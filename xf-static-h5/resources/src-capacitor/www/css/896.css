@@ -1,0 +1,28 @@
+.page-header {
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #db7e42;
+  font-size: 28px;
+  text-align: center;
+  font-family: Wave;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  align-content: center;
+  justify-content: center;
+}
+.verification {
+  display: flex;
+  padding: 10px;
+}
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.txt-center {
+  text-align: center;
+  padding: 0 10px;
+}
+
+/*# sourceMappingURL=896.css.map*/

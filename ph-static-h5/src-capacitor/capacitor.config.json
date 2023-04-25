@@ -1,0 +1,7 @@
+{
+  "appId": "com.caspen.jolly777",
+  "appName": "Jolly88 App",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

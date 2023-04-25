@@ -1,0 +1,1522 @@
+<template>
+  <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
+    <div class="top-bar-wrapper">
+      <div class="top-bar-inner">
+        <div class="timebox">{{ new Date() }}</div>
+        <div class="station-notice-container">
+          <div class="station-notice-box">
+            <!-- Since svg icons do not carry any attributes by default -->
+            <!-- You need to provide attributes directly -->
+            <RiVolumeUpFill style=" fill: #2DB9E2; width: 180px"/>
+            <div class="station-notice">
+              <Vue3Marquee @click="noticeDialogVisible = true" :clone="true" :duration="50" width="300px;">
+                  <span
+                      v-for="(word, index) in noticesList"
+                      :key="index"
+                      v-html="word"
+                  >
+                  </span>
+              </Vue3Marquee>
+            </div>
+          </div>
+        </div>
+        <div v-if="!store.token" class="right-contents">
+          <a class="common-btn grey" @click="loginDialogVisible = true">登录</a>
+          <a class="common-btn" @click="registerDialogVisible = true">开设账户</a>
+          <a class="common-link" @click="forgetPassDialogVisible = true">忘记密码？</a>
+        </div>
+        <div class="details" v-if="store.token">
+          <el-dropdown @command="handleCommand" trigger="click">
+            <span class="el-dropdown-link">
+              <el-tag size="small" type="warning" effect="dark" style="margin-right: 10px; font-weight: bold;">VIP{{
+                  store.vip === 'Normal' ? 1 : 'level'
+                }}</el-tag> {{ store.nickName }}<el-icon class="el-icon--right"><arrow-down
+                style="height:.8em"/></el-icon>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="a">
+                  <RiAccountCircleLine style="width: 20px; fill: #a8b5c3;"/>
+                  个人信息
+                </el-dropdown-item>
+                <el-dropdown-item command="b">
+                  <RiMoneyCnyCircleLine style="width: 20px; fill: #a8b5c3;"/>
+                  充值中心
+                </el-dropdown-item>
+                <el-dropdown-item command="c">
+                  <RiBankCardLine style="width: 20px; fill: #a8b5c3;"/>
+                  快速转账
+                </el-dropdown-item>
+                <el-dropdown-item command="d">
+                  <RiCouponLine style="width: 20px; fill: #a8b5c3;"/>
+                  优惠领取
+                </el-dropdown-item>
+                <el-dropdown-item divided command="e">
+                  <RiLogoutBoxLine style="width: 20px; fill: #a8b5c3;"/>
+                  退出登录
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <a @click="refreshBalance" class="balance-amt">
+            <span>余额：</span>
+            <span class="amount"><span v-if="isLoadingBalance">Loading...</span><span
+                v-if="!isLoadingBalance">￥{{ store.balance }}</span></span>
+            <el-icon>
+              <Refresh/>
+            </el-icon>
+          </a>
+          <div class="top-deposit">
+            <router-link to="/center/deposit" class="common-btn">充值</router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
+      <div class="top-nav-inner">
+        <router-link to="/home">
+          <img src="../../assets/logo.png"/>
+        </router-link>
+        <div class="navigations">
+          <div
+              class="header-menu-item"
+              v-for="nav in navigations"
+              :key="nav.name"
+          >
+            <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+              <span>{{ nav.name }}</span>
+              <span>{{ nav.enName }}</span>
+            </router-link>
+          </div>
+          <div @mouseleave="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
+            <GameMenu ref="el" v-if="selectedMenu === 'Game'"/>
+            <SportsMenu ref="el" v-if="selectedMenu === 'Sports'" @load-modal="openGame"/>
+            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'Live Casino'" @load-modal="openGame"/>
+            <PokerMenu ref="el" v-if="selectedMenu === 'Poker'" @load-modal="openGame"/>
+            <FishingMenu ref="el" v-if="selectedMenu === 'Fishing'" @load-modal="openGame"/>
+            <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'"/>
+            <AppMenu ref="el" v-if="selectedMenu === 'App'"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <el-dialog v-model="loginDialogVisible" title="会员登录" width="50%" align-center style="max-width: 800px;">
+      <span>
+
+          <el-tabs type="card">
+            <el-tab-pane label="账户登录">
+              <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="100" label-suffix=":"
+                       style="width: 100%; max-width: 400px; margin: 50px auto;">
+                <el-form-item tabindex="1" label="用户名" prop="loginName">
+                  <el-input v-model="loginForm.loginName" placeholder="输入用户名"/>
+                </el-form-item>
+                <el-form-item tabindex="2" label="密码" prop="password">
+                  <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password/>
+                </el-form-item>
+                <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+                  <el-row :gutter="10" style="justify-content: center; align-items: center;">
+                    <el-col :span="12">
+                      <el-input
+                          v-model="loginForm.captchaCode"
+                          label="验证码"
+                          placeholder="验证码"
+                          @keyup.enter="submitLogin"
+                      />
+                    </el-col>
+                    <el-col :span="12">
+                     <img style="width: 70%;" :src="verificationImg" @click="getCode"/>
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                           @click="submitLogin">登录</el-button>
+              </el-form>
+            </el-tab-pane>
+            <el-tab-pane label="手机登录">
+              <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="100" label-suffix=":"
+                       style="width: 100%; max-width: 400px; margin: 50px auto;">
+                <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
+                  <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号"/>
+                </el-form-item>
+                <el-form-item tabindex="2" label="验证码" prop="captchaCode">
+                  <el-row :gutter="10" style="justify-content: center; align-items: center;">
+                    <el-col :span="12">
+                      <el-input
+                          v-model="loginForm.captchaCode"
+                          label="验证码"
+                          placeholder="验证码"
+                          @keyup.enter="submitLogin"
+                      />
+                    </el-col>
+                    <el-col :span="12">
+                      <el-button class="common-btn">发送验证码</el-button>
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                           @click="submitLogin">登录</el-button>
+              </el-form></el-tab-pane>
+          </el-tabs>
+      </span>
+    </el-dialog>
+
+    <el-dialog class="noPadding" v-model="registerDialogVisible" width="1280px" align-center style="max-width: 1200px;">
+      <div class="register-container">
+        <div class="registered-left">
+          <div class="title"></div>
+          <ul class="tips">
+            <li>标记有 * 者为必填项目。</li>
+            <li>手机号码为找回密码的重要凭证，请务必填写真实信息。</li>
+            <li>若公司有其他活动会邮件通知您，请您务必填写真实有效的邮箱。"</li>
+          </ul>
+        </div>
+        <div class="registered-right">
+
+          <el-form class="inline-error" ref="registerRef" :rules="regRules" inline-message :model="regForm"
+                   label-width="100" label-suffix=":" style="margin: 50px 0;">
+            <el-row>
+              <el-col>
+                <span class="title account">注册账号</span>
+              </el-col>
+            </el-row>
+
+            <el-form-item label="用户名" prop="loginName">
+              <el-space>
+                <el-input v-model="regForm.loginName" placeholder="输入用户名"/>
+                <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
+                  <el-icon :size="10">
+                    <InfoFilled/>
+                  </el-icon>
+                </el-tooltip>
+              </el-space>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-row style="display:flex; align-items: center;" :gutter="10">
+                <el-col :span="20">
+                  <el-input class="half" v-model="regForm.password" placeholder="输入密码" type="password"
+                            show-password/>
+
+
+                  <div v-if="regForm.password" class="password-str-div">
+          <span
+              :class="{
+              'weak-pwd': pwdStrength == 'weak',
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong',
+            }"
+          >弱</span
+          >
+                    <span
+                        :class="{
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong',
+            }"
+                    >好</span
+                    >
+                    <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
+                  </div>
+                </el-col>
+                <el-col :span="4">
+                  <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
+                    <el-icon :size="10">
+                      <InfoFilled/>
+                    </el-icon>
+                  </el-tooltip>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="confirmPwd">
+              <el-space>
+                <el-input class="half" v-model="regForm.confirmPwd" placeholder="输入确认密码" type="password"
+                          show-password/>
+                <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
+                  <el-icon :size="10">
+                    <InfoFilled/>
+                  </el-icon>
+                </el-tooltip>
+              </el-space>
+            </el-form-item>
+            <el-row>
+              <el-col>
+                <span class="title account">会员资料</span>
+              </el-col>
+            </el-row>
+            <el-form-item label="电话号码" prop="telephone">
+              <el-input class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
+            </el-form-item>
+            <el-form-item label="邮件" prop="email">
+              <el-input class="half" v-model="regForm.email" placeholder="输入邮件"/>
+            </el-form-item>
+            <el-form-item label="验证码" prop="captchaCode">
+              <el-row :gutter="10">
+                <el-col :span="17">
+                  <el-input
+                      v-model="regForm.captchaCode"
+                      label="验证码"
+                      placeholder="验证码"
+                  />
+                </el-col>
+                <el-col :span="7">
+                  <img :src="verificationImg" @click="getCode"/>
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-form>
+          <el-button color="#3bafda" @click="resetRegForm(registerRef)">重新填写
+          </el-button>
+          <el-button @click="submitRegisterForm(registerRef)" color="#3bafda">确认注册
+          </el-button>
+        </div>
+      </div>
+    </el-dialog>
+
+
+    <el-dialog v-model="forgetPassDialogVisible" title="忘记密码" width="50%" align-center style="max-width: 800px;">
+      <span>
+
+          <el-tabs type="card">
+            <el-tab-pane label="邮箱找回密码">
+              <p>方式：请输入您需找回登陆密码的用户名和预留邮箱地址</p>
+              <el-form ref="loginRef" :rules="loginRules" :model="passForm" label-width="100" label-suffix=":"
+                       style="width: 100%; max-width: 400px; margin: 50px auto;">
+                <el-form-item tabindex="1" label="用户名" prop="loginName">
+                  <el-input v-model="passForm.loginName" placeholder="输入用户名"/>
+                </el-form-item>
+                <el-form-item tabindex="2" label="预留邮箱" prop="email">
+                  <el-input v-model="passForm.email" placeholder="预留邮箱"/>
+                </el-form-item>
+                <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+                  <el-row :gutter="10" style="justify-content: center; align-items: center;">
+                    <el-col :span="12">
+                      <el-input
+                          v-model="passForm.captchaCode"
+                          label="验证码"
+                          placeholder="验证码"
+                          @keyup.enter="submitLogin"
+                      />
+                    </el-col>
+                    <el-col :span="12">
+                     <img style="width: 70%;" :src="verificationImg" @click="getCode"/>
+                    </el-col>
+                  </el-row>
+                </el-form-item><el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                                          @click="submitLogin">登录</el-button>
+              </el-form>
+            </el-tab-pane>
+            <el-tab-pane label="邮箱找回账号">
+              <p>方式：请输入您的预留邮箱</p>
+              <el-form ref="loginRef" :rules="loginRules" :model="passForm" label-width="100" label-suffix=":"
+                       style="width: 100%; max-width: 400px; margin: 50px auto;">
+                <el-form-item tabindex="1" label="预留邮箱" prop="loginName">
+                  <el-input v-model="passForm.loginName" placeholder="输入预留邮箱"/>
+                </el-form-item>
+                <el-form-item tabindex="2" label="验证码" prop="captchaCode">
+                  <el-row :gutter="10" style="justify-content: center; align-items: center;">
+                    <el-col :span="12">
+                      <el-input
+                          v-model="passForm.captchaCode"
+                          label="验证码"
+                          placeholder="验证码"
+                          @keyup.enter="submitLogin"
+                      />
+                    </el-col>
+                    <el-col :span="12">
+                     <img style="width: 70%;" :src="verificationImg" @click="getCode"/>
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                           @click="submitLogin">登录</el-button>
+              </el-form>
+            </el-tab-pane>
+          </el-tabs>
+      </span>
+    </el-dialog>
+
+
+    <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px;">
+      <div class="noticedialog">
+        <div class="title">系统提示</div>
+        <div class="contents">
+          尊敬的兴發会员：
+
+          为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！兴發娱乐
+          2022/10/13
+
+          尊敬的兴發会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！兴發娱乐
+          2022/10/13
+
+
+        </div>
+        <el-button class="common-btn" @click="noticeDialogVisible = false">确认</el-button>
+      </div>
+    </el-dialog>
+
+    <GameModal ref="modalGame"></GameModal>
+  </header>
+</template>
+
+<script lang="js">
+
+import "vue3-carousel/dist/carousel.css";
+import {defineComponent, onMounted, ref, reactive, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {userStore} from "@/store/index";
+import {getVerificationCode, register} from "@/api/index/login";
+import {ElMessage} from "element-plus";
+import {Vue3Marquee} from 'vue3-marquee';
+import {
+  RiVolumeUpFill,
+  RiAccountCircleLine,
+  RiMoneyCnyCircleLine,
+  RiBankCardLine,
+  RiCouponLine,
+  RiLogoutBoxLine
+} from 'vue-remix-icons';
+import GameMenu from '@/components/menu/GameMenu.vue'
+import SportsMenu from '@/components/menu/SportsMenu.vue'
+import LiveCasinoMenu from '@/components/menu/LiveCasinoMenu.vue'
+import PokerMenu from '@/components/menu/PokerMenu.vue'
+import FishingMenu from '@/components/menu/FishingMenu.vue'
+import PromotionMenu from '@/components/menu/PromotionMenu.vue'
+import AppMenu from '@/components/menu/AppMenu.vue'
+import 'vue3-marquee/dist/style.css'
+import {useElementSize} from '@vueuse/core'
+import {InfoFilled, ArrowDown, Refresh} from '@element-plus/icons-vue'
+import {storeToRefs} from "pinia";
+import GameModal from "@/components/modal/GameModal";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+
+export default defineComponent({
+  name: "CommonHeader",
+  components: {
+    Vue3Marquee,
+    GameMenu,
+    SportsMenu,
+    LiveCasinoMenu,
+    PokerMenu,
+    FishingMenu,
+    PromotionMenu,
+    AppMenu,
+    InfoFilled,
+    RiVolumeUpFill,
+    ArrowDown,
+    Refresh,
+    RiAccountCircleLine,
+    RiMoneyCnyCircleLine, RiBankCardLine, RiCouponLine, RiLogoutBoxLine,
+    GameModal
+  },
+  data: () => ({
+    // carousel settings
+    navigations: [
+      {code: "Home", name: "首页", enName: "Home", path: "/home"},
+      {code: "Game", name: "电子", enName: "Game", path: "/game", submenu: true},
+      {code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports"},
+      {code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
+      {code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
+      {code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
+      {code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
+      {code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"},
+      {code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", submenu: true},
+      {code: "App", name: "手机APP", enName: "App", path: "/app", submenu: true},
+      {code: "VIP", name: "VIP", enName: "VIP", path: "/vip"},
+      // { code: "Poker", name: "ป็อกเกอร์", path: "/poker" },
+      // { code: "E-sports", name: "E-sports", path: "/e-sport" },
+    ],
+  }),
+  setup() {
+    const store = userStore();
+    const {token} = storeToRefs(store);
+    const router = useRouter();
+    const route = useRoute();
+    const loginDialogVisible = ref(false)
+    const registerDialogVisible = ref(false)
+    const forgetPassDialogVisible = ref(false)
+    const noticeDialogVisible = ref(false)
+    const el = ref(null);
+    const scroll = ref(0);
+    const selectedMenu = ref(false);
+    const {height} = useElementSize(el);
+    const showSubMenu = (nav) => {
+      if (nav.submenu === true) {
+        selectedMenu.value = nav.code
+      } else {
+        selectedMenu.value = ''
+      }
+    }
+    let validatePass = async (r, v) => {
+      if (v === "") {
+        return Promise.reject('请输入密码');
+      } else {
+        return validatePassStrength(r, v);
+      }
+    };
+
+    let validatePassStrength = (r, v) => {
+      var strength = "";
+      var pwd = v;
+      var result = 0;
+      for (var i = 0, len = pwd.length; i < len; ++i) {
+        result |= charType(pwd.charCodeAt(i));
+      }
+
+      var level = 0;
+      for (i = 0; i <= 4; i++) {
+        if (result & 1) {
+          level++;
+        }
+        result = result >>> 1;
+      }
+
+      // console.log(level);
+
+      if (pwd.length >= 6) {
+        switch (level) {
+          case 1:
+            strength = "weak";
+            break;
+          case 2:
+            strength = "normal";
+            break;
+          case 3:
+          case 4:
+            strength = "strong";
+            break;
+        }
+      } else {
+        strength = "weak";
+      }
+      if (strength === "weak") {
+        return Promise.reject("密码至少应该是好的");
+      } else {
+        return Promise.resolve();
+      }
+    };
+
+    let validateName = async (r, v) => {
+      if (v === "") {
+        return Promise.reject("请输入登录名");
+      } else if (!checkName(v)) {
+        return Promise.reject("不允许使用特殊字符");
+      } else {
+        return Promise.resolve();
+      }
+    };
+    const checkName = (v) => {
+      const alphanumeric = /^[\p{L}\p{N}]*$/u;
+      return v.match(alphanumeric);
+    };
+    let validatePass2 = async (r, v) => {
+      if (v === "") {
+        return Promise.reject("请重新输入密码");
+      } else if (v !== regForm.password) {
+        return Promise.reject("密码不同");
+      } else {
+        return Promise.resolve();
+      }
+    };
+    let validatePhoneNumber = async (r, v) => {
+      var reg = /^\d+$/;
+      if (v === '') {
+        return Promise.reject('请验证您的电话号码');
+      } else if (!reg.test(v)) {
+        return Promise.reject('电话号码只允许使用数字');
+      } else {
+        return Promise.resolve();
+      }
+    };
+    const loginForm = reactive({
+      name: '',
+    })
+    const loginRef = ref([])
+
+    const loginRules = {
+      loginName: [
+        {
+          required: true,
+          message: "请输入用户名",
+          trigger: "blur"
+        },
+        {
+          min: 6,
+          max: 12,
+          message: "长度要在 6-12 之间",
+          trigger: "blur"
+        }
+      ],
+      password: [
+        {
+          required: true,
+          message: "请输入密码",
+          trigger: "blur"
+        }
+      ],
+      captchaCode: [
+        {
+          required: true,
+          message: "请输入验证码",
+          trigger: "blur"
+        },
+        {
+          min: 4,
+          max: 4,
+          message: "长度为 4",
+          trigger: "blur"
+        }
+      ]
+    };
+    const regForm = reactive({
+      loginName: "",
+      password: "",
+      confirmPwd: "",
+      telephone: "",
+      email: "",
+      captchaCode: "",
+      regHost: location.hostname,
+      codeId: "",
+      codeAffiliate: "",
+    });
+
+    const regRules = {
+      loginName: [
+        {
+          min: 6,
+          max: 12,
+          message: "长度应为 6 至 12",
+          trigger: "blur",
+        },
+        {
+          validator: validateName,
+          trigger: "change",
+        },
+      ],
+      password: [
+        {
+          validator: validatePass,
+          trigger: "change",
+        },
+        // {
+        //   required: true,
+        //   message: "Password is required",
+        //   trigger: "blur",
+        // },
+        // {
+        //   validator: validatePass,
+        //   trigger: "change",
+        // },
+        // {
+        //   validator: validatePassStrength,
+        //   trigger: "change",
+        // },
+        // {
+        //   min: 6,
+        //   max: 12,
+        //   message: "Length should be 6 to 12",
+        //   trigger: "blur",
+        // },
+      ],
+      confirmPwd: [
+        // {
+        //   required: true,
+        //   message: "Confirm password is required",
+        //   trigger: "blur",
+        // },
+        {
+          validator: validatePass2,
+          trigger: "change",
+        },
+      ],
+      telephone: [
+        {
+          validator: validatePhoneNumber,
+          trigger: "change",
+        },
+      ],
+      // birthday: [
+      //   {
+      //     required: true,
+      //     message: "Birthday is required",
+      //     trigger: "blur",
+      //   },
+      // ],
+      email: [
+        {
+          required: true,
+          message: "请输入您的邮箱",
+          trigger: "blur",
+        },
+        {
+          type: "email",
+          message: "电子邮件地址无效",
+          trigger: "blur",
+        },
+        {
+          max: 50,
+          message: "长度应小于 50",
+          trigger: "blur",
+        },
+      ],
+      captchaCode: [
+        {
+          required: true,
+          message: "需要验证码",
+          trigger: "blur",
+        },
+        {
+          min: 4,
+          max: 4,
+          message: "长度应为 4",
+          trigger: "change",
+        },
+      ],
+    };
+    const passForm = reactive({
+      name: '',
+    })
+    const passRef = ref([])
+
+    const passRules = {
+      loginName: [
+        {
+          required: true,
+          message: "请输入用户名",
+          trigger: "blur"
+        },
+        {
+          min: 6,
+          max: 12,
+          message: "长度要在 6-12 之间",
+          trigger: "blur"
+        }
+      ],
+      password: [
+        {
+          required: true,
+          message: "请输入密码",
+          trigger: "blur"
+        }
+      ],
+      captchaCode: [
+        {
+          required: true,
+          message: "请输入验证码",
+          trigger: "blur"
+        },
+        {
+          min: 4,
+          max: 4,
+          message: "长度为 4",
+          trigger: "blur"
+        }
+      ]
+    };
+
+    const onLogout = () => {
+      store.memberLogout().then(() => {
+        location.reload();
+      });
+    };
+    const registerRef = ref([])
+    const resetRegForm = (formEl) => {
+      if (!formEl) return
+      formEl.resetFields()
+    }
+    const submitRegisterForm = async (elForm) => {
+      if (!elForm) return
+      await elForm.validate((valid) => {
+        if (valid) {
+          const fpPromise = FingerprintJS.load();
+          (async () => {
+            const fp = await fpPromise;
+            const result = await fp.get();
+            const excludes = {value: ["timezone", "timeZoneOffset"]};
+            const allComponents = {...result.components};
+            excludes.value.forEach((element) => {
+              delete allComponents[element];
+            });
+            const sidParam = FingerprintJS.hashComponents(allComponents);
+            regForm.sid = sidParam;
+            register(regForm)
+                .then((response) => {
+                  const regResult = response.code;
+                  if (regResult === 0) {
+
+                    ElMessage({
+                      type: 'success',
+                      message: '注册成功'
+                    });
+                    registerDialogVisible.value = false;
+                    loginDialogVisible.value = true;
+
+                    sessionStorage.removeItem("REFERRAL_CODE");
+                    getCode();
+                  } else {
+                    getCode();
+                    // message.error(response.message);
+                  }
+                })
+          })();
+        } else {
+          getCode();
+        }
+      })
+    }
+    const modalGame = ref(null)
+    const openGame = (gameName, code, gameCode) => {
+      modalGame.value.open(gameName, code, gameCode);
+    }
+    onMounted(() => {
+      getCode();
+      getReferalCode();
+
+      if (token) {
+        store.getBalance();
+        store.getMemberInfo();
+      }
+    });
+
+    const getReferalCode = () => {
+      const referCode = sessionStorage.getItem("REFERRAL_CODE");
+      // console.log("got Code");
+      // console.log(referCode);
+      if (referCode && route.query && route.query.refer) {
+        registerDialogVisible.value = true;
+        regForm.referrer = referCode;
+      }
+    }
+
+
+    const isLoadingBalance = ref(false)
+    const refreshBalance = () => {
+      isLoadingBalance.value = true;
+      store.getBalance().then(() => {
+        isLoadingBalance.value = false;
+      })
+    };
+    const getCode = () => {
+      getVerificationCode().then((res) => {
+        if (res.code === 0) {
+          verificationImg.value = "data:image/png;base64," + res.data.img;
+          loginForm.codeId = res.data.id;
+          regForm.codeId = res.data.id;
+        }
+      })
+    };
+    const verificationImg = ref("");
+
+    const submitLogin = () => {
+      const fpPromise = FingerprintJS.load();
+      (async () => {
+        const fp = await fpPromise;
+        const result = await fp.get();
+        const excludes = {value: ["timezone", "timeZoneOffset"]};
+        const allComponents = {...result.components};
+        excludes.value.forEach((element) => {
+          delete allComponents[element];
+        });
+        const sidParam = FingerprintJS.hashComponents(allComponents);
+
+        loginRef.value.validate().then(() => {
+          store
+              .memberLogin({
+                loginName: loginForm.loginName,
+                password: loginForm.password,
+                sid: sidParam,
+                captchaCode: loginForm.captchaCode,
+                codeId: loginForm.codeId,
+              })
+              .then(() => {
+                const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+                if (store.token) {
+                  router.push(jumpUrl);
+                  loginDialogVisible.value = false;
+
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                } else {
+                  loginForm.loginName = null
+                  loginForm.password = null
+                  loginForm.captchaCode = null
+                  getCode();
+                }
+              }).catch((error) => {
+            // message.error(error.message);
+            console.log(error.message);
+            getCode();
+          });
+        });
+      })();
+    };
+
+    const handleCommand = (command) => {
+      if (command === 'a') {
+        router.push('/center/personal');
+      }
+      if (command === 'b') {
+        router.push('/center/deposit');
+      }
+      if (command === 'c') {
+        router.push('/center/transfer');
+      }
+      if (command === 'd') {
+        router.push('/promotion');
+      }
+      if (command === 'e') {
+        onLogout()
+      }
+    }
+    // const submitRegisterForm = () => {
+    //   registerRef.value
+    //     .validate()
+    //     .then(() => {
+    //     alert('!')
+    //     // if (!valid) {
+    //     //   ElMessage({
+    //     //     message: h('p', null, [
+    //     //       h('span', null, 'Message can be ',
+    //     //       h('i', { style: 'color: teal' }, 'VNode',
+    //     //     ]),
+    //     //   })
+    //     // }
+    //   })
+    // }
+    const pwdStrength = ref();
+
+    function charType(num) {
+      if (num >= 48 && num <= 57) {
+        return 1;
+      }
+      if (num >= 97 && num <= 122) {
+        return 2;
+      }
+      if (num >= 65 && num <= 90) {
+        return 4;
+      }
+      return 8;
+    }
+
+    watch(
+        () => regForm.password,
+        () => {
+          pwdStrength.value = "";
+
+          var pwd = regForm.password;
+          var result = 0;
+          for (var i = 0, len = pwd.length; i < len; ++i) {
+            result |= charType(pwd.charCodeAt(i));
+          }
+
+          var level = 0;
+          for (i = 0; i <= 4; i++) {
+            if (result & 1) {
+              level++;
+            }
+            result = result >>> 1;
+          }
+
+          // console.log(level);
+
+          if (pwd.length >= 6) {
+            switch (level) {
+              case 1:
+                pwdStrength.value = "weak";
+                break;
+              case 2:
+                pwdStrength.value = "normal";
+                break;
+              case 3:
+              case 4:
+                pwdStrength.value = "strong";
+                break;
+            }
+          } else {
+            pwdStrength.value = "weak";
+          }
+
+          // console.log(pwdStrength.value);
+        },
+    );
+
+
+    return {
+      token,
+      el,
+      height,
+      showSubMenu,
+      scroll,
+      selectedMenu,
+      noticesList: [
+        "尊敬的兴發会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！兴發娱乐 2022/10/13",
+        "こんにちは",
+        "bonjour",
+        "안녕하세요"
+      ],
+      loginForm,
+      loginDialogVisible,
+      forgetPassDialogVisible,
+      noticeDialogVisible,
+      loginRef,
+      submitLogin,
+      regForm,
+      registerDialogVisible,
+      submitRegisterForm,
+      registerRef,
+      loginRules,
+      regRules,
+      getCode,
+      verificationImg,
+      onLogout,
+      store,
+      isLoadingBalance,
+      refreshBalance,
+      handleCommand,
+      passForm,
+      passRef,
+      passRules,
+      pwdStrength,
+      resetRegForm,
+      openGame,
+      modalGame
+    }
+  }
+});
+</script>
+<style lang="scss">
+body {
+  .el-dropdown {
+    cursor: pointer;
+  }
+
+  .el-popper__arrow::before {
+    display: none;
+  }
+
+  .el-dropdown-menu {
+    background: #3d4145;
+    border: 0;
+  }
+
+  .el-dropdown-menu__item {
+    min-width: 130px;
+    color: #a8b5c3;
+    gap: 8px;
+  }
+
+  .el-dropdown-menu__item:not(.is-disabled):focus {
+    background: #3a4550;
+    color: #e1e9ee;
+  }
+}
+</style>
+<style scoped lang="scss">
+.el-icon {
+  height: 1.5em;
+  width: 1.5em;
+
+  svg {
+    height: 1.5em;
+    width: 1.5em;
+  }
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  .balance-amt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .amount {
+      color: #faea81;
+      font-weight: bold;
+    }
+
+    .el-icon {
+      height: 2em;
+      width: 2em;
+      line-height: 2em;
+
+      svg {
+        width: 1.3em;
+        height: 1.3em;
+      }
+    }
+  }
+
+  .top-deposit {
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+.el-dropdown-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.hamburger {
+  display: none;
+}
+
+.header-container {
+  &.on-scrolled {
+    // background: rgb(43 43 75 / 80%);
+  }
+
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: all 0.3s ease;
+
+  .top-bar {
+    &-wrapper {
+      padding: 5px;
+      background: $dark-black;
+      color: $light-grey;
+
+      .top-bar-inner {
+        max-width: $maxwidth;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        font-size: .75em;
+        line-height: 1.2em;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+
+        .timebox {
+          flex: 1;
+          min-width: 300px;
+        }
+
+        .station-notice-container {
+          flex: 3;
+
+          .station-notice-box {
+            display: flex;
+            gap: 10px;
+          }
+        }
+
+        .right-contents {
+          flex: 1;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+
+          .common-link {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .top-nav {
+    &-wrapper {
+      padding: 20px;
+      background: $primary;
+      position: relative;
+
+      .top-nav-inner {
+        max-width: $maxwidth;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        // justify-content: center;
+        justify-content: space-between;
+        align-items: center;
+        gap: 80px;
+
+        .logo {
+          width: 107px;
+
+          img {
+            width: 100%;
+            display: block;
+          }
+        }
+
+        .navigations {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          gap: 40px;
+          text-align: center;
+
+          a {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            gap: 5px;
+
+            span:first-child {
+              color: $color-white;
+              font-size: 1rem;
+            }
+
+            span:last-child {
+              color: $link-hover;
+              text-transform: uppercase;
+              font-size: .75rem;
+            }
+
+            &:after {
+              content: "";
+              width: 80%;
+              height: 2px;
+              margin: 0 auto;
+            }
+
+            &:hover, &.router-link-active {
+              span:first-child {
+                color: $link-active;
+              }
+
+              span:last-child {
+                color: $link-active;
+              }
+
+              &:after {
+                background: $link-active;
+              }
+            }
+          }
+
+          .sub-menu {
+            transition: $page-trans;
+            background: rgba(14, 18, 27, .96);
+            overflow: hidden;
+            height: 0px;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            width: 100%;
+          }
+
+        }
+      }
+    }
+
+  }
+}
+
+.register-container {
+  display: flex;
+  min-height: 90vh;
+
+  .registered-left {
+    background-image: url(../../assets/home/zc.jpg);
+    background-size: cover;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    flex: 1;
+    padding: 80px 30px;
+
+    ul {
+      text-align: left;
+      padding-left: 15px;
+      font-size: 14px;
+      line-height: 30px;
+
+      li {
+        list-style-type: decimal;
+      }
+    }
+
+    .title {
+      background-image: url(../../assets/home/download.png);
+      background-position: 100% 100%;
+      width: 143px;
+      height: 35px;
+    }
+  }
+
+  .registered-right {
+    flex: 2;
+    padding: 80px 50px;
+
+    form .title {
+      height: 18px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #5075ad;
+      margin: 30px 0;
+      width: 100%;
+      text-align: left;
+      display: block;
+    }
+  }
+}
+
+.noticedialog {
+  padding: 0 0 5px;
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .contents {
+    padding: 20px;
+  }
+
+  .el-button {
+    display: block;
+    margin: 15px auto;
+  }
+}
+
+.password-str-div {
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+  margin-bottom: 5px;
+  justify-content: space-evenly;
+  gap: 5px;
+  height: 50px;
+
+  span {
+    padding: 8px 3px;
+    //border: 1px solid #fff;
+    border-radius: 5px;
+    background: #434343;
+    width: 33%;
+    text-align: center;
+    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  }
+
+  span.weak-pwd {
+    background: #ff3131;
+  }
+
+  span.normal-pwd {
+    background: #f2c037;
+    color: #000000;
+  }
+
+  span.strong-pwd {
+    //background: linear-gradient(to right, #de4545, #db7e42) !important;
+    background: #21ba45;
+    font-weight: 600;
+  }
+}
+</style>
+
+<!-- Menu Styles -->
+<style lang="scss">
+.platform-menu {
+  a {
+    text-decoration: none;
+  }
+
+  display: flex;
+  margin: 0 auto;
+  max-width: 1280px;
+  justify-content: center;
+  align-items: center;
+
+  .platform-title {
+    color: #ffffff;
+  }
+
+  .platform-box {
+    flex: 1;
+    cursor: pointer;
+    padding: 25px 10px;
+
+    &:hover {
+      background: $primary;
+
+      .platform-img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .platform-img {
+    transition: $page-trans;
+    width: 145px;
+    height: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    &.slot-pt {
+      background-image: url("../../assets/game/header_slot_pt.png");
+    }
+
+    &.slot-sw {
+      background-image: url("../../assets/game/header_slot_sw.png");
+    }
+
+    &.slot-pp {
+      background-image: url("../../assets/game/header_slot_pp.png");
+    }
+
+    &.slot-pg {
+      background-image: url("../../assets/game/header_slot_pg.png");
+    }
+
+    &.slot-mg {
+      background-image: url("../../assets/game/header_slot_mg.png");
+    }
+
+    &.slot-sg {
+      background-image: url("../../assets/game/header_slot_sg.png");
+    }
+
+    &.fish-ag {
+      background-image: url("../../assets/fishing/ag_fish_king.png");
+    }
+
+    &.fish-sg {
+      background-image: url("../../assets/fishing/sg_fish_king.png");
+    }
+
+    &.fish-at {
+      background-image: url("../../assets/fishing/at_fish_king.png");
+    }
+
+    &.fish-gps {
+      background-image: url("../../assets/fishing/gps_fish_king.png");
+    }
+  }
+
+  &.games {
+    .platform-box {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+  }
+
+  .header-fs-box {
+    text-align: left;
+    margin-left: 10px;
+    cursor: pointer;
+
+    .fs-title {
+      font-size: 1.6rem;
+      color: #2ebfe5;
+      margin: 0;
+    }
+
+    .fs-name {
+      font-size: 1.6rem;
+      line-height: 1.6rem;
+      color: #fff;
+      margin: 0;
+    }
+
+    .fs-desc {
+      font-size: 1.3rem;
+      color: #5a758e;
+      margin: 3px 0 0 0;
+    }
+
+    .fs-percentage {
+      background-image: url("../../assets/game/percentage.png");
+      background-size: 1008px 71px;
+      background-repeat: no-repeat;
+      width: 168px;
+      height: 71px;
+      margin-top: 12px;
+
+      &.p128 {
+        background-position-x: -672px;
+      }
+    }
+  }
+
+  &.live, &.sports, &.poker, &.promo {
+    .platform-title {
+      font-size: 2.5em;
+      line-height: 1em;
+      color: #2ebfe5;
+      margin: 0;
+    }
+
+    .platform-slogan {
+      font-size: 1em;
+      color: $menu-bg;
+      margin: 15px 0 12px;
+    }
+  }
+
+  &.sports, &.poker {
+    .platform-box {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .contents {
+        padding-right: 30px;
+        text-align: left;
+
+        .platform {
+          color: #ffffff;
+          font-size: 1.5em;
+        }
+      }
+    }
+  }
+
+  &.app {
+    .platform-box {
+      flex: unset;
+    }
+  }
+
+  &.promo {
+    .platform-box {
+      flex: unset;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .contents {
+        text-align: left;
+
+        .platform {
+          color: #ffffff;
+          font-size: 2em;
+        }
+
+        .platform-slogan {
+          width: 150px;
+        }
+      }
+    }
+
+    img {
+      width: 300px;
+    }
+  }
+
+  &.fish {
+    .platform-box {
+      padding: 25px 80px;
+    }
+  }
+}
+</style>

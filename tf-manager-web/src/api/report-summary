@@ -1,0 +1,39 @@
+import https from "@/utils/https";
+import { ContentType, Method } from "axios-mapper";
+
+export const getSummaryReport = (data) => {
+  return https().request("/report/getSummaryReport", Method.GET, data, ContentType.form);
+};
+
+export const getMemberReport = (data) => {
+	return https().request("/report/getMemberReport", Method.GET, data, ContentType.form);
+  };
+
+export const addReview = (data) => {
+	return https().request("/report/addReview", Method.POST, data, ContentType.json);
+  };
+
+export const getSummaryRegisterReport = (data) => {
+	return https().request("/report/getSummaryRegisterReport", Method.GET, data, ContentType.form);
+  };
+
+  export const getSummaryFdpReport = (data) => {
+	return https().request("/report/getSummaryFdpReport", Method.GET, data, ContentType.form);
+  };
+
+  export const getSummaryDepositReport = (data) => {
+	return https().request("/report/getSummaryDepositReport", Method.GET, data, ContentType.form);
+  };
+
+  export const getSummaryWithdrawReport = (data) => {
+	return https().request("/report/getSummaryWithdrawReport", Method.GET, data, ContentType.form);
+  };
+
+  export const getSummaryActiveReport = (data) => {
+	return https().request("/report/getSummaryActiveReport", Method.GET, data, ContentType.form);
+  };
+
+
+export const getSummaryMemberReport = (data) => {
+    return https().request("/report/getSummaryMemberReport", Method.GET, data, ContentType.form);
+  };

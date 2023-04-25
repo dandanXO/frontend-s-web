@@ -1,0 +1,359 @@
+.account-title-container {
+  margin: 10px 0;
+  font-size: 20px;
+}
+.account-content svg.remixicon {
+  width: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.passwordModal .ant-modal {
+  max-width: 520px;
+  width: 100%;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.passwordModal .ant-modal .ant-modal-content {
+  width: 90%;
+}
+.bankModal .ant-modal {
+  max-width: 520px;
+  width: 100%;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  color: #ffffff;
+}
+.bankModal .ant-modal .ant-modal-content {
+  width: 90%;
+}
+.bankModal .ant-modal .ant-form-item-control-input-content {
+  color: #ffffff;
+}
+.securityModal .ant-modal {
+  width: 100%;
+  max-width: 600px;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.securityModal .ant-modal .ant-modal-content {
+  width: 90%;
+}
+.ant-modal.ant-modal-confirm {
+  width: 100%;
+  max-width: 600px;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+[data-v-0f2e2b74] .ant-form-item-label > label {
+  color: #ffffff;
+}
+[data-v-0f2e2b74] .ant-form-item.half .ant-form-item-control-input-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+[data-v-0f2e2b74] .ant-form-item.half .ant-form-item-control-input-content .ant-input {
+  width: 100%;
+  flex-basis: 50%;
+}
+[data-v-0f2e2b74] .ant-form-item .ant-select {
+  width: 100%;
+}
+[data-v-0f2e2b74] .ant-form-item.select .ant-form-item-control-input {
+  width: 100%;
+}
+[data-v-0f2e2b74] .ant-select-single:not(.ant-select-customize-input)
+    .ant-select-selector
+    .ant-select-selection-search-input {
+  height: 40px;
+}
+[data-v-0f2e2b74] .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  height: 40px;
+  padding: 5px 20px;
+  background: #212534;
+  color: #ffffff;
+  border: 0;
+}
+.common-btn[data-v-0f2e2b74] {
+  width: 100%;
+  cursor: pointer;
+}
+.common-btn.search-btn[data-v-0f2e2b74] {
+  font-size: 14px;
+}
+.common-btn.verification-btn[data-v-0f2e2b74] {
+  padding: 8px;
+}
+.common-btn.submit-btn[data-v-0f2e2b74] {
+  padding: 8px;
+}
+.bank-card-list[data-v-0f2e2b74] {
+  max-width: 300px;
+  margin: 100px auto;
+  padding: 15% 0 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.bank-card-list .bank-card-item[data-v-0f2e2b74] {
+  border-radius: 5px;
+  background-image: linear-gradient(90deg, #de4545, #db7e42);
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 300px;
+  margin: 0;
+  margin-top: -40%;
+  flex-direction: column;
+  align-items: center;
+  height: 150px;
+  transform: none;
+}
+.bank-card-list .bank-card-item .icon[data-v-0f2e2b74] {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  width: 30px;
+}
+.bank-card-list .bank-card-item .icon img[data-v-0f2e2b74] {
+  width: 100%;
+}
+.bank-card-list .bank-card-item.active[data-v-0f2e2b74] {
+  margin-bottom: 30%;
+  padding-bottom: 10%;
+  filter: none;
+}
+.bank-card-list .bank-card-item.active .icon[data-v-0f2e2b74] {
+  width: 40px;
+  position: relative;
+}
+.bank-card-list .bank-card-item.active .unlink-btn[data-v-0f2e2b74] {
+  display: block;
+}
+.bank-card-list .bank-card-item.active .txt-center[data-v-0f2e2b74] {
+  position: relative;
+  padding-top: 0;
+  transform: rotateZ(0);
+  height: unset;
+}
+.bank-card-list .bank-card-item.active[data-v-0f2e2b74]:hover:before {
+  animation: shine-0f2e2b74 2s;
+}
+.bank-card-list .bank-card-item.inactive[data-v-0f2e2b74] {
+  margin-top: -40%;
+}
+.bank-card-list .bank-card-item .txt-center[data-v-0f2e2b74] {
+  left: 0px;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  width: 200px;
+  text-overflow: ellipsis;
+  height: unset;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all 0.3s ease-in-out;
+  transform: none;
+  padding-top: 10px;
+  width: 100%;
+  height: 140px;
+}
+.bank-card-list .bank-card-item .cards[data-v-0f2e2b74] {
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: center;
+  display: flex;
+}
+.bank-card-list .bank-card-item.add-bank-card[data-v-0f2e2b74] {
+  cursor: pointer;
+  align-items: center;
+  padding: 0;
+  filter: none;
+}
+.bank-card-list .bank-card-item .unlink-btn[data-v-0f2e2b74] {
+  cursor: pointer;
+  position: absolute;
+  display: none;
+  top: 10px;
+  left: 10px;
+}
+.bank-card-list .bank-card-item svg[data-v-0f2e2b74] {
+  fill: #ffffff;
+  width: 20px;
+}
+.bank-card-list .bank-card-item[data-v-0f2e2b74]:before {
+  position: absolute;
+  top: 0;
+  left: -85%;
+  z-index: 0;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+  border-radius: 10px;
+  transform: skewX(320deg);
+}
+@keyframes shine-0f2e2b74 {
+100% {
+    left: 125%;
+}
+}
+.addbuttons[data-v-0f2e2b74] {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.addbuttons .add-bank-card[data-v-0f2e2b74] {
+  cursor: pointer;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+.addbuttons .add-bank-card svg[data-v-0f2e2b74] {
+  width: 20px;
+  fill: #ffffff;
+}
+.basic-info[data-v-0f2e2b74] {
+  position: relative;
+}
+.basic-info .buttons[data-v-0f2e2b74] {
+  position: absolute;
+  top: 20px;
+  right: 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.basic-info .account-btn[data-v-0f2e2b74] {
+  cursor: pointer;
+  padding: 5px 20px;
+  font-size: 16px;
+  min-width: 180px;
+}
+.basic-info-table[data-v-0f2e2b74] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 70%;
+}
+.basic-info-table .tbl-row[data-v-0f2e2b74] {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 20px 15px 0px;
+}
+.basic-info-table .basic-info-cell[data-v-0f2e2b74] {
+  padding-bottom: 0.5rem;
+}
+.basic-info-table .basic-info-cell.title[data-v-0f2e2b74] {
+  width: 150px;
+}
+.unbind-record-wrapper[data-v-0f2e2b74] {
+  margin-top: 20px;
+}
+.left[data-v-0f2e2b74] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.searchbar .ant-form[data-v-0f2e2b74] {
+  display: flex;
+  justify-content: space-between;
+}
+.searchbar .ant-form .ant-form-item[data-v-0f2e2b74] {
+  margin-right: 0;
+}
+.account-container .basic-info-table[data-v-0f2e2b74] {
+  grid-template-columns: 1fr;
+}
+.basic-info .buttons[data-v-0f2e2b74] {
+  position: relative;
+  right: unset;
+  left: unset;
+  top: unset;
+  margin-bottom: 20px;
+  flex-direction: unset;
+}
+.bindunbind[data-v-0f2e2b74] {
+  display: none;
+}
+.basic-info .account-btn[data-v-0f2e2b74] {
+  padding: 5px 0px;
+  font-size: 12px;
+  min-width: 140px;
+}
+.bank-card-list[data-v-0f2e2b74] {
+  max-width: 300px;
+  margin: 100px auto 0;
+  padding: 15% 0 0;
+}
+.bank-card-list .bank-card-item[data-v-0f2e2b74] {
+  width: 100%;
+  max-width: 300px;
+  margin-right: 0;
+  margin: 0;
+  margin-top: -40%;
+  flex-direction: column;
+  align-items: center;
+  height: 150px;
+  transform: none;
+}
+.bank-card-list .bank-card-item .icon[data-v-0f2e2b74] {
+  left: 4px;
+  top: 4px;
+  width: 22px;
+  bottom: unset;
+  right: unset;
+}
+.bank-card-list .bank-card-item .unlink-btn[data-v-0f2e2b74] {
+  right: 10px;
+  left: unset;
+  display: none;
+  transition-delay: 0.5s;
+  transition: all 0.3s ease-in;
+}
+.bank-card-list .bank-card-item .txt-center[data-v-0f2e2b74] {
+  transform: none;
+  padding-top: 13px;
+  width: 250px;
+  text-align: center;
+  margin-left: 30px;
+}
+.bank-card-list .bank-card-item.active[data-v-0f2e2b74] {
+  margin-bottom: 30%;
+  padding-bottom: 10%;
+}
+.bank-card-list .bank-card-item.active .unlink-btn[data-v-0f2e2b74] {
+  display: block;
+}
+.bank-card-list .bank-card-item.inactive[data-v-0f2e2b74] {
+  margin-top: -40%;
+}
+
+/*# sourceMappingURL=720.css.map*/

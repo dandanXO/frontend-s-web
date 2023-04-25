@@ -1,0 +1,866 @@
+<template>
+<div v-if="isH5" class="download-top-container">
+		<div class="download-top-box">
+      <q-icon name="close" @click="isH5 = false" />
+			<img class="headicon" src="../assets/images/index/head_logo.png">
+			<div class="download-txt-container">
+				<span class="download-title text-bold">兴發 APP</span>
+				<span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
+			</div>
+      <div class="buttons">
+        <q-btn size="sm" href="/wap/login.html?way=reg" label="注册" color="brightbtn" />
+        <q-btn size="sm" href="https://xfapp1.com?url=m.xf882.com&amp;agentCode=" target="_blank" label="APP 下载" color="brightbtn" />
+      </div>
+				</div>
+	</div>
+  <q-carousel class="home" autoplay navigation v-model="slide" swipeable>
+    <template v-slot:navigation-icon="{ active, onClick }">
+      <q-btn
+        padding="3px"
+        v-if="active"
+        size="xs"
+        color="white"
+        @click="onClick"
+        style="border:1px solid #ffffff; border-radius: 50%; margin: 6px 8px;"
+      />
+      <q-btn
+        padding="3px"
+        v-else
+        size="xs"
+        color="transparent"
+        @click="onClick"
+        style="border:1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px;"
+      />
+    </template>
+
+    <q-carousel-slide
+      v-for="(banner, i) in banners"
+      :key="i"
+      :name="i"
+      class="column no-wrap flex-center"
+      :img-src="imgURL + banner.mobileImageUrl"
+      @click="gotoPromo(banner)"
+    > 
+    </q-carousel-slide>
+  </q-carousel>
+  <div class="midd">
+  <div class="station-notice-wrapper">
+    <div class="volume"><RiVolumeUpLine style="fill: #2fbdd5" /></div>
+    <marquee-text :repeat="5" :duration="announcementList.length * 120">
+      <div v-if="announcementList">
+      <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+        {{ a.content }}
+      </span>
+      </div>
+    </marquee-text>
+  </div>
+  <!-- <div class="share" @click="router.push('/promo?id=35')">
+    <RiUserShared2Line />
+  </div> -->
+  </div>
+  <div class="welcome-bar">
+    <div class="logo"><img src="../assets/logo.png" /></div>
+    <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : '亲爱的用户' }}</div>
+    <router-link v-if="!store.token" to="/login" class="login"><span class="log">请登录</span><span class="user"><q-icon name="person" style="color: #2dbfd4; font-size: 14px;" /></span></router-link>
+    <router-link v-else to="/account" class="login"><span class="log">已登录</span><span class="user"><q-icon name="person" style="color: #2dbfd4; font-size: 14px;" /></span></router-link>
+  </div>
+  <div class="details-bar">
+    <div class="message">{{ store.token ? '¥' + mainWallet.toFixed(2) : '早上好~' }}</div>
+    <div class="menulist">
+      <router-link to="/finance/deposit" class="men deposit-menu">
+        <img src="../assets/images/index/deposit_icon.png">
+        <div class="">存款</div>
+      </router-link>
+      <router-link to="/finance/withdraw" class="men withdraw-menu">
+        <img src="../assets/images/index/withdrawal_icon.png">
+        <div class="">取款</div>
+      </router-link>
+      <router-link to="/account/transfer" class="men transfer-menu">
+        <img src="../assets/images/index/transfer_icon.png">
+        <div class="">转账</div>
+      </router-link>
+    </div>
+    
+  </div>
+  <div class="index-platform-container">
+  <q-splitter
+      v-model="splitterModel"
+      style="min-height: 320px; height: 48vh;"
+    >
+      <template v-slot:before>
+        <q-tabs
+          v-model="selectedTab"
+          vertical
+          inline-label
+        >
+          <q-tab v-for="(tab, i) in tabs" :name="tab.name" :key="i">
+            <q-icon class="text-dark" size="sm" style="margin-right: 5px;">
+              <img :src="require(`../assets/images/index/${tab.icon}-icon.png`)" />
+            </q-icon>
+            <q-item-label>
+              {{ tab.label }}
+            </q-item-label>
+          </q-tab>
+        </q-tabs>
+      </template>
+
+      <template v-slot:after>
+        <q-tab-panels
+          v-model="selectedTab"
+          animated
+          swipeable
+          vertical
+          transition-prev="jump-up"
+          transition-next="jump-up"
+        >
+          <q-tab-panel name="slot">
+            <div class="tabitems quarter">
+              <div v-for="(slot, i) in slots" :key="i">
+                <router-link :to="`slot?platform=${slot.code}`" >
+              <img :src="require(`../assets/images/index/slot/p_slot_${slot.icon}.png`)" />
+                </router-link>
+              </div>
+            </div>
+          </q-tab-panel>
+
+          <q-tab-panel name="esport">
+            <div class="tabitems">
+              <router-link to="/e-sport">
+              <img :src="require(`../assets/images/index/esport/p_esport_xf.png`)" />
+              </router-link>
+            </div>
+          </q-tab-panel>
+
+
+          <q-tab-panel name="sport">
+            <div class="tabitems middle">
+              <router-link to="/sport">
+              <img :src="require(`../assets/images/index/sport/p_sport_im.png`)" />
+              </router-link>
+              
+              <router-link to="/sport">
+              <img :src="require(`../assets/images/index/sport/p_sport_cr.png`)" />
+              </router-link>
+            </div>
+          </q-tab-panel>
+          
+          <q-tab-panel name="live">
+            <div class="tabitems five">
+              <div v-for="(live, i) in livecasino" :key="i">
+              <img @click="playGame(live.id, live.code)" :src="require(`../assets/images/index/live/${live.icon}.png`)" />
+              </div>
+            </div>
+          </q-tab-panel>
+          
+          <q-tab-panel name="poker">
+            <div class="tabitems middle">
+              <div v-for="(poker, i) in pokerList" :key="i">
+              <img @click="playGame(poker.id, poker.code)" :src="require(`../assets/images/index/poker/p_poker_${poker.icon}.png`)" />
+              </div>
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="fishing">
+            <div class="tabitems">
+              <div v-for="(fish, i) in fishing" :key="i">
+              <img @click="playGame(fishing.id, fishing.code)" :src="require(`../assets/images/index/fish/p_fish_${fish.icon}.png`)" />
+              </div>
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="minigame">
+            <div class="tabitems">
+              <div v-for="(mini, i) in minigame" :key="i">
+              <img @click="playGame(minigame.id, minigame.code)" :src="require(`../assets/images/index/minigame/p_mini_${mini.icon}.png`)" />
+              </div>
+            </div>
+          </q-tab-panel>
+        </q-tab-panels>
+      </template>
+
+    </q-splitter>
+  </div>
+  <GameModal ref="allGames"></GameModal>
+
+  <q-dialog width="100%" v-model="isStationNotice">
+    <q-card style="width: 100%;" class="bg-primary text-white">
+      <q-card-section class="q-mb-md">
+          <q-tabs
+            v-model="activeKey"
+            dense
+            class="text-grey"
+            active-color="bright"
+            indicator-color="bright"
+            align="justify"
+          >
+            <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
+          </q-tabs>
+
+          <q-separator />
+
+          <q-tab-panels v-model="activeKey" animated>
+            <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
+                   <q-list style="min-height: 65vh">
+                      <div v-for="(ann,idx) in announcementList" :key="idx">
+                          <span v-if="ann.typeId === tab.id">
+                                <q-expansion-item
+                                 style="max-height: 65vh; overflow: auto;"
+                                  group="somegroup"
+                                  icon="volume_up"
+                                  :label="ann.title"
+                                >
+                                  <q-card>
+                                    <q-card-section>
+                                      {{ ann.content }}
+                                    </q-card-section>
+                                  </q-card>
+                                </q-expansion-item>
+
+                                <q-separator></q-separator>
+                          </span>
+                      </div>
+                   </q-list>
+            </q-tab-panel>
+
+
+          </q-tab-panels>
+
+        </q-card-section
+      >
+    </q-card>
+  </q-dialog>
+</template>
+
+<script>
+import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { api } from "boot/axios";
+import { cached } from "boot/cache";
+import { useQuasar, Platform } from "quasar";
+import { userStore } from "stores/index";
+import GameModal from "components/modal/GameModal";
+import MarqueeText from 'vue-marquee-text-component';
+import { RiVolumeUpLine } from "vue-remix-icons";
+
+import { useUI } from "stores/ui";
+export default defineComponent({
+  name: "IndexPage",
+  components: {
+    GameModal,
+    MarqueeText,
+    RiVolumeUpLine
+  },
+  setup() {
+    const selectedTab = ref('slot');
+    const tabs = ref([
+      {
+        name: 'slot',
+        icon: 'slot',
+        label: '电子'
+      },
+      {
+        name: 'esport',
+        icon: 'esport',
+        label: '电竞'
+      },
+      {
+        name: 'sport',
+        icon: 'sport',
+        label: '体育'
+      },
+      {
+        name: 'live',
+        icon: 'live',
+        label: '真人'
+      },
+      {
+        name: 'poker',
+        icon: 'poker',
+        label: '棋牌'
+      },
+      {
+        name: 'fishing',
+        icon: 'fishing',
+        label: '捕鱼'
+      },
+      {
+        name: 'minigame',
+        icon: 'minigame',
+        label: '小游戏'
+      },
+    ]);
+    const slots = ref([
+      {
+        id: '20',
+        code: 'PT',
+        icon: 'pt',
+      },
+      {
+        id: '37',
+        code: 'SW',
+        icon: 'sw',
+      },
+      {
+        id: '46',
+        code: 'PP',
+        icon: 'pp',
+      },
+      {
+        id: '38',
+        code: 'PG',
+        icon: 'pg',
+      },
+      {
+        id: '54',
+        code: 'MG_PLUS',
+        icon: 'mg',
+      },
+      {
+        id: '42',
+        code: 'CQ',
+        icon: 'cq',
+      },
+      {
+        id: '28',
+        code: 'SG',
+        icon: 'sg',
+      },
+      {
+        id: '27',
+        code: 'TTG',
+        icon: 'ttg',
+      },
+      {
+        id: '39',
+        code: 'PNG',
+        icon: 'png',
+      },
+      {
+        id: '45',
+        code: 'AE',
+        icon: 'ae',
+      },
+      {
+        id: '52',
+        code: 'BBIN',
+        icon: 'bbin',
+      },
+      {
+        id: '64',
+        code: 'JDB',
+        icon: 'jdb',
+      },
+    ]);
+    const livecasino = [{
+        id: 'zhenren',
+        code: 'AG',
+        icon: 'ag',
+    },
+    {
+        id: 'zhenren',
+        code: 'AG',
+        icon: 'ebet',
+    },
+    {
+        id: 'zhenren',
+        code: 'bbin',
+        icon: 'bbin',
+    },{
+        id: 'zhenren',
+        code: 'allbet',
+        icon: 'all',
+    },{
+        id: 'zhenren',
+        code: '',
+        icon: 'jqqd',
+    }]
+    const pokerList = [{
+        id: 'poker',
+        code: 'DT',
+        icon: 'dt',
+    },
+    {
+        id: 'poker',
+        code: 'KY',
+        icon: 'ky',
+    }]
+    const fishing = [{
+        id: 'fish',
+        code: 'AT',
+        icon: 'at',
+    },
+    {
+        id: 'fish',
+        code: 'AG',
+        icon: 'ag',
+    },
+    {
+        id: 'fish',
+        code: 'SG',
+        icon: 'sg',
+    }]
+    const minigame = [{
+      id: 'mini',
+      code: 'GPS',
+      icon: 'gps'
+    }]
+    const ui = useUI();
+    const scrollPageRef = ref(null);
+    const isH5 = ref(true);
+    ui.$onAction(({ name, args }) => {
+      switch (name) {
+        case "setScrollPosition":
+          scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
+      }
+    });
+    const $q = useQuasar();
+    const banners = ref(null);
+    const route = useRoute();
+    const router = useRouter();
+    const store = userStore();
+    const mainWallet = computed(() => {
+      return store.balance;
+    });
+    const allGames = ref(null);
+    const playGame = (gameName, platformCode, gameCode, gameStatus) => {
+      allGames.value.open(gameName, platformCode, gameCode, gameStatus);
+    };
+    function loadData() {
+      api
+        .get("/promo/banner?category=HOME")
+        .then((res) => {
+          if (res.code === 0) {
+            banners.value = res.data;
+          } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: res.data.message,
+            //   icon: "report_problem"
+            // });
+          }
+          // banners.value = response.data;
+        })
+        .catch(() => {
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: "Loading failed",
+          //   icon: "report_problem"
+          // });
+        });
+    }
+    const platforms = ref([]);
+    const selectedPlatId = ref();
+    const selectedPlat = ref(platforms.value[0]);
+    const gamePage = reactive({
+      gameList: [],
+      currentPage: 1,
+      pageSize: 40,
+      searchType: "",
+      searchKey: "",
+      total: 0
+    });
+    const gameListData = ref([]);
+    const fishPlatforms = ref([]);
+    // const getPlatList = () => {
+    //   api
+    //     .get("/platform")
+    //     .then((res) => {
+    //       const ret = res.data;
+    //       platforms.value = ret.data.filter((element) =>
+    //         element.gameType.includes("SLOT")
+    //       );
+    //       fishPlatforms.value = ret.data.filter((element) =>
+    //         element.gameType.includes("FISH")
+    //       );
+    //     })
+    //     .catch((err) => {});
+    // };
+    const liveTabs = ref("");
+    const searchList = () => {
+      if (gamePage.searchKey) {
+        gamePage.gameList = gameListData.value.filter((game) => {
+          return game.name
+            .toLowerCase()
+            .includes(gamePage.searchKey.toLowerCase());
+        });
+      } else {
+        changePage(1, gamePage.pageSize);
+      }
+    };
+    const loadGameList = (type) => {
+      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+      const code = selectedPlatId.value;
+      const gameType = type;
+      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+
+      cached
+        .get(key, () =>
+          api
+            .get("/platformGames", {
+              params: {
+                platformId: code,
+                gameType: gameType,
+                device: regDevice
+              }
+            })
+            .then((response) => {
+              if (response.code === 0) {
+                return response;
+              }
+            })
+            .catch((err) => {
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: "Loading failed",
+              //   icon: "report_problem"
+              // });
+            })
+        )
+        .then((res) => {
+          res.forEach((element) => {
+            element.default = require("../assets/images/games/aviator/default.png");
+            element.icon = `${process.env.IMAGE_CDN}/slot/${selectedPlat.value.code}/${element.icon}.png`;
+          });
+          gameListData.value = res;
+          gamePage.total = res.length;
+          changePage(1, gamePage.pageSize);
+        });
+    };
+    const changePage = (page, pageSize) => {
+      gamePage.gameList = gameListData.value;
+      // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
+    };
+    const getPlatList = () => {
+      // cached
+      //   .get("PLATFORMS", () =>
+      //     api.get("/platform").then((res) => {
+      //       const response = res.data;
+      //       return response;
+      //     })
+      //   )
+      //   .then((data) => {
+      //     fishPlatforms.value = data.filter((element) =>
+      //       element.gameType.includes("FISH")
+      //     );
+      //     platforms.value = data.filter((element) =>
+      //       element.gameType.includes("SLOT")
+      //     );
+      //     if (currentSelectedMenu.value === "slots") {
+      //       switchPlat(platforms.value[0], "slots");
+      //       platforms.value.forEach((e, i) => {
+      //         if (e.code === "AWS") {
+      //           platforms.value.splice(i, 1);
+      //         }
+      //       });
+      //     } else if (currentSelectedMenu.value === "fish") {
+      //       switchPlat(fishPlatforms.value[0], "fish");
+      //     }
+      //     // if (!route.query.plat) {
+      //     //   switchPlat(platforms.value[0], "slot");
+      //     //   switchPlat(fishPlatforms.value[0], "fish");
+      //     // } else {
+      //     //   platforms.value.forEach((element) => {
+      //     //     if (parseInt(route.query.plat) === element.id) {
+      //     //       switchPlat(element, "slot");
+      //     //     }
+      //     //   });
+      //     // }
+      //   })
+      //   .catch((err) => {
+      //     // $q.notify({
+      //     //   color: "negative",
+      //     //   position: "top",
+      //     //   message: "Loading failed",
+      //     //   icon: "report_problem"
+      //     // });
+      //   });
+    };
+    const announcementList = ref([])
+    const announcementTypes = ref([])
+    const loadAnnouncement = () => {
+      api.get("/announcement").then((res) => {
+        if (res.code === 0) {
+          if (res.data.announcements) {
+            const d = res.data.announcements
+            announcementList.value = d
+          }
+          if (res.data.type) {
+            announcementTypes.value = res.data.type
+            activeKey.value = res.data.type[0].id
+          }
+          // announcementList.value = d.announcements
+          // announcementList.value = res.data.announcements
+        }
+      })
+    }
+    const isStationNotice = ref(false)
+    const noticeTitle = ref('')
+    const activeKey = ref(null)
+    const openPopup = (noticeType) => {
+      if (noticeType) {
+        noticeTitle.value = "Announcement"
+        isStationNotice.value = true
+      }
+    }
+    const gotoPromo = (banner) => {
+      const redirectU = '/promo?id=' + banner.redirectUrl
+      router.push(`${redirectU}`)
+    }
+    onMounted(() => {
+      getPlatList();
+      loadData();
+      loadAnnouncement();
+    });
+    const imageLoading = ref(false);
+    const selectedLiveTab = ref();
+    // const openGame = (gameName, gameCode) => {
+    //   casinoGame.value.open(gameName, selectedPlat.value.code, gameCode);
+    // };
+    return {
+      imageLoading,
+      slide: ref(0),
+      tab: ref("slots"),
+      gamesTab: ref(platforms.value[0]),
+      splitterModel: ref(27),
+      imgURL: process.env.IMAGE_CDN + "/",
+      banners,
+      store,
+      platforms,
+      mainWallet,
+      playGame,
+      allGames,
+      // casinoGame,
+      gamePage,
+      selectedPlatId,
+      searchList,
+      liveTabs,
+      selectedLiveTab,
+      // openGame,
+      scrollPageRef,
+      announcementList,
+      isStationNotice,
+      openPopup,
+      noticeTitle,
+      announcementTypes,
+      activeKey,
+      gotoPromo,
+      router,
+      tabs,
+      selectedTab,
+      slots,
+      livecasino,
+      pokerList,
+      fishing,
+      minigame,
+      isH5
+    };
+  }
+});
+</script>
+<style scoped lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+.download-top-container {
+  padding: 10px;
+  .download-top-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  gap: 5px;
+  .q-icon {
+    font-size: 24px;
+    color: #bacef1;
+  }
+  .headicon {
+    flex: 1;
+    width: 5%;
+  }
+  .download-txt-container {
+    flex: 5;
+    font-size: .7rem;
+    line-height: .8rem;
+    display: flex;
+    flex-direction: column;
+    color: #bacef1;
+    .download-title {
+      font-size: .8rem;
+    }
+  }
+  .buttons {
+    display: flex;
+    gap: 5px;
+  }
+
+  }
+}
+.midd {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // gap: 10px;
+  // margin: 10px;
+    margin-top: -29px;
+    height: 30px;
+    position: relative;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+.station-notice-wrapper {
+  display: flex;
+    background: rgba(44, 44, 44, .7);
+  // background: #2b2b4b;
+  // border-radius: 10px;
+  // margin: 10px;
+  gap: 10px;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  .volume { 
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  span { margin-right: 10px; cursor: pointer; color: #bacef1; }
+}
+.share {
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  flex: 1;
+}
+
+}
+.welcome-bar {
+  display: flex;
+  padding: 10px;
+  gap: 20px;
+  background-color: #212534;
+  height: 35px;
+  justify-content: space-evenly;
+  align-items: center;
+    color: #bacef1;
+    font-size: 12px;
+  .logo {
+    flex: 1;
+    height: 25px;
+    img {
+      height: 100%;
+    }
+  }
+  .welcome-liner {
+    flex: 3;
+  }
+  .login {
+    flex: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    text-decoration: none;
+    color: #bacef1;
+    .user {
+      background: #43465e;
+      padding: 0px 2px;
+      border-radius: 50%;
+    }
+  }
+}
+.details-bar {
+    gap: 10px;
+    background-color: #1a1c28;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .message {
+      flex: 1;
+      padding: 10px;
+      border-right: 1px solid #45475f;
+    color: #bacef1;
+    font-size: 16px;
+      
+    }
+    .menulist {
+      flex: 4;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      .men {
+        text-decoration: none;
+        color: #ffffff;
+        gap: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 30px;
+        }
+      }
+    }
+}
+.index-platform-container {
+  padding: 10px;
+  .q-dark {
+    background: none;
+  }
+  .q-tab-panel {
+    padding: 0px;
+  }
+  .q-tabs--vertical {
+    margin: 0 5px 0 0;
+
+     .q-tab {
+    min-height: 40px;
+      border-radius: 10px;
+      margin: 0 0 5px;
+      background-image: linear-gradient(0deg,#1a1c28 0,#212534 100%),linear-gradient(#2d879c,#2d879c);
+      border-radius: 6px;
+      color: #bacef1;
+      display: flex;
+      align-items: center;
+      padding: 3px 0;
+      &--active {
+        background-image: linear-gradient(0deg,#07404b 0,#058096 100%),linear-gradient(#2d879c,#2d879c);
+        color: #fff;
+      }
+    }
+    .q-tab-panel {
+      padding: 5px;
+    }
+  }
+}
+.q-tab-panel {
+  .tabitems {
+    display: grid;
+    img { width: 100%; display: block; }
+    &.quarter {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    &.middle {
+      gap: 10px;
+    }
+    &.five {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+      > div:first-child {
+        grid-column-end: 3;
+        grid-column-start: 1;
+      }
+    }
+  }
+}
+@media (max-width: 400px) {
+  .grid {
+  .q-card {
+    .q-card__section {
+      .text {
+        transform: scale(1.2);
+      }
+    }
+  }
+  }
+}
+</style>

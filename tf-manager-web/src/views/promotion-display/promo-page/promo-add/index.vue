@@ -1,0 +1,417 @@
+<template>
+  <el-form
+    ref="promoForm"
+    :model="form"
+    :rules="formRules"
+    :inline="true"
+    size="small"
+    label-width="120px"
+  >
+    <el-row>
+      <el-form-item :label="t('fields.title')" prop="title">
+        <el-col :span="24">
+          <el-input v-model="form.title" class="form-input" />
+        </el-col>
+      </el-form-item>
+    </el-row>
+    <el-row>
+      <el-form-item :label="t('fields.desktopImage')" prop="desktopImgUrl">
+        <el-row :gutter="5">
+          <el-col :span="20">
+            <el-input
+              :readonly="true"
+              v-model="form.desktopImgUrl"
+              class="image-input"
+            />
+          </el-col>
+          <el-col :span="2">
+            <!-- eslint-disable -->
+            <input
+              id="uploadDesktopFile"
+              type="file"
+              ref="inputDesktop"
+              style="display: none"
+              accept="image/*"
+              @change="attachDesktopImg"
+            />
+            <el-button
+              icon="el-icon-upload"
+              size="mini"
+              type="success"
+              @click="$refs.inputDesktop.click()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-row>
+    <el-row>
+      <el-form-item :label="t('fields.mobileImage')" prop="mobileImgUrl">
+        <el-row :gutter="5">
+          <el-col :span="20">
+            <el-input
+              :readonly="true"
+              v-model="form.mobileImgUrl"
+              class="image-input"
+            />
+          </el-col>
+          <el-col :span="2">
+            <!-- eslint-disable -->
+            <input
+              id="uploadMobileFile"
+              type="file"
+              ref="inputMobile"
+              style="display: none"
+              accept="image/*"
+              @change="attachMobileImg"
+            />
+            <el-button
+              icon="el-icon-upload"
+              size="mini"
+              type="success"
+              @click="$refs.inputMobile.click()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-row>
+    <el-row>
+      <el-form-item :label="t('fields.redirect')" prop="redirectUrl">
+        <el-input v-model="form.redirectUrl" class="form-input" />
+      </el-form-item>
+    </el-row>
+    <el-row>
+      <el-form-item :label="t('fields.site')" prop="siteId">
+        <el-select
+          v-model="form.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 260px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+    </el-row>
+    <el-row>
+      <el-form-item :label="t('fields.label')" prop="labelType">
+        <el-radio-group v-model="form.labelType">
+          <el-radio
+            v-for="c in labelType.list"
+            :label="c.value"
+            :key="c.key"
+            v-model="form.labelType"
+          >
+            {{ c.displayName }}
+          </el-radio>
+        </el-radio-group>
+      </el-form-item>
+    </el-row>
+    <el-row>
+      <el-form-item :label="t('fields.promoType')" prop="promoType">
+        <el-col :span="12">
+          <el-checkbox-group
+            v-model="selected.promoTypeChecked"
+            @change="handleCheckedChangePromoType"
+            class="form-input"
+          >
+            <el-checkbox
+              v-for="p in promoTypes"
+              :label="p.typeName"
+              :key="p.value"
+            >
+              {{ p.typeName }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-col>
+      </el-form-item>
+
+      <el-col :span="12">
+        <el-form-item :label="t('fields.hasPromo')" prop="hasPromo">
+          <el-switch
+            v-model="form.hasPromo"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+          />
+        </el-form-item>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-form-item :label="t('fields.sequence')" prop="sequence">
+        <el-col :span="7">
+          <el-input-number
+            v-model="form.sequence"
+            :min="1"
+            controls-position="right"
+          />
+        </el-col>
+      </el-form-item>
+
+      <el-col :span="17">
+        <el-form-item :label="t('fields.promoCode')" prop="promoCode">
+          <el-input
+            v-model="form.promoCode"
+            size="small"
+            style="width: 260px"
+            :placeholder="t('fields.promoCode')"
+          />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-form-item :label="t('fields.content')" prop="pageContent">
+      <!-- editor here -->
+      <Editor v-model:value="form.pageContent" @input="getInput"></Editor>
+    </el-form-item>
+    <div class="form-footer">
+      <el-button type="primary" @click="submit">
+        {{ t('fields.confirm') }}
+      </el-button>
+      <el-button @click="back">{{ t('fields.cancel') }}</el-button>
+    </div>
+  </el-form>
+</template>
+<script setup>
+import { nextTick, onMounted, reactive, ref } from 'vue'
+import { required } from '../../../../utils/validate'
+import Editor from '../../../../components/editor/index.vue'
+import {
+  createPromoPages,
+  getPromoPageById,
+  updatePromoPages,
+} from '../../../../api/promoPages'
+import { ElMessage } from 'element-plus'
+import { uploadImage } from '../../../../api/image'
+import { useRoute, useRouter } from 'vue-router'
+import { getSiteListSimple } from '../../../../api/site'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const route = useRoute()
+
+const promoForm = ref(null)
+
+const form = reactive({
+  id: null,
+  title: null,
+  imgUrl: null,
+  desktopImgUrl: null,
+  mobileImgUrl: null,
+  backgroundImgUrl: null,
+  redirectUrl: null,
+  siteId: null,
+  labelType: 0,
+  promoType: null,
+  sequence: 0,
+  promoCode: null,
+  pageContent: null,
+  status: true,
+  createTime: null,
+  createBy: null,
+  hasPromo: false,
+})
+
+const uiControl = reactive({
+  titleDisable: false,
+  promoState: [
+    { key: 1, displayName: 'active', value: true },
+    { key: 2, displayName: 'disable', value: false },
+  ],
+})
+
+const selected = reactive({
+  promoTypeChecked: [],
+  labelRadio: ref(),
+})
+
+const formRules = reactive({
+  title: [required(t('message.validateTitleRequired'))],
+  desktopImgUrl: [required(t('message.validateDesktopImageRequired'))],
+  mobileImgUrl: [required(t('message.validateMobileImageRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
+  labelType: [required(t('message.validateLabelRequired'))],
+  promoType: [required(t('message.validatePromoTypeRequired'))],
+  promoCode: [required(t('message.validatePromoCodeRequired'))],
+  pageContent: [required(t('message.validateContentRequired'))],
+  sequence: [required(t('message.validateSequenceRequired'))],
+})
+
+const siteList = reactive({
+  list: [],
+})
+
+const labelType = reactive({
+  list: [
+    { key: 1, displayName: 'New', value: 0 },
+    { key: 2, displayName: 'Hot', value: 1 },
+    { key: 3, displayName: 'Normal', value: 2 },
+  ],
+})
+const promoTypes = [
+  { typeName: 'WELCOME', value: 1 },
+  { typeName: 'SPORT', value: 2 },
+  { typeName: 'ESPORT', value: 3 },
+  { typeName: 'FISH', value: 4 },
+  { typeName: 'LIVE CASINO', value: 5 },
+  { typeName: 'SLOT GAME', value: 6 },
+]
+
+function handleCheckedChangePromoType() {
+  form.promoType = selected.promoTypeChecked.join(',')
+}
+
+// function handleRadioChangeLabel() {
+//   form.labelType = selected.labelRadio;
+// }
+
+// is bind to the onchange event in the editor
+function getInput(value) {
+  form.pageContent = value
+}
+
+function create() {
+  promoForm.value.validate(async valid => {
+    if (valid) {
+      await createPromoPages(form)
+      // redirect to promotion pages
+      back()
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+    }
+  })
+}
+
+function edit() {
+  promoForm.value.validate(async valid => {
+    if (valid) {
+      await updatePromoPages(form)
+      // redirect to promotion pages
+      back()
+      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+    }
+  })
+}
+
+function submit() {
+  if (route.name.includes('Add')) {
+    create()
+  } else {
+    edit()
+  }
+}
+
+const router = useRouter()
+
+function back() {
+  // router.push({ path: `list` })
+  router.push({
+    name: 'Promotion pages',
+    query: { current: route.query.current },
+  })
+}
+
+async function loadForm(id, siteId) {
+  const { data: ret } = await getPromoPageById(id, siteId)
+
+  nextTick(() => {
+    for (const key in ret) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = ret[key]
+      }
+    }
+
+    form.siteId = ret.siteId
+
+    // checked promoType checkboxes
+    // const promoArr = form.promoType.split(",").map(Number)
+    const promoArr = form.promoType.split(',')
+    promoArr.forEach(element => {
+      selected.promoTypeChecked.push(element)
+    })
+  })
+}
+
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  const dir = 'promo'
+
+  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+  } else {
+    var formData = new FormData()
+    formData.append('files', files)
+    formData.append('dir', dir)
+    formData.append('overwrite', false)
+    return await uploadImage(formData)
+  }
+}
+
+async function attachDesktopImg(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    form.desktopImgUrl = data.data[0]
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+async function attachMobileImg(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    form.mobileImgUrl = data.data[0]
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+onMounted(() => {
+  loadSites()
+  if (route.name.includes('Edit')) {
+    uiControl.titleDisable = true
+    loadForm(route.params.id, route.params.siteId)
+  }
+})
+</script>
+
+<style scoped>
+.form-footer {
+  display: flex;
+  margin-left: 7.5em;
+  justify-content: flex-start;
+}
+
+.form-input {
+  width: 520px;
+}
+
+.image-input {
+  width: 420px;
+}
+</style>
+
+<style lang="scss">
+.w-e-toolbar {
+  z-index: 7 !important;
+}
+.w-e-menu {
+  z-index: 2 !important;
+}
+.w-e-text-container {
+  z-index: 1 !important;
+}
+</style>

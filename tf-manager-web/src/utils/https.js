@@ -1,0 +1,87 @@
+import HttpClient from "axios-mapper";
+import { ElMessage } from "element-plus";
+import { useStore } from "@/store";
+import { ResponseCode } from "../api/response";
+import _cloneDeep from 'lodash/cloneDeep';
+import i18n from "../i18n/index";
+
+const toRawType = (value) => {
+  return Object.prototype.toString.call(value).slice(8, -1)
+}
+
+const clearQueryStr = (param) => {
+  return param.split("&").filter(item => item.split("=")[1] !== '').join("&");
+}
+
+const clearEmptyParam = (config) => {
+  ['data', 'params'].forEach(item => {
+    if (config[item]) {
+      const rawType = toRawType(config[item])
+      if (['Object'].includes(rawType)) {
+        const keys = Object.keys(config[item])
+        if (keys.length) {
+          keys.forEach(key => {
+            if (['', undefined, null].includes(config[item][key])) {
+              if (['Object'].includes(rawType)) {
+                config[item] = _cloneDeep(config[item])
+                delete config[item][key]
+              }
+            }
+          })
+        }
+      } else if (['String'].includes(rawType)) {
+        config[item] = clearQueryStr(config[item]);
+      }
+    }
+  })
+}
+const onRequest = (config) => {
+  clearEmptyParam(config);
+  return config;
+}
+
+const onResponse = (response) => {
+  let res = response.data;
+  if (typeof response.data === "string") {
+    res = JSON.parse(response.data);
+  }
+  if (res.code !== ResponseCode.SUCCESS) {
+    if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
+      console.log(res, ' there has been an err with the api unauthosized')
+      location.reload();
+    } else {
+      ElMessage({
+        message: i18n.global.t('error.' + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error",
+        type: "error"
+      });
+    }
+    throw new Error(res.message || "Error");
+  } else {
+    return response;
+  }
+};
+
+const onResponseError = (error) => {
+  ElMessage({
+    message: error.message,
+    type: "error"
+  });
+  return Promise.reject(error);
+};
+
+const https = (timeout) => {
+  const token = useStore().state.user.token;
+  const config = {
+    baseURL: process.env.VUE_APP_BASE_API,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    timeout: timeout | process.env.VUE_APP_TIMEOUT,
+  };
+  const httpClient = new HttpClient(config);
+  httpClient.httpClient.interceptors.request.use(onRequest);
+  httpClient.httpClient.interceptors.response.use(onResponse, onResponseError);
+  return httpClient;
+};
+
+export default https;

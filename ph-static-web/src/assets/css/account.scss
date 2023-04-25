@@ -1,0 +1,308 @@
+
+
+.account-title-container {
+  position: relative;
+    padding: 10px 0;
+    font-weight: bold;
+
+  .account-title {
+    position: relative;
+    color: #ffffff;
+    font-size: 16px;
+
+  }
+}
+.account-content {
+  position: relative;
+  // padding: 20px 30px;
+  // background:  #23263c;
+  color: #ffffff;
+  margin-bottom: 10px;
+  &.full {
+    margin-bottom: 0;
+    height: 740px;
+  }
+  &.last {
+    margin-bottom: 0;
+  }
+}
+$max-width: 1400px;
+.account-container {
+  margin: 0 auto;
+  padding: 0;
+  background: #23263c;
+  // background: url(../images/common/bg.jpg);
+  &-wrap {
+    width: 100%;
+    margin: 20px auto 80px;
+    box-shadow: 0px 0px 9px 1px rgb(17 9 0 / 50%);
+    border-radius: 20px;
+    max-width: $max-width;
+    overflow: hidden;
+  }
+  
+
+  .account-box {
+    // background-color: #1b232d;
+    // border: 1px solid #254e5a;
+  }
+
+  .account-box-wrapper {
+    width: 280px;
+    background: #23263c;
+  }
+
+  .account-content-wrapper {
+    width: calc(100% - 280px);
+    padding: 30px;
+    background: #2b2b4b;
+    .menu-title-container {
+        margin: 0px 0 20px;
+      position: relative;
+      font-size: 30px;
+      color: #ffffff;
+    }
+    .ant-tabs-bar {
+      border-bottom: 4px solid #2b2b4b;
+      margin-bottom: 0;
+    }
+    .ant-tabs-nav .ant-tabs-tab {
+      padding: 15px 48px;
+      margin: 0;
+      color: #ffffff;
+      font-size: 16px;
+      &-active {
+        color: #2b2b4b;
+      }
+    }
+    .ant-tabs-nav-container {
+      margin-bottom: -4px;
+    }
+    
+    .ant-tabs-ink-bar {
+      height: 4px;
+      background-color: #2b2b4b;
+    }
+    .ant-form-item-label > label,
+    .ant-tabs {
+      color: #ffffff;
+    }
+    .ant-form-item-label > label {
+      color: #ffffff;
+      width: 100%;
+      min-width: 180px;
+    }
+    .left {
+      .ant-form-item-label > label {
+        width: 100%;
+        min-width: unset;
+      }
+    }
+    .ant-form-inline .ant-form-item {
+      align-items: center;
+      margin: 0;
+    }
+    // .ant-tabs-bar {
+    //   border-bottom: 4px solid #2b2b4b;
+    // }
+
+    // .ant-tabs-ink-bar {
+    //   height: 4px;
+    //   background-color: #db7e42;
+    // }
+
+    .ant-input {
+      color: #ffffff;
+      background-color: #23263c;
+      border-width: 1px;
+      border-style: solid;
+      &:hover, &:focus {
+        border-color: #db7e42;
+      }
+      &.ant-calendar-picker-input {
+        border: 0;
+        background: #23263c;
+        text-align: left;
+        padding: 10px;
+      }
+    }
+    .ant-calendar-picker {
+      width: 100%;
+      border-radius: 0;
+      svg {
+        fill: white;
+      }
+      &:hover {
+        .ant-calendar-picker-clear {
+          background: #23263c;
+          svg {
+            fill: white;
+          }
+        }
+      }
+    }
+
+    // .ant-form-inline {
+    //   width: 100%;
+    //   justify-content: space-between;
+
+    //   .ant-form-item {
+    //     margin: 0
+    //   }
+    // }
+
+    // .ant-calendar-picker-icon,
+    // .ant-empty-description,
+    // .ant-tabs-nav .ant-tabs-tab-active {
+    //   color: #db7e42;
+    // }
+    
+.ant-tabs-bar {
+  border-bottom: 0;
+}
+.ant-tabs-nav .ant-tabs-tab {
+  background: #23263c;
+    border-radius: 20px;
+  color: #ffffff;
+  margin-right: 10px;
+    padding: 5px 30px;
+  &:hover {
+    color: #ffffff;
+  }
+}
+.ant-tabs-nav .ant-tabs-tab-active {
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+    color: #ffffff;
+    border: 0;
+}
+.ant-tabs-ink-bar {
+  background-color: transparent;
+}
+.about-container :deep(.ant-tabs) {
+  color: #ffffff;
+  // background: url(../../assets/images/common/bg.jpg);
+  padding: 40px 0;
+}
+.about-container :deep(.ant-tabs .ant-tabs-left-bar) {
+  display: flex;
+  flex-direction: column-reverse;
+  background-repeat: no-repeat;
+  width: 250px;
+  border: 0;
+}
+.about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-extra-content) {
+  padding: 30px 0;
+  img {
+    width: 114px;
+  }
+}
+.about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-tab) {
+  margin: 0 0 56px 0;
+  padding: 14px 40px;
+  text-align: center;
+  &:hover {
+
+  color: #db7e42;
+  }
+}
+// .about-container :deep(.ant-tabs-nav .ant-tabs-tab-active) {
+//   color: #db7e42;
+//   background: #23263c;
+// }
+// .about-container :deep(.ant-tabs-ink-bar) {
+//   background-color: #db7e42;
+// }
+// .about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-ink-bar) {
+//   width: 5px;
+// }
+// .about-container :deep(.ant-tabs .ant-tabs-left-content) {
+//   padding: 20px 50px;
+//   border-left: 4px solid #23263c;
+//   margin-left: -4px;
+// }
+    .ant-table {
+      background-color: transparent;
+    }
+
+    .ant-table-thead > tr > th,
+    .ant-table-placeholder {
+      color: #ffffff;
+      background-color: #23263c;
+      border: 0;
+    }
+
+    .ant-table-placeholder {
+      border: 0;
+    }
+    .account-tip {
+        color: #ffffff;
+        margin:0;
+        padding: 0;
+        // background-color: #23263c;
+
+      &.danger {
+      }
+      &-text {
+        a {
+          color: #db7e42;
+          display: inline-block;
+          margin-left: 3px;
+        }
+        svg {
+          fill: #db7e42;
+          margin-right: 5px;
+          width: 20px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+        &.wbot {
+          margin-bottom: 10px;
+        }
+      }
+      // &-text {
+      //   &:before {
+      //     content: "";
+      //     padding: 10px;
+      //     background: #db7e42;
+      //     margin-right: 10px;
+      //   }
+      // }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .ant-form-inline .ant-form-item {
+      width: 100%;
+  }
+  .account-title-container {
+    padding: 10px;
+  }
+  .account-container {
+    display: block;
+    width: 95%;
+    height: unset;
+    min-height: unset;
+    margin-top: 0;
+    padding: 0 0 40px;
+    &-wrap {
+      margin: 0 auto;
+    }
+    .account-box-wrapper {
+      
+      width: 100%;
+    }
+
+    .account-content-wrapper {
+      margin: 0 auto;
+      width: 100%;
+      // padding: 30px 10px;
+      // padding-left: 10px;
+      // padding-right: 10px;
+
+      .menu-title-container {
+        margin: 0 0 20px;
+      }
+    }
+  }
+}

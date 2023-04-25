@@ -1,0 +1,111 @@
+.login-container {
+  min-height: 70vh;
+    padding: 50px 0 80px;
+  background: #23263c;
+  &::placeholder {
+    color: #ffffff;
+    opacity: 1;
+  }
+  &:-ms-input-placeholder {
+    color: #ffffff;
+  }
+  &::-ms-input-placeholder {
+    color: #ffffff;
+  }
+  .login-form-wrapper, .reg-form-wrapper {
+    max-width: 636px;
+    .login-title-container {
+      @include menu-title-container(30px, 30px, 30px, 25px, 32px, 10px, -44px, -120px);
+    }
+    .forget-pwd-tip {
+      color: #db7842;
+      padding: 5px 0 20px;
+      display: inline-block;
+    }
+  }
+  .reg-form-wrapper {
+    max-width: 436px;
+  }
+  .login-btn {
+    margin: 0 auto;
+  }
+}
+.login-container .anticon {
+  font-size: 20px;
+  color: #ffffff;
+}
+.login-container .ant-input-affix-wrapper {
+  border: 1px solid #23263c;
+  background: #23263c;
+    padding: 5px 20px 5px 30px;
+  border-radius: 20px;
+}
+.ant-input-affix-wrapper > input.ant-input{
+  
+    padding: 5px;
+    border-radius: 0px;
+}
+.ant-form-item-explain.ant-form-item-explain-error {
+    margin: 5px 0 10px 10px;}
+.login-container .ant-input {
+  color: #ffffff;
+  background-color: transparent;
+}
+.login-container .ant-form-horizontal .ant-form-item-control {
+  max-width: 100%;
+}
+.login-container .ant-form {
+  color: #ffffff;
+    padding: 20px;
+    border-radius: 30px;
+    background: #2b2b4b;
+}
+.ant-form-item-has-error .ant-input,
+.ant-form-item-has-error .ant-input-affix-wrapper,
+.ant-form-item-has-error .ant-input:hover,
+.ant-form-item-has-error .ant-input-affix-wrapper:hover {
+  background-color: #23263c;
+  color: #ffffff;
+}
+.ant-tabs-bar {
+  border-bottom: 0;
+}
+.ant-tabs-nav .ant-tabs-tab {
+  color: #ffffff;
+  &:hover {
+    color: #ffffff;
+  }
+}
+.ant-tabs-nav .ant-tabs-tab-active {
+    border-radius: 20px;
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+    color: #ffffff;
+    border: 0;
+    padding: 10px 45px;
+}
+.ant-tabs-ink-bar {
+  background-color: transparent;
+}
+@media (max-width: 768px) {
+  .login-container {
+    height: 100%;
+    padding: 0 20px;
+    background-image: none;
+    .login-form-wrapper {
+      width: 100%;
+      .login-title-container {
+        .login-title {
+          margin-left: 10px;
+          font-size: 22px;
+          &::before,
+          &::after {
+            top: 5px;
+          }
+          &::before {
+            left: -30px;
+          }
+        }
+      }
+    }
+  }
+}

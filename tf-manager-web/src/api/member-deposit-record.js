@@ -1,0 +1,18 @@
+import { ContentType, Method } from "axios-mapper";
+import https from "../utils/https";
+
+export const supplementDeposit = (depositRecord) => {
+  return https().request(`/deposit/${depositRecord.id}?_method=PUT`, Method.POST, depositRecord, ContentType.form);
+};
+
+export const cancelDeposit = (depositRecord) => {
+  return https().request(`/deposit/${depositRecord.id}/cancel?_method=PUT`, Method.POST, { remark: depositRecord.remark }, ContentType.form);
+};
+
+export const getDepositRecord = (query) => {
+  return https().request("/deposit/depositRecordList", Method.GET, query, ContentType.form);
+};
+
+export const getTotalDepositAmount = (query) => {
+  return https().request("/deposit/totalDepositAmount", Method.GET, query, ContentType.form);
+};

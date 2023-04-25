@@ -1,0 +1,38 @@
+import https from "@/utils/https";
+import { ContentType, Method } from "axios-mapper";
+
+export const getPrivilegeInfo = (privilegeInfo) => {
+  return https().request("/privilegeInfo", Method.GET, privilegeInfo, ContentType.form);
+};
+
+export const getActivePrivilegeInfo = () => {
+  return https().request("/privilegeInfo/list", Method.GET);
+};
+
+export const getActivePrivilegeInfoBySiteId = (siteId) => {
+  return https().request("/privilegeInfo/priviList", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
+export const getAllPrivilegeInfo = () => {
+  return https().request("/privilegeInfo/allList", Method.GET);
+};
+
+export const getAllPrivilegeInfoBySiteId = (siteId) => {
+  return https().request("/privilegeInfo/allPriviList", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
+export const getPrivilegeExcelMapping = (siteId) => {
+  return https().request("/privilegeInfo/excelMapping", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
+export const createPrivilegeInfo = (privilegeInfo) => {
+  return https().request("/privilegeInfo", Method.POST, privilegeInfo, ContentType.form);
+};
+
+export const updatePrivilegeInfo = (privilegeInfo) => {
+  return https().request(`/privilegeInfo/${privilegeInfo.id}?_method=PUT`, Method.POST, privilegeInfo, ContentType.form);
+};
+
+export const deletePrivilegeInfo = (ids) => {
+  return https().request(`/privilegeInfo?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
+};

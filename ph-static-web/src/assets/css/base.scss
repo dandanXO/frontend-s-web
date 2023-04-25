@@ -1,0 +1,64 @@
+//所有项目通用样式
+*, :before, :after {
+  box-sizing: border-box;
+  outline: none;
+}
+ul {
+  list-style: none;
+}
+button {
+  border: none;
+  cursor: pointer;
+}
+.margin-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.w100 {
+  width: 100%;
+}
+.h100 {
+  height: 100%;
+}
+.clr-both {
+  clear: both;
+}
+.txt-center {
+  text-align: center;
+}
+.txt-left {
+  text-align: left;
+}
+.txt-right {
+  text-align: right;
+}
+.flex-box {
+  display: flex;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-align-center {
+  align-items: center;
+}
+.flex-justify-space {
+  justify-content: space-between;
+}
+.flex-justify-center {
+  justify-content: center;
+}
+.flex-justify-start {
+  justify-content: flex-start;
+}
+.flex-justify-end {
+  justify-content: flex-end;
+}
+.clr-white {
+  color: #ffffff;
+}
+.revers-y {
+  transform: rotateX(180deg);
+}
+.revers-x {
+  transform: rotateY(180deg);
+}
