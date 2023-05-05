@@ -32,7 +32,6 @@ metadata:
   labels:
     app: $FRONTEND_PROJECT_NAME
 spec:
-  type: NodePort
   ports:
     - port: 80
       targetPort: 80
@@ -71,7 +70,7 @@ spec:
       imagePullSecrets:
         - name: gitlab-registry
 ---
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: $FRONTEND_PROJECT_NAME
