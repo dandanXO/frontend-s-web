@@ -31,6 +31,7 @@ metadata:
   namespace: xinfa
   labels:
     app: $FRONTEND_PROJECT_NAME
+    tier: frontend
 spec:
   ports:
     - port: 80
@@ -38,6 +39,7 @@ spec:
       protocol: TCP
   selector:
     app: $FRONTEND_PROJECT_NAME
+    tier: frontend
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,14 +48,17 @@ metadata:
   namespace: xinfa
   labels:
     app: $FRONTEND_PROJECT_NAME
+    tier: frontend
 spec:
   selector:
     matchLabels:
       app: $FRONTEND_PROJECT_NAME
+      tier: frontend
   template:
     metadata:
       labels:
         app: $FRONTEND_PROJECT_NAME
+        tier: frontend
     spec:
       containers:
         - name: $FRONTEND_PROJECT_NAME
