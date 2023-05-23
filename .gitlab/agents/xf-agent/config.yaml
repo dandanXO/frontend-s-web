@@ -9,5 +9,5 @@ gitops:
 
 ci_access:
   groups:
-    - id: "jolly88-complex/frontend"
+    - id: "jolly88-complex"
       default_namespace: xinfa
