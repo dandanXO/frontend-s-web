@@ -1,0 +1,13 @@
+gitops:
+  manifest_projects:
+  - id: "jolly88-complex/frontend"
+    ref:
+      branch: master
+    default_namespace: xinfa
+    paths:
+    - glob: '/**/*.{yaml,yml,json}'
+
+ci_access:
+  groups:
+    - id: "jolly88-complex/frontend"
+      default_namespace: xinfa
