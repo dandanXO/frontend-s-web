@@ -1,0 +1,96 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tf-manager-web
+  namespace: xinfa
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+spec:
+  tls:
+    - hosts:
+        - tf-manager-web.jolly88-ph01.com
+      secretName: tf-manager-web
+  rules:
+  - host: tf-manager-web.jolly88-ph01.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tf-manager-web
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-manager-web
+  namespace: xinfa
+  labels:
+    app: tf-manager-web
+    tier: frontend
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: tf-manager-web
+    tier: frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tf-manager-web
+  namespace: xinfa
+  labels:
+    app: tf-manager-web
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      app: tf-manager-web
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: tf-manager-web
+        tier: frontend
+    spec:
+      containers:
+        - name: tf-manager-web
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:tf-manager-web
+          ports:
+            - containerPort: 80
+          env:
+            - name: TZ
+              value: Asia/Singapore
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 256Mi
+      imagePullSecrets:
+        - name: gitlab-registry
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: tf-manager-web
+  namespace: xinfa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tf-manager-web
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80

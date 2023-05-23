@@ -8,6 +8,7 @@ variables:
    DOCKER_TLS_CERTDIR: ""
    DOCKER_HOST: tcp://docker:2375
    #ENVIRONMENT: $ENVIRONMENT
+   NAMESPACE: xinfa
 
 stages:
   - build
@@ -55,10 +56,11 @@ deploy-prod-ph-static-h5:
     - xinfa-runner
   image: alpine/k8s:1.24.10
   script:
-    - envsubst < deployment.yml | kubectl apply -f -
-  variables:
-    FRONTEND_PROJECT_NAME: ph-static-h5
-    FRONTEND_URL: ph-h5.jolly88-ph01.com
+    - kubectl config use-context jolly88-complex/xf-kubernetes-agent:xf-agent
+    - kubectl rollout restart deployment/xf-static-h5 -n $NAMESPACE
+#  variables:
+#    FRONTEND_PROJECT_NAME: ph-static-h5
+#    FRONTEND_URL: ph-h5.jolly88-ph01.com
   needs:
     - build-image-ph-static-h5
 #  rules:
@@ -106,10 +108,11 @@ deploy-prod-ph-static-web:
     - xinfa-runner
   image: alpine/k8s:1.24.10
   script:
-    - envsubst < deployment.yml | kubectl apply -f -
-  variables:
-    FRONTEND_PROJECT_NAME: ph-static-web
-    FRONTEND_URL: ph-web.jolly88-ph01.com
+    - kubectl config use-context jolly88-complex/xf-kubernetes-agent:xf-agent
+    - kubectl rollout restart deployment/ph-static-web -n $NAMESPACE
+#  variables:
+#    FRONTEND_PROJECT_NAME: ph-static-web
+#    FRONTEND_URL: ph-web.jolly88-ph01.com
   needs:
     - build-image-ph-static-web
 #  rules:
@@ -157,10 +160,11 @@ deploy-prod-tf-manager-web:
     - xinfa-runner
   image: alpine/k8s:1.24.10
   script:
-    - envsubst < deployment.yml | kubectl apply -f -
-  variables:
-    FRONTEND_PROJECT_NAME: tf-manager-web
-    FRONTEND_URL: tf-manager-web.jolly88-ph01.com
+    - kubectl config use-context jolly88-complex/xf-kubernetes-agent:xf-agent
+    - kubectl rollout restart deployment/tf-manager-web -n $NAMESPACE
+#  variables:
+#    FRONTEND_PROJECT_NAME: tf-manager-web
+#    FRONTEND_URL: tf-manager-web.jolly88-ph01.com
   needs:
     - build-image-tf-manager-web
 #  rules:
@@ -209,10 +213,11 @@ deploy-prod-xf-static-h5:
     - xinfa-runner
   image: alpine/k8s:1.24.10
   script:
-    - envsubst < deployment.yml | kubectl apply -f -
-  variables:
-    FRONTEND_PROJECT_NAME: xf-static-h5
-    FRONTEND_URL: xf-h5.jolly88-ph01.com
+    - kubectl config use-context jolly88-complex/xf-kubernetes-agent:xf-agent
+    - kubectl rollout restart deployment/xf-static-h5 -n $NAMESPACE
+#  variables:
+#    FRONTEND_PROJECT_NAME: xf-static-h5
+#    FRONTEND_URL: xf-h5.jolly88-ph01.com
   needs:
     - build-image-xf-static-h5
 #  rules:
@@ -260,10 +265,11 @@ deploy-prod-xf-static-web:
     - xinfa-runner
   image: alpine/k8s:1.24.10
   script:
-    - envsubst < deployment.yml | kubectl apply -f -
-  variables:
-    FRONTEND_PROJECT_NAME: xf-static-web
-    FRONTEND_URL: xf-web.jolly88-ph01.com
+    - kubectl config use-context jolly88-complex/xf-kubernetes-agent:xf-agent
+    - kubectl rollout restart deployment/xf-static-web -n $NAMESPACE
+#  variables:
+#    FRONTEND_PROJECT_NAME: xf-static-web
+#    FRONTEND_URL: xf-web.jolly88-ph01.com
   needs:
     - build-image-xf-static-web
 #  rules:
