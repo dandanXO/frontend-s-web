@@ -5,7 +5,7 @@ gitops:
       branch: master
     default_namespace: xinfa
     paths:
-    - glob: '/**/*.yml'
+    - glob: '/**/*.{yaml,yml,json}'
 
 ci_access:
   projects:
