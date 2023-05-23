@@ -4,10 +4,14 @@ gitops:
     ref:
       branch: master
     default_namespace: xinfa
-    paths:
-    - glob: '/**/*.{yaml,yml,json}'
+    paths: # Wildcard method encountering file limit issue. Declare static globs for now.
+    - glob: '/ph-static-h5/deployment.yml'
+    - glob: '/ph-static-web/deployment.yml'
+    - glob: '/tf-manager-web/deployment.yml'
+    - glob: '/xf-static-h5/deployment.yml'
+    - glob: '/xf-static-web/deployment.yml'
 
-ci_access:
-  projects:
-    - id: "jolly88-complex/frontend"
-      default_namespace: xinfa
+#ci_access:
+#  projects:
+#    - id: "jolly88-complex/frontend"
+#      default_namespace: xinfa
