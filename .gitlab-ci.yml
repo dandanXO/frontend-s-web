@@ -40,11 +40,11 @@ build-image-ph-static-h5:
     - xinfa-runner
   script:
     - cd ph-static-h5
-    - docker build -t $IMAGE_NAME . --no-cache
+    - docker build -t $CI_REGISTRY_IMAGE:ph-static-h5 -t $CI_REGISTRY_IMAGE:ph-static-h5-$CI_COMMIT_SHORT_SHA . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker push $IMAGE_NAME
-  variables:
-    IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:ph-static-h5-$CI_COMMIT_SHORT_SHA
+    - docker push -a $CI_REGISTRY_IMAGE
+#  variables:
+#    IMAGE_NAME: $CI_REGISTRY_IMAGE:ph-static-h5-$CI_COMMIT_SHORT_SHA
   needs:
     - build-ph-static-h5
 #  rules:
@@ -95,11 +95,11 @@ build-image-ph-static-web:
    - xinfa-runner
  script:
    - cd ph-static-web
-   - docker build -t $IMAGE_NAME . --no-cache
+    - docker build -t $CI_REGISTRY_IMAGE:ph-static-web -t $CI_REGISTRY_IMAGE:ph-static-web-$CI_COMMIT_SHORT_SHA . --no-cache
    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
    - docker push $IMAGE_NAME
- variables:
-   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:ph-static-web-$CI_COMMIT_SHORT_SHA
+# variables:
+#   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:ph-static-web-$CI_COMMIT_SHORT_SHA
  needs:
    - build-ph-static-web
 #  rules:
@@ -148,11 +148,11 @@ build-image-tf-manager-web:
    - xinfa-runner
  script:
    - cd tf-manager-web
-   - docker build -t $IMAGE_NAME . --no-cache
+   - docker build -t $CI_REGISTRY_IMAGE:tf-manager-web -t $CI_REGISTRY_IMAGE:tf-manager-web-$CI_COMMIT_SHORT_SHA . --no-cache
    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
    - docker push $IMAGE_NAME
- variables:
-   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:tf-manager-web-$CI_COMMIT_SHORT_SHA
+# variables:
+#   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:tf-manager-web-$CI_COMMIT_SHORT_SHA
  needs:
    - build-tf-manager-web
 #  rules:
@@ -202,11 +202,11 @@ build-image-xf-static-h5:
    - xinfa-runner
  script:
    - cd xf-static-h5
-   - docker build -t $IMAGE_NAME . --no-cache
+   - docker build -t $CI_REGISTRY_IMAGE:xf-static-h5 -t $CI_REGISTRY_IMAGE:xf-static-h5-$CI_COMMIT_SHORT_SHA . --no-cache
    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
    - docker push $IMAGE_NAME
- variables:
-   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:xf-static-h5-$CI_COMMIT_SHORT_SHA
+# variables:
+#   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:xf-static-h5-$CI_COMMIT_SHORT_SHA
  needs:
    - build-xf-static-h5
 #  rules:
@@ -255,11 +255,11 @@ build-image-xf-static-web:
    - xinfa-runner
  script:
    - cd xf-static-web
-   - docker build -t $IMAGE_NAME . --no-cache
+    - docker build -t $CI_REGISTRY_IMAGE:xf-static-web -t $CI_REGISTRY_IMAGE:xf-static-web-$CI_COMMIT_SHORT_SHA . --no-cache
    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
    - docker push $IMAGE_NAME
- variables:
-   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:xf-static-web-$CI_COMMIT_SHORT_SHA
+# variables:
+#   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:xf-static-web-$CI_COMMIT_SHORT_SHA
  needs:
    - build-xf-static-web
 #  rules:
