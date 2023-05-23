@@ -8,6 +8,6 @@ gitops:
     - glob: '/**/*.{yaml,yml,json}'
 
 ci_access:
-  groups:
-    - id: "jolly88-complex"
+  projects:
+    - id: "jolly88-complex/frontend"
       default_namespace: xinfa
