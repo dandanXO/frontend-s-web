@@ -5,7 +5,7 @@ gitops:
       branch: master
     default_namespace: xinfa
     paths:
-    - glob: '/**/deployment.yml'
+    - glob: '/ph-static-h5/deployment.yml'
 
 ci_access:
   projects:
