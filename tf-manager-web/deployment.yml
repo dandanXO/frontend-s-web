@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - tf-manager-web.jolly88-ph01.com
+        - manager.fk9kumoco.com
       secretName: tf-manager-web
   rules:
-  - host: tf-manager-web.jolly88-ph01.com
+  - host: manager.fk9kumoco.com
     http:
       paths:
       - path: /
