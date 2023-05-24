@@ -72,6 +72,16 @@ spec:
           resources:
             requests:
               memory: 256Mi
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - xf-static-web
+              topologyKey: kubernetes.io/hostname
       imagePullSecrets:
         - name: gitlab-registry
 ---
@@ -85,7 +95,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: xf-static-web
-  minReplicas: 2
+  minReplicas: 3
   maxReplicas: 10
   metrics:
     - type: Resource
