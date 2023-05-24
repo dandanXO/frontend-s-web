@@ -45,7 +45,7 @@ default:
   image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/bitnami/kubectl:latest
   script:
     - kubectl config use-context $CI_PROJECT_PATH:xf-agent
-    - kubectl rollout restart $SERVICE -n $NAMESPACE
+    - kubectl rollout restart deployment/$SITE -n $NAMESPACE
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
       changes:
