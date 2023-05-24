@@ -7,277 +7,176 @@ variables:
    DOCKER_DRIVER: overlay2
    DOCKER_TLS_CERTDIR: ""
    DOCKER_HOST: tcp://docker:2375
-   #ENVIRONMENT: $ENVIRONMENT
    NAMESPACE: xinfa
 
-stages:
-  - build
-  - docker-build
-  - deploy
+default:
+  tags:
+    - xinfa-runner
 
-build-ph-static-h5:
+.build-sites:
   stage: build
   cache:
     paths:
       - node_modules
-  tags:
-    - xinfa-runner
   image: node:16.17.0
+  artifacts:
+   untracked: true
+   expire_in: 24 hrs
+   exclude:
+     - $CI_PROJECT_DIR/$SITE/node_modules/**/*
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      changes:
+        - $SITE/**/*
+
+.docker-build:
+  stage: build-image
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:$SITE -t $CI_REGISTRY_IMAGE:$SITE-$CI_COMMIT_SHORT_SHA . --no-cache
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push -a $CI_REGISTRY_IMAGE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      changes:
+        - $SITE/**/*
+
+.deploy:
+  stage: deploy
+  image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/bitnami/kubectl:latest
+  script:
+    - kubectl config use-context $CI_PROJECT_PATH:xf-agent
+    - kubectl rollout restart $SERVICE -n $NAMESPACE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      changes:
+        - $SITE/**/*
+
+stages:
+  - build
+  - build-image
+  - deploy
+
+build-ph-static-h5:
+  extends: .build-sites
   script:
     - cd ph-static-h5
     - npm install
     - npm install -g @quasar/cli
     - quasar build
-  artifacts:
-    untracked: true
-    expire_in: 24 hrs
-    exclude:
-      - $CI_PROJECT_DIR/ph-static-h5/node_modules/**/*
+  variables:
+    SITE: ph-static-h5
 
 build-image-ph-static-h5:
-  stage: docker-build
-  tags:
-    - xinfa-runner
-  script:
-    - cd ph-static-h5
-    - docker build -t $CI_REGISTRY_IMAGE:ph-static-h5 -t $CI_REGISTRY_IMAGE:ph-static-h5-$CI_COMMIT_SHORT_SHA . --no-cache
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker push -a $CI_REGISTRY_IMAGE
-#  variables:
-#    IMAGE_NAME: $CI_REGISTRY_IMAGE:ph-static-h5-$CI_COMMIT_SHORT_SHA
+  extends: .docker-build
+  variables:
+    SITE: ph-static-h5
   needs:
     - build-ph-static-h5
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "production"'
 
 deploy-prod-ph-static-h5:
-  stage: deploy
-  tags:
-    - xinfa-runner
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: ['']
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context $CI_PROJECT_PATH:xf-agent
-    - kubectl rollout restart deployment/xf-static-h5 -n $NAMESPACE
-#  variables:
-#    FRONTEND_PROJECT_NAME: ph-static-h5
-#    FRONTEND_URL: ph-h5.jolly88-ph01.com
+  extends: .deploy
+  variables:
+    SITE: ph-static-h5
   needs:
     - build-image-ph-static-h5
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "production"'
 
 #===============================================================================================
 
 build-ph-static-web:
- stage: build
- cache:
-   paths:
-     - node_modules
- tags:
-   - xinfa-runner
- image: node:16.17.0
- script:
-   - cd ph-static-web
-   - npm install
-   - npm run build
- artifacts:
-   untracked: true
-   expire_in: 24 hrs
-   exclude:
-     - $CI_PROJECT_DIR/ph-static-web/node_modules/**/*
+  extends: .build-sites
+  script:
+    - cd ph-static-web
+    - npm install
+    - npm run build
+  variables:
+    SITE: ph-static-web
 
 build-image-ph-static-web:
- stage: docker-build
- tags:
-   - xinfa-runner
- script:
-   - cd ph-static-web
-   - docker build -t $CI_REGISTRY_IMAGE:ph-static-web -t $CI_REGISTRY_IMAGE:ph-static-web-$CI_COMMIT_SHORT_SHA . --no-cache
-   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-   - docker push -a $CI_REGISTRY_IMAGE
-# variables:
-#   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:ph-static-web-$CI_COMMIT_SHORT_SHA
- needs:
-   - build-ph-static-web
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "production"'
+  extends: .docker-build
+  variables:
+    SITE: ph-static-web
+  needs:
+    - build-ph-static-web
 
 deploy-prod-ph-static-web:
- stage: deploy
- tags:
-   - xinfa-runner
- image: alpine/k8s:1.24.10
- script:
-   - kubectl config get-contexts
-   - kubectl config use-context $CI_PROJECT_PATH:xf-agent
-   - kubectl rollout restart deployment/ph-static-web -n $NAMESPACE
-#  variables:
-#    FRONTEND_PROJECT_NAME: ph-static-web
-#    FRONTEND_URL: ph-web.jolly88-ph01.com
- needs:
-   - build-image-ph-static-web
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "production"'
+  extends: .deploy
+  variables:
+    SITE: ph-static-web
+  needs:
+    - build-image-ph-static-web
 
 #===============================================================================================
 
 build-tf-manager-web:
- stage: build
- cache:
-   paths:
-     - node_modules
- tags:
-   - xinfa-runner
- image: node:16.17.0
- script:
-   - cd tf-manager-web
-   - npm install
-   - npm run build:prod
- artifacts:
-   untracked: true
-   expire_in: 24 hrs
-   exclude:
-     - $CI_PROJECT_DIR/tf-manager-web/node_modules/**/*
+  extends: .build-sites
+  script:
+    - cd tf-manager-web
+    - npm install
+    - npm run build:prod
+  variables:
+    SITE: tf-manager-web
 
 build-image-tf-manager-web:
- stage: docker-build
- tags:
-   - xinfa-runner
- script:
-   - cd tf-manager-web
-   - docker build -t $CI_REGISTRY_IMAGE:tf-manager-web -t $CI_REGISTRY_IMAGE:tf-manager-web-$CI_COMMIT_SHORT_SHA . --no-cache
-   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-   - docker push -a $CI_REGISTRY_IMAGE
-# variables:
-#   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:tf-manager-web-$CI_COMMIT_SHORT_SHA
- needs:
-   - build-tf-manager-web
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "production"'
+  extends: .docker-build
+  variables:
+    SITE: tf-manager-web
+  needs:
+    - build-tf-manager-web
 
 deploy-prod-tf-manager-web:
- stage: deploy
- tags:
-   - xinfa-runner
- image: alpine/k8s:1.24.10
- script:
-   - kubectl config get-contexts
-   - kubectl config use-context $CI_PROJECT_PATH:xf-agent
-   - kubectl rollout restart deployment/tf-manager-web -n $NAMESPACE
-#  variables:
-#    FRONTEND_PROJECT_NAME: tf-manager-web
-#    FRONTEND_URL: tf-manager-web.jolly88-ph01.com
- needs:
-   - build-image-tf-manager-web
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "production"'
+  extends: .deploy
+  variables:
+    SITE: tf-manager-web
+  needs:
+    - build-image-tf-manager-web
 
 #===============================================================================================
 
 build-xf-static-h5:
- stage: build
- cache:
-   paths:
-     - node_modules
- tags:
-   - xinfa-runner
- image: node:16.17.0
- script:
-   - cd xf-static-h5
-   - npm install
-   - npm install -g @quasar/cli
-   - quasar build
- artifacts:
-   untracked: true
-   expire_in: 24 hrs
-   exclude:
-     - $CI_PROJECT_DIR/xf-static-h5/node_modules/**/*
+  extends: .build-sites
+  script:
+    - cd xf-static-h5
+    - npm install
+    - npm install -g @quasar/cli
+    - quasar build
+  variables:
+    SITE: xf-static-h5
 
 build-image-xf-static-h5:
- stage: docker-build
- tags:
-   - xinfa-runner
- script:
-   - cd xf-static-h5
-   - docker build -t $CI_REGISTRY_IMAGE:xf-static-h5 -t $CI_REGISTRY_IMAGE:xf-static-h5-$CI_COMMIT_SHORT_SHA . --no-cache
-   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-   - docker push -a $CI_REGISTRY_IMAGE
-# variables:
-#   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:xf-static-h5-$CI_COMMIT_SHORT_SHA
- needs:
-   - build-xf-static-h5
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "production"'
+  extends: .docker-build
+  variables:
+    SITE: xf-static-h5
+  needs:
+    - build-xf-static-h5
 
 deploy-prod-xf-static-h5:
- stage: deploy
- tags:
-   - xinfa-runner
- image: alpine/k8s:1.24.10
- script:
-   - kubectl config get-contexts
-   - kubectl config use-context $CI_PROJECT_PATH:xf-agent
-   - kubectl rollout restart deployment/xf-static-h5 -n $NAMESPACE
-#  variables:
-#    FRONTEND_PROJECT_NAME: xf-static-h5
-#    FRONTEND_URL: xf-h5.jolly88-ph01.com
- needs:
-   - build-image-xf-static-h5
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "production"'
+  extends: .deploy
+  variables:
+    SITE: xf-static-h5
+  needs:
+    - build-image-xf-static-h5
 
 #===============================================================================================
 
 build-xf-static-web:
- stage: build
- cache:
-   paths:
-     - node_modules
- tags:
-   - xinfa-runner
- image: node:16.17.0
- script:
-   - cd xf-static-web
-   - npm install
-   - npm run build
- artifacts:
-   untracked: true
-   expire_in: 24 hrs
-   exclude:
-     - $CI_PROJECT_DIR/xf-static-web/node_modules/**/*
+  extends: .build-sites
+  script:
+    - cd xf-static-web
+    - npm install
+    - npm run build
+  variables:
+    SITE: xf-static-web
 
 build-image-xf-static-web:
- stage: docker-build
- tags:
-   - xinfa-runner
- script:
-   - cd xf-static-web
-   - docker build -t $CI_REGISTRY_IMAGE:xf-static-web -t $CI_REGISTRY_IMAGE:xf-static-web-$CI_COMMIT_SHORT_SHA . --no-cache
-   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-   - docker push -a $CI_REGISTRY_IMAGE
-# variables:
-#   IMAGE_NAME: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:xf-static-web-$CI_COMMIT_SHORT_SHA
- needs:
-   - build-xf-static-web
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "production"'
+  extends: .docker-build
+  variables:
+    SITE: xf-static-web
+  needs:
+    - build-xf-static-web
 
 deploy-prod-xf-static-web:
- stage: deploy
- tags:
-   - xinfa-runner
- image: alpine/k8s:1.24.10
- script:
-   - kubectl config get-contexts
-   - kubectl config use-context $CI_PROJECT_PATH:xf-agent
-   - kubectl rollout restart deployment/xf-static-web -n $NAMESPACE
-#  variables:
-#    FRONTEND_PROJECT_NAME: xf-static-web
-#    FRONTEND_URL: xf-web.jolly88-ph01.com
- needs:
-   - build-image-xf-static-web
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "production"'
+  extends: .deploy
+  variables:
+    SITE: xf-static-web
+  needs:
+    - build-image-xf-static-web
