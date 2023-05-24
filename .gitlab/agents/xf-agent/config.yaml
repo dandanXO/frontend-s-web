@@ -10,6 +10,7 @@ gitops:
     - glob: '/tf-manager-web/deployment.yml'
     - glob: '/xf-static-h5/deployment.yml'
     - glob: '/xf-static-web/deployment.yml'
+    inventory_policy: adopt_if_no_inventory
 
 #ci_access:
 #  projects:
