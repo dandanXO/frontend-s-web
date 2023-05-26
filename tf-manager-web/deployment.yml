@@ -82,6 +82,11 @@ spec:
                     values:
                       - tf-manager-web
               topologyKey: kubernetes.io/hostname
+      tolerations:
+        - key: "tier"
+          operator: "Equal"
+          value: "frontend"
+          effect: "NoSchedule"
       imagePullSecrets:
         - name: gitlab-registry
 ---

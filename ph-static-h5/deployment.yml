@@ -82,6 +82,11 @@ spec:
                     values:
                       - ph-static-h5
               topologyKey: kubernetes.io/hostname
+      tolerations:
+        - key: "tier"
+          operator: "Equal"
+          value: "frontend"
+          effect: "NoSchedule"
       imagePullSecrets:
         - name: gitlab-registry
 ---
