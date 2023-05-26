@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: $FRONTEND_PROJECT_NAME
+  name: ph-static-web
   namespace: xinfa
   annotations:
     kubernetes.io/ingress.class: "nginx"
@@ -10,54 +10,59 @@ metadata:
 spec:
   tls:
     - hosts:
-        - $FRONTEND_URL
-      secretName: $FRONTEND_PROJECT_NAME
+        - ph-web.jolly88-ph01.com
+      secretName: ph-static-web
   rules:
-  - host: $FRONTEND_URL
+  - host: ph-web.jolly88-ph01.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: $FRONTEND_PROJECT_NAME
+            name: ph-static-web
             port:
               number: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: $FRONTEND_PROJECT_NAME
+  name: ph-static-web
   namespace: xinfa
   labels:
-    app: $FRONTEND_PROJECT_NAME
+    app: ph-static-web
+    tier: frontend
 spec:
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
   selector:
-    app: $FRONTEND_PROJECT_NAME
+    app: ph-static-web
+    tier: frontend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: $FRONTEND_PROJECT_NAME
+  name: ph-static-web
   namespace: xinfa
   labels:
-    app: $FRONTEND_PROJECT_NAME
+    app: ph-static-web
+    tier: frontend
 spec:
   selector:
     matchLabels:
-      app: $FRONTEND_PROJECT_NAME
+      app: ph-static-web
+      tier: frontend
   template:
     metadata:
       labels:
-        app: $FRONTEND_PROJECT_NAME
+        app: ph-static-web
+        tier: frontend
     spec:
       containers:
-        - name: $FRONTEND_PROJECT_NAME
-          image: git.caspen-tech.com:5050/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$FRONTEND_PROJECT_NAME-$CI_COMMIT_SHORT_SHA
+        - name: ph-static-web
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:ph-static-web
           ports:
             - containerPort: 80
           env:
@@ -67,20 +72,29 @@ spec:
           resources:
             requests:
               memory: 256Mi
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - ph-static-web
       imagePullSecrets:
         - name: gitlab-registry
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: $FRONTEND_PROJECT_NAME
+  name: ph-static-web
   namespace: xinfa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: $FRONTEND_PROJECT_NAME
-  minReplicas: 1
+    name: ph-static-web
+  minReplicas: 3
   maxReplicas: 10
   metrics:
     - type: Resource
@@ -89,3 +103,14 @@ spec:
         target:
           type: Utilization
           averageUtilization: 80
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ph-static-web
+  namespace: xinfa
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: ph-static-web

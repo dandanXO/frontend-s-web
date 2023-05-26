@@ -1,0 +1,18 @@
+gitops:
+  manifest_projects:
+  - id: "jolly88-complex/frontend"
+    ref:
+      branch: master
+    default_namespace: xinfa
+    paths: # Wildcard method encountering file limit issue. Declare static globs for now.
+    - glob: '/ph-static-h5/deployment.yml'
+    - glob: '/ph-static-web/deployment.yml'
+    - glob: '/tf-manager-web/deployment.yml'
+    - glob: '/xf-static-h5/deployment.yml'
+    - glob: '/xf-static-web/deployment.yml'
+    inventory_policy: adopt_if_no_inventory
+
+#ci_access:
+#  projects:
+#    - id: "jolly88-complex/frontend"
+#      default_namespace: xinfa
