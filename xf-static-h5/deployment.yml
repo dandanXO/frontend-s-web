@@ -81,6 +81,7 @@ spec:
                     operator: In
                     values:
                       - xf-static-h5
+              topologyKey: kubernetes.io/hostname
       imagePullSecrets:
         - name: gitlab-registry
 ---

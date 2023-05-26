@@ -81,6 +81,7 @@ spec:
                     operator: In
                     values:
                       - tf-manager-web
+              topologyKey: kubernetes.io/hostname
       imagePullSecrets:
         - name: gitlab-registry
 ---
