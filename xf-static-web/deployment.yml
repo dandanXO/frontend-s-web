@@ -104,3 +104,14 @@ spec:
         target:
           type: Utilization
           averageUtilization: 80
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: xf-static-web
+  namespace: xinfa
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: xf-static-web

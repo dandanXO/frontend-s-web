@@ -103,3 +103,14 @@ spec:
         target:
           type: Utilization
           averageUtilization: 80
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ph-static-web
+  namespace: xinfa
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: ph-static-web
