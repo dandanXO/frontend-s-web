@@ -7,8 +7,6 @@
 				<span class="download-title text-bold">兴發 APP</span>
 				<span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
 			</div>
-
-			<img src="https://himalayas.fantasticemedia.com/images/{{ item.icon }}"/>
       <div class="buttons">
         <q-btn size="sm" href="/wap/login.html?way=reg" label="注册" color="brightbtn" />
         <q-btn size="sm" href="https://xfapp1.com?url=m.xf882.com&amp;agentCode=" target="_blank" label="APP 下载" color="brightbtn" />
