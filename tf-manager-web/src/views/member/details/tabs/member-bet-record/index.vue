@@ -31,15 +31,8 @@
             :value="item.code"
           />
         </el-select>
-        <el-input
-          v-model="request.bet"
-          style="margin-left: 5px; width: 200px;"
-          size="small"
-          maxlength="20"
-          :placeholder="t('fields.betMoreThan')"
-          @keypress="restrictInput($event)"
-        />
         <el-select
+          v-if="request.platform !== null"
           v-model="request.gameType"
           size="small"
           :placeholder="t('fields.gameType')"
@@ -54,6 +47,7 @@
           />
         </el-select>
         <el-select
+          v-if="request.gameType.length !== 0"
           multiple
           v-model="request.result"
           size="small"
@@ -68,6 +62,15 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-if="request.gameType.length !== 0 && request.result.length !== 0"
+          v-model="request.bet"
+          style="margin-left: 5px; width: 200px;"
+          size="small"
+          maxlength="20"
+          :placeholder="t('fields.betMoreThan')"
+          @keypress="restrictInput($event)"
+        />
         <el-button
           style="margin-left: 10px"
           icon="el-icon-search"
