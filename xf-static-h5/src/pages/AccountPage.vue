@@ -6,7 +6,7 @@
       </div>
       <div class="pro-details">
         {{ store.nickName }} VIP{{ store.vip }}<br>
-        专属网址: m.xf952.com
+        专属网址: {{ store.evip }}
       </div>
     </div>
     <div class="vipcard">
