@@ -72,6 +72,11 @@ spec:
           resources:
             requests:
               memory: 256Mi
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -81,6 +86,7 @@ spec:
                     operator: In
                     values:
                       - tf-manager-web
+              topologyKey: kubernetes.io/hostname
       imagePullSecrets:
         - name: gitlab-registry
 ---
