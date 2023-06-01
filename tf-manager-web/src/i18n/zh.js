@@ -1032,6 +1032,7 @@ export default {
     'Privilege Report': '优惠报表',
     'Deposit Report': '存款报表',
     System: '系统',
+    'Operator Log': '后台日志',
     Site: '站点',
     Config: '设置',
     Currency: '币别',

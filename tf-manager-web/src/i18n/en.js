@@ -1052,6 +1052,7 @@ export default {
     'Privilege Report': 'Privilege Report',
     'Deposit Report': 'Deposit Report',
     System: 'System',
+    'Operator Log': 'Operator Log',
     Site: 'Site',
     Config: 'Config',
     Currency: 'Currency',
