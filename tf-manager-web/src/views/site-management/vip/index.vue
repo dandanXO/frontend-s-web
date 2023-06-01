@@ -40,7 +40,7 @@
         :rules="formRules"
         :inline="true"
         size="small"
-        label-width="150px"
+        label-width="170px"
       >
         <el-form-item :label="t('fields.name')" prop="name">
           <el-input v-model="form.name" style="width: 350px;" maxlength="20" />
@@ -104,6 +104,18 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.exclusiveUrlWeb')" prop="web">
+          <el-input v-model="form.web" style="width: 350px;" maxlength="20" />
+        </el-form-item>
+        <el-form-item :label="t('fields.exclusiveUrlWap')" prop="wap">
+          <el-input v-model="form.wap" style="width: 350px;" maxlength="20" />
+        </el-form-item>
+        <el-form-item :label="t('fields.exclusiveUrlApp')" prop="app" style="display:none">
+          <el-input v-model="form.app" style="width: 350px;" maxlength="20" />
+        </el-form-item>
+        <el-form-item :label="t('fields.exclusiveUrlCashier')" prop="cashier" style="display:none">
+          <el-input v-model="form.cashier" style="width: 350px" maxlength="20" />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -124,6 +136,11 @@
       <el-table-column prop="level" :label="t('fields.level')" width="100" />
       <el-table-column prop="levelUpCredit" :label="t('fields.levelUpCredit')" width="200" />
       <el-table-column prop="previousLevelName" :label="t('fields.previousLevelName')" width="200" />
+      <el-table-column :label="t('fields.checkExclusiveUrl')" width="200">
+        <template #default="scope">
+          <el-link type="primary" @click="show(scope.row)"> {{ t('fields.view') }} </el-link>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="siteName"
         :label="t('fields.site')"
@@ -139,6 +156,20 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      :title="t('fields.exclusiveUrl')"
+      v-model="uiControl.checkDialogVisible"
+      append-to-body
+      width="580px"
+    >
+
+      <p>{{ t('fields.exclusiveUrlWeb') }} : {{ form.web }}</p>
+      <p>{{ t('fields.exclusiveUrlWap') }} : {{ form.wap }}</p>
+      <p style="display:none">{{ t('fields.exclusiveUrlApp') }} : {{ form.app }}</p>
+      <p style="display:none">{{ t('fields.exclusiveUrlCashier') }} : {{ form.cashier }}</p>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -190,6 +221,7 @@ const minCredit = ref(Number(0));
 
 const uiControl = reactive({
   dialogVisible: false,
+  checkDialogVisible: false,
   dialogTitle: "",
   dialogType: "CREATE",
   editBtn: true,
@@ -212,6 +244,10 @@ const form = reactive({
   levelUpCredit: null,
   previousLevel: null,
   siteId: null,
+  web: null,
+  wap: null,
+  app: null,
+  cashier: null,
 });
 
 const list = reactive({
@@ -271,6 +307,14 @@ function handlePreviousLevelFilter() {
     });
     list.previousLevel = newRecord;
   }
+}
+
+function show(vip) {
+  uiControl.checkDialogVisible = true;
+  form.web = vip.web;
+  form.wap = vip.wap;
+  form.app = vip.app;
+  form.cashier = vip.cashier;
 }
 
 async function loadVip() {

@@ -387,6 +387,7 @@ import {InfoFilled, ArrowDown, Refresh} from '@element-plus/icons-vue'
 import {storeToRefs} from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import {getSiteParamFromServer} from "@/api/index/site";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -410,21 +411,47 @@ export default defineComponent({
   data: () => ({
     // carousel settings
     navigations: [
-      {code: "Home", name: "首页", enName: "Home", path: "/home"},
-      {code: "Game", name: "电子", enName: "Game", path: "/game", submenu: true},
-      {code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports"},
-      {code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
-      {code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
-      {code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
-      {code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
-      {code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"},
-      {code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", submenu: true},
-      {code: "App", name: "手机APP", enName: "App", path: "/app", submenu: true},
-      {code: "VIP", name: "VIP", enName: "VIP", path: "/vip"},
-      // { code: "Poker", name: "ป็อกเกอร์", path: "/poker" },
-      // { code: "E-sports", name: "E-sports", path: "/e-sport" },
+      
     ],
   }),
+  beforeMount() {
+    const getSiteParam = () => {
+		getSiteParamFromServer().then((res) => {
+			this.navigations.splice(0);
+			this.navigations.push({code: "Home", name: "首页", enName: "Home", path: "/home"})
+			var data = JSON.parse(res.data);
+			for ( var i = 0; i < data.length; i++ ) {
+				console.log(data[i]);
+				if(data[i] === "ESPORT"){
+					this.navigations.push({code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports"});
+				} else if (data[i] === "FISH"){
+					this.navigations.push({code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true});
+				} else if (data[i] === "LIVE"){
+					this.navigations.push({code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true});
+				} else if (data[i] === "SPORT"){
+					this.navigations.push({code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true});
+				} else if (data[i] === "SLOT"){
+					this.navigations.push({code: "Game", name: "电子", enName: "Game", path: "/game", submenu: true});
+				} else if (data[i] === "POKER"){
+					this.navigations.push({code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true});
+				}
+			}
+			this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"});
+			this.navigations.push({code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", submenu: true});
+			this.navigations.push({code: "App", name: "手机APP", enName: "App", path: "/app", submenu: true});
+			this.navigations.push({code: "VIP", name: "VIP", enName: "VIP", path: "/vip"});
+	  }).catch((err) => {
+		console.log(err)
+		this.navigations.splice(0);
+		this.navigations.push({code: "Home", name: "首页", enName: "Home", path: "/home"})
+		this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"});
+		this.navigations.push({code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", submenu: true});
+		this.navigations.push({code: "App", name: "手机APP", enName: "App", path: "/app", submenu: true});
+		this.navigations.push({code: "VIP", name: "VIP", enName: "VIP", path: "/vip"});
+        });
+	}
+	getSiteParam();
+  },
   setup() {
     const store = userStore();
     const {token} = storeToRefs(store);

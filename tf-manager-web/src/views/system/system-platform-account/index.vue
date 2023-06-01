@@ -83,6 +83,25 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.siteName')" prop="siteId">
+            <el-select
+              v-model="form.siteId"
+              value-key="id"
+              :placeholder="t('fields.pleaseChoose')"
+              style="width: 350px"
+              filterable
+              @focus="loadSites"
+            >
+              <el-option
+                v-for="item in sites.list"
+                :key="item.id"
+                :label="item.siteName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.name')" prop="name">
             <el-col>
               <el-input
@@ -310,6 +329,7 @@ import {
 import { getPlatformNames } from '../../../api/platform'
 import moment from 'moment'
 import { useI18n } from "vue-i18n";
+import { getSiteListSimple } from '../../../api/site'
 
 const { t } = useI18n();
 const sitePlatformForm = ref(null)
@@ -338,6 +358,7 @@ const request = reactive({
 const form = reactive({
   id: null,
   platformId: null,
+  siteId: null,
   name: null,
   param: null,
   status: null,
@@ -356,6 +377,7 @@ const form = reactive({
 
 const formRules = reactive({
   platformId: [required(t('message.validatePlatformNameRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
   name: [required(t('message.validateNameRequired'))],
   param: [
     required(t('message.validateParamRequired')),
@@ -373,6 +395,10 @@ const formRules = reactive({
 })
 
 const platforms = reactive({
+  list: [],
+})
+
+const sites = reactive({
   list: [],
 })
 
@@ -435,6 +461,11 @@ async function loadPlatforms() {
   platforms.list = ret
 }
 
+async function loadSites() {
+  const { data: ret } = await getSiteListSimple()
+  sites.list = ret
+}
+
 async function changeAccountNeedRegister(id, needRegister) {
   await updateAccountNeedRegister(id, needRegister)
 }
@@ -475,7 +506,6 @@ function showDialog(type) {
 }
 
 function showEdit(platformAccount) {
-  console.log(platformAccount)
   showDialog('EDIT')
   nextTick(() => {
     for (const key in platformAccount) {

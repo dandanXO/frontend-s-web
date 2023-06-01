@@ -19,6 +19,7 @@ export const userStore = defineStore("userStore", {
       balance: 0,
       token: SessionStorage.getItem("TOKEN") || "",
       vip: "",
+	  evip: "",
       currency: { value: "￥", label: "RMB"},
       personalAddress: '',
       unreadInboxMail: 0,
@@ -74,7 +75,8 @@ export const userStore = defineStore("userStore", {
           this.profilePicture = response.data.pictureUrl;
           this.displayName = response.data.displayName
           // this.personalAddress = response.data.personalAddress
-          this.personalAddress = 'm.xf952.com'
+		  var exclusive = JSON.parse(response.data.evip);
+          this.evip = exclusive.wap;
           this.unreadInboxMail = 16
           this.getBalance();
         } else {

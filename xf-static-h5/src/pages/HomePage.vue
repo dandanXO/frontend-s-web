@@ -85,13 +85,14 @@
   <div class="index-platform-container">
   <q-splitter
       v-model="splitterModel"
-      style="min-height: 320px; height: 48vh;"
+	  horizontal
+      style="min-height: 720px; height: 720px;"
     >
       <template v-slot:before>
         <q-tabs
           v-model="selectedTab"
-          vertical
           inline-label
+		  horizontal
         >
           <q-tab v-for="(tab, i) in tabs" :name="tab.name" :key="i">
             <q-icon class="text-dark" size="sm" style="margin-right: 5px;">
@@ -109,7 +110,7 @@
           v-model="selectedTab"
           animated
           swipeable
-          vertical
+		  vertical
           transition-prev="jump-up"
           transition-next="jump-up"
         >
@@ -248,45 +249,39 @@ export default defineComponent({
     MarqueeText,
     RiVolumeUpLine
   },
+  beforeMount() {
+    const getSiteParam = () => {
+		api.get("/menu").then((res) => {
+			this.tabs.splice(0);
+			var data = JSON.parse(res.data);
+			for ( var i = 0; i < data.length; i++ ) {
+				
+				if(data[i] === "ESPORT"){
+					this.tabs.push({name: 'esport',icon: 'esport',label: '电竞'});if(i == 0) this.selectedTab = "esport";
+				} else if (data[i] === "FISH"){
+					this.tabs.push({name: 'fishing',icon: 'fishing',label: '捕鱼'});if(i == 0) this.selectedTab = "fishing";
+				} else if (data[i] === "LIVE"){
+					this.tabs.push({name: 'live',icon: 'live',label: '真人'});if(i == 0) this.selectedTab = "live";
+				} else if (data[i] === "SPORT"){
+					this.tabs.push({name: 'sport',icon: 'sport',label: '体育'});if(i == 0) this.selectedTab = "sport";
+				} else if (data[i] === "SLOT"){
+					this.tabs.push({name: 'slot',icon: 'slot',label: '电子'});if(i == 0) this.selectedTab = "slot";
+				} else if (data[i] === "POKER"){
+					this.tabs.push({name: 'poker',icon: 'poker',label: '棋牌'});if(i == 0) this.selectedTab = "poker";
+				}
+			}
+			this.tabs.push({name: 'minigame',icon: 'minigame',label: '小游戏'});
+	  }).catch((err) => {
+		console.log(err)
+		this.tabs.splice(0);
+		this.tabs.push({name: 'minigame',icon: 'minigame',label: '小游戏'});
+        });
+	}
+	getSiteParam();
+  },
   setup() {
-    const selectedTab = ref('slot');
-    const tabs = ref([
-      {
-        name: 'slot',
-        icon: 'slot',
-        label: '电子'
-      },
-      {
-        name: 'esport',
-        icon: 'esport',
-        label: '电竞'
-      },
-      {
-        name: 'sport',
-        icon: 'sport',
-        label: '体育'
-      },
-      {
-        name: 'live',
-        icon: 'live',
-        label: '真人'
-      },
-      {
-        name: 'poker',
-        icon: 'poker',
-        label: '棋牌'
-      },
-      {
-        name: 'fishing',
-        icon: 'fishing',
-        label: '捕鱼'
-      },
-      {
-        name: 'minigame',
-        icon: 'minigame',
-        label: '小游戏'
-      },
-    ]);
+    const selectedTab = ref('');
+    const tabs = ref([]);
     const slots = ref([
       {
         id: '20',
@@ -622,7 +617,7 @@ export default defineComponent({
       slide: ref(0),
       tab: ref("slots"),
       gamesTab: ref(platforms.value[0]),
-      splitterModel: ref(27),
+      splitterModel: ref(10),
       imgURL: process.env.IMAGE_CDN + "/",
       banners,
       store,
@@ -657,6 +652,10 @@ export default defineComponent({
     };
   }
 });
+
+
+                
+
 </script>
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
@@ -809,7 +808,7 @@ export default defineComponent({
   .q-tab-panel {
     padding: 0px;
   }
-  .q-tabs--vertical {
+  .q-tabs--horizontal {
     margin: 0 5px 0 0;
 
      .q-tab {
@@ -864,3 +863,5 @@ export default defineComponent({
   }
 }
 </style>
+
+

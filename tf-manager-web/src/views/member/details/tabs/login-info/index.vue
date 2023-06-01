@@ -15,7 +15,12 @@
       :editable="false"
       :clearable="false"
     />
-    <el-button icon="el-icon-search" type="primary" @click="loadData" size="small">
+    <el-button
+      icon="el-icon-search"
+      type="primary"
+      @click="loadData(true)"
+      size="small"
+    >
       {{ t('fields.search') }}
     </el-button>
   </div>
@@ -28,52 +33,105 @@
       v-loading="loading"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column :label="t('fields.loginTime')"
-                       align="center" min-width="180"
+      <el-table-column
+        :label="t('fields.loginTime')"
+        align="center"
+        min-width="180"
       >
-        <template #default="scope">
-          <span v-formatter="{data: scope.row.loginTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.loginIp')" align="center" min-width="150">
         <template #default="scope">
           <span
-            :style="[scope.row.loginIpColor !== null ? {color: scope.row.loginIpColor}: {}]"
-          >{{ scope.row.loginIp }}</span>
+            v-formatter="{
+              data: scope.row.loginTime,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
+              type: 'date',
+            }"
+          />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.loginAddress')" prop="loginAddress"
-                       align="center" min-width="180"
+      <el-table-column
+        :label="t('fields.loginIp')"
+        align="center"
+        min-width="150"
       >
         <template #default="scope">
-          <span v-if="scope.row.loginAddress !== '-,-,-' && scope.row.loginAddress !== 'null,null,null' && scope.row.loginAddress !== null">{{ scope.row.loginAddress }}</span>
-          <span v-if="scope.row.loginAddress === '-,-,-' || scope.row.loginAddress === 'null,null,null' || scope.row.loginAddress === null">-</span>
+          <span
+            :style="[
+              scope.row.loginIpColor !== null
+                ? {color: scope.row.loginIpColor}
+                : {},
+            ]"
+          >
+            {{ scope.row.loginIp }}
+          </span>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.loginStatus')" prop="loginStatus"
-                       align="center" min-width="120"
+      <el-table-column
+        :label="t('fields.loginAddress')"
+        prop="loginAddress"
+        align="center"
+        min-width="180"
+      >
+        <template #default="scope">
+          <span
+            v-if="
+              scope.row.loginAddress !== '-,-,-' &&
+                scope.row.loginAddress !== 'null,null,null' &&
+                scope.row.loginAddress !== null
+            "
+          >
+            {{ scope.row.loginAddress }}
+          </span>
+          <span
+            v-if="
+              scope.row.loginAddress === '-,-,-' ||
+                scope.row.loginAddress === 'null,null,null' ||
+                scope.row.loginAddress === null
+            "
+          >
+            -
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        :label="t('fields.loginStatus')"
+        prop="loginStatus"
+        align="center"
+        min-width="120"
       >
         <template #default="scope">
           <el-tag v-if="scope.row.loginStatus === 0" type="danger">FAIL</el-tag>
-          <el-tag v-if="scope.row.loginStatus === 1" type="success">SUCCESS</el-tag>
+          <el-tag v-if="scope.row.loginStatus === 1" type="success">
+            SUCCESS
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.loginFailedReason')" prop="remark"
-                       align="center" min-width="180"
+      <el-table-column
+        :label="t('fields.loginFailedReason')"
+        prop="remark"
+        align="center"
+        min-width="180"
       >
         <template #default="scope">
           <span v-if="scope.row.remark !== null">{{ scope.row.remark }}</span>
           <span v-if="scope.row.remark === null">-</span>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.loginWay')" prop="device"
-                       align="center" min-width="120"
+      <el-table-column
+        :label="t('fields.loginWay')"
+        prop="device"
+        align="center"
+        min-width="120"
       />
-      <el-table-column :label="t('fields.loginUrl')" prop="loginUrl"
-                       align="center" min-width="180"
+      <el-table-column
+        :label="t('fields.loginUrl')"
+        prop="loginUrl"
+        align="center"
+        min-width="180"
       >
         <template #default="scope">
-          <span v-if="scope.row.loginUrl !== null">{{ scope.row.loginUrl }}</span>
+          <span v-if="scope.row.loginUrl !== null">
+            {{ scope.row.loginUrl }}
+          </span>
           <span v-if="scope.row.loginUrl === null">-</span>
         </template>
       </el-table-column>
@@ -81,152 +139,209 @@
     <el-pagination
       :total="total"
       :page-sizes="[20, 50, 100, 150]"
-      layout="total,sizes,prev, pager, next"
+      layout="total,sizes,prev, next"
       style="margin-top: 10px"
       v-model:page-size="size"
       v-model:page-count="pages"
       v-model:current-page="current"
       @current-change="loadData"
-      @size-change="loadData"
+      @size-change="loadData(true)"
     />
   </el-card>
 </template>
 
 <script>
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
-import moment from 'moment';
-import { getMemberLoginRecord } from "../../../../../api/member";
-import { useStore } from "../../../../../store";
-import { useI18n } from "vue-i18n";
+import { defineComponent, onMounted, reactive, toRefs } from 'vue'
+import moment from 'moment'
+import { getMemberLoginRecord } from '../../../../../api/member'
+import { useStore } from '../../../../../store'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 export default defineComponent({
   props: {
     mbrId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
-    const { t } = useI18n();
+    const { t } = useI18n()
     const shortcuts = [
       {
         text: t('fields.today'),
         value: () => {
-          const end = new Date();
-          const start = new Date();
-          return [start, end];
-        }
+          const end = new Date()
+          const start = new Date()
+          return [start, end]
+        },
       },
       {
         text: t('fields.yesterday'),
         value: () => {
-          const end = new Date();
-          const start = new Date();
-          start.setTime(moment(start).subtract(1, 'days').format('x'));
-          end.setTime(moment(end).subtract(1, 'days').format('x'));
-          return [start, end];
-        }
+          const end = new Date()
+          const start = new Date()
+          start.setTime(
+            moment(start)
+              .subtract(1, 'days')
+              .format('x')
+          )
+          end.setTime(
+            moment(end)
+              .subtract(1, 'days')
+              .format('x')
+          )
+          return [start, end]
+        },
       },
       {
         text: t('fields.thisWeek'),
         value: () => {
-          const end = new Date();
-          const start = new Date();
-          start.setTime(moment(start).startOf('week').format('x'));
-          return [start, end];
-        }
+          const end = new Date()
+          const start = new Date()
+          start.setTime(
+            moment(start)
+              .startOf('week')
+              .format('x')
+          )
+          return [start, end]
+        },
       },
       {
         text: t('fields.lastWeek'),
         value: () => {
-          const end = new Date();
-          const start = new Date();
-          start.setTime(moment(start).subtract(1, 'weeks').startOf('week').format('x'));
-          end.setTime(moment(end).subtract(1, 'weeks').endOf('week').format('x'));
-          return [start, end];
-        }
+          const end = new Date()
+          const start = new Date()
+          start.setTime(
+            moment(start)
+              .subtract(1, 'weeks')
+              .startOf('week')
+              .format('x')
+          )
+          end.setTime(
+            moment(end)
+              .subtract(1, 'weeks')
+              .endOf('week')
+              .format('x')
+          )
+          return [start, end]
+        },
       },
       {
         text: t('fields.thisMonth'),
         value: () => {
-          const end = new Date();
-          const start = new Date();
-          start.setTime(moment(start).startOf('month').format('x'));
-          return [start, end];
-        }
+          const end = new Date()
+          const start = new Date()
+          start.setTime(
+            moment(start)
+              .startOf('month')
+              .format('x')
+          )
+          return [start, end]
+        },
       },
       {
         text: t('fields.lastMonth'),
         value: () => {
-          const end = new Date();
-          const start = new Date();
-          start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-          end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-          return [start, end];
-        }
+          const end = new Date()
+          const start = new Date()
+          start.setTime(
+            moment(start)
+              .subtract(1, 'months')
+              .startOf('month')
+              .format('x')
+          )
+          end.setTime(
+            moment(end)
+              .subtract(1, 'months')
+              .endOf('month')
+              .format('x')
+          )
+          return [start, end]
+        },
       },
       {
         text: t('fields.last3Months'),
         value: () => {
-          const end = new Date();
-          const start = new Date();
-          start.setTime(moment(start).subtract(2, 'months').startOf('month').format('x'));
-          return [start, end];
-        }
-      }
-    ];
+          const end = new Date()
+          const start = new Date()
+          start.setTime(
+            moment(start)
+              .subtract(2, 'months')
+              .startOf('month')
+              .format('x')
+          )
+          return [start, end]
+        },
+      },
+    ]
 
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 2);
-    const defaultStartDate = convertDate(startDate);
-    const defaultEndDate = convertDate(new Date());
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - 2)
+    const defaultStartDate = convertDate(startDate)
+    const defaultEndDate = convertDate(new Date())
     function convertDate(date) {
-      return moment(date).format('YYYY-MM-DD');
+      return moment(date).format('YYYY-MM-DD')
     }
     function disabledDate(time) {
-      return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+      return (
+        time.getTime() <
+          moment(new Date())
+            .subtract(2, 'months')
+            .startOf('month')
+            .format('x') || time.getTime() > new Date().getTime()
+      )
     }
     const memberData = reactive({
       pages: 0,
       total: 0,
       records: [],
-      loading: false
-    });
+      loading: false,
+      pagingState: '',
+    })
     const formData = reactive({
       loginTime: [defaultStartDate, defaultEndDate],
       size: 20,
-      current: 1
-    });
-    const loadData = async () => {
-      memberData.loading = true;
-      const formDataCopy = { ...formData };
-      const query = {};
+      current: 1,
+    })
+    const loadData = async frombutton => {
+      if (frombutton === true) {
+        formData.current = 1
+        memberData.pagingState = null
+      }
+
+      memberData.loading = true
+      const formDataCopy = { ...formData }
+      const query = {}
       Object.entries(formDataCopy).forEach(([key, value]) => {
         if (value) {
-          query[key] = value;
-        }
-      });
-      if (formData.loginTime && formData.loginTime.length === 2) {
-        query.loginTime = formData.loginTime.join(",");
-      }
-      query.memberId = props.mbrId;
-      await getMemberLoginRecord(query).then(res => {
-        memberData.records = res?.data?.records;
-        memberData.pages = res?.data?.pages;
-        memberData.total = res?.data?.total;
-      });
-      memberData.records.forEach(function(record) {
-        const ipLabel = store.state.app.ipLabels.find(r => r.ip === record.loginIp);
-        if (ipLabel) {
-          record.loginIpColor = ipLabel.color;
+          query[key] = value
         }
       })
-      memberData.loading = false;
-    };
+      if (formData.loginTime && formData.loginTime.length === 2) {
+        query.loginTime = formData.loginTime.join(',')
+      }
+      query.memberId = props.mbrId
+      query.pagingState = memberData.pagingState
+      await getMemberLoginRecord(query).then(res => {
+        memberData.records = res?.data?.records
+        memberData.pages = res?.data?.pages
+        memberData.total = res?.data?.total
+        memberData.pagingState = res?.data?.pagingState
+      })
+      memberData.records.forEach(function(record) {
+        const ipLabel = store.state.app.ipLabels.find(
+          r => r.ip === record.loginIp
+        )
+        if (ipLabel) {
+          record.loginIpColor = ipLabel.color
+        }
+      })
+      memberData.loading = false
+    }
     onMounted(async () => {
-      loadData();
-    });
+      loadData()
+    })
     return {
       loadData,
       shortcuts,
@@ -237,10 +352,10 @@ export default defineComponent({
       convertDate,
       t,
       ...toRefs(formData),
-      ...toRefs(memberData)
-    };
-  }
-});
+      ...toRefs(memberData),
+    }
+  },
+})
 </script>
 
 <style scoped>

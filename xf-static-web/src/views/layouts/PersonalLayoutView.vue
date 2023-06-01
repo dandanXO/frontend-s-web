@@ -16,7 +16,8 @@
                   <el-icon><Refresh /></el-icon>
                  <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
               </a>
-专属网址: https://www.xf882.com
+            <span style="width: 100px;margin-left: 10pxtext-align: center">专属网址：</span>
+            <span id="vipUrl" class="badge badge-info">{{ store.evip.web }}</span>
         </div>
         <div class="account-box account-contents">
         <router-view />

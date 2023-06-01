@@ -22,12 +22,17 @@
           icon="el-icon-search"
           size="mini"
           type="primary"
-          @click="loadMemberMoneyChange()"
-        >{{ t('fields.search') }}
+          @click="loadMemberMoneyChange(true)"
+        >
+          {{ t('fields.search') }}
         </el-button>
-        <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{
-          t('fields.reset')
-        }}
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="warning"
+          @click="resetQuery()"
+        >
+          {{ t('fields.reset') }}
         </el-button>
       </div>
     </div>
@@ -47,38 +52,78 @@
           :label="t('fields.serialNo')"
           align="center"
           min-width="280"
-          sortable
         />
-        <el-table-column prop="type" :label="t('fields.type')" align="center" min-width="180" />
-        <el-table-column prop="subType" :label="t('fields.privilege')" align="center" min-width="180">
+        <el-table-column
+          prop="type"
+          :label="t('fields.type')"
+          align="center"
+          min-width="180"
+        />
+        <el-table-column
+          prop="subType"
+          :label="t('fields.privilege')"
+          align="center"
+          min-width="180"
+        >
           <template #default="scope">
             <span>{{ f(scope.row.subType) }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="platformName" :label="t('fields.platformName')" align="center" min-width="180">
+        <el-table-column
+          prop="platformName"
+          :label="t('fields.platformName')"
+          align="center"
+          min-width="180"
+        >
           <template #default="scope">
             <span v-if="scope.row.platformName === null">-</span>
-            <span v-if="scope.row.platformName !== null">{{ scope.row.platformName }}</span>
+            <span v-if="scope.row.platformName !== null">
+              {{ scope.row.platformName }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="180" sortable>
+        <el-table-column
+          prop="amount"
+          :label="t('fields.amount')"
+          align="center"
+          min-width="180"
+          sortable
+        >
           <template #default="scope">
-            <span v-if="scope.row.amount < 0" style="color: red">$ <span
-              v-formatter="{data: scope.row.amount,type: 'money'}"
-            /></span>
-            <span v-else> $ <span v-formatter="{data: scope.row.amount,type: 'money'}" /></span>
+            <span v-if="scope.row.amount < 0" style="color: red">
+              $
+              <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+            </span>
+            <span v-else>
+              $
+              <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="beforeBalance" :label="t('fields.beforeBalance')" align="center" min-width="180">
+        <el-table-column
+          prop="beforeBalance"
+          :label="t('fields.beforeBalance')"
+          align="center"
+          min-width="180"
+        >
           <template #default="scope">
             <span v-if="scope.row.beforeBalance === 0">-</span>
-            <span v-if="scope.row.beforeBalance !== 0">{{ scope.row.beforeBalance }}</span>
+            <span v-if="scope.row.beforeBalance !== 0">
+              {{ scope.row.beforeBalance }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="afterBalance" :label="t('fields.afterBalance')" align="center" min-width="180">
+        <el-table-column
+          prop="afterBalance"
+          :label="t('fields.afterBalance')"
+          align="center"
+          min-width="180"
+        >
           <template #default="scope">
             <span v-if="scope.row.afterBalance === 0">-</span>
-            <span v-if="scope.row.afterBalance !== 0">{{ scope.row.afterBalance }}</span>
+            <span v-if="scope.row.afterBalance !== 0">
+              {{ scope.row.afterBalance }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column
@@ -89,7 +134,9 @@
         >
           <template #default="scope">
             <span v-if="scope.row.platformBalance === 0">-</span>
-            <span v-if="scope.row.platformBalance !== 0">{{ scope.row.platformBalance }}</span>
+            <span v-if="scope.row.platformBalance !== 0">
+              {{ scope.row.platformBalance }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column
@@ -104,7 +151,11 @@
             <!-- eslint-disable -->
             <span
               v-if="scope.row.recordTime !== null"
-              v-formatter="{ data: scope.row.recordTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date' }"
+              v-formatter="{
+                data: scope.row.recordTime,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }"
             />
           </template>
         </el-table-column>
@@ -112,23 +163,23 @@
       <el-pagination
         :total="page.total"
         :page-sizes="[20, 50, 100, 150]"
-        layout="total,sizes,prev, pager, next"
+        layout="total,sizes,prev, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
         @current-change="loadMemberMoneyChange"
-        @size-change="loadMemberMoneyChange"
+        @size-change="loadMemberMoneyChange(true)"
       />
     </el-card>
   </div>
 </template>
 
 <script setup>
-import { onMounted, defineProps, reactive } from 'vue';
-import moment from 'moment';
-import { getMemberMoneyChangeList } from '../../../../../api/member';
-import { useI18n } from "vue-i18n";
+import { onMounted, defineProps, reactive } from 'vue'
+import moment from 'moment'
+import { getMemberMoneyChangeList } from '../../../../../api/member'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   mbrId: {
@@ -137,90 +188,131 @@ const props = defineProps({
   },
 })
 
-const { t } = useI18n();
+const { t } = useI18n()
 const shortcuts = [
   {
     text: t('fields.today'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      return [start, end];
+      const end = new Date()
+      const start = new Date()
+      return [start, end]
     },
   },
   {
     text: t('fields.yesterday'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').format('x'));
-      return [start, end];
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'days')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'days')
+          .format('x')
+      )
+      return [start, end]
     },
   },
   {
     text: t('fields.thisWeek'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('week').format('x'));
-      return [start, end];
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('week')
+          .format('x')
+      )
+      return [start, end]
     },
   },
   {
     text: t('fields.lastWeek'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('week').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('week').format('x'));
-      return [start, end];
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'weeks')
+          .startOf('week')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'weeks')
+          .endOf('week')
+          .format('x')
+      )
+      return [start, end]
     },
   },
   {
     text: t('fields.thisMonth'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('month').format('x'));
-      return [start, end];
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
     },
   },
   {
     text: t('fields.lastMonth'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-      return [start, end];
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'months')
+          .endOf('month')
+          .format('x')
+      )
+      return [start, end]
     },
   },
   {
     text: t('fields.last3Months'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(2, 'months').startOf('month').format('x'));
-      return [start, end];
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(2, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
     },
   },
-];
+]
 
-const startDate = new Date();
-startDate.setDate(startDate.getDate() - 2);
-const defaultStartDate = convertDate(startDate);
-const defaultEndDate = convertDate(new Date());
+const startDate = new Date()
+startDate.setDate(startDate.getDate() - 2)
+const defaultStartDate = convertDate(startDate)
+const defaultEndDate = convertDate(new Date())
 
 const request = reactive({
   size: 20,
   current: 1,
   recordTime: [defaultStartDate, defaultEndDate],
-  orderBy: "recordTime",
-  sortType: "DESC",
-});
+  orderBy: 'recordTime',
+  sortType: 'DESC',
+})
 
 function resetQuery() {
-  request.recordTime = [defaultStartDate, defaultEndDate];
+  request.recordTime = [defaultStartDate, defaultEndDate]
 }
 
 const page = reactive({
@@ -228,65 +320,78 @@ const page = reactive({
   records: [],
   total: 0,
   loading: false,
-});
+  pagingState: '',
+})
 
-const sort = (column) => {
-  request.orderBy = column.prop;
-  if (column.order === "descending") {
-    request.sortType = "DESC";
+const sort = column => {
+  request.orderBy = column.prop
+  if (column.order === 'descending') {
+    request.sortType = 'DESC'
   } else {
-    request.sortType = "ASC";
+    request.sortType = 'ASC'
   }
-  loadMemberMoneyChange();
-};
+  loadMemberMoneyChange()
+}
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).format('YYYY-MM-DD')
 }
 
 function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+  return (
+    time.getTime() <
+      moment(new Date())
+        .subtract(2, 'months')
+        .startOf('month')
+        .format('x') || time.getTime() > new Date().getTime()
+  )
 }
 
-async function loadMemberMoneyChange() {
-  page.loading = true;
-  const requestCopy = { ...request };
-  const query = {};
+async function loadMemberMoneyChange(frombutton) {
+  if (frombutton === true) {
+    request.current = 1
+    page.pagingState = null
+  }
+
+  page.loading = true
+  const requestCopy = { ...request }
+  const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
-      query[key] = value;
+      query[key] = value
     }
-  });
+  })
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(",");
+      query.recordTime = request.recordTime.join(',')
     }
   }
-  query.memberId = props.mbrId;
-  const { data: ret } = await getMemberMoneyChangeList(props.mbrId, query);
-  page.pages = ret.pages;
-  page.records = ret.records;
-  page.total = ret.total;
-  page.loading = false;
+  query.memberId = props.mbrId
+  query.pagingState = page.pagingState
+  const { data: ret } = await getMemberMoneyChangeList(props.mbrId, query)
+  page.pages = ret.pages
+  page.records = ret.records
+  page.total = ret.total
+  page.pagingState = ret.pagingState
+  page.loading = false
 }
 
 onMounted(() => {
-  loadMemberMoneyChange();
-});
+  loadMemberMoneyChange()
+})
 
 function f(val) {
   if (val === null) {
-    return '-';
+    return '-'
   }
-  if (val === "DEPOSIT") {
-    return 'Wallet to Game';
+  if (val === 'DEPOSIT') {
+    return 'Wallet to Game'
   }
-  if (val === "WITHDRAW") {
-    return 'Game to Wallet';
+  if (val === 'WITHDRAW') {
+    return 'Game to Wallet'
   }
-  return val;
+  return val
 }
-
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
 .header-container {

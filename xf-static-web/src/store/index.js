@@ -20,6 +20,7 @@ export const userStore = defineStore("userStore", {
       memberType: "",
       balance: 0,
       vip: "",
+	  evip: "",
     };
   },
   actions: {
@@ -51,6 +52,8 @@ export const userStore = defineStore("userStore", {
             this.phone = ret.data.telephone;
             this.memberType = ret.data.memberType;
             this.vip = ret.data.vip;
+			var exclusiveurl = JSON.parse(ret.data.evip);
+			this.evip = exclusiveurl;
           } else {
             throw new Error(ret.message);
           }
