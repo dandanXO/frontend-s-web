@@ -4,7 +4,7 @@ export const uploadImage = (formData) => {
     method: 'POST',
     body: formData
   };
-  return fetch(process.env.VUE_APP_IMAGE_UPLOAD, requestOptions)
+  return fetch(process.env.VUE_APP_BASE_API + '/image/uploadBanner', requestOptions)
     .then(response => {
       return response.json()
     })

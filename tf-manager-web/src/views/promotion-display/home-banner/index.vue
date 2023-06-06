@@ -427,7 +427,7 @@ async function attachPhoto(event) {
 async function attachDesktopImg(event) {
   const data = await attachPhoto(event);
   if (data.code === 0) {
-    form.desktopImageUrl = data.data[0]
+    form.desktopImageUrl = data.data
     inputDesktop.value.value = ""
   } else {
     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
@@ -437,7 +437,7 @@ async function attachDesktopImg(event) {
 async function attachMobileImg(event) {
   const data = await attachPhoto(event);
   if (data.code === 0) {
-    form.mobileImageUrl = data.data[0]
+    form.mobileImageUrl = data.data
     inputMobile.value.value = ""
   } else {
     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })

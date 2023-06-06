@@ -387,7 +387,7 @@ import {
 } from '../../../api/platform'
 import { getSiteListSimple, getSiteExcelMapping } from '../../../api/site'
 import { hasRole, hasPermission } from '../../../utils/util'
-import { uploadGameImage } from '../../../api/image'
+import { uploadImage } from '../../../api/image'
 import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
@@ -817,11 +817,11 @@ async function attachPhoto(event) {
   } else {
     var formData = new FormData()
     formData.append('files', files)
-    formData.append('dir', form.gameType.toLowerCase() + '/' + platformCode.value);
+    formData.append('dir', 'game/' + platformCode.value.toLowerCase() + '/' + form.gameType.toLowerCase());
     formData.append('overwrite', false)
-    const data = await uploadGameImage(formData)
+    const data = await uploadImage(formData)
     if (data.code === 0) {
-      const path = data.data[0];
+      const path = data.data;
       form.icon = path.substr(0, path.indexOf("."));
     } else {
       ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
