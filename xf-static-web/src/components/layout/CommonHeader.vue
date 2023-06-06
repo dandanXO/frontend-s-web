@@ -422,17 +422,17 @@ export default defineComponent({
 			var data = JSON.parse(res.data);
 			for ( var i = 0; i < data.length; i++ ) {
 				console.log(data[i]);
-				if(data[i] === "ESPORT"){
+				if(data[i] === "E-sports"){
 					this.navigations.push({code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports"});
-				} else if (data[i] === "FISH"){
+				} else if (data[i] === "Fishing"){
 					this.navigations.push({code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true});
-				} else if (data[i] === "LIVE"){
+				} else if (data[i] === "Live Casino"){
 					this.navigations.push({code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true});
-				} else if (data[i] === "SPORT"){
+				} else if (data[i] === "Sports"){
 					this.navigations.push({code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true});
-				} else if (data[i] === "SLOT"){
+				} else if (data[i] === "Slots"){
 					this.navigations.push({code: "Game", name: "电子", enName: "Game", path: "/game", submenu: true});
-				} else if (data[i] === "POKER"){
+				} else if (data[i] === "Poker"){
 					this.navigations.push({code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true});
 				}
 			}
