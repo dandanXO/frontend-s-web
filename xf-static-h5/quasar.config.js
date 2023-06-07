@@ -145,8 +145,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `兴发 App`,
-        short_name: `兴发 App`,
+        name: `兴發 App`,
+        short_name: `兴發 App`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",

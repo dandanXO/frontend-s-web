@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="tigercard-container">
-      
+
     <div class="acc-pool-wrap">
         <div class="acc-pool">
             <div class="acc-pool-number">¥{{ cardInfo.cardDetail.setting.sumAward }}</div>
@@ -40,7 +40,7 @@
             <div class="huka-ranking-title">
                 <img src="../../../assets/images/promotion/hotpromo/tigercard/huka-ranking.png" alt="">
             </div>
-            
+
             <q-table
               :loading="rankingPage.loading"
               :columns="columns"
@@ -76,10 +76,10 @@
     <q-form
       @submit="submitRegisterForm"
       @reset="resetRegForm"
-      class="q-gutter-md"  
+      class="q-gutter-md"
     >
         <!-- <q-select color="white" filled v-model="form.type" placeholder="请选择虎卡" label="虎卡" :options="hukaList"
-        
+
           option-value="id"
           option-label="name"
           lazy-rules
@@ -87,7 +87,7 @@
             (val) => (val && val.length > 0) || '请选择虎卡'
           ]"
         /> -->
-        
+
         <q-select
           hide-bottom-space
           color="white"
@@ -106,9 +106,9 @@
         <q-input
           ref="friendLoginNameRef"
           class="q-mt-md"
-          hide-bottom-space color="white" filled v-model="form.friendLoginName" autocomplete="off" placeholder="请输入好友兴发账号" label="账号"
+          hide-bottom-space color="white" filled v-model="form.friendLoginName" autocomplete="off" placeholder="请输入好友兴發账号" label="账号"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入好友兴发账号']"  />
+        :rules="[ val => val && val.length > 0 || '请输入好友兴發账号']"  />
         <q-input
           ref="realNameRef"
           class="q-mt-md"
@@ -354,7 +354,7 @@ const columns = [
     field: "amount",
   }
 ]
-    
+
 </script>
 <style lang="scss">
 .tigercard-container {
@@ -364,7 +364,7 @@ const columns = [
     }
     max-width: 650px;
     margin: 0 auto;
-    
+
     background: #1d212e;
     border-radius: 10px;
     border: 0;
@@ -419,14 +419,14 @@ const columns = [
 </style>
 <style lang="scss">
  body {
-  
+
   .wonHukaBox {
     width: 100%;
     height: 500px;
     background: none;
     background-size: contain;
     box-shadow: none;
-    
+
     .wincontents {
       display: flex;
       justify-content: flex-end;
