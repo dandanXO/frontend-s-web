@@ -9,7 +9,7 @@
       <q-tab name="android" label="安卓系统" />
       <q-tab name="apple" label="苹果系统" />
     </q-tabs>
-    
+
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="android">
         <div class="downloads">
@@ -48,7 +48,7 @@ const tab = ref('android')
 const androidItems = ([
   {
     icon: "xf",
-    title: "兴发全站发",
+    title: "兴發全站",
     content: "安全便捷，支持各大平台游戏",
     downloadLink: "https://xfapp1.com/?url=m.xf882.com&agentCode=",
   },
@@ -62,7 +62,7 @@ const androidItems = ([
 const appleItems = ([
   {
     icon: "xf",
-    title: "兴发全站发",
+    title: "兴發全站",
     content: "安全便捷，支持各大平台游戏",
     downloadLink: "",
   }
@@ -70,7 +70,7 @@ const appleItems = ([
 </script>
 <style lang="scss">
   .download {
-    
+
     .q-tabs {
       background: rgba(113,125,146,.2);
       width: 100%;

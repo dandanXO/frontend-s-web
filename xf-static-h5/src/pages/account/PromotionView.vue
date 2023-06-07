@@ -36,7 +36,7 @@ const promoList = ref([
   },
   {
     code: '3',
-    label: '兴发虎卡',
+    label: '兴發虎卡',
     icon: 'huka'
   },
   {
@@ -68,7 +68,7 @@ const promoList = ref([
   },
 ])
 </script>
-<style scoped lang="scss"> 
+<style scoped lang="scss">
 .promotionbonus {
   background: #212534;
   margin: 10px;

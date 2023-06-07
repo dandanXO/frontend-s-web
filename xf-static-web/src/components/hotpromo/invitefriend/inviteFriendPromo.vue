@@ -57,7 +57,7 @@
 
         <p class="game-title sub inv-title">活动详情</p>
         <p style="margin-bottom: 30px">
-          兴发会员：点击“邀请朋友”以复制邀请链接，并通过 Facebook、LINE、Instagram、WhatsApp、Telegram 和 YouTube
+          兴發会员：点击“邀请朋友”以复制邀请链接，并通过 Facebook、LINE、Instagram、WhatsApp、Telegram 和 YouTube
           等分享。成功邀请朋友后，即可立即获得现金奖励！
         </p>
         <router-link
