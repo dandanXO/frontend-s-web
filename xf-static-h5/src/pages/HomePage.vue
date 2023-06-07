@@ -756,8 +756,9 @@
   </script>
   <style scoped lang="scss">
   .secondSwiper {
-    height: 40vh;
+    height: calc(100vh - 410px);
     padding-bottom: 100px;
+    padding-top: 25px;
   }
   :deep(.secondSwiper .swiper-wrapper) {
       .swiper-slide {
@@ -765,23 +766,26 @@
         // width: 95%;
         // margin: 0 auto;
         // overflow: hidden;
-        height: 15vh;
+    height: calc(45vh / 4);
         width: 95%;
         margin: 0 auto;
         overflow: hidden;
-        max-height: 120px;
+    min-height: 25vw;
         padding-top: 0;
         margin-bottom: 5px;
+        a {
+          display: block;
+        }
         img {
           width: 100%;
         }
         &:first-child {
           // padding-top: 65px;
           // margin-top: -40px;
-          padding-top: 30px;
+          // padding-top: 30px;
         }
         &-active {
-          padding-top: 30px;
+          // padding-top: 30px;
         }
       }
     }
