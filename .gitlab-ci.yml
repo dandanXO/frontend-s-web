@@ -18,7 +18,7 @@ default:
   cache:
     paths:
       - node_modules
-  image: node:16.17.0
+  image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/node:16.17.0
   artifacts:
    untracked: true
    expire_in: 24 hrs
@@ -33,7 +33,8 @@ default:
   stage: build-image
   script:
     - cd $PROJECT
-    - docker build -t $CI_REGISTRY_IMAGE:$PROJECT -t $CI_REGISTRY_IMAGE:$PROJECT-$(date +%s) . --no-cache
+    - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
+    - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $CI_REGISTRY_IMAGE:$PROJECT -t $CI_REGISTRY_IMAGE:$PROJECT-$(date +%s) . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
   rules:

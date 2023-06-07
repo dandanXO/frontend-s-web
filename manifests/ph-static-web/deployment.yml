@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: ph-static-web
-          image: git.caspen-tech.com:5050/jolly88-complex/frontend:ph-static-web-04b46f0c # {"$imagepolicy": "xinfa:ph-static-web"}
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:ph-static-web-1686133789 # {"$imagepolicy": "xinfa:ph-static-web"}
           ports:
             - containerPort: 80
           env:
