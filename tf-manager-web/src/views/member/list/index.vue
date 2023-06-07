@@ -6,6 +6,23 @@
         <el-input v-model="request.email" size="small" style="width: 200px; margin-left: 5px;" :placeholder="t('fields.email')" />
         <el-input v-model="request.telephone" size="small" style="width: 200px; margin-left: 5px;" :placeholder="t('fields.telephone')" />
         <el-input v-model="request.lastLoginIp" size="small" style="width: 200px; margin-left: 5px;" :placeholder="t('fields.lastLoginIp')" />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 100px;"
+          default-first-option
+          @focus="loadSites"
+          @change="changeSite"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadMembers()">
           {{ t('fields.search') }}
         </el-button>
@@ -58,25 +75,6 @@
 
       <el-dialog :title="uiControl.searchDialogTitle" v-model="uiControl.searchDialogVisible" append-to-body width="1000px">
         <el-form ref="advancedSearchForm" :model="request" :inline="true" size="small" label-width="150px">
-          <el-form-item :label="t('fields.site')" prop="siteId">
-            <el-select
-              v-model="request.siteId"
-              size="small"
-              :placeholder="t('fields.site')"
-              class="filter-item"
-              style="width: 300px;"
-              default-first-option
-              @focus="loadSites"
-              @change="changeSite"
-            >
-              <el-option
-                v-for="item in siteList.list"
-                :key="item.id"
-                :label="item.siteName"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
           <el-form-item :label="t('fields.realName')" prop="realName">
             <el-input v-model="request.realName" style="width: 300px;" maxlength="50" />
           </el-form-item>
@@ -589,7 +587,7 @@ function resetQuery() {
   request.totalWithdraw1 = null;
   request.totalWithdraw2 = null;
   request.status = null;
-  request.siteId = null;
+  request.siteId = siteList.list[0].id;
   request.birthday = [];
   request.regTime = [];
   uiControl.searchDialogVisible = false;
@@ -792,6 +790,7 @@ async function setIpLabels() {
 
 onMounted(async() => {
   await loadSites();
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;

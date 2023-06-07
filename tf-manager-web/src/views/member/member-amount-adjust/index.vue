@@ -600,6 +600,7 @@ function disabledDate(time) {
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
   siteList.list = site;
+  request.siteId = siteList.list[0].id;
 };
 
 async function loadFormSelect() {
@@ -628,7 +629,7 @@ async function loadAdjustType() {
 
 function resetQuery() {
   request.createTime = [defaultStartDate, defaultEndDate];
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = siteList.list[0].id;
   request.loginName = null;
   request.operationType = null;
   request.cause = null;
