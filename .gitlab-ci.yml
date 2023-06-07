@@ -18,7 +18,7 @@ default:
   cache:
     paths:
       - node_modules
-  image: node:16.17.0
+  image: node:17.8.0
   artifacts:
    untracked: true
    expire_in: 24 hrs

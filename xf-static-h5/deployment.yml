@@ -120,4 +120,3 @@ spec:
   selector:
     matchLabels:
       app: xf-static-h5
-
