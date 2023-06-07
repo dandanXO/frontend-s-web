@@ -138,6 +138,7 @@ build-xf-static-h5:
   script:
     - cd xf-static-h5
     - npm install
+    - npm i process
     - npm install -g @quasar/cli
     - quasar build
   variables:
