@@ -13,7 +13,7 @@ default:
   tags:
     - xinfa-runner
 
-.build-sites:
+.build-PROJECTs:
   stage: build
   cache:
     paths:
@@ -23,85 +23,85 @@ default:
    untracked: true
    expire_in: 24 hrs
    exclude:
-     - $CI_PROJECT_DIR/$SITE/node_modules/**/*
+     - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
       changes:
-        - $SITE/**/*
+        - $PROJECT/**/*
 
 .docker-build:
   stage: build-image
   script:
-    - cd $SITE
-    - docker build -t $CI_REGISTRY_IMAGE:$SITE -t $CI_REGISTRY_IMAGE:$SITE-$(date +%s) . --no-cache
+    - cd $PROJECT
+    - docker build -t $CI_REGISTRY_IMAGE:$PROJECT -t $CI_REGISTRY_IMAGE:$PROJECT-$(date +%s) . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
       changes:
-        - $SITE/**/*
+        - $PROJECT/**/*
 
 stages:
   - build
   - build-image
 
 build-ph-static-h5:
-  extends: .build-sites
+  extends: .build-PROJECTs
   script:
     - cd ph-static-h5
     - npm install
     - npm install -g @quasar/cli
     - quasar build
   variables:
-    SITE: ph-static-h5
+    PROJECT: ph-static-h5
 
 build-image-ph-static-h5:
   extends: .docker-build
   variables:
-    SITE: ph-static-h5
+    PROJECT: ph-static-h5
   needs:
     - build-ph-static-h5
 
 #===============================================================================================
 
 build-ph-static-web:
-  extends: .build-sites
+  extends: .build-PROJECTs
   script:
     - cd ph-static-web
     - npm install
     - npm run build
   variables:
-    SITE: ph-static-web
+    PROJECT: ph-static-web
 
 build-image-ph-static-web:
   extends: .docker-build
   variables:
-    SITE: ph-static-web
+    PROJECT: ph-static-web
   needs:
     - build-ph-static-web
 
 #===============================================================================================
 
 build-tf-manager-web:
-  extends: .build-sites
+  extends: .build-PROJECTs
   script:
     - cd tf-manager-web
     - npm install
     - npm run build:prod
   variables:
-    SITE: tf-manager-web
+    PROJECT: tf-manager-web
 
 build-image-tf-manager-web:
   extends: .docker-build
   variables:
-    SITE: tf-manager-web
+    PROJECT: tf-manager-web
   needs:
     - build-tf-manager-web
 
 #===============================================================================================
 
 build-xf-static-h5:
-  extends: .build-sites
+  extends: .build-PROJECTs
   script:
     - cd xf-static-h5
     - npm install
@@ -109,29 +109,29 @@ build-xf-static-h5:
     - npm install -g @quasar/cli
     - quasar build
   variables:
-    SITE: xf-static-h5
+    PROJECT: xf-static-h5
 
 build-image-xf-static-h5:
   extends: .docker-build
   variables:
-    SITE: xf-static-h5
+    PROJECT: xf-static-h5
   needs:
     - build-xf-static-h5
 
 #===============================================================================================
 
 build-xf-static-web:
-  extends: .build-sites
+  extends: .build-PROJECTs
   script:
     - cd xf-static-web
     - npm install
     - npm run build
   variables:
-    SITE: xf-static-web
+    PROJECT: xf-static-web
 
 build-image-xf-static-web:
   extends: .docker-build
   variables:
-    SITE: xf-static-web
+    PROJECT: xf-static-web
   needs:
     - build-xf-static-web
