@@ -6,7 +6,6 @@ export const getMembers = (members) => {
 };
 
 export const getMemberDetails = (id, site) => {
-	console.log(site)
   return https().request(`/member/${id}/${site}`, Method.GET, {}, ContentType.form);
 };
 

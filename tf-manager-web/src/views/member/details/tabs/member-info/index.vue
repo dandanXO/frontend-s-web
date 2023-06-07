@@ -1140,7 +1140,6 @@ export default defineComponent({
           uiControl.dialogVisible = false;
 
           loading.total = true;
-		  console.log(site.id + "1");
           const data = await getMemberDetails(props.mbrId, site.id);
           Object.keys({ ...data.data }).forEach(detailField => {
             memberDetail[detailField] = data.data[detailField];
@@ -1159,7 +1158,6 @@ export default defineComponent({
       freezeMemberForm.value.validate(async (valid) => {
         if (valid) {
           await freezeMember(props.mbrId, freezeForm);
-		  console.log(site.id + "11");
           const data = await getMemberDetails(props.mbrId, site.id);
           Object.keys({ ...data.data }).forEach(detailField => {
             memberDetail[detailField] = data.data[detailField];
@@ -1172,7 +1170,6 @@ export default defineComponent({
 
     const changeToNormal = async (id) => {
       await normalMember(id);
-	  console.log(site.id + "111");
       const data = await getMemberDetails(props.mbrId, site.id);
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField];
@@ -1185,7 +1182,6 @@ export default defineComponent({
         updateVipForm.value.validate(async (valid) => {
           if (valid) {
             await updateVip(props.mbrId, vipForm.vip);
-			console.log(site.id + "1111");
             const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
@@ -1198,7 +1194,6 @@ export default defineComponent({
         updateFinancialForm.value.validate(async (valid) => {
           if (valid) {
             await updateFinancial(props.mbrId, financialForm.financial);
-			console.log(site.id + "11111");
             const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
@@ -1211,7 +1206,6 @@ export default defineComponent({
         updateRiskForm.value.validate(async (valid) => {
           if (valid) {
             await updateRisk(props.mbrId, riskForm.risk);
-			console.log(site.id + "111111");
             const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
@@ -1267,7 +1261,6 @@ export default defineComponent({
       updateUserTypeForm.value.validate(async (valid) => {
         if (valid) {
           await updateMemberType(props.mbrId, userTypeForm.memberType);
-		  console.log(site.id + "1111111");
           const data = await getMemberDetails(props.mbrId, site.id);
           Object.keys({ ...data.data }).forEach(detailField => {
             memberDetail[detailField] = data.data[detailField];
@@ -1346,7 +1339,6 @@ export default defineComponent({
       loading.loginInfo = true;
       loading.fundingInfo = true;
       await setIpLabelsIfEmpty();
-	  console.log(site.id + "11111111");
       const data = await getMemberDetails(props.mbrId, site.id, 1);
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField];
