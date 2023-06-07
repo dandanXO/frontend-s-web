@@ -254,6 +254,7 @@ import { getExport, getMemberBetRecords, getMemberBetRecordsTotal, getMemberBetR
 import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n();
 const props = defineProps({
@@ -262,6 +263,11 @@ const props = defineProps({
     required: true
   }
 })
+
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
+});
 
 const uiControl = reactive({
   progressBarVisible: false,
@@ -524,7 +530,7 @@ function pushRecordToData(records, exportData) {
 }
 
 onMounted(async() => {
-  const { data: ret } = await getMemberDetails(props.mbrId);
+  const { data: ret } = await getMemberDetails(props.mbrId, site.id);
   memberDetail.value = ret;
   await loadPlatform();
 })

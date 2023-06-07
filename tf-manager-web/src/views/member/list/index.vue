@@ -302,7 +302,7 @@
         <el-table-column type="selection" width="55" />
         <el-table-column prop="loginName" :label="t('fields.loginName')" width="200">
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-            <router-link :to="`details/${scope.row.id}`">
+            <router-link :to="`details/${scope.row.id}?site=${scope.row.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
