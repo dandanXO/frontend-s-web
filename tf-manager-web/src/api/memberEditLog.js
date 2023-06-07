@@ -6,9 +6,9 @@ export const getMemberEditLogList = (memberEditLog) => {
 };
 
 export const preCheckForCreate = (memberMainInfo) => {
-  return https().request("/member-edit-log/check", Method.POST, memberMainInfo, ContentType.post);
+  return https().request("/member-edit-log/check", Method.POST, memberMainInfo, ContentType.json);
 };
 
 export const createMemberEditLog = (memberEditLog) => {
-  return https().request("/member-edit-log/create", Method.POST, memberEditLog, ContentType.post);
+  return https().request("/member-edit-log/create", Method.POST, memberEditLog, ContentType.json);
 };

@@ -11,11 +11,11 @@ export const getBankCardList = (bank) => {
 };
 
 export const createBankCard = (bank) => {
-  return https().request("/system-bank-card", Method.POST, bank, ContentType.post);
+  return https().request("/system-bank-card", Method.POST, bank, ContentType.json);
 };
 
 export const updateBankCard = (bank) => {
-  return https().request(`/system-bank-card?_method=PUT`, Method.POST, bank, ContentType.post);
+  return https().request(`/system-bank-card?_method=PUT`, Method.POST, bank, ContentType.json);
 };
 
 export const updateBankCardStatus = async (id, status) => {

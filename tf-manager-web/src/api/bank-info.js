@@ -11,11 +11,11 @@ export const getBankInfoList = (bank) => {
 };
 
 export const createBank = (bank) => {
-  return https().request("/system-bank-info", Method.POST, bank, ContentType.post);
+  return https().request("/system-bank-info", Method.POST, bank, ContentType.json);
 };
 
 export const updateBank = (bank) => {
-  return https().request(`/system-bank-info?_method=PUT`, Method.POST, bank, ContentType.post);
+  return https().request(`/system-bank-info?_method=PUT`, Method.POST, bank, ContentType.json);
 };
 
 export const updateBankStatus = async (id, status) => {
