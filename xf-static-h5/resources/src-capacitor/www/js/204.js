@@ -60,7 +60,7 @@ const _hoisted_9 = /*#__PURE__*/_withScopeId(() => /*#__PURE__*/(0,runtime_core_
   __name: 'PokerView',
   setup(__props) {
     // import { loadPromoBanner } from "@/api/index/promo";
-    const imgURL = "https://himalayas.fantasticemedia.com/images" + "/";
+    const imgURL = "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game" + "/";
     const casinoGame = (0,reactivity_esm_bundler/* ref */.iH)(null);
     function playGame(gameName, platformCode, gameCode, gameStatus) {
       casinoGame.value.open(gameName, platformCode, gameCode, gameStatus);

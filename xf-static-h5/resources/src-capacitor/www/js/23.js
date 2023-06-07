@@ -303,7 +303,7 @@ const qs = __webpack_require__(51470);
       })).then(res => {
         res.forEach(element => {
           element.default = __webpack_require__(47419);
-          element.icon = `${"https://himalayas.fantasticemedia.com/images"}/slot/${selectedPlat.value.code}/${element.icon}.png`;
+          element.icon = `${"https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game"}/slot/${selectedPlat.value.code}/${element.icon}.png`;
         });
         gameListData.value = res;
         isLoading.value = false;
