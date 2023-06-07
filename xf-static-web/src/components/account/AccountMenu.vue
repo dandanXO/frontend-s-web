@@ -1,6 +1,6 @@
 <template>
   <div class="account-menu-container">
-    <div class="account-info-wrapper">
+    <div class="account-info-wrapper" style="text-align: center;">
         <img
           class="account-avatar"
           :src="require(`../../assets/images/vip/badge/v1.png`)"
@@ -125,7 +125,7 @@ const vipLevel = computed(() => {
   return store.vip;
 });
 const vip = computed(() => {
-  return 'VIP' + vipLevel.value
+  return vipLevel.value
 });
 
 </script>
