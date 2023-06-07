@@ -13,7 +13,7 @@ default:
   tags:
     - xinfa-runner
 
-.build-PROJECTs:
+.build-projects:
   stage: build
   cache:
     paths:
@@ -46,7 +46,7 @@ stages:
   - build-image
 
 build-ph-static-h5:
-  extends: .build-PROJECTs
+  extends: .build-projects
   script:
     - cd ph-static-h5
     - npm install
@@ -65,7 +65,7 @@ build-image-ph-static-h5:
 #===============================================================================================
 
 build-ph-static-web:
-  extends: .build-PROJECTs
+  extends: .build-projects
   script:
     - cd ph-static-web
     - npm install
@@ -83,7 +83,7 @@ build-image-ph-static-web:
 #===============================================================================================
 
 build-tf-manager-web:
-  extends: .build-PROJECTs
+  extends: .build-projects
   script:
     - cd tf-manager-web
     - npm install
@@ -101,7 +101,7 @@ build-image-tf-manager-web:
 #===============================================================================================
 
 build-xf-static-h5:
-  extends: .build-PROJECTs
+  extends: .build-projects
   script:
     - cd xf-static-h5
     - npm install
@@ -121,7 +121,7 @@ build-image-xf-static-h5:
 #===============================================================================================
 
 build-xf-static-web:
-  extends: .build-PROJECTs
+  extends: .build-projects
   script:
     - cd xf-static-web
     - npm install
