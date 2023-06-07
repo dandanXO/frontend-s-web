@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ph-static-web
+  namespace: xinfa
+  labels:
+    app: ph-static-web
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      app: ph-static-web
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: ph-static-web
+        tier: frontend
+    spec:
+      containers:
+        - name: ph-static-web
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:ph-static-web
+          ports:
+            - containerPort: 80
+          env:
+            - name: TZ
+              value: Asia/Singapore
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 256Mi
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - ph-static-web
+              topologyKey: kubernetes.io/hostname
+      imagePullSecrets:
+        - name: gitlab-registry

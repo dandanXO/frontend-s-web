@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ph-static-h5
+  namespace: xinfa
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+spec:
+  tls:
+    - hosts:
+        - ph-h5.jolly88-ph01.com
+      secretName: ph-static-h5
+  rules:
+  - host: ph-h5.jolly88-ph01.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ph-static-h5
+            port:
+              number: 80

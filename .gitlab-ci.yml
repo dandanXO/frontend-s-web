@@ -41,21 +41,9 @@ default:
       changes:
         - $SITE/**/*
 
-.deploy:
-  stage: deploy
-  image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/bitnami/kubectl:latest
-  script:
-    - kubectl config use-context $CI_PROJECT_PATH:xf-agent
-    - kubectl rollout restart deployment/$SITE -n $NAMESPACE
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-      changes:
-        - $SITE/**/*
-
 stages:
   - build
   - build-image
-  - deploy
 
 build-ph-static-h5:
   extends: .build-sites
@@ -73,13 +61,6 @@ build-image-ph-static-h5:
     SITE: ph-static-h5
   needs:
     - build-ph-static-h5
-
-deploy-prod-ph-static-h5:
-  extends: .deploy
-  variables:
-    SITE: ph-static-h5
-  needs:
-    - build-image-ph-static-h5
 
 #===============================================================================================
 
@@ -99,13 +80,6 @@ build-image-ph-static-web:
   needs:
     - build-ph-static-web
 
-deploy-prod-ph-static-web:
-  extends: .deploy
-  variables:
-    SITE: ph-static-web
-  needs:
-    - build-image-ph-static-web
-
 #===============================================================================================
 
 build-tf-manager-web:
@@ -123,13 +97,6 @@ build-image-tf-manager-web:
     SITE: tf-manager-web
   needs:
     - build-tf-manager-web
-
-deploy-prod-tf-manager-web:
-  extends: .deploy
-  variables:
-    SITE: tf-manager-web
-  needs:
-    - build-image-tf-manager-web
 
 #===============================================================================================
 
@@ -151,13 +118,6 @@ build-image-xf-static-h5:
   needs:
     - build-xf-static-h5
 
-deploy-prod-xf-static-h5:
-  extends: .deploy
-  variables:
-    SITE: xf-static-h5
-  needs:
-    - build-image-xf-static-h5
-
 #===============================================================================================
 
 build-xf-static-web:
@@ -175,10 +135,3 @@ build-image-xf-static-web:
     SITE: xf-static-web
   needs:
     - build-xf-static-web
-
-deploy-prod-xf-static-web:
-  extends: .deploy
-  variables:
-    SITE: xf-static-web
-  needs:
-    - build-image-xf-static-web
