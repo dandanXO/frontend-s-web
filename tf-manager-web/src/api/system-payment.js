@@ -6,7 +6,7 @@ export const getSystemPaymentList = (systemPayment) => {
 };
 
 export const createSystemPayment = (systemPayment) => {
-  return https().request("/system-payment?_method=PUT", Method.POST, systemPayment, ContentType.post);
+  return https().request("/system-payment", Method.POST, systemPayment, ContentType.post);
 };
 
 export const updateSystemPayment = (systemPayment) => {
