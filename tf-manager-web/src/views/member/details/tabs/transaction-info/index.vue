@@ -15,21 +15,6 @@
       :editable="false"
       :clearable="false"
     />
-    <el-select
-      v-model="request.siteId"
-      size="small"
-      :placeholder="t('fields.site')"
-      class="filter-item"
-      style="width: 120px;margin-left:10px"
-      default-first-option
-    >
-      <el-option
-        v-for="item in siteList.list"
-        :key="item.id"
-        :label="item.siteName"
-        :value="item.id"
-      />
-    </el-select>
     <el-button icon="el-icon-search" type="primary" @click="loadData" size="small" style="margin-left:10px">
       {{ t('fields.search') }}
     </el-button>
@@ -96,13 +81,11 @@
 </template>
 
 <script>
-import { onMounted, ref, defineComponent, reactive, toRefs, computed } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 import moment from 'moment';
 import { getMemberTransferRecord } from "../../../../../api/member";
 import { useI18n } from "vue-i18n";
-import { TENANT } from "../../../../../store/modules/user/action-types";
-import { getSiteListSimple } from "../../../../../api/site";
-import { useStore } from '../../../../../store'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   props: {
@@ -113,6 +96,10 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
+    const route = useRoute()
+    const site = reactive({
+      id: route.query.site
+    });
     const shortcuts = [
       {
         text: t('fields.today'),
@@ -181,13 +168,6 @@ export default defineComponent({
       }
     ];
 
-    const store = useStore()
-    const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-    const site = ref(null);
-    const siteList = reactive({
-      list: []
-    });
-
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 2);
     const defaultStartDate = convertDate(startDate);
@@ -226,7 +206,7 @@ export default defineComponent({
       if (formData.transferDate && formData.transferDate.length === 2) {
         query.transferDate = formData.transferDate.join(",");
       }
-      query.siteId = request.siteId;
+      query.siteId = site.id;
       query.memberId = props.mbrId;
       await getMemberTransferRecord(props.mbrId, query).then(res => {
         memberData.records = res?.data?.records;
@@ -245,27 +225,12 @@ export default defineComponent({
       loadData();
     };
 
-    async function loadSites() {
-      const { data: site } = await getSiteListSimple();
-      siteList.list = site;
-    }
-
-    onMounted(async() => {
-      await loadSites();
-      request.siteId = siteList.list[0].id
-      if (LOGIN_USER_TYPE.value === TENANT.value) {
-        site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
-        request.siteId = site.value.id;
-      }
-    });
-
     return {
       shortcuts,
       startDate,
       defaultStartDate,
       defaultEndDate,
       request,
-      siteList,
       disabledDate,
       convertDate,
       t,
