@@ -31,6 +31,24 @@
             :value="item.value"
           />
         </el-select>
+
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left:10px"
+          default-first-option
+          @focus="loadSites"
+          @change="changeSite"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input v-model="request.loginName" style="width: 200px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.loginName')" />
         <el-input v-model="request.serialNumber" style="width: 300px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.serialNo')" />
         <el-input v-model="request.thirdSerialNumber" style="width: 300px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.thirdSerialNo')" />
@@ -169,16 +187,22 @@
 
 <script setup>
 import { ElMessage } from 'element-plus';
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import { cancelDeposit, getDepositRecord, getTotalDepositAmount, supplementDeposit } from '../../../api/member-deposit-record';
 import { required } from '../../../utils/validate';
 import { hasPermission } from '../../../utils/util';
 import { useI18n } from "vue-i18n";
+import { TENANT } from "../../../store/modules/user/action-types";
+import { getSiteListSimple } from "../../../api/site";
+import { useStore } from '../../../store';
 
 const { t } = useI18n();
 const supplementForm = ref(null);
 const cancelDepositForm = ref(null);
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
 const clicked = reactive({
   deposit: false,
   cancel: false
@@ -224,6 +248,10 @@ const uiControl = reactive({
   ]
 });
 
+const siteList = reactive({
+  list: []
+});
+
 const startDate = new Date();
 startDate.setDate(startDate.getDate());
 const defaultStartDate = convertDate(startDate);
@@ -236,6 +264,7 @@ const request = reactive({
   status: "PENDING",
   serialNumber: null,
   loginName: null,
+  siteId: null,
   thirdSerialNumber: null
 });
 
@@ -274,6 +303,7 @@ function resetQuery() {
   request.serialNumber = null;
   request.loginName = null;
   request.thirdSerialNumber = null;
+  request.siteId = siteList.list[0].id;
 };
 
 const page = reactive({
@@ -356,7 +386,18 @@ function cancel() {
   });
 }
 
-onMounted(() => {
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+}
+
+onMounted(async() => {
+  await loadSites();
+  request.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
   loadRecord();
 });
 
