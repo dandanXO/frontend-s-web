@@ -700,6 +700,19 @@ export default {
     tigerCardBonusTime: 'Receive Time',
     timeType: 'Time Type',
     count: 'Count',
+    host: 'host',
+    port: 'port',
+    user: 'user',
+    from: 'from',
+    addEmailSetting: 'Add Email Setting',
+    editEmailSetting: 'Edit Email Setting',
+    signName: 'Sign Name',
+    secretId: 'Secret ID',
+    secretKey: 'Secret Key',
+    appId: 'Application ID',
+    templateId: 'Template ID',
+    addSmsSetting: 'Add SMS Setting',
+    editSmsSetting: 'Edit SMS Setting',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -967,6 +980,13 @@ export default {
     validateTigerCardBonusTimeRequired: 'Receive Time required',
     validateTigerSumAwardRequired: 'Total bonus required',
     validateVirtualCountRequired: 'Count is required',
+    validateHostRequired: 'Host is required',
+    validatePortRequired: 'Port is required',
+    validateSignNameRequired: 'Sign Name is required',
+    validateSecretIdRequired: 'Secret ID is required',
+    validateSecretKeyRequired: 'Secret Key is required',
+    validateAppIdRequired: 'Application ID is required',
+    validateTemplateIdRequired: 'Template ID is required',
   },
   menu: {
     undefined: '',
@@ -1086,6 +1106,8 @@ export default {
     'Summary Active Report': 'Summary Active Report',
     'Summary Member Report': 'Summary Member Report',
     'Finance Feedback': 'Finance Feedback',
+    'Email Setting': 'Email Setting',
+    'SMS Setting': 'SMS Setting'
   },
   error: {
     400: 'Bad Request',
@@ -1205,6 +1227,8 @@ export default {
     17011: 'Vote record is already cancelled',
     18000: 'Domain already exists',
     18001: 'Affiliate domain does not exist',
-    19000: 'Bank card already blacklisted'
+    19000: 'Bank card already blacklisted',
+    20000: 'SMS Setting already exist on the site',
+    20100: 'Email Setting already exist on the site',
   },
 }

@@ -11,11 +11,11 @@ export const getPromoPagesList = (promoPages) => {
 };
 
 export const createPromoPages = (formData) => {
-  return https().request("/promo-pages/create", Method.POST, formData, ContentType.post);
+  return https().request("/promo-pages/create", Method.POST, formData, ContentType.json);
 };
 
 export const updatePromoPages = (promoPages) => {
-  return https().request(`/promo-pages/update?_method=PUT`, Method.POST, promoPages, ContentType.post);
+  return https().request(`/promo-pages/update?_method=PUT`, Method.POST, promoPages, ContentType.json);
 };
 
 export const updatePromoPagesState = async (id, state) => {

@@ -6,7 +6,7 @@ export const getWithdrawBankList = (bank) => {
 };
 
 export const createWithdrawBank = (bank) => {
-  return https().request("/system-withdraw-bank", Method.POST, bank, ContentType.post);
+  return https().request("/system-withdraw-bank", Method.POST, bank, ContentType.json);
 };
 
 export const deleteWithdrawBank = (id) => {

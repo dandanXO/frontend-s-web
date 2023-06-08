@@ -6,7 +6,7 @@ export const getPaymentBankList = (bank) => {
 };
 
 export const createPaymentBank = (bank) => {
-  return https().request("/system-payment-bank", Method.POST, bank, ContentType.post);
+  return https().request("/system-payment-bank", Method.POST, bank, ContentType.json);
 };
 
 export const deletePaymentBank = (id) => {

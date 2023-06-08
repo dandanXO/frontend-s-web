@@ -14,6 +14,7 @@ const clearQueryStr = (param) => {
 }
 
 const clearEmptyParam = (config) => {
+  if (config.headers["Content-type"].includes("json")) { return; }
   ['data', 'params'].forEach(item => {
     if (config[item]) {
       const rawType = toRawType(config[item])

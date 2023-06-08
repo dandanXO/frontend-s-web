@@ -6,7 +6,7 @@ export const getSystemMessageTemplate = (systemMessageTemplate) => {
 };
 
 export const createSystemMessageTemplate = (systemMessageTemplate) => {
-  return https().request("/system-message-template", Method.POST, systemMessageTemplate, ContentType.post);
+  return https().request("/system-message-template", Method.POST, systemMessageTemplate, ContentType.json);
 };
 
 export const deleteMessageTemplate = async (ids) => {

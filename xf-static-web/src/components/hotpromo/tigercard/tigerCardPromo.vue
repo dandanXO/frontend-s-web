@@ -40,7 +40,7 @@
             <div class="huka-ranking-title">
                 <img src="../../../assets/images/promotion/hotpromo/tigercard/huka-ranking.png" alt="">
             </div>
-            
+
             <el-table
               :data="rankingRecord()"
               :loading="rankingPage.loading"
@@ -73,7 +73,7 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="friendLoginName" label="账号" :label-width="formLabelWidth">
-        <el-input v-model="form.friendLoginName" autocomplete="off" placeholder="请输入好友兴发账号" />
+        <el-input v-model="form.friendLoginName" autocomplete="off" placeholder="请输入好友兴發账号" />
       </el-form-item>
       <el-form-item prop="realName" label="姓名" :label-width="formLabelWidth">
         <el-input v-model="form.realName" autocomplete="off" placeholder="请输入好友真实姓名" />
@@ -288,7 +288,7 @@ const submitRegisterForm = async (elForm) => {
     }
   })
 }
-    
+
 </script>
 <style lang="scss">
 .el-loading-spinner .path {
@@ -305,7 +305,7 @@ const submitRegisterForm = async (elForm) => {
     }
     max-width: 650px;
     margin: 0 auto;
-    
+
     background: #1d212e;
     border-radius: 10px;
     border: 0;

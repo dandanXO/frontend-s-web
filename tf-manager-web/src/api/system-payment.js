@@ -6,11 +6,11 @@ export const getSystemPaymentList = (systemPayment) => {
 };
 
 export const createSystemPayment = (systemPayment) => {
-  return https().request("/system-payment", Method.POST, systemPayment, ContentType.post);
+  return https().request("/system-payment", Method.POST, systemPayment, ContentType.json);
 };
 
 export const updateSystemPayment = (systemPayment) => {
-  return https().request(`/system-payment/update?_method=PUT`, Method.POST, systemPayment, ContentType.post);
+  return https().request(`/system-payment/update?_method=PUT`, Method.POST, systemPayment, ContentType.json);
 };
 
 export const updateSystemPaymentStatus = async (id, status) => {

@@ -98,7 +98,7 @@
         <router-view />
       </q-page-container>
     </q-scroll-area> -->
-    
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -185,7 +185,7 @@ export default defineComponent({
         checkRoute();
       }
     );
-    
+
     watch(
       () => route.query,
       async () => {
@@ -270,7 +270,7 @@ export default defineComponent({
         } else if (route.path === "/account/download") {
           prevPage.value = 'account';
           hasPage.value = true;
-          pageName.value = "兴发下载";
+          pageName.value = "兴發下载";
         } else if (route.path === "/account/announcement") {
           prevPage.value = 'account';
           hasPage.value = true;
@@ -407,7 +407,7 @@ export default defineComponent({
         icon: 'jdb',
       },
     ]);
-  
+
     onMounted(() => {
       checkRoute();
     });

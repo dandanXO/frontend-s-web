@@ -28,7 +28,7 @@
       </div>
     </div>
       <div class="affiliate-program">
-        <div class="affiliate-main-title">兴发佣金方案</div>
+        <div class="affiliate-main-title">兴發佣金方案</div>
         <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub" style="margin-top: 0;">
             <div class="affiliate-subtitle">分红条款</div>
@@ -211,7 +211,7 @@
 					<div class="agent-ways-box">
 						<div class="agent-ways-way">合营QQ</div>
 						<div class="agent-ways-val">
-						
+
 						1193911745（工作时间：14:00-23:00）</div>
 					</div>
 					<div class="agent-ways-box">
@@ -261,7 +261,7 @@ export default defineComponent({
           left,
       );
     };
-    
+
     const regDevice = Platform.is.mobile ? "H5" : "WEB"
     const store = userStore();
     const columns = [
@@ -405,9 +405,9 @@ export default defineComponent({
         }
       }
     }
-    
+
     .agent-content-item {
-      
+
     }
     .agent-content-item ul {
       margin-top: 37px;
