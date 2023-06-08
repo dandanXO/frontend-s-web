@@ -427,7 +427,7 @@ var qs = __webpack_require__(51470);
       start: "",
       end: ""
     });
-    const imgURL = "https://himalayas.fantasticemedia.com/images" + '/';
+    const imgURL = "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game" + '/';
     const columns = [{
       title: "Bank Name",
       dataIndex: "name",

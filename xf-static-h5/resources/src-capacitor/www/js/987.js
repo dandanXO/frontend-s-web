@@ -301,7 +301,7 @@ var utils_scroll = __webpack_require__(43701);
         isLoading.value = false;
         res.forEach(element => {
           element.default = __webpack_require__(47419);
-          element.icon = `${"https://himalayas.fantasticemedia.com/images"}/fish/${selectedPlat.value.code}/${element.icon}.png`;
+          element.icon = `${"https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game"}/fish/${selectedPlat.value.code}/${element.icon}.png`;
         });
         gameListData.value = res;
       });

@@ -268,7 +268,7 @@ var use_quasar = __webpack_require__(19302);
   name: "WithdrawView",
   setup() {
     const $q = (0,use_quasar/* default */.Z)();
-    const imgURL = "https://himalayas.fantasticemedia.com/images" + '/';
+    const imgURL = "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game" + '/';
     const amountRef = (0,reactivity_esm_bundler/* ref */.iH)();
     const cardRef = (0,reactivity_esm_bundler/* ref */.iH)();
     const activeItem = (0,reactivity_esm_bundler/* ref */.iH)(0);

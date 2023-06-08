@@ -376,7 +376,7 @@ var vue_router = __webpack_require__(28339);
     const step = (0,reactivity_esm_bundler/* ref */.iH)(1);
     const done1 = (0,reactivity_esm_bundler/* ref */.iH)(false);
     const done2 = (0,reactivity_esm_bundler/* ref */.iH)(false);
-    const imgURL = "https://himalayas.fantasticemedia.com/images" + "/";
+    const imgURL = "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game" + "/";
     const verificationImg = (0,reactivity_esm_bundler/* ref */.iH)("");
     const regForm = (0,reactivity_esm_bundler/* reactive */.qj)({
       loginName: "",

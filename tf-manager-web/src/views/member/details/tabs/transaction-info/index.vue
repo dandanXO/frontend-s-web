@@ -9,13 +9,13 @@
       range-separator=":"
       :start-placeholder="t('fields.startDate')"
       :end-placeholder="t('fields.endDate')"
-      style="margin-right: 10px;width: 300px"
+      style="width: 300px"
       :shortcuts="shortcuts"
       :disabled-date="disabledDate"
       :editable="false"
       :clearable="false"
     />
-    <el-button icon="el-icon-search" type="primary" @click="loadData" size="small">
+    <el-button icon="el-icon-search" type="primary" @click="loadData" size="small" style="margin-left:10px">
       {{ t('fields.search') }}
     </el-button>
   </div>
@@ -85,6 +85,7 @@ import { defineComponent, reactive, toRefs } from "vue";
 import moment from 'moment';
 import { getMemberTransferRecord } from "../../../../../api/member";
 import { useI18n } from "vue-i18n";
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   props: {
@@ -95,6 +96,10 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
+    const route = useRoute()
+    const site = reactive({
+      id: route.query.site
+    });
     const shortcuts = [
       {
         text: t('fields.today'),
@@ -162,10 +167,12 @@ export default defineComponent({
         }
       }
     ];
+
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 2);
     const defaultStartDate = convertDate(startDate);
     const defaultEndDate = convertDate(new Date());
+    const request = reactive({ siteId: null });
     function convertDate(date) {
       return moment(date).format('YYYY-MM-DD');
     }
@@ -180,6 +187,7 @@ export default defineComponent({
     });
     const formData = reactive({
       transferDate: [defaultStartDate, defaultEndDate],
+      siteId: request.siteId,
       size: 20,
       current: 1,
       orderBy: "transfer_date",
@@ -198,6 +206,7 @@ export default defineComponent({
       if (formData.transferDate && formData.transferDate.length === 2) {
         query.transferDate = formData.transferDate.join(",");
       }
+      query.siteId = site.id;
       query.memberId = props.mbrId;
       await getMemberTransferRecord(props.mbrId, query).then(res => {
         memberData.records = res?.data?.records;
@@ -215,11 +224,13 @@ export default defineComponent({
       }
       loadData();
     };
+
     return {
       shortcuts,
       startDate,
       defaultStartDate,
       defaultEndDate,
+      request,
       disabledDate,
       convertDate,
       t,

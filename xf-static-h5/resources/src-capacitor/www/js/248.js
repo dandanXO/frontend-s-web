@@ -558,7 +558,7 @@ var stores_ui = __webpack_require__(24477);
       })).then(res => {
         res.forEach(element => {
           element.default = __webpack_require__(47419);
-          element.icon = `${"https://himalayas.fantasticemedia.com/images"}/slot/${selectedPlat.value.code}/${element.icon}.png`;
+          element.icon = `${"https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game"}/slot/${selectedPlat.value.code}/${element.icon}.png`;
         });
         gameListData.value = res;
         gamePage.total = res.length;
@@ -659,7 +659,7 @@ var stores_ui = __webpack_require__(24477);
       tab: (0,reactivity_esm_bundler/* ref */.iH)("slots"),
       gamesTab: (0,reactivity_esm_bundler/* ref */.iH)(platforms.value[0]),
       splitterModel: (0,reactivity_esm_bundler/* ref */.iH)(30),
-      imgURL: "https://himalayas.fantasticemedia.com/images" + "/",
+      imgURL: "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game" + "/",
       banners,
       store,
       platforms,

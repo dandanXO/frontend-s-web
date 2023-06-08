@@ -23,6 +23,25 @@
             :value="item.id"
           />
         </el-select>
+
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left:10px"
+          default-first-option
+          @focus="loadSites"
+          @change="changeSite"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadBlacklist()">
           {{ t('fields.search') }}
         </el-button>
@@ -329,7 +348,8 @@ const request = reactive({
   size: 30,
   current: 1,
   loginName: null,
-  privilegeId: null
+  privilegeId: null,
+  siteId: null
 });
 
 const form = reactive({
@@ -342,6 +362,7 @@ const form = reactive({
 function resetQuery() {
   request.loginName = null;
   request.privilegeId = null;
+  request.siteId = siteList.list[0].id;
 }
 
 async function loadBlacklist() {
@@ -349,7 +370,7 @@ async function loadBlacklist() {
   const requestCopy = { ...request };
   const query = {};
   Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value && value !== 'siteId') {
+    if (value) {
       query[key] = value;
     }
   });
@@ -613,6 +634,12 @@ async function confirmImport() {
 
 onMounted(async() => {
   await loadSites();
+  request.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
+
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     await loadPrivilegeInfos(site.value.id);
