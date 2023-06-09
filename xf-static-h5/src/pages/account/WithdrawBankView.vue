@@ -6,7 +6,7 @@
     <div>
       <div class="account-content text-center">
         <div class="flex-box flex-wrap bank-card-list">
-          <template 
+          <template
             v-for="(bc, index) in personalState.bankCardList"
             :key="bc.id"
           >
@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-  
+
     <q-dialog v-model="bankCardModalState.visible" persistent>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section v-if="!isVirtual" class="q-mb-md">
@@ -543,7 +543,7 @@ export default defineComponent({
     // };
     let validateBankLength = (val) => {
         if (selectedBankType.value === 'Bank') {
-         return (val.length > 5 && val.length < 13) || 'Length should be 6 to 12 characters'
+         return (val.length > 15 && val.length < 20) || 'Length should be 16 to 19 characters'
         } else if (selectedBankType.value === 'Crypto') {
           return (val.length > 33 && val.length < 38) || 'Length should be 34 to 37 characters.'
         } else if (selectedBankType.value === 'e-Wallet') {

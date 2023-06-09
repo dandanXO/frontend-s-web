@@ -248,8 +248,8 @@ export default defineComponent({
       var min = 6
       var max = 12
       if (selectedBankType.value === 'Bank') {
-        min = 6;
-        max = 12;
+        min = 16;
+        max = 19;
       } else if (selectedBankType.value === 'Crypto') {
         min = 34;
         max = 37;
