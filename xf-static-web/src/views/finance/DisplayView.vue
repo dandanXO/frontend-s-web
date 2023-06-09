@@ -14,7 +14,7 @@
         :value="input.value"
         :name="input.name"
       />
-      <button type="submit" id="submitBtn">Submit</button>
+      <button type="submit" id="submitBtn">提交</button>
     </form>
   </div>
 </template>

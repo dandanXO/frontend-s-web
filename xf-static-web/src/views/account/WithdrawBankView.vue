@@ -149,7 +149,7 @@
       >
         <el-form-item
           prop="bankId"
-          :rules="[{ required: true, message: 'Please select a bank', trigger: 'blur' }]"
+          :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
         >
          <el-row :gutter="20">
           <el-col :span="6">
@@ -162,7 +162,7 @@
               <el-option v-for="bank in bankTypes"
               :key="bank.value"
               :value="bank.value">
-                {{ bank.value }}
+                {{ bank.text }}
               </el-option>
             </el-select>
           </el-col>
@@ -170,7 +170,7 @@
             <el-select
               class="select"
               v-model="bankCardInfo.bankId"
-              placeholder="Please select a bank"
+              placeholder="选择银行"
               style="width: 100%"
             >
               <el-option v-for="b in banksList" :key="b.id" :label="b.name" :value="b.id">
@@ -205,13 +205,13 @@
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            placeholder="Card number"
+            placeholder="银行卡号"
           />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress">
           <el-input
             v-model="bankCardInfo.cardAddress"
-            placeholder="Card Address"
+            placeholder="开户行地址"
           />
         </el-form-item>
         <el-form-item class="txt-center">
@@ -304,7 +304,7 @@ export default defineComponent({
       pageSize: 5,
       pageCount: 1
     }])
-    const bankTypes = [{ value: 'Bank' }, { value: 'Crypto'}]
+    const bankTypes = [{ value: 'Bank', text: '银行卡' }, { value: 'Crypto', text: '数字货币' }]
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -392,7 +392,7 @@ export default defineComponent({
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
-          ElMessage.error('Please fill in real name');
+          ElMessage.error('真实姓名不可为空');
           router.push("/center/personal");
         } else {
           bankCardInfo.bankId = undefined;
