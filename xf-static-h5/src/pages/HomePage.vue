@@ -91,7 +91,6 @@
     :freeMode="true"
     :set-wrapper-size="true"
     :scrollbar="{ draggable: true }"
-    :mousewheel="true"
     watch-slides-progress
     @swiper="setSecondSwiper"
     :controller="{ control: firstSwiper }"
@@ -110,6 +109,7 @@
       slides-per-view="auto"
       :scrollbar="{ draggable: true }"
       @slide-change-transition-end="onSlideChange"
+      :mousewheel="true"
       @swiper="setFirstSwiper"
       :controller="{ control: secondSwiper }"
       class="secondSwiper"
@@ -766,11 +766,11 @@
         // width: 95%;
         // margin: 0 auto;
         // overflow: hidden;
-    height: calc(45vh / 4);
+        height: calc(45vh / 5);
         width: 95%;
         margin: 0 auto;
         overflow: hidden;
-    min-height: 25vw;
+        min-height: 120px;
         padding-top: 0;
         margin-bottom: 5px;
         a {
@@ -1041,7 +1041,15 @@
       }
     }
   }
+  @media (max-width: 480px) {
+    .secondSwiper .swiper-wrapper .swiper-slide {
+      height: calc(45vh/4);
+      min-height: 25vw;
+      max-height: unset;
+    }
+  }
   @media (max-width: 400px) {
+    
     .grid {
     .q-card {
       .q-card__section {

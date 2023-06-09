@@ -29,10 +29,20 @@
           <el-row :gutter="20">
             <el-col :span="9">
               <el-form-item class="helptxt" label="余额" prop="localAmount">
-                  <el-input
+                  <!-- <el-input
+                  v-model="form.localAmount"
+                  placeholder="输入存款余额"
+                /> -->
+                <el-input v-if="amountList.length === 0"
                   v-model="form.localAmount"
                   placeholder="输入存款余额"
                 />
+                
+                <el-select placeholder="选择存款余额" v-else v-model="form.localAmount">
+                  <el-option v-for="amount in amountList" :key="amount" :value="amount">
+                    {{ amount }}
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -163,6 +173,7 @@ const payMethods = reactive([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
+const amountList = ref([]);
 const privilegeList = ref([]);
 const selectedPrivilege = ref(null);
 const unselectedPrivileges = ref([]);
@@ -254,6 +265,11 @@ async function loadPrivilege(val) {
 }
 function selectPayType(value) {
   if (value) {
+    if (value.extra && value.extra.amountArr) {
+      amountList.value = value.extra.amountArr;
+    } else {
+      amountList.value = [];
+    }
     if (value.extra && value.extra.banks) {
       bankCardList.value = value.extra.banks;
     } else {
