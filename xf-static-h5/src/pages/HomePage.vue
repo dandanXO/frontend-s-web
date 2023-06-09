@@ -149,8 +149,7 @@
                                                         
     </swiper-slide>
     <swiper-slide v-for="(mini, i) in minigame" :key="i" :class="'minigame-' + i">
-      <img @click="playGame(minigame.id, minigame.code)" :src="require(`../assets/images/index/minigame/p_mini_${mini.icon}.png`)" />
-                                          
+      <img @click="playGame(minigame.id, minigame.code)" :src="require(`../assets/images/index/minigame/p_mini_${mini.icon}.png`)" />                               
     </swiper-slide>
     </swiper>
     </div>
@@ -757,7 +756,7 @@
   <style scoped lang="scss">
   .secondSwiper {
     height: calc(100vh - 410px);
-    padding-bottom: 100px;
+    padding-bottom: 0px;
     padding-top: 25px;
   }
   :deep(.secondSwiper .swiper-wrapper) {

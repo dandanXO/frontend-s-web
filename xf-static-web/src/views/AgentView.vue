@@ -4,13 +4,13 @@
       <div class="buttons">
         <a
           :href="
-            'https://www.jollycobber.com/my/register?agent=' +
+            'https://www.jollycobber.com/xf/register?agent=' +
             (affCode ? affCode : '')
           "
         >
         加入我们
         </a>
-        <a href="https://www.jollycobber.com/my/login">
+        <a href="https://www.jollycobber.com/xf/login">
         登录
         </a>
         <a
