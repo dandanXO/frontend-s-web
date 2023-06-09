@@ -223,7 +223,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 ;// CONCATENATED MODULE: ./node_modules/@quasar/app-webpack/lib/webpack/loader.js.transform-quasar-imports.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-2.use[0]!./node_modules/@quasar/app-webpack/lib/webpack/loader.vue.auto-import-quasar.js??ruleSet[0].use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[1]!./src/components/paymentSelect/node.vue?vue&type=script&lang=js
 
-const imgURL = "https://himalayas.fantasticemedia.com/images" + '/';
+const imgURL = "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game" + '/';
 /* harmony default export */ const nodevue_type_script_lang_js = ((0,runtime_core_esm_bundler/* defineComponent */.aZ)({
   name: "NodeComp",
   order: 1,

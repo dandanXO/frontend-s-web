@@ -168,10 +168,16 @@ import { getMemberRiskInfo } from '../../../../../api/member-risk';
 import { useStore } from "../../../../../store";
 import { useI18n } from "vue-i18n";
 import { hasPermission } from '../../../../../utils/util'
+import { useRoute } from 'vue-router'
 
 // eslint-disable-next-line
 const { t } = useI18n();
 const store = useStore()
+
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
+});
 
 const props = defineProps({
   mbrId: {
@@ -233,7 +239,7 @@ const page = reactive({
   loading: false,
 })
 async function loadMemberDetail() {
-  const data = await getMemberDetails(props.mbrId);
+  const data = await getMemberDetails(props.mbrId, site.id);
   Object.keys({ ...data.data }).forEach(detailField => {
     memberDetail[detailField] = data.data[detailField];
   });

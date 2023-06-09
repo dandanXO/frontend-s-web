@@ -73,13 +73,27 @@
         <el-input v-model="request.thirdSerialNumber" style="width: 300px; margin-left: 10px" size="small"
                   maxlength="50" :placeholder="t('fields.thirdSerialNo')"
         />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left:10px"
+          default-first-option
+          @focus="loadSites"
+          @change="changeSite"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRecord()">
           {{ t('fields.search') }}
         </el-button>
         <el-button size="mini" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
-        <el-button icon="el-icon-search" size="mini" type="primary" v-permission="['sys:deposit:list:advanced']" @click="showDialog('SEARCH')">
-          {{ t('fields.advancedSearch') }}
-        </el-button>
       </div>
 
       <div class="btn-group">
@@ -90,6 +104,10 @@
           v-permission="['sys:deposit:export']"
           @click="exportExcel"
         >{{ t('fields.exportToExcel') }}
+        </el-button>
+
+        <el-button icon="el-icon-search" size="mini" type="primary" v-permission="['sys:deposit:list:advanced']" @click="showDialog('SEARCH')">
+          {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
     </div>
@@ -425,11 +443,15 @@ import { hasPermission } from '../../../utils/util';
 import { useStore } from '../../../store'
 import { getAllPrivilegeInfo, getAllPrivilegeInfoBySiteId } from '../../../api/privilege-info';
 import { useI18n } from "vue-i18n";
+import { TENANT } from "../../../store/modules/user/action-types";
+import { getSiteListSimple } from "../../../api/site";
 
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 const siteId = ref(null);
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
 const searchForm = ref(null);
 const vipList = reactive({
   list: []
@@ -438,6 +460,10 @@ const financialList = reactive({
   list: []
 });
 const priviList = reactive({
+  list: []
+});
+
+const siteList = reactive({
   list: []
 });
 
@@ -585,7 +611,8 @@ const request = reactive({
   maxDepositAmount: null,
   cardAccount: null,
   transactionTime: uiControl.timeList[0].value,
-  thirdPartyName: null
+  thirdPartyName: null,
+  siteId: null
 });
 
 const validateDepositAmount = (rule, value, callback) => {
@@ -627,6 +654,7 @@ function resetQuery() {
   request.thirdPartyName = uiControl.thirdPartyNameList[0].paymentName;
   request.transactionTime = uiControl.timeList[0].value;
   uiControl.dialogVisible = false;
+  request.siteId = siteList.list[0].id;
 };
 
 const page = reactive({
@@ -805,7 +833,18 @@ async function loadThirdParty() {
   }
 }
 
-onMounted(() => {
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+}
+
+onMounted(async() => {
+  await loadSites();
+  request.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
   if (LOGIN_USER_SITEID.value != null) {
     siteId.value = LOGIN_USER_SITEID.value
     loadPrivilegeInfos(siteId.value);

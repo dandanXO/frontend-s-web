@@ -5,8 +5,8 @@ export const getMembers = (members) => {
   return https().request("/member", Method.GET, members, ContentType.form);
 };
 
-export const getMemberDetails = (id) => {
-  return https().request(`/member/${id}`, Method.GET, {}, ContentType.form);
+export const getMemberDetails = (id, site) => {
+  return https().request(`/member/${id}/${site}`, Method.GET, {}, ContentType.form);
 };
 
 export const getMemberLoginRecord = (query) => {

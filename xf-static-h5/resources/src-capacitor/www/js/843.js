@@ -670,7 +670,7 @@ var qs = __webpack_require__(51470);
     const $q = (0,use_quasar/* default */.Z)();
     const btnLoading = (0,reactivity_esm_bundler/* ref */.iH)(false);
     const loading = (0,reactivity_esm_bundler/* ref */.iH)(true);
-    const imgURL = "https://himalayas.fantasticemedia.com/images" + "/";
+    const imgURL = "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game" + "/";
     const pagination = (0,reactivity_esm_bundler/* reactive */.qj)({
       pageSize: 5,
       total: 5
@@ -1511,7 +1511,7 @@ runtime_auto_import_default()(HotPromotionvue_type_script_lang_js, 'components',
   },
   setup() {
     const store = (0,stores/* userStore */.H)();
-    const imgURL = "https://himalayas.fantasticemedia.com/images" + '/';
+    const imgURL = "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/game" + '/';
     const banner = (0,reactivity_esm_bundler/* ref */.iH)([]);
     const promoState = (0,reactivity_esm_bundler/* reactive */.qj)({
       active: {

@@ -739,6 +739,7 @@
 
 <script>
 import { nextTick, defineComponent, onMounted, reactive, ref } from "vue";
+import { useRoute } from 'vue-router'
 import { ElMessage } from "element-plus";
 import { required, size, isNumeric } from "../../../../../utils/validate";
 import {
@@ -782,6 +783,10 @@ export default defineComponent({
       dialogVisible: false,
       dialogTitle: "",
       dialogType: ""
+    });
+    const route = useRoute()
+    const site = reactive({
+      id: route.query.site
     });
 
     const loading = reactive({
@@ -1135,7 +1140,7 @@ export default defineComponent({
           uiControl.dialogVisible = false;
 
           loading.total = true;
-          const data = await getMemberDetails(props.mbrId);
+          const data = await getMemberDetails(props.mbrId, site.id);
           Object.keys({ ...data.data }).forEach(detailField => {
             memberDetail[detailField] = data.data[detailField];
           });
@@ -1153,7 +1158,7 @@ export default defineComponent({
       freezeMemberForm.value.validate(async (valid) => {
         if (valid) {
           await freezeMember(props.mbrId, freezeForm);
-          const data = await getMemberDetails(props.mbrId);
+          const data = await getMemberDetails(props.mbrId, site.id);
           Object.keys({ ...data.data }).forEach(detailField => {
             memberDetail[detailField] = data.data[detailField];
           });
@@ -1165,7 +1170,7 @@ export default defineComponent({
 
     const changeToNormal = async (id) => {
       await normalMember(id);
-      const data = await getMemberDetails(props.mbrId);
+      const data = await getMemberDetails(props.mbrId, site.id);
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField];
       });
@@ -1177,7 +1182,7 @@ export default defineComponent({
         updateVipForm.value.validate(async (valid) => {
           if (valid) {
             await updateVip(props.mbrId, vipForm.vip);
-            const data = await getMemberDetails(props.mbrId);
+            const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
             });
@@ -1189,7 +1194,7 @@ export default defineComponent({
         updateFinancialForm.value.validate(async (valid) => {
           if (valid) {
             await updateFinancial(props.mbrId, financialForm.financial);
-            const data = await getMemberDetails(props.mbrId);
+            const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
             });
@@ -1201,7 +1206,7 @@ export default defineComponent({
         updateRiskForm.value.validate(async (valid) => {
           if (valid) {
             await updateRisk(props.mbrId, riskForm.risk);
-            const data = await getMemberDetails(props.mbrId);
+            const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
             });
@@ -1256,7 +1261,7 @@ export default defineComponent({
       updateUserTypeForm.value.validate(async (valid) => {
         if (valid) {
           await updateMemberType(props.mbrId, userTypeForm.memberType);
-          const data = await getMemberDetails(props.mbrId);
+          const data = await getMemberDetails(props.mbrId, site.id);
           Object.keys({ ...data.data }).forEach(detailField => {
             memberDetail[detailField] = data.data[detailField];
           });
@@ -1334,7 +1339,7 @@ export default defineComponent({
       loading.loginInfo = true;
       loading.fundingInfo = true;
       await setIpLabelsIfEmpty();
-      const data = await getMemberDetails(props.mbrId);
+      const data = await getMemberDetails(props.mbrId, site.id, 1);
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField];
       });
