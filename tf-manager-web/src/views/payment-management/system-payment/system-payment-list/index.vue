@@ -3,10 +3,10 @@
     <div class="header-container">
       <div class="search">
         <el-input
-          v-model="request.mallName"
+          v-model="request.paymentName"
           size="small"
           style="width: 200px"
-          :placeholder="t('fields.platformName')"
+          :placeholder="t('fields.paymentName')"
         />
         <el-select
           clearable
