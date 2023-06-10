@@ -453,9 +453,9 @@ export default defineComponent({
         const data = await uploadImage(formData)
         if (data.code === 0) {
           if (type === 'payment') {
-            this.ruleForm.icon = data.data[0]
+            this.ruleForm.icon = data.data
           } else {
-            this.ruleForm.promoIcon = data.data[0]
+            this.ruleForm.promoIcon = data.data
           }
         } else {
           ElMessage({
