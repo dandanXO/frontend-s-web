@@ -282,7 +282,6 @@ export default defineComponent({
         // eslint-disable-next-line vue/no-mutating-props
         this.list.push(this.ruleForm)
       }
-      console.log(this.list)
 
       this.dialogVisible = false
       this.$emit('exportNodes', this.list)
@@ -430,7 +429,6 @@ export default defineComponent({
     },
 
     async attachPhoto(event, type) {
-      console.log(type)
       const files = event.target.files[0]
       const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
       const dirPayment = 'payment'
