@@ -42,7 +42,7 @@
               v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
               :src="paymethodicon + '/000/fff.png&text=payment'"
             />
-            <img v-else :src="paymethodicon + '/' + item.icon" />
+            <img v-else :src="paymethodicon + '/payment/' + item.icon" />
           </el-col>
           <el-col :span="12">
             <div class="node-text">

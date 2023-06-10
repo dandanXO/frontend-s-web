@@ -154,7 +154,7 @@
                     <!-- <el-empty
               image="http://149.28.155.235:9999/6f3ec696-4f82-4866-a427-22676659db3b.png"
             /> -->
-                    <img v-else :src="paymethodicon + '/' + item.icon" />
+                    <img v-else :src="paymethodicon + '/payment/' + item.icon" />
                   </el-col>
                   <el-col :span="12">
                     <div class="node-text">
@@ -546,7 +546,7 @@ async function attachPhoto(event) {
     formData.append('overwrite', false)
     const data = await uploadImage(formData)
     if (data.code === 0) {
-      ruleForm.icon = data.data[0]
+      ruleForm.icon = data.data
     } else {
       ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
     }
