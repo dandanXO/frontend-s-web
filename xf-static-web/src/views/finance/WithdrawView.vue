@@ -3,7 +3,7 @@
     <div class="menu-title-container">
       <span class="menu-title">快速提款</span>
     </div>
-    
+
     <div class="menu-title-container">
       <span class="menu-title"> 提款流程：</span>
     <div class="account-content withdrawal">
@@ -35,7 +35,7 @@
               <div class="type-name">{{ method.name }}</div>
             </div>
           </el-form-item>
-          
+
         <el-form-item
           class="helptxt"
           prop="amount"
@@ -136,7 +136,7 @@ export default defineComponent({
   name: "WithdrawView",
   setup() {
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment';
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
@@ -229,7 +229,7 @@ export default defineComponent({
           // message.error(error.message, 4)
            })
     }
-    
+
     async function verifyWithdrawAmount(r, v) {
       if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {

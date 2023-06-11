@@ -284,7 +284,7 @@ export default defineComponent({
       }
 
       this.dialogVisible = false
-      this.$emit('exportNodes', this.list)
+      bus.emit('exportNodes', this.list)
     },
     addto(list, level, name) {
       // this.$emit('addNodesToSelectedGroup');
