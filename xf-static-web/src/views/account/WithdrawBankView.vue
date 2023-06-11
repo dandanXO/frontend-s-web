@@ -262,7 +262,7 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
     const store = userStore();
     const searchForm = reactive({

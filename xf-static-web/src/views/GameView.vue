@@ -113,7 +113,7 @@ export default defineComponent({
   },
   setup() {
     const numBox = ref(275417746)
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/game'
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/game/'
     const banner = ref([]);
     const route = useRoute();
     const router = useRouter();

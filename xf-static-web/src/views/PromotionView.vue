@@ -151,7 +151,7 @@ export default defineComponent({
     HotPromotion
   },
   setup() {
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",

@@ -136,7 +136,7 @@ export default defineComponent({
   name: "WithdrawView",
   setup() {
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);

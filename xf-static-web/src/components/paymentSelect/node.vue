@@ -104,7 +104,7 @@ export default defineComponent({
       selectItem: null,
       dialogVisible: false,
       payMethods: reactive([]),
-      imgURL: process.env.VUE_APP_IMAGE_CDN + "/payment",
+      imgURL: process.env.VUE_APP_IMAGE_CDN + "/payment/",
       nodeKey: 0,
     };
   },
