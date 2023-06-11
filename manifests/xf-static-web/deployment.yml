@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: xf-static-web
-          image: git.caspen-tech.com:5050/jolly88-complex/frontend:xf-static-web-1686460341 # {"$imagepolicy": "xinfa:xf-static-web"}
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:xf-static-web-1686461213 # {"$imagepolicy": "xinfa:xf-static-web"}
           ports:
             - containerPort: 80
           env:
