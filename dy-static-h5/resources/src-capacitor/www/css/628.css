@@ -1,0 +1,14 @@
+.esport-container[data-v-21356aa0] {
+  background: linear-gradient(to bottom, #23263c, #190f25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.esport-container .esports-iframe[data-v-21356aa0] {
+  width: 100%;
+  min-height: 100vh;
+  overflow: auto !important;
+}
+
+
+/*# sourceMappingURL=628.css.map*/
