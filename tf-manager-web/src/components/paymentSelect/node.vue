@@ -112,7 +112,10 @@
               :key="item.id"
               :label="item.name"
               :value="item.id"
-            />
+            >
+              <img :src="paymethodicon + '/' + item.icon" style="float: left; width: 30px; margin-right: 10px;">
+              <span>{{ item.name }}</span>
+            </el-option>
           </el-select>
         </el-form-item>
 
