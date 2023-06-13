@@ -27,15 +27,15 @@
           </div>
         </div>
       </div>
-      <div class="otherlinks">
-        <span class="note">备注：您的邀请奖励还未被分享。</span>
+<!--      <div class="otherlinks">-->
+<!--        <span class="note">备注：您的邀请奖励还未被分享。</span>-->
 
-        <div class="links">
-          <RiFacebookCircleLine /><RiWhatsappLine />
-          <RiTelegramLine /><RiTwitterLine />
-          <RiInstagramLine />
-        </div>
-      </div>
+<!--        <div class="links">-->
+<!--          <RiFacebookCircleLine /><RiWhatsappLine />-->
+<!--          <RiTelegramLine /><RiTwitterLine />-->
+<!--          <RiInstagramLine />-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
     <div>
       <!-- <div class="account-title-container">

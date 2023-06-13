@@ -38,7 +38,7 @@
           class="account-menu-item"
         >
           <RiShieldFlashLine />
-          投注记录
+          交易记录
         </router-link>
       </div>
       <div class="account-menu-title">个人中心</div>
@@ -55,7 +55,7 @@
           class="account-menu-item"
         >
           <RiBankLine />
-         加银行卡
+         银行卡管理
         </router-link>
         <router-link
           to="/center/mailbox"
@@ -76,7 +76,7 @@
           class="account-menu-item"
         >
           <RiShareBoxLine />
-          分享好友
+          邀请好友
         </router-link>
       </div>
     </div>

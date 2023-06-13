@@ -35,10 +35,10 @@
                 /> -->
                 <el-input v-if="amountList.length === 0"
                   v-model="form.localAmount"
-                  placeholder="输入存款余额"
+                  placeholder="输入存款金额"
                 />
-                
-                <el-select placeholder="选择存款余额" v-else v-model="form.localAmount">
+
+                <el-select placeholder="选择存款金额" v-else v-model="form.localAmount">
                   <el-option v-for="amount in amountList" :key="amount" :value="amount">
                     {{ amount }}
                   </el-option>
@@ -48,12 +48,12 @@
             <el-col :span="8">
               <div class="account-tip">
                 最低存款 :
-                ￥{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
+                {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} USDT
                  <br />
                 最高存款:
-                ￥{{
+                {{
                   activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
-                }}
+                }} USDT
               </div>
             </el-col>
           </el-row>
@@ -61,10 +61,10 @@
           <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
             class="helptxt"
-            label="Exchange Rate"
+            label="实时汇率"
           >
             <span style="color: #9bffd1"
-              >1.00 USDT ≈ {{ activeMethod.currencyRate }} THB</span
+              >1.00 USDT ≈ {{ activeMethod.currencyRate }} RMB</span
             >
           </el-form-item>
           <el-form-item
