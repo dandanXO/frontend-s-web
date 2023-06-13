@@ -4,11 +4,12 @@
       <el-select
         v-model="selectedBankId"
         @change="selectBank"
-        placeholder="Select bank"
+        placeholder="选择银行"
       >
         <el-option
           v-for="bc in props.bankList"
           :key="bc.id"
+          :label="bc.name"
           :value="bc.id"
         >
           {{ bc.name }}

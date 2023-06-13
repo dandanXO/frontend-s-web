@@ -11,6 +11,7 @@
     <div class="deposit-container">
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <q-input
+          v-if="amountList.length === 0"
           hide-bottom-space
           ref="depositAmtRef"
           label="存款金额"
@@ -25,6 +26,23 @@
             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
           </template>
         </q-input>
+        
+        <q-select
+          v-else
+          ref="depositAmtRef"
+          label="Select an amount"
+          name="localAmount"
+          filled
+          :options="amountList"
+          v-model="form.localAmount"
+          color="white"
+          :rules="verifyDepositAmount"
+          padding="none"
+          >
+          <template v-slot:prepend>
+            <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
+          </template>
+        </q-select>
         
           <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
           最低金额:
@@ -121,6 +139,7 @@ const payMethods = reactive([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
+const amountList = ref([]);
 const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
@@ -224,6 +243,9 @@ function selectPayType(value) {
         isUSDT.value = true;
       } else {
         isUSDT.value = false;
+      }
+      if (value.extra && value.extra.amountArr) {
+        amountList.value = value.extra.amountArr;
       }
       if (value.extra && value.extra.banks) {
         bankCardList.value = value.extra.banks;

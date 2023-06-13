@@ -29,10 +29,20 @@
           <el-row :gutter="20">
             <el-col :span="9">
               <el-form-item class="helptxt" label="余额" prop="localAmount">
-                  <el-input
+                  <!-- <el-input
+                  v-model="form.localAmount"
+                  placeholder="输入存款余额"
+                /> -->
+                <el-input v-if="amountList.length === 0"
                   v-model="form.localAmount"
                   placeholder="输入存款余额"
                 />
+                
+                <el-select placeholder="选择存款余额" v-else v-model="form.localAmount">
+                  <el-option v-for="amount in amountList" :key="amount" :value="amount">
+                    {{ amount }}
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -59,15 +69,15 @@
           </el-form-item>
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
-            label="Bank"
+            label="银行"
             prop="bankId"
             name="bankId"
+            value="bankName"
           >
             <template #label></template>
             <BankComponent
               ref="payTypeClass"
               :is="selectedPayType"
-              v-model="form.bankId"
               :bank-list="bankCardList"
               @selected="selectedBank"
             ></BankComponent>
@@ -126,6 +136,7 @@
         </el-form>
       </div>
       <el-dialog
+        class="isDeposit"
         width="500px"
         v-model="isDeposited"
         :maskClosable="false"
@@ -163,6 +174,7 @@ const payMethods = reactive([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
+const amountList = ref([]);
 const privilegeList = ref([]);
 const selectedPrivilege = ref(null);
 const unselectedPrivileges = ref([]);
@@ -254,6 +266,11 @@ async function loadPrivilege(val) {
 }
 function selectPayType(value) {
   if (value) {
+    if (value.extra && value.extra.amountArr) {
+      amountList.value = value.extra.amountArr;
+    } else {
+      amountList.value = [];
+    }
     if (value.extra && value.extra.banks) {
       bankCardList.value = value.extra.banks;
     } else {
@@ -315,6 +332,7 @@ function checkPrivilege(v) {
 }
 
 function selectedBank(value) {
+  console.log(value)
   form.bankId = value;
 }
 
@@ -326,18 +344,24 @@ function clearInfo() {
   checkMinDepositAmt();
 }
 
-async function confirmDeposit() {
-  await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
-      (d) => {
-        if (d.code === 11002) {
-          form.localAmount = d.data.suggestion;
-          // message.error(d.message, 4);
-          ElMessage.error(d.message);
-        } else {
-          doDeposit();
-        }
-      },
-  );
+function confirmDeposit() {
+  formRef.value.validate(async(valid) => {
+    if (valid) {
+        await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
+        (d) => {
+          if (d.code === 11002) {
+            form.localAmount = d.data.suggestion;
+            // message.error(d.message, 4);
+            ElMessage.error(d.message);
+          } else {
+            doDeposit();
+          }
+        },
+    );
+    } else {
+      return;
+    }
+  })
 }
 
 function doDeposit() {
@@ -363,6 +387,8 @@ function doDeposit() {
           "message",
           (event) => {
             if (event.data?.msg) {
+              console.log(event.data?.msg)
+              alert();
               if (event.data.msg === "success") {
                 isDeposited.value = true;
               } else {
@@ -412,6 +438,13 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
+body {
+  .isDeposit {
+    .el-dialog__body {
+      padding: 20px;
+    }
+  }
+}
 .sm .ant-modal {
   width: 100%;
   max-width: 400px;
@@ -504,6 +537,7 @@ grid-template-rows: 50px;
   .loading {
     display: flex;
     justify-content: center;
+    padding: 50px 0;
     font-size: 30px;
     height: 100%;
     img {
