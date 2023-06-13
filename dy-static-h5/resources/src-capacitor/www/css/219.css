@@ -1,0 +1,125 @@
+.wrapper[data-v-286f78ca] {
+  background: url(../img/bg.bd14cf49.png) no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.wrapper .affiliate[data-v-286f78ca] {
+  max-width: 1550px;
+  margin: 0 auto;
+  min-height: 90vh;
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper .affiliate .game-title.sub[data-v-286f78ca] {
+  font-size: 30px;
+}
+.wrapper .affiliate .description[data-v-286f78ca] {
+  margin: 50px;
+  display: flex;
+  gap: 50px;
+}
+.wrapper .affiliate .description .desc[data-v-286f78ca] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  gap: 10px;
+}
+.wrapper .affiliate .description .desc img[data-v-286f78ca] {
+  width: 50px;
+}
+.wrapper .affiliate .buttons[data-v-286f78ca] {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 200px;
+}
+.wrapper .affiliate .steps[data-v-286f78ca] {
+  background: #212534;
+  padding: 40px;
+  border-radius: 20px;
+  width: 95%;
+  margin: 50px auto;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  max-width: 260px;
+  gap: 10px;
+}
+.wrapper .affiliate .steps .step[data-v-286f78ca] {
+  display: flex;
+  color: #ffffff;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.wrapper .affiliate .information[data-v-286f78ca] {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;
+}
+.wrapper .affiliate .information .game-title[data-v-286f78ca] {
+  text-align: left;
+  margin: unset;
+}
+.wrapper .affiliate .information p[data-v-286f78ca] {
+  font-size: 16px;
+  color: #ffffff;
+}
+.wrapper .affiliate .information ol[data-v-286f78ca] {
+  color: #ffffff;
+  text-align: left;
+  margin: 0;
+  padding-left: 15px;
+}
+.wrapper .affiliate .information .terms[data-v-286f78ca] {
+  color: #ffffff;
+  text-align: left;
+  margin: 0;
+  padding-left: 15px;
+}
+.wrapper .affiliate .information .table[data-v-286f78ca] .ant-table .ant-table-thead > tr > th {
+  text-align: center;
+}
+.wrapper .affiliate .information .table[data-v-286f78ca] .ant-table .ant-table-thead > tr > th:nth-child(odd),
+.wrapper .affiliate .information .table[data-v-286f78ca] .ant-table .ant-table-tbody > tr > td:nth-child(odd) {
+  background: #303450;
+}
+.wrapper .affiliate .information .boxes[data-v-286f78ca] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+.wrapper .affiliate .information .boxes .box[data-v-286f78ca] {
+  flex: 1;
+  background-color: #2b2b4b;
+  padding: 20px;
+  color: #ffffff;
+}
+.wrapper .affiliate .information .boxes .box .bx-table[data-v-286f78ca] {
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 768px) {
+.wrapper .affiliate .description[data-v-286f78ca] {
+    flex-direction: column-reverse;
+}
+.wrapper .affiliate .information .boxes[data-v-286f78ca] {
+    flex-direction: column;
+}
+.wrapper .affiliate .steps[data-v-286f78ca] {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+    max-width: 260px;
+}
+}
+
+/*# sourceMappingURL=219.css.map*/

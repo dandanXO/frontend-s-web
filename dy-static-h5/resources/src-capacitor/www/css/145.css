@@ -1,0 +1,101 @@
+.vipcard {
+  border-radius: 20px;
+  padding: 10px 0;
+  margin: 0 10px 10px;
+  border-left: 5px solid #db7e42;
+  border-right: 5px solid #db7e42;
+}
+.vipcard .q-card__section--vert {
+  padding: 0;
+}
+.vipcard .q-card__section--vert > div {
+  flex: 1;
+}
+.vipcard .q-card__actions .q-btn {
+  min-width: 60px;
+}
+.vipcard .top-section {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.vipcard .top-section img {
+  max-width: 55px;
+  margin: 0 auto;
+  display: block;
+}
+.vipcard .acct-section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.vipcard .acct-section .q-seperator--dark {
+  border-right: 1px solid #ffffff;
+}
+.vipcard .acct-section .label {
+  font-size: 15px;
+}
+.vipcard .acct-section .amt {
+  font-size: 40px;
+}
+.vipcard .bot-section {
+  background: #212534;
+  display: flex;
+  justify-content: space-around;
+}
+.vipcard .bot-section .acct-section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-evenly;
+}
+.vipcard .bot-section .acct-section .q-seperator--dark {
+  border-right: 1px solid #ffffff;
+}
+.vipcard .bot-section .acct-section .label {
+  font-size: 12px;
+}
+.vipcard .bot-section .acct-section .amt {
+  font-size: 50px;
+}
+.vipcard .bot-section .q-btn__content {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.vipcard .bot-section .q-btn__content svg {
+  fill: #ffffff;
+  width: 25px;
+  display: block;
+  padding: 0;
+}
+.acct-nav {
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.acct-nav .acct-nav-item {
+  cursor: pointer;
+  display: flex;
+  padding: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  margin: 0 10px;
+}
+.acct-nav .acct-nav-item svg {
+  width: 30px;
+  fill: white;
+  padding: 0;
+}
+.vip-badge {
+  position: absolute;
+  left: 10px;
+  top: -27px;
+}
+
+/*# sourceMappingURL=145.css.map*/

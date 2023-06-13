@@ -1,0 +1,605 @@
+<template>
+  <div>
+      <div class="q-pa-md text-bold text-center" style="color: #33bcd4">
+        专属网址：{{ store.personalAddress }}
+      </div>
+    <div>
+      <div class="account-content text-center">
+        <div class="flex-box flex-wrap bank-card-list">
+          <template
+            v-for="(bc, index) in personalState.bankCardList"
+            :key="bc.id"
+          >
+          <q-card
+            v-if="bc.bankName"
+            @click="showCard(bc, index)"
+            class="q-pa-sm text-left" style="color: #bacef1;"
+          >
+            <div class="icon"><img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon"></div>
+            <div class="cardname q-pa-xs">
+              <div class="txt-center">
+                {{ bc.bankName }}
+                <!-- <div>Bank Account Number</div> -->
+              </div>
+            </div>
+            <q-separator class="q-my-xs" />
+            <div class="bottom q-pa-xs">
+            <div class="flex-box cards">
+              <div
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
+              >
+                {{ b }}
+              </div>
+              <!-- <div
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
+              >
+                {{ b.slice(0, 4) }}
+              </div>
+              <div
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
+              >
+                ****
+              </div>
+              <div
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
+              >
+                ****
+              </div>
+              <div
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
+              >
+                {{ b.slice(b.length - 4, b.length) }}
+              </div> -->
+            </div>
+            <q-btn @click="unbindBankCard(bc)" color="dyblue" label="解绑" />
+            </div>
+          </q-card>
+          </template>
+          <div class="q-pa-sm">
+          <q-btn color="dyblue" style="width: 100%;" label="添加银行卡" @click="bankCardModal('bank')" />
+          </div>
+          <!-- <div
+            class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
+            @click="bankCardModal('bank')"
+          >
+            <RiLink />
+            Add Bank Card
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <q-dialog v-model="bankCardModalState.visible" persistent>
+      <q-card style="width: 100%; padding: 10px">
+        <q-card-section v-if="!isVirtual" class="q-mb-md">
+          <div class="text-h6">Add a bank card</div>
+        </q-card-section>
+        <q-card-section v-if="isVirtual" class="q-mb-md">
+          <div class="text-h6">Add a virtual currency</div>
+        </q-card-section>
+        <q-form>
+          <div v-if="!isVirtual">
+            <div class="row q-col-gutter-xs">
+              <div class="col-12">
+                <q-select
+                  v-model="selectedBankType"
+                  filled
+                  :options="[{ name: 'Bank' }, { name: 'Crypto' }, { name: 'e-Wallet' }]"
+                  label="银行Type"
+                  color="white"
+                  label-color="grey"
+                  option-label="name"
+                  option-value="name"
+                  @update:model-value="selectBankType(opt)"
+                  emit-value
+                  map-options
+                />
+              </div>
+              <div class="col-12">
+                <q-select
+                  ref="bankCardRef"
+                  class="q-mb-md"
+                  color="white"
+                  filled
+                  label-color="grey"
+                  v-model="bankCardInfo.bankId"
+                  :options="banksList"
+                  option-value="id"
+                  option-label="name"
+                  label="选择银行卡"
+                  :rules="[(val) => !!val || '选择银行卡']"
+                  lazy-rules
+                  emit-value
+                  map-options
+                >
+                  <template v-slot:selected-item="scope">
+                    <q-item-section avatar>
+                      <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.name }}</q-item-label>
+                    </q-item-section>
+                  </template>
+                  <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps">
+                      <q-item-section avatar>
+                        <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>{{ scope.opt.name }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                </q-select>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="isVirtual">
+            <q-input
+              filled
+              ref="bankCardRef"
+              class="q-mb-md"
+              v-model="bankName"
+              disable
+              readonly
+              label="银行名城"
+              color="white"
+            />
+          </div>
+          <q-input
+            class="q-mb-md"
+            filled
+            v-model="bankCardInfo.cardAccount"
+            label="特卡人姓名"
+            :rules="cardAccountRules"
+            lazy-rules
+            :readonly="true"
+            ref="cardAccountRef"
+            color="white"
+          />
+          <q-input
+            filled
+            class="q-mb-md"
+            v-model="bankCardInfo.cardNumber"
+            label="银行卡号"
+            :rules="cardNumberRules"
+            ref="cardNumberRef"
+            color="white"
+          />
+          <q-input
+            class="q-mb-md"
+            filled
+            v-model="bankCardInfo.cardAddress"
+            label="开户行地址"
+            :rules="cardAddressRules"
+            ref="cardAddressRef"
+            color="white"
+          />
+          <div class="flex flex-center">
+            <q-btn
+              class="q-mr-md"
+              label="取消"
+              @click="bankCardModalState.visible = false"
+            />
+            <q-btn color="dyblue" label="提交" @click="submitBankCard" />
+          </div>
+        </q-form>
+      </q-card>
+    </q-dialog>
+
+    <!-- <q-dialog
+      wrap-class-name="bankModal"
+      width="100%"
+      v-model:visible="virtualCurrencyModalState.visible"
+      :footer="null"
+    >
+      <div class="modal-head-title">Add a virtual currency</div>
+      <q-form
+        ref="virtualCurrencyFormRef"
+        :hideRequiredMark="true"
+        :model="bankCardInfo"
+        :colon="false"
+        :label-col="{ span: 8 }"
+      >
+        <q-input
+          v-model:value="virtualCurrencyInfo.wallet"
+          label="Card Account"
+          placeholder="Enter card account"
+        />
+        <q-input
+          v-model:value="virtualCurrencyInfo.digitalCurrency"
+          label="Digital Currency"
+          placeholder="Enter digital currency"
+        />
+        <q-input
+          v-model="virtualCurrencyInfo.digitalCurrency"
+          label="Digital Currency"
+          placeholder="Enter digital currency"
+          disable
+        />
+
+        <q-input
+          v-model="virtualCurrencyInfo.protocol"
+          label="Protocol"
+          placeholder="Enter protocol"
+          disable
+        />
+        <q-btn color="brand" type="submit" @click="submitVirtualCurrency">
+          Confirm
+        </q-btn>
+      </q-form>
+    </q-dialog> -->
+  </div>
+</template>
+
+<script lang="js">
+import { defineComponent, reactive, ref, onMounted, createVNode } from "vue";
+// import { Modal, message } from "ant-design-vue";
+// import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
+import { RiSpamLine, RiLink } from "vue-remix-icons";
+// import { loadMemberInfo, loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/personal/personal";
+// import moment from "moment";
+import { api } from "boot/axios"
+import { useQuasar } from "quasar";
+import { userStore } from "stores/index";
+
+import { useRouter } from "vue-router";
+var qs = require("qs");
+export default defineComponent({
+  name: "WithdrawBankView",
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    RiSpamLine, RiLink
+  },
+  setup() {
+    const store = userStore();
+    const $q = useQuasar();
+    const isCardActive = ref();
+    const searchForm = reactive({
+      start: "",
+      end: ""
+    });
+    const imgURL = process.env.IMAGE_CDN + '/'
+    const columns = [
+      {
+        title: "Bank Name",
+        dataIndex: "name",
+        key: "name",
+        slots: { title: "customTitle", customRender: "name" }
+      },
+      {
+        title: "Account Number",
+        dataIndex: "age",
+        key: "age"
+      },
+      {
+        title: "Branch",
+        dataIndex: "address",
+        key: "address"
+      },
+      {
+        title: "Bind Time",
+        key: "tags",
+        dataIndex: "tags",
+        slots: { customRender: "tags" }
+      },
+      {
+        title: "Unbind Time",
+        key: "action",
+        slots: { customRender: "action" }
+      }
+    ];
+
+    const personalState = reactive({
+      memberInfo: {},
+      bankCardList: []
+    });
+    onMounted(() => {
+      api.get("session/member").then((response) => {
+        if (response.code === 0) {
+          personalState.memberInfo = response.data;
+
+          if (personalState.memberInfo.birthday > 0) {
+            personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+          }
+        }
+      }).catch((error) => {
+        console.log("error", error);
+      });
+      loadCards();
+    });
+    const showCard = (item, index) => {
+      // if (index === isCardActive.value) {
+      //   isCardActive.value = null;
+      //   console.log(isCardActive.value)
+      // } else {
+      //   isCardActive.value = index
+      // }
+      isCardActive.value = index
+    }
+    const loadCards = () => {
+      personalState.bankCardList = [];
+      api.get("/session/bankCard").then((res) => {
+        if (response.code === 0) {
+          personalState.bankCardList.push(...response.data);
+        }
+      }).catch((error) => {
+        console.log("error", error);
+      });
+    }
+
+    //add bank card
+    const bankCardModalState = reactive({
+      visible: false,
+      banks: []
+    });
+    const bankCardRef = ref();
+    const cardNumberRef = ref();
+    const cardAccountRef = ref();
+    const cardAddressRef = ref();
+
+    const bankCardInfo = reactive({
+      bankId: undefined,
+      cardNumber: "",
+      cardAccount: "",
+      cardAddress: ""
+    });
+    const router = useRouter();
+    const bankName = ref();
+    const banksList = ref([]);
+    const isVirtual = ref(false)
+    const bankCardModal = (type) => {
+      store.getMemberInfo().then(() => {
+        if (!store.realName || store.realName == "" || store.realName == null) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "Please enter your real name",
+            icon: "report_problem"
+          });
+          router.push("/account/personal");
+        } else {
+          bankCardInfo.bankId = undefined;
+          bankCardInfo.cardNumber = "";
+          bankCardInfo.cardAccount = store.realName;
+          bankCardInfo.cardAddress = "";
+          bankCardModalState.visible = true;
+        if (bankCardModalState.banks.length === 0) {
+          api.get("/session/withdraw/card").then((res) => {
+            if (res.code === 0) {
+              bankCardModalState.banks.push(...res.data);
+              selectBankType()
+            }
+          }).catch((e) => {
+            console.log("error", e);
+          });
+        }
+      }
+      })
+    };
+
+    const selectedBankType = ref('Bank')
+    const selectBankType = () => {
+      bankCardInfo.bankId = "";
+      banksList.value = []
+      bankCardModalState.banks.forEach(element => {
+        if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
+          banksList.value.push(element);
+        }
+        if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
+          const isCrypto = ref(true)
+          banksList.value.push(element);
+        }
+        if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
+          const isEWallet = ref(true)
+          banksList.value.push(element);
+        }
+      })
+    }
+    const submitBankCard = () => {
+      bankCardRef.value.validate();
+      cardAccountRef.value.validate();
+      cardAddressRef.value.validate();
+      cardNumberRef.value.validate();
+      if (bankCardRef.value.hasError || cardAccountRef.value.hasError  || cardAddressRef.value.hasError || cardNumberRef.value.hasError) {
+      }
+      else {
+          api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((response) => {
+            if (response.code === 0) {
+              bankCardModalState.visible = false;
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "Card Added",
+                icon: "check_circle_outline"
+              });
+              loadCards();
+            } else {
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: response.message,
+              //   icon: "report_problem"
+              // });
+            }
+          }).catch((error) => {
+            console.log("error", error);
+          });
+
+
+      }
+    };
+    const unbindBankCard = (card) => {
+      console.log(card)
+      const dialog = $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "Remove " + card.bankName + "?",
+        message: "Are you sure you want to remove " + card.bankName + "?",
+        ok: {
+          push: true,
+          color: 'brightbtn',
+          label: "Confirm",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: '',
+          label: "Cancel",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+          api.post(`/session/bankCard/${card.id}?_method=delete`).then((response) => {
+            if (response.code === 0) {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "Success",
+                icon: "check_circle_outline"
+              });
+              loadCards();
+            } else {
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: response.message,
+              //   icon: "report_problem"
+              // });
+            }
+
+          })
+        })
+    };
+
+    //add virtual card
+    // const virtualCurrencyModalState = reactive({
+    //   visible: false,
+    //   banks: []
+    // });
+    // const virtualCurrencyFormRef = ref();
+    // const virtualCurrencyInfo = reactive({
+    //   wallet: undefined,
+    //   digitalCurrency: 'SGD',
+    //   protocol: 'protocol_01'
+    // });
+    // const virtualCurrencyModal = () => {
+    //   virtualCurrencyInfo.bankId = undefined;
+    //   virtualCurrencyInfo.cardNumber = "";
+    //   virtualCurrencyInfo.cardAccount = "";
+    //   virtualCurrencyInfo.cardAddress = "";
+    //   virtualCurrencyModalState.visible = true;
+    //   if (virtualCurrencyModalState.banks.length === 0) {
+    //     loadBanks(3).then((res) => {
+    //       if (res.code === 0) {
+    //         virtualCurrencyModalState.banks.push(...res.data);
+    //       }
+    //     }).catch((e) => {
+    //       console.log("error", e);
+    //     });
+    //   }
+    // };
+    // const submitvirtualCurrency = () => {
+
+    // };
+    // const virtualCurrencyRules = {
+    //   cardNumber: [
+    //     {
+    //       required: true,
+    //       message: "card number is required",
+    //       trigger: "blur",
+    //     },
+    //     {
+    //       min: 6,
+    //       max: 12,
+    //       message: "Length should be 6 to 12",
+    //       trigger: "blur",
+    //     }
+    //   ],
+    //   cardAccount: [
+    //     {
+    //       required: true,
+    //       message: "card account is required",
+    //       trigger: "blur"
+    //     }
+    //   ],
+    //   cardAddress: [
+    //     {
+    //       required: true,
+    //       message: "card address is required",
+    //       trigger: "blur"
+    //     }
+    //   ]
+    // };
+    let validateBankLength = (val) => {
+        if (selectedBankType.value === 'Bank') {
+         return (val.length > 5 && val.length < 13) || 'Length should be 6 to 12 characters'
+        } else if (selectedBankType.value === 'Crypto') {
+          return (val.length > 33 && val.length < 38) || 'Length should be 34 to 37 characters.'
+        } else if (selectedBankType.value === 'e-Wallet') {
+          return (val.length > 10 && val.length < 12) || 'Length should be 11 characters.'
+        }
+    }
+    return {
+      searchForm,
+      columns,
+      personalState,
+      bankCardModalState,
+      bankCardInfo,
+      submitBankCard,
+      bankCardModal,
+      unbindBankCard,
+      // virtualCurrencyModalState,
+      // virtualCurrencyFormRef,
+      // virtualCurrencyInfo,
+      // virtualCurrencyRules,
+      // submitvirtualCurrency,
+      // virtualCurrencyModal,
+      showCard,
+      isCardActive,
+      bankName,
+      isVirtual,
+      bankCardRef,
+      cardNumberRef,
+      cardAccountRef,
+      cardAddressRef,
+      cardNumberRules: [
+        val => (val && val.length > 0) || '请输入卡号',
+        val => (/^\d+$/.test(val)) || '只允许数字',
+        val => validateBankLength(val)
+      ],
+      cardAccountRules: [
+         val => (val && val.length > 0) || '情书入银行卡号',
+      ],
+      cardAddressRules: [
+      ],
+      selectedBankType,
+      selectBankType,
+      banksList,
+      imgURL,
+      store
+    };
+  }
+});
+</script>
+<style scoped lang="scss">
+
+  .account-content {
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+  }
+</style>

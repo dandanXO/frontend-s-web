@@ -1,0 +1,468 @@
+<template>
+  <div>
+    <AcctBal :platforms="platforms" />
+    <div class="q-pa-md bg-white q-mx-sm q-my-md">
+      <div class="account-content last">
+        <div class="withdrawalmethod">
+          <div
+            v-for="(method, i) in withdrawalMethods"
+            :key="i"
+            class="txt-center withdraw-type-item"
+            @click="selectMethod(method, i)"
+            :class="{ active: i === activeItem }"
+          >
+            <span class="promo" v-if="method.recommended">Recommended</span>
+            <img :src="imgURL + method.icon" />
+            <div class="type-name">{{ method.name }}</div>
+          </div>
+        </div>
+        <q-form>
+          <q-select
+           hide-bottom-space
+            filled
+            ref="cardRef"
+            v-model="withdrawInfo.cardId"
+            option-value="id"
+            emit-value
+            label="钱包地址"
+            color="white"
+            :options="withdrawState.bankCardList"
+            map-options
+            :rules="[(val) => !!val || '请选择钱包']"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey"
+                  >没有可用的卡片
+                  <router-link class="text-bright" to="/account/withdraw"
+                    >加卡</router-link
+                  ></q-item-section
+                >
+              </q-item>
+            </template>
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section avatar v-if="scope.opt.bankIcon" >
+                  <img style="width: 30px;" :src="imgURL + scope.opt.bankIcon">
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label
+                    >{{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+            <template v-slot:selected-item="scope">
+                <q-item-section avatar v-if="scope.opt.bankIcon">
+                  <img style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
+                    >{{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
+                  </q-item-label>
+                </q-item-section>
+            </template>
+          </q-select>
+          <q-input
+            hide-bottom-space
+            ref="amountRef"
+            v-model="withdrawInfo.amount"
+            label="金额"
+            color="white"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please enter an amount',
+              (val) => (val >= selectedWithdrawalMethod.withdrawMin) || ('The amount should be as specified.'),
+              (val) => (val <= selectedWithdrawalMethod.withdrawMax) || 'The amount should be as specified.'
+            ]"
+          >
+            <template v-slot:prepend>
+             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
+            </template>
+            <template v-slot:append>
+             <span style="font-size:26px;" class="text-bright"><q-btn @click="updateWithdrawAmt" label="全额提款" color="dyblue" /></span>
+            </template>
+          </q-input>
+          <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md" style="border-bottom: 1px solid #434343;" v-show="selectedWithdrawalMethod">
+            <template
+              v-if="
+                selectedWithdrawalMethod.withdrawMin &&
+                selectedWithdrawalMethod.withdrawMin
+              "
+            >
+              {{
+                "单笔提款: " +
+                selectedWithdrawalMethod.withdrawMin +
+                "元 - " +
+                selectedWithdrawalMethod.withdrawMax + "元"
+              }}
+              <br />
+            </template>
+            <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
+              {{
+                "单日可提款: " +
+                selectedWithdrawalMethod.withdrawMaxAmount + "元"
+              }}
+            </template>
+            <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
+              {{
+                " 剩余: " +
+                selectedWithdrawalMethod.withdrawMaxTimes +
+                " 次"
+              }}
+            </template>
+          </div>
+          <div  v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
+          <div class="q-my-md" style="display: flex; justify-content: center; align-items: center;">
+            <span style="flex: 1">实施汇率：</span>
+          <span style="flex:3" class="bg-neontb text-neontb q-pa-sm"
+            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.value }}</span
+          >
+          </div>
+          <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center;">
+            <span style="flex: 1">预计到帐：</span>
+            <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm"
+              >{{
+                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
+                ).toFixed(2)
+              }}
+              USDT</span>
+          </div>
+          <div class="q-mt-md text-neontb">
+                *特别说明：三方自动收取提币 1.00 USDT 手续费！
+          </div>
+          </div>
+          <!-- <a-form-item
+            class="select"
+            name="cardId"
+            label="Select Bank Card"
+            :rules="[{ required: true, message: 'Please select a bank card' }]"
+          >
+            <a-select
+              v-model:value="withdrawInfo.cardId"
+              placeholder="Please select a bank card"
+            >
+              <a-select-option
+                v-for="b in withdrawState.bankCardList"
+                :key="b.id"
+                :value="b.id"
+              >
+                {{ b.bankName }} - {{ b.cardNumber }}
+              </a-select-option>
+            </a-select>
+          </a-form-item> -->
+          <div class="flex-box flex-justify-center">
+            <q-btn
+              style="width: 100%;"
+              class="q-mt-md fit"
+              color="dyblue"
+              @click="submitWithdraw"
+              label="立即提款"
+            />
+          </div>
+          <div class="q-py-md text-red">
+
+                温馨提示：若提款失败请查看站内信提示的失败原因，感谢您的支持与理解！
+
+          </div>
+        </q-form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="js">
+import { defineComponent, reactive, ref, onMounted } from "vue";
+// import { loadBankCards, confirmWithdraw, withdrawEntrance
+// //  } from "@/api/personal/personal";
+// import { message } from "ant-design-vue";
+import { userStore } from "stores/index";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import AcctBal from "../../components/AcctBal.vue"
+export default defineComponent({
+  name: "WithdrawView",
+  components: { AcctBal },
+  setup() {
+    const store = userStore();
+    const $q = useQuasar();
+    const imgURL = process.env.IMAGE_CDN + '/'
+    const amountRef = ref();
+    const cardRef = ref();
+    const activeItem = ref(0);
+    const withdrawState = reactive({
+      bankCardList: [],
+    });
+    const qs = require("qs")
+    const withdrawInfo = reactive({
+      cardId: undefined,
+      amount: "",
+    });
+    const withdrawalMethods = ref([]);
+    const selectedWithdrawalMethod = ref([])
+    onMounted(() => {
+      getWithdrawalMethods()
+      store.getBalance()
+      loadPlatform()
+    });
+    const platforms = reactive([]);
+    const loadPlatform = () => {
+        api.get("/platform").then((res) => {
+            res.data.forEach(p => {
+            if (p.walletType !== "SEAMLESS") {
+                platforms.push({
+                id: p.id,
+                code: p.code,
+                amount: 0
+                });
+              }
+            });
+            refreshBalance('all')
+        })
+    };
+    const refreshBalance = (plat) => {
+        if (plat === 'all') {
+            platforms.forEach(platform => {
+                platform.isLoading = true;
+                if (platform.code) {
+                    api.get('/session/balance', {params: { platform: platform.code }}).then((res) => {
+                        if (platform) {
+                            platform.amount = res.data;
+                            platform.isLoading = false;
+                        }
+                    }).catch((e) => {
+                        platform.isLoading = false;
+                    }
+                    );
+
+                }
+            });
+        }
+    };
+    const submitWithdraw = () => {
+      cardRef.value.validate();
+      amountRef.value.validate();
+      $q.loading.show({
+        message: "Confirming Withdrawal"
+      });
+      if (cardRef.value.hasError || amountRef.value.hasError) {
+        $q.loading.hide();
+      } else {
+          api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
+            if(response.code === 0) {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "Redirecting",
+                icon: "check_circle_outline"
+              });
+            } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: response.message,
+            //   icon: "report_problem"
+            // });
+            }
+          }).catch((error) => {
+            console.log("error", error);
+          });
+          $q.loading.hide();
+      }
+    }
+    const isUSDT = ref(false);
+    const selectMethod = (method, index) => {
+      withdrawInfo.withdrawCode = null;
+      withdrawInfo.cardId = null;
+      selectedWithdrawalMethod.value = method
+      withdrawInfo.withdrawCode = method.code;
+      if (withdrawInfo.withdrawCode.includes('USDT')) {
+        isUSDT.value = true
+      } else {
+        isUSDT.value = false
+      }
+      activeItem.value = index;
+      loadCards()
+    }
+
+    const loadCards = () => {
+      api.get("/session/bankCard").then((response) => {
+        withdrawState.bankCardList = []
+        if(response.code === 0) {
+          // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
+            response.data.forEach(element => {
+              if (element.bankType === 'BANK') {
+                if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+                  withdrawState.bankCardList.push(element)
+                }
+              } else {
+                if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+                  withdrawState.bankCardList.push(element)
+                }
+              }
+              });
+            // else {
+            //   response.data.forEach(element => {
+            //     if (element.bankId !== 39) {
+            //       withdrawState.bankCardList.push(element)
+            //     }
+            //   });
+            // }
+            cardRef.value.resetValidation();
+
+        }
+      }).catch((error) => {
+        console.log("error", error);
+      });}
+    const getWithdrawalMethods = () => {
+      api.get("/session/withdraw/entrance").then((response) => {
+        if (response.code === 0) {
+          withdrawalMethods.value = response.data
+          //Remove this for real data
+          // withdrawalMethods.value = [
+          //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
+          //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
+          if (withdrawalMethods.value.length > 0) {
+              selectMethod(withdrawalMethods.value[0], 0)
+          }
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+    }
+    const updateWithdrawAmt = () => {
+      withdrawInfo.amount = JSON.stringify(Math.floor(store.balance))
+    }
+
+    return {
+      amountRef,
+      cardRef,
+      withdrawInfo,
+      submitWithdraw,
+      withdrawState,
+      withdrawalMethods,
+      activeItem,
+      selectMethod,
+      imgURL,
+      step: ref(),
+      selectedWithdrawalMethod,
+      loadCards,
+      isUSDT,
+      store,
+      updateWithdrawAmt,
+      platforms
+    };
+  },
+});
+</script>
+
+<style scoped lang="scss">
+// :deep(.ant-form-item) {
+//   align-items: center;
+//   &.tip {
+//     margin-top: -20px;
+//     color: #ffffff;
+//   }
+// }
+// .helptxt {
+//   display: flex;
+//   align-items: flex-start;
+//   .ant-input {
+//     background: #212534;
+//     width: 50%;
+//     max-width: 280px;
+//     padding: 10px;
+//     border: #212534;
+//   }
+//   :deep(.ant-form-item-control-input-content) {
+//     display: flex;
+//     justify-content: flex-start;
+//     gap: 10px;
+//     align-items: flex-start;
+//   }
+// }
+// :deep(.ant-form-horizontal .ant-form-item-label) {
+//   width: 160px;
+// }
+// :deep(.ant-form-horizontal .ant-form-item-control) {
+//   width: unset;
+// }
+// :deep(.ant-form-item .ant-select) {
+//   width: 280px;
+// }
+// :deep(.ant-form-item.select .ant-form-item-control-input) {
+//   max-width: 280px;
+// }
+// :deep(.ant-select-single:not(.ant-select-customize-input)
+//     .ant-select-selector
+//     .ant-select-selection-search-input) {
+//   height: 40px;
+// }
+// :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
+//   height: 40px;
+//   padding: 5px 20px;
+//   background: #212534;
+//   color: #ffffff;
+//   border: 0;
+// }
+
+.withdrawalmethod {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: center;
+  overflow-x: auto;
+  padding: 15px 5px;
+  gap: 30px;
+
+  .withdraw-type-item {
+    width: 60px;
+
+    position: relative;
+    cursor: pointer;
+    img { width: 100%;
+      padding: 5px; }
+    &.active {
+      // background: #212534;
+      // color: #db7e42;
+      // box-shadow: none;
+      // filter: drop-shadow(0px 0px 3px #ffffff);
+      img {  border: 1px solid #33bcd4; }
+    }
+    .type-name {
+      line-height: 15px;
+      overflow-wrap: break-word;
+    }
+    .promo {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: top center;
+      top: -8px;
+      right: -1px;
+      background: linear-gradient(to right, #de4545, #db7e42);
+      padding: 5px;
+      color: #ffffff;
+      font-size: 12px;
+      line-height: 10px;
+      border-radius: 0 10px;
+      font-weight: bold;
+      ::after {
+        position: relative;
+      }
+    }
+  }
+  .withdraw-btn {
+    margin: 30px auto;
+    &.cancel {
+      margin-right: 60px;
+    }
+  }
+}
+</style>
