@@ -76,7 +76,7 @@
           class="account-menu-item"
         >
           <RiShareBoxLine />
-          分享好友
+          邀请好友
         </router-link>
       </div>
     </div>

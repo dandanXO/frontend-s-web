@@ -564,14 +564,10 @@ async function attachPhoto(event) {
     formData.append('dir', dirPayment)
     formData.append('overwrite', false)
     const data = await uploadImage(formData)
-    console.log(data);
     if (data.code === 0) {
-      var icon = data.data[0]
+      var icon = data.data
       form.bankIcon = icon
       formRules.bankIcon = icon
-      console.log(formRules.bankIcon)
-      console.log(icon)
-      console.log(form.bankIcon)
       traceEditing()
     } else {
       ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
