@@ -450,12 +450,14 @@ async function loadAffiliateBalance() {
 // }
 
 async function loadReferralLink() {
-  if (store.state.user.siteId === 5 || store.state.user.siteId === "5") {
-    link.value = "https://www.funbet8.com/agent/" + affInfo.affiliateCode;
-  } else if (store.state.user.siteId === 8 || store.state.user.siteId === "8") {
-    link.value = "https://ph.jolly88.com/agent/" + affInfo.affiliateCode;
-  } else if (store.state.user.siteId === 9 || store.state.user.siteId === "9") {
-    link.value = "https://www.jolly8858.com/agent/" + affInfo.affiliateCode;
+  // if (store.state.user.siteId === 5 || store.state.user.siteId === "5") {
+  //   link.value = "https://www.funbet8.com/agent/" + affInfo.affiliateCode;
+  // } else if (store.state.user.siteId === 8 || store.state.user.siteId === "8") {
+  //   link.value = "https://ph.jolly88.com/agent/" + affInfo.affiliateCode;
+  // } else if (store.state.user.siteId === 9 || store.state.user.siteId === "9") {
+  //   link.value = "https://www.jolly8858.com/agent/" + affInfo.affiliateCode;
+  if (store.state.user.siteId === 1 || store.state.user.siteId === "1") {
+    link.value = "https://xf-web.jolly88-ph01.com/agent/" + affInfo.affiliateCode;
   } else {
     link.value = "";
   }
