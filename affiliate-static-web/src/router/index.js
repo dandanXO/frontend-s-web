@@ -6,7 +6,7 @@ export const constantRoutes = [
     path: "/login",
     name: "Login",
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "login" */"../views/my/login/index.vue")
+    component: () => import(/* webpackChunkName: "login" */"../views/xf/login/index.vue")
   },
   {
     path: "/",
