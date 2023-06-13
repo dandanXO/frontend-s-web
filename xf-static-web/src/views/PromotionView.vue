@@ -1,7 +1,7 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
-      <div v-if="banner.desktopImageUrl" class="banner-container">
+      <div v-if="banner.desktopImgUrl" class="banner-container">
         <!-- <div
           class="promo-bg isDesktop"
           :style="
@@ -120,7 +120,7 @@
 投注要求：会员选择并申请30%限时存优惠，需在老虎机有效游戏中投注存款加奖金的指定倍数，方可申请提款，不可转账投注其他游戏。
 
 例如：会员选择30%限时存送并且成功存款了500元人民币，奖金=500 X 30%=150元。 -->
-            
+
             <!-- <div class="game-title"><img src="../assets/images/promotion/hotpromo/common/title_txt_rule.png"></div>
             <div v-html="selectedPromo.pageRules"></div> -->
             <!-- <ol>
@@ -151,18 +151,18 @@ export default defineComponent({
     HotPromotion
   },
   setup() {
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",
       promoList: [],
     });
     const promoTypes = ref([
-      { code:"ALL", img: 'all', label: '所有游戏' }, 
-      { code: "SLOT GAME", img: 'game', label: '老虎机优惠'}, 
-      { code: "FISH", img: 'game', label: '捕鱼优惠'}, 
-      { code: "LIVE CASINO", img: 'spade', label: '真人优惠'}, 
-      { code: "POKER", img: 'dice', label: '棋牌优惠'} 
+      { code:"ALL", img: 'all', label: '所有游戏' },
+      { code: "SLOT GAME", img: 'game', label: '老虎机优惠'},
+      { code: "FISH", img: 'game', label: '捕鱼优惠'},
+      { code: "LIVE CASINO", img: 'spade', label: '真人优惠'},
+      { code: "POKER", img: 'dice', label: '棋牌优惠'}
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -222,7 +222,7 @@ export default defineComponent({
       loadBanner();
       loadAll();
     });
-    
+
     watch(() => route.query.name, () => {
       if (!route.query.name) {
         isPromoDetail.value = false
@@ -350,7 +350,7 @@ export default defineComponent({
         max-width: $maxwidth;
         background-color: #222a34;
         box-shadow: 0 5px 8px 0 rgb(0 0 0 / 30%);
-        border-radius: 8px; 
+        border-radius: 8px;
         margin: 0 auto;
       .promo-type-wrapper {
         display: flex;

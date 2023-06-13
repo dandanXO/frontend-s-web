@@ -4,7 +4,7 @@ import router from "@/router";
 import { useStore } from "./store";
 import { MenuActionType } from "@/store/modules/menu/action-types";
 
-const whiteList = ['/login', '/my/login', '/my/register', '/ph/login', '/ph/register', '/th/login', '/th/register']
+const whiteList = ['/login', '/my/login', '/my/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register']
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, _, next) => {

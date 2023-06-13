@@ -60,12 +60,12 @@
                     <el-form-item
                       name="realName"
                       :rules="[
-                        { required: true, message: 'Please key in real name' },
+                        { required: true, message: '请输入真实姓名' },
                       ]"
                     >
                       <el-input
                         v-model="updateFormDetails.realName"
-                        placeholder="Real Name"
+                        placeholder="真实姓名"
                       />
                     </el-form-item>
                   </div>
@@ -86,12 +86,12 @@
                   <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="birthday"
-                      :rules="[{ required: true, message: 'Birthday is required' }]"
+                      :rules="[{ required: true, message: '请完善生日信息' }]"
                     >
                       <el-date-picker
                         v-model="updateFormDetails.birthday"
                         value-format="YYYY-MM-DD"
-                        placeholder="Birthday"
+                        placeholder="生日"
                       />
                     </el-form-item>
                   </div>
@@ -139,26 +139,26 @@
                     <el-form-item
                       name="email"
                       :rules="[
-                        { required: true, message: 'Email is required' },
-                        { type: 'email', message: 'Email address is not valid' },
+                        { required: true, message: '请输入邮箱地址' },
+                        { type: 'email', message: '邮箱地址格式错误' },
                       ]"
                     >
                       <el-input
                         v-model="updateFormDetails.email"
-                        placeholder="Email"
+                        placeholder="邮箱"
                       />
                     </el-form-item>
                   </div>
                 </div>
               </div>
-              
+
                 <el-button
                   class="common-btn"
                   v-if="isEdit"
                   @click="updateState"
-                  >Submit</el-button
+                  >提交</el-button
                 >
-              
+
               <el-button
                 class="common-btn"
                 v-if="
@@ -424,7 +424,7 @@ export default defineComponent({
           verificationDetails.memberInfo.codeId = res.data.codeId
           verificationModalVisible.value = false;
           // message.success("Success")
-          
+
           ElMessage({
             message: 'Success',
             type: 'success',
@@ -657,7 +657,7 @@ export default defineComponent({
         padding-bottom: 20px;
         flex: 1;
         border-right: 1px solid #aaaaaa;
-        
+
       .basic-info-table {
         display: flex;
         gap: 10px;
@@ -669,7 +669,7 @@ export default defineComponent({
         justify-content: flex-start;
         gap: 10px;
         align-items: center;
-        .basic-info-cell { 
+        .basic-info-cell {
           &.title {
             width: 40px;
           }
@@ -689,7 +689,7 @@ export default defineComponent({
         justify-content: flex-end;
       }
     }
-    
+
 }
 
 </style>
