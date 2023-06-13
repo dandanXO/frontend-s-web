@@ -105,16 +105,16 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.exclusiveUrlWeb')" prop="web">
-          <el-input v-model="form.web" style="width: 350px;" maxlength="20" />
+          <el-input v-model="form.web" style="width: 350px;" maxlength="50" />
         </el-form-item>
         <el-form-item :label="t('fields.exclusiveUrlWap')" prop="wap">
-          <el-input v-model="form.wap" style="width: 350px;" maxlength="20" />
+          <el-input v-model="form.wap" style="width: 350px;" maxlength="50" />
         </el-form-item>
         <el-form-item :label="t('fields.exclusiveUrlApp')" prop="app" style="display:none">
-          <el-input v-model="form.app" style="width: 350px;" maxlength="20" />
+          <el-input v-model="form.app" style="width: 350px;" maxlength="100" />
         </el-form-item>
         <el-form-item :label="t('fields.exclusiveUrlCashier')" prop="cashier" style="display:none">
-          <el-input v-model="form.cashier" style="width: 350px" maxlength="20" />
+          <el-input v-model="form.cashier" style="width: 350px" maxlength="100" />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
