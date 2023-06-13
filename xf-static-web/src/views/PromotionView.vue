@@ -1,7 +1,7 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
-      <div v-if="banner.desktopImageUrl" class="banner-container">
+      <div v-if="banner.desktopImgUrl" class="banner-container">
         <!-- <div
           class="promo-bg isDesktop"
           :style="
