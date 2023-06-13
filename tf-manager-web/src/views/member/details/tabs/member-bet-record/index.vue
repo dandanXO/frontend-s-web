@@ -217,11 +217,14 @@
       </div>
       <el-pagination
         class="pagination"
+        :total="page.total"
+        :page-sizes="[20, 50, 100, 150]"
         @current-change="changepage"
-        layout="prev, pager, next"
+        layout="total,sizes,prev, next"
         :page-size="request.size"
         :page-count="page.pages"
         :current-page="request.current"
+        @size-change="loadMemberBetRecords(true)"
       />
     </el-card>
 
@@ -393,14 +396,15 @@ const total = reactive({
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
   request.platform = null;
+  request.result = ["WIN", "LOSS", "DRAW"];
   request.bet = null;
   request.gameType = null;
-  request.result = ["WIN", "LOSS", "DRAW"];
 }
 
 const page = reactive({
   pages: 0,
   records: [],
+  pagingState: '',
   loading: false
 });
 
@@ -440,12 +444,18 @@ function checkQuery() {
   return query;
 }
 
-async function loadMemberBetRecords() {
+async function loadMemberBetRecords(frombutton) {
+  if (frombutton === true) {
+    request.current = 1
+    page.pagingState = null
+  }
   page.loading = true;
   const query = checkQuery();
+  query.pagingState = page.pagingState
   const { data: ret } = await getMemberBetRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  page.pagingState = ret.pagingState;
 
   const { data: t } = await getMemberBetRecordsTotal(query);
   total.totalBet = t.totalBet;
