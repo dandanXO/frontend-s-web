@@ -69,15 +69,15 @@
           </el-form-item>
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
-            label="Bank"
+            label="银行"
             prop="bankId"
             name="bankId"
+            value="bankName"
           >
             <template #label></template>
             <BankComponent
               ref="payTypeClass"
               :is="selectedPayType"
-              v-model="form.bankId"
               :bank-list="bankCardList"
               @selected="selectedBank"
             ></BankComponent>
@@ -136,6 +136,7 @@
         </el-form>
       </div>
       <el-dialog
+        class="isDeposit"
         width="500px"
         v-model="isDeposited"
         :maskClosable="false"
@@ -331,6 +332,7 @@ function checkPrivilege(v) {
 }
 
 function selectedBank(value) {
+  console.log(value)
   form.bankId = value;
 }
 
@@ -342,18 +344,24 @@ function clearInfo() {
   checkMinDepositAmt();
 }
 
-async function confirmDeposit() {
-  await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
-      (d) => {
-        if (d.code === 11002) {
-          form.localAmount = d.data.suggestion;
-          // message.error(d.message, 4);
-          ElMessage.error(d.message);
-        } else {
-          doDeposit();
-        }
-      },
-  );
+function confirmDeposit() {
+  formRef.value.validate(async(valid) => {
+    if (valid) {
+        await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
+        (d) => {
+          if (d.code === 11002) {
+            form.localAmount = d.data.suggestion;
+            // message.error(d.message, 4);
+            ElMessage.error(d.message);
+          } else {
+            doDeposit();
+          }
+        },
+    );
+    } else {
+      return;
+    }
+  })
 }
 
 function doDeposit() {
@@ -379,6 +387,8 @@ function doDeposit() {
           "message",
           (event) => {
             if (event.data?.msg) {
+              console.log(event.data?.msg)
+              alert();
               if (event.data.msg === "success") {
                 isDeposited.value = true;
               } else {
@@ -428,6 +438,13 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
+body {
+  .isDeposit {
+    .el-dialog__body {
+      padding: 20px;
+    }
+  }
+}
 .sm .ant-modal {
   width: 100%;
   max-width: 400px;
@@ -520,6 +537,7 @@ grid-template-rows: 50px;
   .loading {
     display: flex;
     justify-content: center;
+    padding: 50px 0;
     font-size: 30px;
     height: 100%;
     img {
