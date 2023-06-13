@@ -1,7 +1,7 @@
 <template>
   <div>
     <div className="menu-title-container">
-      <span className="menu-title">投注记录</span>
+      <span className="menu-title">交易记录</span>
     </div>
     <div class="account-content transit">
       <el-tabs
@@ -55,9 +55,9 @@
               </el-table-column>
             </el-table>
             <el-divider />
-            <el-pagination 
+            <el-pagination
               @current-change="recordPage"
-              :total="pagination.total" 
+              :total="pagination.total"
               :current-page="searchForm[recordActive].current"
               :page-size="searchForm[recordActive].size"
             />
@@ -114,7 +114,7 @@
                 </span>
               </template>
             </el-table> -->
-            
+
             <el-table
               :data="dataState.turnover"
               :loading="loading"
@@ -132,7 +132,7 @@
               </el-table-column>
             </el-table>
             <el-divider />
-            <el-pagination 
+            <el-pagination
               @current-change="recordPage"
               :total="pagination.total"
               :current-page="searchForm[recordActive].current"
@@ -181,8 +181,8 @@
                 <span>{{ humanDatetime(text) }}</span>
               </template>
             </el-table> -->
-            
-            
+
+
             <el-table
               :data="dataState.withdraw"
               :loading="loading"
@@ -199,9 +199,9 @@
                 </template>
               </el-table-column>
             </el-table>
-            
+
             <el-divider />
-            <el-pagination 
+            <el-pagination
               @current-change="recordPage"
               :total="pagination.total"
               :current-page="searchForm[recordActive].current"
@@ -299,7 +299,7 @@
             </el-form>
           </div>
           <div class="unbind-record-wrapper">
-            
+
             <el-table
               :data="dataState.rebates"
               :loading="loading"
@@ -326,10 +326,10 @@
             >
               <template #recordTime="{ text }">
                 <span>{{ humanDatetime(text) }}</span>
-              </template> 
+              </template>
             </el-table>-->
             <el-divider />
-            <el-pagination 
+            <el-pagination
               @current-change="recordPage"
               :total="pagination.total"
               :current-page="searchForm[recordActive].current"
@@ -399,7 +399,7 @@
               @change="recordPage"
             >
             </el-table> -->
-            
+
             <el-table
               :data="dataState.gameBetRecord"
               :loading="loading"
@@ -417,7 +417,7 @@
               </el-table-column>
             </el-table>
             <el-divider />
-            <el-pagination 
+            <el-pagination
               @current-change="recordPage"
               :total="pagination.total"
               :current-page="searchForm[recordActive].current"
@@ -805,7 +805,7 @@ export default defineComponent({
     const searchRecord = (tab) => {
       if (tab) {
         recordActive.value = tab.props.name
-      } 
+      }
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === 'gameBetRecord') {
