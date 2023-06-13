@@ -5,7 +5,7 @@
     title="description"
   ></iframe> -->
     <iframe
-    :src="'https://csweb01.amv4xjcbd.com/?partnerId=8&lang=en&way=' + regDevice + '&token=' + store.token"
+    :src="'https://csweb01.amv4xjcbd.com/?partnerId=2&lang=zh-CN&type=2&way=' + regDevice + '&token=' + store.token"
     title="description"
   ></iframe>
   <!-- <div class="iFrameFull">
@@ -37,7 +37,7 @@ export default defineComponent({
   padding-bottom: env(safe-area-inset-top, 59px); */
   /* height: calc(100vh - (env(safe-area-inset-top, 44px) + env(safe-area-inset-bottom, 59px) + 100px));
   padding-bottom: 44px + env(safe-area-inset-top, 44px); */
-  
+
 }
 iframe {
   width: 100%;

@@ -157,13 +157,15 @@ const routes = [
   {
     path: "/agent/:affiliateCode",
     name: "agentCode",
-    component: () => {}
+    component: () => {
+    }
     // component: () => {},
   },
   {
     path: "/refer/:referralCode",
     name: "referCode",
-    component: () => {}
+    component: () => {
+    }
     // component: () => {},
   },
   {
@@ -212,6 +214,17 @@ const routes = [
       {
         path: "",
         component: () => import("pages/account/DownloadView.vue")
+      }
+    ],
+    meta: {requiresAuth: false}
+  },
+  {
+    path: "/account/invite",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/InviteView.vue")
       }
     ],
     meta: {requiresAuth: false}

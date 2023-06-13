@@ -8,7 +8,7 @@
       >
         <div class="logo">
           <router-link to="/"
-            ><img src="../assets/home/logo.png"
+          ><img src="../assets/home/logo.png"
           /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
@@ -26,13 +26,13 @@
           flat
         >
           <span style="font-size: 10px; margin-left: 5px; display: block"
-            >Deposit</span
+          >Deposit</span
           >
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage ? '/' + prevPage : '/'">
-          <RiArrowDropLeftLine />
+          <RiArrowDropLeftLine/>
         </router-link>
         {{ pageName }}
         <q-btn
@@ -115,7 +115,7 @@
     </q-scroll-area> -->
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs
@@ -126,7 +126,7 @@
         align="justify"
       >
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/homeBar.png" />
+          <img class="inactive" src="../assets/images/index/menu/homeBar.png"/>
           <img
             class="hover"
             src="../assets/images/index/menu/homeBar_active.png"
@@ -156,7 +156,7 @@
           客服
         </q-route-tab>
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/meBar.png" />
+          <img class="inactive" src="../assets/images/index/menu/meBar.png"/>
           <img
             class="hover"
             src="../assets/images/index/menu/meBar_active.png"
@@ -169,13 +169,13 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue";
-import { userStore } from "stores/index";
-import { useUI } from "stores/ui";
-import { useRoute, useRouter } from "vue-router";
+import {defineComponent, onMounted, ref, watch} from "vue";
+import {userStore} from "stores/index";
+import {useUI} from "stores/ui";
+import {useRoute, useRouter} from "vue-router";
 // import EssentialLink from "components/EssentialLink.vue";
 
-import { RiArrowDropLeftLine } from "vue-remix-icons";
+import {RiArrowDropLeftLine} from "vue-remix-icons";
 
 export default defineComponent({
   name: "MainLayout",
@@ -295,6 +295,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "东赢下载";
+        } else if (route.path === "/account/invite") {
+          prevPage.value = "account";
+          hasPage.value = true;
+          pageName.value = "呼朋唤友";
         } else if (route.path === "/account/announcement") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -322,7 +326,7 @@ export default defineComponent({
         } else if (route.path === "/account/promotion") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "优惠领取";
+          pageName.value = "优惠领取区";
         } else if (route.path === "/affiliate") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -461,10 +465,12 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+
   .q-btn {
     width: 40%;
   }
 }
+
 .scrollArea {
   // height: calc(100vh - 70px);
   height: 100vh;
@@ -479,6 +485,7 @@ path {
   stroke-dashoffset: 3212;
   fill: transparent;
 }
+
 svg path {
   fill: none;
   stroke: #ffffff;
@@ -490,6 +497,7 @@ svg path {
 .logo {
   width: 130px;
   margin-left: 10px;
+
   img {
     width: 100%;
   }
@@ -498,6 +506,7 @@ svg path {
 .page-wrapper {
   background: #4fb2ff;
 }
+
 .page-title {
   color: #fff;
   display: flex;

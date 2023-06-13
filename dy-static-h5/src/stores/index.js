@@ -75,8 +75,8 @@ export const userStore = defineStore("userStore", {
           this.profilePicture = response.data.pictureUrl;
           this.displayName = response.data.displayName
           // this.personalAddress = response.data.personalAddress
-		  var exclusive = JSON.parse(response.data.evip);
-          this.evip = exclusive.wap;
+		  // var exclusive = JSON.parse(response.data.evip);
+      //     this.evip = exclusive.wap;
           this.unreadInboxMail = 16
           this.getBalance();
         } else {

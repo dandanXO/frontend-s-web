@@ -2,8 +2,9 @@
   <div class="promotionbonus">
     <!-- <span class="menu-title">Mailbox</span> -->
     <div class="promo-items">
-      <router-link
-        :to="`/promo?name=${item.redirectUrl}&fromAccount=true`"
+      <a
+        :href="item.redirectUrl"
+        :target="(item.redirectTo == true) ? '_blank' : '_self'"
         v-for="(item, i) in promoList"
         :key="i"
         class="promo-item"
@@ -12,7 +13,7 @@
         <!-- <div>{{`${item.iconLink}`}}</div> -->
         <img :src="`${item.iconLink}`" />
         {{ item.label }}
-      </router-link>
+      </a>
     </div>
   </div>
 </template>
@@ -23,7 +24,8 @@ const promoList = ref([
     code: "1",
     label: "体育免费竞猜",
     icon: "invite-friend",
-    redirectUrl: "invitefriend",
+    redirectUrl: "https://m.dyvip1.com/",
+    redirectTo: true,
     iconLink:
       "https://sm.zzwangjie.com/static//image/7597bf69-7c02-42f6-987f-da06040887f1.png",
   },
@@ -31,7 +33,7 @@ const promoList = ref([
     code: "2",
     label: "体育保险",
     icon: "invite-friend",
-    redirectUrl: "invitefriend",
+    redirectUrl: "promo",
     iconLink:
       "https://sm.zzwangjie.com/static//image/43d35d61-264a-4f7c-9b32-7f865dfaf95a.png",
   },
