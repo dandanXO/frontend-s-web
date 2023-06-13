@@ -83,7 +83,7 @@
     <div class="pagination-wrapper">
       <el-pagination background layout="prev, pager, next" :total="gamePage.total"  @current-change="changePage(gamePage.currentPage, gamePage.pageSize)" v-model:current-page="gamePage.currentPage" v-model:pageSize="gamePage.pageSize" default-page-size="30"/>
       <!-- <el-pagination
-      
+
         v-model:current="gamePage.currentPage"
         v-model:pageSize="gamePage.pageSize"
         :total="gamePage.total"
@@ -113,7 +113,7 @@ export default defineComponent({
   },
   setup() {
     const numBox = ref(275417746)
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/game/'
     const banner = ref([]);
     const route = useRoute();
     const router = useRouter();
@@ -167,7 +167,7 @@ export default defineComponent({
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/slot/${activePlat.value.code}/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/slot/${activePlat.value.code}/${element.icon}.png`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
@@ -260,7 +260,7 @@ export default defineComponent({
       getPlatList();
       loadBanner();
     });
-    
+
     watch(
       () => route.query.plat,
       () => {
@@ -606,7 +606,7 @@ export default defineComponent({
             &:hover {
                   background-image: linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#2a313e,#2a313e);
                   color: #fff;
-              
+
             }
           }
         }

@@ -42,7 +42,7 @@
               v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
               :src="paymethodicon + '/000/fff.png&text=payment'"
             />
-            <img v-else :src="paymethodicon + '/' + item.icon" />
+            <img v-else :src="paymethodicon + '/payment/' + item.icon" />
           </el-col>
           <el-col :span="12">
             <div class="node-text">
@@ -285,10 +285,9 @@ export default defineComponent({
         // eslint-disable-next-line vue/no-mutating-props
         this.list.push(this.ruleForm)
       }
-      console.log(this.list)
 
       this.dialogVisible = false
-      this.$emit('exportNodes', this.list)
+      bus.emit('exportNodes', this.list)
     },
     addto(list, level, name) {
       // this.$emit('addNodesToSelectedGroup');
@@ -433,7 +432,6 @@ export default defineComponent({
     },
 
     async attachPhoto(event, type) {
-      console.log(type)
       const files = event.target.files[0]
       const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
       const dirPayment = 'payment'
@@ -456,9 +454,9 @@ export default defineComponent({
         const data = await uploadImage(formData)
         if (data.code === 0) {
           if (type === 'payment') {
-            this.ruleForm.icon = data.data[0]
+            this.ruleForm.icon = data.data
           } else {
-            this.ruleForm.promoIcon = data.data[0]
+            this.ruleForm.promoIcon = data.data
           }
         } else {
           ElMessage({

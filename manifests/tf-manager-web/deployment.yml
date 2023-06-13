@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: tf-manager-web
-          image: git.caspen-tech.com:5050/jolly88-complex/frontend:tf-manager-web-1686215313 # {"$imagepolicy": "xinfa:tf-manager-web"}
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:tf-manager-web-1686648339 # {"$imagepolicy": "xinfa:tf-manager-web"}
           ports:
             - containerPort: 80
           env:
