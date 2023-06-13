@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="logo">
-      <img src="../assets/images/login/logo.png" />
+      <img src="../assets/images/login/logo.png"/>
     </div>
     <q-tabs
       v-model="tab"
@@ -10,8 +10,8 @@
       align="justify"
       class="bg-dyblue"
     >
-      <q-tab name="login" label="登录" />
-      <q-tab name="register" label="注册" />
+      <q-tab name="login" label="登录"/>
+      <q-tab name="register" label="注册"/>
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
@@ -28,8 +28,9 @@
               :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
               label-color=""
               autocomplete="username"
-              ><template v-slot:prepend>
-                <img src="../assets/images/login/login_name.png" width="20" />
+            >
+              <template v-slot:prepend>
+                <img src="../assets/images/login/login_name.png" width="20"/>
               </template>
             </q-input>
 
@@ -46,7 +47,7 @@
               autocomplete="current-password"
             >
               <template v-slot:prepend>
-                <img src="../assets/images/login/login_key.png" width="20" />
+                <img src="../assets/images/login/login_key.png" width="20"/>
               </template>
               <template v-slot:append>
                 <q-icon
@@ -54,8 +55,10 @@
                   :name="isPwd ? 'visibility_off' : 'visibility'"
                   class="cursor-pointer"
                   @click="isPwd = !isPwd"
-                /> </template
-            ></q-input>
+                />
+              </template
+              >
+            </q-input>
             <q-input
               standout
               bg-color="white"
@@ -68,11 +71,11 @@
               label-color=""
             >
               <template v-slot:append>
-                <img :src="verificationImg" @click="getCode" />
+                <img :src="verificationImg" @click="getCode"/>
               </template>
               <template v-slot:prepend>
                 <!-- <q-icon color="dark" name="security" /> -->
-                <img src="../assets/images/login/login_key.png" width="20" />
+                <img src="../assets/images/login/login_key.png" width="20"/>
               </template>
             </q-input>
           </div>
@@ -87,8 +90,9 @@
               color="white"
               label-color=""
               autocomplete="username"
-              ><template v-slot:prepend>
-                <q-icon color="dark" name="person_outline" />
+            >
+              <template v-slot:prepend>
+                <q-icon color="dark" name="person_outline"/>
               </template>
             </q-input>
             <q-input
@@ -103,10 +107,10 @@
               label-color="brand"
             >
               <template v-slot:append>
-                <img :src="verificationImg" />
+                <img :src="verificationImg"/>
               </template>
               <template v-slot:prepend>
-                <q-icon color="bright" name="security" />
+                <q-icon color="bright" name="security"/>
               </template>
             </q-input>
           </div>
@@ -116,10 +120,27 @@
             </span>
           </div> -->
 
+          <div class="forgetpass-div">
+            <div class="mui-row">
+              <q-checkbox v-model="isCheckRmb" label="记住密码"
+                          checked-icon="task_alt"
+                          unchecked-icon="task_alt"
+                          size="lg"
+                          color="light-blue-9"/>
+
+            </div>
+            <div class="mui-row">
+              <router-link to="/forgot-password">
+                忘记密码？
+              </router-link>
+
+            </div>
+          </div>
+
           <q-btn
             @click.prevent="onSubmit"
             type="submit"
-            class="q-mt-lg"
+            class="q-mt-md"
             label="登录"
             width="100%"
             color="dyblue"
@@ -129,23 +150,23 @@
         </q-form>
 
         <div class="q-pa-md text-center">
-          <router-link class="txt-tip" to="/">先去逛逛 </router-link>
+          <router-link class="txt-tip" to="/">先去逛逛</router-link>
         </div>
       </q-tab-panel>
 
       <q-tab-panel name="register" class="form-container">
-        <RegisterPage />
+        <RegisterPage/>
       </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted } from "vue";
-import { userStore } from "stores/index";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
-import { useRoute, useRouter } from "vue-router";
+import {defineComponent, ref, reactive, onMounted} from "vue";
+import {userStore} from "stores/index";
+import {api} from "boot/axios";
+import {useQuasar} from "quasar";
+import {useRoute, useRouter} from "vue-router";
 import RegisterPage from "../pages/RegisterPage.vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
@@ -191,13 +212,15 @@ export default defineComponent({
         });
     };
 
+    const isCheckRmb = ref(false);
+
     const onSubmit = () => {
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
+        const excludes = {value: ["timezone", "timeZoneOffset"]};
+        const allComponents = {...result.components};
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
@@ -262,6 +285,7 @@ export default defineComponent({
       tab,
       loginType,
       getCode,
+      isCheckRmb
     };
   },
 });
@@ -271,18 +295,22 @@ export default defineComponent({
   background: url(../assets/images/login/bg.jpg) no-repeat center center;
   background-size: cover;
   height: 100vh;
+
   .logo {
     margin: 0 auto;
     display: block;
     padding: 20% 0 10%;
     width: 40%;
+
     img {
       width: 100%;
     }
   }
+
   .q-field__native.q-placeholder {
     color: #000000;
   }
+
   .q-tabs {
     background: rgba(113, 125, 146, 0.2);
     border-radius: 30px;
@@ -290,40 +318,82 @@ export default defineComponent({
     margin: 0 auto;
     box-shadow: 5px 5px 5px 0 rgba(66, 91, 186, 0.2);
   }
+
   .q-tab {
     min-height: 40px;
     background: white;
     color: #666;
   }
+
   .q-tab__content {
     width: 100%;
 
   }
+
   .q-tab--active .q-tab__indicator {
     height: 100%;
     background: #5b80e8;
     border-radius: 30px;
   }
+
   .q-tab__label {
     z-index: 1;
   }
+
   .q-tab-panels {
     background: none;
     padding: 10px;
   }
+
   .align-right {
     text-align: right;
     // color: #acacac;
     color: #333;
     margin-top: 20px;
   }
+
   .txt-tip {
     color: #007aff;
     text-decoration: none;
   }
+
   .form-container {
     width: 85%;
     margin: auto;
+  }
+
+  .forgetpass-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 4px);
+    margin: 14px auto 0px;
+
+    .mui-row {
+      height: 48px;
+      width: calc(100% - 40px);
+      max-width: 150px;
+      border-radius: 20px;
+      border: 3px solid #5b80e7;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #5b80e7;
+
+
+      &:active{
+        filter: brightness(0.8);
+      }
+    }
+
+    a,a:visited,a:active,a:hover{
+      text-decoration: none;
+      color:  #5b80e7;
+    }
   }
 }
 </style>

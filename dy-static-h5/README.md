@@ -1,4 +1,4 @@
-# Jolly88 App (ph-project)
+# 东瀛 H5 App (dy-static-h5)
 
 APP
 
