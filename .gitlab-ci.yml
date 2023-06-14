@@ -46,6 +46,13 @@ stages:
   - build
   - build-image
 
+build-image-pt-launch:
+  extends: .docker-build
+  variables:
+    PROJECT: pt-launch
+
+#===============================================================================================
+
 build-ph-static-h5:
   extends: .build-projects
   script:
