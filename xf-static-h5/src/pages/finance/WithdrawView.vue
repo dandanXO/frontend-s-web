@@ -91,16 +91,15 @@
             >
               {{
                 "单笔提款: " +
-                selectedWithdrawalMethod.withdrawMin +
-                "元 - " +
-                selectedWithdrawalMethod.withdrawMax + "元"
+                selectedWithdrawalMethod.withdrawMin + (isUSDT ? 'USDT - ' : store.currency.label + ' - ') +
+                selectedWithdrawalMethod.withdrawMax + (isUSDT ? 'USDT' : store.currency.label)
               }}
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
               {{
                 "单日可提款: " +
-                selectedWithdrawalMethod.withdrawMaxAmount + "元"
+                selectedWithdrawalMethod.withdrawMaxAmount + (isUSDT ? 'USDT - ' : store.currency.label)
               }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">

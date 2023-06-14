@@ -5,8 +5,7 @@
     </div>
     <div class="account-content">
       <div class="account-tip-text wbot">
-        <el-icon><InfoFilled /></el-icon>
-        TIP hereeeee
+        <!-- <el-icon><InfoFilled /></el-icon> -->
       </div>
       <!-- <div class="addbuttons">
         <div
@@ -136,7 +135,7 @@
           </div>
     </div>
     <el-dialog
-      wrap-class-name="bankModal"
+      class="bankModal"
       width="500"
       v-model="bankCardModalState.visible"
       :footer="null"
@@ -161,7 +160,8 @@
             >
               <el-option v-for="bank in bankTypes"
               :key="bank.value"
-              :value="bank.value">
+              :value="bank.value"
+              :label="bank.text">
                 {{ bank.text }}
               </el-option>
             </el-select>
@@ -175,10 +175,10 @@
             >
               <el-option v-for="b in banksList" :key="b.id" :label="b.name" :value="b.id">
                 <el-row v-if="b.bankIcon" :gutter="10">
-                  <el-col :span="1">
+                  <el-col :span="3">
                     <img style="width: 75%; display: block; margin: 5px;" :src="imgURL + b.bankIcon" />
                   </el-col>
-                  <el-col :span="23">
+                  <el-col :span="21">
                      {{ b.name }}
                   </el-col>
                 </el-row>
@@ -219,7 +219,7 @@
             class="txt-center common-btn"
             @click="submitBankCard"
           >
-            Submit
+            提交
           </el-button>
         </el-form-item>
       </el-form>
@@ -255,9 +255,9 @@ export default defineComponent({
         max = 37;
       }
       if (v === '') {
-        return Promise.reject('Card number is required');
+        return Promise.reject('请输入卡号');
       } else if (v.length < min || v.length > max) {
-        return Promise.reject('Length should be ' + min + '-' + max);
+        return Promise.reject('长度应为 ' + min + '-' + max);
       } else {
         return Promise.resolve();
       }
@@ -555,6 +555,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+
+body {
+  .bankModal {
+    .el-dialog__body {
+      padding: 20px;
+    }
+  }
+}
 .passwordModal .ant-modal {
   max-width: 520px;
   width: 100%;
