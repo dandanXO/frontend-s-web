@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: pt-launch
-          image: git.caspen-tech.com:5050/jolly88-complex/frontend:pt-launch-1686660170 # {"$imagepolicy": "xinfa:pt-launch"}
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:pt-launch # {"$imagepolicy": "xinfa:pt-launch"}
           ports:
             - containerPort: 80
           env:
