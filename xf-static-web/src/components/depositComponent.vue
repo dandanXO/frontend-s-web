@@ -48,12 +48,12 @@
             <el-col :span="8">
               <div class="account-tip">
                 最低存款 :
-                {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} USDT
+                {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? 'USDT' : 'RMB' }}
                  <br />
                 最高存款:
                 {{
                   activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
-                }} USDT
+                }} {{ isUSDT ? 'USDT' : 'RMB' }}
               </div>
             </el-col>
           </el-row>
