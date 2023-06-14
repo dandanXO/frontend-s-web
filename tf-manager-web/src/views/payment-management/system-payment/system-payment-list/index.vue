@@ -123,6 +123,13 @@
             type="success"
             @click="editPayment(scope.row)"
           />
+
+          <el-button
+            icon="el-icon-copy-document"
+            size="mini"
+            type="warning"
+            @click="showDialog(scope.row)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -135,6 +142,35 @@
     :page-count="page.pages"
     :current-page="request.current"
   />
+
+    <el-dialog
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      append-to-body
+      width="600px"
+    >
+      <el-form
+        ref="copyPaymentForm"
+        v-loading="uiControl.dialogLoading"
+        :model="copyForm"
+        :inline="true"
+        size="small"
+        label-width="160px"
+      >
+        <el-form-item :label="t('fields.paymentName')" prop="name">
+          <el-input v-model="copyForm.name" style="width: 350px" />
+        </el-form-item>
+
+        <el-form-item :label="t('fields.mallName')" prop="mall">
+          <el-input v-model="copyForm.mall" style="width: 350px" />
+        </el-form-item>
+
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="copySubmit">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
 </template>
 
 <script setup>
@@ -143,16 +179,19 @@ import { useRoute, useRouter } from 'vue-router'
 import {
   getSystemPaymentList,
   updateSystemPaymentStatus,
+  copyPayment,
 } from '../../../../api/system-payment'
 import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from "vue-i18n";
+import { ElMessage } from 'element-plus'
 
 // eslint-disable-next-line
 const { t } = useI18n();
 const store = useStore()
+const copyPaymentForm = ref(null)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const siteList = reactive({
@@ -164,6 +203,9 @@ const uiControl = reactive({
     { key: 1, displayName: 'Open', value: 'OPEN' },
     { key: 2, displayName: 'Close', value: 'STATUS' },
   ],
+  dialogVisible: false,
+  dialogTitle: '',
+  dialogLoading: false,
 })
 const request = reactive({
   size: 30,
@@ -171,6 +213,13 @@ const request = reactive({
   mallName: null,
   status: null,
   siteId: null,
+})
+
+const copyForm = reactive({
+  name: null,
+  mall: null,
+  id: null,
+  paymentName: null
 })
 
 const form = reactive({
@@ -220,6 +269,14 @@ function addPayment() {
   })
 }
 
+function showDialog(systemPayment) {
+  copyForm.id = systemPayment.id;
+  copyForm.mall = "";
+  copyForm.name = "";
+  uiControl.dialogTitle = t('fields.copyPayment') + " -  " + systemPayment.paymentName;
+  uiControl.dialogVisible = true
+}
+
 function editPayment(systemPayment) {
   nextTick(() => {
     for (const key in systemPayment) {
@@ -232,6 +289,19 @@ function editPayment(systemPayment) {
       params: { id: systemPayment.id, current: request.current },
     })
   })
+}
+
+async function copySubmit() {
+  if (copyForm.name === null || copyForm.name === "") {
+    ElMessage({ message: t('message.validatePaymentNameRequired'), type: 'error' });
+  } else if (copyForm.mall === null || copyForm.mall === "") {
+    ElMessage({ message: t('message.validateMallNameRequired'), type: 'error' });
+  } else {
+    uiControl.dialogVisible = false;
+    await copyPayment(copyForm);
+    loadSystemPayment();
+    ElMessage({ message: t('message.copySuccess'), type: 'success' });
+  }
 }
 
 const page = reactive({
