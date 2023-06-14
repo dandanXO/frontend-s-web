@@ -174,6 +174,7 @@ export default {
     confirmPay: '确认结算',
     content: '内容',
     copy: '复制',
+    copyPayment: '正在复制',
     copyTo: '复制到',
     copyToOtherLevel: '复制到其他会员组别',
     country: '国家',

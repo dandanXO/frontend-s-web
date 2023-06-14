@@ -174,6 +174,7 @@ export default {
     confirmPay: 'Confirm Pay',
     content: 'Content',
     copy: 'Copy',
+    copyPayment: 'Copying payment',
     copyTo: 'Copy to',
     copyToOtherLevel: 'Copy to other level',
     country: 'Country',

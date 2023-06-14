@@ -1,9 +1,11 @@
 <template>
-  <div v-if="submitMessage" class="submit-message">
+  <div v-if="submitMessage" class="inner-cont">
+    <div  class="submit-message">
     <div class="line"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
     <div class="line"><span>银行账号：</span> <span class="info" ref="subMsg1">{{submitMessage[1]}}</span><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button></div>
     <div class="line"><span>银行卡号：</span> <span class="info" ref="subMsg2">{{submitMessage[2]}}</span><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">{{ copybtntxt2 }}</button></div>
     <div class="line"><span>存款金额：</span> <span class="info" ref="subMsg3">{{submitMessage[3]}}</span><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button></div>
+  </div>
   </div>
   <div v-else id="renderArea">
     <form ref="formRef" method="post" style="display: none">
@@ -133,11 +135,19 @@ onMounted(async () => {
 });
 </script>
 <style lang="scss">
+.inner-cont {  
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .submit-message {
-  width: 400px;
+  width: calc(100% - 40px);
+  max-width: 500px;
   margin: 0 auto;
-  height:100%;
-  gap: 40px;
+  padding: 20px;
+  height: auto;
+  gap: 1px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -148,16 +158,30 @@ onMounted(async () => {
     display: flex;
     gap: 10px;
     justify-content: space-between;
-    width: 100%;
+    width: calc(100% - 30px);
+    align-items: center;
+    font-size: 16px;
+    align-items: center;
+    background: #222a34;
+    padding: 15px;
     span:first-child {
       flex: 1;
+      color: #a0bcd6;
     }
     span.info {
-      flex: 1;
+      flex: 3;
     }
     button {
-      width: 150px;
+      width: 80px;
     }
   }
+}
+</style>
+
+<style scoped lang="scss">
+.account-contents {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -75,7 +75,7 @@
           min-width="90"
         >
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-            <router-link :to="`/member/details/${scope.row.memberId}?tab=member-info&site=${scope.row.siteId}`">
+            <router-link :to="`/member/details/${scope.row.memberId}?tab=member-info&site=${site.id}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -249,7 +249,7 @@ async function loadMemberDetail() {
 async function loadRiskInfo() {
   page.loading = true;
   const pageable = { current: request.current, size: request.size };
-  const { data: ret } = await getMemberRiskInfo(props.mbrId, request.queryValue, pageable);
+  const { data: ret } = await getMemberRiskInfo(props.mbrId, site.id, request.queryValue, pageable);
   page.records = ret.records;
   page.pages = ret.pages;
   page.total = ret.total;

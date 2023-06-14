@@ -388,10 +388,10 @@ function doDeposit() {
           (event) => {
             if (event.data?.msg) {
               console.log(event.data?.msg)
-              alert();
               if (event.data.msg === "success") {
                 isDeposited.value = true;
               } else {
+                ElMessage.error(event.data.msg);
                 // message.error(event.data.msg, 4);
               }
             }
