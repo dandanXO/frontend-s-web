@@ -6,7 +6,8 @@
       </q-inner-loading>
       <div v-if="!loading">
         <q-infinite-scroll @load="onLoad" :offset="250">
-            <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" style="background: #212534; color: #bacef1;">
+<!--          style="background: #212534; color: #bacef1;"-->
+            <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" >
                     <div class="table-data" v-for="(head, e) in headers" :key="e">
                         <div class="label">
                             {{ head.label }}
@@ -23,7 +24,7 @@
                         </template>
                         <!-- <div v-if="Object.keys(head.key)" class="desc">
                             {{ det.value }}
-                            
+
                         </div> -->
                     </div>
                     <div v-if="recordType === 'deposit'" class="buttons">
@@ -31,7 +32,7 @@
                          <q-btn outline label="复制" size="sm" color="bright"  />
                     </div>
             </q-card>
-            
+
             <template v-slot:loading>
                 <div v-if="comList.length > 0">
                 <div class="row justify-center q-my-md">

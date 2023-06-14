@@ -16,6 +16,7 @@
       />
       <q-input
         standout
+        ref="realNameRef"
         bg-color="white"
         class="q-pb-xs"
         hide-bottom-space
@@ -27,6 +28,7 @@
         :readonly="personalState.memberInfo.realName ? true : false"
       />
       <q-input
+        ref="birthdayRef"
         standout
         bg-color="white"
         label="生日"
@@ -45,9 +47,9 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date v-model="formDetail.birthday">
+              <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
+                  <q-btn v-close-popup label="Close" color="primary" flat/>
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -95,26 +97,22 @@
         :readonly="personalState.memberInfo.phone ? true : false"
       >
         <template v-slot:append>
-          <q-btn size="sm" color="dyblue" label="验证" />
+          <q-btn size="sm" color="dyblue" label="验证"/>
         </template>
       </q-input>
-      <div class="text-center q-mt-md">
-        <q-btn size="md" color="dyblue" type="submit" label="更新信息" />
+      <div class="text-center q-mt-md" v-if="canEdit">
+        <q-btn size="md" color="dyblue" @click="updateState" label="更新信息"/>
       </div>
     </q-form>
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
-// import {
-//   loadMemberInfo,
-//   changePwd,
-// } from "@/api/personal/personal";
+import {defineComponent, reactive, ref, onMounted, computed} from "vue";
 import moment from "moment";
-import { api } from "boot/axios"
-import { useQuasar } from "quasar"
-import { userStore } from "src/stores"
+import {api} from "boot/axios"
+import {useQuasar} from "quasar"
+import {userStore} from "src/stores"
 
 
 export default defineComponent({
@@ -128,17 +126,26 @@ export default defineComponent({
       end: ""
     });
 
+    const store= userStore();
+
     const loadInfo = () => {
-    personalState.memberInfo = userStore()
-    if (personalState.memberInfo.birthday > 0) {
-      personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
-    }
+      personalState.memberInfo = userStore()
+      if (personalState.memberInfo.birthday > 0) {
+        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
+      }
       formDetail.nickName = personalState.memberInfo.nickName
       formDetail.realName = personalState.memberInfo.realName
       formDetail.birthday = personalState.memberInfo.birthday
       formDetail.email = personalState.memberInfo.email
       formDetail.phone = personalState.memberInfo.phone
     }
+
+    const canEdit = computed(() => {
+      if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)){
+        return true;
+      }
+      return false;
+    });
 
     const personalState = reactive({
       memberInfo: {}
@@ -194,7 +201,7 @@ export default defineComponent({
     const verifyVerificationCode = () => {
       isEmailSending.value = true
       verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
-      const emailDetails =  {
+      const emailDetails = {
         email: updateSecurityVerified.emailAddress,
         captchaCode: updateSecurityVerified.captchaCode,
         codeId: updateSecurityVerified.codeId
@@ -273,10 +280,10 @@ export default defineComponent({
     const phoneRef = ref()
     const formDetail = reactive([])
     const updateState = () => {
-      const updateInfo = formDetail.value
-      if (!personalState.memberInfo.email) {
-        emailRef.value.validate()
-        if (emailRef.value.hasError) {
+      const updateInfo = formDetail;
+      if (!personalState.memberInfo.birthday) {
+        birthdayRef.value.validate()
+        if (birthdayRef.value.hasError) {
           return
         }
       }
@@ -286,41 +293,27 @@ export default defineComponent({
           return
         }
       }
-      if (!personalState.memberInfo.birthday) {
-        birthdayRef.value.validate()
-        if (birthdayRef.value.hasError) {
-          return
-        }
-      }
-      if (!personalState.memberInfo.telephone) {
-        phoneRef.value.validate()
-        if (phoneRef.value.hasError) {
-          return
-        }
-      }
+      console.log(updateInfo);
+      updateInfo.birthday = moment(updateInfo.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "อัพเดทเรียบร้อยแล้ว",
+            message: "更新成功",
             icon: "check_circle_outline"
           });
-          loadInfo()
+          loadInfo();
+          store.getMemberInfo();
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: r.message,
+            icon: "report_problem"
+          });
         }
       })
-      // if (field === 'email') {
-      //   isEditEmail.value = false
-      // }
-      // if (field === 'name') {
-      //   isEditRealName.value = false
-      // }
-      // if (field === 'phone') {
-      //   isEditPhone.value = false
-      // }
-      // if (field === 'birthday') {
-      //   isEditBirthday.value = false
-      // }
     }
     return {
       searchForm,
@@ -351,7 +344,8 @@ export default defineComponent({
       realNameRef,
       birthdayRef,
       phoneRef,
-      moment
+      moment,
+      canEdit
     };
   }
 });
@@ -359,6 +353,7 @@ export default defineComponent({
 <style lang="scss">
 .personal-account {
   padding: 10px;
+
   .web {
     color: #3764d6;
     text-align: center;

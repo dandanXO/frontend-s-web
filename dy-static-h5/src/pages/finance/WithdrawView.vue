@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AcctBal :platforms="platforms" />
+<!--    <AcctBal :platforms="platforms" />-->
     <div class="q-pa-md bg-white q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -25,7 +25,7 @@
             option-value="id"
             emit-value
             label="钱包地址"
-            color="white"
+            color="blue"
             :options="withdrawState.bankCardList"
             map-options
             :rules="[(val) => !!val || '请选择钱包']"
@@ -70,9 +70,9 @@
             label="金额"
             color="white"
             :rules="[
-              (val) => (val && val.length > 0) || 'Please enter an amount',
-              (val) => (val >= selectedWithdrawalMethod.withdrawMin) || ('The amount should be as specified.'),
-              (val) => (val <= selectedWithdrawalMethod.withdrawMax) || 'The amount should be as specified.'
+              (val) => (val && val.length > 0) || '请输入提款金额',
+              (val) => (val >= selectedWithdrawalMethod.withdrawMin) || ('请输入正确的提款金额'),
+              (val) => (val <= selectedWithdrawalMethod.withdrawMax) || '请输入正确的提款金额'
             ]"
           >
             <template v-slot:prepend>
@@ -171,10 +171,8 @@
 </template>
 
 <script lang="js">
+/* eslint-disable */
 import { defineComponent, reactive, ref, onMounted } from "vue";
-// import { loadBankCards, confirmWithdraw, withdrawEntrance
-// //  } from "@/api/personal/personal";
-// import { message } from "ant-design-vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -202,7 +200,7 @@ export default defineComponent({
     onMounted(() => {
       getWithdrawalMethods()
       store.getBalance()
-      loadPlatform()
+      // loadPlatform()
     });
     const platforms = reactive([]);
     const loadPlatform = () => {

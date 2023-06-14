@@ -14,7 +14,7 @@
           <span class="span-text">推广链接</span>
           <div class="share-link-div">
             <a :href="selfTgurl" target="_blank" id="selfTgurl">{{ selfTgurl }}</a>
-            <button class="mui-btn-primary copy-btn" onclick="copy()">复制</button>
+            <button class="mui-btn-primary copy-btn" @click="copyText(selfTgurl)">复制</button>
           </div>
 
         </div>
@@ -28,7 +28,7 @@
           </div>
           <div class="share-qr-div">
             <!--            <div id="qr-code"></div>-->
-            <VueQRCodeComponent size="150" id="qr-code" :text="qrCode"/>
+            <VueQRCodeComponent size="200" id="qr-code" :text="qrCode"/>
 
             <div class="share-info-div">
               <div class="share-info-box">
@@ -76,8 +76,11 @@
   </div>
 </template>
 <script lang="js">
-import {defineComponent, ref} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import VueQRCodeComponent from 'vue-qrcode-component'
+import {userStore} from "src/stores";
+import {useQuasar} from "quasar";
+import { api } from "boot/axios"
 
 export default defineComponent({
   name: "ShareView",
@@ -85,28 +88,70 @@ export default defineComponent({
     VueQRCodeComponent
   },
   setup() {
+    const $q= useQuasar();
+    const store = userStore();
     const selfTgurl = ref("https://www.google.com/");
-    const qrCode = ref("123");
+
+    let tgDomain = "https://m.dyvip989.com";
+    selfTgurl.value = tgDomain + "/member/" + window.btoa(store.loginName);
+
+    const qrCode= ref( selfTgurl.value);
 
 
-    const copy = () => {
-      var clipboard = new Clipboard('.mui-btn-primary');
-      clipboard.on('success', e => {
-        // fun_alertMsg('复制成功，快去邀请你的好友吧！');
-        // 释放内存
-        clipboard.destroy();
-      })
-      clipboard.on('error', e => {
-        // 不支持复制
-        // fun_alertMsg("复制失败")
-        // 释放内存
-        clipboard.destroy();
-      })
+    const copyText = (text) => {
+      copyToClipboard(text);
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "复制成功！",
+        icon: "check_circle_outline"
+      });
     }
+
+    async function copyToClipboard(textToCopy) {
+      // Navigator clipboard api needs a secure context (https)
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(textToCopy);
+      } else {
+        // Use the 'out of viewport hidden text area' trick
+        const textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+
+        // Move textarea out of the viewport so it's not visible
+        textArea.style.position = "absolute";
+        textArea.style.left = "-999999px";
+
+        document.body.prepend(textArea);
+        textArea.select();
+
+        try {
+          document.execCommand("copy");
+        } catch (error) {
+          console.error(error);
+        } finally {
+          textArea.remove();
+        }
+      }
+      ;
+    }
+
+    //TODO:: Get Invited Frens Count.
+    // onMounted(()=>{
+    //   // {token : store.token}
+    //   api.get( "/session/recommend/summary" ).then((res) => {
+    //     // console.log(reminderForm)
+    //     const ret = res.data;
+    //     if (res.code === 0) {
+    //
+    //     }
+    //   });
+    //
+    // })
+
     return {
       selfTgurl,
       qrCode,
-      copy
+      copyText
     }
   }
 });
@@ -299,11 +344,11 @@ export default defineComponent({
   opacity: 0.7;
 }
 
-#qr-code{
+#qr-code {
   text-align: center;
 
-  img{
-    margin:0 auto;
+  img {
+    margin: 0 auto;
   }
 }
 

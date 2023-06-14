@@ -1,6 +1,7 @@
-import { defineStore } from "pinia";
-import { api, cashier, eventapi } from "boot/axios";
-import { SessionStorage, Notify, Platform } from "quasar";
+import {defineStore} from "pinia";
+import {api, cashier, eventapi} from "boot/axios";
+import {SessionStorage, Notify, Platform} from "quasar";
+
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
 
@@ -12,6 +13,7 @@ export const userStore = defineStore("userStore", {
       displayName: "",
       nickName: "",
       realName: "",
+      loginName: "",
       birthday: "",
       phone: "",
       email: "",
@@ -19,8 +21,8 @@ export const userStore = defineStore("userStore", {
       balance: 0,
       token: SessionStorage.getItem("TOKEN") || "",
       vip: "",
-	  evip: "",
-      currency: { value: "￥", label: "RMB"},
+      evip: "",
+      currency: {value: "￥", label: "RMB"},
       personalAddress: '',
       unreadInboxMail: 0,
     };
@@ -30,7 +32,7 @@ export const userStore = defineStore("userStore", {
       return !!SessionStorage.getItem("TOKEN");
     },
     memberLogin(loginInfo) {
-      const regDevice = Platform.is.mobile ? "H5" : "WEB"
+      const regDevice = Platform.is.mobile ? "H5" : "H5"
       loginInfo.way = regDevice
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {
@@ -64,8 +66,9 @@ export const userStore = defineStore("userStore", {
       });
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
-          this.id= response.data.id;
+          this.id = response.data.id;
           this.nickName = response.data.loginName;
+          this.loginName = response.data.loginName;
           this.realName = response.data.realName;
           this.birthday = response.data.birthday;
           this.email = response.data.email;
@@ -75,8 +78,11 @@ export const userStore = defineStore("userStore", {
           this.profilePicture = response.data.pictureUrl;
           this.displayName = response.data.displayName
           // this.personalAddress = response.data.personalAddress
-		  // var exclusive = JSON.parse(response.data.evip);
-      //     this.evip = exclusive.wap;
+          if (response.data.evip) {
+            var exclusive = JSON.parse(response.data.evip)
+            this.evip = exclusive.wap;
+          }
+
           this.unreadInboxMail = 16
           this.getBalance();
         } else {
