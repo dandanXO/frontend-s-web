@@ -17,7 +17,7 @@
           name="localAmount"
           v-model="form.localAmount"
           placeholder="输入金额"
-          color="white"
+          color="blue"
           :rules="verifyDepositAmount"
           padding="none"
         >
@@ -58,7 +58,7 @@
           emit-value
           v-if="hasPrivilege"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-          color="white"
+          color="blue"
           @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">

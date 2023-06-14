@@ -6,14 +6,14 @@
       </q-inner-loading>
       <div v-if="!loading">
         <q-infinite-scroll @load="onLoad" :offset="150">
-            <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" :class="{active: isSelectedMail === det.title }" style="background: #212534; color: #bacef1;" @click="selectMail(det)">
+            <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" :class="{active: isSelectedMail === det.title }" style="" @click="selectMail(det)">
                     <div style="display:flex; justify-content: space-between; align-items: center">
                     <div>
                     <q-icon name="mail" />
                     {{ det.title }}
                     </div>
                     <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0" />
-                    
+
                     </div>
                     <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.title ? 'auto' : '0px'}`">
                       {{ det.content }}
@@ -23,7 +23,7 @@
                          <q-btn outline label="复制" size="sm" color="bright"  />
                     </div>
             </q-card>
-            
+
             <template v-slot:loading>
                 <div v-if="comList.length > 0">
                 <div class="row justify-center q-my-md">

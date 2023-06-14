@@ -1,19 +1,39 @@
 <template>
-    <div class="table-record">
-        <RecordComponent :loading="visible" :list="tableData" :headers="tableHeaders" />
-    </div>
+  <div class="table-record">
+    <RecordComponent :loading="visible" :list="tableData" :headers="tableHeaders"/>
+  </div>
 </template>
-<script setup>
-import { onMounted, ref } from "vue"
+<script lang="js">
+import {defineComponent, onMounted, ref} from "vue"
 import RecordComponent from "../../components/RecordComponent.vue"
-components: {
+import {api} from "boot/axios";
+
+export default defineComponent({
+  components: {
     RecordComponent
-}
-const visible = ref(true);
-const tableData = ref([]);
-const loadDepositTable = () => {
-    visible.value = false
-    tableData.value = [{
+  },
+  setup() {
+    const visible = ref(true);
+    const tableData = ref([]);
+
+
+    const loadDepositTable = () => {
+
+      let paramData = {
+        "startDate": "2023-06-07",
+        "endDate": "2023-06-14"
+      }
+
+      api.get("/session/member/financeFeedback", {
+          params: paramData
+        },
+      ).then((res) => {
+        console.log(res);
+      })
+
+
+      visible.value = false
+      tableData.value = [{
         amount: 50,
         commitTime: null,
         feedbackTime: "2021-11-01 22:33:15",
@@ -32,42 +52,52 @@ const loadDepositTable = () => {
         typeText: "存款",
         updateBy: 0,
         updateTime: null
-        
-    },]
-}
-const tableHeaders = ([
-    {
+
+      },]
+    }
+    const tableHeaders = ([
+      {
         key: 'orderNo',
         label: '单号'
-    },
-    {
+      },
+      {
         key: 'statusText',
         label: '状态'
-    },
-    {
+      },
+      {
         key: 'typeText',
         label: '类型'
-    },
-    {
+      },
+      {
         key: 'feedbackTime',
         label: '催单时间',
-    },
-    {
+      },
+      {
         key: 'financeRemark',
         label: '回复'
+      }
+    ])
+    onMounted(() => {
+      loadDepositTable()
+    })
+
+    return {
+      tableData,
+      tableHeaders,
+      visible
     }
-])
-onMounted(() => {
-    loadDepositTable()
-})
+
+  }
+});
 
 </script>
 <style scoped lang="scss">
-    .table-record {
-        width: 100%;
-        gap: 10px;
-        .label {
-            color: #bacef1;
-        }
-    }
+.table-record {
+  width: 100%;
+  gap: 10px;
+
+  .label {
+    color: #bacef1;
+  }
+}
 </style>

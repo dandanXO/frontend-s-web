@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="q-pa-md text-bold text-center" style="color: #33bcd4">
-        专属网址：{{ store.personalAddress }}
+        专属网址：{{ store.evip }}
       </div>
     <div>
       <div class="account-content text-center">
@@ -13,7 +13,7 @@
           <q-card
             v-if="bc.bankName"
             @click="showCard(bc, index)"
-            class="q-pa-sm text-left" style="color: #bacef1;"
+            class="q-pa-sm text-left" style="color: #000;"
           >
             <div class="icon"><img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon"></div>
             <div class="cardname q-pa-xs">
@@ -82,7 +82,7 @@
     <q-dialog v-model="bankCardModalState.visible" persistent>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section v-if="!isVirtual" class="q-mb-md">
-          <div class="text-h6">Add a bank card</div>
+          <div class="text-h6">添加银行卡</div>
         </q-card-section>
         <q-card-section v-if="isVirtual" class="q-mb-md">
           <div class="text-h6">Add a virtual currency</div>
@@ -96,7 +96,7 @@
                   filled
                   :options="[{ name: 'Bank' }, { name: 'Crypto' }, { name: 'e-Wallet' }]"
                   label="银行Type"
-                  color="white"
+                  color="blue"
                   label-color="grey"
                   option-label="name"
                   option-value="name"
@@ -109,7 +109,7 @@
                 <q-select
                   ref="bankCardRef"
                   class="q-mb-md"
-                  color="white"
+                  color="blue"
                   filled
                   label-color="grey"
                   v-model="bankCardInfo.bankId"
@@ -154,7 +154,7 @@
               disable
               readonly
               label="银行名城"
-              color="white"
+              color="blue"
             />
           </div>
           <q-input
@@ -166,7 +166,7 @@
             lazy-rules
             :readonly="true"
             ref="cardAccountRef"
-            color="white"
+            color="blue"
           />
           <q-input
             filled
@@ -175,7 +175,7 @@
             label="银行卡号"
             :rules="cardNumberRules"
             ref="cardNumberRef"
-            color="white"
+            color="blue"
           />
           <q-input
             class="q-mb-md"
@@ -184,7 +184,7 @@
             label="开户行地址"
             :rules="cardAddressRules"
             ref="cardAddressRef"
-            color="white"
+            color="blue"
           />
           <div class="flex flex-center">
             <q-btn
@@ -331,8 +331,8 @@ export default defineComponent({
     const loadCards = () => {
       personalState.bankCardList = [];
       api.get("/session/bankCard").then((res) => {
-        if (response.code === 0) {
-          personalState.bankCardList.push(...response.data);
+        if (res.code === 0) {
+          personalState.bankCardList.push(...res.data);
         }
       }).catch((error) => {
         console.log("error", error);
@@ -444,8 +444,8 @@ export default defineComponent({
       console.log(card)
       const dialog = $q.dialog({
         class: "q-px-md q-pt-md",
-        title: "Remove " + card.bankName + "?",
-        message: "Are you sure you want to remove " + card.bankName + "?",
+        title: "解绑 " + card.bankName + "?",
+        message: "你确定要解绑银行卡： " + card.bankName + "?",
         ok: {
           push: true,
           color: 'brightbtn',
@@ -454,7 +454,7 @@ export default defineComponent({
         },
         cancel: {
           push: true,
-          color: '',
+          color: 'warning',
           label: "Cancel",
           tabindex: 0
         },

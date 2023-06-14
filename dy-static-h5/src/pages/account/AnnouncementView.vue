@@ -1,5 +1,5 @@
 <template>
-  <div class="download">
+  <div class="announcement-section">
     <q-tabs
       v-model="tab"
       active-color="white"
@@ -26,11 +26,15 @@
                 :label="promo.label"
                 header-class="text-brand"
               >
-                <div class="q-pa-md">
-                  {{ promo.content }}
-                </div>
-                <div class="text-right q-pa-sm">
-                  {{ promo.date }}
+                <div class="notice_txt">
+                  <div class="notice-inner">
+                     <div class="q-pa-md">
+                        {{ promo.content }}
+                      </div>
+                    <div class="text-right q-pa-sm text-grey-6">
+                      {{ promo.date }}
+                    </div>
+                   </div>
                 </div>
               </q-expansion-item>
               <div
@@ -47,7 +51,8 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import {ref} from "vue";
+
 const tab = ref("webpromo");
 const tabItems = [
   {
@@ -159,40 +164,76 @@ const announcementsList = [
 ];
 </script>
 <style lang="scss">
-.download {
+.announcement-section {
   .q-tabs {
     background: rgba(113, 125, 146, 0.2);
     width: 100%;
     margin: 0 auto;
   }
+
   .q-tab {
     min-height: 40px;
   }
+
   .q-tab__content {
     width: 100%;
   }
+
   .q-tab--active .q-tab__indicator {
     height: 100%;
   }
+
   .q-tab__label {
     z-index: 1;
   }
+
   .q-tab-panels {
     background: none;
     padding: 10px;
   }
+
+  .q-item {
+    background: #fff;
+
+  }
+
+  .notice_txt {
+    background: linear-gradient(to right, #AC61E0, #6848F5);
+    padding: 30px 10px 10px;
+    border-radius: 5px;
+
+    .notice-inner{
+      background: #fff;
+      border-radius: 5px;
+    }
+  }
+
+  .q-expansion-item--expanded {
+    .q-item {
+      background: #eee;
+    }
+  }
+
+  .q-expansion-item__content {
+    background: #fff;
+    padding: 10px 10px 15px;
+  }
+
   .download-item {
     background: #ffffff;
     padding: 10px;
+
     .imgtext {
       display: flex;
       gap: 10px;
       justify-content: flex-start;
       align-items: flex-start;
+
       img {
         width: 40px;
       }
     }
+
     .download {
       width: 120px;
       margin-left: auto;
