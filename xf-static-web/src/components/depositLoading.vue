@@ -28,7 +28,6 @@ function pDepo(data) {
       //   window.close();
       // }
       else {
-        // alert(d)
         window.opener.postMessage(
           {
             msg: d.data.message
