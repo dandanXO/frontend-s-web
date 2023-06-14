@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: xf-static-h5
-          image: git.caspen-tech.com:5050/jolly88-complex/frontend:xf-static-h5-1686654446 # {"$imagepolicy": "xinfa:xf-static-h5"}
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:xf-static-h5-1686740809 # {"$imagepolicy": "xinfa:xf-static-h5"}
           ports:
             - containerPort: 80
           env:
