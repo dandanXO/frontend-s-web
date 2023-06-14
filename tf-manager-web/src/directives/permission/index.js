@@ -15,7 +15,6 @@ function checkPermission(el, binding) {
         })
 
         if (!hasPermission) {
-          console.log(el.parentNode)
           el.parentNode && el.parentNode.removeChild(el)
         }
       }
