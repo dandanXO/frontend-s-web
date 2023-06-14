@@ -1,5 +1,5 @@
 <template>
-  <div v-if="submitMessage" class="inner-cont">
+  <div v-if="submitMessage.length > 0" class="inner-cont">
     <div  class="submit-message">
     <div class="line"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
     <div class="line"><span>银行账号：</span> <span class="info" ref="subMsg1">{{submitMessage[1]}}</span><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button></div>
