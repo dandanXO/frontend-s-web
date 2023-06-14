@@ -134,7 +134,7 @@
             <router-link v-if="scope.row.memberType === 'AFFILIATE'" :to="`/affiliate/details/${scope.row.memberId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
-            <router-link v-else :to="`/member/details/${scope.row.memberId}?site=${scope.row.siteId}`">
+            <router-link v-else :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>

@@ -146,7 +146,7 @@
           #default="scope"
           v-if="hasPermission(['sys:member:review:detail'])"
         >
-          <router-link :to="`/member/details/${scope.row.memberId}?site=${scope.row.siteId}`">
+          <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
             <el-link type="primary">{{ scope.row.name }}</el-link>
           </router-link>
         </template>
