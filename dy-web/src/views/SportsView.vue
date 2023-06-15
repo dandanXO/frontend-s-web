@@ -1,0 +1,209 @@
+<template>
+  <div class="sports-container">
+    <div class="sport-platform-bg bg-circle"></div>
+    <div class="sport-platform-bg bg-wave"></div>
+      <div class="sports-container-inner">
+          <template v-for="(det, idx) in platforms" :key="idx">
+            <template v-if="selectedPlat === det.code">
+              <div class="sports-right" data-aos="fade-right"  data-aos-duration="4000">
+                <img :src="require('../assets/sports/sport_left_' + det.image + '.webp')">
+              </div>
+              <div class="sports-left">  
+                  <div class="platform-list-box">
+                    <span class="platform-list-item platform" v-for="(plat, i) in platforms" :key="i" @click="clickPlat(plat)" :class="{active: selectedPlat === plat.code}">
+                      {{plat.code}} 体育
+                    </span>
+                  </div>
+                  <div class="" data-aos="fade-left"  data-aos-duration="4000">
+                  <img :src="require('../assets/sports/txt_' + det.image + '_sport.png')">
+                  <div class="platform-txt-box">
+                      <div>
+                          <div class="platform-txt-list-content">{{ det.message }}</div>
+                      </div>
+                  </div>
+                  <div class="play-btn" @click="openGame(det.name, det.code)">立即投注</div>
+              </div>
+            </div>
+            </template>
+        </template>
+    </div>
+  </div>
+  <GameModal ref="sportsGame"></GameModal>
+</template>
+<script>
+import { defineComponent, ref, watch } from 'vue';
+import GameModal from "@/components/modal/GameModal";
+import { useRoute, useRouter } from 'vue-router';
+
+export default defineComponent({
+  components: {
+    GameModal
+  },
+  setup() {
+    const sportsGame = ref(null);
+    const route = useRoute();
+    const router = useRouter();
+    const platforms = ref([
+      {
+        code: 'IM',
+        name: 'IM',
+        image: 'im',
+        message: '全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！',
+        link: '/games/im-sport.html'
+      },
+      {
+        code: 'SABA',
+        name: 'SABA',
+        image: 'saba',
+        message: '覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 不会让您错过任何自己最喜爱的体育赛事',
+        link: '/games/cr-sport.html'
+      },
+      {
+        code: 'CR',
+        name: 'CR',
+        image: 'cr',
+        message: '奇幻赛事、特别投注 ，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰。',
+        link: '/games/cr-sport.html'
+      }
+    ])
+    const selectedPlat = ref(platforms.value[0].code);
+    const clickPlat = (plat) => {
+      router.push({ path: 'sports', query: { plat: plat.code }})
+      selectedPlat.value = plat.code
+    }
+    
+    const openGame = (gameName, gameCode) => {
+      sportsGame.value.open(gameName, "onlyPlatform", gameCode);
+    };
+    
+    watch(
+      () => route.query.plat,
+      () => {
+        if (route.path === "/sports") {
+          platforms.value.forEach(element => {
+          if (element.code === route.query.plat) {
+            clickPlat(element);
+          }
+        });
+        }
+      }
+    );
+    return {
+      platforms,
+      selectedPlat,
+      clickPlat,
+      openGame,
+      sportsGame
+    }
+  },
+})
+</script>
+
+<style scoped lang="scss">
+  .sports-container {
+    background-image: url(../assets/sports/sport_bg.webp);
+    background-repeat: no-repeat;
+    background-position: top center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0;
+    font-size: 14px;
+    z-index: 0;
+    .sport-platform-bg {
+      position: absolute;
+      background-repeat: no-repeat;
+      background-position: top center;
+      &.bg-wave {
+        width: 1507px;
+        height: 331px;
+        background-image: url(../assets/sports/sport_bg_bottom.webp);
+        left: 0;
+        top: 580px;
+      }
+      &.bg-circle {
+        width: 475px;
+        height: 475px;
+        background-image: url(../assets/sports/img_bg_bule.webp);
+        top: 128px;
+        left: 380px;
+      }
+    }
+    .sports-container-inner {
+      z-index: 1;
+      position: relative;
+      max-width: $maxwidth;
+      width: 100%;
+      margin: 50px auto 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      .sports-left {
+        text-align: left;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .platform-txt-list-content {
+          font-size: 16px;
+          line-height: 26px;
+          letter-spacing: 1px;
+          margin: 80px 0 77px;
+          color: #2e79fc;
+        }
+        .play-btn {
+          cursor: pointer;
+          display: block;
+          width: 198px;
+          height: 52px;
+          background-image: linear-gradient(90deg,#2d74f6 0,#7abdfc 100%),linear-gradient(#000,#000);
+          background-blend-mode: normal,normal;
+          border-radius: 26px;
+          color: #fff;
+          font-size: 16px;
+          margin: 0 auto;
+          text-align: center;
+          line-height: 52px;
+          border: none;
+        }
+      }
+      .sports-right {
+        flex: 2;
+        img {
+          height: 100%;
+        }
+        
+      }
+    }
+    .platform-list-box {
+        cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      margin: 35px auto 90px;
+      .platform-list-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: linear-gradient(0deg,#f2f2f2 0,#fefefe 100%),linear-gradient(#000,#000);
+        border: none;
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        color: #222;
+        padding: 15px 0px;
+        min-width: 165px;
+        background-blend-mode: normal,normal;
+        box-shadow: 0 6px 20px 2px rgba(203,203,203,.75);
+    border-radius: 26px;
+        &.active, &:hover {
+          background-image: linear-gradient(90deg,#2d74f6 0,#7abdfc 100%),linear-gradient(#000,#000);
+          box-shadow: 0 6px 20px 2px rgba(103,204,255,.75);
+          border: none;
+          color: #fff;
+        }
+      }
+    }
+  }
+</style>
