@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xf-static-web
+  name: dy-static-h5
   namespace: xinfa
   labels:
-    app: xf-static-web
+    app: dy-static-h5
     tier: frontend
 spec:
   selector:
     matchLabels:
-      app: xf-static-web
+      app: dy-static-h5
       tier: frontend
   template:
     metadata:
       labels:
-        app: xf-static-web
+        app: dy-static-h5
         tier: frontend
     spec:
       containers:
-        - name: xf-static-web
-          image: git.caspen-tech.com:5050/jolly88-complex/frontend:xf-static-web-1686810801 # {"$imagepolicy": "xinfa:xf-static-web"}
+        - name: dy-static-h5
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:dy-static-h5 # {"$imagepolicy": "xinfa:dy-static-h5"}
           ports:
             - containerPort: 80
           env:
@@ -42,7 +42,7 @@ spec:
                   - key: app
                     operator: In
                     values:
-                      - xf-static-web
+                      - dy-static-h5
               topologyKey: kubernetes.io/hostname
       imagePullSecrets:
         - name: gitlab-registry

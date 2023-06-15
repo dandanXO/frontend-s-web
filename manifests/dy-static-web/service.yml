@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dy-static-web
+  namespace: xinfa
+  labels:
+    app: dy-static-web
+    tier: frontend
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: dy-static-web
+    tier: frontend
