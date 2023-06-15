@@ -97,7 +97,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.rebatePercentage')" prop="rebatePercentage">
-          <el-input-number type="number" v-model.number="form.rebatePercentage" :precision="2" :step="0.01" :min="0" :max="2"
+          <el-input-number type="number" v-model.number="form.rebatePercentage" :precision="2" :step="0.01" :min="0" :max="10"
                            style="width: 350px;" @keypress="restrictInput($event)" controls-position="right"
           />
         </el-form-item>
@@ -307,7 +307,7 @@ function submit() {
 
 function restrictInput(event) {
   var charCode = (event.which) ? event.which : event.keyCode;
-  if (charCode < 48 || charCode > 57) {
+  if (charCode < 46 || charCode === 47 || charCode > 57) {
     event.preventDefault();
   }
 }
