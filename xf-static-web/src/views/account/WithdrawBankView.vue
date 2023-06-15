@@ -467,15 +467,15 @@ export default defineComponent({
       cardAccount: [
         {
           required: true,
-          message: "Card account is required",
+          message: "请输入银行卡号",
           trigger: "blur"
         }
       ]
     };
     const unbindBankCard = (card) => {
       ElMessageBox.confirm(
-        `Remove ${card.bankName} ?`,
-        'Warning',
+        `解绑 ${card.bankName} ?`,
+        '警告',
         {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
