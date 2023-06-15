@@ -140,7 +140,7 @@
             :precision="3"
             :step="0.10"
             :min="0"
-            :max="10"
+            :max="1"
             :controls="false"
             class="form-input"
           />
