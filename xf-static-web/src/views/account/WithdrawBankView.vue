@@ -174,9 +174,9 @@
               style="width: 100%"
             >
               <el-option v-for="b in banksList" :key="b.id" :label="b.name" :value="b.id">
-                <el-row v-if="b.bankIcon" :gutter="10">
+                <el-row style="align-items: center;" v-if="b.bankIcon" :gutter="10">
                   <el-col :span="3">
-                    <img style="width: 75%; display: block; margin: 5px;" :src="imgURL + b.bankIcon" />
+                    <img style="max-height: 25px; display: block; margin: 5px;" :src="imgURL + b.bankIcon" />
                   </el-col>
                   <el-col :span="21">
                      {{ b.name }}

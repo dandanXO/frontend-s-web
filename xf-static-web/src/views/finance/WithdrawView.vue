@@ -48,13 +48,13 @@
               class="form-input"
               v-model="withdrawInfo.amount"
               placeholder="提款金额"
-            ><template #append>￥</template>
+            ><template #append>{{ isUSDT ? 'USDT' : store.currency.label }}</template>
             </el-input>
           </el-col>
           <el-col :span="12">
             <span v-if="selectedWithdrawalMethod">
-              {{ `单笔限额: ${selectedWithdrawalMethod.withdrawMin} - ${selectedWithdrawalMethod.withdrawMax}`  }} <br>
-              {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes}` }}
+              {{ `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${isUSDT ? 'USDT' : store.currency.label } - ${selectedWithdrawalMethod.withdrawMax} ${isUSDT ? 'USDT' : store.currency.label }`  }} <br>
+              {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${isUSDT ? 'USDT' : store.currency.label }, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`  }}
             </span>
           </el-col>
         </el-row>
@@ -74,10 +74,10 @@
         <el-form-item
           v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
           class="helptxt"
-          label="Exchange rate"
+          label="实时汇率"
         >
           <span style="color: #9bffd1"
-            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} MYR</span
+            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}</span
           >
         </el-form-item>
         <el-form-item
@@ -104,7 +104,7 @@
         <el-form-item
           v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
           class="helptxt"
-          label="Estimated amount"
+          label="预计到账"
         >
           <span style="color: #9bffd1"
             >{{
@@ -283,7 +283,8 @@ export default defineComponent({
       selectMethod,
       imgURL,
       isUSDT,
-      verifyWithdrawAmount
+      verifyWithdrawAmount,
+      store
     };
   },
 });
