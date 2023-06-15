@@ -1,0 +1,34 @@
+<template>
+    <div>
+        
+        <div class="platform-menu promo">
+            
+          <div
+              class="platform-box"
+              v-for="nav in navigations"
+              :key="nav.code"
+            >
+                <img :src="require('../../assets/promo/header_promo'+ nav.code + '.png')">
+                <div class="contents">
+                <p class="platform">{{ nav.label }} </p>
+                <p class="platform-slogan">{{ nav.slogan }}</p>
+                </div>
+          </div>
+        </div>
+    </div>
+</template>
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    data: () => ({
+        navigations: [
+        { code: "1", label: "劲爆优惠", slogan: "新用户开户即享  68%优惠红利" },
+        { code: "2", label: "VIP 尊享", slogan: "贵者为宾 尊者为君 尽享VIP尊贵礼遇" },
+        ],
+    }),
+    setup() {
+        
+    },
+})
+</script>
