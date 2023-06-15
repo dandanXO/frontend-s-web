@@ -95,6 +95,20 @@
           />
         </template>
       </el-table-column>
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{
+              data: scope.row.updateTime,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="status"
         :label="t('fields.state')"

@@ -156,6 +156,7 @@
       <el-table-column prop="currencyName" :label="t('fields.currency')" width="200" />
       <el-table-column prop="type" :label="t('fields.paymentType')" width="170" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="180" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="180" />
       <el-table-column prop="status" :label="t('fields.status')" width="100" v-if="hasPermission(['sys:payment-withdraw:update:state'])">
         <template #default="scope">
           <el-switch
