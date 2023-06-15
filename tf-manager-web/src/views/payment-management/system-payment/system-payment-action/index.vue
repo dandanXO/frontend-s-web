@@ -137,10 +137,10 @@
         <el-form-item :label="t('fields.feeRate')" prop="feeRate">
           <el-input-number
             v-model="form.feeRate"
-            :precision="2"
+            :precision="3"
             :step="0.10"
             :min="0"
-            :max="1"
+            :max="10"
             :controls="false"
             class="form-input"
           />
