@@ -45,7 +45,7 @@
                     v-if="vipLevel === 'VIP' + vip.vipLevel && storeToken"
                     class="claim-btn"
                     :loading="loadingMClaim"
-                    @click="dailySlot('jolly88-vip-monthly', 'monthly')"
+                    @click="dailySlot('dy1-vip-monthly', 'monthly')"
                     >Claim Now</a-button
                   >
                 </div>
@@ -56,7 +56,7 @@
                     v-if="vipLevel === 'VIP' + vip.vipLevel && storeToken"
                     class="claim-btn"
                     :loading="loadingBClaim"
-                    @click="dailySlot('jolly88-vip-birthday', 'birthday')"
+                    @click="dailySlot('dy1-vip-birthday', 'birthday')"
                     >Claim Now</a-button
                   >
                 </div>
