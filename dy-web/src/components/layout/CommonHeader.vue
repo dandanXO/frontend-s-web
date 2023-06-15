@@ -102,11 +102,12 @@
               </template>
             </router-link>
           </div>
-          <div @mouseleave="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
+          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'Slots'"/>
             <EsportsMenu ref="el" v-if="selectedMenu === 'Esports'" @load-modal="openGame" />
             <SportsMenu ref="el" v-if="selectedMenu === 'Sports'" @load-modal="openGame"/>
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'Live Casino'" @load-modal="openGame"/>
+            <LotteryMenu ref="el" v-if="selectedMenu === 'Lottery'" @load-modal="openGame"/>
             <PokerMenu ref="el" v-if="selectedMenu === 'Poker'" @load-modal="openGame"/>
             <FishingMenu ref="el" v-if="selectedMenu === 'Fishing'" @load-modal="openGame"/>
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'"/>
@@ -408,6 +409,7 @@ import GameMenu from '@/components/menu/GameMenu.vue'
 import EsportsMenu from '@/components/menu/EsportsMenu.vue'
 import SportsMenu from '@/components/menu/SportsMenu.vue'
 import LiveCasinoMenu from '@/components/menu/LiveCasinoMenu.vue'
+import LotteryMenu from '@/components/menu/LotteryMenu.vue'
 import PokerMenu from '@/components/menu/PokerMenu.vue'
 import FishingMenu from '@/components/menu/FishingMenu.vue'
 import PromotionMenu from '@/components/menu/PromotionMenu.vue'
@@ -428,6 +430,7 @@ export default defineComponent({
     EsportsMenu,
     SportsMenu,
     LiveCasinoMenu,
+    LotteryMenu,
     PokerMenu,
     FishingMenu,
     PromotionMenu,
@@ -1509,6 +1512,12 @@ body {
     &.live-bbin {
       background-image: url("../../assets/game/header_slot_sw.png");
     }
+    &.lottery-tcg {
+      background-image: url("../../assets/lottery/lottery_tcg.webp");
+    }
+    &.lottery-bbin {
+      background-image: url("../../assets/lottery/lottery_bbin.webp");
+    }
   }
 
   &.games, &.live {
@@ -1522,6 +1531,21 @@ body {
       .plat-icon {
         height: 40px;
         width: unset;
+      }
+    }
+  }
+  &.games, &.live, &.lottery {
+    justify-content: center;
+    .platform-box {
+      max-width: 160px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      .plat-icon {
+        height: 40px;
+        width: unset;
+        margin-bottom: 5px;
       }
     }
   }
