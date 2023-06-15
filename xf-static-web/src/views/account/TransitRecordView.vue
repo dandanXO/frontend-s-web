@@ -1,36 +1,34 @@
+<!-- eslint-disable vue/valid-v-slot -->
 <template>
   <div>
     <div className="menu-title-container">
-      <span className="menu-title">交易记录</span>
+      <span className="menu-title">投注记录</span>
     </div>
     <div class="account-content transit">
-      <el-tabs
-        v-model="recordActive"
-        @tab-click="searchRecord"
-        type="card"
-      >
+      <el-tabs v-model="recordActive" @tab-click="searchRecord" type="card">
         <el-tab-pane name="deposit" label="存款记录">
           <div>
             <el-form layout="inline" :model="searchForm.deposit">
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                    v-model="searchForm.deposit.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.deposit.startDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                    v-model="searchForm.deposit.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.deposit.endDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item class="search">
-                  <el-button type="success"
-                    class="common-btn"
-                    @click="searchRecord"
+                  <el-button
+                      type="success"
+                      class="common-btn"
+                      @click="searchRecord"
                   >搜索
                   </el-button>
                 </el-form-item>
@@ -38,28 +36,47 @@
             </el-form>
           </div>
           <div class="unbind-record-wrapper">
-            <el-table
-              :data="dataState.deposit"
-              :loading="loading"
-            >
-            <template #empty>
-              <EmptyData />
-            </template>
+            <el-table :data="dataState.deposit" :loading="loading">
+              <template #empty>
+                <EmptyData/>
+              </template>
 
-              <el-table-column v-for="tbl in tableColumns.deposit" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
-                <template v-if="tbl.dataIndex === 'depositDate'" #default="scope">
+              <el-table-column
+                  v-for="tbl in tableColumns.deposit"
+                  :key="tbl.key"
+                  :prop="tbl.dataIndex"
+                  :label="tbl.title"
+              >
+                <template
+                    v-if="tbl.dataIndex === 'depositDate'"
+                    #default="scope"
+                >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{ humanDatetime(scope.row.depositDate) }}</span>
+                    <span style="margin-left: 10px">{{
+                        humanDatetime(scope.row.depositDate)
+                      }}</span>
                   </div>
+                </template>
+
+                <template v-if="tbl.dataIndex === 'operation'" #default="scope">
+                  <template v-if="scope.row.status === 'PENDING'">
+                    <div style="display: flex; align-items: center">
+                      <el-button
+                          class="common-btn"
+                          @click="openReminder(scope.row)"
+                      >催单
+                      </el-button>
+                    </div>
+                  </template>
                 </template>
               </el-table-column>
             </el-table>
-            <el-divider />
+            <el-divider/>
             <el-pagination
-              @current-change="recordPage"
-              :total="pagination.total"
-              :current-page="searchForm[recordActive].current"
-              :page-size="searchForm[recordActive].size"
+                @current-change="recordPage"
+                :total="pagination.total"
+                :current-page="searchForm[recordActive].current"
+                :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -69,22 +86,23 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                    v-model="searchForm.turnover.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.turnover.startDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                    v-model="searchForm.turnover.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.turnover.endDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success"
-                    class="common-btn"
-                    @click="searchRecord"
+                  <el-button
+                      type="success"
+                      class="common-btn"
+                      @click="searchRecord"
                   >搜索
                   </el-button>
                 </el-form-item>
@@ -115,28 +133,35 @@
               </template>
             </el-table> -->
 
-            <el-table
-              :data="dataState.turnover"
-              :loading="loading"
-            >
-            <template #empty>
-              <EmptyData />
-            </template>
+            <el-table :data="dataState.turnover" :loading="loading">
+              <template #empty>
+                <EmptyData/>
+              </template>
 
-              <el-table-column v-for="tbl in tableColumns.turnover" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
-                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
+              <el-table-column
+                  v-for="tbl in tableColumns.turnover"
+                  :key="tbl.key"
+                  :prop="tbl.dataIndex"
+                  :label="tbl.title"
+              >
+                <template
+                    v-if="tbl.dataIndex === 'recordTime'"
+                    #default="scope"
+                >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{ humanDatetime(scope.row.recordTime) }}</span>
+                    <span style="margin-left: 10px">{{
+                        humanDatetime(scope.row.recordTime)
+                      }}</span>
                   </div>
                 </template>
               </el-table-column>
             </el-table>
-            <el-divider />
+            <el-divider/>
             <el-pagination
-              @current-change="recordPage"
-              :total="pagination.total"
-              :current-page="searchForm[recordActive].current"
-              :page-size="searchForm[recordActive].size"
+                @current-change="recordPage"
+                :total="pagination.total"
+                :current-page="searchForm[recordActive].current"
+                :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -146,22 +171,23 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                    v-model="searchForm.withdraw.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.withdraw.startDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                    v-model="searchForm.withdraw.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.withdraw.endDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success"
-                    class="common-btn"
-                    @click="searchRecord"
+                  <el-button
+                      type="success"
+                      class="common-btn"
+                      @click="searchRecord"
                   >搜索
                   </el-button>
                 </el-form-item>
@@ -182,30 +208,48 @@
               </template>
             </el-table> -->
 
+            <el-table :data="dataState.withdraw" :loading="loading">
+              <template #empty>
+                <EmptyData/>
+              </template>
 
-            <el-table
-              :data="dataState.withdraw"
-              :loading="loading"
-            >
-            <template #empty>
-              <EmptyData />
-            </template>
-
-              <el-table-column v-for="tbl in tableColumns.withdraw" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
-                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
+              <el-table-column
+                  v-for="tbl in tableColumns.withdraw"
+                  :key="tbl.key"
+                  :prop="tbl.dataIndex"
+                  :label="tbl.title"
+              >
+                <template
+                    v-if="tbl.dataIndex === 'recordTime'"
+                    #default="scope"
+                >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{ humanDatetime(scope.row.recordTime) }}</span>
+                    <span style="margin-left: 10px">{{
+                        humanDatetime(scope.row.recordTime)
+                      }}</span>
                   </div>
+                </template>
+
+                <template v-if="tbl.dataIndex === 'operation'" #default="scope">
+                  <template v-if="scope.row.status === 'SETP_1'">
+                    <div style="display: flex; align-items: center">
+                      <el-button
+                          class="common-btn"
+                          @click="openReminder(scope.row)"
+                      >催单
+                      </el-button>
+                    </div>
+                  </template>
                 </template>
               </el-table-column>
             </el-table>
 
-            <el-divider />
+            <el-divider/>
             <el-pagination
-              @current-change="recordPage"
-              :total="pagination.total"
-              :current-page="searchForm[recordActive].current"
-              :page-size="searchForm[recordActive].size"
+                @current-change="recordPage"
+                :total="pagination.total"
+                :current-page="searchForm[recordActive].current"
+                :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -276,22 +320,23 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                    v-model="searchForm.rebates.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.rebates.startDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                    v-model="searchForm.rebates.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.rebates.endDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success"
-                    class="common-btn"
-                    @click="searchRecord"
+                  <el-button
+                      type="success"
+                      class="common-btn"
+                      @click="searchRecord"
                   >搜索
                   </el-button>
                 </el-form-item>
@@ -299,19 +344,25 @@
             </el-form>
           </div>
           <div class="unbind-record-wrapper">
+            <el-table :data="dataState.rebates" :loading="loading">
+              <template #empty>
+                <EmptyData/>
+              </template>
 
-            <el-table
-              :data="dataState.rebates"
-              :loading="loading"
-            >
-            <template #empty>
-              <EmptyData />
-            </template>
-
-              <el-table-column v-for="tbl in tableColumns.rebates" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
-                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
+              <el-table-column
+                  v-for="tbl in tableColumns.rebates"
+                  :key="tbl.key"
+                  :prop="tbl.dataIndex"
+                  :label="tbl.title"
+              >
+                <template
+                    v-if="tbl.dataIndex === 'recordTime'"
+                    #default="scope"
+                >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{ humanDatetime(scope.row.recordTime) }}</span>
+                    <span style="margin-left: 10px">{{
+                        humanDatetime(scope.row.recordTime)
+                      }}</span>
                   </div>
                 </template>
               </el-table-column>
@@ -328,19 +379,16 @@
                 <span>{{ humanDatetime(text) }}</span>
               </template>
             </el-table>-->
-            <el-divider />
+            <el-divider/>
             <el-pagination
-              @current-change="recordPage"
-              :total="pagination.total"
-              :current-page="searchForm[recordActive].current"
-              :page-size="searchForm[recordActive].size"
+                @current-change="recordPage"
+                :total="pagination.total"
+                :current-page="searchForm[recordActive].current"
+                :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane
-          name="gameBetRecord"
-          label="投注记录"
-        >
+        <el-tab-pane name="gameBetRecord" label="投注记录">
           <div class="payout-total">
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
@@ -350,16 +398,16 @@
               <div class="left">
                 <el-form-item label="平台">
                   <el-select
-                    allowClear
-                    style="width: 300px"
-                    v-model="searchForm.gameBetRecord.platform"
-                    placeholder="平台"
-                    @change="searchRecord"
+                      allowClear
+                      style="width: 300px"
+                      v-model="searchForm.gameBetRecord.platform"
+                      placeholder="平台"
+                      @change="searchRecord"
                   >
                     <el-option
-                      v-for="p in platformsList"
-                      :key="p.name"
-                      :value="p.name"
+                        v-for="p in platformsList"
+                        :key="p.name"
+                        :value="p.name"
                     >
                       {{ p.name }}
                     </el-option>
@@ -367,22 +415,23 @@
                 </el-form-item>
                 <el-form-item label="开始">
                   <el-date-picker
-                    v-model="searchForm.gameBetRecord.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.gameBetRecord.startDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                    v-model="searchForm.gameBetRecord.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
+                      v-model="searchForm.gameBetRecord.endDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success"
-                    class="common-btn"
-                    @click="searchRecord"
+                  <el-button
+                      type="success"
+                      class="common-btn"
+                      @click="searchRecord"
                   >搜索
                   </el-button>
                 </el-form-item>
@@ -400,28 +449,105 @@
             >
             </el-table> -->
 
-            <el-table
-              :data="dataState.gameBetRecord"
-              :loading="loading"
-            >
-            <template #empty>
-              <EmptyData />
-            </template>
+            <el-table :data="dataState.gameBetRecord" :loading="loading">
+              <template #empty>
+                <EmptyData/>
+              </template>
 
-              <el-table-column v-for="tbl in tableColumns.gameBetRecord" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
-                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
+              <el-table-column
+                  v-for="tbl in tableColumns.gameBetRecord"
+                  :key="tbl.key"
+                  :prop="tbl.dataIndex"
+                  :label="tbl.title"
+              >
+                <template
+                    v-if="tbl.dataIndex === 'recordTime'"
+                    #default="scope"
+                >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{ humanDatetime(scope.row.recordTime) }}</span>
+                    <span style="margin-left: 10px">{{
+                        humanDatetime(scope.row.recordTime)
+                      }}</span>
                   </div>
                 </template>
               </el-table-column>
             </el-table>
-            <el-divider />
+            <el-divider/>
             <el-pagination
-              @current-change="recordPage"
-              :total="pagination.total"
-              :current-page="searchForm[recordActive].current"
-              :page-size="searchForm[recordActive].size"
+                @current-change="recordPage"
+                :total="pagination.total"
+                :current-page="searchForm[recordActive].current"
+                :page-size="searchForm[recordActive].size"
+            />
+          </div>
+        </el-tab-pane>
+        <el-tab-pane name="reminderRecord" label="催单记录">
+          <div>
+            <el-form layout="inline" :model="searchForm.reminderRecord">
+              <div class="left">
+                <el-form-item label="开始">
+                  <el-date-picker
+                      v-model="searchForm.reminderRecord.startDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
+                  />
+                </el-form-item>
+                <el-form-item label="结束">
+                  <el-date-picker
+                      v-model="searchForm.reminderRecord.endDate"
+                      valueFormat="YYYY-MM-DD"
+                      placeholder=""
+                  />
+                </el-form-item>
+                <el-form-item>
+                  <el-button
+                      type="success"
+                      class="common-btn"
+                      @click="searchRecord"
+                  >搜索
+                  </el-button>
+                </el-form-item>
+              </div>
+            </el-form>
+          </div>
+          <div class="unbind-record-wrapper">
+            <el-table :data="dataState.reminderRecord" :loading="loading">
+              <template #empty>
+                <EmptyData/>
+              </template>
+
+              <el-table-column
+                  v-for="tbl in tableColumns.reminderRecord"
+                  :key="tbl.key"
+                  :prop="tbl.dataIndex"
+                  :label="tbl.title"
+              >
+                <template
+                    v-if="tbl.dataIndex === 'recordTime'"
+                    #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span style="margin-left: 10px">{{
+                        humanDatetime(scope.row.recordTime)
+                      }}</span>
+                  </div>
+                </template>
+
+                <template v-if="tbl.dataIndex === 'type'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span style="margin-left: 10px">{{
+                        humanDatetime(scope.row.type)
+                      }}</span>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-divider/>
+            <el-pagination
+                @current-change="recordPage"
+                :total="pagination.total"
+                :current-page="searchForm[recordActive].current"
+                :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -445,20 +571,104 @@
         >
         </el-table>
       </el-modal> -->
+
+      <!-- <el-modal
+        width="90%"
+        v-model:visible="reminderRecordDialog"
+        :maskClosable="false"
+        :closable="true"
+        :footer="null"
+      >
+        <div class="modal-head-title">催单</div>
+        <div>record thing here</div>
+      </el-modal> -->
+
+      <el-dialog
+          v-model="reminderDialog"
+          title="催单"
+          width="50%"
+          align-center
+          style="max-width: 800px"
+      >
+        <span>
+          <el-form
+              ref="formRef"
+              :model="reminderForm"
+              :hide-required-mark="true"
+              name="basic"
+              autocomplete="off"
+              label-width="110"
+              label-suffix=":"
+              style="
+              width: 100%;
+              max-width: 400px;
+              margin: 0px auto 0px;
+              padding-top: 50px;
+              padding-bottom: 50px;
+            "
+          >
+            <el-form-item
+                tabindex="1"
+                label="Serial Number"
+                prop="serialNumber"
+            >
+              <el-input
+                  v-model="reminderForm.orderNo"
+                  placeholder="Serial Number"
+                  disabled
+              />
+            </el-form-item>
+
+            <el-form-item label="Image Upload" prop="photos">
+              <FileUpload @photo-response="getImageLink" ref="uploadFileRef"/>
+            </el-form-item>
+
+            <el-form-item label="Remarks" prop="remarks">
+              <el-input
+                  type="textarea"
+                  v-model="reminderForm.memberRemark"
+                  placeholder="Remarks"
+                  :rows="2"
+                  :autosize="{ minRows: 2, maxRows: 5 }"
+              />
+            </el-form-item>
+
+            <el-button
+                size="large"
+                color="#3bafda"
+                class="common-btn"
+                style="margin-left: 110px"
+                @click="submitReminder()"
+            >提交</el-button
+            >
+          </el-form>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, onMounted, reactive, ref } from "vue";
-import { loadRecords, gameBetRecordTotal } from "@/api/personal/personal";
+import {defineComponent, onMounted, reactive, ref} from "vue";
+import {ElMessage} from "element-plus";
+import {
+  loadRecords,
+  gameBetRecordTotal,
+  saveFinanceFeedback,
+  getVerifyingFeedbackCount,
+  financeFeedbackList
+} from "@/api/personal/personal";
 import moment from "moment";
 // import { message } from "ant-design-vue";
-import { getPlatformList } from "@/api/platform/platform";
-import { userStore } from "@/store";
+import {getPlatformList} from "@/api/platform/platform";
+import {userStore} from "@/store";
+import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
+
 const store = userStore()
+const uploadFileRef = ref();
 const recordActive = ref("deposit");
+const reminderForm = reactive({});
 const totalBetRecord = reactive({
   totalBet: 0,
   totalPayout: 0
@@ -508,7 +718,13 @@ const searchForm = reactive({
     memberId: store.id,
     current: 1,
     size: 10
-  }
+  },
+  reminderRecord: {
+    startDate: "",
+    endDate: "",
+    current: 1,
+    size: 10
+  },
 });
 const dataState = reactive({
   deposit: [],
@@ -517,11 +733,12 @@ const dataState = reactive({
   withdraw: [],
   turnover: [],
   betRecord: [],
-  gameBetRecord: []
+  gameBetRecord: [],
+  reminderRecord: []
 });
 const commonColumns = [
   {
-    title: "Serial Number",
+    title: "序列号",
     dataIndex: "serialNumber",
     key: "serialNumber"
   }
@@ -530,96 +747,106 @@ const tableColumns = {
   deposit: [
     ...commonColumns,
     {
-      title: "Amount",
+      title: "金额",
       dataIndex: "depositAmount"
     },
     {
-      title: "Status",
+      title: "状态",
       dataIndex: "status"
     },
     {
-      title: "Deposit Date",
+      title: "存款日期",
       dataIndex: "depositDate",
-      slots: { customRender: "depositDate" }
+      slots: {customRender: "depositDate"}
+    },
+    {
+      title: "操作",
+      dataIndex: "operation",
+      slots: {customRender: "operation"}
     }
   ],
   withdraw: [
     ...commonColumns,
     {
-      title: "Amount",
+      title: "金额",
       dataIndex: "withdrawAmount"
     },
     {
-      title: "Status",
+      title: "状态",
       dataIndex: "status"
     },
     {
-      title: "Withdraw Date",
+      title: "提款日期",
       dataIndex: "withdrawDate",
-      slots: { customRender: "withdrawDate" }
+      slots: {customRender: "withdrawDate"}
+    },
+    {
+      title: "操作",
+      dataIndex: "operation",
+      slots: {customRender: "operation"}
     }
   ],
   transfer: [
     ...commonColumns,
     {
-      title: "Trans Description",
+      title: "转账类型",
       dataIndex: "type",
       key: "type",
-      slots: { customRender: "type" }
+      slots: {customRender: "type"}
     },
     {
-      title: "Amount",
+      title: "金额",
       dataIndex: "amount",
       key: "withdrawAmount"
     },
     {
-      title: "Status",
+      title: "状态",
       dataIndex: "status",
       key: "status",
-      slots: { customRender: "status" }
+      slots: {customRender: "status"}
     },
     {
-      title: "Transfer Date",
+      title: "转账日期",
       dataIndex: "transferDate",
       key: "transferDate",
-      slots: { customRender: "transferDate" }
+      slots: {customRender: "transferDate"}
     }
   ],
   rebates: [
     ...commonColumns,
     {
-      title: "Privilege Name",
+      title: "优惠名",
       dataIndex: "privilegeName"
     },
     {
-      title: "Amount",
+      title: "金额",
       dataIndex: "amount"
     },
     {
-      title: "Record Time",
+      title: "记录时间",
       dataIndex: "recordTime",
-      slots: { customRender: "recordTime" }
+      slots: {customRender: "recordTime"}
     }
   ],
   turnover: [
     ...commonColumns,
     {
-      title: "Type",
+      title: "周转型",
       dataIndex: "type"
     },
     {
-      title: "Amount",
+      title: "金额",
       dataIndex: "amount"
     },
     {
-      title: "Sub Type",
+      title: "周转亚型",
       dataIndex: "subType",
-      slots: { customRender: "subType" }
+      slots: {customRender: "subType"}
     },
     {
-      title: "Record Time",
+      title: "记录时间",
       dataIndex: "recordTime",
-      slots: { customRender: "recordTime" }
+      slots: {customRender: "recordTime"}
     }
   ],
   gameBetRecord: [
@@ -628,19 +855,19 @@ const tableColumns = {
     //   dataIndex: "betId"
     // },
     {
-      title: "Game Name",
+      title: "游戏名称",
       dataIndex: "gameName"
     },
     {
-      title: "Platform",
+      title: "游戏平台",
       dataIndex: "platform"
     },
     {
-      title: "Bet",
+      title: "赌注",
       dataIndex: "bet"
     },
     {
-      title: "Payout",
+      title: "支出",
       dataIndex: "payout"
     },
     // {
@@ -656,7 +883,7 @@ const tableColumns = {
     //   dataIndex: "betStatus"
     // },
     {
-      title: "Type of game",
+      title: "游戏类型",
       dataIndex: "gameType"
     },
     // {
@@ -680,111 +907,131 @@ const tableColumns = {
     // },
   ],
   betRecord: [
+    // {
+    //   title: "รหัสเดิมพัน",
+    //   dataIndex: "betId"
+    // },
+    // {
+    //   title: "รหัสธุรกรรม",
+    //   dataIndex: "transactionId"
+    // },
+    // {
+    //   title: "แพลตฟอร์ม",
+    //   dataIndex: "platform"
+    // },
+    // {
+    //   title: "เดิมพัน",
+    //   dataIndex: "bet"
+    // },
+    // {
+    //   title: "การจ่ายเงิน",
+    //   dataIndex: "payout"
+    // },
+    // {
+    //   title: "วงเงินก่อนหน้า",
+    //   dataIndex: "beforeBalance"
+    // },
+    // {
+    //   title: "วงเงินหลังจาก",
+    //   dataIndex: "afterBalance"
+    // },
+    // {
+    //   title: "สถานะการเดิมพัน",
+    //   dataIndex: "betStatus"
+    // },
+    // {
+    //   title: "ประเภทของเกม",
+    //   dataIndex: "gameType"
+    // },
+    // {
+    //   title: "เวลาเดิมพัน",
+    //   dataIndex: "betTime",
+    //   slots: {customRender: "betTime"}
+    // },
+    // {
+    //   title: "เวลาชำระเงิน",
+    //   dataIndex: "settleTime",
+    //   slots: {customRender: "settleTime"}
+    // },
+    // {
+    //   title: "ผลลัพท์",
+    //   dataIndex: "result"
+    // },
     {
-      title: "รหัสเดิมพัน",
+      title: " 下注 ID",
       dataIndex: "betId"
     },
     {
-      title: "รหัสธุรกรรม",
+      title: "交易 ID",
       dataIndex: "transactionId"
     },
     {
-      title: "แพลตฟอร์ม",
+      title: "游戏平台",
       dataIndex: "platform"
     },
     {
-      title: "เดิมพัน",
+      title: "下注",
       dataIndex: "bet"
     },
     {
-      title: "การจ่ายเงิน",
+      title: "支出",
       dataIndex: "payout"
     },
     {
-      title: "วงเงินก่อนหน้า",
+      title: "余额前金额",
       dataIndex: "beforeBalance"
     },
     {
-      title: "วงเงินหลังจาก",
+      title: "余额后金额",
       dataIndex: "afterBalance"
     },
     {
-      title: "สถานะการเดิมพัน",
+      title: "投注状态",
       dataIndex: "betStatus"
     },
     {
-      title: "ประเภทของเกม",
+      title: "游戏类型",
       dataIndex: "gameType"
     },
     {
-      title: "เวลาเดิมพัน",
+      title: "下注时间",
       dataIndex: "betTime",
       slots: { customRender: "betTime" }
     },
     {
-      title: "เวลาชำระเงิน",
+      title: "结算时间",
       dataIndex: "settleTime",
       slots: { customRender: "settleTime" }
     },
     {
-      title: "ผลลัพท์",
+      title: "结果",
       dataIndex: "result"
     },
-    // {
-    //   title: "Bet ID",
-    //   dataIndex: "betId"
-    // },
-    // {
-    //   title: "Transaction ID",
-    //   dataIndex: "transactionId"
-    // },
-    // {
-    //   title: "Platform",
-    //   dataIndex: "platform"
-    // },
-    // {
-    //   title: "Bet",
-    //   dataIndex: "bet"
-    // },
-    // {
-    //   title: "Payout",
-    //   dataIndex: "payout"
-    // },
-    // {
-    //   title: "Before Balance",
-    //   dataIndex: "beforeBalance"
-    // },
-    // {
-    //   title: "After Balance",
-    //   dataIndex: "afterBalance"
-    // },
-    // {
-    //   title: "Bet Status",
-    //   dataIndex: "betStatus"
-    // },
-    // {
-    //   title: "Game Type",
-    //   dataIndex: "gameType"
-    // },
-    // {
-    //   title: "Bet Time",
-    //   dataIndex: "betTime",
-    //   slots: { customRender: "betTime" }
-    // },
-    // {
-    //   title: "Settle Time",
-    //   dataIndex: "settleTime",
-    //   slots: { customRender: "settleTime" }
-    // },
-    // {
-    //   title: "Result",
-    //   dataIndex: "result"
-    // },
-    // {
-    //   title: "Sport Bet Result",
-    //   dataIndex: "sportBetResult"
-    // },
-  ]
+    {
+      title: "体育投注结果",
+      dataIndex: "sportBetResult"
+    },
+  ],
+  reminderRecord: [
+    {
+      title: "订单号",
+      dataIndex: "orderNo"
+    },
+    {
+      title: "财务反馈",
+      dataIndex: "financeRemark"
+    },
+    {
+      title: "反馈时间",
+      dataIndex: "feedbackTime",
+      slots: {customRender: "feedbackTime"}
+    },
+    {
+      title: "类型",
+      dataIndex: "type",
+      slots: {customRender: "type"}
+    },
+  ],
 };
 const loading = ref(false);
 const pagination = reactive({
@@ -798,7 +1045,8 @@ const betPagination = reactive({
 
 export default defineComponent({
   components: {
-    EmptyData
+    EmptyData,
+    FileUpload,
   },
   name: "TransitRecordView",
   setup() {
@@ -810,6 +1058,17 @@ export default defineComponent({
       loading.value = true;
       if (recordActive.value === 'gameBetRecord') {
         getPlatList();
+      } else if (recordActive.value === 'reminderRecord') {
+        financeFeedbackList(searchForm[recordActive.value]).then((response) => {
+          if (response.code === 0) {
+            pagination.total = response.data.total;
+            const dataSource = dataState[recordActive.value];
+            //clear array and then push new record
+            dataSource.splice(0);
+            dataSource.push(...response.data.records);
+          }
+        })
+        return;
       }
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {
@@ -849,7 +1108,7 @@ export default defineComponent({
     };
 
     const getTime = () => {
-      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord"].forEach(function(v) {
+      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function (v) {
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
@@ -883,6 +1142,43 @@ export default defineComponent({
     };
     const selectedBetRecord = ref({})
     const betRecordDialog = ref(false)
+    const reminderDialog = ref(false)
+    const openReminder = (record) => {
+      getVerifyingFeedbackCount().then((res) => {
+        if (res.code === 0) {
+          if (res.data < 3) {
+            reminderDialog.value = true
+            reminderForm.orderNo = record.serialNumber
+            reminderForm.photos = null
+            reminderForm.memberRemark = ""
+            if (recordActive.value === 'deposit') {
+              reminderForm.type = 1
+            } else if (recordActive.value === 'withdraw') {
+              reminderForm.type = 2
+            }
+          } else {
+            ElMessage.error('无法提交新催单，目前尚有未处理的催单。')
+          }
+        }
+      })
+    }
+    const submitReminder = () => {
+      console.log(reminderForm);
+      if (!reminderForm.photos) {
+        ElMessage.warning(
+            `请上传图片提交`
+        );
+      } else {
+        saveFinanceFeedback(reminderForm).then((res) => {
+          if (res.code === 0) {
+            ElMessage.success(`催单上传成功。`);
+            reminderDialog.value = false;
+            reminderForm.value = {}
+            uploadFileRef.value.clear()
+          }
+        })
+      }
+    }
     const betDetails = (record) => {
       dataState.betRecord = []
       selectedBetRecord.value = record
@@ -904,8 +1200,15 @@ export default defineComponent({
       })
     }
 
+    const getImageLink = (linkId) => {
+      console.log(linkId);
+      reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
+    }
+
     return {
       recordActive,
+      uploadFileRef,
+      reminderForm,
       searchForm,
       dataState,
       tableColumns,
@@ -918,13 +1221,24 @@ export default defineComponent({
       humanDatetime(ts) {
         return moment(ts).format("DD-MM-YYYY HH:mm:ss");
       },
+      checkType(ts) {
+        if (ts === 1) {
+          return 'Deposit'
+        } else {
+          return 'Withdraw'
+        }
+      },
       getPlatList,
       platformsList,
       betDetails,
       betRecordDialog,
       recordBetPage,
       betPagination,
-      totalBetRecord
+      totalBetRecord,
+      reminderDialog,
+      openReminder,
+      submitReminder,
+      getImageLink,
     };
   }
 });
@@ -938,23 +1252,28 @@ export default defineComponent({
   gap: 20px;
   margin-bottom: 20px;
 }
+
 :deep(.ant-select:hover .ant-select-clear) {
   background: #2b2b4b;
 }
+
 .account-content.transit {
   min-height: 740px;
   margin: 0;
   padding: 0;
+
   .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,
   .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
     padding: 20px;
   }
 }
+
 .account-container {
   .account-content-wrapper {
     .unbind-record-wrapper {
       margin-top: 20px;
     }
+
     .common-btn {
       cursor: pointer;
 
@@ -964,16 +1283,20 @@ export default defineComponent({
         font-size: 14px;
       }
     }
+
     .transit .ant-form {
       display: flex;
       justify-content: space-between;
     }
+
     .ant-form-inline .ant-form-item {
       align-items: center;
     }
+
     .ant-form-inline .ant-form-item.search {
       margin-right: 0;
     }
+
     .left {
       display: flex;
       justify-content: flex-start;
@@ -992,6 +1315,7 @@ export default defineComponent({
         align-items: flex-start;
         margin-bottom: 15px;
       }
+
       .account-btn {
         &.search-btn {
           margin-top: 10px;

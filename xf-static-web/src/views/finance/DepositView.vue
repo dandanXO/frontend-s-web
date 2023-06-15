@@ -5,6 +5,7 @@
       <span class="additional-title">支持虚拟币USDT小额存提，24小时安全、便捷、秒存秒提!</span>
     </div>
     <div class="account-content deposit">
+      <span class="additional-tips">如有遇到存款问题，请立即联系在线客服咨询！</span>
       <DepositComponent />
     </div>
   </div>
@@ -21,6 +22,14 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+.additional-tips {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffa600;
+}
 // .account-content.deposit {
 //   min-height: 740px;
 //   display: flex;

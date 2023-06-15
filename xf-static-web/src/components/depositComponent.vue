@@ -28,7 +28,7 @@
         >
           <el-row :gutter="20">
             <el-col :span="9">
-              <el-form-item class="helptxt" label="余额" prop="localAmount">
+              <el-form-item class="helptxt" label="金额" prop="localAmount">
                   <!-- <el-input
                   v-model="form.localAmount"
                   placeholder="输入存款余额"
@@ -123,10 +123,10 @@
               <div v-html="activeMethod.msg"></div>
               <!-- {{ activeMethod.msg }} -->
             </span>
-            <div class="account-tip-text">
+            <!-- <div class="account-tip-text">
               <el-icon><InfoFilled /> </el-icon>
                 更新个人信息的新帐户可以参与促销活动。
-            </div>
+            </div> -->
           </el-form-item>
           <div class="txt-center">
             <el-button @click="confirmDeposit" class="common-btn">
