@@ -61,7 +61,7 @@
           <a @click="refreshBalance" class="balance-amt">
             <span>余额：</span>
             <span class="amount"><span v-if="isLoadingBalance">Loading...</span><span
-                v-if="!isLoadingBalance">￥{{ store.balance }}</span></span>
+                v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span></span>
             <el-icon>
               <Refresh/>
             </el-icon>
@@ -1154,6 +1154,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 12px;
+  color: silver;
 }
 
 .hamburger {

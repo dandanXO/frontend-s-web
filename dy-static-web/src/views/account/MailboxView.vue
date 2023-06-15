@@ -99,8 +99,8 @@
             >
               <el-form-item
                 ref="title"
-                name="title"
-                label="Title"
+                prop="title"
+                label="标题"
                 :wrapperCol="{ span: 6 }"
               >
                 <el-input
@@ -110,8 +110,8 @@
               </el-form-item>
               <el-form-item
                 ref="content"
-                name="content"
-                label="Content"
+                prop="content"
+                label="内容"
               >
                 <el-input
                   type="textarea"
@@ -124,8 +124,8 @@
               </el-form-item>
               <el-form-item>
                 <template #label></template>
-                <el-button type="submit" @click="onSubmit">
-                  Submit
+                <el-button size="large" class="common-btn" type="submit" @click="onSubmit">
+                  提交
                 </el-button>
               </el-form-item>
             </el-form>
@@ -236,24 +236,24 @@ export default defineComponent({
       title: [
         {
           required: true,
-          message: "title is required",
+          message: "请输入标题",
           trigger: "blur",
         },
         {
           max: 255,
-          message: "Length should less then 255",
+          message: "长度为 255",
           trigger: "change",
         },
       ],
       content: [
         {
           required: true,
-          message: "content is required",
+          message: "请输入内容",
           trigger: "blur",
         },
         {
           max: 500,
-          message: "Length should less then 500",
+          message: "长度应少过 500 字",
           trigger: "change",
         },
       ],
@@ -269,6 +269,7 @@ export default defineComponent({
                       message: 'Success',
                       type: 'success',
                     })
+                    loadPersonalMailbox();
 
                   mailboxState.mailboxList.write.title = "";
                   mailboxState.mailboxList.write.content = "";
@@ -334,7 +335,7 @@ export default defineComponent({
       min-height: 450px;
     font-size: 14px;
       .mailbox-item {
-        background-color: #2a313e;
+        box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 3px;
         margin-bottom: 15px;
         padding: 24px;
@@ -381,7 +382,8 @@ export default defineComponent({
           font-size: 12px;
           line-height: 16px;
           margin-bottom: 20px;
-          color: #ffffff;
+          // color: #ffffff;
+          color: #16151c;
         }
         .mailbox-content {
           width: 100%;

@@ -1,13 +1,14 @@
 <template>
   <div class="account-menu-container">
     <div class="account-info-wrapper">
-        <img
+        <!-- <img
           class="account-avatar"
           :src="require(`../../assets/images/vip/badge/v1.png`)"
           alt=""
-        />
-      <div class="account-name">欢迎您 {{ loginName }}</div>
-      <div class="account-vip">{{ vip }}</div>
+        /> -->
+        <img class="account-avatar" src="../../assets/images/account/avatar.png">
+      <div class="account-name">欢迎您 {{ loginName }}<el-tag type="warning" class="account-vip">{{ vip }}</el-tag></div>
+      
     </div>
     <div class="web-menu" :class="{ 'menu-active': 'personalMenuVisible' }">
       <div class="menu-box">
@@ -18,28 +19,28 @@
           to="/center/deposit"
           class="account-menu-item"
         >
-          <RiWallet3Line />
+          <RiWallet3Fill class="pink" />
           充值中心
         </router-link>
         <router-link
           to="/center/withdraw"
           class="account-menu-item"
         >
-          <RiBankCardLine />
+          <RiBankCardFill class="blue" />
           快速提款
         </router-link>
         <router-link
           to="/center/transfer"
           class="account-menu-item"
         >
-          <RiExchangeDollarLine />
+          <RiExchangeDollarFill class="grey" />
           快速转账
         </router-link>
         <router-link
           to="/center/transit-record"
           class="account-menu-item"
         >
-          <RiShieldFlashLine />
+          <RiShieldFlashFill class="green" />
           投注记录
         </router-link>
       </div>
@@ -52,21 +53,21 @@
           to="/center/personal"
           class="account-menu-item"
         >
-          <RiUser5Line />
+          <RiAccountBoxFill class="orange" />
          个人资料
         </router-link>
         <router-link
           to="/center/withdrawbank"
           class="account-menu-item"
         >
-          <RiBankLine />
+          <RiBankFill class="pink" />
          加银行卡
         </router-link>
         <router-link
           to="/center/mailbox"
           class="account-menu-item"
         >
-          <RiMailLine />
+          <RiMailFill class="blue" />
           收发信息
         </router-link>
 <!--        <router-link-->
@@ -80,7 +81,7 @@
           to="/center/share"
           class="account-menu-item"
         >
-          <RiShareBoxLine />
+          <RiShareBoxFill class="green" />
           分享好友
         </router-link>
       </div></div>
@@ -92,31 +93,30 @@
 import { computed } from "vue";
 import { userStore } from "@/store";
 import {
-  RiWallet3Line,
-  RiUser5Line,
-  RiBankCardLine,
-  RiMailLine,
-  RiExchangeDollarLine,
-  RiShieldFlashLine,
+  RiWallet3Fill,
+  RiBankCardFill,
+  RiMailFill,
+  RiExchangeDollarFill,
+  RiShieldFlashFill,
   RiCoupon3Line,
-  RiShareBoxLine,
+  RiShareBoxFill,
   RiFileShieldLine,
   RiMenuLine,
-  RiBankLine,
+  RiBankFill,
+RiAccountBoxFill,
 } from "vue-remix-icons";
 
 {
-  RiWallet3Line,
-    RiUser5Line,
-    RiBankCardLine,
-    RiMailLine,
-    RiExchangeDollarLine,
-    RiShieldFlashLine,
+  RiWallet3Fill,
+    RiBankCardFill,
+    RiMailFill,
+    RiExchangeDollarFill,
+    RiShieldFlashFill,
     RiCoupon3Line,
-    RiShareBoxLine,
+    RiShareBoxFill,
     RiFileShieldLine,
     RiMenuLine,
-    RiBankLine;
+    RiBankFill;
 }
 const store = userStore();
 const loginName = computed(() => {
@@ -130,7 +130,7 @@ const vipLevel = computed(() => {
   return store.vip;
 });
 const vip = computed(() => {
-  return 'VIP' + vipLevel.value
+  return vipLevel.value
 });
 
 </script>
@@ -139,13 +139,19 @@ const vip = computed(() => {
   background-size: cover;
   background-position: center center;
   .account-container-wrap {
-
+    .account-avatar {
+      width: 98px;
+    }
   .account-name {
-
+display: flex;
+gap: 5px;
     margin: 10px 0 14px;
+    .name {
+      color: #2d3f61
+    }
   }
   .account-vip {
-        color: #436aa0;
+        // color: #436aa0;
   }
   }
 }

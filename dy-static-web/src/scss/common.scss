@@ -89,7 +89,7 @@ body {
   border-color: #e9ecef #e9ecef #dee2e6;
 }
 .el-tabs--card>.el-tabs__header .el-tabs__nav{
-  border: 1px solid $border;
+  border: 0;
   border-bottom: none;
 }
 .el-dialog__header {
@@ -128,7 +128,6 @@ body {
   padding-top: 20px;
   >.el-tabs__header{ 
     .el-tabs__nav {
-      border: 0;
     }
     .el-tabs__item {
       color: #6c757d;
@@ -204,19 +203,20 @@ body {
 }
 .common-btn, .common-btn.el-button {
   height: unset;
-  padding: 3px;
+  padding: 10px;
   font-size: .75rem;
   border-radius: 2px;
   color: $color-white;
   // background: $blue-btn;
   // background-image: linear-gradient(90deg,#0ca9bc 0,#0a5e89 100%);
-  background: #4e5efb;
+  background:#00b4fd;
   display: inline-block;
   cursor: pointer;
   text-align: center;
   min-width: 62px;
   border: 0;
   &--small {
+    padding: 3px;
     --el-button-size: 20px;
     height: var(--el-button-size);
     padding: 12px 40px;
@@ -240,6 +240,14 @@ body {
   &.light {
     background: #4e5efb;
   }
+  &:hover, &:focus {
+    color: #ffffff;
+    background: #5281e9;
+  }
+}
+.common-btn {
+  padding: 3px;
+  background: #4e5efb;
 }
 .el-button>span {
   color: #ffffff;

@@ -4,10 +4,10 @@
       <span class="account-title">添加银行卡</span>
     </div>
     <div class="account-content">
-      <div class="account-tip-text wbot">
+      <!-- <div class="account-tip-text wbot">
         <el-icon><InfoFilled /></el-icon>
         TIP hereeeee
-      </div>
+      </div> -->
       <!-- <div class="addbuttons">
         <div
           class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
@@ -149,7 +149,7 @@
       >
         <el-form-item
           prop="bankId"
-          :rules="[{ required: true, message: 'Please select a bank', trigger: 'blur' }]"
+          :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
         >
          <el-row :gutter="20">
           <el-col :span="6">
@@ -161,8 +161,9 @@
             >
               <el-option v-for="bank in bankTypes"
               :key="bank.value"
-              :value="bank.value">
-                {{ bank.value }}
+              :value="bank.value"
+              :label="bank.text">
+                {{ bank.text }}
               </el-option>
             </el-select>
           </el-col>
@@ -170,15 +171,15 @@
             <el-select
               class="select"
               v-model="bankCardInfo.bankId"
-              placeholder="Please select a bank"
+              placeholder="请选择银行"
               style="width: 100%"
             >
               <el-option v-for="b in banksList" :key="b.id" :label="b.name" :value="b.id">
-                <el-row v-if="b.bankIcon" :gutter="10">
-                  <el-col :span="1">
-                    <img style="width: 75%; display: block; margin: 5px;" :src="imgURL + b.bankIcon" />
+                <el-row style="align-items: center;" v-if="b.bankIcon" :gutter="10">
+                  <el-col :span="4">
+                    <img style="max-height: 25px; display: block; margin: 5px;" :src="imgURL + b.bankIcon" />
                   </el-col>
-                  <el-col :span="23">
+                  <el-col :span="20">
                      {{ b.name }}
                   </el-col>
                 </el-row>
@@ -205,13 +206,13 @@
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            placeholder="Card number"
+            placeholder="银行卡号"
           />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress">
           <el-input
             v-model="bankCardInfo.cardAddress"
-            placeholder="Card Address"
+            placeholder="银行地址"
           />
         </el-form-item>
         <el-form-item class="txt-center">
@@ -219,7 +220,7 @@
             class="txt-center common-btn"
             @click="submitBankCard"
           >
-            Submit
+            提交
           </el-button>
         </el-form-item>
       </el-form>
@@ -255,9 +256,9 @@ export default defineComponent({
         max = 37;
       }
       if (v === '') {
-        return Promise.reject('Card number is required');
+        return Promise.reject('请输入卡号');
       } else if (v.length < min || v.length > max) {
-        return Promise.reject('Length should be ' + min + '-' + max);
+        return Promise.reject('长度应为 ' + min + '-' + max);
       } else {
         return Promise.resolve();
       }
@@ -304,7 +305,7 @@ export default defineComponent({
       pageSize: 5,
       pageCount: 1
     }])
-    const bankTypes = [{ value: 'Bank' }, { value: 'Crypto'}]
+    const bankTypes = [{ value: 'Bank', text: '银行卡' }, { value: 'Crypto', text: '数字货币' }]
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -467,15 +468,15 @@ export default defineComponent({
       cardAccount: [
         {
           required: true,
-          message: "Card account is required",
+          message: "请输入银行卡号",
           trigger: "blur"
         }
       ]
     };
     const unbindBankCard = (card) => {
       ElMessageBox.confirm(
-        `Remove ${card.bankName} ?`,
-        'Warning',
+        `解绑 ${card.bankName} ?`,
+        '警告',
         {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
@@ -685,6 +686,8 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     margin-right: -280px;
+    font-size: 12px;
+    color: #b79f9f;
 
     cursor: pointer;
     transition: all 0.3s ease-in;
