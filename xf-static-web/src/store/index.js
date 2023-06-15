@@ -20,7 +20,8 @@ export const userStore = defineStore("userStore", {
       memberType: "",
       balance: 0,
       vip: "",
-	  evip: "",
+	    evip: "",
+      currency: { value: "￥", label: "RMB"},
     };
   },
   actions: {
