@@ -163,18 +163,34 @@ export default defineComponent({
             align-items: center;
             text-decoration: none;
             color: #4a556c;
-            padding: 10px 40px 25px 10px;
+            padding: 10px 50px 15px 10px;
               border-left: 4px solid transparent;
             margin-left: -10px;
             padding-left: 10px;
             svg {
-              height: 20px;
+              height: 28px;
               fill: #3d4b66;
+              &.pink {
+                fill: #f789cf;
+              }
+              &.blue {
+                fill: #00a9f2;
+              }
+              &.grey {
+                fill: #4a556c;
+              }
+              &.green {
+                fill: #74c8cb;
+              }
+              &.orange {
+                fill: #f38046;
+              }
             }
             &:hover, &.router-link-exact-active {
               // background-image: linear-gradient(90deg,#2d4551 0,#2a313e 100%);
                 background: url(../../assets/common/hover.png)no-repeat;
-                background-position: -4px 0;
+                background-size: contain;
+                background-position: -4px 2px;
                 color: #d8e4ff;
               &:after {
               }

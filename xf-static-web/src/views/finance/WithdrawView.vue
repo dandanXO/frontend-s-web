@@ -48,13 +48,13 @@
               class="form-input"
               v-model="withdrawInfo.amount"
               placeholder="提款金额"
-            ><template #append>{{ isUSDT ? 'USDT' : store.currency.label }}</template>
+            ><template #append>{{ store.currency.label }}</template>
             </el-input>
           </el-col>
           <el-col :span="12">
             <span v-if="selectedWithdrawalMethod">
-              {{ `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${isUSDT ? 'USDT' : store.currency.label } - ${selectedWithdrawalMethod.withdrawMax} ${isUSDT ? 'USDT' : store.currency.label }`  }} <br>
-              {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${isUSDT ? 'USDT' : store.currency.label }, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`  }}
+              {{ `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label } - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label }`  }} <br>
+              {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label }, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`  }}
             </span>
           </el-col>
         </el-row>

@@ -110,7 +110,7 @@ $loadingwidth: 300px;
   .txt {
     display: block;
     font-size: 30px;
-    color: #ffffff;
+    color: #a09ffb;
   }
   display: flex;
   flex-direction: column;
@@ -141,8 +141,7 @@ $loadingwidth: 300px;
 
   li:nth-child(-n + 3) {
     background: rgba(255, 255, 255, 0.9);
-    box-shadow: inset 0px 0px 10px 2px rgb(34 42 52),
-      0px 0px 20px rgb(46 208 236 / 90%);
+    box-shadow: inset 0px 0px 10px 2px rgb(226 142 253), 0px 0px 20px rgb(181 134 222);
   }
 
   li:nth-child(n + 4) {
@@ -153,6 +152,17 @@ $loadingwidth: 300px;
   li:nth-child(3) {
     -webkit-animation: pulse 1s alternate infinite;
     -moz-animation: pulse 1s alternate infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      background: rgba(255, 255, 255, 1);
+    box-shadow: inset 0px 0px 10px 2px rgb(172, 142, 253), 0px 0px 20px rgb(109, 0, 204);
+    }
+    100% {
+      background: rgba(255, 255, 255, 0);
+    box-shadow: inset 0px 0px 10px 2px rgba(172, 142, 253, 0.4), 0px 0px 20px rgba(109, 0, 204, 0.1);
+    }
   }
 
   @-webkit-keyframes pulse {

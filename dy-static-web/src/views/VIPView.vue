@@ -112,13 +112,15 @@
                                         </button>
                                     </div>
                                 </div>
-                                <!-- <div class="vip-detail-promo-box">
-                    <div class="vip-promo-title">每月存送：</div>
-                    <div class="vip-promo-txt" v-html="vip.level5" />
-                    <div>
-                      <button class="vip-btn-get vip-deposit-btn">领取</button>
-                    </div>
-                  </div> -->
+                                <div class="vip-detail-promo-box">
+                                <div class="vip-promo-title">每月存送：</div>
+                                <div class="vip-promo-txt" v-html="vip.level5"></div>
+                                <div>
+                                    <router-link to="/center/deposit">
+                                        <el-button class="vip-btn-get vip-deposit-btn">领取</el-button>
+                                    </router-link>
+                                </div>
+                            </div>
                                 <div class="vip-detail-promo-box">
                                     <div class="vip-promo-title">
                                         流水要求：
@@ -415,7 +417,7 @@ import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { claimBonusItem } from "@/api/index/promo";
 import { router } from "vue-router";
-import Swal from "sweetalert2";
+import { ElMessageBox } from "element-plus";
 
 export default defineComponent({
     components: {
@@ -543,30 +545,66 @@ export default defineComponent({
             },
         ]);
 
-        const fireCommonError = () => {
-            Swal.fire({
-                title: "系统提示",
-                text: "请登录后再操作",
-                confirmButtonText: "确认",
-            });
-        };
+        // const fireCommonError = () => {
+        //     Swal.fire({
+        //         title: "系统提示",
+        //         text: "请登录后再操作",
+        //         confirmButtonText: "确认",
+        //     });
+        // };
 
         const onVIPButtonClick = (bonusItem, vipType) => {
-            claimBonusItem(bonusItem)
+            if (!store.token) {
+                ElMessageBox.alert(
+                    `请登录后再操作`,
+                    '系统提示',
+                    {
+                    confirmButtonText: 'OK',
+                    type: 'warning',
+                    }
+                )
+                return
+            } else {
+
+                claimBonusItem(bonusItem)
                 .then((res) => {
                     console.log(res);
                     if (res.code === 0) {
-                        // Success
+                        // Success                 
+                        ElMessageBox.alert(
+                            `你已领取 ${res.data.value}`,
+                            '系统提示',
+                            {
+                            confirmButtonText: 'OK',
+                            type: 'success',
+                            }
+                        )
                         location.href = `/center/deposit`;
-                    } else {
-                        // Silent Death
-                        fireCommonError();
+                    } else {                        
+                        ElMessageBox.alert(
+                            `${res.message}`,
+                            '系统提示',
+                            {
+                            confirmButtonText: 'OK',
+                            type: 'error',
+                            }
+                        )
                     }
                 })
                 .catch((err) => {
+                                          
+                    ElMessageBox.alert(
+                            `系统错误`,
+                            '系统提示',
+                            {
+                            confirmButtonText: 'OK',
+                            type: 'error',
+                            }
+                        )
                     // Silent Death
-                    fireCommonError();
+                    // fireCommonError();
                 }); // End catch
+            }
         };
 
         const reduce = () => {
@@ -774,10 +812,11 @@ export default defineComponent({
     color: #515e6b;
 }
 .vip-container .vip-list-container .vip-detail-right-box .vip-btn-get {
+    cursor: pointer;
     width: 108px;
     height: 36px;
     font-size: 14px;
-    margin-left: 22px;
+    border-radius: 0;
     /* background: -webkit-gradient(
     linear,
     right top,

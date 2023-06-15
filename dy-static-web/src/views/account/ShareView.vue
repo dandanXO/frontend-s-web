@@ -17,13 +17,13 @@
           </div>
           <div class="share-link-wrapper">
             <input @blur="blurCode" ref="copyinput" v-model="referralLink" />
-            <button
+            <el-button
                 class="common-btn copy-btn"
                 @blur="blurCode"
                 @click="copyCode"
             >
               {{ copybtntxt }}
-            </button>
+            </el-button>
           </div>
         </div>
       </div>
@@ -158,15 +158,15 @@ export default defineComponent({
             margin: 0 auto;
           }
         }
-        .right-container {
-          background: #1d222e;
+        .right-container {    
+          // background: #34cfe5;
           width: 100%;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          color: #ffffff;
-          padding: 30px;
+          color: #000000;
+          padding: 10px;
           .share-content {
             // padding: 10px 30px;
           }
@@ -181,7 +181,7 @@ export default defineComponent({
             input {
               width: 100%;
               border: none;
-              background-color: #2c444f;
+              border: 1px solid #c7c7c7;
               padding: 10px;
             }
           }

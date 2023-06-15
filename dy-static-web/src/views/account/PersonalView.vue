@@ -59,13 +59,14 @@
                   <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="realName"
+                      prop="realName"
                       :rules="[
-                        { required: true, message: 'Please key in real name' },
+                        { required: true, message: '请输入名字' },
                       ]"
                     >
                       <el-input
                         v-model="updateFormDetails.realName"
-                        placeholder="Real Name"
+                        placeholder="名字"
                       />
                     </el-form-item>
                   </div>
@@ -86,12 +87,13 @@
                   <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="birthday"
-                      :rules="[{ required: true, message: 'Birthday is required' }]"
+                      prop="birthday"
+                      :rules="[{ required: true, message: '请输入生日' }]"
                     >
                       <el-date-picker
                         v-model="updateFormDetails.birthday"
                         value-format="YYYY-MM-DD"
-                        placeholder="Birthday"
+                        placeholder="生日"
                       />
                     </el-form-item>
                   </div>
@@ -112,13 +114,14 @@
                   <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="phone"
+                      prop="phone"
                       :rules="[
-                        { required: true, message: 'Please key in phone number' },
+                        { required: true, message: '请输入电话' },
                       ]"
                     >
                       <el-input
                         v-model="updateFormDetails.phone"
-                        placeholder="Phone Number"
+                        placeholder="电话"
                       />
                     </el-form-item>
                   </div>
@@ -138,14 +141,15 @@
                   <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="email"
+                      prop="email"
                       :rules="[
-                        { required: true, message: 'Email is required' },
-                        { type: 'email', message: 'Email address is not valid' },
+                        { required: true, message: '请输入邮箱' },
+                        { type: 'email', message: '邮箱信息错误' },
                       ]"
                     >
                       <el-input
                         v-model="updateFormDetails.email"
-                        placeholder="Email"
+                        placeholder="邮箱"
                       />
                     </el-form-item>
                   </div>
@@ -156,7 +160,7 @@
                   class="common-btn"
                   v-if="isEdit"
                   @click="updateState"
-                  >Submit</el-button
+                  >提交</el-button
                 >
               
               <el-button
@@ -190,7 +194,7 @@
             </el-button>
           </div>
         </div>
-          <div class="account-tip-text">
+          <div class="account-tip-text red">
             <el-icon>
             <InfoFilled style="font-size: 15px; line-height: 20px;" />
             </el-icon>
@@ -199,7 +203,7 @@
             <a
               @click.stop.prevent="
                 openWindow(
-                  `https://csweb01.amv4xjcbd.com/?partnerId=6&lang=en-US&way=${regDevice}&token=${store.token}`,
+                  `https://csweb01.v6kthwlug.com/?partnerId=3&lang=zh-CN&way=${regDevice}&token=${store.token}`,
                   'Chat Server',
                   350,
                   650,
@@ -225,28 +229,28 @@
         :model="updatePwdInfo"
         :rules="updatePwdRules"
       >
-        <el-form-item ref="oldPassword" name="oldPassword">
+        <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">
           <el-input
             type="password"
             v-model="updatePwdInfo.oldPassword"
-            :placeholder="'account.personal.oldPwd'"
+            :placeholder="'旧密码'"
           />
         </el-form-item>
-        <el-form-item ref="password" name="password">
+        <el-form-item ref="password" name="password" prop="password">
           <el-input
             type="password"
             v-model="updatePwdInfo.password"
-            :placeholder="'login.password'"
+            :placeholder="'新密码'"
           />
         </el-form-item>
         <el-form-item class="txt-center">
-          <button
+          <el-button
             class="txt-center submit-btn common-btn"
             type="submit"
             @click="submitUpdatePwd"
           >
-            {{ "common.confirm" }}
-          </button>
+            提交
+          </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -265,58 +269,72 @@
         :model="updateSecurityVerified"
         :rules="updateSecurityVerifiedRules"
       >
-        <el-form-item ref="emailAddress" name="emailAddress">
+        <el-form-item ref="emailAddress" prop="emailAddress">
           <el-input
             v-model="updateSecurityVerified.emailAddress"
-            placeholder="Email Address"
+            placeholder="邮箱"
           />
         </el-form-item>
         <el-form-item
           class="half"
           ref="verificationCode"
-          name="verificationCode"
+          prop="verificationCode"
         >
-          <el-input
-            type="password"
-            v-model="updateSecurityVerified.verificationCode"
-            :placeholder="'login.validCode'"
-          />
-          <span
-            class="common-btn verification-btn"
-            @click="openVerificationModal"
-            >{{ "account.personal.getValidCode" }}
-          </span>
+          <el-row>
+            <el-col :span="20">
+              <el-input
+                type="password"
+                v-model="updateSecurityVerified.verificationCode"
+                :placeholder="'验证码'"
+              />
+            </el-col>
+            <el-col :span="4">
+              <el-button
+                class="common-btn verification-btn"
+                @click="openVerificationModal"
+                >发送验证码
+              </el-button>
+            </el-col>
+          </el-row>
         </el-form-item>
-        <span class="common-btn verification-btn" @click="submitUpdateSecurity"
-          >{{ "account.personal.submitValid" }}
-        </span>
+        <el-button class="common-btn verification-btn" @click="submitUpdateSecurity"
+          >提交
+        </el-button>
       </el-form>
     </el-dialog>
     <el-dialog
       wrap-class-name="securityModal"
       v-model="verificationModalVisible"
-      title="Verify Captcha Code"
+      title="验证码"
       width="500px"
     >
-      <el-form :model="updateSecurityVerified">
-        <el-form-item ref="captchaCode" name="captchaCode">
-          <el-input
-            @keypress.enter="verifyVerificationCode"
-            v-model="updateSecurityVerified.captchaCode"
-            :maxlength="4"
-            placeholder="Captcha Code"
-          >
-          </el-input>
-          <div class="verification" @click="getCode()">
+      <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[
+                        { required: true, message: '请输入验证码' },
+                      ]">
+          <el-row>
+            <el-col :span="20">
+              <el-input
+                @keypress.enter="verifyVerificationCode"
+                v-model="updateSecurityVerified.captchaCode"
+                :maxlength="4"
+                placeholder="验证码"
+              />
+            </el-col>
+            <el-col :span="4">
+
+              <div class="verification" @click="getCode()">
             <img :src="verificationImg" />
           </div>
+            </el-col>
+          </el-row>
         </el-form-item>
       </el-form>
       <el-button
-        class="a-common-btn"
+        class="common-btn"
         @click="verifyVerificationCode"
         :loading="isEmailSending"
-        >Verify</el-button
+        >验证</el-button
       >
     </el-dialog>
   </div>
@@ -381,6 +399,7 @@ export default defineComponent({
     };
     const updateSecurityModalVisible = ref(false);
     const updateSecurityFormRef = ref();
+    const captchaUpdateRef = ref();
     const updateSecurityVerified = reactive({
       mobileNumber: "",
       verificationCode: ""
@@ -412,6 +431,9 @@ export default defineComponent({
 
     }
     const verifyVerificationCode = () => {
+      captchaUpdateRef.value
+        .validate()
+        .then(() => {
       isEmailSending.value = true
       verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
       const emailDetails =  {
@@ -437,6 +459,8 @@ export default defineComponent({
         getCode()
         isEmailSending.value = false
       });
+      
+    })
     }
     const submitUpdateSecurity = () => {
       updateSecurityFormRef.value
@@ -466,24 +490,24 @@ export default defineComponent({
       emailAddress: [
         {
           required: true,
-          message: "Email is required",
+          message: "请输入邮箱地址",
           trigger: "blur",
         },
         {
           type: "email",
-          message: "Email address is not valid",
+          message: "邮箱地址不符合",
           trigger: "blur",
         },
       ],
       verificationCode: [
         {
           required: true,
-          message: "Verification code is required",
+          message: "请输入验证码",
           trigger: "blur",
         },
         {
           min: 4,
-          message: "Length should be 4",
+          message: "长度应为 4",
           trigger: "blur",
         },
       ],
@@ -528,26 +552,26 @@ export default defineComponent({
       oldPassword: [
         {
           required: true,
-          message: "old password is required",
+          message: "请输入旧密码",
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "Length should be 6 to 12",
+          message: "长度应为 6 到 12 数字",
           trigger: "blur"
         }
       ],
       password: [
         {
           required: true,
-          message: "password is required",
+          message: "请输入新密码",
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "Length should be 6 to 12",
+          message: "长度应为 6 到 12 数字",
           trigger: "blur"
         }
       ]
@@ -566,7 +590,7 @@ export default defineComponent({
           updateAccount(toRaw(updateFormDetails)).then((ret) => {
             if (ret.code === 0) {
               ElMessage({
-                message: 'Successfully updated',
+                message: '提交成功',
                 type: 'success',
               })
               loadInfo();
@@ -630,7 +654,8 @@ export default defineComponent({
       updateFormRef,
       store,
       regDevice,
-      openWindow
+      openWindow,
+      captchaUpdateRef
     };
   }
 });
@@ -638,9 +663,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .personal-container {
-    background-color: #232833;
-    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
-    border-radius: 2px;
+    border-radius: 3px;
     display: flex;
     padding: 20px;
     justify-content: space-between;

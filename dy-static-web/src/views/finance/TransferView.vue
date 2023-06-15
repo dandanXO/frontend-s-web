@@ -1,19 +1,16 @@
 <template>
   <div>
-    <div class="menu-title-container">
-      <span class="menu-title">快速转账</span>
-    </div>
-    <div class="account-content quicktransfer">
-      <div class="flex-box transfer-top-container">
         <div class="balance">
-          <div class="balance-wrapper">
+              <div class="menu-title-container">
+          <el-row style="width: 100%;">
+            <el-col :span="20">
+              <!-- <div class="balance-wrapper">
             <span class="currency">主账户:</span> ￥{{ mainWallet }}
-          </div>
-          <!-- <div class="balance-refresh" @click="refreshBalance(MAIN)">
-            <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
-
-          <el-button type="success"
+                <span class="menu-title">快速转账</span>
+            </el-col>
+            <el-col :span="4">
+              <el-button type="success"
             class="common-btn"
             @click="transferOutAllModal"
           >
@@ -25,10 +22,20 @@
           >
             一键刷新
           </el-button>
+            </el-col>
+          </el-row>
+              </div>
+          <!-- <div class="balance-refresh" @click="refreshBalance(MAIN)">
+            <el-icon><Refresh style="color: #ffffff" /></el-icon>
+          </div> -->
+
+          
         </div>
+    <div class="account-content quicktransfer">
+      <div class="flex-box transfer-top-container">
         <div class="account-content">
-          <div class="account-tip-text">
-            <el-icon><InfoFilled style="color: #45fdfb" /></el-icon>
+          <div class="account-tip-text green">
+            <el-icon><img src="../../assets/images/account/transfer_tip.png"></el-icon>
             兴發电竞、IM体育无需转账，充值即可游戏
           </div>
         </div>
@@ -41,9 +48,9 @@
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
               <div class="plat-name" v-if="p.code === 'FlashTech'">Sport</div>
-              <div class="plat-name" v-else>{{ p.code }}</div>
+              <div class="plat-name" v-else><RiWirelessChargingLine />{{ p.code }}</div>
               <div class="balance-wrapper">
-                <span class="currency">余额:</span> {{ p.amount }}
+                <span class="currency">金额:</span> {{ p.amount }}
               </div>
             </div>
             <div class="balance-refresh" @click="refreshBalance(p.code)">
@@ -54,13 +61,13 @@
             class="flex-box flex-justify-space flex-wrap transfer-action-box"
           >
             <button
-              class="outline transfer-btn"
+              class="outline transfer-btn in"
               @click="transferModal(0, p)"
             >
               转进
             </button>
             <button
-              class="transfer-btn"
+              class="transfer-btn out"
               @click="transferModal(1, p)"
             >
               转出
@@ -146,16 +153,19 @@ import { transfer, withdrawAll, getPlatforms } from "@/api/personal/transfer";
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
-// import { RiSpamLine, RiRestartLine } from "vue-remix-icons";
 import { InfoFilled, Refresh, Right } from "@element-plus/icons-vue"
+import { RiWirelessChargingLine } from "vue-remix-icons";
 // import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "TransferView",
   components: {
     // RiSpamLine, RiRestartLine
-    InfoFilled, Refresh, Right
-  },
+    InfoFilled,
+    Refresh,
+    Right,
+    RiWirelessChargingLine
+},
   setup() {
     const store = userStore();
     const platforms = reactive([]);
@@ -394,14 +404,14 @@ body .transferinout .el-dialog__header .el-dialog__title {
         }
         .balance-wrapper {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           gap: 10px;
           align-items:  center;
           font-size: 14px;
           margin-right: 50px;
             color: #30a73b;
           .currency {
-            color: #a0bcd6;
+            color: #000000;
           }
         }
         .balance-refresh {
@@ -422,28 +432,31 @@ body .transferinout .el-dialog__header .el-dialog__title {
     }
 
     .transfer-plat-wrapper {
-      // display: grid;
-      // padding-top: 30px;
-      // grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      display: grid;
+      padding-top: 30px;
+      margin: 0 auto;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       // grid-gap: 20px 24px;
       // display: grid;
       // grid-gap: 20px;
       // grid-template-columns: 1fr 1fr;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      // display: flex;
+      // justify-content: flex-start;
+      // align-items: center;
+      // flex-wrap: wrap;
+      // gap: 10px;
       .transfer-plat-item {
-        display: flex;
-        background-color: #232833;
-        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
-        border-radius: 2px;
-        margin: 0 0 23px 14px;
-        padding: 10px 20px;
-        flex-direction: column;
+        // display: flex;
+        background: url(../../assets/images/account/transfer_item_bg.png)no-repeat center center;
+        background-size: contain;
+    width: 238px;
+    height: 128px;
+        // border-radius: 2px;
+        // margin: 0 0 23px 14px;
+        // padding: 10px 20px 30px;
+        // flex-direction: column;
         position: relative;
-        width: 170px;
+        // width: 28%;
         .transfer-balance-box {
           align-items: center;
         }
@@ -452,18 +465,20 @@ body .transferinout .el-dialog__header .el-dialog__title {
           align-items:  center;
           justify-content: flex-end;
           gap: 15px;
-
+          width: 78%;
           .transfer-btn {
-                background-color: #164a5f;
+                background-color: #3bafda;
                 box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
                 border-radius: 2px;
-                border: 1px solid #22737f;
-                color: #a0bcd6;
+                border: 0;
+                // border: 1px solid #22737f;  
+                  color: #fff;
                 padding: 2px 20px;
                 font-size: 12px;
                 line-height: 14px;
 
             &.outline {
+                  background-image: linear-gradient(267deg,#78abfa 0,#4877ec 100%),linear-gradient(#5b80e7,#5b80e7);
             }
           }
         }
@@ -482,16 +497,21 @@ body .transferinout .el-dialog__header .el-dialog__title {
             // min-width: 60px;
             position: relative;
             clear: both;
-            padding: 5px 12px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             -webkit-box-shadow: 2px 5px 10px rgb(138 146 154 / 15%);
             box-shadow: 2px 5px 10px rgb(138 146 154 / 15%);
             color: #fff;
-            margin-left: -27px;
-            margin-top: -3px;
             border-radius: 0 3px 3px 0;
-            background: #323d50;
-            &::before {
+            background: #1abc9c;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            margin-left: -7px;
+            margin-top: 15px;
+            padding: 2px 10px;
+            &:before {
               content: " ";
               border-style: solid;
               border-width: 10px;
@@ -500,32 +520,64 @@ body .transferinout .el-dialog__header .el-dialog__title {
               bottom: -10px;
               left: 0;
               margin-bottom: -10px;
-              z-index: 0;
-              border-color: #2494be transparent transparent;
+              z-index: -1;
+              border-color: #148f77 transparent transparent;
             }
+            
             &::after {
               content: " ";
-              background: #232833;
+              background: url(../../assets/images/account/transfer_item_bg.png)no-repeat center center;
+              background-position: -2px -33px;
+              background-size: 1400%;
               display: block;
               position: absolute;
-              width: 100%;
-              height: 20px;
-              bottom: -20px;
-              left: 7px;
+              width: 15px;
+              height: 15px;
+              bottom: -15px;
+              left: 10px;
               margin-bottom: 0px;
-              z-index: 0;
+              z-index: -1;
               border-color: #2494be transparent transparent;
+            }
+            // &::before {
+            //   content: " ";
+            //   border-style: solid;
+            //   border-width: 10px;
+            //   display: block;
+            //   position: absolute;
+            //   bottom: -10px;
+            //   left: 0;
+            //   margin-bottom: -10px;
+            //   z-index: 0;
+            //   border-color: #2494be transparent transparent;
+            // }
+            // &::after {
+            //   content: " ";
+            //   background: #232833;
+            //   display: block;
+            //   position: absolute;
+            //   width: 100%;
+            //   height: 20px;
+            //   bottom: -20px;
+            //   left: 7px;
+            //   margin-bottom: 0px;
+            //   z-index: 0;
+            //   border-color: #2494be transparent transparent;
+            // }
+            .remixicon {
+    fill: #ffffff;
+    width: 15px;
             }
           }
           .balance-wrapper {
             display: flex;
-            justify-content: flex-end;
-            width: 100%;
-            align-items:  center;
-            color: #30a73b;
-            margin: 10px 0;
+            justify-content: flex-start;
+            width: 65%;
+            align-items: center;
+            color: #a56322;
+            margin: 0px auto 15px;
             .currency {
-              color: #a0bcd6;
+              color: #1f356b;
               font-size: 14px;
               line-height: 16px;
               margin-right: 10px;
@@ -534,14 +586,17 @@ body .transferinout .el-dialog__header .el-dialog__title {
         }
         .balance-refresh {
           position: absolute;
-          right: 10px;
+          right: 35px;
           top: 10px;
           cursor: pointer;
           margin-left: 10px;
           .el-icon {
             display: block;
-            width: 16px;
-            color: #2494be;
+            color: #3865e8;
+            svg {
+              width: 25px;
+              height: 25px;
+            }
           }
         }
       }

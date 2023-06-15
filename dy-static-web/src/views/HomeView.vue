@@ -8,26 +8,27 @@
     <div class="index-container">
       <div class="index-top-btn-container">
         <div class="index-operator-btn-box">
-            <div class="index-operator-btn deposit" onclick="urlOpen('/personal/main.html?page=deposit')">我要充值</div>
-            <a class="index-operator-btn download" href="download.html" target="_blank">下载APP</a>
-            <div class="index-operator-btn promo" onclick="urlOpen('/personal/main.html?page=privilege')">热门活动</div>
+          <router-link to="/center/deposit"><div class="index-operator-btn deposit">我要充值</div></router-link>
+          <router-link to="/app" class="index-operator-btn download">下载APP</router-link> 
+            <router-link to="/promotion" class="index-operator-btn promo">热门活动</router-link>
         </div>
         <div class="index-platform-btn-box">
-            <a class="index-platform-btn" href="/games/esports.html">
+            <router-link class="index-platform-btn" to="/esports">
                 <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_esports.png">
                 <div>电竞游戏</div>
-            </a>
-            <a class="index-platform-btn" href="/games/sportPlatforms.html">
+            </router-link>
+            <router-link class="index-platform-btn" to="/sports">
                 <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_sport.png">
                 <div>体育竞猜</div>
-            </a>
-            <a class="index-platform-btn" href="/games/live.html">
+            </router-link>
+            <router-link class="index-platform-btn" to="/live-casino">
                 <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_live.png">
                 <div>真人娱乐</div>
-            </a>
+            </router-link>
         </div>
     </div>
-    <div class="index-title-container" style="margin-top: 50px;">
+    <!--暂时没后端数据-->
+    <!-- <div class="index-title-container" style="margin-top: 50px;">
         <div class="index-title-main">热门赛事</div>
         <div class="index-title-sub">HOT EVENTS</div>
     </div>
@@ -104,7 +105,7 @@
                 进入投注
             </a>
         </div>
-    </div>
+    </div> -->
     <div class="index-title-container">
         <div class="index-title-main">场馆投注</div>
         <div class="index-title-sub">VENUES BETTING</div>
