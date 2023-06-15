@@ -270,6 +270,12 @@
             </el-row>
             <el-form-item label="电话号码" prop="telephone">
               <el-input class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
+              <el-button @click="sendOtp" class="common-btn">
+                发送验证码
+              </el-button>
+            </el-form-item>
+            <el-form-item label="手机验证码" prop="smsCode">
+              <el-input class="half" v-model="regForm.smsCode" placeholder="输入手机验证码"/>
             </el-form-item>
             <el-form-item label="邮件" prop="email">
               <el-input class="half" v-model="regForm.email" placeholder="输入邮件"/>
@@ -390,6 +396,7 @@ import {defineComponent, onMounted, ref, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
 import {getVerificationCode, register} from "@/api/index/login";
+import {sendSms} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
 import {Vue3Marquee} from 'vue3-marquee';
 import {
@@ -622,6 +629,8 @@ export default defineComponent({
       regHost: location.hostname,
       codeId: "",
       codeAffiliate: "",
+      smsCode: "",
+      smsCodeId: ""
     });
 
     const regRules = {
@@ -686,6 +695,19 @@ export default defineComponent({
       //     trigger: "blur",
       //   },
       // ],
+      smsCode: [
+        {
+          required: true,
+          message: "请输入手机验证码",
+          trigger: "blur"
+        },
+        {
+          min: 6,
+          max: 6,
+          message: "长度应为 6",
+          trigger: "blur",
+        },
+      ],
       email: [
         {
           required: true,
@@ -768,6 +790,23 @@ export default defineComponent({
       if (!formEl) return
       formEl.resetFields()
     }
+
+    const sendOtp = async() => {
+      const smsDetail = {
+        telephone: regForm.telephone
+      }
+      sendSms(smsDetail)
+        .then((response) => {
+          if (response.code == 0) {
+            regForm.smsCodeId = response.data.codeId;
+            ElMessage({
+              type: 'success',
+              message: '发送手机验证码成功'
+            });
+          }
+        })
+    };
+
     const submitRegisterForm = async (elForm) => {
       if (!elForm) return
       await elForm.validate((valid) => {
@@ -1026,7 +1065,8 @@ export default defineComponent({
       resetRegForm,
       openGame,
       modalGame,
-      todayDate
+      todayDate,
+      sendOtp
     }
   }
 });
