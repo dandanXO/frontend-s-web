@@ -287,10 +287,10 @@ export default defineComponent({
             padding: 10px;
           }
       th {
-        background-image: linear-gradient(0deg,#07414c 0,#058096 100%),linear-gradient(#d0d1d3,#d0d1d3);
+        background-image: linear-gradient(0deg,#0494fc 0,#15bdfc 100%),linear-gradient(#d0d1d3,#d0d1d3);
       }
       td {
-            background-color: #202228;
+            // background-color: #202228;
             border: 1px solid #2e3039;
       }
     }
