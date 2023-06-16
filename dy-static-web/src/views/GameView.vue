@@ -122,7 +122,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const numBox = ref(275417746)
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/game/'
     const banner = ref([]);
     const route = useRoute();
     const router = useRouter();
@@ -132,7 +132,7 @@ export default defineComponent({
     const gamePage = reactive({
       gameList: [],
       currentPage: 1,
-      pageSize: 30,
+      pageSize: 12,
       searchType: "",
       searchKey: "",
       total: 0
@@ -176,7 +176,7 @@ export default defineComponent({
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/slot/${activePlat.value.code}/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code}/slot/${element.icon}.png`;
         });
         gameListData.value = data;
         gamePage.total = data.length;

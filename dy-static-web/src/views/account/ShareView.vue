@@ -167,6 +167,7 @@ export default defineComponent({
           align-items: center;
           color: #000000;
           padding: 10px;
+          background: #ebebeb;
           .share-content {
             // padding: 10px 30px;
           }
@@ -176,7 +177,7 @@ export default defineComponent({
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
+            width: calc(100% - 30px);
             gap: 20px;
             input {
               width: 100%;

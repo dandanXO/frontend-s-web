@@ -280,22 +280,19 @@
           ref="verificationCode"
           prop="verificationCode"
         >
-          <el-row>
-            <el-col :span="20">
+        <el-space>
               <el-input
                 type="password"
                 v-model="updateSecurityVerified.verificationCode"
                 :placeholder="'验证码'"
               />
-            </el-col>
-            <el-col :span="4">
               <el-button
+                size="small"
                 class="common-btn verification-btn"
                 @click="openVerificationModal"
                 >发送验证码
               </el-button>
-            </el-col>
-          </el-row>
+            </el-space>
         </el-form-item>
         <el-button class="common-btn verification-btn" @click="submitUpdateSecurity"
           >提交
@@ -312,22 +309,18 @@
         <el-form-item ref="captchaCode" prop="captchaCode" :rules="[
                         { required: true, message: '请输入验证码' },
                       ]">
-          <el-row>
-            <el-col :span="20">
+                      <el-space>
               <el-input
                 @keypress.enter="verifyVerificationCode"
                 v-model="updateSecurityVerified.captchaCode"
                 :maxlength="4"
                 placeholder="验证码"
               />
-            </el-col>
-            <el-col :span="4">
 
               <div class="verification" @click="getCode()">
-            <img :src="verificationImg" />
+            <img style="width: 80%; margin-top: 6px;" :src="verificationImg" />
           </div>
-            </el-col>
-          </el-row>
+        </el-space>
         </el-form-item>
       </el-form>
       <el-button

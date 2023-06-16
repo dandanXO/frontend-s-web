@@ -555,14 +555,16 @@ export default defineComponent({
 
         const onVIPButtonClick = (bonusItem, vipType) => {
             if (!store.token) {
-                ElMessageBox.alert(
-                    `请登录后再操作`,
-                    '系统提示',
-                    {
-                    confirmButtonText: 'OK',
-                    type: 'warning',
-                    }
-                )
+                ElMessageBox.alert('请登录后再操作', '系统提示', {
+                    // if you want to disable its autofocus
+                    // autofocus: false,
+                    center: true,
+                    confirmButtonText: '确认',
+                    showClose: false,
+                    buttonSize: 'large'
+                }).then(() => {
+                    store.loginPageVisible = true
+                })
                 return
             } else {
 
@@ -580,29 +582,10 @@ export default defineComponent({
                             }
                         )
                         location.href = `/center/deposit`;
-                    } else {                        
-                        ElMessageBox.alert(
-                            `${res.message}`,
-                            '系统提示',
-                            {
-                            confirmButtonText: 'OK',
-                            type: 'error',
-                            }
-                        )
                     }
                 })
                 .catch((err) => {
-                                          
-                    ElMessageBox.alert(
-                            `系统错误`,
-                            '系统提示',
-                            {
-                            confirmButtonText: 'OK',
-                            type: 'error',
-                            }
-                        )
-                    // Silent Death
-                    // fireCommonError();
+                    console.log(err)
                 }); // End catch
             }
         };

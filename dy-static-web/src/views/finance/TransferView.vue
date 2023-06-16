@@ -11,12 +11,14 @@
             </el-col>
             <el-col :span="4">
               <el-button type="success"
+              size="small"
             class="common-btn"
             @click="transferOutAllModal"
           >
             一键转出
           </el-button>
           <el-button type="success"
+              size="small"
             class="common-btn"
             @click="refreshAllModal"
           >
@@ -102,7 +104,7 @@
         <el-form-item ref="amount" name="amount">
           <el-input
             v-model="transferInfo.amount"
-            placeholder="Amount"
+            placeholder="金额"
           />
         </el-form-item>
         <el-form-item class="txt-center">
@@ -118,7 +120,7 @@
             :loading="loadingTransfer"
             @click="submitTransfer"
           >
-            Confirm</el-button
+            确定</el-button
           >
         </el-form-item>
       </el-form>
@@ -476,6 +478,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
                 padding: 2px 20px;
                 font-size: 12px;
                 line-height: 14px;
+                cursor: pointer;
 
             &.outline {
                   background-image: linear-gradient(267deg,#78abfa 0,#4877ec 100%),linear-gradient(#5b80e7,#5b80e7);

@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <el-dialog v-model="loginDialogVisible" title="会员登录" width="50%" align-center style="max-width: 800px;">
+    <el-dialog v-model="loginDialogVisible" title="会员登录" width="50%" align-center style="max-width: 800px;" :before-close="store.loginPageVisible = false">
       <span>
 
           <el-tabs type="card">
@@ -141,7 +141,7 @@
                       />
                     </el-col>
                     <el-col :span="12">
-                     <img style="width: 70%;" :src="verificationImg" @click="getCode"/>
+                     <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -199,22 +199,20 @@
 
             <el-form-item label="用户名" prop="loginName">
               <el-space>
-                <el-input v-model="regForm.loginName" placeholder="输入用户名">
+                <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
                   <template #append>
                     范围在6-12位之间, 由字母和数字组成
                   </template>
                 </el-input>
-              </el-space>
+                </el-space>
             </el-form-item>
             <el-form-item label="密码" prop="password">
-              <el-row>
               <el-space>
-                <el-input v-model="regForm.password" placeholder="输入密码" type="password" show-password>
+                <el-input class="wTip" v-model="regForm.password" placeholder="输入密码" type="password" show-password>
                   <template #append>密码范围在6-12位之间, 由字母和数字组成
                   </template>
                 </el-input>
               </el-space>
-            </el-row>
             <el-row>
 
               <div v-if="regForm.password" class="password-str-div">
@@ -237,30 +235,25 @@
               </div>
             </el-row>
             </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-row style="display:flex; align-items: center;" :gutter="10">
-                <el-col :span="20">
+            <!-- <el-form-item label="密码" prop="password">
+              <el-space>
                   <el-input class="half" v-model="regForm.password" placeholder="输入密码" type="password"
                             show-password/>
-                </el-col>
-                <el-col :span="4">
                   <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
                     <el-icon :size="10">
                       <InfoFilled/>
                     </el-icon>
                   </el-tooltip>
-                </el-col>
-              </el-row>
-            </el-form-item>
+                  </el-space>
+            </el-form-item> -->
             <el-form-item label="确认密码" prop="confirmPwd">
               <el-space>
-                <el-input class="half" v-model="regForm.confirmPwd" placeholder="输入确认密码" type="password"
-                          show-password/>
-                <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
-                  <el-icon :size="10">
-                    <InfoFilled/>
-                  </el-icon>
-                </el-tooltip>
+                <el-input class="half wTip" v-model="regForm.confirmPwd" placeholder="输入确认密码" type="password"
+                          show-password>
+                <template #append>
+                  密码范围在6-12位之间, 由字母和数字组成
+                  </template>
+                  </el-input>
               </el-space>
             </el-form-item>
             <el-row>
@@ -269,30 +262,33 @@
               </el-col>
             </el-row>
             <el-form-item label="电话号码" prop="telephone">
+              <el-space>
               <el-input class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
-              <el-button @click="sendOtp" class="common-btn">
+              <el-button size="small" @click="sendOtp" class="common-btn">
                 发送验证码
               </el-button>
+            </el-space>
             </el-form-item>
             <el-form-item label="手机验证码" prop="smsCode">
+              <el-space>
               <el-input class="half" v-model="regForm.smsCode" placeholder="输入手机验证码"/>
+            </el-space>
             </el-form-item>
             <el-form-item label="邮件" prop="email">
+              <el-space>
               <el-input class="half" v-model="regForm.email" placeholder="输入邮件"/>
+            </el-space>
             </el-form-item>
             <el-form-item label="验证码" prop="captchaCode">
-              <el-row :gutter="10">
-                <el-col :span="17">
+              <el-space>
                   <el-input
                       v-model="regForm.captchaCode"
                       label="验证码"
                       placeholder="验证码"
                   />
-                </el-col>
-                <el-col :span="7">
-                  <img :src="verificationImg" @click="getCode"/>
-                </el-col>
-              </el-row>
+                  
+                  <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
+                </el-space>
             </el-form-item>
           </el-form>
           <el-button color="#3bafda" @click="resetRegForm(registerRef)">重新填写
@@ -329,7 +325,7 @@
                       />
                     </el-col>
                     <el-col :span="12">
-                     <img style="width: 70%;" :src="verificationImg" @click="getCode"/>
+                     <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
                     </el-col>
                   </el-row>
                 </el-form-item><el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
@@ -354,7 +350,7 @@
                       />
                     </el-col>
                     <el-col :span="12">
-                     <img style="width: 70%;" :src="verificationImg" @click="getCode"/>
+                     <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -898,6 +894,20 @@ export default defineComponent({
         store.getBalance();
         store.getMemberInfo();
       }
+      
+      if (store.loginPageVisible) {
+        loginDialogVisible.value = true
+      }
+    });
+    
+    watch(() => store.loginPageVisible, () => {
+      if (store.loginPageVisible) {
+        loginDialogVisible.value = true
+      } else {
+        loginDialogVisible.value = true
+      }
+      // Optionally you can set immediate: true config for the watcher to run on init
+      // }, { immediate: true });
     });
 
     const getReferalCode = () => {
@@ -955,6 +965,7 @@ export default defineComponent({
                 if (store.token) {
                   router.push(jumpUrl);
                   loginDialogVisible.value = false;
+                  store.loginPageVisible = false;
 
                   sessionStorage.removeItem("REFERRAL_CODE");
                 } else {
@@ -997,6 +1008,7 @@ export default defineComponent({
                 if (store.token) {
                   router.push(jumpUrl);
                   loginDialogVisible.value = false;
+                  store.loginPageVisible = false;
 
                   sessionStorage.removeItem("REFERRAL_CODE");
                 } else {
@@ -1155,6 +1167,13 @@ export default defineComponent({
 </script>
 <style lang="scss">
 body {
+  .el-input.wTip .el-input-group__append {
+    background: none;
+    border: 0;
+    padding: 0 8px;
+    font-size: 12px;
+    box-shadow: none;
+  }
   .el-dropdown {
     cursor: pointer;
   }
@@ -1464,6 +1483,7 @@ body {
   .registered-right {
     flex: 2;
     padding: 73px 44px;
+    background: url(../../assets/images/index/reg-bg.jpg)no-repeat center center;
     .el-row {
       width: 100%;
     }
@@ -1512,6 +1532,8 @@ body {
   justify-content: space-evenly;
   gap: 5px;
   height: 50px;
+  width: 215px;
+  color: #ffffff;
 
   span {
     padding: 8px 3px;
@@ -1896,6 +1918,7 @@ body {
     opacity: .5;
     &:hover {
       opacity: 1;
+      color: #000000;
     }      
     }
   }

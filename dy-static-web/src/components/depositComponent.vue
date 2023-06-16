@@ -27,7 +27,7 @@
           label-suffix=":"
         >
           <el-row :gutter="20">
-            <el-col :span="9">
+            <el-col :span="12">
               <el-form-item class="helptxt" label="金额" prop="localAmount">
                 <el-input v-if="amountList.length === 0"
                   v-model="form.localAmount"
@@ -41,7 +41,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="12">
               <div class="account-tip">
                 最低存款: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? 'USDT' : store.currency.label }}
                  <br />
@@ -581,6 +581,11 @@ grid-template-rows: 50px;
 }
 </style>
 <style scoped lang="scss">
+
+.txt-center {
+  margin: 50px auto 20px;
+  text-align: center;
+}
 :deep(.ant-form-item-label > label) {
   color: #ffffff;
 }

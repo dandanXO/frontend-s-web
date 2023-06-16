@@ -94,7 +94,7 @@ const routes = [
         component: () => import("pages/games/sportFrameView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   // {
   //   path: "/sports",
@@ -118,7 +118,7 @@ const routes = [
         component: () => import("pages/games/E-SportView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/share",
@@ -130,7 +130,7 @@ const routes = [
         component: () => import("pages/ShareView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/vip",
@@ -172,7 +172,7 @@ const routes = [
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
     children: [{path: "", component: () => import("pages/AccountPage.vue")}],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records",
@@ -183,7 +183,7 @@ const routes = [
         component: () => import("pages/account/RecordsView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/promotion",
@@ -194,7 +194,7 @@ const routes = [
         component: () => import("pages/account/PromotionView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/changePwd",
@@ -205,7 +205,7 @@ const routes = [
         component: () => import("pages/account/ChangePwdView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/download",
@@ -216,7 +216,7 @@ const routes = [
         component: () => import("pages/account/DownloadView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/invite",
@@ -227,7 +227,7 @@ const routes = [
         component: () => import("pages/account/InviteView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/announcement",
@@ -238,7 +238,7 @@ const routes = [
         component: () => import("pages/account/AnnouncementView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records/deposit",
@@ -249,7 +249,7 @@ const routes = [
         component: () => import("pages/records/DepositRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records/withdraw",
@@ -260,7 +260,7 @@ const routes = [
         component: () => import("pages/records/WithdrawRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records/transfer",
@@ -271,7 +271,7 @@ const routes = [
         component: () => import("pages/records/TransferRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records/change",
@@ -282,7 +282,7 @@ const routes = [
         component: () => import("pages/records/ChangeRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records/betrecord",
@@ -293,7 +293,7 @@ const routes = [
         component: () => import("pages/records/BetRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records/recommend",
@@ -304,7 +304,7 @@ const routes = [
         component: () => import("pages/records/RecommendRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records/help",
@@ -315,7 +315,7 @@ const routes = [
         component: () => import("pages/records/HelpRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/records/bill",
@@ -326,7 +326,7 @@ const routes = [
         component: () => import("pages/records/BillRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/transit",
@@ -337,7 +337,7 @@ const routes = [
         component: () => import("pages/account/TransitRecordView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/personal",
@@ -348,7 +348,7 @@ const routes = [
         component: () => import("pages/account/PersonalView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/withdraw",
@@ -359,7 +359,7 @@ const routes = [
         component: () => import("pages/account/WithdrawBankView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/transfer",
@@ -370,7 +370,7 @@ const routes = [
         component: () => import("pages/finance/TransferView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/mail",
@@ -381,7 +381,7 @@ const routes = [
         component: () => import("pages/account/StationLettersView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/mail/inbox",
@@ -392,7 +392,7 @@ const routes = [
         component: () => import("pages/mail/InboxView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/mail/outbox",
@@ -403,7 +403,7 @@ const routes = [
         component: () => import("pages/mail/OutboxView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/account/mail/write",
@@ -414,7 +414,7 @@ const routes = [
         component: () => import("pages/mail/WriteView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/finance/deposit",
@@ -425,7 +425,7 @@ const routes = [
         component: () => import("pages/finance/DepositView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/display",
@@ -435,7 +435,7 @@ const routes = [
         component: () => import("pages/finance/DisplayView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/depositLoading",
@@ -445,7 +445,7 @@ const routes = [
         component: () => import("components/depositLoading.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   {
     path: "/finance/withdraw",
@@ -456,7 +456,7 @@ const routes = [
         component: () => import("pages/finance/WithdrawView.vue")
       }
     ],
-    meta: {requiresAuth: false}
+    meta: {requiresAuth: true}
   },
   // Always leave this as last one,
   // but you can also remove it
