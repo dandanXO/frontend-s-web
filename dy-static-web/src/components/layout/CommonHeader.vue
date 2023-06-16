@@ -318,7 +318,7 @@
         </el-form-item>
         <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;" @click="sendOtp">发送</el-button>
       </el-form>
-    </el-dialog>"
+    </el-dialog>
 
     <el-dialog v-model="forgetPassDialogVisible" title="忘记密码" width="50%" align-center style="max-width: 800px;">
       <span>
@@ -1232,7 +1232,6 @@ export default defineComponent({
       sendOtp,
       phoneLogin,
       openCaptchaForm,
-      sendLoginOtp,
       loadingBtn
     }
   }
