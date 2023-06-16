@@ -35,7 +35,7 @@
             <div class="vip-list-container mx-auto">
                 <Carousel
                     :itemsToShow="1"
-                    :wrapAround="true"
+                    :wrapAround="false"
                     v-model="selectedVIP"
                 >
                     <Slide v-for="(vip, vipIndex) in vipList" :key="vipIndex">
@@ -58,7 +58,7 @@
                                             }.png`)
                                         "
                                     />
-                                    <div v-html="vip.description" />
+                                    <div class="vip-txt-desc" v-html="vip.description" />
                                 </div>
                             </div>
 
@@ -67,8 +67,8 @@
                                     <div class="vip-promo-title">
                                         每月红包：
                                     </div>
-                                    <div class="vip-promo-txt">8888元</div>
-                                    <div>
+                                    <div class="vip-promo-txt">{{ vip.monthlyBonus ? vip.monthlyBonus + '元' : '无' }}</div>
+                                    <div v-if="vip.monthlyBonus">
                                         <button
                                             class="vip-btn-get vip-receive-btn"
                                             data-bonu-type="month"
@@ -114,8 +114,8 @@
                                 </div>
                                 <div class="vip-detail-promo-box">
                                 <div class="vip-promo-title">每月存送：</div>
-                                <div class="vip-promo-txt" v-html="vip.level5"></div>
-                                <div>
+                                <div class="vip-promo-txt" v-html="vip.cunsong"></div>
+                                <div v-if="vip.birthdayBonus">
                                     <router-link to="/center/deposit">
                                         <el-button class="vip-btn-get vip-deposit-btn">领取</el-button>
                                     </router-link>
@@ -126,7 +126,7 @@
                                         流水要求：
                                     </div>
                                     <div class="vip-promo-txt">
-                                        {{ vip.drawLimit }}
+                                        {{ vip.drawTimes ? vip.drawTimes + '倍' : '-' }} 
                                     </div>
                                 </div>
                             </div>
@@ -436,113 +436,191 @@ export default defineComponent({
         const vipList = ref([
             {
                 level: 1,
-                morethan: 5000,
-                upgrade: 8,
-                birthdayBonus: false,
-                drawTimes: 3,
-                drawLimit: "10万",
-                level5: "每月单笔≥500元,返现15%,最高188元",
                 description: "> 有一笔存款",
+                monthlyBonus: null,
+                birthdayBonus: null,
+                cunsong: `无`,
+                drawTimes: null,
             },
             {
                 level: 2,
-                morethan: 20000,
-                upgrade: 8,
-                birthdayBonus: false,
-                drawTimes: 3,
-                drawLimit: "10万",
-                level5: "每月单笔≥500元,返现15%,最高258元",
-                description:
-                    "升级要求 > 5000≤累积存款<br/>保级要求 > 1888≤一个月内累积存款",
+                description: `升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款`,
+                monthlyBonus: '288',
+                birthdayBonus: '38',
+                cunsong: `存款至少100元可申请每月一次再存20% 最高奖金588元`,
+                drawTimes: "12",
             },
             {
                 level: 3,
-                morethan: 200000,
-                upgrade: 38,
-                birthdayBonus: false,
-                drawTimes: 3,
-                drawLimit: "10万",
-                level5: "每月单笔≥500元,返现15%,最高288元",
-                description:
-                    "升级要求 &gt; 50000≤累积存款<br>保级要求 &gt; 10888≤一个月内累积存款",
+                description: `升级要求 &gt; 50000≤累积存款<br>
+							保级要求 &gt; 10888≤一个月内累积存款`,
+                monthlyBonus: '88',
+                birthdayBonus: '108',
+                cunsong: `存款至少100元可申请每月一次再存20% 最高奖金888元`,
+                drawTimes: "12",
             },
             {
                 level: 4,
-                morethan: 500000,
-                upgrade: 88,
-                birthdayBonus: false,
-                drawTimes: 6,
-                drawLimit: "15万",
-                level5: "每月单笔≥1000元,返现25%,最高388元",
-                description:
-                    "升级要求 &gt; 250000≤累积存款<br>保级要求 &gt; 38888≤一个月内累积存款",
+                description: `升级要求 &gt; 250000≤累积存款<br>
+							保级要求 &gt; 38888≤一个月内累积存款`,
+                monthlyBonus: '188',
+                birthdayBonus: '388',
+                cunsong: `存款至少100元可申请每周一次再存25% 最高奖金888元`,
+                drawTimes: "12",
             },
             {
                 level: 5,
-                morethan: 2000000,
-                upgrade: 288,
-                birthdayBonus: 188,
-                drawTimes: 8,
-                drawLimit: "20万",
-                level5: "每月单笔≥1000元,返现25%,最高588元",
-                description:
-                    "升级要求 &gt; 500000≤累积存款<br>保级要求 &gt; 58888≤一个月内累积存款",
+                description: `升级要求 &gt; 500000≤累积存款<br>
+							保级要求 &gt; 58888≤一个月内累积存款`,
+                monthlyBonus: '388',
+                birthdayBonus: '688',
+                cunsong: `存款至少500元可申请每月一次再存50% 最高奖金1888元`,
+                drawTimes: "15",
             },
             {
                 level: 6,
-                morethan: 5000000,
-                upgrade: 588,
-                birthdayBonus: 388,
-                drawTimes: 8,
-                drawLimit: "20万",
-                level5: "每月单笔≥1000元,返现25%,最高688元",
-                description:
-                    "升级要求 &gt; 2500000≤累积存款<br>保级要求 &gt; 88888≤一个月内累积存款",
+                description: `升级要求 &gt; 2500000≤累积存款<br>
+							保级要求 &gt; 88888≤一个月内累积存款`,
+                monthlyBonus: '888',
+                birthdayBonus: '1088',
+                cunsong: `存款至少500元可申请每周一次再存30% 最高奖金2888元`,
+                drawTimes: "15",
             },
             {
                 level: 7,
-                morethan: 8000000,
-                upgrade: 1888,
-                birthdayBonus: 588,
-                drawTimes: 8,
-                drawLimit: "20万",
-                level5: "每月单笔≥2000元,返现35%,最高888元",
-                description:
-                    "升级要求 &gt; 5000000≤累积存款<br>保级要求 &gt; 188888≤一个月内累积存款",
+                description: `升级要求 &gt; 5000000≤累积存款<br>
+							保级要求 &gt; 188888≤一个月内累积存款`,
+                monthlyBonus: '2888',
+                birthdayBonus: '6888',
+                cunsong: `存款至少500元可申请每周一次再存35% 最高奖金3888元`,
+                drawTimes: "15",
             },
             {
                 level: 8,
-                morethan: 10000000,
-                upgrade: 2888,
-                birthdayBonus: 888,
-                drawTimes: 10,
-                drawLimit: "30万",
-                level5: "每月单笔≥2000元,返现35%,最高1288元",
-                description:
-                    "升级要求 &gt; 8000000≤累积存款<br>保级要求 &gt; 288888≤一个月内累积存款",
+                description: `升级要求 &gt; 8000000≤累积存款<br>
+							保级要求 &gt; 288888≤一个月内累积存款`,
+                monthlyBonus: '5888',
+                birthdayBonus: '8888',
+                cunsong: `存款至少500元可申请每周一次再存40% 最高奖金5888元`,
+                drawTimes: "15",
             },
             {
                 level: 9,
-                morethan: 20000000,
-                upgrade: 5888,
-                birthdayBonus: 1288,
-                drawTimes: 10,
-                drawLimit: "30万",
-                level5: "每月单笔≥2000元,返现35%,最高1888元",
-                description:
-                    "升级要求 &gt; 12000000≤累积存款<br>保级要求 &gt; 588888≤一个月内累积存款",
+                description: `升级要求 &gt; 12000000≤累积存款<br>
+							保级要求 &gt; 588888≤一个月内累积存款`,
+                monthlyBonus: '6888',
+                birthdayBonus: '10888',
+                cunsong: `存款至少500元可申请每周一次再存45% 最高奖金8888元`,
+                drawTimes: "15",
             },
             {
                 level: 10,
-                morethan: 30000000,
-                upgrade: 18888,
-                birthdayBonus: 1588,
-                drawTimes: 12,
-                drawLimit: "30万",
-                level5: "每月单笔≥2000元,返现40%,最高2888元",
-                description:
-                    "升级要求 &gt; 20000000≤累积存款<br>保级要求 &gt; 888888≤一个月内累积存款",
+                description: `升级要求 &gt; 20000000≤累积存款<br>
+							保级要求 &gt; 888888≤一个月内累积存款`,
+                monthlyBonus: '8888',
+                birthdayBonus: '18888',
+                cunsong: `存款至少500元可申请每周一次再存50% 最高奖金12888元`,
+                drawTimes: "15",
             },
+            // {
+            //     level: 2,
+            //     morethan: 20000,
+            //     upgrade: 8,
+            //     birthdayBonus: false,
+            //     drawTimes: 3,
+            //     drawLimit: "10万",
+            //     level5: "每月单笔≥500元,返现15%,最高258元",
+            //     description:
+            //         "升级要求 > 5000≤累积存款<br/>保级要求 > 1888≤一个月内累积存款",
+            // },
+            // {
+            //     level: 3,
+            //     morethan: 200000,
+            //     upgrade: 38,
+            //     birthdayBonus: false,
+            //     drawTimes: 3,
+            //     drawLimit: "10万",
+            //     level5: "每月单笔≥500元,返现15%,最高288元",
+            //     description:
+            //         "升级要求 &gt; 50000≤累积存款<br>保级要求 &gt; 10888≤一个月内累积存款",
+            // },
+            // {
+            //     level: 4,
+            //     morethan: 500000,
+            //     upgrade: 88,
+            //     birthdayBonus: false,
+            //     drawTimes: 6,
+            //     drawLimit: "15万",
+            //     level5: "每月单笔≥1000元,返现25%,最高388元",
+            //     description:
+            //         "升级要求 &gt; 250000≤累积存款<br>保级要求 &gt; 38888≤一个月内累积存款",
+            // },
+            // {
+            //     level: 5,
+            //     morethan: 2000000,
+            //     upgrade: 288,
+            //     birthdayBonus: 188,
+            //     drawTimes: 8,
+            //     drawLimit: "20万",
+            //     level5: "每月单笔≥1000元,返现25%,最高588元",
+            //     description:
+            //         "升级要求 &gt; 500000≤累积存款<br>保级要求 &gt; 58888≤一个月内累积存款",
+            // },
+            // {
+            //     level: 6,
+            //     morethan: 5000000,
+            //     upgrade: 588,
+            //     birthdayBonus: 388,
+            //     drawTimes: 8,
+            //     drawLimit: "20万",
+            //     level5: "每月单笔≥1000元,返现25%,最高688元",
+            //     description:
+            //         "升级要求 &gt; 2500000≤累积存款<br>保级要求 &gt; 88888≤一个月内累积存款",
+            // },
+            // {
+            //     level: 7,
+            //     morethan: 8000000,
+            //     upgrade: 1888,
+            //     birthdayBonus: 588,
+            //     drawTimes: 8,
+            //     drawLimit: "20万",
+            //     level5: "每月单笔≥2000元,返现35%,最高888元",
+            //     description:
+            //         "升级要求 &gt; 5000000≤累积存款<br>保级要求 &gt; 188888≤一个月内累积存款",
+            // },
+            // {
+            //     level: 8,
+            //     morethan: 10000000,
+            //     upgrade: 2888,
+            //     birthdayBonus: 888,
+            //     drawTimes: 10,
+            //     drawLimit: "30万",
+            //     level5: "每月单笔≥2000元,返现35%,最高1288元",
+            //     description:
+            //         "升级要求 &gt; 8000000≤累积存款<br>保级要求 &gt; 288888≤一个月内累积存款",
+            // },
+            // {
+            //     level: 9,
+            //     morethan: 20000000,
+            //     upgrade: 5888,
+            //     birthdayBonus: 1288,
+            //     drawTimes: 10,
+            //     drawLimit: "30万",
+            //     level5: "每月单笔≥2000元,返现35%,最高1888元",
+            //     description:
+            //         "升级要求 &gt; 12000000≤累积存款<br>保级要求 &gt; 588888≤一个月内累积存款",
+            // },
+            // {
+            //     level: 10,
+            //     morethan: 30000000,
+            //     upgrade: 18888,
+            //     birthdayBonus: 1588,
+            //     drawTimes: 12,
+            //     drawLimit: "30万",
+            //     level5: "每月单笔≥2000元,返现40%,最高2888元",
+            //     description:
+            //         "升级要求 &gt; 20000000≤累积存款<br>保级要求 &gt; 888888≤一个月内累积存款",
+            // },
         ]);
 
         // const fireCommonError = () => {
@@ -771,6 +849,9 @@ export default defineComponent({
     color: #73561f;
     font-size: 14px;
     flex: 1 0 auto;
+    .vip-txt-desc {
+        text-align: left;
+    }
 }
 .vip-container .vip-list-container .vip-detail-left-box .vip-btn-ljsq {
     width: 144px;
@@ -796,7 +877,7 @@ export default defineComponent({
 }
 .vip-container .vip-list-container .vip-detail-right-box .vip-btn-get {
     cursor: pointer;
-    width: 108px;
+    width: 100px;
     height: 36px;
     font-size: 14px;
     border-radius: 0;
@@ -820,6 +901,8 @@ export default defineComponent({
     align-items: center;
     text-align: center;
     margin-top: 5px;
+    justify-content: flex-start;
+    gap: 5px;
 }
 .vip-container
     .vip-list-container
