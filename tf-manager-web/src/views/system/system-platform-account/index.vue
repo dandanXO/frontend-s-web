@@ -6,7 +6,7 @@
           clearable
           v-model="request.platformId"
           size="small"
-          :placeholder="t('fields.platform')"
+          :placeholder="t('fields.platformCode')"
           class="filter-item"
           style="width: 200px; margin-left: 5px"
           @focus="loadPlatforms"
@@ -14,7 +14,7 @@
           <el-option
             v-for="item in platforms.list"
             :key="item.id"
-            :label="item.name"
+            :label="item.code"
             :value="item.id"
           />
         </el-select>
@@ -62,7 +62,7 @@
         label-width="150px"
       >
         <el-row>
-          <el-form-item :label="t('fields.platformName')" prop="platformId">
+          <el-form-item :label="t('fields.platformCode')" prop="platformId">
             <el-col>
               <el-select
                 v-model="form.platformId"
@@ -75,7 +75,7 @@
                 <el-option
                   v-for="item in platforms.list"
                   :key="item.id"
-                  :label="item.name"
+                  :label="item.code"
                   :value="item.id"
                 />
               </el-select>
