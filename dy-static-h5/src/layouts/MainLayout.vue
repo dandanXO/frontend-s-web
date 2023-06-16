@@ -8,7 +8,7 @@
       >
         <div class="logo">
           <router-link to="/"
-          ><img src="../assets/home/logo.png"
+            ><img src="../assets/home/logo.png"
           /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
@@ -26,13 +26,13 @@
           flat
         >
           <span style="font-size: 10px; margin-left: 5px; display: block"
-          >Deposit</span
+            >Deposit</span
           >
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage ? '/' + prevPage : '/'">
-          <RiArrowDropLeftLine/>
+          <RiArrowDropLeftLine />
         </router-link>
         {{ pageName }}
         <q-btn
@@ -115,7 +115,7 @@
     </q-scroll-area> -->
 
     <q-page-container>
-      <router-view/>
+      <router-view />
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs
@@ -126,7 +126,7 @@
         align="justify"
       >
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/homeBar.png"/>
+          <img class="inactive" src="../assets/images/index/menu/homeBar.png" />
           <img
             class="hover"
             src="../assets/images/index/menu/homeBar_active.png"
@@ -156,7 +156,7 @@
           客服
         </q-route-tab>
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/meBar.png"/>
+          <img class="inactive" src="../assets/images/index/menu/meBar.png" />
           <img
             class="hover"
             src="../assets/images/index/menu/meBar_active.png"
@@ -169,19 +169,19 @@
 </template>
 
 <script>
-import {defineComponent, onMounted, ref, watch} from "vue";
-import {userStore} from "stores/index";
-import {useUI} from "stores/ui";
-import {useRoute, useRouter} from "vue-router";
+import { defineComponent, onMounted, ref, watch } from "vue";
+import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
+import { useRoute, useRouter } from "vue-router";
 // import EssentialLink from "components/EssentialLink.vue";
 
-import {RiArrowDropLeftLine} from "vue-remix-icons";
+import { RiArrowDropLeftLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    RiArrowDropLeftLine,
+    RiArrowDropLeftLine
   },
 
   setup() {
@@ -388,64 +388,64 @@ export default defineComponent({
     const platformsList = ref([
       {
         id: "20",
-        code: "PTDY",
-        icon: "pt",
+        code: "PT",
+        icon: "pt"
       },
       {
         id: "37",
         code: "SW",
-        icon: "sw",
+        icon: "sw"
       },
       {
         id: "46",
         code: "PP",
-        icon: "pp",
+        icon: "pp"
       },
       {
         id: "38",
-        code: "PGDY",
-        icon: "pg",
+        code: "PG",
+        icon: "pg"
       },
       {
         id: "54",
         code: "MG_PLUS",
-        icon: "mg",
+        icon: "mg"
       },
       {
         id: "42",
         code: "CQ",
-        icon: "cq",
+        icon: "cq"
       },
       {
         id: "28",
         code: "SG",
-        icon: "sg",
+        icon: "sg"
       },
       {
         id: "27",
         code: "TTG",
-        icon: "ttg",
+        icon: "ttg"
       },
       {
         id: "39",
         code: "PNG",
-        icon: "png",
+        icon: "png"
       },
       {
         id: "45",
         code: "AE",
-        icon: "ae",
+        icon: "ae"
       },
       {
         id: "52",
-        code: "BBINDY",
-        icon: "bbin",
+        code: "BBIN",
+        icon: "bbin"
       },
       {
         id: "64",
         code: "JDB",
-        icon: "jdb",
-      },
+        icon: "jdb"
+      }
     ]);
 
     onMounted(() => {
@@ -466,9 +466,9 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform,
+      changePlatform
     };
-  },
+  }
 });
 </script>
 

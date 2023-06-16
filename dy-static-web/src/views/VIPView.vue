@@ -162,104 +162,117 @@
                 >
                     <thead>
                         <tr>
-                            <th>VIP等级</th>
-                            <th>存款</th>
-                            <th>晋升奖金(1倍)</th>
-                            <th>生日奖金(1倍)</th>
-                            <th>每月优惠</th>
+                            <th>等级</th>
+                            <th>升级要求/元</th>
+                            <th>保级要求</th>
+                            <th style="text-align: center;">生日礼金<br/>(1倍)</th>
+                            <th style="text-align: center;">每月红包<br/>(3倍)</th>
+                            <th width="280">每月优惠</th>
                             <th>优惠流水要求</th>
+                            <th>平台限制</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr>
-                            <td>VIP 1</td>
-                            <td>5000</td>
-                            <td>8</td>
-                            <td>0</td>
-                            <td>每月单笔≥500元,返现15%, 最高188元</td>
-                            <td>12倍</td>
+                            <td>VIP1</td>
+                            <td>有一笔存款</td>
+                            <td>无</td>
+                            <td>无</td>
+                            <td>无</td>
+                            <td>无</td>
+                            <td>无</td>
+                            <td>无</td>
                         </tr>
-
                         <tr>
                             <td>VIP2</td>
-                            <td>20000</td>
-                            <td>8</td>
-                            <td>0</td>
-                            <td>每月单笔≥500元,返现15%, 最高258元</td>
-                            <td>12倍</td>
+                            <td>5000≤累积存款</td>
+                            <td>1888≤一个月内累积存款</td>
+                            <td>38元</td>
+                            <td>28元</td>
+                            <td>存款至少100元可申请每月一次再存20% 最高奖金588元</td>
+                            <td>12</td>
+                            <td>电竞/体育</td>
                         </tr>
-
                         <tr>
                             <td>VIP3</td>
-                            <td>200000</td>
-                            <td>38</td>
-                            <td>0</td>
-                            <td>每月单笔≥500元,返现15%, 最高288元</td>
-                            <td>12倍</td>
+                            <td>50000≤累积存款</td>
+                            <td>10888≤一个月内累积存款</td>
+                            <td>108元</td>
+                            <td>88元</td>
+                            <td>存款至少100元可申请每月一次再存20%最高奖金888元</td>
+                            <td>12</td>
+                            <td>所有（彩票除外）</td>
                         </tr>
-
                         <tr>
                             <td>VIP4</td>
-                            <td>500000</td>
-                            <td>88</td>
-                            <td>0</td>
-                            <td>每月单笔≥1000元,返现25%, 最高388元</td>
-                            <td>15倍</td>
+                            <td>250000≤累积存款</td>
+                            <td>38888≤一个月内累积存款</td>
+                            <td>388元</td>
+                            <td>188元</td>
+                            <td>存款至少100元可申请每周一次再存25% 最高奖金888元</td>
+                            <td>12</td>
+                            <td>电竞/体育</td>
                         </tr>
-
                         <tr>
                             <td>VIP5</td>
-                            <td>2000000</td>
-                            <td>288</td>
-                            <td>188</td>
-                            <td>每月单笔≥1000元,返现25%, 最高588元</td>
-                            <td>15倍</td>
+                            <td>500000≤累积存款</td>
+                            <td>58888≤一个月内累积存款</td>
+                            <td>688元</td>
+                            <td>388元</td>
+                            <td>存款至少500元可申请每月一次再存50% 最高奖金1888元</td>
+                            <td>15</td>
+                            <td>所有（彩票除外）</td>
                         </tr>
-
                         <tr>
                             <td>VIP6</td>
-                            <td>5000000</td>
-                            <td>588</td>
-                            <td>388</td>
-                            <td>每月单笔≥1000元,返现25%, 最高688元</td>
-                            <td>18倍</td>
+                            <td>2500000≤累积存款</td>
+                            <td>88888≤一个月内累积存款</td>
+                            <td>1088元</td>
+                            <td>888元</td>
+                            <td>存款至少500元可申请每周一次再存30% 最高奖金2888元</td>
+                            <td>15</td>
+                            <td>所有（彩票除外）</td>
                         </tr>
-
                         <tr>
                             <td>VIP7</td>
-                            <td>8000000</td>
-                            <td>1888</td>
-                            <td>588</td>
-                            <td>每月单笔≥2000元,返现35%, 最高888元</td>
-                            <td>15倍</td>
+                            <td>5000000≤累积存款</td>
+                            <td>188888≤一个月内累积存款</td>
+                            <td>6888元</td>
+                            <td>2888元</td>
+                            <td>存款至少500元可申请每周一次再存35% 最高奖金3888元</td>
+                            <td>15</td>
+                            <td>所有（彩票除外）</td>
                         </tr>
-
                         <tr>
                             <td>VIP8</td>
-                            <td>10000000</td>
-                            <td>2888</td>
-                            <td>888</td>
-                            <td>每月单笔≥2000元,返现35%, 最高1288元</td>
-                            <td>18倍</td>
+                            <td>8000000≤累积存款</td>
+                            <td>288888≤一个月内累积存款</td>
+                            <td>8888元</td>
+                            <td>5888元</td>
+                            <td>存款至少500元可申请每周一次再存40% 最高奖金5888元</td>
+                            <td>15</td>
+                            <td>所有（彩票除外）</td>
                         </tr>
-
                         <tr>
                             <td>VIP9</td>
-                            <td>20000000</td>
-                            <td>5888</td>
-                            <td>1288</td>
-                            <td>每月单笔≥2000元,返现35%, 最高1888元</td>
-                            <td>18倍</td>
+                            <td>12000000≤累积存款</td>
+                            <td>588888≤一个月内累积存款</td>
+                            <td>10888元</td>
+                            <td>6888元</td>
+                            <td>存款至少500元可申请每周一次再存45% 最高奖金8888元</td>
+                            <td>15</td>
+                            <td>所有（彩票除外）</td>
                         </tr>
-
                         <tr>
                             <td>VIP10</td>
-                            <td>30000000</td>
-                            <td>18888</td>
-                            <td>1588</td>
-                            <td>每月单笔≥2000元,返现40%, 最高2888元</td>
-                            <td>18倍</td>
+                            <td>20000000≤累积存款</td>
+                            <td>888888≤一个月内累积存款</td>
+                            <td>18888元</td>
+                            <td>8888元</td>
+                            <td>存款至少500元可申请每周一次再存50% 最高奖金12888元</td>
+                            <td>15</td>
+                            <td>所有（彩票除外）</td>
                         </tr>
                     </tbody>
                 </table>
@@ -269,8 +282,7 @@
                 <table border="0" cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>VIP等级</th>
-                            <th>VIP0</th>
+                            <th>等级</th>
                             <th>VIP1</th>
                             <th>VIP2</th>
                             <th>VIP3</th>
@@ -285,88 +297,76 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>体育返水</td>
-                            <td>0.40%</td>
-                            <td>0.40%</td>
-                            <td>0.40%</td>
-                            <td>0.45%</td>
-                            <td>0.50%</td>
-                            <td>0.55%</td>
-                            <td>0.60%</td>
-                            <td>0.65%</td>
-                            <td>0.70%</td>
-                            <td>0.80%</td>
-                            <td>1.00%</td>
-                        </tr>
-                        <tr>
                             <td>电竞返水</td>
+                            <td>0.40%</td>
+                            <td>0.40%</td>
                             <td>0.45%</td>
                             <td>0.45%</td>
                             <td>0.50%</td>
-                            <td>0.50%</td>
                             <td>0.55%</td>
-                            <td>0.60%</td>
                             <td>0.65%</td>
-                            <td>0.70%</td>
-                            <td>0.75%</td>
-                            <td>0.80%</td>
-                            <td>1.00%</td>
-                        </tr>
-                        <tr>
-                            <td>真人返水</td>
-                            <td>0.50%</td>
-                            <td>0.50%</td>
-                            <td>0.50%</td>
-                            <td>0.50%</td>
-                            <td>0.55%</td>
-                            <td>0.60%</td>
-                            <td>0.65%</td>
-                            <td>0.70%</td>
                             <td>0.80%</td>
                             <td>0.90%</td>
                             <td>1.00%</td>
                         </tr>
                         <tr>
-                            <td>棋牌返水</td>
+                            <td>体育返水</td>
                             <td>0.40%</td>
+                            <td>0.40%</td>
+                            <td>0.45%</td>
                             <td>0.45%</td>
                             <td>0.50%</td>
                             <td>0.55%</td>
-                            <td>0.60%</td>
                             <td>0.65%</td>
-                            <td>0.70%</td>
-                            <td>0.75%</td>
+                            <td>0.80%</td>
+                            <td>0.90%</td>
+                            <td>1.00%</td>
+                        </tr>
+                        <tr>
+                            <td>真人返水</td>
+                            <td>0.40%</td>
+                            <td>0.40%</td>
+                            <td>0.45%</td>
+                            <td>0.45%</td>
+                            <td>0.50%</td>
+                            <td>0.55%</td>
+                            <td>0.65%</td>
                             <td>0.80%</td>
                             <td>0.90%</td>
                             <td>1.00%</td>
                         </tr>
                         <tr>
                             <td>电子返水</td>
-                            <td>0.45%</td>
-                            <td>0.45%</td>
                             <td>0.50%</td>
-                            <td>0.55%</td>
                             <td>0.60%</td>
-                            <td>0.65%</td>
                             <td>0.70%</td>
                             <td>0.80%</td>
                             <td>0.90%</td>
+                            <td>1.20%</td>
+                            <td>1.50%</td>
+                            <td>1.80%</td>
+                            <td>1.90%</td>
+                            <td>2.00%</td>
+                        </tr>
+                        <tr>
+                            <td>棋牌返水</td>
+                            <td>0.50%</td>
+                            <td>0.60%</td>
+                            <td>0.70%</td>
+                            <td>0.75%</td>
+                            <td>0.80%</td>
+                            <td>0.85%</td>
+                            <td>0.90%</td>
+                            <td>0.95%</td>
                             <td>1.00%</td>
                             <td>1.20%</td>
                         </tr>
                         <tr>
                             <td>返水上限</td>
-                            <td>8888</td>
-                            <td>12888</td>
-                            <td>15888</td>
-                            <td>16888</td>
-                            <td>18888</td>
-                            <td>28888</td>
-                            <td>38888</td>
-                            <td>58888</td>
-                            <td>88888</td>
-                            <td>128888</td>
-                            <td>188888</td>
+                            <td colspan="3" style="text-align: center;">18888元</td>
+                            <td colspan="3" style="text-align: center;">38888元</td>
+                            <td colspan="2" style="text-align: center;">58888元</td>
+                            <td colspan="2" style="text-align: center;">88888元</td>
                         </tr>
                     </tbody>
                 </table>
@@ -722,7 +722,7 @@ export default defineComponent({
     background-position-y: 0;
 }
 .vip-container .vip-list-container {
-    width: 1244px;
+    width: $maxwidth;
     border-style: solid;
     border-width: 4px;
     border-image-source: linear-gradient(237deg, #6f8fec 0, #81adfe 100%);
@@ -1043,7 +1043,7 @@ export default defineComponent({
 .level_img > div > p,
 .level_text > span {
     font-size: 16px;
-    color: #959dab;
+    color: #6c757d;
     text-align: center;
 }
 .level-active > img {
@@ -1169,13 +1169,13 @@ export default defineComponent({
 }
 .level_card .card_content > ul > li > p:nth-child(1) {
     font-size: 14px;
-    color: #959dab;
+    color: #6c757d;
     letter-spacing: 1px;
     font-weight: 600;
 }
 .level_card .card_content > ul > li > p:nth-child(2) {
     font-size: 10px;
-    color: #959dab;
+    color: #6c757d;
 }
 .level_card .card_content > .slogan {
     margin-top: 20px;
@@ -1338,23 +1338,25 @@ table > thead {
 }
 table {
     width: 100%;
+    text-align: left;
 }
 .vip_table th {
-    height: 50px;
-    line-height: 50px;
+    height: 20px;
+    line-height: 20px;
     border: 1px solid #bac8dc;
-    font-size: 12px;
+    font-size: 14px;
     color: #fff;
     background-color: #7197ff;
-    height: 60px;
+    padding: 10px;
 }
 table td {
     height: 60px;
-    line-height: 60px;
+    line-height: 25px;
     font-size: 14px;
     border: 1px solid #bac8dc;
-    color: #959dab;
-    text-align: center;
+    color: #6c757d;
+    text-align: left;
+    padding: 5px 10px;
 }
 .td_button > span,
 .td_button_blue > span {
@@ -1389,7 +1391,7 @@ table td {
     text-align: center;
     background-color: #333b44;
     border-radius: 33px;
-    color: #959dab;
+    color: #6c757d;
     cursor: pointer;
 }
 .blue,
@@ -1429,7 +1431,7 @@ table td {
     width: 400px;
     height: 54px;
     line-height: 54px;
-    color: #959dab;
+    color: #6c757d;
     font-size: 14px;
     text-align: center;
     border: none;

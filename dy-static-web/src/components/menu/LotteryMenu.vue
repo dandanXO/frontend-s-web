@@ -35,12 +35,12 @@ export default defineComponent({
                 label: "TCG彩票",
                 slogan: "TCG",
             },
-            // {
-            //     code: "BBIN",
-            //     icon: "bbin",
-            //     label: "BBIN彩票",
-            //     slogan: "BBIN",
-            // },
+            {
+                code: "BBINDY",
+                icon: "bbin",
+                label: "BBIN彩票",
+                slogan: "BBIN",
+            },
         ],
     }),
 });
