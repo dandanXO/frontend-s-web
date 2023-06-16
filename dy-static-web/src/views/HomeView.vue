@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <el-carousel height="25vw" arrow="always">
-      <el-carousel-item v-for="banner in banners" :key="item">
-        <router-link :to="`/promotion${banner.redirectUrl}`">
+    <el-carousel class="banner-slider" height="25vw" arrow="always">
+      <el-carousel-item class="banner-container" v-for="banner in banners" :key="item">
+        <router-link :to="`/promotion?name=${banner.redirectUrl}`">
             <div
               class="promo-bg isDesktop"
               :style="
@@ -634,7 +634,7 @@ export default defineComponent({
     GameModal
 },
   setup() {
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/'
     const gameMenu = ref(null);
     const banners = ref([
       {
@@ -662,13 +662,34 @@ export default defineComponent({
       banners,
       isImportantAnnoucementModal,
       gameMenu,
-      openGame
+      openGame,
+      imgURL
     };
   },
 });
 </script>
 
 <style lang="scss">
+.home {
+  .banner-slider {
+    width: 100%;
+    .banner-container {
+      .promo-bg {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        &.isDesktop {
+          display: block;
+          height: 100%;
+        }
+        &.isMobile {
+          display: none;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
 .demonstration {
   color: var(--el-text-color-secondary);
 }
