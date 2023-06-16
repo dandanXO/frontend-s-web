@@ -2,7 +2,7 @@
 <template>
   <div>
     <div className="menu-title-container">
-      <span className="menu-title">投注记录</span>
+      <span className="menu-title">交易记录</span>
     </div>
     <div class="account-content transit">
       <el-tabs v-model="recordActive" @tab-click="searchRecord" type="card">
@@ -61,7 +61,7 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'PENDING'">
                     <div style="display: flex; align-items: center">
-                      <el-button
+                      <el-button size="small"
                           class="common-btn"
                           @click="openReminder(scope.row)"
                       >催单
@@ -233,7 +233,7 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'SETP_1'">
                     <div style="display: flex; align-items: center">
-                      <el-button
+                      <el-button size="small"
                           class="common-btn"
                           @click="openReminder(scope.row)"
                       >催单

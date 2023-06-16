@@ -16,7 +16,7 @@
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="login" class="form-container">
-        <q-form @submit="onSubmit">
+        <q-form ref="loginFormRef" @submit="onSubmit">
           <div v-if="!loginType" class="q-gutter-y-md">
             <q-input
               standout
@@ -153,7 +153,7 @@
       </q-tab-panel>
 
       <q-tab-panel name="register" class="form-container">
-        <RegisterPage />
+        <RegisterPage @changeTab="changeLoginTab" />
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -163,7 +163,7 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import RegisterPage from "../pages/RegisterPage.vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -185,6 +185,7 @@ export default defineComponent({
       codeId: ""
     });
     const $q = useQuasar();
+    const loginFormRef = ref();
     const loginNameRef = ref();
     const passwordRef = ref();
     const verificationRef = ref();
@@ -248,6 +249,8 @@ export default defineComponent({
               $q.loading.hide();
               sessionStorage.removeItem("REFERRAL_CODE");
 
+              loginFormRef.value.reset();
+
               if (store.hasToken()) {
                 const jumpUrl = route.query.redirect
                   ? route.query.redirect
@@ -268,6 +271,11 @@ export default defineComponent({
         }
       })();
     };
+
+    const changeLoginTab = () => {
+      tab.value = "login";
+    };
+
     onMounted(() => {
       getCode();
     });
@@ -278,13 +286,15 @@ export default defineComponent({
       verificationRef,
       verificationImg,
       loginForm,
+      loginFormRef,
       onSubmit,
       store,
       isPwd: ref(true),
       tab,
       loginType,
       getCode,
-      isCheckRmb
+      isCheckRmb,
+      changeLoginTab
     };
   }
 });

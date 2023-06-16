@@ -29,7 +29,7 @@
         (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
         (val) =>
           (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) ||
-          '密码安全级别必须至少为好',
+          '密码安全级别必须至少为好'
       ]"
     >
       <template v-slot:prepend>
@@ -49,14 +49,14 @@
         :class="{
           'weak-pwd': pwdStrength == 'weak',
           'normal-pwd': pwdStrength == 'normal',
-          'strong-pwd': pwdStrength == 'strong',
+          'strong-pwd': pwdStrength == 'strong'
         }"
         >弱</span
       >
       <span
         :class="{
           'normal-pwd': pwdStrength == 'normal',
-          'strong-pwd': pwdStrength == 'strong',
+          'strong-pwd': pwdStrength == 'strong'
         }"
         >好</span
       >
@@ -75,7 +75,7 @@
       :rules="[
         (val) => (val && val.length > 0) || '请输入确认密码',
         (val) => val === regForm.password || '密码不一样',
-        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
+        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
       ]"
     >
       <template v-slot:prepend>
@@ -117,7 +117,7 @@
       lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入电子邮件',
-        isValidEmail,
+        isValidEmail
       ]"
     >
       <template v-slot:prepend>
@@ -167,7 +167,8 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export default defineComponent({
   name: "RegisterPage",
-  setup() {
+  emits: ["changeTab"],
+  setup(props, context) {
     onMounted(() => {
       getCode();
       getReferralCode();
@@ -181,7 +182,7 @@ export default defineComponent({
       email: "",
       captchaCode: "",
       regHost: location.hostname,
-      codeId: "",
+      codeId: ""
     });
     const getCode = () => {
       api
@@ -226,7 +227,7 @@ export default defineComponent({
       emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
-        message: "注册中",
+        message: "注册中"
       });
       if (
         loginNameRef.value.hasError ||
@@ -265,12 +266,12 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
-                router.push("/login");
+                context.emit("changeTab");
                 $q.notify({
                   color: "positive",
                   position: "top",
                   message: "注册成功",
-                  icon: "check_circle_outline",
+                  icon: "check_circle_outline"
                 });
                 sessionStorage.removeItem("REFERRAL_CODE");
               } else {
@@ -278,7 +279,7 @@ export default defineComponent({
                   color: "negative",
                   position: "top",
                   message: res.message,
-                  icon: "report_problem",
+                  icon: "report_problem"
                 });
               }
               $q.loading.hide();
@@ -342,9 +343,9 @@ export default defineComponent({
       isPwd: ref(true),
       isCfmPwd: ref(true),
       getCode,
-      pwdStrength,
+      pwdStrength
     };
-  },
+  }
 });
 
 function charType(num) {

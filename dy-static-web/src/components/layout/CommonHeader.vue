@@ -145,7 +145,7 @@
                     </el-col>
                   </el-row>
                 </el-form-item>
-                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                <el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                            @click="submitLogin">登录</el-button>
               </el-form>
             </el-tab-pane>
@@ -166,11 +166,11 @@
                       />
                     </el-col>
                     <el-col :span="12">
-                      <el-button @click="sendLoginOtp" size="small" color="#3bafda" >发送验证码</el-button>
+                      <el-button @click="openCaptchaForm('LOGIN')" size="small" color="#3bafda" >发送验证码</el-button>
                     </el-col>
                   </el-row>
                 </el-form-item>
-                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                <el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                            @click="phoneLogin">登录</el-button>
               </el-form></el-tab-pane>
           </el-tabs>
@@ -264,7 +264,7 @@
             <el-form-item label="电话号码" prop="telephone">
               <el-space>
               <el-input class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
-              <el-button size="small" @click="sendOtp" class="common-btn">
+              <el-button size="small" @click="openCaptchaForm('REGISTER')" class="common-btn">
                 发送验证码
               </el-button>
             </el-space>
@@ -299,6 +299,26 @@
       </div>
     </el-dialog>
 
+    <el-dialog v-model="captchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px;">
+      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
+        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+          <el-row :gutter="10" style="justify-content: center; align-items: center;">
+            <el-col :span="12">
+              <el-input
+                  v-model="captchaForm.captchaCode"
+                  label="验证码"
+                  placeholder="验证码"
+                  @keyup.enter="sendOtp"
+              />
+            </el-col>
+            <el-col :span="12">
+             <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
+            </el-col>
+          </el-row>
+        </el-form-item>
+        <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;" @click="sendOtp">发送</el-button>
+      </el-form>
+    </el-dialog>
 
     <el-dialog v-model="forgetPassDialogVisible" title="忘记密码" width="50%" align-center style="max-width: 800px;">
       <span>
@@ -328,7 +348,7 @@
                      <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
                     </el-col>
                   </el-row>
-                </el-form-item><el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                </el-form-item><el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                                           @click="submitLogin">登录</el-button>
               </el-form>
             </el-tab-pane>
@@ -354,7 +374,7 @@
                     </el-col>
                   </el-row>
                 </el-form-item>
-                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                <el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                            @click="submitLogin">登录</el-button>
               </el-form>
             </el-tab-pane>
@@ -419,7 +439,7 @@ import PromotionMenu from '@/components/menu/PromotionMenu.vue'
 import AppMenu from '@/components/menu/AppMenu.vue'
 import 'vue3-marquee/dist/style.css'
 import {useElementSize} from '@vueuse/core'
-import {InfoFilled, ArrowDown, Refresh} from '@element-plus/icons-vue'
+import {ArrowDown, Refresh} from '@element-plus/icons-vue'
 import {storeToRefs} from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -438,7 +458,6 @@ export default defineComponent({
     FishingMenu,
     PromotionMenu,
     AppMenu,
-    InfoFilled,
     RiVolumeUpFill,
     ArrowDown,
     Refresh,
@@ -475,6 +494,7 @@ export default defineComponent({
     ],
   }),
   setup() {
+    const loadingBtn = ref(false);
     const store = userStore();
     const {token} = storeToRefs(store);
     const router = useRouter();
@@ -483,6 +503,7 @@ export default defineComponent({
     const registerDialogVisible = ref(false)
     const forgetPassDialogVisible = ref(false)
     const noticeDialogVisible = ref(false)
+    const captchaDialogVisible = ref(false)
     const el = ref(null);
     const scroll = ref(0);
     const selectedMenu = ref(false);
@@ -580,6 +601,7 @@ export default defineComponent({
     })
     const loginRef = ref([])
     const mobileLoginRef = ref([])
+    const captchaRef = ref([])
 
     const loginRules = {
       loginName: [
@@ -638,6 +660,28 @@ export default defineComponent({
         }
       ]
     };
+
+    const captchaForm = reactive({
+      type: "",
+      captchaCode: "",
+      codeId: ""
+    });
+    const captchaRules = {
+      captchaCode: [
+        {
+          required: true,
+          message: "请输入验证码",
+          trigger: "blur"
+        },
+        {
+          min: 4,
+          max: 4,
+          message: "长度为 4",
+          trigger: "blur"
+        }
+      ]
+    };
+
     const regForm = reactive({
       loginName: "",
       password: "",
@@ -811,35 +855,54 @@ export default defineComponent({
     }
 
     const sendOtp = async() => {
-      const smsDetail = {
-        telephone: regForm.telephone
+      if (captchaForm.type === 'REGISTER') {
+        const smsDetail = {
+          telephone: regForm.telephone,
+          captchaCode: captchaForm.captchaCode,
+          codeId: captchaForm.codeId
+        }
+        sendSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              regForm.smsCodeId = response.data.codeId;
+              ElMessage({
+                type: 'success',
+                message: '发送手机验证码成功'
+              });
+              captchaDialogVisible.value = false;
+              getCode();
+            } else {
+              getCode();
+            }
+          })
+      } else if (captchaForm.type === 'LOGIN') {
+        const smsDetail = {
+          telephone: loginForm.phoneNumber,
+          captchaCode: captchaForm.captchaCode,
+          codeId: captchaForm.codeId
+        }
+        sendSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              loginForm.smsCodeId = response.data.codeId;
+              ElMessage({
+                type: 'success',
+                message: '发送手机验证码成功'
+              });
+              captchaDialogVisible.value = false;
+              getCode();
+            } else {
+              getCode();
+            }
+          })
       }
-      sendSms(smsDetail)
-        .then((response) => {
-          if (response.code == 0) {
-            regForm.smsCodeId = response.data.codeId;
-            ElMessage({
-              type: 'success',
-              message: '发送手机验证码成功'
-            });
-          }
-        })
     };
 
-    const sendLoginOtp = async() => {
-      const smsDetail = {
-        telephone: loginForm.phoneNumber
-      }
-      sendSms(smsDetail)
-        .then((response) => {
-          if (response.code == 0) {
-            loginForm.codeId = response.data.codeId;
-            ElMessage({
-              type: 'success',
-              message: '发送手机验证码成功'
-            });
-          }
-        })
+    const openCaptchaForm = (type) => {
+      captchaForm.captchaCode = "";
+      captchaForm.type = type;
+      captchaDialogVisible.value = true;
+      getCode();
     };
 
     const submitRegisterForm = async (elForm) => {
@@ -934,12 +997,14 @@ export default defineComponent({
           verificationImg.value = "data:image/png;base64," + res.data.img;
           loginForm.codeId = res.data.id;
           regForm.codeId = res.data.id;
+          captchaForm.codeId = res.data.id;
         }
       })
     };
     const verificationImg = ref("");
 
     const submitLogin = () => {
+      loadingBtn.value = true
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
@@ -961,6 +1026,7 @@ export default defineComponent({
                 codeId: loginForm.codeId,
               })
               .then(() => {
+                loadingBtn.value = false
                 const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                 if (store.token) {
                   router.push(jumpUrl);
@@ -975,9 +1041,10 @@ export default defineComponent({
                   getCode();
                 }
               }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-            getCode();
+                loadingBtn.value = false
+                // message.error(error.message);
+                console.log(error.message);
+                getCode();
           });
         });
       })();
@@ -1001,7 +1068,7 @@ export default defineComponent({
                 phoneNumber: loginForm.phoneNumber,
                 sid: sidParam,
                 code: loginForm.code,
-                codeId: loginForm.codeId,
+                smsCodeId: loginForm.smsCodeId,
               })
               .then(() => {
                 const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
@@ -1112,7 +1179,7 @@ export default defineComponent({
         },
     );
     const todayDate = () => {
-      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');;
+      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
 
 
@@ -1133,8 +1200,10 @@ export default defineComponent({
       loginDialogVisible,
       forgetPassDialogVisible,
       noticeDialogVisible,
+      captchaDialogVisible,
       loginRef,
       mobileLoginRef,
+      captchaRef,
       submitLogin,
       regForm,
       registerDialogVisible,
@@ -1142,6 +1211,7 @@ export default defineComponent({
       registerRef,
       loginRules,
       mobileLoginRules,
+      captchaRules,
       regRules,
       getCode,
       verificationImg,
@@ -1151,6 +1221,7 @@ export default defineComponent({
       refreshBalance,
       handleCommand,
       passForm,
+      captchaForm,
       passRef,
       passRules,
       pwdStrength,
@@ -1160,7 +1231,8 @@ export default defineComponent({
       todayDate,
       sendOtp,
       phoneLogin,
-      sendLoginOtp
+      openCaptchaForm,
+      loadingBtn
     }
   }
 });

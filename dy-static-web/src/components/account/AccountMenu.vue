@@ -41,7 +41,7 @@
           class="account-menu-item"
         >
           <RiShieldFlashFill class="green" />
-          投注记录
+          交易记录
         </router-link>
       </div>
     </div>

@@ -380,7 +380,7 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
     GameModal,
-    MarqueeText,
+    MarqueeText
     // RiVolumeUpLine,
   },
   setup() {
@@ -467,7 +467,7 @@ export default defineComponent({
         "poker",
         "lottery",
         "slot",
-        "fishing",
+        "fishing"
       ];
 
       // Iterate over each keyword
@@ -484,38 +484,38 @@ export default defineComponent({
         name: "esport",
         icon: "esport",
         label: "电竞",
-        labelact: "电竞赛事",
+        labelact: "电竞赛事"
       },
       {
         name: "sport",
         icon: "sport",
         label: "体育",
-        labelact: "体育赛事",
+        labelact: "体育赛事"
       },
       {
         name: "live",
         icon: "live",
         label: "真人",
-        labelact: "真人娱乐",
+        labelact: "真人娱乐"
       },
       {
         name: "poker",
         icon: "poker",
         label: "棋牌",
-        labelact: "棋牌游戏",
+        labelact: "棋牌游戏"
       },
       {
         name: "lottery",
         icon: "lottery",
         label: "彩票",
-        labelact: "彩票游戏",
+        labelact: "彩票游戏"
       },
       {
         name: "slot",
         icon: "slot",
         label: "电游",
-        labelact: "电子/捕鱼",
-      },
+        labelact: "电子/捕鱼"
+      }
     ]);
     const esport = [
       {
@@ -524,7 +524,7 @@ export default defineComponent({
         icon: "marlin",
         title: "东赢电竞",
         subcount: "145",
-        subtitle: "电竞赛事",
+        subtitle: "电竞赛事"
       },
       {
         id: "esport",
@@ -532,7 +532,7 @@ export default defineComponent({
         icon: "im",
         title: "IM电竞",
         subcount: "157",
-        subtitle: "电竞赛事",
+        subtitle: "电竞赛事"
       },
       {
         id: "esport",
@@ -540,8 +540,8 @@ export default defineComponent({
         icon: "ia",
         title: "小艾电竞",
         subcount: "166",
-        subtitle: "电竞赛事",
-      },
+        subtitle: "电竞赛事"
+      }
     ];
 
     const sport = [
@@ -551,7 +551,7 @@ export default defineComponent({
         icon: "im",
         title: "IM体育",
         subcount: "637",
-        subtitle: "体育赛事",
+        subtitle: "体育赛事"
       },
       {
         id: "sport",
@@ -559,7 +559,7 @@ export default defineComponent({
         icon: "saba",
         title: "沙巴体育",
         subcount: "",
-        subtitle: "体育赛事",
+        subtitle: "体育赛事"
       },
       {
         id: "sport",
@@ -567,8 +567,8 @@ export default defineComponent({
         icon: "cr",
         title: "CR体育",
         subcount: "204",
-        subtitle: "体育赛事",
-      },
+        subtitle: "体育赛事"
+      }
     ];
 
     const livecasino = [
@@ -578,7 +578,7 @@ export default defineComponent({
         icon: "ag",
         title: "AG真人",
         subcount: "40",
-        subtitle: "真人娱乐",
+        subtitle: "真人娱乐"
       },
       {
         id: "live",
@@ -586,7 +586,7 @@ export default defineComponent({
         icon: "bbin",
         title: "BBIN真人",
         subcount: "40",
-        subtitle: "真人娱乐",
+        subtitle: "真人娱乐"
       },
       {
         id: "live",
@@ -594,8 +594,8 @@ export default defineComponent({
         icon: "allbet",
         title: "欧博真人",
         subcount: "38",
-        subtitle: "真人娱乐",
-      },
+        subtitle: "真人娱乐"
+      }
     ];
 
     const poker = [
@@ -605,7 +605,7 @@ export default defineComponent({
         icon: "tx",
         title: "大唐棋牌",
         subcount: "18",
-        subtitle: "棋牌娱乐",
+        subtitle: "棋牌娱乐"
       },
       {
         id: "poker",
@@ -613,8 +613,8 @@ export default defineComponent({
         icon: "ky",
         title: "开元棋牌",
         subcount: "30",
-        subtitle: "棋牌娱乐",
-      },
+        subtitle: "棋牌娱乐"
+      }
     ];
 
     const lottery = [
@@ -624,7 +624,7 @@ export default defineComponent({
         icon: "tcg",
         title: "TCG彩票",
         subcount: "29",
-        subtitle: "彩票游戏",
+        subtitle: "彩票游戏"
       },
       {
         id: "lottery",
@@ -632,8 +632,8 @@ export default defineComponent({
         icon: "bbin",
         title: "BBIN彩票",
         subcount: "48",
-        subtitle: "彩票游戏",
-      },
+        subtitle: "彩票游戏"
+      }
     ];
 
     const slot = [
@@ -643,7 +643,7 @@ export default defineComponent({
         icon: "pg",
         title: "PG",
         subcount: "89",
-        subtitle: "电子游戏",
+        subtitle: "电子游戏"
       },
       {
         id: "slot",
@@ -651,7 +651,7 @@ export default defineComponent({
         icon: "cq",
         title: "SW电子",
         subcount: "89",
-        subtitle: "电子游戏",
+        subtitle: "电子游戏"
       },
       {
         id: "slot",
@@ -659,7 +659,7 @@ export default defineComponent({
         icon: "pt",
         title: "PT电子",
         subcount: "157",
-        subtitle: "电子游戏",
+        subtitle: "电子游戏"
       },
       {
         id: "slot",
@@ -667,7 +667,7 @@ export default defineComponent({
         icon: "mgplus",
         title: "MG+电子",
         subcount: "240",
-        subtitle: "电子游戏",
+        subtitle: "电子游戏"
       },
       {
         id: "slot",
@@ -675,7 +675,7 @@ export default defineComponent({
         icon: "cq",
         title: "CQ电子",
         subcount: "205",
-        subtitle: "电子游戏",
+        subtitle: "电子游戏"
       },
       {
         id: "slot",
@@ -683,7 +683,7 @@ export default defineComponent({
         icon: "bbin",
         title: "BBIN电子",
         subcount: "85",
-        subtitle: "电子游戏",
+        subtitle: "电子游戏"
       },
       {
         id: "slot",
@@ -691,8 +691,8 @@ export default defineComponent({
         icon: "ag",
         title: "AG电子",
         subcount: "44",
-        subtitle: "电子游戏",
-      },
+        subtitle: "电子游戏"
+      }
     ];
 
     const fishing = [
@@ -702,7 +702,7 @@ export default defineComponent({
         icon: "ag_new",
         title: "AG捕鱼",
         subcount: "",
-        subtitle: "捕鱼游戏",
+        subtitle: "捕鱼游戏"
       },
       {
         id: "fishing",
@@ -710,8 +710,8 @@ export default defineComponent({
         icon: "sw",
         title: "捕鱼达人",
         subcount: "3",
-        subtitle: "捕鱼游戏",
-      },
+        subtitle: "捕鱼游戏"
+      }
     ];
 
     const ui = useUI();
@@ -769,7 +769,7 @@ export default defineComponent({
       pageSize: 40,
       searchType: "",
       searchKey: "",
-      total: 0,
+      total: 0
     });
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
@@ -812,8 +812,8 @@ export default defineComponent({
               params: {
                 platformId: code,
                 gameType: gameType,
-                device: regDevice,
-              },
+                device: regDevice
+              }
             })
             .then((response) => {
               if (response.code === 0) {
@@ -916,7 +916,7 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      const redirectU = "/promo?id=" + banner.redirectUrl;
+      const redirectU = "/promo?name=" + banner.redirectUrl;
       router.push(`${redirectU}`);
     };
     onMounted(() => {
@@ -935,7 +935,7 @@ export default defineComponent({
       tab: ref("esport"),
       gamesTab: ref(platforms.value[0]),
       splitterModel: ref(27),
-      imgURL: process.env.IMAGE_CDN + "/",
+      imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
       store,
       platforms,
@@ -978,9 +978,9 @@ export default defineComponent({
       secondSwiper,
       setFirstSwiper,
       setSecondSwiper,
-      setSelectedSwiper,
+      setSelectedSwiper
     };
-  },
+  }
 });
 </script>
 <style scoped lang="scss">
@@ -1249,7 +1249,6 @@ export default defineComponent({
     padding: 0px;
   }
 
-
   .q-tabs--vertical {
     margin: 0 5px 0 0;
 
@@ -1340,5 +1339,10 @@ export default defineComponent({
       }
     }
   }
+}
+</style>
+<style>
+.marquee-text-wrap span{
+  color: #ffffff !important;
 }
 </style>

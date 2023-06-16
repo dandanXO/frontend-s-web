@@ -6,7 +6,7 @@
     :on-exceed="handleExceed"
     :action="action"
   >
-    <el-button class="common-btn">
+    <el-button size="small" class="common-btn">
       <el-icon class="el-icon--left"><UploadFilled /></el-icon>
       上传图片
     </el-button>

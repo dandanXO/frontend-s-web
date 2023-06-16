@@ -247,10 +247,10 @@ export default defineComponent({
   setup() {
     let validateBankLength = async (r, v) => {
       var min = 6
-      var max = 12
+      var max = 19
       if (selectedBankType.value === 'Bank') {
         min = 6;
-        max = 12;
+        max = 19;
       } else if (selectedBankType.value === 'Crypto') {
         min = 34;
         max = 37;

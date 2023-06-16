@@ -1,7 +1,7 @@
 <template>
   <div class="personal-account">
     <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
-    <q-form>
+    <q-form ref="profileFormRef">
       <q-input
         standout
         bg-color="white"
@@ -49,7 +49,7 @@
             >
               <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat/>
+                  <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -97,22 +97,22 @@
         :readonly="personalState.memberInfo.phone ? true : false"
       >
         <template v-slot:append>
-          <q-btn size="sm" color="dyblue" label="验证"/>
+          <q-btn size="sm" color="dyblue" label="验证" />
         </template>
       </q-input>
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="dyblue" @click="updateState" label="更新信息"/>
+        <q-btn size="md" color="dyblue" @click="updateState" label="更新信息" />
       </div>
     </q-form>
   </div>
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import moment from "moment";
-import {api} from "boot/axios"
-import {useQuasar} from "quasar"
-import {userStore} from "src/stores"
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
 
 
 export default defineComponent({
@@ -126,19 +126,21 @@ export default defineComponent({
       end: ""
     });
 
+    const profileFormRef = ref();
+
     const store = userStore();
 
     const loadInfo = () => {
-      personalState.memberInfo = userStore()
+      personalState.memberInfo = userStore();
       if (personalState.memberInfo.birthday > 0) {
         personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
       }
-      formDetail.nickName = personalState.memberInfo.nickName
-      formDetail.realName = personalState.memberInfo.realName
-      formDetail.birthday = personalState.memberInfo.birthday
-      formDetail.email = personalState.memberInfo.email
-      formDetail.phone = personalState.memberInfo.phone
-    }
+      formDetail.nickName = personalState.memberInfo.nickName;
+      formDetail.realName = personalState.memberInfo.realName;
+      formDetail.birthday = personalState.memberInfo.birthday;
+      formDetail.email = personalState.memberInfo.email;
+      formDetail.phone = personalState.memberInfo.phone;
+    };
 
     const canEdit = computed(() => {
       if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)) {
@@ -155,8 +157,8 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      loadInfo()
-      getCode()
+      loadInfo();
+      getCode();
     });
 
     const verificationImg = ref("");
@@ -181,14 +183,14 @@ export default defineComponent({
     };
     //update security
 
-    const isEmailSending = ref(false)
+    const isEmailSending = ref(false);
     const updateSecurityModalVisible = ref(false);
     const updateSecurityFormRef = ref();
     const updateSecurityVerified = reactive({
       mobileNumber: "",
       verificationCode: ""
     });
-    const verificationModalVisible = ref(false)
+    const verificationModalVisible = ref(false);
     const updateSecurityModal = () => {
       updateSecurityVerified.emailAddress = "";
       updateSecurityVerified.verificationCode = "";
@@ -197,15 +199,15 @@ export default defineComponent({
     const openVerificationModal = () => {
       getCode();
       verificationModalVisible.value = true;
-    }
+    };
     const verifyVerificationCode = () => {
-      isEmailSending.value = true
-      verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
+      isEmailSending.value = true;
+      verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress;
       const emailDetails = {
         email: updateSecurityVerified.emailAddress,
         captchaCode: updateSecurityVerified.captchaCode,
         codeId: updateSecurityVerified.codeId
-      }
+      };
       api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
         if (ret.code === 0) {
           $q.notify({
@@ -214,9 +216,9 @@ export default defineComponent({
             message: "An OTP code has been sent to your email.",
             icon: "check_circle_outline"
           });
-          verificationDetails.memberInfo.codeId = ret.data.codeId
+          verificationDetails.memberInfo.codeId = ret.data.codeId;
           verificationModalVisible.value = false;
-          isEmailSending.value = false
+          isEmailSending.value = false;
         } else {
           // $q.notify({
           //   color: "negative",
@@ -224,29 +226,23 @@ export default defineComponent({
           //   message: ret.message,
           //   icon: "report_problem"
           // });
-          isEmailSending.value = false
-          getCode()
+          isEmailSending.value = false;
+          getCode();
         }
       })
         .catch((e) => {
-          getCode()
-          isEmailSending.value = false
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: e.message,
-          //   icon: "report_problem"
-          // });
+          getCode();
+          isEmailSending.value = false;
         });
-    }
-    const emailAddressRef = ref()
-    const verificationCodeRef = ref()
+    };
+    const emailAddressRef = ref();
+    const verificationCodeRef = ref();
     const submitUpdateSecurity = () => {
-      emailAddressRef.value.validate()
-      verificationCodeRef.value.validate()
+      emailAddressRef.value.validate();
+      verificationCodeRef.value.validate();
       if (emailAddressRef.value.hasError || verificationCodeRef.value.hasError) {
       } else {
-        verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode
+        verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode;
         api.post("/otp/verifyEmail", qs.stringify(verificationDetails.memberInfo)).then((res) => {
           if (res.code === 0) {
             $q.notify({
@@ -255,8 +251,8 @@ export default defineComponent({
               message: "Successfully verified",
               icon: "check_circle_outline"
             });
-            updateSecurityModalVisible.value = false
-            loadInfo()
+            updateSecurityModalVisible.value = false;
+            loadInfo();
           }
         }).catch((e) => {
           // $q.notify({
@@ -267,44 +263,50 @@ export default defineComponent({
           // });
         });
       }
-    }
+    };
 
-    const isEditRealName = ref(false)
-    const isEditEmail = ref(false)
-    const isEditPhone = ref(false)
-    const isEditBirthday = ref(false)
-    const isEdit = ref(false)
-    const emailRef = ref()
-    const realNameRef = ref()
-    const birthdayRef = ref()
-    const phoneRef = ref()
-    const formDetail = reactive([])
+    const isEditRealName = ref(false);
+    const isEditEmail = ref(false);
+    const isEditPhone = ref(false);
+    const isEditBirthday = ref(false);
+    const isEdit = ref(false);
+    const emailRef = ref();
+    const realNameRef = ref();
+    const birthdayRef = ref();
+    const phoneRef = ref();
+    const formDetail = reactive([]);
     const updateState = () => {
-      const updateInfo = formDetail;
+      const updateInfo = {};
       if (!personalState.memberInfo.birthday) {
-        birthdayRef.value.validate()
+        birthdayRef.value.validate();
         if (birthdayRef.value.hasError) {
-          return
+          return;
         }
       }
       if (!personalState.memberInfo.realName) {
-        realNameRef.value.validate()
+        realNameRef.value.validate();
         if (realNameRef.value.hasError) {
-          return
+          return;
         }
       }
       console.log(updateInfo);
-      updateInfo.birthday = moment(updateInfo.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
+      updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
+      updateInfo.realName = formDetail.realName;
+
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
+          profileFormRef.value.reset();
+
           $q.notify({
             color: "positive",
             position: "top",
             message: "更新成功",
             icon: "check_circle_outline"
           });
-          loadInfo();
-          store.getMemberInfo();
+
+          store.getMemberInfo().then(() => {
+            loadInfo();
+          });
         } else {
           $q.notify({
             color: "negative",
@@ -313,8 +315,8 @@ export default defineComponent({
             icon: "report_problem"
           });
         }
-      })
-    }
+      });
+    };
     return {
       searchForm,
       personalState,
@@ -329,6 +331,7 @@ export default defineComponent({
       loadInfo,
       isEditBirthday,
       formDetail,
+      profileFormRef,
       updateState,
       verificationModalVisible,
       openVerificationModal,
