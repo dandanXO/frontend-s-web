@@ -68,7 +68,13 @@
           :label="t('fields.smsStatus')"
           align="center"
           min-width="50"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.smsStatus === 0">发送中</span>
+            <span v-if="scope.row.smsStatus === 1">成功</span>
+            <span v-if="scope.row.smsStatus === 1">失败</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="sendTime"
           :label="t('fields.smsSendTime')"
