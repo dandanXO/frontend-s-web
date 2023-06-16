@@ -29,7 +29,7 @@ export default defineComponent({
     const store = userStore();
     const fileList = ref([]);
     // const action = `https://fxlmnp.wallykrooger.com/upload?token=${store.token}`;
-    const action = `${process.env.VUE_APP_RST_API}/image/uploadOrder?token=${store.token}`;
+    const action = `${process.env.VUE_APP_RST_API}/session/image/uploadOrder`;
     watch(fileList, (newValue, oldValue) => {
       if (newValue.length > 0) {
         uploadFile(newValue);
@@ -43,7 +43,7 @@ export default defineComponent({
         formData.append("fileList", uploadedItem[0].raw);
         try {
           const response = await fetch(
-            `${process.env.VUE_APP_RST_API}/image/uploadOrder?token=${store.token}`,
+            `${process.env.VUE_APP_RST_API}/session/image/uploadOrder`,
             {
               method: "POST",
               body: formData,
