@@ -133,7 +133,7 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
-    path: "/vip",
+    path: "/account/vip",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {

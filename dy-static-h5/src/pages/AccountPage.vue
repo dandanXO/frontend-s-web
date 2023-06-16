@@ -84,7 +84,7 @@
           />转账
           </router-link
           >
-          <router-link to="vip" class="button"
+          <router-link to="account/vip" class="button"
           ><img
             src="../assets/images/account/vip_icon.png"
           />VIP详情

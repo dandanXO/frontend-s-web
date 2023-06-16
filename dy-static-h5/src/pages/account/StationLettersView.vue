@@ -14,39 +14,53 @@
         />
         {{ trans.name }}
         <div class="right">
-          <q-chip v-if="trans.icon === 'inbox'" color="dyblue" size="sm">
-            {{ store.unreadInboxMail }} </q-chip
-          ><RiArrowRightSLine />
+<!--          <q-chip v-if="trans.icon === 'inbox'" color="dyblue" size="sm">-->
+<!--            {{ store.unreadInboxMail }}-->
+<!--          </q-chip>-->
+          <RiArrowRightSLine />
         </div>
       </router-link>
     </div>
   </div>
 </template>
-<script setup>
-import { ref } from "vue";
+<script lang="js">
+import { defineComponent, ref } from "vue";
 import { userStore } from "../../stores/index";
 import { RiArrowRightSLine } from "vue-remix-icons";
-components: {
-  RiArrowRightSLine;
-}
-const store = userStore();
-const transitList = ref([
-  {
-    code: "inbox",
-    icon: "inbox",
-    name: "收件箱",
+
+export default defineComponent({
+  name: "IndexPage",
+  components: {
+    RiArrowRightSLine
   },
-  {
-    code: "outbox",
-    icon: "outbox",
-    name: "发件箱",
-  },
-  {
-    code: "write",
-    icon: "write",
-    name: "写信",
-  },
-]);
+  setup() {
+
+    const store = userStore();
+    const transitList = ref([
+      {
+        code: "inbox",
+        icon: "inbox",
+        name: "收件箱"
+      },
+      {
+        code: "outbox",
+        icon: "outbox",
+        name: "发件箱"
+      },
+      {
+        code: "write",
+        icon: "write",
+        name: "写信"
+      }
+    ]);
+
+    return {
+      store,
+      transitList
+    };
+
+  }
+});
 </script>
 <style scoped lang="scss">
 .transit-buttons {
@@ -55,6 +69,7 @@ const transitList = ref([
   flex-direction: column;
   gap: 10px;
   color: #bacef1;
+
   .btn {
     color: #000000;
     text-decoration: none;
@@ -65,15 +80,18 @@ const transitList = ref([
     justify-content: flex-start;
     align-items: center;
     gap: 30px;
+
     img {
       width: 25px;
     }
+
     .right {
       position: absolute;
       right: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
+
       svg {
         fill: #bbb;
       }
