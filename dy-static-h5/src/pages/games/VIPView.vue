@@ -1,8 +1,8 @@
 <template>
   <div class="vip-container">
-    <q-tabs v-model="tab" active-color="white" indicator-color="bright">
-      <q-tab name="special" label="VIP特权" />
-      <q-tab name="details" label="VIP详情" />
+    <q-tabs v-model="tab" active-color="white" indicator-color="transparent">
+      <q-tab name="special" label="VIP特权"/>
+      <q-tab name="details" label="VIP详情"/>
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
@@ -59,27 +59,27 @@
             <div class="bft-row-cnt">
               <div class="left">
                 <div class="icon">
-                  <img src="../../assets/vip/red_box.png" />
+                  <img src="../../assets/vip/red_box.png"/>
                 </div>
                 <div class="txt">每月红包(3倍)</div>
               </div>
-              <q-btn class="btn" color="dyblue" label="领取" />
+              <q-btn class="btn" color="dyblue" label="领取"/>
             </div>
             <div class="bft-row-cnt">
               <div class="left">
                 <div class="icon">
-                  <img src="../../assets/vip/deposit.png" />
+                  <img src="../../assets/vip/deposit.png"/>
                 </div>
                 <div class="txt">每月存送</div>
               </div>
-              <q-btn class="btn" color="dyblue" label="领取" />
+              <q-btn class="btn" color="dyblue" label="领取"/>
             </div>
             <div class="bft-row-cnt">
               <div class="left">
-                <div class="icon"><img src="../../assets/vip/money.png" /></div>
+                <div class="icon"><img src="../../assets/vip/money.png"/></div>
                 <div class="txt">生日礼金(1倍)</div>
               </div>
-              <q-btn class="btn" color="dyblue" label="领取" />
+              <q-btn class="btn" color="dyblue" label="领取"/>
             </div>
           </div>
         </div>
@@ -113,250 +113,250 @@
       <q-tab-panel name="details">
         <table class="bouns_table">
           <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">升级要求</th>
-              <th class="dy-vip-th">保级要求</th>
-              <th class="dy-vip-th">生日礼金</th>
-              <th class="dy-vip-th">每月红包</th>
-            </tr>
+          <tr>
+            <th class="dy-vip-th">等级</th>
+            <th class="dy-vip-th">升级要求</th>
+            <th class="dy-vip-th">保级要求</th>
+            <th class="dy-vip-th">生日礼金</th>
+            <th class="dy-vip-th">每月红包</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>VIP1</td>
-              <td>有一笔存款</td>
-              <td>无</td>
-              <td>无</td>
-              <td>无</td>
-            </tr>
-            <tr>
-              <td>VIP2</td>
-              <td>5000≤累积存款</td>
-              <td>1888≤一个月内累积存款</td>
-              <td>38元</td>
-              <td>28元</td>
-            </tr>
-            <tr>
-              <td>VIP3</td>
-              <td>50000≤累积存款</td>
-              <td>10888≤一个月内累积存款</td>
-              <td>108元</td>
-              <td>88元</td>
-            </tr>
-            <tr>
-              <td>VIP4</td>
-              <td>250000≤累积存款</td>
-              <td>38888≤一个月内累积存款</td>
-              <td>388元</td>
-              <td>188元</td>
-            </tr>
-            <tr>
-              <td>VIP5</td>
-              <td>500000≤累积存款</td>
-              <td>58888≤一个月内累积存款</td>
-              <td>688元</td>
-              <td>388元</td>
-            </tr>
-            <tr>
-              <td>VIP6</td>
-              <td>2500000≤累积存款</td>
-              <td>88888≤一个月内累积存款</td>
-              <td>1088元</td>
-              <td>888元</td>
-            </tr>
-            <tr>
-              <td>VIP7</td>
-              <td>5000000≤累积存款</td>
-              <td>188888≤一个月内累积存款</td>
-              <td>6888元</td>
-              <td>2888元</td>
-            </tr>
-            <tr>
-              <td>VIP8</td>
-              <td>8000000≤累积存款</td>
-              <td>288888≤一个月内累积存款</td>
-              <td>8888元</td>
-              <td>5888元</td>
-            </tr>
-            <tr>
-              <td>VIP9</td>
-              <td>12000000≤累积存款</td>
-              <td>588888≤一个月内累积存款</td>
-              <td>10888元</td>
-              <td>6888元</td>
-            </tr>
-            <tr>
-              <td>VIP10</td>
-              <td>20000000≤累积存款</td>
-              <td>888888≤一个月内累积存款</td>
-              <td>18888元</td>
-              <td>8888元</td>
-            </tr>
+          <tr>
+            <td>VIP1</td>
+            <td>有一笔存款</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+          </tr>
+          <tr>
+            <td>VIP2</td>
+            <td>5000≤累积存款</td>
+            <td>1888≤一个月内累积存款</td>
+            <td>38元</td>
+            <td>28元</td>
+          </tr>
+          <tr>
+            <td>VIP3</td>
+            <td>50000≤累积存款</td>
+            <td>10888≤一个月内累积存款</td>
+            <td>108元</td>
+            <td>88元</td>
+          </tr>
+          <tr>
+            <td>VIP4</td>
+            <td>250000≤累积存款</td>
+            <td>38888≤一个月内累积存款</td>
+            <td>388元</td>
+            <td>188元</td>
+          </tr>
+          <tr>
+            <td>VIP5</td>
+            <td>500000≤累积存款</td>
+            <td>58888≤一个月内累积存款</td>
+            <td>688元</td>
+            <td>388元</td>
+          </tr>
+          <tr>
+            <td>VIP6</td>
+            <td>2500000≤累积存款</td>
+            <td>88888≤一个月内累积存款</td>
+            <td>1088元</td>
+            <td>888元</td>
+          </tr>
+          <tr>
+            <td>VIP7</td>
+            <td>5000000≤累积存款</td>
+            <td>188888≤一个月内累积存款</td>
+            <td>6888元</td>
+            <td>2888元</td>
+          </tr>
+          <tr>
+            <td>VIP8</td>
+            <td>8000000≤累积存款</td>
+            <td>288888≤一个月内累积存款</td>
+            <td>8888元</td>
+            <td>5888元</td>
+          </tr>
+          <tr>
+            <td>VIP9</td>
+            <td>12000000≤累积存款</td>
+            <td>588888≤一个月内累积存款</td>
+            <td>10888元</td>
+            <td>6888元</td>
+          </tr>
+          <tr>
+            <td>VIP10</td>
+            <td>20000000≤累积存款</td>
+            <td>888888≤一个月内累积存款</td>
+            <td>18888元</td>
+            <td>8888元</td>
+          </tr>
           </tbody>
         </table>
 
         <table class="privilege_table">
           <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">每月优惠</th>
-              <th class="dy-vip-th">流水</th>
-              <th class="dy-vip-th">平台限制</th>
-            </tr>
+          <tr>
+            <th class="dy-vip-th">等级</th>
+            <th class="dy-vip-th">每月优惠</th>
+            <th class="dy-vip-th">流水</th>
+            <th class="dy-vip-th">平台限制</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>VIP1</td>
-              <td>无</td>
-              <td>无</td>
-              <td>无</td>
-            </tr>
-            <tr>
-              <td>VIP2</td>
-              <td>存款最少100元可申请每月一次再存20%最高奖金588元</td>
-              <td>12倍</td>
-              <td>电竞/体育</td>
-            </tr>
-            <tr>
-              <td>VIP3</td>
-              <td>存款最少100元可申请每月一次再存20%最高奖金888元</td>
-              <td>12倍</td>
-              <td>所有（彩票除外）</td>
-            </tr>
-            <tr>
-              <td>VIP4</td>
-              <td>存款最少100元可申请每月一次再存25%最高奖金888元</td>
-              <td>12倍</td>
-              <td>电竞/体育</td>
-            </tr>
-            <tr>
-              <td>VIP5</td>
-              <td>存款最少500元可申请每月一次再存50%最高奖金1888元</td>
-              <td>15倍</td>
-              <td>所有（彩票除外）</td>
-            </tr>
-            <tr>
-              <td>VIP6</td>
-              <td>存款至少500元可申请每周一次再存30%最高奖金2888元</td>
-              <td>15倍</td>
-              <td>所有（彩票除外）</td>
-            </tr>
-            <tr>
-              <td>VIP7</td>
-              <td>存款至少500元可申请每周一次再存35%最高奖金3888元</td>
-              <td>15倍</td>
-              <td>所有（彩票除外）</td>
-            </tr>
-            <tr>
-              <td>VIP8</td>
-              <td>存款至少500元可申请每周一次再存40%最高奖金5888元</td>
-              <td>15倍</td>
-              <td>所有（彩票除外）</td>
-            </tr>
-            <tr>
-              <td>VIP9</td>
-              <td>存款至少500元可申请每周一次再存45%最高奖金8888元</td>
-              <td>15倍</td>
-              <td>所有（彩票除外）</td>
-            </tr>
-            <tr>
-              <td>VIP10</td>
-              <td>存款至少500元可申请每周一次再存50%最高奖金12888元</td>
-              <td>15倍</td>
-              <td>所有（彩票除外）</td>
-            </tr>
+          <tr>
+            <td>VIP1</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+          </tr>
+          <tr>
+            <td>VIP2</td>
+            <td>存款最少100元可申请每月一次再存20%最高奖金588元</td>
+            <td>12倍</td>
+            <td>电竞/体育</td>
+          </tr>
+          <tr>
+            <td>VIP3</td>
+            <td>存款最少100元可申请每月一次再存20%最高奖金888元</td>
+            <td>12倍</td>
+            <td>所有（彩票除外）</td>
+          </tr>
+          <tr>
+            <td>VIP4</td>
+            <td>存款最少100元可申请每月一次再存25%最高奖金888元</td>
+            <td>12倍</td>
+            <td>电竞/体育</td>
+          </tr>
+          <tr>
+            <td>VIP5</td>
+            <td>存款最少500元可申请每月一次再存50%最高奖金1888元</td>
+            <td>15倍</td>
+            <td>所有（彩票除外）</td>
+          </tr>
+          <tr>
+            <td>VIP6</td>
+            <td>存款至少500元可申请每周一次再存30%最高奖金2888元</td>
+            <td>15倍</td>
+            <td>所有（彩票除外）</td>
+          </tr>
+          <tr>
+            <td>VIP7</td>
+            <td>存款至少500元可申请每周一次再存35%最高奖金3888元</td>
+            <td>15倍</td>
+            <td>所有（彩票除外）</td>
+          </tr>
+          <tr>
+            <td>VIP8</td>
+            <td>存款至少500元可申请每周一次再存40%最高奖金5888元</td>
+            <td>15倍</td>
+            <td>所有（彩票除外）</td>
+          </tr>
+          <tr>
+            <td>VIP9</td>
+            <td>存款至少500元可申请每周一次再存45%最高奖金8888元</td>
+            <td>15倍</td>
+            <td>所有（彩票除外）</td>
+          </tr>
+          <tr>
+            <td>VIP10</td>
+            <td>存款至少500元可申请每周一次再存50%最高奖金12888元</td>
+            <td>15倍</td>
+            <td>所有（彩票除外）</td>
+          </tr>
           </tbody>
         </table>
 
         <table class="percent_table">
           <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">VIP1</th>
-              <th class="dy-vip-th">VIP2</th>
-              <th class="dy-vip-th">VIP3</th>
-              <th class="dy-vip-th">VIP4</th>
-              <th class="dy-vip-th">VIP5</th>
-              <th class="dy-vip-th">VIP6</th>
-              <th class="dy-vip-th">VIP7</th>
-              <th class="dy-vip-th">VIP8</th>
-              <th class="dy-vip-th">VIP9</th>
-              <th class="dy-vip-th">VIP10</th>
-            </tr>
+          <tr>
+            <th class="dy-vip-th">等级</th>
+            <th class="dy-vip-th">VIP1</th>
+            <th class="dy-vip-th">VIP2</th>
+            <th class="dy-vip-th">VIP3</th>
+            <th class="dy-vip-th">VIP4</th>
+            <th class="dy-vip-th">VIP5</th>
+            <th class="dy-vip-th">VIP6</th>
+            <th class="dy-vip-th">VIP7</th>
+            <th class="dy-vip-th">VIP8</th>
+            <th class="dy-vip-th">VIP9</th>
+            <th class="dy-vip-th">VIP10</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>电竞返水</td>
-              <td>0.4%</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.65%</td>
-              <td>0.8%</td>
-              <td>0.9%</td>
-              <td>1%</td>
-            </tr>
-            <tr>
-              <td>体育返水</td>
-              <td>0.4%</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.65%</td>
-              <td>0.8%</td>
-              <td>0.9%</td>
-              <td>1%</td>
-            </tr>
-            <tr>
-              <td>真人返水</td>
-              <td>0.4%</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.65%</td>
-              <td>0.8%</td>
-              <td>0.9%</td>
-              <td>1%</td>
-            </tr>
-            <tr>
-              <td>电子返水</td>
-              <td>0.5%</td>
-              <td>0.6%</td>
-              <td>0.7%</td>
-              <td>0.8%</td>
-              <td>0.9%</td>
-              <td>1.2%</td>
-              <td>1.5%</td>
-              <td>1.8%</td>
-              <td>1.9%</td>
-              <td>2%</td>
-            </tr>
-            <tr>
-              <td>棋牌返水</td>
-              <td>0.5%</td>
-              <td>0.6%</td>
-              <td>0.7%</td>
-              <td>0.75%</td>
-              <td>0.8%</td>
-              <td>0.85%</td>
-              <td>0.9%</td>
-              <td>0.95%</td>
-              <td>1%</td>
-              <td>1.2%</td>
-            </tr>
-            <tr>
-              <td>返水上限</td>
-              <td colspan="3">18888元</td>
-              <td colspan="3">38888元</td>
-              <td colspan="2">58888元</td>
-              <td colspan="2">88888元</td>
-            </tr>
+          <tr>
+            <td>电竞返水</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.45%</td>
+            <td>0.45%</td>
+            <td>0.5%</td>
+            <td>0.55%</td>
+            <td>0.65%</td>
+            <td>0.8%</td>
+            <td>0.9%</td>
+            <td>1%</td>
+          </tr>
+          <tr>
+            <td>体育返水</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.45%</td>
+            <td>0.45%</td>
+            <td>0.5%</td>
+            <td>0.55%</td>
+            <td>0.65%</td>
+            <td>0.8%</td>
+            <td>0.9%</td>
+            <td>1%</td>
+          </tr>
+          <tr>
+            <td>真人返水</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.45%</td>
+            <td>0.45%</td>
+            <td>0.5%</td>
+            <td>0.55%</td>
+            <td>0.65%</td>
+            <td>0.8%</td>
+            <td>0.9%</td>
+            <td>1%</td>
+          </tr>
+          <tr>
+            <td>电子返水</td>
+            <td>0.5%</td>
+            <td>0.6%</td>
+            <td>0.7%</td>
+            <td>0.8%</td>
+            <td>0.9%</td>
+            <td>1.2%</td>
+            <td>1.5%</td>
+            <td>1.8%</td>
+            <td>1.9%</td>
+            <td>2%</td>
+          </tr>
+          <tr>
+            <td>棋牌返水</td>
+            <td>0.5%</td>
+            <td>0.6%</td>
+            <td>0.7%</td>
+            <td>0.75%</td>
+            <td>0.8%</td>
+            <td>0.85%</td>
+            <td>0.9%</td>
+            <td>0.95%</td>
+            <td>1%</td>
+            <td>1.2%</td>
+          </tr>
+          <tr>
+            <td>返水上限</td>
+            <td colspan="3">18888元</td>
+            <td colspan="3">38888元</td>
+            <td colspan="2">58888元</td>
+            <td colspan="2">88888元</td>
+          </tr>
           </tbody>
         </table>
 
@@ -407,7 +407,7 @@
         </q-card-section>
 
         <q-card-actions align="center">
-          <q-btn flat label="OK" color="primary" v-close-popup />
+          <q-btn flat label="OK" color="primary" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -415,10 +415,10 @@
 </template>
 
 <script>
-import { ref, defineComponent, onMounted } from "vue";
-import { userStore } from "stores/index";
-import { eventapi } from "boot/axios";
-import { useQuasar } from "quasar";
+import {ref, defineComponent, onMounted} from "vue";
+import {userStore} from "stores/index";
+import {eventapi} from "boot/axios";
+import {useQuasar} from "quasar";
 
 export default defineComponent({
   name: "TransitRecordView",
@@ -1007,28 +1007,31 @@ program at any time without prior notice.`,
       // padding: 10px;
       width: 70%;
       height: 150px;
-      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center
-        center;
+      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center center;
       background-size: contain;
       position: relative;
       text-align: left;
       display: flex;
       flex-direction: column;
       padding: 35px 10px 10px 65px;
+
       .vip-badgelevel {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .vip-badge {
           flex: 1;
           position: absolute;
           // width: 2.66rem;
           top: -10px;
           left: -50px;
+
           img {
             width: 100%;
           }
         }
+
         .vip-text {
           flex: 2;
 
@@ -1038,6 +1041,7 @@ program at any time without prior notice.`,
           }
         }
       }
+
       .vip-badgecontent {
         margin-top: 5px;
         font-size: 11px;
@@ -1102,9 +1106,12 @@ program at any time without prior notice.`,
       }
     }
   }
+
   .vip-benefits {
     padding: 10px;
     font-size: 0.75rem;
+    background: #eaeef2;
+
     .bft-title {
       display: flex;
       justify-content: flex-start;
@@ -1112,6 +1119,7 @@ program at any time without prior notice.`,
       color: #3a3a3a;
       font-weight: bold;
       gap: 10px;
+
       &:before {
         content: "";
         width: 10px;
@@ -1122,37 +1130,46 @@ program at any time without prior notice.`,
         background-size: 100%;
       }
     }
+
     .bft-row {
       padding: 10px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+
       .bft-row-cnt {
+        background: #fff;
         padding: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         color: #3a3a3a;
+
         .left {
           display: flex;
           justify-content: flex-start;
           align-items: center;
           gap: 40px;
+
           .icon {
             width: 40px;
+
             img {
               flex: 1;
               width: 100%;
               display: block;
             }
           }
+
           .text {
           }
         }
+
         .btn {
         }
       }
     }
+
     .bft-promo-row {
       display: flex;
       gap: 15px;
@@ -1171,6 +1188,7 @@ program at any time without prior notice.`,
           font-weight: 700;
           font-size: 25px;
         }
+
         .promo-title {
           color: #3a3a3a;
           font-size: 13px;
@@ -1228,9 +1246,11 @@ program at any time without prior notice.`,
       display: block;
     }
   }
+
   .q-tab-panel {
     padding: 8px;
   }
+
   table {
     text-align: center;
     font-size: 10px;
@@ -1238,21 +1258,26 @@ program at any time without prior notice.`,
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 10px;
+
     thead {
       background-color: #7197ff;
+
       th {
         color: #ffffff;
       }
     }
+
     tbody {
       td {
         border: 1px solid #bac8dc;
       }
     }
   }
+
   .terms-conditions {
     color: #52697e;
     font-size: 0.8rem;
+
     .title {
       color: #3865e8;
     }
@@ -1266,21 +1291,26 @@ program at any time without prior notice.`,
     background: url(../../assets/vip/top_bg.png) no-repeat top right;
     background-attachment: fixed;
   }
+
   .q-tabs--not-scrollable .q-tabs__content {
     gap: 45px;
     display: flex;
     justify-content: center;
   }
+
   .q-tabs__content--align-justify .q-tab {
     flex: unset;
   }
+
   .q-tab {
     min-height: 35px;
+
     &__label {
       font-size: 12px;
       color: #ffffff;
     }
   }
+
   .q-tab--active .q-tab__indicator {
     width: 100%;
     margin: 0 auto;
@@ -1297,6 +1327,7 @@ program at any time without prior notice.`,
     }
   }
 }
+
 .q-carousel {
   overflow: hidden;
   margin: 0 auto;
@@ -1326,14 +1357,17 @@ program at any time without prior notice.`,
 button {
   border: 0;
 }
+
 .q-carousel__arrow {
   background: url(../../assets/vip/left.png) no-repeat center center;
   background-size: contain;
   width: 45px;
+
   .q-icon {
     display: none;
   }
 }
+
 .q-carousel__prev,
 .q-carousel__next {
   position: absolute;
@@ -1353,6 +1387,7 @@ button {
   top: 20%;
   left: 0%;
 }
+
 .q-carousel__next-arrow--horizontal {
   transform: rotate(180deg);
   right: 10px;

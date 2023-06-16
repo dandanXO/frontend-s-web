@@ -33,31 +33,31 @@ const transitList = ref([
     name: '转账记录'
   },
   {
-    code: 'change',
-    icon: 'change',
-    name: '账变记录'
+    code: 'promo',
+    icon: 'deposit',
+    name: '优惠记录'
   },
   {
-    code: 'recommend',
-    icon: 'recommend',
-    name: '推荐好友记录'
+    code: 'bet',
+    icon: 'change',
+    name: '投注记录'
   },
+  {
+    code: 'financeFeedback',
+    icon: 'help',
+    name: '催单记录'
+  }
+  // {
+  //   code: 'recommend',
+  //   icon: 'recommend',
+  //   name: '推荐好友记录'
+  // },
   // {
   //   code: 'betRecord',
   //   icon: 'help',
   //   name: '投注记录'
   // },
 
-  {
-    code: 'help',
-    icon: 'help',
-    name: '救援金记录'
-  },
-  {
-    code: 'bill',
-    icon: 'deposit',
-    name: '催单记录'
-  },
 ]);
 </script>
 <style scoped lang="scss">

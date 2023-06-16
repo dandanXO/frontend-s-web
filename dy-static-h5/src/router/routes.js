@@ -274,6 +274,39 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
+    path: "/account/records/promo",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/records/PromoRecordView.vue")
+      }
+    ],
+    meta: {requiresAuth: true}
+  },
+  {
+    path: "/account/records/financeFeedBack",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/records/FeedbackRecordView.vue")
+      }
+    ],
+    meta: {requiresAuth: true}
+  },
+  {
+    path: "/account/records/bet",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/records/BetHistoryRecordView.vue")
+      }
+    ],
+    meta: {requiresAuth: true}
+  },
+  {
     path: "/account/records/change",
     component: () => import("layouts/MainLayout.vue"),
     children: [

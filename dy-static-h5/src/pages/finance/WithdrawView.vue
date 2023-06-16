@@ -183,7 +183,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const $q = useQuasar();
-    const imgURL = process.env.IMAGE_CDN + '/'
+    const imgURL = process.env.IMAGE_CDN + '/withdraw/'
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);

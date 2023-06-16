@@ -126,7 +126,7 @@ export default defineComponent({
       end: ""
     });
 
-    const store= userStore();
+    const store = userStore();
 
     const loadInfo = () => {
       personalState.memberInfo = userStore()
@@ -141,7 +141,7 @@ export default defineComponent({
     }
 
     const canEdit = computed(() => {
-      if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)){
+      if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)) {
         return true;
       }
       return false;

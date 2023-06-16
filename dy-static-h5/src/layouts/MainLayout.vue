@@ -346,6 +346,18 @@ export default defineComponent({
           prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "转账记录";
+        } else if (route.path === "/account/records/promo") {
+          prevPage.value = "account/records";
+          hasPage.value = true;
+          pageName.value = "优惠记录";
+        } else if (route.path === "/account/records/bet") {
+          prevPage.value = "account/records";
+          hasPage.value = true;
+          pageName.value = "投注记录";
+        } else if (route.path === "/account/records/financeFeedback") {
+          prevPage.value = "account/records";
+          hasPage.value = true;
+          pageName.value = "催单记录";
         } else if (route.path === "/account/records/change") {
           prevPage.value = "account/records";
           hasPage.value = true;

@@ -2,11 +2,23 @@
   <q-page>
     <div class="profile">
       <div class="avatar">
-        <img src="../assets/images/account/profile-img.png"/>
+        <img src="../assets/images/account/avatar.png"/>
       </div>
       <div class="pro-details">
-        {{ store.nickName }} VIP {{ store.vip }}
-        <span><img id="personal_vip_img" src="../assets/vip/vip_text_1.png"></span>
+        <span class="nickname-span">{{ store.nickName }}</span>
+        <span v-if="vipLevel === 1"><img id="personal_vip_img" src="../assets/vip/vip_text_1.png"></span>
+        <span v-else-if="vipLevel === 2"><img id="personal_vip_img" src="../assets/vip/vip_text_2.png"></span>
+        <span v-else-if="vipLevel === 3"><img id="personal_vip_img" src="../assets/vip/vip_text_3.png"></span>
+        <span v-else-if="vipLevel === 4"><img id="personal_vip_img" src="../assets/vip/vip_text_4.png"></span>
+        <span v-else-if="vipLevel === 5"><img id="personal_vip_img" src="../assets/vip/vip_text_5.png"></span>
+        <span v-else-if="vipLevel === 6"><img id="personal_vip_img" src="../assets/vip/vip_text_6.png"></span>
+        <span v-else-if="vipLevel === 7"><img id="personal_vip_img" src="../assets/vip/vip_text_7.png"></span>
+        <span v-else-if="vipLevel === 8"><img id="personal_vip_img" src="../assets/vip/vip_text_8.png"></span>
+        <span v-else-if="vipLevel === 9"><img id="personal_vip_img" src="../assets/vip/vip_text_9.png"></span>
+        <span v-else-if="vipLevel === 10"><img id="personal_vip_img" src="../assets/vip/vip_text_10.png"></span>
+        <span v-else-if="vipLevel === 11"><img id="personal_vip_img" src="../assets/vip/vip_text_11.png"></span>
+        <span v-else-if="vipLevel === 12"><img id="personal_vip_img" src="../assets/vip/vip_text_12.png"></span>
+
         <br/>
         <span v-if="store.evip">专属网址: {{ store.evip }}</span>
       </div>
@@ -103,7 +115,7 @@
         <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_share.png"/>
-            <div class="acct-nav-label">呼朋唤友</div>
+            <div class="acct-nav-label">分享好友</div>
           </div>
         </router-link>
         <router-link to="/account/promotion">
@@ -182,7 +194,32 @@ export default defineComponent({
       });
     };
 
-    const vip = computed(() => {
+    const vipLevel = computed(() => {
+      if (store.vip == "VIP1") {
+        return 1;
+      } else if (store.vip == "VIP2") {
+        return 2;
+      } else if (store.vip == "VIP3") {
+        return 3;
+      } else if (store.vip == "VIP4") {
+        return 4;
+      } else if (store.vip == "VIP5") {
+        return 5;
+      } else if (store.vip == "VIP6") {
+        return 6;
+      } else if (store.vip == "VIP7") {
+        return 7;
+      } else if (store.vip == "VIP8") {
+        return 8;
+      } else if (store.vip == "VIP9") {
+        return 9;
+      } else if (store.vip == "VIP10") {
+        return 10;
+      } else if (store.vip == "VIP11") {
+        return 11;
+      } else if (store.vip == "VIP12") {
+        return 12;
+      }
       return store.vip;
     });
 
@@ -214,7 +251,7 @@ export default defineComponent({
       logout,
       mainWallet,
       getBalance,
-      vip,
+      vipLevel,
       store,
       openDeposit,
     };
@@ -227,7 +264,7 @@ export default defineComponent({
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 30px 10px;
+  padding: 30px 15px;
   gap: 10px;
 
   .avatar {
@@ -241,7 +278,13 @@ export default defineComponent({
   .pro-details {
     font-size: 12px;
     line-height: 15px;
-    margin-top: 5px;
+    margin-top: 10px;
+
+    .nickname-span {
+      font-size: 14px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
   }
 }
 

@@ -248,7 +248,6 @@ export default defineComponent({
             })
             .then(() => {
               $q.loading.hide();
-              getCode();
               sessionStorage.removeItem("REFERRAL_CODE");
 
               if (store.hasToken()) {
@@ -259,6 +258,8 @@ export default defineComponent({
                 if (Platform.is.capacitor && Platform.is.ios) {
                   location.reload();
                 }
+              }else{
+                getCode();
               }
             })
             .catch((error) => {
