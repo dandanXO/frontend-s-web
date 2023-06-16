@@ -445,7 +445,7 @@ export default defineComponent({
             {
                 level: 2,
                 description: `升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款`,
-                monthlyBonus: '288',
+                monthlyBonus: '28',
                 birthdayBonus: '38',
                 cunsong: `存款至少100元可申请每月一次再存20% 最高奖金588元`,
                 drawTimes: "12",
