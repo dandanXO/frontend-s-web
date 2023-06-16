@@ -5,15 +5,18 @@ html {
   width: 100%;
   margin: 0 auto;
 }
+
 // app global css in SCSS form
 body {
   //font-family: "Jura";
   background: #ffffff;
 }
+
 #q-app {
   // background: #11131f;
   background: #d2d2de;
 }
+
 .q-layout,
 .q-header,
 .q-footer,
@@ -21,6 +24,7 @@ body {
   max-width: 500px;
   margin: 0 auto;
 }
+
 ::-webkit-scrollbar {
   width: 2px;
   height: 2px;
@@ -43,10 +47,12 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #2b2b4b;
 }
+
 .q-toolbar {
   padding-top: env(safe-area-inset-top, 0);
   background: #2b2b4b;
 }
+
 .q-page-container {
   background: #d2d2de;
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
@@ -57,28 +63,34 @@ body {
   // padding-top: calc(50px + env(safe-area-inset-top)) !important;
   // margin-bottom: calc(70px + env(safe-area-inset-top) + env(safe-area-inset-bottom)) !important;
 }
+
 .q-scrollarea__content {
   width: 100%;
   height: 100%;
 }
+
 body.body--dark {
   background: #11131f;
 }
+
 body.body--dark .q-header {
   // background: url(../assets/images/common/bgheader.png) no-repeat top center;
   background: #212534;
   // border-radius: 0 0 20px 20px;
   background-size: cover;
 }
+
 .q-dialog__inner--minimized {
   padding: 0;
 }
+
 // body.platform-ios .q-dialog__inner--minimized > div, body.platform-android:not(.native-mobile) .q-dialog__inner--minimized > div {
 //   max-height: unset;
 // }
 body.platform-ios .q-dialog__inner--minimized > div {
   max-height: calc(100vh - 108px);
 }
+
 .game-title {
   font-family: "Wave";
   font-size: 50px;
@@ -89,12 +101,14 @@ body.platform-ios .q-dialog__inner--minimized > div {
   background-image: linear-gradient(to right, #de4545, #db7e42);
   -webkit-background-clip: text;
   -webkit-text-fill-color: #db7e42;
+
   .menu-title {
     color: #db7e42;
     margin-bottom: 20px;
     display: block;
   }
 }
+
 .page-title {
   margin: 5px;
   color: #bacef1;
@@ -105,11 +119,13 @@ body.platform-ios .q-dialog__inner--minimized > div {
   justify-content: center;
   align-items: center;
   position: relative;
+
   a {
     display: block;
     position: absolute;
     left: 0;
     padding: 0;
+
     svg {
       display: block;
       width: 40px;
@@ -124,49 +140,60 @@ body.body--dark .q-drawer {
   max-width: 500px;
   margin: 0 auto;
 }
+
 body.body--dark .q-header {
   padding: 3px;
   padding-top: calc(3px + env(safe-area-inset-top, 0));
 }
+
 body.body--dark .q-footer {
   padding-bottom: calc(1px + env(safe-area-inset-top, 0));
   border-radius: 15px 15px 0 0;
   overflow: hidden;
 }
+
 svg {
   width: 25px;
   fill: #ffffff;
 }
+
 .q-carousel.vip {
   height: auto;
   text-align: center;
 }
+
 .q-carousel.home {
   height: 60vw;
   // border-radius: 20px;
   // margin: 10px;
   max-height: 180px;
+
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
   }
+
   .q-carousel__navigation--bottom {
     bottom: 30px;
   }
 }
+
 .q-card {
   margin: 10px;
   border-radius: 10px;
 }
+
 .q-card__section--vert {
   padding: 0;
 }
+
 .login-card {
   .q-card__section--vert {
     padding: 10px;
   }
 }
+
 .q-footer {
   border-radius: 20px 20px 0 0;
   box-shadow: 0 0 0px rgba(0, 0, 0, 0.3);
@@ -175,6 +202,7 @@ svg {
   .q-tabs {
     background: #d2d2de !important;
   }
+
   .q-tab {
     padding: 5px 0 0px;
     background: #ffffff;
@@ -182,25 +210,32 @@ svg {
 
     img {
       width: 25px;
+
       &.inactive {
         display: block;
       }
+
       &.hover {
         display: none;
       }
     }
+
     &__indicator {
       display: none;
     }
+
     &--inactive {
       opacity: 1;
     }
+
     &--active {
       color: #3f5fc7;
+
       img {
         &.inactive {
           display: none;
         }
+
         &.hover {
           display: block;
         }
@@ -208,44 +243,56 @@ svg {
     }
   }
 }
+
 .q-splitter--dark .q-splitter__separator {
   background: none;
 }
+
 .q-tabs--vertical .q-tab__indicator {
   display: none;
 }
+
 .text-brand {
   color: #000000;
 }
+
 .bg-brand {
   background: #063c50;
 }
+
 .bg-neontb {
   background: #313542;
 }
+
 .text-neontb {
   color: #13f129;
 }
+
 .text-bright {
   // color: #33bcd4;
   color: #5b80e7;
 }
+
 .bg-bright {
   background: #d4d4db !important;
   color: #3a3a3a !important;
 }
+
 .bg-brightbtn {
   background: #33bcd4;
   color: #ffffff;
 }
+
 .bg-dyblue {
   background: #5b80e8;
   color: #ffffff;
 }
+
 .bg-darkbtn {
   background: #212534;
   color: #bacef1;
 }
+
 // .bg-white {
 //   background: #ffffff;
 //   color: #000;
@@ -264,6 +311,7 @@ svg {
   align-content: center;
   justify-content: center;
 }
+
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);
   -webkit-background-clip: text;
@@ -277,6 +325,7 @@ svg {
   align-content: center;
   justify-content: center;
 }
+
 // .fullscreen {
 //   max-width: 500px;
 //   margin: 0 auto;
@@ -291,6 +340,7 @@ svg {
 .q-field--filled.q-field--readonly .q-field__control:before {
   border-bottom: 0;
 }
+
 .q-field--readonly.q-field--float .q-field__native,
 .q-field--readonly.q-field--float .q-field__input {
   color: #bacef1;

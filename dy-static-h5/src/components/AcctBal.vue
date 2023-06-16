@@ -3,7 +3,7 @@
     <div class="top-balance">
       <div class="mainbal">
         <div class="icon">
-          <img src="../assets/images/finance/withdraw/wallet.png"/>
+          <img src="../assets/images/finance/withdraw/wallet.png" />
         </div>
         <div class="wallet">
           <div class="label">中心钱包</div>
@@ -22,7 +22,7 @@
           @click="refreshBalance('all')"
         >
           <div class="icon">
-            <img src="../assets/images/finance/withdraw/refresh.png"/>
+            <img src="../assets/images/finance/withdraw/refresh.png" />
           </div>
           <div class="label">一键刷新</div>
         </div>
@@ -33,7 +33,7 @@
           @click="transferOutAll"
         >
           <div class="icon">
-            <img src="../assets/images/finance/withdraw/transfer_icon.png"/>
+            <img src="../assets/images/finance/withdraw/transfer_icon.png" />
           </div>
           <div class="label">一键转出</div>
         </div>
@@ -43,7 +43,7 @@
     <div v-if="isTransfer" class="text-brand q-pa-sm">
       东赢电竞、IM体育无需转账，共享主钱包
     </div>
-    <q-separator/>
+    <q-separator />
     <div
       class="transfer-plat-wrapper"
       :style="isExpanded ? `height: ${transferBox}px` : 'height: 80px;'"
@@ -101,7 +101,7 @@
       class="showall text-center text-brand q-pt-md"
     >
       显示所有场馆
-      <q-icon name="expand_more"/>
+      <q-icon name="expand_more" />
     </div>
     <div
       @click="showPlatform"
@@ -109,7 +109,7 @@
       class="showall text-center text-brand q-pt-md"
     >
       收起所有场馆
-      <q-icon name="expand_less"/>
+      <q-icon name="expand_less" />
     </div>
   </div>
 </template>
@@ -117,12 +117,12 @@
 <script setup>
 const props = defineProps({
   isTransfer: Boolean,
-  platforms: Array,
+  platforms: Array
 });
-import {ref, reactive, onMounted} from "vue";
-import {userStore} from "stores/index";
-import {api} from "boot/axios";
-import {useQuasar} from "quasar";
+import { ref, reactive, onMounted } from "vue";
+import { userStore } from "stores/index";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 
 const isLoadingBalance = ref(false);
 const isRefreshingBalance = ref(true);
@@ -179,7 +179,7 @@ const transferOutAll = () => {
     if (platform.code && platform.amount > 0) {
       const transferInfo = {
         platform: platform.code,
-        amount: platform.amount,
+        amount: platform.amount
       };
       api
         .post("/session/balance/transfer/withdraw", qs.stringify(transferInfo))
@@ -211,7 +211,7 @@ const refreshBalance = (plat) => {
       platform.isLoading = true;
       if (platform.code) {
         api
-          .get("/session/balance", {params: {platform: platform.code}})
+          .get("/session/balance", { params: { platform: platform.code } })
           .then((res) => {
             if (platform) {
               platform.amount = res.data;
@@ -234,7 +234,7 @@ const refreshBalance = (plat) => {
     platform.amount = 0;
     platform.isLoading = true;
     api
-      .get("/session/balance", {params: {platform: plat}})
+      .get("/session/balance", { params: { platform: plat } })
       .then((res) => {
         if (platform) {
           platform.amount = res.data;
@@ -246,7 +246,7 @@ const refreshBalance = (plat) => {
           color: "negative",
           position: "top",
           message: e.message,
-          icon: "report_problem",
+          icon: "report_problem"
         });
         platform.isLoading = false;
       });
@@ -319,7 +319,7 @@ onMounted(() => {
 
         .icon {
           width: 25px;
-          height:25px;
+          height: 25px;
 
           img {
             width: 100%;
@@ -336,7 +336,7 @@ onMounted(() => {
 
         .icon {
           width: 25px;
-          height:25px;
+          height: 25px;
 
           img {
             width: 100%;
@@ -375,7 +375,7 @@ onMounted(() => {
             word-break: break-all;
 
             .plat-name {
-              color:#000;
+              color: #000;
               overflow: hidden;
               height: 25px;
               font-weight: 700;
