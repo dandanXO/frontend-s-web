@@ -36,7 +36,7 @@
                 </div>
             </template>
 
-            <!-- <template v-if="selectedPlat === 'BBIN'">
+            <template v-if="selectedPlat === 'BBIN'">
                 <div
                     class="lottery-pane-bg lottery-pane-bbin-bg"
                     data-aos="zoom-in"
@@ -68,12 +68,12 @@
                     </div>
                     <button
                         class="btn linear-blue"
-                        @click="openGame(BBIN, BBIN)"
+                        @click="openGame('BBIN', 'BBIN')"
                     >
                         进入游戏
                     </button>
                 </div>
-            </template> -->
+            </template>
         </div>
         <ul class="nav nav-tabs lottery-tabs" id="myTab" role="tablist">
             <li class="nav-item custom-nav-item" style="margin-left: 120px">
@@ -85,14 +85,14 @@
                     TCG彩票
                 </a>
             </li>
-            <!-- <li class="nav-item custom-nav-item">
+            <li class="nav-item custom-nav-item">
                 <a
                     class="nav-link custom-nav-link bbin-nav-link"
-                    @click="selectedPlat !== 'BBIN' && clickPlat('BBIN')"
-                    :class="{ active: selectedPlat === 'BBIN' }"
+                    @click="selectedPlat !== 'BBINDY' && clickPlat('BBINDY')"
+                    :class="{ active: selectedPlat === 'BBINDY' }"
                     >bbin 彩票</a
                 >
-            </li> -->
+            </li>
         </ul>
     </div>
     <GameModal ref="liveGame"></GameModal>
@@ -117,13 +117,13 @@ export default defineComponent({
                 message:
                     "TCG，业界首创区块链彩票，汲取区块链的核心技术算法，只为公平、公正的开奖结果。多地域的官方时时彩、11选5、PK10、PC蛋蛋和官方六合彩，足不出户却能无时无刻的尽情游玩！",
             },
-            // {
-            //     code: "BBIN",
-            //     name: "BBIN",
-            //     image: "bbin",
-            //     message:
-            //         "BBIN彩票打造着高品质游戏体验、不断地求新求变，寻找最新的创意，秉持最好的服务……，种种这些都注定BBIN彩票的不俗传说，超百种彩票玩法任您赢！",
-            // },
+            {
+                code: "BBINDY",
+                name: "BBIN",
+                image: "bbin",
+                message:
+                    "BBIN彩票打造着高品质游戏体验、不断地求新求变，寻找最新的创意，秉持最好的服务……，种种这些都注定BBIN彩票的不俗传说，超百种彩票玩法任您赢！",
+            },
         ]);
         const selectedPlat = ref(platforms.value[0].code);
 
@@ -175,7 +175,7 @@ export default defineComponent({
         };
 
         const openGame = (gameName, gameCode) => {
-            liveGame.value.open(gameName, "onlyPlatform", gameCode);
+            liveGame.value.open(gameName, gameCode, 'bbkeno_bbws_pc');
         };
         onMounted(() => {
             aos.refresh();
