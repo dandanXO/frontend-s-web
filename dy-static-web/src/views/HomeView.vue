@@ -8,26 +8,27 @@
     <div class="index-container">
       <div class="index-top-btn-container">
         <div class="index-operator-btn-box">
-            <div class="index-operator-btn deposit" onclick="urlOpen('/personal/main.html?page=deposit')">我要充值</div>
-            <a class="index-operator-btn download" href="download.html" target="_blank">下载APP</a>
-            <div class="index-operator-btn promo" onclick="urlOpen('/personal/main.html?page=privilege')">热门活动</div>
+          <router-link to="/center/deposit"><div class="index-operator-btn deposit">我要充值</div></router-link>
+          <router-link to="/app" class="index-operator-btn download">下载APP</router-link> 
+            <router-link to="/promotion" class="index-operator-btn promo">热门活动</router-link>
         </div>
         <div class="index-platform-btn-box">
-            <a class="index-platform-btn" href="/games/esports.html">
+            <router-link class="index-platform-btn" to="/esports">
                 <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_esports.png">
                 <div>电竞游戏</div>
-            </a>
-            <a class="index-platform-btn" href="/games/sportPlatforms.html">
+            </router-link>
+            <router-link class="index-platform-btn" to="/sports">
                 <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_sport.png">
                 <div>体育竞猜</div>
-            </a>
-            <a class="index-platform-btn" href="/games/live.html">
+            </router-link>
+            <router-link class="index-platform-btn" to="/live-casino">
                 <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_live.png">
                 <div>真人娱乐</div>
-            </a>
+            </router-link>
         </div>
     </div>
-    <div class="index-title-container" style="margin-top: 50px;">
+    <!--暂时没后端数据-->
+    <!-- <div class="index-title-container" style="margin-top: 50px;">
         <div class="index-title-main">热门赛事</div>
         <div class="index-title-sub">HOT EVENTS</div>
     </div>
@@ -104,7 +105,7 @@
                 进入投注
             </a>
         </div>
-    </div>
+    </div> -->
     <div class="index-title-container">
         <div class="index-title-main">场馆投注</div>
         <div class="index-title-sub">VENUES BETTING</div>
@@ -117,15 +118,15 @@
                     <div class="platform-title-sub">LIVE CASINO</div>
                 </div>
                 <div class="back">
-                    <div class="game-platform" onclick="fun_openGame('0',5)" style="margin-top: 59px;margin-left: 46px;">
+                    <div class="game-platform" @click="openGame('AG真人', 'live' , 'AG')" style="margin-top: 59px;margin-left: 46px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/ag.png">
                         <div>AG真人</div>
                     </div>
-                    <div class="game-platform" onclick="fun_openGame('100',26)" style="margin-left: 30px;">
+                    <div class="game-platform" @click="openGame('欧博真人', 'live', 'ALLBET')" style="margin-left: 30px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/allbet.png">
                         <div>欧博真人</div>
                     </div>
-                    <div class="game-platform" onclick="fun_openGame('zhenren',36,'BBIN')" style="margin-left: 14px;">
+                    <div class="game-platform" @click="openGame('BBIN真人', 'live', 'BBIN')" style="margin-left: 14px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/bbin.png">
                         <div>BBIN真人</div>
                     </div>
@@ -139,15 +140,15 @@
                     <div class="platform-title-sub">ESPORTS</div>
                 </div>
                 <div class="back">
-                    <a class="game-platform" href="/games/esport.html" style="margin-top: 59px;margin-left: 46px;">
+                    <a class="game-platform" @click="openGame('东赢', 'onlyPlatform', 'TFGaming')" style="margin-top: 59px;margin-left: 46px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
                         <div>东赢电竞</div>
                     </a>
-                    <a class="game-platform" href="/games/ia-esport.html" style="margin-left: 30px;">
+                    <a class="game-platform" @click="openGame('小艾', 'onlyPlatform', 'XA')" style="margin-left: 30px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
                         <div>小艾电竞</div>
                     </a>
-                    <div class="game-platform" onclick="urlOpen('/games/im-esport.html')" style="margin-left: 14px;">
+                    <div class="game-platform" @click="openGame('IM', 'onlyPlatform', 'IM')"  style="margin-left: 14px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
                         <div>IM电竞</div>
                     </div>
@@ -161,11 +162,11 @@
                     <div class="platform-title-sub">SPORTS</div>
                 </div>
                 <div class="back">
-                    <a class="game-platform" href="/games/sport.html" style="margin-top: 118px;margin-left: 38px;">
+                    <a class="game-platform" @click="openGame('东赢体育', 'sport', 'DY')" style="margin-top: 118px;margin-left: 38px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
                         <div>东赢体育</div>
                     </a>
-                    <div class="game-platform" onclick="urlOpen('/games/im-sport.html')" style="margin-left: 22px;">
+                    <div class="game-platform" @click="openGame('IM体育', 'sport', 'IM')" style="margin-left: 22px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
                         <div>IM体育</div>
                     </div>
@@ -179,14 +180,14 @@
                     <div class="platform-title-sub">LOTTERY</div>
                 </div>
                 <div class="back">
-                    <div class="game-platform" onclick="openELottery('/ptweb/playELottery?gameCode=Lobby')" style="margin-top: 118px;margin-left: 38px;">
+                    <div class="game-platform" @click="openGame('TCG彩票', 'lottery', 'TCG')" style="margin-top: 118px;margin-left: 38px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/tcg.png">
                         <div>TCG彩票</div>
                     </div>
-                    <div class="game-platform" style="margin-left: 22px;" onclick="openELottery('/ptweb/playGame?gameCode=lottery&amp;pid=36&amp;pfCode=BBIN')">
+                    <!-- <div class="game-platform" @click="openGame('BBIN彩票', 'lottery', 'BBIN')" style="margin-left: 22px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/bbin.png">
                         <div>BBIN彩票</div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -197,11 +198,11 @@
                     <div class="platform-title-sub">POKER</div>
                 </div>
                 <div class="back">
-                    <div class="game-platform" onclick="openELottery('/ptweb/kyGame?gameCode=Lobby')" style="margin-top: 118px;margin-left: 38px;">
+                    <div class="game-platform" @click="openGame('开元棋牌', 'poker', 'KY')" style="margin-top: 118px;margin-left: 38px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/ky.png">
                         <div>开元棋牌</div>
                     </div>
-                    <div class="game-platform" onclick="openELottery('/ptweb/txGame?gameCode=Lobby')" style="margin-left: 22px;">
+                    <div class="game-platform" @click="openGame('大唐棋牌', 'poker', 'DT')"  style="margin-left: 22px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/tx.png">
                         <div>大唐棋牌</div>
                     </div>
@@ -215,14 +216,14 @@
                     <div class="platform-title-sub">FISHING</div>
                 </div>
                 <div class="back">
-                    <a class="game-platform" href="/games/fish.html" style="margin-top: 118px;margin-left: 38px;">
+                    <router-link class="game-platform" to="/fishing" style="margin-top: 118px;margin-left: 38px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/index_fish.png">
                         <div>捕鱼</div>
-                    </a>
-                    <a class="game-platform" href="/games/slots.html" style="margin-left: 22px;">
+                    </router-link>
+                    <router-link class="game-platform" to="/slot" style="margin-left: 22px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/index_slot.png">
                         <div>老虎机</div>
-                    </a>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -594,10 +595,12 @@
       </div>
     </el-dialog>
   </div>
+  <GameModal ref="gameMenu" />
 </template>
 
 <script>
 /* eslint-disable */
+import GameModal from "@/components/modal/GameModal.vue";
 import { defineComponent, ref, onMounted } from "vue";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
@@ -608,8 +611,10 @@ export default defineComponent({
   // },
   components: {
     Vue3autocounter,
-  },
+    GameModal
+},
   setup() {
+    const gameMenu = ref(null);
     const banners = ref([
       {
         src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png",
@@ -619,9 +624,14 @@ export default defineComponent({
       },
     ]);
     const isImportantAnnoucementModal = ref(true);
+    const openGame = (gameName, platType, gameCode) => {
+      gameMenu.value.open(gameName, platType, gameCode);
+    };
     return {
       banners,
       isImportantAnnoucementModal,
+      gameMenu,
+      openGame
     };
   },
 });

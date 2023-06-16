@@ -8,10 +8,12 @@
       <span class="menu-title"> 提款流程：</span>
     <div class="account-content withdrawal">
       <div class="flex-box">
-        <div class="step-item active">申请中
-        </div>
+        <div class="step-item active">申请中</div>
+        <RiArrowRightSLine />
         <div class="step-item">审核中</div>
+        <RiArrowRightSLine />
         <div class="step-item">支付中</div>
+        <RiArrowRightSLine />
         <div class="step-item">出款成功</div>
       </div>
       <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
@@ -48,13 +50,13 @@
               class="form-input"
               v-model="withdrawInfo.amount"
               placeholder="提款金额"
-            ><template #append>￥</template>
+            ><template #append>{{ store.currency.label }}</template>
             </el-input>
           </el-col>
           <el-col :span="12">
             <span v-if="selectedWithdrawalMethod">
-              {{ `单笔限额: ${selectedWithdrawalMethod.withdrawMin} - ${selectedWithdrawalMethod.withdrawMax}`  }} <br>
-              {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes}` }}
+              {{ `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${ store.currency.label } - ${selectedWithdrawalMethod.withdrawMax} ${ store.currency.label }`  }} <br>
+              {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${ store.currency.label }, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次` }}
             </span>
           </el-col>
         </el-row>
@@ -74,10 +76,10 @@
         <el-form-item
           v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
           class="helptxt"
-          label="Exchange rate"
+          label="实时汇率"
         >
-          <span style="color: #9bffd1"
-            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} MYR</span
+          <span style="color: #17cd27"
+            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}</span
           >
         </el-form-item>
         <el-form-item
@@ -104,9 +106,9 @@
         <el-form-item
           v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
           class="helptxt"
-          label="Estimated amount"
+          label="预计到账"
         >
-          <span style="color: #9bffd1"
+          <span style="color: #17cd27"
             >{{
               (
                 withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
@@ -115,11 +117,11 @@
             USDT</span
           >
         </el-form-item>
-        <div class="flex-box flex-justify-center">
-          <el-button class="common-btn withdraw-btn" @click="submitWithraw">
+        <el-row>
+          <el-button size="large" class="common-btn withdraw-btn" @click="submitWithraw">
             确定
           </el-button>
-        </div>
+        </el-row>
         </el-form>
     </div>
   </div>
@@ -131,12 +133,16 @@ import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
+import { RiArrowRightSLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "WithdrawView",
+  components: {
+    RiArrowRightSLine
+  },
   setup() {
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
@@ -283,7 +289,8 @@ export default defineComponent({
       selectMethod,
       imgURL,
       isUSDT,
-      verifyWithdrawAmount
+      verifyWithdrawAmount,
+      store
     };
   },
 });
@@ -300,6 +307,11 @@ export default defineComponent({
       .flex-box {
         display: flex;
         justify-content: center;
+        gap: 10px;
+        svg {
+          width: 20px;
+          fill: #6c757d;
+        }
       }
       .withdraw-tip {
         color: #ff7f10;
@@ -318,44 +330,46 @@ export default defineComponent({
       width: 130px;
       // height: 50px;
       line-height: 45px;
-      background-color: #2a313e;
+    background-image: linear-gradient(267deg,#78abfa 0,#4877ec 100%),linear-gradient(#5b80e7,#5b80e7);
       text-align: center;
       position: relative;
-      border: 2px solid #2a313e;
+      // border: 2px solid #74aef8;
       border-left: 0;
-      padding-left: 20px;
+      // padding-left: 20px;
       font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
-      &::before,
-      &::after {
-        content: "";
-        position: absolute;
-        border-top: 23px solid transparent;
-        border-bottom: 23px solid transparent;
-        top: 0px;
-      }
-      &::before {
-        left: 0;
-        top: -2px;
-        border-left: 25px solid #24222e;
-        border-top: 25px solid transparent;
-        border-bottom: 25px solid transparent;
-      }
-      &::after {
-        border-left: 23px solid #2a313e;
-        right: -23px;
-        z-index: 1;
-      }
+      // &::before,
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   border-top: 23px solid transparent;
+      //   border-bottom: 23px solid transparent;
+      //   top: 0px;
+      // }
+      // &::before {
+      //   left: 0;
+      //   top: -2px;
+      //   border-left: 25px solid #74aef8;
+      //   border-top: 25px solid transparent;
+      //   border-bottom: 25px solid transparent;
+      // }
+      // &::after {
+      //   border-left: 23px solid #74aef8;
+      //   right: -23px;
+      //   z-index: 1;
+      // }
       &.active {
         color: #ffffff;
         // background: #ffffff;
-        background-image: linear-gradient(90deg,#0ca9bc 0,#0a5e89 100%),linear-gradient(#45fdfb,#45fdfb);
+        // background-image: linear-gradient(90deg,#0ca9bc 0,#0a5e89 100%),linear-gradient(#45fdfb,#45fdfb);
+        
+    background-image: linear-gradient(267deg,#78abfa 0,#4877ec 100%),linear-gradient(#5b80e7,#5b80e7);
         border: 0;
         padding-left: 0px;
         &::after {
-          border-left: 25px solid #0a5f8a;
+          border-left: 25px solid #74aef8;
           top: 0;
           right: -25px;
           border-top: 25px solid transparent;
@@ -381,15 +395,17 @@ export default defineComponent({
       cursor: pointer;
       img {
         width: 40px;
-        padding: 2px 20px;
-        background: #2a313e;
+    padding: 8px 20px;
+    background: #ffffff;
+    border: 1px solid #ced4da;
       }
       &.active {
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
         img {
-          border: 1px solid #45FDFB;
+          border: 1px solid #4978ec;
+          background: #bad2ff;
         }
       }
       .type-name {
@@ -492,7 +508,7 @@ export default defineComponent({
           border-bottom: 15px solid transparent;
         }
         &::after {
-          border-left: 13px solid #2a313e;
+          border-left: 13px solid #74aef8;
           right: -13px;
           border-top: 13px solid transparent;
           border-bottom: 13px solid transparent;

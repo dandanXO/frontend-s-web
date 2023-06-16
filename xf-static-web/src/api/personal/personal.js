@@ -41,6 +41,10 @@ export function gameBetRecordTotal(p) {
   return server.REST.get("/session/member/gameBetRecordTotal", { params: p });
 }
 
+export function financeFeedbackList(p) {
+  return server.REST.get("/session/member/financeFeedback", { params: p });
+}
+
 export function loadCurrency() {
   return server.REST.get("/session/withdraw/currency");
 }
@@ -79,4 +83,14 @@ export function sendEmail(emailInfo) {
 
 export function verifyEmail(emailInfo) {
   return server.REST.post("/otp/verifyEmail", emailInfo);
+}
+
+export function saveFinanceFeedback(reminderInfo) {
+  return server.REST.post("/session/saveFinanceFeedback", reminderInfo);
+}
+export function getVerifyingFeedbackCount(data) {
+  return server.REST.get("session/getVerifyingFeedbackCount", data);
+}
+export function sendSms(telephoneInfo) {
+  return server.REST.post("/otp/sendSms", telephoneInfo);
 }

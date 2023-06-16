@@ -1,6 +1,6 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div v-if="level === 1" />
+    <div v-if="level === 1"/>
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
@@ -18,7 +18,7 @@
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <img :src="imgURL + item.nodeIcon" />
+          <img :src="imgURL + item.nodeIcon"/>
           <div class="overflow">{{ item.nodeName }}</div>
           <div
             class="promo"
@@ -35,7 +35,7 @@
               :key="pm.id"
               :class="{ active: pm.nodeName === activeMethod }"
             >
-              <img :src="imgURL + pm.nodeIcon" />
+              <img :src="imgURL + pm.nodeIcon"/>
               <div>{{ pm.nodeName }}</div>
             </div>
           </div>
@@ -71,10 +71,10 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import {defineComponent, reactive} from "vue";
 
 
-const imgURL = process.env.IMAGE_CDN + '/'
+const imgURL = process.env.IMAGE_CDN + '/payment/'
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -141,7 +141,7 @@ export default defineComponent({
       }
     });
   },
-  
+
   methods: {
     firstTime(item) {
       if (item) {
@@ -149,7 +149,7 @@ export default defineComponent({
         this.selectItem = item;
         this.$emit("clicked", this.selectItem);
         if (item.group) {
-              this.$emit("clicked", item.children[0]);
+          this.$emit("clicked", item.children[0]);
         } else {
           this.$emit("clicked", item);
         }
@@ -161,7 +161,8 @@ export default defineComponent({
           element.children.forEach((e) => {
             e.hasActive = false
           })
-        };
+        }
+        ;
         element.hasActive = false;
       });
       this.list.forEach((element) => {
@@ -194,7 +195,7 @@ export default defineComponent({
   mounted() {
     // this.clickItem(this.list[0]);
     this.$nextTick(() => {
-     this.firstTime(this.list[0]);
+      this.firstTime(this.list[0]);
     })
   }
 });
@@ -210,6 +211,7 @@ $node-color: #45fefa;
   margin-left: 18px;
   margin-bottom: 10px;
 }
+
 .title::before,
 .title::after {
   content: "";
@@ -218,16 +220,19 @@ $node-color: #45fefa;
   width: 6px;
   height: 6px;
   background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  linear-gradient(#ffffff, #ffffff);
 }
+
 .title::before {
   top: 8px;
   left: -16px;
 }
+
 .title::after {
   top: 15px;
   left: -10px;
 }
+
 .payment-method-wrapper {
   // display: grid;
   // grid-template-columns: repeat(auto-fill, 200px);
@@ -245,14 +250,17 @@ $node-color: #45fefa;
     cursor: pointer;
     // padding: 20px 35px;
     img {
-        border: 1px solid;padding: 5px 15px;
+      border: 1px solid;
+      padding: 5px 15px;
       border-radius: 3px;
       max-width: 75px;
       margin-bottom: 10px;
     }
+
     &:hover {
       // border-bottom: 3px solid rgba(255, 255, 255, .4);
     }
+
     &.active {
       // background: rgba(255,255,255, .2);
       img {
@@ -268,15 +276,19 @@ $node-color: #45fefa;
     // }
   }
 }
+
 .container {
   margin: -20px;
 }
+
 .container > .node:first-of-type {
   margin-top: 0;
 }
+
 .container > .node:first-of-type {
   padding: 500px;
 }
+
 .node:not(.node) {
   border-bottom: 1px solid #484460;
   // .node  {
@@ -284,44 +296,57 @@ $node-color: #45fefa;
   //   padding: 0 25px;
   //   margin: 0 -25px;
 }
+
 .node {
   .node {
     margin: 0 -30px;
     padding: 0 30px;
+
     .account-title-container {
       margin: 0 -30px;
       background: none;
       // border-top: 1px solid #484460;
       // font-weight: bold;
     }
+
     &.node-group {
       display: flex;
       justify-content: flex-start;
-      align-items:  center;
+      align-items: center;
       gap: 10px;
       margin: 10px 0px;
       padding: 0 0px;
+      flex-wrap: wrap;
+
       .account-title-container {
         margin: 0;
       }
+
       .payment-method-wrapper {
         gap: 5px;
       }
-      .payment-method-item { padding: 5px;
+
+      .payment-method-item {
+        padding: 5px;
         border: 1px solid transparent;
-      &.active {
-        border: 1px solid #33bcd4;
-      } }
+
+        &.active {
+          border: 1px solid #33bcd4;
+        }
+      }
+
       .node-text {
         display: flex;
         gap: 5px;
         flex-direction: row;
         justify-content: center;
         align-items: center;
+
         & > div {
           font-size: 12px;
           color: #a0bcd6;
         }
+
         img {
           width: 15px;
           border: 0;
@@ -333,8 +358,10 @@ $node-color: #45fefa;
       }
     }
   }
+
   .node-content {
     gap: 0;
+
     .payment-method-item {
       text-align: center;
       padding: 10px 8px;
@@ -344,6 +371,7 @@ $node-color: #45fefa;
 
       &:hover {
       }
+
       &.active {
         // background-color: #1c1c32;
         // border-radius: 6px;
@@ -352,94 +380,58 @@ $node-color: #45fefa;
         // filter: drop-shadow(0px 0px 3px #ffffff);
       }
     }
+
     .node-item {
       display: flex;
       justify-content: center;
       min-width: 2rem;
+
       .payment-method-wrapper {
         display: none;
       }
     }
+
     .node-text {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 5px;
       flex-direction: column;
+
       & > div {
         font-size: 12px;
         color: #a0bcd6;
       }
+
       img {
-       background-color: #2a313e;
+        background-color: #fff;
         margin-bottom: 0;
       }
     }
   }
-  // .node-content {
-  //   display: flex;
-  //   align-items: stretch;
-  //   flex-wrap: wrap;
-  //   padding: 5px 0;
-  //   justify-content: flex-start;
-  //   position: relative;
-  //   width: 100%;
-  //   margin: 20px auto;
-  //   background: #23263c;
-  // }
-  // .node {
-  //   .node-content {
-  //     .payment-method-item {
-  //       text-align: center;
-  //       padding: 10px 8px;
-  //       cursor: pointer;
-  //       background-color: #161b23;
-  //       border-radius: 6px;
-  //       border: solid 1px #484460;
-  //       &:hover {
-  //       }
-  //       &.active {
-  //         background: #161b23;
-  //         border-color: $node-color;
-  //       }
-  //     }
-  //     .node-item {
-  //       display: flex;
-  //       justify-content: center;
-  //       width: 10rem;
-  //       .payment-method-wrapper {
-  //         display: none;
-  //       }
-  //     }
-  //     .node-text {
-  //       display: flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //       img {
-  //         max-width: 1.5rem;
-  //         margin-bottom: 0;
-  //         margin-right: 20px;
-  //       }
-  //     }
-  //   }
-  // }
+
   .icons {
     text-align: right;
     display: flex;
     justify-content: flex-end;
   }
+
   .el-icon-edit,
   .el-icon-remove {
     padding: 5px;
   }
+
   .el-icon-edit {
     color: $node-color;
   }
+
   .el-icon-remove {
     color: $node-color;
   }
+
   .node-item {
     position: relative;
+
     .promo {
       position: absolute;
       right: 0;
@@ -465,36 +457,13 @@ $node-color: #45fefa;
       ::after {
         position: relative;
       }
-      // .val{
-      //   position: absolute;
-      //   z-index: 999999;
-      //   right: 1px;
-      //   top: 3px;
-      //   font-size: 8px;
-      //   color: #FFFFFF;
-      //   display: block;
-      //   background: #cd1e1e;
-      // }
+
+
     }
   }
-  // .node-item {
-  //   &.selected{
-  //     border-bottom: 5px solid $node-color;
-  //   }
-  // }
-  // .node-group {
-  //   color: $group-color;
-  //   .el-icon-edit{
-  //     color: $group-color;
-  //   }
-  //   .el-icon-remove{
-  //     color: $group-color;
-  //   }
-  //   &.selected{
-  //     border-bottom: 2px solid $group-color;
-  //   }
-  // }
+
 }
+
 @media (max-width: 768px) {
   .node {
     .node {

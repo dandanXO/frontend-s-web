@@ -105,6 +105,7 @@ import GameModal from "@/components/modal/GameModal";
 import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
 import { useScriptTag } from '@vueuse/core'
+import { userStore } from "@/store";
 // import { message } from "ant-design-vue";
 
 export default defineComponent({
@@ -112,6 +113,7 @@ export default defineComponent({
     Search, GameModal
   },
   setup() {
+    const store = userStore();
     const numBox = ref(275417746)
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/game/'
     const banner = ref([]);
@@ -248,9 +250,8 @@ export default defineComponent({
               casino : 'drunkenmonkey88',
               currency : 'cny'
             })
-          console.log(Ticker.prototype);
           ptJackpot.value.SetCurrencyPos(0);
-          ptJackpot.value.SetCurrencySign("￥");
+          ptJackpot.value.SetCurrencySign(store.currency.value);
           ptJackpot.value.attachToTextBox('numBox');
           ptJackpot.value.tick();
         },
@@ -283,7 +284,8 @@ export default defineComponent({
       onShowSizeChange,
       slotsGame,
       banner,
-      imgURL
+      imgURL,
+      store
     };
   }
 });

@@ -1,5 +1,5 @@
 {
-  "name": "xf",
+  "name": "dy",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
     "gsap": "^3.12.1",
     "moment": "^2.29.4",
     "pinia": "^2.0.30",
+    "sweetalert2": "^11.7.12",
     "vue": "^3.2.13",
     "vue-qrcode-component": "^2.1.1",
     "vue-qrious": "^3.1.0",

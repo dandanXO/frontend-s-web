@@ -104,7 +104,7 @@ export default defineComponent({
       selectItem: null,
       dialogVisible: false,
       payMethods: reactive([]),
-      imgURL: process.env.VUE_APP_IMAGE_CDN + "/",
+      imgURL: process.env.VUE_APP_IMAGE_CDN + "/payment/",
       nodeKey: 0,
     };
   },
@@ -271,6 +271,7 @@ $node-color: #4873f1;
       justify-content: flex-start;
       align-items:  center;
       gap: 10px;
+    flex-wrap: wrap;
       .account-title-container {
         margin: 0 0 20px;
       }

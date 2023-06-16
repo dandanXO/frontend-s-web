@@ -92,3 +92,7 @@ export function saveFinanceFeedback(reminderInfo) {
 export function getVerifyingFeedbackCount(data) {
   return server.REST.get("session/getVerifyingFeedbackCount", data);
 }
+
+export function sendSms(telephoneInfo) {
+  return server.REST.post("/otp/sendSms", telephoneInfo);
+}

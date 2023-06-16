@@ -36,7 +36,7 @@
               >
               <!-- {{ p.code = 'JDB' }}
                 <img :src="require(`../assets/game/${p.code.toLowerCase()}.png`)" /> -->
-                {{ p.code + ' 电子' }}
+                {{ p.name + ' 电子' }}
               </div>
             </div>
           </div>
@@ -112,6 +112,7 @@ import GameModal from "@/components/modal/GameModal";
 import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
 import { useScriptTag } from '@vueuse/core'
+import { userStore } from "@/store";
 // import { message } from "ant-design-vue";
 
 export default defineComponent({
@@ -119,8 +120,9 @@ export default defineComponent({
     Search, GameModal
   },
   setup() {
+    const store = userStore();
     const numBox = ref(275417746)
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/game/'
     const banner = ref([]);
     const route = useRoute();
     const router = useRouter();
@@ -130,7 +132,7 @@ export default defineComponent({
     const gamePage = reactive({
       gameList: [],
       currentPage: 1,
-      pageSize: 30,
+      pageSize: 12,
       searchType: "",
       searchKey: "",
       total: 0
@@ -174,7 +176,7 @@ export default defineComponent({
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/slot/${activePlat.value.code}/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code}/slot/${element.icon}.png`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
@@ -257,7 +259,7 @@ export default defineComponent({
             })
           console.log(Ticker.prototype);
           ptJackpot.value.SetCurrencyPos(0);
-          ptJackpot.value.SetCurrencySign("￥");
+          ptJackpot.value.SetCurrencySign(store.currency.value);
           ptJackpot.value.attachToTextBox('numBox');
           ptJackpot.value.tick();
         },
@@ -277,6 +279,7 @@ export default defineComponent({
       }
     );
     return {
+      store,
       numBox,
       platforms,
       activePlat,
@@ -604,7 +607,7 @@ export default defineComponent({
               text-align: center;
               // background-color: #333b44;
               // box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
-              color: #959dab;
+              color: #707a8f;
               display: inline-block;
               cursor: pointer;
               font-size: 15px;

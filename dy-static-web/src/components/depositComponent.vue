@@ -27,21 +27,27 @@
           label-suffix=":"
         >
           <el-row :gutter="20">
-            <el-col :span="9">
-              <el-form-item class="helptxt" label="余额" prop="localAmount">
-                  <el-input
+            <el-col :span="12">
+              <el-form-item class="helptxt" label="金额" prop="localAmount">
+                <el-input v-if="amountList.length === 0"
                   v-model="form.localAmount"
-                  placeholder="输入存款余额"
+                  placeholder="输入存款金额"
                 />
+
+                <el-select placeholder="选择存款金额" v-else v-model="form.localAmount">
+                  <el-option v-for="amount in amountList" :key="amount" :value="amount">
+                    {{ amount }}
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="12">
               <div class="account-tip">
-                最低存款 : {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? 'USDT' : 'RMB'}}
+                最低存款: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? 'USDT' : store.currency.label }}
                  <br />
-                最高存款:{{
+                最高存款: {{
                   activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
-                }} {{ isUSDT ? 'USDT' : 'RMB'}}
+                }} {{ isUSDT ? 'USDT' : store.currency.label }}
               </div>
             </el-col>
           </el-row>
@@ -49,10 +55,10 @@
           <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
             class="helptxt"
-            label="Exchange Rate"
+            label="实时汇率"
           >
-            <span style="color: #15c201"
-              >1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ isUSDT ? 'USDT' : 'RMB'}}</span
+            <span style="color: #17cd27"
+              >1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span
             >
           </el-form-item>
           <el-form-item
@@ -111,13 +117,13 @@
               <div v-html="activeMethod.msg"></div>
               <!-- {{ activeMethod.msg }} -->
             </span>
-            <div class="account-tip-text">
+            <!-- <div class="account-tip-text">
               <el-icon><InfoFilled /> </el-icon>
                 更新个人信息的新帐户可以参与促销活动。
-            </div>
+            </div> -->
           </el-form-item>
           <div class="txt-center">
-            <el-button @click="confirmDeposit" class="common-btn">
+            <el-button size="large" @click="confirmDeposit" class="common-btn">
               确定
             </el-button>
           </div>
@@ -160,6 +166,7 @@ const payTypeClass = ref();
 const payMethods = reactive([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
+const amountList = ref([]);
 const bankCardList = ref([]);
 const privilegeList = ref([]);
 const selectedPrivilege = ref(null);
@@ -252,6 +259,11 @@ async function loadPrivilege(val) {
 }
 function selectPayType(value) {
   if (value) {
+    if (value.extra && value.extra.amountArr) {
+      amountList.value = value.extra.amountArr;
+    } else {
+      amountList.value = [];
+    }
     if (value.extra && value.extra.banks) {
       bankCardList.value = value.extra.banks;
     } else {
@@ -504,6 +516,7 @@ grid-template-rows: 50px;
     justify-content: center;
     font-size: 30px;
     height: 100%;
+    padding: 80px 0;
     img {
       width: 100%;
     }
@@ -568,15 +581,20 @@ grid-template-rows: 50px;
 }
 </style>
 <style scoped lang="scss">
+
+.txt-center {
+  margin: 50px auto 20px;
+  text-align: center;
+}
 :deep(.ant-form-item-label > label) {
   color: #ffffff;
 }
-.account-tip {
-  color: #ffffff;
-  &-text {
-    color: #ffffff;
-  }
-}
+// .account-tip {
+//   color: #ffffff;
+//   &-text {
+//     color: #ffffff;
+//   }
+// }
 :deep(.ant-select) {
   height: 42px;
   width: 280px;

@@ -100,7 +100,7 @@
               <el-form-item
                 ref="title"
                 name="title"
-                label="Title"
+                label="标题"
                 :wrapperCol="{ span: 6 }"
               >
                 <el-input
@@ -111,7 +111,7 @@
               <el-form-item
                 ref="content"
                 name="content"
-                label="Content"
+                label="内容"
               >
                 <el-input
                   type="textarea"
@@ -125,7 +125,7 @@
               <el-form-item>
                 <template #label></template>
                 <el-button type="submit" @click="onSubmit">
-                  Submit
+                  提交
                 </el-button>
               </el-form-item>
             </el-form>
@@ -236,24 +236,24 @@ export default defineComponent({
       title: [
         {
           required: true,
-          message: "title is required",
+          message: "请输入标题",
           trigger: "blur",
         },
         {
           max: 255,
-          message: "Length should less then 255",
+          message: "长度为 255",
           trigger: "change",
         },
       ],
       content: [
         {
           required: true,
-          message: "content is required",
+          message: "请输入内容",
           trigger: "blur",
         },
         {
           max: 500,
-          message: "Length should less then 500",
+          message: "长度应少过 500 字",
           trigger: "change",
         },
       ],

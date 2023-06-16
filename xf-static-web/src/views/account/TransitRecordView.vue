@@ -2,7 +2,7 @@
 <template>
   <div>
     <div className="menu-title-container">
-      <span className="menu-title">投注记录</span>
+      <span className="menu-title">交易记录</span>
     </div>
     <div class="account-content transit">
       <el-tabs v-model="recordActive" @tab-click="searchRecord" type="card">

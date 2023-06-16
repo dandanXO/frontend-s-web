@@ -78,13 +78,13 @@ export default defineComponent({
       date: moment('2022-03-03', 'YYYY-MM-DD'),
     });
     const referralLink = ref('');
-    const copybtntxt = ref("คัดลอก");
+    const copybtntxt = ref("复制");
     const copyinput = ref(null);
     const copyCode = () => {
       const copyText = copyinput.value
       copyText.select()
       document.execCommand("copy")
-      copybtntxt.value = '复制'
+      copybtntxt.value = '已复制'
     };
     const blurCode = () => {
       copybtntxt.value = '复制'
