@@ -56,8 +56,7 @@
                   class="cursor-pointer"
                   @click="isPwd = !isPwd"
                 />
-              </template
-              >
+              </template>
             </q-input>
             <q-input
               standout
@@ -122,18 +121,17 @@
 
           <div class="forgetpass-div">
             <div class="mui-row">
-              <q-checkbox v-model="isCheckRmb" label="记住密码"
-                          checked-icon="task_alt"
-                          unchecked-icon="task_alt"
-                          size="lg"
-                          color="light-blue-9"/>
-
+              <q-checkbox
+                v-model="isCheckRmb"
+                label="记住密码"
+                checked-icon="task_alt"
+                unchecked-icon="task_alt"
+                size="lg"
+                color="light-blue-9"
+              />
             </div>
             <div class="mui-row">
-              <router-link to="/forgot-password">
-                忘记密码？
-              </router-link>
-
+              <router-link to="/forgot-password"> 忘记密码？</router-link>
             </div>
           </div>
 
@@ -258,7 +256,7 @@ export default defineComponent({
                 if (Platform.is.capacitor && Platform.is.ios) {
                   location.reload();
                 }
-              }else{
+              } else {
                 getCode();
               }
             })
@@ -286,7 +284,7 @@ export default defineComponent({
       tab,
       loginType,
       getCode,
-      isCheckRmb
+      isCheckRmb,
     };
   },
 });
@@ -328,7 +326,6 @@ export default defineComponent({
 
   .q-tab__content {
     width: 100%;
-
   }
 
   .q-tab--active .q-tab__indicator {
@@ -385,15 +382,17 @@ export default defineComponent({
       font-weight: 600;
       color: #5b80e7;
 
-
-      &:active{
+      &:active {
         filter: brightness(0.8);
       }
     }
 
-    a,a:visited,a:active,a:hover{
+    a,
+    a:visited,
+    a:active,
+    a:hover {
       text-decoration: none;
-      color:  #5b80e7;
+      color: #5b80e7;
     }
   }
 }
