@@ -34,7 +34,7 @@
                   <img class="imgabs tx6" src="../assets/poker/girl_tx_right.webp">
                   <img class="imgabs tx7" src="../assets/poker/txt_tx.webp">
                 </template>
-                <template v-if="det.code === 'KY'">
+                <template v-if="det.code === 'KYDY'">
                   <img class="imgabs ky1" src="../assets/poker/img_bg_ky_left.webp">
                   <img class="imgabs ky2" src="../assets/poker/girl_ky_left.webp">
                   <img class="imgabs kydice" src="../assets/poker/img_ky_left_top.webp">

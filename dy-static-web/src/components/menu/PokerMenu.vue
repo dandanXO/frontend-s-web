@@ -32,7 +32,7 @@ export default defineComponent({
     data: () => ({
         navigations: [
         { code: "DT", image: "tx", label: "大唐", slogan: "赛事最多 玩法新颖" },
-        { code: "KY", image: "ky", label: "开元", slogan: "崭新玩法 感受精彩" },
+        { code: "KYDY", image: "ky", label: "开元", slogan: "崭新玩法 感受精彩" },
         ],
     }),
 })

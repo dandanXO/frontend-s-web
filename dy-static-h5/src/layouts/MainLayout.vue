@@ -388,7 +388,7 @@ export default defineComponent({
     const platformsList = ref([
       {
         id: "20",
-        code: "PT",
+        code: "PTDY",
         icon: "pt",
       },
       {
@@ -403,7 +403,7 @@ export default defineComponent({
       },
       {
         id: "38",
-        code: "PG",
+        code: "PGDY",
         icon: "pg",
       },
       {
@@ -438,7 +438,7 @@ export default defineComponent({
       },
       {
         id: "52",
-        code: "BBIN",
+        code: "BBINDY",
         icon: "bbin",
       },
       {
