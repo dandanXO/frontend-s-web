@@ -947,7 +947,7 @@ function copy(text, field) {
 async function success() {
   clicked.pay = true
   if (uiControl.dialogType === 'PAY') {
-    await fromPayToSuccess(payForm.id, payForm.bankCard)
+    await fromPayToSuccess(payForm.id, payForm.bankCard, payForm.withdrawDate)
     ElMessage({ message: t('message.paySuccess'), type: 'success' })
   } else if (uiControl.dialogType === 'AUTOPAY') {
     await fromPayToAutopay(payForm.id, payForm.withdrawPlatformId, payForm.withdrawDate)

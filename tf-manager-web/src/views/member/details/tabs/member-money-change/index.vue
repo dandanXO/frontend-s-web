@@ -54,6 +54,25 @@
           min-width="280"
         />
         <el-table-column
+          prop="recordTime"
+          :label="t('fields.recordTime')"
+          align="center"
+          min-width="180"
+          sortable
+        >
+          <template #default="scope">
+            <span v-if="scope.row.recordTime === null">-</span>
+            <span
+              v-if="scope.row.recordTime !== null"
+              v-formatter="{
+                data: scope.row.recordTime,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="type"
           :label="t('fields.type')"
           align="center"
@@ -137,26 +156,6 @@
             <span v-if="scope.row.platformBalance !== 0">
               {{ scope.row.platformBalance }}
             </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="recordTime"
-          :label="t('fields.recordTime')"
-          align="center"
-          min-width="180"
-          sortable
-        >
-          <template #default="scope">
-            <span v-if="scope.row.recordTime === null">-</span>
-            <!-- eslint-disable -->
-            <span
-              v-if="scope.row.recordTime !== null"
-              v-formatter="{
-                data: scope.row.recordTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
-                type: 'date',
-              }"
-            />
           </template>
         </el-table-column>
       </el-table>
