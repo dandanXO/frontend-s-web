@@ -16,7 +16,7 @@
                   <el-icon><Refresh /></el-icon>
                  <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
               </a>
-              专属网址: <el-tag color="#37cde6" effect="dark">{{ store.evip }}</el-tag>
+              专属网址: <el-tag color="#37cde6" effect="dark">{{ store.evip.web }}</el-tag>
         </div>
         <div class="account-box account-contents">
         <router-view />
