@@ -704,7 +704,7 @@ async function toApply() {
 }
 
 async function success(memberWithdrawRecord) {
-  await fromAffiliateCheckingToBeforePaid(memberWithdrawRecord.id)
+  await fromAffiliateCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
   await loadRecord()
   ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
 }
