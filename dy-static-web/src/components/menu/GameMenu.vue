@@ -29,11 +29,11 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     data: () => ({
         navigations: [
-        { code: "PG", icon: "pg", label: "PG" },
+        { code: "PGDY", icon: "pg", label: "PG" },
         { code: "SW", icon: "sw", label: "SW" },
-        { code: "PT", icon: "pt", label: "PT" },
+        { code: "PTDY", icon: "pt", label: "PT" },
         { code: "AG", icon: "ag", label: "AG" },
-        { code: "BBIN", icon: "bbin", label: "BBIN" },
+        { code: "BBINDY", icon: "bbin", label: "BBIN" },
         { code: "CQ9", icon: "cq", label: "CQ" },
         { code: "AMEBA", icon: "mg", label: "MG" },
         ],
