@@ -1231,12 +1231,9 @@ export default defineComponent({
       todayDate,
       sendOtp,
       phoneLogin,
-<<<<<<< Updated upstream
-      openCaptchaForm
-=======
+      openCaptchaForm,
       sendLoginOtp,
       loadingBtn
->>>>>>> Stashed changes
     }
   }
 });
