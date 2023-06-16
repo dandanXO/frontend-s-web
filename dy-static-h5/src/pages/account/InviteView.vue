@@ -30,38 +30,38 @@
             <!--            <div id="qr-code"></div>-->
             <VueQRCodeComponent size="200" id="qr-code" :text="qrCode"/>
 
-            <div class="share-info-div">
-              <div class="share-info-box">
-                <div class="user-sign-bg">
-                  <svg class="user-sign" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                       width="32"
-                       height="32">
-                    <path fill="none" d="M0 0h24v24H0z"/>
-                    <path d="M4 22a8 8 0 1 1 16 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6z"
-                          fill="rgba(99,139,240,1)"/>
-                  </svg>
-                </div>
+<!--            <div class="share-info-div">-->
+<!--              <div class="share-info-box">-->
+<!--                <div class="user-sign-bg">-->
+<!--                  <svg class="user-sign" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"-->
+<!--                       width="32"-->
+<!--                       height="32">-->
+<!--                    <path fill="none" d="M0 0h24v24H0z"/>-->
+<!--                    <path d="M4 22a8 8 0 1 1 16 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6z"-->
+<!--                          fill="rgba(99,139,240,1)"/>-->
+<!--                  </svg>-->
+<!--                </div>-->
 
-                <span>累计注册</span>
-                <div class="total-info-div"><span class="total-span" id="total-signup-no">0</span>人
-                </div>
-              </div>
+<!--                <span>累计注册</span>-->
+<!--                <div class="total-info-div"><span class="total-span" id="total-signup-no">0</span>人-->
+<!--                </div>-->
+<!--              </div>-->
 
-              <div class="share-info-box">
+<!--              <div class="share-info-box">-->
 
-                <svg class="money-sign" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                     width="75" height="75">
-                  <path fill="none" d="M0 0h24v24H0z"/>
-                  <path
-                    d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm1-9v-1h3v-2h-2.586l2.122-2.121-1.415-1.415L12 8.586 9.879 6.464 8.464 7.88 10.586 10H8v2h3v1H8v2h3v2h2v-2h3v-2h-3z"
-                    fill="rgba(70,106,235,1)"/>
-                </svg>
+<!--                <svg class="money-sign" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"-->
+<!--                     width="75" height="75">-->
+<!--                  <path fill="none" d="M0 0h24v24H0z"/>-->
+<!--                  <path-->
+<!--                    d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm1-9v-1h3v-2h-2.586l2.122-2.121-1.415-1.415L12 8.586 9.879 6.464 8.464 7.88 10.586 10H8v2h3v1H8v2h3v2h2v-2h3v-2h-3z"-->
+<!--                    fill="rgba(70,106,235,1)"/>-->
+<!--                </svg>-->
 
-                <span>累计充值</span>
-                <div class="total-info-div"><span class="total-span" id="total-topup-no">0</span>人
-                </div>
-              </div>
-            </div>
+<!--                <span>累计充值</span>-->
+<!--                <div class="total-info-div"><span class="total-span" id="total-topup-no">0</span>人-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
           </div>
 
@@ -82,6 +82,7 @@ import {userStore} from "src/stores";
 import {useQuasar} from "quasar";
 import { api } from "boot/axios"
 
+
 export default defineComponent({
   name: "ShareView",
   components: {
@@ -92,8 +93,10 @@ export default defineComponent({
     const store = userStore();
     const selfTgurl = ref("https://www.google.com/");
 
+    const refCode= ref("");
+
     let tgDomain = "https://m.dyvip989.com";
-    selfTgurl.value = tgDomain + "/member/" + window.btoa(store.loginName);
+
 
     const qrCode= ref( selfTgurl.value);
 
@@ -135,18 +138,16 @@ export default defineComponent({
       ;
     }
 
-    //TODO:: Get Invited Frens Count.
-    // onMounted(()=>{
-    //   // {token : store.token}
-    //   api.get( "/session/recommend/summary" ).then((res) => {
-    //     // console.log(reminderForm)
-    //     const ret = res.data;
-    //     if (res.code === 0) {
-    //
-    //     }
-    //   });
-    //
-    // })
+    onMounted(()=>{
+      api.get( "/session/member/referralCode" ).then((res) => {
+        // console.log(reminderForm)
+        if (res.code === 0) {
+          refCode.value = res.data;
+          selfTgurl.value = tgDomain + "/member/" + refCode.value;
+        }
+      });
+
+    })
 
     return {
       selfTgurl,

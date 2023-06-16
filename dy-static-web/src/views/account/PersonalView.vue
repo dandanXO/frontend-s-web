@@ -155,14 +155,14 @@
                   </div>
                 </div>
               </div>
-              
+
                 <el-button
                   class="common-btn"
                   v-if="isEdit"
                   @click="updateState"
                   >提交</el-button
                 >
-              
+
               <el-button
                 class="common-btn"
                 v-if="
@@ -439,7 +439,7 @@ export default defineComponent({
           verificationDetails.memberInfo.codeId = res.data.codeId
           verificationModalVisible.value = false;
           // message.success("Success")
-          
+
           ElMessage({
             message: 'Success',
             type: 'success',
@@ -452,7 +452,7 @@ export default defineComponent({
         getCode()
         isEmailSending.value = false
       });
-      
+
     })
     }
     const submitUpdateSecurity = () => {
@@ -587,7 +587,8 @@ export default defineComponent({
                 type: 'success',
               })
               loadInfo();
-              isEdit.value = false
+              isEdit.value = false;
+              // router.go(-1);
             }
           }).catch((err) => {
             console.log(err.message);
@@ -673,7 +674,7 @@ export default defineComponent({
         padding-bottom: 20px;
         flex: 1;
         border-right: 1px solid #aaaaaa;
-        
+
       .basic-info-table {
         display: flex;
         gap: 10px;
@@ -685,7 +686,7 @@ export default defineComponent({
         justify-content: flex-start;
         gap: 10px;
         align-items: center;
-        .basic-info-cell { 
+        .basic-info-cell {
           &.title {
             width: 40px;
           }
@@ -705,7 +706,7 @@ export default defineComponent({
         justify-content: flex-end;
       }
     }
-    
+
 }
 
 </style>

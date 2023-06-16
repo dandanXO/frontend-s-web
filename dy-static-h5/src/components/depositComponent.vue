@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="overflow: hidden;">
+  <div class="q-pa-md " style="overflow: hidden;background:#fff;margin:8px;">
     <div class="node-wrapper">
       <Node
         :level="1"
@@ -34,8 +34,8 @@
 
         </div>
 
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange Rate">
-            <span style="color: #9bffd1"
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
+            <span style="color: #000"
               >1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.value }}</span
             >
           </div>

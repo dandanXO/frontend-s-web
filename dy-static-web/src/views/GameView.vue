@@ -36,7 +36,7 @@
               >
               <!-- {{ p.code = 'JDB' }}
                 <img :src="require(`../assets/game/${p.code.toLowerCase()}.png`)" /> -->
-                {{ p.code + ' 电子' }}
+                {{ p.name + ' 电子' }}
               </div>
             </div>
           </div>
