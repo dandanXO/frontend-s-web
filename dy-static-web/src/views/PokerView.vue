@@ -76,7 +76,7 @@ export default defineComponent({
         message: '抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活'
       },
       {
-        code: 'KY',
+        code: 'KYDY',
         name: '开元',
         image: 'ky',
         message: '双赢棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！'
