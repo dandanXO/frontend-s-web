@@ -93,8 +93,8 @@ export const fromCheckingToBeforePaid = (id, wd) => {
   return https().request(`/memberWithdrawRecord/${id}/checkingToBeforePaid?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
 };
 
-export const fromAffiliateCheckingToBeforePaid = (id) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliateCheckingToBeforePaid?_method=PUT`, Method.POST, {}, ContentType.form);
+export const fromAffiliateCheckingToBeforePaid = (id, wd) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliateCheckingToBeforePaid?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
 };
 
 export const fromCheckingToFail = (id, cancelType, remark, wd) => {
@@ -103,6 +103,14 @@ export const fromCheckingToFail = (id, cancelType, remark, wd) => {
 
 export const fromAffiliateCheckingToFail = (id, cancelType, remark, wd) => {
   return https().request(`/memberWithdrawRecord/${id}/affiliateCheckingToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
+};
+
+export const fromToFail = (id, wd) => {
+  return https().request(`/memberWithdrawRecord/${id}/toFail?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+};
+
+export const fromAffiliateToFail = (id, wd) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliateToFail?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
 };
 
 export const fromBeforePaidToPay = async (ids) => {
