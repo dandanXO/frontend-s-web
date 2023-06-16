@@ -150,28 +150,28 @@
               </el-form>
             </el-tab-pane>
             <el-tab-pane label="手机登录">
-              <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="100" label-suffix=":"
+              <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="100" label-suffix=":"
                        style="width: 100%; max-width: 400px; margin: 50px auto;">
                 <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
                   <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号"/>
                 </el-form-item>
-                <el-form-item tabindex="2" label="验证码" prop="captchaCode">
+                <el-form-item tabindex="2" label="验证码" prop="code">
                   <el-row :gutter="10" style="justify-content: center; align-items: center;">
                     <el-col :span="12">
                       <el-input
-                          v-model="loginForm.captchaCode"
+                          v-model="loginForm.code"
                           label="验证码"
                           placeholder="验证码"
-                          @keyup.enter="submitLogin"
+                          @keyup.enter="phoneLogin"
                       />
                     </el-col>
                     <el-col :span="12">
-                      <el-button size="small" color="#3bafda" >发送验证码</el-button>
+                      <el-button @click="sendLoginOtp" size="small" color="#3bafda" >发送验证码</el-button>
                     </el-col>
                   </el-row>
                 </el-form-item>
                 <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
-                           @click="submitLogin">登录</el-button>
+                           @click="phoneLogin">登录</el-button>
               </el-form></el-tab-pane>
           </el-tabs>
       </span>
@@ -583,6 +583,7 @@ export default defineComponent({
       name: '',
     })
     const loginRef = ref([])
+    const mobileLoginRef = ref([])
 
     const loginRules = {
       loginName: [
@@ -615,6 +616,28 @@ export default defineComponent({
           min: 4,
           max: 4,
           message: "长度为 4",
+          trigger: "blur"
+        }
+      ]
+    };
+    const mobileLoginRules = {
+      telephone: [
+        {
+          required: true,
+          message: "请输入手机号码",
+          trigger: "blur"
+        }
+      ],
+      code: [
+        {
+          required: true,
+          message: "请输入验证码",
+          trigger: "blur"
+        },
+        {
+          min: 6,
+          max: 6,
+          message: "长度为 6",
           trigger: "blur"
         }
       ]
@@ -807,6 +830,22 @@ export default defineComponent({
         })
     };
 
+    const sendLoginOtp = async() => {
+      const smsDetail = {
+        telephone: loginForm.phoneNumber
+      }
+      sendSms(smsDetail)
+        .then((response) => {
+          if (response.code == 0) {
+            loginForm.codeId = response.data.codeId;
+            ElMessage({
+              type: 'success',
+              message: '发送手机验证码成功'
+            });
+          }
+        })
+    };
+
     const submitRegisterForm = async (elForm) => {
       if (!elForm) return
       await elForm.validate((valid) => {
@@ -933,6 +972,45 @@ export default defineComponent({
       })();
     };
 
+    const phoneLogin = () => {
+      const fpPromise = FingerprintJS.load();
+      (async () => {
+        const fp = await fpPromise;
+        const result = await fp.get();
+        const excludes = {value: ["timezone", "timeZoneOffset"]};
+        const allComponents = {...result.components};
+        excludes.value.forEach((element) => {
+          delete allComponents[element];
+        });
+        const sidParam = FingerprintJS.hashComponents(allComponents);
+
+        mobileLoginRef.value.validate().then(() => {
+          store
+              .telephoneLogin({
+                phoneNumber: loginForm.phoneNumber,
+                sid: sidParam,
+                code: loginForm.code,
+                codeId: loginForm.codeId,
+              })
+              .then(() => {
+                const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+                if (store.token) {
+                  router.push(jumpUrl);
+                  loginDialogVisible.value = false;
+
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                } else {
+                  loginForm.phoneNumber = null
+                  loginForm.code = null
+                }
+              }).catch((error) => {
+            // message.error(error.message);
+            console.log(error.message);
+          });
+        });
+      })();
+    };
+
     const handleCommand = (command) => {
       if (command === 'a') {
         router.push('/center/personal');
@@ -1044,12 +1122,14 @@ export default defineComponent({
       forgetPassDialogVisible,
       noticeDialogVisible,
       loginRef,
+      mobileLoginRef,
       submitLogin,
       regForm,
       registerDialogVisible,
       submitRegisterForm,
       registerRef,
       loginRules,
+      mobileLoginRules,
       regRules,
       getCode,
       verificationImg,
@@ -1066,7 +1146,9 @@ export default defineComponent({
       openGame,
       modalGame,
       todayDate,
-      sendOtp
+      sendOtp,
+      phoneLogin,
+      sendLoginOtp
     }
   }
 });
