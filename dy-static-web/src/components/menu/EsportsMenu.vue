@@ -31,7 +31,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     data: () => ({
         navigations: [
-        { code: "DY", icon: "dy", label: "东赢", slogan: "亚洲第一 实时滚球", percentage: '32.48%' },
+        { code: "TFGaming", icon: "dy", label: "东赢", slogan: "亚洲第一 实时滚球", percentage: '32.48%' },
         { code: "IM", icon: "im", label: "IM", slogan: "赛事齐全 玩法新颖", percentage: '66.7%' },
         { code: "AI", icon: "ai", label: "小艾", slogan: "崭新玩法 全新体验", percentage: '99.4%' },
         ],

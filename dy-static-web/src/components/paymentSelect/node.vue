@@ -271,6 +271,7 @@ $node-color: #4873f1;
       justify-content: flex-start;
       align-items:  center;
       gap: 10px;
+    flex-wrap: wrap;
       .account-title-container {
         margin: 0 0 20px;
       }

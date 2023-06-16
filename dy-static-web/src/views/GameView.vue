@@ -132,7 +132,7 @@ export default defineComponent({
     const gamePage = reactive({
       gameList: [],
       currentPage: 1,
-      pageSize: 30,
+      pageSize: 12,
       searchType: "",
       searchKey: "",
       total: 0

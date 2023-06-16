@@ -48,14 +48,14 @@
     </div>
     <el-drawer
       :append-to-body="true"
-      :width="'100%'"
-      style="max-width: 500px"
+      style="width: 40vw; min-width: 500px;"
       :placement="'right'"
       v-model="drawerVisible"
       :get-container="false"
       :style="{ position: 'absolute', overflow: 'hidden' }"
       @close="onClose"
       :closable="true"
+      title="快速提款"
     >
       <!-- <template #extra>
         <el-button style="margin-right: 8px" @click="onClose">Cancel</el-button>
@@ -221,6 +221,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         confirmButtonText: '确认',
         showClose: false,
         buttonSize: 'large'
+      }).then(() => {
+          store.loginPageVisible = true
       })
     }
   }
@@ -390,7 +392,7 @@ defineExpose({
   flex-direction: column;
   justify-content: space-between;
   top: 0;
-  background: #201f2a;
+  background: #d48eff;
   .bottom-button {
     display: block;
     transform-origin: left top;
@@ -400,7 +402,8 @@ defineExpose({
     border-radius: 0 10px 10px 0;
     transform: rotate3d(0, 0, 1, 90deg);
     cursor: pointer;
-    box-shadow: 0px 0px 10px 0 #000;
+    box-shadow: 0px 0px 10px 0 #464646;
+    color: #ffffff;
     padding: 10px 5px;
     width: 120px;
     transform-origin: top left;

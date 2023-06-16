@@ -4,7 +4,7 @@ body {
   font-size: 16px;
   line-height: 1.5;
   min-width: $maxwidth;
-  font-family: 'Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','微软雅黑',Arial,sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Heiti SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
   background: #ffffff;
   a {
     text-decoration: none;
@@ -170,7 +170,7 @@ body {
 }
 .el-button {
   height: unset;
-  padding: 3px;
+  padding: 12px 40px;
   font-size: .75rem;
   border-radius: 2px;
   color: $color-white;
@@ -181,13 +181,15 @@ body {
   cursor: pointer;
   text-align: center;
   min-width: 62px;
+  --el-button-size: 20px;
+  height: var(--el-button-size);
+  font-size: var(--el-font-size-base);
+  border-radius: var(--el-border-radius-base);
   &--small {
-    --el-button-size: 20px;
-    height: var(--el-button-size);
-    padding: 12px 40px;
-    font-size: var(--el-font-size-base);
-    border-radius: var(--el-border-radius-base);
+    padding: 5px 11px;
     border: 0;
+    font-size: 0.75rem;
+    font-size: 12px;
   }
   &--large {
     --el-button-size: 40px;
@@ -203,7 +205,7 @@ body {
 }
 .common-btn, .common-btn.el-button {
   height: unset;
-  padding: 10px;
+  padding: 12px 40px;
   font-size: .75rem;
   border-radius: 2px;
   color: $color-white;
@@ -215,13 +217,12 @@ body {
   text-align: center;
   min-width: 62px;
   border: 0;
+  --el-button-size: 20px;
+  border-radius: var(--el-border-radius-base);
   &--small {
     padding: 3px;
-    --el-button-size: 20px;
-    height: var(--el-button-size);
-    padding: 12px 40px;
-    font-size: var(--el-font-size-base);
-    border-radius: var(--el-border-radius-base);
+    padding: 5px 11px;
+    font-size: 0.75rem;
   }
   &--large {
     --el-button-size: 40px;

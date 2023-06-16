@@ -109,7 +109,7 @@ export default defineComponent({
         }
         .trans-tip {
           width: 225px;
-          font-size: 8px;
+    font-size: 12px;
           color: #3d4b66;
         }
         }

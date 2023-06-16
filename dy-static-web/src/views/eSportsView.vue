@@ -2,7 +2,7 @@
   <div class="esports-container">
       <div class="platform-list-box">
         <span class="platform-list-item platform" v-for="(plat, i) in platforms" :key="i" @click="clickPlat(plat)" :class="{active: selectedPlat === plat.code}">
-          {{plat.code}}电竞
+          {{plat.name}}电竞
         </span>
       </div>
     <div class="nav-pane">
@@ -16,7 +16,7 @@
                   <div class="esports-right" data-aos="fade-left"  data-aos-duration="4000">
                     <div class="left-icon"></div>
                         <p class="left">{{ det.left }}</p>
-                        <button>进入游戏</button>
+                        <button @click="openGame(det.name, det.code)">进入游戏</button>
                         <p class="right">{{ det.right }}</p>
                         <div class="right-icon"></div>
                   </div>
@@ -57,7 +57,7 @@ export default defineComponent({
     const router = useRouter();
     const platforms = ref([
       {
-        code: 'DY',
+        code: 'TFGaming',
         name: 'DY',
         image: 'dy',
         message: '全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！',
@@ -66,7 +66,7 @@ export default defineComponent({
         right: '一应俱全'
       },
       {
-        code: 'IM',
+        code: 'im',
         name: 'IM',
         image: 'im',
         message: '倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。',
@@ -75,7 +75,7 @@ export default defineComponent({
         right: '玩法新颖'
       },
       {
-        code: 'IA',
+        code: 'ia',
         name: '小艾',
         image: 'ia',
         message: '倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。',
