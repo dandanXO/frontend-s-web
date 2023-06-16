@@ -28,8 +28,8 @@
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
             <span class="el-dropdown-link">
-              <el-tag size="small" type="warning" effect="dark" style="margin-right: 10px; font-weight: bold;">VIP{{
-                  store.vip === 'Normal' ? 1 : 'level'
+              <el-tag size="small" type="warning" effect="dark" style="margin-right: 10px; font-weight: bold;">{{
+                  store.vip ? store.vip : store.vip
                 }}</el-tag> {{ store.nickName }}<el-icon class="el-icon--right"><arrow-down
                 style="height:.8em"/></el-icon>
             </span>
