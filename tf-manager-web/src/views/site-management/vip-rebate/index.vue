@@ -101,6 +101,11 @@
                            style="width: 350px;" @keypress="restrictInput($event)" controls-position="right"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.maxRebate')" prop="maxRebate">
+          <el-input-number type="number" v-model.number="form.maxRebate" :precision="2" :step="100" :min="0"
+                           style="width: 350px;" @keypress="restrictInput($event)" controls-position="right"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -120,6 +125,7 @@
       <el-table-column prop="vipName" label="VIP" width="150" />
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="150" />
       <el-table-column prop="rebatePercentage" :label="t('fields.rebatePercentage')" width="150" />
+      <el-table-column prop="maxRebate" :label="t('fields.maxRebate')" width="150" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150" />
       <el-table-column
@@ -185,13 +191,15 @@ const form = reactive({
   siteId: null,
   vipId: null,
   gameType: null,
-  rebatePercentage: null
+  rebatePercentage: null,
+  maxRebate: null
 });
 
 const formRules = reactive({
   vipId: [required(t('message.validateVIPRequired'))],
   gameType: [required(t('message.validateGameTypeRequired'))],
-  rebatePercentage: [required(t('message.validateRebatePercentageRequired'))]
+  rebatePercentage: [required(t('message.validateRebatePercentageRequired'))],
+  maxRebate: [required(t('message.validateMaxRebateRequired'))]
 });
 
 let chooseRule = [];
