@@ -20,7 +20,7 @@
                   <img class="imgabs img-down-up fallbet1" src="../assets/live/left_float_allbet_1.webp">
                   <img class="imgabs img-down-up fallbet2" src="../assets/live/left_float_allbet_2.webp">
                 </template>
-                <template v-if="det.code === 'BBIN'">
+                <template v-if="det.code === 'BBINDY'">
                   <img class="imgabs bbin1" src="../assets/live/left_bg_bbin_1.webp">
                   <img class="imgabs bbin2" src="../assets/live/left_bg_bbin_2.webp">
                   <img class="imgabs img-right-left fbbin5" src="../assets/live/left_float_bbin_5.webp">

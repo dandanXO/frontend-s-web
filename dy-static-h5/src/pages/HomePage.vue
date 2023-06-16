@@ -582,7 +582,7 @@ export default defineComponent({
       },
       {
         id: "live",
-        code: "BBIN",
+        code: "BBINDY",
         icon: "bbin",
         title: "BBIN真人",
         subcount: "40",
@@ -609,7 +609,7 @@ export default defineComponent({
       },
       {
         id: "poker",
-        code: "KY",
+        code: "KYDY",
         icon: "ky",
         title: "开元棋牌",
         subcount: "30",
@@ -628,7 +628,7 @@ export default defineComponent({
       },
       {
         id: "lottery",
-        code: "BBIN",
+        code: "BBINDY",
         icon: "bbin",
         title: "BBIN彩票",
         subcount: "48",
@@ -639,7 +639,7 @@ export default defineComponent({
     const slot = [
       {
         id: "slot",
-        code: "PG",
+        code: "PGDY",
         icon: "pg",
         title: "PG",
         subcount: "89",
@@ -655,7 +655,7 @@ export default defineComponent({
       },
       {
         id: "slot",
-        code: "PT",
+        code: "PTDY",
         icon: "pt",
         title: "PT电子",
         subcount: "157",
@@ -679,7 +679,7 @@ export default defineComponent({
       },
       {
         id: "slot",
-        code: "BBIN",
+        code: "BBINDY",
         icon: "bbin",
         title: "BBIN电子",
         subcount: "85",

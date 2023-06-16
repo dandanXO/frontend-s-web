@@ -55,7 +55,7 @@
                       spinner-color="white"
                       position="50% 20%"
                       style=" border-radius: 10px; overflow: hidden"
-                      :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
+                      :imgClass="selectedCat.code === 'PGDY' ? 'zoomin' : ''"
                   >
                  <template v-slot:loading>
                       <img :src="game.default" style="width: 100%; height: 100px; border-radius: 15px; overflow:hidden;">
@@ -147,7 +147,7 @@ export default defineComponent({
     const categoryList = ref([]);
     const getCategoryList = () => {
       selectedPlat.value = route.query.platform
-      if (selectedPlat.value === 'PT') {
+      if (selectedPlat.value === 'PTDY') {
         categoryList.value = [
           {
             id: 1,
@@ -188,7 +188,7 @@ export default defineComponent({
 
         ]
 
-      } else if (selectedPlat.value === 'PG') {
+      } else if (selectedPlat.value === 'PGDY') {
         categoryList.value = [
           {
             id: 1,
@@ -275,7 +275,7 @@ export default defineComponent({
       }
     };
     const loadGameList = () => {
-      if (selectedPlat.value === 'PT') {
+      if (selectedPlat.value === 'PTDY') {
       gameListData.value = [
         {
           name: '水牛闪电战',

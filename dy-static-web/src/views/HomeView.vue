@@ -145,7 +145,7 @@
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/allbet.png">
                         <div>欧博真人</div>
                     </div>
-                    <div class="game-platform" @click="openGame('BBIN真人', 'live', 'BBIN')" style="margin-left: 14px;">
+                    <div class="game-platform" @click="openGame('BBIN真人', 'live', 'BBINDY')" style="margin-left: 14px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/bbin.png">
                         <div>BBIN真人</div>
                     </div>
@@ -217,7 +217,7 @@
                     <div class="platform-title-sub">POKER</div>
                 </div>
                 <div class="back">
-                    <div class="game-platform" @click="openGame('开元棋牌', 'poker', 'KY')" style="margin-top: 118px;margin-left: 38px;">
+                    <div class="game-platform" @click="openGame('开元棋牌', 'poker', 'KYDY')" style="margin-top: 118px;margin-left: 38px;">
                         <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/ky.png">
                         <div>开元棋牌</div>
                     </div>
