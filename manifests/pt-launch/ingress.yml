@@ -11,8 +11,21 @@ spec:
     - hosts:
         - game.tljkrpry2.com
       secretName: pt-launch
+    - hosts:
+        - game.nxfxback.com
+      secretName: pt-launch-nxfxback
   rules:
   - host: game.tljkrpry2.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pt-launch
+            port:
+              number: 80
+  - host: game.nxfxback.com
     http:
       paths:
       - path: /

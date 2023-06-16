@@ -11,8 +11,21 @@ spec:
     - hosts:
         - xf-web.jolly88-ph01.com
       secretName: xf-static-web
+    - hosts:
+        - xf-web.nxfxback.com
+      secretName: xf-static-web-nxfxback
   rules:
   - host: xf-web.jolly88-ph01.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: xf-static-web
+            port:
+              number: 80
+  - host: xf-web.nxfxback.com
     http:
       paths:
       - path: /
