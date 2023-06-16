@@ -1868,6 +1868,7 @@ body {
   }
 
   &.app {
+    gap: 30px;
     .platform-box {
       flex: unset;
     }
