@@ -12,7 +12,9 @@
               {{ store.currency.value }}{{ store.balance.toFixed(2) }}</span
             ><span v-if="isLoadingBalance">加载中...</span>
           </div>
-          <div @click="loadBalance" class="icon"><img src="../assets/images/finance/withdraw/refresh.png"></div>
+          <div @click="loadBalance" class="icon">
+            <img src="../assets/images/finance/withdraw/refresh.png" />
+          </div>
         </div>
       </div>
       <div class="refreshItems">
