@@ -32,16 +32,16 @@
           </template>
           <span v-if="memberDetail.realName !== null">{{ memberDetail.realName }}</span>
           <span v-if="memberDetail.realName === null">-</span>
-          <el-button
-            type="info"
-            size="mini"
-            style="float: right;"
-            v-permission="['sys:member:detail:unmask']"
-            @click="unmaskDetail('NAME')"
-            :disabled="memberDetail.realName === null"
-          >
-            {{ t('fields.show') }}
-          </el-button>
+          <!--          <el-button-->
+          <!--            type="info"-->
+          <!--            size="mini"-->
+          <!--            style="float: right;"-->
+          <!--            v-permission="['sys:member:detail:unmask']"-->
+          <!--            @click="unmaskDetail('NAME')"-->
+          <!--            :disabled="memberDetail.realName === null"-->
+          <!--          >-->
+          <!--            {{ t('fields.show') }}-->
+          <!--          </el-button>-->
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>

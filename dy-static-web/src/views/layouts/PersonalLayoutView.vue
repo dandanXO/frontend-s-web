@@ -8,15 +8,15 @@
       </div>
       <div class="account-content-wrapper">
         <div class="account-box account-balance">
-          
-            
+
+
                <a @click="refreshBalance" class="balance-container">
                   <span>账户余额：</span>
                   <div class="balance-txt"><span v-if="isLoadingBalance">Loading...</span><span v-if="!isLoadingBalance">￥{{ store.balance }}</span></div>
                   <el-icon><Refresh /></el-icon>
                  <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
               </a>
-              专属网址: <el-tag color="#37cde6" effect="dark">https://www.xf882.com</el-tag>
+              专属网址: <el-tag color="#37cde6" effect="dark">{{ store.evip }}</el-tag>
         </div>
         <div class="account-box account-contents">
         <router-view />
@@ -40,7 +40,7 @@ export default defineComponent({
     Refresh
   },
   setup() {
-    
+
     const isLoadingBalance = ref(false)
     const refreshBalance = () => {
       isLoadingBalance.value = true;
@@ -74,7 +74,7 @@ export default defineComponent({
     gap: 20px;
     color: #000000;
     .account-box {
-      
+
     }
     .account-menu-wrapper {
       width: 225px;

@@ -20,6 +20,7 @@ export const userStore = defineStore("userStore", {
       memberType: "",
       balance: 0,
       vip: "",
+      evip: "",
       currency: { value: "￥", label: "RMB"},
       loginPageVisible: false,
     };
@@ -69,6 +70,7 @@ export const userStore = defineStore("userStore", {
             this.phone = ret.data.telephone;
             this.memberType = ret.data.memberType;
             this.vip = ret.data.vip;
+            this.evip = ret.data.evip;
           } else {
             throw new Error(ret.message);
           }
