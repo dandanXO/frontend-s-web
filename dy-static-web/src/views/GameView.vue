@@ -34,8 +34,7 @@
                 :key="p"
                 @click="switchPlat(p)"
               >
-              <!-- {{ p.code = 'JDB' }}
-                <img :src="require(`../assets/game/${p.code.toLowerCase()}.png`)" /> -->
+                <img :src="require(`../assets/game/${(p.code).toLowerCase()}.png`)" />
                 {{ p.name + ' 电子' }}
               </div>
             </div>
@@ -583,7 +582,7 @@ export default defineComponent({
         min-height: 1138px;
         min-width: 315px;
         .plat-type-container {
-        padding: 20px;
+    padding: 60px 20px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid rgb(255 255 255 / 15%);
@@ -614,6 +613,7 @@ export default defineComponent({
               display: flex;
               justify-content: center;
               align-items: center;
+              gap: 15px;
             // padding: 10px;
             // cursor: pointer;
             // // border-bottom: 4px solid transparent;
@@ -634,6 +634,9 @@ export default defineComponent({
               background-size: contain;
               color: #fff;
               
+            }
+            img {
+              max-height: 40px;
             }
           }
         }

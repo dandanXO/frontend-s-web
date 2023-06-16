@@ -36,7 +36,7 @@
                 </div>
             </template>
 
-            <template v-if="selectedPlat === 'BBIN'">
+            <template v-if="selectedPlat === 'BBINDY'">
                 <div
                     class="lottery-pane-bg lottery-pane-bbin-bg"
                     data-aos="zoom-in"
@@ -218,7 +218,7 @@ export default defineComponent({
 
 .lottery-tabs {
     position: relative;
-    padding: 0 0 70px 135px;
+    padding: 0 0 70px 30px;
     justify-content: flex-start;
     border: none;
     display: flex;
