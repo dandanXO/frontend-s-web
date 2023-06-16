@@ -28,3 +28,7 @@ export const getPlatformExcelMapping = () => {
 export const getPlatformsBySite = (siteId) => {
   return https().request("/platform/sitePlatforms", Method.GET, { siteId: siteId }, ContentType.form);
 };
+
+export const getPlatformsBySiteAndGameType = (siteId, gameType) => {
+  return https().request("/platform/siteAndGameType", Method.GET, { siteId: siteId, gameType: gameType }, ContentType.form);
+};
