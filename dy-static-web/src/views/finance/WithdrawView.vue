@@ -142,7 +142,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
