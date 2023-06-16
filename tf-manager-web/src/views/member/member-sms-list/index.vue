@@ -65,7 +65,7 @@
         />
         <el-table-column
           prop="status"
-          :label="t('fields.smsStatus')"
+          :label="t('fields.status')"
           align="center"
           min-width="50"
         >
