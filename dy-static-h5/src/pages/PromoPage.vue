@@ -1,7 +1,7 @@
 <template>
   <div class="promo-container">
     <div class="promo">
-      <q-tabs v-model="tab" align="justify">
+      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab
           v-for="(tab, i) in tabItems"
           :key="i"

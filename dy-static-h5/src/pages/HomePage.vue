@@ -916,7 +916,7 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      const redirectU = "/promo?id=" + banner.redirectUrl;
+      const redirectU = "/promo?name=" + banner.redirectUrl;
       router.push(`${redirectU}`);
     };
     onMounted(() => {
@@ -935,7 +935,7 @@ export default defineComponent({
       tab: ref("esport"),
       gamesTab: ref(platforms.value[0]),
       splitterModel: ref(27),
-      imgURL: process.env.IMAGE_CDN + "/",
+      imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
       store,
       platforms,
