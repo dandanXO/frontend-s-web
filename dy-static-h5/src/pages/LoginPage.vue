@@ -171,7 +171,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 export default defineComponent({
   name: "LoginPage",
   components: {
-    RegisterPage,
+    RegisterPage
   },
   setup() {
     const tab = ref("login");
@@ -182,7 +182,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       captchaCode: "",
-      codeId: "",
+      codeId: ""
     });
     const $q = useQuasar();
     const loginNameRef = ref();
@@ -205,7 +205,7 @@ export default defineComponent({
             color: "negative",
             position: "top",
             message: e.message,
-            icon: "report_problem",
+            icon: "report_problem"
           });
         });
     };
@@ -227,7 +227,7 @@ export default defineComponent({
         passwordRef.value.validate();
         verificationRef.value.validate();
         $q.loading.show({
-          message: "登录中",
+          message: "登录中"
         });
         if (
           loginNameRef.value.hasError ||
@@ -242,7 +242,7 @@ export default defineComponent({
               password: loginForm.password,
               sid: sidParam,
               captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId,
+              codeId: loginForm.codeId
             })
             .then(() => {
               $q.loading.hide();
@@ -284,9 +284,9 @@ export default defineComponent({
       tab,
       loginType,
       getCode,
-      isCheckRmb,
+      isCheckRmb
     };
-  },
+  }
 });
 </script>
 <style lang="scss">
