@@ -23,7 +23,7 @@
           <div
             class="promo"
             :style="
-              item.promoStyle + 'background-image: url(' + item.promoIcon + ''
+              item.promoStyle + 'background-image: url(' + imgURL + 'label/' + item.promotionIcon + ''
             "
           >
             <span class="val">{{ item.promoValue }}</span>

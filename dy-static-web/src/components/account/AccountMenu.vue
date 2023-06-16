@@ -8,7 +8,7 @@
         /> -->
         <img class="account-avatar" src="../../assets/images/account/avatar.png">
       <div class="account-name">欢迎您 {{ loginName }}<el-tag type="warning" class="account-vip">{{ vip }}</el-tag></div>
-      
+
     </div>
     <div class="web-menu" :class="{ 'menu-active': 'personalMenuVisible' }">
       <div class="menu-box">
@@ -61,7 +61,7 @@
           class="account-menu-item"
         >
           <RiBankFill class="pink" />
-         加银行卡
+          银行卡管理
         </router-link>
         <router-link
           to="/center/mailbox"
