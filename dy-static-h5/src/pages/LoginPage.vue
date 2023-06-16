@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="logo">
-      <img src="../assets/images/login/logo.png"/>
+      <img src="../assets/images/login/logo.png" />
     </div>
     <q-tabs
       v-model="tab"
@@ -10,8 +10,8 @@
       align="justify"
       class="bg-dyblue"
     >
-      <q-tab name="login" label="登录"/>
-      <q-tab name="register" label="注册"/>
+      <q-tab name="login" label="登录" />
+      <q-tab name="register" label="注册" />
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
@@ -30,7 +30,7 @@
               autocomplete="username"
             >
               <template v-slot:prepend>
-                <img src="../assets/images/login/login_name.png" width="20"/>
+                <img src="../assets/images/login/login_name.png" width="20" />
               </template>
             </q-input>
 
@@ -47,7 +47,7 @@
               autocomplete="current-password"
             >
               <template v-slot:prepend>
-                <img src="../assets/images/login/login_key.png" width="20"/>
+                <img src="../assets/images/login/login_key.png" width="20" />
               </template>
               <template v-slot:append>
                 <q-icon
@@ -70,11 +70,11 @@
               label-color=""
             >
               <template v-slot:append>
-                <img :src="verificationImg" @click="getCode"/>
+                <img :src="verificationImg" @click="getCode" />
               </template>
               <template v-slot:prepend>
                 <!-- <q-icon color="dark" name="security" /> -->
-                <img src="../assets/images/login/login_key.png" width="20"/>
+                <img src="../assets/images/login/login_key.png" width="20" />
               </template>
             </q-input>
           </div>
@@ -91,7 +91,7 @@
               autocomplete="username"
             >
               <template v-slot:prepend>
-                <q-icon color="dark" name="person_outline"/>
+                <q-icon color="dark" name="person_outline" />
               </template>
             </q-input>
             <q-input
@@ -106,10 +106,10 @@
               label-color="brand"
             >
               <template v-slot:append>
-                <img :src="verificationImg"/>
+                <img :src="verificationImg" />
               </template>
               <template v-slot:prepend>
-                <q-icon color="bright" name="security"/>
+                <q-icon color="bright" name="security" />
               </template>
             </q-input>
           </div>
@@ -153,18 +153,18 @@
       </q-tab-panel>
 
       <q-tab-panel name="register" class="form-container">
-        <RegisterPage/>
+        <RegisterPage />
       </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
 
 <script>
-import {defineComponent, ref, reactive, onMounted} from "vue";
-import {userStore} from "stores/index";
-import {api} from "boot/axios";
-import {useQuasar} from "quasar";
-import {useRoute, useRouter} from "vue-router";
+import { defineComponent, ref, reactive, onMounted } from "vue";
+import { userStore } from "stores/index";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import { useRoute, useRouter } from "vue-router";
 import RegisterPage from "../pages/RegisterPage.vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
@@ -217,8 +217,8 @@ export default defineComponent({
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
-        const excludes = {value: ["timezone", "timeZoneOffset"]};
-        const allComponents = {...result.components};
+        const excludes = { value: ["timezone", "timeZoneOffset"] };
+        const allComponents = { ...result.components };
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
