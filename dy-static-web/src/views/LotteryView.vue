@@ -68,7 +68,7 @@
                     </div>
                     <button
                         class="btn linear-blue"
-                        @click="openGame('BBIN', 'BBIN')"
+                        @click="openGame('BBINDY', 'BBINDY')"
                     >
                         进入游戏
                     </button>
@@ -175,7 +175,7 @@ export default defineComponent({
         };
 
         const openGame = (gameName, gameCode) => {
-            liveGame.value.open(gameName, gameCode, 'bbkeno_bbws_pc');
+            liveGame.value.open(gameName, "onlyPlatform", gameCode);
         };
         onMounted(() => {
             aos.refresh();
