@@ -145,7 +145,7 @@
                     </el-col>
                   </el-row>
                 </el-form-item>
-                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                <el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                            @click="submitLogin">登录</el-button>
               </el-form>
             </el-tab-pane>
@@ -170,7 +170,7 @@
                     </el-col>
                   </el-row>
                 </el-form-item>
-                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                <el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                            @click="phoneLogin">登录</el-button>
               </el-form></el-tab-pane>
           </el-tabs>
@@ -348,7 +348,7 @@
                      <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
                     </el-col>
                   </el-row>
-                </el-form-item><el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                </el-form-item><el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                                           @click="submitLogin">登录</el-button>
               </el-form>
             </el-tab-pane>
@@ -374,7 +374,7 @@
                     </el-col>
                   </el-row>
                 </el-form-item>
-                <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
+                <el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                            @click="submitLogin">登录</el-button>
               </el-form>
             </el-tab-pane>
@@ -494,6 +494,7 @@ export default defineComponent({
     ],
   }),
   setup() {
+    const loadingBtn = ref(false);
     const store = userStore();
     const {token} = storeToRefs(store);
     const router = useRouter();
@@ -1003,6 +1004,7 @@ export default defineComponent({
     const verificationImg = ref("");
 
     const submitLogin = () => {
+      loadingBtn.value = true
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
@@ -1024,6 +1026,7 @@ export default defineComponent({
                 codeId: loginForm.codeId,
               })
               .then(() => {
+                loadingBtn.value = false
                 const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                 if (store.token) {
                   router.push(jumpUrl);
@@ -1038,9 +1041,10 @@ export default defineComponent({
                   getCode();
                 }
               }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-            getCode();
+                loadingBtn.value = false
+                // message.error(error.message);
+                console.log(error.message);
+                getCode();
           });
         });
       })();
@@ -1227,7 +1231,12 @@ export default defineComponent({
       todayDate,
       sendOtp,
       phoneLogin,
+<<<<<<< Updated upstream
       openCaptchaForm
+=======
+      sendLoginOtp,
+      loadingBtn
+>>>>>>> Stashed changes
     }
   }
 });
