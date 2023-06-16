@@ -96,6 +96,7 @@ export default defineComponent({
         background-color: #fff;
         box-shadow: 0 5px 8px 0 rgba(206,223,227,.25);
         border-radius: 3px;
+        gap: 15px;
         .balance-container {
           gap: 10px;
           display: flex;

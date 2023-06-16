@@ -66,6 +66,7 @@
             label="银行"
             prop="bankId"
             name="bankId"
+            value="bankName"
           >
             <template #label></template>
             <BankComponent

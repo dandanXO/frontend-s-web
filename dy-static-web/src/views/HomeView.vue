@@ -1,8 +1,27 @@
 <template>
   <div class="home">
     <el-carousel height="25vw" arrow="always">
-      <el-carousel-item v-for="item in banners" :key="item">
-        <img :src="require('../assets/home/' + item.src)" />
+      <el-carousel-item v-for="banner in banners" :key="item">
+        <router-link :to="`/promotion${banner.redirectUrl}`">
+            <div
+              class="promo-bg isDesktop"
+              :style="
+                'background-image: url(' +
+                imgURL +
+                banner.desktopImageUrl +
+                ')'
+              "
+            ></div>
+            <div
+              class="promo-bg isMobile"
+              :style="
+                'background-image: url(' +
+                imgURL +
+                banner.mobileImageUrl +
+                ')'
+              "
+            ></div>
+          </router-link>
       </el-carousel-item>
     </el-carousel>
     <div class="index-container">
@@ -602,6 +621,7 @@
 /* eslint-disable */
 import GameModal from "@/components/modal/GameModal.vue";
 import { defineComponent, ref, onMounted } from "vue";
+import { loadPromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
 
@@ -614,6 +634,7 @@ export default defineComponent({
     GameModal
 },
   setup() {
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
     const gameMenu = ref(null);
     const banners = ref([
       {
@@ -627,6 +648,16 @@ export default defineComponent({
     const openGame = (gameName, platType, gameCode) => {
       gameMenu.value.open(gameName, platType, gameCode);
     };
+    const loadBanners = () => {
+      loadPromoBanner("HOME").then((res) => {
+        if (res.code === 0) {
+          banners.value = res.data
+        }
+      })
+    }
+    onMounted(() => {
+      loadBanners();
+    })
     return {
       banners,
       isImportantAnnoucementModal,
@@ -1392,7 +1423,7 @@ export default defineComponent({
       color: #474747;
       font-size: 16px;
       letter-spacing: 2px;
-      line-height: 32px;
+      // line-height: 32px;
       cursor: pointer;
       &.knew {
         background-color: #fff;

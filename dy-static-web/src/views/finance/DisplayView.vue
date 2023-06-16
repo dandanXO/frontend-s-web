@@ -1,9 +1,11 @@
 <template>
-  <div v-if="submitMessage" class="submit-message">
-    <div class="line"><span>银行名称：</span> <span>{{submitMessage[0]}}</span></div>
-    <div class="line"><span>银行账号：</span> <span>{{submitMessage[1]}}</span></div>
-    <div class="line"><span>银行卡号：</span> <span>{{submitMessage[2]}}</span></div>
-    <div class="line"><span>存款金额：</span> <span>{{submitMessage[3]}}</span></div>
+  <div v-if="submitMessage.length > 0" class="inner-cont">
+    <div  class="submit-message">
+    <div class="line"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
+    <div class="line"><span>银行账号：</span> <span class="info" ref="subMsg1">{{submitMessage[1]}}</span><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button></div>
+    <div class="line"><span>银行卡号：</span> <span class="info" ref="subMsg2">{{submitMessage[2]}}</span><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">{{ copybtntxt2 }}</button></div>
+    <div class="line"><span>存款金额：</span> <span class="info" ref="subMsg3">{{submitMessage[3]}}</span><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button></div>
+  </div>
   </div>
   <div v-else id="renderArea">
     <form ref="formRef" method="post" style="display: none">
@@ -14,7 +16,7 @@
         :value="input.value"
         :name="input.name"
       />
-      <button type="submit" id="submitBtn">Submit</button>
+      <button type="submit" id="submitBtn">提交</button>
     </form>
   </div>
 </template>
@@ -28,10 +30,46 @@ const request = ref({});
 const formRef = ref();
 const data = reactive([]);
 const submitMessage = ref([]);
+const subMsg0 = ref();
+const subMsg1 = ref();
+const subMsg2 = ref();
+const subMsg3 = ref();
+const copybtntxt0 = ref("复制");
+const copybtntxt1 = ref("复制");
+const copybtntxt2 = ref("复制");
+const copybtntxt3 = ref("复制");
+const copyMessage = (position) => {
+  let copyText = null;
+    copyText = eval(`subMsg${position}.value.innerText`);
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement('textarea');
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt[position].value = '已复制';
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
+
+const blurCode = () => {
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt.forEach(element => {
+    element.value = '复制';
+  });
+};
+
 
 function getRequest(url) {
   if (isEmpty(url)) {
-    url = window.location.search;
+    url = decodeURIComponent(window.location.search);
   }
   let theRequest = {};
   if (url.indexOf("?") != -1) {
@@ -97,19 +135,44 @@ onMounted(async () => {
 });
 </script>
 <style lang="scss">
+.inner-cont {  
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .submit-message {
-  width: 400px;
+  width: calc(100% - 40px);
+  max-width: 500px;
   margin: 0 auto;
-  height:100%;
-  gap: 40px;
+  padding: 20px;
+  height: auto;
+  gap: 1px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  color:#ffffff;
+  color:#000000;
   .line {
     display: flex;
     gap: 10px;
+    justify-content: space-between;
+    width: calc(100% - 30px);
+    align-items: center;
+    font-size: 16px;
+    align-items: center;
+    background: #dddddd;
+    padding: 15px;
+    span:first-child {
+      flex: 1;
+      color: #4669f8;
+    }
+    span.info {
+      flex: 3;
+    }
+    button {
+      width: 80px;
+    }
   }
 }
 </style>

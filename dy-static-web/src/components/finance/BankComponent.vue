@@ -9,6 +9,7 @@
         <el-option
           v-for="bc in props.bankList"
           :key="bc.id"
+          :label="bc.name"
           :value="bc.id"
         >
           {{ bc.name }}
