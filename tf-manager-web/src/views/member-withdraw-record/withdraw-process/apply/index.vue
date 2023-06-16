@@ -584,9 +584,9 @@ async function loadRecord() {
 
 async function toCheck(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromApplyToChecking([memberWithdrawRecord.id])
+    await fromApplyToChecking([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
   } else {
-    await fromApplyToChecking(chooseRecord.map(a => a.id))
+    await fromApplyToChecking(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToUnderReviewSuccess'), type: 'success' })
@@ -594,9 +594,9 @@ async function toCheck(memberWithdrawRecord) {
 
 async function toPending(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromApplyToPending([memberWithdrawRecord.id])
+    await fromApplyToPending([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
   } else {
-    await fromApplyToPending(chooseRecord.map(a => a.id))
+    await fromApplyToPending(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToSuspendSuccess'), type: 'success' })

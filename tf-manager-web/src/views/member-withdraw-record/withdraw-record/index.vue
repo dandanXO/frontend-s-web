@@ -1213,14 +1213,14 @@ async function advancedSearch() {
 async function toApply(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromCheckingToApply(chooseRecord.map(a => a.id))
+  await fromCheckingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   await loadRecord()
 }
 
 async function toBeforePaid(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromPayToBeforePaid(chooseRecord.map(a => a.id))
+  await fromPayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   await loadRecord()
 }
 
