@@ -214,7 +214,8 @@ $node-color: #4873f1;
     cursor: pointer;
     // padding: 20px 35px;
     img {
-        border: 2px solid;padding: 5px 15px;
+        border: 2px solid #dddddd;
+        padding: 5px 15px;
         border-radius: 3px;
     }
     &:hover {
@@ -279,7 +280,7 @@ $node-color: #4873f1;
         gap: 5px;
         & > div {
           font-size: 12px;
-          color: #a0bcd6;
+          color: #000000;
         }
         img {
           background-color: #f7f7f7;
@@ -326,7 +327,7 @@ $node-color: #4873f1;
       flex-direction: column;
       & > div {
         font-size: 12px;
-        color: #a0bcd6;
+        color: #000000;
       }
       img {
         background-color: #f7f7f7;

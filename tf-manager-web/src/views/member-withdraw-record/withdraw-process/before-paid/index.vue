@@ -581,9 +581,9 @@ async function loadRecord() {
 
 async function toPay(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromBeforePaidToPay([memberWithdrawRecord.id])
+    await fromBeforePaidToPay([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
   } else {
-    await fromBeforePaidToPay(chooseRecord.map(a => a.id))
+    await fromBeforePaidToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToPaySuccess'), type: 'success' })

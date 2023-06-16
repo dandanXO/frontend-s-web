@@ -407,6 +407,14 @@
             >
               {{ t('fields.viewLog') }}
             </el-button>
+            <el-button
+              v-if="scope.row.status === 'SUCCESS'"
+              size="mini"
+              type="primary"
+              @click="toFail(scope.row)"
+            >
+              {{ t('fields.fail') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -813,6 +821,7 @@ import {
   getTotalWithdrawAmount,
   fromAffiliateCheckingToApply,
   fromAffiliatePayToBeforePaid,
+  fromAffiliateToFail,
 } from '../../../api/member-withdraw-record'
 import { getAffiliateWithdrawLog } from '../../../api/member-withdraw-log'
 import { getAllWithdrawBankCard } from '../../../api/bank-card'
@@ -1213,14 +1222,21 @@ async function advancedSearch() {
 async function toApply(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromAffiliateCheckingToApply(chooseRecord.map(a => a.id))
+  await fromAffiliateCheckingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   await loadRecord()
 }
 
 async function toBeforePaid(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromAffiliatePayToBeforePaid(chooseRecord.map(a => a.id))
+  await fromAffiliatePayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await loadRecord()
+}
+
+async function toFail(val) {
+  const chooseRecord = []
+  chooseRecord.push(val)
+  await fromAffiliateToFail(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   await loadRecord()
 }
 

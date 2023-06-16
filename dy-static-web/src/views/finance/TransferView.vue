@@ -50,12 +50,12 @@
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
               <div class="plat-name" v-if="p.code === 'FlashTech'">Sport</div>
-              <div class="plat-name" v-else><RiWirelessChargingLine />{{ p.code }}</div>
+              <div class="plat-name" v-else><RiWirelessChargingLine />{{ p.name }}</div>
               <div class="balance-wrapper">
                 <span class="currency">金额:</span> {{ p.amount }}
               </div>
             </div>
-            <div class="balance-refresh" @click="refreshBalance(p.code)">
+            <div class="balance-refresh" @click="refreshBalance(p.name)">
             <el-icon><Refresh /></el-icon>
             </div>
           </div>

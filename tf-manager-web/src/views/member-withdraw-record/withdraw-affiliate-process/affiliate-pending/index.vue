@@ -569,9 +569,9 @@ async function loadRecord() {
 
 async function toApply(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromAffiliatePendingToApply([memberWithdrawRecord.id])
+    await fromAffiliatePendingToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
   } else {
-    await fromAffiliatePendingToApply(chooseRecord.map(a => a.id))
+    await fromAffiliatePendingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })

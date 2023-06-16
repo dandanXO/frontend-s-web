@@ -702,6 +702,7 @@ const payForm = reactive({
   cardAddress: null,
   bankCard: null,
   withdrawPlatformId: null,
+  withdrawDate: null,
 })
 
 const failForm = reactive({
@@ -709,6 +710,7 @@ const failForm = reactive({
   reasonType: [],
   reasonTemplate: [],
   failReason: null,
+  withdrawDate: null,
 })
 
 const failFormRules = reactive({
@@ -822,8 +824,8 @@ async function loadBankCards(id) {
   bankCardList.list = bankCard
 }
 
-async function loadWithdrawPlatforms(id) {
-  const { data: wp } = await getWithdrawPlatformList(id)
+async function loadWithdrawPlatforms(id, wd) {
+  const { data: wp } = await getWithdrawPlatformList(id, wd)
   withdrawPlatformList.list = wp
 }
 
@@ -880,7 +882,7 @@ async function loadSites() {
 }
 
 async function toBeforePaid() {
-  await fromAffiliatePayToBeforePaid(chooseRecord.map(a => a.id))
+  await fromAffiliatePayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   await loadRecord()
   ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
 }
@@ -904,7 +906,7 @@ async function showDialog(type, memberWithdrawRecord) {
       toPayForm.value.resetFields()
     }
     addToPayForm(memberWithdrawRecord)
-    await loadWithdrawPlatforms(memberWithdrawRecord.id)
+    await loadWithdrawPlatforms(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
     payForm.withdrawPlatformId = withdrawPlatformList.list[0].id
     uiControl.dialogTitle = t('fields.autopay')
   } else if (type === 'FAIL') {
@@ -913,6 +915,7 @@ async function showDialog(type, memberWithdrawRecord) {
       toFailForm.value.resetFields()
     }
     failForm.id = payForm.id
+    failForm.withdrawDate = payForm.withdrawDate
     failForm.reasonType = reasonTypeList.list[0].value
     uiControl.dialogTitle = t('fields.failReason')
   } else if (type === 'SEARCH') {
@@ -930,6 +933,7 @@ function addToPayForm(memberWithdrawRecord) {
   payForm.bankName = memberWithdrawRecord.bankName
   payForm.cardNumber = memberWithdrawRecord.cardNumber
   payForm.cardAddress = memberWithdrawRecord.cardAddress
+  payForm.withdrawDate = memberWithdrawRecord.withdrawDate
 }
 
 function copy(text, field) {
@@ -946,7 +950,7 @@ async function success() {
     await fromAffiliatePayToSuccess(payForm.id, payForm.bankCard)
     ElMessage({ message: t('message.paySuccess'), type: 'success' })
   } else if (uiControl.dialogType === 'AUTOPAY') {
-    await fromAffiliatePayToAutopay(payForm.id, payForm.withdrawPlatformId)
+    await fromAffiliatePayToAutopay(payForm.id, payForm.withdrawPlatformId, payForm.withdrawDate)
     ElMessage({ message: t('message.autopaySuccess'), type: 'success' })
   }
   uiControl.dialogVisible = false
@@ -958,7 +962,7 @@ async function fail() {
   toFailForm.value.validate(async valid => {
     if (valid) {
       clicked.fail = true
-      await fromAffiliatePayToFail(failForm.id, failForm.reasonType, failForm.failReason)
+      await fromAffiliatePayToFail(failForm.id, failForm.reasonType, failForm.failReason, failForm.withdrawDate)
       uiControl.dialogVisible = false
       clicked.fail = false
       await loadRecord()

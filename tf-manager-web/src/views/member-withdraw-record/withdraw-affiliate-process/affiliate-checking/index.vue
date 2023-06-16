@@ -537,6 +537,7 @@ const failForm = reactive({
   reasonType: [],
   reasonTemplate: [],
   failReason: null,
+  withdrawDate: ''
 })
 
 const failFormRules = reactive({
@@ -697,13 +698,13 @@ async function loadSites() {
 }
 
 async function toApply() {
-  await fromAffiliateApplyToChecking(chooseRecord.map(a => a.id))
+  await fromAffiliateApplyToChecking(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   await loadRecord()
   ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })
 }
 
 async function success(memberWithdrawRecord) {
-  await fromAffiliateCheckingToBeforePaid(memberWithdrawRecord.id)
+  await fromAffiliateCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
   await loadRecord()
   ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
 }
@@ -714,6 +715,7 @@ async function showDialog(type, memberWithdrawRecord) {
       toFailForm.value.resetFields()
     }
     failForm.id = memberWithdrawRecord.id
+    failForm.withdrawDate = memberWithdrawRecord.withdrawDate
     site.value = siteList.list.find(
       s => s.siteName === memberWithdrawRecord.site
     )
@@ -734,7 +736,8 @@ async function fail() {
       await fromAffiliateCheckingToFail(
         failForm.id,
         failForm.reasonType,
-        failForm.failReason
+        failForm.failReason,
+        failForm.withdrawDate
       )
       uiControl.dialogVisible = false
       clickedFail.value = false
