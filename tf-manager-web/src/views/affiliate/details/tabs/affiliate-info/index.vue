@@ -603,17 +603,17 @@ const commissionForm = ref(null);
 const updateTimeTypeModel = ref(null);
 const freezeType = reactive({
   list: [
-    { key: 1, name: "NORMAL", value: "NORMAL" },
-    { key: 2, name: "TEMPORARY", value: "TEMPORARY" },
-    { key: 3, name: "PERMANENT", value: "PERMANENT" }
+    { key: 1, name: t('types.normal'), value: "NORMAL" },
+    { key: 2, name: t('types.temporary'), value: "TEMPORARY" },
+    { key: 3, name: t('types.permanent'), value: "PERMANENT" }
   ]
 });
 
 const freezeReason = reactive({
   list: [
-    { key: 1, name: "Game Violation", value: "Game Violation" },
-    { key: 2, name: "Member Request", value: "Member Request" },
-    { key: 3, name: "Others", value: "Others" }
+    { key: 1, name: t('types.gameViolation'), value: "Game Violation" },
+    { key: 2, name: t('types.memberRequest'), value: "Member Request" },
+    { key: 3, name: t('types.others'), value: "Others" }
   ]
 });
 

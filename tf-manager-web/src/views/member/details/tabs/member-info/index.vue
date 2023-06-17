@@ -937,7 +937,8 @@ export default defineComponent({
     const transferForm = reactive({
       platformCode: null,
       amount: 0,
-      action: null
+      action: null,
+      siteId: null
     });
 
     const userTypeForm = reactive({
@@ -1136,6 +1137,7 @@ export default defineComponent({
     const transferFund = () => {
       platformTransferForm.value.validate(async (valid) => {
         if (valid) {
+          transferForm.siteId = memberDetail.siteId;
           await platformFundTransfer(props.mbrId, transferForm);
           uiControl.dialogVisible = false;
 
@@ -1288,7 +1290,7 @@ export default defineComponent({
       });
 
       for (const key of Object.keys(platformWallet.value)) {
-        const { data: balance } = await getPlatformBalance(props.mbrId, key);
+        const { data: balance } = await getPlatformBalance(props.mbrId, key, site.id);
         platformWallet.value[key] = balance;
         loading.balance[key] = false;
       }
@@ -1297,7 +1299,7 @@ export default defineComponent({
 
     const refreshPlatformBalance = async (key) => {
       loading.balance[key] = true;
-      const { data: balance } = await getPlatformBalance(props.mbrId, key);
+      const { data: balance } = await getPlatformBalance(props.mbrId, key, site.id);
       platformWallet.value[key] = balance;
       loading.balance[key] = false;
     };
@@ -1344,7 +1346,7 @@ export default defineComponent({
         memberDetail[detailField] = data.data[detailField];
       });
 
-      const { data: aff } = await getAffiliateInfo(props.mbrId);
+      const { data: aff } = await getAffiliateInfo(props.mbrId, site.id);
       Object.keys({ ...aff }).forEach(detailField => {
         affiliateDetail[detailField] = aff[detailField];
       });
