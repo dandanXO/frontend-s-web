@@ -31,14 +31,14 @@
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
 
-          
+
         </div>
     <div class="account-content quicktransfer">
       <div class="flex-box transfer-top-container">
         <div class="account-content">
           <div class="account-tip-text green">
             <el-icon><img src="../../assets/images/account/transfer_tip.png"></el-icon>
-            兴發电竞、IM体育无需转账，充值即可游戏
+            东赢电竞、IM体育无需转账，充值即可游戏
           </div>
         </div>
         <!--<div class="account-tip">
@@ -89,9 +89,9 @@
     >
     <template #header>
       <div :style="transferTypeIndex === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse; justify-content: flex-end;'" class="el-dialog__title">
-      <el-tag type="danger" effect="dark">主账户</el-tag> 
+      <el-tag type="danger" effect="dark">主账户</el-tag>
       <el-icon><Right /></el-icon>
-      <el-tag type="success" effect="dark">{{ transferInfo.platform }}</el-tag> 
+      <el-tag type="success" effect="dark">{{ transferInfo.platform }}</el-tag>
       </div>
     </template>
       <el-form
@@ -212,7 +212,7 @@ export default defineComponent({
         refreshBalance(p.code);
       });
     }
-    
+
     const refreshAllModal = () => {
       platforms.forEach(p => {
         store.getBalance();
@@ -473,7 +473,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
                 box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
                 border-radius: 2px;
                 border: 0;
-                // border: 1px solid #22737f;  
+                // border: 1px solid #22737f;
                   color: #fff;
                 padding: 2px 20px;
                 font-size: 12px;
@@ -526,7 +526,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
               z-index: -1;
               border-color: #148f77 transparent transparent;
             }
-            
+
             &::after {
               content: " ";
               background: url(../../assets/images/account/transfer_item_bg.png)no-repeat center center;
