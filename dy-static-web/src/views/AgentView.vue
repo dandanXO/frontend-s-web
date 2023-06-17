@@ -39,7 +39,7 @@
 					<li>代理佣金计算方式：<br>
 						<span class="agent-stress-tip">[（投注输赢额-优惠100%）-（存款+提款）*1%-平台费*8%]*佣金比例</span>
 					</li>
-					<li>代理推广每月至少需要新注册活跃会员达到3名，如无达到将视为无推广兴發平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。</li>
+					<li>代理推广每月至少需要新注册活跃会员达到3名，如无达到将视为无推广东赢平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。</li>
 				</ul>
           </div>
           <div class="affiliate-sub">
@@ -211,7 +211,7 @@
 					<div class="agent-ways-box">
 						<div class="agent-ways-way">合营QQ</div>
 						<div class="agent-ways-val">
-						
+
 						1193911745（工作时间：14:00-23:00）</div>
 					</div>
 					<div class="agent-ways-box">
@@ -350,7 +350,7 @@ export default defineComponent({
     // background-position: center;
     // background-repeat: no-repeat;
     // background-size: cover;
-    
+
     display: block;
     margin: 30px auto 0;
     text-align: center;
@@ -362,7 +362,7 @@ export default defineComponent({
     height: 60px;
     background-image: linear-gradient(-90deg, #518bf7 0%, #65adff 100%), linear-gradient(#d0d0d0, #d0d0d0);
     box-shadow: 0px 2px 3px 0px rgba(12, 3, 7, 0.15);
-    border-radius: 30px;      
+    border-radius: 30px;
   }
     }
     .steps {
@@ -415,9 +415,9 @@ export default defineComponent({
         }
       }
     }
-    
+
     .agent-content-item {
-      
+
     }
     .agent-content-item ul {
       margin-top: 37px;
@@ -524,7 +524,7 @@ color: #518bf7;
 }
 .agent-ways-val {
 font-size: 16px;
-color: #506180; 
+color: #506180;
   a {
     display: inline-block;
     vertical-align: middle;

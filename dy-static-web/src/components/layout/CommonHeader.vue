@@ -286,7 +286,7 @@
                       label="验证码"
                       placeholder="验证码"
                   />
-                  
+
                   <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
                 </el-space>
             </el-form-item>
@@ -387,12 +387,12 @@
       <div class="noticedialog">
         <div class="title">系统提示</div>
         <div class="contents">
-          尊敬的兴發会员：
+          尊敬的东赢会员：
 
-          为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！兴發娱乐
+          为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！东赢娱乐
           2022/10/13
 
-          尊敬的兴發会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！兴發娱乐
+          尊敬的东赢会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！东赢娱乐
           2022/10/13
 
 
@@ -957,12 +957,12 @@ export default defineComponent({
         store.getBalance();
         store.getMemberInfo();
       }
-      
+
       if (store.loginPageVisible) {
         loginDialogVisible.value = true
       }
     });
-    
+
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         loginDialogVisible.value = true
@@ -1191,7 +1191,7 @@ export default defineComponent({
       scroll,
       selectedMenu,
       noticesList: [
-        "尊敬的兴發会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！兴發娱乐 2022/10/13",
+        "尊敬的东赢会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！东赢娱乐 2022/10/13",
         "こんにちは",
         "bonjour",
         "안녕하세요"
@@ -1718,7 +1718,7 @@ body {
     &.fish-gps {
       background-image: url("../../assets/fishing/gps_fish_king.png");
     }
-    
+
     &.live-ag {
       background-image: url("../../assets/game/header_slot_ag.png");
     }
@@ -1830,7 +1830,7 @@ body {
       margin: 15px 0 12px;
     }
   }
-  
+
   &.esports {
     .platform-box {
       display: flex;
@@ -1860,7 +1860,7 @@ body {
         overflow: hidden;
         -webkit-transition: all .5s ease-out;
         transition: all .5s ease-out;
-        
+
       }
       &:hover {
       .imgbox {
@@ -1901,7 +1901,7 @@ body {
         padding-right: 0px;
         text-align: left;
 
-        .platform {          
+        .platform {
           font-size: 24px;
           color: #4080ff;
         }
@@ -1914,13 +1914,13 @@ body {
       .imgbox {
         background-image: url(../../assets/home/header_sport_new_2.png);
         // background-size: 320%;
-        
+
     background-size: 310%;
         overflow: hidden;
         transition: all 0.5s ease-out;
         background-repeat: no-repeat;
         background-position: center center;
-            
+
         flex: 6;
       }
       .contents {
@@ -1992,7 +1992,7 @@ body {
     &:hover {
       opacity: 1;
       color: #000000;
-    }      
+    }
     }
   }
   }
