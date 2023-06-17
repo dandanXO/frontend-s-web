@@ -4,6 +4,17 @@ export default {
     logout: 'Logout',
     changePassword: 'Change Password',
   },
+  types: {
+    normal: 'NORMAL',
+    temporary: 'TEMPORARY',
+    permanent: 'PERMANENT',
+    gameViolation: 'Game Violation',
+    memberRequest: 'Member Request',
+    others: 'Others',
+    test: 'TEST',
+    affiliate: 'AFFILIATE',
+    outside: 'OUTSIDE',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',

@@ -4,6 +4,17 @@ export default {
     logout: '登出',
     changePassword: '更换密码',
   },
+  types: {
+    normal: '正常',
+    temporary: '临时冻结',
+    permanent: '永久冻结',
+    gameViolation: '违规游戏',
+    memberRequest: '会员要求',
+    others: '其他',
+    test: '测试',
+    affiliate: '代理',
+    outside: '三方',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
