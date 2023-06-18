@@ -49,7 +49,7 @@ export default defineComponent({
       })
     };
     const store = userStore();
-    const evips = JSON.parse(store.evip);
+    const evips = store.evip ? JSON.parse(store.evip) : '';
     return {
       store,
       evips,

@@ -70,7 +70,7 @@ export const userStore = defineStore("userStore", {
             this.phone = ret.data.telephone;
             this.memberType = ret.data.memberType;
             this.vip = ret.data.vip;
-            this.evip = ret.data.evip;
+            // this.evip = ret.data.evip;
           } else {
             throw new Error(ret.message);
           }

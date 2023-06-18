@@ -22,7 +22,9 @@ export function doIt(resp) {
 }
 
 function locationUrl(resp) {
-  location.href = resp.requestUrl;
+  const newWin = window.open(`/`)
+  newWin.location.href = resp.requestUrl;
+  return null;
 }
 
 function postSubmit(resp) {
@@ -30,13 +32,19 @@ function postSubmit(resp) {
     location.href = `center/display?${resp.data}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
   } else {
     location.href = `center/display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
-  }
+  }    
+  return null
 }
 
 function renderPage(resp) {
-  if (isEmpty(resp.paramKey)) {
-    location.href = `center/display?data=${resp.data}&payResultType=${resp.payResultType}`;
-  } else {
-    location.href = `center/display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}`;
+  if (resp.payResultType === 'RENDER_HTML') {
+    return resp
+  } else {  
+    if (isEmpty(resp.paramKey)) {
+      location.href = `center/display?data=${resp.data}&payResultType=${resp.payResultType}`;
+    } else {
+      location.href = `center/display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}`;
+    }
+    return null
   }
 }
