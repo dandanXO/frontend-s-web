@@ -513,7 +513,8 @@ const promoForm = reactive({
   privilegeId: null,
   amount: null,
   rollover: null,
-  recordTime: null
+  recordTime: null,
+  siteId: null
 })
 
 const validatePassword = (rule, value, callback) => {
@@ -779,6 +780,7 @@ async function loadSites() {
 async function changeSite(siteId) {
   await loadVips();
   vipList.list = vipList.list.filter(vip => vip.siteId === siteId);
+  promoForm.siteId = siteId;
   await loadRiskLevels(siteId);
   await loadFinancialLevels(siteId);
 }

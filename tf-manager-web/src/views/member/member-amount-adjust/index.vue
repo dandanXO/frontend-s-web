@@ -151,6 +151,23 @@
         label-width="150px"
         style="float: right;"
       >
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="importForm.siteId"
+            :placeholder="t('fields.site')"
+            style="width: 350px;"
+            filterable
+            default-first-option
+            @focus="loadSites"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.cause')" prop="cause">
           <el-select
             v-model="importForm.cause"
@@ -555,7 +572,8 @@ const form = reactive({
 });
 
 const importForm = reactive({
-  cause: null
+  cause: null,
+  siteId: null
 });
 
 const loginNameValidator = async(rule, value, callback) => {
@@ -586,6 +604,7 @@ const formRules = reactive({
 });
 
 const importRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
   cause: [required(t('message.validateCauseRequired'))]
 });
 
@@ -693,7 +712,6 @@ async function showDialog(type) {
     uiControl.balance = null;
     uiControl.dialogTitle = t('fields.deductMemberAmountAdjust');
   }
-  form.siteId = siteList.list[0].id;
   await loadFormSelect();
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -703,7 +721,7 @@ function createAdd() {
   memberAmountAdjustForm.value.validate(async (valid) => {
     form.id = null;
     form.memberId = null;
-    const { data: id } = await findIdByLoginName(form.loginName);
+    const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
     form.memberId = id;
     if (valid) {
       await createAddMemberAmountAdjust(form);
@@ -718,7 +736,7 @@ function createDeduct() {
   memberAmountAdjustForm.value.validate(async (valid) => {
     form.id = null;
     form.memberId = null;
-    const { data: id } = await findIdByLoginName(form.loginName);
+    const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
     form.memberId = id;
     if (valid) {
       await createDeductMemberAmountAdjust(form);
@@ -789,7 +807,7 @@ function importToTable(file) {
           })
         );
         for (const d of data) {
-          const { data: id } = await findIdByLoginName(d.loginName);
+          const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
           d.memberId = id;
         }
         break;
@@ -831,6 +849,7 @@ async function confirmImport() {
         const item = {};
         if (value) {
           item.cause = importForm.cause;
+          item.siteId = importForm.siteId;
           Object.entries(value).forEach(([k, v]) => {
             if (k !== "loginName") {
               item[k] = v;

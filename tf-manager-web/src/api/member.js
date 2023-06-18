@@ -37,8 +37,8 @@ export const freezeMember = (id, member) => {
   return https().request(`/member/${id}/freeze?_method=PUT`, Method.POST, member, ContentType.form);
 };
 
-export const normalMember = (id) => {
-  return https().request(`/member/${id}/normal?_method=PUT`, Method.POST, ContentType.form);
+export const normalMember = (id, siteId) => {
+  return https().request(`/member/${id}/normal?_method=PUT`, Method.POST, { siteId: siteId }, ContentType.form);
 };
 
 export const updateVip = (id, vipId) => {
@@ -109,12 +109,12 @@ export const getMemberListBySiteId = (siteId) => {
   return https().request("/member/memberList", Method.GET, { siteId: siteId }, ContentType.form);
 };
 
-export const findIdByLoginName = (loginName) => {
-  return https().request("/member/loginName", Method.GET, { loginName: loginName }, ContentType.form);
+export const findIdByLoginName = (loginName, sid) => {
+  return https().request("/member/loginName", Method.GET, { loginName: loginName, siteId: sid }, ContentType.form);
 };
 
-export const getPlatformBalance = (id, platformCode) => {
-  return https().request(`/member/${id}/getBalance`, Method.GET, { platformCode: platformCode }, ContentType.form);
+export const getPlatformBalance = (id, platformCode, siteId) => {
+  return https().request(`/member/${id}/getBalance`, Method.GET, { platformCode: platformCode, siteId: siteId }, ContentType.form);
 };
 
 export const platformFundTransfer = (id, transfer) => {
@@ -125,30 +125,30 @@ export const getMemberBalance = (id) => {
   return https().request(`/member/${id}/getMemberBalance`, Method.GET);
 };
 
-export const getMemberRealName = (id) => {
-  return https().request(`/member/${id}/unmaskRealName`, Method.GET);
+export const getMemberRealName = (id, siteId) => {
+  return https().request(`/member/${id}/unmaskRealName?siteId=${siteId}`, Method.GET);
 };
 
-export const getMemberEmail = (id) => {
-  return https().request(`/member/${id}/unmaskEmail`, Method.GET);
+export const getMemberEmail = (id, siteId) => {
+  return https().request(`/member/${id}/unmaskEmail?siteId=${siteId}`, Method.GET);
 };
 
-export const getMemberTelephone = (id) => {
-  return https().request(`/member/${id}/unmaskTelephone`, Method.GET);
+export const getMemberTelephone = (id, siteId) => {
+  return https().request(`/member/${id}/unmaskTelephone?siteId=${siteId}`, Method.GET);
 };
 
 export const getMemberReferFriend = (query) => {
   return https().request(`/member/referFriend`, Method.GET, query, ContentType.form);
 };
 
-export const getAffiliateInfo = (id) => {
-  return https().request(`/member/${id}/affiliate`, Method.GET);
+export const getAffiliateInfo = (id, siteId) => {
+  return https().request(`/member/${id}/affiliate?siteId=${siteId}`, Method.GET);
 };
 
 export const getMemberBalanceByLoginNameSite = (loginName, siteId) => {
   return https().request(`/member/getMemberBalanceByLoginNameSite`, Method.GET, { loginName: loginName, siteId: siteId }, ContentType.form);
 };
 
-export const updateMemberType = (id, memberType) => {
-  return https().request(`/member/${id}/memberType?_method=PUT`, Method.POST, { memberType: memberType }, ContentType.form);
+export const updateMemberType = (id, memberType, siteId) => {
+  return https().request(`/member/${id}/memberType?_method=PUT`, Method.POST, { memberType: memberType, siteId: siteId }, ContentType.form);
 };

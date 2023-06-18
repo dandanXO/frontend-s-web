@@ -230,6 +230,33 @@
           @change="importToTable"
           hidden
         />
+        <el-form
+          ref="importRefForm"
+          :model="importForm"
+          :rules="importRules"
+          :inline="true"
+          size="small"
+          label-width="150px"
+          style="float: right;"
+        >
+          <el-form-item :label="t('fields.site')" prop="siteId">
+            <el-select
+              v-model="importForm.siteId"
+              :placeholder="t('fields.site')"
+              style="width: 350px;"
+              filterable
+              default-first-option
+              @focus="loadSites"
+            >
+              <el-option
+                v-for="item in siteList.list"
+                :key="item.id"
+                :label="item.siteName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+        </el-form>
         <el-table
           :data="
             importedPage.records.slice(
@@ -283,6 +310,7 @@ import { findIdByLoginName, getMemberListBySiteId } from "../../../api/member";
 import { TENANT } from "../../../store/modules/user/action-types";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useI18n } from "vue-i18n";
+import { required } from "../../../utils/validate";
 
 const { t } = useI18n();
 const store = useStore();
@@ -357,6 +385,14 @@ const form = reactive({
   siteId: null,
   memberId: null,
   privilegeId: null
+});
+
+const importForm = reactive({
+  siteId: null
+});
+
+const importRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))]
 });
 
 function resetQuery() {
@@ -569,7 +605,7 @@ function importToTable(file) {
           })
         );
         for (const d of data) {
-          const { data: id } = await findIdByLoginName(d.loginName);
+          const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
           d.memberId = id;
         }
         break;
