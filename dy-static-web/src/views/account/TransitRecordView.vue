@@ -1153,8 +1153,10 @@ export default defineComponent({
             reminderForm.memberRemark = ""
             if (recordActive.value === 'deposit') {
               reminderForm.type = 1
+              reminderForm.recordTime = record.depositDate
             } else if (recordActive.value === 'withdraw') {
               reminderForm.type = 2
+              reminderForm.recordTime = record.withdrawDate
             }
           } else {
             ElMessage.error('无法提交新催单，目前尚有未处理的催单。')
