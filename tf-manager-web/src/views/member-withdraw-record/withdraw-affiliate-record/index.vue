@@ -1336,7 +1336,7 @@ async function showDialog(type, memberWithdrawRecord) {
   if (type === 'LOG') {
     uiControl.dialogTitle = t('fields.memberWithdrawLog')
     logPage.loading = true
-    const { data: ret } = await getAffiliateWithdrawLog(memberWithdrawRecord.id)
+    const { data: ret } = await getAffiliateWithdrawLog(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
     logPage.records = ret
     logPage.loading = false
   } else if (type === 'SEARCH') {

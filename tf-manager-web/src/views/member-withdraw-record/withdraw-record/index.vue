@@ -731,24 +731,24 @@
             maxlength="20"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.cancelType')" prop="cancelType">
-          <el-select
-            v-model="request.cancelType"
-            size="small"
-            :placeholder="t('fields.cancelType')"
-            class="filter-item"
-            style="width: 250px;"
-            default-first-option
-            @focus="loadCancelTypes"
-          >
-            <el-option
-              v-for="item in cancelTypeList.list"
-              :key="item.id"
-              :label="item.value"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
+        <!--        <el-form-item :label="t('fields.cancelType')" prop="cancelType">-->
+        <!--          <el-select-->
+        <!--            v-model="request.cancelType"-->
+        <!--            size="small"-->
+        <!--            :placeholder="t('fields.cancelType')"-->
+        <!--            class="filter-item"-->
+        <!--            style="width: 250px;"-->
+        <!--            default-first-option-->
+        <!--            @focus="loadCancelTypes"-->
+        <!--          >-->
+        <!--            <el-option-->
+        <!--              v-for="item in cancelTypeList.list"-->
+        <!--              :key="item.id"-->
+        <!--              :label="item.value"-->
+        <!--              :value="item.id"-->
+        <!--            />-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
         <el-form-item :label="t('fields.checkTime')" prop="checkTime">
           <el-select
             v-model="request.checkTime"
@@ -1336,7 +1336,7 @@ async function showDialog(type, memberWithdrawRecord) {
   if (type === 'LOG') {
     uiControl.dialogTitle = t('fields.memberWithdrawLog')
     logPage.loading = true
-    const { data: ret } = await getMemberWithdrawLog(memberWithdrawRecord.id)
+    const { data: ret } = await getMemberWithdrawLog(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
     logPage.records = ret
     logPage.loading = false
   } else if (type === 'SEARCH') {
