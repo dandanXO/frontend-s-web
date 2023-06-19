@@ -38,9 +38,9 @@ export default defineComponent({
     const uploadFile = async (uploadedItem) => {
       console.log(uploadedItem[0])
       if (uploadedItem[0]) {
-        
+
         const formData = new FormData();
-        formData.append("fileList", uploadedItem[0].raw);
+        formData.append("files", uploadedItem[0].raw);
         try {
           const response = await fetch(
             `${process.env.VUE_APP_RST_API}/session/image/uploadOrder`,
