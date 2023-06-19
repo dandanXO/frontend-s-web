@@ -49,7 +49,7 @@
         <div class="transfer-plat-item" v-for="p in platforms" :key="p.id">
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
-              <div class="plat-name" v-if="p.code === 'FlashTech'">Sport</div>
+              <div class="plat-name" v-if="p.code === 'FlashTech'"><RiWirelessChargingLine />Sport</div>
               <div class="plat-name" v-else><RiWirelessChargingLine />{{ p.name }}</div>
               <div class="balance-wrapper">
                 <span class="currency">金额:</span> {{ p.amount }}
@@ -248,6 +248,7 @@ export default defineComponent({
           platforms.push({
             id: p.id,
             code: p.code,
+            name: p.name,
             amount: 0,
             status: 'Waiting for transfer'
           });
@@ -512,6 +513,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
             z-index: 2;
             margin-left: -7px;
             margin-top: 15px;
+            gap: 5px;
             padding: 2px 10px;
             &:before {
               content: " ";

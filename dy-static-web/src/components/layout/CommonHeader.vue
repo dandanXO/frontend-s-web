@@ -9,11 +9,12 @@
             <!-- You need to provide attributes directly -->
             <RiVolumeUpFill style=" fill: #5c78f0; width: 180px"/>
             <div class="station-notice">
-              <Vue3Marquee @click="noticeDialogVisible = true" :clone="true" :duration="50" width="300px;">
+              <Vue3Marquee :clone="true" :duration="50" width="300px;">
                   <span
-                      v-for="(word, index) in noticesList"
+                      v-for="(word, index) in announcementList"
                       :key="index"
-                      v-html="word"
+                      v-html="word.content"
+                      @click="openPopup(word)"
                   >
                   </span>
               </Vue3Marquee>
@@ -120,7 +121,7 @@
     <el-dialog v-model="loginDialogVisible" title="会员登录" width="50%" align-center style="max-width: 800px;" :before-close="store.loginPageVisible = false">
       <span>
 
-          <el-tabs type="card">
+          <el-tabs>
             <el-tab-pane label="账户登录">
               <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="100" label-suffix=":"
                        style="width: 100%; max-width: 400px; margin: 50px auto;">
@@ -402,6 +403,39 @@
     </el-dialog>
 
     <GameModal ref="modalGame"></GameModal>
+    
+    <el-dialog
+      class="notice-modal"
+      width="100%"
+      style="max-width: 800px;"
+      v-model="isStationNotice"
+      :maskClosable="false"
+      :footer="null"
+      title="站内信"
+    >
+      <el-tabs type="card"
+        class="announcementTabs"
+        v-model="announcementActive"
+        @tab-click="announcementTabChange"
+      >
+        <el-tab-pane
+          v-for="(tab, ind) in announcementTypes"
+          :key="tab.id"
+          :tab="ind"
+          :label="tab.name"
+        >
+          <el-collapse accordion v-model="typeActive">
+            <template v-for="(ann, idx) in announcementList" :key="idx">
+              <template v-if="ann.typeId === tab.id">
+                <el-collapse-item :name="idx" :title="ann.title">
+                  {{ ann.content }}
+                </el-collapse-item>
+              </template>
+            </template>
+          </el-collapse>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
   </header>
 </template>
 
@@ -412,7 +446,7 @@ import {defineComponent, onMounted, ref, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
 import {getVerificationCode, register} from "@/api/index/login";
-import {sendSms} from "@/api/personal/personal";
+import {sendSms, getAnnouncement} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
 import {Vue3Marquee} from 'vue3-marquee';
 import {
@@ -949,7 +983,42 @@ export default defineComponent({
     const openGame = (gameName, code, gameCode) => {
       modalGame.value.open(gameName, code, gameCode);
     }
+    
+    const announcementActive = ref('1')
+    const announcementList = ref([])
+    const announcementTypes = ref([])
+    const loadAnnouncement = () => {
+      getAnnouncement().then((res) => {
+        if (res.code === 0) {
+          const d = res.data.announcements
+          announcementTypes.value = res.data.type
+          if (res.data.type.length > 0) {
+            announcementActive.value = res.data.type[0].id
+          }
+          announcementList.value = d
+          // announcementList.value = d.announcements
+          // announcementList.value = res.data.announcements
+        }
+      })
+    }
+    const announcementTabChange = () => {
+      // homeState.tabMatchs.forEach(element => {
+      //   if (nk === element.gameId) {
+      //     getMatchData(element);
+      //   }
+      // });
+    };
+    const isStationNotice = ref(false)
+    const noticeTitle = ref('')
+    const openPopup = (noticeType) => {
+      if (noticeType) {
+        announcementActive.value = '0'
+        noticeTitle.value = noticeType.title
+        isStationNotice.value = true
+      }
+    }
     onMounted(() => {
+      loadAnnouncement();
       getCode();
       getReferalCode();
 
@@ -1232,7 +1301,15 @@ export default defineComponent({
       sendOtp,
       phoneLogin,
       openCaptchaForm,
-      loadingBtn
+      loadingBtn,
+      announcementList,
+      isStationNotice,
+      openPopup,
+      noticeTitle,
+      announcementActive,
+      announcementTabChange,
+      announcementTypes,
+      typeActive: '1',
     }
   }
 });

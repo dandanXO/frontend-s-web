@@ -1258,6 +1258,10 @@ export default defineComponent({
         return '提款失败' // Fail Withdrawal
       } else if (turnoverType === 'WITHDRAW') {
         return '提款' // Withdraw
+      }  else if (turnoverType === 'PROMO') {
+        return '优惠' // 优惠
+      }  else if (turnoverType === 'DEPOSIT') {
+        return '存款' // 存款
       } else {
         return turnoverType
       }
@@ -1337,6 +1341,8 @@ export default defineComponent({
         return '云闪付' // 云闪付
       }  else if (depositType === 'DYPAY') {
         return '抖音' // 抖音
+      }   else if (depositType === 'AUTOPAY') {
+        return '自动支付' // 自动支付
       } else {
         return depositType
       }
