@@ -1,13 +1,13 @@
 <template>
     <div>
-        
+
         <div class="platform-menu poker">
-            
+
           <div
               class="platform-box"
               v-for="nav in navigations"
               :key="nav.code"
-              @click="$emit('loadModal', nav.label, 'onlyPlatform', nav.code)"
+              @click="$emit('loadModal', nav.label,  nav.code, nav.gameCode)"
             >
                 <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
                 <div class="contents">
@@ -31,8 +31,8 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     data: () => ({
         navigations: [
-        { code: "DT", image: "tx", label: "大唐", slogan: "赛事最多 玩法新颖" },
-        { code: "KYDY", image: "ky", label: "开元", slogan: "崭新玩法 感受精彩" },
+        { code: "DT", image: "tx", label: "大唐", slogan: "赛事最多 玩法新颖" , gameCode: '' },
+        { code: "KYDY", image: "ky", label: "开元", slogan: "崭新玩法 感受精彩", gameCode: 'ky_lobby' },
         ],
     }),
 })
