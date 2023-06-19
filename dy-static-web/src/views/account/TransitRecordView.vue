@@ -53,7 +53,7 @@
                 >
                   <div style="display: flex; align-items: center">
                     <span>{{
-                        humanDatetime(scope.row.depositDate)
+                        scope.row.depositDate
                       }}</span>
                   </div>
                 </template>
@@ -167,7 +167,7 @@
                 >
                   <div style="display: flex; align-items: center">
                     <span>{{
-                        humanDatetime(scope.row.recordTime)
+                        scope.row.recordTime
                       }}</span>
                   </div>
                 </template>
@@ -253,7 +253,7 @@
                 >
                   <div style="display: flex; align-items: center">
                     <span>{{
-                        humanDatetime(scope.row.recordTime)
+                        scope.row.recordTime
                       }}</span>
                   </div>
                 </template>
@@ -400,7 +400,7 @@
                 >
                   <div style="display: flex; align-items: center">
                     <span>{{
-                        humanDatetime(scope.row.recordTime)
+                        scope.row.recordTime
                       }}</span>
                   </div>
                 </template>
@@ -505,7 +505,7 @@
                 >
                   <div style="display: flex; align-items: center">
                     <span>{{
-                        humanDatetime(scope.row.recordTime)
+                        scope.row.recordTime
                       }}</span>
                   </div>
                 </template>
@@ -567,7 +567,7 @@
                 >
                   <div style="display: flex; align-items: center">
                     <span>{{
-                        humanDatetime(scope.row.recordTime)
+                        scope.row.recordTime
                       }}</span>
                   </div>
                 </template>
@@ -575,7 +575,7 @@
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{
-                        humanDatetime(scope.row.type)
+                        scope.row.type
                       }}</span>
                   </div>
                 </template>
@@ -1362,9 +1362,6 @@ export default defineComponent({
       pagination,
       getTime,
       chgDate,
-      humanDatetime(ts) {
-        return moment(ts).format("DD-MM-YYYY HH:mm:ss");
-      },
       checkType(ts) {
         if (ts === 1) {
           return 'Deposit'
