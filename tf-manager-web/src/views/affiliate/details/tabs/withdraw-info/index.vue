@@ -472,16 +472,18 @@ const page = reactive({
 })
 const statusList = reactive({
   list: [
-    { key: 1, name: 'APPLYING', value: 'APPLY' },
-    { key: 2, name: 'REJECT', value: 'REJECT' },
-    { key: 3, name: 'UNDER_REVIEW', value: 'STEP_1' },
-    { key: 4, name: 'TO_BE_PAID', value: 'STEP_2' },
-    { key: 5, name: 'PAYMENT_ON_GOING', value: 'STEP_3' },
-    { key: 6, name: 'AUTOMATIC_PAYMENT', value: 'AUTOPAY' },
-    { key: 7, name: 'SENDING', value: 'SENDING' },
-    { key: 8, name: 'WAITING_CALLBACK', value: 'WAITING_CALLBACK' },
-    { key: 9, name: 'SUCCESS', value: 'SUCCESS' },
-    { key: 10, name: 'FAIL', value: 'FAIL' },
+    { key: 1, name: t('withdrawStatus.APPLY'), value: 'APPLY' },
+    { key: 2, name: t('withdrawStatus.REJECT'), value: 'REJECT' },
+    { key: 3, name: t('withdrawStatus.STEP_1'), value: 'STEP_1' },
+    { key: 4, name: t('withdrawStatus.STEP_2'), value: 'STEP_2' },
+    { key: 5, name: t('withdrawStatus.STEP_3'), value: 'STEP_3' },
+    { key: 6, name: t('withdrawStatus.PAYING'), value: 'PAYING' },
+    { key: 7, name: t('withdrawStatus.AUTOPAY'), value: 'AUTOPAY' },
+    { key: 8, name: t('withdrawStatus.SENDING'), value: 'SENDING' },
+    { key: 9, name: t('withdrawStatus.WAITING_CALLBACK'), value: 'WAITING_CALLBACK' },
+    { key: 10, name: t('withdrawStatus.SUCCESS'), value: 'SUCCESS' },
+    { key: 11, name: t('withdrawStatus.FAIL'), value: 'FAIL' },
+    { key: 12, name: t('withdrawStatus.PENDING'), value: 'PENDING' },
   ],
 })
 const sort = column => {

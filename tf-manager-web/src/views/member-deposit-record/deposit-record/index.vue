@@ -23,7 +23,7 @@
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -39,7 +39,7 @@
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -153,10 +153,10 @@
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="110">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success">
-              {{ scope.row.status }}
+              {{ t('depositStatus.' + scope.row.status) }}
             </el-tag>
-            <el-tag v-if="scope.row.status === 'CLOSED'" type="danger">{{ scope.row.status }}</el-tag>
-            <el-tag v-if="scope.row.status === 'PENDING'">{{ scope.row.status }}</el-tag>
+            <el-tag v-if="scope.row.status === 'CLOSED'" type="danger">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'PENDING'">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="paymentType" :label="t('fields.paymentType')" align="center" min-width="110" />
@@ -541,10 +541,10 @@ const uiControl = reactive({
   dialogTitle: "",
   dialogType: "SEARCH",
   status: [
-    { key: 1, displayName: "PENDING", value: "PENDING" },
-    { key: 2, displayName: "SUCCESS", value: "SUCCESS" },
-    { key: 3, displayName: "SUPPLEMENT SUCCESS", value: "SUPPLEMENT_SUCCESS" },
-    { key: 4, displayName: "CLOSED", value: "CLOSED" }
+    { key: 1, displayName: t('depositStatus.PENDING'), value: "PENDING" },
+    { key: 2, displayName: t('depositStatus.SUCCESS'), value: "SUCCESS" },
+    { key: 3, displayName: t('depositStatus.SUPPLEMENT_SUCCESS'), value: "SUPPLEMENT_SUCCESS" },
+    { key: 4, displayName: t('depositStatus.CLOSED'), value: "CLOSED" }
   ],
   payType: [
     { key: 1, displayName: "BANK", value: "BANK" },
@@ -578,8 +578,8 @@ const uiControl = reactive({
     { color: '#5cb87a', percentage: 100 }
   ],
   selectedDateType: [
-    { key: 0, displayName: "Deposit Date", value: 0 },
-    { key: 1, displayName: "Finish Date", value: 1 },
+    { key: 0, displayName: t('dateType.depositDate'), value: 0 },
+    { key: 1, displayName: t('dateType.finishDate'), value: 1 },
   ]
 });
 
@@ -627,7 +627,7 @@ const searchFormRule = reactive({
 });
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).format('YYYY-MM-DD HH:mm:ss');
 }
 
 function disabledDate(time) {

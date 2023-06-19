@@ -7,7 +7,7 @@
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -149,6 +149,12 @@
           :label="t('fields.currencyRate')"
           align="center"
           min-width="100"
+        />
+        <el-table-column
+          prop="paymentCard"
+          :label="t('fields.paymentCard')"
+          align="center"
+          min-width="120"
         />
         <el-table-column
           prop="withdrawName"
@@ -561,7 +567,7 @@ const request = reactive({
 })
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
+  return moment(date).format('YYYY-MM-DD HH:mm:ss')
 }
 
 function disabledDate(time) {

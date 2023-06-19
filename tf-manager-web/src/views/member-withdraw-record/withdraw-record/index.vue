@@ -21,7 +21,7 @@
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -310,70 +310,16 @@
           prop="status"
           :label="t('fields.status')"
           align="center"
-          width="150"
+          width="160"
         >
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
-              {{ scope.row.status }}
+              {{ t('withdrawStatus.' + scope.row.status) }}
             </el-tag>
             <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
-              {{ scope.row.status }}
+              {{ t('withdrawStatus.' + scope.row.status) }}
             </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'APPLY'
-              "
-            >
-              APPLYING
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_1'
-              "
-            >
-              UNDER REVIEW
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_2'
-              "
-            >
-              TO BE PAID
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_3'
-              "
-            >
-              PAYMENT ON GOING
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'AUTOPAY'
-              "
-            >
-              AUTOMATIC PAYMENT
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'PENDING'
-              "
-            >
-              SUSPEND
-            </el-tag>
-            <el-tag v-else>{{ scope.row.status }}</el-tag>
+            <el-tag v-else>{{ t('withdrawStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -976,19 +922,19 @@ const uiControl = reactive({
     { key: 7, displayName: 'More than 30 minutes', value: '>1800' },
   ],
   statusList: [
-    { key: 0, displayName: 'ALL' },
-    { key: 1, displayName: 'APPLYING', value: 'APPLY' },
-    { key: 2, displayName: 'REJECT', value: 'REJECT' },
-    { key: 3, displayName: 'UNDER REVIEW', value: 'STEP_1' },
-    { key: 4, displayName: 'TO BE PAID', value: 'STEP_2' },
-    { key: 5, displayName: 'PAYMENT ON GOING', value: 'STEP_3' },
-    { key: 6, displayName: 'PAYING', value: 'PAYING' },
-    { key: 7, displayName: 'AUTOMATIC PAYMENT', value: 'AUTOPAY' },
-    { key: 8, displayName: 'SENDING', value: 'SENDING' },
-    { key: 9, displayName: 'WAITING_CALLBACK', value: 'WAITING_CALLBACK' },
-    { key: 10, displayName: 'SUCCESS', value: 'SUCCESS' },
-    { key: 11, displayName: 'FAIL', value: 'FAIL' },
-    { key: 12, displayName: 'SUSPEND', value: 'PENDING' },
+    { key: 0, displayName: t('withdrawStatus.ALL') },
+    { key: 1, displayName: t('withdrawStatus.APPLY'), value: 'APPLY' },
+    { key: 2, displayName: t('withdrawStatus.REJECT'), value: 'REJECT' },
+    { key: 3, displayName: t('withdrawStatus.STEP_1'), value: 'STEP_1' },
+    { key: 4, displayName: t('withdrawStatus.STEP_2'), value: 'STEP_2' },
+    { key: 5, displayName: t('withdrawStatus.STEP_3'), value: 'STEP_3' },
+    { key: 6, displayName: t('withdrawStatus.PAYING'), value: 'PAYING' },
+    { key: 7, displayName: t('withdrawStatus.AUTOPAY'), value: 'AUTOPAY' },
+    { key: 8, displayName: t('withdrawStatus.SENDING'), value: 'SENDING' },
+    { key: 9, displayName: t('withdrawStatus.WAITING_CALLBACK'), value: 'WAITING_CALLBACK' },
+    { key: 10, displayName: t('withdrawStatus.SUCCESS'), value: 'SUCCESS' },
+    { key: 11, displayName: t('withdrawStatus.FAIL'), value: 'FAIL' },
+    { key: 12, displayName: t('withdrawStatus.PENDING'), value: 'PENDING' },
   ],
   colors: [
     { color: '#f56c6c', percentage: 30 },
@@ -996,8 +942,8 @@ const uiControl = reactive({
     { color: '#5cb87a', percentage: 100 },
   ],
   selectedDateType: [
-    { key: 0, displayName: 'Withdraw Date', value: 0 },
-    { key: 1, displayName: 'Payment Date', value: 1 },
+    { key: 0, displayName: t('dateType.withdrawDate'), value: 0 },
+    { key: 1, displayName: t('dateType.paymentDate'), value: 1 },
   ],
 })
 
@@ -1086,7 +1032,7 @@ const searchFormRule = reactive({
 })
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
+  return moment(date).format('YYYY-MM-DD HH:mm:ss')
 }
 
 function disabledDate(time) {
@@ -1394,6 +1340,7 @@ function pushRecordToData(records, exportData) {
     delete item.memberId
     delete item.withdrawCode
     delete item.withdrawName
+    delete item.siteId
   })
   const data = records.map(record =>
     Object.values(record).map(item => (!item || item === '' ? '-' : item))

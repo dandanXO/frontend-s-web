@@ -17,7 +17,16 @@
           @clicked="onSelect"
         />
       </div>
-      <div class="deposit-container">
+      
+      <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
+          <div class="submit-message">
+          <div class="line"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
+          <div class="line"><span>银行账号：</span> <span class="info" ref="subMsg1">{{submitMessage[1]}}</span><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button></div>
+          <div class="line"><span>银行卡号：</span> <span class="info" ref="subMsg2">{{submitMessage[2]}}</span><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">{{ copybtntxt2 }}</button></div>
+          <div class="line"><span>存款金额：</span> <span class="info" ref="subMsg3">{{submitMessage[3]}}</span><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button></div>
+        </div>
+        </div>
+      <div class="deposit-container" v-else>
         <el-form
           ref="formRef"
           :model="form"
@@ -72,7 +81,6 @@
             <BankComponent
               ref="payTypeClass"
               :is="selectedPayType"
-              v-model="form.bankId"
               :bank-list="bankCardList"
               @selected="selectedBank"
             ></BankComponent>
@@ -147,7 +155,7 @@
 </template>
 <script setup>
 import { ref, reactive, onMounted, shallowRef } from "vue";
-import { loadPay, loadPrivileges,verifyAmount } from "@/api/personal/deposit";
+import { loadPay, loadPrivileges,verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { RiSpamLine } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
@@ -155,7 +163,8 @@ import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
-import { InfoFilled } from "@element-plus/icons-vue"
+import { InfoFilled } from "@element-plus/icons-vue";
+import { doIt } from "@/utils/action";
 {
   RiSpamLine;
 }
@@ -176,7 +185,43 @@ const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
+const isDisplay = ref(false);
+const submitMessage = ref([]);
+const subMsg0 = ref();
+const subMsg1 = ref();
+const subMsg2 = ref();
+const subMsg3 = ref();
+const copybtntxt0 = ref("复制");
+const copybtntxt1 = ref("复制");
+const copybtntxt2 = ref("复制");
+const copybtntxt3 = ref("复制");
+const copyMessage = (position) => {
+  let copyText = null;
+    copyText = eval(`subMsg${position}.value.innerText`);
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement('textarea');
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
 
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt[position].value = '已复制';
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
+
+const blurCode = () => {
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt.forEach(element => {
+    element.value = '复制';
+  });
+};
 const form = reactive({
   paymentId: null,
   privilegeId: null,
@@ -286,6 +331,7 @@ function selectPayType(value) {
 }
 
 async function onSelect(value) {
+  isDisplay.value = false
   clearInfo();
   if (value) {
     if (value.group) {
@@ -368,21 +414,74 @@ function doDeposit() {
   formRef.value.validate().then(() => {
     form.paymentId = activeMethod.value.paymentId;
     if (store.token) {
-      const newWin = window.open(`/depositLoading`, "Bank");
-      newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-      window.addEventListener(
-          "message",
-          (event) => {
-            if (event.data?.msg) {
-              if (event.data.msg === "success") {
-                isDeposited.value = true;
-              } else {
-                // message.error(event.data.msg, 4);
-              }
+      verifyAmount(form.paymentId, form.localAmount)
+      .then((d) => {
+        if (d.code == 0) {
+          // newWin.location.href = d.data;
+          // newWin.location.href = resp
+          const copy = { ...form };
+          const data = {};
+          Object.entries(copy).forEach(([key, value]) => {
+            if (value) {
+              data[key] = value;
             }
-          },
-          { once: true }
-      );
+          });
+          data.bankCardId = 0;
+          
+          postDeposit(data).then((d) => {
+          if (d.code === 0) {
+            doIt(d).then((resp) => {
+                const response = resp.data.result
+              if (response.data) {
+                if (response.paramKey === null || response.paramKey === "") {
+                isDisplay.value = true;
+                submitMessage.value = response.data.split(',');
+                }
+                // if (resp.paramKey === null || resp.paramKey === "") {
+                //   resp.data = ['北京银行,请联系在线客服获取,888888,1233']
+                //   isDisplay.value = true;
+                //   submitMessage.value = resp.data.split(',');
+                // }
+              } else {
+                isDeposited.value = true
+              }
+            });
+          }
+          else {
+            ElMessage.error(d.data.message);
+          }
+    })
+    .catch((error) => {
+            
+            doIt(d).then((resp) => {
+              if (resp) {
+                console.log(resp)
+              }
+            });
+      ElMessage.error(error.message);
+    });
+        } else {
+          ElMessage.error(d.message);
+        }
+      })
+      .catch((error) => {
+          ElMessage.error(error.message);
+      });
+      // const newWin = window.open(`/depositLoading`, "Bank");
+      // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+      // window.addEventListener(
+      //     "message",
+      //     (event) => {
+      //       if (event.data?.msg) {
+      //         if (event.data.msg === "success") {
+      //           isDeposited.value = true;
+      //         } else {
+      //           // message.error(event.data.msg, 4);
+      //         }
+      //       }
+      //     },
+      //     { once: true }
+      // );
     }
   });
 }
@@ -657,4 +756,46 @@ grid-template-rows: 50px;
 //     }
 //   }
 // }
+</style>
+<style lang="scss">
+.inner-cont {  
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.submit-message {
+  width: calc(100% - 40px);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  height: auto;
+  gap: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  color:#000000;
+  .line {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    width: calc(100% - 30px);
+    align-items: center;
+    font-size: 16px;
+    align-items: center;
+    background: #dddddd;
+    padding: 15px;
+    span:first-child {
+      flex: 1;
+      color: #4669f8;
+    }
+    span.info {
+      flex: 3;
+    }
+    button {
+      width: 80px;
+    }
+  }
+}
 </style>

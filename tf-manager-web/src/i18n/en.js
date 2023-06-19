@@ -15,6 +15,33 @@ export default {
     affiliate: 'AFFILIATE',
     outside: 'OUTSIDE',
   },
+  dateType: {
+    depositDate: 'Deposit Date',
+    finishDate: 'Finish Date',
+    withdrawDate: 'Withdraw Date',
+    paymentDate: 'Payment Date'
+  },
+  depositStatus: {
+    SUCCESS: 'Success',
+    SUPPLEMENT_SUCCESS: 'Supplement Success',
+    CLOSED: 'Closed',
+    PENDING: 'Pending'
+  },
+  withdrawStatus: {
+    ALL: 'All',
+    SUCCESS: 'Success',
+    FAIL: 'Fail',
+    APPLY: 'Applying',
+    STEP_1: 'Under Review',
+    STEP_2: 'To Be Paid',
+    STEP_3: 'Payment On Going',
+    AUTOPAY: 'Automatic Payment',
+    PENDING: 'Suspend',
+    REJECT: 'Reject',
+    SENDING: 'Sending',
+    WAITING_CALLBACK: 'Waiting Callback',
+    PAYING: 'Paying'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',

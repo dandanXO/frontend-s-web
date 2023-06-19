@@ -15,6 +15,33 @@ export default {
     affiliate: '代理',
     outside: '三方',
   },
+  dateType: {
+    depositDate: '存款日期',
+    finishDate: '完成日期',
+    withdrawDate: '提款日期',
+    paymentDate: '支付日期'
+  },
+  depositStatus: {
+    SUCCESS: '存款成功',
+    SUPPLEMENT_SUCCESS: '存款补单成功',
+    CLOSED: '已关闭',
+    PENDING: '待存款'
+  },
+  withdrawStatus: {
+    ALL: '全部',
+    SUCCESS: '支付成功',
+    FAIL: '支付失败',
+    APPLY: '申请中',
+    STEP_1: '审核中',
+    STEP_2: '待支付',
+    STEP_3: '支付中',
+    AUTOPAY: '自动支付中',
+    PENDING: '中止',
+    REJECT: '驳回',
+    SENDING: '发送中',
+    WAITING_CALLBACK: '待回调',
+    PAYING: '支付'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -592,8 +619,8 @@ export default {
     successfullyExport: '成功导出',
     summaryReport: '总结报表',
     superiorCategory: '上级组件',
-    supplement: '补助',
-    supplementDeposit: '补助存款',
+    supplement: '补单',
+    supplementDeposit: '存款补单',
     supportType: '支持类型',
     suspend: '中止',
     switch: '转换',
