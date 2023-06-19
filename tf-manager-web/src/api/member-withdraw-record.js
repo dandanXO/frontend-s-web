@@ -105,12 +105,12 @@ export const fromAffiliateCheckingToFail = (id, cancelType, remark, wd) => {
   return https().request(`/memberWithdrawRecord/${id}/affiliateCheckingToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
 };
 
-export const fromToFail = (id, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/toFail?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+export const fromToFail = async (ids) => {
+  await https().httpClient.post('/memberWithdrawRecord/toFail?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
-export const fromAffiliateToFail = (id, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliateToFail?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+export const fromAffiliateToFail = async (ids) => {
+  await https().httpClient.post('/memberWithdrawRecord/affiliateToFail?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
 export const fromBeforePaidToPay = async (ids) => {
