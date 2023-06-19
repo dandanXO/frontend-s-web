@@ -52,7 +52,7 @@
                     #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{
+                    <span>{{
                         humanDatetime(scope.row.depositDate)
                       }}</span>
                   </div>
@@ -64,6 +64,14 @@
                 >
                   <div style="display: flex; align-items: center">
                     {{ getDepositStatus(scope.row.status) }}
+                  </div>
+                </template>
+                <template
+                    v-if="tbl.dataIndex === 'paymentType'"
+                    #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    {{ getDepositType(scope.row.paymentType) }}
                   </div>
                 </template>
 
@@ -158,7 +166,7 @@
                     #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{
+                    <span>{{
                         humanDatetime(scope.row.recordTime)
                       }}</span>
                   </div>
@@ -244,7 +252,7 @@
                     #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{
+                    <span>{{
                         humanDatetime(scope.row.recordTime)
                       }}</span>
                   </div>
@@ -255,7 +263,7 @@
                     #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{
+                    <span>{{
                         getWithdrawStatus(scope.row.status)
                       }}</span>
                   </div>
@@ -391,7 +399,7 @@
                     #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{
+                    <span>{{
                         humanDatetime(scope.row.recordTime)
                       }}</span>
                   </div>
@@ -496,7 +504,7 @@
                     #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{
+                    <span>{{
                         humanDatetime(scope.row.recordTime)
                       }}</span>
                   </div>
@@ -558,7 +566,7 @@
                     #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{
+                    <span>{{
                         humanDatetime(scope.row.recordTime)
                       }}</span>
                   </div>
@@ -566,7 +574,7 @@
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">{{
+                    <span>{{
                         humanDatetime(scope.row.type)
                       }}</span>
                   </div>
@@ -787,7 +795,7 @@ const tableColumns = {
     },
     {
       title: "存款类型",
-      dataIndex: "type"
+      dataIndex: "paymentType"
     },
     {
       title: "存款日期",
@@ -1265,11 +1273,11 @@ export default defineComponent({
         return '审核中' //Under review
       } else if (withdrawStatus === 'STEP_2') {
         return '待支付' // To be paid
-      }  else if (withdrawStatus === 'STEP_3') {
+      } else if (withdrawStatus === 'STEP_3') {
         return '支付中' // Payment on going
-      }  else if (withdrawStatus === 'STEP_4') {
+      } else if (withdrawStatus === 'STEP_4') {
         return '自动支付' // Automatic Payment
-      }  else if (withdrawStatus === 'STEP_5') {
+      } else if (withdrawStatus === 'STEP_5') {
         return '暂不处理' //Suspend
       } else {
         return withdrawStatus
@@ -1289,6 +1297,48 @@ export default defineComponent({
         return '关闭' // Closed
       } else {
         return depositStatus
+      }
+    }
+    const getDepositType = (depositType) => {
+      if (!depositType) {
+        return ''
+      }
+      if (depositType === 'BANK') {
+        return 'VIP转卡' // VIP转卡
+      } else if (depositType === 'USDTERC') {
+        return 'USDT ERC' // USDT ERC
+      } else if (depositType === 'USDTTRC') {
+        return 'USDT TRC' // USDT TRC
+      } else if (depositType === 'OFFLINE') {
+        return '线下转卡' // 线下转卡
+      } else if (depositType === 'UNION') {
+        return '银联快捷' // 银联快捷
+      } else if (depositType === 'QUICKPAYMENT') {
+        return '小额转卡' // 小额转卡
+      } else if (depositType === 'SPECIALPAY') {
+        return '网银转账' // 网银转账
+      } else if (depositType === 'ALIPAYCODE') {
+        return '支付宝' // 支付宝
+      } else if (depositType === 'WECHATCODE') {
+        return '微信支付' // 微信支付
+      } else if (depositType === 'QQCODE') {
+        return 'QQ支付' // QQ支付
+      } else if (depositType === 'KDPAY') {
+        return 'K豆' // K豆
+      } else if (depositType === 'DDPAY') {
+        return '钉钉' // 钉钉
+      } else if (depositType === 'HBPAY') {
+        return '和包' // 和包
+      }  else if (depositType === 'SZPAY') {
+        return '数字人民币' // 数字人民币
+      }  else if (depositType === 'CARDPAY') {
+        return '点卡支付' // 点卡支付
+      }  else if (depositType === 'ONLINECODE') {
+        return '云闪付' // 云闪付
+      }  else if (depositType === 'DYPAY') {
+        return '抖音' // 抖音
+      } else {
+        return depositType
       }
     }
 
@@ -1330,6 +1380,7 @@ export default defineComponent({
       getTurnoverType,
       getWithdrawStatus,
       getDepositStatus,
+      getDepositType
     };
   }
 });
