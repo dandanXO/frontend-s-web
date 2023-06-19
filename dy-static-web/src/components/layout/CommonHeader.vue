@@ -291,9 +291,9 @@
                 </el-space>
             </el-form-item>
           </el-form>
-          <el-button color="#3bafda" @click="resetRegForm(registerRef)">重新填写
+          <el-button class="common-btn" color="#3bafda" @click="resetRegForm(registerRef)">重新填写
           </el-button>
-          <el-button @click="submitRegisterForm(registerRef)" color="#3bafda">确认注册
+          <el-button class="common-btn" @click="submitRegisterForm(registerRef)" color="#3bafda">确认注册
           </el-button>
         </div>
       </div>
