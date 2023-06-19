@@ -1,6 +1,6 @@
-<template>
+<!-- <template>
   <el-upload
-    v-model:file-list="fileList"
+    v-model="fileList"
     :on-remove="handleRemove"
     :limit="1"
     :on-exceed="handleExceed"
@@ -11,6 +11,7 @@
       上传图片
     </el-button>
   </el-upload>
+  
 </template>
 
 <script>
@@ -38,15 +39,16 @@ export default defineComponent({
     const uploadFile = async (uploadedItem) => {
       console.log(uploadedItem[0])
       if (uploadedItem[0]) {
-
+        
         const formData = new FormData();
-        formData.append("files", uploadedItem[0].raw);
+        formData.append("fileList", uploadedItem[0].raw);
         try {
           const response = await fetch(
             `${process.env.VUE_APP_RST_API}/session/image/uploadOrder`,
             {
               method: "POST",
               body: formData,
+              token: store.token
             }
           );
           const data = await response.json();
@@ -99,4 +101,83 @@ export default defineComponent({
 .el-upload-list__item {
   width: calc(100% + 30px);
 }
-</style>
+</style> -->
+<template>
+  <el-space>
+              <el-input
+                :readonly="true"
+                v-model.number="ruleForm.icon"
+                autocomplete="off"
+              />
+              <!-- eslint-disable -->
+              <input
+                id="uploadFile"
+                type="file"
+                ref="input"
+                style="display: none"
+                accept="image/*"
+                @change="attachPhoto($event, 'payment')"
+              />
+    <el-button size="small" class="common-btn" 
+                @click="$refs.input.click()">
+      上传图片
+    </el-button></el-space>
+          <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
+</template>
+
+<script>
+import {defineComponent, reactive} from "vue";
+
+import { uploadImage } from '@/api/image';
+export default defineComponent({
+  emits: ["photoResponse"],
+  
+  setup: (props, { emit }) => {
+    const ruleForm = reactive({
+      icon: null
+    })
+    const attachPhoto = async(event, type) => {
+      const files = event.target.files[0]
+      const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+      const dirPayment = 'payment'
+      const dirPaymentLabel = 'payment/label'
+
+      if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+        ElMessage({
+          message: '上传限制',
+          type: 'error',
+        })
+      } else {
+        var formData = new FormData()
+        formData.append('files', files)
+        if (type === 'payment') {
+          formData.append('dir', dirPayment)
+        } else {
+          formData.append('dir', dirPaymentLabel)
+        }
+        formData.append('overwrite', false)
+        const data = await uploadImage(formData)
+        if (data.code === 0) {
+          if (type === 'payment') {
+            ruleForm.icon = data.data
+            emit("photoResponse", data.data);
+          } else {
+            ruleForm.promoIcon = data.data
+          }
+        } else {
+          ElMessage({
+            message: '上传失败. 上传限制，请稍后再试',
+            type: 'error',
+          })
+        }
+      }
+    }
+    
+    return {
+        attachPhoto,
+        ruleForm
+      }
+    }
+  });
+  
+</script>

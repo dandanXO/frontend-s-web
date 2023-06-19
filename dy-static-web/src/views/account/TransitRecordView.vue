@@ -1196,10 +1196,10 @@ export default defineComponent({
             reminderForm.memberRemark = ""
             if (recordActive.value === 'deposit') {
               reminderForm.type = 1
-              reminderForm.recordTime = record.depositDate
+              reminderForm.recordTime = moment(record.depositDate).format('YYYY-MM-DD HH:mm:ss')
             } else if (recordActive.value === 'withdraw') {
               reminderForm.type = 2
-              reminderForm.recordTime = record.withdrawDate
+              reminderForm.recordTime = moment(record.withdrawDate).format('YYYY-MM-DD HH:mm:ss')
             }
           } else {
             ElMessage.error('无法提交新催单，目前尚有未处理的催单。')
@@ -1247,7 +1247,7 @@ export default defineComponent({
 
     const getImageLink = (linkId) => {
       console.log(linkId);
-      reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
+      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
     }
 
     const getTurnoverType = (turnoverType) => {

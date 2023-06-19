@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <el-carousel class="banner-slider" height="25vw" arrow="always">
-      <el-carousel-item class="banner-container" v-for="banner in banners" :key="item">
+      <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
         <router-link :to="`/promotion?name=${banner.redirectUrl}`">
             <div
               class="promo-bg isDesktop"
