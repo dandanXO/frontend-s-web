@@ -23,14 +23,14 @@
                 <img :src="require('../assets/poker/poker_right_' + det.image + '.png')">
               </div> -->
               <div class="platform-left-box">
-                <template v-if="det.code === 'TX'">
+                <template v-if="det.code === 'DT'">
                   <img class="imgabs tx1" src="../assets/poker/bg_left_tx.webp">
                   <img class="imgabs tx2" src="../assets/poker/girl_tx_left.webp">
                   <img class="imgabs tx3" src="../assets/poker/center_btn_bg_tx.webp">
                   <div class="imgabs tx3text" v-html="det.message"></div>
                   <img class="imgabs tx4" src="../assets/poker/img_float_tx.webp">
                   <img class="imgabs tx5" src="../assets/poker/bg_right_tx.webp">
-                  <div class="imgabs play-btn" @click="openGame(det.name, det.code)">立即游戏</div>
+                  <div class="imgabs play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即游戏</div>
                   <img class="imgabs tx6" src="../assets/poker/girl_tx_right.webp">
                   <img class="imgabs tx7" src="../assets/poker/txt_tx.webp">
                 </template>
@@ -42,7 +42,7 @@
                   <div class="imgabs ky3text" v-html="det.message"></div>
                   <img class="imgabs ky4" src="../assets/poker/txt_ky.webp">
                   <img class="imgabs ky5" src="../assets/poker/txt_ky_tip.webp">
-                  <div class="imgabs play-btn" @click="openGame(det.name, det.code)">立即游戏</div>
+                  <div class="imgabs play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即游戏</div>
                   <img class="imgabs ky6" src="../assets/poker/girl_ky_right.webp">
                   <img class="imgabs ky7" src="../assets/poker/img_float_ky_1.webp">
                   <img class="imgabs ky8" src="../assets/poker/img_float_ky_2.webp">
@@ -70,15 +70,17 @@ export default defineComponent({
     const pokerGame = ref(null);
     const platforms = ref([
       {
-        code: 'TX',
+        code: 'DT',
         name: '大唐',
         image: 'tx',
+        gameCode: '',
         message: '抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活'
       },
       {
         code: 'KYDY',
         name: '开元',
         image: 'ky',
+        gameCode: 'ky_lobby',
         message: '双赢棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！'
       },
     ])
@@ -87,8 +89,8 @@ export default defineComponent({
       selectedPlat.value = plat.code
     }
 
-    const openGame = (gameName, gameCode) => {
-      pokerGame.value.open(gameName, "onlyPlatform", gameCode);
+    const openGame = (gameName, code, gameCode) => {
+      pokerGame.value.open(gameName, code, gameCode);
     };
     onMounted(() => {
       aos.refresh();
@@ -173,7 +175,7 @@ export default defineComponent({
       //     height: 75vh;
       //   }
       // }
-      &.TX {
+      &.DT {
         background: url(../assets/poker/bg_tx.webp);
         .imgabs {
           position: absolute;
@@ -239,7 +241,7 @@ export default defineComponent({
             margin: auto;
             top: 20%;
           }
-          
+
         }
       }
       &.KY {

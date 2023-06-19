@@ -5,7 +5,7 @@
                 class="platform-box"
                 v-for="nav in navigations"
                 :key="nav.code"
-                @click="$emit('loadModal', nav.label, 'onlyPlatform', nav.code)"
+                @click="$emit('loadModal', nav.label, nav.code, nav.gameCode)"
             >
                 <img
                     class="plat-icon"
@@ -34,12 +34,14 @@ export default defineComponent({
                 icon: "tcg",
                 label: "TCG彩票",
                 slogan: "TCG",
+              gameCode: ""
             },
             {
                 code: "BBINDY",
                 icon: "bbin",
                 label: "BBIN彩票",
                 slogan: "BBIN",
+              gameCode: "bbkeno_lobby_pc"
             },
         ],
     }),

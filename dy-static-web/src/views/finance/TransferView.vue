@@ -55,7 +55,7 @@
                 <span class="currency">金额:</span> {{ p.amount }}
               </div>
             </div>
-            <div class="balance-refresh" @click="refreshBalance(p.name)">
+            <div class="balance-refresh" @click="refreshBalance(p.code)">
             <el-icon><Refresh /></el-icon>
             </div>
           </div>

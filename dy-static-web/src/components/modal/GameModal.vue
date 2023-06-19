@@ -1,34 +1,34 @@
 <template>
   <el-dialog
-    v-model="visible"
-    width="100%"
-    class="full-modal"
-    :title="title"
-    destroyOnClose
-    :afterClose="destroyGame"
+      v-model="visible"
+      width="100%"
+      class="full-modal"
+      :title="title"
+      destroyOnClose
+      :afterClose="destroyGame"
   >
-    <TFLoading v-if="logoShow"> </TFLoading>
+    <TFLoading v-if="logoShow"></TFLoading>
     <iframe
-      @load="loadGame()"
-      v-show="!logoShow"
-      :src="src"
-      id="game-iframe"
-      scrolling="no"
-      frameborder="0"
-      class="game-iframe"
+        @load="loadGame()"
+        v-show="!logoShow"
+        :src="src"
+        id="game-iframe"
+        scrolling="no"
+        frameborder="0"
+        class="game-iframe"
     ></iframe>
     <div
-      @click="showDrawer()"
-      class="drawer-btn"
-      :class="{ active: isMobileDrawerActive }"
+        @click="showDrawer()"
+        class="drawer-btn"
+        :class="{ active: isMobileDrawerActive }"
     >
       Quick Actions
     </div>
 
     <div
-      :class="{ active: isMobileDrawerActive }"
-      class="additional-buttons desktopview"
-      v-if="!drawerVisible"
+        :class="{ active: isMobileDrawerActive }"
+        class="additional-buttons desktopview"
+        v-if="!drawerVisible"
     >
       <!-- <div class="numbers">
         <div class="amt-numbers">โอนด่วน</div>
@@ -47,15 +47,15 @@
       </div>
     </div>
     <el-drawer
-      :append-to-body="true"
-      style="width: 40vw; min-width: 500px;"
-      :placement="'right'"
-      v-model="drawerVisible"
-      :get-container="false"
-      :style="{ position: 'absolute', overflow: 'hidden' }"
-      @close="onClose"
-      :closable="true"
-      title="快速提款"
+        :append-to-body="true"
+        style="width: 40vw; min-width: 500px;"
+        :placement="'right'"
+        v-model="drawerVisible"
+        :get-container="false"
+        :style="{ position: 'absolute', overflow: 'hidden' }"
+        @close="onClose"
+        :closable="true"
+        title="快速提款"
     >
       <!-- <template #extra>
         <el-button style="margin-right: 8px" @click="onClose">Cancel</el-button>
@@ -83,11 +83,11 @@
             <div class="instruction">Transfer amount to platform</div>
 
             <div
-              v-for="(val, valIndex) in values"
-              :key="valIndex"
-              class="num"
-              @click="submitTransfer(val)"
-              :class="{ animate: isClicked === val }"
+                v-for="(val, valIndex) in values"
+                :key="valIndex"
+                class="num"
+                @click="submitTransfer(val)"
+                :class="{ animate: isClicked === val }"
             >
               {{ val }}
             </div>
@@ -99,38 +99,38 @@
         <!-- <div class="">
           <span class="title">快速存款</span>
         </div> -->
-        <DepositComponent />
+        <DepositComponent/>
       </span>
     </el-drawer>
   </el-dialog>
   <el-dialog
-    v-model="visibleComingSoon"
-    :footer="null"
-    width="100%"
-    :maskClosable="false"
-    wrap-class-name="full-modal"
-    :title="title"
-    destroyOnClose
+      v-model="visibleComingSoon"
+      :footer="null"
+      width="100%"
+      :maskClosable="false"
+      wrap-class-name="full-modal"
+      :title="title"
+      destroyOnClose
   >
     <ComingSoon></ComingSoon>
   </el-dialog>
 </template>
 <script setup id="GameModal">
-import { userStore } from "@/store";
-import { launchSessionGame } from "@/api/platform/platform";
-import { isMobile } from "@/utils/utils";
-import { ref, defineExpose } from "vue";
+import {userStore} from "@/store";
+import {launchSessionGame} from "@/api/platform/platform";
+import {isMobile} from "@/utils/utils";
+import {ref, defineExpose} from "vue";
 import ComingSoon from "@/components/loading/ComingSoon";
 import TFLoading from "@/components/loading/TFLoading";
-import { transfer } from "@/api/personal/transfer";
+import {transfer} from "@/api/personal/transfer";
 // import { message } from "ant-design-vue";
-import { storeToRefs } from "pinia";
+import {storeToRefs} from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
-import { ElMessageBox } from "element-plus";
+import {ElMessageBox} from "element-plus";
 // import { Modal } from "ant-design-vue";
 
 const store = userStore();
-const { token } = storeToRefs(store);
+const {token} = storeToRefs(store);
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
 
@@ -169,22 +169,22 @@ const isClicked = ref("");
 const submitTransfer = (amount) => {
   transferInfo.value.amount = amount;
   transfer(0, transferInfo.value)
-    .then((response) => {
-      if (response.code === 0) {
-        // message.success("สำเร็จ");
-        isClicked.value = amount;
-        if (token) {
-          store.getBalance();
+      .then((response) => {
+        if (response.code === 0) {
+          // message.success("สำเร็จ");
+          isClicked.value = amount;
+          if (token) {
+            store.getBalance();
+          }
+          setTimeout(function () {
+            isClicked.value = null;
+          }, 1000);
         }
-        setTimeout(function () {
-          isClicked.value = null;
-        }, 1000);
-      }
-    })
-    .catch((error) => {
-      console.log(error.message);
-      // message.error(error.message, 4);
-    });
+      })
+      .catch((error) => {
+        console.log(error.message);
+        // message.error(error.message, 4);
+      });
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
   transferInfo.value = {
@@ -196,20 +196,24 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.token) {
+      console.log(gameCode);
+      console.log(platformCode);
+
       if (platformCode === 'onlyPlatform') {
         launchSessionGame(gameCode, {
-          isMobile: isMobile(),
+          isMobile: isMobile()
         }).then((res) => {
           src.value = res.data;
-      visible.value = true;
+          visible.value = true;
         });
       } else {
-          launchSessionGame(platformCode, {
+
+        launchSessionGame(platformCode, {
           gameCode: gameCode,
           isMobile: isMobile(),
         }).then((res) => {
           src.value = res.data;
-      visible.value = true;
+          visible.value = true;
         });
       }
     } else {
@@ -222,7 +226,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         showClose: false,
         buttonSize: 'large'
       }).then(() => {
-          store.loginPageVisible = true
+        store.loginPageVisible = true
       })
     }
   }
@@ -251,6 +255,7 @@ defineExpose({
   .ant-modal-content {
     width: 90%;
   }
+
   .confirm-btn {
     padding: 5px;
     min-width: unset;
@@ -276,9 +281,11 @@ defineExpose({
   padding: 10px;
   font-size: 10px;
   text-align: center;
+
   .amt-numbers {
     margin: 5px -10px;
   }
+
   .num {
     font-size: 12px;
     // background-image: linear-gradient(to right, #de4545, #db7e42);
@@ -294,6 +301,7 @@ defineExpose({
     box-shadow: 0px 0px 10px 0 #000;
     padding: 10px 5px;
     position: relative;
+
     &:before,
     &:after {
       position: absolute;
@@ -306,83 +314,91 @@ defineExpose({
       transition: all ease-in-out 0.5s;
       background-repeat: no-repeat;
     }
+
     &:before {
       display: none;
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
+      radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%,
-        15% 15%, 10% 10%, 18% 18%;
+      15% 15%, 10% 10%, 18% 18%;
     }
+
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
-        20% 20%;
+      20% 20%;
     }
+
     &.animate {
       transform: translateZ(45deg);
     }
+
     &.animate:before {
       content: "";
       display: block;
       animation: topBubbles ease-in-out 0.75s forwards;
       z-index: 0;
     }
+
     &.animate:after {
       content: "";
       display: block;
       animation: bottomBubbles ease-in-out 0.75s forwards;
       z-index: 100;
     }
+
     @keyframes topBubbles {
       0% {
         background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
-          40% 90%, 55% 90%, 70% 90%;
+        40% 90%, 55% 90%, 70% 90%;
       }
       50% {
         background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
-          50% 50%, 65% 20%, 90% 30%;
+        50% 50%, 65% 20%, 90% 30%;
       }
       100% {
         background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
-          50% 40%, 65% 10%, 90% 20%;
+        50% 40%, 65% 10%, 90% 20%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
     @keyframes bottomBubbles {
       0% {
         background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
-          70% -10%, 70% 0%;
+        70% -10%, 70% 0%;
       }
       50% {
         background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%,
-          95% 60%, 105% 0%;
+        95% 60%, 105% 0%;
       }
       100% {
         background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%,
-          95% 70%, 110% 10%;
+        95% 70%, 110% 10%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
   }
 }
+
 .drawer-btn {
   display: none;
 }
+
 .additional-buttons {
   position: absolute;
   right: -60px;
@@ -393,6 +409,7 @@ defineExpose({
   justify-content: space-between;
   top: 0;
   background: #d48eff;
+
   .bottom-button {
     display: block;
     transform-origin: left top;
@@ -412,8 +429,10 @@ defineExpose({
     border-radius: 10px;
   }
 }
+
 :deep(.ant-drawer-content) {
   background: #1c1d32;
+
   .account-tip-text {
     svg {
       width: 15px;
@@ -423,31 +442,38 @@ defineExpose({
     }
   }
 }
+
 :deep(.ant-drawer-header) {
   background: #201f2a;
 }
+
 :deep(.ant-drawer-title) {
   color: #ffffff;
 }
+
 .account-tip {
   color: #ffffff;
 }
+
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
   position: relative;
   background-color: #23263c;
   border: 0;
   color: #ffffff;
 }
+
 :deep(.ant-form-vertical
     .ant-form-item-label
     > label, .ant-col-24.ant-form-item-label
     > label, .ant-col-xl-24.ant-form-item-label > label) {
   color: #ffffff;
 }
+
 :deep(.ant-drawer-right.ant-drawer-open) {
   width: calc(100% + 60px);
   margin-right: -60px;
 }
+
 .game-iframe {
   height: 100%;
   width: 100%;
@@ -462,6 +488,7 @@ defineExpose({
     font-size: 20px;
   }
 }
+
 .fullheight {
   position: absolute;
   left: 0;
@@ -473,9 +500,11 @@ defineExpose({
   justify-content: center;
   align-items: center;
 }
+
 .mobileshow {
   display: none;
 }
+
 @media (max-width: 768px) {
   :deep(.ant-drawer-right.ant-drawer-open) {
     margin-right: 0;
@@ -487,6 +516,7 @@ defineExpose({
   }
   .mobileshow {
     display: block;
+
     .numbers {
       // display: grid;
       // grid-template-areas: 1fr 1fr, 1fr 1fr, 2fr;
@@ -498,9 +528,11 @@ defineExpose({
       padding: 20px;
       border-radius: 20px;
       justify-content: center;
+
       .instruction {
         font-size: 14px;
       }
+
       .num {
         width: 100%;
       }
@@ -517,6 +549,7 @@ defineExpose({
     overflow: hidden;
     margin: 50px auto 30px;
     border: 1px solid #ffffff;
+
     .common-btn {
       flex: 1;
       border: 0;
@@ -525,9 +558,11 @@ defineExpose({
       border-radius: 0;
       font-size: 12px;
       text-align: center;
+
       &:hover {
         box-shadow: none;
       }
+
       &.active {
         background: #ffffff;
         color: #000000;
@@ -548,10 +583,12 @@ defineExpose({
     justify-content: center;
     align-items: center;
     padding: 0px 15px;
+
     svg {
       width: 20px;
       fill: white;
     }
+
     &.active {
       // right: 0;
       // left: unset;
@@ -580,6 +617,7 @@ defineExpose({
     position: fixed;
   }
 }
+
 @media (orientation: landscape) {
   .game-iframe {
     top: 0;
