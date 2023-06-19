@@ -701,7 +701,7 @@ export default defineComponent({
               opacity: 0;
               transition: all .3s ease-out;
               left: 0;
-              z-index: 1000;
+              z-index: 1;
             }
             &:hover {
               &::before {
