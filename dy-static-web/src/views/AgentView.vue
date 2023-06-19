@@ -16,7 +16,7 @@
         <a
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.v6kthwlug.com/?partnerId=3&lang=zh-CN&way=${regDevice}&token=${store.token}`,
+              `https://csweb01.v6kthwlug.com/?partnerId=11&lang=zh-CN&way=${regDevice}&token=${store.token}`,
               'Chat Server',
               350,
               650,
