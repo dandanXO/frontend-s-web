@@ -720,8 +720,19 @@ const failFormRules = reactive({
 
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
-const defaultStartDate = convertDate(startDate)
-const defaultEndDate = convertDate(new Date())
+const defaultStartDate = convertDateToStart(startDate);
+const defaultEndDate = convertDateToEnd(new Date());
+function convertDateToStart(date) {
+  var m = moment(date)
+  m.set({ hour: 0, minute: 0, second: 0 })
+  return m.format('YYYY-MM-DD HH:mm:ss');
+}
+
+function convertDateToEnd(date) {
+  var m = moment(date)
+  m.set({ hour: 23, minute: 59, second: 59 })
+  return m.format('YYYY-MM-DD HH:mm:ss');
+}
 
 const request = reactive({
   size: 20,
@@ -736,10 +747,6 @@ const request = reactive({
   maxWithdrawAmount: null,
   vipId: null,
 })
-
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD HH:mm:ss')
-}
 
 function disabledDate(time) {
   return (
