@@ -29,8 +29,8 @@ export const distributePromotion = (promo) => {
   return https().request("/member/promo", Method.POST, promo, ContentType.form);
 };
 
-export const updatePassword = (id, password) => {
-  return https().request(`/member/${id}/password?_method=PUT`, Method.POST, { password: password }, ContentType.form);
+export const updatePassword = (id, password, site) => {
+  return https().request(`/member/${id}/password?_method=PUT`, Method.POST, { password: password, site: site }, ContentType.form);
 };
 
 export const freezeMember = (id, member) => {
@@ -41,16 +41,16 @@ export const normalMember = (id, siteId) => {
   return https().request(`/member/${id}/normal?_method=PUT`, Method.POST, { siteId: siteId }, ContentType.form);
 };
 
-export const updateVip = (id, vipId) => {
-  return https().request(`/member/${id}/vipId?_method=PUT`, Method.POST, { vipId: vipId }, ContentType.form);
+export const updateVip = (id, vipId, site) => {
+  return https().request(`/member/${id}/vipId?_method=PUT`, Method.POST, { vipId: vipId, site: site }, ContentType.form);
 };
 
-export const updateFinancial = (id, financialId) => {
-  return https().request(`/member/${id}/financialId?_method=PUT`, Method.POST, { financialId: financialId }, ContentType.form);
+export const updateFinancial = (id, financialId, site) => {
+  return https().request(`/member/${id}/financialId?_method=PUT`, Method.POST, { financialId: financialId, site: site }, ContentType.form);
 };
 
-export const updateRisk = (id, riskId) => {
-  return https().request(`/member/${id}/riskId?_method=PUT`, Method.POST, { riskId: riskId }, ContentType.form);
+export const updateRisk = (id, riskId, site) => {
+  return https().request(`/member/${id}/riskId?_method=PUT`, Method.POST, { riskId: riskId, site: site }, ContentType.form);
 };
 
 export const addMemberRemark = (remark) => {
