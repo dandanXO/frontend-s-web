@@ -96,9 +96,9 @@
         <el-table-column prop="finishDate" :label="t('fields.finishDate')" align="center" min-width="150" />
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="110">
           <template #default="scope">
-            <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success">{{ scope.row.status }}</el-tag>
-            <el-tag v-if="scope.row.status === 'CLOSED'" type="danger">{{ scope.row.status }}</el-tag>
-            <el-tag v-if="scope.row.status === 'PENDING'">{{ scope.row.status }}</el-tag>
+            <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'CLOSED'" type="danger">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'PENDING'">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="paymentType" :label="t('fields.paymentType')" align="center" min-width="110" />
@@ -134,7 +134,7 @@
           v-if="hasPermission(['sys:deposit:check'])"
         >
           <template #default="scope">
-            <el-button :disabled="scope.row.status !== 'PENDING'" size="mini" type="primary" v-permission="['sys:deposit:check']" @click="showDialog('SUPPLEMENT',scope.row)">Supplement</el-button>
+            <el-button :disabled="scope.row.status !== 'PENDING'" size="mini" type="primary" v-permission="['sys:deposit:check']" @click="showDialog('SUPPLEMENT',scope.row)">{{ t('fields.supplement') }}</el-button>
             <el-button :disabled="scope.row.status !== 'PENDING'" size="mini" type="danger" v-permission="['sys:deposit:check']" @click="showDialog('CANCEL',scope.row)">{{ t('fields.cancel') }}</el-button>
           </template>
         </el-table-column>

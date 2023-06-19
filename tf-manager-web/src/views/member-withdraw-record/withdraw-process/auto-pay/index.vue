@@ -151,6 +151,12 @@
           min-width="100"
         />
         <el-table-column
+          prop="paymentCard"
+          :label="t('fields.paymentCard')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           prop="withdrawName"
           :label="t('fields.withdrawName')"
           align="center"
