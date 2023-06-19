@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: dy-static-web
-          image: git.caspen-tech.com:5050/jolly88-complex/frontend:dy-static-web-1686993104 # {"$imagepolicy": "xinfa:dy-static-web"}
+          image: git.caspen-tech.com:5050/jolly88-complex/frontend:dy-static-web-1687150333 # {"$imagepolicy": "xinfa:dy-static-web"}
           ports:
             - containerPort: 80
           env:
