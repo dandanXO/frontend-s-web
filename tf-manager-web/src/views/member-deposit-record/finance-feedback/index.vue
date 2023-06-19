@@ -507,7 +507,7 @@ function convertDate(date) {
 
 async function submit() {
   if (form.remark === null || form.remark === '') {
-    alert('Please fill in remark')
+    alert('请输入备注')
     return
   }
   await updateFinanceFeedback(form.id, form.remark)

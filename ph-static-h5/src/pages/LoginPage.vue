@@ -8,7 +8,7 @@
       filled
       v-model="loginForm.loginName"
       label="Login name"
-      :rules="[(val) => (val && val.length > 0) || 'Please fill in login name']"
+      :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
       color="white"
       autocomplete="username"
       ><template v-slot:prepend>
@@ -22,7 +22,7 @@
       v-model="loginForm.password"
       label="Password"
       :type="isPwd ? 'password' : 'text'"
-      :rules="[(val) => (val && val.length > 0) || 'Please fill in password']"
+      :rules="[(val) => (val && val.length > 0) || '请输入密码']"
       color="white"
       autocomplete="current-password"
     >
@@ -43,7 +43,7 @@
       v-model="loginForm.captchaCode"
       label="Verification Code"
       :rules="[
-        (val) => (val && val.length > 3) || 'Please fill in verification number'
+        (val) => (val && val.length > 3) || '请输入验证码'
       ]"
       color="white"
     >
