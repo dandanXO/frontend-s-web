@@ -11,8 +11,21 @@ spec:
     - hosts:
         - manager.fk9kumoco.com
       secretName: tf-manager-web
+    - hosts:
+        - manager.nxfxback.com
+      secretName: tf-manager-web-nxfxback
   rules:
   - host: manager.fk9kumoco.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tf-manager-web
+            port:
+              number: 80
+  - host: manager.nxfxback.com
     http:
       paths:
       - path: /

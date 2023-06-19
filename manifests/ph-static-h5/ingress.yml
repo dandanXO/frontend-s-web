@@ -11,8 +11,21 @@ spec:
     - hosts:
         - ph-h5.jolly88-ph01.com
       secretName: ph-static-h5
+    - hosts:
+        - ph-h5.nxfxback.com
+      secretName: ph-static-h5-nxfxback
   rules:
   - host: ph-h5.jolly88-ph01.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ph-static-h5
+            port:
+              number: 80
+  - host: ph-h5.nxfxback.com
     http:
       paths:
       - path: /

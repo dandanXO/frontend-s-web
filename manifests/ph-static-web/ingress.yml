@@ -11,8 +11,21 @@ spec:
     - hosts:
         - ph-web.jolly88-ph01.com
       secretName: ph-static-web
+    - hosts:
+        - ph-web.nxfxback.com
+      secretName: ph-static-web-nxfxback
   rules:
   - host: ph-web.jolly88-ph01.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ph-static-web
+            port:
+              number: 80
+  - host: ph-web.nxfxback.com
     http:
       paths:
       - path: /
