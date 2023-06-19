@@ -845,7 +845,7 @@ async function loadRecord() {
     }
   }
   query.memberType = "AFFILIATE";
-  query.withdrawCode = "BANK,GCASH";
+  query.withdrawCode = "BANK";
   const { data: ret } = await getAffiliateWithdrawRecordPay(query)
   page.pages = ret.pages
   page.records = ret.records
