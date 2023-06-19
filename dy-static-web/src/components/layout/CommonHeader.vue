@@ -118,7 +118,7 @@
       </div>
     </div>
 
-    <el-dialog v-model="loginDialogVisible" title="会员登录" width="50%" align-center style="max-width: 800px;" :before-close="store.loginPageVisible = false">
+    <el-dialog v-model="loginDialogVisible" title="会员登录" width="50%" align-center style="max-width: 800px;" @close="store.loginPageVisible = false">
       <span>
 
           <el-tabs>
@@ -1450,6 +1450,8 @@ body {
           .station-notice-box {
             display: flex;
             gap: 10px;
+            max-height: 20px;
+            overflow: hidden;
             .station-notice {
               display: flex;
               justify-content: center;
@@ -1633,6 +1635,7 @@ body {
     flex: 2;
     padding: 73px 44px;
     background: url(../../assets/images/index/reg-bg.jpg)no-repeat center center;
+    background-size: cover;
     .el-row {
       width: 100%;
     }
