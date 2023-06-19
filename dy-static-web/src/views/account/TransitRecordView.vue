@@ -57,7 +57,7 @@
                       }}</span>
                   </div>
                 </template>
-                
+
                 <template
                     v-if="tbl.dataIndex === 'status'"
                     #default="scope"
@@ -163,7 +163,7 @@
                       }}</span>
                   </div>
                 </template>
-                
+
                 <template
                     v-if="tbl.dataIndex === 'type'"
                     #default="scope"
@@ -249,7 +249,7 @@
                       }}</span>
                   </div>
                 </template>
-                
+
                 <template
                     v-if="tbl.dataIndex === 'status'"
                     #default="scope"
@@ -640,17 +640,17 @@
           >
             <el-form-item
                 tabindex="1"
-                label="序列号"
+                label="单号"
                 prop="serialNumber"
             >
               <el-input
                   v-model="reminderForm.orderNo"
-                  placeholder="序列号"
+                  placeholder="单号"
                   disabled
               />
             </el-form-item>
 
-            <el-form-item label="图片上传" prop="photos">
+            <el-form-item label="选择图片" prop="photos">
               <FileUpload @photo-response="getImageLink" ref="uploadFileRef"/>
             </el-form-item>
 
@@ -1241,7 +1241,7 @@ export default defineComponent({
       console.log(linkId);
       reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
     }
-    
+
     const getTurnoverType = (turnoverType) => {
       if (!turnoverType) {
         return ''
