@@ -270,6 +270,7 @@ const request = reactive({
 
 const suppForm = reactive({
   id: null,
+  depositDate: null,
   serialNumber: null,
   thirdSerialNumber: null,
   remark: null
@@ -277,6 +278,7 @@ const suppForm = reactive({
 
 const cancelForm = reactive({
   id: null,
+  depositDate: null,
   remark: null
 });
 
@@ -347,6 +349,7 @@ async function showDialog(type, row) {
       supplementForm.value.resetFields();
     }
     suppForm.id = row.id;
+    suppForm.depositDate = row.depositDate;
     suppForm.serialNumber = row.serialNumber;
     uiControl.dialogTitle = t('fields.supplementDeposit');
   } else if (type === "CANCEL") {
@@ -354,6 +357,7 @@ async function showDialog(type, row) {
       cancelDepositForm.value.resetFields();
     }
     cancelForm.id = row.id;
+    cancelForm.depositDate = row.depositDate;
     uiControl.dialogTitle = t('fields.cancelDeposit');
   }
   uiControl.dialogType = type;

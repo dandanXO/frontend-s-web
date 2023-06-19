@@ -6,7 +6,7 @@ export const supplementDeposit = (depositRecord) => {
 };
 
 export const cancelDeposit = (depositRecord) => {
-  return https().request(`/deposit/${depositRecord.id}/cancel?_method=PUT`, Method.POST, { remark: depositRecord.remark }, ContentType.form);
+  return https().request(`/deposit/${depositRecord.id}/cancel?_method=PUT`, Method.POST, depositRecord, ContentType.form);
 };
 
 export const getDepositRecord = (query) => {

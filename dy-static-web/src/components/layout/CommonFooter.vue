@@ -89,11 +89,9 @@
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
-import { RiStarFill } from "vue-remix-icons";
 
 export default defineComponent({
   components: {
-    RiStarFill
   },
   setup() {
     const isFireFox = ref(false);

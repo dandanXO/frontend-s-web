@@ -59,20 +59,18 @@
               {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${ store.currency.label }, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次` }}
             </span>
           </el-col>
-        </el-row>
-          <!-- <div
-            v-if="selectedWithdrawalMethod"
-            class="account-tip remain-box"
-            v-html="
-              ('finance.withdraw.limitTip', {
-                min: selectedWithdrawalMethod.withdrawMin,
-                max: selectedWithdrawalMethod.withdrawMax,
-                got: selectedWithdrawalMethod.withdrawMaxAmount,
-                last: selectedWithdrawalMethod.withdrawMaxTimes,
-              })
-            "
-          ></div> -->
+        </el-row> 
         </el-form-item>
+        <el-row>
+          <el-col>
+          <div
+            v-if="selectedWithdrawalMethod.tips"
+            class="selected-tip"
+            v-html="selectedWithdrawalMethod.tips"
+          ></div>
+        </el-col>
+        </el-row>
+          <!-- -->
         <el-form-item
           v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
           class="helptxt"
@@ -589,4 +587,10 @@ export default defineComponent({
     .ant-input:hover, .ant-form-item-has-error .ant-input-affix-wrapper:hover) {
   background: #15141b;
 }
+
+.selected-tip {
+    margin-left: 150px;
+    margin-bottom: 30px;
+    color: #ff7f10;
+  }
 </style>

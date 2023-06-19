@@ -149,6 +149,7 @@ export default defineComponent({
         withdrawDate: [defaultStartDate, defaultEndDate]
       }
       query.withdrawDate = query.withdrawDate.join(',');
+      query.memberType = "NORMAL,TEST,OUTSIDE";
       return query;
     }
 

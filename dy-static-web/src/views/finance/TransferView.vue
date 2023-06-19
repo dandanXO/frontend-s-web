@@ -155,7 +155,7 @@ import { transfer, withdrawAll, getPlatforms } from "@/api/personal/transfer";
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
-import { InfoFilled, Refresh, Right } from "@element-plus/icons-vue"
+import { Refresh, Right } from "@element-plus/icons-vue"
 import { RiWirelessChargingLine } from "vue-remix-icons";
 // import { useI18n } from "vue-i18n";
 
@@ -163,7 +163,6 @@ export default defineComponent({
   name: "TransferView",
   components: {
     // RiSpamLine, RiRestartLine
-    InfoFilled,
     Refresh,
     Right,
     RiWirelessChargingLine

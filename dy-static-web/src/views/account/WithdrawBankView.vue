@@ -4,10 +4,9 @@
       <span class="account-title">添加银行卡</span>
     </div>
     <div class="account-content">
-      <!-- <div class="account-tip-text wbot">
-        <el-icon><InfoFilled /></el-icon>
-        TIP hereeeee
-      </div> -->
+      <div class="account-tip-text wbot">
+        <!-- <el-icon><InfoFilled /></el-icon> -->
+      </div>
       <!-- <div class="addbuttons">
         <div
           class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
@@ -122,7 +121,7 @@
           :row-key="(record) => record.bankName"
         ></el-table> -->
 
-          <el-table :data="dataSource" style="width: 100%">
+          <el-table :data="dataSource" style="width: 100%" empty-text="暂无数据">
             <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title" />
           </el-table>
           <el-divider />
@@ -136,7 +135,7 @@
           </div>
     </div>
     <el-dialog
-      wrap-class-name="bankModal"
+      class="bankModal"
       width="500"
       v-model="bankCardModalState.visible"
       :footer="null"
@@ -171,15 +170,15 @@
             <el-select
               class="select"
               v-model="bankCardInfo.bankId"
-              placeholder="请选择银行"
+              placeholder="选择银行"
               style="width: 100%"
             >
               <el-option v-for="b in banksList" :key="b.id" :label="b.name" :value="b.id">
                 <el-row style="align-items: center;" v-if="b.bankIcon" :gutter="10">
-                  <el-col :span="4">
+                  <el-col :span="3">
                     <img style="max-height: 25px; display: block; margin: 5px;" :src="imgURL + b.bankIcon" />
                   </el-col>
-                  <el-col :span="20">
+                  <el-col :span="21">
                      {{ b.name }}
                   </el-col>
                 </el-row>
@@ -212,7 +211,7 @@
         <el-form-item prop="cardAddress" name="cardAddress">
           <el-input
             v-model="bankCardInfo.cardAddress"
-            placeholder="银行地址"
+            placeholder="开户行地址"
           />
         </el-form-item>
         <el-form-item class="txt-center">
@@ -247,7 +246,7 @@ export default defineComponent({
   setup() {
     let validateBankLength = async (r, v) => {
       var min = 6
-      var max = 19
+      var max = 12
       if (selectedBankType.value === 'Bank') {
         min = 6;
         max = 19;
@@ -393,7 +392,7 @@ export default defineComponent({
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
-          ElMessage.error('Please fill in real name');
+          ElMessage.error('真实姓名不可为空');
           router.push("/center/personal");
         } else {
           bankCardInfo.bankId = undefined;
@@ -556,6 +555,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+
+body {
+  .bankModal {
+    .el-dialog__body {
+      padding: 20px;
+    }
+  }
+}
 .passwordModal .ant-modal {
   max-width: 520px;
   width: 100%;
