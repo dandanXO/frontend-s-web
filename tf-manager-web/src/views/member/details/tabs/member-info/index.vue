@@ -913,7 +913,8 @@ export default defineComponent({
       id: null,
       freezeType: null,
       reason: null,
-      remark: null
+      remark: null,
+      site: null
     });
 
     const vipForm = reactive({
@@ -1062,6 +1063,7 @@ export default defineComponent({
         }
         freezeForm.freezeType = freezeType.list[0].value;
         freezeForm.reason = freezeReason.list[0].value;
+        freezeForm.site = site.id;
         uiControl.dialogTitle = t('fields.freezeMember');
       } else if (type === "UPDATE_VIP") {
         if (updateVipForm.value) {
@@ -1171,7 +1173,7 @@ export default defineComponent({
     };
 
     const changeToNormal = async (id) => {
-      await normalMember(id);
+      await normalMember(id, site.id);
       const data = await getMemberDetails(props.mbrId, site.id);
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField];
@@ -1183,7 +1185,7 @@ export default defineComponent({
       if (type === "VIP") {
         updateVipForm.value.validate(async (valid) => {
           if (valid) {
-            await updateVip(props.mbrId, vipForm.vip);
+            await updateVip(props.mbrId, vipForm.vip, site.id);
             const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
@@ -1195,7 +1197,7 @@ export default defineComponent({
       } else if (type === "FINANCIAL") {
         updateFinancialForm.value.validate(async (valid) => {
           if (valid) {
-            await updateFinancial(props.mbrId, financialForm.financial);
+            await updateFinancial(props.mbrId, financialForm.financial, site.id);
             const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
@@ -1207,7 +1209,7 @@ export default defineComponent({
       } else if (type === "RISK") {
         updateRiskForm.value.validate(async (valid) => {
           if (valid) {
-            await updateRisk(props.mbrId, riskForm.risk);
+            await updateRisk(props.mbrId, riskForm.risk, site.id);
             const data = await getMemberDetails(props.mbrId, site.id);
             Object.keys({ ...data.data }).forEach(detailField => {
               memberDetail[detailField] = data.data[detailField];
@@ -1262,7 +1264,7 @@ export default defineComponent({
     const editUserType = () => {
       updateUserTypeForm.value.validate(async (valid) => {
         if (valid) {
-          await updateMemberType(props.mbrId, userTypeForm.memberType);
+          await updateMemberType(props.mbrId, userTypeForm.memberType, site.id);
           const data = await getMemberDetails(props.mbrId, site.id);
           Object.keys({ ...data.data }).forEach(detailField => {
             memberDetail[detailField] = data.data[detailField];
@@ -1320,15 +1322,15 @@ export default defineComponent({
 
     async function unmaskDetail(type) {
       if (type === 'NAME') {
-        const { data: name } = await getMemberRealName(props.mbrId);
+        const { data: name } = await getMemberRealName(props.mbrId, site.id);
         unmaskedValue.value = name;
         uiControl.dialogTitle = t('fields.realName');
       } else if (type === 'EMAIL') {
-        const { data: email } = await getMemberEmail(props.mbrId);
+        const { data: email } = await getMemberEmail(props.mbrId, site.id);
         unmaskedValue.value = email;
         uiControl.dialogTitle = t('fields.email');
       } else if (type === 'TELEPHONE') {
-        const { data: telephone } = await getMemberTelephone(props.mbrId);
+        const { data: telephone } = await getMemberTelephone(props.mbrId, site.id);
         unmaskedValue.value = telephone;
         uiControl.dialogTitle = t('fields.telephone');
       }

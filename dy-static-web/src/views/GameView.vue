@@ -24,7 +24,7 @@
     <div class="margin-center game-container">
       <div class="all-game-container">
         <div class="left">
-          
+
           <div class="plat-type-container">
             <div class="plat-list">
               <div
@@ -87,7 +87,7 @@
         <div class="pagination-wrapper">
           <el-pagination background layout="prev, pager, next" :total="gamePage.total"  @current-change="changePage(gamePage.currentPage, gamePage.pageSize)" v-model:current-page="gamePage.currentPage" v-model:pageSize="gamePage.pageSize" default-page-size="30"/>
           <!-- <el-pagination
-          
+
             v-model:current="gamePage.currentPage"
             v-model:pageSize="gamePage.pageSize"
             :total="gamePage.total"
@@ -175,7 +175,7 @@ export default defineComponent({
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code}/slot/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLocaleString()}/slot/${element.icon}.png`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
@@ -268,7 +268,7 @@ export default defineComponent({
       getPlatList();
       loadBanner();
     });
-    
+
     watch(
       () => route.query.plat,
       () => {
@@ -633,7 +633,7 @@ export default defineComponent({
               background: url(../assets/game/menu.png)no-repeat center center;
               background-size: contain;
               color: #fff;
-              
+
             }
             img {
               max-height: 40px;
