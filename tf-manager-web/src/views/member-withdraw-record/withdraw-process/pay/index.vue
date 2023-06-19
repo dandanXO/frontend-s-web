@@ -845,7 +845,7 @@ async function loadRecord() {
     }
   }
   query.memberType = "NORMAL,TEST,OUTSIDE";
-  query.withdrawCode = "BANK,GCASH";
+  query.withdrawCode = "BANK";
   const { data: ret } = await getMemberWithdrawRecordPay(query)
   page.pages = ret.pages
   page.records = ret.records
