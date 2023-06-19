@@ -19,9 +19,9 @@
         <el-date-picker
           v-model="searchRequest.date"
           format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -581,9 +581,9 @@
           <el-date-picker
             v-model="request.withdrawDate"
             format="DD/MM/YYYY"
-            value-format="YYYY-MM-DD"
+            value-format="YYYY-MM-DD HH:mm:ss"
             size="small"
-            type="daterange"
+            type="datetimerange"
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
