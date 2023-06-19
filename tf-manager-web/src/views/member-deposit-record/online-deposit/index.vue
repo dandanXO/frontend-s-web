@@ -136,6 +136,7 @@
           <template #default="scope">
             <el-button :disabled="scope.row.status !== 'PENDING'" size="mini" type="primary" v-permission="['sys:deposit:check']" @click="showDialog('SUPPLEMENT',scope.row)">{{ t('fields.supplement') }}</el-button>
             <el-button :disabled="scope.row.status !== 'PENDING'" size="mini" type="danger" v-permission="['sys:deposit:check']" @click="showDialog('CANCEL',scope.row)">{{ t('fields.cancel') }}</el-button>
+            <el-button :disabled="scope.row.status !== 'PENDING' || scope.row.paymentType !== 'OFFLINE'" size="mini" type="success" v-permission="['sys:deposit:edit-amount']" @click="showDialog('EDIT_AMOUNT',scope.row)">{{ t('fields.edit') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -181,6 +182,15 @@
           <el-button :disabled="clicked.cancel" type="primary" @click="cancel()">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
+      <el-form v-if="uiControl.dialogType === 'EDIT_AMOUNT'" ref="editAmountForm" :model="editForm" :rules="editFormRule" :inline="true" size="small" label-width="150px">
+        <el-form-item :label="t('fields.amount')" prop="amount">
+          <el-input v-model="editForm.amount" type="money" style="width: 250px;" maxlength="11" />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false;">{{ t('fields.cancel') }}</el-button>
+          <el-button :disabled="clicked.cancel" type="primary" @click="editAmount()">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -189,7 +199,7 @@
 import { ElMessage } from 'element-plus';
 import { computed, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
-import { cancelDeposit, getDepositRecord, getTotalDepositAmount, supplementDeposit } from '../../../api/member-deposit-record';
+import { cancelDeposit, getDepositRecord, getTotalDepositAmount, supplementDeposit, editDeposit } from '../../../api/member-deposit-record';
 import { required } from '../../../utils/validate';
 import { hasPermission } from '../../../utils/util';
 import { useI18n } from "vue-i18n";
@@ -200,6 +210,7 @@ import { useStore } from '../../../store';
 const { t } = useI18n();
 const supplementForm = ref(null);
 const cancelDepositForm = ref(null);
+const editAmountForm = ref(null);
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
@@ -282,6 +293,11 @@ const cancelForm = reactive({
   remark: null
 });
 
+const editForm = reactive({
+  id: null,
+  amount: null
+})
+
 const suppFormRule = reactive({
   thirdSerialNumber: [required(t('message.validateThirdSerialNumberRequired'))],
   remark: [required(t('message.validateRemarkRequired'))]
@@ -289,6 +305,10 @@ const suppFormRule = reactive({
 
 const cancelFormRule = reactive({
   remark: [required(t('message.validateRemarkRequired'))]
+});
+
+const editFormRule = reactive({
+  amount: [required(t('message.valiedateAmountRequired'))]
 });
 
 function convertDate(date) {
@@ -359,6 +379,13 @@ async function showDialog(type, row) {
     cancelForm.id = row.id;
     cancelForm.depositDate = row.depositDate;
     uiControl.dialogTitle = t('fields.cancelDeposit');
+  } else if (type === "EDIT_AMOUNT") {
+    if (editAmountForm.value) {
+      editAmountForm.value.resetFields();
+    }
+    editForm.id = row.id;
+    editForm.depositDate = row.depositDate;
+    uiControl.dialogTitle = t('fields.editAmount');
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -386,6 +413,19 @@ function cancel() {
       clicked.cancel = false;
       await loadRecord();
       ElMessage({ message: t('fields.cancelDepositSuccess'), type: "success" });
+    }
+  });
+}
+
+function editAmount() {
+  editAmountForm.value.validate(async (valid) => {
+    if (valid) {
+      clicked.edit = true;
+      await editDeposit(editForm);
+      uiControl.dialogVisible = false;
+      clicked.edit = false;
+      await loadRecord();
+      ElMessage({ message: t('fields.editAmountSuccess'), type: "success" });
     }
   });
 }

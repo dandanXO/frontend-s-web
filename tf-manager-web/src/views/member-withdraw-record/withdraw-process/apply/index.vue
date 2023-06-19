@@ -5,7 +5,7 @@
         <el-date-picker
           v-model="request.withdrawDate"
           format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
           type="datetimerange"
           range-separator=":"
