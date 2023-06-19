@@ -4,10 +4,10 @@
       <div class="search">
         <el-date-picker
           v-model="request.depositDate"
-          format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -292,7 +292,7 @@ const cancelFormRule = reactive({
 });
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).format('YYYY-MM-DD HH:mm:ss');
 }
 
 function disabledDate(time) {

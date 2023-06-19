@@ -23,7 +23,7 @@
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -39,7 +39,7 @@
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -627,7 +627,7 @@ const searchFormRule = reactive({
 });
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).format('YYYY-MM-DD HH:mm:ss');
 }
 
 function disabledDate(time) {

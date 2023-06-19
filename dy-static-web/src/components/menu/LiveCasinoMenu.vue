@@ -30,7 +30,7 @@ export default defineComponent({
         navigations: [
         { code:"AG", icon: "ag", label: "AG", slogan: "全球顶尖, 尊享娱乐" },
         { code:"ALLBET", icon: "allbet", label: "ALLBET", slogan: "全球顶尖, 尊享娱乐"  },
-        { code:"BBIN", icon: "bbin", label: "BBIN", slogan: "全球顶尖, 尊享娱乐"  },
+        { code:"BBINDY", icon: "bbin", label: "BBIN", slogan: "全球顶尖, 尊享娱乐"  },
         ],
     }),
 })
