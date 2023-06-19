@@ -208,7 +208,7 @@
           :class="'live-' + i"
         >
           <img
-            @click="playGame(live.id, live.code)"
+            @click="playGame(live.id, live.code, live.gameCode)"
             :src="
               require(`../assets/images/index/live/live_bg_${live.icon}.png`)
             "
@@ -227,7 +227,7 @@
           :class="'poker-' + i"
         >
           <img
-            @click="playGame(poker.id, poker.code)"
+            @click="playGame(poker.id, poker.code, poker.gameCode)"
             :src="
               require(`../assets/images/index/poker/poker_bg_${poker.icon}.png`)
             "
@@ -246,7 +246,7 @@
           :class="'lottery-' + i"
         >
           <img
-            @click="playGame(lottery.id, lottery.code)"
+            @click="playGame(lottery.id, lottery.code, lottery.gameCode)"
             :src="
               require(`../assets/images/index/lottery/lottery_bg_${lottery.icon}.png`)
             "
@@ -586,7 +586,8 @@ export default defineComponent({
         icon: "bbin",
         title: "BBIN真人",
         subcount: "40",
-        subtitle: "真人娱乐"
+        subtitle: "真人娱乐",
+        gameCode: "bblive_lobby_app"
       },
       {
         id: "live",
@@ -601,7 +602,7 @@ export default defineComponent({
     const poker = [
       {
         id: "poker",
-        code: "TX",
+        code: "DT",
         icon: "tx",
         title: "大唐棋牌",
         subcount: "18",
@@ -613,7 +614,8 @@ export default defineComponent({
         icon: "ky",
         title: "开元棋牌",
         subcount: "30",
-        subtitle: "棋牌娱乐"
+        subtitle: "棋牌娱乐",
+        gameCode: "ky_lobby"
       }
     ];
 
@@ -632,7 +634,8 @@ export default defineComponent({
         icon: "bbin",
         title: "BBIN彩票",
         subcount: "48",
-        subtitle: "彩票游戏"
+        subtitle: "彩票游戏",
+        gameCode: "bbkeno_lobby_app",
       }
     ];
 
@@ -733,6 +736,8 @@ export default defineComponent({
     });
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
+      // console.log("gameName" + ":" + "platformCode" + ":" + "gameCode" + ":" + "gameStatus");
+      // console.log(gameName + ":" + platformCode + ":" + gameCode + ":" + gameStatus);
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
     function loadData() {
@@ -1342,7 +1347,7 @@ export default defineComponent({
 }
 </style>
 <style>
-.marquee-text-wrap span{
+.marquee-text-wrap span {
   color: #ffffff !important;
 }
 </style>
