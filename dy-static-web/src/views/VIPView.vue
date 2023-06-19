@@ -416,7 +416,6 @@ import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { claimBonusItem } from "@/api/index/promo";
-import { router } from "vue-router";
 import { ElMessageBox } from "element-plus";
 
 export default defineComponent({
@@ -631,7 +630,7 @@ export default defineComponent({
         //     });
         // };
 
-        const onVIPButtonClick = (bonusItem, vipType) => {
+        const onVIPButtonClick = (bonusItem) => {
             if (!store.token) {
                 ElMessageBox.alert('请登录后再操作', '系统提示', {
                     // if you want to disable its autofocus

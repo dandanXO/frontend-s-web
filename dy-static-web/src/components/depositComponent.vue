@@ -31,7 +31,7 @@
               <el-form-item class="helptxt" label="金额" prop="localAmount">
                 <el-input v-if="amountList.length === 0"
                   v-model="form.localAmount"
-                  placeholder="输入存款金额"
+                  :placeholder="isUSDT ? '请输入USDT金额' : '输入存款金额'"
                 />
 
                 <el-select placeholder="选择存款金额" v-else v-model="form.localAmount">

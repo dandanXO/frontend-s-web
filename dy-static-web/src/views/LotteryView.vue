@@ -101,7 +101,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import GameModal from "@/components/modal/GameModal";
 import aos from "aos";
-import { gsap, TimelineMax, TweenMax } from "gsap";
+import { TweenMax } from "gsap";
 
 export default defineComponent({
     components: {

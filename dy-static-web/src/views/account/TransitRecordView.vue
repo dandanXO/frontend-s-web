@@ -57,6 +57,15 @@
                       }}</span>
                   </div>
                 </template>
+                
+                <template
+                    v-if="tbl.dataIndex === 'status'"
+                    #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    {{ getDepositStatus(scope.row.status) }}
+                  </div>
+                </template>
 
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'PENDING'">
@@ -154,6 +163,17 @@
                       }}</span>
                   </div>
                 </template>
+                
+                <template
+                    v-if="tbl.dataIndex === 'type'"
+                    #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                      {{
+                        getTurnoverType(scope.row.type)
+                      }}
+                  </div>
+                </template>
               </el-table-column>
             </el-table>
             <el-divider/>
@@ -226,6 +246,17 @@
                   <div style="display: flex; align-items: center">
                     <span style="margin-left: 10px">{{
                         humanDatetime(scope.row.recordTime)
+                      }}</span>
+                  </div>
+                </template>
+                
+                <template
+                    v-if="tbl.dataIndex === 'status'"
+                    #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span style="margin-left: 10px">{{
+                        getWithdrawStatus(scope.row.status)
                       }}</span>
                   </div>
                 </template>
@@ -609,25 +640,25 @@
           >
             <el-form-item
                 tabindex="1"
-                label="Serial Number"
+                label="序列号"
                 prop="serialNumber"
             >
               <el-input
                   v-model="reminderForm.orderNo"
-                  placeholder="Serial Number"
+                  placeholder="序列号"
                   disabled
               />
             </el-form-item>
 
-            <el-form-item label="Image Upload" prop="photos">
+            <el-form-item label="图片上传" prop="photos">
               <FileUpload @photo-response="getImageLink" ref="uploadFileRef"/>
             </el-form-item>
 
-            <el-form-item label="Remarks" prop="remarks">
+            <el-form-item label="备注" prop="remarks">
               <el-input
                   type="textarea"
                   v-model="reminderForm.memberRemark"
-                  placeholder="Remarks"
+                  placeholder="备注"
                   :rows="2"
                   :autosize="{ minRows: 2, maxRows: 5 }"
               />
@@ -753,6 +784,10 @@ const tableColumns = {
     {
       title: "状态",
       dataIndex: "status"
+    },
+    {
+      title: "存款类型",
+      dataIndex: "type"
     },
     {
       title: "存款日期",
@@ -1206,6 +1241,57 @@ export default defineComponent({
       console.log(linkId);
       reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
     }
+    
+    const getTurnoverType = (turnoverType) => {
+      if (!turnoverType) {
+        return ''
+      }
+      if (turnoverType === 'WITHDRAW_FAIL') {
+        return '提款失败' // Fail Withdrawal
+      } else if (turnoverType === 'WITHDRAW') {
+        return '提款' // Withdraw
+      } else {
+        return turnoverType
+      }
+    }
+    const getWithdrawStatus = (withdrawStatus) => {
+      if (withdrawStatus === 'APPLY') {
+        return '申请中' //Applying
+      } else if (withdrawStatus === 'FAIL') {
+        return '失败' // Failed
+      } else if (withdrawStatus === 'SUCCESS') {
+        return '成功' // Success
+      } else if (withdrawStatus === 'STEP_1') {
+        return '审核中' //Under review
+      } else if (withdrawStatus === 'STEP_2') {
+        return '待支付' // To be paid
+      }  else if (withdrawStatus === 'STEP_3') {
+        return '支付中' // Payment on going
+      }  else if (withdrawStatus === 'STEP_4') {
+        return '自动支付' // Automatic Payment
+      }  else if (withdrawStatus === 'STEP_5') {
+        return '暂不处理' //Suspend
+      } else {
+        return withdrawStatus
+      }
+    };
+    const getDepositStatus = (depositStatus) => {
+      if (!depositStatus) {
+        return ''
+      }
+      if (depositStatus === 'PENDING') {
+        return '支付中' // Pending
+      } else if (depositStatus === 'SUCCESS') {
+        return '成功' // Success
+      } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
+        return '成功' // Supplement Success
+      } else if (depositStatus === 'CLOSED') {
+        return '关闭' // Closed
+      } else {
+        return depositStatus
+      }
+    }
+
 
     return {
       recordActive,
@@ -1241,6 +1327,9 @@ export default defineComponent({
       openReminder,
       submitReminder,
       getImageLink,
+      getTurnoverType,
+      getWithdrawStatus,
+      getDepositStatus,
     };
   }
 });
