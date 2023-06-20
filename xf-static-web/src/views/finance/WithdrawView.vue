@@ -131,9 +131,13 @@ import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
+import { RiArrowRightSLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "WithdrawView",
+  components: {
+    RiArrowRightSLine
+  },
   setup() {
     const store = userStore();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
@@ -218,6 +222,7 @@ export default defineComponent({
                     withdrawState.bankCardList.push(element)
                   }
                 } else {
+                  console.log(selectedWithdrawalMethod.value.code)
                   if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
                     withdrawState.bankCardList.push(element)
                   }
@@ -229,7 +234,7 @@ export default defineComponent({
           // message.error(error.message, 4)
            })
     }
-
+    
     async function verifyWithdrawAmount(r, v) {
       if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {

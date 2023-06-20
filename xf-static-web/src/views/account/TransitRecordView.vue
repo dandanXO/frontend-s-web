@@ -755,6 +755,10 @@ const tableColumns = {
       dataIndex: "status"
     },
     {
+      title: "存款类型",
+      dataIndex: "paymentType"
+    },
+    {
       title: "存款日期",
       dataIndex: "depositDate",
       slots: {customRender: "depositDate"}
@@ -1051,7 +1055,7 @@ export default defineComponent({
   name: "TransitRecordView",
   setup() {
     const searchRecord = (tab) => {
-      if (tab) {
+      if (tab && tab.props && tab.props.name) {
         recordActive.value = tab.props.name
       }
       // recordActive.value = key.props.name
@@ -1153,8 +1157,10 @@ export default defineComponent({
             reminderForm.memberRemark = ""
             if (recordActive.value === 'deposit') {
               reminderForm.type = 1
+              reminderForm.recordTime = moment(record.depositDate).format('YYYY-MM-DD HH:mm:ss')
             } else if (recordActive.value === 'withdraw') {
               reminderForm.type = 2
+              reminderForm.recordTime = moment(record.withdrawDate).format('YYYY-MM-DD HH:mm:ss')
             }
           } else {
             ElMessage.error('无法提交新催单，目前尚有未处理的催单。')
@@ -1174,7 +1180,6 @@ export default defineComponent({
             ElMessage.success(`催单上传成功。`);
             reminderDialog.value = false;
             reminderForm.value = {}
-            uploadFileRef.value.clear()
           }
         })
       }
@@ -1202,8 +1207,107 @@ export default defineComponent({
 
     const getImageLink = (linkId) => {
       console.log(linkId);
-      reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
+      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
     }
+
+    const getTurnoverType = (turnoverType) => {
+      if (!turnoverType) {
+        return ''
+      }
+      if (turnoverType === 'WITHDRAW_FAIL') {
+        return '提款失败' // Fail Withdrawal
+      } else if (turnoverType === 'WITHDRAW') {
+        return '提款' // Withdraw
+      }  else if (turnoverType === 'PROMO') {
+        return '优惠' // 优惠
+      }  else if (turnoverType === 'DEPOSIT') {
+        return '存款' // 存款
+      } else {
+        return turnoverType
+      }
+    }
+    const getWithdrawStatus = (withdrawStatus) => {
+      if (withdrawStatus === 'APPLY') {
+        return '申请中' //Applying
+      } else if (withdrawStatus === 'FAIL') {
+        return '失败' // Failed
+      } else if (withdrawStatus === 'SUCCESS') {
+        return '成功' // Success
+      } else if (withdrawStatus === 'STEP_1') {
+        return '审核中' //Under review
+      } else if (withdrawStatus === 'STEP_2') {
+        return '待支付' // To be paid
+      } else if (withdrawStatus === 'STEP_3') {
+        return '支付中' // Payment on going
+      } else if (withdrawStatus === 'STEP_4') {
+        return '自动支付' // Automatic Payment
+      } else if (withdrawStatus === 'STEP_5') {
+        return '暂不处理' //Suspend
+      } else {
+        return withdrawStatus
+      }
+    };
+    const getDepositStatus = (depositStatus) => {
+      if (!depositStatus) {
+        return ''
+      }
+      if (depositStatus === 'PENDING') {
+        return '支付中' // Pending
+      } else if (depositStatus === 'SUCCESS') {
+        return '成功' // Success
+      } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
+        return '成功' // Supplement Success
+      } else if (depositStatus === 'CLOSED') {
+        return '关闭' // Closed
+      } else {
+        return depositStatus
+      }
+    }
+    const getDepositType = (depositType) => {
+      if (!depositType) {
+        return ''
+      }
+      if (depositType === 'BANK') {
+        return 'VIP转卡' // VIP转卡
+      } else if (depositType === 'USDTERC') {
+        return 'USDT ERC' // USDT ERC
+      } else if (depositType === 'USDTTRC') {
+        return 'USDT TRC' // USDT TRC
+      } else if (depositType === 'OFFLINE') {
+        return '线下转卡' // 线下转卡
+      } else if (depositType === 'UNION') {
+        return '银联快捷' // 银联快捷
+      } else if (depositType === 'QUICKPAYMENT') {
+        return '小额转卡' // 小额转卡
+      } else if (depositType === 'SPECIALPAY') {
+        return '网银转账' // 网银转账
+      } else if (depositType === 'ALIPAYCODE') {
+        return '支付宝' // 支付宝
+      } else if (depositType === 'WECHATCODE') {
+        return '微信支付' // 微信支付
+      } else if (depositType === 'QQCODE') {
+        return 'QQ支付' // QQ支付
+      } else if (depositType === 'KDPAY') {
+        return 'K豆' // K豆
+      } else if (depositType === 'DDPAY') {
+        return '钉钉' // 钉钉
+      } else if (depositType === 'HBPAY') {
+        return '和包' // 和包
+      }  else if (depositType === 'SZPAY') {
+        return '数字人民币' // 数字人民币
+      }  else if (depositType === 'CARDPAY') {
+        return '点卡支付' // 点卡支付
+      }  else if (depositType === 'ONLINECODE') {
+        return '云闪付' // 云闪付
+      }  else if (depositType === 'DYPAY') {
+        return '抖音' // 抖音
+      }   else if (depositType === 'AUTOPAY') {
+        return '自动支付' // 自动支付
+      } else {
+        return depositType
+      }
+    }
+
 
     return {
       recordActive,
@@ -1239,6 +1343,10 @@ export default defineComponent({
       openReminder,
       submitReminder,
       getImageLink,
+      getTurnoverType,
+      getWithdrawStatus,
+      getDepositStatus,
+      getDepositType
     };
   }
 });

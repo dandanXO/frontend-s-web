@@ -153,7 +153,7 @@
 </template>
 <script setup>
 import { ref, reactive, onMounted, shallowRef } from "vue";
-import { loadPay, loadPrivileges,verifyAmount } from "@/api/personal/deposit";
+import { loadPay, loadPrivileges,verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { RiSpamLine } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
@@ -162,6 +162,7 @@ import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
 import { InfoFilled } from "@element-plus/icons-vue"
+import { doIt } from "@/utils/action";
 {
   RiSpamLine;
 }
@@ -173,8 +174,8 @@ const payTypeClass = ref();
 const payMethods = reactive([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
-const bankCardList = ref([]);
 const amountList = ref([]);
+const bankCardList = ref([]);
 const privilegeList = ref([]);
 const selectedPrivilege = ref(null);
 const unselectedPrivileges = ref([]);
@@ -182,6 +183,43 @@ const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
+const isDisplay = ref(false);
+const submitMessage = ref([]);
+const subMsg0 = ref();
+const subMsg1 = ref();
+const subMsg2 = ref();
+const subMsg3 = ref();
+const copybtntxt0 = ref("复制");
+const copybtntxt1 = ref("复制");
+const copybtntxt2 = ref("复制");
+const copybtntxt3 = ref("复制");
+const copyMessage = (position) => {
+  let copyText = null;
+    copyText = eval(`subMsg${position}.value.innerText`);
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement('textarea');
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt[position].value = '已复制';
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
+
+const blurCode = () => {
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt.forEach(element => {
+    element.value = '复制';
+  });
+};
 
 const form = reactive({
   paymentId: null,
@@ -292,6 +330,7 @@ function selectPayType(value) {
 }
 
 async function onSelect(value) {
+  isDisplay.value = false
   clearInfo();
   if (value) {
     if (value.group) {
@@ -304,7 +343,9 @@ async function onSelect(value) {
     } else {
       activeMethod.value = value;
       checkPrivilege(value);
-      formRef.value.resetFields();
+      if (formRef.value) {	
+        formRef.value.resetFields();	
+      }
     }
     checkMinDepositAmt();
   }
@@ -344,24 +385,18 @@ function clearInfo() {
   checkMinDepositAmt();
 }
 
-function confirmDeposit() {
-  formRef.value.validate(async(valid) => {
-    if (valid) {
-        await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
-        (d) => {
-          if (d.code === 11002) {
-            form.localAmount = d.data.suggestion;
-            // message.error(d.message, 4);
-            ElMessage.error(d.message);
-          } else {
-            doDeposit();
-          }
-        },
-    );
-    } else {
-      return;
-    }
-  })
+async function confirmDeposit() {
+  await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(	
+      (d) => {	
+        if (d.code === 11002) {	
+          form.localAmount = d.data.suggestion;	
+          // message.error(d.message, 4);	
+          ElMessage.error(d.message);	
+        } else {	
+          doDeposit();	
+        }	
+      },
+  );
 }
 
 function doDeposit() {
@@ -381,26 +416,78 @@ function doDeposit() {
   formRef.value.validate().then(() => {
     form.paymentId = activeMethod.value.paymentId;
     if (store.token) {
-      const newWin = window.open(`/depositLoading`, "Bank");
-      newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-      window.addEventListener(
-          "message",
-          (event) => {
-            if (event.data?.msg) {
-              console.log(event.data?.msg)
-              if (event.data.msg === "success") {
-                isDeposited.value = true;
-              } else {
-                ElMessage.error(event.data.msg);
-                // message.error(event.data.msg, 4);
-              }
+      verifyAmount(form.paymentId, form.localAmount)
+      .then((d) => {
+        if (d.code == 0) {
+          // newWin.location.href = d.data;
+          // newWin.location.href = resp
+          const copy = { ...form };
+          const data = {};
+          Object.entries(copy).forEach(([key, value]) => {
+            if (value) {
+              data[key] = value;
             }
-          },
-          { once: true }
-      );
+          });
+          data.bankCardId = 0;
+          
+          postDeposit(data).then((d) => {
+          if (d.code === 0) {
+            doIt(d).then((resp) => {
+                const response = resp.data.result
+              if (response.data) {
+                if (response.paramKey === null || response.paramKey === "") {
+                isDisplay.value = true;
+                submitMessage.value = response.data.split(',');
+                }
+                // if (resp.paramKey === null || resp.paramKey === "") {
+                //   resp.data = ['北京银行,请联系在线客服获取,888888,1233']
+                //   isDisplay.value = true;
+                //   submitMessage.value = resp.data.split(',');
+                // }
+              } else {
+                isDeposited.value = true
+              }
+            });
+          }
+          else {
+            ElMessage.error(d.data.message);
+          }
+    })
+    .catch((error) => {
+            
+            doIt(d).then((resp) => {
+              if (resp) {
+                console.log(resp)
+              }
+            });
+      ElMessage.error(error.message);
+    });
+        } else {
+          ElMessage.error(d.message);
+        }
+      })
+      .catch((error) => {
+          ElMessage.error(error.message);
+      });
+      // const newWin = window.open(`/depositLoading`, "Bank");
+      // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+      // window.addEventListener(
+      //     "message",
+      //     (event) => {
+      //       if (event.data?.msg) {
+      //         if (event.data.msg === "success") {
+      //           isDeposited.value = true;
+      //         } else {
+      //           // message.error(event.data.msg, 4);
+      //         }
+      //       }
+      //     },
+      //     { once: true }
+      // );
     }
   });
 }
+
 
 async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
