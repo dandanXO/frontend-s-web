@@ -205,7 +205,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="table-footer">
+      <!-- <div class="table-footer">
         <span>{{ t('fields.totalBetRecords') }}</span>
         <span style="margin-left: 10px">{{ total.totalRecord }}</span>
         <span style="margin-left: 30px"> {{ t('fields.totalBet') }}</span>
@@ -214,7 +214,7 @@
         <span style="margin-left: 30px"> {{ t('fields.totalPayout') }}</span>
         <span style="margin-left: 10px">$ </span>
         <span v-formatter="{data: total.totalPayout, type: 'money'}" />
-      </div>
+      </div> -->
       <el-pagination
         class="pagination"
         :total="page.total"
@@ -253,7 +253,7 @@
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import * as XLSX from 'xlsx';
-import { getExport, getMemberBetRecords, getMemberBetRecordsTotal, getMemberBetRecordsTotalRecord } from '../../../../../api/member-bet-record';
+import { getExport, getMemberBetRecords } from '../../../../../api/member-bet-record';
 import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
@@ -387,11 +387,11 @@ const request = reactive({
   result: ["WIN", "LOSS", "DRAW"]
 });
 
-const total = reactive({
-  totalRecord: 0,
-  totalBet: 0,
-  totalPayout: 0
-});
+// const total = reactive({
+//   totalRecord: 0,
+//   totalBet: 0,
+//   totalPayout: 0
+// });
 
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
@@ -457,12 +457,12 @@ async function loadMemberBetRecords(frombutton) {
   page.records = ret.records;
   page.pagingState = ret.pagingState;
 
-  const { data: t } = await getMemberBetRecordsTotal(query);
-  total.totalBet = t.totalBet;
-  total.totalPayout = t.totalPayout;
+  //   const { data: t } = await getMemberBetRecordsTotal(query);
+  //   total.totalBet = t.totalBet;
+  //   total.totalPayout = t.totalPayout;
 
-  const { data: r } = await getMemberBetRecordsTotalRecord(query);
-  total.totalRecord = r;
+  //   const { data: r } = await getMemberBetRecordsTotalRecord(query);
+  //   total.totalRecord = r;
 
   page.loading = false;
 }
