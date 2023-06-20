@@ -34,21 +34,7 @@ export default defineComponent({
           params: paramData
         },
       ).then((res) => {
-        console.log(res);
-        // tableData.value= res.data.records;
-        tableData.value = res.data.records.map((record) => {
-            if (record.status === "PENDING") {
-              record.status = "支付中"; // Pending
-            } else if (record.status === "SUCCESS") {
-              record.status = "成功"; // Success
-            } else if (record.status === 'SUPPLEMENT_SUCCESS') {
-              record.status = '成功' // Supplement Success
-            } else if (record.status === 'CLOSED') {
-              record.status = '关闭' // Closed
-            }
-            return record;
-          });
-
+        tableData.value= res.data.records;
       }).finally(()=>{
         visible.value = false;
       })

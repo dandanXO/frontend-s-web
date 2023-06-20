@@ -14,10 +14,13 @@
                         </div>
                         <template v-for="obj in Object.keys(det)" :key="obj">
                             <div v-if="obj === head.key" class="desc">
+                                <div v-if="obj === 'status'">
+                                    {{ checkRecord(det[obj])}}
+                                </div>
                                 <div v-if="obj === 'commitDate'">
                                     {{ humanDatetime(det[obj])}}
                                 </div>
-                                <div v-else>
+                                <div v-if="obj !== 'status' || obj === 'commitDate'">
                                     {{ det[obj] }}
                                 </div>
                             </div>
@@ -51,7 +54,7 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import moment from "moment"
-
+import { translateRecord } from "../directives/translate.js";
 export default defineComponent({
     props: {
         list: {
@@ -98,6 +101,9 @@ export default defineComponent({
         return {
             humanDatetime(ts) {
                 return moment(ts).format("YYYY-MM-DD HH:mm:ss");
+            },
+            checkRecord(status) {
+                return translateRecord(status);                
             },
             onLoad,
             truncatedList,
