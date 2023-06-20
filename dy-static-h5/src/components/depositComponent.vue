@@ -263,7 +263,7 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 function initPay() {
   $q.loading.show({
-    message: "加载银行信息。 别挂断..."
+    message: "加载银行信息。 请稍等..."
   });
 
   payMethods.value = [];

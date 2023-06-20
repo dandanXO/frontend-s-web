@@ -39,7 +39,7 @@ export default {
     PENDING: '中止',
     REJECT: '驳回',
     SENDING: '发送中',
-    WAITING_CALLBACK: '待回调',
+    WAITING_CALLBACK: '自动支付中',
     PAYING: '支付'
   },
   fields: {
