@@ -2,6 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left: 5px"
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY"
@@ -124,16 +139,23 @@
 
 <script setup>
 import { ElMessage, ElMessageBox } from "element-plus";
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { hasRole } from "../../../../utils/util";
 import { deleteMessageOutbox, getMessageOutbox } from "../../../../api/message-outbox";
 import { useI18n } from "vue-i18n";
-import { getSiteIdByName } from "../../../../api/site";
+import { getSiteIdByName, getSiteListSimple } from "../../../../api/site";
 import { createSystemMessageTemplate } from "../../../../api/system-message-template";
+import { useStore } from '../../../../store';
+import { TENANT } from "../../../../store/modules/user/action-types";
 
 const { t } = useI18n();
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
 const dialogForm = ref(null);
-
+const siteList = reactive({
+  list: []
+});
 const uiControl = reactive({
   dialogType: null,
   dialogVisible: false,
@@ -147,12 +169,14 @@ const request = reactive({
   size: 30,
   current: 1,
   createTime: [],
-  memberName: null
+  memberName: null,
+  siteId: null
 });
 
 function resetQuery() {
   request.createTime = [];
   request.memberName = null;
+  request.siteId = null;
 }
 
 const form = reactive({
@@ -227,6 +251,11 @@ const page = reactive({
   records: []
 });
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+}
+
 async function loadMessageOutbox() {
   const requestCopy = { ...request };
   const query = {};
@@ -237,6 +266,10 @@ async function loadMessageOutbox() {
   });
   if (request.createTime.length === 2) {
     query.createTime = request.createTime.join(",");
+  }
+  if (request.siteId === null) {
+    const siteIdList = siteList.list.map(s => s.id);
+    query.siteId = siteIdList.join(',');
   }
   const { data: ret } = await getMessageOutbox(query);
   page.pages = ret.pages;
@@ -266,8 +299,13 @@ function send() {
   })
 }
 
-onMounted(() => {
-  loadMessageOutbox();
+onMounted(async() => {
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
+  await loadMessageOutbox();
 });
 
 function changePage(page) {
