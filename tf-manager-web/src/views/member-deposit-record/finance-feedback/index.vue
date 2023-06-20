@@ -268,7 +268,7 @@
       >
         <template #default="scope1">
           <el-button
-            v-if="scope1.row.status === 1"
+            v-if="scope1.row.status === 1 && hasPermission(['sys:feedback:update'])"
             size="mini"
             type="primary"
             @click="showDialog(scope1.row)"
@@ -383,8 +383,8 @@ const request = reactive({
   size: 30,
   current: 1,
   name: null,
-  feedbackTime: [defaultStartDate, defaultEndDate],
-  commitTime: [defaultStartDate, defaultEndDate],
+  feedbackTime: [null, null],
+  commitTime: [null, null],
   siteId: null,
   orderNo: null,
   status: null,
@@ -583,10 +583,8 @@ onMounted(async () => {
 })
 
 async function showDialog(record) {
-  if (hasPermission(['sys:feedback:update'])) {
-    form.id = record.id
-    uiControl.dialogVisible = true
-  }
+  form.id = record.id
+  uiControl.dialogVisible = true
 }
 </script>
 

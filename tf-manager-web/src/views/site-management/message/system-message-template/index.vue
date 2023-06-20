@@ -51,6 +51,15 @@
         >
           {{ t('fields.delete') }}
         </el-button>
+        <el-button
+          icon="el-icon-upload"
+          size="mini"
+          type="success"
+          v-permission="['sys:message:import']"
+          @click="uiControl.importDialogVisible = true"
+        >
+          {{ t('fields.massImport') }}
+        </el-button>
       </div>
     </div>
     <el-dialog
@@ -172,6 +181,104 @@
       </el-form>
     </el-dialog>
 
+    <el-dialog
+      :title="t('fields.massImport')"
+      v-model="uiControl.importDialogVisible"
+      append-to-body
+      width="1000px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <el-button
+        icon="el-icon-download"
+        size="mini"
+        type="primary"
+        @click="downloadTemplate"
+      >
+        {{ t('fields.downloadTemplate') }}
+      </el-button>
+      <el-button
+        icon="el-icon-upload"
+        size="mini"
+        type="success"
+        @click="chooseFile"
+      >
+        {{ t('fields.import') }}
+      </el-button>
+      <!-- eslint-disable -->
+      <input
+        id="importFile"
+        type="file"
+        accept=".xlsx, .xls"
+        @change="importToTable"
+        hidden
+      />
+      <el-form
+        ref="importRefForm"
+        :model="importForm"
+        :rules="importRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+        style="float: right;"
+      >
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="importForm.siteId"
+            :placeholder="t('fields.site')"
+            style="width: 350px;"
+            filterable
+            default-first-option
+            @focus="loadSites"
+          >
+            <el-option
+              v-for="item in list.sites"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <el-table
+        :data="
+          importedPage.records.slice(
+            importedPage.size * (importedPage.current - 1),
+            importedPage.size * importedPage.current
+          )
+        "
+        v-loading="importedPage.loading"
+        ref="table"
+        row-key="id"
+        size="small"
+        :empty-text="t('fields.noData')"
+      >
+        <el-table-column prop="title" :label="t('fields.title')" width="300" />
+        <el-table-column prop="content" :label="t('fields.content')" width="330" />
+        <el-table-column prop="receiveType" :label="t('fields.receiveType')" width="330" />
+        <el-table-column prop="receiveRange" :label="t('fields.recipient')" width="330" />
+      </el-table>
+      <el-pagination
+        class="pagination"
+        @current-change="changeImportedPage"
+        layout="prev, pager, next"
+        :page-size="importedPage.size"
+        :page-count="importedPage.pages"
+        :current-page="importedPage.current"
+      />
+      <div class="dialog-footer">
+        <el-button
+          type="primary"
+          :disabled="importedPage.records.length === 0"
+          @click="confirmImport"
+          :loading="importedPage.buttonLoading"
+        >
+          {{ t('fields.confirmAndImport') }}
+        </el-button>
+        <el-button @click="clearImport">{{ t('fields.cancel') }}</el-button>
+      </div>
+    </el-dialog>
+
     <el-table
       :data="page.records"
       ref="table"
@@ -215,20 +322,42 @@
 <script setup>
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { onMounted, reactive, ref } from 'vue'
+import * as XLSX from 'xlsx';
 import { getMemberNameList } from '../../../../api/member'
 import { getSiteListSimple } from '../../../../api/site'
 import {
   createSystemMessageTemplate,
   deleteMessageTemplate,
   getSystemMessageTemplate,
+  createBatchMessageTemplate
 } from '../../../../api/system-message-template'
-import { getVipList } from '../../../../api/vip'
+import { findLevelByVipName, getVipList } from '../../../../api/vip'
 import { required } from '../../../../utils/validate'
 import { hasRole } from '../../../../utils/util'
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const dialogForm = ref(null)
+const importRefForm = ref(null);
+
+const EXPORT_MESSAGE_LIST_HEADER = [
+  'Subject',
+  'Message',
+  'Receive Type',
+  'Receive Range'
+]
+
+const EXPORT_MAPPING_HEADER = [
+  'Receive Type',
+  'Description'
+]
+
+const IMPORT_MESSAGE_LIST_JSON = [
+  'title',
+  'content',
+  'receiveType',
+  'receiveRange'
+]
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -240,7 +369,25 @@ const uiControl = reactive({
     { typeName: 'Specific VIP', value: 'VIP' },
   ],
   size: null,
+  importDialogVisible: false
 })
+
+const importedPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  size: 10,
+  current: 1,
+  buttonLoading: false,
+})
+
+const importForm = reactive({
+  siteId: null
+});
+
+const importRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))]
+});
 
 const request = reactive({
   size: 30,
@@ -319,13 +466,9 @@ const handleSelect = item => {
     dynamicTags.value.push(item.value)
     const removed = list.members.splice(list.members.indexOf(item), 1)
     const removedArr = [...removed]
-    console.log(removedArr[0])
     selectionList.members.push(removedArr[0])
   }
   inputValue.value = ''
-
-  console.log(selectionList.members)
-  console.log(list.members)
 }
 
 const formRules = reactive({
@@ -365,15 +508,10 @@ function handleSiteChange() {
 
 function handleVipFilter() {
   dropdownList.vip = list.vips
-
-  console.log(list.vips)
-  console.log(dropdownList.vip)
-  console.log(selected.site)
   const newRecord = dropdownList.vip.filter(element => {
     return element.siteId === selected.site
   })
   dropdownList.vip = newRecord
-  console.log(dropdownList.vip)
 }
 
 function submit() {
@@ -481,6 +619,175 @@ async function loadSites() {
     singleObj.value = entry.id
     list.sites.push(singleObj)
   })
+}
+
+async function downloadTemplate() {
+  const exportMessage = [EXPORT_MESSAGE_LIST_HEADER];
+  const maxLengthMessage = [];
+  const wsMessage = XLSX.utils.aoa_to_sheet(exportMessage);
+  setWidth(exportMessage, maxLengthMessage);
+  const wsMessageCols = maxLengthMessage.map(w => {
+    return { width: w };
+  });
+  wsMessage['!cols'] = wsMessageCols;
+
+  const exportMapping = [EXPORT_MAPPING_HEADER];
+  const maxLengthMapping = [];
+  const mapping = [
+    { receiveType: 'ALL', description: 'Everyone' },
+    { receiveType: 'MULTIPLE', description: 'Specific Recipient' },
+    { receiveType: 'VIP', description: 'Specific VIP' }
+  ];
+  pushRecordToData(mapping, exportMapping);
+  const wsMapping = XLSX.utils.aoa_to_sheet(exportMapping);
+  setWidth(exportMapping, maxLengthMapping);
+  const wsMappingCols = maxLengthMapping.map(w => {
+    return { width: w }
+  });
+  wsMapping['!cols'] = wsMappingCols;
+
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push('Message');
+  wb.Sheets.Message = wsMessage;
+  wb.SheetNames.push('Mapping');
+  wb.Sheets.Mapping = wsMapping;
+  XLSX.writeFile(wb, 'message.xlsx');
+}
+
+function pushRecordToData(records, exportData) {
+  const data = records.map(record =>
+    Object.values(record).map(item => (!item || item === '' ? '-' : item))
+  )
+  exportData.push(...data)
+}
+
+function setWidth(exportData, maxLength) {
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] =
+        typeof value === 'number'
+          ? maxLength[key] >= 10
+            ? maxLength[key]
+            : 10
+          : maxLength[key] >= value.length + 2
+            ? maxLength[key]
+            : value.length + 2
+    });
+  });
+}
+
+function chooseFile() {
+  document.getElementById('importFile').click();
+}
+
+function importToTable(file) {
+  if (!importForm.siteId) {
+    ElMessage({ message: t('message.selectSiteFirst'), type: 'error' });
+    document.getElementById('importFile').value = '';
+  } else {
+    importedPage.loading = true;
+    importedPage.buttonLoading = false;
+    const files = file.target.files[0];
+    const allowFileType = [
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-excel',
+    ];
+    if (allowFileType.find(ftype => ftype.includes(files.type))) {
+      const fileReader = new FileReader();
+
+      fileReader.onload = async event => {
+        const { result } = event.target;
+        const workbook = XLSX.read(result, { type: 'binary' });
+        let data = [];
+        for (const sheet in workbook.Sheets) {
+          data = data.concat(
+            XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
+              header: IMPORT_MESSAGE_LIST_JSON,
+              range: 1,
+            })
+          );
+          for (const d of data) {
+            if (d.receiveType === 'MULTIPLE') {
+              const recipientArr = d.receiveRange.split(',');
+              d.recipient = recipientArr;
+            } else if (d.receiveType === 'VIP') {
+              const arr = d.receiveRange.split(',');
+              const recipientArr = [];
+              for (const v of arr) {
+                const { data: id } = await findLevelByVipName(v, importForm.siteId);
+                recipientArr.push(id);
+              }
+              d.recipient = recipientArr;
+            }
+          }
+          break;
+        }
+        importedPage.records = data;
+        importedPage.pages = Math.ceil(
+          importedPage.records.length / importedPage.size
+        );
+      }
+      fileReader.readAsBinaryString(files);
+      document.getElementById('importFile').value = '';
+    } else {
+      ElMessage({ message: t('message.invalidFileType'), type: 'error' });
+    }
+    importedPage.loading = false;
+  }
+}
+
+function changeImportedPage(page) {
+  importedPage.current = page;
+}
+
+function clearImport() {
+  uiControl.importDialogVisible = false;
+  importedPage.buttonLoading = false;
+  importedPage.loading = false;
+  importedPage.records = [];
+  importedPage.pages = 0;
+  importedPage.current = 1;
+  importForm.siteId = null;
+}
+
+async function confirmImport() {
+  importRefForm.value.validate(async (valid) => {
+    if (valid) {
+      importedPage.buttonLoading = true;
+      const recordCopy = { ...importedPage.records };
+      const data = [];
+      Object.entries(recordCopy).forEach(([key, value]) => {
+        const item = {};
+        if (value) {
+          item.siteId = importForm.siteId;
+          Object.entries(value).forEach(([k, v]) => {
+            if (k !== "receiveRange") {
+              item[k] = v;
+            }
+          });
+        }
+        data.push(item);
+      });
+
+      const records = [...data];
+      do {
+        if (records.length > 10000) {
+          await createBatchMessageTemplate(records.slice(0, 10000));
+          records.splice(0, 10000);
+        } else {
+          await createBatchMessageTemplate(records);
+          records.splice(0, records.length);
+        }
+      } while (records.length > 0)
+      importedPage.buttonLoading = false;
+      ElMessage({ message: t('message.importSuccess'), type: 'success' });
+      clearImport();
+      loadSystemMessageTemplate();
+      importForm.siteId = null;
+    }
+  });
 }
 
 onMounted(() => {

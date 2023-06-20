@@ -7,7 +7,7 @@
             </span>
           </div>
           <template v-for="(det, idx) in platforms" :key="idx">
-            <div class="poker-container-inner" v-if="selectedPlat === det.code" :class="det.code">
+            <div class="poker-container-inner" v-if="selectedPlat === det.code" :class="det.style">
               <!-- <div class="poker-left" data-aos="fade-right" data-aos-duration="4000">
                   <img :src="require('../assets/poker/title_poker_' + det.image + '.png')" style="margin-bottom: 54px;">
                   <div class="platform-txt-box">
@@ -74,12 +74,14 @@ export default defineComponent({
         name: '大唐',
         image: 'tx',
         gameCode: '',
+        style: 'DT',
         message: '抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活'
       },
       {
         code: 'KYDY',
         name: '开元',
         image: 'ky',
+        style: 'KY',
         gameCode: 'ky_lobby',
         message: '双赢棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！'
       },

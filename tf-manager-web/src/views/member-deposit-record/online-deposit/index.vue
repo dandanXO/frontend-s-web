@@ -129,7 +129,7 @@
         <el-table-column
           :label="t('fields.operate')"
           align="center"
-          min-width="250"
+          min-width="300"
           fixed="right"
           v-if="hasPermission(['sys:deposit:check'])"
         >

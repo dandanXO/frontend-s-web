@@ -32,3 +32,7 @@ export const getSiteListSimpleNoParenId = () => {
 export const getSiteExcelMapping = () => {
   return https().request("/site/excelMapping", Method.GET);
 }
+
+export const getSiteIdByName = (name) => {
+  return https().request("/site/getIdByName", Method.GET, { name: name }, ContentType.form);
+}

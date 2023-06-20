@@ -170,7 +170,7 @@
           :class="'esport-' + i"
         >
           <img
-            @click="playGame(esport.id, esport.code)"
+            @click="playGame(esport.id, esport.code, esport.gameCode)"
             :src="
               require(`../assets/images/index/esport/esport_bg_${esport.icon}.png`)
             "
@@ -189,7 +189,7 @@
           :class="'sport-' + i"
         >
           <img
-            @click="playGame(sport.id, sport.code)"
+            @click="playGame(sport.id, sport.code, sport.gameCode)"
             :src="
               require(`../assets/images/index/sport/sport_bg_${sport.icon}.png`)
             "
@@ -261,7 +261,7 @@
         </swiper-slide>
         <swiper-slide v-for="(slot, i) in slot" :key="i" :class="'slot-' + i">
           <img
-            @click="playGame(slot.id, slot.code)"
+            @click="playGame(slot.id, slot.code, slot.gameCode)"
             :src="
               require(`../assets/images/index/slot/slot_bg_${slot.icon}.png`)
             "
@@ -281,7 +281,7 @@
           :class="'fish-' + i"
         >
           <img
-            @click="playGame(fish.id, fish.code)"
+            @click="playGame(fish.id, fish.code, fish.gameCode)"
             :src="
               require(`../assets/images/index/fish/fish_bg_${fish.icon}.png`)
             "
@@ -300,14 +300,12 @@
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-primary text-white">
+    <q-card style="width: 100%" class="bg-bright text-black">
       <q-card-section class="q-mb-md">
         <q-tabs
           v-model="activeKey"
           dense
-          class="text-grey"
-          active-color="bright"
-          indicator-color="bright"
+
           align="justify"
         >
           <q-tab
@@ -520,11 +518,12 @@ export default defineComponent({
     const esport = [
       {
         id: "esport",
-        code: "MARLIN",
+        code: "TFGaming",
         icon: "marlin",
         title: "东赢电竞",
         subcount: "145",
-        subtitle: "电竞赛事"
+        subtitle: "电竞赛事",
+        gameCode: "TFGaming"
       },
       {
         id: "esport",
@@ -532,7 +531,8 @@ export default defineComponent({
         icon: "im",
         title: "IM电竞",
         subcount: "157",
-        subtitle: "电竞赛事"
+        subtitle: "电竞赛事",
+        gameCode: "IM"
       },
       {
         id: "esport",
@@ -540,7 +540,8 @@ export default defineComponent({
         icon: "ia",
         title: "小艾电竞",
         subcount: "166",
-        subtitle: "电竞赛事"
+        subtitle: "电竞赛事",
+        gameCode: "IA"
       }
     ];
 
@@ -551,7 +552,8 @@ export default defineComponent({
         icon: "im",
         title: "IM体育",
         subcount: "637",
-        subtitle: "体育赛事"
+        subtitle: "体育赛事",
+        gameCode: "IM"
       },
       {
         id: "sport",
@@ -559,7 +561,8 @@ export default defineComponent({
         icon: "saba",
         title: "沙巴体育",
         subcount: "",
-        subtitle: "体育赛事"
+        subtitle: "体育赛事",
+        gameCode: ""
       },
       {
         id: "sport",
@@ -567,7 +570,8 @@ export default defineComponent({
         icon: "cr",
         title: "CR体育",
         subcount: "204",
-        subtitle: "体育赛事"
+        subtitle: "体育赛事",
+        gameCode: "CR"
       }
     ];
 
@@ -578,7 +582,8 @@ export default defineComponent({
         icon: "ag",
         title: "AG真人",
         subcount: "40",
-        subtitle: "真人娱乐"
+        subtitle: "真人娱乐",
+        gameCode: ""
       },
       {
         id: "live",
@@ -595,18 +600,20 @@ export default defineComponent({
         icon: "allbet",
         title: "欧博真人",
         subcount: "38",
-        subtitle: "真人娱乐"
+        subtitle: "真人娱乐",
+        gameCode: ""
       }
     ];
 
     const poker = [
       {
         id: "poker",
-        code: "DT",
+        code: "TX",
         icon: "tx",
         title: "大唐棋牌",
         subcount: "18",
-        subtitle: "棋牌娱乐"
+        subtitle: "棋牌娱乐",
+        gameCode: "TX",
       },
       {
         id: "poker",
@@ -626,7 +633,8 @@ export default defineComponent({
         icon: "tcg",
         title: "TCG彩票",
         subcount: "29",
-        subtitle: "彩票游戏"
+        subtitle: "彩票游戏",
+        gmaeCode: ""
       },
       {
         id: "lottery",
@@ -705,7 +713,8 @@ export default defineComponent({
         icon: "ag_new",
         title: "AG捕鱼",
         subcount: "",
-        subtitle: "捕鱼游戏"
+        subtitle: "捕鱼游戏",
+        gameCode: ""
       },
       {
         id: "fishing",
@@ -713,7 +722,8 @@ export default defineComponent({
         icon: "sw",
         title: "捕鱼达人",
         subcount: "3",
-        subtitle: "捕鱼游戏"
+        subtitle: "捕鱼游戏",
+        gameCode: ""
       }
     ];
 
@@ -736,8 +746,8 @@ export default defineComponent({
     });
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
-      // console.log("gameName" + ":" + "platformCode" + ":" + "gameCode" + ":" + "gameStatus");
-      // console.log(gameName + ":" + platformCode + ":" + gameCode + ":" + gameStatus);
+      console.log("gameName" + ":" + "platformCode" + ":" + "gameCode" + ":" + "gameStatus");
+      console.log(gameName + ":" + platformCode + ":" + gameCode + ":" + gameStatus);
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
     function loadData() {

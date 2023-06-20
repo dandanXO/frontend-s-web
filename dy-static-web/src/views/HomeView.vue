@@ -1,256 +1,324 @@
 <template>
   <div class="home">
     <el-carousel class="banner-slider" height="25vw" arrow="always">
-      <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
+      <el-carousel-item
+        class="banner-container"
+        v-for="banner in banners"
+        :key="banner"
+      >
         <router-link :to="`/promotion?name=${banner.redirectUrl}`">
-            <div
-              class="promo-bg isDesktop"
-              :style="
-                'background-image: url(' +
-                imgURL +
-                banner.desktopImageUrl +
-                ')'
-              "
-            ></div>
-            <div
-              class="promo-bg isMobile"
-              :style="
-                'background-image: url(' +
-                imgURL +
-                banner.mobileImageUrl +
-                ')'
-              "
-            ></div>
-          </router-link>
+          <div
+            class="promo-bg isDesktop"
+            :style="
+              'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
+            "
+          ></div>
+          <div
+            class="promo-bg isMobile"
+            :style="
+              'background-image: url(' + imgURL + banner.mobileImageUrl + ')'
+            "
+          ></div>
+        </router-link>
       </el-carousel-item>
     </el-carousel>
     <div class="index-container">
       <div class="index-top-btn-container">
         <div class="index-operator-btn-box">
-          <router-link to="/center/deposit"><div class="index-operator-btn deposit">我要充值</div></router-link>
-          <router-link to="/app" class="index-operator-btn download">下载APP</router-link> 
-            <router-link to="/promotion" class="index-operator-btn promo">热门活动</router-link>
+          <router-link to="/center/deposit">
+            <div class="index-operator-btn deposit">我要充值</div>
+          </router-link>
+          <router-link to="/app" class="index-operator-btn download"
+            >下载APP</router-link
+          >
+          <router-link to="/promotion" class="index-operator-btn promo"
+            >热门活动</router-link
+          >
         </div>
         <div class="index-platform-btn-box">
-            <router-link class="index-platform-btn" to="/esports">
-                <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_esports.png">
-                <div>电竞游戏</div>
-            </router-link>
-            <router-link class="index-platform-btn" to="/sports">
-                <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_sport.png">
-                <div>体育竞猜</div>
-            </router-link>
-            <router-link class="index-platform-btn" to="/live-casino">
-                <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_live.png">
-                <div>真人娱乐</div>
-            </router-link>
+          <router-link class="index-platform-btn" to="/esports">
+            <img src="../assets/home/index_icon_esports.png" />
+            <div>电竞游戏</div>
+          </router-link>
+          <router-link class="index-platform-btn" to="/sports">
+            <img src="../assets/home/index_icon_sport.png" />
+            <div>体育竞猜</div>
+          </router-link>
+          <router-link class="index-platform-btn" to="/live-casino">
+            <img src="../assets/home/index_icon_live.png" />
+            <div>真人娱乐</div>
+          </router-link>
         </div>
-    </div>
-    <!--暂时没后端数据-->
-    <!-- <div class="index-title-container" style="margin-top: 50px;">
-        <div class="index-title-main">热门赛事</div>
-        <div class="index-title-sub">HOT EVENTS</div>
-    </div>
-    <div class="index-match-container">
-        <div class="index-match-box-sub index-match-CSGO index-match-box">
-            <div class="index-match-title">暂无赛事</div>
-            <div class="index-match-time"> - </div>
-            <div class="index-match-team-container">
-                <div class="index-match-team-box">
-                    <div class="index-team-logo">
-                        <img class="match-home-logo" src="">
-                    </div>
-                    <div class="match-home-name">暂无</div>
-                </div>
-                <div class="txt-vs">
-                    VS
-                </div>
-                <div class="index-match-team-box">
-                    <div class="index-team-logo">
-                        <img class="match-away-logo" src="">
-                    </div>
-                    <div class="match-away-name">暂无</div>
-                </div>
-            </div>
-            <a href="/games/esport.html" class="index-match-enter-btn">
-                进入投注
-            </a>
-        </div>
-        <div class="index-match-box-main index-match-DOTA2 index-match-box">
-            <div class="index-match-title">暂无赛事</div>
-            <div class="index-match-time"> - </div>
-            <div class="index-match-team-container">
-                <div class="index-match-team-box">
-                    <div class="index-team-logo">
-                        <img class="match-home-logo" src="">
-                    </div>
-                    <div class="match-home-name">暂无</div>
-                </div>
-                <div class="txt-vs" style="margin-top: 0;">
-                    VS
-                </div>
-                <div class="index-match-team-box">
-                    <div class="index-team-logo">
-                        <img class="match-away-logo" src="">
-                    </div>
-                    <div class="match-away-name">暂无</div>
-                </div>
-            </div>
-            <a href="/games/esport.html" class="index-match-enter-btn">
-                进入投注
-            </a>
-        </div>
-        <div class="index-match-box-sub index-match-LOL index-match-box" style="background-image: url('https://8fzka.latinovelas.com/resources/dy//style/img/index/hot_event_bg_lol.png?cid=53606624d476e3a42d89db2aff7cba14');">
-            <div class="index-match-title">暂无赛事</div>
-            <div class="index-match-time"> - </div>
-            <div class="index-match-team-container">
-                <div class="index-match-team-box">
-                    <div class="index-team-logo">
-                        <img class="match-home-logo" src="">
-                    </div>
-                    <div class="match-home-name">暂无</div>
-                </div>
-                <div class="txt-vs">
-                    VS
-                </div>
-                <div class="index-match-team-box">
-                    <div class="index-team-logo">
-                        <img class="match-away-logo" src="">
-                    </div>
-                    <div class="match-away-name">暂无</div>
-                </div>
-            </div>
-            <a href="/games/esport.html" class="index-match-enter-btn">
-                进入投注
-            </a>
-        </div>
-    </div> -->
-    <div class="index-title-container">
+      </div>
+      <!--暂时没后端数据-->
+      <!-- <div class="index-title-container" style="margin-top: 50px;">
+          <div class="index-title-main">热门赛事</div>
+          <div class="index-title-sub">HOT EVENTS</div>
+      </div>
+      <div class="index-match-container">
+          <div class="index-match-box-sub index-match-CSGO index-match-box">
+              <div class="index-match-title">暂无赛事</div>
+              <div class="index-match-time"> - </div>
+              <div class="index-match-team-container">
+                  <div class="index-match-team-box">
+                      <div class="index-team-logo">
+                          <img class="match-home-logo" src="">
+                      </div>
+                      <div class="match-home-name">暂无</div>
+                  </div>
+                  <div class="txt-vs">
+                      VS
+                  </div>
+                  <div class="index-match-team-box">
+                      <div class="index-team-logo">
+                          <img class="match-away-logo" src="">
+                      </div>
+                      <div class="match-away-name">暂无</div>
+                  </div>
+              </div>
+              <a href="/games/esport.html" class="index-match-enter-btn">
+                  进入投注
+              </a>
+          </div>
+          <div class="index-match-box-main index-match-DOTA2 index-match-box">
+              <div class="index-match-title">暂无赛事</div>
+              <div class="index-match-time"> - </div>
+              <div class="index-match-team-container">
+                  <div class="index-match-team-box">
+                      <div class="index-team-logo">
+                          <img class="match-home-logo" src="">
+                      </div>
+                      <div class="match-home-name">暂无</div>
+                  </div>
+                  <div class="txt-vs" style="margin-top: 0;">
+                      VS
+                  </div>
+                  <div class="index-match-team-box">
+                      <div class="index-team-logo">
+                          <img class="match-away-logo" src="">
+                      </div>
+                      <div class="match-away-name">暂无</div>
+                  </div>
+              </div>
+              <a href="/games/esport.html" class="index-match-enter-btn">
+                  进入投注
+              </a>
+          </div>
+          <div class="index-match-box-sub index-match-LOL index-match-box" style="background-image: url('../assets/home/resources/dy//style/img/index/hot_event_bg_lol.png?cid=53606624d476e3a42d89db2aff7cba14');">
+              <div class="index-match-title">暂无赛事</div>
+              <div class="index-match-time"> - </div>
+              <div class="index-match-team-container">
+                  <div class="index-match-team-box">
+                      <div class="index-team-logo">
+                          <img class="match-home-logo" src="">
+                      </div>
+                      <div class="match-home-name">暂无</div>
+                  </div>
+                  <div class="txt-vs">
+                      VS
+                  </div>
+                  <div class="index-match-team-box">
+                      <div class="index-team-logo">
+                          <img class="match-away-logo" src="">
+                      </div>
+                      <div class="match-away-name">暂无</div>
+                  </div>
+              </div>
+              <a href="/games/esport.html" class="index-match-enter-btn">
+                  进入投注
+              </a>
+          </div>
+      </div> -->
+      <div class="index-title-container">
         <div class="index-title-main">场馆投注</div>
         <div class="index-title-sub">VENUES BETTING</div>
-    </div>
-    <div class="index-platform-container">
+      </div>
+      <div class="index-platform-container">
         <div class="flip-container">
-            <div class="flipper platform-live">
-                <div class="front">
-                    <div>真人娱乐</div>
-                    <div class="platform-title-sub">LIVE CASINO</div>
-                </div>
-                <div class="back">
-                    <div class="game-platform" @click="openGame('AG真人', 'live' , 'AG')" style="margin-top: 59px;margin-left: 46px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/ag.png">
-                        <div>AG真人</div>
-                    </div>
-                    <div class="game-platform" @click="openGame('欧博真人', 'live', 'ALLBET')" style="margin-left: 30px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/allbet.png">
-                        <div>欧博真人</div>
-                    </div>
-                    <div class="game-platform" @click="openGame('BBIN真人', 'live', 'BBINDY')" style="margin-left: 14px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/bbin.png">
-                        <div>BBIN真人</div>
-                    </div>
-                </div>
+          <div class="flipper platform-live">
+            <div class="front">
+              <div>真人娱乐</div>
+              <div class="platform-title-sub">LIVE CASINO</div>
             </div>
+            <div class="back">
+              <div
+                class="game-platform"
+                @click="openGame('AG真人', 'AG', '')"
+                style="margin-top: 59px; margin-left: 46px"
+              >
+                <img src="../assets/home/ag.png" />
+                <div>AG真人</div>
+              </div>
+              <div
+                class="game-platform"
+                @click="openGame('欧博真人', 'ALLBET', '')"
+                style="margin-left: 30px"
+              >
+                <img src="../assets/home/allbet.png" />
+                <div>欧博真人</div>
+              </div>
+              <div
+                class="game-platform"
+                @click="openGame('BBIN真人', 'BBINDY', 'bblive_lobby_pc')"
+                style="margin-left: 14px"
+              >
+                <img src="../assets/home/bbin.png" />
+                <div>BBIN真人</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="flip-container">
-            <div class="flipper platform-esports">
-                <div class="front">
-                    <div>电子竞技</div>
-                    <div class="platform-title-sub">ESPORTS</div>
-                </div>
-                <div class="back">
-                    <a class="game-platform" @click="openGame('东赢', 'onlyPlatform', 'TFGaming')" style="margin-top: 59px;margin-left: 46px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
-                        <div>东赢电竞</div>
-                    </a>
-                    <a class="game-platform" @click="openGame('小艾', 'onlyPlatform', 'XA')" style="margin-left: 30px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
-                        <div>小艾电竞</div>
-                    </a>
-                    <div class="game-platform" @click="openGame('IM', 'onlyPlatform', 'IM')"  style="margin-left: 14px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
-                        <div>IM电竞</div>
-                    </div>
-                </div>
+          <div class="flipper platform-esports">
+            <div class="front">
+              <div>电子竞技</div>
+              <div class="platform-title-sub">ESPORTS</div>
             </div>
+            <div class="back">
+              <a
+                class="game-platform"
+                @click="openGame('东赢', 'onlyPlatform', 'TFGaming')"
+                style="margin-top: 59px; margin-left: 46px"
+              >
+                <img src="../assets/home/dy.png" />
+                <div>东赢电竞</div>
+              </a>
+              <a
+                class="game-platform"
+                @click="openGame('小艾', 'onlyPlatform', 'XA')"
+                style="margin-left: 30px"
+              >
+                <img src="../assets/home/dy.png" />
+                <div>小艾电竞</div>
+              </a>
+              <div
+                class="game-platform"
+                @click="openGame('IM', 'onlyPlatform', 'IM')"
+                style="margin-left: 14px"
+              >
+                <img src="../assets/home/dy.png" />
+                <div>IM电竞</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="flip-container">
-            <div class="flipper platform-sport">
-                <div class="front">
-                    <div>体育竞技</div>
-                    <div class="platform-title-sub">SPORTS</div>
-                </div>
-                <div class="back">
-                    <a class="game-platform" @click="openGame('东赢体育', 'sport', 'DY')" style="margin-top: 118px;margin-left: 38px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
-                        <div>东赢体育</div>
-                    </a>
-                    <div class="game-platform" @click="openGame('IM体育', 'sport', 'IM')" style="margin-left: 22px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
-                        <div>IM体育</div>
-                    </div>
-                </div>
+          <div class="flipper platform-sport">
+            <div class="front">
+              <div>体育竞技</div>
+              <div class="platform-title-sub">SPORTS</div>
             </div>
+            <div class="back">
+              <a
+                class="game-platform"
+                @click="openGame('东赢体育', 'DY', '')"
+                style="margin-top: 59px; margin-left: 38px"
+              >
+                <img src="../assets/home/dy.png" />
+                <div>东赢体育</div>
+              </a>
+              <div
+                class="game-platform"
+                @click="openGame('IM体育', 'IM', '')"
+                style="margin-left: 22px"
+              >
+                <img src="../assets/home/dy.png" />
+                <div>IM体育</div>
+              </div>
+              <div
+                class="game-platform"
+                @click="openGame('CR体育', 'CR', '')"
+                style="margin-left: 6px"
+              >
+                <img src="../assets/home/dy.png" />
+                <div>CR体育</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="flip-container">
-            <div class="flipper platform-lottery">
-                <div class="front">
-                    <div>彩票投注</div>
-                    <div class="platform-title-sub">LOTTERY</div>
-                </div>
-                <div class="back">
-                    <div class="game-platform" @click="openGame('TCG彩票', 'lottery', 'TCG')" style="margin-top: 118px;margin-left: 38px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/tcg.png">
-                        <div>TCG彩票</div>
-                    </div>
-                    <!-- <div class="game-platform" @click="openGame('BBIN彩票', 'lottery', 'BBIN')" style="margin-left: 22px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/bbin.png">
-                        <div>BBIN彩票</div>
-                    </div> -->
-                </div>
+          <div class="flipper platform-lottery">
+            <div class="front">
+              <div>彩票投注</div>
+              <div class="platform-title-sub">LOTTERY</div>
             </div>
+            <div class="back">
+              <div
+                class="game-platform"
+                @click="openGame('TCG彩票', 'TCG', '')"
+                style="margin-top: 118px; margin-left: 38px"
+              >
+                <img src="../assets/home/tcg.png" />
+                <div>TCG彩票</div>
+              </div>
+              <div
+                class="game-platform"
+                @click="openGame('BBIN彩票', 'BBINDY', 'bbkeno_lobby_pc')"
+                style="margin-left: 22px"
+              >
+                <img src="../assets/home/bbin.png" />
+                <div>BBIN彩票</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="flip-container">
-            <div class="flipper platform-poker">
-                <div class="front">
-                    <div>棋牌游戏</div>
-                    <div class="platform-title-sub">POKER</div>
-                </div>
-                <div class="back">
-                    <div class="game-platform" @click="openGame('开元棋牌', 'poker', 'KYDY')" style="margin-top: 118px;margin-left: 38px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/ky.png">
-                        <div>开元棋牌</div>
-                    </div>
-                    <div class="game-platform" @click="openGame('大唐棋牌', 'poker', 'DT')"  style="margin-left: 22px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/tx.png">
-                        <div>大唐棋牌</div>
-                    </div>
-                </div>
+          <div class="flipper platform-poker">
+            <div class="front">
+              <div>棋牌游戏</div>
+              <div class="platform-title-sub">POKER</div>
             </div>
+            <div class="back">
+              <div
+                class="game-platform"
+                @click="openGame('开元棋牌', 'KYDY', 'ky_lobby')"
+                style="margin-top: 118px; margin-left: 38px"
+              >
+                <img src="../assets/home/ky.png" />
+                <div>开元棋牌</div>
+              </div>
+              <div
+                class="game-platform"
+                @click="openGame('大唐棋牌', 'DT', '')"
+                style="margin-left: 22px"
+              >
+                <img src="../assets/home/tx.png" />
+                <div>大唐棋牌</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="flip-container">
-            <div class="flipper platform-fish">
-                <div class="front">
-                    <div>电子游艺</div>
-                    <div class="platform-title-sub">FISHING</div>
-                </div>
-                <div class="back">
-                    <router-link class="game-platform" to="/fishing" style="margin-top: 118px;margin-left: 38px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/index_fish.png">
-                        <div>捕鱼</div>
-                    </router-link>
-                    <router-link class="game-platform" to="/slot" style="margin-left: 22px;">
-                        <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/index_slot.png">
-                        <div>老虎机</div>
-                    </router-link>
-                </div>
+          <div class="flipper platform-fish">
+            <div class="front">
+              <div>电子游艺</div>
+              <div class="platform-title-sub">FISHING</div>
             </div>
+            <div class="back">
+              <router-link
+                class="game-platform"
+                to="/fishing"
+                style="margin-top: 118px; margin-left: 38px"
+              >
+                <img src="../assets/home/index_fish.png" />
+                <div>捕鱼</div>
+              </router-link>
+              <router-link
+                class="game-platform"
+                to="/slot"
+                style="margin-left: 22px"
+              >
+                <img src="../assets/home/index_slot.png" />
+                <div>老虎机</div>
+              </router-link>
+            </div>
+          </div>
         </div>
-    </div>
-    <div class="czsj">
+      </div>
+      <div class="czsj">
         <div class="title-czsj-zh">重置世界，颠覆未来</div>
         <div class="title-czsj-en">CHANGE THE WORLD</div>
-    </div>
+      </div>
       <!-- <div class="avg-fox">
         <img
           class="game-title"
@@ -357,9 +425,7 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">
-            DY<br/>ADVANTAGE
-          </div>
+          <div class="avg-container-en">DY<br />ADVANTAGE</div>
           <div><span class="date_color sky_blue"></span>平均存款时间</div>
         </div>
         <div>
@@ -399,9 +465,7 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">
-            DY<br/>ADVANTAGE
-          </div>
+          <div class="avg-container-en">DY<br />ADVANTAGE</div>
           <div><span class="date_color blue"></span>平均取款时间</div>
         </div>
         <div>
@@ -444,9 +508,7 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">
-            DY<br/>ADVANTAGE
-          </div>
+          <div class="avg-container-en">DY<br />ADVANTAGE</div>
           <div><span class="date_color yellow"></span>合作支付平台</div>
         </div>
         <div>
@@ -489,9 +551,7 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">
-            DY<br/>ADVANTAGE
-          </div>
+          <div class="avg-container-en">DY<br />ADVANTAGE</div>
           <div><span class="date_color purple"></span>客户端下载数量</div>
         </div>
       </div>
@@ -499,9 +559,7 @@
         <div class="index-bottom-box">
           <div class="index-our-tc">
             <div>
-              <img
-                src="../assets/home/index_bottom_profession.png"
-              />
+              <img src="../assets/home/index_bottom_profession.png" />
             </div>
             <div>
               <div class="serve_tip">更专业</div>
@@ -512,9 +570,7 @@
           </div>
           <div class="index-our-tc">
             <div>
-              <img
-                src="../assets/home/index_bottom_safe.png"
-              />
+              <img src="../assets/home/index_bottom_safe.png" />
             </div>
             <div>
               <div class="serve_tip">更安全</div>
@@ -527,9 +583,7 @@
         <div class="index-bottom-box">
           <div class="index-our-tc">
             <div>
-              <img
-                src="../assets/home/index_bottom_easy.png"
-              />
+              <img src="../assets/home/index_bottom_easy.png" />
             </div>
             <div>
               <div class="serve_tip">更便捷</div>
@@ -541,9 +595,7 @@
           </div>
           <div class="index-our-tc">
             <div>
-              <img
-                src="../assets/home/index_bottom_fast.png"
-              />
+              <img src="../assets/home/index_bottom_fast.png" />
             </div>
             <div>
               <div class="serve_tip">更快速</div>
@@ -605,8 +657,8 @@
             >
           </div>
           <el-button class="knew" @click="isImportantAnnoucementModal = false"
-            >知道了</el-button
-          >
+            >知道了
+          </el-button>
           <el-button class="more" color="#434343"
             ><a href="/promotion.html" target="_self">查看详情</a></el-button
           >
@@ -632,17 +684,17 @@ export default defineComponent({
   components: {
     Vue3autocounter,
     GameModal
-},
+  },
   setup() {
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/'
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
     const gameMenu = ref(null);
     const banners = ref([
       {
-        src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png",
+        src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
       },
       {
-        src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg",
-      },
+        src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
+      }
     ]);
     const isImportantAnnoucementModal = ref(true);
     const openGame = (gameName, platType, gameCode) => {
@@ -651,13 +703,13 @@ export default defineComponent({
     const loadBanners = () => {
       loadPromoBanner("HOME").then((res) => {
         if (res.code === 0) {
-          banners.value = res.data
+          banners.value = res.data;
         }
-      })
-    }
+      });
+    };
     onMounted(() => {
       loadBanners();
-    })
+    });
     return {
       banners,
       isImportantAnnoucementModal,
@@ -665,7 +717,7 @@ export default defineComponent({
       openGame,
       imgURL
     };
-  },
+  }
 });
 </script>
 
@@ -673,15 +725,18 @@ export default defineComponent({
 .home {
   .banner-slider {
     width: 100%;
+
     .banner-container {
       .promo-bg {
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
+
         &.isDesktop {
           display: block;
           height: 100%;
         }
+
         &.isMobile {
           display: none;
           height: 100%;
@@ -690,13 +745,16 @@ export default defineComponent({
     }
   }
 }
+
 .demonstration {
   color: var(--el-text-color-secondary);
 }
+
 .el-carousel__item {
   color: #475669;
   margin: 0;
   text-align: center;
+
   img {
     height: unset;
     width: 100%;
@@ -706,17 +764,21 @@ export default defineComponent({
 .el-carousel__item:nth-child(2n) {
   background-color: #0e121b;
 }
+
 .index-container {
   background: url(../assets/home/index_bg_dsj.png) center 1280px no-repeat;
+
   .index-top-btn-container {
     display: flex;
     max-width: calc($maxwidth + 40px);
     justify-content: space-between;
     align-items: flex-start;
     margin: 30px auto;
+
     .index-operator-btn-box {
       display: flex;
       gap: 5px;
+
       .index-operator-btn {
         width: 240px;
         height: 90px;
@@ -730,22 +792,28 @@ export default defineComponent({
         padding-left: 26px;
         background-repeat: no-repeat;
         text-decoration: none;
+
         &.deposit {
           background-image: url(../assets/home/btn_bg_deposit.png);
         }
+
         &.download {
           background-image: url(../assets/home/btn_bg_download.png);
         }
+
         &.promo {
           background-image: url(../assets/home/btn_bg_promo.png);
         }
+
         &:hover {
           filter: brightness(1.2);
         }
       }
     }
+
     .index-platform-btn-box {
       display: flex;
+
       .index-platform-btn {
         width: 162px;
         height: 96px;
@@ -757,45 +825,50 @@ export default defineComponent({
         padding-top: 10px;
         font-size: 14px;
         text-decoration: none;
+
         &:hover {
           filter: brightness(1.2);
         }
       }
     }
   }
+
   .index-title-container {
     max-width: $maxwidth;
     margin: 0 auto;
+
     .index-title-main {
       font-size: 40px;
       line-height: 1.5;
       color: #4266ee;
       font-weight: 600;
     }
+
     .index-title-sub {
       font-size: 32px;
       color: #d0d6ed;
-
     }
   }
+
   .index-match-container {
-      font-size: 12px;
+    font-size: 12px;
     display: flex;
     align-items: center;
     color: #fff;
     max-width: $maxwidth;
     justify-content: space-between;
     margin: 0 auto;
-    .index-match-box {
-      
-    -webkit-transition: all .5s;
-    transition: all .5s;
-    &:hover {
-    -webkit-transform: scale(1.03);
-    transform: scale(1.03);
 
+    .index-match-box {
+      -webkit-transition: all 0.5s;
+      transition: all 0.5s;
+
+      &:hover {
+        -webkit-transform: scale(1.03);
+        transform: scale(1.03);
+      }
     }
-    }
+
     .index-match-box-main {
       width: 454px;
       text-align: center;
@@ -804,6 +877,7 @@ export default defineComponent({
       cursor: pointer;
       background-repeat: no-repeat;
       background-image: url(../assets/home/hot_event_bg_dota2.png);
+
       .index-match-team-container {
         width: 430px;
         height: 100px;
@@ -812,35 +886,41 @@ export default defineComponent({
         justify-content: center;
         align-items: center;
         background-image: url(../assets/home/hot_event_bg_team.png);
+
         .index-team-logo {
           margin: 0 auto 35px;
         }
+
         .index-match-team-box {
-            width: 160px;
-            height: 92px;
-            padding-top: 27px;
+          width: 160px;
+          height: 92px;
+          padding-top: 27px;
         }
       }
     }
+
     .index-match-box-sub {
       width: 408px;
       text-align: center;
       height: 457px;
       padding-top: 67px;
       cursor: pointer;
-      background-image: url('../assets/home/hot_event_bg_csgo.png');
+      background-image: url("../assets/home/hot_event_bg_csgo.png");
       background-repeat: no-repeat;
     }
+
     .index-match-title {
       font-size: 20px;
       margin-bottom: 10px;
     }
+
     .index-match-team-container {
       width: 254px;
       margin: 26px auto 114px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .index-team-logo {
         background-color: #f8f8f8;
         width: 65px;
@@ -848,104 +928,122 @@ export default defineComponent({
         border-radius: 50%;
         margin: 0 auto 15px;
       }
+
       .txt-vs {
-    width: 40px;
-    height: 25px;
-    background-color: #acb1bf;
-    border-radius: 12px;
-    line-height: 25px;
-    margin-top: -26px;
-}
+        width: 40px;
+        height: 25px;
+        background-color: #acb1bf;
+        border-radius: 12px;
+        line-height: 25px;
+        margin-top: -26px;
+      }
     }
+
     .index-match-enter-btn {
-        color: #fefefe;
-        width: 162px;
-        height: 42px;
-        background-color: #4765f3;
-        border-radius: 20px;
-        line-height: 42px;
-        font-size: 18px;
-        cursor: pointer;
-        margin: 0 auto;
-        display: block;
-        text-decoration: none;
+      color: #fefefe;
+      width: 162px;
+      height: 42px;
+      background-color: #4765f3;
+      border-radius: 20px;
+      line-height: 42px;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 0 auto;
+      display: block;
+      text-decoration: none;
     }
-    
   }
+
   .index-platform-container {
     position: relative;
     display: flex;
     justify-content: space-between;
     max-width: $maxwidth;
     margin: 60px auto;
+
     .flipper {
-      transition: .8s;
+      transition: 0.8s;
       transform-style: preserve-3d;
       position: relative;
       width: 228px;
       height: 545px;
       cursor: pointer;
+
       &.platform {
         &-live {
           .front {
             background-image: url(../assets/home/index_platform_detail_live.png);
           }
+
           .back {
             background-image: url(../assets/home/index_platform_detail_live_back.png);
           }
         }
+
         &-esports {
           .front {
             background-image: url(../assets/home/index_platform_detail_esports.png);
           }
+
           .back {
             background-image: url(../assets/home/index_platform_detail_esports_back.png);
           }
         }
+
         &-sport {
           .front {
             background-image: url(../assets/home/index_platform_detail_sport.png);
           }
+
           .back {
             background-image: url(../assets/home/index_platform_detail_sport_back.png);
           }
         }
+
         &-lottery {
           .front {
             background-image: url(../assets/home/index_platform_detail_lottery.png);
           }
+
           .back {
             background-image: url(../assets/home/index_platform_detail_lottery_back.png);
           }
         }
+
         &-fish {
           .front {
             background-image: url(../assets/home/index_platform_detail_fish.png);
           }
+
           .back {
             background-image: url(../assets/home/index_platform_detail_fish_back.png);
           }
         }
+
         &-poker {
           .front {
             background-image: url(../assets/home/index_platform_detail_poker.png);
           }
+
           .back {
             background-image: url(../assets/home/index_platform_detail_poker_back.png);
           }
         }
       }
     }
-    .back, .front {
+
+    .back,
+    .front {
       top: 0;
       left: 0;
       backface-visibility: hidden;
       position: absolute;
       -webkit-transform-style: preserve-3d;
       transform-style: preserve-3d;
-      -webkit-transition: .8s ease-in-out;
-      transition: .8s ease-in-out;
+      -webkit-transition: 0.8s ease-in-out;
+      transition: 0.8s ease-in-out;
     }
+
     .front {
       width: 228px;
       height: 422px;
@@ -958,10 +1056,12 @@ export default defineComponent({
       padding-top: 40px;
       background-repeat: no-repeat;
       background-position: center center;
+
       .platform-title-sub {
         font-size: 14px;
       }
     }
+
     .back {
       width: 270px;
       height: 503px;
@@ -972,54 +1072,61 @@ export default defineComponent({
       left: -22px;
       top: -21px;
       padding-top: 13px;
+
       .game-platform {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    text-decoration: none;
-    height: 118px;
-    width: 207px;
-    padding-top: 10px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    text-align: center;
-    cursor: pointer;
-    margin-left: 54px;
-    color: #fff;
-    &:hover {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none;
+        height: 118px;
+        width: 207px;
+        padding-top: 10px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        text-align: center;
+        cursor: pointer;
+        margin-left: 54px;
+        color: #fff;
+
+        &:hover {
           color: #fff;
-          background-image: url(../assets/home/index_platform_hover.png)
+          background-image: url(../assets/home/index_platform_hover.png);
+        }
       }
     }
-    }
-    .flip-container {
-    perspective: 1000px;
-    transform-style: preserve-3d;
-    &:hover {
-      .front {
-    transform: rotateY(180deg);
-    }
-    .back {
-      
-    transform: rotateY(0);
-    }
-    }
-}
 
-}
-.czsj {
-  text-align: center;
-  .title-czsj-zh {
-    font-size: 40px;
-    color: #4266ee;
+    .flip-container {
+      perspective: 1000px;
+      transform-style: preserve-3d;
+
+      &:hover {
+        .front {
+          transform: rotateY(180deg);
+        }
+
+        .back {
+          transform: rotateY(0);
+        }
+      }
+    }
   }
-  .title-czsj-en {
-    font-size: 32px;
-    color: #d0d6ed;
+
+  .czsj {
+    text-align: center;
+
+    .title-czsj-zh {
+      font-size: 40px;
+      color: #4266ee;
+    }
+
+    .title-czsj-en {
+      font-size: 32px;
+      color: #d0d6ed;
+    }
   }
-}
+
   // .avg-earth,
   // .avg-fox {
   //   background-repeat: no-repeat;
@@ -1137,11 +1244,13 @@ export default defineComponent({
     .avg-advantage {
       font-size: 30px;
     }
+
     .avg-active-bg {
       position: absolute;
       left: 3px;
       top: 0;
     }
+
     .avg-circle-container {
       position: absolute;
       width: 130px;
@@ -1149,6 +1258,7 @@ export default defineComponent({
       left: 0px;
       top: 0px;
     }
+
     .avg-time-nv-box {
       display: flex;
       justify-content: center;
@@ -1160,51 +1270,62 @@ export default defineComponent({
       position: relative;
       background-repeat: no-repeat;
     }
+
     .avg-circle,
     .avg-schedule {
       position: absolute;
       top: 0;
       overflow: hidden;
     }
+
     .avg-time-content-box {
-    width: 97px;
-    height: 95px;
+      width: 97px;
+      height: 95px;
       background-image: url(../assets/home/avg-time-container.png);
       background-size: cover;
-    line-height: 95px;
-    color: #fff;
+      line-height: 95px;
+      color: #fff;
     }
+
     .avg-schedule {
       width: 71px;
     }
+
     .avg-schedule-container {
       height: 115px;
     }
+
     .avg-circle,
     .avg-schedule-box {
       height: 135px;
     }
+
     .avg-schedule-left {
       left: 0;
     }
+
     .avg-schedule-right {
       left: 71px;
       -webkit-transform-origin: left;
       transform-origin: left;
     }
+
     .avg-circle {
       width: 135px;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
       border-radius: 50%;
-      border: 13px solid rgba(211,227,249,.8);
+      border: 13px solid rgba(211, 227, 249, 0.8);
     }
+
     .avg-circle-left {
       left: 2px;
     }
+
     .avg-circle-right {
       right: 5px;
     }
+
     .avg-animate-dep {
       -webkit-transform: rotate(125deg);
       transform: rotate(125deg);
@@ -1215,6 +1336,7 @@ export default defineComponent({
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
     }
+
     .avg-animate-withdraw {
       -webkit-transform: rotate(175deg);
       transform: rotate(175deg);
@@ -1225,6 +1347,7 @@ export default defineComponent({
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
     }
+
     .avg-animate-full {
       -webkit-transform: rotate(180deg);
       transform: rotate(180deg);
@@ -1235,6 +1358,7 @@ export default defineComponent({
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
     }
+
     .avg-animate-pay {
       -webkit-transform: rotate(75deg);
       transform: rotate(75deg);
@@ -1245,6 +1369,7 @@ export default defineComponent({
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
     }
+
     .avg-animate-down {
       -webkit-transform: rotate(115deg);
       transform: rotate(115deg);
@@ -1255,11 +1380,13 @@ export default defineComponent({
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
     }
+
     .avg-container-en {
       color: #3d72f6;
       line-height: 16px;
       font-size: 12px;
     }
+
     @keyframes avg-time-dep {
       0% {
         -webkit-transform: rotate(0);
@@ -1341,11 +1468,13 @@ export default defineComponent({
       }
     }
   }
+
   .index-bottom-container {
     text-align: left;
     padding-bottom: 83px;
     margin: 0 auto;
     max-width: $maxwidth;
+
     .index-bottom-box {
       display: flex;
       justify-content: space-between;
@@ -1353,23 +1482,26 @@ export default defineComponent({
       gap: 20px;
       margin: 10px auto;
       width: 100%;
+
       .index-our-tc {
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex: 1;
         background-color: #fcfcfc;
-        box-shadow: 2px 3px 10px 0 rgba(168,168,168,.28);
+        box-shadow: 2px 3px 10px 0 rgba(168, 168, 168, 0.28);
         border-radius: 6px;
         padding: 20px 60px;
         font-size: 18px;
         color: #4b71d2;
         min-height: 100px;
         gap: 20px;
+
         .index-tc-desc {
           color: #959dab;
           font-size: 14px;
         }
+
         img {
           display: block;
         }
@@ -1377,19 +1509,24 @@ export default defineComponent({
     }
   }
 }
+
 .imptann-modal {
   max-width: 600px;
+
   .el-dialog__body {
     padding: 50px 64px 40px;
+
     .inoticeContentList {
       margin: 0;
       padding: 0;
+
       .inotice-title-li {
         list-style: none;
         color: #474747;
         font-size: 16px;
         letter-spacing: 2px;
         line-height: 32px;
+
         &:before {
           content: "";
           display: inline-block;
@@ -1399,28 +1536,34 @@ export default defineComponent({
           border-radius: 50%;
           margin-right: 5px;
         }
+
         .inotice-modal-content-title {
           color: #0195ff;
         }
+
         .inotice-mod {
           padding: 0 22px;
         }
       }
     }
+
     .inotice-nomorecheck {
       position: absolute;
       clip: rect(0, 0, 0, 0);
+
       &:checked + .inotice-check-label::before {
         content: "\2713";
         color: #474747;
       }
     }
+
     .inotice-check-label {
       font-weight: 400;
       color: #474747;
       font-size: 16px;
       letter-spacing: 2px;
       line-height: 32px;
+
       &:before {
         content: "\a0";
         display: inline-block;
@@ -1436,6 +1579,7 @@ export default defineComponent({
         margin-right: 10px;
       }
     }
+
     .el-button {
       width: 156px;
       height: 44px;
@@ -1446,16 +1590,21 @@ export default defineComponent({
       letter-spacing: 2px;
       // line-height: 32px;
       cursor: pointer;
+
       &.knew {
         background-color: #fff;
         border: 1px solid #474747;
+
         > span {
           color: #474747;
         }
       }
+
       &.more {
-        background-image: linear-gradient(90deg,#19c6ff 0,#0094ff 100%),linear-gradient(#fff,#fff);
+        background-image: linear-gradient(90deg, #19c6ff 0, #0094ff 100%),
+          linear-gradient(#fff, #fff);
         border: 0;
+
         a {
           text-decoration: none;
           color: #fff;
