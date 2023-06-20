@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    <AcctBal :platforms="platforms" />-->
+    <!--    <AcctBal :platforms="platforms" />-->
     <div class="q-pa-md bg-white q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -18,7 +18,7 @@
         </div>
         <q-form>
           <q-select
-           hide-bottom-space
+            hide-bottom-space
             filled
             ref="cardRef"
             v-model="withdrawInfo.cardId"
@@ -42,8 +42,8 @@
             </template>
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
-                <q-item-section avatar v-if="scope.opt.bankIcon" >
-                  <img style="width: 30px;" :src="imgURL + scope.opt.bankIcon">
+                <q-item-section avatar v-if="scope.opt.bankIcon">
+                  <img style="width: 30px" :src="imgURL + scope.opt.bankIcon" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label
@@ -53,14 +53,22 @@
               </q-item>
             </template>
             <template v-slot:selected-item="scope">
-                <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
-                    >{{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
-                  </q-item-label>
-                </q-item-section>
+              <q-item-section avatar v-if="scope.opt.bankIcon">
+                <img
+                  style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                  :src="imgURL + scope.opt.bankIcon"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label
+                  style="
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  "
+                  >{{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
+                </q-item-label>
+              </q-item-section>
             </template>
           </q-select>
           <q-input
@@ -71,18 +79,33 @@
             color="white"
             :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
-              (val) => (val >= selectedWithdrawalMethod.withdrawMin) || ('请输入正确的提款金额'),
-              (val) => (val <= selectedWithdrawalMethod.withdrawMax) || '请输入正确的提款金额'
+              (val) =>
+                val >= selectedWithdrawalMethod.withdrawMin ||
+                '请输入正确的提款金额',
+              (val) =>
+                val <= selectedWithdrawalMethod.withdrawMax ||
+                '请输入正确的提款金额'
             ]"
           >
             <template v-slot:prepend>
-             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
+              <span style="font-size: 26px" class="text-bright">{{
+                store.currency.value
+              }}</span>
             </template>
             <template v-slot:append>
-             <span style="font-size:26px;" class="text-bright"><q-btn @click="updateWithdrawAmt" label="全额提款" color="dyblue" /></span>
+              <span style="font-size: 26px" class="text-bright"
+                ><q-btn
+                  @click="updateWithdrawAmt"
+                  label="全额提款"
+                  color="dyblue"
+              /></span>
             </template>
           </q-input>
-          <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md" style="border-bottom: 1px solid #434343;" v-show="selectedWithdrawalMethod">
+          <div
+            class="q-mt-md q-mb-md text-grey text-bold q-pb-md"
+            style="border-bottom: 1px solid #434343"
+            v-show="selectedWithdrawalMethod"
+          >
             <template
               v-if="
                 selectedWithdrawalMethod.withdrawMin &&
@@ -93,43 +116,60 @@
                 "单笔提款: " +
                 selectedWithdrawalMethod.withdrawMin +
                 "元 - " +
-                selectedWithdrawalMethod.withdrawMax + "元"
+                selectedWithdrawalMethod.withdrawMax +
+                "元"
               }}
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
               {{
                 "单日可提款: " +
-                selectedWithdrawalMethod.withdrawMaxAmount + "元"
+                selectedWithdrawalMethod.withdrawMaxAmount +
+                "元"
               }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
               {{
-                " 剩余: " +
-                selectedWithdrawalMethod.withdrawMaxTimes +
-                " 次"
+                " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次"
               }}
             </template>
           </div>
-          <div  v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-          <div class="q-my-md" style="display: flex; justify-content: center; align-items: center;">
-            <span style="flex: 1">实施汇率：</span>
-          <span style="flex:3" class="bg-neontb text-neontb q-pa-sm"
-            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.value }}</span
-          >
-          </div>
-          <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center;">
-            <span style="flex: 1">预计到帐：</span>
-            <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm"
-              >{{
-                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
-                ).toFixed(2)
-              }}
-              USDT</span>
-          </div>
-          <div class="q-mt-md text-neontb">
-                *特别说明：三方自动收取提币 1.00 USDT 手续费！
-          </div>
+          <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
+            <div
+              class="q-my-md"
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <span style="flex: 1">实施汇率：</span>
+              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm"
+                >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
+                {{ store.currency.value }}</span
+              >
+            </div>
+            <div
+              class="q-mt-md"
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <span style="flex: 1">预计到帐：</span>
+              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm"
+                >{{
+                  (
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
+                  ).toFixed(2)
+                }}
+                USDT</span
+              >
+            </div>
+            <div class="q-mt-md text-neontb">
+              *特别说明：三方自动收取提币 1.00 USDT 手续费！
+            </div>
           </div>
           <!-- <a-form-item
             class="select"
@@ -152,17 +192,19 @@
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
             <q-btn
-              style="width: 100%;"
+              style="width: 100%"
               class="q-mt-md fit"
               color="dyblue"
               @click="submitWithdraw"
               label="立即提款"
             />
           </div>
-          <div class="q-py-md text-red">
-
-                温馨提示：若提款失败请查看站内信提示的失败原因，感谢您的支持与理解！
-
+          <div class="q-py-md text-orange">
+            <div
+              v-if="selectedWithdrawalMethod.tips"
+              class="selected-tip"
+              v-html="selectedWithdrawalMethod.tips"
+            ></div>
           </div>
         </q-form>
       </div>
@@ -422,14 +464,18 @@ export default defineComponent({
 
     position: relative;
     cursor: pointer;
-    img { width: 100%;
-      padding: 5px; }
+    img {
+      width: 100%;
+      padding: 5px;
+    }
     &.active {
       // background: #212534;
       // color: #db7e42;
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
-      img {  border: 1px solid #33bcd4; }
+      img {
+        border: 1px solid #33bcd4;
+      }
     }
     .type-name {
       line-height: 15px;

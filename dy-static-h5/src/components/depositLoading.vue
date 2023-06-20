@@ -30,8 +30,8 @@ async function pDepo(deposit) {
   if (deposit.privilegeId) {
     obj.privilegeId = deposit.privilegeId
   }
-  await cashier.post("/session/payment/submit", qs.stringify(obj)).then((ret) => {
-    const res = ret.data
+  await cashier.post("/session/payment/submit", qs.stringify(obj)).then((res) => {
+    // const res = ret.data
     if (res.code === 0) {
       doIt(res).then(() => {
         if (!Platform.is.desktop) {
