@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md " style="overflow: hidden;background:#fff;margin:8px;">
+  <div class="q-pa-md" style="overflow: hidden; background: #fff; margin: 8px">
     <div class="node-wrapper">
       <Node
         :level="1"
@@ -7,6 +7,54 @@
         ref="paymentNode"
         @clicked="onSelect"
       />
+    </div>
+    <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
+      <div class="submit-message">
+        <div class="line">
+          <span>银行名称：</span>
+          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span
+          ><button
+            @blur="blurCode"
+            @click="copyMessage('0')"
+            class="common-btn"
+          >
+            {{ copybtntxt0 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>银行账号：</span>
+          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span
+          ><button
+            @blur="blurCode"
+            @click="copyMessage('1')"
+            class="common-btn"
+          >
+            {{ copybtntxt1 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>银行卡号：</span>
+          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span
+          ><button
+            @blur="blurCode"
+            @click="copyMessage('2')"
+            class="common-btn"
+          >
+            {{ copybtntxt2 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>存款金额：</span>
+          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span
+          ><button
+            @blur="blurCode"
+            @click="copyMessage('3')"
+            class="common-btn"
+          >
+            {{ copybtntxt3 }}
+          </button>
+        </div>
+      </div>
     </div>
     <div class="deposit-container">
       <q-form ref="depositForm" class="q-gutter-y-xs">
@@ -22,23 +70,38 @@
           padding="none"
         >
           <template v-slot:prepend>
-            <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
+            <span style="font-size: 26px" class="text-bright">{{
+              store.currency.value
+            }}</span>
           </template>
         </q-input>
 
-          <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
+        <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
           最低金额:
-          {{ calculatedMinDeposit ? calculatedMinDeposit + ' ' + (store.currency.value) : 0 }} <br />
+          {{
+            calculatedMinDeposit
+              ? calculatedMinDeposit + " " + store.currency.value
+              : 0
+          }}
+          <br />
           最高金额:
-          {{ activeMethod.depositMax ? activeMethod.depositMax + ' ' + (store.currency.value) : "No Limit" }}
-
+          {{
+            activeMethod.depositMax
+              ? activeMethod.depositMax + " " + store.currency.value
+              : "No Limit"
+          }}
         </div>
 
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
-            <span style="color: #000"
-              >1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.value }}</span
-            >
-          </div>
+        <div
+          v-if="isUSDT && activeMethod.currencyRate"
+          class="q-pb-md"
+          label="兑换率"
+        >
+          <span style="color: #000"
+            >1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            {{ store.currency.value }}</span
+          >
+        </div>
         <BankComponent
           v-show="selectedPayType && bankCardList.length"
           ref="payTypeClass"
@@ -64,16 +127,20 @@
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.name }}</q-item-label>
+                <q-item-label
+                  style="
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  "
+                  >{{ scope.opt.name }}</q-item-label
+                >
               </q-item-section>
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-md" v-html="activeMethod.msg">
-        </div>
-        <div class="q-mt-md">
-          更新个人信息的新帐户可以参与促销活动。
-        </div>
+        <div class="q-mt-md" v-html="activeMethod.msg"></div>
+        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
             color="brightbtn fit"
@@ -90,26 +157,24 @@
       <q-card-section class="q-mb-md">
         您已被重定向到您的特定银行以继续进行存款。<br /><br />
         入金成功后会反映这里。
-      </q-card-section
-      >
-      <q-btn @click="clearInfo" label="明白" color="dyblue"/>
+      </q-card-section>
+      <q-btn @click="clearInfo" label="明白" color="dyblue" />
     </q-card>
   </q-dialog>
 </template>
 
 <script setup id="DepositComponent">
-import {ref, reactive, onMounted, shallowRef, onBeforeUnmount} from "vue";
+import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import {cashier} from "boot/axios";
-import {Platform, useQuasar} from "quasar";
-import liff from '@line/liff';
-
+import { cashier } from "boot/axios";
+import { Platform, useQuasar } from "quasar";
+import liff from "@line/liff";
 
 var qs = require("qs");
 
-import {userStore} from "stores/index";
-import {useRouter} from "vue-router";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
 
 const store = userStore();
 const router = useRouter();
@@ -129,20 +194,57 @@ const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
 const isOpenFromAccount = ref(false);
 const isUSDT = ref(false);
+const isDisplay = ref(false);
+const submitMessage = ref([]);
+const subMsg0 = ref();
+const subMsg1 = ref();
+const subMsg2 = ref();
+const subMsg3 = ref();
+const copybtntxt0 = ref("复制");
+const copybtntxt1 = ref("复制");
+const copybtntxt2 = ref("复制");
+const copybtntxt3 = ref("复制");
+const copyMessage = (position) => {
+  let copyText = null;
+  copyText = eval(`subMsg${position}.value.innerText`);
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement("textarea");
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand("copy");
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt[position].value = "已复制";
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
+const blurCode = () => {
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt.forEach((element) => {
+    element.value = "复制";
+  });
+};
+
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
     "存款应介于 " +
-    calculatedMinDeposit.value +
-    " - " +
-    activeMethod.value.depositMax,
+      calculatedMinDeposit.value +
+      " - " +
+      activeMethod.value.depositMax,
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
     "存款应介于 " +
-    calculatedMinDeposit.value +
-    " - " +
-    activeMethod.value.depositMax
+      calculatedMinDeposit.value +
+      " - " +
+      activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -158,7 +260,7 @@ const checkAmount = reactive({
 });
 
 const $q = useQuasar();
-const calculatedMinDeposit = ref('');
+const calculatedMinDeposit = ref("");
 function initPay() {
   $q.loading.show({
     message: "加载银行信息。 别挂断..."
@@ -180,90 +282,102 @@ function initPay() {
     }
 
     // if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit')) {
-   if (!(((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()))) {
-
-        let isBacked = localStorage.getItem("isBacked");
-        isBacked = isBacked ? JSON.parse(isBacked) : false;
-        if (isBacked === true) {
-          isDeposited.value = true;
-        }
+    if (
+      !(
+        (Platform.is.desktop || Platform.is.webkit) &&
+        !Platform.is.capacitor &&
+        Platform.is.name !== "webkit" &&
+        !liff.isInClient()
+      )
+    ) {
+      let isBacked = localStorage.getItem("isBacked");
+      isBacked = isBacked ? JSON.parse(isBacked) : false;
+      if (isBacked === true) {
+        isDeposited.value = true;
+      }
     }
-      localStorage.removeItem("isBacked");
+    localStorage.removeItem("isBacked");
   });
 }
 
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
-  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
-    if (res.code === 0) {
-      privilegeList.value = res.data.privileges;
-      hasPrivilege.value = true;
-      unselectedPrivileges.value = [];
-      freePrivilege.value = null;
-      privilegeList.value.map((p) => {
-        if (p.payTypes.indexOf(val.payType) >= 0) {
-          if (p.triggerType == "FREE") {
-            freePrivilege.value = p;
-          } else {
-            unselectedPrivileges.value.push(p);
+  await cashier
+    .get(`/session/payment/${val.paymentId}/privileges`)
+    .then((res) => {
+      if (res.code === 0) {
+        privilegeList.value = res.data.privileges;
+        hasPrivilege.value = true;
+        unselectedPrivileges.value = [];
+        freePrivilege.value = null;
+        privilegeList.value.map((p) => {
+          if (p.payTypes.indexOf(val.payType) >= 0) {
+            if (p.triggerType == "FREE") {
+              freePrivilege.value = p;
+            } else {
+              unselectedPrivileges.value.push(p);
+            }
           }
-        }
-      });
-    } else {
-      hasPrivilege.value = false;
-      privilegeList.value = [];
-    }
-  });
+        });
+      } else {
+        hasPrivilege.value = false;
+        privilegeList.value = [];
+      }
+    });
 }
 
 function selectPayType(value) {
   if (value) {
-      selectedPayType.value = value.payType
-      if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
-        isUSDT.value = true;
-      } else {
-        isUSDT.value = false;
-      }
-      if (value.extra && value.extra.banks) {
-        bankCardList.value = value.extra.banks;
-      } else {
-        bankCardList.value = [];
-        form.bankId = null;
-      }
+    selectedPayType.value = value.payType;
+    if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
+      isUSDT.value = true;
+    } else {
+      isUSDT.value = false;
+    }
+    if (value.extra && value.extra.banks) {
+      bankCardList.value = value.extra.banks;
+    } else {
+      bankCardList.value = [];
+      form.bankId = null;
+    }
   }
 }
 
-const depositForm = ref(null)
+const depositForm = ref(null);
 
 async function onSelect(value) {
-  if(!Platform.is.android || !Platform.is.capacitor){
-    clearInfo()
+  isDisplay.value = false;
+  if (!Platform.is.android || !Platform.is.capacitor) {
+    clearInfo();
   }
   if (liff.isInClient()) {
-    clearInfo()
+    clearInfo();
   }
-  depositAmtRef.value.resetValidation()
+  depositAmtRef.value.resetValidation();
   if (value) {
     if (value.group) {
       value.children.forEach((element) => {
         if (element.hasActive) {
           activeMethod.value = element;
-          checkPrivilege(element)
+          checkPrivilege(element);
         }
       });
     } else {
       activeMethod.value = value;
-      checkPrivilege(value)
+      checkPrivilege(value);
     }
-    checkMinDepositAmt()
+    checkMinDepositAmt();
   }
 }
 function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
-    calculatedMinDeposit.value = activeMethod.value.depositMin
+    calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin)
+    calculatedMinDeposit.value = Math.max(
+      activeMethod.value.depositMin,
+      selectedPrivilege.value.depositMin
+    );
   }
 }
 
@@ -283,8 +397,8 @@ function clearInfo() {
   isDeposited.value = false;
   form.localAmount = null;
   selectedPrivilege.value = "";
-  depositForm.value.reset()
-  checkMinDepositAmt()
+  depositForm.value.reset();
+  checkMinDepositAmt();
 }
 
 const depositAmtRef = ref("");
@@ -293,55 +407,64 @@ async function confirmDeposit() {
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
   } else {
-    await cashier.get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`).then((d) => {
-      if (d.code === 11002) {
-        if (d.data && d.data.suggestion) {
-          form.localAmount = d.data.suggestion;
+    await cashier
+      .get(
+        `/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`
+      )
+      .then((d) => {
+        console.log("verify run");
+        if (d.code === 11002) {
+          if (d.data && d.data.suggestion) {
+            form.localAmount = d.data.suggestion;
+          }
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: d.message,
+            icon: "report_problem"
+          });
+        } else {
+          doDeposit();
         }
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: d.message,
-          icon: "report_problem"
-        });
-      } else {
-        doDeposit();
-      }
-
-    })
+      });
   }
 }
 
 function doDeposit() {
-    if (freePrivilege.value) {
-      if (selectedPrivilege.value) {
-        form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
-      } else {
-        form.privilegeId = "," + freePrivilege.value.id;
-      }
+  if (freePrivilege.value) {
+    if (selectedPrivilege.value) {
+      form.privilegeId =
+        selectedPrivilege.value.id + "," + freePrivilege.value.id;
     } else {
-      if (selectedPrivilege.value) {
-        form.privilegeId = selectedPrivilege.value.id
-      } else {
-        form.privilegeId = null
-      }
+      form.privilegeId = "," + freePrivilege.value.id;
     }
+  } else {
+    if (selectedPrivilege.value) {
+      form.privilegeId = selectedPrivilege.value.id;
+    } else {
+      form.privilegeId = null;
+    }
+  }
 
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
   } else {
-      form.paymentId = activeMethod.value.paymentId;
+    form.paymentId = activeMethod.value.paymentId;
 
     if (store.token) {
-      if (((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient())) {
-      // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
+      if (
+        (Platform.is.desktop || Platform.is.webkit) &&
+        !Platform.is.capacitor &&
+        Platform.is.name !== "webkit" &&
+        !liff.isInClient()
+      ) {
+        // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
         const newWin = window.open(`/depositLoading`, "Bank");
         newWin.localStorage.setItem("formDetails", JSON.stringify(form));
       } else {
         localStorage.setItem("formDetails", JSON.stringify(form));
-        router.push({path: "/depositLoading"});
+        router.push({ path: "/depositLoading" });
       }
-
 
       window.addEventListener(
         "message",
@@ -350,7 +473,6 @@ function doDeposit() {
             if (event.data.msg === "success") {
               isDeposited.value = true;
               localStorage.setItem("isBacked", JSON.stringify(true));
-
             } else {
               $q.notify({
                 color: "negative",
@@ -361,10 +483,8 @@ function doDeposit() {
             }
           }
         },
-        {once: true}
+        { once: true }
       );
-
-
     }
     // cashier
     //   .get(
@@ -438,3 +558,40 @@ onMounted(() => {
   initPay();
 });
 </script>
+
+<style lang="scss">
+.submit-message {
+  width: calc(100% - 40px);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  height: auto;
+  gap: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  color: #000000;
+  .line {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    width: calc(100% - 30px);
+    align-items: center;
+    font-size: 16px;
+    align-items: center;
+    background: #dddddd;
+    padding: 15px;
+    span:first-child {
+      flex: 1;
+      color: #4669f8;
+    }
+    span.info {
+      flex: 3;
+    }
+    button {
+      width: 80px;
+    }
+  }
+}
+</style>

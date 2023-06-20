@@ -35,120 +35,23 @@ export default defineComponent({
         },
       ).then((res) => {
         console.log(res);
-        tableData.value= res.data.records;
+        // tableData.value= res.data.records;
+        tableData.value = res.data.records.map((record) => {
+            if (record.status === "PENDING") {
+              record.status = "支付中"; // Pending
+            } else if (record.status === "SUCCESS") {
+              record.status = "成功"; // Success
+            } else if (record.status === 'SUPPLEMENT_SUCCESS') {
+              record.status = '成功' // Supplement Success
+            } else if (record.status === 'CLOSED') {
+              record.status = '关闭' // Closed
+            }
+            return record;
+          });
 
       }).finally(()=>{
         visible.value = false;
       })
-
-
-      //HARDCODE.
-      // tableData.value = [
-      //   {
-      //     id: "1",
-      //     code: "金额",
-      //     depositAmount: "200",
-      //     depositType: "KDPay",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "2",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "3",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "WECHAT_CODE2",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "4",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "5",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "6",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "金额",
-      //     depositAmount: "200",
-      //     depositType: "KDPay",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "last",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      // ];
-
     };
     const tableHeaders = [
       {
