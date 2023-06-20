@@ -533,14 +533,11 @@ async function loadPayments() {
 function updateFinancialToCopy() {
   copy.financials = []
   copy.selectedLevel = []
-  var selected = searchCondition.financialLevel
   var totallevel = page.financials
   var all = { name: 'All', level: '-1' }
   copy.financials.push(all)
   for (let i = 0; i < totallevel.length; i++) {
-    if (totallevel[i].level !== selected) {
-      copy.financials.push(totallevel[i])
-    }
+    copy.financials.push(totallevel[i])
   }
 }
 

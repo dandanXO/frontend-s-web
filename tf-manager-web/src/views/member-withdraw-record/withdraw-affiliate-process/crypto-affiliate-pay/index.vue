@@ -280,13 +280,13 @@
         </el-form-item>
         <el-form-item :label="t('fields.withdrawAmount')" prop="withdrawAmount">
           <el-input
-            v-model="payForm.withdrawAmount"
+            v-model="payForm.localCurrencyAmount"
             style="width: 300px;"
             disabled
           />
           <el-button
             style="margin-left: 10px"
-            @click="copy(payForm.withdrawAmount, 'Withdraw Amount')"
+            @click="copy(payForm.localCurrencyAmount, 'Withdraw Amount')"
           >
             {{ t('fields.copy') }}
           </el-button>
@@ -696,7 +696,7 @@ const payForm = reactive({
   id: null,
   loginName: null,
   cardAccount: null,
-  withdrawAmount: null,
+  localCurrencyAmount: null,
   bankName: null,
   cardNumber: null,
   cardAddress: null,
@@ -936,7 +936,7 @@ function addToPayForm(memberWithdrawRecord) {
   payForm.id = memberWithdrawRecord.id
   payForm.loginName = memberWithdrawRecord.loginName
   payForm.cardAccount = memberWithdrawRecord.cardAccount
-  payForm.withdrawAmount = memberWithdrawRecord.withdrawAmount
+  payForm.localCurrencyAmount = memberWithdrawRecord.localCurrencyAmount
   payForm.bankName = memberWithdrawRecord.bankName
   payForm.cardNumber = memberWithdrawRecord.cardNumber
   payForm.cardAddress = memberWithdrawRecord.cardAddress
