@@ -175,7 +175,7 @@ export default defineComponent({
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLocaleString()}/slot/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
         });
         gameListData.value = data;
         gamePage.total = data.length;

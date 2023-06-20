@@ -575,7 +575,7 @@
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{
-                        scope.row.type
+                        scope.row.type === 1 ? '存款' : '提款'
                       }}</span>
                   </div>
                 </template>

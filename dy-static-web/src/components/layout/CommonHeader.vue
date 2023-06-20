@@ -24,7 +24,7 @@
         <div v-if="!store.token" class="right-contents">
           <a class="common-btn grey" @click="loginDialogVisible = true">登录</a>
           <a class="common-btn" @click="registerDialogVisible = true">开设账户</a>
-          <a class="common-link" @click="forgetPassDialogVisible = true">忘记密码？</a>
+          <a class="common-link" @click="forgetPassDialogVisible = true">忘记账号？</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -321,11 +321,11 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="forgetPassDialogVisible" title="忘记密码" width="50%" align-center style="max-width: 800px;">
+    <el-dialog v-model="forgetPassDialogVisible" title="忘记账号" width="50%" align-center style="max-width: 800px;">
       <span>
 
           <el-tabs>
-            <el-tab-pane label="邮箱找回密码">
+            <!-- <el-tab-pane label="邮箱找回密码">
               <p>方式：请输入您需找回登陆密码的用户名和预留邮箱地址</p>
               <el-form ref="loginRef" :rules="loginRules" :model="passForm" label-width="100" label-suffix=":"
                        style="width: 100%; max-width: 400px; margin: 50px auto;">
@@ -352,7 +352,7 @@
                 </el-form-item><el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
                                           @click="submitLogin">登录</el-button>
               </el-form>
-            </el-tab-pane>
+            </el-tab-pane> -->
             <el-tab-pane label="邮箱找回账号">
               <p>方式：请输入您的预留邮箱</p>
               <el-form ref="loginRef" :rules="loginRules" :model="passForm" label-width="100" label-suffix=":"
@@ -1103,11 +1103,15 @@ export default defineComponent({
                   store.loginPageVisible = false;
 
                   sessionStorage.removeItem("REFERRAL_CODE");
-                } else {
                   loginForm.loginName = null
                   loginForm.password = null
                   loginForm.captchaCode = null
+                } else {
+                  // loginForm.loginName = null
+                  // loginForm.password = null
+                  // loginForm.captchaCode = null
                   getCode();
+                  loadingBtn.value = false
                 }
               }).catch((error) => {
                 loadingBtn.value = false
@@ -1116,6 +1120,7 @@ export default defineComponent({
                 getCode();
           });
         });
+          loadingBtn.value = false
       })();
     };
 
