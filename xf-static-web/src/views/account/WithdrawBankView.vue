@@ -103,14 +103,11 @@
                 format="YYYY-MM-DD"
               />
             </el-form-item>
-          <el-form-item>
-            <el-button
-              class="common-btn"
-              @click="searchRecord()"
-            >
-            搜索
-            </el-button>
-          </el-form-item>
+            <el-form-item>
+              <el-button class="common-btn" @click="searchRecord()">
+                搜索
+              </el-button>
+            </el-form-item>
           </div>
         </el-form>
       </div>
@@ -121,18 +118,23 @@
           :row-key="(record) => record.bankName"
         ></el-table> -->
 
-          <el-table :data="dataSource" style="width: 100%">
-            <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title" />
-          </el-table>
-          <el-divider />
-          <el-pagination
-            @current-change="handleCurrentChange"
-            :total="pagination.totalPage"
-            :current-page="pagination.currentPage"
-            :page-size="pagination.pageSize"
-            :page-count="pagination.pageCount"
+        <el-table :data="dataSource" style="width: 100%">
+          <el-table-column
+            v-for="tbl in columns"
+            :key="tbl.key"
+            :prop="tbl.dataIndex"
+            :label="tbl.title"
           />
-          </div>
+        </el-table>
+        <el-divider />
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :total="pagination.totalPage"
+          :current-page="pagination.currentPage"
+          :page-size="pagination.pageSize"
+          :page-count="pagination.pageCount"
+        />
+      </div>
     </div>
     <el-dialog
       class="bankModal"
@@ -150,52 +152,64 @@
           prop="bankId"
           :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
         >
-         <el-row :gutter="20">
-          <el-col :span="6">
-            <el-select
-              placeholder="Bank type"
-              v-model="selectedBankType"
-              style="width: 100%"
-              @change="selectBankType"
-            >
-              <el-option v-for="bank in bankTypes"
-              :key="bank.value"
-              :value="bank.value"
-              :label="bank.text">
-                {{ bank.text }}
-              </el-option>
-            </el-select>
-          </el-col>
-          <el-col :span="18">
-            <el-select
-              class="select"
-              v-model="bankCardInfo.bankId"
-              placeholder="选择银行"
-              style="width: 100%"
-            >
-              <el-option v-for="b in banksList" :key="b.id" :label="b.name" :value="b.id">
-                <el-row style="align-items: center;" v-if="b.bankIcon" :gutter="10">
-                  <el-col :span="3">
-                    <img style="max-height: 25px; display: block; margin: 5px;" :src="imgURL + b.bankIcon" />
-                  </el-col>
-                  <el-col :span="21">
-                     {{ b.name }}
-                  </el-col>
-                </el-row>
-              </el-option>
-            </el-select>
-          </el-col>
-         </el-row>
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <el-select
+                placeholder="Bank type"
+                v-model="selectedBankType"
+                style="width: 100%"
+                @change="selectBankType"
+              >
+                <el-option
+                  v-for="bank in bankTypes"
+                  :key="bank.value"
+                  :value="bank.value"
+                  :label="bank.text"
+                >
+                  {{ bank.text }}
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="18">
+              <el-select
+                class="select"
+                v-model="bankCardInfo.bankId"
+                placeholder="选择银行"
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="b in banksList"
+                  :key="b.id"
+                  :label="b.name"
+                  :value="b.id"
+                >
+                  <el-row
+                    style="align-items: center"
+                    v-if="b.bankIcon"
+                    :gutter="10"
+                  >
+                    <el-col :span="3">
+                      <img
+                        style="max-height: 25px; display: block; margin: 5px"
+                        :src="imgURL + b.bankIcon"
+                      />
+                    </el-col>
+                    <el-col :span="21">
+                      {{ b.name }}
+                    </el-col>
+                  </el-row>
+                </el-option>
+              </el-select>
+            </el-col>
+          </el-row>
         </el-form-item>
 
         <!-- <el-form-item v-if="isVirtual" name="bankId" label="ชื่อธนาคาร">
           {{ bankName }}
         </el-form-item> -->
-        <el-form-item
-          >
+        <el-form-item>
           <el-input disabled v-model="bankCardInfo.cardAccount" />
-          </el-form-item
-        >
+        </el-form-item>
         <!-- <el-form-item prop="cardAccount" name="cardAccount">
           <el-input
             v-model="bankCardInfo.cardAccount"
@@ -203,10 +217,7 @@
           />
         </el-form-item> -->
         <el-form-item prop="cardNumber" name="cardNumber">
-          <el-input
-            v-model="bankCardInfo.cardNumber"
-            placeholder="银行卡号"
-          />
+          <el-input v-model="bankCardInfo.cardNumber" placeholder="银行卡号" />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress">
           <el-input
@@ -215,10 +226,7 @@
           />
         </el-form-item>
         <el-form-item class="txt-center">
-          <el-button
-            class="txt-center common-btn"
-            @click="submitBankCard"
-          >
+          <el-button class="txt-center common-btn" @click="submitBankCard">
             提交
           </el-button>
         </el-form-item>
@@ -555,7 +563,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-
 body {
   .bankModal {
     .el-dialog__body {
@@ -638,9 +645,11 @@ body {
 :deep(.ant-form-item.select .ant-form-item-control-input) {
   width: 100%;
 }
-:deep(.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector
-    .ant-select-selection-search-input) {
+:deep(
+    .ant-select-single:not(.ant-select-customize-input)
+      .ant-select-selector
+      .ant-select-selection-search-input
+  ) {
   height: 40px;
 }
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
@@ -703,8 +712,7 @@ body {
     filter: grayscale(0.3);
     transform: skewX(5deg);
     &.USDT {
-
-    background-image: url("../../assets/images/finance/download.png");
+      background-image: url("../../assets/images/finance/download.png");
     }
 
     &.active {

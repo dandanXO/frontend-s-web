@@ -12,24 +12,24 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                      v-model="searchForm.deposit.startDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.deposit.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                      v-model="searchForm.deposit.endDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.deposit.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item class="search">
                   <el-button
-                      type="success"
-                      class="common-btn"
-                      @click="searchRecord"
-                  >搜索
+                    type="success"
+                    class="common-btn"
+                    @click="searchRecord"
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -38,23 +38,23 @@
           <div class="unbind-record-wrapper">
             <el-table :data="dataState.deposit" :loading="loading">
               <template #empty>
-                <EmptyData/>
+                <EmptyData />
               </template>
 
               <el-table-column
-                  v-for="tbl in tableColumns.deposit"
-                  :key="tbl.key"
-                  :prop="tbl.dataIndex"
-                  :label="tbl.title"
+                v-for="tbl in tableColumns.deposit"
+                :key="tbl.key"
+                :prop="tbl.dataIndex"
+                :label="tbl.title"
               >
                 <template
-                    v-if="tbl.dataIndex === 'depositDate'"
-                    #default="scope"
+                  v-if="tbl.dataIndex === 'depositDate'"
+                  #default="scope"
                 >
                   <div style="display: flex; align-items: center">
                     <span style="margin-left: 10px">{{
-                        humanDatetime(scope.row.depositDate)
-                      }}</span>
+                      humanDatetime(scope.row.depositDate)
+                    }}</span>
                   </div>
                 </template>
 
@@ -62,21 +62,21 @@
                   <template v-if="scope.row.status === 'PENDING'">
                     <div style="display: flex; align-items: center">
                       <el-button
-                          class="common-btn"
-                          @click="openReminder(scope.row)"
-                      >催单
+                        class="common-btn"
+                        @click="openReminder(scope.row)"
+                        >催单
                       </el-button>
                     </div>
                   </template>
                 </template>
               </el-table-column>
             </el-table>
-            <el-divider/>
+            <el-divider />
             <el-pagination
-                @current-change="recordPage"
-                :total="pagination.total"
-                :current-page="searchForm[recordActive].current"
-                :page-size="searchForm[recordActive].size"
+              @current-change="recordPage"
+              :total="pagination.total"
+              :current-page="searchForm[recordActive].current"
+              :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -86,24 +86,24 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                      v-model="searchForm.turnover.startDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.turnover.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                      v-model="searchForm.turnover.endDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.turnover.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                      type="success"
-                      class="common-btn"
-                      @click="searchRecord"
-                  >搜索
+                    type="success"
+                    class="common-btn"
+                    @click="searchRecord"
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -135,33 +135,33 @@
 
             <el-table :data="dataState.turnover" :loading="loading">
               <template #empty>
-                <EmptyData/>
+                <EmptyData />
               </template>
 
               <el-table-column
-                  v-for="tbl in tableColumns.turnover"
-                  :key="tbl.key"
-                  :prop="tbl.dataIndex"
-                  :label="tbl.title"
+                v-for="tbl in tableColumns.turnover"
+                :key="tbl.key"
+                :prop="tbl.dataIndex"
+                :label="tbl.title"
               >
                 <template
-                    v-if="tbl.dataIndex === 'recordTime'"
-                    #default="scope"
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
                 >
                   <div style="display: flex; align-items: center">
                     <span style="margin-left: 10px">{{
-                        humanDatetime(scope.row.recordTime)
-                      }}</span>
+                      humanDatetime(scope.row.recordTime)
+                    }}</span>
                   </div>
                 </template>
               </el-table-column>
             </el-table>
-            <el-divider/>
+            <el-divider />
             <el-pagination
-                @current-change="recordPage"
-                :total="pagination.total"
-                :current-page="searchForm[recordActive].current"
-                :page-size="searchForm[recordActive].size"
+              @current-change="recordPage"
+              :total="pagination.total"
+              :current-page="searchForm[recordActive].current"
+              :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -171,24 +171,24 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                      v-model="searchForm.withdraw.startDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.withdraw.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                      v-model="searchForm.withdraw.endDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.withdraw.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                      type="success"
-                      class="common-btn"
-                      @click="searchRecord"
-                  >搜索
+                    type="success"
+                    class="common-btn"
+                    @click="searchRecord"
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -210,23 +210,23 @@
 
             <el-table :data="dataState.withdraw" :loading="loading">
               <template #empty>
-                <EmptyData/>
+                <EmptyData />
               </template>
 
               <el-table-column
-                  v-for="tbl in tableColumns.withdraw"
-                  :key="tbl.key"
-                  :prop="tbl.dataIndex"
-                  :label="tbl.title"
+                v-for="tbl in tableColumns.withdraw"
+                :key="tbl.key"
+                :prop="tbl.dataIndex"
+                :label="tbl.title"
               >
                 <template
-                    v-if="tbl.dataIndex === 'recordTime'"
-                    #default="scope"
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
                 >
                   <div style="display: flex; align-items: center">
                     <span style="margin-left: 10px">{{
-                        humanDatetime(scope.row.recordTime)
-                      }}</span>
+                      humanDatetime(scope.row.recordTime)
+                    }}</span>
                   </div>
                 </template>
 
@@ -234,9 +234,9 @@
                   <template v-if="scope.row.status === 'SETP_1'">
                     <div style="display: flex; align-items: center">
                       <el-button
-                          class="common-btn"
-                          @click="openReminder(scope.row)"
-                      >催单
+                        class="common-btn"
+                        @click="openReminder(scope.row)"
+                        >催单
                       </el-button>
                     </div>
                   </template>
@@ -244,12 +244,12 @@
               </el-table-column>
             </el-table>
 
-            <el-divider/>
+            <el-divider />
             <el-pagination
-                @current-change="recordPage"
-                :total="pagination.total"
-                :current-page="searchForm[recordActive].current"
-                :page-size="searchForm[recordActive].size"
+              @current-change="recordPage"
+              :total="pagination.total"
+              :current-page="searchForm[recordActive].current"
+              :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -320,24 +320,24 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                      v-model="searchForm.rebates.startDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.rebates.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                      v-model="searchForm.rebates.endDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.rebates.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                      type="success"
-                      class="common-btn"
-                      @click="searchRecord"
-                  >搜索
+                    type="success"
+                    class="common-btn"
+                    @click="searchRecord"
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -346,23 +346,23 @@
           <div class="unbind-record-wrapper">
             <el-table :data="dataState.rebates" :loading="loading">
               <template #empty>
-                <EmptyData/>
+                <EmptyData />
               </template>
 
               <el-table-column
-                  v-for="tbl in tableColumns.rebates"
-                  :key="tbl.key"
-                  :prop="tbl.dataIndex"
-                  :label="tbl.title"
+                v-for="tbl in tableColumns.rebates"
+                :key="tbl.key"
+                :prop="tbl.dataIndex"
+                :label="tbl.title"
               >
                 <template
-                    v-if="tbl.dataIndex === 'recordTime'"
-                    #default="scope"
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
                 >
                   <div style="display: flex; align-items: center">
                     <span style="margin-left: 10px">{{
-                        humanDatetime(scope.row.recordTime)
-                      }}</span>
+                      humanDatetime(scope.row.recordTime)
+                    }}</span>
                   </div>
                 </template>
               </el-table-column>
@@ -379,12 +379,12 @@
                 <span>{{ humanDatetime(text) }}</span>
               </template>
             </el-table>-->
-            <el-divider/>
+            <el-divider />
             <el-pagination
-                @current-change="recordPage"
-                :total="pagination.total"
-                :current-page="searchForm[recordActive].current"
-                :page-size="searchForm[recordActive].size"
+              @current-change="recordPage"
+              :total="pagination.total"
+              :current-page="searchForm[recordActive].current"
+              :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -398,16 +398,16 @@
               <div class="left">
                 <el-form-item label="平台">
                   <el-select
-                      allowClear
-                      style="width: 300px"
-                      v-model="searchForm.gameBetRecord.platform"
-                      placeholder="平台"
-                      @change="searchRecord"
+                    allowClear
+                    style="width: 300px"
+                    v-model="searchForm.gameBetRecord.platform"
+                    placeholder="平台"
+                    @change="searchRecord"
                   >
                     <el-option
-                        v-for="p in platformsList"
-                        :key="p.name"
-                        :value="p.name"
+                      v-for="p in platformsList"
+                      :key="p.name"
+                      :value="p.name"
                     >
                       {{ p.name }}
                     </el-option>
@@ -415,24 +415,24 @@
                 </el-form-item>
                 <el-form-item label="开始">
                   <el-date-picker
-                      v-model="searchForm.gameBetRecord.startDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.gameBetRecord.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                      v-model="searchForm.gameBetRecord.endDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.gameBetRecord.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                      type="success"
-                      class="common-btn"
-                      @click="searchRecord"
-                  >搜索
+                    type="success"
+                    class="common-btn"
+                    @click="searchRecord"
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -451,33 +451,33 @@
 
             <el-table :data="dataState.gameBetRecord" :loading="loading">
               <template #empty>
-                <EmptyData/>
+                <EmptyData />
               </template>
 
               <el-table-column
-                  v-for="tbl in tableColumns.gameBetRecord"
-                  :key="tbl.key"
-                  :prop="tbl.dataIndex"
-                  :label="tbl.title"
+                v-for="tbl in tableColumns.gameBetRecord"
+                :key="tbl.key"
+                :prop="tbl.dataIndex"
+                :label="tbl.title"
               >
                 <template
-                    v-if="tbl.dataIndex === 'recordTime'"
-                    #default="scope"
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
                 >
                   <div style="display: flex; align-items: center">
                     <span style="margin-left: 10px">{{
-                        humanDatetime(scope.row.recordTime)
-                      }}</span>
+                      humanDatetime(scope.row.recordTime)
+                    }}</span>
                   </div>
                 </template>
               </el-table-column>
             </el-table>
-            <el-divider/>
+            <el-divider />
             <el-pagination
-                @current-change="recordPage"
-                :total="pagination.total"
-                :current-page="searchForm[recordActive].current"
-                :page-size="searchForm[recordActive].size"
+              @current-change="recordPage"
+              :total="pagination.total"
+              :current-page="searchForm[recordActive].current"
+              :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -487,24 +487,24 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
-                      v-model="searchForm.reminderRecord.startDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.reminderRecord.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
-                      v-model="searchForm.reminderRecord.endDate"
-                      valueFormat="YYYY-MM-DD"
-                      placeholder=""
+                    v-model="searchForm.reminderRecord.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                      type="success"
-                      class="common-btn"
-                      @click="searchRecord"
-                  >搜索
+                    type="success"
+                    class="common-btn"
+                    @click="searchRecord"
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -513,41 +513,41 @@
           <div class="unbind-record-wrapper">
             <el-table :data="dataState.reminderRecord" :loading="loading">
               <template #empty>
-                <EmptyData/>
+                <EmptyData />
               </template>
 
               <el-table-column
-                  v-for="tbl in tableColumns.reminderRecord"
-                  :key="tbl.key"
-                  :prop="tbl.dataIndex"
-                  :label="tbl.title"
+                v-for="tbl in tableColumns.reminderRecord"
+                :key="tbl.key"
+                :prop="tbl.dataIndex"
+                :label="tbl.title"
               >
                 <template
-                    v-if="tbl.dataIndex === 'recordTime'"
-                    #default="scope"
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
                 >
                   <div style="display: flex; align-items: center">
                     <span style="margin-left: 10px">{{
-                        humanDatetime(scope.row.recordTime)
-                      }}</span>
+                      humanDatetime(scope.row.recordTime)
+                    }}</span>
                   </div>
                 </template>
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span style="margin-left: 10px">{{
-                        humanDatetime(scope.row.type)
-                      }}</span>
+                      humanDatetime(scope.row.type)
+                    }}</span>
                   </div>
                 </template>
               </el-table-column>
             </el-table>
-            <el-divider/>
+            <el-divider />
             <el-pagination
-                @current-change="recordPage"
-                :total="pagination.total"
-                :current-page="searchForm[recordActive].current"
-                :page-size="searchForm[recordActive].size"
+              @current-change="recordPage"
+              :total="pagination.total"
+              :current-page="searchForm[recordActive].current"
+              :page-size="searchForm[recordActive].size"
             />
           </div>
         </el-tab-pane>
@@ -584,22 +584,22 @@
       </el-modal> -->
 
       <el-dialog
-          v-model="reminderDialog"
-          title="催单"
-          width="50%"
-          align-center
-          style="max-width: 800px"
+        v-model="reminderDialog"
+        title="催单"
+        width="50%"
+        align-center
+        style="max-width: 800px"
       >
         <span>
           <el-form
-              ref="formRef"
-              :model="reminderForm"
-              :hide-required-mark="true"
-              name="basic"
-              autocomplete="off"
-              label-width="110"
-              label-suffix=":"
-              style="
+            ref="formRef"
+            :model="reminderForm"
+            :hide-required-mark="true"
+            name="basic"
+            autocomplete="off"
+            label-width="110"
+            label-suffix=":"
+            style="
               width: 100%;
               max-width: 400px;
               margin: 0px auto 0px;
@@ -608,38 +608,38 @@
             "
           >
             <el-form-item
-                tabindex="1"
-                label="Serial Number"
-                prop="serialNumber"
+              tabindex="1"
+              label="Serial Number"
+              prop="serialNumber"
             >
               <el-input
-                  v-model="reminderForm.orderNo"
-                  placeholder="Serial Number"
-                  disabled
+                v-model="reminderForm.orderNo"
+                placeholder="Serial Number"
+                disabled
               />
             </el-form-item>
 
             <el-form-item label="Image Upload" prop="photos">
-              <FileUpload @photo-response="getImageLink" ref="uploadFileRef"/>
+              <FileUpload @photo-response="getImageLink" ref="uploadFileRef" />
             </el-form-item>
 
             <el-form-item label="Remarks" prop="remarks">
               <el-input
-                  type="textarea"
-                  v-model="reminderForm.memberRemark"
-                  placeholder="Remarks"
-                  :rows="2"
-                  :autosize="{ minRows: 2, maxRows: 5 }"
+                type="textarea"
+                v-model="reminderForm.memberRemark"
+                placeholder="Remarks"
+                :rows="2"
+                :autosize="{ minRows: 2, maxRows: 5 }"
               />
             </el-form-item>
 
             <el-button
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 110px"
-                @click="submitReminder()"
-            >提交</el-button
+              size="large"
+              color="#3bafda"
+              class="common-btn"
+              style="margin-left: 110px"
+              @click="submitReminder()"
+              >提交</el-button
             >
           </el-form>
         </span>

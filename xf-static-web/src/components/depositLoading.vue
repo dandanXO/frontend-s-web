@@ -30,7 +30,7 @@ function pDepo(data) {
       else {
         window.opener.postMessage(
           {
-            msg: d.data.message
+            msg: d.data.message,
           },
           "*"
         );
@@ -40,7 +40,7 @@ function pDepo(data) {
     .catch((error) => {
       window.opener.postMessage(
         {
-          msg: error.message
+          msg: error.message,
         },
         "*"
       );
