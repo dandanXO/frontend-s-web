@@ -152,3 +152,7 @@ export const getMemberBalanceByLoginNameSite = (loginName, siteId) => {
 export const updateMemberType = (id, memberType, siteId) => {
   return https().request(`/member/${id}/memberType?_method=PUT`, Method.POST, { memberType: memberType, siteId: siteId }, ContentType.form);
 };
+
+export const unlockMember = (id, siteId) => {
+  return https().request(`/member/${id}/unlock?_method=PUT`, Method.POST, { id: id, siteId: siteId }, ContentType.form);
+};

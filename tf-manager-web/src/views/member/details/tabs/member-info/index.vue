@@ -65,6 +65,11 @@
           >
             {{ t('fields.updatePassword') }}
           </el-button>
+          <el-button type="info" size="mini" v-permission="['sys:member:unlock']"
+                     @click="unlock()"
+          >
+            {{ t('fields.unlockMember') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>
@@ -758,7 +763,8 @@ import {
   getMemberRealName,
   getMemberEmail,
   getMemberTelephone, normalMember, getAffiliateInfo,
-  updateMemberType
+  updateMemberType,
+  unlockMember
 } from "../../../../../api/member";
 import { getPlatformsBySite } from "../../../../../api/platform";
 import { selectIpLabelAll } from "../../../../../api/ip-label";
@@ -1337,6 +1343,15 @@ export default defineComponent({
       showDialog("UNMASK");
     }
 
+    async function unlock() {
+      await unlockMember(props.mbrId, site.id);
+      const data = await getMemberDetails(props.mbrId, site.id);
+      Object.keys({ ...data.data }).forEach(detailField => {
+        memberDetail[detailField] = data.data[detailField];
+      });
+      ElMessage({ message: t('message.unlockMemberSuccess'), type: "success" });
+    }
+
     onMounted(async () => {
       loading.accountInfo = true;
       loading.affiliateInfo = true;
@@ -1434,6 +1449,7 @@ export default defineComponent({
       userTypeForm,
       userTypeFormRules,
       editUserType,
+      unlock,
       t
     };
   }
