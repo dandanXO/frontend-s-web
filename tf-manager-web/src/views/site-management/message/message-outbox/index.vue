@@ -2,6 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left: 5px"
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY"
@@ -41,7 +56,7 @@
       </div>
     </div>
     <el-dialog :title="form.title" v-model="uiControl.dialogVisible" append-to-body width="600px">
-      <el-form ref="dialogForm" :model="form" :inline="true" size="small" label-width="50px">
+      <el-form v-if="uiControl.dialogType === 'VIEW'" ref="dialogForm" :model="form" :inline="true" size="small" label-width="50px">
         <el-row :gutter="20">
           <el-col :span="3">From</el-col>
           <el-col :span="21">{{ form.memberName }}</el-col>
@@ -52,6 +67,30 @@
           </el-col>
         </el-row>
         <div class="dialog-footer">
+          <el-button v-permission="['sys:outbox:reply']" v-if="form.memberName" @click="showDialog(form, 'REPLY')">{{ t('fields.reply') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+        </div>
+      </el-form>
+      <el-form v-else-if="uiControl.dialogType === 'REPLY'" ref="dialogForm" :model="form" :inline="true" size="small" label-width="50px">
+        <el-row :gutter="20">
+          <el-col :span="3">To</el-col>
+          <el-col :span="21">{{ form.memberName }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item prop="content">
+              <el-input
+                v-model="form.content"
+                :rows="8"
+                type="textarea"
+                :placeholder="t('fields.message')"
+                style="width: 540px"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <div class="dialog-footer">
+          <el-button @click="send()">{{ t('fields.send') }}</el-button>
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
         </div>
       </el-form>
@@ -64,7 +103,7 @@
       highlight-current-row
       tooltip-effect="light"
       @selection-change="handleSelectionChange"
-      @row-click="(row) => showDialog(row)"
+      @row-click="(row) => showDialog(row, 'VIEW')"
       :empty-text="t('fields.noData')"
     >
       <el-table-column type="selection" v-if="!hasRole(['SUB_TENANT'])" />
@@ -100,15 +139,25 @@
 
 <script setup>
 import { ElMessage, ElMessageBox } from "element-plus";
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { hasRole } from "../../../../utils/util";
 import { deleteMessageOutbox, getMessageOutbox } from "../../../../api/message-outbox";
 import { useI18n } from "vue-i18n";
+import { getSiteIdByName, getSiteListSimple } from "../../../../api/site";
+import { createSystemMessageTemplate } from "../../../../api/system-message-template";
+import { useStore } from '../../../../store';
+import { TENANT } from "../../../../store/modules/user/action-types";
 
 const { t } = useI18n();
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
 const dialogForm = ref(null);
-
+const siteList = reactive({
+  list: []
+});
 const uiControl = reactive({
+  dialogType: null,
   dialogVisible: false,
   removeBtn: true,
   receiptInputVisible: false,
@@ -120,35 +169,50 @@ const request = reactive({
   size: 30,
   current: 1,
   createTime: [],
-  memberName: null
+  memberName: null,
+  siteId: null
 });
 
 function resetQuery() {
   request.createTime = [];
   request.memberName = null;
+  request.siteId = null;
 }
 
 const form = reactive({
   memberName: [],
   title: null,
   content: null,
+  siteName: null
 });
 
 let chooseMessage = [];
 
-function showDialog(row) {
-  if (dialogForm.value) {
-    dialogForm.value.resetFields();
-  }
-  uiControl.dialogVisible = true;
-
-  nextTick(() => {
-    for (const key in row) {
-      if (Object.keys(form).find(k => k === key)) {
-        form[key] = row[key];
-      }
+function showDialog(row, type) {
+  if (type === 'VIEW') {
+    if (dialogForm.value) {
+      dialogForm.value.resetFields();
     }
-  });
+    uiControl.dialogVisible = true;
+
+    nextTick(() => {
+      for (const key in row) {
+        if (Object.keys(form).find(k => k === key)) {
+          form[key] = row[key];
+        }
+        console.log("row %O", row)
+      }
+    });
+    console.log(form)
+  } else if (type === 'REPLY') {
+    if (dialogForm.value) {
+      dialogForm.value.resetFields();
+    }
+    form.content = null;
+    form.title = 'RE: ' + form.title;
+    uiControl.dialogVisible = true;
+  }
+  uiControl.dialogType = type;
 }
 
 function handleSelectionChange(val) {
@@ -187,6 +251,11 @@ const page = reactive({
   records: []
 });
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+}
+
 async function loadMessageOutbox() {
   const requestCopy = { ...request };
   const query = {};
@@ -198,13 +267,45 @@ async function loadMessageOutbox() {
   if (request.createTime.length === 2) {
     query.createTime = request.createTime.join(",");
   }
+  if (request.siteId === null) {
+    const siteIdList = siteList.list.map(s => s.id);
+    query.siteId = siteIdList.join(',');
+  }
   const { data: ret } = await getMessageOutbox(query);
   page.pages = ret.pages;
   page.records = ret.records;
 }
 
-onMounted(() => {
-  loadMessageOutbox();
+function send() {
+  dialogForm.value.validate(async valid => {
+    if (valid) {
+      const item = {};
+      const arr = [];
+      const { data: id } = await getSiteIdByName(form.siteName);
+      item.siteId = id;
+      arr.push(form.memberName)
+      item.recipient = arr;
+      item.receiveType = 'MULTIPLE';
+      Object.entries(form).forEach(([k, v]) => {
+        if (k !== "siteName" && k !== "memberName") {
+          item[k] = v;
+        }
+      });
+      await createSystemMessageTemplate(item)
+      uiControl.dialogVisible = false
+      await loadMessageOutbox()
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+    }
+  })
+}
+
+onMounted(async() => {
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
+  await loadMessageOutbox();
 });
 
 function changePage(page) {
