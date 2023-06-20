@@ -185,7 +185,7 @@
               </a>
               <a
                 class="game-platform"
-                @click="openGame('小艾', 'onlyPlatform', 'XA')"
+                @click="openGame('小艾', 'onlyPlatform', 'IA')"
                 style="margin-left: 30px"
               >
                 <img src="../assets/home/dy.png" />

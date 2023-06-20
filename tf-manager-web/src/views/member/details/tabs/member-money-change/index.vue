@@ -89,15 +89,15 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="platformName"
+          prop="platformCode"
           :label="t('fields.platformName')"
           align="center"
           min-width="180"
         >
           <template #default="scope">
-            <span v-if="scope.row.platformName === null">-</span>
-            <span v-if="scope.row.platformName !== null">
-              {{ scope.row.platformName }}
+            <span v-if="scope.row.platformCode === null">-</span>
+            <span v-if="scope.row.platformCode !== null">
+              {{ scope.row.platformCode }}
             </span>
           </template>
         </el-table-column>

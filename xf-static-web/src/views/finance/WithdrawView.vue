@@ -6,35 +6,40 @@
 
     <div class="menu-title-container">
       <span class="menu-title"> 提款流程：</span>
-    <div class="account-content withdrawal">
-      <div class="flex-box">
-        <div class="step-item active">申请中
+      <div class="account-content withdrawal">
+        <div class="flex-box">
+          <div class="step-item active">申请中</div>
+          <div class="step-item">审核中</div>
+          <div class="step-item">支付中</div>
+          <div class="step-item">出款成功</div>
         </div>
-        <div class="step-item">审核中</div>
-        <div class="step-item">支付中</div>
-        <div class="step-item">出款成功</div>
+        <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
       </div>
-      <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
-    </div>
     </div>
     <div class="withdraw-form">
-        <el-form ref="formRef" label-width="150px" label-position="left" label-suffix=":" :model="withdrawInfo"
-        :rules="withdrawRules">
-          <el-form-item label="提款方式">
-            <div
-              v-for="(method, i) in withdrawalMethods"
-              :key="i"
-              class="txt-center withdraw-type-item"
-              @click="selectMethod(method, i)"
-              :class="{ active: i === activeItem }"
-            >
-              <span class="promo" v-if="method.recommended">{{
-                ("finance.withdraw.recommended")
-              }}</span>
-              <img :src="imgURL + method.icon" />
-              <div class="type-name">{{ method.name }}</div>
-            </div>
-          </el-form-item>
+      <el-form
+        ref="formRef"
+        label-width="150px"
+        label-position="left"
+        label-suffix=":"
+        :model="withdrawInfo"
+        :rules="withdrawRules"
+      >
+        <el-form-item label="提款方式">
+          <div
+            v-for="(method, i) in withdrawalMethods"
+            :key="i"
+            class="txt-center withdraw-type-item"
+            @click="selectMethod(method, i)"
+            :class="{ active: i === activeItem }"
+          >
+            <span class="promo" v-if="method.recommended">{{
+              "finance.withdraw.recommended"
+            }}</span>
+            <img :src="imgURL + method.icon" />
+            <div class="type-name">{{ method.name }}</div>
+          </div>
+        </el-form-item>
 
         <el-form-item
           class="helptxt"
@@ -42,22 +47,27 @@
           label="提款金额"
           name="amount"
         >
-        <el-row :gutter="10">
-          <el-col :span="12">
-            <el-input
-              class="form-input"
-              v-model="withdrawInfo.amount"
-              placeholder="提款金额"
-            ><template #append>{{ store.currency.label }}</template>
-            </el-input>
-          </el-col>
-          <el-col :span="12">
-            <span v-if="selectedWithdrawalMethod">
-              {{ `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label } - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label }`  }} <br>
-              {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label }, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`  }}
-            </span>
-          </el-col>
-        </el-row>
+          <el-row :gutter="10">
+            <el-col :span="12">
+              <el-input
+                class="form-input"
+                v-model="withdrawInfo.amount"
+                placeholder="提款金额"
+                ><template #append>{{ store.currency.label }}</template>
+              </el-input>
+            </el-col>
+            <el-col :span="12">
+              <span v-if="selectedWithdrawalMethod">
+                {{
+                  `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                }}
+                <br />
+                {{
+                  `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                }}
+              </span>
+            </el-col>
+          </el-row>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -77,19 +87,22 @@
           label="实时汇率"
         >
           <span style="color: #9bffd1"
-            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}</span
+            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
+            {{ store.currency.label }}</span
           >
         </el-form-item>
         <el-form-item
           class="select"
           prop="cardId"
           label="选择银行卡"
-          :rules="[{ required: true, message: '请选择银行卡', trigger: 'blur' }]"
+          :rules="[
+            { required: true, message: '请选择银行卡', trigger: 'blur' },
+          ]"
         >
           <el-select
             v-model="withdrawInfo.cardId"
             placeholder="选择银行卡"
-            style="width: 300px;"
+            style="width: 300px"
           >
             <el-option
               v-for="b in withdrawState.bankCardList"
@@ -120,7 +133,7 @@
             确定
           </el-button>
         </div>
-        </el-form>
+      </el-form>
     </div>
   </div>
 </template>
@@ -131,9 +144,13 @@ import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
+import { RiArrowRightSLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "WithdrawView",
+  components: {
+    RiArrowRightSLine
+  },
   setup() {
     const store = userStore();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
@@ -218,6 +235,7 @@ export default defineComponent({
                     withdrawState.bankCardList.push(element)
                   }
                 } else {
+                  console.log(selectedWithdrawalMethod.value.code)
                   if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
                     withdrawState.bankCardList.push(element)
                   }
@@ -297,7 +315,7 @@ export default defineComponent({
       overflow: auto;
     }
     .withdrawal {
-        margin: 10px 0;
+      margin: 10px 0;
       .flex-box {
         display: flex;
         justify-content: center;
@@ -326,9 +344,9 @@ export default defineComponent({
       border-left: 0;
       padding-left: 20px;
       font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &::before,
       &::after {
         content: "";
@@ -352,7 +370,8 @@ export default defineComponent({
       &.active {
         color: #ffffff;
         // background: #ffffff;
-        background-image: linear-gradient(90deg,#0ca9bc 0,#0a5e89 100%),linear-gradient(#45fdfb,#45fdfb);
+        background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%),
+          linear-gradient(#45fdfb, #45fdfb);
         border: 0;
         padding-left: 0px;
         &::after {
@@ -390,7 +409,7 @@ export default defineComponent({
         // border: 1px solid #ffd800;
         // color: #ffd800;
         img {
-          border: 1px solid #45FDFB;
+          border: 1px solid #45fdfb;
         }
       }
       .type-name {
@@ -554,14 +573,18 @@ export default defineComponent({
     color: #ffffff;
   }
 }
-:deep(.ant-form-item-has-error
-    .ant-input-affix-wrapper:hover, .ant-form-item-has-error
-    .ant-input-affix-wrapper:focus) {
+:deep(
+    .ant-form-item-has-error .ant-input-affix-wrapper:hover,
+    .ant-form-item-has-error .ant-input-affix-wrapper:focus
+  ) {
   background: #15141b;
 }
-:deep(.ant-form-item-has-error .ant-input, .ant-form-item-has-error
-    .ant-input-affix-wrapper, .ant-form-item-has-error
-    .ant-input:hover, .ant-form-item-has-error .ant-input-affix-wrapper:hover) {
+:deep(
+    .ant-form-item-has-error .ant-input,
+    .ant-form-item-has-error .ant-input-affix-wrapper,
+    .ant-form-item-has-error .ant-input:hover,
+    .ant-form-item-has-error .ant-input-affix-wrapper:hover
+  ) {
   background: #15141b;
 }
 </style>

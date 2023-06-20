@@ -43,6 +43,9 @@ export function sendForgetPasswordEmail(email) {
 export function verifyForgetPasswordEmail(results) {
   return server.REST.post("/otp/verifyForgetPasswordEmail", results);
 }
+export function findAccount(results) {
+  return server.REST.post("/otp/findAccount", results);
+}
 export function memberAccessLog(log) {
   return server.REST.post("/memberAccessLog", log);
 }
