@@ -64,7 +64,7 @@
         <el-row>
           <el-col>
           <div
-            v-if="selectedWithdrawalMethod.tips"
+            v-if="!isUSDT && selectedWithdrawalMethod.tips"
             class="selected-tip"
             v-html="selectedWithdrawalMethod.tips"
           ></div>

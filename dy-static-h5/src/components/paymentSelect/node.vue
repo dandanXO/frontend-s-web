@@ -310,8 +310,8 @@ $node-color: #45fefa;
     }
 
     &.node-group {
-      display: flex;
-      justify-content: flex-start;
+      // display: flex;
+      // justify-content: flex-start;
       align-items: center;
       gap: 10px;
       margin: 10px 0px;

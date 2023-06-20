@@ -31,7 +31,7 @@ export default defineComponent({
       let paramData = {
         "startDate": moment().add(-7, 'days').format("YYYY-MM-DD"),
         "endDate": moment().format("YYYY-MM-DD"),
-        "platform": "PTDY",
+        "platform": "",
         "memberId": store.id,
         "current": 1,
         "size": 10

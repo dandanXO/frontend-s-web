@@ -1050,6 +1050,8 @@ export default defineComponent({
 
       if (store.loginPageVisible) {
         loginDialogVisible.value = true
+      } else {
+        loginDialogVisible.value = false
       }
     });
 
@@ -1057,7 +1059,7 @@ export default defineComponent({
       if (store.loginPageVisible) {
         loginDialogVisible.value = true
       } else {
-        loginDialogVisible.value = true
+        loginDialogVisible.value = false
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });

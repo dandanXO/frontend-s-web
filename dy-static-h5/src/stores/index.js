@@ -8,7 +8,7 @@ const TOKEN_KEY = "TOKEN";
 export const userStore = defineStore("userStore", {
   state: () => {
     return {
-      id: 0,
+      id: "",
       profilePicture: "",
       displayName: "",
       nickName: "",

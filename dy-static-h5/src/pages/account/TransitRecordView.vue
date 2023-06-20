@@ -5,12 +5,12 @@
     </div>
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped">
-        <q-tab name="deposit" label="Deposit" />
-        <q-tab name="turnover" label="Profit" />
-        <q-tab name="withdraw" label="Withdraw" />
+        <q-tab name="deposit" label="存款记录" />
+        <q-tab name="turnover" label="转账记录" />
+        <q-tab name="withdraw" label="提款记录" />
         <!-- <q-tab name="transfer" label="โอน" /> -->
-        <q-tab name="rebates" label="Rebates" />
-        <q-tab name="gameBetRecord" label="Game bet record" />
+        <q-tab name="rebates" label="优惠记录" />
+        <q-tab name="gameBetRecord" label="投注记录" />
       </q-tabs>
       <q-separator />
       <q-tab-panels v-model="recordActive" animated>
@@ -33,7 +33,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -58,7 +58,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -71,7 +71,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="Search For"
+                label="搜索"
                 color="brand"
                 @click="searchRecord"
               />
@@ -113,7 +113,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -138,7 +138,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -151,7 +151,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="Search For"
+                label="搜索"
                 color="brand"
                 @click="searchRecord"
               />
@@ -193,7 +193,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -218,7 +218,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -231,7 +231,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="Search For"
+                label="搜索"
                 color="brand"
                 @click="searchRecord"
               />
@@ -273,7 +273,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -298,7 +298,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -311,7 +311,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="Search For"
+                label="搜索"
                 color="brand"
                 @click="searchRecord"
               />
@@ -356,7 +356,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -381,7 +381,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -394,7 +394,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="Search For"
+                label="搜索"
                 color="brand"
                 @click="searchRecord"
               />
@@ -432,7 +432,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -457,7 +457,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -475,7 +475,7 @@
                   filled
                   clearable
                   :options="platformsList"
-                  label="Platforms"
+                  label="平台"
                   color="white"
                   label-color="grey"
                   option-label="name"
@@ -497,7 +497,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -522,7 +522,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              label="关闭"
                               color="white"
                               flat
                             />
@@ -535,7 +535,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="Search For"
+                label="搜索"
                 color="brand"
                 @click="searchRecord"
               />
@@ -548,8 +548,8 @@
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
-          >          
-            
+          >
+
             <!-- <template v-slot:body-cell-actions="props">
               <q-td :props="props">
                 <q-btn color="deep-orange" @click="betDetails(props.row)" label="บันทึกการเดิมพัน"></q-btn>
@@ -566,7 +566,7 @@
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
-          >          
+          >
           </q-table>
       </q-dialog>
     </div>
@@ -629,7 +629,7 @@ const dataState = reactive({
 });
 const commonColumns = [
   {
-    label: "Serial Number",
+    label: "序列号",
     field: "serialNumber"
   }
 ];
@@ -637,16 +637,16 @@ const tableColumns = {
   deposit: [
     ...commonColumns,
     {
-      label: "Deposit amount",
+      label: "金额",
       field: "depositAmount"
     },
     {
-      label: "Status",
+      label: "状态",
       field: "status",
       name: "status"
     },
     {
-      label: "Deposit Date",
+      label: "存款日期",
       field: "depositDate",
       // slots: { customRender: "depositDate" }
     }
@@ -654,16 +654,16 @@ const tableColumns = {
   withdraw: [
     ...commonColumns,
     {
-      label: "Withdraw Amount",
+      label: "金额",
       field: "withdrawAmount"
     },
     {
-      label: "Status",
+      label: "状态",
       field: "status",
       name: "status"
     },
     {
-      label: "Withdrawal Date",
+      label: "提款日期",
       field: "withdrawDate",
       // slots: { customRender: "withdrawDate" }
     }
@@ -671,24 +671,24 @@ const tableColumns = {
   transfer: [
     ...commonColumns,
     {
-      label: "Type",
+      label: "转账类型",
       field: "type",
       key: "type",
       // slots: { customRender: "type" }
     },
     {
-      label: "Amount",
+      label: "金额",
       field: "amount",
       key: "withdrawAmount"
     },
     {
-      label: "Status",
+      label: "状态",
       field: "status",
       key: "status",
       // slots: { customRender: "status" }
     },
     {
-      label: "Transfer Date",
+      label: "转账日期",
       field: "transferDate",
       key: "transferDate",
       // slots: { customRender: "transferDate" }
@@ -697,15 +697,15 @@ const tableColumns = {
   rebates: [
     ...commonColumns,
     {
-      label: "Privilege Name",
+      label: "优惠名",
       field: "privilegeName"
     },
     {
-      label: "Amount",
+      label: "金额",
       field: "amount"
     },
     {
-      label: "Record Time",
+      label: "记录时间",
       field: "recordTime",
       // slots: { customRender: "recordTime" }
     }
@@ -713,73 +713,73 @@ const tableColumns = {
   turnover: [
     ...commonColumns,
     {
-      label: "Type",
+      label: "周转型",
       field: "type",
       name: "type"
     },
     {
-      label: "Amount",
+      label: "金额",
       field: "amount"
     },
     {
-      label: "Sub Type",
+      label: "周转亚型",
       field: "subType"
     },
     {
-      label: "Record Time",
+      label: "记录时间",
       field: "recordTime",
       // slots: { customRender: "recordTime" }
     }
   ],
   betRecord: [
     {
-      label: "Bet ID",
+      label: "下注 ID",
       field: "betId"
     },
     {
-      label: "Transaction ID",
+      label: "交易 ID",
       field: "transactionId"
     },
     {
-      label: "Platform",
+      label: "游戏平台",
       field: "platform"
     },
     {
-      label: "Bet",
+      label: "赌注",
       field: "bet"
     },
     {
-      label: "Payout",
+      label: "支出",
       field: "payout"
     },
     {
-      label: "Before Balance",
+      label: "余额前金额",
       field: "beforeBalance"
     },
     {
-      label: "After Balance",
+      label: "余额后金额",
       field: "afterBalance"
     },
     {
-      label: "Bet Status",
+      label: "投注状态",
       field: "betStatus"
     },
     {
-      label: "Game Type",
+      label: "游戏类型",
       field: "gameType"
     },
     {
-      label: "Bet Time",
+      label: "下注时间",
       field: "betTime",
       // slots: { customRender: "betTime" }
     },
     {
-      label: "Settle Time",
+      label: "结算时间",
       field: "settleTime",
       // slots: { customRender: "settleTime" }
     },
     {
-      label: "Result",
+      label: "结果",
       field: "result"
     },
   ],
@@ -793,19 +793,19 @@ const tableColumns = {
     //   field: "transactionId"
     // },
     {
-      label: "Game Name",
+      label: "游戏名称",
       field: "gameName"
     },
     {
-      label: "Platform",
+      label: "游戏平台",
       field: "platform"
     },
     {
-      label: "Bet",
+      label: "赌注",
       field: "bet"
     },
     {
-      label: "Payout",
+      label: "支出",
       field: "payout"
     },
     // {
@@ -821,7 +821,7 @@ const tableColumns = {
     //   field: "betStatus"
     // },
     {
-      label: "Game Type",
+      label: "游戏类型",
       field: "gameType"
     },
     {
@@ -1013,7 +1013,7 @@ export default defineComponent({
         }
       })
     }
-    
+
     return {
       recordActive,
       searchForm,
