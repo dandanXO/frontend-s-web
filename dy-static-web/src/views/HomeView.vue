@@ -1,25 +1,23 @@
 <template>
   <div class="home">
     <el-carousel class="banner-slider" height="25vw" arrow="always">
-      <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
+      <el-carousel-item
+        class="banner-container"
+        v-for="banner in banners"
+        :key="banner"
+      >
         <router-link :to="`/promotion?name=${banner.redirectUrl}`">
           <div
-              class="promo-bg isDesktop"
-              :style="
-                'background-image: url(' +
-                imgURL +
-                banner.desktopImageUrl +
-                ')'
-              "
+            class="promo-bg isDesktop"
+            :style="
+              'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
+            "
           ></div>
           <div
-              class="promo-bg isMobile"
-              :style="
-                'background-image: url(' +
-                imgURL +
-                banner.mobileImageUrl +
-                ')'
-              "
+            class="promo-bg isMobile"
+            :style="
+              'background-image: url(' + imgURL + banner.mobileImageUrl + ')'
+            "
           ></div>
         </router-link>
       </el-carousel-item>
@@ -30,20 +28,24 @@
           <router-link to="/center/deposit">
             <div class="index-operator-btn deposit">我要充值</div>
           </router-link>
-          <router-link to="/app" class="index-operator-btn download">下载APP</router-link>
-          <router-link to="/promotion" class="index-operator-btn promo">热门活动</router-link>
+          <router-link to="/app" class="index-operator-btn download"
+            >下载APP</router-link
+          >
+          <router-link to="/promotion" class="index-operator-btn promo"
+            >热门活动</router-link
+          >
         </div>
         <div class="index-platform-btn-box">
           <router-link class="index-platform-btn" to="/esports">
-            <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_esports.png">
+            <img src="../assets/home/index_icon_esports.png" />
             <div>电竞游戏</div>
           </router-link>
           <router-link class="index-platform-btn" to="/sports">
-            <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_sport.png">
+            <img src="../assets/home/index_icon_sport.png" />
             <div>体育竞猜</div>
           </router-link>
           <router-link class="index-platform-btn" to="/live-casino">
-            <img src="https://8fzka.latinovelas.com/resources/dy/style/img/index/index_icon_live.png">
+            <img src="../assets/home/index_icon_live.png" />
             <div>真人娱乐</div>
           </router-link>
         </div>
@@ -102,7 +104,7 @@
                   进入投注
               </a>
           </div>
-          <div class="index-match-box-sub index-match-LOL index-match-box" style="background-image: url('https://8fzka.latinovelas.com/resources/dy//style/img/index/hot_event_bg_lol.png?cid=53606624d476e3a42d89db2aff7cba14');">
+          <div class="index-match-box-sub index-match-LOL index-match-box" style="background-image: url('../assets/home/resources/dy//style/img/index/hot_event_bg_lol.png?cid=53606624d476e3a42d89db2aff7cba14');">
               <div class="index-match-title">暂无赛事</div>
               <div class="index-match-time"> - </div>
               <div class="index-match-team-container">
@@ -139,18 +141,28 @@
               <div class="platform-title-sub">LIVE CASINO</div>
             </div>
             <div class="back">
-              <div class="game-platform" @click="openGame('AG真人', 'AG' , '')"
-                   style="margin-top: 59px;margin-left: 46px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/ag.png">
+              <div
+                class="game-platform"
+                @click="openGame('AG真人', 'AG', '')"
+                style="margin-top: 59px; margin-left: 46px"
+              >
+                <img src="../assets/home/ag.png" />
                 <div>AG真人</div>
               </div>
-              <div class="game-platform" @click="openGame('欧博真人', 'ALLBET', '')" style="margin-left: 30px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/allbet.png">
+              <div
+                class="game-platform"
+                @click="openGame('欧博真人', 'ALLBET', '')"
+                style="margin-left: 30px"
+              >
+                <img src="../assets/home/allbet.png" />
                 <div>欧博真人</div>
               </div>
-              <div class="game-platform" @click="openGame('BBIN真人', 'BBINDY', 'bblive_lobby_pc')"
-                   style="margin-left: 14px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/bbin.png">
+              <div
+                class="game-platform"
+                @click="openGame('BBIN真人', 'BBINDY', 'bblive_lobby_pc')"
+                style="margin-left: 14px"
+              >
+                <img src="../assets/home/bbin.png" />
                 <div>BBIN真人</div>
               </div>
             </div>
@@ -163,17 +175,28 @@
               <div class="platform-title-sub">ESPORTS</div>
             </div>
             <div class="back">
-              <a class="game-platform" @click="openGame('东赢', 'onlyPlatform', 'TFGaming')"
-                 style="margin-top: 59px;margin-left: 46px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
+              <a
+                class="game-platform"
+                @click="openGame('东赢', 'onlyPlatform', 'TFGaming')"
+                style="margin-top: 59px; margin-left: 46px"
+              >
+                <img src="../assets/home/dy.png" />
                 <div>东赢电竞</div>
               </a>
-              <a class="game-platform" @click="openGame('小艾', 'onlyPlatform', 'XA')" style="margin-left: 30px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
+              <a
+                class="game-platform"
+                @click="openGame('小艾', 'onlyPlatform', 'XA')"
+                style="margin-left: 30px"
+              >
+                <img src="../assets/home/dy.png" />
                 <div>小艾电竞</div>
               </a>
-              <div class="game-platform" @click="openGame('IM', 'onlyPlatform', 'IM')" style="margin-left: 14px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
+              <div
+                class="game-platform"
+                @click="openGame('IM', 'onlyPlatform', 'IM')"
+                style="margin-left: 14px"
+              >
+                <img src="../assets/home/dy.png" />
                 <div>IM电竞</div>
               </div>
             </div>
@@ -186,17 +209,28 @@
               <div class="platform-title-sub">SPORTS</div>
             </div>
             <div class="back">
-              <a class="game-platform" @click="openGame('东赢体育', 'DY', '')"
-                 style="margin-top: 59px;margin-left: 38px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
+              <a
+                class="game-platform"
+                @click="openGame('东赢体育', 'DY', '')"
+                style="margin-top: 59px; margin-left: 38px"
+              >
+                <img src="../assets/home/dy.png" />
                 <div>东赢体育</div>
               </a>
-              <div class="game-platform" @click="openGame('IM体育', 'IM', '')" style="margin-left: 22px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
+              <div
+                class="game-platform"
+                @click="openGame('IM体育', 'IM', '')"
+                style="margin-left: 22px"
+              >
+                <img src="../assets/home/dy.png" />
                 <div>IM体育</div>
               </div>
-              <div class="game-platform" @click="openGame('CR体育', 'CR', '')" style="margin-left: 6px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/dy.png">
+              <div
+                class="game-platform"
+                @click="openGame('CR体育', 'CR', '')"
+                style="margin-left: 6px"
+              >
+                <img src="../assets/home/dy.png" />
                 <div>CR体育</div>
               </div>
             </div>
@@ -209,14 +243,20 @@
               <div class="platform-title-sub">LOTTERY</div>
             </div>
             <div class="back">
-              <div class="game-platform" @click="openGame('TCG彩票', 'TCG', '')"
-                   style="margin-top: 118px;margin-left: 38px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/tcg.png">
+              <div
+                class="game-platform"
+                @click="openGame('TCG彩票', 'TCG', '')"
+                style="margin-top: 118px; margin-left: 38px"
+              >
+                <img src="../assets/home/tcg.png" />
                 <div>TCG彩票</div>
               </div>
-              <div class="game-platform" @click="openGame('BBIN彩票', 'BBINDY', 'bbkeno_lobby_pc')"
-                   style="margin-left: 22px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/bbin.png">
+              <div
+                class="game-platform"
+                @click="openGame('BBIN彩票', 'BBINDY', 'bbkeno_lobby_pc')"
+                style="margin-left: 22px"
+              >
+                <img src="../assets/home/bbin.png" />
                 <div>BBIN彩票</div>
               </div>
             </div>
@@ -229,13 +269,20 @@
               <div class="platform-title-sub">POKER</div>
             </div>
             <div class="back">
-              <div class="game-platform" @click="openGame('开元棋牌', 'KYDY', 'ky_lobby')"
-                   style="margin-top: 118px;margin-left: 38px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/ky.png">
+              <div
+                class="game-platform"
+                @click="openGame('开元棋牌', 'KYDY', 'ky_lobby')"
+                style="margin-top: 118px; margin-left: 38px"
+              >
+                <img src="../assets/home/ky.png" />
                 <div>开元棋牌</div>
               </div>
-              <div class="game-platform" @click="openGame('大唐棋牌', 'DT', '')" style="margin-left: 22px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/tx.png">
+              <div
+                class="game-platform"
+                @click="openGame('大唐棋牌', 'DT', '')"
+                style="margin-left: 22px"
+              >
+                <img src="../assets/home/tx.png" />
                 <div>大唐棋牌</div>
               </div>
             </div>
@@ -248,12 +295,20 @@
               <div class="platform-title-sub">FISHING</div>
             </div>
             <div class="back">
-              <router-link class="game-platform" to="/fishing" style="margin-top: 118px;margin-left: 38px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/index_fish.png">
+              <router-link
+                class="game-platform"
+                to="/fishing"
+                style="margin-top: 118px; margin-left: 38px"
+              >
+                <img src="../assets/home/index_fish.png" />
                 <div>捕鱼</div>
               </router-link>
-              <router-link class="game-platform" to="/slot" style="margin-left: 22px;">
-                <img src="https://8fzka.latinovelas.com/resources/dy/./style/img/index/index_slot.png">
+              <router-link
+                class="game-platform"
+                to="/slot"
+                style="margin-left: 22px"
+              >
+                <img src="../assets/home/index_slot.png" />
                 <div>老虎机</div>
               </router-link>
             </div>
@@ -337,32 +392,32 @@
           <div class="avg-time-nv-box">
             <div class="avg-time-content-box">
               <span class="avg-advantage avg-dep-box"
-              ><Vue3autocounter
+                ><Vue3autocounter
                   ref="counter"
                   :startAmount="0"
                   :endAmount="Math.floor(Math.random() * 31) + 50"
                   :duration="1"
                   separator=","
-                  :autoinit="true"/></span
+                  :autoinit="true" /></span
               >秒
             </div>
             <img
-                src="../assets/home/avg-time-active-bg.png"
-                class="avg-active-bg"
+              src="../assets/home/avg-time-active-bg.png"
+              class="avg-active-bg"
             />
             <div class="avg-circle-container">
               <div
-                  class="avg-schedule avg-schedule-container avg-schedule-left"
+                class="avg-schedule avg-schedule-container avg-schedule-left"
               >
                 <div
-                    id="avgDepAni"
-                    class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-dep"
+                  id="avgDepAni"
+                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-dep"
                 >
                   <div class="avg-circle avg-circle-left"></div>
                 </div>
               </div>
               <div
-                  class="avg-schedule avg-schedule-container avg-schedule-right"
+                class="avg-schedule avg-schedule-container avg-schedule-right"
               >
                 <div class="avg-schedule avg-schedule-box avg-schedule-left">
                   <div class="avg-circle avg-circle-right"></div>
@@ -370,41 +425,39 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">
-            DY<br/>ADVANTAGE
-          </div>
+          <div class="avg-container-en">DY<br />ADVANTAGE</div>
           <div><span class="date_color sky_blue"></span>平均存款时间</div>
         </div>
         <div>
           <div class="avg-time-nv-box">
             <div class="avg-time-content-box">
               <span class="avg-advantage avg-with-box"
-              ><Vue3autocounter
+                ><Vue3autocounter
                   ref="counter"
                   :startAmount="0"
                   :endAmount="Math.floor(Math.random() * 31) + 70"
                   :duration="2"
                   separator=","
-                  :autoinit="true"/></span
+                  :autoinit="true" /></span
               >秒
             </div>
             <img
-                src="../assets/home/avg-time-active-bg.png"
-                class="avg-active-bg"
+              src="../assets/home/avg-time-active-bg.png"
+              class="avg-active-bg"
             />
             <div class="avg-circle-container">
               <div
-                  class="avg-schedule avg-schedule-container avg-schedule-left"
+                class="avg-schedule avg-schedule-container avg-schedule-left"
               >
                 <div
-                    id="avgWithdrawAni"
-                    class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-withdraw"
+                  id="avgWithdrawAni"
+                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-withdraw"
                 >
                   <div class="avg-circle avg-circle-left"></div>
                 </div>
               </div>
               <div
-                  class="avg-schedule avg-schedule-container avg-schedule-right"
+                class="avg-schedule avg-schedule-container avg-schedule-right"
               >
                 <div class="avg-schedule avg-schedule-box avg-schedule-left">
                   <div class="avg-circle avg-circle-right"></div>
@@ -412,99 +465,93 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">
-            DY<br/>ADVANTAGE
-          </div>
+          <div class="avg-container-en">DY<br />ADVANTAGE</div>
           <div><span class="date_color blue"></span>平均取款时间</div>
         </div>
         <div>
           <div class="avg-time-nv-box">
             <div class="avg-time-content-box">
               <span class="avg-advantage avg-pay-box"
-              ><Vue3autocounter
+                ><Vue3autocounter
                   ref="counter"
                   :startAmount="0"
                   :endAmount="14"
                   :duration="3"
                   separator=","
-                  :autoinit="true"/></span
+                  :autoinit="true" /></span
               >家
             </div>
             <img
-                src="../assets/home/avg-time-active-bg.png"
-                class="avg-active-bg"
+              src="../assets/home/avg-time-active-bg.png"
+              class="avg-active-bg"
             />
             <div class="avg-circle-container">
               <div
-                  class="avg-schedule avg-schedule-container avg-schedule-left"
+                class="avg-schedule avg-schedule-container avg-schedule-left"
               >
                 <div
-                    id="avgPayFullAni"
-                    class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full"
+                  id="avgPayFullAni"
+                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full"
                 >
                   <div class="avg-circle avg-circle-left"></div>
                 </div>
               </div>
               <div
-                  class="avg-schedule avg-schedule-container avg-schedule-right"
+                class="avg-schedule avg-schedule-container avg-schedule-right"
               >
                 <div
-                    id="avgPayAni"
-                    class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-pay"
+                  id="avgPayAni"
+                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-pay"
                 >
                   <div class="avg-circle avg-circle-right"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="avg-container-en">
-            DY<br/>ADVANTAGE
-          </div>
+          <div class="avg-container-en">DY<br />ADVANTAGE</div>
           <div><span class="date_color yellow"></span>合作支付平台</div>
         </div>
         <div>
           <div class="avg-time-nv-box">
             <div class="avg-time-content-box">
               <span class="avg-advantage avg-down-box"
-              ><Vue3autocounter
+                ><Vue3autocounter
                   ref="counter"
                   :startAmount="0"
                   :endAmount="90"
                   :duration="3"
                   separator=","
-                  :autoinit="true"/></span
+                  :autoinit="true" /></span
               >万
             </div>
             <img
-                src="../assets/home/avg-time-active-bg.png"
-                class="avg-active-bg"
+              src="../assets/home/avg-time-active-bg.png"
+              class="avg-active-bg"
             />
             <div class="avg-circle-container">
               <div
-                  class="avg-schedule avg-schedule-container avg-schedule-left"
+                class="avg-schedule avg-schedule-container avg-schedule-left"
               >
                 <div
-                    id="avgDownFullAni"
-                    class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full"
+                  id="avgDownFullAni"
+                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full"
                 >
                   <div class="avg-circle avg-circle-left"></div>
                 </div>
               </div>
               <div
-                  class="avg-schedule avg-schedule-container avg-schedule-right"
+                class="avg-schedule avg-schedule-container avg-schedule-right"
               >
                 <div
-                    id="avgDownAni"
-                    class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-down"
+                  id="avgDownAni"
+                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-down"
                 >
                   <div class="avg-circle avg-circle-right"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="avg-container-en">
-            DY<br/>ADVANTAGE
-          </div>
+          <div class="avg-container-en">DY<br />ADVANTAGE</div>
           <div><span class="date_color purple"></span>客户端下载数量</div>
         </div>
       </div>
@@ -512,9 +559,7 @@
         <div class="index-bottom-box">
           <div class="index-our-tc">
             <div>
-              <img
-                  src="../assets/home/index_bottom_profession.png"
-              />
+              <img src="../assets/home/index_bottom_profession.png" />
             </div>
             <div>
               <div class="serve_tip">更专业</div>
@@ -525,9 +570,7 @@
           </div>
           <div class="index-our-tc">
             <div>
-              <img
-                  src="../assets/home/index_bottom_safe.png"
-              />
+              <img src="../assets/home/index_bottom_safe.png" />
             </div>
             <div>
               <div class="serve_tip">更安全</div>
@@ -540,9 +583,7 @@
         <div class="index-bottom-box">
           <div class="index-our-tc">
             <div>
-              <img
-                  src="../assets/home/index_bottom_easy.png"
-              />
+              <img src="../assets/home/index_bottom_easy.png" />
             </div>
             <div>
               <div class="serve_tip">更便捷</div>
@@ -554,9 +595,7 @@
           </div>
           <div class="index-our-tc">
             <div>
-              <img
-                  src="../assets/home/index_bottom_fast.png"
-              />
+              <img src="../assets/home/index_bottom_fast.png" />
             </div>
             <div>
               <div class="serve_tip">更快速</div>
@@ -569,16 +608,16 @@
       </div>
     </div>
     <el-dialog
-        class="imptann-modal"
-        v-model="isImportantAnnoucementModal"
-        align-center
-        title="重要公告"
+      class="imptann-modal"
+      v-model="isImportantAnnoucementModal"
+      align-center
+      title="重要公告"
     >
       <div class="modal-body">
         <ul class="inoticeContentList">
           <li class="inotice-title-li">
             <span class="inotice-modal-content-title"
-            >邀请好友 双方有奖 三层奖金领不停</span
+              >邀请好友 双方有奖 三层奖金领不停</span
             >
             <div class="form-group inotice-mod">
               好友首存赠送奖金，周存赠送奖金，投注赠送奖金！
@@ -596,8 +635,8 @@
           </li>
         </ul>
         <div
-            class="form-group"
-            style="
+          class="form-group"
+          style="
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -607,35 +646,34 @@
         >
           <div class="form-check">
             <input
-                type="checkbox"
-                class="form-check-input inotice-nomorecheck"
-                id="inoticeNoMore"
+              type="checkbox"
+              class="form-check-input inotice-nomorecheck"
+              id="inoticeNoMore"
             />
             <label
-                class="form-check-label inotice-check-label"
-                for="inoticeNoMore"
-            >不再提醒</label
+              class="form-check-label inotice-check-label"
+              for="inoticeNoMore"
+              >不再提醒</label
             >
           </div>
           <el-button class="knew" @click="isImportantAnnoucementModal = false"
-          >知道了
-          </el-button
-          >
+            >知道了
+          </el-button>
           <el-button class="more" color="#434343"
-          ><a href="/promotion.html" target="_self">查看详情</a></el-button
+            ><a href="/promotion.html" target="_self">查看详情</a></el-button
           >
         </div>
       </div>
     </el-dialog>
   </div>
-  <GameModal ref="gameMenu"/>
+  <GameModal ref="gameMenu" />
 </template>
 
 <script>
 /* eslint-disable */
 import GameModal from "@/components/modal/GameModal.vue";
-import {defineComponent, ref, onMounted} from "vue";
-import {loadPromoBanner} from "@/api/index/promo";
+import { defineComponent, ref, onMounted } from "vue";
+import { loadPromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
 
@@ -648,15 +686,15 @@ export default defineComponent({
     GameModal
   },
   setup() {
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/'
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
     const gameMenu = ref(null);
     const banners = ref([
       {
-        src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png",
+        src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
       },
       {
-        src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg",
-      },
+        src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
+      }
     ]);
     const isImportantAnnoucementModal = ref(true);
     const openGame = (gameName, platType, gameCode) => {
@@ -665,13 +703,13 @@ export default defineComponent({
     const loadBanners = () => {
       loadPromoBanner("HOME").then((res) => {
         if (res.code === 0) {
-          banners.value = res.data
+          banners.value = res.data;
         }
-      })
-    }
+      });
+    };
     onMounted(() => {
       loadBanners();
-    })
+    });
     return {
       banners,
       isImportantAnnoucementModal,
@@ -679,7 +717,7 @@ export default defineComponent({
       openGame,
       imgURL
     };
-  },
+  }
 });
 </script>
 
@@ -809,7 +847,6 @@ export default defineComponent({
     .index-title-sub {
       font-size: 32px;
       color: #d0d6ed;
-
     }
   }
 
@@ -823,14 +860,12 @@ export default defineComponent({
     margin: 0 auto;
 
     .index-match-box {
-
-      -webkit-transition: all .5s;
-      transition: all .5s;
+      -webkit-transition: all 0.5s;
+      transition: all 0.5s;
 
       &:hover {
         -webkit-transform: scale(1.03);
         transform: scale(1.03);
-
       }
     }
 
@@ -870,7 +905,7 @@ export default defineComponent({
       height: 457px;
       padding-top: 67px;
       cursor: pointer;
-      background-image: url('../assets/home/hot_event_bg_csgo.png');
+      background-image: url("../assets/home/hot_event_bg_csgo.png");
       background-repeat: no-repeat;
     }
 
@@ -917,7 +952,6 @@ export default defineComponent({
       display: block;
       text-decoration: none;
     }
-
   }
 
   .index-platform-container {
@@ -928,7 +962,7 @@ export default defineComponent({
     margin: 60px auto;
 
     .flipper {
-      transition: .8s;
+      transition: 0.8s;
       transform-style: preserve-3d;
       position: relative;
       width: 228px;
@@ -998,15 +1032,16 @@ export default defineComponent({
       }
     }
 
-    .back, .front {
+    .back,
+    .front {
       top: 0;
       left: 0;
       backface-visibility: hidden;
       position: absolute;
       -webkit-transform-style: preserve-3d;
       transform-style: preserve-3d;
-      -webkit-transition: .8s ease-in-out;
-      transition: .8s ease-in-out;
+      -webkit-transition: 0.8s ease-in-out;
+      transition: 0.8s ease-in-out;
     }
 
     .front {
@@ -1057,7 +1092,7 @@ export default defineComponent({
 
         &:hover {
           color: #fff;
-          background-image: url(../assets/home/index_platform_hover.png)
+          background-image: url(../assets/home/index_platform_hover.png);
         }
       }
     }
@@ -1072,12 +1107,10 @@ export default defineComponent({
         }
 
         .back {
-
           transform: rotateY(0);
         }
       }
     }
-
   }
 
   .czsj {
@@ -1282,7 +1315,7 @@ export default defineComponent({
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
       border-radius: 50%;
-      border: 13px solid rgba(211, 227, 249, .8);
+      border: 13px solid rgba(211, 227, 249, 0.8);
     }
 
     .avg-circle-left {
@@ -1456,7 +1489,7 @@ export default defineComponent({
         justify-content: space-between;
         flex: 1;
         background-color: #fcfcfc;
-        box-shadow: 2px 3px 10px 0 rgba(168, 168, 168, .28);
+        box-shadow: 2px 3px 10px 0 rgba(168, 168, 168, 0.28);
         border-radius: 6px;
         padding: 20px 60px;
         font-size: 18px;
@@ -1568,7 +1601,8 @@ export default defineComponent({
       }
 
       &.more {
-        background-image: linear-gradient(90deg, #19c6ff 0, #0094ff 100%), linear-gradient(#fff, #fff);
+        background-image: linear-gradient(90deg, #19c6ff 0, #0094ff 100%),
+          linear-gradient(#fff, #fff);
         border: 0;
 
         a {
