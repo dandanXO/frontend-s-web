@@ -1281,7 +1281,9 @@ export default defineComponent({
       } else if (withdrawStatus === 'STEP_4') {
         return '自动支付' // Automatic Payment
       } else if (withdrawStatus === 'STEP_5') {
-        return '暂不处理' //Suspend
+        return '暂不处理' // Suspend
+      }  else if (withdrawStatus === 'AUTOPAY') {
+        return '自动支付' // Automatic Payment
       } else {
         return withdrawStatus
       }
@@ -1320,6 +1322,8 @@ export default defineComponent({
         return '小额转卡' // 小额转卡
       } else if (depositType === 'SPECIALPAY') {
         return '网银转账' // 网银转账
+      } else if (depositType === 'ALIPAY') {
+        return '支付宝转卡' // 支付宝转卡
       } else if (depositType === 'ALIPAYCODE') {
         return '支付宝' // 支付宝
       } else if (depositType === 'WECHATCODE') {

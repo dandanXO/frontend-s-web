@@ -354,11 +354,11 @@
               </el-form>
             </el-tab-pane> -->
             <el-tab-pane label="邮箱找回账号">
-              <p>方式：请输入您的预留邮箱</p>
-              <el-form ref="loginRef" :rules="loginRules" :model="passForm" label-width="100" label-suffix=":"
+              <p>方式：请输入您的注册邮箱</p>
+              <el-form ref="passRef" :rules="forgetPassRules" :model="passForm" label-width="100" label-suffix=":"
                        style="width: 100%; max-width: 400px; margin: 50px auto;">
-                <el-form-item tabindex="1" label="预留邮箱" prop="loginName">
-                  <el-input v-model="passForm.loginName" placeholder="输入预留邮箱"/>
+                <el-form-item tabindex="1" label="注册邮箱" prop="email">
+                  <el-input v-model="passForm.email" placeholder="输入注册邮箱"/>
                 </el-form-item>
                 <el-form-item tabindex="2" label="验证码" prop="captchaCode">
                   <el-row :gutter="10" style="justify-content: center; align-items: center;">
@@ -367,7 +367,7 @@
                           v-model="passForm.captchaCode"
                           label="验证码"
                           placeholder="验证码"
-                          @keyup.enter="submitLogin"
+                          @keyup.enter="submitForgetPass"
                       />
                     </el-col>
                     <el-col :span="12">
@@ -376,7 +376,7 @@
                   </el-row>
                 </el-form-item>
                 <el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
-                           @click="submitLogin">登录</el-button>
+                           @click="submitForgetPass">提交</el-button>
               </el-form>
             </el-tab-pane>
           </el-tabs>
@@ -445,7 +445,7 @@ import "vue3-carousel/dist/carousel.css";
 import {defineComponent, onMounted, ref, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
-import {getVerificationCode, register} from "@/api/index/login";
+import {getVerificationCode, register, findAccount} from "@/api/index/login";
 import {sendSms, getAnnouncement} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
 import {Vue3Marquee} from 'vue3-marquee';
@@ -837,10 +837,31 @@ export default defineComponent({
       ],
     };
     const passForm = reactive({
-      name: '',
+      email: '',
     })
+    
     const passRef = ref([])
+    const forgetPassRules = {
+      
+      email: [
+        {
+          required: true,
+          message: "请输入您的邮箱",
+          trigger: "blur",
+        },
+        {
+          type: "email",
+          message: "电子邮件地址无效",
+          trigger: "blur",
+        },
+        {
+          max: 50,
+          message: "长度应小于 50",
+          trigger: "blur",
+        },
+      ],
 
+    }
     const passRules = {
       loginName: [
         {
@@ -1067,11 +1088,20 @@ export default defineComponent({
           loginForm.codeId = res.data.id;
           regForm.codeId = res.data.id;
           captchaForm.codeId = res.data.id;
+          passForm.codeId = res.data.id
         }
       })
     };
     const verificationImg = ref("");
-
+    const submitForgetPass = () => {
+      passRef.value.validate().then(() => {
+        findAccount(passForm).then((res) => {
+          if (res.code === 0) {
+            ElMessage.success("您的帐号已经发送到注册邮箱");
+          }
+        })
+      });
+    }
     const submitLogin = () => {
       loadingBtn.value = true
       const fpPromise = FingerprintJS.load();
@@ -1298,6 +1328,8 @@ export default defineComponent({
       captchaForm,
       passRef,
       passRules,
+      forgetPassRules,
+      submitForgetPass,
       pwdStrength,
       resetRegForm,
       openGame,
