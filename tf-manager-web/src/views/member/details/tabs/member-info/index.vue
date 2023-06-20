@@ -30,18 +30,9 @@
               {{ t('fields.realName') }}
             </div>
           </template>
-          <span v-if="memberDetail.realName !== null">{{ memberDetail.realName }}</span>
+          <span v-if="memberDetail.realName !== null && memberDetail.dupName === 'red'" style="background:red">{{ memberDetail.realName }}</span>
+          <span v-else-if="memberDetail.realName !== null">{{ memberDetail.realName }}</span>
           <span v-if="memberDetail.realName === null">-</span>
-          <!--          <el-button-->
-          <!--            type="info"-->
-          <!--            size="mini"-->
-          <!--            style="float: right;"-->
-          <!--            v-permission="['sys:member:detail:unmask']"-->
-          <!--            @click="unmaskDetail('NAME')"-->
-          <!--            :disabled="memberDetail.realName === null"-->
-          <!--          >-->
-          <!--            {{ t('fields.show') }}-->
-          <!--          </el-button>-->
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>
@@ -408,7 +399,13 @@
                               class-name="member-context"
         >
           <span
-            v-if="memberDetail.regIp !== null"
+            v-if="memberDetail.regIp !== null && memberDetail.dupIp === 'red'"
+            :style="[selectedIpColor.registerIpColor !== null ? {color: selectedIpColor.registerIpColor}: {}]"
+          >
+            {{ memberDetail.regIp }}
+          </span>
+          <span
+            v-if="memberDetail.regIp !== null && memberDetail.dupIp === 'red'"
             :style="[selectedIpColor.registerIpColor !== null ? {color: selectedIpColor.registerIpColor}: {}]"
           >
             {{ memberDetail.regIp }}
@@ -889,6 +886,8 @@ export default defineComponent({
       site: "",
       siteId: 0,
       memberType: "",
+      dupName: "",
+      dupIp: ""
     });
 
     const affiliateDetail = reactive({
