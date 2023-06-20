@@ -531,6 +531,7 @@ export default {
     maxRebate: '最大返水额',
     receiveTime: '领取时间',
     receiveType: '领取模式',
+    recipient: '收件人',
     recordDate: '记录日期',
     recordTime: '记录时间',
     redeemedBy: '领取人',

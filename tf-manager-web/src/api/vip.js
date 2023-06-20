@@ -20,3 +20,7 @@ export const updateVip = (vip) => {
 export const deleteVip = (ids) => {
   return https().request(`/vip?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
+
+export const findLevelByVipName = (vipName, sid) => {
+  return https().request("/vip/vipName", Method.GET, { vipName: vipName, siteId: sid }, ContentType.form);
+};

@@ -531,6 +531,7 @@ export default {
     maxRebate: 'Max Rebate',
     receiveTime: 'Receive Time',
     receiveType: 'Receive Type',
+    recipient: 'Recipient',
     recordDate: 'Record Date',
     recordTime: 'Record Time',
     redeemedBy: 'Redeemed By',
