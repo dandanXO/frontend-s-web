@@ -1094,7 +1094,7 @@ export default defineComponent({
   name: "TransitRecordView",
   setup() {
     const searchRecord = (tab) => {
-      if (tab) {
+      if (tab && tab.props && tab.props.name) {
         recordActive.value = tab.props.name
       }
       // recordActive.value = key.props.name
@@ -1219,7 +1219,6 @@ export default defineComponent({
             ElMessage.success(`催单上传成功。`);
             reminderDialog.value = false;
             reminderForm.value = {}
-            uploadFileRef.value.clear()
           }
         })
       }

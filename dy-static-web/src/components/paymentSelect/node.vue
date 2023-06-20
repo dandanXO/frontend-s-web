@@ -203,9 +203,9 @@ $node-color: #4873f1;
   // margin-top: 10px;
   display: flex;
   grid-gap: 20px;
-  margin-top: 20px;
+  // margin-top: 20px;
   flex-wrap: wrap;
-  padding-bottom: 20px;
+  // padding-bottom: 20px;
 
   .payment-method-item {
     text-align: center;
@@ -269,13 +269,21 @@ $node-color: #4873f1;
       // font-weight: bold;
     }
     &.node-group {
-      display: flex;
-      justify-content: flex-start;
-      align-items:  center;
-      gap: 10px;
-    flex-wrap: wrap;
+    //   display: flex;
+    //   justify-content: flex-start;
+    //   align-items:  center;
+    //   gap: 10px;
+    // flex-wrap: wrap;
+      display: block;
       .account-title-container {
-        margin: 0 0 20px;
+        margin: 0 15px 0 10px;
+        font-weight: bold;
+        display: inline-block;
+        float: left;
+        vertical-align: bottom;
+        margin-top: 25px;
+        min-width: 100px;
+        text-align: right;
       }
       .node-text {
         gap: 5px;

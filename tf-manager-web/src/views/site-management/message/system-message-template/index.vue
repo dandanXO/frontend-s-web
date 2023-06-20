@@ -319,13 +319,9 @@ const handleSelect = item => {
     dynamicTags.value.push(item.value)
     const removed = list.members.splice(list.members.indexOf(item), 1)
     const removedArr = [...removed]
-    console.log(removedArr[0])
     selectionList.members.push(removedArr[0])
   }
   inputValue.value = ''
-
-  console.log(selectionList.members)
-  console.log(list.members)
 }
 
 const formRules = reactive({
@@ -365,15 +361,10 @@ function handleSiteChange() {
 
 function handleVipFilter() {
   dropdownList.vip = list.vips
-
-  console.log(list.vips)
-  console.log(dropdownList.vip)
-  console.log(selected.site)
   const newRecord = dropdownList.vip.filter(element => {
     return element.siteId === selected.site
   })
   dropdownList.vip = newRecord
-  console.log(dropdownList.vip)
 }
 
 function submit() {
