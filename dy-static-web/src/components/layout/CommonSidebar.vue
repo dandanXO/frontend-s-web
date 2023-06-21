@@ -11,7 +11,7 @@
             <RiCustomerServiceLine />
             <div style="margin-top: 15px;">客服中心</div>
             <div class="customer-right-content">
-                <div class="customer-content">
+                <div class="customer-content" @click.stop.prevent="store.openLiveChat()">
                     <RiCustomerServiceFill />
                     <span>24小时在线客服</span>
                 </div>
@@ -34,14 +34,14 @@
         </div>
         <div class="app-download customer-div">
             <a href="/download.html">
-                
+
                 <RiDownloadCloudLine />
                 <div class="remixicon-download-cloud-line"></div>
                 <div style="margin-top: 15px;">APP下载</div>
             </a>
         </div>
         <div class="back-top customer-div" @click="scrollToTop">
-                
+
                 <RiRocketLine />
             <div class="remixicon-rocket-line"></div>
             <div style="margin-top: 15px;">返回顶部</div>
@@ -52,6 +52,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { RiPaletteLine, RiCustomerServiceLine, RiCustomerServiceFill,RiMailFill, RiPhoneFill, RiDownloadCloudLine,RiRocketLine } from 'vue-remix-icons'
+import {userStore} from "@/store";
 
 export default defineComponent({
   components: {
@@ -64,8 +65,10 @@ export default defineComponent({
     const customerHovered = ref(false);
     const scrollToTop = () => {
         window.scroll({ behavior: 'smooth', left: 0, top: 0 })
-    }
+    };
+    const store = userStore();
     return {
+        store,
         customerHovered,
         scrollToTop
     }

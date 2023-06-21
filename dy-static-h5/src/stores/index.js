@@ -83,7 +83,7 @@ export const userStore = defineStore("userStore", {
             this.evip = exclusive.wap;
           }
 
-          this.unreadInboxMail = 16
+          this.unreadInboxMail = 0
           this.getBalance();
         } else {
           this.memberLogout();

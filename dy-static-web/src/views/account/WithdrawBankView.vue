@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">绑卡历史</span>
+      <span class="account-title">解绑银行卡记录</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
