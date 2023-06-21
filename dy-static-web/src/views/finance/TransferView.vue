@@ -101,7 +101,7 @@
         :rules="rules"
         :label-col="{ span: 4 }"
       >
-        <el-form-item ref="amount" name="amount">
+        <el-form-item ref="amount" prop="amount">
           <el-input
             v-model="transferInfo.amount"
             placeholder="金额"
@@ -271,10 +271,9 @@ export default defineComponent({
     const loadingTransfer = ref(false)
     const submitTransfer = () => {
       loadingTransfer.value = true
-      console.log(transferTypeIndex)
       if (transferTypeIndex.value === 1) {
         if (transferInfo.amount > transferInfo.currentAmt) {
-          ElMessage.error('Transfer amount is more than current amount', 4);
+          ElMessage.error('平台余额不足');
           loadingTransfer.value = false
           return
         }
@@ -298,21 +297,23 @@ export default defineComponent({
             loadingTransfer.value = false;
           });
         }).catch((err) => {
-            console.log(err.message);
+            console.log(err);
             loadingTransfer.value = false;
         });
+      
+      loadingTransfer.value = false
     };
     const formRef = ref();
     const rules = {
       amount: [
         {
           required: true,
-          message: "amount is required",
+          message: "请输入金额",
           trigger: "blur"
         },
         {
           pattern: "^([1-9][0-9]*)$",
-          message: "amount should be a positive number",
+          message: "金额应为正数",
           trigger: "change"
         },
       ]

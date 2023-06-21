@@ -69,6 +69,10 @@ export function confirmWithdraw(bci) {
   return server.REST.post("/session/withdraw/", bci);
 }
 
+export function confirmationOfWithdrawalReceived(bci) {
+  return server.REST.post("/session/withdraw/confirm", bci);
+}
+
 export function withdrawEntrance() {
   return server.REST.get("/session/withdraw/entrance");
 }

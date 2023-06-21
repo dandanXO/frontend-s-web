@@ -43,7 +43,7 @@
         </div>
       </div> -->
       <div>
-        <span class="bottom-button" @click="showDrawer">提款</span>
+        <span class="bottom-button" @click="showDrawer">存款</span>
       </div>
     </div>
     <el-drawer
@@ -55,7 +55,7 @@
         :style="{ position: 'absolute', overflow: 'hidden' }"
         @close="onClose"
         :closable="true"
-        title="快速提款"
+        title="快速存款"
     >
       <!-- <template #extra>
         <el-button style="margin-right: 8px" @click="onClose">Cancel</el-button>
