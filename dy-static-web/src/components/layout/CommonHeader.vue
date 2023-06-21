@@ -291,6 +291,12 @@
                   <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
                 </el-space>
             </el-form-item>
+            <el-form-item label="代理代码" prop="codeAffiliate">
+              <el-space>
+                <el-input v-if="!hasAffiliate" class="half" v-model="regForm.codeAffiliate" placeholder="输入代理代码"/>
+                <el-input v-else class="half" v-model="regForm.codeAffiliate" placeholder="输入代理代码" readonly disabled/>
+              </el-space>
+            </el-form-item>
           </el-form>
           <el-button class="common-btn" color="#3bafda" @click="resetRegForm(registerRef)">重新填写
           </el-button>
@@ -636,6 +642,7 @@ export default defineComponent({
     const loginRef = ref([])
     const mobileLoginRef = ref([])
     const captchaRef = ref([])
+    const hasAffiliate = ref(false);
 
     const loginRules = {
       loginName: [
@@ -898,6 +905,14 @@ export default defineComponent({
       ]
     };
 
+    const getAffiliateCode = () => {
+      const affCode = sessionStorage.getItem("AFFILIATE_CODE");
+      if (affCode) {
+        hasAffiliate.value = true
+        regForm.codeAffiliate = affCode;
+      }
+    }
+
     const onLogout = () => {
       store.memberLogout().then(() => {
         location.reload();
@@ -1039,6 +1054,7 @@ export default defineComponent({
       }
     }
     onMounted(() => {
+      getAffiliateCode();
       loadAnnouncement();
       getCode();
       getReferalCode();
@@ -1349,6 +1365,8 @@ export default defineComponent({
       announcementTabChange,
       announcementTypes,
       typeActive: '1',
+      getAffiliateCode,
+      hasAffiliate
     }
   }
 });

@@ -104,6 +104,11 @@ const routes = [
                         /* webpackChunkName: "depositLoading" */ "../components/depositLoading.vue"
                         ),
             },
+            {
+                path: "/agent/:affiliateCode",
+                name: "agentCode",
+                component: () => {},
+            }
         ]
     },
     // {
