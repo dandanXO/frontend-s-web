@@ -118,8 +118,8 @@ export const fromAffiliateToFail = async (ids) => {
 };
 
 export const fromAffiliateToConfirm = async (ids) => {
-	await https().httpClient.post('/memberWithdrawRecord/affiliateToConfirm?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
-  };
+  await https().httpClient.post('/memberWithdrawRecord/affiliateToConfirm?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
+};
 
 export const fromBeforePaidToPay = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/beforePaidToPay?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });

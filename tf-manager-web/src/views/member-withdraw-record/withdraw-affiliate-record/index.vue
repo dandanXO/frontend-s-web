@@ -445,7 +445,7 @@
               {{ t('fields.fail') }}
             </el-button>
             <el-button
-              v-if="scope.row.confirmStatus === '0' && hasPermission(['sys:withdraw:confirm'])"
+              v-if="scope.row.withdrawCode === 'BANK' && scope.row.confirmStatus === '0' && hasPermission(['sys:withdraw:confirm'])"
               size="mini"
               type="primary"
               @click="toConfirm(scope.row)"

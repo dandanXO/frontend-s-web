@@ -49,11 +49,14 @@ async function validateBank(value) {
 }
 const qs = require("qs");
 async function submitDeposit(deposit) {
+
   const obj = {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
-    paymentId: deposit.paymentId
+    paymentId: deposit.paymentId,
+    bankId: selectedBankId.value.id
   }
+
   if (deposit.privilegeId) {
     obj.privilegeId = deposit.privilegeId
   }
