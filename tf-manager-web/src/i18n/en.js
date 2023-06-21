@@ -41,7 +41,7 @@ export default {
     SENDING: 'Sending',
     WAITING_CALLBACK: 'Waiting Callback',
     PAYING: 'Paying'
-  },  
+  },
   withdrawConfirmStatus: {
     0: '未确认',
     1: '已到账',
