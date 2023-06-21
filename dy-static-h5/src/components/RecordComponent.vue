@@ -44,9 +44,6 @@
             <q-btn outline label="复制" size="sm" color="bright" />
           </div>
           <div v-if="recordType === 'withdraw'" class="buttons">
-            <!-- status: {{det.status}},
-                          currencyName: {{det.currencyName}},
-                          confirmStatus: {{det.confirmStatus}} -->
             <template
               v-if="
                 det.status === 'SUCCESS' &&
@@ -54,7 +51,13 @@
                 det.confirmStatus === 0
               "
             >
-              <q-btn @click="openWithdrawConfirm(det)" outline label="确认到账" size="sm" color="bright" />
+              <q-btn
+                @click="openWithdrawConfirmDialog(det)"
+                outline
+                label="确认到账"
+                size="sm"
+                color="bright"
+              />
             </template>
           </div>
         </q-card>
@@ -72,11 +75,22 @@
       </q-infinite-scroll>
     </div>
   </div>
+
+  <q-dialog width="100%" v-model="isConfirmWithdraw">
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+      <q-card-section class="q-mb-md">
+        系统提示<br /><br />
+        确认到账
+      </q-card-section>
+      <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue" />
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
 export default defineComponent({
   props: {
@@ -108,6 +122,10 @@ export default defineComponent({
   setup(props, { emit }) {
     const truncatedList = ref([]);
     const comList = ref({});
+    const $q = useQuasar();
+    const qs = require("qs");
+    const isConfirmWithdraw = ref(false);
+    const passDet = ref(null);
     const onLoad = (index, done) => {
       comList.value = props.list;
       setTimeout(() => {
@@ -121,97 +139,43 @@ export default defineComponent({
       }, 200);
     };
 
-    const openWithdrawConfirm = (record) => {
+    const openWithdrawConfirmDialog = (det) => {
+      isConfirmWithdraw.value = true;
+      passDet.value = det;
+    };
+
+    const openWithdrawConfirm = () => {
       const obj = {
-        id: record.id,
-        withdrawDate: record.withdrawDate
-      }
+        id: passDet.value.id,
+        withdrawDate: passDet.value.withdrawDate
+      };
 
-      api.post("/session/withdraw/confirm", obj)
-      .then(response => {
-        // Handle the response if needed
-        console.log(response);
-      })
+      api
+        .post("/session/withdraw/confirm", qs.stringify(obj))
+        .then((response) => {
+          // Handle the response
+          if (response.code === 0) {
+            isConfirmWithdraw.value = false;
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "已经确认到账",
+              icon: "check_circle_outline"
+            });
+          }
 
-      .catch(error => {
-        // Handle the error if needed
-        console.error(error);
-      });
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
 
+          // console.log(response);
+        })
 
-      // confirmationOfWithdrawalReceived(obj).then((res) => {
-      //   if (res.code === 0) {
-
-      //     ElMessageBox.alert('已经确认到账', {
-      //           // if you want to disable its autofocus
-      //           // autofocus: false,
-      //           title: '系统提示',
-      //           center: true,
-      //           confirmButtonText: '确认',
-      //           showClose: false,
-      //           buttonSize: 'large'
-      //       }).then(() => {
-      //         getTime()
-      //       })
-      //   }
-      // })
-    }
-
-
-
-    // const openWithdrawConfirm = (record) => {
-
-
-    //   const confirmData = {
-    //     id: record.id,
-    //     withdrawDate: record.withdrawDate
-    //   };
-
-    //   console.log(confirmData)
-
-    //   api.post("/session/withdraw/confirm", confirmData)
-    //   .then(response => {
-    //     // Handle the response if needed
-    //     console.log(response);
-    //   })
-
-    //   .catch(error => {
-    //     // Handle the error if needed
-    //     console.error(error);
-    //   });
-
-
-    //   // api.get("/session/member/gameBetRecord", {
-    //   //     params: paramData
-    //   //   },
-    //   // ).then((res) => {
-    //   //   console.log(res);
-    //   //   tableData.value= res.data.records;
-
-    //   // }).finally(()=>{
-    //   //   visible.value = false;
-    //   // })
-
-
-
-    //   // confirmationOfWithdrawalReceived(obj).then((res) => {
-    //   //   if (res.code === 0) {
-    //   //     // ElMessageBox.alert('已经确认到账', {
-    //   //     //       // if you want to disable its autofocus
-    //   //     //       // autofocus: false,
-    //   //     //       title: '系统提示',
-    //   //     //       center: true,
-    //   //     //       confirmButtonText: '确认',
-    //   //     //       showClose: false,
-    //   //     //       buttonSize: 'large'
-    //   //     //   }).then(() => {
-    //   //     //     getTime()
-    //   //     //   })
-
-    //   //     console.log("已经确认到账");
-    //   //   }
-    //   // });
-    // };
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
+    };
 
     return {
       humanDatetime(ts) {
@@ -223,7 +187,10 @@ export default defineComponent({
       onLoad,
       truncatedList,
       comList,
-      openWithdrawConfirm
+      openWithdrawConfirmDialog,
+      openWithdrawConfirm,
+      isConfirmWithdraw,
+      passDet
     };
   }
 });
