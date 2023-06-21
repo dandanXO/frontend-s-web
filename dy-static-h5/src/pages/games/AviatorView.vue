@@ -21,9 +21,12 @@
               v-for="p in platforms"
               :class="{ active: p.id === selectedPlatId }"
               :key="p"
-              @click="switchPlat(p)"
+              @click="fishGame.open(p.name, p.code, p.gameCode)"
             >
-              <img :src="require('../../assets/logo/' + p.code + '.png')">
+            <img v-if="p.name !== 'CQ9'" :src="require(`../../assets/images/games/aviator/${p.name.toLowerCase()}_fish_king.png`)"
+              />
+              <!-- <img v-if="p.name !== 'CQ9'" :src="require(`../../assets/images/games/aviator/${p.name.toLowerCase()}_fish_king.png`)"
+              /> -->
               <!-- <img
                 v-if="p.name === 'JDB'"
                 src="../../assets/images/common/logo/JDB.png"

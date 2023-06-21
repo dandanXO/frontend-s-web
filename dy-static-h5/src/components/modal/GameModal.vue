@@ -299,6 +299,20 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       } else if (Platform.is.ios) {
         way = "IOS"
       }
+      if (platformCode === 'platformType') {
+        api
+        .get(`/session/launch?_time=${new Date().getTime()}`, {
+          params: {
+            platform: gameCode,
+            isMobile: Platform.is.mobile ? true : false,
+            way: way
+          }
+        })
+        .then((response) => {
+          src.value = response.data;
+        });
+        return
+      }
       api
         .get(`/session/launch?_time=${new Date().getTime()}`, {
           params: {

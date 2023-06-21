@@ -27,16 +27,16 @@ const props = defineProps({
 </script>
 
 <template>
-  <router-link :to="`slot?platform=${data.code}`">
+  <router-link :to="dataType === 'slot' ? `${dataType}?platform=${data.code}` : ``">
     <img
       :src="
-        require(`../../assets/images/index/${dataType}/${dataType}_bg_${data.icon}.png`)
+        require(`../../assets/images/index/${dataType}/${dataType}_bg_${data.name.toLowerCase()}.png`)
       "
     />
     <div class="game_content">
       <div class="game_title">{{ data.title }}</div>
       <div class="game_subtitle">
-        <span class="game_num">{{ data.subcount }}</span>
+        <span class="game_num" v-if="data.id === 'slot'">{{ data.subcount }}</span>
         {{ data.subtitle }}
       </div>
     </div>
