@@ -331,22 +331,6 @@
         >
           <template #default="scope">
             <el-button
-              v-if="scope.row.status === 'STEP_1'"
-              size="mini"
-              type="primary"
-              @click="toApply(scope.row)"
-            >
-              {{ t('fields.toApplying') }}
-            </el-button>
-            <el-button
-              v-if="scope.row.status === 'STEP_3'"
-              size="mini"
-              type="primary"
-              @click="toBeforePaid(scope.row)"
-            >
-              {{ t('fields.toBeforePaid') }}
-            </el-button>
-            <el-button
               size="mini"
               type="primary"
               @click="showDialog('LOG', scope.row)"
@@ -354,9 +338,25 @@
               {{ t('fields.viewLog') }}
             </el-button>
             <el-button
+              v-if="scope.row.status === 'STEP_1' && hasPermission(['sys:withdraw:checking'])"
+              size="mini"
+              type="success"
+              @click="toApply(scope.row)"
+            >
+              {{ t('fields.toApplying') }}
+            </el-button>
+            <el-button
+              v-if="scope.row.status === 'STEP_3' && hasPermission(['sys:withdraw:pay'])"
+              size="mini"
+              type="warning"
+              @click="toBeforePaid(scope.row)"
+            >
+              {{ t('fields.toBeforePaid') }}
+            </el-button>
+            <el-button
               v-if="scope.row.status === 'SUCCESS' && hasPermission(['sys:withdraw:fail'])"
               size="mini"
-              type="primary"
+              type="danger"
               @click="toFail(scope.row)"
             >
               {{ t('fields.fail') }}
