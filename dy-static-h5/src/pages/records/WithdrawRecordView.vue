@@ -28,8 +28,8 @@ export default defineComponent({
           params: paramData
         },
       ).then((res) => {
-        console.log(res);
-        // tableData.value = res.data.records;
+        // console.log(res);
+        tableData.value = res.data.records;
 
 
       }).finally(() => {
