@@ -12,7 +12,7 @@
             :class="{ active: i === activeItem }"
           >
             <span class="promo" v-if="method.recommended">Recommended</span>
-            <img :src="imgURL + method.icon" />
+            <img :src="imgURL + '/withdraw/' + method.icon" />
             <div class="type-name">{{ method.name }}</div>
           </div>
         </div>
@@ -43,7 +43,7 @@
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img style="width: 30px" :src="imgURL + scope.opt.bankIcon" />
+                  <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label
@@ -56,7 +56,7 @@
               <q-item-section avatar v-if="scope.opt.bankIcon">
                 <img
                   style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                  :src="imgURL + scope.opt.bankIcon"
+                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
                 />
               </q-item-section>
               <q-item-section>
@@ -225,7 +225,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const $q = useQuasar();
-    const imgURL = process.env.IMAGE_CDN + '/withdraw/'
+    const imgURL = process.env.IMAGE_CDN;
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);

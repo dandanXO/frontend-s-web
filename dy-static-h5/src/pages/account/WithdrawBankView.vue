@@ -270,7 +270,7 @@ export default defineComponent({
       start: "",
       end: ""
     });
-    const imgURL = process.env.IMAGE_CDN + '/'
+    const imgURL = process.env.IMAGE_CDN + '/payment/'
     const columns = [
       {
         title: "Bank Name",
