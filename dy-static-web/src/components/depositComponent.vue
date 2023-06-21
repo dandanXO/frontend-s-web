@@ -262,7 +262,194 @@ const rules = {
 
 function initPay() {
   isLoading.value = true;
-  loadPay().then((d) => {
+  // loadPay().then((d) => {
+    const d = {
+      code: 0,
+      data: {
+        payments: [
+          {
+            nodeName: "加密货币",
+            nodeIcon: "d643ccce-bfd0-474b-bf4a-214f9fba59c4.png",
+            promotionIcon: null,
+            groupId: 6451,
+            lineName: null,
+            children: [
+              {
+                nodeName: "USDT",
+                nodeIcon: "65576157-d927-4775-a731-387a5d04def2.png",
+                promotionIcon: null,
+                groupId: 6452,
+                lineName: null,
+                children: [
+                  {
+                    nodeName: "TRC20-2",
+                    nodeIcon: "7caa11e8-e30f-4169-a2e0-9f2352f84f92.png",
+                    promotionIcon: null,
+                    paymentId: 88,
+                    payResultType: "GET_SUBMIT",
+                    payType: "USDTTRC",
+                    depositMin: 10.0,
+                    depositMax: 50000.0,
+                    currencyRate: 7.14,
+                    msg: '<a style="color:orange;" target="_blank">1. 若提交不出码请换其他金额重试，存款上分以到账的U数量为准！</a>\n<br>2. 虚拟币USDT教程： <a style="color:purple;text-decoration:underline;" href="https://qwzr2.radiotopdance.com/dy-deposit_guide.mp4" style="color: #eee;" target="_blank">视频教程</a> \n<a style="color:purple;text-decoration:underline;" href="https://m.dyvip98.com/wap/other/usdt.html" style="color: #eee;" target="_blank">图文教程</a> \n<br>3. 每日赠送1.5%最高588元，仅限单笔充值100 USDT以上 ！\n<br> 4. 热门交易所平台推荐： <a style="color:purple;text-decoration:underline;" href="https://www.okex.com/" style="color: #eee;" target="_blank">Okex</a> <a style="color:purple;text-decoration:underline;" href="https://www.binance.com/zh-CN" style="color: #eee;" target="_blank">币安</a> ',
+                    extra: {
+                      banks: [],
+                      amountArr: []
+                    },
+                    group: false
+                  },
+                  {
+                    nodeName: "ERC20",
+                    nodeIcon: "fe966e73-f6ea-4907-8b8d-a364305fb9a3.png",
+                    promotionIcon: null,
+                    paymentId: 89,
+                    payResultType: "GET_SUBMIT",
+                    payType: "USDTERC",
+                    depositMin: 20.0,
+                    depositMax: 50000.0,
+                    currencyRate: 7.14,
+                    msg: '<a style=""color:orange;"" target=""_blank"">1. 若提交不出码请换其他金额重试，存款上分以到账的U数量为准！</a>\n<br>2. 虚拟币USDT教程： <a style=""color:purple;text-decoration:underline;"" href=""https://qwzr2.radiotopdance.com/dy-deposit_guide.mp4"" style=""color: #eee;"" target=""_blank"">视频教程</a> \n<a style=""color:purple;text-decoration:underline;"" href=""https://m.dyvip98.com/wap/other/usdt.html"" style=""color: #eee;"" target=""_blank"">图文教程</a> \n<br>3. 每日赠送1.5%最高588元，仅限单笔充值100 USDT以上 ！\n<br> 4. 热门交易所平台推荐： <a style=""color:purple;text-decoration:underline;"" href=""https://www.okex.com/"" style=""color: #eee;"" target=""_blank"">Okex</a> <a style=""color:purple;text-decoration:underline;"" href=""https://www.binance.com/zh-CN"" style=""color: #eee;"" target=""_blank"">币安</a> ',
+                    extra: {
+                      banks: [],
+                      amountArr: []
+                    },
+                    group: false
+                  }
+                ],
+                group: true
+              }
+            ],
+            group: true
+          },
+          {
+            nodeName: "DY银行转账",
+            nodeIcon: "63d74df4-07cf-46ea-9ea3-0712123c81d2.png",
+            promotionIcon: null,
+            paymentId: 85,
+            payResultType: "RENDER_HTML",
+            payType: "OFFLINE",
+            depositMin: 100.0,
+            depositMax: 200000.0,
+            currencyRate: 1.0,
+            msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
+            extra: {
+              banks: [
+                {
+                  code: "ABC",
+                  name: "中国农业银行",
+                  id: 20
+                }
+              ],
+              amountArr: []
+            },
+            group: false
+          },
+          {
+            nodeName: "VIP 转卡",
+            nodeIcon: "25b20a24-a23d-4917-b719-bf2441c77d38.png",
+            promotionIcon: "81384fb4-1e0f-4506-89d6-9e20ec03f9bf.png",
+            paymentId: 197,
+            payResultType: "GET_SUBMIT",
+            payType: "BANK",
+            depositMin: 3000.0,
+            depositMax: 50000.0,
+            currencyRate: 1.0,
+            msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 1. 请按照订单金额付款，否则无法核实到账\n<br> 2. 付款完成后请提供回单，可速度到账\n<br>每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
+            extra: {
+              banks: [],
+              amountArr: []
+            },
+            group: false
+          },
+          {
+            nodeName: "DYMGOpay卡转卡040",
+            nodeIcon: "SPECIALPAY",
+            promotionIcon: null,
+            paymentId: 141,
+            payResultType: "RENDER_HTML",
+            payType: "SPECIALPAY",
+            depositMin: 2000.0,
+            depositMax: 8000.0,
+            currencyRate: 1.0,
+            msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
+            extra: {
+              banks: [],
+              amountArr: []
+            },
+            group: false
+          },
+          {
+            nodeName: "DYDMPay2卡转卡337",
+            nodeIcon: "SPECIALPAY",
+            promotionIcon: null,
+            paymentId: 143,
+            payResultType: "RENDER_HTML",
+            payType: "SPECIALPAY",
+            depositMin: 3000.0,
+            depositMax: 20000.0,
+            currencyRate: 1.0,
+            msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
+            extra: {
+              banks: [],
+              amountArr: []
+            },
+            group: false
+          },
+          {
+            nodeName: "DYHCPay2卡转卡468",
+            nodeIcon: "SPECIALPAY",
+            promotionIcon: null,
+            paymentId: 144,
+            payResultType: "RENDER_HTML",
+            payType: "SPECIALPAY",
+            depositMin: 3000.0,
+            depositMax: 30000.0,
+            currencyRate: 1.0,
+            msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
+            extra: {
+              banks: [],
+              amountArr: []
+            },
+            group: false
+          },
+          {
+            nodeName: "DYMGOPay2卡转卡040",
+            nodeIcon: "SPECIALPAY",
+            promotionIcon: null,
+            paymentId: 145,
+            payResultType: "RENDER_HTML",
+            payType: "SPECIALPAY",
+            depositMin: 2000.0,
+            depositMax: 20000.0,
+            currencyRate: 1.0,
+            msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
+            extra: {
+              banks: [],
+              amountArr: []
+            },
+            group: false
+          },
+          {
+            nodeName: "DY强盛小额转卡366",
+            nodeIcon: "QUICKPAYMENT",
+            promotionIcon: null,
+            paymentId: 185,
+            payResultType: "GET_SUBMIT",
+            payType: "QUICKPAYMENT",
+            depositMin: 300.0,
+            depositMax: 2000.0,
+            currencyRate: 1.0,
+            msg: '<a style="color:orange;" target="_blank">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>',
+            extra: {
+              banks: [],
+              amountArr: []
+            },
+            group: false
+          }
+        ]
+      }
+    };
+    console.log(d)
     if (d.code === 0) {
       payMethods.value = [];
       isLoading.value = false;
@@ -276,7 +463,7 @@ function initPay() {
         bankCardList.value = payMethods[0].extra.banks;
       }
     }
-  });
+  // });
 }
 
 async function loadPrivilege(val) {

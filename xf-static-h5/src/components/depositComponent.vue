@@ -26,7 +26,7 @@
             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
           </template>
         </q-input>
-        
+
         <q-select
           v-else
           ref="depositAmtRef"
@@ -43,7 +43,7 @@
             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
           </template>
         </q-select>
-        
+
           <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
           最低金额:
           {{ calculatedMinDeposit ? calculatedMinDeposit + ' ' + (store.currency.value) : 0 }} <br />
@@ -286,7 +286,7 @@ function checkMinDepositAmt() {
     calculatedMinDeposit.value = activeMethod.value.depositMin
   } else {
     calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin)
-  }  
+  }
 }
 
 function checkPrivilege(v) {
@@ -348,7 +348,7 @@ function doDeposit() {
         form.privilegeId = null
       }
     }
-    
+
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
   } else {
