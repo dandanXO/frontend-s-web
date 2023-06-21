@@ -699,7 +699,7 @@
 
 <script lang="js">
 import {defineComponent, onMounted, reactive, ref} from "vue";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 import {
   loadRecords,
   gameBetRecordTotal,
@@ -1225,7 +1225,18 @@ export default defineComponent({
       }
       confirmationOfWithdrawalReceived(obj).then((res) => {
         if (res.code === 0) {
-          getTime()
+          
+          ElMessageBox.alert('已经确认到账', {
+                // if you want to disable its autofocus
+                // autofocus: false,
+                title: '系统提示',
+                center: true,
+                confirmButtonText: '确认',
+                showClose: false,
+                buttonSize: 'large'
+            }).then(() => {
+              getTime()
+            })
         }
       })
     }
