@@ -249,9 +249,9 @@ export default defineComponent({
         } else if (route.path === "/sport") {
           hasPage.value = true;
           pageName.value = "体育";
-        } else if (route.path === "/aviator") {
+        } else if (route.path === "/fish") {
           hasPage.value = true;
-          pageName.value = "Aviator";
+          pageName.value = "捕鱼达人";
         } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
           hasPage.value = true;

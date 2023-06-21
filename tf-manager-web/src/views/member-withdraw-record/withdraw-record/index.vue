@@ -329,13 +329,12 @@
           width="160"
         >
           <template #default="scope">
-            <el-tag v-if="scope.row.confirmStatus === '0'" type="danger">
+            <el-tag v-if="scope.row.confirmStatus === '0' && scope.row.status === 'SUCCESS'" type="danger">
               {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
             </el-tag>
-            <el-tag v-else-if="scope.row.confirmStatusstatus === '1'" type="success">
+            <el-tag v-else-if="scope.row.confirmStatus === '1' && scope.row.status === 'SUCCESS'" type="success">
               {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
             </el-tag>
-            <el-tag v-else>{{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -345,10 +344,10 @@
           min-width="100"
         >
           <template #default="scope">
-            <span v-if="scope.row.confirmBy === null">-</span>
-            <span v-if="scope.row.confirmBy !== null">
+            <span v-if="scope.row.confirmBy !== null && scope.row.status === 'SUCCESS'">
               {{ scope.row.confirmBy }}
             </span>
+            <span v-else>-</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -391,7 +390,7 @@
               {{ t('fields.fail') }}
             </el-button>
             <el-button
-              v-if="scope.row.withdrawCode === 'BANK' && scope.row.confirmStatus === '0' && hasPermission(['sys:withdraw:confirm'])"
+              v-if="scope.row.status === 'SUCCESS' && scope.row.withdrawCode === 'BANK' && scope.row.confirmStatus === '0' && hasPermission(['sys:withdraw:confirm'])"
               size="mini"
               type="primary"
               @click="toConfirm(scope.row)"

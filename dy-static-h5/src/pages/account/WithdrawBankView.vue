@@ -25,13 +25,13 @@
             <q-separator class="q-my-xs" />
             <div class="bottom q-pa-xs">
             <div class="flex-box cards">
-              <div
+              <!-- <div
                 v-for="b in bc.cardNumber.split()"
                 :key="b"
                 class="card-num-box"
               >
                 {{ b }}
-              </div>
+              </div> -->
               <!-- <div
                 v-for="b in bc.cardNumber.split()"
                 :key="b"
@@ -60,6 +60,13 @@
               >
                 {{ b.slice(b.length - 4, b.length) }}
               </div> -->
+              <div
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
+              >
+                ****{{ b.slice(b.length - 4, b.length) }}
+              </div>
             </div>
             <q-btn @click="unbindBankCard(bc)" color="dyblue" label="解绑" />
             </div>

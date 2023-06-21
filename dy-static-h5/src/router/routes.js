@@ -41,7 +41,7 @@ const routes = [
     children: [{path: "", component: () => import("pages/LiveChatPage.vue")}]
   },
   {
-    path: "/aviator",
+    path: "/fish",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
