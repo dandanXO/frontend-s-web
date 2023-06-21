@@ -14,13 +14,16 @@
                         </div>
                         <template v-for="obj in Object.keys(det)" :key="obj">
                             <div v-if="obj === head.key" class="desc">
+                                <div v-if="obj === 'type'">
+                                    {{ checkRecord(det[obj])}}
+                                </div>
                                 <div v-if="obj === 'status'">
                                     {{ checkRecord(det[obj])}}
                                 </div>
                                 <div v-if="obj === 'commitDate'">
                                     {{ humanDatetime(det[obj])}}
                                 </div>
-                                <div v-if="obj !== 'status' || obj === 'commitDate'">
+                                <div v-if="obj !== 'type' || obj !== 'status' || obj === 'commitDate'">
                                     {{ det[obj] }}
                                 </div>
                             </div>
