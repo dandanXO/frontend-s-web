@@ -2,24 +2,48 @@
   <q-page>
     <div class="profile">
       <div class="avatar">
-        <img src="../assets/images/account/avatar.png"/>
+        <img src="../assets/images/account/avatar.png" />
       </div>
       <div class="pro-details">
         <span class="nickname-span">{{ store.nickName }}</span>
-        <span v-if="vipLevel === 1"><img id="personal_vip_img" src="../assets/vip/vip_text_1.png"></span>
-        <span v-else-if="vipLevel === 2"><img id="personal_vip_img" src="../assets/vip/vip_text_2.png"></span>
-        <span v-else-if="vipLevel === 3"><img id="personal_vip_img" src="../assets/vip/vip_text_3.png"></span>
-        <span v-else-if="vipLevel === 4"><img id="personal_vip_img" src="../assets/vip/vip_text_4.png"></span>
-        <span v-else-if="vipLevel === 5"><img id="personal_vip_img" src="../assets/vip/vip_text_5.png"></span>
-        <span v-else-if="vipLevel === 6"><img id="personal_vip_img" src="../assets/vip/vip_text_6.png"></span>
-        <span v-else-if="vipLevel === 7"><img id="personal_vip_img" src="../assets/vip/vip_text_7.png"></span>
-        <span v-else-if="vipLevel === 8"><img id="personal_vip_img" src="../assets/vip/vip_text_8.png"></span>
-        <span v-else-if="vipLevel === 9"><img id="personal_vip_img" src="../assets/vip/vip_text_9.png"></span>
-        <span v-else-if="vipLevel === 10"><img id="personal_vip_img" src="../assets/vip/vip_text_10.png"></span>
-        <span v-else-if="vipLevel === 11"><img id="personal_vip_img" src="../assets/vip/vip_text_11.png"></span>
-        <span v-else-if="vipLevel === 12"><img id="personal_vip_img" src="../assets/vip/vip_text_12.png"></span>
+        <span v-if="vipLevel === 1"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_1.png"
+        /></span>
+        <span v-else-if="vipLevel === 2"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_2.png"
+        /></span>
+        <span v-else-if="vipLevel === 3"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_3.png"
+        /></span>
+        <span v-else-if="vipLevel === 4"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_4.png"
+        /></span>
+        <span v-else-if="vipLevel === 5"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_5.png"
+        /></span>
+        <span v-else-if="vipLevel === 6"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_6.png"
+        /></span>
+        <span v-else-if="vipLevel === 7"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_7.png"
+        /></span>
+        <span v-else-if="vipLevel === 8"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_8.png"
+        /></span>
+        <span v-else-if="vipLevel === 9"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_9.png"
+        /></span>
+        <span v-else-if="vipLevel === 10"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_10.png"
+        /></span>
+        <span v-else-if="vipLevel === 11"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_11.png"
+        /></span>
+        <span v-else-if="vipLevel === 12"
+          ><img id="personal_vip_img" src="../assets/vip/vip_text_12.png"
+        /></span>
 
-        <br/>
+        <br />
         <span v-if="store.evip">专属网址: {{ store.evip }}</span>
       </div>
     </div>
@@ -67,29 +91,17 @@
         <!-- <q-separator /> -->
         <q-card-section class="bot-section">
           <router-link to="/" @click="openDeposit" class="button"
-          ><img
-            src="../assets/images/index/deposit_icon.png"
-          />存款
-          </router-link
-          >
+            ><img src="../assets/images/index/deposit_icon.png" />存款
+          </router-link>
           <router-link to="finance/withdraw" class="button"
-          ><img
-            src="../assets/images/index/withdrawal_icon.png"
-          />提款
-          </router-link
-          >
+            ><img src="../assets/images/index/withdrawal_icon.png" />提款
+          </router-link>
           <router-link to="account/transfer" class="button"
-          ><img
-            src="../assets/images/index/transfer_icon.png"
-          />转账
-          </router-link
-          >
+            ><img src="../assets/images/index/transfer_icon.png" />转账
+          </router-link>
           <router-link to="account/vip" class="button"
-          ><img
-            src="../assets/images/account/vip_icon.png"
-          />VIP详情
-          </router-link
-          >
+            ><img src="../assets/images/account/vip_icon.png" />VIP详情
+          </router-link>
         </q-card-section>
       </q-card-section>
     </div>
@@ -102,61 +114,64 @@
       </div> -->
       <div class="acct-title">
         <div class="acct-title-1">我的功能</div>
-        <div id="vipDomain" class="vipurl">专属网址：<a style="color: #000000;" href="https://m.dyvip6839.com">m.dyvip6839.com</a>
+        <div id="vipDomain" class="vipurl">
+          专属网址：<a style="color: #000000" href="https://m.dyvip6839.com"
+            >m.dyvip6839.com</a
+          >
         </div>
       </div>
       <div class="acct-menu">
         <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_record.png"/>
+            <img src="../assets/images/account/menu_record.png" />
             <div class="acct-nav-label">交易记录</div>
           </div>
         </router-link>
         <router-link to="/account/invite">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.png"/>
+            <img src="../assets/images/account/menu_share.png" />
             <div class="acct-nav-label">分享好友</div>
           </div>
         </router-link>
         <router-link to="/account/promotion">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_promo.png"/>
+            <img src="../assets/images/account/menu_promo.png" />
             <div class="acct-nav-label">优惠领取</div>
           </div>
         </router-link>
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_personal.png"/>
+            <img src="../assets/images/account/menu_personal.png" />
             <div class="acct-nav-label">个人信息</div>
           </div>
         </router-link>
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_changePwd.png"/>
+            <img src="../assets/images/account/menu_changePwd.png" />
             <div class="acct-nav-label">密码</div>
           </div>
         </router-link>
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_bank.png"/>
+            <img src="../assets/images/account/menu_bank.png" />
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
         <router-link to="/account/download">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_download.png"/>
+            <img src="../assets/images/account/menu_download.png" />
             <div class="acct-nav-label">下载中心</div>
           </div>
         </router-link>
         <router-link to="/account/announcement">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_announcement.png"/>
+            <img src="../assets/images/account/menu_announcement.png" />
             <div class="acct-nav-label">系统公告</div>
           </div>
         </router-link>
         <router-link to="/account/mail">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.png"/>
+            <img src="../assets/images/account/menu_mailbox.png" />
             <div class="acct-nav-label">
               站内信({{ store.unreadInboxMail }})
             </div>
@@ -164,7 +179,7 @@
         </router-link>
         <a href="https://partner.dyvip90.com" target="_blank">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_agent.png"/>
+            <img src="../assets/images/account/menu_agent.png" />
             <div class="acct-nav-label">加盟</div>
           </div>
         </a>
@@ -179,9 +194,9 @@
 </template>
 
 <script>
-import {defineComponent, ref, computed, onMounted} from "vue";
-import {userStore} from "stores/index";
-import {useRouter} from "vue-router";
+import { defineComponent, ref, computed, onMounted } from "vue";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "AccountPage",
@@ -227,7 +242,6 @@ export default defineComponent({
       return store.balance.toFixed(2);
     });
     onMounted(() => {
-
       getBalance();
       store.getBalance();
       console.log(store.vip);
@@ -253,14 +267,15 @@ export default defineComponent({
       getBalance,
       vipLevel,
       store,
-      openDeposit,
+      openDeposit
     };
-  },
+  }
 });
 </script>
 <style scoped lang="scss">
 .profile {
-  background: url(../assets/images/account/personal_bg.png) no-repeat center center;
+  background: url(../assets/images/account/personal_bg.png) no-repeat center
+    center;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -292,7 +307,8 @@ export default defineComponent({
   margin: -20px auto 0;
   border-radius: 15px;
   width: 95%;
-  background: url(../assets/images/account/personal_details_bg.png) no-repeat center center;
+  background: url(../assets/images/account/personal_details_bg.png) no-repeat
+    center center;
   background-size: cover;
 
   .q-card__section--vert {
@@ -400,26 +416,30 @@ export default defineComponent({
         // background: #33bcd4;
         height: 19px;
         width: 10px;
-        background: url(../assets/images/account/personal_menu_title_icon.png) no-repeat center;
+        background: url(../assets/images/account/personal_menu_title_icon.png)
+          no-repeat center;
         background-size: 100%;
         display: inline-block;
         margin-left: -5px;
       }
     }
-
   }
 
   .acct-menu {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: stretch;
+    // display: grid;
+    // grid-template-columns: repeat(3, 1fr);
+    display:flex;
+    justify-content: flex-start;
+    flex-wrap:wrap;
 
     a {
+      width:33.33%;
       text-decoration: none;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 10px;
+      height: 80px;
 
       .acct-nav-item {
         gap: 5px;
