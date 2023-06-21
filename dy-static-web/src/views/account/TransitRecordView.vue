@@ -766,7 +766,7 @@ const dataState = reactive({
 });
 const commonColumns = [
   {
-    title: "序列号",
+    title: "编码",
     dataIndex: "serialNumber",
     key: "serialNumber"
   }
@@ -863,7 +863,7 @@ const tableColumns = {
   turnover: [
     ...commonColumns,
     {
-      title: "周转型",
+      title: "账变类型",
       dataIndex: "type"
     },
     {
@@ -871,12 +871,12 @@ const tableColumns = {
       dataIndex: "amount"
     },
     {
-      title: "周转亚型",
+      title: "账变子类型",
       dataIndex: "subType",
       slots: {customRender: "subType"}
     },
     {
-      title: "记录时间",
+      title: "时间",
       dataIndex: "recordTime",
       slots: {customRender: "recordTime"}
     }

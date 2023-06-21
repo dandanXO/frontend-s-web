@@ -1,6 +1,6 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div class="" v-if="level === 1">选择银行卡</div>
+    <div class="" v-if="level === 1">支付方式</div>
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>

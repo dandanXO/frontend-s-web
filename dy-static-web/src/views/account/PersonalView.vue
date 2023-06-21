@@ -201,14 +201,7 @@
             <div class="link">
             如果您需要修改个人资料，请您联系我们的
             <a
-              @click.stop.prevent="
-                openWindow(
-                  `https://csweb01.v6kthwlug.com/?partnerId=11&lang=zh-CN&way=${regDevice}&token=${store.token}`,
-                  'Chat Server',
-                  350,
-                  650,
-                )
-              "
+              @click.stop.prevent="store.openLiveChat()"
             >
               在线客服
             </a>
