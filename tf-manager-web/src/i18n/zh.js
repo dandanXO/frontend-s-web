@@ -42,6 +42,10 @@ export default {
     WAITING_CALLBACK: '自动支付中',
     PAYING: '支付'
   },
+  withdrawConfirmStatus: {
+    0: '未确认',
+    1: '已到账',
+  },
   transfer: {
     status: {
       sending: '发送中',
@@ -221,6 +225,8 @@ export default {
     confirmNewPassword: '确认新密码',
     confirmPassword: '确认密码',
     confirmPay: '确认结算',
+    confirmStatus: '确认状态',
+    confirmBy: '确认人',
     content: '内容',
     copy: '复制',
     copyPayment: '正在复制',
