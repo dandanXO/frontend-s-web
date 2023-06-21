@@ -323,6 +323,35 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="confirm status"
+          :label="t('fields.confirmStatus')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.confirmStatus === '0'" type="danger">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.confirmStatusstatus === '1'" type="success">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else>{{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="confirmBy"
+          :label="t('fields.confirmBy')"
+          align="center"
+          min-width="100"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.confirmBy === null">-</span>
+            <span v-if="scope.row.confirmBy !== null">
+              {{ scope.row.confirmBy }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="280"
@@ -331,22 +360,6 @@
         >
           <template #default="scope">
             <el-button
-              v-if="scope.row.status === 'STEP_1'"
-              size="mini"
-              type="primary"
-              @click="toApply(scope.row)"
-            >
-              {{ t('fields.toApplying') }}
-            </el-button>
-            <el-button
-              v-if="scope.row.status === 'STEP_3'"
-              size="mini"
-              type="primary"
-              @click="toBeforePaid(scope.row)"
-            >
-              {{ t('fields.toBeforePaid') }}
-            </el-button>
-            <el-button
               size="mini"
               type="primary"
               @click="showDialog('LOG', scope.row)"
@@ -354,12 +367,36 @@
               {{ t('fields.viewLog') }}
             </el-button>
             <el-button
+              v-if="scope.row.status === 'STEP_1' && hasPermission(['sys:withdraw:checking'])"
+              size="mini"
+              type="success"
+              @click="toApply(scope.row)"
+            >
+              {{ t('fields.toApplying') }}
+            </el-button>
+            <el-button
+              v-if="scope.row.status === 'STEP_3' && hasPermission(['sys:withdraw:pay'])"
+              size="mini"
+              type="warning"
+              @click="toBeforePaid(scope.row)"
+            >
+              {{ t('fields.toBeforePaid') }}
+            </el-button>
+            <el-button
               v-if="scope.row.status === 'SUCCESS' && hasPermission(['sys:withdraw:fail'])"
               size="mini"
-              type="primary"
+              type="danger"
               @click="toFail(scope.row)"
             >
               {{ t('fields.fail') }}
+            </el-button>
+            <el-button
+              v-if="scope.row.confirmStatus === '0' && hasPermission(['sys:withdraw:confirm'])"
+              size="mini"
+              type="primary"
+              @click="toConfirm(scope.row)"
+            >
+              {{ t('fields.confirm') }}
             </el-button>
           </template>
         </el-table-column>
@@ -768,6 +805,7 @@ import {
   fromCheckingToApply,
   fromPayToBeforePaid,
   fromToFail,
+  fromToConfirm,
 } from '../../../api/member-withdraw-record'
 import { getMemberWithdrawLog } from '../../../api/member-withdraw-log'
 import { getAllWithdrawBankCard } from '../../../api/bank-card'
@@ -1190,6 +1228,13 @@ async function toFail(val) {
   const chooseRecord = []
   chooseRecord.push(val)
   await fromToFail(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await loadRecord()
+}
+
+async function toConfirm(val) {
+  const chooseRecord = []
+  chooseRecord.push(val)
+  await fromToConfirm(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   await loadRecord()
 }
 
