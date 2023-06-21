@@ -47,7 +47,7 @@
                 </q-item-section>
                 <q-item-section>
                   <q-item-label
-                    >{{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
+                    >{{ scope.opt.bankName }} -  ****{{ scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length) }}
                   </q-item-label>
                 </q-item-section>
               </q-item>
