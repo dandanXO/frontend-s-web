@@ -270,12 +270,22 @@
                 </template>
 
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
-                  <template v-if="scope.row.status === 'SETP_1'">
+                  <template v-if="scope.row.status === 'STEP_1'">
                     <div style="display: flex; align-items: center">
                       <el-button size="small"
                           class="common-btn"
                           @click="openReminder(scope.row)"
                       >催单
+                      </el-button>
+                    </div>
+                  </template>
+                  
+                  <template v-if="scope.row.status === 'SUCCESS' && scope.row.currencyName === 'CNY' && scope.row.confirmStatus === 0">
+                    <div style="display: flex; align-items: center">
+                      <el-button size="small"
+                          class="common-btn"
+                          @click="openWithdrawConfirm(scope.row)"
+                      >确认到账
                       </el-button>
                     </div>
                   </template>
@@ -689,13 +699,14 @@
 
 <script lang="js">
 import {defineComponent, onMounted, reactive, ref} from "vue";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 import {
   loadRecords,
   gameBetRecordTotal,
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
-  financeFeedbackList
+  financeFeedbackList,
+  confirmationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
 // import { message } from "ant-design-vue";
@@ -1207,6 +1218,28 @@ export default defineComponent({
         }
       })
     }
+    const openWithdrawConfirm = (record) => {
+      const obj = {
+        id: record.id,
+        withdrawDate: record.withdrawDate
+      }
+      confirmationOfWithdrawalReceived(obj).then((res) => {
+        if (res.code === 0) {
+          
+          ElMessageBox.alert('已经确认到账', {
+                // if you want to disable its autofocus
+                // autofocus: false,
+                title: '系统提示',
+                center: true,
+                confirmButtonText: '确认',
+                showClose: false,
+                buttonSize: 'large'
+            }).then(() => {
+              getTime()
+            })
+        }
+      })
+    }
     const submitReminder = () => {
       console.log(reminderForm);
       if (!reminderForm.photos) {
@@ -1388,7 +1421,8 @@ export default defineComponent({
       getTurnoverType,
       getWithdrawStatus,
       getDepositStatus,
-      getDepositType
+      getDepositType,
+      openWithdrawConfirm
     };
   }
 });
