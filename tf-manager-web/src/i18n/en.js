@@ -42,6 +42,17 @@ export default {
     WAITING_CALLBACK: 'Waiting Callback',
     PAYING: 'Paying'
   },
+  transfer: {
+    status: {
+      sending: 'SENDING',
+      success: 'SUCCESS',
+      fail: 'FAIL'
+    },
+    type: {
+      deposit: 'DEPOSIT',
+      withdraw: 'WITHDRAW'
+    }
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1057,6 +1068,7 @@ export default {
     'Member Bank Card History': 'Member Bank Card History',
     'Member Sms': 'Member Sms History',
     'Import Bet Records': 'Import Bet Records',
+    'Member Transfer Record': 'Member Transfer Record',
     Affiliate: 'Affiliate',
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',

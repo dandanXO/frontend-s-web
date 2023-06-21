@@ -42,6 +42,17 @@ export default {
     WAITING_CALLBACK: '自动支付中',
     PAYING: '支付'
   },
+  transfer: {
+    status: {
+      sending: '发送中',
+      success: '成功',
+      fail: '失败'
+    },
+    type: {
+      deposit: '转入',
+      withdraw: '转出'
+    }
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1038,6 +1049,7 @@ export default {
     'Member Privilege Blacklist': '会员优惠黑名单',
     'Member Sms': '发送短信记录',
     'Import Bet Records': '导入投注记录',
+    'Member Transfer Record': '会员转账记录',
     Affiliate: '代理',
     'Affiliate Summary': '代理总结',
     'Affiliate Monthly Settlement': '代理结算记录',

@@ -71,6 +71,12 @@ export const translateRecord = (rec) => {
         return '成功' // Supplement Success
       } else if (rec === 'CLOSED') {
         return '关闭' // Closed
+      } else if (rec === 'WAITING_CALLBACK') {
+        return '自动支付中' // Waiting Callback
+      } else if (rec === '1') {
+        return '存款' // 存款
+      }  else if (rec === '2') {
+        return '提款' // 提款
       } else {
         return rec
       }
