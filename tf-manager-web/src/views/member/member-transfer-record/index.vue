@@ -137,7 +137,10 @@
           <span v-else>{{ scope.row.updateBy }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')">
+      <el-table-column
+        :label="t('fields.operate')"
+        v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:transfer:update'])"
+      >
         <template #default="scope">
           <el-button v-if="scope.row.status === 'SENDING'" icon="el-icon-edit" size="mini" type="success" @click="showValidate(scope.row)" />
         </template>
@@ -156,6 +159,7 @@
 <script setup>
 
 import { computed, nextTick, onMounted, reactive, ref } from "vue";
+import { hasRole, hasPermission } from "../../../utils/util";
 import { required } from "../../../utils/validate";
 import { ElMessage } from "element-plus";
 import { getTransferRecords, update } from "../../../api/transfer";
