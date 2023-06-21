@@ -169,110 +169,38 @@
           :key="i"
           :class="'esport-' + i"
         >
-          <img
-            @click="playGame(esport.id, esport.code, esport.gameCode)"
-            :src="
-              require(`../assets/images/index/esport/esport_bg_${esport.icon}.png`)
-            "
-          />
-          <div class="game_content">
-            <div class="game_title">{{ esport.title }}</div>
-            <div class="game_subtitle">
-              <span class="game_num">{{ esport.subcount }}</span>
-              {{ esport.subtitle }}
-            </div>
-          </div>
+          <PlatformBlock dataType="esport" :data="esport" />
         </swiper-slide>
         <swiper-slide
           v-for="(sport, i) in sport"
           :key="i"
           :class="'sport-' + i"
         >
-          <img
-            @click="playGame(sport.id, sport.code, sport.gameCode)"
-            :src="
-              require(`../assets/images/index/sport/sport_bg_${sport.icon}.png`)
-            "
-          />
-          <div class="game_content">
-            <div class="game_title">{{ sport.title }}</div>
-            <div class="game_subtitle">
-              <span class="game_num">{{ sport.subcount }}</span>
-              {{ sport.subtitle }}
-            </div>
-          </div>
+          <PlatformBlock dataType="sport" :data="sport" />
         </swiper-slide>
         <swiper-slide
           v-for="(live, i) in livecasino"
           :key="i"
           :class="'live-' + i"
         >
-          <img
-            @click="playGame(live.id, live.code, live.gameCode)"
-            :src="
-              require(`../assets/images/index/live/live_bg_${live.icon}.png`)
-            "
-          />
-          <div class="game_content">
-            <div class="game_title">{{ live.title }}</div>
-            <div class="game_subtitle">
-              <span class="game_num">{{ live.subcount }}</span>
-              {{ live.subtitle }}
-            </div>
-          </div>
+          <PlatformBlock dataType="live" :data="live" />
         </swiper-slide>
         <swiper-slide
           v-for="(poker, i) in poker"
           :key="i"
           :class="'poker-' + i"
         >
-          <img
-            @click="playGame(poker.id, poker.code, poker.gameCode)"
-            :src="
-              require(`../assets/images/index/poker/poker_bg_${poker.icon}.png`)
-            "
-          />
-          <div class="game_content">
-            <div class="game_title">{{ poker.title }}</div>
-            <div class="game_subtitle">
-              <span class="game_num">{{ poker.subcount }}</span>
-              {{ poker.subtitle }}
-            </div>
-          </div>
+          <PlatformBlock dataType="poker" :data="poker" />
         </swiper-slide>
         <swiper-slide
           v-for="(lottery, i) in lottery"
           :key="i"
           :class="'lottery-' + i"
         >
-          <img
-            @click="playGame(lottery.id, lottery.code, lottery.gameCode)"
-            :src="
-              require(`../assets/images/index/lottery/lottery_bg_${lottery.icon}.png`)
-            "
-          />
-          <div class="game_content">
-            <div class="game_title">{{ lottery.title }}</div>
-            <div class="game_subtitle">
-              <span class="game_num">{{ lottery.subcount }}</span>
-              {{ lottery.subtitle }}
-            </div>
-          </div>
+          <PlatformBlock dataType="lottery" :data="lottery" />
         </swiper-slide>
         <swiper-slide v-for="(slot, i) in slot" :key="i" :class="'slot-' + i">
-          <img
-            @click="playGame(slot.id, slot.code, slot.gameCode)"
-            :src="
-              require(`../assets/images/index/slot/slot_bg_${slot.icon}.png`)
-            "
-          />
-          <div class="game_content">
-            <div class="game_title">{{ slot.title }}</div>
-            <div class="game_subtitle">
-              <span class="game_num">{{ slot.subcount }}</span>
-              {{ slot.subtitle }}
-            </div>
-          </div>
+          <PlatformBlock dataType="slot" :data="slot" />
         </swiper-slide>
 
         <swiper-slide
@@ -280,19 +208,7 @@
           :key="i"
           :class="'fish-' + i"
         >
-          <img
-            @click="playGame(fish.id, fish.code, fish.gameCode)"
-            :src="
-              require(`../assets/images/index/fish/fish_bg_${fish.icon}.png`)
-            "
-          />
-          <div class="game_content">
-            <div class="game_title">{{ fish.title }}</div>
-            <div class="game_subtitle">
-              <span class="game_num">{{ fish.subcount }}</span>
-              {{ fish.subtitle }}
-            </div>
-          </div>
+          <PlatformBlock dataType="fish" :data="fish" />
         </swiper-slide>
       </swiper>
     </div>
@@ -302,12 +218,7 @@
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%" class="bg-bright text-black">
       <q-card-section class="q-mb-md">
-        <q-tabs
-          v-model="activeKey"
-          dense
-
-          align="justify"
-        >
+        <q-tabs v-model="activeKey" dense align="justify">
           <q-tab
             v-for="(tab, i) in announcementTypes"
             :key="i"
@@ -355,8 +266,8 @@
 import { defineComponent, onMounted, ref, reactive, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
-import { cached } from "boot/cache";
-import { useQuasar, Platform } from "quasar";
+
+import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
@@ -372,48 +283,21 @@ import { Thumbs, Controller } from "swiper";
 import "swiper/css";
 import "swiper/css/scrollbar";
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
+
+import PlatformBlock from "components/platform/PlatformBlock.vue";
+
 export default defineComponent({
   name: "IndexPage",
   components: {
     Swiper,
     SwiperSlide,
     GameModal,
-    MarqueeText
+    MarqueeText,
+    PlatformBlock
     // RiVolumeUpLine,
   },
   setup() {
     const thumbsSwiper = ref(null);
-    // const setThumbsSwiper = (swiper) => {
-    //   if (swiper.clickedIndex === 0) {
-    //     // Go to first Slot Slide
-    //     alert('slot')
-    //   }
-    //   if (swiper.clickedIndex === 1) {
-    //     // Go to first Esport Slide
-    //     swiper.activeIndex = 11
-    //     alert('esport')
-    //   }
-    //   if (swiper.clickedIndex === 2) {
-    //     // Go to first Esport Slide
-    //     swiper.activeIndex = 13
-    //     alert('sport')
-    //   }
-
-    // // for (let i = 0; i < slideElements.length; i++) {
-    // //   const slideElement = slideElements[i];
-
-    // //   if (slideElement.classList.contains(targetClass)) {
-    // //     const thumbsSwiperInstance = slideElement.swiper;
-    // //     this.thumbsSwiper = thumbsSwiperInstance;
-    // //     console.log('Set thumbs swiper:', thumbsSwiperInstance);
-    // //     return;
-    // //   }
-    // // }
-
-    // // console.log('No swiper found with the specified class:', targetClass);
-
-    // };
-
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
 
@@ -613,7 +497,7 @@ export default defineComponent({
         title: "大唐棋牌",
         subcount: "18",
         subtitle: "棋牌娱乐",
-        gameCode: "TX",
+        gameCode: "TX"
       },
       {
         id: "poker",
@@ -643,7 +527,7 @@ export default defineComponent({
         title: "BBIN彩票",
         subcount: "48",
         subtitle: "彩票游戏",
-        gameCode: "bbkeno_lobby_app",
+        gameCode: "bbkeno_lobby_app"
       }
     ];
 
@@ -746,8 +630,18 @@ export default defineComponent({
     });
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
-      console.log("gameName" + ":" + "platformCode" + ":" + "gameCode" + ":" + "gameStatus");
-      console.log(gameName + ":" + platformCode + ":" + gameCode + ":" + gameStatus);
+      console.log(
+        "gameName" +
+          ":" +
+          "platformCode" +
+          ":" +
+          "gameCode" +
+          ":" +
+          "gameStatus"
+      );
+      console.log(
+        gameName + ":" + platformCode + ":" + gameCode + ":" + gameStatus
+      );
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
     function loadData() {
@@ -814,46 +708,7 @@ export default defineComponent({
         changePage(1, gamePage.pageSize);
       }
     };
-    const loadGameList = (type) => {
-      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-      const code = selectedPlatId.value;
-      const gameType = type;
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
 
-      cached
-        .get(key, () =>
-          api
-            .get("/platformGames", {
-              params: {
-                platformId: code,
-                gameType: gameType,
-                device: regDevice
-              }
-            })
-            .then((response) => {
-              if (response.code === 0) {
-                return response;
-              }
-            })
-            .catch((err) => {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: "Loading failed",
-              //   icon: "report_problem"
-              // });
-            })
-        )
-        .then((res) => {
-          res.forEach((element) => {
-            element.default = require("../assets/images/games/aviator/default.png");
-            element.icon = `${process.env.IMAGE_CDN}/slot/${selectedPlat.value.code}/${element.icon}.png`;
-          });
-          gameListData.value = res;
-          gamePage.total = res.length;
-          changePage(1, gamePage.pageSize);
-        });
-    };
     const changePage = (page, pageSize) => {
       gamePage.gameList = gameListData.value;
       // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
@@ -1056,28 +911,6 @@ export default defineComponent({
         padding: 8px 20px 2px;
         color: #ffffff;
       }
-    }
-  }
-
-  .game_content {
-    position: absolute;
-    text-align: center;
-    top: 45%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-    .game_title {
-      font-size: 1.2rem;
-      color: #fff;
-      font-weight: 500;
-    }
-    .game_subtitle {
-      font-size: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .game_num {
-      font-size: 1rem;
     }
   }
 }

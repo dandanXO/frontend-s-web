@@ -206,22 +206,26 @@
 				<div class="agent-contact-ways">
 					<div class="agent-ways-box" style="margin-top: 0;">
 						<div class="agent-ways-way">合营部电邮</div>
-						<div class="agent-ways-val">affiliate@xf926.com</div>
+						<div class="agent-ways-val">affiliate@dyvip99.com</div>
 					</div>
 					<div class="agent-ways-box">
 						<div class="agent-ways-way">合营QQ</div>
 						<div class="agent-ways-val">
 
-						1193911745（工作时间：14:00-23:00）</div>
+            1903577733（工作时间：14:00-23:00）</div>
 					</div>
 					<div class="agent-ways-box">
 						<div class="agent-ways-way">合营Skype</div>
-						<div class="agent-ways-val">live:.cid.2e3257b6f3c30c1（ <a href=""><img src="../assets/images/affiliate/agent_skype.png"></a> 点击图标以联系，联系时请提供用户名)</div>
+						<div class="agent-ways-val">live:.cid.7b0e3647b2036b38（ <a href="skype:live:.cid.7b0e3647b2036b38?chat"><img src="../assets/images/affiliate/agent_skype.png"></a> 点击图标以联系，联系时请提供用户名)</div>
 					</div>
 					<div class="agent-ways-box">
-                        <div class="agent-ways-way">合营Flygram</div>
-                        <div class="agent-ways-val">搜索ID：XF666888 (下载链接: https://www.flygram8.com)</div>
-                    </div>
+              <div class="agent-ways-way">合营Flygram</div>
+              <div class="agent-ways-val">dybet5 (下载链接: https://www.flygram8.com)</div>
+          </div>
+          <div class="agent-ways-box">
+              <div class="agent-ways-way">合营蝙蝠ID</div>
+              <div class="agent-ways-val">12830840 (下载链接:https://www.batchat.com/#/ )</div>
+          </div>
 					<!-- <div class="agent-ways-box">
 						<div class="agent-ways-way">合营微信</div>
 						<div class="agent-ways-val">XF856COM</div>
