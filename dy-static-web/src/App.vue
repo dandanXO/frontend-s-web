@@ -27,6 +27,7 @@ export default defineComponent({
         };
         memberAccessLog(obj).then((res) => {
           if (res.code === 0) {
+            // do nothing
           }
         });
       })();

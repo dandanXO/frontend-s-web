@@ -161,7 +161,7 @@ import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
-import { InfoFilled } from "@element-plus/icons-vue";
+// import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 {
   RiSpamLine;

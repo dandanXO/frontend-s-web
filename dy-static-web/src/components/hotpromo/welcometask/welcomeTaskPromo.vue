@@ -306,11 +306,11 @@ import { welcomeTaskClaimBonus, welcomeTaskInit } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const promoNotReady = ref(false);
+// const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
 const store = userStore();
-const checkInDays = ref(3);
+// const checkInDays = ref(3);
 
 const welcomeState = reactive({
   stateDetails: {},
