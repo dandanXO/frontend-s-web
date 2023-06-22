@@ -11,7 +11,7 @@
         @clicked="onSelect"
       />
     </div>
-    
+
 
   <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
     <div class="submit-message">
@@ -535,9 +535,9 @@ async function pDepo(deposit) {
               ) {
                 // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
                 const newWin = window.open(`/depositLoading`, "Bank");
-                newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+                newWin.localStorage.setItem("formDetails", JSON.stringify(res));
               } else {
-                localStorage.setItem("formDetails", JSON.stringify(form));
+                localStorage.setItem("formDetails", JSON.stringify(res));
                 router.push({ path: "/depositLoading" });
               }
 

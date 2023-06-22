@@ -117,15 +117,11 @@ onMounted(async () => {
   ) {
     let params = localStorage.getItem("formDetails");
     params = params ? JSON.parse(params) : "";
-    var form = params;
-  } else {
-    // const {value} = await Preferences.get({key: 'formDetails'});
-    let value = localStorage.getItem("formDetails");
-    let params = value ? JSON.parse(value) : "";
-    // console.log(params);
-    var form = params;
+    // var form = params;
+    console.log(params);
+    doIt(params);
   }
-  
+
   // console.log(form);
 
   // cashier
