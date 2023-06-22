@@ -137,6 +137,10 @@ export default defineComponent({
     const ruleForm = reactive({
       icon: null
     })
+    const clear = () => {
+      ruleForm.icon = null
+      emit("photoResponse", null);
+    }
     const attachPhoto = async(event, type) => {
       const files = event.target.files[0]
       const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
@@ -176,7 +180,8 @@ export default defineComponent({
     
     return {
         attachPhoto,
-        ruleForm
+        ruleForm,
+        clear
       }
     }
   });

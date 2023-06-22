@@ -282,6 +282,14 @@ export default defineComponent({
     //   }
     // }
     table {
+      margin: 10px auto;
+    min-width: 80%;
+    text-align: center;
+      tr:first-child td {
+    background-image: linear-gradient(0deg,#0094ff 0,#19c6ff 100%),linear-gradient(#2e3039,#2e3039);
+    color: #ffffff;
+    border: 0;
+      }
           border-collapse: collapse;
           th, td {
             padding: 10px;
@@ -291,7 +299,7 @@ export default defineComponent({
       }
       td {
             // background-color: #202228;
-            border: 1px solid #2e3039;
+    border: 1px solid #dcdce8;
       }
     }
   }

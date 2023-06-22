@@ -652,6 +652,7 @@
         width="50%"
         align-center
         style="max-width: 800px"
+        :before-close="clearItems"
       >
         <span>
           <el-form
@@ -1195,6 +1196,10 @@ export default defineComponent({
     const selectedBetRecord = ref({})
     const betRecordDialog = ref(false)
     const reminderDialog = ref(false)
+    const clearItems = (done) => {
+      uploadFileRef.value.clear();
+      done()
+    }
     const openReminder = (record) => {
       getVerifyingFeedbackCount().then((res) => {
         if (res.code === 0) {
@@ -1240,17 +1245,18 @@ export default defineComponent({
     }
     const submitReminder = () => {
       loadingBtn.value = true;
-      console.log(reminderForm);
       if (!reminderForm.photos) {
         ElMessage.warning(
             `请上传图片提交`
         );
       } else {
+        console.log(reminderForm)
         saveFinanceFeedback(reminderForm).then((res) => {
           if (res.code === 0) {
             ElMessage.success(`催单上传成功。`);
             reminderDialog.value = false;
-            reminderForm.value = {}
+            formRef.value.resetFields();
+            uploadFileRef.value.clear();
           }
         })
       }
@@ -1279,7 +1285,6 @@ export default defineComponent({
     }
 
     const getImageLink = (linkId) => {
-      console.log(linkId);
       reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
     }
 
@@ -1426,6 +1431,7 @@ export default defineComponent({
         return gameType
       }
     }
+    const formRef = ref(null)
 
     return {
       recordActive,
@@ -1465,7 +1471,9 @@ export default defineComponent({
       getDepositType,
       getGameType,
       openWithdrawConfirm,
-      loadingBtn
+      loadingBtn,
+      clearItems,
+      formRef
     };
   }
 });
