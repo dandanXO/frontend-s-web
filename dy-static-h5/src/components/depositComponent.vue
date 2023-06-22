@@ -141,7 +141,7 @@
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
-    <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
+    <q-card style="width: 100%; padding: 20px" class="bg-dyblue text-black">
       <q-card-section class="q-mb-md">
         您已被重定向到您的特定银行以继续进行存款。<br /><br />
         入金成功后会反映这里。
