@@ -209,7 +209,7 @@ export default defineComponent({
           p.status = '0.00'
         }
         store.getBalance();
-        refreshBalance(p.code, true);
+        refreshBalance(p.code);
       });
     }
 
@@ -231,20 +231,16 @@ export default defineComponent({
       transferModalVisible.value = true;
       transferInfo.amount = "";
     };
-    const refreshBalance = (plat, isTransferAllOut) => {
+    const refreshBalance = (plat) => {
       setTimeout(()=> {
         if (plat === MAIN){
           store.getBalance();
         } else {
-            const platform = platforms.find(p => p.code === plat);
             loadBalance(plat).then((response) => {
               console.log(plat)
               const plaform = platforms.find(p => p.code === plat);
               if (plaform) {
                 plaform.amount = response.data;
-                if (plaform.amount === 0 && !isTransferAllOut) {
-                  ElMessage.error(plat + ' 场馆没有金额');
-                }
               }
             }).catch(e => {
               const plaform = platforms.find(p => p.code === plat);
@@ -269,7 +265,7 @@ export default defineComponent({
           });
         });
         platforms.forEach(element => {
-          refreshBalance(element.code, false)
+          refreshBalance(element.code)
         });
       }).catch((error) => {
           console.log(error.message);
@@ -303,7 +299,7 @@ export default defineComponent({
                 type: 'success',
               })
               store.getBalance();
-              refreshBalance(transferInfo.platform, false);
+              refreshBalance(transferInfo.platform);
               cancelTransfer();
             }
           }).catch((error) => {

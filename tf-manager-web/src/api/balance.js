@@ -1,6 +1,6 @@
 import https from "@/utils/https";
-import { Method } from "axios-mapper";
+import { ContentType, Method } from "axios-mapper";
 
-export const getBalance = () => {
-  return https().request("/memberWithdrawRecord/withdrawPlatformBalance", Method.GET);
+export const getBalance = (siteId) => {
+  return https().request("/memberWithdrawRecord/withdrawPlatformBalance", Method.GET, { siteId: siteId }, ContentType.form);
 };
