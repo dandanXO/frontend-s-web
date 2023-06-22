@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="withdrawBankView">
     <div class="q-pa-md text-bold text-center" style="color: #33bcd4">
       专属网址：{{ store.evip }}
     </div>
-    <div>
+    <div class="widthdrawBankView--content">
       <div class="account-content text-center">
         <div class="flex-box flex-wrap bank-card-list">
           <template
@@ -14,59 +14,17 @@
               v-if="bc.bankName"
               @click="showCard(bc, index)"
               class="q-pa-sm text-left"
-              style="color: #000"
+              style="color: #000; border-radius: 0"
             >
-              <div class="icon">
-                <img
-                  v-if="bc.bankIcon"
-                  :src="imgURL + bc.bankIcon"
-                  style="width: 100%; max-width: 40px"
-                />
-              </div>
               <div class="cardname q-pa-xs">
                 <div class="txt-center">
                   {{ bc.bankName }}
                   <!-- <div>Bank Account Number</div> -->
                 </div>
               </div>
-              <q-separator class="q-my-xs" />
+              <q-separator class="q-my-xs" style="background: #666" />
               <div class="bottom q-pa-xs">
                 <div class="flex-box cards">
-                  <!-- <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                {{ b }}
-              </div> -->
-                  <!-- <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                {{ b.slice(0, 4) }}
-              </div>
-              <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                ****
-              </div>
-              <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                ****
-              </div>
-              <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                {{ b.slice(b.length - 4, b.length) }}
-              </div> -->
                   <div
                     v-for="b in bc.cardNumber.split()"
                     :key="b"
@@ -79,11 +37,12 @@
                   @click="unbindBankCard(bc)"
                   color="dyblue"
                   label="解绑"
+                  style="background-color: rgb(46, 66, 148)"
                 />
               </div>
             </q-card>
           </template>
-          <div class="q-pa-sm">
+          <div class="q-pa-sm widthdrawBankView--content-cta">
             <q-btn
               color="dyblue"
               style="width: 100%"
@@ -91,13 +50,6 @@
               @click="bankCardModal('bank')"
             />
           </div>
-          <!-- <div
-            class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
-            @click="bankCardModal('bank')"
-          >
-            <RiLink />
-            Add Bank Card
-          </div> -->
         </div>
       </div>
     </div>
@@ -649,5 +601,24 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
   }
+}
+
+.withdrawBankView {
+  height: calc(100vh - 109px);
+  display: flex;
+  flex-direction: column;
+}
+
+.widthdrawBankView--content > div > div,
+.widthdrawBankView--content > div,
+.widthdrawBankView--content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.widthdrawBankView--content-cta {
+  margin-top: auto;
+  padding-block: 1.2em;
 }
 </style>
