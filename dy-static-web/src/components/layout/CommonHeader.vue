@@ -1872,6 +1872,9 @@ body {
     &.lottery-bbin {
       background-image: url("../../assets/lottery/lottery_bbin.webp");
     }
+    &.lottery-sgwin {
+      background-image: url("../../assets/lottery/lottery_sgwin.webp");
+    }
   }
 
   &.games, &.live {
