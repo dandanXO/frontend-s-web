@@ -687,8 +687,9 @@ body {
     width: 300px;
     height: 200px;
     border-radius: 5px;
-    background-image: url("../../assets/images/finance/hk.png");
+    // background-image: url("../../assets/images/finance/hk.png");
     background-position: right;
+    background: #69001c;
     // background: #24222e;
     // background: url(../../assets/images/account/bank_card_lrg_bg.png) no-repeat
     //   0% 50%;
@@ -698,7 +699,7 @@ body {
     align-items: center;
     margin-right: -280px;
     font-size: 12px;
-    color: #b79f9f;
+    color: #ffffff;
 
     cursor: pointer;
     transition: all 0.3s ease-in;
