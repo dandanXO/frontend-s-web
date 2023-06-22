@@ -1,7 +1,7 @@
 import { server } from "@/utils/request";
 
 export function loadBalance(platform) {
-  return server.REST.get("/session/balance?v=123", {
+  return server.REST.get("/session/balance?v=" + new Date().getTime(), {
     params: {
       platform,
     },

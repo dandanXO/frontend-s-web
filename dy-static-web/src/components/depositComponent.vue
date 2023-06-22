@@ -72,7 +72,6 @@
             prop="bankId"
             name="bankId"
             value="bankName"
-            required
           >
             <template #label></template>
             <BankComponent
@@ -434,13 +433,27 @@ function doDeposit(data) {
     if (d.code === 0) {
       doIt(d).then((resp) => {
           const response = resp.data.result
-        if (response.data) {
+        if (response.payResultType === 'RENDER_HTML') {
           if (response.paramKey === null || response.paramKey === "") {
           isDisplay.value = true;
           submitMessage.value = response.data.split(',');
           }
         } else {
-          isDeposited.value = true
+          const newWin = window.open(`/depositLoading`, "Bank");
+          newWin.localStorage.setItem("formDetails", JSON.stringify(resp));
+          window.addEventListener(
+              "message",
+              (event) => {
+                if (event.data?.msg) {
+                  if (event.data.msg === "success") {
+                    isDeposited.value = true;
+                  } else {
+                    // message.error(event.data.msg, 4);
+                  }
+                }
+              },
+              { once: true }
+          );
         }
       });
     }

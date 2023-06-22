@@ -246,7 +246,7 @@
               <div
                 class="game-platform"
                 @click="openGame('TCG彩票', 'TCG', '')"
-                style="margin-top: 59px; margin-left: 38px"
+                style="margin-top: 118px; margin-left: 38px"
               >
                 <img src="../assets/home/tcg.png" />
                 <div>TCG彩票</div>
@@ -258,14 +258,6 @@
               >
                 <img src="../assets/home/bbin.png" />
                 <div>BBIN彩票</div>
-              </div>
-              <div
-                class="game-platform"
-                @click="openGame('SG-WIN彩票', 'SGWin', 'imlotto30000')"
-                style="margin-left: 22px"
-              >
-                <img src="../assets/home/sgwin.png" />
-                <div>SG-WIN彩票</div>
               </div>
             </div>
           </div>

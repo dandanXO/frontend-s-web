@@ -15,17 +15,17 @@
     </div>
     <div class="play-box">
       <div class="game-content">
-        <div class="fish1"></div>
         <div class="fish5"></div>
+        <div class="fish1"></div>
       </div>
       <div class="game-btn">
         <button
             class="btn fish-begin"
-            @click="openGame('GPS', 'GPS', 'GPS')"
+            @click="openGame('GPS捕鱼', 'GPS', '7202')"
         ></button>
         <button
             class="btn fish-begin"
-            @click="openGame('AG', 'AG', '')"
+            @click="openGame('AG捕鱼', 'AG', '')"
         ></button>
       </div>
     </div>
@@ -172,7 +172,7 @@ export default defineComponent({
 
 .game-content {
   padding: 131px 25px 0px;
-  width: 1245px;
+  width: 1215px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
