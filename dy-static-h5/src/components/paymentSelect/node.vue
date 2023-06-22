@@ -202,7 +202,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 $group-color: #76c034;
 // $node-color: #dd4645;
-$node-color: #45fefa;
+$node-color: #4ab6fd;
 .title {
   color: $group-color;
   margin: 10px auto;
@@ -343,7 +343,7 @@ $node-color: #45fefa;
 
         & > div {
           font-size: 12px;
-          color: #a0bcd6;
+          color: #000000;
         }
 
         img {

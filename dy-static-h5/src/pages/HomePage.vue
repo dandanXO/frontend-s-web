@@ -479,15 +479,22 @@ export default defineComponent({
         pf.forEach(element => {
           if (element.gameType.includes("ESPORT")) {
             var espObj = Object.assign({}, element)
+            if (espObj.code === 'TFGaming') {
+              espObj.title = '东赢电竞'
+            }
+            if (espObj.code === 'IA') {
+              espObj.title = '小艾电竞'
+            }
+            if (!espObj.title) {
+              espObj.title = espObj.code + '电竞'
+            }
             espObj.icon = 'esport'
-            espObj.title = '东赢电竞'
             espObj.subtitle = '电竞赛事'
             esport.value.push(espObj);
           }
           if (element.gameType.includes("SPORT") && !element.gameType.includes("ESPORT")) {
 
             var spObj = Object.assign({}, element)
-            console.log(spObj)
             if (spObj.code === 'IM') {
               spObj.title = 'IM体育'
             }
@@ -496,6 +503,9 @@ export default defineComponent({
             }
             if (spObj.code === 'CR') {
               spObj.title = 'CR体育'
+            }
+            if (spObj.code === 'SABA') {
+              spObj.title = spObj.code + '体育'
             }
             spObj.icon = 'sport'
             spObj.subtitle = '体育赛事'
@@ -523,7 +533,6 @@ export default defineComponent({
               lottery.value.push(lottObj);
           }
           if (element.gameType.includes("SLOT")) {
-            console.log(element.gameType)
               var slotObj = Object.assign({}, element)
               slotObj.title = slotObj.name + ' 电子'
               slotObj.icon = 'slot'
@@ -813,7 +822,7 @@ export default defineComponent({
     margin: 0 auto;
     overflow: hidden;
     // min-height: 25vw;
-    min-height: 10vw;
+    min-height: 95px;
     padding-top: 0;
     margin-bottom: 5px;
     a {

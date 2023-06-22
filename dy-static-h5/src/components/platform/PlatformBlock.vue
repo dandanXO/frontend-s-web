@@ -46,10 +46,13 @@ const props = defineProps({
 <style lang="scss">
 .game_content {
   position: absolute;
-  text-align: center;
-  top: 45%;
-  left: 55%;
-  transform: translate(-50%, -50%);
+  // text-align: center;
+  // top: 45%;
+  // left: 55%;
+  // transform: translate(-50%, -50%);
+    top: 25%;
+    left: 150px;
+    text-align: left;
   .game_title {
     font-size: 1.2rem;
     color: #fff;
