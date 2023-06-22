@@ -62,6 +62,7 @@
                       prop="realName"
                       :rules="[
                         { required: true, message: '请输入名字' },
+                        { pattern: '^([\u4e00-\u9fa5]*)$', message: '请输入中文字符', trigger: 'change'}
                       ]"
                     >
                       <el-input
@@ -91,6 +92,7 @@
                       :rules="[{ required: true, message: '请输入生日' }]"
                     >
                       <el-date-picker
+                        style="max-width: 190px;"
                         v-model="updateFormDetails.birthday"
                         value-format="YYYY-MM-DD"
                         placeholder="生日"
@@ -157,6 +159,8 @@
               </div>
 
                 <el-button
+                  style="margin-top: 10px;"
+                  :loading="loadingBtn"
                   class="common-btn"
                   v-if="isEdit"
                   @click="updateState"
@@ -173,7 +177,7 @@
                     !personalState.memberInfo.telephone)
                 "
                 @click="isEdit = !isEdit"
-                >Edit</el-button
+                >编辑</el-button
               >
             </div>
           </div>
@@ -238,6 +242,7 @@
         </el-form-item>
         <el-form-item class="txt-center">
           <el-button
+            :loading="loadingPwBtn"
             class="txt-center submit-btn common-btn"
             type="submit"
             @click="submitUpdatePwd"
@@ -287,7 +292,7 @@
               </el-button>
             </el-space>
         </el-form-item>
-        <el-button class="common-btn verification-btn" @click="submitUpdateSecurity"
+        <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity"
           >提交
         </el-button>
       </el-form>
@@ -297,6 +302,7 @@
       v-model="verificationModalVisible"
       title="验证码"
       width="500px"
+      align-center
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
         <el-form-item ref="captchaCode" prop="captchaCode" :rules="[
@@ -348,6 +354,9 @@ export default defineComponent({
     InfoFilled
   },
   setup() {
+    const loadingBtn = ref(false)
+    const loadingPwBtn = ref(false)
+    const loadingSecurityBtn = ref(false)
     const isEmailSending = ref(false)
     const verificationDetails = reactive({
       memberInfo: {}
@@ -434,7 +443,7 @@ export default defineComponent({
           // message.success("Success")
 
           ElMessage({
-            message: 'Success',
+            message: '成功',
             type: 'success',
           })
           isEmailSending.value = false
@@ -449,6 +458,7 @@ export default defineComponent({
     })
     }
     const submitUpdateSecurity = () => {
+      loadingSecurityBtn.value = true
       updateSecurityFormRef.value
         .validate()
         .then(() => {
@@ -457,7 +467,7 @@ export default defineComponent({
             if (res.code === 0) {
               // message.success("Success");
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               updateSecurityModalVisible.value = false
@@ -470,6 +480,7 @@ export default defineComponent({
         }).catch((error) => {
         console.log("error", error);
       });
+      loadingSecurityBtn.value = false
     };
 
     const updateSecurityVerifiedRules = {
@@ -512,6 +523,7 @@ export default defineComponent({
       updatePwdModalVisible.value = true;
     };
     const submitUpdatePwd = () => {
+      loadingPwBtn.value = true
       updatePwdFormRef.value
         .validate()
         .then(() => {
@@ -519,7 +531,7 @@ export default defineComponent({
             if (response.code === 0) {
               // message.success("success");
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               updatePwdModalVisible.value = false;
@@ -533,6 +545,7 @@ export default defineComponent({
         }).catch((error) => {
           console.log("error", error);
       });
+      loadingPwBtn.value = false
     };
     const updatePwdRules = {
       oldPassword: [
@@ -570,6 +583,7 @@ export default defineComponent({
     )
     const updateFormRef = ref()
     const updateState = () => {
+      loadingBtn.value = true
       updateFormRef.value
         .validate()
         .then(() => {
@@ -612,7 +626,9 @@ export default defineComponent({
       // if (field === 'birthday' {
       //   isEditBirthday.value = false
       // }
+      loadingBtn.value = false
     }
+
     return {
       personalState,
       updateSecurityFormRef,
@@ -642,7 +658,10 @@ export default defineComponent({
       store,
       regDevice,
       openWindow,
-      captchaUpdateRef
+      captchaUpdateRef,
+      loadingBtn,
+      loadingPwBtn,
+      loadingSecurityBtn
     };
   }
 });

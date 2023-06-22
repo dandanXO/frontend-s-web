@@ -36,7 +36,7 @@
             </el-form>
           </div>
           <div class="unbind-record-wrapper">
-            <el-table :data="dataState.deposit" :loading="loading">
+            <el-table :data="dataState.deposit" v-loading="loading">
               <template #empty>
                 <EmptyData />
               </template>
@@ -665,6 +665,7 @@
               color="#3bafda"
               class="common-btn"
               style="margin-left: 110px"
+              :loading="loadingBtn"
               @click="submitReminder()"
               >提交</el-button
             >
@@ -693,6 +694,7 @@ import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
 
+const loadingBtn = ref(false);
 const store = userStore()
 const uploadFileRef = ref();
 const recordActive = ref("deposit");
@@ -706,7 +708,8 @@ const searchForm = reactive({
     startDate: "",
     endDate: "",
     current: 1,
-    size: 10
+    size: 10,
+    pagingState: null
   },
   rebates: {
     startDate: "",
@@ -738,7 +741,8 @@ const searchForm = reactive({
     platform: "",
     memberId: store.id,
     current: 1,
-    size: 10
+    size: 10,
+    pagingState: null
   },
   betRecord: {
     platform: "",
@@ -1068,11 +1072,13 @@ const tableColumns = {
 const loading = ref(false);
 const pagination = reactive({
   pageSize: 20,
-  total: 0
+  total: 0,
+  pagingState: ""
 });
 const betPagination = reactive({
   pageSize: 20,
-  total: 0
+  total: 0,
+  pagingState: ""
 });
 
 export default defineComponent({
@@ -1102,9 +1108,20 @@ export default defineComponent({
         })
         return;
       }
+      
+      if (recordActive.value === 'turnover' || recordActive.value === 'gameBetRecord') {
+        if (searchForm[recordActive.value].current === 1) {
+          searchForm[recordActive.value].pagingState = null;
+        } else {
+          searchForm[recordActive.value].pagingState = pagination.pagingState;
+        }
+      }
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {
           pagination.total = response.data.total;
+          if (recordActive.value === 'turnover' || recordActive.value === 'gameBetRecord') {
+            pagination.pagingState = response.data.pagingState;
+          }
           const dataSource = dataState[recordActive.value];
           //clear array and then push new record
           dataSource.splice(0);
@@ -1124,6 +1141,11 @@ export default defineComponent({
     };
     const recordBetPage = (pagination) => {
       searchForm.betRecord.current = pagination.current
+      if (pagination.current === 1) {
+        searchForm.betRecord.pagingState = null;
+      } else {
+        searchForm.betRecord.pagingState = betPagination.pagingState;
+      }
       betDetails(selectedBetRecord);
     }
 
@@ -1219,6 +1241,7 @@ export default defineComponent({
       })
     }
     const submitReminder = () => {
+      loadingBtn.value = true;
       console.log(reminderForm);
       if (!reminderForm.photos) {
         ElMessage.warning(
@@ -1233,6 +1256,7 @@ export default defineComponent({
           }
         })
       }
+      loadingBtn.value = false;
     }
     const betDetails = (record) => {
       dataState.betRecord = []
@@ -1244,11 +1268,13 @@ export default defineComponent({
         memberId: searchForm.betRecord.memberId,
         current: searchForm.betRecord.current,
         size: searchForm.betRecord.size,
+        pagingState: searchForm.betRecord.pagingState
       }
       loadRecords("betRecord", obj).then((response) => {
         if (response.code === 0) {
           betPagination.total = response.data.total;
           betRecordDialog.value = true
+          betPagination.pagingState = response.data.pagingState;
           // dataState.betRecord = response.data.records
           dataState.betRecord.push(...response.data.records)
         }
@@ -1400,7 +1426,8 @@ export default defineComponent({
       getWithdrawStatus,
       getDepositStatus,
       getDepositType,
-      openWithdrawConfirm
+      openWithdrawConfirm,
+      loadingBtn
     };
   }
 });

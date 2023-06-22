@@ -10,6 +10,7 @@
       option-value="id"
       option-label="name"
       :rules="verifyBank"
+      @update:model-value="selectBank()"
     />
   </div>
 </template>
@@ -37,6 +38,7 @@ const verifyBank = ref([
 const selectedBankId = ref();
 
 function selectBank() {
+  // console.log(selectedBankId)
   emits("selected", selectedBankId);
 }
 

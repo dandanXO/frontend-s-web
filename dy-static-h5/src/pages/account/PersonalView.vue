@@ -23,7 +23,8 @@
         v-model="formDetail.realName"
         label="姓名"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入姓名']"
+        :rules="[(val) => (val && val.length > 0) || '请输入姓名',
+                isValidName]"
         label-color=""
         :readonly="personalState.memberInfo.realName ? true : false"
       />
@@ -317,6 +318,12 @@ export default defineComponent({
         }
       });
     };
+
+    const isValidName = () => {
+      const namePattern =
+        /^([\u4e00-\u9fa5]*)$/;
+      return namePattern.test(formDetail.realName) || "请输入中文字符";
+    };
     return {
       searchForm,
       personalState,
@@ -348,7 +355,8 @@ export default defineComponent({
       birthdayRef,
       phoneRef,
       moment,
-      canEdit
+      canEdit,
+      isValidName
     };
   }
 });

@@ -129,6 +129,7 @@ export default defineComponent({
 import {defineComponent, reactive} from "vue";
 
 import { uploadImage } from '@/api/image';
+import { ElMessage } from "element-plus";
 export default defineComponent({
   emits: ["photoResponse"],
   

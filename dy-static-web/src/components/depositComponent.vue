@@ -35,8 +35,7 @@
           label-width="100px"
           label-suffix=":"
         >
-          <el-row :gutter="20">
-            <el-col :span="12">
+        <el-space>
               <el-form-item class="helptxt" label="金额" prop="localAmount">
                 <el-input v-if="amountList.length === 0"
                   v-model="form.localAmount"
@@ -49,8 +48,6 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
-            <el-col :span="12">
               <div class="account-tip">
                 最低存款: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? 'USDT' : store.currency.label }}
                  <br />
@@ -58,8 +55,7 @@
                   activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
                 }} {{ isUSDT ? 'USDT' : store.currency.label }}
               </div>
-            </el-col>
-          </el-row>
+            </el-space>
 
           <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
@@ -76,12 +72,14 @@
             prop="bankId"
             name="bankId"
             value="bankName"
+            required
           >
             <template #label></template>
             <BankComponent
               ref="payTypeClass"
               :is="selectedPayType"
               :bank-list="bankCardList"
+              v-model="form.bankId"
               @selected="selectedBank"
             ></BankComponent>
           </el-form-item>
@@ -132,7 +130,7 @@
             </div> -->
           </el-form-item>
           <div class="txt-center">
-            <el-button size="large" @click="confirmDeposit" class="common-btn">
+            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">
               确定
             </el-button>
           </div>
@@ -163,11 +161,12 @@ import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
-import { InfoFilled } from "@element-plus/icons-vue";
+// import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 {
   RiSpamLine;
 }
+const loadingBtn = ref(false)
 const store = userStore();
 const formRef = ref();
 const isDeposited = ref(false);
@@ -263,193 +262,6 @@ const rules = {
 function initPay() {
   isLoading.value = true;
   loadPay().then((d) => {
-    // const d = {
-    //   code: 0,
-    //   data: {
-    //     payments: [
-    //       {
-    //         nodeName: "加密货币",
-    //         nodeIcon: "d643ccce-bfd0-474b-bf4a-214f9fba59c4.png",
-    //         promotionIcon: null,
-    //         groupId: 6451,
-    //         lineName: null,
-    //         children: [
-    //           {
-    //             nodeName: "USDT",
-    //             nodeIcon: "65576157-d927-4775-a731-387a5d04def2.png",
-    //             promotionIcon: null,
-    //             groupId: 6452,
-    //             lineName: null,
-    //             children: [
-    //               {
-    //                 nodeName: "TRC20-2",
-    //                 nodeIcon: "7caa11e8-e30f-4169-a2e0-9f2352f84f92.png",
-    //                 promotionIcon: null,
-    //                 paymentId: 88,
-    //                 payResultType: "GET_SUBMIT",
-    //                 payType: "USDTTRC",
-    //                 depositMin: 10.0,
-    //                 depositMax: 50000.0,
-    //                 currencyRate: 7.14,
-    //                 msg: '<a style="color:orange;" target="_blank">1. 若提交不出码请换其他金额重试，存款上分以到账的U数量为准！</a>\n<br>2. 虚拟币USDT教程： <a style="color:purple;text-decoration:underline;" href="https://qwzr2.radiotopdance.com/dy-deposit_guide.mp4" style="color: #eee;" target="_blank">视频教程</a> \n<a style="color:purple;text-decoration:underline;" href="https://m.dyvip98.com/wap/other/usdt.html" style="color: #eee;" target="_blank">图文教程</a> \n<br>3. 每日赠送1.5%最高588元，仅限单笔充值100 USDT以上 ！\n<br> 4. 热门交易所平台推荐： <a style="color:purple;text-decoration:underline;" href="https://www.okex.com/" style="color: #eee;" target="_blank">Okex</a> <a style="color:purple;text-decoration:underline;" href="https://www.binance.com/zh-CN" style="color: #eee;" target="_blank">币安</a> ',
-    //                 extra: {
-    //                   banks: [],
-    //                   amountArr: []
-    //                 },
-    //                 group: false
-    //               },
-    //               {
-    //                 nodeName: "ERC20",
-    //                 nodeIcon: "fe966e73-f6ea-4907-8b8d-a364305fb9a3.png",
-    //                 promotionIcon: null,
-    //                 paymentId: 89,
-    //                 payResultType: "GET_SUBMIT",
-    //                 payType: "USDTERC",
-    //                 depositMin: 20.0,
-    //                 depositMax: 50000.0,
-    //                 currencyRate: 7.14,
-    //                 msg: '<a style=""color:orange;"" target=""_blank"">1. 若提交不出码请换其他金额重试，存款上分以到账的U数量为准！</a>\n<br>2. 虚拟币USDT教程： <a style=""color:purple;text-decoration:underline;"" href=""https://qwzr2.radiotopdance.com/dy-deposit_guide.mp4"" style=""color: #eee;"" target=""_blank"">视频教程</a> \n<a style=""color:purple;text-decoration:underline;"" href=""https://m.dyvip98.com/wap/other/usdt.html"" style=""color: #eee;"" target=""_blank"">图文教程</a> \n<br>3. 每日赠送1.5%最高588元，仅限单笔充值100 USDT以上 ！\n<br> 4. 热门交易所平台推荐： <a style=""color:purple;text-decoration:underline;"" href=""https://www.okex.com/"" style=""color: #eee;"" target=""_blank"">Okex</a> <a style=""color:purple;text-decoration:underline;"" href=""https://www.binance.com/zh-CN"" style=""color: #eee;"" target=""_blank"">币安</a> ',
-    //                 extra: {
-    //                   banks: [],
-    //                   amountArr: []
-    //                 },
-    //                 group: false
-    //               }
-    //             ],
-    //             group: true
-    //           }
-    //         ],
-    //         group: true
-    //       },
-    //       {
-    //         nodeName: "DY银行转账",
-    //         nodeIcon: "63d74df4-07cf-46ea-9ea3-0712123c81d2.png",
-    //         promotionIcon: null,
-    //         paymentId: 85,
-    //         payResultType: "RENDER_HTML",
-    //         payType: "OFFLINE",
-    //         depositMin: 100.0,
-    //         depositMax: 200000.0,
-    //         currencyRate: 1.0,
-    //         msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
-    //         extra: {
-    //           banks: [
-    //             {
-    //               code: "ABC",
-    //               name: "中国农业银行",
-    //               id: 20
-    //             }
-    //           ],
-    //           amountArr: []
-    //         },
-    //         group: false
-    //       },
-    //       {
-    //         nodeName: "VIP 转卡",
-    //         nodeIcon: "25b20a24-a23d-4917-b719-bf2441c77d38.png",
-    //         promotionIcon: "81384fb4-1e0f-4506-89d6-9e20ec03f9bf.png",
-    //         paymentId: 197,
-    //         payResultType: "GET_SUBMIT",
-    //         payType: "BANK",
-    //         depositMin: 3000.0,
-    //         depositMax: 50000.0,
-    //         currencyRate: 1.0,
-    //         msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 1. 请按照订单金额付款，否则无法核实到账\n<br> 2. 付款完成后请提供回单，可速度到账\n<br>每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
-    //         extra: {
-    //           banks: [],
-    //           amountArr: []
-    //         },
-    //         group: false
-    //       },
-    //       {
-    //         nodeName: "DYMGOpay卡转卡040",
-    //         nodeIcon: "SPECIALPAY",
-    //         promotionIcon: null,
-    //         paymentId: 141,
-    //         payResultType: "RENDER_HTML",
-    //         payType: "SPECIALPAY",
-    //         depositMin: 2000.0,
-    //         depositMax: 8000.0,
-    //         currencyRate: 1.0,
-    //         msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
-    //         extra: {
-    //           banks: [],
-    //           amountArr: []
-    //         },
-    //         group: false
-    //       },
-    //       {
-    //         nodeName: "DYDMPay2卡转卡337",
-    //         nodeIcon: "SPECIALPAY",
-    //         promotionIcon: null,
-    //         paymentId: 143,
-    //         payResultType: "RENDER_HTML",
-    //         payType: "SPECIALPAY",
-    //         depositMin: 3000.0,
-    //         depositMax: 20000.0,
-    //         currencyRate: 1.0,
-    //         msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
-    //         extra: {
-    //           banks: [],
-    //           amountArr: []
-    //         },
-    //         group: false
-    //       },
-    //       {
-    //         nodeName: "DYHCPay2卡转卡468",
-    //         nodeIcon: "SPECIALPAY",
-    //         promotionIcon: null,
-    //         paymentId: 144,
-    //         payResultType: "RENDER_HTML",
-    //         payType: "SPECIALPAY",
-    //         depositMin: 3000.0,
-    //         depositMax: 30000.0,
-    //         currencyRate: 1.0,
-    //         msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
-    //         extra: {
-    //           banks: [],
-    //           amountArr: []
-    //         },
-    //         group: false
-    //       },
-    //       {
-    //         nodeName: "DYMGOPay2卡转卡040",
-    //         nodeIcon: "SPECIALPAY",
-    //         promotionIcon: null,
-    //         paymentId: 145,
-    //         payResultType: "RENDER_HTML",
-    //         payType: "SPECIALPAY",
-    //         depositMin: 2000.0,
-    //         depositMax: 20000.0,
-    //         currencyRate: 1.0,
-    //         msg: '<a style=""color:orange;"" target=""_blank"">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>\n<br> 每日赠送0.5%最高100元，仅限单笔存款5000元以上！\n',
-    //         extra: {
-    //           banks: [],
-    //           amountArr: []
-    //         },
-    //         group: false
-    //       },
-    //       {
-    //         nodeName: "DY强盛小额转卡366",
-    //         nodeIcon: "QUICKPAYMENT",
-    //         promotionIcon: null,
-    //         paymentId: 185,
-    //         payResultType: "GET_SUBMIT",
-    //         payType: "QUICKPAYMENT",
-    //         depositMin: 300.0,
-    //         depositMax: 2000.0,
-    //         currencyRate: 1.0,
-    //         msg: '<a style="color:orange;" target="_blank">**只支持（账户本人）姓名存款，若违规操作会进行冻结审查，亏损自负！</a>',
-    //         extra: {
-    //           banks: [],
-    //           amountArr: []
-    //         },
-    //         group: false
-    //       }
-    //     ]
-    //   }
-    // };
-    
     if (d.code === 0) {
       payMethods.value = [];
       isLoading.value = false;
@@ -468,7 +280,6 @@ function initPay() {
 
 async function loadPrivilege(val) {
   privilegeList.value = [];
-  // hasPrivilege.value = false;
   await loadPrivileges(val.paymentId).then((d) => {
     if (d.code == 0) {
       privilegeList.value = d.data.privileges;
@@ -561,32 +372,21 @@ function checkPrivilege(v) {
 }
 
 function selectedBank(value) {
-  form.bankId = value;
+  form.bankId = value.value;
+  console.log(form.bankId)
 }
 
 function clearInfo() {
   isDeposited.value = false;
-  formRef.value.resetFields();
   form.localAmount = "";
+  form.bankId = "";
   selectedPrivilege.value = null;
   checkMinDepositAmt();
 }
 
-async function confirmDeposit() {
-  await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
-      (d) => {
-        if (d.code === 11002) {
-          form.localAmount = d.data.suggestion;
-          // message.error(d.message, 4);
-          ElMessage.error(d.message);
-        } else {
-          doDeposit();
-        }
-      },
-  );
-}
-
-function doDeposit() {
+function confirmDeposit() {
+  loadingBtn.value = true;
+  
   if (freePrivilege.value) {
     if (selectedPrivilege.value) {
       form.privilegeId = selectedPrivilege.value + "," + freePrivilege.value.id;
@@ -600,14 +400,15 @@ function doDeposit() {
       form.privilegeId = null;
     }
   }
-  formRef.value.validate().then(() => {
-    form.paymentId = activeMethod.value.paymentId;
-    if (store.token) {
-      verifyAmount(form.paymentId, form.localAmount)
-      .then((d) => {
-        if (d.code == 0) {
-          // newWin.location.href = d.data;
-          // newWin.location.href = resp
+  form.paymentId = activeMethod.value.paymentId;
+  formRef.value.validate().then(async() => {
+  await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
+      (d) => {
+        if (d.code === 11002) {
+          form.localAmount = d.data.suggestion;
+          // message.error(d.message, 4);
+          ElMessage.error(d.message);
+        } else {
           const copy = { ...form };
           const data = {};
           Object.entries(copy).forEach(([key, value]) => {
@@ -617,62 +418,36 @@ function doDeposit() {
           });
           data.bankCardId = 0;
           
-          postDeposit(data).then((d) => {
-          if (d.code === 0) {
-            doIt(d).then((resp) => {
-                const response = resp.data.result
-              if (response.data) {
-                if (response.paramKey === null || response.paramKey === "") {
-                isDisplay.value = true;
-                submitMessage.value = response.data.split(',');
-                }
-                // if (resp.paramKey === null || resp.paramKey === "") {
-                //   resp.data = ['北京银行,请联系在线客服获取,888888,1233']
-                //   isDisplay.value = true;
-                //   submitMessage.value = resp.data.split(',');
-                // }
-              } else {
-                isDeposited.value = true
-              }
-            });
-          }
-          else {
-            ElMessage.error(d.data.message);
-          }
-    })
-    .catch((error) => {
-            
-            doIt(d).then((resp) => {
-              if (resp) {
-                console.log(resp)
-              }
-            });
-      ElMessage.error(error.message);
-    });
-        } else {
-          ElMessage.error(d.message);
+          doDeposit(data);
         }
-      })
-      .catch((error) => {
-          ElMessage.error(error.message);
-      });
-      // const newWin = window.open(`/depositLoading`, "Bank");
-      // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-      // window.addEventListener(
-      //     "message",
-      //     (event) => {
-      //       if (event.data?.msg) {
-      //         if (event.data.msg === "success") {
-      //           isDeposited.value = true;
-      //         } else {
-      //           // message.error(event.data.msg, 4);
-      //         }
-      //       }
-      //     },
-      //     { once: true }
-      // );
-    }
+      },
+  ).catch((err) => {
+    console.log(err)
   });
+})
+    loadingBtn.value = false;
+}
+
+function doDeposit(data) {
+  
+  postDeposit(data).then((d) => {
+    if (d.code === 0) {
+      doIt(d).then((resp) => {
+          const response = resp.data.result
+        if (response.data) {
+          if (response.paramKey === null || response.paramKey === "") {
+          isDisplay.value = true;
+          submitMessage.value = response.data.split(',');
+          }
+        } else {
+          isDeposited.value = true
+        }
+      });
+    }
+  }).catch((err) => {
+    console.log(err)
+  });
+
 }
 
 async function verifyDepositAmount(r, v) {

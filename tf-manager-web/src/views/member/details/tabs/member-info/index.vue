@@ -23,16 +23,15 @@
           <span v-if="memberDetail.loginName !== null">{{ memberDetail.loginName }}</span>
           <span v-if="memberDetail.loginName === null">-</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
+        <el-descriptions-item label-align="left" label-class-name="member-label" :class-name="memberDetail.dupName === 'red'?'member-context-red':'member-context'">
           <template #label>
             <div>
               <svg-icon icon-class="user1" style="height: 16px;width: 16px;" />
               {{ t('fields.realName') }}
             </div>
           </template>
-          <span v-if="memberDetail.realName !== null && memberDetail.dupName === 'red'" style="background:red">{{ memberDetail.realName }}</span>
-          <span v-else-if="memberDetail.realName !== null">{{ memberDetail.realName }}</span>
-          <span v-if="memberDetail.realName === null">-</span>
+          <span v-if="memberDetail.realName !== null">{{ memberDetail.realName }} </span>
+          <span v-else-if="memberDetail.realName === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>
@@ -1468,6 +1467,11 @@ export default defineComponent({
 
 .member-context {
   width: 20%;
+}
+
+.member-context-red {
+  background: #ff0000;
+  color: white;
 }
 
 </style>

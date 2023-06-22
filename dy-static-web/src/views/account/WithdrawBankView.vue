@@ -121,7 +121,7 @@
           :row-key="(record) => record.bankName"
         ></el-table> -->
 
-          <el-table :data="dataSource" style="width: 100%" empty-text="暂无数据">
+          <el-table :data="dataSource" style="width: 100%" empty-text="暂无数据" v-loading="tblLoading">
             <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title" />
           </el-table>
           <el-divider />
@@ -262,6 +262,7 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
+    const tblLoading = ref(false);
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
     const store = userStore();
@@ -311,6 +312,7 @@ export default defineComponent({
     });
     const dataSource = ref();
     const searchRecord = () => {
+      tblLoading.value = true
       loadUnbindRecord(searchForm).then((response) => {
         if (response.code === 0) {
           dataSource.value = response.data.records
@@ -324,6 +326,7 @@ export default defineComponent({
         console.log(e.message);
         // message.error(e.message, 4);
       });
+      tblLoading.value = false
     };
 
 
@@ -436,7 +439,7 @@ export default defineComponent({
           addBankCard(bankCardInfo).then((response) => {
             if (response.code === 0) {
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               bankCardModalState.visible = false;
@@ -548,7 +551,8 @@ export default defineComponent({
       dataSource,
       imgURL,
       pagination,
-      handleCurrentChange
+      handleCurrentChange,
+      tblLoading
     };
   }
 });

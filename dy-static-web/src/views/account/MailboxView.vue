@@ -124,7 +124,7 @@
               </el-form-item>
               <el-form-item>
                 <template #label></template>
-                <el-button size="large" class="common-btn" type="submit" @click="onSubmit">
+                <el-button :loading="loadingBtn" size="large" class="common-btn" type="submit" @click="onSubmit">
                   提交
                 </el-button>
               </el-form-item>
@@ -150,6 +150,7 @@ export default defineComponent({
     Calendar
   },
   setup() {
+    const loadingBtn = ref(false)
     const mailboxData = ref([])
     const mailboxState = reactive({
       active: "inbox",
@@ -259,6 +260,7 @@ export default defineComponent({
       ],
     };
     const onSubmit = () => {
+      loadingBtn.value = true
       formRef.value
         .validate()
         .then(() => {
@@ -266,7 +268,7 @@ export default defineComponent({
               .then((response) => {
                 if(response.code === 0) {
                     ElMessage({
-                      message: 'Success',
+                      message: '成功',
                       type: 'success',
                     })
                     loadPersonalMailbox();
@@ -286,6 +288,7 @@ export default defineComponent({
           console.log(error);
           // message.error(error.message, 4)
         });
+        loadingBtn.value = false
     };
     return {
       mailboxState,
@@ -296,6 +299,7 @@ export default defineComponent({
       formRef,
       rules,
       onSubmit,
+      loadingBtn
     }
   },
 });
