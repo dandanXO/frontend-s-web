@@ -886,61 +886,27 @@ const tableColumns = {
     }
   ],
   gameBetRecord: [
-    // {
-    //   title: "รหัสเดิมพัน",
-    //   dataIndex: "betId"
-    // },
     {
-      title: "游戏名称",
-      dataIndex: "gameName"
+      title: "游戏时间",
+      dataIndex: "betTime",
+      slots: { customRender: "betTime" }
     },
     {
       title: "游戏平台",
       dataIndex: "platform"
     },
     {
-      title: "赌注",
+      title: "投注",
       dataIndex: "bet"
     },
     {
-      title: "支出",
+      title: "派彩",
       dataIndex: "payout"
     },
-    // {
-    //   title: "วงเงินก่อนหน้า",
-    //   dataIndex: "beforeBalance"
-    // },
-    // {
-    //   title: "วงเงินหลังจาก",
-    //   dataIndex: "afterBalance"
-    // },
-    // {
-    //   title: "สถานะการเดิมพัน",
-    //   dataIndex: "betStatus"
-    // },
     {
       title: "游戏类型",
       dataIndex: "gameType"
     },
-    // {
-    //   title: "เวลาเดิมพัน",
-    //   dataIndex: "betTime",
-    //   slots: { customRender: "betTime" }
-    // },
-    // {
-    //   title: "เวลาชำระเงิน",
-    //   dataIndex: "settleTime",
-    //   slots: { customRender: "settleTime" }
-    // },
-    // {
-    //   title: "ผลลัพท์",
-    //   dataIndex: "result"
-    // },
-    // {
-    //   title: "",
-    //   dataIndex: "actions",
-    //   slots: { customRender: "actions" }
-    // },
   ],
   betRecord: [
     // {
@@ -1108,7 +1074,7 @@ export default defineComponent({
         })
         return;
       }
-      
+
       if (recordActive.value === 'turnover' || recordActive.value === 'gameBetRecord') {
         if (searchForm[recordActive.value].current === 1) {
           searchForm[recordActive.value].pagingState = null;
