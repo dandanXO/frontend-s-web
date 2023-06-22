@@ -20,7 +20,7 @@
                 <img
                   v-if="bc.bankIcon"
                   :src="imgURL + bc.bankIcon"
-                  style="width: 100%"
+                  style="width: 100%; max-width: 40px"
                 />
               </div>
               <div class="cardname q-pa-xs">

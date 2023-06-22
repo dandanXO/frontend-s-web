@@ -17,11 +17,11 @@
           href="/wap/login.html?way=reg"
           label="注册"
           color="dyblue"
-        /> 
+        />
           href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
         <q-btn
           size="sm"
-          href="#"
+          href="https://kcx3zdl.ycylbj.com/dy_app.apk"
           target="_blank"
           label="立即下载"
           color="dyblue"
@@ -410,7 +410,7 @@ export default defineComponent({
     const lottery = ref([]);
     const slot = ref([]);
     const fishing = ref([]);
-    
+
     const ui = useUI();
     const scrollPageRef = ref(null);
     const isH5 = ref(true);
@@ -470,7 +470,7 @@ export default defineComponent({
     });
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
-    
+
     const getPlatList = () => {
       cached.get("PLATFORMS", () => api.get("/platform").then((res) => {
         return res
@@ -486,11 +486,11 @@ export default defineComponent({
           }
           if (element.gameType.includes("SPORT") && !element.gameType.includes("ESPORT")) {
 
-            var spObj = Object.assign({}, element)            
+            var spObj = Object.assign({}, element)
             console.log(spObj)
             if (spObj.code === 'IM') {
               spObj.title = 'IM体育'
-            } 
+            }
             if (spObj.code === 'IA') {
               spObj.title = '小艾体育'
             }
@@ -573,7 +573,7 @@ export default defineComponent({
           // sport.value.forEach(e => {
           //   if (e.code === 'IM') {
           //     e.title = 'IM体育'
-          //   } 
+          //   }
           //   if (e.code === 'IA') {
           //     e.title = '小艾体育'
           //   }
@@ -616,7 +616,7 @@ export default defineComponent({
         // sport.value.forEach(element => {
         //   if (element.code === 'IM') {
         //     element.title = 'IM体育'
-        //   } 
+        //   }
         //   if (element.code === 'IA') {
         //     element.title = '小艾体育'
         //   }
@@ -700,7 +700,7 @@ export default defineComponent({
       gamePage.gameList = gameListData.value;
       // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
     };
-    
+
     const announcementList = ref([]);
     const announcementTypes = ref([]);
     const loadAnnouncement = () => {
