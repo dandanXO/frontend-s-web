@@ -436,7 +436,7 @@ export default defineComponent({
           addBankCard(bankCardInfo).then((response) => {
             if (response.code === 0) {
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               bankCardModalState.visible = false;

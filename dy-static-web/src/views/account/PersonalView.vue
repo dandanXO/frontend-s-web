@@ -62,6 +62,7 @@
                       prop="realName"
                       :rules="[
                         { required: true, message: '请输入名字' },
+                        { pattern: '^([\u4e00-\u9fa5]*)$', message: '请输入中文字符', trigger: 'change'}
                       ]"
                     >
                       <el-input
@@ -173,7 +174,7 @@
                     !personalState.memberInfo.telephone)
                 "
                 @click="isEdit = !isEdit"
-                >Edit</el-button
+                >编辑</el-button
               >
             </div>
           </div>
@@ -434,7 +435,7 @@ export default defineComponent({
           // message.success("Success")
 
           ElMessage({
-            message: 'Success',
+            message: '成功',
             type: 'success',
           })
           isEmailSending.value = false
@@ -457,7 +458,7 @@ export default defineComponent({
             if (res.code === 0) {
               // message.success("Success");
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               updateSecurityModalVisible.value = false
@@ -519,7 +520,7 @@ export default defineComponent({
             if (response.code === 0) {
               // message.success("success");
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               updatePwdModalVisible.value = false;
@@ -613,6 +614,7 @@ export default defineComponent({
       //   isEditBirthday.value = false
       // }
     }
+
     return {
       personalState,
       updateSecurityFormRef,

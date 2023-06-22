@@ -266,7 +266,7 @@ export default defineComponent({
               .then((response) => {
                 if(response.code === 0) {
                     ElMessage({
-                      message: 'Success',
+                      message: '成功',
                       type: 'success',
                     })
                     loadPersonalMailbox();

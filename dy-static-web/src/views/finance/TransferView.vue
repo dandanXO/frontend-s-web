@@ -195,47 +195,59 @@ export default defineComponent({
         if (p.amount > 0) {
           transferInfo.platform = p.code
           transferInfo.amount = p.amount
-          p.status = 'Transferring';
+          p.status = '平台余额转出中';
           withdrawAll(transferInfo).then((res) => {
             if (res.code === 0) {
-              p.status = 'Transferred'
+              p.status = '已转出'
               cancelTransfer();
             } else {
-              p.status = 'Transfer Failed'
+              p.status = '转出失败'
             }
           })
         } else {
           p.status = '0.00'
         }
         store.getBalance();
-        refreshBalance(p.code);
+        refreshBalance(p.code, true);
       });
     }
 
     const refreshAllModal = () => {
+      store.getBalance();
       platforms.forEach(p => {
-        store.getBalance();
         p.amount = 'Loading'
-        refreshBalance(p.code);
+        refreshBalance(p.code, false);
       });
     }
     const transferModal = (i, p) => {
+      if (formRef.value) {
+        formRef.value.resetFields();
+      }
       transferTypeIndex.value = i;
       transferInfo.platform = p.code;
       transferInfo.currentAmt = p.amount;
       transferModalVisible.value = true;
+      transferInfo.amount = "";
     };
-    const refreshBalance = (plat) => {
+    const refreshBalance = (plat, isTransferAllOut) => {
       setTimeout(()=> {
         if (plat === MAIN){
           store.getBalance();
         } else {
             loadBalance(plat).then((response) => {
+              console.log(plat)
               const plaform = platforms.find(p => p.code === plat);
               if (plaform) {
                 plaform.amount = response.data;
+                if (plaform.amount === 0 && !isTransferAllOut) {
+                  ElMessage.error(plat + ' 场馆没有金额');
+                }
               }
             }).catch(e => {
+              const plaform = platforms.find(p => p.code === plat);
+              if (plaform) {
+                plaform.amount = 0;
+              }
               console.log(e)
             });
         }
@@ -254,7 +266,7 @@ export default defineComponent({
           });
         });
         platforms.forEach(element => {
-          refreshBalance(element.code)
+          refreshBalance(element.code, false)
         });
       }).catch((error) => {
           console.log(error.message);
@@ -273,7 +285,7 @@ export default defineComponent({
       loadingTransfer.value = true
       if (transferTypeIndex.value === 1) {
         if (transferInfo.amount > transferInfo.currentAmt) {
-          ElMessage.error('平台余额不足');
+          ElMessage.error(transferInfo.platform + ' 平台余额不足');
           loadingTransfer.value = false
           return
         }
@@ -281,14 +293,14 @@ export default defineComponent({
       formRef.value
         .validate()
         .then(() => {
-          transfer(transferTypeIndex.value, transferInfo).then((res) => {
+          transfer(transferTypeIndex.value, transferInfo).then(async(res) => {
             if (res.code === 0) {
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               store.getBalance();
-              refreshBalance(transferInfo.platform);
+              refreshBalance(transferInfo.platform, false);
               cancelTransfer();
             }
           }).catch((error) => {
