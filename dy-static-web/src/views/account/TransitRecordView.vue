@@ -171,6 +171,12 @@
                     {{ getTurnoverType(scope.row.type) }}
                   </div>
                 </template>
+
+                <template v-if="tbl.dataIndex === 'subType'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getSubType(scope.row.subType) }}
+                  </div>
+                </template>
               </el-table-column>
             </el-table>
             <el-divider />
@@ -505,6 +511,32 @@
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
+                <template
+                  v-if="tbl.dataIndex === 'bet'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span v-if="scope.row.bet !== null">{{ scope.row.bet }}</span>
+                    <span v-else>0</span>
+                  </div>
+                </template>
+                <template
+                  v-if="tbl.dataIndex === 'payout'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span v-if="scope.row.payout !== null">{{ scope.row.payout }}</span>
+                    <span v-else>0</span>
+                  </div>
+                </template>
+                <template
+                  v-if="tbl.dataIndex === 'gameType'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    {{ getGameType(scope.row.gameType) }}
+                  </div>
+                </template>
               </el-table-column>
             </el-table>
             <el-divider />
@@ -620,6 +652,7 @@
         width="50%"
         align-center
         style="max-width: 800px"
+        :before-close="clearItems"
       >
         <span>
           <el-form
@@ -1163,6 +1196,10 @@ export default defineComponent({
     const selectedBetRecord = ref({})
     const betRecordDialog = ref(false)
     const reminderDialog = ref(false)
+    const clearItems = (done) => {
+      uploadFileRef.value.clear();
+      done()
+    }
     const openReminder = (record) => {
       getVerifyingFeedbackCount().then((res) => {
         if (res.code === 0) {
@@ -1208,17 +1245,18 @@ export default defineComponent({
     }
     const submitReminder = () => {
       loadingBtn.value = true;
-      console.log(reminderForm);
       if (!reminderForm.photos) {
         ElMessage.warning(
             `请上传图片提交`
         );
       } else {
+        console.log(reminderForm)
         saveFinanceFeedback(reminderForm).then((res) => {
           if (res.code === 0) {
             ElMessage.success(`催单上传成功。`);
             reminderDialog.value = false;
-            reminderForm.value = {}
+            formRef.value.resetFields();
+            uploadFileRef.value.clear();
           }
         })
       }
@@ -1228,7 +1266,6 @@ export default defineComponent({
       dataState.betRecord = []
       selectedBetRecord.value = record
       const obj = {
-        gameName: record.gameName,
         platform: record.platform,
         betTime: moment(record.betTime).format('YYYY-MM-DD'),
         memberId: searchForm.betRecord.memberId,
@@ -1248,7 +1285,6 @@ export default defineComponent({
     }
 
     const getImageLink = (linkId) => {
-      console.log(linkId);
       reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
     }
 
@@ -1264,10 +1300,28 @@ export default defineComponent({
         return '优惠' // 优惠
       }  else if (turnoverType === 'DEPOSIT') {
         return '存款' // 存款
+      }  else if (turnoverType === 'TRANSFER') {
+        return '转账' // 转账
+      }  else if (turnoverType === 'ADJUST') {
+        return '账变' // 账变
       } else {
         return turnoverType
       }
     }
+
+    const getSubType = (subType) => {
+      if (!subType) {
+        return ''
+      }
+      if (subType === 'DEPOSIT') {
+        return '转进' // 转进
+      } else if (subType === 'WITHDRAW') {
+        return '转出' // 转出
+      } else {
+        return subType
+      }
+    }
+
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
         return '申请中' //Applying
@@ -1355,7 +1409,29 @@ export default defineComponent({
         return depositType
       }
     }
-
+    const getGameType = (gameType) => {
+      if (!gameType) {
+        return ''
+      }
+      if (gameType === 'SLOT') {
+        return '老虎机' // Slot
+      } else if (gameType === 'LIVE') {
+        return '真人' // Live
+      } else if (gameType === 'FISH') {
+        return '捕鱼' // Fish
+      } else if (gameType === 'SPORT') {
+        return '体育' // Sport
+      } else if (gameType === 'ESPORT') {
+        return '电竞' // E-Sport
+      } else if (gameType === 'POKER') {
+        return '棋牌' // Poker
+      } else if (gameType === 'LOTTERY') {
+        return '彩票' // Lottery
+      } else {
+        return gameType
+      }
+    }
+    const formRef = ref(null)
 
     return {
       recordActive,
@@ -1389,11 +1465,15 @@ export default defineComponent({
       submitReminder,
       getImageLink,
       getTurnoverType,
+      getSubType,
       getWithdrawStatus,
       getDepositStatus,
       getDepositType,
+      getGameType,
       openWithdrawConfirm,
-      loadingBtn
+      loadingBtn,
+      clearItems,
+      formRef
     };
   }
 });

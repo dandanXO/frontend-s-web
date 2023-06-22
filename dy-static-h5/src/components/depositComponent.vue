@@ -11,7 +11,41 @@
         @clicked="onSelect"
       />
     </div>
-    <div class="deposit-container">
+
+
+  <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
+    <div class="submit-message">
+      <div class="line">
+        <span>银行名称：</span>
+        <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span
+        ><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
+          {{ copybtntxt0 }}
+        </button>
+      </div>
+      <div class="line">
+        <span>银行账号：</span>
+        <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span
+        ><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
+          {{ copybtntxt1 }}
+        </button>
+      </div>
+      <div class="line">
+        <span>银行卡号：</span>
+        <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span
+        ><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
+          {{ copybtntxt2 }}
+        </button>
+      </div>
+      <div class="line">
+        <span>存款金额：</span>
+        <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span
+        ><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
+          {{ copybtntxt3 }}
+        </button>
+      </div>
+    </div>
+  </div>
+    <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <q-input
           hide-bottom-space
@@ -104,39 +138,6 @@
           />
         </div>
       </q-form>
-    </div>
-  </div>
-
-  <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
-    <div class="submit-message">
-      <div class="line">
-        <span>银行名称：</span>
-        <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span
-        ><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
-          {{ copybtntxt0 }}
-        </button>
-      </div>
-      <div class="line">
-        <span>银行账号：</span>
-        <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span
-        ><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
-          {{ copybtntxt1 }}
-        </button>
-      </div>
-      <div class="line">
-        <span>银行卡号：</span>
-        <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span
-        ><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
-          {{ copybtntxt2 }}
-        </button>
-      </div>
-      <div class="line">
-        <span>存款金额：</span>
-        <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span
-        ><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
-          {{ copybtntxt3 }}
-        </button>
-      </div>
     </div>
   </div>
 
@@ -412,96 +413,62 @@ async function confirmDeposit() {
             icon: "report_problem"
           });
         } else {
-          doDeposit();
+
+          if (freePrivilege.value) {
+            if (selectedPrivilege.value) {
+              form.privilegeId =
+                selectedPrivilege.value.id + "," + freePrivilege.value.id;
+            } else {
+              form.privilegeId = "," + freePrivilege.value.id;
+            }
+          } else {
+            if (selectedPrivilege.value) {
+              form.privilegeId = selectedPrivilege.value.id;
+            } else {
+              form.privilegeId = null;
+            }
+          }
+          form.paymentId = activeMethod.value.paymentId;
+          const copy = { ...form };
+          const data = {};
+          Object.entries(copy).forEach(([key, value]) => {
+            if (value) {
+              data[key] = value;
+            }
+          });
+          data.bankCardId = 0;
+          pDepo(data);
         }
       });
   }
 }
 
-function doDeposit() {
-  if (freePrivilege.value) {
-    if (selectedPrivilege.value) {
-      form.privilegeId =
-        selectedPrivilege.value.id + "," + freePrivilege.value.id;
-    } else {
-      form.privilegeId = "," + freePrivilege.value.id;
-    }
-  } else {
-    if (selectedPrivilege.value) {
-      form.privilegeId = selectedPrivilege.value.id;
-    } else {
-      form.privilegeId = null;
-    }
-  }
-
-  depositAmtRef.value.validate();
-  if (depositAmtRef.value.hasError) {
-  } else {
-    form.paymentId = activeMethod.value.paymentId;
-    if (store.token) {
-      if (
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      ) {
-        // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
-        const newWin = window.open(`/depositLoading`, "Bank");
-        newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-
-        const copy = { ...form };
-        const data = {};
-        Object.entries(copy).forEach(([key, value]) => {
-          if (value) {
-            data[key] = value;
-          }
-        });
-        data.bankCardId = 0;
-        // payTypeClass.value.submitDeposit(data);
-        // console.log(data);
-        pDepo(data);
-      } else {
-        localStorage.setItem("formDetails", JSON.stringify(form));
-        router.push({ path: "/depositLoading" });
-      }
-
-      window.addEventListener(
-        "message",
-        (event) => {
-          if (event.data?.msg) {
-            if (event.data.msg === "success") {
-              isDeposited.value = true;
-              localStorage.setItem("isBacked", JSON.stringify(true));
-            } else {
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: event.data.msg,
-                icon: "report_problem"
-              });
-            }
-          }
-        },
-        { once: true }
-      );
-    }
-    // cashier.get("/session/payment/" +form.paymentId +"/amount/" +form.localAmount +"/verify")
-    //   .then((res) => {
-    //     const d = res.data;
-    //     if (d.code === 0) {
-    //       checkAmount.flag = true;
-    //       if (d.message === "System Error") {
-    //         console.log("Error");
-    //       } else {
-    //       }
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     checkAmount.flag = false;
-    //     checkAmount.errorMessage = e.message;
-    //   });
-  }
-}
+// function doDeposit(data) {
+//   depositAmtRef.value.validate();
+//   if (depositAmtRef.value.hasError) {
+//   } else {
+//     // payTypeClass.value.submitDeposit(data);
+//     // console.log(data);
+//     if (store.token) {
+//         pDepo(data);
+//     }
+//     // cashier.get("/session/payment/" +form.paymentId +"/amount/" +form.localAmount +"/verify")
+//     //   .then((res) => {
+//     //     const d = res.data;
+//     //     if (d.code === 0) {
+//     //       checkAmount.flag = true;
+//     //       if (d.message === "System Error") {
+//     //         console.log("Error");
+//     //       } else {
+//     //       }
+//     //     }
+//     //   })
+//     //   .catch((e) => {
+//     //     checkAmount.flag = false;
+//     //     checkAmount.errorMessage = e.message;
+//     //   });
+//   }
+// }
 
 // async function verifyDepositAmount(r, v) {
 //   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
@@ -555,30 +522,101 @@ async function pDepo(deposit) {
       // console.log(res)
 
       if (res.code === 0) {
-        doIt(res).then(() => {
-          if (!Platform.is.desktop) {
-            // setTimeout(() => {
-            //   router.go(-1);
-            // }, 1000);
+          if (res.data.result.payResultType === 'RENDER_HTML') {
             isDisplay.value = true;
             const submitResult = res.data.result.data;
             submitMessage.value = submitResult.split(",");
+          } else {
+            if (
+                (Platform.is.desktop || Platform.is.webkit) &&
+                !Platform.is.capacitor &&
+                Platform.is.name !== "webkit" &&
+                !liff.isInClient()
+              ) {
+                // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
+                const newWin = window.open(`/depositLoading`, "Bank");
+                newWin.localStorage.setItem("formDetails", JSON.stringify(res));
+              } else {
+                localStorage.setItem("formDetails", JSON.stringify(res));
+                router.push({ path: "/depositLoading" });
+              }
+
+              window.addEventListener(
+                "message",
+                (event) => {
+                  if (event.data?.msg) {
+                    if (event.data.msg === "success") {
+                      isDeposited.value = true;
+                      localStorage.setItem("isBacked", JSON.stringify(true));
+                    } else {
+                      $q.notify({
+                        color: "negative",
+                        position: "top",
+                        message: event.data.msg,
+                        icon: "report_problem"
+                      });
+                    }
+                  }
+                },
+                { once: true }
+              );
           }
-          $q.loading.hide();
-          postMessage({ msg: "success" }, "*");
-        });
+        // doIt(res).then((ret) => {
+        //   // if (res.payResultType === 'RENDER_HTML') {
+        //   //   isDisplay.value = true;
+        //   //   const submitResult = res.data.result.data;
+        //   //   submitMessage.value = submitResult.split(",");
+        //   // }
+        //   // else {
+        //   //   if (
+        //   //       (Platform.is.desktop || Platform.is.webkit) &&
+        //   //       !Platform.is.capacitor &&
+        //   //       Platform.is.name !== "webkit" &&
+        //   //       !liff.isInClient()
+        //   //     ) {
+        //   //       // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
+        //   //       const newWin = window.open(`/depositLoading`, "Bank");
+        //   //       newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+        //   //     } else {
+        //   //       localStorage.setItem("formDetails", JSON.stringify(form));
+        //   //       router.push({ path: "/depositLoading" });
+        //   //     }
+
+        //   //     window.addEventListener(
+        //   //       "message",
+        //   //       (event) => {
+        //   //         if (event.data?.msg) {
+        //   //           if (event.data.msg === "success") {
+        //   //             isDeposited.value = true;
+        //   //             localStorage.setItem("isBacked", JSON.stringify(true));
+        //   //           } else {
+        //   //             $q.notify({
+        //   //               color: "negative",
+        //   //               position: "top",
+        //   //               message: event.data.msg,
+        //   //               icon: "report_problem"
+        //   //             });
+        //   //           }
+        //   //         }
+        //   //       },
+        //   //       { once: true }
+        //   //     );
+        //   // }
+        //   // $q.loading.hide();
+        //   // postMessage({ msg: "success" }, "*");
+        // });
       } else {
         // console.log(res);
-        postMessage({ msg: res.message }, "*");
+        // postMessage({ msg: res.message }, "*");
       }
     })
     .catch((error) => {
-      postMessage(
-        {
-          msg: error.message
-        },
-        "*"
-      );
+      // postMessage(
+      //   {
+      //     msg: error.message
+      //   },
+      //   "*"
+      // );
     });
 }
 
@@ -593,7 +631,6 @@ onMounted(() => {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  padding: 20px;
   height: auto;
   gap: 1px;
   display: flex;
@@ -611,7 +648,7 @@ onMounted(() => {
     font-size: 14px;
     align-items: center;
     background: #ffffff;
-    padding: 15px;
+    padding: 15px 0;
     span:first-child {
       // flex: 1;
       color: #4669f8;

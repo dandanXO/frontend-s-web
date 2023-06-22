@@ -1,45 +1,38 @@
 <template>
   <div class="announcement-section">
     <q-tabs
-      v-model="tab"
       active-color="white"
       indicator-color="bright"
       align="justify"
+      v-model="activeKey"
     >
       <q-tab
         v-for="(tab, i) in tabItems"
         :key="i"
-        :name="tab.name"
-        :label="tab.label"
+        :name="tab.id"
+        :label="tab.name"
       />
     </q-tabs>
 
-    <q-tab-panels v-model="tab" animated>
-      <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
+    <q-tab-panels v-model="activeKey" animated>
+      <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.id">
         <q-list class="rounded-borders">
           <span v-for="ann in announcementsList" :key="ann">
-            <div v-if="ann.type === tab.name">
+            <div v-if="ann.typeId === tab.id">
               <q-expansion-item
-                v-for="(promo, e) in ann.promotions"
-                :key="e"
+                class="expansion-bg"
                 expand-separator
-                :label="promo.label"
-                header-class="text-brand"
+                :label="ann.title"
               >
-                <div class="notice_txt">
-                  <div class="notice-inner">
-                    <div class="q-pa-md">
-                      {{ promo.content }}
-                    </div>
-                    <div class="text-right q-pa-sm text-grey-6">
-                      {{ promo.date }}
-                    </div>
-                  </div>
-                </div>
+                <q-card>
+                  <q-card-section>
+                    {{ ann.content }}
+                  </q-card-section>
+                </q-card>
               </q-expansion-item>
               <div
                 class="text-center q-pa-md text-brand"
-                v-if="ann.promotions.length === 0"
+                v-if="ann.content.length === 0"
               >
                 暂时无通知
               </div>
@@ -51,40 +44,47 @@
   </div>
 </template>
 <script lang="js">
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
+import { api } from "boot/axios";
 
 export default defineComponent({
   name: "AnnouncementView",
   setup() {
-    const tab = ref("webpromo");
-    const tabItems = [
-      {
-        name: "webpromo",
-        label: "网站优惠"
-      },
-      {
-        name: "bonus",
-        label: "恭喜中大奖"
-      },
-      {
-        name: "changes",
-        label: "变更通知"
-      },
-      {
-        name: "notices",
-        label: "维护通知"
-      },
-      {
-        name: "important",
-        label: "重要通知"
-      }
-    ];
-    const announcementsList = [];
+    const tab = ref("");
+    const tabItems = ref([]);
+    const announcementsList = ref([]);
+    const announcementTypes = ref([]);
+    const activeKey = ref(null);
+
+    const loadAnnouncement = () => {
+      api.get("/announcement").then((res) => {
+        if (res.code === 0) {
+          if (res.data.announcements) {
+            const d = res.data.announcements;
+            announcementsList.value = d;
+            console.log(announcementsList.value)
+          }
+          if (res.data.type) {
+            const e = res.data.type
+            tabItems.value = e;
+            activeKey.value = res.data.type[0].id;
+          }
+          // announcementList.value = d.announcements
+          // announcementList.value = res.data.announcements
+        }
+      });
+    };
+
+    onMounted(() => {
+      loadAnnouncement();
+    });
 
     return {
       tab,
       tabItems,
-      announcementsList
+      announcementsList,
+      announcementTypes,
+      activeKey
     };
   }
 });
@@ -97,8 +97,16 @@ export default defineComponent({
     margin: 0 auto;
   }
 
+  .q-tabs__content {
+    background: #fff;
+  }
+
   .q-tab {
     min-height: 40px;
+  }
+
+  .q-tab--active {
+    color: #3e5cc0 !important;;
   }
 
   .q-tab__content {
@@ -119,7 +127,16 @@ export default defineComponent({
   }
 
   .q-item {
-    background: #fff;
+    // background: #fff;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .q-tab--active .q-tab__indicator {
+    background: url("../../assets/images/promotion/tab_bg.png") no-repeat center
+      center;
+    background-size: 20px 10px;
+    width: 100%;
+    height: 10px;
   }
 
   .notice_txt {
