@@ -516,7 +516,7 @@
                   #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span v-if="scope.row.totalBet !== null">{{ scope.row.bet }}</span>
+                    <span v-if="scope.row.bet !== null">{{ scope.row.bet }}</span>
                     <span v-else>0</span>
                   </div>
                 </template>
