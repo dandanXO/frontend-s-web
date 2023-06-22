@@ -44,11 +44,11 @@ export default defineComponent({
               gameCode: "bbkeno_lobby_pc"
             },
             {
-                code: "IMOne",
+                code: "SGWin",
                 icon: "sgwin",
                 label: "SG-WIN彩票",
-                slogan: "IMOne ",
-              gameCode: ""
+                slogan: "SGWin ",
+              gameCode: "imlotto30000"
             },
         ],
     }),
