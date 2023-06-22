@@ -1,8 +1,8 @@
 <template>
   <div>
-      <div class="q-pa-md text-bold text-center" style="color: #33bcd4">
-        专属网址：{{ store.evip }}
-      </div>
+    <div class="q-pa-md text-bold text-center" style="color: #33bcd4">
+      专属网址：{{ store.evip }}
+    </div>
     <div>
       <div class="account-content text-center">
         <div class="flex-box flex-wrap bank-card-list">
@@ -10,29 +10,36 @@
             v-for="(bc, index) in personalState.bankCardList"
             :key="bc.id"
           >
-          <q-card
-            v-if="bc.bankName"
-            @click="showCard(bc, index)"
-            class="q-pa-sm text-left" style="color: #000;"
-          >
-            <div class="icon"><img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon"></div>
-            <div class="cardname q-pa-xs">
-              <div class="txt-center">
-                {{ bc.bankName }}
-                <!-- <div>Bank Account Number</div> -->
+            <q-card
+              v-if="bc.bankName"
+              @click="showCard(bc, index)"
+              class="q-pa-sm text-left"
+              style="color: #000"
+            >
+              <div class="icon">
+                <img
+                  v-if="bc.bankIcon"
+                  :src="imgURL + bc.bankIcon"
+                  style="width: 100%"
+                />
               </div>
-            </div>
-            <q-separator class="q-my-xs" />
-            <div class="bottom q-pa-xs">
-            <div class="flex-box cards">
-              <!-- <div
+              <div class="cardname q-pa-xs">
+                <div class="txt-center">
+                  {{ bc.bankName }}
+                  <!-- <div>Bank Account Number</div> -->
+                </div>
+              </div>
+              <q-separator class="q-my-xs" />
+              <div class="bottom q-pa-xs">
+                <div class="flex-box cards">
+                  <!-- <div
                 v-for="b in bc.cardNumber.split()"
                 :key="b"
                 class="card-num-box"
               >
                 {{ b }}
               </div> -->
-              <!-- <div
+                  <!-- <div
                 v-for="b in bc.cardNumber.split()"
                 :key="b"
                 class="card-num-box"
@@ -60,20 +67,29 @@
               >
                 {{ b.slice(b.length - 4, b.length) }}
               </div> -->
-              <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                ****{{ b.slice(b.length - 4, b.length) }}
+                  <div
+                    v-for="b in bc.cardNumber.split()"
+                    :key="b"
+                    class="card-num-box"
+                  >
+                    ****{{ b.slice(b.length - 4, b.length) }}
+                  </div>
+                </div>
+                <q-btn
+                  @click="unbindBankCard(bc)"
+                  color="dyblue"
+                  label="解绑"
+                />
               </div>
-            </div>
-            <q-btn @click="unbindBankCard(bc)" color="dyblue" label="解绑" />
-            </div>
-          </q-card>
+            </q-card>
           </template>
           <div class="q-pa-sm">
-          <q-btn color="dyblue" style="width: 100%;" label="添加银行卡" @click="bankCardModal('bank')" />
+            <q-btn
+              color="dyblue"
+              style="width: 100%"
+              label="添加银行卡"
+              @click="bankCardModal('bank')"
+            />
           </div>
           <!-- <div
             class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
@@ -101,7 +117,11 @@
                 <q-select
                   v-model="selectedBankType"
                   filled
-                  :options="[{ name: 'Bank' }, { name: 'Crypto' }, { name: 'e-Wallet' }]"
+                  :options="[
+                    { name: 'Bank' },
+                    { name: 'Crypto' },
+                    { name: 'e-Wallet' }
+                  ]"
                   label="银行Type"
                   color="blue"
                   label-color="grey"
@@ -131,16 +151,39 @@
                 >
                   <template v-slot:selected-item="scope">
                     <q-item-section avatar>
-                      <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                      <img
+                        v-if="scope.opt.bankIcon"
+                        style="
+                          width: 30px;
+                          margin-top: 10px;
+                          margin-bottom: 10px;
+                        "
+                        :src="imgURL + scope.opt.bankIcon"
+                      />
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.name }}</q-item-label>
+                      <q-item-label
+                        style="
+                          text-overflow: ellipsis;
+                          overflow: hidden;
+                          white-space: nowrap;
+                        "
+                        >{{ scope.opt.name }}</q-item-label
+                      >
                     </q-item-section>
                   </template>
                   <template v-slot:option="scope">
                     <q-item v-bind="scope.itemProps">
                       <q-item-section avatar>
-                        <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                        <img
+                          v-if="scope.opt.bankIcon"
+                          style="
+                            width: 30px;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                          "
+                          :src="imgURL + scope.opt.bankIcon"
+                        />
                       </q-item-section>
                       <q-item-section>
                         <q-item-label>{{ scope.opt.name }}</q-item-label>
@@ -600,13 +643,11 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-
-  .account-content {
-    .bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
+.account-content {
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+}
 </style>
