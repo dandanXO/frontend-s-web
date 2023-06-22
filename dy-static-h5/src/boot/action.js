@@ -33,9 +33,14 @@ function postSubmit(resp) {
 }
 
 function renderPage(resp) {
-  if (!resp.paramKey) {
-    location.href = `display?data=${resp.data}&payResultType=${resp.payResultType}`;
+  if (resp.payResultType === 'RENDER_HTML') {
+    return resp
   } else {
-    location.href = `display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}`;
+    if (isEmpty(resp.paramKey)) {
+      location.href = `center/display?data=${resp.data}&payResultType=${resp.payResultType}`;
+    } else {
+      location.href = `center/display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}`;
+    }
+    return null
   }
 }

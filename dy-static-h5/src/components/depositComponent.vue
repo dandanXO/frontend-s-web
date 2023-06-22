@@ -1,7 +1,7 @@
 <template>
   <div
     class="q-pa-md"
-    style="overflow: auto; background: #fff; margin: 8px 8px 90px"
+    style="overflow: auto; background: #fff; margin: 8px 8px"
   >
     <div class="node-wrapper">
       <Node
@@ -10,58 +10,6 @@
         ref="paymentNode"
         @clicked="onSelect"
       />
-    </div>
-    <div
-      v-if="submitMessage.length > 0 && isDisplay"
-      class="inner-cont"
-      style="overflow: auto"
-    >
-      <div class="submit-message">
-        <div class="line">
-          <span>银行名称：</span>
-          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span
-          ><button
-            @blur="blurCode"
-            @click="copyMessage('0')"
-            class="common-btn"
-          >
-            {{ copybtntxt0 }}
-          </button>
-        </div>
-        <div class="line">
-          <span>银行账号：</span>
-          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span
-          ><button
-            @blur="blurCode"
-            @click="copyMessage('1')"
-            class="common-btn"
-          >
-            {{ copybtntxt1 }}
-          </button>
-        </div>
-        <div class="line">
-          <span>银行卡号：</span>
-          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span
-          ><button
-            @blur="blurCode"
-            @click="copyMessage('2')"
-            class="common-btn"
-          >
-            {{ copybtntxt2 }}
-          </button>
-        </div>
-        <div class="line">
-          <span>存款金额：</span>
-          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span
-          ><button
-            @blur="blurCode"
-            @click="copyMessage('3')"
-            class="common-btn"
-          >
-            {{ copybtntxt3 }}
-          </button>
-        </div>
-      </div>
     </div>
     <div class="deposit-container">
       <q-form ref="depositForm" class="q-gutter-y-xs">
@@ -113,7 +61,7 @@
           v-show="selectedPayType && bankCardList.length"
           ref="payTypeClass"
           :is="selectedPayType"
-          v-model:value="form.bankId"
+          v-model="form.bankId"
           :bank-list="bankCardList"
           @selected="selectedBank"
           @successful="isDeposited = true"
@@ -159,6 +107,39 @@
     </div>
   </div>
 
+  <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
+    <div class="submit-message">
+      <div class="line">
+        <span>银行名称：</span>
+        <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span
+        ><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
+          {{ copybtntxt0 }}
+        </button>
+      </div>
+      <div class="line">
+        <span>银行账号：</span>
+        <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span
+        ><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
+          {{ copybtntxt1 }}
+        </button>
+      </div>
+      <div class="line">
+        <span>银行卡号：</span>
+        <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span
+        ><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
+          {{ copybtntxt2 }}
+        </button>
+      </div>
+      <div class="line">
+        <span>存款金额：</span>
+        <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span
+        ><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
+          {{ copybtntxt3 }}
+        </button>
+      </div>
+    </div>
+  </div>
+
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
@@ -176,6 +157,7 @@ import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar } from "quasar";
+import { doIt } from "boot/action";
 import liff from "@line/liff";
 
 var qs = require("qs");
@@ -397,7 +379,7 @@ function checkPrivilege(v) {
 }
 
 function selectedBank(value) {
-  form.bankId = value;
+  form.bankId = value.value.id;
 }
 
 function clearInfo() {
@@ -419,7 +401,6 @@ async function confirmDeposit() {
         `/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`
       )
       .then((d) => {
-        console.log(d);
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
             form.localAmount = d.data.suggestion;
@@ -467,8 +448,18 @@ function doDeposit() {
         // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
         const newWin = window.open(`/depositLoading`, "Bank");
         newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-        // console.log(form)
 
+        const copy = { ...form };
+        const data = {};
+        Object.entries(copy).forEach(([key, value]) => {
+          if (value) {
+            data[key] = value;
+          }
+        });
+        data.bankCardId = 0;
+        // payTypeClass.value.submitDeposit(data);
+        // console.log(data);
+        pDepo(data);
       } else {
         localStorage.setItem("formDetails", JSON.stringify(form));
         router.push({ path: "/depositLoading" });
@@ -509,15 +500,6 @@ function doDeposit() {
     //     checkAmount.flag = false;
     //     checkAmount.errorMessage = e.message;
     //   });
-    const copy = { ...form };
-    const data = {};
-    Object.entries(copy).forEach(([key, value]) => {
-      if (value) {
-        data[key] = value;
-      }
-    });
-    data.bankCardId = 0;
-    payTypeClass.value.submitDeposit(data);
   }
 }
 
@@ -555,6 +537,51 @@ function doDeposit() {
 //   }
 // }
 
+async function pDepo(deposit) {
+  const obj = {
+    bankCardId: deposit.bankCardId,
+    localAmount: deposit.localAmount,
+    paymentId: deposit.paymentId,
+    bankId: deposit.bankId
+  };
+
+  if (deposit.privilegeId) {
+    obj.privilegeId = deposit.privilegeId;
+  }
+  await cashier
+    .post("/session/payment/submit", qs.stringify(obj))
+    .then((res) => {
+      // const res = ret.data
+      // console.log(res)
+
+      if (res.code === 0) {
+        doIt(res).then(() => {
+          if (!Platform.is.desktop) {
+            // setTimeout(() => {
+            //   router.go(-1);
+            // }, 1000);
+            isDisplay.value = true;
+            const submitResult = res.data.result.data;
+            submitMessage.value = submitResult.split(",");
+          }
+          $q.loading.hide();
+          postMessage({ msg: "success" }, "*");
+        });
+      } else {
+        // console.log(res);
+        postMessage({ msg: res.message }, "*");
+      }
+    })
+    .catch((error) => {
+      postMessage(
+        {
+          msg: error.message
+        },
+        "*"
+      );
+    });
+}
+
 onMounted(() => {
   initPay();
 });
@@ -562,7 +589,8 @@ onMounted(() => {
 
 <style lang="scss">
 .submit-message {
-  width: calc(100% - 40px);
+  // width: calc(100% - 40px);
+  width: 100%;
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
@@ -577,15 +605,17 @@ onMounted(() => {
     display: flex;
     gap: 10px;
     justify-content: space-between;
-    width: calc(100% - 30px);
+    // width: calc(100% - 30px);
+    width: 100%;
     align-items: center;
-    font-size: 16px;
+    font-size: 14px;
     align-items: center;
-    background: #dddddd;
+    background: #ffffff;
     padding: 15px;
     span:first-child {
-      flex: 1;
+      // flex: 1;
       color: #4669f8;
+      width: 80px;
     }
     span.info {
       flex: 3;
@@ -600,10 +630,3 @@ onMounted(() => {
   background: #4fb2ff !important;
 }
 </style>
-
-api.post("/session/balance/transfer/deposit", qs.stringify(obj)).then((response)
-=> { if (response.code === 0) { setTimeout(() => { $q.notify({ color:
-"positive", position: "top", message: "成功", icon: "check_circle_outline" });
-getPlatBalances(platform.code) store.getBalance(); transferInfo.value.amount = 0
-isTransferring.value = false }, 1000); } }).catch((error) => {
-isTransferring.value = false });
