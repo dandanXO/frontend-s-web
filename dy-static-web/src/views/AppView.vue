@@ -50,14 +50,14 @@
                             <template v-if="det.code === 'QZ'">
                                 <img src="../assets/app/txt_all_client.png" />
                             </template>
-                            <template v-if="det.code === 'DJ'">
+                            <!-- <template v-if="det.code === 'DJ'">
                                 <img src="../assets/app/txt_sport_client.png" />
                             </template>
                             <template v-if="det.code === 'TY'">
                                 <img
                                     src="../assets/app/txt_esports_client.png"
                                 />
-                            </template>
+                            </template> -->
                             <div class="app-desc" v-html="det.message"></div>
                             <div class="app-items">
                                 <div class="box">
@@ -123,27 +123,27 @@ export default defineComponent({
                 image: "qz",
                 message:
                     "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
-                link: "https://dy232.app",
-                mobile: "https://dybet1.com",
+                link: "https://dy9367.app",
+                mobile: "https://dy9367.app",
             },
-            {
-                code: "DJ",
-                name: "电竞",
-                image: "dj",
-                message:
-                    "独立电竞APP，原生态开发，提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
-                link: "https://xwesport.app",
-                mobile: "https://dybet1.com",
-            },
-            {
-                code: "TY",
-                name: "体育",
-                image: "ty",
-                message:
-                    "独立体育APP，原生态开发，高赔率 玩法多 提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
-                link: "https://dygames.app",
-                mobile: "https://dygames.app",
-            },
+            // {
+            //     code: "DJ",
+            //     name: "电竞",
+            //     image: "dj",
+            //     message:
+            //         "独立电竞APP，原生态开发，提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
+            //     link: "https://xwesport.app",
+            //     mobile: "https://dybet1.com",
+            // },
+            // {
+            //     code: "TY",
+            //     name: "体育",
+            //     image: "ty",
+            //     message:
+            //         "独立体育APP，原生态开发，高赔率 玩法多 提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
+            //     link: "https://dygames.app",
+            //     mobile: "https://dygames.app",
+            // },
         ]);
         const selectedPlat = ref(platforms.value[0].code);
         const clickPlat = (plat) => {
