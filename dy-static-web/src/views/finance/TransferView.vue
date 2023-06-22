@@ -52,7 +52,7 @@
               <div class="plat-name" v-if="p.code === 'FlashTech'"><RiWirelessChargingLine />Sport</div>
               <div class="plat-name" v-else><RiWirelessChargingLine />{{ p.name }}</div>
               <div class="balance-wrapper">
-                <span class="currency">金额:</span> {{ p.amount }}
+                <span class="currency">余额:</span> {{ p.amount }}
               </div>
             </div>
             <div class="balance-refresh" @click="refreshBalance(p.code)">
@@ -62,18 +62,19 @@
           <div
             class="flex-box flex-justify-space flex-wrap transfer-action-box"
           >
-            <button
+            <el-button 
+              size="small"
               class="outline transfer-btn in"
               @click="transferModal(0, p)"
             >
               转进
-            </button>
-            <button
+            </el-button>
+            <el-button size="small"
               class="transfer-btn out"
               @click="transferModal(1, p)"
             >
               转出
-            </button>
+            </el-button>
           </div>
         </div>
       </div>
@@ -215,8 +216,9 @@ export default defineComponent({
     const refreshAllModal = () => {
       store.getBalance();
       platforms.forEach(p => {
-        p.amount = 'Loading'
-        refreshBalance(p.code, false);
+        store.getBalance();
+        p.amount = '加载中'
+        refreshBalance(p.code);
       });
     }
     const transferModal = (i, p) => {
@@ -234,6 +236,7 @@ export default defineComponent({
         if (plat === MAIN){
           store.getBalance();
         } else {
+            const platform = platforms.find(p => p.code === plat);
             loadBalance(plat).then((response) => {
               console.log(plat)
               const plaform = platforms.find(p => p.code === plat);
@@ -262,7 +265,7 @@ export default defineComponent({
             code: p.code,
             name: p.name,
             amount: 0,
-            status: 'Waiting for transfer'
+            status: '等待转出'
           });
         });
         platforms.forEach(element => {
@@ -312,7 +315,6 @@ export default defineComponent({
             console.log(err);
             loadingTransfer.value = false;
         });
-      
       loadingTransfer.value = false
     };
     const formRef = ref();

@@ -116,7 +116,7 @@
           >
         </el-form-item>
         <el-row>
-          <el-button size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
             确定
           </el-button>
         </el-row>
@@ -139,6 +139,7 @@ export default defineComponent({
     RiArrowRightSLine
   },
   setup() {
+    const loadingBtn = ref(false);
     const store = userStore();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
     const formRef = ref();
@@ -172,6 +173,7 @@ export default defineComponent({
       getWithdrawalMethods();
     });
     const submitWithraw = () => {
+      loadingBtn.value = true;
       formRef.value
         .validate()
         .then(() => {
@@ -193,6 +195,7 @@ export default defineComponent({
         }).catch((error) => {
           console.log("error", error);
         });
+        loadingBtn.value = false;
     };
     const withdrawRules = {
       amount: [
@@ -289,7 +292,8 @@ export default defineComponent({
       imgURL,
       isUSDT,
       verifyWithdrawAmount,
-      store
+      store,
+      loadingBtn
     };
   },
 });

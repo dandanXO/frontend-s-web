@@ -5,7 +5,6 @@ import { stringify } from "qs";
 import { userStore } from "@/store";
 // import i18n from "../i18n/index";
 import { ResponseCode,SkipErrorCode } from "@/api/response";
-import { ElLoading } from 'element-plus';
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
@@ -25,8 +24,6 @@ const onRequest = (config) => {
 };
 
 const onResponse = (response) => {
-  const loading = ElLoading.service({ lock: true });
-  loading
   let res = response.data;
   if (typeof response.data === "string") {
     res = JSON.parse(response.data);
@@ -65,12 +62,10 @@ const onResponse = (response) => {
         location.reload();
       }
       // message.error(res.message, 4);
-    loading.close();
       ElMessage.error(res.message);
     }
     throw new Error(res.message || "Error");
   } else {
-    loading.close();
     return response.data;
   }
 };

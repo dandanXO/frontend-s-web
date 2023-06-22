@@ -1143,7 +1143,6 @@ export default defineComponent({
                 codeId: loginForm.codeId,
               })
               .then(() => {
-                loadingBtn.value = false
                 const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                 if (store.token) {
                   router.push(jumpUrl);
@@ -1159,10 +1158,8 @@ export default defineComponent({
                   // loginForm.password = null
                   // loginForm.captchaCode = null
                   getCode();
-                  loadingBtn.value = false
                 }
               }).catch((error) => {
-                loadingBtn.value = false
                 // message.error(error.message);
                 console.log(error.message);
                 getCode();
@@ -1173,6 +1170,7 @@ export default defineComponent({
     };
 
     const phoneLogin = () => {
+      loadingBtn.value = true
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
@@ -1210,6 +1208,7 @@ export default defineComponent({
           });
         });
       })();
+      loadingBtn.value = false
     };
 
     const handleCommand = (command) => {

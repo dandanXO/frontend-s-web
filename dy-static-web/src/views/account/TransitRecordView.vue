@@ -36,7 +36,7 @@
             </el-form>
           </div>
           <div class="unbind-record-wrapper">
-            <el-table :data="dataState.deposit" :loading="loading">
+            <el-table :data="dataState.deposit" v-loading="loading">
               <template #empty>
                 <EmptyData />
               </template>
@@ -665,6 +665,7 @@
               color="#3bafda"
               class="common-btn"
               style="margin-left: 110px"
+              :loading="loadingBtn"
               @click="submitReminder()"
               >提交</el-button
             >
@@ -693,6 +694,7 @@ import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
 
+const loadingBtn = ref(false);
 const store = userStore()
 const uploadFileRef = ref();
 const recordActive = ref("deposit");
@@ -1219,6 +1221,7 @@ export default defineComponent({
       })
     }
     const submitReminder = () => {
+      loadingBtn.value = true;
       console.log(reminderForm);
       if (!reminderForm.photos) {
         ElMessage.warning(
@@ -1233,6 +1236,7 @@ export default defineComponent({
           }
         })
       }
+      loadingBtn.value = false;
     }
     const betDetails = (record) => {
       dataState.betRecord = []
@@ -1400,7 +1404,8 @@ export default defineComponent({
       getWithdrawStatus,
       getDepositStatus,
       getDepositType,
-      openWithdrawConfirm
+      openWithdrawConfirm,
+      loadingBtn
     };
   }
 });
