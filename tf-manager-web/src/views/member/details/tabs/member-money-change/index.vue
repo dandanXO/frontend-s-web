@@ -222,7 +222,7 @@ const shortcuts = [
       const start = new Date()
       start.setTime(
         moment(start)
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       return [start, end]
@@ -236,13 +236,13 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .subtract(1, 'weeks')
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       end.setTime(
         moment(end)
           .subtract(1, 'weeks')
-          .endOf('week')
+          .endOf('isoWeek')
           .format('x')
       )
       return [start, end]

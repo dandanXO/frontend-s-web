@@ -301,7 +301,7 @@ const shortcuts = [
       const start = new Date()
       start.setTime(
         moment(start)
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       return [start, end]

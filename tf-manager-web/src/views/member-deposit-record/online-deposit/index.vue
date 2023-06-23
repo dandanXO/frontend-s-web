@@ -248,7 +248,7 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).startOf('week').format('x'));
+      start.setTime(moment(start).startOf('isoWeek').format('x'));
       return [start, end];
     }
   }
