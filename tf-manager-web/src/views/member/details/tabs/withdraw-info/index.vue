@@ -4,8 +4,8 @@
       <div class="search">
         <el-date-picker
           v-model="request.withdrawDate"
-          format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
           type="datetimerange"
           range-separator=":"
@@ -16,6 +16,7 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-select
           clearable
@@ -345,6 +346,10 @@ const props = defineProps({
 })
 
 const { t } = useI18n();
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const shortcuts = [
   {
     text: t('fields.today'),

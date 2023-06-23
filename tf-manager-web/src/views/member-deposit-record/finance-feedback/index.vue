@@ -343,8 +343,8 @@ import { hasPermission } from '../../../utils/util'
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
-const defaultStartDate = convertDate(startDate)
-const defaultEndDate = convertDate(new Date())
+// const defaultStartDate = convertDate(startDate)
+// const defaultEndDate = convertDate(new Date())
 
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -501,9 +501,9 @@ function disabledDate(time) {
   )
 }
 
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
-}
+// function convertDate(date) {
+//   return moment(date).format('YYYY-MM-DD')
+// }
 
 async function submit() {
   if (form.remark === null || form.remark === '') {

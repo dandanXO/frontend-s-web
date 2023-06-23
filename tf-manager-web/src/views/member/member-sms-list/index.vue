@@ -16,6 +16,7 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-input
           v-model="request.phone"
@@ -112,6 +113,10 @@ const date = new Date()
 const defaultStartDate = convertStartDate(date)
 const defaultEndDate = convertDate(date)
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const shortcuts = [
   {
     text: t('fields.today'),

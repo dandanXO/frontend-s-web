@@ -20,7 +20,7 @@
         <el-date-picker
           v-if="request.selectedDateType === 0"
           v-model="request.depositDate"
-          format="DD/MM/YYYY"
+          format="DD/MM/YYYY HH:mm:ss"
           value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
           type="datetimerange"
@@ -32,11 +32,12 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-date-picker
           v-else
           v-model="request.finishDate"
-          format="DD/MM/YYYY"
+          format="DD/MM/YYYY HH:mm:ss"
           value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
           type="datetimerange"
@@ -48,6 +49,7 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-select
           clearable
@@ -237,10 +239,10 @@
         <el-form-item v-if="request.selectedDateType === 0" :label="t('fields.depositDate')" prop="depositDate">
           <el-date-picker
             v-model="request.depositDate"
-            format="DD/MM/YYYY"
-            value-format="YYYY-MM-DD"
+            format="DD/MM/YYYY HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
             size="small"
-            type="daterange"
+            type="datetimerange"
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
@@ -249,15 +251,16 @@
             :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
+            :default-time="defaultTime"
           />
         </el-form-item>
         <el-form-item v-else :label="t('fields.finishDate')" prop="finishDate">
           <el-date-picker
             v-model="request.finishDate"
-            format="DD/MM/YYYY"
-            value-format="YYYY-MM-DD"
+            format="DD/MM/YYYY HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
             size="small"
-            type="daterange"
+            type="datetimerange"
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
@@ -266,6 +269,7 @@
             :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
+            :default-time="defaultTime"
           />
         </el-form-item>
         <el-form-item :label="t('fields.serialNo')" prop="serialNumber">
@@ -467,6 +471,10 @@ const siteList = reactive({
   list: []
 });
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const shortcuts = [
   {
     text: t('fields.today'),
