@@ -16,8 +16,8 @@
                 src="../assets/images/index/game_icon_all.png"
               />
               <template v-else>{{ p.label }}</template> -->
-             <img :src="require('../assets/promo/menu-' + p.img + '.png')">
-             <span class="label"> {{ p.label }}</span>
+              <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
+              <span class="label"> {{ p.label }}</span>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino:
                 selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
             <!-- <div class="game-title"><img src="../assets/images/promotion/hotpromo/common/title_txt_content.png"></div> -->
@@ -126,6 +126,8 @@ import { ref, defineComponent, onMounted, reactive, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
+import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
 
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
@@ -134,6 +136,7 @@ export default defineComponent({
     HotPromotion
   },
   setup() {
+    const store = userStore();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
@@ -171,12 +174,27 @@ export default defineComponent({
       })
     }
     const showPromoDetails = (promo) => {
-      if (promo.redirectUrl.includes("page-vip")) {
-        router.push("/vip");
+
+      if (!store.token) {
+          ElMessageBox.alert('请登录后再操作', '系统提示', {
+              // if you want to disable its autofocus
+              // autofocus: false,
+              center: true,
+              confirmButtonText: '确认',
+              showClose: false,
+              buttonSize: 'large'
+          }).then(() => {
+              store.loginPageVisible = true
+          })
+          return
       } else {
-        router.push({name: 'promotion', query: {name: promo.redirectUrl}})
-        isPromoDetail.value = true
-        selectedPromo.value = promo
+        if (promo.redirectUrl.includes("page-vip")) {
+          router.push("/vip");
+        } else {
+          router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+          isPromoDetail.value = true
+          selectedPromo.value = promo
+        }
       }
     }
     const switchPromoType = (type) => {
@@ -238,7 +256,7 @@ export default defineComponent({
 .promo-container {
   // background: #090b19;
   .all-promotions {
-    background: url(../assets/promo/bg-top.jpg)no-repeat center top;
+    background: url(../assets/promo/bg-top.jpg) no-repeat center top;
     min-height: 40vh;
     padding: 50px;
     position: relative;
@@ -283,23 +301,26 @@ export default defineComponent({
     // }
     table {
       margin: 10px auto;
-    min-width: 80%;
-    text-align: center;
+      min-width: 80%;
+      text-align: center;
       tr:first-child td {
-    background-image: linear-gradient(0deg,#0094ff 0,#19c6ff 100%),linear-gradient(#2e3039,#2e3039);
-    color: #ffffff;
-    border: 0;
+        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%),
+          linear-gradient(#2e3039, #2e3039);
+        color: #ffffff;
+        border: 0;
       }
-          border-collapse: collapse;
-          th, td {
-            padding: 10px;
-          }
+      border-collapse: collapse;
+      th,
+      td {
+        padding: 10px;
+      }
       th {
-        background-image: linear-gradient(0deg,#0494fc 0,#15bdfc 100%),linear-gradient(#d0d1d3,#d0d1d3);
+        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%),
+          linear-gradient(#d0d1d3, #d0d1d3);
       }
       td {
-            // background-color: #202228;
-    border: 1px solid #dcdce8;
+        // background-color: #202228;
+        border: 1px solid #dcdce8;
       }
     }
   }
@@ -338,11 +359,11 @@ export default defineComponent({
       }
     }
     .promo-main-container {
-        width: 100%;
-        max-width: $maxwidth;
-        background-color: #ffffff;
-        margin: 0 auto;
-    padding: 10px 0;
+      width: 100%;
+      max-width: $maxwidth;
+      background-color: #ffffff;
+      margin: 0 auto;
+      padding: 10px 0;
       .promo-type-wrapper {
         display: flex;
         justify-content: center;
@@ -401,16 +422,21 @@ export default defineComponent({
               // background: #4b4e66;
               // box-shadow: 0 0 5px #ffffff;
               // background-image: linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#5243bd,#5243bd);
-            .label {
-              color: #ffffff;
-            }
+              .label {
+                color: #ffffff;
+              }
 
-            &:before {
-            background-image: linear-gradient(90deg,#2d74f6 0,#7abdfc 100%),linear-gradient(#3077f6,#3077f6);
-            }
-            img {
-              filter: grayscale(1) brightness(100);
-            }
+              &:before {
+                background-image: linear-gradient(
+                    90deg,
+                    #2d74f6 0,
+                    #7abdfc 100%
+                  ),
+                  linear-gradient(#3077f6, #3077f6);
+              }
+              img {
+                filter: grayscale(1) brightness(100);
+              }
             }
           }
         }
@@ -427,14 +453,15 @@ export default defineComponent({
           overflow: hidden;
           cursor: pointer;
           background-color: #f2f6ff;
-          box-shadow: 0 3px 9px 0 rgba(112,122,143,.4);
+          box-shadow: 0 3px 9px 0 rgba(112, 122, 143, 0.4);
           a {
             display: block;
           }
           &:hover {
             .promo-info {
-              background-image: linear-gradient(90deg,#2d74f6 0,#7abdfc 100%),linear-gradient(#3077f6,#3077f6);
-              background-blend-mode: normal,normal;
+              background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
+                linear-gradient(#3077f6, #3077f6);
+              background-blend-mode: normal, normal;
               .viewdetail {
                 color: #fefefe;
               }

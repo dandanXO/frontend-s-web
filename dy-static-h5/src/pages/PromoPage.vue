@@ -71,7 +71,7 @@
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino:
                       selectedPromo.promoType.toLowerCase() === 'livecasino',
-                    slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
                   <!-- <div v-html="selectedPromo.pageContent"></div> -->
@@ -126,6 +126,17 @@
       </q-tab-panels>
     </div>
   </div>
+
+  <q-dialog width="100%" v-model="isDisplayLogin">
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
+      <q-card-section class="q-mb-md">
+        <strong>系统提示</strong><br /><br />
+        请登录后再操作
+      </q-card-section>
+      <q-btn href="/login?redirect=/promo" label="确认" color="dyblue" />
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script lang="js">
@@ -168,6 +179,7 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui= useUI();
+    const isDisplayLogin = ref(false);
 
     const tab = ref("all");
     const tabItems = [
@@ -224,13 +236,18 @@ export default defineComponent({
         })
     }
     const showPromoDetails = (promo) => {
-      if (route.query.fromAccount) {
-        router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+      if (!store.token) {
+        isDisplayLogin.value = true
       } else {
-        router.push({path: '/promo', query: {name: promo.redirectUrl }})
+
+        if (route.query.fromAccount) {
+          router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+        } else {
+          router.push({path: '/promo', query: {name: promo.redirectUrl }})
+        }
+        isPromoDetail.value = true
+        selectedPromo.value = promo
       }
-      isPromoDetail.value = true
-      selectedPromo.value = promo
     }
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
@@ -284,7 +301,8 @@ export default defineComponent({
       imgURL,
       store,
       tab,
-      tabItems
+      tabItems,
+      isDisplayLogin
     }
   },
 });

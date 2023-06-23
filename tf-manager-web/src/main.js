@@ -14,7 +14,9 @@ import SvgIcon from "@/components/SvgIcon/index.vue";
 import ElementPlus from 'element-plus'
 import { Socket } from "./utils/socket";
 import { createPinia } from "pinia";
+import dayjs from 'dayjs';
 
+dayjs.Ls.en.weekStart = 1;
 const socket = new Socket(store);
 const app = createApp(App);
 app.config.globalProperties.$socket = socket

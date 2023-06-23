@@ -18,7 +18,7 @@
         </el-select>
         <el-date-picker
           v-model="searchRequest.date"
-          format="DD/MM/YYYY"
+          format="DD/MM/YYYY HH:mm:ss"
           value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
           type="datetimerange"
@@ -30,6 +30,7 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-input
           v-model="request.serialNumber"
@@ -617,7 +618,7 @@
         <el-form-item :label="t('fields.withdrawDate')" prop="withdrawDate">
           <el-date-picker
             v-model="request.withdrawDate"
-            format="DD/MM/YYYY"
+            format="DD/MM/YYYY HH:mm:ss"
             value-format="YYYY-MM-DD HH:mm:ss"
             size="small"
             type="datetimerange"
@@ -629,6 +630,7 @@
             :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
+            :default-time="defaultTime"
           />
         </el-form-item>
         <el-form-item :label="t('fields.serialNo')" prop="serialNumber">
@@ -889,6 +891,10 @@ const cancelTypeList = reactive({
   list: [],
 })
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const shortcuts = [
   {
     text: t('fields.today'),
@@ -923,7 +929,7 @@ const shortcuts = [
       const start = new Date()
       start.setTime(
         moment(start)
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       return [start, end]
@@ -937,13 +943,13 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .subtract(1, 'weeks')
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       end.setTime(
         moment(end)
           .subtract(1, 'weeks')
-          .endOf('week')
+          .endOf('isoWeek')
           .format('x')
       )
       return [start, end]

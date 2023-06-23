@@ -24,11 +24,11 @@
             v-model="withdrawInfo.cardId"
             option-value="id"
             emit-value
-            label="钱包地址"
-            color="blue"
+            label="提款银行"
+            color="black"
             :options="withdrawState.bankCardList"
             map-options
-            :rules="[(val) => !!val || '请选择钱包']"
+            :rules="[(val) => !!val || '请选择银行']"
           >
             <template v-slot:no-option>
               <q-item>

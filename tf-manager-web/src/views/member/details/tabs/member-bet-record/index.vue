@@ -16,6 +16,7 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-select
           v-model="request.platform"
@@ -295,6 +296,10 @@ const uiControl = reactive({
   ]
 });
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const shortcuts = [
   {
     text: t('fields.today'),
@@ -319,7 +324,7 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).startOf('week').format('x'));
+      start.setTime(moment(start).startOf('isoWeek').format('x'));
       return [start, end];
     }
   },
@@ -328,8 +333,8 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('week').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('week').format('x'));
+      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
+      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
       return [start, end];
     }
   },

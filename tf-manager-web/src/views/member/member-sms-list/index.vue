@@ -16,6 +16,7 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-input
           v-model="request.phone"
@@ -112,6 +113,10 @@ const date = new Date()
 const defaultStartDate = convertStartDate(date)
 const defaultEndDate = convertDate(date)
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const shortcuts = [
   {
     text: t('fields.today'),
@@ -146,7 +151,7 @@ const shortcuts = [
       const start = new Date()
       start.setTime(
         moment(start)
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       return [start, end]
@@ -160,13 +165,13 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .subtract(1, 'weeks')
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       end.setTime(
         moment(end)
           .subtract(1, 'weeks')
-          .endOf('week')
+          .endOf('isoWeek')
           .format('x')
       )
       return [start, end]

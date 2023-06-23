@@ -46,7 +46,7 @@
             <q-btn
               color="dyblue"
               style="width: 100%"
-              label="添加银行卡"
+              label="绑定银行卡"
               @click="bankCardModal('bank')"
             />
           </div>
@@ -57,7 +57,7 @@
     <q-dialog v-model="bankCardModalState.visible" persistent>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section v-if="!isVirtual" class="q-mb-md">
-          <div class="text-h6">添加银行卡</div>
+          <div class="text-h6">绑定银行卡</div>
         </q-card-section>
         <q-card-section v-if="isVirtual" class="q-mb-md">
           <div class="text-h6">Add a virtual currency</div>
@@ -70,13 +70,12 @@
                   v-model="selectedBankType"
                   filled
                   :options="[
-                    { name: 'Bank' },
-                    { name: 'Crypto' },
-                    { name: 'e-Wallet' }
+                    { name: '银行卡' },
+                    { name: '数字货币' }
                   ]"
-                  label="银行Type"
+                  label="银行 / 数字货币"
                   color="blue"
-                  label-color="grey"
+                  label-color="black"
                   option-label="name"
                   option-value="name"
                   @update:model-value="selectBankType(opt)"
@@ -391,20 +390,16 @@ export default defineComponent({
       })
     };
 
-    const selectedBankType = ref('Bank')
+    const selectedBankType = ref('银行卡')
     const selectBankType = () => {
       bankCardInfo.bankId = "";
       banksList.value = []
       bankCardModalState.banks.forEach(element => {
-        if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
+        if (selectedBankType.value === "银行卡" && element.bankType === 'BANK') {
           banksList.value.push(element);
         }
-        if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
+        if (selectedBankType.value === "数字货币" && element.bankType === 'CRYPTO') {
           const isCrypto = ref(true)
-          banksList.value.push(element);
-        }
-        if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
-          const isEWallet = ref(true)
           banksList.value.push(element);
         }
       })
@@ -423,7 +418,7 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: "Card Added",
+                message: "已添加银行卡",
                 icon: "check_circle_outline"
               });
               loadCards();
@@ -548,8 +543,6 @@ export default defineComponent({
          return (val.length > 5 && val.length < 13) || 'Length should be 6 to 12 characters'
         } else if (selectedBankType.value === 'Crypto') {
           return (val.length > 33 && val.length < 38) || 'Length should be 34 to 37 characters.'
-        } else if (selectedBankType.value === 'e-Wallet') {
-          return (val.length > 10 && val.length < 12) || 'Length should be 11 characters.'
         }
     }
     return {
