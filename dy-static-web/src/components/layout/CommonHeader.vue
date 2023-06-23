@@ -267,13 +267,14 @@
             </el-row>
             <el-form-item label="电话号码" prop="telephone">
               <el-space>
-              <el-input class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
-              <el-button v-if="regCountdown === 0" size="small" @click="openCaptchaForm('REGISTER')" class="common-btn">
-                发送验证码
+              
+              <el-input :disabled="disableSendVerificationButton" class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
+              <el-button :disabled="disableSendVerificationButton" @click="openCaptchaForm('REGISTER')" size="small" class="common-btn">
+                <span v-if="disableSendVerificationButton">已发送（倒数{{ regCountdown }}秒)</span>
+                <span v-else >发送验证码</span>
               </el-button>
-              <el-button v-else disabled size="small" class="common-btn">
-                已发送（倒数{{ regCountdown }}秒）
-              </el-button>
+
+
             </el-space>
             </el-form-item>
             <el-form-item label="手机验证码" prop="smsCode">
@@ -490,6 +491,7 @@ import {storeToRefs} from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import moment from 'moment';
+import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
 
 export default defineComponent({
   name: "CommonHeader",
@@ -540,6 +542,29 @@ export default defineComponent({
     ]
   }),
   setup() {
+
+    // Register
+    const registerTelephoneKey = `registerTelephoneKey`
+    const registerSendOtpDisabledKey = `registeredSendOtpDisabled`
+
+    const registerSendOtpDisabledTimeout = 60
+    const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey)
+
+    let cachedTelephone = lsGet(registerTelephoneKey);
+    let initialRegisterSendOtpDisabledTimeout = false
+
+    if (registerSendOtpDisabledTimeoutLeft) {
+      initialRegisterSendOtpDisabledTimeout = true
+    } else {
+      lsRemove(registerSendOtpDisabledKey)
+      lsRemove(registerTelephoneKey)
+
+      cachedTelephone = '';
+    }
+
+    const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
+
+
     const loadingBtn = ref(false);
     const store = userStore();
     const {token} = storeToRefs(store);
@@ -649,7 +674,7 @@ export default defineComponent({
     const mobileLoginRef = ref([])
     const captchaRef = ref([])
     const hasAffiliate = ref(false);
-    const regCountdown = ref(0)
+    const regCountdown = ref(registerSendOtpDisabledTimeoutLeft)
     const loginCountdown = ref(0)
 
     const loginRules = {
@@ -735,7 +760,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      telephone: "",
+      telephone: cachedTelephone ?? '',
       email: "",
       captchaCode: "",
       regHost: location.hostname,
@@ -933,6 +958,7 @@ export default defineComponent({
     }
 
     const sendOtp = async() => {
+
       if (captchaForm.type === 'REGISTER') {
         const smsDetail = {
           telephone: regForm.telephone,
@@ -942,14 +968,26 @@ export default defineComponent({
         sendSms(smsDetail)
           .then((response) => {
             if (response.code == 0) {
+              disableSendVerificationButton.value = true
+
               regForm.smsCodeId = response.data.codeId;
+              
               ElMessage({
                 type: 'success',
                 message: '发送手机验证码成功'
               });
+
               captchaDialogVisible.value = false;
-              getCode();
-              regCountdown.value = 30;
+              
+              regCountdown.value = registerSendOtpDisabledTimeout;
+
+              const now = new Date();
+
+              now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
+
+              lsStore(registerSendOtpDisabledKey, now.getTime());
+              lsStore(registerTelephoneKey, regForm.telephone);
+
               countdownTimer('REGISTER')
             } else {
               getCode();
@@ -987,6 +1025,11 @@ export default defineComponent({
             regCountdown.value -= 1
             countdownTimer('REGISTER')
           }, 1000)
+        } else {
+          lsRemove(registerSendOtpDisabledKey);
+          lsRemove(registerTelephoneKey);
+
+          disableSendVerificationButton.value = false
         }
       } else if (type === 'LOGIN') {
         if (loginCountdown.value > 0) {
@@ -1045,6 +1088,7 @@ export default defineComponent({
         }
       })
     }
+
     const modalGame = ref(null)
     const openGame = (gameName, code, gameCode) => {
       modalGame.value.open(gameName, code, gameCode);
@@ -1083,7 +1127,13 @@ export default defineComponent({
         isStationNotice.value = true
       }
     }
+
     onMounted(() => {
+
+      if (regCountdown.value > 0)
+        countdownTimer('REGISTER')
+        
+
       getAffiliateCode();
       loadAnnouncement();
       getCode();
@@ -1366,6 +1416,7 @@ export default defineComponent({
       regRules,
       getCode,
       verificationImg,
+      disableSendVerificationButton,
       onLogout,
       store,
       isLoadingBalance,
