@@ -948,6 +948,10 @@ const tableColumns = {
       title: "游戏类型",
       dataIndex: "gameType"
     },
+    {
+      title: "投注状态",
+      dataIndex: "betStatus"
+    }
   ],
   betRecord: [
     // {
@@ -1446,8 +1450,8 @@ export default defineComponent({
       }
       if (betStatus === 'BET') {
         return '投注' // Bet
-      } else if (betStatus === 'SETTLED') {
-        return '结算' // Settled
+      } else if (betStatus === 'SETTLE') {
+        return '结算' // Settle
       } else if (betStatus === 'BET_N_SETTLE') {
         return '投注并结算' // Bet & Settled
       } else if (betStatus === 'CANCEL') {

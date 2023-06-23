@@ -31,6 +31,30 @@
               <img class="imgabs img-left-right fbbin6" src="../assets/live/left_float_bbin_6.webp">
               <img class="imgabs img-right-left fbbin7" src="../assets/live/left_float_bbin_7.webp">
             </template>
+            <template v-if="det.code === 'PM'">
+              <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp">
+              <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp">
+              <img class="imgabs img-down-up fag1" src="../assets/live/left_float_ag_1.webp">
+              <img class="imgabs img-down-up fag2" src="../assets/live/left_float_ag_2.webp">
+            </template>
+            <template v-if="det.code === 'BG'">
+              <img class="imgabs allbet1" src="../assets/live/left_bg_allbet_1.webp">
+              <img class="imgabs allbet2" src="../assets/live/left_bg_allbet_2.webp">
+              <img class="imgabs allbet3" src="../assets/live/left_bg_allbet_3.webp">
+              <img class="imgabs img-down-up fallbet1" src="../assets/live/left_float_allbet_1.webp">
+              <img class="imgabs img-down-up fallbet2" src="../assets/live/left_float_allbet_2.webp">
+            </template>
+            <template v-if="det.code === 'Sexy'">
+              <img class="imgabs bbin1" src="../assets/live/left_bg_bbin_1.webp">
+              <img class="imgabs bbin2" src="../assets/live/left_bg_bbin_2.webp">
+              <img class="imgabs img-right-left fbbin5" src="../assets/live/left_float_bbin_5.webp">
+              <img class="imgabs img-down-up fbbin4" src="../assets/live/left_float_bbin_4.webp">
+              <img class="imgabs img-right-left fbbin3" src="../assets/live/left_float_bbin_3.webp">
+              <img class="imgabs img-left-right fbbin2" src="../assets/live/left_float_bbin_2.webp">
+              <img class="imgabs img-right-left fbbin1" src="../assets/live/left_float_bbin_1.webp">
+              <img class="imgabs img-left-right fbbin6" src="../assets/live/left_float_bbin_6.webp">
+              <img class="imgabs img-right-left fbbin7" src="../assets/live/left_float_bbin_7.webp">
+            </template>
           </div>
           <div class="live-left">
             <div class="platform-list-box">
@@ -88,6 +112,27 @@ export default defineComponent({
         gameCode: '',
         message: '玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。'
       },
+      // {
+      //   code: 'PM',
+      //   name: 'PM',
+      //   image: 'pm',
+      //   gameCode: '',
+      //   message: ''
+      // },
+      // {
+      //   code: 'BG',
+      //   name: 'BG',
+      //   image: 'bg',
+      //   gameCode: '',
+      //   message: ''
+      // },
+      // {
+      //   code: 'Sexy',
+      //   name: 'Sexy',
+      //   image: 'sexy',
+      //   gameCode: '',
+      //   message: ''
+      // },
 
     ])
     const selectedPlat = ref(platforms.value[0].code);
@@ -513,6 +558,8 @@ export default defineComponent({
     align-items: center;
     gap: 25px;
     margin: 35px auto 90px;
+    flex-wrap:wrap;
+    width:600px;
 
     .platform-list-item {
       display: flex;

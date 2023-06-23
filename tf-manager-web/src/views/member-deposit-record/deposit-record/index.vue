@@ -83,7 +83,7 @@
           style="width: 120px;margin-left:10px"
           default-first-option
           @focus="loadSites"
-          @change="changeSite"
+          @change="loadThirdParty()"
         >
           <el-option
             v-for="item in siteList.list"
@@ -835,8 +835,8 @@ function pushRecordToData(records, exportData) {
 }
 
 async function loadThirdParty() {
-  const { data: ret } = await getSystemPaymentListForDeposit()
-  uiControl.thirdPartyNameList = ret.records
+  const { data: ret } = await getSystemPaymentListForDeposit(request.siteId)
+  uiControl.thirdPartyNameList = ret
   uiControl.thirdPartyNameList.unshift({
     id: 0,
     paymentName: "ALL"

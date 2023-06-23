@@ -21,8 +21,8 @@ export const getSystemPaymentById = (id) => {
   return https().request(`/system-payment/${id}/systemPayment`, Method.GET, {}, ContentType.form);
 };
 
-export const getSystemPaymentListForDeposit = (systemPayment) => {
-  return https().request("/system-payment/depositRecord", Method.GET, systemPayment, ContentType.form);
+export const getSystemPaymentListForDeposit = (site) => {
+  return https().request("/system-payment/depositRecord", Method.GET, { site: site }, ContentType.form);
 };
 
 export const copyPayment = async (systemPayment) => {
