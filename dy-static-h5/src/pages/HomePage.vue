@@ -252,6 +252,14 @@
               :data="fish"
             />
           </template>
+
+          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
+            <PlatformBlock
+              @click="playGame(fish.name, fish.code, '')"
+              dataType="fish"
+              :data="fish"
+            />
+          </template>
           <PlatformBlock
             @click="playGame(fish.name, fish.code, fish.code)"
             dataType="fish"
