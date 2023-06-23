@@ -421,6 +421,10 @@ defineExpose({
     margin-top: 45px;
     margin-left: 10px;
     border-radius: 10px;
+    word-break: break-all;
+    white-space: normal;
+    width: 25px;
+
   }
 }
 
