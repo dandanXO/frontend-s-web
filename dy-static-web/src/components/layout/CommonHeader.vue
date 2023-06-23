@@ -5,7 +5,7 @@
         <div class="timebox">{{ todayDate() }}</div>
         <div class="station-notice-container">
           <div class="station-notice-box">
-            <!-- Since svg icons do not carry any attributes by default -->common-btn
+            <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
             <RiVolumeUpFill style=" fill: #5c78f0; width: 180px"/>
             <div class="station-notice">
