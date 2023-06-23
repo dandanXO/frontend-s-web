@@ -481,7 +481,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
-    background-color: #2144c6;
+    background-color: #3bafda;
     font-size: 14px;
     color: #ffffff;
     border: 1px solid transparent;
@@ -492,7 +492,7 @@ export default defineComponent({
     }
 }
 :deep(.el-input-group__append) {
-    background-color: #353f4b;
+    background-color: #e1e3ef;
     border: 0;
     padding: 0 10px;
     border-radius: 0;
@@ -501,17 +501,20 @@ export default defineComponent({
     }
 }
 :deep(.el-input-group__prepend) {
-    background-color: #2144c6;
+    background-color: #c9cfdd;
     border: 0;
     padding: 0;
     border-radius: 0;
     color: #ffffff;
     font-size: 20px;
+    width: 40px;
+        height: 40px;
     i {
       display: flex;
       justify-content: center;
+      color:#2b5ee2;
       img {
-        height: 40px;
+        // height: 40px;
       }
     }
 }
@@ -519,12 +522,12 @@ export default defineComponent({
   width: 100%;
 }
 :deep(.el-input__prefix) {
-  background: #2144c6;
+  background: #c9cfdd;
   left: 0;
   padding: 0 8px;
   .el-input__icon {
     font-size: 18px;
-    color: #ffffff;
+    color: #2b5ee2;
   }
 }
 :deep(.el-input--prefix .el-input__inner) {

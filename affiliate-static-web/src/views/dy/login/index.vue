@@ -21,7 +21,7 @@
               tabindex="1"
               autocomplete="no-fill"
             >
-              <template style="background-color: #2144c6;" #prepend><i><img src="../../../assets/images/dy/icon_name.png"></i></template>
+              <template style="background-color: #c9cfdd;" #prepend><i><img src="../../../assets/images/dy/icon_name.png"></i></template>
             </el-input>
           </el-form-item>
 
@@ -213,7 +213,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
-    background-color: #2144c6;
+    background-color: #3bafda;
     font-size: 14px;
     color: #ffffff;
     border: 1px solid transparent;
@@ -224,15 +224,16 @@ export default defineComponent({
     }
 }
 :deep(.el-input-group__prepend) {
-    background-color: #2144c6;
+    background-color: #c9cfdd;
     border: 0;
     padding: 0;
     border-radius: 0;
+    width: 40px;
+    height: 40px;
     i {
       display: flex;
       justify-content: center;
       img {
-        height: 40px;
       }
     }
 }
