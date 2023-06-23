@@ -1,4 +1,4 @@
-package com.example.Jolly88;
+package com.code9.dongying;
 
 import com.getcapacitor.BridgeActivity;
 
