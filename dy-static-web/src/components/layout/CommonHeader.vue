@@ -5,7 +5,7 @@
         <div class="timebox">{{ todayDate() }}</div>
         <div class="station-notice-container">
           <div class="station-notice-box">
-            <!-- Since svg icons do not carry any attributes by default -->
+            <!-- Since svg icons do not carry any attributes by default -->common-btn
             <!-- You need to provide attributes directly -->
             <RiVolumeUpFill style=" fill: #5c78f0; width: 180px"/>
             <div class="station-notice">
@@ -167,7 +167,10 @@
                       />
                     </el-col>
                     <el-col :span="12">
-                      <el-button @click="openCaptchaForm('LOGIN')" size="small" color="#3bafda" >发送验证码</el-button>
+                      <el-button v-if="loginCountdown === 0" @click="openCaptchaForm('LOGIN')" size="small" color="#3bafda" >发送验证码</el-button>
+                      <el-button v-else disabled size="small" class="common-btn">
+                        已发送（倒数{{ loginCountdown }}秒）
+                      </el-button>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -265,8 +268,11 @@
             <el-form-item label="电话号码" prop="telephone">
               <el-space>
               <el-input class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
-              <el-button size="small" @click="openCaptchaForm('REGISTER')" class="common-btn">
+              <el-button v-if="regCountdown === 0" size="small" @click="openCaptchaForm('REGISTER')" class="common-btn">
                 发送验证码
+              </el-button>
+              <el-button v-else disabled size="small" class="common-btn">
+                已发送（倒数{{ regCountdown }}秒）
               </el-button>
             </el-space>
             </el-form-item>
@@ -531,7 +537,7 @@ export default defineComponent({
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
       // { code: "Poker", name: "ป็อกเกอร์", path: "/poker" },
       // { code: "E-sports", name: "E-sports", path: "/e-sport" },
-    ],
+    ]
   }),
   setup() {
     const loadingBtn = ref(false);
@@ -643,6 +649,8 @@ export default defineComponent({
     const mobileLoginRef = ref([])
     const captchaRef = ref([])
     const hasAffiliate = ref(false);
+    const regCountdown = ref(0)
+    const loginCountdown = ref(0)
 
     const loginRules = {
       loginName: [
@@ -941,6 +949,8 @@ export default defineComponent({
               });
               captchaDialogVisible.value = false;
               getCode();
+              regCountdown.value = 30;
+              countdownTimer('REGISTER')
             } else {
               getCode();
             }
@@ -961,12 +971,32 @@ export default defineComponent({
               });
               captchaDialogVisible.value = false;
               getCode();
+              loginCountdown.value = 30;
+              countdownTimer('LOGIN')
             } else {
               getCode();
             }
           })
       }
     };
+
+    const countdownTimer = (type) => {
+      if (type === 'REGISTER') {
+        if (regCountdown.value > 0) {
+          setTimeout(() => {
+            regCountdown.value -= 1
+            countdownTimer('REGISTER')
+          }, 1000)
+        }
+      } else if (type === 'LOGIN') {
+        if (loginCountdown.value > 0) {
+          setTimeout(() => {
+            loginCountdown.value -= 1
+            countdownTimer('LOGIN')
+          }, 1000)
+        }
+      }
+    }
 
     const openCaptchaForm = (type) => {
       captchaForm.captchaCode = "";
@@ -1365,13 +1395,19 @@ export default defineComponent({
       announcementTypes,
       typeActive: '1',
       getAffiliateCode,
-      hasAffiliate
+      hasAffiliate,
+      countdownTimer,
+      regCountdown,
+      loginCountdown
     }
   }
 });
 </script>
 <style lang="scss">
 body {
+  .el-button.is-disabled, .el-button.is-disabled:hover {
+    background-color: #a8b5c3;
+  }
   .el-input.wTip .el-input-group__append {
     background: none;
     border: 0;
