@@ -37,6 +37,21 @@ npm run format
 quasar build
 ```
 
+
+
+### Build Android APK App.
+```bash
+quasar build -m capacitor -T android
+cd src-capacitor
+npx cap sync 
+npx cap update android
+
+
+npx cap open android     (OR)
+npx cap run android -l   
+```
+
+
 ### Customize the configuration
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
 

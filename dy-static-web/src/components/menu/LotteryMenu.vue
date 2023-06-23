@@ -43,6 +43,13 @@ export default defineComponent({
                 slogan: "BBIN",
               gameCode: "bbkeno_lobby_pc"
             },
+            {
+                code: "SGWin",
+                icon: "sgwin",
+                label: "SG-WIN彩票",
+                slogan: "SGWin ",
+              gameCode: "imlotto30000"
+            },
         ],
     }),
 });

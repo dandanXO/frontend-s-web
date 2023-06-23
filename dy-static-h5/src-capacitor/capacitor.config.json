@@ -1,6 +1,6 @@
 {
-  "appId": "com.example.Jolly88",
-  "appName": "Jolly88 App",
+  "appId": "com.code9.dongying",
+  "appName": "东赢",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www"

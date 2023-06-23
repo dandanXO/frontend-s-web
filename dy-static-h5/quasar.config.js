@@ -191,7 +191,13 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: true
+      hideSplashscreen: true,
+      // (Optional) If not present, will look for package.json > name
+      appName: '东赢', // string
+      // (Optional) If not present, will look for package.json > version
+      version: '1.0.0', // string
+      // (Optional) If not present, will look for package.json > description
+      description: '东赢官网 - 最专业的竞猜网站', // string
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/configuring-electron

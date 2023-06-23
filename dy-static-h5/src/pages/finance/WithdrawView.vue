@@ -292,7 +292,7 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: "Redirecting",
+                message: "提交成功",
                 icon: "check_circle_outline"
               });
             } else {
