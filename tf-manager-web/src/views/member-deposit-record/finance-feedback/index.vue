@@ -517,9 +517,9 @@ async function submit() {
 
 function resetQuery() {
   request.name = null
-  request.feedbackTime = [defaultStartDate, defaultEndDate]
-  request.commitTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value : null
+  request.feedbackTime = [null, null]
+  request.commitTime = [null, null]
+  request.siteId = site.value.id ? site.value.id : null
   request.orderNo = null
   request.type = typeList.list[0].value
   request.status = statusList.list[0].value

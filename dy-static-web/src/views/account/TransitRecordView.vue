@@ -537,6 +537,14 @@
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
+                <template
+                  v-if="tbl.dataIndex === 'betStatus'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    {{ getBetStatus(scope.row.betStatus) }}
+                  </div>
+                </template>
               </el-table-column>
             </el-table>
             <el-divider />
@@ -1431,6 +1439,25 @@ export default defineComponent({
         return gameType
       }
     }
+
+    const getBetStatus = (betStatus) => {
+      if (!betStatus) {
+        return ''
+      }
+      if (betStatus === 'BET') {
+        return '投注' // Bet
+      } else if (betStatus === 'SETTLED') {
+        return '结算' // Settled
+      } else if (betStatus === 'BET_N_SETTLE') {
+        return '投注并结算' // Bet & Settled
+      } else if (betStatus === 'CANCEL') {
+        return '取消' // Cancel
+      } else if (betStatus === 'PATCH') {
+        return '修补' // Patch
+      } else {
+        return betStatus
+      }
+    }
     const formRef = ref(null)
 
     return {
@@ -1470,6 +1497,7 @@ export default defineComponent({
       getDepositStatus,
       getDepositType,
       getGameType,
+      getBetStatus,
       openWithdrawConfirm,
       loadingBtn,
       clearItems,
