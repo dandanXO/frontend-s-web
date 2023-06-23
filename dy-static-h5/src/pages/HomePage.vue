@@ -255,7 +255,7 @@
 
           <template v-if="fish.code === 'AG' && fish.name === 'AG'">
             <PlatformBlock
-              @click="playGame(fish.name, fish.code, '')"
+              @click="playGame(fish.name, fish.code, '6')"
               dataType="fish"
               :data="fish"
             />
@@ -373,19 +373,19 @@ export default defineComponent({
         firstSwiper.value?.slideTo(3, 500);
       }
       if (tab.name === "live") {
-        firstSwiper.value?.slideTo(3, 500);
+        firstSwiper.value?.slideTo(4, 500);
       }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(6, 500);
+        firstSwiper.value?.slideTo(7, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(8, 500);
+        firstSwiper.value?.slideTo(9, 500);
       }
       if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(11, 500);
+        firstSwiper.value?.slideTo(12, 500);
       }
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(13, 500);
+        firstSwiper.value?.slideTo(14, 500);
       }
     };
     const onSlideChange = (swiper) => {
@@ -564,8 +564,7 @@ export default defineComponent({
               esport.value.push(espObj);
             }
             if (
-              element.gameType.includes("SPORT") &&
-              !element.gameType.includes("ESPORT")
+              element.gameType.includes("SPORT,ESPORT")
             ) {
               var spObj = Object.assign({}, element);
               if (spObj.code === "IM") {

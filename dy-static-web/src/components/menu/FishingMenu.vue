@@ -37,7 +37,7 @@ export default defineComponent({
         //     message: 'ICONIC GAMING主打的龙珠捕鱼，是一款具有3种精致场景和高赔率的热门射击游戏。 可爱逗趣的海底生物、特殊累积机制、5种随机倍数奖励，丰富的视觉效果带来前所未有的乐趣。'
         // },
         {
-            gameCode: '',
+            gameCode: '6',
             name: 'AG捕鱼王',
             code: 'AG',
             image: 'ag',
