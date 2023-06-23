@@ -5,4 +5,3 @@ WORKDIR /usr/share/nginx/html
 USER root
 
 ADD dist ./
-

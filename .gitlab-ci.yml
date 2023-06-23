@@ -25,7 +25,7 @@ default:
    exclude:
      - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "p8s1"'
       changes:
         - $PROJECT/**/*
 
@@ -34,11 +34,15 @@ default:
   script:
     - cd $PROJECT
     - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
-    - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $CI_REGISTRY_IMAGE:$PROJECT -t $CI_REGISTRY_IMAGE:$PROJECT-$(date +%s) . --no-cache
+    - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $IMAGE_NAME -t $IMAGE_NAME-$(date +%s) . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE:$IMAGE_TAG-dev
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "p8s1"'
+      variables:
+        IMAGE_NAME: $CI_REGISTRY_IMAGE:$IMAGE_TAG-$CI_COMMIT_REF_NAME-prod
       changes:
         - $PROJECT/**/*
 
@@ -49,14 +53,14 @@ stages:
 build-image-pt-launch:
   extends: .docker-build
   variables:
-    PROJECT: pt-launch
+    IMAGE_TAG: pt-launch
 
 #===============================================================================================
 
 build-image-site-download:
   extends: .docker-build
   variables:
-    PROJECT: site-download
+    IMAGE_TAG: site-download
 
 #===============================================================================================
 
@@ -68,12 +72,12 @@ build-ph-static-h5:
     - npm install -g @quasar/cli
     - quasar build
   variables:
-    PROJECT: ph-static-h5
+    IMAGE_TAG: ph-static-h5
 
 build-image-ph-static-h5:
   extends: .docker-build
   variables:
-    PROJECT: ph-static-h5
+    IMAGE_TAG: ph-static-h5
   needs:
     - build-ph-static-h5
 
@@ -86,12 +90,12 @@ build-ph-static-web:
     - npm install
     - npm run build
   variables:
-    PROJECT: ph-static-web
+    IMAGE_TAG: ph-static-web
 
 build-image-ph-static-web:
   extends: .docker-build
   variables:
-    PROJECT: ph-static-web
+    IMAGE_TAG: ph-static-web
   needs:
     - build-ph-static-web
 
@@ -104,12 +108,12 @@ build-tf-manager-web:
     - npm install
     - npm run build:prod
   variables:
-    PROJECT: tf-manager-web
+    IMAGE_TAG: tf-manager-web
 
 build-image-tf-manager-web:
   extends: .docker-build
   variables:
-    PROJECT: tf-manager-web
+    IMAGE_TAG: tf-manager-web
   needs:
     - build-tf-manager-web
 
@@ -124,12 +128,12 @@ build-xf-static-h5:
     - npm install -g @quasar/cli
     - quasar build
   variables:
-    PROJECT: xf-static-h5
+    IMAGE_TAG: xf-static-h5
 
 build-image-xf-static-h5:
   extends: .docker-build
   variables:
-    PROJECT: xf-static-h5
+    IMAGE_TAG: xf-static-h5
   needs:
     - build-xf-static-h5
 
@@ -142,12 +146,12 @@ build-xf-static-web:
     - npm install
     - npm run build
   variables:
-    PROJECT: xf-static-web
+    IMAGE_TAG: xf-static-web
 
 build-image-xf-static-web:
   extends: .docker-build
   variables:
-    PROJECT: xf-static-web
+    IMAGE_TAG: xf-static-web
   needs:
     - build-xf-static-web
 
@@ -162,12 +166,12 @@ build-dy-static-h5:
     - npm install -g @quasar/cli
     - quasar build
   variables:
-    PROJECT: dy-static-h5
+    IMAGE_TAG: dy-static-h5
 
 build-image-dy-static-h5:
   extends: .docker-build
   variables:
-    PROJECT: dy-static-h5
+    IMAGE_TAG: dy-static-h5
   needs:
     - build-dy-static-h5
 
@@ -180,11 +184,11 @@ build-dy-static-web:
     - npm install
     - npm run build
   variables:
-    PROJECT: dy-static-web
+    IMAGE_TAG: dy-static-web
 
 build-image-dy-static-web:
   extends: .docker-build
   variables:
-    PROJECT: dy-static-web
+    IMAGE_TAG: dy-static-web
   needs:
     - build-dy-static-web
