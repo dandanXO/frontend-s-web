@@ -216,15 +216,27 @@ export const constantRoutes = [
   },
   {
     path: "/xf/login",
-    name: "XF1 Login",
+    name: "XF Login",
     meta: { hidden: true },
     component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/xf/login/index.vue")
   },
   {
     path: "/xf/register",
-    name: "XF1 Register",
+    name: "XF Register",
     meta: { hidden: true },
     component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/xf/register/index.vue")
+  },
+  {
+    path: "/dy/login",
+    name: "DY Login",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/dy/login/index.vue")
+  },
+  {
+    path: "/dy/register",
+    name: "DY Register",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/dy/register/index.vue")
   },
 ];
 

@@ -277,7 +277,7 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).startOf('week').format('x'));
+      start.setTime(moment(start).startOf('isoWeek').format('x'));
       return [start, end];
     }
   },
@@ -286,8 +286,8 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('week').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('week').format('x'));
+      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
+      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
       return [start, end];
     }
   },

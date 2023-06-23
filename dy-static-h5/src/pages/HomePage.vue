@@ -21,7 +21,7 @@
           href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
         <q-btn
           size="sm"
-          href="https://kcx3zdl.ycylbj.com/dy_app.apk"
+          href="https://dy9367.app/"
           target="_blank"
           label="立即下载"
           color="dyblue"
@@ -116,10 +116,10 @@
           <img src="../assets/images/index/withdrawal_icon.png" />
           <div class="">取款</div>
         </router-link>
-        <router-link to="/account/transfer" class="men transfer-menu">
+        <!-- <router-link to="/account/transfer" class="men transfer-menu">
           <img src="../assets/images/index/transfer_icon.png" />
           <div class="">转账</div>
-        </router-link>
+        </router-link> -->
         <router-link to="/account/vip" class="men transfer-menu">
           <img src="../assets/images/index/vip_icon.png" />
           <div class="">VIP 详情</div>
@@ -1041,7 +1041,7 @@ export default defineComponent({
   .menulist {
     flex: 4;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     gap: 10px;
     .men {
       text-decoration: none;

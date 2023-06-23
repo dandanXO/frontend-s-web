@@ -4,7 +4,7 @@
       <div class="search">
         <el-date-picker
           v-model="request.depositDate"
-          format="DD/MM/YYYY"
+          format="DD/MM/YYYY HH:mm:ss"
           value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
           type="datetimerange"
@@ -16,6 +16,7 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-select
           clearable
@@ -236,6 +237,10 @@ const statusList = reactive({
   ]
 })
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const shortcuts = [
   {
     text: t('fields.today'),
@@ -260,7 +265,7 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).startOf('week').format('x'));
+      start.setTime(moment(start).startOf('isoWeek').format('x'));
       return [start, end];
     }
   },
@@ -269,8 +274,8 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('week').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('week').format('x'));
+      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
+      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
       return [start, end];
     }
   },

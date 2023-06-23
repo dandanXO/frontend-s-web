@@ -1,27 +1,28 @@
 <template>
   <div class="wrapper">
     <div class="affiliate">
-      <div class="game-title underline">Join Us! Enjoy your life!</div>
-      <div class="game-title sub"><img :src="xf1Logo"></div>
+      <div class="game-title sub"><img :src="xfLogo"></div>
       <div class="affiliate-login">
         <el-form
           ref="loginFormRef"
           :model="loginForm"
           :rules="loginRules"
           class="login-form"
-          autocomplete="on"
+          autocomplete="no-fill"
         >
 
           <el-form-item prop="userName">
             <el-input
               ref="userNameRef"
               v-model="loginForm.userName"
-              :placeholder="'Username'"
+              :placeholder="'用户名'"
               name="username"
               type="text"
               tabindex="1"
-              autocomplete="on"
-            />
+              autocomplete="no-fill"
+            >
+              <template style="background-color: #2144c6;" #prepend><i><img src="../../../assets/images/xf/icon_name.png"></i></template>
+            </el-input>
           </el-form-item>
 
           <el-tooltip
@@ -36,14 +37,18 @@
                 ref="passwordRef"
                 v-model="loginForm.password"
                 :type="passwordType"
-                :placeholder="'Password'"
+                :placeholder="'密码'"
                 name="password"
                 tabindex="2"
-                autocomplete="on"
+                autocomplete="no-fill"
                 @keyup="checkCapslock"
                 @blur="capsTooltip = false"
                 @keyup.enter="handleLogin"
-              />
+              >
+                <template style="background-color: #2144c6;" #prepend>
+                  <i><img src="../../../assets/images/xf/icon_pwd.png"></i>
+                </template>
+              </el-input>
             </el-form-item>
           </el-tooltip>
 
@@ -54,9 +59,9 @@
             style="width:100%;"
             @click.prevent="handleLogin"
           >
-            Login
+            登录
           </el-button>
-          <router-link to="/xf/register" class="signlog">Not an affiliate yet? Register Now</router-link>
+          <router-link to="/xf/register" class="signlog">申请账号</router-link>
         </el-form>
       </div>
     </div>
@@ -75,7 +80,7 @@ import {
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { UserActionTypes } from "@/store/modules/user/action-types";
-import xf1Logo from "@/assets/images/xf/logo-xf1.png";
+import xfLogo from "@/assets/images/xf/logo.png";
 
 export default defineComponent({
   setup() {
@@ -94,14 +99,14 @@ export default defineComponent({
         userName: [
           {
             required: true,
-            message: "User name is required",
+            message: "请输入用户名",
             trigger: "blur",
           }
         ],
         password: [
           {
             required: true,
-            message: "Password is required",
+            message: "请输入密码",
             trigger: "blur",
           }
         ]
@@ -117,15 +122,17 @@ export default defineComponent({
     const methods = reactive({
       validatePasswordLength: (rule, value, callback) => {
         if (value.length < 6 || value.length > 12) {
-          callback(new Error("The password cannot be less than 6 digits or more than 12 digits"));
+          callback(new Error("密码长度为6-12"));
         } else {
           callback();
         }
       },
       checkCapslock: (e) => {
         const { key } = e;
-        state.capsTooltip =
-          key !== null && key.length === 1 && key >= "A" && key <= "Z";
+        if (key) {
+          state.capsTooltip =
+            key !== null && key.length === 1 && key >= "A" && key <= "Z";
+        }
       },
       showPwd: () => {
         if (state.passwordType === "password") {
@@ -138,7 +145,7 @@ export default defineComponent({
         });
       },
       handleLogin: () => {
-        state.loginForm.siteId = 1;
+        state.loginForm.siteId = 5;
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             state.loading = true;
@@ -188,7 +195,7 @@ export default defineComponent({
       userNameRef,
       passwordRef,
       loginFormRef,
-      xf1Logo,
+      xfLogo,
       ...toRefs(state),
       ...toRefs(methods)
     };
@@ -206,29 +213,41 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
-    background: #ffd800;
-    font-size: 18px;
-    color: #000;
+    background-color: #2144c6;
+    font-size: 14px;
+    color: #ffffff;
     border: 1px solid transparent;
-    font-weight: 700;
     border-radius: 0;
+    opacity: .9;
     &:hover {
-    color: #ffd800;
-    border: 1px solid #ffd800;
-    background-color: transparent;
+      opacity: 1;
+    }
+}
+:deep(.el-input-group__prepend) {
+    background-color: #2144c6;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    i {
+      display: flex;
+      justify-content: center;
+      img {
+        height: 40px;
+      }
     }
 }
 :deep(.el-input__inner) {
   background: #24222e;
+  background-color: #353f4b;
   color: #ffffff;
   border: 0;
+  border-radius: 0;
 }
 .wrapper {
-  background: url("../../../assets/images/my/main.jpg") no-repeat center top;
+  background: url("../../../assets/images/xf/main.jpg") no-repeat center top;
   background-size: cover;
 
   .affiliate {
-    background: url("../../../assets/images/my/bg.png") no-repeat center top;
     margin: 0 auto;
     min-height: 100vh;
     padding: 40px 20px;
@@ -246,14 +265,17 @@ export default defineComponent({
         font-family: Jura;
       }
       &.underline {
-        color: #ffd200;
+        background-image: linear-gradient(to right, #de4545, #db7e42);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         text-align: center;
         margin-bottom: 40px;
         &:after {
           content: "";
           width: 60px;
           height: 5px;
-          background: #ffd200;
+          background: linear-gradient(to right, #de4545, #db7e42);
           display: block;
           margin: 5px auto;
         }
@@ -263,17 +285,23 @@ export default defineComponent({
       width: 95%;
       max-width: 480px;
       margin: 30px;
-      background-color: #15141b;
-      border-radius: 10px;
-      border: solid 1px #24222e;
-      padding: 46px 50px;
+      // background-color: #15141b;
+      // border-radius: 10px;
+      // border: solid 1px #24222e;
+      padding: 10px 50px;
+      .el-form-item {
+        margin-bottom: 30px;
+      }
+      :deep(.el-form-item__error) {
+        padding-top: 10px;
+      }
       .signlog {
         font-family: Jura;
         font-size: 14px;
-        color: #ffffff;
+        color: #31b0bf;
         display: block;
         margin: 10px auto;
-        text-align: center;
+        text-align: right;
       }
     }
   }

@@ -343,8 +343,8 @@ import { hasPermission } from '../../../utils/util'
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
-const defaultStartDate = convertDate(startDate)
-const defaultEndDate = convertDate(new Date())
+// const defaultStartDate = convertDate(startDate)
+// const defaultEndDate = convertDate(new Date())
 
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -431,7 +431,7 @@ const shortcuts = [
       const start = new Date()
       start.setTime(
         moment(start)
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       return [start, end]
@@ -445,13 +445,13 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .subtract(1, 'weeks')
-          .startOf('week')
+          .startOf('isoWeek')
           .format('x')
       )
       end.setTime(
         moment(end)
           .subtract(1, 'weeks')
-          .endOf('week')
+          .endOf('isoWeek')
           .format('x')
       )
       return [start, end]
@@ -501,9 +501,9 @@ function disabledDate(time) {
   )
 }
 
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
-}
+// function convertDate(date) {
+//   return moment(date).format('YYYY-MM-DD')
+// }
 
 async function submit() {
   if (form.remark === null || form.remark === '') {

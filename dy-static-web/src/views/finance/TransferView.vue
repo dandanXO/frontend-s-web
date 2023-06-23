@@ -3,12 +3,12 @@
         <div class="balance">
               <div class="menu-title-container">
           <el-row style="width: 100%;">
-            <el-col :span="20">
+            <!-- <el-col :span="20"> -->
               <!-- <div class="balance-wrapper">
             <span class="currency">主账户:</span> ￥{{ mainWallet }}
           </div> -->
-                <span class="menu-title">快速转账</span>
-            </el-col>
+                <!-- <span class="menu-title">快速转账</span>
+            </el-col> -->
             <el-col :span="4">
               <el-button type="success"
               size="small"
