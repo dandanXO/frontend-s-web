@@ -1,7 +1,7 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="deposit"
+      recordType="reminder"
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"
@@ -15,7 +15,6 @@ import {api} from "boot/axios";
 import moment from "moment/moment";
 
 export default defineComponent({
-  name: "FeedbackRecordView",
   components: {
     RecordComponent
   },
@@ -35,9 +34,7 @@ export default defineComponent({
           params: paramData
         },
       ).then((res) => {
-        console.log(res);
         tableData.value= res.data.records;
-
       }).finally(()=>{
         visible.value = false;
       })
