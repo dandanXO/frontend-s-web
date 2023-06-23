@@ -184,6 +184,13 @@
           :key="i"
           :class="'live-' + i"
         >
+          <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
+            <PlatformBlock
+              @click="playGame(live.name, live.code, 'bblive_lobby_app')"
+              dataType="live"
+              :data="live"
+            />
+          </template>
           <PlatformBlock
             @click="playGame(live.name, live.code, live.gameCode)"
             dataType="live"
@@ -191,6 +198,13 @@
           />
         </swiper-slide>
         <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
+          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
+            <PlatformBlock
+              @click="playGame(poke.name, poke.code, 'ky_lobby')"
+              dataType="poker"
+              :data="poke"
+            />
+          </template>
           <PlatformBlock
             @click="playGame(poke.name, poke.code, poke.gameCode)"
             dataType="poker"
@@ -205,6 +219,13 @@
           <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
             <PlatformBlock
               @click="playGame(lotter.name, lotter.code, 'imlotto30000')"
+              dataType="lottery"
+              :data="lotter"
+            />
+          </template>
+          <template v-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'">
+            <PlatformBlock
+              @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
               dataType="lottery"
               :data="lotter"
             />
@@ -224,6 +245,21 @@
           :key="i"
           :class="'fish-' + i"
         >
+          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
+            <PlatformBlock
+              @click="playGame(fish.name, fish.code, '7202')"
+              dataType="fish"
+              :data="fish"
+            />
+          </template>
+
+          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
+            <PlatformBlock
+              @click="playGame(fish.name, fish.code, '6')"
+              dataType="fish"
+              :data="fish"
+            />
+          </template>
           <PlatformBlock
             @click="playGame(fish.name, fish.code, fish.code)"
             dataType="fish"
@@ -337,19 +373,19 @@ export default defineComponent({
         firstSwiper.value?.slideTo(3, 500);
       }
       if (tab.name === "live") {
-        firstSwiper.value?.slideTo(6, 500);
+        firstSwiper.value?.slideTo(4, 500);
       }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(9, 500);
+        firstSwiper.value?.slideTo(7, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(11, 500);
+        firstSwiper.value?.slideTo(9, 500);
       }
       if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(13, 500);
+        firstSwiper.value?.slideTo(12, 500);
       }
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(25, 500);
+        firstSwiper.value?.slideTo(14, 500);
       }
     };
     const onSlideChange = (swiper) => {
@@ -430,7 +466,21 @@ export default defineComponent({
 
     const ui = useUI();
     const scrollPageRef = ref(null);
-    const isH5 = ref(true);
+    const isH5 = ref(false);
+    const checkPlatform = () => {
+      //Is iOS Webclip App || Is Android Apk
+      if (
+        (Platform.is.ios &&
+          "standalone" in window.navigator &&
+          window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
+      ) {
+        isH5.value = false;
+      } else {
+        isH5.value = true;
+      }
+    };
+
     ui.$onAction(({ name, args }) => {
       switch (name) {
         case "setScrollPosition":
@@ -514,8 +564,7 @@ export default defineComponent({
               esport.value.push(espObj);
             }
             if (
-              element.gameType.includes("SPORT") &&
-              !element.gameType.includes("ESPORT")
+              element.gameType.includes("SPORT,ESPORT")
             ) {
               var spObj = Object.assign({}, element);
               if (spObj.code === "IM") {
@@ -768,6 +817,7 @@ export default defineComponent({
       getPlatList();
       loadData();
       loadAnnouncement();
+      checkPlatform();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();

@@ -24,18 +24,18 @@
             v-model="withdrawInfo.cardId"
             option-value="id"
             emit-value
-            label="提款银行"
+            :label="isUSDT ? '钱包地址': '提款银行'"
             color="black"
             :options="withdrawState.bankCardList"
             map-options
-            :rules="[(val) => !!val || '请选择银行']"
+            :rules="[(val) => !!val || isUSDT ? '请选择钱包地址': '请选择银行']"
           >
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey"
-                  >没有可用的卡片
+                  > {{ isUSDT ? '没有可用的钱包地址': '没有可用的卡片' }}
                   <router-link class="text-bright" to="/account/withdraw"
-                    >加卡</router-link
+                    >{{ isUSDT ? '加钱包地址': '加卡' }}</router-link
                   ></q-item-section
                 >
               </q-item>

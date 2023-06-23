@@ -83,12 +83,12 @@
         <el-form-item
           class="select"
           prop="cardId"
-          label="选择银行卡"
-          :rules="[{ required: true, message: '请选择银行卡', trigger: 'blur' }]"
+          :label="isUSDT ? '选择钱包地址' : '选择银行卡'"
+          :rules="[{ required: true, message: isUSDT ? '请选择钱包地址' : '请选择银行卡', trigger: 'blur' }]"
         >
           <el-select
             v-model="withdrawInfo.cardId"
-            placeholder="选择银行卡"
+            :placeholder="isUSDT ? '选择钱包地址' : '选择银行卡'"
             style="width: 300px;"
           >
             <el-option
