@@ -16,12 +16,28 @@
           class="filter-item"
           style="width: 120px; margin-left: 5px"
           @focus="loadPlatformNames"
+          filterable
         >
           <el-option
             v-for="item in platforms.list"
             :key="item.id"
             :label="item.name"
             :value="item.id"
+          />
+        </el-select>
+        <el-select
+          clearable
+          v-model="request.gameType"
+          size="small"
+          :placeholder="t('fields.gameType')"
+          style="width: 120px; margin-left: 5px"
+          @focus="loadGameTypes"
+        >
+          <el-option
+            v-for="item in gameTypes.list"
+            :key="item"
+            :label="item"
+            :value="item"
           />
         </el-select>
         <el-select
@@ -330,6 +346,7 @@
       <el-table-column prop="name" :label="t('fields.gameName')" min-width="150"/>
       <el-table-column prop="code" :label="t('fields.gameCode')" min-width="180"/>
       <el-table-column prop="platformName" :label="t('fields.platform')" width="150"/>
+      <el-table-column prop="gameType" :label="t('fields.gameType')" width="120"/>
       <el-table-column prop="siteName" :label="t('fields.site')" width="150"/>
       <el-table-column prop="status" :label="t('fields.status')" width="150"/>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150"/>
@@ -462,6 +479,7 @@ const request = reactive({
   name: null,
   platform: null,
   siteId: null,
+  gameType: null
 })
 
 const form = reactive({
@@ -519,6 +537,7 @@ function resetQuery() {
   request.name = null
   request.platform = null
   request.siteId = site.value ? site.value.id : null;
+  request.gameType = null
 }
 
 function handleSelectionChange(val) {
