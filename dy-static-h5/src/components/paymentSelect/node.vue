@@ -405,6 +405,8 @@ $node-color: #4ab6fd;
       img {
         background-color: #fff;
         margin-bottom: 0;
+        width: 100%;
+        height: auto;
       }
     }
   }
