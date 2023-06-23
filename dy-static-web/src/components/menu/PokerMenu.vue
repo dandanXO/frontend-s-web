@@ -31,7 +31,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     data: () => ({
         navigations: [
-        { code: "DT", image: "tx", label: "大唐", slogan: "赛事最多 玩法新颖" , gameCode: '', percentage: "0"},
+        { code: "DT", image: "tx", label: "大唐", slogan: "玩出运气 赢得喜气" , gameCode: '', percentage: "0"},
         { code: "KYDY", image: "ky", label: "开元", slogan: "崭新玩法 感受精彩", gameCode: 'ky_lobby', percentage: "-232px"},
         ],
     }),

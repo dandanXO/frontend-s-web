@@ -93,7 +93,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="turnover" label="转账记录">
+        <el-tab-pane name="turnover" label="账变记录">
           <div>
             <el-form layout="inline" :model="searchForm.turnover">
               <div class="left">
@@ -1341,7 +1341,7 @@ export default defineComponent({
         return '失败' // Failed
       } else if (withdrawStatus === 'SUCCESS') {
         return '成功' // Success
-      } else if (withdrawStatus === 'STEP_1') {
+      } else if (withdrawStatus === 'STEP_1' || withdrawStatus === 'PENDING') {
         return '审核中' //Under review
       } else if (withdrawStatus === 'STEP_2') {
         return '待支付' // To be paid

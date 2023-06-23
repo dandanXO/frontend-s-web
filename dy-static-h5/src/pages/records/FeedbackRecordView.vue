@@ -41,136 +41,23 @@ export default defineComponent({
       }).finally(()=>{
         visible.value = false;
       })
-
-
-      //HARDCODE.
-      // tableData.value = [
-      //   {
-      //     id: "1",
-      //     code: "金额",
-      //     depositAmount: "200",
-      //     depositType: "KDPay",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "2",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "3",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "WECHAT_CODE2",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "4",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "5",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "6",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "金额",
-      //     depositAmount: "200",
-      //     depositType: "KDPay",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "last",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      // ];
-
     };
     const tableHeaders = [
       {
-        key: "depositAmount",
-        label: "金额",
-      },
-      // {
-      //   key: "depositType",
-      //   label: "存款类型",
-      // },
-      {
-        key: "status",
-        label: "存款状态",
+        key: "orderNo",
+        label: "订单号",
       },
       {
-        key: "depositDate",
-        label: "到账时间",
+        key: "financeRemark",
+        label: "财务反馈",
       },
       {
-        key: "serialNumber",
-        label: "存款编码",
+        key: "feedbackTime",
+        label: "反馈时间",
+      },
+      {
+        key: "type",
+        label: "类型",
       }
     ];
     onMounted(() => {
