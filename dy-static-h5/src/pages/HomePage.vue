@@ -373,19 +373,19 @@ export default defineComponent({
         firstSwiper.value?.slideTo(3, 500);
       }
       if (tab.name === "live") {
-        firstSwiper.value?.slideTo(6, 500);
+        firstSwiper.value?.slideTo(3, 500);
       }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(9, 500);
+        firstSwiper.value?.slideTo(6, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(11, 500);
+        firstSwiper.value?.slideTo(8, 500);
       }
       if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(13, 500);
+        firstSwiper.value?.slideTo(11, 500);
       }
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(25, 500);
+        firstSwiper.value?.slideTo(13, 500);
       }
     };
     const onSlideChange = (swiper) => {
