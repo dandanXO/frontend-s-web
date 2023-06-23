@@ -2165,14 +2165,23 @@ body {
     }
 
     &.live-ag {
-      background-image: url("../../assets/game/header_slot_ag.png");
+      background-image: url("../../assets/live/live_ag.png");
     }
     &.live-allbet {
-      background-image: url("../../assets/game/header_slot_pt.png");
+      background-image: url("../../assets/live/live_allbet.png");
     }
 
     &.live-bbin {
-      background-image: url("../../assets/game/header_slot_sw.png");
+      background-image: url("../../assets/live/live_bbin.png");
+    }
+    &.live-pm {
+      background-image: url("../../assets/live/live_pm.png");
+    }
+    &.live-bg {
+      background-image: url("../../assets/live/live_bg.png");
+    }
+    &.live-sexy {
+      background-image: url("../../assets/live/live_sexy.png");
     }
     &.lottery-tcg {
       background-image: url("../../assets/lottery/lottery_tcg.webp");
