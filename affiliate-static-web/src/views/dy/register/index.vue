@@ -1,7 +1,8 @@
 <template>
   <div class="wrapper">
     <div class="affiliate">
-      <div class="game-title sub"><img :src="xfLogo"></div>
+      <div class="game-title"><img src="../../../assets/images/dy/joinus.png"></div>
+      <div class="game-title sub"><img :src="dyLogo"></div>
       <div class="affiliate-login">
         <el-form
           ref="loginFormRef"
@@ -21,7 +22,7 @@
                 tabindex="1"
                 autocomplete="off"
               >
-                <template #prepend><i><img src="../../../assets/images/xf/icon_name.png"></i></template>
+                <template #prepend><i><img src="../../../assets/images/dy/icon_name.png"></i></template>
               </el-input>
             </el-form-item>
             <el-tooltip
@@ -43,7 +44,7 @@
                   @keyup="checkCapslock"
                   @blur="capsTooltip = false"
                 >
-                  <template #prepend><i><img src="../../../assets/images/xf/icon_pwd.png"></i></template>
+                  <template #prepend><i><img src="../../../assets/images/dy/icon_pwd.png"></i></template>
                 </el-input>
               </el-form-item>
             </el-tooltip>
@@ -66,7 +67,7 @@
                   @keyup="checkCapslock"
                   @blur="capsTooltip = false"
                 >
-                  <template #prepend><i><img src="../../../assets/images/xf/icon_pwd.png"></i></template>
+                  <template #prepend><i><img src="../../../assets/images/dy/icon_pwd.png"></i></template>
                 </el-input>
               </el-form-item>
             </el-tooltip>
@@ -79,7 +80,7 @@
             >
               下一步
             </el-button>
-            <router-link to="/xf/login" class="signlog">已经有帐号?请登录</router-link>
+            <router-link to="/dy/login" class="signlog">已经有帐号?请登录</router-link>
           </div>
           <div v-if="step === 2">
             <el-form-item prop="telephone">
@@ -92,7 +93,7 @@
                 tabindex="4"
                 autocomplete="on"
               >
-                <template #prepend><i><img src="../../../assets/images/xf/icon_phone.png"></i></template>
+                <template #prepend><i><img src="../../../assets/images/dy/icon_phone.png"></i></template>
               </el-input>
             </el-form-item>
             <el-form-item prop="email">
@@ -105,7 +106,7 @@
                 tabindex="5"
                 autocomplete="on"
               >
-                <template #prepend><i><img src="../../../assets/images/xf/icon_mail.png"></i></template>
+                <template #prepend><i><img src="../../../assets/images/dy/icon_mail.png"></i></template>
               </el-input>
             </el-form-item>
             <el-form-item prop="birthday">
@@ -185,7 +186,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import { getVerificationCode } from '../../../api/user';
-import xfLogo from "@/assets/images/xf/logo.png";
+import dyLogo from "@/assets/images/dy/logo.png";
 import { ElNotification } from 'element-plus';
 
 export default defineComponent({
@@ -383,7 +384,7 @@ export default defineComponent({
               return;
             }
             router.push({
-              path: state.redirect || "/xf/login",
+              path: state.redirect || "/dy/login",
               query: state.otherQuery
             }).catch(err => {
               console.warn(err);
@@ -435,7 +436,7 @@ export default defineComponent({
       loginFormRef,
       verificationImg,
       disabledDate,
-      xfLogo,
+      dyLogo,
       ...toRefs(state),
       ...toRefs(methods),
       getCode,
@@ -480,7 +481,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
-    background-color: #2144c6;
+    background-color: #3bafda;
     font-size: 14px;
     color: #ffffff;
     border: 1px solid transparent;
@@ -491,7 +492,7 @@ export default defineComponent({
     }
 }
 :deep(.el-input-group__append) {
-    background-color: #353f4b;
+    background-color: #e1e3ef;
     border: 0;
     padding: 0 10px;
     border-radius: 0;
@@ -500,17 +501,20 @@ export default defineComponent({
     }
 }
 :deep(.el-input-group__prepend) {
-    background-color: #2144c6;
+    background-color: #c9cfdd;
     border: 0;
     padding: 0;
     border-radius: 0;
     color: #ffffff;
     font-size: 20px;
+    width: 40px;
+        height: 40px;
     i {
       display: flex;
       justify-content: center;
+      color:#2b5ee2;
       img {
-        height: 40px;
+        // height: 40px;
       }
     }
 }
@@ -518,12 +522,12 @@ export default defineComponent({
   width: 100%;
 }
 :deep(.el-input__prefix) {
-  background: #2144c6;
+  background: #c9cfdd;
   left: 0;
   padding: 0 8px;
   .el-input__icon {
     font-size: 18px;
-    color: #ffffff;
+    color: #2b5ee2;
   }
 }
 :deep(.el-input--prefix .el-input__inner) {
@@ -535,13 +539,13 @@ export default defineComponent({
   border: 0;
 }
 :deep(.el-input__inner) {
-  background-color: #353f4b;
-  color: #ffffff;
+    background-color: #e1e3ef !important;
+    color: #333333 !important;
   border: 0;
   border-radius: 0;
 }
 .wrapper {
-  background: url("../../../assets/images/xf/main.jpg") no-repeat center top;
+  background: url("../../../assets/images/dy/main.jpg") no-repeat center top;
   background-size: cover;
 
   .affiliate {
@@ -595,7 +599,7 @@ export default defineComponent({
       .signlog {
         font-family: Jura;
         font-size: 14px;
-        color: #31b0bf;
+        color: #3c7cf4;
         display: block;
         margin: 10px auto;
         text-align: right;
