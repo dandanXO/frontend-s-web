@@ -430,7 +430,21 @@ export default defineComponent({
 
     const ui = useUI();
     const scrollPageRef = ref(null);
-    const isH5 = ref(true);
+    const isH5 = ref(false);
+    const checkPlatform = () => {
+      //Is iOS Webclip App || Is Android Apk
+      if (
+        (Platform.is.ios &&
+          "standalone" in window.navigator &&
+          window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
+      ) {
+        isH5.value = false;
+      } else {
+        isH5.value = true;
+      }
+    };
+
     ui.$onAction(({ name, args }) => {
       switch (name) {
         case "setScrollPosition":
@@ -768,6 +782,7 @@ export default defineComponent({
       getPlatList();
       loadData();
       loadAnnouncement();
+      checkPlatform();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
