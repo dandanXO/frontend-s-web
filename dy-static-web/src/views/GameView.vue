@@ -51,7 +51,7 @@
             placeholder="输入查找游戏名"
           >
             <template #suffix>
-              <el-icon :width="15">
+              <el-icon :width="15" @click="searchList()">
               <Search />
               </el-icon>
             </template>

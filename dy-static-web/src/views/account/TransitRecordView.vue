@@ -93,7 +93,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="turnover" label="转账记录">
+        <el-tab-pane name="turnover" label="账变记录">
           <div>
             <el-form layout="inline" :model="searchForm.turnover">
               <div class="left">
@@ -948,6 +948,10 @@ const tableColumns = {
       title: "游戏类型",
       dataIndex: "gameType"
     },
+    {
+      title: "投注状态",
+      dataIndex: "betStatus"
+    }
   ],
   betRecord: [
     // {
@@ -1337,7 +1341,7 @@ export default defineComponent({
         return '失败' // Failed
       } else if (withdrawStatus === 'SUCCESS') {
         return '成功' // Success
-      } else if (withdrawStatus === 'STEP_1') {
+      } else if (withdrawStatus === 'STEP_1' || withdrawStatus === 'PENDING') {
         return '审核中' //Under review
       } else if (withdrawStatus === 'STEP_2') {
         return '待支付' // To be paid
@@ -1446,8 +1450,8 @@ export default defineComponent({
       }
       if (betStatus === 'BET') {
         return '投注' // Bet
-      } else if (betStatus === 'SETTLED') {
-        return '结算' // Settled
+      } else if (betStatus === 'SETTLE') {
+        return '结算' // Settle
       } else if (betStatus === 'BET_N_SETTLE') {
         return '投注并结算' // Bet & Settled
       } else if (betStatus === 'CANCEL') {

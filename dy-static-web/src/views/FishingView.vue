@@ -25,7 +25,7 @@
         ></button>
         <button
             class="btn fish-begin"
-            @click="openGame('AG捕鱼', 'AG', '')"
+            @click="openGame('AG捕鱼', 'AG', '6')"
         ></button>
       </div>
     </div>

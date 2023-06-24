@@ -177,12 +177,12 @@
             </div>
           </div>
         </router-link>
-        <a href="https://partner.dyvip90.com" target="_blank">
+        <!-- <a href="https://partner.dyvip90.com" target="_blank">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_agent.png" />
             <div class="acct-nav-label">加盟</div>
           </div>
-        </a>
+        </a> -->
       </div>
     </q-item-section>
     <a @click="logout">

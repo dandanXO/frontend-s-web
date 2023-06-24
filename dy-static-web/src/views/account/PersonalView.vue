@@ -4,31 +4,6 @@
       <span class="menu-title">个人资料</span>
     </div>
     <div class="personal-container">
-    <!-- <div
-      class="account-title-container"
-      style="display: flex; justify-content: space-between; align-items: center"
-    >
-      <el-button
-        class="a-common-btn"
-        v-if="
-          !isEdit &&
-          (!personalState.memberInfo.realName ||
-            !personalState.memberInfo.email ||
-            !personalState.memberInfo.birthday ||
-            !personalState.memberInfo.telephone)
-        "
-        @click="isEdit = !isEdit"
-        style="padding: 10px; width: auto; font-size: 16px"
-        >Edit</el-button
-      >
-      <el-button
-        class="a-common-btn"
-        v-if="isEdit"
-        @click="updateState"
-        style="padding: 10px; width: auto; font-size: 16px"
-        >Submit</el-button
-      >
-    </div> -->
       <el-form ref="updateFormRef" :model="updateFormDetails">
         <div class="personal-wrapper">
           <div class="basic-info">
@@ -285,11 +260,15 @@
                 :placeholder="'验证码'"
               />
               <el-button
+                :disabled="disableSendVerificationButton"
                 size="small"
                 class="common-btn verification-btn"
-                @click="openVerificationModal"
-                >发送验证码
+                @click="openVerificationModal">
+                <span v-if="disableSendVerificationButton">已发送（倒数{{ countDown }}秒)</span>
+                <span v-else >发送验证码</span>
               </el-button>
+
+              
             </el-space>
         </el-form-item>
         <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity"
@@ -347,6 +326,7 @@ import {
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
+import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
 
 export default defineComponent({
   name: "PersonalView",
@@ -354,6 +334,29 @@ export default defineComponent({
     InfoFilled
   },
   setup() {
+
+    // Send Verification Code
+    const emailKey = `emailKey`
+    const sendOtpDisabledKey = `sendOtpDisabled`
+
+    const sendOtpDisabledTimeout = 60
+    const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey)
+
+    let cachedEmail = lsGet(emailKey);
+    let initialSendOtpDisabledTimeout = false
+
+    if (sendOtpDisabledTimeoutLeft) {
+      initialSendOtpDisabledTimeout = true
+    } else {
+      lsRemove(sendOtpDisabledKey)
+      lsRemove(emailKey)
+
+      cachedEmail = '';
+    }
+
+    const disableSendVerificationButton = ref(initialSendOtpDisabledTimeout);
+    const countDown = ref(sendOtpDisabledTimeoutLeft);
+
     const loadingBtn = ref(false)
     const loadingPwBtn = ref(false)
     const loadingSecurityBtn = ref(false)
@@ -367,6 +370,10 @@ export default defineComponent({
     });
 
     onMounted(() => {
+
+      if(sendOtpDisabledTimeoutLeft)
+        countdownTimer();
+
       loadInfo();
       getCode();
     });
@@ -397,7 +404,8 @@ export default defineComponent({
     const captchaUpdateRef = ref();
     const updateSecurityVerified = reactive({
       mobileNumber: "",
-      verificationCode: ""
+      verificationCode: "",
+      emailAddress: "",
     });
     const verificationImg = ref("");
     const loadInfo = () => {
@@ -416,7 +424,7 @@ export default defineComponent({
 
     const verificationModalVisible = ref(false)
     const updateSecurityModal = () => {
-      updateSecurityVerified.emailAddress = "";
+      updateSecurityVerified.emailAddress = cachedEmail;
       updateSecurityVerified.verificationCode = "";
       updateSecurityModalVisible.value = true;
     };
@@ -429,23 +437,39 @@ export default defineComponent({
       captchaUpdateRef.value
         .validate()
         .then(() => {
+
       isEmailSending.value = true
       verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
+      
       const emailDetails =  {
         email: updateSecurityVerified.emailAddress,
         captchaCode: updateSecurityVerified.captchaCode,
         codeId: updateSecurityVerified.codeId
       }
+
       sendEmail(emailDetails).then((res) => {
         if ( res.code === 0) {
+
+          disableSendVerificationButton.value = true
+
+          const now = new Date();
+
+          now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout)
+
+          lsStore(sendOtpDisabledKey, now.getTime());
+          lsStore(emailKey, verificationDetails.memberInfo.email)
+
+          countDown.value = sendOtpDisabledTimeout
+          countdownTimer()
+
           verificationDetails.memberInfo.codeId = res.data.codeId
           verificationModalVisible.value = false;
-          // message.success("Success")
 
           ElMessage({
             message: '成功',
             type: 'success',
           })
+
           isEmailSending.value = false
         }
      }).catch((e) => {
@@ -465,13 +489,16 @@ export default defineComponent({
           verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode
           verifyEmail(verificationDetails.memberInfo).then((res) => {
             if (res.code === 0) {
-              // message.success("Success");
+
               ElMessage({
                 message: '成功',
                 type: 'success',
               })
+
               updateSecurityModalVisible.value = false
+
               loadInfo()
+              
             }
           }).catch((e) => {
             console.log(e.message);
@@ -482,6 +509,20 @@ export default defineComponent({
       });
       loadingSecurityBtn.value = false
     };
+
+    const countdownTimer = () => {
+      if (countDown.value > 0) {
+        setTimeout(() => {
+          countDown.value -= 1
+          countdownTimer()
+        }, 1000)
+      } else {
+        lsRemove(sendOtpDisabledKey);
+        lsRemove(emailKey);
+
+        disableSendVerificationButton.value = false
+      }
+    }
 
     const updateSecurityVerifiedRules = {
       emailAddress: [
@@ -595,37 +636,12 @@ export default defineComponent({
               })
               loadInfo();
               isEdit.value = false;
-              // router.go(-1);
             }
           }).catch((err) => {
             console.log(err.message);
-            // message.error(err.message, 4);
           })
         })
-      // if (personalState.memberInfo.email) {
-      //   updateFormDetails.email = personalState.memberInfo.email
-      // }
-      // if (personalState.memberInfo.realName) {
-      //   updateFormDetails.realName = personalState.memberInfo.realName
-      // }
-      // if (personalState.memberInfo.telephone) {
-      //   updateFormDetails.phone = personalState.memberInfo.telephone
-      // }
-      // if (personalState.memberInfo.birthday) {
-      //   updateFormDetails.birthday = personalState.memberInfo.birthday
-      // }
-      // if (field === 'email' {
-      //   isEditEmail.value = false
-      // }
-      // if (field === 'name' {
-      //   isEditRealName.value = false
-      // }
-      // if (field === 'phone' {
-      //   isEditPhone.value = false
-      // }
-      // if (field === 'birthday' {
-      //   isEditBirthday.value = false
-      // }
+ 
       loadingBtn.value = false
     }
 
@@ -661,7 +677,9 @@ export default defineComponent({
       captchaUpdateRef,
       loadingBtn,
       loadingPwBtn,
-      loadingSecurityBtn
+      loadingSecurityBtn,
+      disableSendVerificationButton,
+      countDown
     };
   }
 });

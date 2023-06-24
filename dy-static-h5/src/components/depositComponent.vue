@@ -12,39 +12,54 @@
       />
     </div>
 
-
-  <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
-    <div class="submit-message">
-      <div class="line">
-        <span>银行名称：</span>
-        <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span
-        ><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
-          {{ copybtntxt0 }}
-        </button>
-      </div>
-      <div class="line">
-        <span>银行账号：</span>
-        <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span
-        ><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
-          {{ copybtntxt1 }}
-        </button>
-      </div>
-      <div class="line">
-        <span>银行卡号：</span>
-        <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span
-        ><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
-          {{ copybtntxt2 }}
-        </button>
-      </div>
-      <div class="line">
-        <span>存款金额：</span>
-        <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span
-        ><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
-          {{ copybtntxt3 }}
-        </button>
+    <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
+      <div class="submit-message">
+        <div class="line">
+          <span>银行名称：</span>
+          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span
+          ><button
+            @blur="blurCode"
+            @click="copyMessage('0')"
+            class="common-btn"
+          >
+            {{ copybtntxt0 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>银行账号：</span>
+          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span
+          ><button
+            @blur="blurCode"
+            @click="copyMessage('1')"
+            class="common-btn"
+          >
+            {{ copybtntxt1 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>银行卡号：</span>
+          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span
+          ><button
+            @blur="blurCode"
+            @click="copyMessage('2')"
+            class="common-btn"
+          >
+            {{ copybtntxt2 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>存款金额：</span>
+          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span
+          ><button
+            @blur="blurCode"
+            @click="copyMessage('3')"
+            class="common-btn"
+          >
+            {{ copybtntxt3 }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <q-input
@@ -59,9 +74,10 @@
           padding="none"
         >
           <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-bright">{{
-              store.currency.value
-            }}</span>
+            <span style="font-size: 26px" class="text-bright">
+              <template v-if="isUSDT">USDT</template>
+              <template v-else>{{ store.currency.value }}</template>
+            </span>
           </template>
         </q-input>
 
@@ -69,14 +85,14 @@
           最低金额:
           {{
             calculatedMinDeposit
-              ? calculatedMinDeposit + " " + store.currency.value
+              ? calculatedMinDeposit + " " + (isUSDT ? 'USDT' : store.currency.value)
               : 0
           }}
           <br />
           最高金额:
           {{
             activeMethod.depositMax
-              ? activeMethod.depositMax + " " + store.currency.value
+              ? activeMethod.depositMax + " " +  (isUSDT ? 'USDT' : store.currency.value)
               : "No Limit"
           }}
         </div>
@@ -413,7 +429,6 @@ async function confirmDeposit() {
             icon: "report_problem"
           });
         } else {
-
           if (freePrivilege.value) {
             if (selectedPrivilege.value) {
               form.privilegeId =
@@ -522,45 +537,45 @@ async function pDepo(deposit) {
       // console.log(res)
 
       if (res.code === 0) {
-          if (res.data.result.payResultType === 'RENDER_HTML') {
-            isDisplay.value = true;
-            const submitResult = res.data.result.data;
-            submitMessage.value = submitResult.split(",");
+        if (res.data.result.payResultType === "RENDER_HTML") {
+          isDisplay.value = true;
+          const submitResult = res.data.result.data;
+          submitMessage.value = submitResult.split(",");
+        } else {
+          if (
+            (Platform.is.desktop || Platform.is.webkit) &&
+            !Platform.is.capacitor &&
+            Platform.is.name !== "webkit" &&
+            !liff.isInClient()
+          ) {
+            // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
+            const newWin = window.open(`/depositLoading`, "Bank");
+            newWin.localStorage.setItem("formDetails", JSON.stringify(res));
           } else {
-            if (
-                (Platform.is.desktop || Platform.is.webkit) &&
-                !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
-              ) {
-                // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
-                const newWin = window.open(`/depositLoading`, "Bank");
-                newWin.localStorage.setItem("formDetails", JSON.stringify(res));
-              } else {
-                localStorage.setItem("formDetails", JSON.stringify(res));
-                router.push({ path: "/depositLoading" });
-              }
-
-              window.addEventListener(
-                "message",
-                (event) => {
-                  if (event.data?.msg) {
-                    if (event.data.msg === "success") {
-                      isDeposited.value = true;
-                      localStorage.setItem("isBacked", JSON.stringify(true));
-                    } else {
-                      $q.notify({
-                        color: "negative",
-                        position: "top",
-                        message: event.data.msg,
-                        icon: "report_problem"
-                      });
-                    }
-                  }
-                },
-                { once: true }
-              );
+            localStorage.setItem("formDetails", JSON.stringify(res));
+            router.push({ path: "/depositLoading" });
           }
+
+          window.addEventListener(
+            "message",
+            (event) => {
+              if (event.data?.msg) {
+                if (event.data.msg === "success") {
+                  isDeposited.value = true;
+                  localStorage.setItem("isBacked", JSON.stringify(true));
+                } else {
+                  $q.notify({
+                    color: "negative",
+                    position: "top",
+                    message: event.data.msg,
+                    icon: "report_problem"
+                  });
+                }
+              }
+            },
+            { once: true }
+          );
+        }
         // doIt(res).then((ret) => {
         //   // if (res.payResultType === 'RENDER_HTML') {
         //   //   isDisplay.value = true;

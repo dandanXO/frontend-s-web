@@ -6,7 +6,6 @@
     </q-inner-loading>
     <div v-if="!loading">
       <q-infinite-scroll @load="onLoad" :offset="250">
-        <!--          style="background: #212534; color: #bacef1;"-->
         <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm">
           <div class="table-data" v-for="(head, e) in headers" :key="e">
             <div class="label">
@@ -20,7 +19,7 @@
                 <div v-else-if="obj === 'status'">
                   {{ checkRecord(det[obj]) }}
                 </div>
-                <div v-else-if="obj === 'commitDate'">
+                <div v-else-if="obj === 'commitDate' || obj === 'feedbackTime'">
                   {{ humanDatetime(det[obj]) }}
                 </div>
                 <div v-else>

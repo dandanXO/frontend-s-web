@@ -28,3 +28,26 @@ export function isEmpty(obj) {
     return false;
   }
 }
+
+export const lsGet = (key, jsonParse = false) => {
+  const value = localStorage.getItem(key) ?? '';
+
+  return value && jsonParse ? JSON.parse(value) : value;
+}
+
+export const lsStore = (key, value, jsonStringfy = false) => {
+  const n_value = jsonStringfy ? JSON.stringify(value) : value;
+
+  localStorage.setItem(key, n_value);
+}
+
+export const lsRemove = key => localStorage.removeItem(key)
+
+export const getTimeout = key => {
+  const cached_timeout = lsGet(key) ?? 0
+  const now = new Date()
+
+  return cached_timeout > now.getTime() 
+    ? Math.ceil((cached_timeout - now.getTime()) / 1000) // Seconds left
+    : 0  // No timeout found
+}

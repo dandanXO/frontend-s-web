@@ -205,7 +205,7 @@
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            placeholder="银行卡号"
+            :placeholder="isUSDT ? '钱包地址' : '银行卡号'"
           />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress">
@@ -255,7 +255,7 @@ export default defineComponent({
         max = 37;
       }
       if (v === '') {
-        return Promise.reject('请输入卡号');
+          return Promise.reject('请输入卡号')
       } else if (v.length < min || v.length > max) {
         return Promise.reject('长度应为 ' + min + '-' + max);
       } else {
@@ -265,6 +265,7 @@ export default defineComponent({
     const tblLoading = ref(false);
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
+    const isUSDT = ref(false);
     const store = userStore();
     const searchForm = reactive({
       startDate: "",
@@ -423,9 +424,11 @@ export default defineComponent({
       bankCardModalState.banks.forEach(element => {
         if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
           banksList.value.push(element);
+          isUSDT.value = false;
         }
         if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
           banksList.value.push(element);
+          isUSDT.value = true;
         }
         if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
           banksList.value.push(element);
@@ -542,6 +545,7 @@ export default defineComponent({
       unbindBankCard,
       showCard,
       isCardActive,
+      isUSDT,
       bankName,
       bankTypes,
       selectBankType,

@@ -1,8 +1,8 @@
 <template>
   <div class="vip-container">
     <q-tabs v-model="tab" active-color="white" indicator-color="transparent">
-      <q-tab name="special" label="VIP特权"/>
-      <q-tab name="details" label="VIP详情"/>
+      <q-tab name="special" label="VIP特权" />
+      <q-tab name="details" label="VIP详情" />
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
@@ -53,36 +53,62 @@
             </div>
           </q-carousel-slide>
         </q-carousel>
+
         <div class="vip-benefits">
           <div class="bft-title">VIP特权</div>
-          <div class="bft-row">
-            <div class="bft-row-cnt">
-              <div class="left">
-                <div class="icon">
-                  <img src="../../assets/vip/red_box.png"/>
+          <template v-for="(vip, vipIndex) in vipList" :key="vipIndex">
+            <template v-if="vipIndex === slide">
+              <div class="bft-row">
+                <div class="bft-row-cnt">
+                  <div class="left">
+                    <div class="icon">
+                      <img src="../../assets/vip/red_box.png" />
+                    </div>
+                    <div class="txt">每月红包: {{ vip.monthlyBonus }}</div>
+                  </div>
+                  <template v-if="vip.monthlyBonus !== '无'">
+                    <q-btn class="btn" color="dyblue" label="领取"
+                  /></template>
                 </div>
-                <div class="txt">每月红包(3倍)</div>
-              </div>
-              <q-btn class="btn" color="dyblue" label="领取"/>
-            </div>
-            <div class="bft-row-cnt">
-              <div class="left">
-                <div class="icon">
-                  <img src="../../assets/vip/deposit.png"/>
+                <div class="bft-row-cnt">
+                  <div class="left">
+                    <div class="icon">
+                      <img src="../../assets/vip/deposit.png" />
+                    </div>
+                    <div class="txt" style="margin-right: 20px">
+                      每月存送: {{ vip.cunsong }}
+                    </div>
+                  </div>
+                  <template v-if="vip.cunsong !== '无'">
+                    <q-btn
+                      class="btn"
+                      color="dyblue"
+                      style="white-space: nowrap"
+                      label="领取"
+                    />
+                  </template>
                 </div>
-                <div class="txt">每月存送</div>
+                <div class="bft-row-cnt">
+                  <div class="left">
+                    <div class="icon">
+                      <img src="../../assets/vip/money.png" />
+                    </div>
+                    <div class="txt">生日礼金: {{ vip.birthdayBonus }}</div>
+                  </div>
+                  <template v-if="vip.birthdayBonus !== '无'">
+                    <q-btn class="btn" color="dyblue" label="领取"
+                  /></template>
+                </div>
+                <div class="bft-row-cnt">
+                  <div class="left">
+                    <div class="txt">流水要求: {{ vip.drawTimes }}</div>
+                  </div>
+                </div>
               </div>
-              <q-btn class="btn" color="dyblue" label="领取"/>
-            </div>
-            <div class="bft-row-cnt">
-              <div class="left">
-                <div class="icon"><img src="../../assets/vip/money.png"/></div>
-                <div class="txt">生日礼金(1倍)</div>
-              </div>
-              <q-btn class="btn" color="dyblue" label="领取"/>
-            </div>
-          </div>
+            </template>
+          </template>
         </div>
+
         <div class="vip-benefits">
           <div class="bft-title">VIP优惠</div>
           <div class="bft-promo-row">
@@ -113,250 +139,250 @@
       <q-tab-panel name="details">
         <table class="bouns_table">
           <thead>
-          <tr>
-            <th class="dy-vip-th">等级</th>
-            <th class="dy-vip-th">升级要求</th>
-            <th class="dy-vip-th">保级要求</th>
-            <th class="dy-vip-th">生日礼金</th>
-            <th class="dy-vip-th">每月红包</th>
-          </tr>
+            <tr>
+              <th class="dy-vip-th">等级</th>
+              <th class="dy-vip-th">升级要求</th>
+              <th class="dy-vip-th">保级要求</th>
+              <th class="dy-vip-th">生日礼金</th>
+              <th class="dy-vip-th">每月红包</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>VIP1</td>
-            <td>有一笔存款</td>
-            <td>无</td>
-            <td>无</td>
-            <td>无</td>
-          </tr>
-          <tr>
-            <td>VIP2</td>
-            <td>5000≤累积存款</td>
-            <td>1888≤一个月内累积存款</td>
-            <td>38元</td>
-            <td>28元</td>
-          </tr>
-          <tr>
-            <td>VIP3</td>
-            <td>50000≤累积存款</td>
-            <td>10888≤一个月内累积存款</td>
-            <td>108元</td>
-            <td>88元</td>
-          </tr>
-          <tr>
-            <td>VIP4</td>
-            <td>250000≤累积存款</td>
-            <td>38888≤一个月内累积存款</td>
-            <td>388元</td>
-            <td>188元</td>
-          </tr>
-          <tr>
-            <td>VIP5</td>
-            <td>500000≤累积存款</td>
-            <td>58888≤一个月内累积存款</td>
-            <td>688元</td>
-            <td>388元</td>
-          </tr>
-          <tr>
-            <td>VIP6</td>
-            <td>2500000≤累积存款</td>
-            <td>88888≤一个月内累积存款</td>
-            <td>1088元</td>
-            <td>888元</td>
-          </tr>
-          <tr>
-            <td>VIP7</td>
-            <td>5000000≤累积存款</td>
-            <td>188888≤一个月内累积存款</td>
-            <td>6888元</td>
-            <td>2888元</td>
-          </tr>
-          <tr>
-            <td>VIP8</td>
-            <td>8000000≤累积存款</td>
-            <td>288888≤一个月内累积存款</td>
-            <td>8888元</td>
-            <td>5888元</td>
-          </tr>
-          <tr>
-            <td>VIP9</td>
-            <td>12000000≤累积存款</td>
-            <td>588888≤一个月内累积存款</td>
-            <td>10888元</td>
-            <td>6888元</td>
-          </tr>
-          <tr>
-            <td>VIP10</td>
-            <td>20000000≤累积存款</td>
-            <td>888888≤一个月内累积存款</td>
-            <td>18888元</td>
-            <td>8888元</td>
-          </tr>
+            <tr>
+              <td>VIP1</td>
+              <td>有一笔存款</td>
+              <td>无</td>
+              <td>无</td>
+              <td>无</td>
+            </tr>
+            <tr>
+              <td>VIP2</td>
+              <td>5000≤累积存款</td>
+              <td>1888≤一个月内累积存款</td>
+              <td>38元</td>
+              <td>28元</td>
+            </tr>
+            <tr>
+              <td>VIP3</td>
+              <td>50000≤累积存款</td>
+              <td>10888≤一个月内累积存款</td>
+              <td>108元</td>
+              <td>88元</td>
+            </tr>
+            <tr>
+              <td>VIP4</td>
+              <td>250000≤累积存款</td>
+              <td>38888≤一个月内累积存款</td>
+              <td>388元</td>
+              <td>188元</td>
+            </tr>
+            <tr>
+              <td>VIP5</td>
+              <td>500000≤累积存款</td>
+              <td>58888≤一个月内累积存款</td>
+              <td>688元</td>
+              <td>388元</td>
+            </tr>
+            <tr>
+              <td>VIP6</td>
+              <td>2500000≤累积存款</td>
+              <td>88888≤一个月内累积存款</td>
+              <td>1088元</td>
+              <td>888元</td>
+            </tr>
+            <tr>
+              <td>VIP7</td>
+              <td>5000000≤累积存款</td>
+              <td>188888≤一个月内累积存款</td>
+              <td>6888元</td>
+              <td>2888元</td>
+            </tr>
+            <tr>
+              <td>VIP8</td>
+              <td>8000000≤累积存款</td>
+              <td>288888≤一个月内累积存款</td>
+              <td>8888元</td>
+              <td>5888元</td>
+            </tr>
+            <tr>
+              <td>VIP9</td>
+              <td>12000000≤累积存款</td>
+              <td>588888≤一个月内累积存款</td>
+              <td>10888元</td>
+              <td>6888元</td>
+            </tr>
+            <tr>
+              <td>VIP10</td>
+              <td>20000000≤累积存款</td>
+              <td>888888≤一个月内累积存款</td>
+              <td>18888元</td>
+              <td>8888元</td>
+            </tr>
           </tbody>
         </table>
 
         <table class="privilege_table">
           <thead>
-          <tr>
-            <th class="dy-vip-th">等级</th>
-            <th class="dy-vip-th">每月优惠</th>
-            <th class="dy-vip-th">流水</th>
-            <th class="dy-vip-th">平台限制</th>
-          </tr>
+            <tr>
+              <th class="dy-vip-th">等级</th>
+              <th class="dy-vip-th">每月优惠</th>
+              <th class="dy-vip-th">流水</th>
+              <th class="dy-vip-th">平台限制</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>VIP1</td>
-            <td>无</td>
-            <td>无</td>
-            <td>无</td>
-          </tr>
-          <tr>
-            <td>VIP2</td>
-            <td>存款最少100元可申请每月一次再存20%最高奖金588元</td>
-            <td>12倍</td>
-            <td>电竞/体育</td>
-          </tr>
-          <tr>
-            <td>VIP3</td>
-            <td>存款最少100元可申请每月一次再存20%最高奖金888元</td>
-            <td>12倍</td>
-            <td>所有（彩票除外）</td>
-          </tr>
-          <tr>
-            <td>VIP4</td>
-            <td>存款最少100元可申请每月一次再存25%最高奖金888元</td>
-            <td>12倍</td>
-            <td>电竞/体育</td>
-          </tr>
-          <tr>
-            <td>VIP5</td>
-            <td>存款最少500元可申请每月一次再存50%最高奖金1888元</td>
-            <td>15倍</td>
-            <td>所有（彩票除外）</td>
-          </tr>
-          <tr>
-            <td>VIP6</td>
-            <td>存款至少500元可申请每周一次再存30%最高奖金2888元</td>
-            <td>15倍</td>
-            <td>所有（彩票除外）</td>
-          </tr>
-          <tr>
-            <td>VIP7</td>
-            <td>存款至少500元可申请每周一次再存35%最高奖金3888元</td>
-            <td>15倍</td>
-            <td>所有（彩票除外）</td>
-          </tr>
-          <tr>
-            <td>VIP8</td>
-            <td>存款至少500元可申请每周一次再存40%最高奖金5888元</td>
-            <td>15倍</td>
-            <td>所有（彩票除外）</td>
-          </tr>
-          <tr>
-            <td>VIP9</td>
-            <td>存款至少500元可申请每周一次再存45%最高奖金8888元</td>
-            <td>15倍</td>
-            <td>所有（彩票除外）</td>
-          </tr>
-          <tr>
-            <td>VIP10</td>
-            <td>存款至少500元可申请每周一次再存50%最高奖金12888元</td>
-            <td>15倍</td>
-            <td>所有（彩票除外）</td>
-          </tr>
+            <tr>
+              <td>VIP1</td>
+              <td>无</td>
+              <td>无</td>
+              <td>无</td>
+            </tr>
+            <tr>
+              <td>VIP2</td>
+              <td>存款最少100元可申请每月一次再存20%最高奖金588元</td>
+              <td>12倍</td>
+              <td>电竞/体育</td>
+            </tr>
+            <tr>
+              <td>VIP3</td>
+              <td>存款最少100元可申请每月一次再存20%最高奖金888元</td>
+              <td>12倍</td>
+              <td>所有（彩票除外）</td>
+            </tr>
+            <tr>
+              <td>VIP4</td>
+              <td>存款最少100元可申请每月一次再存25%最高奖金888元</td>
+              <td>12倍</td>
+              <td>电竞/体育</td>
+            </tr>
+            <tr>
+              <td>VIP5</td>
+              <td>存款最少500元可申请每月一次再存50%最高奖金1888元</td>
+              <td>15倍</td>
+              <td>所有（彩票除外）</td>
+            </tr>
+            <tr>
+              <td>VIP6</td>
+              <td>存款至少500元可申请每周一次再存30%最高奖金2888元</td>
+              <td>15倍</td>
+              <td>所有（彩票除外）</td>
+            </tr>
+            <tr>
+              <td>VIP7</td>
+              <td>存款至少500元可申请每周一次再存35%最高奖金3888元</td>
+              <td>15倍</td>
+              <td>所有（彩票除外）</td>
+            </tr>
+            <tr>
+              <td>VIP8</td>
+              <td>存款至少500元可申请每周一次再存40%最高奖金5888元</td>
+              <td>15倍</td>
+              <td>所有（彩票除外）</td>
+            </tr>
+            <tr>
+              <td>VIP9</td>
+              <td>存款至少500元可申请每周一次再存45%最高奖金8888元</td>
+              <td>15倍</td>
+              <td>所有（彩票除外）</td>
+            </tr>
+            <tr>
+              <td>VIP10</td>
+              <td>存款至少500元可申请每周一次再存50%最高奖金12888元</td>
+              <td>15倍</td>
+              <td>所有（彩票除外）</td>
+            </tr>
           </tbody>
         </table>
 
         <table class="percent_table">
           <thead>
-          <tr>
-            <th class="dy-vip-th">等级</th>
-            <th class="dy-vip-th">VIP1</th>
-            <th class="dy-vip-th">VIP2</th>
-            <th class="dy-vip-th">VIP3</th>
-            <th class="dy-vip-th">VIP4</th>
-            <th class="dy-vip-th">VIP5</th>
-            <th class="dy-vip-th">VIP6</th>
-            <th class="dy-vip-th">VIP7</th>
-            <th class="dy-vip-th">VIP8</th>
-            <th class="dy-vip-th">VIP9</th>
-            <th class="dy-vip-th">VIP10</th>
-          </tr>
+            <tr>
+              <th class="dy-vip-th">等级</th>
+              <th class="dy-vip-th">VIP1</th>
+              <th class="dy-vip-th">VIP2</th>
+              <th class="dy-vip-th">VIP3</th>
+              <th class="dy-vip-th">VIP4</th>
+              <th class="dy-vip-th">VIP5</th>
+              <th class="dy-vip-th">VIP6</th>
+              <th class="dy-vip-th">VIP7</th>
+              <th class="dy-vip-th">VIP8</th>
+              <th class="dy-vip-th">VIP9</th>
+              <th class="dy-vip-th">VIP10</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>电竞返水</td>
-            <td>0.4%</td>
-            <td>0.4%</td>
-            <td>0.45%</td>
-            <td>0.45%</td>
-            <td>0.5%</td>
-            <td>0.55%</td>
-            <td>0.65%</td>
-            <td>0.8%</td>
-            <td>0.9%</td>
-            <td>1%</td>
-          </tr>
-          <tr>
-            <td>体育返水</td>
-            <td>0.4%</td>
-            <td>0.4%</td>
-            <td>0.45%</td>
-            <td>0.45%</td>
-            <td>0.5%</td>
-            <td>0.55%</td>
-            <td>0.65%</td>
-            <td>0.8%</td>
-            <td>0.9%</td>
-            <td>1%</td>
-          </tr>
-          <tr>
-            <td>真人返水</td>
-            <td>0.4%</td>
-            <td>0.4%</td>
-            <td>0.45%</td>
-            <td>0.45%</td>
-            <td>0.5%</td>
-            <td>0.55%</td>
-            <td>0.65%</td>
-            <td>0.8%</td>
-            <td>0.9%</td>
-            <td>1%</td>
-          </tr>
-          <tr>
-            <td>电子返水</td>
-            <td>0.5%</td>
-            <td>0.6%</td>
-            <td>0.7%</td>
-            <td>0.8%</td>
-            <td>0.9%</td>
-            <td>1.2%</td>
-            <td>1.5%</td>
-            <td>1.8%</td>
-            <td>1.9%</td>
-            <td>2%</td>
-          </tr>
-          <tr>
-            <td>棋牌返水</td>
-            <td>0.5%</td>
-            <td>0.6%</td>
-            <td>0.7%</td>
-            <td>0.75%</td>
-            <td>0.8%</td>
-            <td>0.85%</td>
-            <td>0.9%</td>
-            <td>0.95%</td>
-            <td>1%</td>
-            <td>1.2%</td>
-          </tr>
-          <tr>
-            <td>返水上限</td>
-            <td colspan="3">18888元</td>
-            <td colspan="3">38888元</td>
-            <td colspan="2">58888元</td>
-            <td colspan="2">88888元</td>
-          </tr>
+            <tr>
+              <td>电竞返水</td>
+              <td>0.4%</td>
+              <td>0.4%</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.5%</td>
+              <td>0.55%</td>
+              <td>0.65%</td>
+              <td>0.8%</td>
+              <td>0.9%</td>
+              <td>1%</td>
+            </tr>
+            <tr>
+              <td>体育返水</td>
+              <td>0.4%</td>
+              <td>0.4%</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.5%</td>
+              <td>0.55%</td>
+              <td>0.65%</td>
+              <td>0.8%</td>
+              <td>0.9%</td>
+              <td>1%</td>
+            </tr>
+            <tr>
+              <td>真人返水</td>
+              <td>0.4%</td>
+              <td>0.4%</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.5%</td>
+              <td>0.55%</td>
+              <td>0.65%</td>
+              <td>0.8%</td>
+              <td>0.9%</td>
+              <td>1%</td>
+            </tr>
+            <tr>
+              <td>电子返水</td>
+              <td>0.5%</td>
+              <td>0.6%</td>
+              <td>0.7%</td>
+              <td>0.8%</td>
+              <td>0.9%</td>
+              <td>1.2%</td>
+              <td>1.5%</td>
+              <td>1.8%</td>
+              <td>1.9%</td>
+              <td>2%</td>
+            </tr>
+            <tr>
+              <td>棋牌返水</td>
+              <td>0.5%</td>
+              <td>0.6%</td>
+              <td>0.7%</td>
+              <td>0.75%</td>
+              <td>0.8%</td>
+              <td>0.85%</td>
+              <td>0.9%</td>
+              <td>0.95%</td>
+              <td>1%</td>
+              <td>1.2%</td>
+            </tr>
+            <tr>
+              <td>返水上限</td>
+              <td colspan="3">18888元</td>
+              <td colspan="3">38888元</td>
+              <td colspan="2">58888元</td>
+              <td colspan="2">88888元</td>
+            </tr>
           </tbody>
         </table>
 
@@ -407,7 +433,7 @@
         </q-card-section>
 
         <q-card-actions align="center">
-          <q-btn flat label="OK" color="primary" v-close-popup/>
+          <q-btn flat label="OK" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -415,10 +441,10 @@
 </template>
 
 <script>
-import {ref, defineComponent, onMounted} from "vue";
-import {userStore} from "stores/index";
-import {eventapi} from "boot/axios";
-import {useQuasar} from "quasar";
+import { ref, defineComponent, onMounted } from "vue";
+import { userStore } from "stores/index";
+import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "TransitRecordView",
@@ -439,68 +465,68 @@ export default defineComponent({
       {
         title: "VIP Level",
         dataIndex: "vipLevel",
-        key: "vipLevel",
+        key: "vipLevel"
       },
       {
         title: "VIP 1",
         dataIndex: "vip1",
-        key: "vip1",
+        key: "vip1"
       },
       {
         title: "VIP 2",
         dataIndex: "vip2",
-        key: "vip2",
+        key: "vip2"
       },
       {
         title: "VIP 3",
         dataIndex: "vip3",
-        key: "vip3",
+        key: "vip3"
       },
       {
         title: "VIP 4",
         dataIndex: "vip4",
-        key: "vip4",
+        key: "vip4"
       },
       {
         title: "VIP 5",
         dataIndex: "vip5",
-        key: "vip5",
+        key: "vip5"
       },
       {
         title: "VIP 6",
         dataIndex: "vip6",
-        key: "vip6",
+        key: "vip6"
       },
       {
         title: "VIP 7",
         dataIndex: "vip7",
-        key: "vip7",
+        key: "vip7"
       },
       {
         title: "VIP 8",
         dataIndex: "vip8",
-        key: "vip8",
+        key: "vip8"
       },
       {
         title: "VIP 9",
         dataIndex: "vip9",
-        key: "vip9",
+        key: "vip9"
       },
       {
         title: "VIP 10",
         dataIndex: "vip10",
-        key: "vip10",
+        key: "vip10"
       },
       {
         title: "VIP 11",
         dataIndex: "vip11",
-        key: "vip11",
+        key: "vip11"
       },
       {
         title: "VIP 12",
         dataIndex: "vip12",
-        key: "vip12",
-      },
+        key: "vip12"
+      }
     ];
     const data = [
       {
@@ -512,7 +538,7 @@ export default defineComponent({
         vip4: "0.50%",
         vip5: "0.60%",
         vip6: "0.80%",
-        vip7: "1.00%",
+        vip7: "1.00%"
       },
       {
         key: "2",
@@ -523,7 +549,7 @@ export default defineComponent({
         vip4: "0.45%",
         vip5: "0.50%",
         vip6: "0.60%",
-        vip7: "0.80%",
+        vip7: "0.80%"
       },
       {
         key: "3",
@@ -534,7 +560,7 @@ export default defineComponent({
         vip4: "0.45%",
         vip5: "0.50%",
         vip6: "0.60%",
-        vip7: "0.80%",
+        vip7: "0.80%"
       },
       {
         key: "4",
@@ -545,7 +571,7 @@ export default defineComponent({
         vip4: "0.45%",
         vip5: "0.50%",
         vip6: "0.60%",
-        vip7: "0.80%",
+        vip7: "0.80%"
       },
       {
         key: "5",
@@ -556,7 +582,7 @@ export default defineComponent({
         vip4: "0.40%",
         vip5: "0.45%",
         vip6: "0.55%",
-        vip7: "0.65%",
+        vip7: "0.65%"
       },
       {
         key: "6",
@@ -567,52 +593,52 @@ export default defineComponent({
         vip4: "0.40%",
         vip5: "0.50%",
         vip6: "0.50%",
-        vip7: "0.60%",
-      },
+        vip7: "0.60%"
+      }
     ];
     const promoExclusive = [
       {
         title: "VIP Level",
         dataIndex: "vipLevel",
         key: "vipLevel",
-        render: (text) => String(text),
+        render: (text) => String(text)
       },
       {
         title: "VIP 1",
         dataIndex: "vip1",
-        key: "vip1",
+        key: "vip1"
       },
       {
         title: "VIP 2",
         dataIndex: "vip2",
-        key: "vip2",
+        key: "vip2"
       },
       {
         title: "VIP 3",
         dataIndex: "vip3",
-        key: "vip3",
+        key: "vip3"
       },
       {
         title: "VIP 4",
         dataIndex: "vip4",
-        key: "vip4",
+        key: "vip4"
       },
       {
         title: "VIP 5",
         dataIndex: "vip5",
-        key: "vip5",
+        key: "vip5"
       },
       {
         title: "VIP 6",
         dataIndex: "vip6",
-        key: "vip6",
+        key: "vip6"
       },
       {
         title: "VIP 7",
         dataIndex: "vip7",
         key: "vip7",
-        render: (text) => String(text),
-      },
+        render: (text) => String(text)
+      }
     ];
     const dataExclusive = [
       {
@@ -624,7 +650,7 @@ export default defineComponent({
         vip4: "1,000,000/Day",
         vip5: "1,000,000/Day",
         vip6: "1,000,000/Day",
-        vip7: "2,000,000.00/Day",
+        vip7: "2,000,000.00/Day"
       },
       {
         key: "2",
@@ -635,7 +661,7 @@ export default defineComponent({
         vip4: "Standard",
         vip5: "High Limit",
         vip6: "High Limit",
-        vip7: "High Limit",
+        vip7: "High Limit"
       },
       {
         key: "3",
@@ -646,7 +672,7 @@ export default defineComponent({
         vip4: "",
         vip5: "✔",
         vip6: "✔",
-        vip7: "✔",
+        vip7: "✔"
       },
       {
         key: "4",
@@ -657,7 +683,7 @@ export default defineComponent({
         vip4: "",
         vip5: "",
         vip6: "✔",
-        vip7: "✔",
+        vip7: "✔"
       },
       {
         key: "5",
@@ -668,42 +694,133 @@ export default defineComponent({
         vip4: "",
         vip5: "",
         vip6: "",
-        vip7: "✔",
-      },
+        vip7: "✔"
+      }
     ];
     const terms = [
       {
-        text: `The program applies to VIP members with valid accounts. The VIP upgrade is based on the member's total accumulated deposit amount, the daily total successful deposit amount is calculate from 00:00:01 to 23:59:59  (GMT+8)`,
+        text: `The program applies to VIP members with valid accounts. The VIP upgrade is based on the member's total accumulated deposit amount, the daily total successful deposit amount is calculate from 00:00:01 to 23:59:59  (GMT+8)`
       },
       {
         text: `The system will automatically upgrade VIP level after 00:00:00 (GMT+8) of the next day, the VIP level only can upgrade one level a day if the member's  total
-deposit amount is eligible for the corresponding VIP level.`,
+deposit amount is eligible for the corresponding VIP level.`
       },
       {
         text: `The Free bonus, rebates and promotins benefits level corresponding to the VIP level will be updated as soon as the member's account is updated in the
-next day.`,
+next day.`
       },
       {
         text: `Birthday bonus:the bonus need to be claim on VIP page by member self on the birthday day and overdue void, Members who celebrate their birthday less
 than 90 days from registration day will not receive this year's birthday bonus, Only members who have registered for more than 90 days can receive it, once
-a year. (Birthday bonus can be withdrawal after 1x turnover)`,
+a year. (Birthday bonus can be withdrawal after 1x turnover)`
       },
       {
         text: `Monthly bonus:the bonus need to be claim on VIP page by member self after the member have upgraded to a new level in the next day, Each member can
-claim 1 monthly bonus in upgrade month.(Monthly bonus can be withdrawal after 3x turnover)`,
+claim 1 monthly bonus in upgrade month.(Monthly bonus can be withdrawal after 3x turnover)`
       },
       {
         text: `All draw bets, CANCEL bets, 2 sided bets, bets on Europe Handicap under 1.75, Asian Handicap under 0.75, Number Games, Fantasy Sports, Progressive RNG
-Jackpots, Progressive RNG Slot will not be counted in this promotion.`,
+Jackpots, Progressive RNG Slot will not be counted in this promotion.`
       },
       {
         text: `Jolly88 reserves the right to modify, refuse or cancel this VIP membership
-program at any time without prior notice.`,
+program at any time without prior notice.`
       },
       {
-        text: `Jolly88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.`,
-      },
+        text: `Jolly88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.`
+      }
     ];
+    const vipList = ref([
+      {
+        level: 1,
+        description: "> 有一笔存款",
+        monthlyBonus: `无`,
+        birthdayBonus: `无`,
+        cunsong: `无`,
+        drawTimes: `无`
+      },
+      {
+        level: 2,
+        description: `升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款`,
+        monthlyBonus: "28",
+        birthdayBonus: "38",
+        cunsong: `存款至少100元可申请每月一次再存20% 最高奖金588元`,
+        drawTimes: "12"
+      },
+      {
+        level: 3,
+        description: `升级要求 &gt; 50000≤累积存款<br>
+							保级要求 &gt; 10888≤一个月内累积存款`,
+        monthlyBonus: "88",
+        birthdayBonus: "108",
+        cunsong: `存款至少100元可申请每月一次再存20% 最高奖金888元`,
+        drawTimes: "12"
+      },
+      {
+        level: 4,
+        description: `升级要求 &gt; 250000≤累积存款<br>
+							保级要求 &gt; 38888≤一个月内累积存款`,
+        monthlyBonus: "188",
+        birthdayBonus: "388",
+        cunsong: `存款至少100元可申请每周一次再存25% 最高奖金888元`,
+        drawTimes: "12"
+      },
+      {
+        level: 5,
+        description: `升级要求 &gt; 500000≤累积存款<br>
+							保级要求 &gt; 58888≤一个月内累积存款`,
+        monthlyBonus: "388",
+        birthdayBonus: "688",
+        cunsong: `存款至少500元可申请每月一次再存50% 最高奖金1888元`,
+        drawTimes: "15"
+      },
+      {
+        level: 6,
+        description: `升级要求 &gt; 2500000≤累积存款<br>
+							保级要求 &gt; 88888≤一个月内累积存款`,
+        monthlyBonus: "888",
+        birthdayBonus: "1088",
+        cunsong: `存款至少500元可申请每周一次再存30% 最高奖金2888元`,
+        drawTimes: "15"
+      },
+      {
+        level: 7,
+        description: `升级要求 &gt; 5000000≤累积存款<br>
+							保级要求 &gt; 188888≤一个月内累积存款`,
+        monthlyBonus: "2888",
+        birthdayBonus: "6888",
+        cunsong: `存款至少500元可申请每周一次再存35% 最高奖金3888元`,
+        drawTimes: "15"
+      },
+      {
+        level: 8,
+        description: `升级要求 &gt; 8000000≤累积存款<br>
+							保级要求 &gt; 288888≤一个月内累积存款`,
+        monthlyBonus: "5888",
+        birthdayBonus: "8888",
+        cunsong: `存款至少500元可申请每周一次再存40% 最高奖金5888元`,
+        drawTimes: "15"
+      },
+      {
+        level: 9,
+        description: `升级要求 &gt; 12000000≤累积存款<br>
+							保级要求 &gt; 588888≤一个月内累积存款`,
+        monthlyBonus: "6888",
+        birthdayBonus: "10888",
+        cunsong: `存款至少500元可申请每周一次再存45% 最高奖金8888元`,
+        drawTimes: "15"
+      },
+      {
+        level: 10,
+        description: `升级要求 &gt; 20000000≤累积存款<br>
+							保级要求 &gt; 888888≤一个月内累积存款`,
+        monthlyBonus: "8888",
+        birthdayBonus: "18888",
+        cunsong: `存款至少500元可申请每周一次再存50% 最高奖金12888元`,
+        drawTimes: "15"
+      }
+    ]);
+
     const vipItems = [
       {
         vipLevel: "1",
@@ -711,7 +828,7 @@ program at any time without prior notice.`,
         birthday: "",
         saving: "有一笔",
         monthlySaving: "",
-        oneMonthSaving: "无保级要求",
+        oneMonthSaving: "无保级要求"
       },
       {
         vipLevel: "2",
@@ -720,7 +837,7 @@ program at any time without prior notice.`,
         birthday: "",
         saving: "5000≤累积",
         monthlySaving: "1888≤",
-        oneMonthSaving: "一个月内累积存款",
+        oneMonthSaving: "一个月内累积存款"
       },
       {
         vipLevel: "3",
@@ -729,7 +846,7 @@ program at any time without prior notice.`,
         birthday: "888",
         saving: "50000≤累积",
         monthlySaving: "10888≤",
-        oneMonthSaving: "一个月内累积存款",
+        oneMonthSaving: "一个月内累积存款"
       },
       {
         vipLevel: "4",
@@ -738,7 +855,7 @@ program at any time without prior notice.`,
         birthday: "2,888",
         saving: "250000≤累积",
         monthlySaving: "38888≤",
-        oneMonthSaving: "一个月内累积存款",
+        oneMonthSaving: "一个月内累积存款"
       },
       {
         vipLevel: "5",
@@ -747,7 +864,7 @@ program at any time without prior notice.`,
         birthday: "5,888",
         saving: "500000≤累积",
         monthlySaving: "58888≤",
-        oneMonthSaving: "一个月内累积存款",
+        oneMonthSaving: "一个月内累积存款"
       },
       {
         vipLevel: "6",
@@ -756,7 +873,7 @@ program at any time without prior notice.`,
         birthday: "8,888",
         saving: "2500000≤累积",
         monthlySaving: "88888≤",
-        oneMonthSaving: "一个月内累积存款",
+        oneMonthSaving: "一个月内累积存款"
       },
       {
         vipLevel: "7",
@@ -765,7 +882,7 @@ program at any time without prior notice.`,
         birthday: "48,888",
         saving: "5000000≤累积",
         monthlySaving: "188888≤",
-        oneMonthSaving: "一个月内累积存款",
+        oneMonthSaving: "一个月内累积存款"
       },
       {
         vipLevel: "8",
@@ -774,7 +891,7 @@ program at any time without prior notice.`,
         birthday: "48,888",
         saving: "8000000≤累积",
         monthlySaving: "288888≤",
-        oneMonthSaving: "一个月内累积存款",
+        oneMonthSaving: "一个月内累积存款"
       },
       {
         vipLevel: "9",
@@ -783,7 +900,7 @@ program at any time without prior notice.`,
         birthday: "48,888",
         saving: "12000000≤累积",
         monthlySaving: "588888≤",
-        oneMonthSaving: "一个月内累积存款",
+        oneMonthSaving: "一个月内累积存款"
       },
       {
         vipLevel: "10",
@@ -792,8 +909,8 @@ program at any time without prior notice.`,
         birthday: "48,888",
         saving: "20000000≤累积",
         monthlySaving: "888888≤",
-        oneMonthSaving: "一个月内累积存款",
-      },
+        oneMonthSaving: "一个月内累积存款"
+      }
     ];
 
     const isClaimModal = ref(false);
@@ -868,6 +985,7 @@ program at any time without prior notice.`,
       dataExclusive,
       terms,
       vipItems,
+      vipList,
       loading,
       vipLevel,
       slide,
@@ -877,9 +995,9 @@ program at any time without prior notice.`,
       claimMsg,
       loadingMClaim,
       loadingBClaim,
-      tab,
+      tab
     };
-  },
+  }
 });
 </script>
 <style scoped lang="scss">
@@ -1007,7 +1125,8 @@ program at any time without prior notice.`,
       // padding: 10px;
       width: 70%;
       height: 150px;
-      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center center;
+      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center
+        center;
       background-size: contain;
       position: relative;
       text-align: left;
@@ -1153,6 +1272,7 @@ program at any time without prior notice.`,
 
           .icon {
             width: 40px;
+            min-width: 40px;
 
             img {
               flex: 1;
