@@ -31,6 +31,9 @@ export default defineComponent({
         { code:"AG", icon: "ag", label: "AG", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
         { code:"ALLBET", icon: "allbet", label: "ALLBET", slogan: "全球顶尖, 尊享娱乐",gameCode : ""  },
         { code:"BBINDY", icon: "bbin", label: "BBIN", slogan: "全球顶尖, 尊享娱乐",gameCode : "bblive_lobby_pc"  },
+        { code:"PM", icon: "pm", label: "PM", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
+        { code:"BG", icon: "bg", label: "BG", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
+        { code:"Sexy", icon: "sexy", label: "Sexy", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
         ],
     }),
 })

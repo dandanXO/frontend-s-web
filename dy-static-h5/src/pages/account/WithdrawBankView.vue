@@ -173,7 +173,7 @@
             filled
             class="q-mb-md"
             v-model="bankCardInfo.cardNumber"
-            label="银行卡号"
+            :label="isCrypto ? '钱包地址' : '银行卡号'"
             :rules="cardNumberRules"
             ref="cardNumberRef"
             color="blue"
@@ -266,6 +266,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const $q = useQuasar();
+    const isCrypto = ref(false);
     const isCardActive = ref();
     const searchForm = reactive({
       start: "",
@@ -399,7 +400,8 @@ export default defineComponent({
           banksList.value.push(element);
         }
         if (selectedBankType.value === "数字货币" && element.bankType === 'CRYPTO') {
-          const isCrypto = ref(true)
+          isCrypto.value = true
+          // console.log("crypto!")
           banksList.value.push(element);
         }
       })
@@ -562,6 +564,7 @@ export default defineComponent({
       // virtualCurrencyModal,
       showCard,
       isCardActive,
+      isCrypto,
       bankName,
       isVirtual,
       bankCardRef,
