@@ -226,7 +226,7 @@
                 </el-select>
               </el-col>
               <el-col :span="17" align="right">
-                <el-button type="success" @click="savePaymentValues">{{ t('fields.paymentUpdate') }}</el-button>
+                <el-button type="success" @click="savePaymentValues">{{ t('fields.updatePayment') }}</el-button>
               </el-col>
             </el-row>
             <el-row style="margin: 50px 0;">
