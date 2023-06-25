@@ -249,22 +249,18 @@ export default defineComponent({
       if (!value) {
         return callback(new Error('Code is required'));
       }
-      setTimeout(() => {
-        const codes = [];
-        this.list.forEach(item => {
-          if (item.code) {
-            codes.push(item.code);
-          }
-        });
-        codes.forEach(element => {
-          if (element.toLowerCase() === value.toLowerCase()) {
-            return callback(new Error('Code exists, please input a different code'));
-          } else {
-            callback();
-          }
-        });
-        callback();
-      }, 1000);
+      const codes = [];
+      this.list.forEach(item => {
+        if (item.code) {
+          codes.push(item.code);
+        }
+      });
+      codes.forEach(element => {
+        if (element.toLowerCase() === value.toLowerCase()) {
+          return callback(new Error('Code exists, please input a different code'));
+        }
+      });
+      callback();
     };
     return {
       paymethodicon: process.env.VUE_APP_IMAGE,
