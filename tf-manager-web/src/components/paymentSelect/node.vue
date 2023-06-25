@@ -263,6 +263,7 @@ export default defineComponent({
             callback();
           }
         });
+        callback();
       }, 1000);
     };
     return {
