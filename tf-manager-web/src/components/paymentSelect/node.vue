@@ -258,7 +258,7 @@ export default defineComponent({
         });
         codes.forEach(element => {
           if (element.toLowerCase() === value.toLowerCase()) {
-            callback(new Error('Code exists, please input a different code'));
+            return callback(new Error('Code exists, please input a different code'));
           } else {
             callback();
           }
