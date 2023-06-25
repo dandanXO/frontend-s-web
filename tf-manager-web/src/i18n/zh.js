@@ -858,6 +858,7 @@ export default {
     updateCommissionRateSuccess: '更新分红比率成功',
     updateFinancialLevelSuccess: '更新会员组别成功',
     updatePasswordSuccess: '更新密码成功',
+    updatePayment: '提交付款',
     updateProceed: '更新节点以进行付款编辑',
     updateRiskLevelSuccess: '更新风险等级成功',
     updateSuccess: '更新成功',
