@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-drawer
+    <!-- <el-drawer
       title="Switch Payment"
       v-model="uiControl.searchDialogVisible"
       direction="rtl"
@@ -52,7 +52,7 @@
           {{ t('fields.switch') }}
         </el-button>
       </el-card>
-    </el-drawer>
+    </el-drawer> -->
     <el-dialog
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
@@ -67,80 +67,9 @@
           :key="pindex"
           v-for="(p, pindex) in form.selectedPaymentNodes"
         >
-          {{ p.name }}
+          {{ p }}
         </el-tag>
       </div>
-      <el-form :model="form" :inline="false" size="small" label-width="200px">
-        <!-- <el-form-item :label="`${addNodeData.addNode.name} append to`" class="select-node-name">
-          <el-select
-            filterable
-            allow-create
-            default-first-option
-            :reserve-keyword="false"
-            v-model="addNodeData.selectValue"
-            size="small"
-            placeholder="Select Payment Append to"
-            class="filter-item"
-            style="width: 200px;margin-bottom: 16px"
-          >
-            <el-option
-              v-for="item in addNodeData.parentNodes"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item> -->
-        <!-- <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="addNewNode" :disabled="uiControl.dialogEditBtn">{{ t('fields.add') }}</el-button>
-        </div> -->
-      </el-form>
-      <el-input
-        v-model="paymentNameFilter"
-        size="small"
-        style="width: 100%"
-        :placeholder="t('message.multipleQuerySeparatedBySpace')"
-        @input="paymentSearch()"
-      />
-      <el-table
-        max-height="700px"
-        style="margin-bottom: 20px;"
-        :data="page.paymentRecords"
-        v-loading="page.loading"
-        ref="table"
-        row-key="id"
-        size="small"
-        highlight-current-row
-        :empty-text="t('fields.noData')"
-      >
-        <el-table-column
-          prop="paymentName"
-          :label="t('fields.paymentName')"
-          width="200"
-        />
-        <el-table-column
-          prop="payType"
-          :label="t('fields.payType')"
-          width="200"
-        />
-        <el-table-column
-          prop="currencyName"
-          :label="t('fields.currencyName')"
-          width="200"
-        />
-        <el-table-column :label="t('fields.operate')" align="right">
-          <template #default="scope">
-            <el-button
-              size="mini"
-              type="success"
-              @click="selectNode(scope.row)"
-            >
-              {{ t('fields.select') }}
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
       <div class="dialog-footer">
         <el-button @click="uiControl.dialogVisible = false">
           {{ t('fields.cancel') }}
@@ -158,27 +87,12 @@
       <el-card class="display-area" shadow="never">
         <template #header>
           <div class="card-header">
-            <el-row type="flex" class="row-bg" align="center">
-              <el-col :span="16">
-                <span>{{ t('fields.paymentArea') }}</span>
-              </el-col>
-              <el-col :span="8" align="right">
-                <el-button
-                  type="success"
-                  v-permission="['sys:payment:show:update']"
-                  @click="updatePaymentShowBtn"
-                >
-                  {{ t('fields.update') }}
-                </el-button>
-                <el-button
-                  type="primary"
-                  @click="uiControl.searchDialogVisible = true"
-                >
-                  {{ t('fields.switch') }}
-                </el-button>
+            <el-row type="flex" class="row-bg" justify="center">
+              <el-col :span="24">
+                <h3 style="margin: 0;">{{ t('fields.paymentArea') }}</h3>
               </el-col>
             </el-row>
-            <el-tag-group>
+            <!-- <el-tag-group>
               <span style="font-size: 12px; margin-right: 10px;">
                 {{ t('fields.searchCondition') }}:
               </span>
@@ -195,25 +109,176 @@
                     selectedCondition.financialLevel
                 }}
               </el-tag>
-            </el-tag-group>
+            </el-tag-group> -->
           </div>
         </template>
-        <div class="container">
-          <Node
-            :level="1"
-            :list="page.paymentShowNodes"
-            ref="paymentArea"
-            @add-nodes-to-selected-group="addNodesToSelectedGroup"
-          />
-          <el-button
-            v-show="page.paymentShowNodes.length === 0"
-            class="add"
-            icon="el-icon-plus"
-            size="mini"
-            type="primary"
-            @click="addNewNodesToSelectedGroup()"
-          />
-        </div>
+        <el-row>
+          <el-col :span="2" style="margin: 10px 0 30px; display: block;">
+            <span>{{ t('fields.site') }}</span>
+          </el-col>
+          <el-col :span="5">
+            <el-select
+              v-model="searchCondition.siteId"
+              @change="handleSiteNameCheckedChange"
+              value-key="id"
+            >
+              <el-option v-for="c in page.sites" :label="c.siteName" :key="c.id" :value="c.id">
+                {{ c.siteName }}
+              </el-option>
+            </el-select>
+          </el-col>
+          <!-- <el-col :span="6">
+            <h3>{{ t('fields.site') }}</h3>
+            <el-select
+              v-model="searchCondition.siteId"
+              @change="handleSiteNameCheckedChange"
+              value-key="id"
+            >
+              <el-option v-for="c in page.sites" :label="c.siteName" :key="c.id" :value="c.id">
+                {{ c.siteName }}
+              </el-option>
+            </el-select>
+          </el-col> -->
+          <!-- <el-col :span="6">
+            <h3>{{ t('fields.site') }}</h3>
+            <el-switch
+              v-model="searchCondition.way"
+              active-text="WEB"
+              active-value="WEB"
+              active-color="#13ce66"
+              inactive-text="MOBILE"
+              inactive-color="rgb(13 79 229)"
+              inactive-value="MOBILE"
+            />
+          </el-col> -->
+        </el-row>
+        <el-card v-loading="page.loading">
+          <el-row>
+            <el-col :span="4">
+              <el-button
+                v-show="page.webPaymentShowNodes.length === 0"
+                class="add"
+                icon="el-icon-plus"
+                size="mini"
+                type="primary"
+                @click="addNewNodesToSelectedGroup()"
+              />
+            </el-col>
+            <el-col :span="20" align="right">
+              <el-button
+                v-if="page.webPaymentShowNodes.length > 0 && !isNodesUpdated"
+                type="success"
+                v-permission="['sys:payment:show:update']"
+                @click="confirmUpdate"
+              >
+                {{ t('fields.update') }}
+              </el-button>
+            </el-col>
+          </el-row>
+          <div class="container">
+            <Node
+              :level="1"
+              :list="page.webPaymentShowNodes"
+              :type-list="page.originPaymentRecords"
+              ref="paymentArea"
+              :pageList="searchCondition"
+              @add-nodes-to-selected-group="addNodesToSelectedGroup()"
+              @export-child-item="getSelectedChild()"
+              @export-nodes="showNodesUpdated()"
+            />
+          </div>
+        </el-card>
+        <el-row v-if="isCodeSelected && isNodesUpdated">
+          <el-col :span="24">
+            <!-- <el-button
+              type="success"
+              v-permission="['sys:payment:show:update']"
+              @click="updatePaymentShowBtn"
+            >
+              {{ t('fields.update') }}
+            </el-button>
+            <el-button
+              type="primary"
+              @click="uiControl.searchDialogVisible = true"
+            >
+              {{ t('fields.switch') }}
+            </el-button> -->
+            <el-row style="margin: 50px 0;">
+              <el-col :span="2" style="margin: 10px 0 30px; display: block;">
+                <span>Payment Type</span>
+              </el-col>
+              <el-col :span="5">
+                <el-select
+                  v-model="selectedPaymentType"
+                  class="filter-item"
+                  style="width: 100%"
+                  placeholder="Select Payment Type"
+                  @change="checkPayTypeSelected"
+                >
+                  <el-option
+                    v-for="item in page.payTypeList"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                  >
+                    <span>{{ item }}</span>
+                  </el-option>
+                </el-select>
+              </el-col>
+              <el-col :span="17" align="right">
+                <el-button type="success" @click="savePaymentValues">{{ t('fields.paymentUpdate') }}</el-button>
+              </el-col>
+            </el-row>
+            <el-row style="margin: 50px 0;">
+              <el-col :span="24">
+                <el-row v-if="selectedPaymentType" :gutter="20">
+                  <el-col :span="6">
+                    <div style="margin-bottom: 10px; font-weight: bold;">WEB</div>
+                    <el-card>
+                      <div style="margin-bottom: 10px;">Payment</div>
+                      <el-radio-group v-model="nodeValues.web.paymentId">
+                        <el-radio v-for="c in page.paymentRecords" :label="c.paymentName" v-model="c.id" :key="c" style="display: block;" />
+                      </el-radio-group>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="6">
+                    <div style="margin-bottom: 10px; font-weight: bold;">MOBILE</div>
+                    <el-card>
+                      <div style="margin-bottom: 10px;">Payment</div>
+                      <el-radio-group v-model="nodeValues.mobile.paymentId">
+                        <el-radio v-for="c in page.paymentRecords" :label="c.paymentName" :key="c" style="display: block;">
+                          {{ c.paymentName }}
+                        </el-radio>
+                      </el-radio-group>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="6">
+                    <div style="margin-bottom: 10px; font-weight: bold;">WEB</div>
+                    <el-card>
+                      <div style="margin-bottom: 10px;">Level</div>
+                      <el-checkbox-group v-model="nodeValues.web.financialLevels">
+                        <el-checkbox v-for="c in page.financials" :label="c.name" :value="c.id" :key="c.id" style="display: block; margin: 5px 0;">
+                          {{ c.name }}
+                        </el-checkbox>
+                      </el-checkbox-group>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="6">
+                    <div style="margin-bottom: 10px; font-weight: bold;">MOBILE</div>
+                    <el-card>
+                      <div style="margin-bottom: 10px;">Level</div>
+                      <el-checkbox-group v-model="nodeValues.mobile.financialLevels">
+                        <el-checkbox v-for="c in page.financials" :label="c.name" :value="c.id" :key="c.id" style="display: block; margin: 5px 0;">
+                          {{ c.name }}
+                        </el-checkbox>
+                      </el-checkbox-group>
+                    </el-card>
+                  </el-col>
+                </el-row>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
       </el-card>
     </div>
 
@@ -263,12 +328,13 @@
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { toRaw } from '@vue/reactivity'
-import { notEmpty } from '../../../utils/common'
 import Node from '@/components/paymentSelect/node'
 import {
   getAllPayments,
   getPaymentShow,
+  getPaymentShowDetails,
   updatePaymentShow,
+  updatePaymentShowDetails
 } from '../../../api/payment-display'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getSiteListSimple } from '../../../api/site'
@@ -280,7 +346,18 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
-
+const nodeValues = ref({
+  code: null,
+  web: {
+    paymentId: null,
+    financialLevels: [],
+  },
+  mobile: {
+    paymentId: null,
+    financialLevels: [],
+  }
+})
+const selectedPaymentType = ref(null);
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -297,15 +374,19 @@ const addNodeData = reactive({
 const page = reactive({
   paymentRecords: [],
   originPaymentRecords: [],
-  paymentShowNodes: [],
+  mobileOriginPaymentRecords: [],
+  payTypeList: [],
+  webPaymentShowNodes: [],
+  mobilePaymentShowNodes: [],
   loading: false,
   sites: [],
   financials: [],
 })
 const searchCondition = reactive({
-  way: 'WEB',
   siteId: 1,
-  financialLevel: 1,
+})
+const arr = reactive({
+  item: [],
 })
 
 const form = reactive({
@@ -323,20 +404,17 @@ const copy = reactive({
 const span = reactive({
   copyWay: '',
 })
+const isCodeSelected = ref(false);
+const selectedChild = ref(null);
+const isNodesUpdated = ref(true)
 
 const paymentArea = ref()
-const paymentNameFilter = ref(null)
 let newNodeId = 0
 
-// function addNewNode() {
-//   console.log(addNodeData)
-//   if (addNodeData.selectValue === addNodeData.root.id) {
-//     page.paymentShowNodes.push(addNodeData.addNode);
-//   } else {
-//     addNewNodes(page.paymentShowNodes);
-//   }
-//   uiControl.dialogVisible = false;
-// }
+function showNodesUpdated() {
+  isNodesUpdated.value = false
+}
+
 function addNewNode() {
   if (!form.selectedGroup || form.selectedGroup === addNodeData.root.name) {
     page.paymentShowNodes = []
@@ -345,6 +423,18 @@ function addNewNode() {
   } else {
     runCode(page.paymentShowNodes)
   }
+  addNodeData.addNode = {
+    // childId: value.id,
+    id: --newNodeId,
+    // name: value.name,
+    // paymentName: value.paymentName,
+    // icon: value.payType,
+    children: [],
+    siteId: searchCondition.siteId,
+    level: searchCondition.financialLevel,
+    way: searchCondition.way,
+  }
+  form.selectedPaymentNodes.push(addNodeData.addNode)
 }
 function runCode(arr) {
   for (let i = 0; i < form.selectedLevel + 1; i++) {
@@ -359,89 +449,129 @@ function runCode(arr) {
       })
     }
   }
-  // arr.forEach(element => {
-  //   if (form.selectedLevel === level && form.selectedGroup === element.name) {
-  //     Object.assign(element.children, form.selectedPaymentNodes)
-  //     uiControl.dialogVisible = false
-  //   } else {
-  //     level++
-  //     runCode(element.children)
-  //   }
-  // });
 }
-
-const selectedCondition = reactive({
-  way: 'WEB',
-  site: page.sites,
-  financialLevel: 1,
-})
-
-function getSelectedSearchCondition() {
-  selectedCondition.way = searchCondition.way
-  page.sites.forEach(element => {
-    if (searchCondition.siteId === element.id) {
-      selectedCondition.siteName = element.siteName
-    }
-  })
-  page.financials.forEach(element => {
-    if (searchCondition.financialLevel === element.level) {
-      selectedCondition.financialLevel = element.name
-    }
-  })
-}
-
-// function addNewNodes(list) {
-//   list.forEach(function (item, index) {
-//     if (item.id === addNodeData.selectValue) {
-//       item.children.push(addNodeData.addNode);
-//       return true;
-//     }
-//     if (item.children) {
-//       addNewNodes(item.children);
-//     }
-//   });
-// }
-
-// function showSelectAddNodePanel(value) {
-//   addNodeData.addNode = { childId: value.id, id: --newNodeId, name: value.paymentName, icon: "", children: [] };
-//   addNodeData.parentNodes.length = 0;
-//   addNodeData.parentNodes.push(addNodeData.root);
-//   addNodeData.selectValue = addNodeData.root.id;
-//   addSelectOption(paymentArea.value.list);
-//   uiControl.dialogVisible = true;
-// }
-function selectNode(value) {
-  value.name = value.paymentName
-  form.selectedPaymentNodes.forEach(element => {
-    if (element.name === value.name) {
-      if (/\([\d]+\)/.test(value.name)) {
-        var str = value.name
-        var res = str.split(/[()]/)[1]
-        // Replace the old number value in the brackets
-        value.name = str.replace(
-          '(' + res + ')',
-          '(' + (parseInt(res) + 1) + ')'
-        )
-      } else {
-        value.name += '(1)'
-      }
-    }
-  })
-  addNodeData.addNode = {
-    childId: value.id,
-    id: --newNodeId,
-    name: value.name,
-    paymentName: value.paymentName,
-    icon: value.payType,
-    children: [],
-    siteId: searchCondition.siteId,
-    level: searchCondition.financialLevel,
-    way: searchCondition.way,
+function getSelectedChild(item) {
+  if (isNodesUpdated.value === false) {
+    ElMessage.error(t('message.updateProceed'))
+    return
   }
-  form.selectedPaymentNodes.push(addNodeData.addNode)
+  if (item === 'groupSelected') {
+    isCodeSelected.value = false
+    selectedChild.value = null
+    return
+  }
+  if (item.code) {
+    nodeValues.value.code = item.code
+    isCodeSelected.value = true
+    selectedChild.value = item
+  }
+  let selectedNode = null
+  page.webPaymentShowNodeDetails.forEach((el) => {
+    if (el.code === item.code) {
+      selectedNode = el
+    }
+  })
+  if (selectedNode) {
+    nodeValues.value.web.financialLevels = []
+    nodeValues.value.mobile.financialLevels = []
+    selectedPaymentType.value = selectedNode.web.type
+    checkPayTypeSelected(selectedPaymentType.value)
+    nodeValues.value.code = selectedNode.code
+    page.originPaymentRecords.forEach((payRec) => {
+      if (payRec.id === selectedNode.web.paymentId) {
+        nodeValues.value.web.paymentId = payRec.paymentName
+      }
+      if (payRec.id === selectedNode.mobile.paymentId) {
+        nodeValues.value.mobile.paymentId = payRec.paymentName
+      }
+    })
+    page.financials.forEach((element, index) => {
+      var webArray = JSON.parse("[" + selectedNode.web.financialLevels + "]");
+      var mobileArray = JSON.parse("[" + selectedNode.mobile.financialLevels + "]");
+      if (webArray[index] === 1) {
+        nodeValues.value.web.financialLevels.push(element.name)
+      }
+      if (mobileArray[index] === 1) {
+        nodeValues.value.mobile.financialLevels.push(element.name)
+      }
+    });
+  } else {
+    selectedPaymentType.value = ""
+    nodeValues.value.mobile.paymentId = null
+    nodeValues.value.mobile.financialLevels = []
+    nodeValues.value.web.paymentId = null
+    nodeValues.value.web.financialLevels = []
+  }
 }
+function savePaymentValues() {
+  arr.item = []
+  const paymentValues = nodeValues.value
+  const obj = {
+    code: paymentValues.code,
+    mobile: {
+      paymentId: null,
+      financialLevels: []
+    },
+    web: {
+      paymentId: null,
+      financialLevels: []
+    }
+  }
+  page.originPaymentRecords.forEach(element => {
+    if (element.paymentName === paymentValues.mobile.paymentId) {
+      obj.mobile.paymentId = element.id
+    }
+    if (element.paymentName === paymentValues.web.paymentId) {
+      obj.web.paymentId = element.id
+    }
+  });
+  page.financials.forEach(element => {
+    if (paymentValues.mobile.financialLevels.includes(element.name)) {
+      obj.mobile.financialLevels.push(1);
+    } else {
+      obj.mobile.financialLevels.push(0);
+    }
 
+    if (paymentValues.web.financialLevels.includes(element.name)) {
+      obj.web.financialLevels.push(1);
+    } else {
+      obj.web.financialLevels.push(0);
+    }
+  });
+  if (!selectedPaymentType.value) {
+    ElMessage.error(t('message.selectPaymentType'));
+    return
+  }
+  if (!obj.web.paymentId) {
+    ElMessage.error(t('message.selectWebPayment'));
+    return
+  }
+  if (!obj.mobile.paymentId) {
+    ElMessage.error(t('message.selectMobilePayment'));
+    return
+  }
+  ElMessageBox.confirm(t('message.confirmUpdatePayment'), t('fields.notice'), {
+    confirmButtonText: t('fields.update'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'info',
+  }).then(async () => {
+    arr.item.push(obj);
+    updatePaymentShowDetails(arr).then((res) => {
+      if (res.code === 0) {
+        ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+        getPaymentShowDetails({
+          siteId: searchCondition.siteId
+        }).then((res) => {
+          if (res.code === 0) {
+            page.webPaymentShowNodeDetails = res.data
+          }
+        })
+      }
+    })
+  });
+}
 function addNodesToSelectedGroup({ list, level, name }) {
+  console.log(list, level, name)
   form.selectedPaymentNodes = []
   form.selectedLevel = level
   Object.assign(form.selectedPaymentNodes, list)
@@ -453,182 +583,78 @@ function addNodesToSelectedGroup({ list, level, name }) {
     uiControl.dialogTitle = t('fields.selectNodeAddTo') + form.selectedGroup
   }
   uiControl.dialogVisible = true
-  // addNodeData.addNode = { childId: value.id, id: --newNodeId, name: value.paymentName, icon: "", children: [] };
-  // addNodeData.parentNodes.length = 0;
-  // addNodeData.parentNodes.push(addNodeData.root);
-  // addNodeData.selectValue = addNodeData.root.id;
-  // addSelectOption(paymentArea.value.list);
 }
-
-// function addSelectedNodesToGroup(value) {
-// }
-// function addSelectOption(list) {
-//   list.forEach(function (item, index) {
-//     console.log(item.children)
-//     if (item.children.length > 0) {
-//       addNodeData.parentNodes.push({ name: item.name, childId: item.id, id: item.id, icon: item.icon });
-//       addSelectOption(item.children)
-//     }
-//   });
-// }
 function addNewNodesToSelectedGroup() {
-  if (!form.selectedGroup || form.selectedGroup === addNodeData.root.name) {
-    form.selectedPaymentNodes = []
-    Object.assign(form.selectedPaymentNodes, page.paymentShowNodes)
-    uiControl.dialogTitle = t('fields.addNodes')
-    uiControl.dialogVisible = true
-  }
+  paymentArea.value.addHandle()
 }
 function handleRemoveNode(tag) {
   form.selectedPaymentNodes.splice(form.selectedPaymentNodes.indexOf(tag), 1)
 }
-async function paymentSearch() {
-  if (notEmpty(paymentNameFilter.value)) {
-    page.paymentRecords = page.originPaymentRecords.filter(x => {
-      const words = paymentNameFilter.value
-        .toLowerCase()
-        .trim()
-        .split(/\s+/)
-      for (let i = 0; i < words.length; i++) {
-        const w = words[i]
-        if (
-          (x.paymentName && x.paymentName.toLowerCase().indexOf(w) >= 0) ||
-          (x.payType && x.payType.toLowerCase().indexOf(w) >= 0) ||
-          (x.currencyName && x.currencyName.toLowerCase().indexOf(w) >= 0)
-        ) {
-          return true
-        }
-      }
-      return false
-    })
-  } else {
-    const selectedSite = page.sites.find(k => k.id === searchCondition.siteId)
-    page.paymentRecords = page.originPaymentRecords.filter(p =>
-      selectedSite.currency.includes(p.currencyCode)
-    )
-  }
+function checkPayTypeSelected(value) {
+  // page.payTypeList = [];
+  // page.originPaymentRecords.forEach((el) => {
+  //   if (el.payType === value) {
+  //     page.payTypeList.push(el)
+  //   }
+  // })
+  page.paymentRecords = page.originPaymentRecords.filter((el) => el.payType === value);
+  nodeValues.value.web.paymentId = null;
+  nodeValues.value.mobile.paymentId = null;
 }
-
 async function loadPayments() {
-  page.loading = true
+  // searchCondition.way = 'WEB'
   const { data: records } = await getAllPayments({
-    way: searchCondition.way,
+    // way: searchCondition.way,
     status: 'OPEN',
     siteId: searchCondition.siteId,
   })
-  page.originPaymentRecords = records
-  page.loading = false
   const { data: nodes } = await getPaymentShow({
-    financialLevel: searchCondition.financialLevel,
     siteId: searchCondition.siteId,
-    way: searchCondition.way,
+    // way: searchCondition.way,
   })
-  page.paymentShowNodes = nodes
-  await paymentSearch()
+  const { data: nodeDetails } = await getPaymentShowDetails({
+    siteId: searchCondition.siteId,
+    // way: searchCondition.way,
+  })
+  page.webPaymentShowNodeDetails = nodeDetails
+  page.webPaymentShowNodes = nodes
+  page.originPaymentRecords = records
+  page.paymentRecords = records
+  const payTypes = new Set();
+  records.forEach((el) => {
+    payTypes.add(el.payType);
+  })
+  page.payTypeList = Array.from(payTypes);
   uiControl.searchDialogVisible = false
-  getSelectedSearchCondition()
-  updateFinancialToCopy()
-}
-
-function updateFinancialToCopy() {
-  copy.financials = []
-  copy.selectedLevel = []
-  var selected = searchCondition.financialLevel
-  var totallevel = page.financials
-  var all = { name: 'All', level: '-1' }
-  copy.financials.push(all)
-  for (let i = 0; i < totallevel.length; i++) {
-    if (totallevel[i].level !== selected) {
-      copy.financials.push(totallevel[i])
-    }
-  }
-}
-
-// async function copyLevel() {
-//   if (copy.selectedLevel.length !== 0) {
-//     var selectedString = ''
-//     for (let i = 0; i < copy.selectedLevel.length; i++) {
-//       if (i > 0) selectedString += ', '
-//       selectedString += getFinancialLevelNameByLevel(copy.selectedLevel[i])
-//     }
-
-//     ElMessageBox.confirm(
-//       t('message.confirmCopy') +
-//         getFinancialLevelNameByLevel(searchCondition.financialLevel) +
-//         t('message.confirmCopyTo') +
-//         selectedString +
-//         ' ?',
-//       t('fields.notice'),
-//       {
-//         confirmButtonText: t('fields.copy'),
-//         cancelButtonText: t('fields.cancel'),
-//         type: 'info',
-//       }
-//     ).then(async () => {
-//       const obj = {
-//         nodes: toRaw(paymentArea.value.list),
-//         financialLevel: searchCondition.financialLevel,
-//         siteId: searchCondition.siteId,
-//         way: searchCondition.way,
-//         selected: copy.selectedLevel.toString(),
-//       }
-//       await copyPaymentShow(obj)
-//       ElMessage({ message: t('message.updateSuccess'), type: 'success' })
-//     })
-//   } else {
-//     ElMessage({
-//       message: t('message.validateCopyFinancialLevel'),
-//       type: 'error',
-//     })
-//   }
-// }
-
-async function updatePaymentShowBtn() {
-  uiControl.updateDialogVisible = true
-  if (searchCondition.way === 'WEB') {
-    span.copyWay = t('fields.copyTo') + ' Mobile'
-  } else {
-    span.copyWay = t('fields.copyTo') + ' WEB'
-  }
 }
 
 async function confirmUpdate() {
-  ElMessageBox.confirm(t('message.confirmUpdatePayment'), t('fields.notice'), {
+  ElMessageBox.confirm(t('message.confirmUpdate'), t('fields.notice'), {
     confirmButtonText: t('fields.update'),
     cancelButtonText: t('fields.cancel'),
     type: 'info',
   }).then(async () => {
+    page.loading = true
     const obj = {
       nodes: toRaw(paymentArea.value.list),
-      financialLevel: searchCondition.financialLevel,
-      siteId: searchCondition.siteId,
-      way: searchCondition.way,
-      selected: copy.selectedLevel.toString(),
-      copyWay: copy.checked,
+      siteId: searchCondition.siteId
     }
     await updatePaymentShow(obj)
     uiControl.updateDialogVisible = false;
     ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+    isNodesUpdated.value = true
+    page.loading = false
   })
 }
 
 async function loadSearchCondition() {
+  page.loading = true
   const { data: ret } = await getSiteListSimple()
   page.sites = ret
   await loadFinancialLevels()
-  getSelectedSearchCondition()
+  await loadPayments()
+  page.loading = false
 }
-
-// function getFinancialLevelNameByLevel(selected) {
-//   var totallevel = page.financials
-//   for (let i = 0; i < totallevel.length; i++) {
-//     console.log(totallevel[i].level + '/' + selected)
-//     if (totallevel[i].level === selected) {
-//       return totallevel[i].name
-//     }
-//   }
-// }
-
 async function loadFinancialLevels() {
   const { data: financial } = await getFinancialLevels({
     siteId: searchCondition.siteId,
@@ -637,6 +663,8 @@ async function loadFinancialLevels() {
 }
 
 function handleSiteNameCheckedChange() {
+  isCodeSelected.value = false
+  isNodesUpdated.value = true
   loadSearchCondition()
 }
 
@@ -659,10 +687,14 @@ onMounted(async () => {
   await loadFinancialLevels()
   await loadPayments()
   bus.on('addNodesToSelectedGroup', addNodesToSelectedGroup)
+  bus.on('exportChildItem', getSelectedChild)
+  bus.on('exportNodes', showNodesUpdated)
 })
 
 onUnmounted(() => {
   bus.off('addNodesToSelectedGroup')
+  bus.off('exportChildItem')
+  bus.off('exportNodes')
 })
 </script>
 
