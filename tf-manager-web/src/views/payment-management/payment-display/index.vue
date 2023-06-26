@@ -127,30 +127,6 @@
               </el-option>
             </el-select>
           </el-col>
-          <!-- <el-col :span="6">
-            <h3>{{ t('fields.site') }}</h3>
-            <el-select
-              v-model="searchCondition.siteId"
-              @change="handleSiteNameCheckedChange"
-              value-key="id"
-            >
-              <el-option v-for="c in page.sites" :label="c.siteName" :key="c.id" :value="c.id">
-                {{ c.siteName }}
-              </el-option>
-            </el-select>
-          </el-col> -->
-          <!-- <el-col :span="6">
-            <h3>{{ t('fields.site') }}</h3>
-            <el-switch
-              v-model="searchCondition.way"
-              active-text="WEB"
-              active-value="WEB"
-              active-color="#13ce66"
-              inactive-text="MOBILE"
-              inactive-color="rgb(13 79 229)"
-              inactive-value="MOBILE"
-            />
-          </el-col> -->
         </el-row>
         <el-card v-loading="page.loading">
           <el-row>
@@ -539,7 +515,6 @@ function getSelectedChild(item, onUpd) {
     // } else {
     //   originType.value = selectedNode.web.type
     // }
-    
     originType.value = selectedNode.web.type
     checkPayTypeSelected(selectedPaymentType.value)
     nodeValues.value.code = selectedNode.code
@@ -557,7 +532,6 @@ function getSelectedChild(item, onUpd) {
         nodeValues.value.mobile.paymentId = payRec.paymentName
       }
     })
-    
     nodeValues.value.web.financialLevels = []
     nodeValues.value.mobile.financialLevels = []
     page.financials.forEach((element, index) => {
@@ -661,7 +635,6 @@ function savePaymentValues() {
                 selectedElement = element
               }
             });
-
             if (selectedElement !== null) {
               // Perform operations with the selectedElement
               getSelectedChild(selectedElement, 'onupdate');
