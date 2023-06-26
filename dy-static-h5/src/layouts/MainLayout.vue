@@ -35,7 +35,7 @@
           <RiArrowDropLeftLine />
         </router-link>
         {{ pageName }}
-        <q-btn
+        <!-- <q-btn
           v-if="hasDrawer"
           style="position: absolute; right: 10px"
           flat
@@ -43,7 +43,7 @@
           round
           dense
           icon="menu"
-        />
+        /> -->
       </q-card-section>
       <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
         <q-card-section class="acct-section">
@@ -236,7 +236,7 @@ export default defineComponent({
         } else if (route.path === "/forgot-password") {
           prevPage.value = "login";
           hasPage.value = true;
-          pageName.value = "找回密码";
+          pageName.value = "找回账号";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";

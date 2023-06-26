@@ -126,8 +126,8 @@
           min-width="180"
         >
           <template #default="scope">
-            <span v-if="scope.row.beforeBalance === 0">-</span>
-            <span v-if="scope.row.beforeBalance !== 0">
+            <span v-if="scope.row.beforeBalance === null">-</span>
+            <span v-if="scope.row.beforeBalance !== null">
               {{ scope.row.beforeBalance }}
             </span>
           </template>
@@ -139,8 +139,8 @@
           min-width="180"
         >
           <template #default="scope">
-            <span v-if="scope.row.afterBalance === 0">-</span>
-            <span v-if="scope.row.afterBalance !== 0">
+            <span v-if="scope.row.afterBalance === null">-</span>
+            <span v-if="scope.row.afterBalance !== null">
               {{ scope.row.afterBalance }}
             </span>
           </template>
@@ -152,8 +152,8 @@
           min-width="180"
         >
           <template #default="scope">
-            <span v-if="scope.row.platformBalance === 0">-</span>
-            <span v-if="scope.row.platformBalance !== 0">
+            <span v-if="scope.row.platformBalance === null">-</span>
+            <span v-if="scope.row.platformBalance !== null">
               {{ scope.row.platformBalance }}
             </span>
           </template>

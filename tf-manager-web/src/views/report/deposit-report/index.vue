@@ -307,6 +307,53 @@ const shortcuts = [
       return [start, end]
     },
   },
+  {
+    text: t('fields.lastWeek'),
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
+      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
+      return [start, end];
+    }
+  },
+  {
+    text: t('fields.thisMonth'),
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(moment(start).startOf('month').format('x'));
+      return [start, end];
+    }
+  },
+  {
+    text: t('fields.lastMonth'),
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
+      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
+      return [start, end];
+    }
+  },
+  {
+    text: t('fields.last3Months'),
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(moment(start).subtract(2, 'months').startOf('month').format('x'));
+      return [start, end];
+    }
+  },
+  {
+    text: t('fields.last6Months'),
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(moment(start).subtract(5, 'months').startOf('month').format('x'));
+      return [start, end];
+    }
+  }
 ]
 
 async function loadDaily(row, expandedRows) {
@@ -347,9 +394,10 @@ function convertDate(date) {
 
 function disabledDate(time) {
   return (
-    time.getTime() <=
+    time.getTime() <
       moment(new Date())
-        .subtract(1, 'weeks')
+        .subtract(5, 'months')
+        .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
   )
 }

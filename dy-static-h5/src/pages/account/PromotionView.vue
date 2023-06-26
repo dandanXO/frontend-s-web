@@ -30,8 +30,7 @@ export default defineComponent({
         code: "1",
         label: "体育免费竞猜",
         icon: "invite-friend",
-        redirectUrl: "https://m.dyvip1.com/",
-        redirectTo: true,
+        redirectUrl: "promo",
         iconLink:
           "https://sm.zzwangjie.com/static//image/7597bf69-7c02-42f6-987f-da06040887f1.png",
       },
@@ -47,7 +46,7 @@ export default defineComponent({
         code: "3",
         label: "电竞保险投注",
         icon: "invite-friend",
-        redirectUrl: "invitefriend",
+        redirectUrl: "promo",
         iconLink:
           "https://sm.zzwangjie.com/static//image/97f9fdf5-592f-48c9-810d-a0cbcb84128d.png",
       },
@@ -55,7 +54,7 @@ export default defineComponent({
         code: "4",
         label: "电子救援金",
         icon: "invite-friend",
-        redirectUrl: "invitefriend",
+        redirectUrl: "promo",
         iconLink:
           "https://sm.zzwangjie.com/static//image/926968b3-51b3-4683-8feb-e12f0c3849c7.png",
       },
@@ -63,7 +62,7 @@ export default defineComponent({
         code: "5",
         label: "邀请好友",
         icon: "invite-friend",
-        redirectUrl: "invitefriend",
+        redirectUrl: "promo",
         iconLink:
           "https://sm.zzwangjie.com/static//image/8a04274f-3480-4ad9-8a62-f82f3070f69e.png",
       },
@@ -71,7 +70,7 @@ export default defineComponent({
         code: "6",
         label: "APP存款红包",
         icon: "invite-friend",
-        redirectUrl: "invitefriend",
+        redirectUrl: "promo",
         iconLink:
           "https://sm.zzwangjie.com/static//image/ed69c241-d803-44ed-bbe1-1b8b1d0229f5.png",
       },

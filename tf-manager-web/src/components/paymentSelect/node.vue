@@ -1,122 +1,116 @@
 <template>
-  <div class="node" v-if="list && list.length !== 0">
-    <div class="title root" v-if="level === 1" />
-    <div class="title" v-else>{{ name }}</div>
-    <el-button
-      :key="level"
-      class="add"
-      icon="el-icon-plus"
-      size="mini"
-      type="primary"
-      @click="addto(list, level, name)"
-    />
-    <div class="node-content">
-      <div
-        class="node-item"
-        :id="level + '_' + i"
-        draggable="true"
-        @click="clickItem(item)"
-        :class="[
-          item.children.length !== 0 ? 'node-group' : '',
-          item.dragtype === 3
-            ? 'dragging'
-            : selectItem === item
-              ? 'selected'
-              : '',
-        ]"
-        @dragover="dragenter($event, item, i)"
-        @dragleave="dragleave(item, i)"
-        @drag="drag($event, item, i)"
-        @drop="drop(item, i)"
-        :key="i"
-        v-for="(item, i) in list"
-      >
-        <!-- <div
-          :class="{ before: item.dragtype === 1, after: item.dragtype === 2 }"
-        ></div> -->
-        <!-- <div class="node-item-border"> -->
-        <el-row :gutter="10" justify="space-between" align="middle">
-          <el-col :span="6" style="position: relative">
-            <!-- eslint-disable -->
-            <img
-              v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
-              :src="paymethodicon + '/000/fff.png&text=payment'"
-            />
-            <img v-else :src="paymethodicon + '/payment/' + item.icon" />
-          </el-col>
-          <el-col :span="12">
-            <div class="node-text">
-              <div class="group-node" v-if="item.children.length !== 0">
-                <div>{{ item.name }}</div>
-              </div>
-              <div class="payment-node" v-else>
-                <div>{{ $t('fields.name') }}: {{ item.name }}</div>
-                <div>{{ $t('fields.payment') }}: {{ item.paymentName }}</div>
-              </div>
-            </div>
-          </el-col>
-          <el-col :span="6" class="icons">
-            <i
-              class="el-icon-edit"
-              size="mini"
-              type="success"
-              @click.stop="editHandle(item, i, idx)"
-            />
-            <i
-              class="el-icon-remove"
-              size="mini"
-              type="danger"
-              @click.stop="deleteItem(item, i, idx)"
-            />
-          </el-col>
-        </el-row>
-        <!-- <el-icon
-          title="编辑"
-          style="margin: 0 10px"
-          class="pointer"
-          @click.stop="editHandle(item, i, idx)"
-        >
-        <Edit />
-        </el-icon>
-        <el-tag @click.stop="deleteItem(idx, index, element)">x</el-tag>-->
-      </div>
-      <!-- </div> -->
-      <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
-    </div>
-    <div :key="i" v-for="(item, i) in list">
-      <node
-        :name="item.name"
-        v-if="selectItem === item"
-        :level="parseInt(level) + 1"
-        :list="item.children"
-        v-bind="$attrs"
+  <div>
+    <div class="node" v-if="list && list.length !== 0">
+      <div class="title root" v-if="level === 1" />
+      <div class="title" v-else>{{ name }}</div>
+      <el-button
+        v-if="level === 1"
+        :key="level"
+        class="add"
+        icon="el-icon-plus"
+        size="mini"
+        type="primary"
+        @click="addHandle()"
       />
+      <div class="node-content">
+        <div
+          class="node-item"
+          :id="level + '_' + i"
+          draggable="true"
+          @click="clickItem(item)"
+          :class="[
+            item.children.length !== 0 ? 'node-group' : '',
+            item.dragtype === 3
+              ? 'dragging'
+              : selectItem === item
+                ? 'selected'
+                : '',
+          ]"
+          @dragover="dragenter($event, item, i)"
+          @dragleave="dragleave(item, i)"
+          @drag="drag($event, item, i)"
+          @drop="drop(item, i)"
+          :key="i"
+          v-for="(item, i) in list"
+        >
+          <div>
+            <el-row :gutter="10" justify="space-between" align="middle">
+              <el-col :span="6" style="position: relative">
+                <!-- eslint-disable -->
+                <img
+                  v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
+                  :src="paymethodicon + '/000/fff.png&text=payment'"
+                />
+                <img v-else :src="paymethodicon + '/' + item.icon" />
+              </el-col>
+              <el-col :span="12">
+                <div class="node-text">
+                  <div class="group-node">
+                    <div>{{ item.code }}</div>
+                  </div>
+                </div>
+              </el-col>
+
+              <el-col :span="6" class="icons">
+                <i
+                  class="el-icon-edit"
+                  size="mini"
+                  type="success"
+                  @click.stop="editHandle(item, i, idx)"
+                />
+                <i
+                  class="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click.stop="deleteItem(item, i, idx)"
+                />
+              </el-col>
+            </el-row>
+          </div>
+          <!-- <div
+            :class="{ before: item.dragtype === 1, after: item.dragtype === 2 }"
+          ></div> -->
+          <!-- <div class="node-item-border"> -->
+        </div>
+        <!-- </div> -->
+        <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
+      </div>
+      <div :key="i" v-for="(item, i) in list">
+        <node
+          :name="item.code"
+          v-if="selectItem === item"
+          :level="parseInt(level) + 1"
+          :list="item.children"
+          v-bind="$attrs"
+        />
+      </div>
+      <!-- <div :key="i" v-for="(childItem, i) in list">
+        {{ childItem }}
+        <node
+          :name="childItem.nodeName"
+          :level="parseInt(level) + 1"
+          :list="childItem"
+          v-bind="$attrs"
+        />
+        <!- <node
+          :name="item.nodeName"
+          v-if="item.childIds === null"
+          :level="parseInt(level) + 1"
+          :list="item"
+          v-bind="$attrs"
+        /> ->
+      </div> -->
     </div>
-    <el-dialog v-model="dialogVisible" :title="$t('fields.edit')" width="40%">
+    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="40%">
       <el-form
-        ref="ruleFormRef"
+        ref="addFormRef"
         :model="ruleForm"
         status-icon
         label-width="100px"
+        :rules="rules"
       >
-        <el-form-item :label="'Copy From'" prop="name">
-          <el-select
-            v-model="noteId"
-            size="small"
-            class="filter-item"
-            style="width: 100%"
-            @change="copyNoteName"
-          >
-            <el-option
-              v-for="item in snoteList.list"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            >
-              <img :src="paymethodicon + '/' + item.icon" style="float: left; width: 30px; margin-right: 10px;">
-              <span>{{ item.name }}</span>
-            </el-option>
-          </el-select>
+        <el-form-item :label="'Code'" prop="code" required>
+          <el-input v-model="ruleForm.code" autocomplete="off" />
         </el-form-item>
 
         <el-form-item :label="$t('fields.name')" prop="name" required>
@@ -198,13 +192,13 @@
           <el-button @click="dialogVisible = false">
             {{ $t('fields.cancel') }}
           </el-button>
-          <el-button type="primary" @click="confirmEdit">
+          <el-button type="primary" @click="isEdit ? confirmEdit() : confirmAddNode(list, level, name)">
             {{ $t('fields.confirm') }}
           </el-button>
         </span>
       </template>
     </el-dialog>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -214,18 +208,31 @@ import { reactive, defineComponent } from 'vue'
 import { uploadImage } from '../../api/image'
 import bus from '../../utils/bus'
 import i18n from '../../i18n/index'
-import { getSystemPaymentShowBySiteIdGroupByNodeName } from '../../api/payment-display'
+// import { getSystemPaymentShowBySiteIdGroupByNodeName } from '../../api/payment-display'
+// import { addPaymentShow, updatePaymentShow } from '../../api/payment-display'
 
 export default defineComponent({
   name: 'Node',
   order: 1,
   setup: (props, { emit }) => {},
-  emits: ['exportNodes', 'addNodesToSelectedGroup'],
+  emits: ['exportChildItem', 'exportNodes', 'addNodesToSelectedGroup'],
   props: {
     list: {
       type: Array,
       default: function() {
         return []
+      },
+    },
+    typeList: {
+      type: Array,
+      default: function() {
+        return []
+      },
+    },
+    pageList: {
+      type: Object,
+      default: function() {
+        return {}
       },
     },
     level: {
@@ -238,6 +245,23 @@ export default defineComponent({
     },
   },
   data() {
+    var checkCode = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('Code is required'));
+      }
+      const codes = [];
+      this.list.forEach(item => {
+        if (item.code) {
+          codes.push(item.code);
+        }
+      });
+      codes.forEach(element => {
+        if (element.toLowerCase() === value.toLowerCase()) {
+          return callback(new Error('Code exists, please input a different code'));
+        }
+      });
+      callback();
+    };
     return {
       paymethodicon: process.env.VUE_APP_IMAGE,
       ruleForm: {
@@ -247,8 +271,18 @@ export default defineComponent({
         promoStyle: '',
         siteId: '',
         level: '',
-        way: '',
-        add: false,
+        code: '',
+      },
+      rules: {
+        code: [
+          { validator: checkCode, trigger: 'blur' }
+        ],
+        name: [
+          { required: true, message: 'Name is required' }
+        ],
+        icon: [
+          { required: true, message: 'Icon is required' }
+        ]
       },
       snoteList: reactive({
         list: [],
@@ -257,15 +291,39 @@ export default defineComponent({
       selectItem: null,
       dragItem: null,
       dialogVisible: false,
+      dialogTitle: null,
+      addForm: {
+        type: null,
+      },
+      isEdit: false
     }
   },
   methods: {
     // 编辑
     editHandle(node, parentIdx, idx) {
       this.ruleForm = { ...node }
-      this.loadNote(this.ruleForm.siteId)
+      // this.loadNote(this.ruleForm.siteId)
       this.item = node
+      this.isEdit = true
       this.dialogVisible = true
+    },
+    addHandle() {
+      this.ruleForm = { id: 0, code: null, name: null }
+      this.isEdit = false
+      this.dialogTitle = 'Add'
+      this.dialogVisible = true
+    },
+    confirmAddNode() {
+      this.$refs.addFormRef.validate((valid) => {
+        if (valid) {
+          this.ruleForm.siteId = this.pageList.siteId
+          this.ruleForm.children = []
+          // eslint-disable-next-line vue/no-mutating-props
+          this.list.push(this.ruleForm)
+          this.dialogVisible = false;
+          bus.emit('exportNodes')
+        }
+      })
     },
     deleteItem(item, index) {
       // eslint-disable-next-line vue/no-mutating-props
@@ -273,21 +331,22 @@ export default defineComponent({
     },
     clickItem(item) {
       this.selectItem = item
+      if (item.children.length === 0) {
+        bus.emit('exportChildItem', item)
+      } else {
+        bus.emit('exportChildItem', 'groupSelected')
+      }
     },
     addNode() {
       this.ruleForm = { name: '', add: true }
       this.dialogVisible = true
     },
     confirmEdit() {
-      if (!this.ruleForm.add) {
-        Object.assign(this.item, this.ruleForm)
-      } else {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.list.push(this.ruleForm)
-      }
+      Object.assign(this.item, this.ruleForm)
+      console.log(this.list)
 
       this.dialogVisible = false
-      bus.emit('exportNodes', this.list)
+      bus.emit('exportNodes')
     },
     addto(list, level, name) {
       // this.$emit('addNodesToSelectedGroup');
@@ -360,6 +419,7 @@ export default defineComponent({
       })
     },
     drop(item, i) {
+      bus.emit('exportNodes')
       console.log('drop====', item)
       if (item === this.dragItem) {
         return
@@ -392,7 +452,7 @@ export default defineComponent({
         item.children = item.children || []
         if (item.children.length === 0) {
           const group = {
-            name: 'group' + this.level + '-' + this.list.indexOf(item),
+            name: item.code,
             childId: -1,
             children: [item, this.dragItem],
             icon: 'default',
@@ -404,7 +464,6 @@ export default defineComponent({
 
           console.log('this.dragItem', this.list.indexOf(this.dragItem))
         }
-
         // eslint-disable-next-line vue/no-mutating-props
         this.list.splice(this.list.indexOf(this.dragItem), 1)
       }
@@ -432,6 +491,7 @@ export default defineComponent({
     },
 
     async attachPhoto(event, type) {
+      console.log(type)
       const files = event.target.files[0]
       const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
       const dirPayment = 'payment'
@@ -466,21 +526,21 @@ export default defineComponent({
         }
       }
     },
-    async loadNote() {
-      const { data: note } = await getSystemPaymentShowBySiteIdGroupByNodeName({
-        financialLevel: this.ruleForm.level,
-        siteId: this.ruleForm.siteId,
-        way: this.ruleForm.way,
-      })
-      this.snoteList.list = note
-    },
-    copyNoteName() {
-      const str = this.snoteList.list.find(d => d.id === this.noteId)
-      this.ruleForm.name = str.name
-      this.ruleForm.icon = str.icon
-      this.ruleForm.promoIcon = str.promoIcon
-      this.ruleForm.promoStyle = str.promoStyle
-    },
+    // async loadNote() {
+    //   const { data: note } = await getSystemPaymentShowBySiteIdGroupByNodeName({
+    //     financialLevel: this.ruleForm.level,
+    //     siteId: this.ruleForm.siteId,
+    //     way: this.ruleForm.way,
+    //   })
+    //   this.snoteList.list = note
+    // },
+    // copyNoteName() {
+    //   const str = this.snoteList.list.find(d => d.id === this.noteId)
+    //   this.ruleForm.name = str.name
+    //   this.ruleForm.icon = str.icon
+    //   this.ruleForm.promoIcon = str.promoIcon
+    //   this.ruleForm.promoStyle = str.promoStyle
+    // },
   },
 })
 </script>
