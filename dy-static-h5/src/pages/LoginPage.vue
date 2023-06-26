@@ -131,7 +131,7 @@
               />
             </div>
             <div class="mui-row">
-              <router-link to="/forgot-password"> 忘记密码？</router-link>
+              <router-link to="/forgot-password"> 忘记账号？</router-link>
             </div>
           </div>
 

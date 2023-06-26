@@ -28,7 +28,7 @@
             color="black"
             :options="withdrawState.bankCardList"
             map-options
-            :rules="[(val) => !!val || isUSDT ? '请选择钱包地址': '请选择银行']"
+            :rules="[(val) => !!val || '请选择银行/钱包地址']"
           >
             <template v-slot:no-option>
               <q-item>

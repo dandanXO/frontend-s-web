@@ -24,23 +24,51 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <a @click="showPromoDetails(promo)">
-                    <div class="pad-title">
-                      <span class="pad-right">查看详情&gt;&gt;</span>
-                    </div>
-                    <div class="promo-info">
-                      <span class="viewdetail">{{ promo.title }}</span>
-                    </div>
-                    <div class="promo-img-wrapper">
-                      <div class="promo-bg">
-                        <img
-                          class="promo-content"
-                          :src="imgURL + promo.mobileImgUrl"
-                        />
+                  <template v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                    <a @click="showPromoDetails(promo)">
+                      <div class="pad-title">
+                        <span class="pad-right">查看详情&gt;&gt;</span>
                       </div>
-                    </div>
-                    <div class="pad-label label-new">最新活动</div>
-                  </a>
+                      <div class="promo-info">
+                        <span class="viewdetail">{{ promo.title }}</span>
+                      </div>
+                      <div class="promo-img-wrapper">
+                        <div class="promo-bg">
+                          <img
+                            class="promo-content"
+                            :src="imgURL + promo.mobileImgUrl"
+                          />
+                        </div>
+                      </div>
+                      <div class="pad-label label-new">最新活动</div>
+                    </a>
+                  </template>
+
+                  <template v-if="tab.name === 'all'">
+                    <a @click="showPromoDetails(promo)">
+                      <div class="pad-title">
+                        <span class="pad-right">查看详情&gt;&gt;</span>
+                      </div>
+                      <div class="promo-info">
+                        <span class="viewdetail">{{ promo.title }}</span>
+                      </div>
+                      <div class="promo-img-wrapper">
+                        <div class="promo-bg">
+                          <img
+                            class="promo-content"
+                            :src="imgURL + promo.mobileImgUrl"
+                          />
+                        </div>
+                      </div>
+                      <div class="pad-label label-new">最新活动</div>
+                    </a>
+                  </template>
+
+
+
+                  <!-- <template v-if="tab.name === promo.promoType.toLowerCase()"> -->
+
+                  <!-- </template> -->
                 </div>
               </div>
             </div>
@@ -74,50 +102,7 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <!-- <div v-html="selectedPromo.pageContent"></div> -->
-                  <div>
-                    <div class="title-box">
-                      <img
-                        src="https://jsn92.czxinbang.com/xf-resource/wap/images/promo/package/package_active.png"
-                      />
-                    </div>
-                    <div class="active-content">
-                      <p>
-                        感谢兴發全体会员，特开启红包雨活动，红包雨每日15:00:00分、20:00:00
-                        分开启两次，每次开启将随机派发三个奖金1888元红包，此活动在特定时间
-                        开启，逢节假日将增加大量现金红包及实物奖品随机派发。
-                      </p>
-                      <p>
-                        活动时间：2020-12-24 00:00:00 至 2022-12-31 23:59:59
-                      </p>
-                    </div>
-                    <div class="title-box">
-                      <img
-                        src="https://jsn92.czxinbang.com/xf-resource/wap/images/promo/package/package_ruler.png"
-                      />
-                    </div>
-                    <ul class="rule-list poker-tab">
-                      <li>
-                        用户单笔充值金额≥200元即可报名一次，获得红包奖金将直接添加到主账户中。
-                      </li>
-                      <li>
-                        活动开启时间为每日15:00:00分、20:00:00分两次系统自动开启，未及时参与活动无任何补偿。
-                      </li>
-                      <li>获得奖金完成一倍流水即可提款。</li>
-                      <li>
-                        开启活动节假日：春节、元宵节、劳动节、端午节、七夕节、中秋节、国庆节、元旦节日当天开启两次。
-                      </li>
-                      <li>
-                        每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能享受一次活动，对违规的用户，保留无限期审核，如发现恶意刷取活动套利者，将扣除红利及所得盈利。
-                      </li>
-                      <li>
-                        所有电竞/体育赔率均为欧洲盘，且投注赔率低于1.75和无效的、取消的、同局中对冲投注将不计算在有效投注内。
-                      </li>
-                      <li>
-                        凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。
-                      </li>
-                    </ul>
-                  </div>
+                  <div v-html="selectedPromo.pageContent"></div>
                 </div>
               </div>
             </div>
@@ -128,7 +113,10 @@
   </div>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
+    <q-card
+      style="width: 100%; padding: 20px"
+      class="bg-white text-black text-center"
+    >
       <q-card-section class="q-mb-md">
         <strong>系统提示</strong><br /><br />
         请登录后再操作
@@ -136,7 +124,6 @@
       <q-btn href="/login?redirect=/promo" label="确认" color="dyblue" />
     </q-card>
   </q-dialog>
-
 </template>
 
 <script lang="js">
@@ -165,11 +152,12 @@ export default defineComponent({
       promoList: [],
     });
     const promoTypes = ref([
-      {value: "ALL", label: "ALL"},
-      {value: "WELCOME", label: "WELCOME"},
-      {value: "SPORT", label: "SPORT"},
-      {value: "LIVE CASINO", label: "LIVE CASINO"},
-      {value: "SLOT", label: "SLOT"},
+      { code:"ALL", img: 'all', label: '所有游戏' },
+      { code: "ESPORTS", img: 'esport', label: '电竞'},
+      { code: "SPORTS", img: 'sport', label: '体育'},
+      { code: "POKER", img: 'poker', label: '棋牌'},
+      { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
+      { code: "FISH", img: 'game', label: '老虎机/捕鱼'},
     ]);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
@@ -188,19 +176,19 @@ export default defineComponent({
         label: "全部",
       },
       {
-        name: "esport",
-        label: "电竞",
-      },
-      {
         name: "sport",
         label: "体育",
+      },
+      {
+        name: "esport",
+        label: "电竞",
       },
       {
         name: "livecasino",
         label: "真人",
       },
       {
-        name: "slots",
+        name: "slot game",
         label: "电游",
       },
     ];
@@ -224,6 +212,7 @@ export default defineComponent({
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];
+            // console.log(banner.value)
           } else {
             // $q.notify({
             //   color: "negative",
@@ -253,12 +242,30 @@ export default defineComponent({
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function (promo) {
+          console.log("^^^")
           return (promo.promoType.toLowerCase()).includes(type.value.toLowerCase());
         });
       } else {
         filteredArray.value = promoState.promoList
+        console.log("~~~")
       }
     };
+
+    // const loadAll = () => {
+    //   loadPromo().then((res) => {
+    //     if(res.code === 0) {
+    //       promoState.promoList.push(...res.data);
+    //       res.data.forEach(element => {
+    //         if (element.redirectUrl === route.query.name) {
+    //           showPromoDetails(element)
+    //         }
+    //       });
+    //     }
+    //   }).catch((e) => { console.log("error", e); });
+    //   switchPromoType(promoState.active)
+    // }
+
+
     const loadAll = () => {
       api.get("/promo/page").then((res) => {
         if (res.code === 0) {
@@ -272,15 +279,7 @@ export default defineComponent({
             });
           }
         }
-      }).catch((e) => {
-        console.log("error", e);
-      });
-
-      // loadPromo().then((res) => {
-      //   if(res.code === 0) {
-      //     promoState.promoList.push(...res.data);
-      //   }
-      // }).catch((e) => { console.log("error", e); });
+      }).catch((e) => {console.log("error", e);});
       switchPromoType(promoState.active)
     }
     onMounted(() => {
@@ -616,14 +615,14 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%),
+            background-image: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%),
               linear-gradient(#d0d1d3, #d0d1d3);
           }
           td {
             padding: 5px;
             text-align: center;
-            background-color: #202228;
-            border: 1px solid #2e3039;
+            background-color: #ffffff;
+            border: 1px solid #d0d1d3;
           }
         }
         img {

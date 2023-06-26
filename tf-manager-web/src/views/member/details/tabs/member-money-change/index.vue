@@ -126,8 +126,8 @@
           min-width="180"
         >
           <template #default="scope">
-            <span v-if="scope.row.beforeBalance === 0">-</span>
-            <span v-if="scope.row.beforeBalance !== 0">
+            <span v-if="scope.row.beforeBalance === null">-</span>
+            <span v-if="scope.row.beforeBalance !== null">
               {{ scope.row.beforeBalance }}
             </span>
           </template>

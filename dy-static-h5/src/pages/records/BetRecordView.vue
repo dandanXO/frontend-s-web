@@ -32,7 +32,7 @@ const loadDepositTable = () => {
         typeText: "存款",
         updateBy: 0,
         updateTime: null
-        
+
     },]
 }
 const tableHeaders = ([

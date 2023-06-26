@@ -341,15 +341,15 @@ const dialogForm = ref(null)
 const importRefForm = ref(null);
 
 const EXPORT_MESSAGE_LIST_HEADER = [
-  'Subject',
-  'Message',
-  'Receive Type',
-  'Receive Range'
+  '标题',
+  '内容',
+  '领取模式（参照Mapping表）',
+  '收件人（以逗号来区分）'
 ]
 
 const EXPORT_MAPPING_HEADER = [
-  'Receive Type',
-  'Description'
+  '领取模式',
+  '详情'
 ]
 
 const IMPORT_MESSAGE_LIST_JSON = [
