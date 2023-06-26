@@ -11,7 +11,7 @@
           <div class="bookmarks q-pa-sm">
             <!-- <q-btn rounded
               v-for="cate in categoryList"
-              :color="cate.id === selectedCatId ? 'brightbtn' : 'darkbtn'" 
+              :color="cate.id === selectedCatId ? 'brightbtn' : 'darkbtn'"
               :class="{ active: cate.id === selectedCatId }"
               :key="cate"
               @click="switchCategory(cate)"
@@ -19,7 +19,7 @@
               <!- <img :src="require('../../assets/logo/' + p.code + '.png')"> ->
               {{ cate.label }}
             </q-btn> -->
-          </div> 
+          </div>
           <div class="search">
           <q-form @submit="searchList">
             <q-input color="white" bg-color="brand" filled class="q-ma-md" standout v-model="gamePage.searchKey" label="请输入关键字">
@@ -43,7 +43,7 @@
             @click="openGame(game.name, game.code, selectedCat.status)"
             style="height: 140px;"
           >
-          
+
             <transition name="in-view">
               <q-list class="q-col-gutter-none">
                 <q-img
@@ -60,8 +60,8 @@
                  <template v-slot:loading>
                       <img :src="game.default" style="width: 100%; height: 100px; border-radius: 15px; overflow:hidden;">
                     </template>
-                  </q-img> 
-              <div class="slot-name"> {{ game.name }}</div>     
+                  </q-img>
+              <div class="slot-name"> {{ game.name }}</div>
               </q-list>
             </transition>
               <!-- <q-img
@@ -284,7 +284,7 @@ export default defineComponent({
       //     default: require("../../assets/images/games/aviator/default.png"),
       //     icon: 'https://jsn92.czxinbang.com/xf-resource/app/games_new/PT/bfb.png'
       //   },
-        
+
       //   {
       //     name: '三倍猴子',
       //     default: require("../../assets/images/games/aviator/default.png"),
@@ -304,7 +304,7 @@ export default defineComponent({
       var way = null
       if (Platform.is.android) {
         way = "ANDROID"
-      } else if (Platform.is.ios) { 
+      } else if (Platform.is.ios) {
         way="IOS"
       }
       cached.get(key, () => api.get("/platformGames", {
@@ -384,7 +384,7 @@ export default defineComponent({
       //   remove(entry.target.dataset.id)
       // }
     }
-    
+
 
     // function add (i) {
     //   remove(i)
@@ -429,10 +429,10 @@ export default defineComponent({
       scroll,
       scrollPosition,
       isLoading,
-      scrollInfo, 
+      scrollInfo,
       onIntersection,
       onScroll (info) {
-        
+
           scrollInfo.value = (info.position.left) / (platforms.value.length) + 8
         // scrollInfo.value = (info.position.left / 100) * 50
         // scrollInfo.value = 50 / 100 * info.position.left / 10
