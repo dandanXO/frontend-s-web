@@ -35,7 +35,7 @@
           <RiArrowDropLeftLine />
         </router-link>
         {{ pageName }}
-        <q-btn
+        <!-- <q-btn
           v-if="hasDrawer"
           style="position: absolute; right: 10px"
           flat
@@ -43,7 +43,7 @@
           round
           dense
           icon="menu"
-        />
+        /> -->
       </q-card-section>
       <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
         <q-card-section class="acct-section">

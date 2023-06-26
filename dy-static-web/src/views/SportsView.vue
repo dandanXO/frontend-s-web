@@ -51,20 +51,20 @@ export default defineComponent({
         message: '全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！',
         link: '/games/im-sport.html'
       },
-      {
-        code: 'SABA',
-        name: 'SABA',
-        image: 'saba',
-        message: '覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 不会让您错过任何自己最喜爱的体育赛事',
-        link: '/games/cr-sport.html'
-      },
-      {
-        code: 'CR',
-        name: 'CR',
-        image: 'cr',
-        message: '奇幻赛事、特别投注 ，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰。',
-        link: '/games/cr-sport.html'
-      }
+      // {
+      //   code: 'SABA',
+      //   name: 'SABA',
+      //   image: 'saba',
+      //   message: '覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 不会让您错过任何自己最喜爱的体育赛事',
+      //   link: '/games/cr-sport.html'
+      // },
+      // {
+      //   code: 'CR',
+      //   name: 'CR',
+      //   image: 'cr',
+      //   message: '奇幻赛事、特别投注 ，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰。',
+      //   link: '/games/cr-sport.html'
+      // }
     ])
     const selectedPlat = ref(platforms.value[0].code);
     const clickPlat = (plat) => {
