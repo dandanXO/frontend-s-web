@@ -401,6 +401,7 @@ export default {
     lastLoginTime: 'Last Login Time',
     lastMonth: 'Last Month',
     last3Months: 'Last 3 Months',
+    last6Months: 'Last 6 Months',
     lastWeek: 'Last Week',
     level: 'Level',
     levelUpCredit: 'Level Up Credit',

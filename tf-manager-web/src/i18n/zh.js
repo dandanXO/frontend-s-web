@@ -401,6 +401,7 @@ export default {
     lastLoginTime: '最近登录时间',
     lastMonth: '上月',
     last3Months: '上3个月',
+    last6Months: '上6个月',
     lastWeek: '上周',
     level: '级别',
     levelUpCredit: '升级金额',
