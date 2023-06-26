@@ -511,7 +511,7 @@ function runCode(arr) {
     }
   }
 }
-function getSelectedChild(item) {
+function getSelectedChild(item, onUpd) {
   if (isNodesUpdated.value === false) {
     ElMessage.error(t('message.updateProceed'))
     return
@@ -533,9 +533,13 @@ function getSelectedChild(item) {
     }
   })
   if (selectedNode) {
-    nodeValues.value.web.financialLevels = []
-    nodeValues.value.mobile.financialLevels = []
     selectedPaymentType.value = selectedNode.web.type
+    // if (onUpd === 'onupdate') {
+    //   originType.value = selectedNode.web.type
+    // } else {
+    //   originType.value = selectedNode.web.type
+    // }
+    
     originType.value = selectedNode.web.type
     checkPayTypeSelected(selectedPaymentType.value)
     nodeValues.value.code = selectedNode.code
@@ -553,30 +557,35 @@ function getSelectedChild(item) {
         nodeValues.value.mobile.paymentId = payRec.paymentName
       }
     })
+    
+    nodeValues.value.web.financialLevels = []
+    nodeValues.value.mobile.financialLevels = []
     page.financials.forEach((element, index) => {
       var webArray = JSON.parse("[" + selectedNode.web.financialLevels + "]");
       var mobileArray = JSON.parse("[" + selectedNode.mobile.financialLevels + "]");
       if (webArray[index] === 1) {
+        element.selectedWebPaymentName = selectedWebPaymentName.value
         nodeValues.value.web.financialLevels.push(element)
       } else {
         element.selectedWebPaymentName = null
       }
       if (mobileArray[index] === 1) {
+        element.selectedMobilePaymentName = selectedWebPaymentName.value
         nodeValues.value.mobile.financialLevels.push(element)
       } else {
         element.selectedMobilePaymentName = null
       }
     });
-    nodeValues.value.web.financialLevels.forEach(level => {
-      level.selectedWebPaymentName = selectedWebPaymentName.value
-    });
-    nodeValues.value.mobile.financialLevels.forEach(level => {
-      level.selectedMobilePaymentName = selectedMobilePaymentName.value
-    });
+    // nodeValues.value.web.financialLevels.forEach(level => {
+    //   level.selectedWebPaymentName = selectedWebPaymentName.value
+    // });
+    // nodeValues.value.mobile.financialLevels.forEach(level => {
+    //   level.selectedMobilePaymentName = selectedMobilePaymentName.value
+    // });
     selectedWebLevels.value = nodeValues.value.web.financialLevels
     selectedMobileLevels.value = nodeValues.value.mobile.financialLevels
-    originWebLevels.value = Object.assign(nodeValues.value.web.financialLevels, originWebLevels.value)
-    originMobileLevels.value = Object.assign(nodeValues.value.mobile.financialLevels, originMobileLevels.value)
+    originWebLevels.value = nodeValues.value.web.financialLevels
+    originMobileLevels.value = nodeValues.value.mobile.financialLevels
     // originMobileLevels.value = nodeValues.value.mobile.financialLevels
   } else {
     selectedPaymentType.value = ""
@@ -646,7 +655,19 @@ function savePaymentValues() {
         }).then((res) => {
           if (res.code === 0) {
             page.webPaymentShowNodeDetails = res.data
-            getSelectedChild(selectedChild.value)
+            let selectedElement = null;
+            res.data.forEach(element => {
+              if (element.code === selectedChild.value.code) {
+                selectedElement = element
+              }
+            });
+
+            if (selectedElement !== null) {
+              // Perform operations with the selectedElement
+              getSelectedChild(selectedElement, 'onupdate');
+            } else {
+              console.log("No matching element found.");
+            }
           }
         })
       }
@@ -684,8 +705,8 @@ function checkPayTypeSelected(value) {
   if (originType.value === value) {
     nodeValues.value.web.paymentId = originWebPaymentName.value;
     nodeValues.value.mobile.paymentId = originMobilePaymentName.value;
-    nodeValues.value.web.financialLevels = Object.assign(nodeValues.value.web.financialLevels, originWebLevels.value);
-    nodeValues.value.mobile.financialLevels = Object.assign(nodeValues.value.mobile.financialLevels, originMobileLevels.value);
+    nodeValues.value.web.financialLevels = Object.assign(nodeValues.value.web.financialLevels, selectedWebLevels.value);
+    nodeValues.value.mobile.financialLevels = Object.assign(nodeValues.value.mobile.financialLevels, selectedMobileLevels.value);
     nodeValues.value.web.financialLevels.forEach(level => {
       level.selectedWebPaymentName = originWebPaymentName.value
     });

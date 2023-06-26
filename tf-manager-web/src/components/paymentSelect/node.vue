@@ -46,11 +46,11 @@
               <el-col :span="12">
                 <div class="node-text">
                   <div class="group-node">
-                    <div>{{ item.code }}</div>
+                    <div>{{ item.name }}</div>
                   </div>
                 </div>
               </el-col>
-
+              
               <el-col :span="6" class="icons">
                 <i
                   class="el-icon-edit"
