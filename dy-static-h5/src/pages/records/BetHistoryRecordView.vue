@@ -1,7 +1,6 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="deposit"
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"
@@ -158,26 +157,30 @@ export default defineComponent({
 
     };
     const tableHeaders = [
-      {
-        key: "depositAmount",
-        label: "金额",
-      },
-      // {
-      //   key: "depositType",
-      //   label: "存款类型",
-      // },
-      {
-        key: "status",
-        label: "存款状态",
-      },
-      {
-        key: "depositDate",
-        label: "到账时间",
-      },
-      {
-        key: "serialNumber",
-        label: "存款编码",
-      }
+    {
+        key: 'betTime',
+        label: '游戏时间'
+    },
+    {
+        key: 'platform',
+        label: '游戏平台'
+    },
+    {
+        key: 'bet',
+        label: '投注'
+    },
+    {
+        key: 'payout',
+        label: '派彩',
+    },
+    {
+        key: 'gameType',
+        label: '游戏类型'
+    },
+    {
+        key: 'betStatus',
+        label: '投注状态'
+    }
     ];
     onMounted(() => {
       loadDepositTable();

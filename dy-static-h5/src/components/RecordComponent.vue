@@ -19,6 +19,12 @@
                 <div v-else-if="obj === 'status'">
                   {{ checkRecord(det[obj]) }}
                 </div>
+                <div v-else-if="obj === 'betStatus'">
+                  {{ checkRecord(det[obj]) }}
+                </div>
+                <div v-else-if="obj === 'gameType'">
+                  {{ checkRecord(det[obj]) }}
+                </div>
                 <div v-else-if="obj === 'commitDate' || obj === 'feedbackTime'">
                   {{ humanDatetime(det[obj]) }}
                 </div>
