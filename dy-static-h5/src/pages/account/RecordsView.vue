@@ -27,11 +27,11 @@ const transitList = ref([
     icon: 'withdraw',
     name: '提款记录'
   },
-  // {
-  //   code: 'transfer',
-  //   icon: 'transfer',
-  //   name: '转账记录'
-  // },
+  {
+    code: 'transfer',
+    icon: 'transfer',
+    name: '转账记录'
+  },
   {
     code: 'promo',
     icon: 'deposit',
