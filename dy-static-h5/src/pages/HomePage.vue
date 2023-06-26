@@ -116,10 +116,10 @@
           <img src="../assets/images/index/withdrawal_icon.png" />
           <div class="">取款</div>
         </router-link>
-        <!-- <router-link to="/account/transfer" class="men transfer-menu">
+        <router-link to="/account/transfer" class="men transfer-menu">
           <img src="../assets/images/index/transfer_icon.png" />
           <div class="">转账</div>
-        </router-link> -->
+        </router-link>
         <router-link to="/account/vip" class="men transfer-menu">
           <img src="../assets/images/index/vip_icon.png" />
           <div class="">VIP 详情</div>

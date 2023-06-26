@@ -29,13 +29,13 @@
           <RiBankCardFill class="blue" />
           快速提款
         </router-link>
-        <!-- <router-link
+        <router-link
           to="/center/transfer"
           class="account-menu-item"
         >
           <RiExchangeDollarFill class="grey" />
           快速转账
-        </router-link> -->
+        </router-link>
         <router-link
           to="/center/transit-record"
           class="account-menu-item"

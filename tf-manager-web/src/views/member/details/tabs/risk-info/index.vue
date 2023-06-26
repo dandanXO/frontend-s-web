@@ -228,7 +228,7 @@ const populateIpColor = () => {
 };
 
 const request = reactive({
-  queryValue: null,
+  queryValue: 'riskInfoIpLogin',
   current: 1,
   size: 20
 })
