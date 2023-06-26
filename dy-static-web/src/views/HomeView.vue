@@ -217,7 +217,7 @@
                 <img src="../assets/home/dy.png" />
                 <div>东赢体育</div>
               </a>
-              <div
+              <!-- <div
                 class="game-platform"
                 @click="openGame('IM体育', 'IM', '')"
                 style="margin-left: 22px"
@@ -232,7 +232,7 @@
               >
                 <img src="../assets/home/dy.png" />
                 <div>CR体育</div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
