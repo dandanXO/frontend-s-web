@@ -343,7 +343,7 @@ const importRefForm = ref(null);
 const EXPORT_MESSAGE_LIST_HEADER = [
   'Subject',
   'Message',
-  'Receive Type',
+  'Receive Type(Refer to Mapping Tab)',
   'Receive Range'
 ]
 
