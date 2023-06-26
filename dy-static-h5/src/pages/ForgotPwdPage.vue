@@ -48,6 +48,7 @@
 
             <q-input
               standout
+              class="captcha-textfield"
               bg-color="white"
               ref="verificationRef"
               hide-bottom-space
@@ -177,6 +178,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
+import { findAccount } from "src/api/index/login";
 
 export default defineComponent({
   name: "ForgotPwdPage",
@@ -238,26 +240,27 @@ export default defineComponent({
     const isPhoneSent = ref(false);
     const isEmailSending = ref(false);
     const passRef = ref([]);
+
     const submitForgetPass = () => {
       passRef.value.validate().then(() => {
-        findAccount(passForm).then((res) => {
+        findAccount(passwordForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success("您的帐号已经发送到注册邮箱");
+            $q.notify({
+              message: "您的帐号已经发送到注册邮箱",
+              color: "positive",
+              position: "top"
+            });
           }
-        })
+        });
       });
-    }
+    };
     const onSubmitForgotPwd = () => {
-
       emailRef.value.validate();
       ftCaptchaRef.value.validate();
       $q.loading.show({
         message: "Registering"
       });
-      if (
-        emailRef.value.hasError ||
-        ftCaptchaRef.value.hasError
-      ) {
+      if (emailRef.value.hasError || ftCaptchaRef.value.hasError) {
         $q.loading.hide();
       } else {
         api
@@ -406,76 +409,4 @@ function charType(num) {
 }
 </script>
 
-<style lang="scss">
-.page-header {
-  background-image: linear-gradient(to right, #de4545, #db7e42);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 28px;
-  text-align: center;
-  font-family: Wave;
-  padding: 10px;
-  display: flex;
-  gap: 20px;
-  align-content: center;
-  justify-content: center;
-}
-
-.verification {
-  display: flex;
-  padding: 10px;
-}
-
-.space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.password-str-div {
-  display: flex;
-  align-items: center;
-  margin-top: 3px;
-  margin-bottom: 5px;
-  justify-content: space-evenly;
-  gap: 5px;
-  height: 50px;
-
-  span {
-    padding: 8px 3px;
-    //border: 1px solid #fff;
-    border-radius: 5px;
-    background: #434343;
-    width: 33%;
-    text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
-      sans-serif;
-  }
-
-  span.weak-pwd {
-    background: var(--q-negative);
-  }
-
-  span.normal-pwd {
-    background: var(--q-warning);
-    color: var(--q-primary);
-  }
-
-  span.strong-pwd {
-    //background: linear-gradient(to right, #de4545, #db7e42) !important;
-    background: var(--q-positive);
-    font-weight: 600;
-  }
-}
-
-.forget-pass-section {
-  .q-item__label {
-    width: 95px;
-    text-align: left;
-  }
-
-  .q-input {
-    width: calc(100% - 100px);
-  }
-}
-</style>
+<style lang="scss" src="src/css/pages/forget-password.scss"></style>
