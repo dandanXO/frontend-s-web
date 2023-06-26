@@ -143,6 +143,19 @@
       </template>
     </q-input>
 
+    <q-input
+      standout
+      bg-color="white"
+      ref="affiliateCodeRef"
+      hide-bottom-space
+      v-model="regForm.affiliateCode"
+      label="代理代码"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/login_name.png" width="20" />
+      </template>
+    </q-input>
+
     <div class="row justify-between items-center">
       <q-btn
         @click.prevent="onSubmit"
@@ -182,7 +195,8 @@ export default defineComponent({
       email: "",
       captchaCode: "",
       regHost: location.hostname,
-      codeId: ""
+      codeId: "",
+      affiliateCode: ""
     });
     const getCode = () => {
       api
@@ -210,6 +224,7 @@ export default defineComponent({
     const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
+    const affiliateCodeRef = ref();
     const $q = useQuasar();
 
     const pwdStrength = ref("");
