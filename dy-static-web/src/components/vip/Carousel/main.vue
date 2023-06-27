@@ -1,15 +1,19 @@
 <script setup>
 import { ref } from "vue";
 import { userStore } from "@/store";
-import { claimBonusItem } from "@/api/index/promo";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 
-import { getImageUrl, openCommonError, openLoginAlert } from "@/utils/utils.js";
+import { getImageUrl } from "@/utils/utils.js";
 
 import VipCard from "@/components/vip/Card/main.vue";
 import VipButton from "@/components/vip/Button/main.vue";
 
 import vipLevel from ".shared/constant/vip-level.js";
+
+import bonus from ".shared/api/bonus";
+import { openCommonError, openLoginAlert } from ".shared/helper/utils";
+
+const { labels, levels } = vipLevel;
 
 const store = userStore();
 
@@ -23,7 +27,8 @@ const onVIPButtonClick = (type) => {
   else {
     const bonusItem = `dy1-vip-${type}`;
 
-    claimBonusItem(bonusItem)
+    bonus
+      .claim(bonusItem)
       .then((res) => {
         if (res.code === 0) {
           // Success
@@ -59,7 +64,7 @@ const handleSlideStart = (slide) => {
 <template>
   <div class="vip_level">
     <div class="level_img">
-      <template v-for="(vip, _) in vipLevel" :key="vip.level">
+      <template v-for="(vip, _) in levels" :key="vip.level">
         <img
           v-if="selectedVIP.level === vip.level"
           :src="getImageUrl('vip/vip_current_bg.png')"
@@ -83,8 +88,16 @@ const handleSlideStart = (slide) => {
     >
       <Slide
         v-for="(
-          { level, description, birthdayBonus, drawLimit }, vipIndex
-        ) in vipLevel"
+          {
+            level,
+            description,
+            birthdayBonus,
+            monthlyRedEnvelop,
+            monthlyDeposit,
+            requirements
+          },
+          vipIndex
+        ) in levels"
         :key="vipIndex"
       >
         <div class="carousel__item vip-slide-container">
@@ -92,14 +105,18 @@ const handleSlideStart = (slide) => {
 
           <div class="vip-right-box">
             <div class="vip-right-block">
-              <div class="vip-label-column">每月红包</div>
-              <div class="vip-value-column">8888元</div>
-              <VipButton @click.native="onVIPButtonClick('monthly')">
-                领取
-              </VipButton>
+              <div class="vip-label-column">{{ labels.redEnvelop }}</div>
+              <div class="vip-value-column">
+                {{ monthlyRedEnvelop ? monthlyRedEnvelop : "无" }}
+              </div>
+              <div v-if="monthlyRedEnvelop">
+                <VipButton @click.native="onVIPButtonClick('monthly')">
+                  领取
+                </VipButton>
+              </div>
             </div>
             <div class="vip-right-block">
-              <div class="vip-label-column">生日礼金</div>
+              <div class="vip-label-column">{{ labels.birthday }}</div>
               <div class="vip-value-column">
                 {{ birthdayBonus ? `${birthdayBonus}元` : "无" }}
               </div>
@@ -110,8 +127,10 @@ const handleSlideStart = (slide) => {
               </div>
             </div>
             <div class="vip-right-block">
-              <div class="vip-label-column">流水要求</div>
-              <div class="vip-value-column">{{ drawLimit }}</div>
+              <div class="vip-label-column">{{ labels.requirements }}</div>
+              <div class="vip-value-column">
+                {{ requirements ? requirements : "无" }}
+              </div>
             </div>
           </div>
         </div>
