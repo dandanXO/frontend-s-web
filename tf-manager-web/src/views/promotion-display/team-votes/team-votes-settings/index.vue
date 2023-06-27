@@ -79,7 +79,7 @@
       size="small"
       highlight-current-row
     >
-      <el-table-column prop="teamNameEn" :label="t('fields.teamName')" />
+      <el-table-column prop="teamNameLocal" :label="t('fields.teamName')" />
       <el-table-column prop="totalVotesRealVirtual" :label="t('fields.realVirtualVotes')">
         <template #default="scope">
           <el-input disabled v-model="scope.row.totalVotesRealVirtual" />

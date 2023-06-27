@@ -28,7 +28,7 @@
               style="width: 100%" highlight-current-row :empty-text="t('fields.noData')"
     >
       <el-table-column prop="mallName" :label="t('fields.mallName')" width="300" />
-      <el-table-column prop="balance" :label="t('fields.balance')" width="200" />
+      <el-table-column prop="balance" :label="t('fields.balance')" width="200" sortable />
     </el-table>
 
   </div>

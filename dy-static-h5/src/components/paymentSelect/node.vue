@@ -1,6 +1,6 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div v-if="level === 1"/>
+    <div v-if="level === 1" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
@@ -12,22 +12,21 @@
         @click="clickItem(item)"
         :class="[
           item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
+          selectItem === item ? 'active' : ''
         ]"
         :key="i"
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <img :src="imgURL + item.nodeIcon"/>
+          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
-          <div
-            class="promo"
-            :style="
-              item.promoStyle + 'background-image: url(' + imgURL + 'label/' + item.promotionIcon + ')'
-            "
-          >
-            <span class="val">{{ item.promoValue }}</span>
+          <div class="promo">
+            <img
+              v-if="item.promotionIcon"
+              :src="`${imgURL}label/${item.promotionIcon}`"
+            />
           </div>
+
           <div class="payment-method-wrapper">
             <div
               class="payment-method-item"
@@ -35,23 +34,12 @@
               :key="pm.id"
               :class="{ active: pm.nodeName === activeMethod }"
             >
-              <img :src="imgURL + pm.nodeIcon"/>
+              <img :src="imgURL + pm.nodeIcon" />
               <div>{{ pm.nodeName }}</div>
             </div>
           </div>
         </div>
-        <!-- <el-icon
-          title="编辑"
-          style="margin: 0 10px"
-          class="pointer"
-          @click.stop="editHandle(item, i, idx)"
-        >
-        <Edit />
-        </el-icon>
-        <el-tag @click.stop="deleteItem(idx, index, element)">x</el-tag>-->
       </div>
-      <!-- </div> -->
-      <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
@@ -59,7 +47,7 @@
         :name="item.nodeName"
         :class="[
           item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
+          selectItem === item ? 'active' : ''
         ]"
         v-if="selectItem === item"
         :level="parseInt(level) + 1"
@@ -71,36 +59,35 @@
 </template>
 
 <script>
-import {defineComponent, reactive} from "vue";
+import { defineComponent, reactive } from "vue";
 
-const imgURL = process.env.IMAGE_CDN + '/payment/'
+const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
-  // setup: (props, { emit }) => {},
   emits: ["clicked"],
   props: {
     list: {
       type: Array,
       default: function () {
         return [];
-      },
+      }
     },
     level: {
       type: Number,
-      default: 0,
+      default: 0
     },
     name: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   data() {
     return {
       ruleForm: {
         name: "",
         icon: "",
-        add: false,
+        add: false
       },
       selectItem: null,
       dialogVisible: false,
@@ -109,29 +96,6 @@ export default defineComponent({
       imgURL
     };
   },
-  // methods: {
-  //   clickItem(item) {
-  //     this.list.forEach((element) => {
-  //       element.hasActive = false;
-  //     });
-  //     if (item) {
-  //       item.hasActive = true;
-  //       this.selectItem = item;
-  //       this.$emit("clicked", this.selectItem);
-  //       if (item.group) {
-  //         this.clickChildItem(item.children[0]);
-  //       }
-  //     }
-  //   },
-  //   clickChildItem(item) {
-  //     this.list.forEach((element) => {
-  //       element.hasActive = false;
-  //     });
-  //     item.hasActive = true;
-  //     this.selectedItem = item;
-  //     this.$emit("clicked", this.selectedItem);
-  //   },
-  // },
   updated() {
     this.$nextTick().then(() => {
       if (!this.selectItem) {
@@ -144,7 +108,7 @@ export default defineComponent({
   methods: {
     firstTime(item) {
       if (item) {
-        item.hasActive = true
+        item.hasActive = true;
         this.selectItem = item;
         this.$emit("clicked", this.selectItem);
         if (item.group) {
@@ -158,20 +122,21 @@ export default defineComponent({
       this.list.forEach((element) => {
         if (!element.hasActive && element.group) {
           element.children.forEach((e) => {
-            e.hasActive = false
-          })
+            e.hasActive = false;
+          });
         }
-        ;
         element.hasActive = false;
       });
       this.list.forEach((element) => {
         element.hasActive = false;
       });
       if (item) {
-        item.hasActive = true
+        item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find((child) => child.hasActive === true)
+          let activeChild = item.children.find(
+            (child) => child.hasActive === true
+          );
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -187,15 +152,15 @@ export default defineComponent({
         element.hasActive = false;
       });
       item.hasActive = true;
-      this.selectedItem = item
+      this.selectedItem = item;
       this.$emit("clicked", this.selectedItem);
-    },
+    }
   },
   mounted() {
     // this.clickItem(this.list[0]);
     this.$nextTick(() => {
       this.firstTime(this.list[0]);
-    })
+    });
   }
 });
 </script>
@@ -219,7 +184,7 @@ $node-color: #4ab6fd;
   width: 6px;
   height: 6px;
   background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-  linear-gradient(#ffffff, #ffffff);
+    linear-gradient(#ffffff, #ffffff);
 }
 
 .title::before {
@@ -233,27 +198,24 @@ $node-color: #4ab6fd;
 }
 
 .payment-method-wrapper {
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, 200px);
-  // grid-gap: 20px;
-  // margin-top: 10px;
-  display: flex;
+  // display: flex;
   grid-gap: 15px;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
+  // justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 20px;
 
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
-    // border: solid 1px #484460;
     color: #ffffff;
     cursor: pointer;
-    // padding: 20px 35px;
     img {
-      border: 1px solid;
-      padding: 5px 15px;
-      border-radius: 3px;
       max-width: 75px;
       margin-bottom: 10px;
+      width: 100%;
+      height: auto;
     }
 
     &:hover {
@@ -262,17 +224,31 @@ $node-color: #4ab6fd;
 
     &.active {
       // background: rgba(255,255,255, .2);
-      img {
-        border-color: $node-color;
+
+      .node-txt-img {
+        border-color: #4873f1 !important;
+
+        &:before {
+          display: block;
+          content: "";
+          position: absolute;
+          bottom: 23px;
+          right: 3px;
+          background-color: #4873f1;
+          height: 15px;
+          width: 15px;
+          z-index: 3;
+          border-radius: 3px;
+          background-image: url("../../assets/images/account/CheckBox.svg");
+          background-size: 100%;
+          background-position: center center;
+        }
+
+        img {
+          // border-color: $node-color;
+        }
       }
     }
-
-    // &.node-group {
-    //   color: $group-color;
-    //   &.active{
-    //     border-color: $group-color;
-    //   }
-    // }
   }
 }
 
@@ -290,10 +266,6 @@ $node-color: #4ab6fd;
 
 .node:not(.node) {
   border-bottom: 1px solid #484460;
-  // .node  {
-  //   border-bottom: 1px solid #484460;
-  //   padding: 0 25px;
-  //   margin: 0 -25px;
 }
 
 .node {
@@ -304,86 +276,91 @@ $node-color: #4ab6fd;
     .account-title-container {
       margin: 0 -30px;
       background: none;
-      // border-top: 1px solid #484460;
-      // font-weight: bold;
     }
 
-    &.node-group {
-      // display: flex;
-      // justify-content: flex-start;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0px;
-      padding: 0 0px;
-      flex-wrap: wrap;
+    // &.node-group {
+    //   align-items: center;
+    //   gap: 10px;
+    //   margin: 10px 0px;
+    //   padding: 0 0px;
+    //   flex-wrap: wrap;
 
-      .account-title-container {
-        margin: 0;
-      }
+    //   .promo {
+    //     right: -12px;
+    //     top: -12px;
+    //     img {
+    //       padding: 0;
+    //       border: 0;
+    //       height: 22px;
+    //       width: auto;
+    //       background-color: transparent;
+    //     }
+    //   }
 
-      .payment-method-wrapper {
-        gap: 5px;
-      }
+    //   .account-title-container {
+    //     margin: 0;
+    //   }
 
-      .payment-method-item {
-        padding: 5px;
-        border: 1px solid transparent;
+    //   .payment-method-item {
+    //     padding: 5px 20px 5px 5px;
+    //     border: 2px solid #ddd;
+    //     width: auto;
 
-        &.active {
-          border: 1px solid #33bcd4;
-        }
-      }
+    //     &.active {
+    //       border: 2px solid #4873f1;
 
-      .node-text {
-        display: flex;
-        gap: 5px;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+    //       .node-txt-img {
+    //         &:before {
+    //           bottom: -1px !important;
+    //           right: -1px !important;
+    //         }
+    //       }
+    //     }
+    //   }
 
-        & > div {
-          font-size: 12px;
-          color: #000000;
-        }
+    //   .node-text {
+    //     display: flex;
+    //     gap: 5px;
+    //     flex-direction: row;
+    //     justify-content: center;
+    //     align-items: center;
 
-        img {
-          width: 15px;
-          border: 0;
-          background-color: #2a313e;
-          // max-width: 1.5rem;
-          padding: 0px;
-          margin-bottom: 0;
-        }
-      }
-    }
+    //     & > div {
+    //       font-size: 12px;
+    //       color: #000000;
+    //     }
+
+    //     .node-txt-img {
+    //       width: auto;
+    //       height: auto;
+    //       margin-bottom: 0;
+    //       border: 0;
+    //       img {
+    //         width: 15px;
+    //         height: auto;
+    //         border: 0;
+    //         background-color: #2a313e;
+    //         padding: 0px;
+    //         margin-bottom: 0;
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   .node-content {
-    gap: 0;
+    gap: 10px;
 
     .payment-method-item {
       text-align: center;
-      padding: 10px 8px;
       cursor: pointer;
-      // background: #2b2b4b;
-      // box-shadow: 6px 6px #161b23;
-
-      &:hover {
-      }
-
-      &.active {
-        // background-color: #1c1c32;
-        // border-radius: 6px;
-        // border: solid 1px #1c1c32;
-        // box-shadow: none;
-        // filter: drop-shadow(0px 0px 3px #ffffff);
-      }
     }
 
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 2rem;
+      width: 100%;
+      max-width: 4.5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -394,19 +371,33 @@ $node-color: #4ab6fd;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 5px;
+      // gap: 5px;
       flex-direction: column;
 
       & > div {
         font-size: 12px;
-        color: #a0bcd6;
+        color: #000;
       }
 
-      img {
-        background-color: #fff;
-        margin-bottom: 0;
-        width: 100%;
-        height: auto;
+      .node-txt-img {
+        background-color: #f7f7f7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 5px;
+        border: 2px solid #ddd;
+        border-radius: 3px;
+
+        img {
+          background-color: #fff;
+          margin-bottom: 0;
+          padding: 5px 10px;
+          width: 100%;
+          height: auto;
+        }
       }
     }
   }
@@ -440,29 +431,16 @@ $node-color: #4ab6fd;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
-      // top: -5px;
-      // right: 0;
-      // background: #dd4645;
-      // padding: 5px;
-      // color: #000000;
-      // font-size: 12px;
-      // line-height: 10px;
-      // top: -8px;
-      // right: -1px;
-      // background: #dd4645;
-      // padding: 5px;
-      // color: #000000;
-      // font-size: 12px;
-      // line-height: 10px;
-      // border-radius: 0 10px;
+      img {
+        padding: 0;
+        border: 0;
+        background-color: transparent;
+      }
       ::after {
         position: relative;
       }
-
-
     }
   }
-
 }
 
 @media (max-width: 768px) {

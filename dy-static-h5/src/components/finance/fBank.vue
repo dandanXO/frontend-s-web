@@ -4,7 +4,6 @@
       filled
       class="q-mt-md"
       label="银行"
-      color="white"
       v-model="selectedBankId"
       :options="bankList"
       option-value="id"

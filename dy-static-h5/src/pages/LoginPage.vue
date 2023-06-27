@@ -113,11 +113,6 @@
               </template>
             </q-input>
           </div>
-          <!-- <div class="align-right">
-            <span @click="loginType = !loginType">
-              {{ loginType ? "手机号记录" : "用户名登陆" }}
-            </span>
-          </div> -->
 
           <div class="forgetpass-div">
             <div class="mui-row">
@@ -131,7 +126,7 @@
               />
             </div>
             <div class="mui-row">
-              <router-link to="/forgot-password"> 忘记账号？</router-link>
+              <router-link to="/forgot-account">忘记账号？</router-link>
             </div>
           </div>
 
@@ -376,11 +371,12 @@ export default defineComponent({
     justify-content: space-between;
     width: calc(100% - 4px);
     margin: 14px auto 0px;
+    gap: 20px;
 
     .mui-row {
       height: 48px;
       width: calc(100% - 40px);
-      max-width: 150px;
+      max-width: 180px;
       border-radius: 20px;
       border: 3px solid #5b80e7;
       text-align: center;

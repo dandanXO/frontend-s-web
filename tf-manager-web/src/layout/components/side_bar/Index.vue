@@ -48,8 +48,8 @@ export default defineComponent({
     const isMounted = ref(false);
     const startDate = new Date();
     startDate.setDate(startDate.getDate());
-    const defaultStartDate = convertDate(startDate);
-    const defaultEndDate = convertDate(new Date());
+    const defaultStartDate = convertStartDate(startDate);
+    const defaultEndDate = convertEndDate(new Date());
     const store = useStore()
     const route = useRoute()
     const sidebar = computed(() => {
@@ -73,8 +73,12 @@ export default defineComponent({
       return !sidebar.value.opened
     })
 
-    function convertDate(date) {
-      return moment(date).format('YYYY-MM-DD HH:mm:ss');
+    function convertStartDate(date) {
+      return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
+    }
+
+    function convertEndDate(date) {
+      return moment(date).format('YYYY-MM-DD') + ' 23:59:59'
     }
 
     const checkQuery = () => {

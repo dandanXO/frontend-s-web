@@ -367,7 +367,7 @@ export default defineComponent({
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Please enter your real name",
+            message: "请输入您的真实姓名",
             icon: "report_problem"
           });
           router.push("/account/personal");

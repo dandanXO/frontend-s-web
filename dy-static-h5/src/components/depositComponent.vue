@@ -3,6 +3,12 @@
     class="q-pa-md"
     style="overflow: auto; background: #fff; margin: 8px 8px"
   >
+    <div class="q-mb-lg">
+      <span class="additional-tips">
+        如有遇到存款问题，请立即联系在线客服咨询！
+      </span>
+    </div>
+
     <div class="node-wrapper">
       <Node
         :level="1"
@@ -16,45 +22,29 @@
       <div class="submit-message">
         <div class="line">
           <span>银行名称：</span>
-          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span
-          ><button
-            @blur="blurCode"
-            @click="copyMessage('0')"
-            class="common-btn"
-          >
+          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
+          <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
             {{ copybtntxt0 }}
           </button>
         </div>
         <div class="line">
           <span>银行账号：</span>
-          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span
-          ><button
-            @blur="blurCode"
-            @click="copyMessage('1')"
-            class="common-btn"
-          >
+          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
+          <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
             {{ copybtntxt1 }}
           </button>
         </div>
         <div class="line">
           <span>银行卡号：</span>
-          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span
-          ><button
-            @blur="blurCode"
-            @click="copyMessage('2')"
-            class="common-btn"
-          >
+          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
+          <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
             {{ copybtntxt2 }}
           </button>
         </div>
         <div class="line">
           <span>存款金额：</span>
-          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span
-          ><button
-            @blur="blurCode"
-            @click="copyMessage('3')"
-            class="common-btn"
-          >
+          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
+          <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
             {{ copybtntxt3 }}
           </button>
         </div>
@@ -63,6 +53,7 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <q-input
+          v-if="amountList.length === 0"
           hide-bottom-space
           ref="depositAmtRef"
           label="存款金额"
@@ -81,18 +72,41 @@
           </template>
         </q-input>
 
+        <q-select
+          v-else
+          ref="depositAmtRef"
+          label="选择金额"
+          name="localAmount"
+          filled
+          :options="amountList"
+          v-model="form.localAmount"
+          color=""
+          :rules="verifyDepositAmount"
+          padding="none"
+        >
+          <template v-slot:prepend>
+            <span style="font-size: 26px" class="text-bright">
+              {{ store.currency.value }}
+            </span>
+          </template>
+        </q-select>
+
         <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
           最低金额:
           {{
             calculatedMinDeposit
-              ? calculatedMinDeposit + " " + (isUSDT ? 'USDT' : store.currency.value)
+              ? calculatedMinDeposit +
+                " " +
+                (isUSDT ? "USDT" : store.currency.value)
               : 0
           }}
           <br />
           最高金额:
           {{
             activeMethod.depositMax
-              ? activeMethod.depositMax + " " +  (isUSDT ? 'USDT' : store.currency.value)
+              ? activeMethod.depositMax +
+                " " +
+                (isUSDT ? "USDT" : store.currency.value)
               : "No Limit"
           }}
         </div>
@@ -102,10 +116,10 @@
           class="q-pb-md"
           label="兑换率"
         >
-          <span style="color: #000"
-            >1.00 USDT ≈ {{ activeMethod.currencyRate }}
-            {{ store.currency.value }}</span
-          >
+          <span style="color: #000">
+            1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            {{ store.currency.value }}
+          </span>
         </div>
         <BankComponent
           v-show="selectedPayType && bankCardList.length"
@@ -126,7 +140,7 @@
           emit-value
           v-if="hasPrivilege && !isUSDT"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-          color="white"
+          clearable
           @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">
@@ -138,8 +152,9 @@
                     overflow: auto;
                     white-space: nowrap;
                   "
-                  >{{ scope.opt.name }}</q-item-label
                 >
+                  {{ scope.opt.name }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </template>
@@ -160,7 +175,9 @@
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%; padding: 20px" class="bg-dyblue text-black">
       <q-card-section class="q-mb-md">
-        您已被重定向到您的特定银行以继续进行存款。<br /><br />
+        您已被重定向到您的特定银行以继续进行存款。
+        <br />
+        <br />
         入金成功后会反映这里。
       </q-card-section>
       <q-btn @click="clearInfo" label="明白" color="dyblue" />
@@ -192,6 +209,7 @@ const payMethods = reactive([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
+const amountList = ref([]);
 const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
@@ -333,6 +351,23 @@ async function loadPrivilege(val) {
     });
 }
 
+// function selectPayType(value) {
+//   if (value) {
+//     selectedPayType.value = value.payType;
+//     if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
+//       isUSDT.value = true;
+//     } else {
+//       isUSDT.value = false;
+//     }
+//     if (value.extra && value.extra.banks) {
+//       bankCardList.value = value.extra.banks;
+//     } else {
+//       bankCardList.value = [];
+//       form.bankId = null;
+//     }
+//   }
+// }
+
 function selectPayType(value) {
   if (value) {
     selectedPayType.value = value.payType;
@@ -340,6 +375,9 @@ function selectPayType(value) {
       isUSDT.value = true;
     } else {
       isUSDT.value = false;
+    }
+    if (value.extra && value.extra.amountArr) {
+      amountList.value = value.extra.amountArr;
     }
     if (value.extra && value.extra.banks) {
       bankCardList.value = value.extra.banks;
@@ -676,6 +714,15 @@ onMounted(() => {
       width: 80px;
     }
   }
+}
+
+.additional-tips {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff0000;
+  font-size:14px;
 }
 
 .q-select__dialog .q-field__control {

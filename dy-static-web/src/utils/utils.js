@@ -51,3 +51,5 @@ export const getTimeout = key => {
     ? Math.ceil((cached_timeout - now.getTime()) / 1000) // Seconds left
     : 0  // No timeout found
 }
+
+export const getImageUrl = srcPath => require(`/src/assets/${srcPath}`)

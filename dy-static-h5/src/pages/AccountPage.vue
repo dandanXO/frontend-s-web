@@ -96,9 +96,9 @@
           <router-link to="finance/withdraw" class="button"
             ><img src="../assets/images/index/withdrawal_icon.png" />提款
           </router-link>
-          <!-- <router-link to="account/transfer" class="button"
+          <router-link to="account/transfer" class="button"
             ><img src="../assets/images/index/transfer_icon.png" />转账
-          </router-link> -->
+          </router-link>
           <router-link to="account/vip" class="button"
             ><img src="../assets/images/account/vip_icon.png" />VIP详情
           </router-link>
@@ -133,7 +133,7 @@
             <div class="acct-nav-label">分享好友</div>
           </div>
         </router-link>
-        <router-link to="/account/promotion">
+        <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_promo.png" />
             <div class="acct-nav-label">优惠领取</div>
