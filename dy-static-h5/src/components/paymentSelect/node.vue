@@ -259,6 +259,7 @@ $node-color: #4ab6fd;
   display: flex;
   grid-gap: 15px;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 
   .payment-method-item {
     text-align: center;
