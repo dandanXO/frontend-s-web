@@ -98,7 +98,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="loginName" :label="t('fields.loginName')" />
-      <el-table-column prop="teamNameEn" :label="t('fields.teamName')" />
+      <el-table-column prop="teamNameLocal" :label="t('fields.teamName')" />
       <el-table-column prop="type" :label="t('fields.type')" />
       <el-table-column prop="status" :label="t('fields.status')" />
       <el-table-column prop="voteTime" :label="t('fields.voteTime')" />
