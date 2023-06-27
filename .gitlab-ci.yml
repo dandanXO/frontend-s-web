@@ -11,7 +11,7 @@ variables:
 
 default:
   tags:
-    - xinfa-runner
+    - jolly88-complex-runners
 
 .build-projects:
   stage: build
