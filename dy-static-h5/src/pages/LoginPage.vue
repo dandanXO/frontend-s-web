@@ -381,7 +381,7 @@ export default defineComponent({
     .mui-row {
       height: 48px;
       width: calc(100% - 40px);
-      max-width: 150px;
+      max-width: 180px;
       border-radius: 20px;
       border: 3px solid #5b80e7;
       text-align: center;

@@ -18,7 +18,7 @@
             <p class="fs-title">电子游艺</p>
             <p class="fs-name">SLOT<br>GAME</p>
             <p class="fs-desc">返水最高可达</p>
-            <div class="fs-percentage p128"></div>
+            <div class="fs-percentage p200"></div>
         </div>
         </div>
     </div>
