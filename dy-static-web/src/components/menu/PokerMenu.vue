@@ -20,7 +20,7 @@
             <p class="fs-title">棋牌游戏</p>
             <p class="fs-name">CHESS<br>GAME</p>
             <p class="fs-desc">返水最高可达</p>
-            <div class="fs-percentage"></div>
+            <div class="fs-percentage p120"></div>
         </div>
         </div>
     </div>

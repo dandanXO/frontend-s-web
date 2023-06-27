@@ -2269,6 +2269,14 @@ body {
       &.p128 {
         background-position-x: -672px;
       }
+
+      &.p120{
+        background-position-x: -840px;
+      }
+
+      &.p200 {
+        background-position-x: -504px;
+      }
     }
   }
   &.live,
