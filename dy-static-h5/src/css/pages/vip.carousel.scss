@@ -1,0 +1,106 @@
+.vip-container {
+    .q-tabs {
+      background: url(../../assets/vip/top_bg.png) no-repeat top right;
+      background-attachment: fixed;
+    }
+  
+    .q-tabs--not-scrollable .q-tabs__content {
+      gap: 45px;
+      display: flex;
+      justify-content: center;
+    }
+  
+    .q-tabs__content--align-justify .q-tab {
+      flex: unset;
+    }
+  
+    .q-tab {
+      min-height: 35px;
+  
+      &__label {
+        font-size: 12px;
+        color: #ffffff;
+      }
+    }
+  
+    .q-tab--active .q-tab__indicator {
+      width: 100%;
+      margin: 0 auto;
+      height: 10px;
+  
+      &:before {
+        content: "";
+        background: url(../../assets/vip/tap.png) no-repeat top center;
+        background-size: 100%;
+        height: 10px;
+        width: 19px;
+        display: block;
+        margin: auto;
+      }
+    }
+  }
+  
+  .q-carousel {
+    overflow: hidden;
+    margin: 0 auto;
+    text-align: center;
+  
+    ol {
+      padding: 0;
+      margin: 0 auto;
+      width: 100%;
+      list-style-type: none;
+      display: flex;
+    }
+  }
+  
+  .carousel__item {
+    background: url(../../assets/vip/logo_bg.png) no-repeat top center;
+    // background: url(../../assets/images/vip/vipbg.png)no-repeat center center;
+    background-size: cover;
+    font-size: 20px;
+  }
+  
+  .q-carousel__slide {
+    padding: 0;
+    width: 100%;
+  }
+  
+  button {
+    border: 0;
+  }
+  
+  .q-carousel__arrow {
+    background: url(../../assets/vip/left.png) no-repeat center center;
+    background-size: contain;
+    width: 45px;
+  
+    .q-icon {
+      display: none;
+    }
+  }
+  
+  .q-carousel__prev,
+  .q-carousel__next {
+    position: absolute;
+    padding: 10px;
+  
+    box-sizing: content-box;
+    background: url(../../assets/vip/right.png) no-repeat center center;
+    background-size: contain;
+    top: 20%;
+  
+    .carousel__icon {
+      display: none;
+    }
+  }
+  
+  .carousel__prev {
+    top: 20%;
+    left: 0%;
+  }
+  
+  .q-carousel__next-arrow--horizontal {
+    transform: rotate(180deg);
+    right: 10px;
+  }

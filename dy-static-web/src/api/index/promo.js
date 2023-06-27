@@ -1,3 +1,4 @@
+import bonus from '.shared/api/endpoint/bonus.js'
 import { server } from "@/utils/request";
 
 export function loadPromo() {
@@ -12,7 +13,7 @@ export function loadPromoBanner(category) {
   });
 }
 export function claimBonusItem(item) {
-  return server.EVENT.put(`/bonus/claim/${item}`);
+  return server.EVENT.put(`${bonus.claim}/${item}`);
 }
 
 export function welcomeTaskInit() {

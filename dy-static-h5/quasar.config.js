@@ -67,7 +67,20 @@ module.exports = configure(function (ctx) {
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-
+      extendWebpack (cfg) {
+        cfg.resolve.alias = { 
+          ...cfg.resolve.alias,
+          '.shared' : path.resolve(__dirname, '../.shared') 
+        }
+        cfg.resolve.modules = [
+          ...cfg.resolve.modules,
+          path.resolve(__dirname, '../.shared')
+        ]
+        cfg.resolveLoader.modules = [
+          ...cfg.resolveLoader.modules,
+          path.resolve(__dirname, '../.shared')
+        ]
+      },
       chainWebpack(chain) {
         chain
           .plugin("eslint-webpack-plugin")

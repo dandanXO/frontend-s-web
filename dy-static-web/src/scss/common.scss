@@ -262,3 +262,29 @@ body {
 .noPadding .el-dialog__body {
   padding: 0;
 }
+
+/* Defaults */
+:root {
+  --vip-carousel-label-width: 70px;
+  --vip-carousel-button-width: 108px;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+}
+
+/* Utility Class */
+.mx-auto.mx-auto {
+  margin-inline: auto;
+}
+
+/* Overwrite */
+
+.swal2-confirm {
+  width: 200px;
+}
+
+.swal2-styled.swal2-confirm {
+  background-image: linear-gradient(90deg,#2d74f6 0,#7abdfc 100%),linear-gradient(#000,#000);
+}
