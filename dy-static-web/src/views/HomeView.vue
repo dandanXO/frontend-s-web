@@ -259,14 +259,14 @@
                 <img src="../assets/home/bbin.png" />
                 <div>BBIN彩票</div>
               </div>
-              <div
+              <!-- <div
                 class="game-platform"
                 @click="openGame('SG-WIN彩票', 'SGWin', 'imlotto30000')"
                 style="margin-left: 22px"
               >
                 <img src="../assets/home/sgwin.png" />
                 <div>SG-WIN彩票</div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
