@@ -11,7 +11,7 @@ variables:
 
 default:
   tags:
-    - xinfa-runner
+    - jolly88-complex-runners
 
 .build-projects:
   stage: build
@@ -25,7 +25,7 @@ default:
    exclude:
      - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "p8s1"'
+    - if: '$CI_COMMIT_BRANCH == "prod/p8s0" || $CI_COMMIT_BRANCH == "prod/p8s1"'
       changes:
         - $PROJECT/**/*
 
@@ -34,15 +34,11 @@ default:
   script:
     - cd $PROJECT
     - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
-    - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $IMAGE_NAME -t $IMAGE_NAME-$(date +%s) . --no-cache
+    - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $CI_REGISTRY_IMAGE:$PROJECT-${CI_COMMIT_REF_NAME/\//-}-$(date +%s) . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
-  variables:
-    IMAGE_NAME: $CI_REGISTRY_IMAGE:$PROJECT-dev
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "p8s1"'
-      variables:
-        IMAGE_NAME: $CI_REGISTRY_IMAGE:$PROJECT-$CI_COMMIT_REF_NAME-prod
+    - if: '$CI_COMMIT_BRANCH == "prod/p8s0" || $CI_COMMIT_BRANCH == "prod/p8s1"'
       changes:
         - $PROJECT/**/*
 
