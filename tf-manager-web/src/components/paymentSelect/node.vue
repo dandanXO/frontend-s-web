@@ -50,7 +50,6 @@
                   </div>
                 </div>
               </el-col>
-
               <el-col :span="6" class="icons">
                 <i
                   class="el-icon-edit"
@@ -101,13 +100,14 @@
         /> ->
       </div> -->
     </div>
-    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="40%">
+    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="45%">
       <el-form
         ref="addFormRef"
         :model="ruleForm"
         status-icon
         label-width="100px"
         :rules="rules"
+        :value-key="inputKey"
       >
         <el-form-item :label="'Code'" prop="code" required>
           <el-input v-model="ruleForm.code" autocomplete="off" />
@@ -118,14 +118,14 @@
         </el-form-item>
         <el-form-item :label="$t('fields.icon')" prop="icon" required>
           <el-row :gutter="24">
-            <el-col :span="18">
+            <el-col :span="16">
               <el-input
                 :readonly="true"
                 v-model.number="ruleForm.icon"
                 autocomplete="off"
               />
             </el-col>
-            <el-col :span="6">
+            <el-col :span="8">
               <!-- eslint-disable -->
               <input
                 id="uploadFile"
@@ -153,17 +153,17 @@
         </div>
         <el-form-item :label="$t('fields.icon')" prop="promoIcon">
           <el-row :gutter="24">
-            <el-col :span="18">
+            <el-col :span="16">
               <el-input
                 :readonly="true"
                 v-model="ruleForm.promoIcon"
                 autocomplete="off"
               />
             </el-col>
-            <el-col :span="6">
+            <el-col :span="8">
               <!-- eslint-disable -->
               <input
-                id="uploadFile"
+                id="uploadFileL"
                 type="file"
                 ref="input1"
                 style="display: none"
@@ -171,7 +171,15 @@
                 @change="attachPhoto($event, 'paymentLabel')"
               />
               <el-button
-                style="display: block"
+                v-if="ruleForm.promoIcon"
+                style="display: inline-block"
+                icon="el-icon-close"
+                size="mini"
+                type="danger"
+                @click="removePromoIcon"
+              />
+              <el-button
+                style="display: inline-block"
                 icon="el-icon-upload"
                 size="mini"
                 type="success"
@@ -257,7 +265,11 @@ export default defineComponent({
       });
       codes.forEach(element => {
         if (element.toLowerCase() === value.toLowerCase()) {
-          return callback(new Error('Code exists, please input a different code'));
+          if (this.isEdit) {
+            callback()
+          } else {
+            return callback(new Error('Code exists, please input a different code'));
+          }
         }
       });
       callback();
@@ -295,10 +307,15 @@ export default defineComponent({
       addForm: {
         type: null,
       },
-      isEdit: false
+      isEdit: false,
+      inputKey: 0
     }
   },
   methods: {
+    removePromoIcon() {
+      this.ruleForm.promoIcon = "";
+      $('#uploadFileL').val(null);
+    },
     // 编辑
     editHandle(node, parentIdx, idx) {
       this.ruleForm = { ...node }
@@ -308,7 +325,9 @@ export default defineComponent({
       this.dialogVisible = true
     },
     addHandle() {
-      this.ruleForm = { id: 0, code: null, name: null }
+      $('#uploadFile').val(null);
+      $('#uploadFileL').val(null);
+      this.ruleForm = { id: 0, icon: null, code: null, name: null }
       this.isEdit = false
       this.dialogTitle = 'Add'
       this.dialogVisible = true
@@ -328,6 +347,7 @@ export default defineComponent({
     deleteItem(item, index) {
       // eslint-disable-next-line vue/no-mutating-props
       this.list.splice(index, 1)
+      bus.emit('exportNodes')
     },
     clickItem(item) {
       this.selectItem = item
@@ -342,11 +362,15 @@ export default defineComponent({
       this.dialogVisible = true
     },
     confirmEdit() {
-      Object.assign(this.item, this.ruleForm)
-      console.log(this.list)
+      this.$refs.addFormRef.validate((valid) => {
+        if (valid) {
+          Object.assign(this.item, this.ruleForm)
+          console.log(this.list)
 
-      this.dialogVisible = false
-      bus.emit('exportNodes')
+          this.dialogVisible = false
+          bus.emit('exportNodes')
+        }
+      })
     },
     addto(list, level, name) {
       // this.$emit('addNodesToSelectedGroup');
@@ -491,7 +515,6 @@ export default defineComponent({
     },
 
     async attachPhoto(event, type) {
-      console.log(type)
       const files = event.target.files[0]
       const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
       const dirPayment = 'payment'
