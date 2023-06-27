@@ -126,11 +126,7 @@
               />
             </div>
             <div class="mui-row">
-<<<<<<< HEAD
-              <router-link to="/forget-account">忘记账号？</router-link>
-=======
-              <router-link to="/forgot-account"> 忘记账号？</router-link>
->>>>>>> b4dd809ce5b5726cec5acf1a8be6ccfbc30bbd24
+              <router-link to="/forgot-account">忘记账号？</router-link>
             </div>
           </div>
 
@@ -375,7 +371,7 @@ export default defineComponent({
     justify-content: space-between;
     width: calc(100% - 4px);
     margin: 14px auto 0px;
-    gap:20px;
+    gap: 20px;
 
     .mui-row {
       height: 48px;
