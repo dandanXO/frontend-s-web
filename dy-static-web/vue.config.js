@@ -1,5 +1,6 @@
 const { defineConfig } = require("@vue/cli-service");
 const defaultSettings = require("./src/settings.js");
+const path = require('path');
 
 module.exports = defineConfig({
   lintOnSave: true,
@@ -9,10 +10,19 @@ module.exports = defineConfig({
     hot: true,
     port: 8089
   },
-  // publicPath:
-  //   process.env.NODE_ENV === "production" ? "https://asdfdsa.com/" : "/",
   assetsDir: "static",
   transpileDependencies: true,
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '.shared' : path.resolve(__dirname, '../.shared'),
+      },
+      modules: [path.resolve(__dirname, '../.shared')]
+    },
+    resolveLoader: {
+      modules: [path.resolve(__dirname, '../.shared')]
+    }
+  },
   chainWebpack: (config) => {
     config.plugin("html").tap((args) => {
       args[0].title = defaultSettings.title;

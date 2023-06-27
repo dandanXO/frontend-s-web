@@ -113,11 +113,6 @@
               </template>
             </q-input>
           </div>
-          <!-- <div class="align-right">
-            <span @click="loginType = !loginType">
-              {{ loginType ? "手机号记录" : "用户名登陆" }}
-            </span>
-          </div> -->
 
           <div class="forgetpass-div">
             <div class="mui-row">
@@ -131,7 +126,7 @@
               />
             </div>
             <div class="mui-row">
-              <router-link to="/forget-account"> 忘记账号？</router-link>
+              <router-link to="/forget-account">忘记账号？</router-link>
             </div>
           </div>
 

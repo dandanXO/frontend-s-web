@@ -1,3 +1,5 @@
+import { ElMessageBox } from "element-plus";
+
 export const MAIN = "MAIN";
 
 export const getRndInteger = (min, max) => {
@@ -50,4 +52,26 @@ export const getTimeout = key => {
   return cached_timeout > now.getTime() 
     ? Math.ceil((cached_timeout - now.getTime()) / 1000) // Seconds left
     : 0  // No timeout found
+}
+
+export const getImageUrl = srcPath => require(`/src/assets/${srcPath}`)
+
+export const openCommonError = (text = '请登录后再操作') => {
+  Swal.fire({
+    title: '系统提示',
+    text, confirmButtonText: '确认'
+  })
+}
+
+export const openLoginAlert = store => {
+  ElMessageBox.alert("请登录后再操作", "系统提示", {
+    // autofocus: false, // if you want to disable its autofocus
+    center: true,
+    confirmButtonText: "确认",
+    showClose: false,
+    buttonSize: "large"
+  }).then(() => {
+    if (store)
+      store.loginPageVisible = true
+  })
 }
