@@ -133,7 +133,7 @@
             <div class="acct-nav-label">分享好友</div>
           </div>
         </router-link>
-        <router-link to="/account/promotion">
+        <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_promo.png" />
             <div class="acct-nav-label">优惠领取</div>
