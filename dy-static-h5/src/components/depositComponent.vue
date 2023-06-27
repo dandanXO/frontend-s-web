@@ -126,7 +126,7 @@
           emit-value
           v-if="hasPrivilege && !isUSDT"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-          color="white"
+          clearable
           @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">
