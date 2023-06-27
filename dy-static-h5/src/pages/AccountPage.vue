@@ -96,9 +96,9 @@
           <router-link to="finance/withdraw" class="button"
             ><img src="../assets/images/index/withdrawal_icon.png" />提款
           </router-link>
-          <!-- <router-link to="account/transfer" class="button"
+          <router-link to="account/transfer" class="button"
             ><img src="../assets/images/index/transfer_icon.png" />转账
-          </router-link> -->
+          </router-link>
           <router-link to="account/vip" class="button"
             ><img src="../assets/images/account/vip_icon.png" />VIP详情
           </router-link>

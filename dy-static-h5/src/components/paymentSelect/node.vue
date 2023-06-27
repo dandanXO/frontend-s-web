@@ -1,6 +1,6 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div v-if="level === 1"/>
+    <div v-if="level === 1" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
@@ -12,18 +12,23 @@
         @click="clickItem(item)"
         :class="[
           item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
+          selectItem === item ? 'active' : ''
         ]"
         :key="i"
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <img :src="imgURL + item.nodeIcon"/>
+          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
           <div
             class="promo"
             :style="
-              item.promoStyle + 'background-image: url(' + imgURL + 'label/' + item.promotionIcon + ')'
+              item.promoStyle +
+              'background-image: url(' +
+              imgURL +
+              'label/' +
+              item.promotionIcon +
+              ')'
             "
           >
             <span class="val">{{ item.promoValue }}</span>
@@ -35,7 +40,7 @@
               :key="pm.id"
               :class="{ active: pm.nodeName === activeMethod }"
             >
-              <img :src="imgURL + pm.nodeIcon"/>
+              <img :src="imgURL + pm.nodeIcon" />
               <div>{{ pm.nodeName }}</div>
             </div>
           </div>
@@ -59,7 +64,7 @@
         :name="item.nodeName"
         :class="[
           item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
+          selectItem === item ? 'active' : ''
         ]"
         v-if="selectItem === item"
         :level="parseInt(level) + 1"
@@ -71,9 +76,9 @@
 </template>
 
 <script>
-import {defineComponent, reactive} from "vue";
+import { defineComponent, reactive } from "vue";
 
-const imgURL = process.env.IMAGE_CDN + '/payment/'
+const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -84,23 +89,23 @@ export default defineComponent({
       type: Array,
       default: function () {
         return [];
-      },
+      }
     },
     level: {
       type: Number,
-      default: 0,
+      default: 0
     },
     name: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   data() {
     return {
       ruleForm: {
         name: "",
         icon: "",
-        add: false,
+        add: false
       },
       selectItem: null,
       dialogVisible: false,
@@ -144,7 +149,7 @@ export default defineComponent({
   methods: {
     firstTime(item) {
       if (item) {
-        item.hasActive = true
+        item.hasActive = true;
         this.selectItem = item;
         this.$emit("clicked", this.selectItem);
         if (item.group) {
@@ -158,20 +163,21 @@ export default defineComponent({
       this.list.forEach((element) => {
         if (!element.hasActive && element.group) {
           element.children.forEach((e) => {
-            e.hasActive = false
-          })
+            e.hasActive = false;
+          });
         }
-        ;
         element.hasActive = false;
       });
       this.list.forEach((element) => {
         element.hasActive = false;
       });
       if (item) {
-        item.hasActive = true
+        item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find((child) => child.hasActive === true)
+          let activeChild = item.children.find(
+            (child) => child.hasActive === true
+          );
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -187,15 +193,15 @@ export default defineComponent({
         element.hasActive = false;
       });
       item.hasActive = true;
-      this.selectedItem = item
+      this.selectedItem = item;
       this.$emit("clicked", this.selectedItem);
-    },
+    }
   },
   mounted() {
     // this.clickItem(this.list[0]);
     this.$nextTick(() => {
       this.firstTime(this.list[0]);
-    })
+    });
   }
 });
 </script>
@@ -219,7 +225,7 @@ $node-color: #4ab6fd;
   width: 6px;
   height: 6px;
   background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-  linear-gradient(#ffffff, #ffffff);
+    linear-gradient(#ffffff, #ffffff);
 }
 
 .title::before {
@@ -232,6 +238,19 @@ $node-color: #4ab6fd;
   left: -10px;
 }
 
+// .node-group {
+//   .payment-method-item {
+//     &.active {
+//       .node-txt-img {
+//         &:before {
+//           bottom: -1px !important;
+//           right: -1px !important;
+//           // background-color: salmon !important;
+//         }
+//       }
+//     }
+//   }
+// }
 .payment-method-wrapper {
   // display: grid;
   // grid-template-columns: repeat(auto-fill, 200px);
@@ -240,20 +259,18 @@ $node-color: #4ab6fd;
   display: flex;
   grid-gap: 15px;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
-    // border: solid 1px #484460;
     color: #ffffff;
     cursor: pointer;
-    // padding: 20px 35px;
     img {
-      border: 1px solid;
-      padding: 5px 15px;
-      border-radius: 3px;
       max-width: 75px;
       margin-bottom: 10px;
+      width: 100%;
+      height: auto;
     }
 
     &:hover {
@@ -262,17 +279,31 @@ $node-color: #4ab6fd;
 
     &.active {
       // background: rgba(255,255,255, .2);
-      img {
-        border-color: $node-color;
+
+      .node-txt-img {
+        border-color: #4873f1 !important;
+
+        &:before {
+          display: block;
+          content: "";
+          position: absolute;
+          bottom: 23px;
+          right: 8px;
+          background-color: #4873f1;
+          height: 15px;
+          width: 15px;
+          z-index: 3;
+          border-radius: 3px;
+          background-image: url("../../assets/images/account/CheckBox.svg");
+          background-size: 100%;
+          background-position: center center;
+        }
+
+        img {
+          // border-color: $node-color;
+        }
       }
     }
-
-    // &.node-group {
-    //   color: $group-color;
-    //   &.active{
-    //     border-color: $group-color;
-    //   }
-    // }
   }
 }
 
@@ -326,11 +357,20 @@ $node-color: #4ab6fd;
       }
 
       .payment-method-item {
-        padding: 5px;
-        border: 1px solid transparent;
+        padding: 5px 20px 5px 5px;
+        border: 2px solid transparent;
+        width: auto;
 
         &.active {
-          border: 1px solid #33bcd4;
+          border: 2px solid #4873f1;
+
+          .node-txt-img {
+            &:before {
+              bottom: -1px !important;
+              right: -1px !important;
+              // background-color: salmon !important;
+            }
+          }
         }
       }
 
@@ -346,24 +386,31 @@ $node-color: #4ab6fd;
           color: #000000;
         }
 
-        img {
-          width: 15px;
-          border: 0;
-          background-color: #2a313e;
-          // max-width: 1.5rem;
-          padding: 0px;
+        .node-txt-img {
+          width: auto;
+          height: auto;
           margin-bottom: 0;
+          border: 0;
+          img {
+            width: 15px;
+            height: auto;
+            border: 0;
+            background-color: #2a313e;
+            // max-width: 1.5rem;
+            padding: 0px;
+            margin-bottom: 0;
+          }
         }
       }
     }
   }
 
   .node-content {
-    gap: 0;
+    gap: 10px;
 
     .payment-method-item {
       text-align: center;
-      padding: 10px 8px;
+      // padding: 10px 8px;
       cursor: pointer;
       // background: #2b2b4b;
       // box-shadow: 6px 6px #161b23;
@@ -383,7 +430,7 @@ $node-color: #4ab6fd;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 2rem;
+      width: 5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -394,19 +441,33 @@ $node-color: #4ab6fd;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 5px;
+      // gap: 5px;
       flex-direction: column;
 
       & > div {
         font-size: 12px;
-        color: #a0bcd6;
+        color: #000;
       }
 
-      img {
-        background-color: #fff;
-        margin-bottom: 0;
-        width: 100%;
-        height: auto;
+      .node-txt-img {
+        background-color: #f7f7f7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 5px;
+        border: 2px solid #ddd;
+        border-radius: 3px;
+
+        img {
+          background-color: #fff;
+          margin-bottom: 0;
+          padding: 5px 10px;
+          width: 100%;
+          height: auto;
+        }
       }
     }
   }
@@ -440,29 +501,11 @@ $node-color: #4ab6fd;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
-      // top: -5px;
-      // right: 0;
-      // background: #dd4645;
-      // padding: 5px;
-      // color: #000000;
-      // font-size: 12px;
-      // line-height: 10px;
-      // top: -8px;
-      // right: -1px;
-      // background: #dd4645;
-      // padding: 5px;
-      // color: #000000;
-      // font-size: 12px;
-      // line-height: 10px;
-      // border-radius: 0 10px;
       ::after {
         position: relative;
       }
-
-
     }
   }
-
 }
 
 @media (max-width: 768px) {

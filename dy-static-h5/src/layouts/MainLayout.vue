@@ -233,7 +233,7 @@ export default defineComponent({
           if (route.query.platform) {
             pageName.value = `${route.query.platform}游戏大厅`;
           }
-        } else if (route.path === "/forgot-password") {
+        } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = "找回账号";

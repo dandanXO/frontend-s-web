@@ -126,7 +126,11 @@
               />
             </div>
             <div class="mui-row">
+<<<<<<< HEAD
               <router-link to="/forget-account">忘记账号？</router-link>
+=======
+              <router-link to="/forgot-account"> 忘记账号？</router-link>
+>>>>>>> b4dd809ce5b5726cec5acf1a8be6ccfbc30bbd24
             </div>
           </div>
 
@@ -371,11 +375,12 @@ export default defineComponent({
     justify-content: space-between;
     width: calc(100% - 4px);
     margin: 14px auto 0px;
+    gap:20px;
 
     .mui-row {
       height: 48px;
       width: calc(100% - 40px);
-      max-width: 150px;
+      max-width: 180px;
       border-radius: 20px;
       border: 3px solid #5b80e7;
       text-align: center;

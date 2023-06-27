@@ -19,20 +19,11 @@
       >
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
-
           <div>{{ item.nodeName }}</div>
           <div
             class="promo"
-            :style="
-              item.promoStyle +
-              'background-image: url(' +
-              imgURL +
-              'label/' +
-              item.promotionIcon +
-              ''
-            "
           >
-            <span class="val">{{ item.promoValue }}</span>
+            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`">
           </div>
           <div class="payment-method-wrapper">
             <div
@@ -58,6 +49,7 @@
       </div>
       <!-- </div> -->
       <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
+      
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
@@ -325,6 +317,14 @@ $node-color: #4873f1;
           margin-bottom: 0;
         }
       }
+      .promo {
+        img {
+          background-color: transparent;
+          box-shadow: none;
+          padding: 0;
+          border: 0;
+        }
+      }
     }
   }
   .node-content {
@@ -461,6 +461,11 @@ $node-color: #4873f1;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      img {
+       padding: 0;
+       border: 0; 
+       background-color: transparent;
+      }
       // top: -5px;
       // right: 0;
       // background: #dd4645;
