@@ -25,7 +25,7 @@ default:
    exclude:
      - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "p8s1"'
+    - if: '$CI_COMMIT_BRANCH == "prod/p8s0" || $CI_COMMIT_BRANCH == "prod/p8s1"'
       changes:
         - $PROJECT/**/*
 
@@ -40,7 +40,7 @@ default:
   variables:
     IMAGE_NAME: $CI_REGISTRY_IMAGE:$PROJECT-dev
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "p8s1"'
+    - if: '$CI_COMMIT_BRANCH == "prod/p8s0" || $CI_COMMIT_BRANCH == "prod/p8s1"'
       variables:
         IMAGE_NAME: $CI_REGISTRY_IMAGE:$PROJECT-$CI_COMMIT_REF_NAME-prod
       changes:
