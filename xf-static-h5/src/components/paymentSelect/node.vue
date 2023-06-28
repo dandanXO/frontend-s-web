@@ -74,7 +74,7 @@
 import { defineComponent, reactive } from "vue";
 
 
-const imgURL = process.env.IMAGE_CDN + '/'
+const imgURL = process.env.IMAGE_CDN + '/payment/'
 export default defineComponent({
   name: "NodeComp",
   order: 1,
