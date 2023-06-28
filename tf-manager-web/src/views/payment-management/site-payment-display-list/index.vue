@@ -206,7 +206,7 @@ function loadTable() {
       }
     });
     mobileTableFormatted.forEach(element => {
-      if (element.financialLevels[findex] === '1' && mobileObj.financial.includes('WEB')) {
+      if (element.financialLevels[findex] === '1' && mobileObj.financial.includes('MOBILE')) {
         mobileObj[element.type] = element.paymentName
       } else {
         mobileObj[element.type] = '未分配'
