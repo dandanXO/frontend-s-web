@@ -1033,6 +1033,8 @@ const EXPORT_HEADER = [
   'Payment Card',
   'Status',
   'Remark',
+  'Confirm Status',
+  'Confirm By',
 ]
 
 const searchRequest = reactive({

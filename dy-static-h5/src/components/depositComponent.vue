@@ -351,23 +351,6 @@ async function loadPrivilege(val) {
     });
 }
 
-// function selectPayType(value) {
-//   if (value) {
-//     selectedPayType.value = value.payType;
-//     if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
-//       isUSDT.value = true;
-//     } else {
-//       isUSDT.value = false;
-//     }
-//     if (value.extra && value.extra.banks) {
-//       bankCardList.value = value.extra.banks;
-//     } else {
-//       bankCardList.value = [];
-//       form.bankId = null;
-//     }
-//   }
-// }
-
 function selectPayType(value) {
   if (value) {
     selectedPayType.value = value.payType;
@@ -392,13 +375,14 @@ const depositForm = ref(null);
 
 async function onSelect(value) {
   isDisplay.value = false;
+
   if (!Platform.is.android || !Platform.is.capacitor) {
     clearInfo();
   }
   if (liff.isInClient()) {
     clearInfo();
   }
-  depositAmtRef.value.resetValidation();
+  // depositAmtRef.value.resetValidation();
   if (value) {
     if (value.group) {
       value.children.forEach((element) => {
@@ -441,7 +425,7 @@ function clearInfo() {
   isDeposited.value = false;
   form.localAmount = null;
   selectedPrivilege.value = "";
-  depositForm.value.reset();
+  // depositForm.value.reset();
   checkMinDepositAmt();
 }
 
@@ -495,67 +479,6 @@ async function confirmDeposit() {
       });
   }
 }
-
-// function doDeposit(data) {
-//   depositAmtRef.value.validate();
-//   if (depositAmtRef.value.hasError) {
-//   } else {
-//     // payTypeClass.value.submitDeposit(data);
-//     // console.log(data);
-//     if (store.token) {
-//         pDepo(data);
-//     }
-//     // cashier.get("/session/payment/" +form.paymentId +"/amount/" +form.localAmount +"/verify")
-//     //   .then((res) => {
-//     //     const d = res.data;
-//     //     if (d.code === 0) {
-//     //       checkAmount.flag = true;
-//     //       if (d.message === "System Error") {
-//     //         console.log("Error");
-//     //       } else {
-//     //       }
-//     //     }
-//     //   })
-//     //   .catch((e) => {
-//     //     checkAmount.flag = false;
-//     //     checkAmount.errorMessage = e.message;
-//     //   });
-//   }
-// }
-
-// async function verifyDepositAmount(r, v) {
-//   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
-//     if (
-//       v < activeMethod.value.depositMin ||
-//       v > activeMethod.value.depositMax
-//     ) {
-//       return Promise.reject(
-//         "Deposit should be between " +
-//           activeMethod.value.depositMin +
-//           " - " +
-//           activeMethod.value.depositMax
-//       );
-//     } else {
-//       if (checkAmount.flag) {
-//         return Promise.resolve();
-//       } else {
-//         return Promise.reject(checkAmount.errorMessage);
-//       }
-//     }
-//   }
-// }
-
-// async function verifyBank(r, v) {
-//   if (bankCardList.value.length) {
-//     return payTypeClass.value.validateBank(v).then((d) => {
-//       if (d) {
-//         return Promise.resolve();
-//       } else {
-//         return Promise.reject("Bank is required");
-//       }
-//     });
-//   }
-// }
 
 async function pDepo(deposit) {
   const obj = {
@@ -614,50 +537,6 @@ async function pDepo(deposit) {
             { once: true }
           );
         }
-        // doIt(res).then((ret) => {
-        //   // if (res.payResultType === 'RENDER_HTML') {
-        //   //   isDisplay.value = true;
-        //   //   const submitResult = res.data.result.data;
-        //   //   submitMessage.value = submitResult.split(",");
-        //   // }
-        //   // else {
-        //   //   if (
-        //   //       (Platform.is.desktop || Platform.is.webkit) &&
-        //   //       !Platform.is.capacitor &&
-        //   //       Platform.is.name !== "webkit" &&
-        //   //       !liff.isInClient()
-        //   //     ) {
-        //   //       // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
-        //   //       const newWin = window.open(`/depositLoading`, "Bank");
-        //   //       newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-        //   //     } else {
-        //   //       localStorage.setItem("formDetails", JSON.stringify(form));
-        //   //       router.push({ path: "/depositLoading" });
-        //   //     }
-
-        //   //     window.addEventListener(
-        //   //       "message",
-        //   //       (event) => {
-        //   //         if (event.data?.msg) {
-        //   //           if (event.data.msg === "success") {
-        //   //             isDeposited.value = true;
-        //   //             localStorage.setItem("isBacked", JSON.stringify(true));
-        //   //           } else {
-        //   //             $q.notify({
-        //   //               color: "negative",
-        //   //               position: "top",
-        //   //               message: event.data.msg,
-        //   //               icon: "report_problem"
-        //   //             });
-        //   //           }
-        //   //         }
-        //   //       },
-        //   //       { once: true }
-        //   //     );
-        //   // }
-        //   // $q.loading.hide();
-        //   // postMessage({ msg: "success" }, "*");
-        // });
       } else {
         // console.log(res);
         // postMessage({ msg: res.message }, "*");
@@ -722,7 +601,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   color: #ff0000;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .q-select__dialog .q-field__control {
