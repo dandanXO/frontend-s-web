@@ -89,6 +89,7 @@
                       class="btn"
                       color="dyblue"
                       label="领取"
+                      :disable="btnIsDisabled"
                       @click="onVIPButtonClick('monthly')"
                     />
                   </template>
@@ -105,6 +106,7 @@
                       class="btn"
                       color="dyblue"
                       label="领取"
+                      :disable="btnIsDisabled"
                       @click="onVIPButtonClick('birthday')"
                     />
                   </template>
@@ -457,8 +459,10 @@
 <script>
 import { ref, defineComponent, onMounted } from "vue";
 import { userStore } from "stores/index";
+import { useRoute, useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import Swal from "sweetalert2";
 
 export default defineComponent({
   name: "TransitRecordView",
@@ -469,26 +473,53 @@ export default defineComponent({
     const slide = ref(0);
     const showRebate = ref(false);
 
+    const router = useRouter();
     const store = userStore();
     const vipLevel = ref("");
     const loading = ref(false);
     const loadingMClaim = ref(false);
     const loadingBClaim = ref(false);
 
+    const btnIsDisabled = ref(false)
+
+    let errorCount = 0;
+
     const onVIPButtonClick = (type) => {
-      if (!store.token) openLoginAlert(store);
-      else {
+      if (!store.token) {
+        Swal.fire({
+          title: "请登录后再操作",
+          text: "系统提示",
+          confirmButtonText: "登录"
+        }).then((dialog) => {
+          if (dialog.isConfirmed) {
+            router.push({ path: "/login" });
+          }
+        });
+      } else {
         const bonusItem = `dy1-vip-${type}`;
         eventapi
           .put("/bonus/claim/" + bonusItem)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.code === 0) {
-              console.log(`你已领取 ${res.data.value}`, "系统提示");
+              Swal.fire({
+                title: "系统提示",
+                text: `你已领取 ${res.data.value}`,
+                confirmButtonText: "确认"
+              }).then((dialog) => {
+                if (dialog.isConfirmed) {
+                  router.push({ path: "/finance/deposit" });
+                }
+              });
             }
           })
           .catch((err) => {
+            errorCount++;
             console.log(err);
+            if (errorCount >= 3) {
+              // Disable the button after 3 or more errors
+              btnIsDisabled.value = true;
+            }
           });
       }
     };
@@ -1010,9 +1041,8 @@ program at any time without prior notice.`
       } else if (vipType === "birthday") {
         loadingBClaim.value = true;
       }
-      // console.log(eventapi);
       const eventUrl = "/bonus/claim/" + type;
-      console.log(eventUrl);
+      // console.log(eventUrl);
       eventapi
         .put(eventUrl)
         .then((res) => {
@@ -1025,19 +1055,6 @@ program at any time without prior notice.`
 
             claimMsg.value = "$" + rebatePoint;
             isClaimModal.value = true;
-
-            // $q.dialog({
-            //   class: "q-px-md q-pt-md",
-            //   title: "สำเร็จ",
-            //   message: "You won " + rebatePoint + " !",
-            //   ok: {
-            //     push: true,
-            //     color: 'deep-orange',
-            //     label: "ตกลง",
-            //     tabindex: 1
-            //   },
-            //   persistent: true
-            // });
           } else {
             // $q.notify({
             //   color: "negative",
@@ -1051,6 +1068,7 @@ program at any time without prior notice.`
           loading.value = false;
           loadingMClaim.value = false;
           loadingBClaim.value = false;
+
           // $q.notify({
           //   color: "negative",
           //   position: "top",
@@ -1079,7 +1097,8 @@ program at any time without prior notice.`
       loadingMClaim,
       loadingBClaim,
       tab,
-      onVIPButtonClick
+      onVIPButtonClick,
+      btnIsDisabled
     };
   }
 });
@@ -1595,5 +1614,16 @@ button {
 .q-carousel__next-arrow--horizontal {
   transform: rotate(180deg);
   right: 10px;
+}
+
+h2#swal2-title.swal2-title {
+  font-size: 14px;
+}
+#swal2-html-container.swal2-html-container {
+  font-size: 14px;
+}
+.swal2-confirm.swal2-styled {
+  font-size: 14px;
+  background-color: #5b80e8;
 }
 </style>

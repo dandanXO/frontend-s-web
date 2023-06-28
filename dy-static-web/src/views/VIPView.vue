@@ -64,6 +64,7 @@
                       data-bonu-type="month"
                       data-vip-lev="10"
                       @click="onVIPButtonClick('dy1-vip-monthly')"
+                      :disabled="btnIsDisabled"
                     >
                       领取
                     </button>
@@ -81,6 +82,7 @@
                       data-bonu-type="birth"
                       data-vip-lev="10"
                       @click="onVIPButtonClick('dy1-vip-birthday')"
+                      :disabled="btnIsDisabled"
                     >
                       领取
                     </button>
@@ -401,6 +403,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const selectedVIP = ref(0);
+    const btnIsDisabled = ref(false);
 
     const claimBirthdayBonus = (vip) => {
       alert(vip.level);
@@ -604,6 +607,8 @@ export default defineComponent({
     //     });
     // };
 
+    let errorCount = 0;
+
     const onVIPButtonClick = (bonusItem) => {
       if (!store.token) {
         ElMessageBox.alert("请登录后再操作", "系统提示", {
@@ -632,7 +637,12 @@ export default defineComponent({
             }
           })
           .catch((err) => {
+            errorCount++;
             console.log(err);
+            if (errorCount >= 3) {
+              // Disable the button after 3 or more errors
+              btnIsDisabled.value = true;
+            }
           }); // End catch
       }
     };
@@ -654,7 +664,8 @@ export default defineComponent({
       selectedVIP,
       reduce,
       plus,
-      onVIPButtonClick
+      onVIPButtonClick,
+      btnIsDisabled
     };
   }
 });
@@ -862,6 +873,15 @@ export default defineComponent({
   color: #fff;
   margin-right: 10px;
 }
+.vip-container .vip-list-container .vip-detail-right-box .vip-btn-get:disabled,
+.vip-container
+  .vip-list-container
+  .vip-detail-right-box
+  .vip-btn-get[disabled] {
+  background: -webkit-linear-gradient(right, #85898d, #b0bec0);
+  background: linear-gradient(270deg, #85898d, #b0bec0);
+}
+
 .vip-container .vip-list-container .vip-detail-right-box .vip-detail-promo-box {
   width: 465px;
   height: 60px;

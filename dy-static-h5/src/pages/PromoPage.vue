@@ -247,24 +247,8 @@ export default defineComponent({
         });
       } else {
         filteredArray.value = promoState.promoList
-        console.log("~~~")
       }
     };
-
-    // const loadAll = () => {
-    //   loadPromo().then((res) => {
-    //     if(res.code === 0) {
-    //       promoState.promoList.push(...res.data);
-    //       res.data.forEach(element => {
-    //         if (element.redirectUrl === route.query.name) {
-    //           showPromoDetails(element)
-    //         }
-    //       });
-    //     }
-    //   }).catch((e) => { console.log("error", e); });
-    //   switchPromoType(promoState.active)
-    // }
-
 
     const loadAll = () => {
       api.get("/promo/page").then((res) => {
