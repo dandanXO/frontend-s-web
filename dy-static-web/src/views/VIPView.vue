@@ -607,9 +607,28 @@ export default defineComponent({
     //     });
     // };
 
-    let errorCount = 0;
+    const errorCount = ref(0);
+    let countdownInterval;
 
     const onVIPButtonClick = (bonusItem) => {
+      // Check if the button is already disabled
+      if (localStorage.getItem("vipButtonDisabled") === "true") {
+        const currentTime = new Date().getTime();
+        const expirationTime = parseInt(
+          localStorage.getItem("vipButtonExpirationTime"),
+          10
+        );
+
+        // Check if the expiration time has passed
+        if (currentTime < expirationTime) {
+          return; // Exit the function if the button is still disabled
+        } else {
+          localStorage.removeItem("vipButtonDisabled");
+          localStorage.removeItem("vipButtonExpirationTime");
+          clearInterval(countdownInterval);
+        }
+      }
+
       if (!store.token) {
         ElMessageBox.alert("请登录后再操作", "系统提示", {
           // if you want to disable its autofocus
@@ -637,15 +656,72 @@ export default defineComponent({
             }
           })
           .catch((err) => {
-            errorCount++;
+            errorCount.value++;
             console.log(err);
-            if (errorCount >= 3) {
+            if (errorCount.value >= 3) {
               // Disable the button after 3 or more errors
               btnIsDisabled.value = true;
+              const currentTime = new Date().getTime();
+              const expirationTime = currentTime + 120000; // 2 minutes in milliseconds
+              localStorage.setItem("vipButtonDisabled", "true");
+              localStorage.setItem(
+                "vipButtonExpirationTime",
+                expirationTime.toString()
+              );
+              // Start the countdown
+              startCountdown(expirationTime);
+              ElMessageBox.alert(`按钮将在2分钟后启用`, "系统提示", {
+                confirmButtonText: "确认",
+                buttonSize: "large",
+                showClose: false,
+                center: true
+              });
             }
           }); // End catch
       }
     };
+
+    // Function to start the countdown
+    const startCountdown = (expirationTime) => {
+      countdownInterval = setInterval(() => {
+        const currentTime = new Date().getTime();
+        const remainingTime = expirationTime - currentTime;
+
+        if (remainingTime > 0) {
+          const seconds = Math.floor(remainingTime / 1000) % 60;
+          if (seconds === 0) {
+            btnIsDisabled.value = false;
+            errorCount.value = 0;
+          }
+        } else {
+          clearInterval(countdownInterval); // Clear the countdown interval
+          // Remove the stored disabled state and expiration time
+          localStorage.removeItem("vipButtonDisabled");
+          localStorage.removeItem("vipButtonExpirationTime");
+        }
+      }, 1000);
+    };
+
+    // Check if the button should be initially disabled after a page refresh
+    if (localStorage.getItem("vipButtonDisabled") === "true") {
+      const currentTime = new Date().getTime();
+      const expirationTime = parseInt(
+        localStorage.getItem("vipButtonExpirationTime"),
+        10
+      );
+
+      // Check if the expiration time has passed
+      if (currentTime < expirationTime) {
+        // Disable the button
+        btnIsDisabled.value = true;
+        // Start the countdown
+        startCountdown(expirationTime);
+      } else {
+        // Remove the stored disabled state and expiration time
+        localStorage.removeItem("vipButtonDisabled");
+        localStorage.removeItem("vipButtonExpirationTime");
+      }
+    }
 
     const reduce = () => {
       if (!store.token && Number(selectedVIP.value > 1)) {
@@ -665,7 +741,9 @@ export default defineComponent({
       reduce,
       plus,
       onVIPButtonClick,
-      btnIsDisabled
+      btnIsDisabled,
+      errorCount,
+      startCountdown
     };
   }
 });
