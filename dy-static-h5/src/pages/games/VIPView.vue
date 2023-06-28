@@ -17,7 +17,7 @@
           transition-next="slide-left"
         >
           <q-carousel-slide
-            v-for="(vip, vipIndex) in levels"
+            v-for="(vip, vipIndex) in vipItems"
             :key="vipIndex"
             :name="vipIndex"
           >
@@ -28,19 +28,26 @@
                     <div class="vip-badge">
                       <img
                         :src="
-                          require(`src/assets/vip/vip_img_${vip.level}.png`)
+                          require(`../../assets/vip/vip_img_${vip.vipLevel}.png`)
                         "
                       />
                     </div>
                     <div class="vip-text">
                       <img
                         :src="
-                          require(`src/assets/vip/vip_text_${vip.level}.png`)
+                          require(`../../assets/vip/vip_text_${vip.vipLevel}.png`)
                         "
                       />
                     </div>
                   </div>
-                  <div class="vip-badgecontent" v-html="vip.description"></div>
+                  <div class="vip-badgecontent">
+                    <span>
+                      {{ `>${vip.saving}存款` }}
+                    </span>
+                    <span>
+                      {{ `>${vip.monthlySaving}${vip.oneMonthSaving}` }}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -49,45 +56,41 @@
 
         <div class="vip-benefits">
           <div class="bft-title">VIP特权</div>
-          <template v-for="(vip, vipIndex) in levels" :key="vipIndex">
+          <template v-for="(vip, vipIndex) in vipList" :key="vipIndex">
             <template v-if="vipIndex === slide">
               <div class="bft-row">
-                <div class="bft-row-cnt">
-                  <div class="left">
-                    <div class="icon">
-                      <img src="../../assets/vip/red_box.png" />
-                    </div>
-                    <div class="txt">
-                      {{ labels.redEnvelop }}:
-                      {{ vip.monthlyRedEnvelop ? vip.monthlyRedEnvelop : "无" }}
-                    </div>
-                  </div>
-                  <template v-if="vip.monthlyRedEnvelop">
-                    <q-btn
-                      class="btn"
-                      color="dyblue"
-                      label="领取"
-                      @click="onVIPButtonClick('monthly')"
-                    />
-                  </template>
-                </div>
                 <div class="bft-row-cnt">
                   <div class="left">
                     <div class="icon">
                       <img src="../../assets/vip/deposit.png" />
                     </div>
                     <div class="txt" style="margin-right: 20px">
-                      {{ labels.deposit }}:
-                      {{ vip.monthlyDeposit ? vip.monthlyDeposit : "无" }}
+                      每月存送: {{ vip.cunsong }}
                     </div>
                   </div>
-                  <template v-if="vip.monthlyDeposit">
+                  <!-- <template v-if="vip.cunsong !== '无'">
                     <q-btn
                       class="btn"
                       color="dyblue"
                       style="white-space: nowrap"
                       label="领取"
-                      @click="onVIPButtonClick('deposit')"
+                    />
+                  </template> -->
+                </div>
+                <div class="bft-row-cnt">
+                  <div class="left">
+                    <div class="icon">
+                      <img src="../../assets/vip/red_box.png" />
+                    </div>
+                    <div class="txt">每月红包: {{ vip.monthlyBonus }}</div>
+                  </div>
+                  <template v-if="vip.monthlyBonus !== '无'">
+                    <q-btn
+                      class="btn"
+                      color="dyblue"
+                      label="领取"
+                      :disable="btnIsDisabled"
+                      @click="onVIPButtonClick('monthly')"
                     />
                   </template>
                 </div>
@@ -96,26 +99,21 @@
                     <div class="icon">
                       <img src="../../assets/vip/money.png" />
                     </div>
-                    <div class="txt">
-                      {{ labels.birthday }}:
-                      {{ vip.birthdayBonus ? vip.birthdayBonus : "无" }}
-                    </div>
+                    <div class="txt">生日礼金: {{ vip.birthdayBonus }}</div>
                   </div>
-                  <template v-if="vip.birthdayBonus">
+                  <template v-if="vip.birthdayBonus !== '无'">
                     <q-btn
                       class="btn"
                       color="dyblue"
                       label="领取"
+                      :disable="btnIsDisabled"
                       @click="onVIPButtonClick('birthday')"
                     />
                   </template>
                 </div>
                 <div class="bft-row-cnt">
                   <div class="left">
-                    <div class="txt">
-                      {{ labels.requirements }}:
-                      {{ vip.requirements ? vip.requirements : "无" }}
-                    </div>
+                    <div class="txt">流水要求: {{ vip.drawTimes }}</div>
                   </div>
                 </div>
               </div>
@@ -123,31 +121,35 @@
           </template>
         </div>
 
-        <div class="vip-benefits">
-          <div class="bft-title">VIP优惠</div>
-          <div class="bft-promo-row">
-            <div class="bft-promo">
-              <div class="promo-percent">0.4%</div>
-              <div class="promo-title">电竞返水</div>
+        <template v-for="(vip, vipIndex) in vipList" :key="vipIndex">
+          <template v-if="vipIndex === slide">
+            <div class="vip-benefits">
+              <div class="bft-title">VIP优惠</div>
+              <div class="bft-promo-row">
+                <div class="bft-promo">
+                  <div class="promo-percent">{{ vip.perEsport }}</div>
+                  <div class="promo-title">电竞返水</div>
+                </div>
+                <div class="bft-promo">
+                  <div class="promo-percent">{{ vip.perSport }}</div>
+                  <div class="promo-title">体育返水</div>
+                </div>
+                <div class="bft-promo">
+                  <div class="promo-percent">{{ vip.perLive }}</div>
+                  <div class="promo-title">真人返水</div>
+                </div>
+                <div class="bft-promo">
+                  <div class="promo-percent">{{ vip.perSlot }}</div>
+                  <div class="promo-title">电子返水</div>
+                </div>
+                <div class="bft-promo">
+                  <div class="promo-percent">{{ vip.perPoker }}</div>
+                  <div class="promo-title">棋牌返水</div>
+                </div>
+              </div>
             </div>
-            <div class="bft-promo">
-              <div class="promo-percent">0.4%</div>
-              <div class="promo-title">体育返水</div>
-            </div>
-            <div class="bft-promo">
-              <div class="promo-percent">0.4%</div>
-              <div class="promo-title">真人返水</div>
-            </div>
-            <div class="bft-promo">
-              <div class="promo-percent">0.5%</div>
-              <div class="promo-title">电子返水</div>
-            </div>
-            <div class="bft-promo">
-              <div class="promo-percent">0.5%</div>
-              <div class="promo-title">棋牌返水</div>
-            </div>
-          </div>
-        </div>
+          </template>
+        </template>
       </q-tab-panel>
 
       <q-tab-panel name="details">
@@ -456,14 +458,11 @@
 
 <script>
 import { ref, defineComponent, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { useRoute, useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-
-import vipLevel from ".shared/constant/vip-level.js";
-import bonus from ".shared/api/bonus";
-import { openCommonError, openLoginAlert } from ".shared/helper/utils";
+import Swal from "sweetalert2";
 
 export default defineComponent({
   name: "TransitRecordView",
@@ -474,13 +473,132 @@ export default defineComponent({
     const slide = ref(0);
     const showRebate = ref(false);
 
+    const router = useRouter();
     const store = userStore();
-
+    const vipLevel = ref("");
     const loading = ref(false);
     const loadingMClaim = ref(false);
     const loadingBClaim = ref(false);
 
-    const router = useRouter();
+    const btnIsDisabled = ref(false);
+
+    const errorCount = ref(0);
+    let countdownInterval;
+
+    const onVIPButtonClick = (type) => {
+      // Check if the button is already disabled
+      if (localStorage.getItem("vipButtonDisabled") === "true") {
+        const currentTime = new Date().getTime();
+        const expirationTime = parseInt(
+          localStorage.getItem("vipButtonExpirationTime"),
+          10
+        );
+
+        // Check if the expiration time has passed
+        if (currentTime < expirationTime) {
+          return; // Exit the function if the button is still disabled
+        } else {
+          localStorage.removeItem("vipButtonDisabled");
+          localStorage.removeItem("vipButtonExpirationTime");
+          clearInterval(countdownInterval);
+        }
+      }
+
+      if (!store.token) {
+        Swal.fire({
+          title: "请登录后再操作",
+          text: "系统提示",
+          confirmButtonText: "登录"
+        }).then((dialog) => {
+          if (dialog.isConfirmed) {
+            router.push({ path: "/login" });
+          }
+        });
+      } else {
+        const bonusItem = `dy1-vip-${type}`;
+        eventapi
+          .put("/bonus/claim/" + bonusItem)
+          .then((res) => {
+            // console.log(res);
+            if (res.code === 0) {
+              Swal.fire({
+                title: "系统提示",
+                text: `你已领取 ${res.data.value}`,
+                confirmButtonText: "确认"
+              }).then((dialog) => {
+                if (dialog.isConfirmed) {
+                  router.push({ path: "/finance/deposit" });
+                }
+              });
+            }
+          })
+          .catch((err) => {
+            errorCount.value++;
+            console.log(err);
+            if (errorCount.value >= 3) {
+              // Disable the button after 3 or more errors
+              btnIsDisabled.value = true;
+              const currentTime = new Date().getTime();
+              const expirationTime = currentTime + 10000; // 10 secs in milliseconds
+
+              localStorage.setItem("vipButtonDisabled", "true");
+              localStorage.setItem(
+                "vipButtonExpirationTime",
+                expirationTime.toString()
+              );
+              // Start the countdown
+              startCountdown(expirationTime);
+              Swal.fire({
+                title: "系统提示",
+                text: `按钮将在30秒后启用`,
+                confirmButtonText: "确认"
+              });
+            }
+          });
+      }
+    };
+
+    // Function to start the countdown
+    const startCountdown = (expirationTime) => {
+      countdownInterval = setInterval(() => {
+        const currentTime = new Date().getTime();
+        const remainingTime = expirationTime - currentTime;
+
+        if (remainingTime > 0) {
+          const seconds = Math.floor(remainingTime / 1000) % 60;
+          if (seconds === 0) {
+            btnIsDisabled.value = false;
+            errorCount.value = 0;
+          }
+        } else {
+          clearInterval(countdownInterval); // Clear the countdown interval
+          // Remove the stored disabled state and expiration time
+          localStorage.removeItem("vipButtonDisabled");
+          localStorage.removeItem("vipButtonExpirationTime");
+        }
+      }, 1000);
+    };
+
+    // Check if the button should be initially disabled after a page refresh
+    if (localStorage.getItem("vipButtonDisabled") === "true") {
+      const currentTime = new Date().getTime();
+      const expirationTime = parseInt(
+        localStorage.getItem("vipButtonExpirationTime"),
+        10
+      );
+
+      // Check if the expiration time has passed
+      if (currentTime < expirationTime) {
+        // Disable the button
+        btnIsDisabled.value = true;
+        // Start the countdown
+        startCountdown(expirationTime);
+      } else {
+        // Remove the stored disabled state and expiration time
+        localStorage.removeItem("vipButtonDisabled");
+        localStorage.removeItem("vipButtonExpirationTime");
+      }
+    }
 
     const columns = [
       {
@@ -751,6 +869,7 @@ program at any time without prior notice.`
         text: `Jolly88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.`
       }
     ];
+
     const vipList = ref([
       {
         level: 1,
@@ -758,7 +877,12 @@ program at any time without prior notice.`
         monthlyBonus: `无`,
         birthdayBonus: `无`,
         cunsong: `无`,
-        drawTimes: `无`
+        drawTimes: `无`,
+        perEsport: "0.40%",
+        perSport: "0.40%",
+        perLive: "0.40%",
+        perSlot: "0.50%",
+        perPoker: "0.50%"
       },
       {
         level: 2,
@@ -766,7 +890,12 @@ program at any time without prior notice.`
         monthlyBonus: "28",
         birthdayBonus: "38",
         cunsong: `存款至少100元可申请每月一次再存20% 最高奖金588元`,
-        drawTimes: "12"
+        drawTimes: "12",
+        perEsport: "0.40%",
+        perSport: "0.40%",
+        perLive: "0.40%",
+        perSlot: "0.60%",
+        perPoker: "0.60%"
       },
       {
         level: 3,
@@ -775,7 +904,12 @@ program at any time without prior notice.`
         monthlyBonus: "88",
         birthdayBonus: "108",
         cunsong: `存款至少100元可申请每月一次再存20% 最高奖金888元`,
-        drawTimes: "12"
+        drawTimes: "12",
+        perEsport: "0.45%",
+        perSport: "0.45%",
+        perLive: "0.45%",
+        perSlot: "0.70%",
+        perPoker: "0.70%"
       },
       {
         level: 4,
@@ -784,7 +918,12 @@ program at any time without prior notice.`
         monthlyBonus: "188",
         birthdayBonus: "388",
         cunsong: `存款至少100元可申请每周一次再存25% 最高奖金888元`,
-        drawTimes: "12"
+        drawTimes: "12",
+        perEsport: "0.45%",
+        perSport: "0.45%",
+        perLive: "0.45%",
+        perSlot: "0.80%",
+        perPoker: "0.75%"
       },
       {
         level: 5,
@@ -793,7 +932,12 @@ program at any time without prior notice.`
         monthlyBonus: "388",
         birthdayBonus: "688",
         cunsong: `存款至少500元可申请每月一次再存50% 最高奖金1888元`,
-        drawTimes: "15"
+        drawTimes: "15",
+        perEsport: "0.50%",
+        perSport: "0.50%",
+        perLive: "0.50%",
+        perSlot: "0.90%",
+        perPoker: "0.80%"
       },
       {
         level: 6,
@@ -802,7 +946,12 @@ program at any time without prior notice.`
         monthlyBonus: "888",
         birthdayBonus: "1088",
         cunsong: `存款至少500元可申请每周一次再存30% 最高奖金2888元`,
-        drawTimes: "15"
+        drawTimes: "15",
+        perEsport: "0.55%",
+        perSport: "0.55%",
+        perLive: "0.55%",
+        perSlot: "1.20%",
+        perPoker: "0.85%"
       },
       {
         level: 7,
@@ -811,7 +960,12 @@ program at any time without prior notice.`
         monthlyBonus: "2888",
         birthdayBonus: "6888",
         cunsong: `存款至少500元可申请每周一次再存35% 最高奖金3888元`,
-        drawTimes: "15"
+        drawTimes: "15",
+        perEsport: "0.65%",
+        perSport: "0.65%",
+        perLive: "0.65%",
+        perSlot: "1.50%",
+        perPoker: "0.90%"
       },
       {
         level: 8,
@@ -820,7 +974,12 @@ program at any time without prior notice.`
         monthlyBonus: "5888",
         birthdayBonus: "8888",
         cunsong: `存款至少500元可申请每周一次再存40% 最高奖金5888元`,
-        drawTimes: "15"
+        drawTimes: "15",
+        perEsport: "0.80%",
+        perSport: "0.80%",
+        perLive: "0.80%",
+        perSlot: "1.80%",
+        perPoker: "0.95%"
       },
       {
         level: 9,
@@ -829,7 +988,12 @@ program at any time without prior notice.`
         monthlyBonus: "6888",
         birthdayBonus: "10888",
         cunsong: `存款至少500元可申请每周一次再存45% 最高奖金8888元`,
-        drawTimes: "15"
+        drawTimes: "15",
+        perEsport: "0.90%",
+        perSport: "0.90%",
+        perLive: "0.90%",
+        perSlot: "1.90%",
+        perPoker: "1.00%"
       },
       {
         level: 10,
@@ -838,7 +1002,12 @@ program at any time without prior notice.`
         monthlyBonus: "8888",
         birthdayBonus: "18888",
         cunsong: `存款至少500元可申请每周一次再存50% 最高奖金12888元`,
-        drawTimes: "15"
+        drawTimes: "15",
+        perEsport: "1.00%",
+        perSport: "1.00%",
+        perLive: "1.00%",
+        perSlot: "2.00%",
+        perPoker: "1.20%"
       }
     ]);
 
@@ -937,9 +1106,9 @@ program at any time without prior notice.`
     const isClaimModal = ref(false);
     const claimMsg = ref("");
 
-    // onMounted(() => {
-    //   vipLevel.value = store.vip.replace("VIP", "");
-    // });
+    onMounted(() => {
+      vipLevel.value = store.vip.replace("VIP", "");
+    });
 
     const claimRebate = (type, vipType) => {
       loading.value = true;
@@ -948,9 +1117,8 @@ program at any time without prior notice.`
       } else if (vipType === "birthday") {
         loadingBClaim.value = true;
       }
-      // console.log(eventapi);
       const eventUrl = "/bonus/claim/" + type;
-      console.log(eventUrl);
+      // console.log(eventUrl);
       eventapi
         .put(eventUrl)
         .then((res) => {
@@ -963,19 +1131,6 @@ program at any time without prior notice.`
 
             claimMsg.value = "$" + rebatePoint;
             isClaimModal.value = true;
-
-            // $q.dialog({
-            //   class: "q-px-md q-pt-md",
-            //   title: "สำเร็จ",
-            //   message: "You won " + rebatePoint + " !",
-            //   ok: {
-            //     push: true,
-            //     color: 'deep-orange',
-            //     label: "ตกลง",
-            //     tabindex: 1
-            //   },
-            //   persistent: true
-            // });
           } else {
             // $q.notify({
             //   color: "negative",
@@ -989,6 +1144,7 @@ program at any time without prior notice.`
           loading.value = false;
           loadingMClaim.value = false;
           loadingBClaim.value = false;
+
           // $q.notify({
           //   color: "negative",
           //   position: "top",
@@ -996,29 +1152,6 @@ program at any time without prior notice.`
           //   icon: "report_problem"
           // });
         });
-    };
-
-    const { labels, levels } = vipLevel;
-
-    const onVIPButtonClick = (type) => {
-      if (!store.token) {
-        openLoginAlert(() => {
-          // Redirect to login page
-          router.push({ path: "/login", query: { redirect: "/account/vip" } });
-        });
-      } else {
-        const bonusItem = `dy1-vip-${type}`;
-
-        bonus
-          .claim(bonusItem)
-          .then((res) => {
-            if (res.code === 0) {
-              // Success
-              location.href = `/center/deposit`;
-            } else openCommonError();
-          })
-          .catch(openCommonError);
-      }
     };
 
     return {
@@ -1040,14 +1173,534 @@ program at any time without prior notice.`
       loadingMClaim,
       loadingBClaim,
       tab,
-
-      labels,
-      levels,
-      onVIPButtonClick
+      onVIPButtonClick,
+      btnIsDisabled,
+      startCountdown
     };
   }
 });
 </script>
+<style scoped lang="scss">
+.vip-container {
+  min-height: 100vh;
 
-<style scoped lang="scss" src="src/css/pages/vip.scss"></style>
-<style lang="scss" src="src/css/pages/vip.carousel.scss"></style>
+  .banner-container {
+    background: url("../../assets/vip/banner.png") no-repeat center center;
+    background-size: cover;
+    margin-bottom: -200px;
+    padding-top: 100px;
+    padding-bottom: 200px;
+    // width: 1920px;
+    // height: 450px;
+    font-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 300px;
+    display: flex;
+
+    .btn-wrapper {
+      width: 95%;
+      max-width: 1400px;
+      margin: auto;
+      position: relative;
+
+      .center {
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #ffffff;
+
+        .page-headline {
+          font-size: 150px;
+          line-height: 150px;
+          font-family: Wave;
+        }
+
+        .page-subline {
+          font-size: 25px;
+          line-height: 25px;
+          margin-bottom: 20px;
+          font-family: Wave;
+        }
+
+        .page-blend {
+          background-image: linear-gradient(to right, #de4545, #db7e42);
+          font-family: Wave;
+          color: #ffffff;
+          font-size: 60px;
+          line-height: 60px;
+          padding: 15px;
+          border-radius: 20px;
+          margin-bottom: 10px;
+          width: 100%;
+          max-width: 460px;
+
+          .pesos {
+            font-family: sans-serif;
+            font-weight: bold;
+          }
+        }
+
+        .page-liner {
+          font-size: 20px;
+          text-transform: none;
+        }
+
+        img {
+          max-width: unset;
+        }
+
+        .common-btn.getnow {
+          background: #ffffff;
+          color: #000000;
+          border: transparent;
+
+          &:hover {
+            background: #ffd800;
+          }
+        }
+      }
+    }
+
+    // .jp-container {
+    //   display: flex;
+    //   justify-content: center;
+    //   text-align: center;
+    //   font-size: 110px;
+    //   margin-top: 30px;
+    //   color: #1bcef1;
+    //   font-family: jp;
+    //   font-weight: 600;
+    //   line-height: 120px;
+
+    //   .jp-number-item {
+    //     width: 96px;
+    //     height: 120px;
+    //     // background-image: url("../../assets/images/games/casino/jp_bg.png");
+    //     background-repeat: no-repeat;
+    //     background-size: 100% 100%;
+    //   }
+    // }
+  }
+
+  .inner-vip-mobile {
+    display: none;
+  }
+
+  .vipitem {
+    position: relative;
+    display: flex;
+    // background: url("../../assets/vip/vip_04.png") no-repeat top center;
+    background-size: contain;
+    width: 320px;
+    padding: 40px 0;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
+    .viplevelcard {
+      // padding: 10px;
+      width: 70%;
+      height: 150px;
+      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center
+        center;
+      background-size: contain;
+      position: relative;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      padding: 35px 10px 10px 65px;
+
+      .vip-badgelevel {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .vip-badge {
+          flex: 1;
+          position: absolute;
+          // width: 2.66rem;
+          top: -10px;
+          left: -50px;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .vip-text {
+          flex: 2;
+
+          img {
+            width: 100%;
+            max-width: 73px;
+          }
+        }
+      }
+
+      .vip-badgecontent {
+        margin-top: 5px;
+        font-size: 11px;
+        color: #73561f;
+
+        span {
+          display: block;
+          line-height: 200%;
+        }
+
+        // position: absolute;
+        // right: 20px;
+        // bottom: 20px;
+      }
+    }
+
+    .vipcontents {
+      padding-top: 60px;
+      // background: #2b2b4b;
+      color: #ffffff;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      // border-top: 2px solid #db7e42;
+      // border-bottom: 2px solid #db7e42;
+      .title {
+        font-size: 18px;
+        line-height: 36px;
+      }
+
+      .inner-vip {
+        background-color: #303450;
+        width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-evenly;
+        font-size: 45px;
+        line-height: 53px;
+        font-family: "Arial";
+      }
+
+      .second-vip {
+        // background: #2b2b4b;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        font-size: 45px;
+        line-height: 53px;
+
+        div {
+          flex: 1;
+        }
+
+        .common-btn {
+          padding: 5px 10px;
+          font-size: 12px;
+          line-height: 20px;
+          margin: 0 30px 30px;
+        }
+      }
+    }
+  }
+
+  .vip-benefits {
+    padding: 10px;
+    font-size: 0.75rem;
+    background: #eaeef2;
+
+    .bft-title {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      color: #3a3a3a;
+      font-weight: bold;
+      gap: 10px;
+
+      &:before {
+        content: "";
+        width: 10px;
+        height: 19px;
+        display: inline-block;
+        background-image: url(../../assets/vip/privilege.png);
+        background-position: center center;
+        background-size: 100%;
+      }
+    }
+
+    .bft-row {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .bft-row-cnt {
+        background: #fff;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #3a3a3a;
+
+        .left {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 40px;
+
+          .icon {
+            width: 40px;
+            min-width: 40px;
+
+            img {
+              flex: 1;
+              width: 100%;
+              display: block;
+            }
+          }
+
+          .text {
+          }
+        }
+
+        .btn {
+        }
+      }
+    }
+
+    .bft-promo-row {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+
+      .bft-promo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: calc(33.33% - 10px);
+
+        .promo-percent {
+          color: #ccb455;
+          text-align: center;
+          font-weight: 700;
+          font-size: 25px;
+        }
+
+        .promo-title {
+          color: #3a3a3a;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  .vip-program {
+    .game-title {
+      margin-bottom: 30px;
+    }
+
+    margin: 50px auto;
+    max-width: 1080px;
+    width: 95%;
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      border: 1px solid #db7e42;
+      border-radius: 10px;
+      margin-bottom: 10px;
+
+      .common-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: transparent;
+
+        &.active {
+          background-image: linear-gradient(to right, #de4545, #db7e42);
+        }
+      }
+    }
+
+    :deep(.ant-table-thead > tr > th) {
+      text-align: center;
+
+      &:nth-child(odd) {
+        background: #2b2b4b;
+      }
+    }
+
+    :deep(.ant-table-tbody > tr > td) {
+      &:nth-child(odd) {
+        background: #2b2b4b;
+      }
+    }
+
+    .note {
+      color: #db7d42;
+      margin-top: 5px;
+      display: block;
+    }
+  }
+
+  .q-tab-panel {
+    padding: 8px;
+  }
+
+  table {
+    text-align: center;
+    font-size: 10px;
+    color: #52697e;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+
+    thead {
+      background-color: #7197ff;
+
+      th {
+        color: #ffffff;
+      }
+    }
+
+    tbody {
+      td {
+        border: 1px solid #bac8dc;
+      }
+    }
+  }
+
+  .terms-conditions {
+    color: #52697e;
+    font-size: 0.8rem;
+
+    .title {
+      color: #3865e8;
+    }
+  }
+}
+</style>
+<!-- Carousel CSS only -->
+<style lang="scss">
+.vip-container {
+  .q-tabs {
+    background: url(../../assets/vip/top_bg.png) no-repeat top right;
+    background-attachment: fixed;
+  }
+
+  .q-tabs--not-scrollable .q-tabs__content {
+    gap: 45px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .q-tabs__content--align-justify .q-tab {
+    flex: unset;
+  }
+
+  .q-tab {
+    min-height: 35px;
+
+    &__label {
+      font-size: 12px;
+      color: #ffffff;
+    }
+  }
+
+  .q-tab--active .q-tab__indicator {
+    width: 100%;
+    margin: 0 auto;
+    height: 10px;
+
+    &:before {
+      content: "";
+      background: url(../../assets/vip/tap.png) no-repeat top center;
+      background-size: 100%;
+      height: 10px;
+      width: 19px;
+      display: block;
+      margin: auto;
+    }
+  }
+}
+
+.q-carousel {
+  overflow: hidden;
+  margin: 0 auto;
+  text-align: center;
+
+  ol {
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+  }
+}
+
+.carousel__item {
+  background: url(../../assets/vip/logo_bg.png) no-repeat top center;
+  // background: url(../../assets/images/vip/vipbg.png)no-repeat center center;
+  background-size: cover;
+  font-size: 20px;
+}
+
+.q-carousel__slide {
+  padding: 0;
+  width: 100%;
+}
+
+button {
+  border: 0;
+}
+
+.q-carousel__arrow {
+  background: url(../../assets/vip/left.png) no-repeat center center;
+  background-size: contain;
+  width: 45px;
+
+  .q-icon {
+    display: none;
+  }
+}
+
+.q-carousel__prev,
+.q-carousel__next {
+  position: absolute;
+  padding: 10px;
+
+  box-sizing: content-box;
+  background: url(../../assets/vip/right.png) no-repeat center center;
+  background-size: contain;
+  top: 20%;
+
+  .carousel__icon {
+    display: none;
+  }
+}
+
+.carousel__prev {
+  top: 20%;
+  left: 0%;
+}
+
+.q-carousel__next-arrow--horizontal {
+  transform: rotate(180deg);
+  right: 10px;
+}
+
+h2#swal2-title.swal2-title {
+  font-size: 14px;
+}
+#swal2-html-container.swal2-html-container {
+  font-size: 14px;
+}
+.swal2-confirm.swal2-styled {
+  font-size: 14px;
+  background-color: #5b80e8;
+}
+</style>

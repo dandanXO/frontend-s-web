@@ -24,7 +24,14 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <template v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <template
+                    v-if="
+                      promo.promoType
+                        .toLowerCase()
+                        .split(',')
+                        .includes(tab.name)
+                    "
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
@@ -63,8 +70,6 @@
                       <div class="pad-label label-new">最新活动</div>
                     </a>
                   </template>
-
-
 
                   <!-- <template v-if="tab.name === promo.promoType.toLowerCase()"> -->
 
@@ -118,7 +123,9 @@
       class="bg-white text-black text-center"
     >
       <q-card-section class="q-mb-md">
-        <strong>系统提示</strong><br /><br />
+        <strong>系统提示</strong>
+        <br />
+        <br />
         请登录后再操作
       </q-card-section>
       <q-btn href="/login?redirect=/promo" label="确认" color="dyblue" />
@@ -229,14 +236,19 @@ export default defineComponent({
         isDisplayLogin.value = true
       } else {
 
-        if (route.query.fromAccount) {
+        if (promo.redirectUrl.includes("page-vip")) {
+          router.push({path: '/account/vip'});
+        } else {
+          if (route.query.fromAccount) {
           router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
         } else {
           router.push({path: '/promo', query: {name: promo.redirectUrl }})
         }
         isPromoDetail.value = true
         selectedPromo.value = promo
-      }
+
+        }
+        }
     }
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
@@ -247,24 +259,8 @@ export default defineComponent({
         });
       } else {
         filteredArray.value = promoState.promoList
-        console.log("~~~")
       }
     };
-
-    // const loadAll = () => {
-    //   loadPromo().then((res) => {
-    //     if(res.code === 0) {
-    //       promoState.promoList.push(...res.data);
-    //       res.data.forEach(element => {
-    //         if (element.redirectUrl === route.query.name) {
-    //           showPromoDetails(element)
-    //         }
-    //       });
-    //     }
-    //   }).catch((e) => { console.log("error", e); });
-    //   switchPromoType(promoState.active)
-    // }
-
 
     const loadAll = () => {
       api.get("/promo/page").then((res) => {
@@ -630,7 +626,7 @@ export default defineComponent({
           display: block;
         }
         .hot-promo {
-          background: #272c3d;
+          // background: #272c3d;
           border-radius: 10px;
         }
 
