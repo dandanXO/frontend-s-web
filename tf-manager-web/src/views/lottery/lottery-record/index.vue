@@ -3,6 +3,23 @@
     <div class="header-container">
       <div class="search">
         <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 100px;"
+          default-first-option
+          @focus="loadSites"
+          @change="changeSite"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
           clearable
           v-model="request.winStatus"
           size="small"
@@ -99,6 +116,7 @@ import { onMounted, reactive } from "vue";
 import moment from 'moment';
 import { getLotteryRecords } from "../../../api/privilege-lottery";
 import { useI18n } from "vue-i18n";
+import { getSiteListSimple } from "../../../api/site";
 
 const { t } = useI18n();
 const uiControl = reactive({
@@ -122,6 +140,10 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false
+});
+
+const siteList = reactive({
+  list: []
 });
 
 const request = reactive({
@@ -160,7 +182,14 @@ function changePage(page) {
   }
 }
 
-onMounted(() => {
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+}
+
+onMounted(async() => {
+  await loadSites();
+  request.siteId = siteList.list[0].id
   loadRecords();
 });
 </script>
