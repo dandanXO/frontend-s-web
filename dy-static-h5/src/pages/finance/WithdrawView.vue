@@ -127,17 +127,17 @@
               {{
                 "单笔提款: " +
                 selectedWithdrawalMethod.withdrawMin +
-                "元 - " +
+                "RMB - " +
                 selectedWithdrawalMethod.withdrawMax +
-                "元"
+                "RMB"
               }}
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
               {{
-                "单日可提款: " +
+                "今日提款: " +
                 selectedWithdrawalMethod.withdrawMaxAmount +
-                "元"
+                "RMB"
               }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
@@ -308,15 +308,21 @@ export default defineComponent({
                 icon: "check_circle_outline"
               });
             } else {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: response.message,
+              icon: "report_problem"
+            });
+            }
+          }).catch((error) => {
+            console.log("error", error);
             // $q.notify({
             //   color: "negative",
             //   position: "top",
             //   message: response.message,
             //   icon: "report_problem"
             // });
-            }
-          }).catch((error) => {
-            console.log("error", error);
           });
           $q.loading.hide();
       }
@@ -494,7 +500,6 @@ export default defineComponent({
       // filter: drop-shadow(0px 0px 3px #ffffff);
       .withdraw-img {
         border: 2px solid #4873f1;
-
       }
       // img {
       //   border: 2px solid #33bcd4;
