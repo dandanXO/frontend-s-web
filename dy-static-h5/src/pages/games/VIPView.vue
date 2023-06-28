@@ -91,6 +91,7 @@
                       label="领取"
                       :disable="btnIsDisabled"
                       @click="onVIPButtonClick('monthly')"
+                      :loading="false"
                     />
                   </template>
                 </div>
