@@ -540,9 +540,9 @@ export default defineComponent({
     // };
     let validateBankLength = (val) => {
         if (isCrypto.value == true) {
-         return (val.length > 34 && val.length < 36) || '长度应为34到36个字符'
+         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
         } else if (isCrypto.value == false) {
-          return (val.length > 16 && val.length < 19) || '长度应为6到12个字符'
+          return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
         }
     }
     return {
