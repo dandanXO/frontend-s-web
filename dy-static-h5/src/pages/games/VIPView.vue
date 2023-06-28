@@ -539,7 +539,7 @@ export default defineComponent({
               // Disable the button after 3 or more errors
               btnIsDisabled.value = true;
               const currentTime = new Date().getTime();
-              const expirationTime = currentTime + 120000; // 2 minutes in milliseconds
+              const expirationTime = currentTime + 10000; // 10 secs in milliseconds
 
               localStorage.setItem("vipButtonDisabled", "true");
               localStorage.setItem(
@@ -549,7 +549,7 @@ export default defineComponent({
               // Start the countdown
               startCountdown(expirationTime);
               Swal.fire({
-                text: `按钮将在2分钟后启用`,
+                text: `按钮将在30秒后启用`,
                 confirmButtonText: "确认"
               });
             }

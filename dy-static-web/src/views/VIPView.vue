@@ -662,7 +662,7 @@ export default defineComponent({
               // Disable the button after 3 or more errors
               btnIsDisabled.value = true;
               const currentTime = new Date().getTime();
-              const expirationTime = currentTime + 120000; // 2 minutes in milliseconds
+              const expirationTime = currentTime + 30000; // 30 secs in milliseconds
               localStorage.setItem("vipButtonDisabled", "true");
               localStorage.setItem(
                 "vipButtonExpirationTime",
@@ -670,7 +670,7 @@ export default defineComponent({
               );
               // Start the countdown
               startCountdown(expirationTime);
-              ElMessageBox.alert(`按钮将在2分钟后启用`, "系统提示", {
+              ElMessageBox.alert(`按钮将在30秒后启用`, "系统提示", {
                 confirmButtonText: "确认",
                 buttonSize: "large",
                 showClose: false,
