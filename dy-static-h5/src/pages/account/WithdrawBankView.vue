@@ -400,7 +400,6 @@ export default defineComponent({
         }
         if (selectedBankType.value === "数字货币" && element.bankType === 'CRYPTO') {
           isCrypto.value = true
-          console.log("crypto!")
           banksList.value.push(element);
         }
       })
