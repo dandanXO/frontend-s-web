@@ -151,6 +151,23 @@
           />
         </el-select>
 
+        <el-select
+          v-model="request.thirdPartyName"
+          size="small"
+          :placeholder="t('fields.thirdPartyName')"
+          class="filter-item"
+          style="width: 200px;margin-right:10px"
+          default-first-option
+          filterable
+        >
+          <el-option
+            v-for="item in uiControl.thirdPartyNameList"
+            :key="item.paymentName"
+            :label="item.paymentName"
+            :value="item.paymentName"
+          />
+        </el-select>
+
         <el-button
           icon="el-icon-download"
           size="mini"
@@ -600,25 +617,6 @@
               :key="item.key"
               :label="item.displayName"
               :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item :label="t('fields.thirdPartyName')" prop="thirdPartyName">
-          <el-select
-            v-model="request.thirdPartyName"
-            size="small"
-            :placeholder="t('fields.thirdPartyName')"
-            class="filter-item"
-            style="width: 200px;"
-            default-first-option
-            filterable
-          >
-            <el-option
-              v-for="item in uiControl.thirdPartyNameList"
-              :key="item.paymentName"
-              :label="item.paymentName"
-              :value="item.paymentName"
             />
           </el-select>
         </el-form-item>
