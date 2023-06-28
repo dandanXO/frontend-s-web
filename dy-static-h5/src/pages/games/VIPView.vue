@@ -549,6 +549,7 @@ export default defineComponent({
               // Start the countdown
               startCountdown(expirationTime);
               Swal.fire({
+                title: "系统提示",
                 text: `按钮将在30秒后启用`,
                 confirmButtonText: "确认"
               });
