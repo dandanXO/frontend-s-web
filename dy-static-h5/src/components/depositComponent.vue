@@ -183,6 +183,21 @@
       <q-btn @click="clearInfo" label="明白" color="dyblue" />
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="isNewUser">
+    <q-card style="width: 100%; padding: 20px" class="text-black">
+      <q-card-section class="q-mb-md">
+        <strong>温馨提示</strong>
+        <br />
+        <br />
+        为保证资金安全，存款前前先绑定手机号
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn label="暫不绑定" color="primary" href="/" />
+        <q-btn label="前往绑定" color="dyblue" href="/account/personal" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup id="DepositComponent">
@@ -202,6 +217,12 @@ import { useRouter } from "vue-router";
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
+const isNewUser = ref(false);
+const checkNewUser = () => {
+  if (store.phone == null) {
+    isNewUser.value = true;
+  }
+};
 const isDeposited = ref(false);
 const isLoading = ref(true);
 const payTypeClass = ref();
@@ -554,6 +575,7 @@ async function pDepo(deposit) {
 
 onMounted(() => {
   initPay();
+  checkNewUser();
 });
 </script>
 

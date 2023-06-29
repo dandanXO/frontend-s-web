@@ -27,7 +27,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <router-link :to="dataType === 'slot' ? `${dataType}?platform=${data.code}` : ``">
+  <router-link :to="dataType === 'slot' || (dataType === 'lottery') ? `${dataType}?platform=${data.code}` : ``">
     <img
       :src="
         require(`../../assets/images/index/${dataType}/${dataType}_bg_${data.name.toLowerCase()}.png`)
