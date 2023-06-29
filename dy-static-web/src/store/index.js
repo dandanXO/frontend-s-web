@@ -42,6 +42,11 @@ export const userStore = defineStore("userStore", {
           // message.error(err.message);
         });
     },
+    autoLogin(token) {
+      this.token = token;
+      this.getBalance();
+      this.getMemberInfo();
+    },
     telephoneLogin(loginInfo) {
       return mobileLogin(loginInfo)
       .then((ret) => {
