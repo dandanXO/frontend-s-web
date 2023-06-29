@@ -403,7 +403,7 @@
             </el-row>
             <el-form-item label="电话号码" prop="telephone">
               <el-space>
-              
+
               <el-input :disabled="disableSendVerificationButton" class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
               <el-button :disabled="disableSendVerificationButton" @click="openCaptchaForm('REGISTER')" size="small" class="common-btn">
                 <span v-if="disableSendVerificationButton">已发送（倒数{{ regCountdown }}秒)</span>
@@ -1194,14 +1194,14 @@ export default defineComponent({
               disableSendVerificationButton.value = true
 
               regForm.smsCodeId = response.data.codeId;
-              
+
               ElMessage({
                 type: 'success',
                 message: '发送手机验证码成功'
               });
 
               captchaDialogVisible.value = false;
-              
+
               regCountdown.value = registerSendOtpDisabledTimeout;
 
               const now = new Date();
@@ -1290,16 +1290,16 @@ export default defineComponent({
                 .then((response) => {
                   const regResult = response.code;
                   if (regResult === 0) {
-
                     ElMessage({
                       type: 'success',
                       message: '注册成功'
                     });
+                    store.autoLogin(response.data);
                     registerDialogVisible.value = false;
-                    loginDialogVisible.value = true;
+                    // loginDialogVisible.value = true;
 
                     sessionStorage.removeItem("REFERRAL_CODE");
-                    getCode();
+                    // getCode();
                   } else {
                     getCode();
                     // message.error(response.message);
@@ -1355,7 +1355,7 @@ export default defineComponent({
 
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
-        
+
 
       getAffiliateCode();
       loadAnnouncement();
