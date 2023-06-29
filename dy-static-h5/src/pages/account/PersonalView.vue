@@ -23,8 +23,7 @@
         v-model="formDetail.realName"
         label="姓名"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入姓名',
-                isValidName]"
+        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
         label-color=""
         :readonly="personalState.memberInfo.realName ? true : false"
       />
@@ -72,6 +71,7 @@
         :readonly="personalState.memberInfo.birthday ? true : false"
       /> -->
       <q-input
+        ref="emailRef"
         standout
         bg-color="white"
         class="q-pb-xs"
@@ -86,6 +86,7 @@
       />
       <q-input
         standout
+        ref="phoneRef"
         bg-color="white"
         class="q-pb-xs"
         hide-bottom-space
@@ -104,6 +105,9 @@
       <div class="text-center q-mt-md" v-if="canEdit">
         <q-btn size="md" color="dyblue" @click="updateState" label="更新信息" />
       </div>
+      <!-- <div class="text-center q-mt-md" v-else>
+        <q-btn size="md" color="dyblue" @click="editState" label="修改信息" />
+      </div> -->
     </q-form>
   </div>
 </template>
@@ -144,7 +148,7 @@ export default defineComponent({
     };
 
     const canEdit = computed(() => {
-      if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)) {
+      if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday || !personalState.memberInfo.phone || !personalState.memberInfo.email)) {
         return true;
       }
       return false;
@@ -276,6 +280,13 @@ export default defineComponent({
     const birthdayRef = ref();
     const phoneRef = ref();
     const formDetail = reactive([]);
+    const editState = () => {
+      isEdit.value = true;
+      isEditRealName.value = true;
+      isEditEmail.value = true;
+      isEditPhone.value = true;
+      isEditBirthday.value = true;
+    }
     const updateState = () => {
       const updateInfo = {};
       if (!personalState.memberInfo.birthday) {
@@ -290,9 +301,23 @@ export default defineComponent({
           return;
         }
       }
+      if (!personalState.memberInfo.phone) {
+        phoneRef.value.validate();
+        if (phoneRef.value.hasError) {
+          return;
+        }
+      }
+      if (!personalState.memberInfo.email) {
+        emailRef.value.validate();
+        if (emailRef.value.hasError) {
+          return;
+        }
+      }
       console.log(updateInfo);
       updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
       updateInfo.realName = formDetail.realName;
+      updateInfo.phone = formDetail.phone;
+      updateInfo.email = formDetail.email;
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
@@ -336,6 +361,7 @@ export default defineComponent({
       isEditEmail,
       isEditPhone,
       loadInfo,
+      editState,
       isEditBirthday,
       formDetail,
       profileFormRef,
