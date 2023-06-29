@@ -542,10 +542,11 @@ async function pDepo(deposit) {
                 isDeposited.value = true;
               }
               if (response.payResultType === 'POST_SUBMIT') {
+                localStorage.setItem("responseDetails", JSON.stringify(response));
                 if (response.paramKey === null || response.paramKey === "") {
-                  router.push(`display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`) 
+                  router.push(`/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`) 
                 } else {
-                  router.push(`display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`) 
+                  router.push(`/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`) 
                 }
                 isDeposited.value = true;
               }

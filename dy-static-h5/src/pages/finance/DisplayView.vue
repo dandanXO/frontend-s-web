@@ -6,13 +6,23 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { Platform } from "quasar";
+import liff from "@line/liff"
 import { cashier } from "src/boot/axios";
 
 const request = ref({});
 const formRef = ref();
 function getRequest(url) {
   if (!url) {
-    url = window.location.search;
+    if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+      url = window.location.search;
+    } else {
+      url = window.location.search;
+      let params = localStorage.getItem("responseDetails");
+      params = params ? JSON.parse(params) : "";
+      const paramData = '?' + params.data + '&payResultType=' + params.payResultType + '&requestUrl=' + params.requestUrl 
+      url = paramData
+    }
   }
   let theRequest = {};
   if (url.indexOf("?") != -1) {
@@ -22,6 +32,7 @@ function getRequest(url) {
   for (let i = 0; i < strs.length; i++) {
     theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
   }
+  console.log(theRequest)
   return theRequest;
 }
 
@@ -59,16 +70,35 @@ function postSubmit() {
 }
 
 onMounted(async () => {
-  request.value = getRequest();
-  if (request.value.paramKey) {
-    const d = await cashier.get(`/param/key/${key}`, request.value.paramKey).then(() => {
-      if (request.value.payResultType == "POST_SUBMIT") {
-        request.value = Object.assign({}, getRequest(d.data), request.value);
-      } else {
-        request.value.data = d.data;
-      }
-    })
-  }
-  renderOrSubmit();
+    request.value = getRequest();
+    if (request.value.paramKey) {
+      const d = await cashier.get(`/param/key/${key}`, request.value.paramKey).then(() => {
+        if (request.value.payResultType == "POST_SUBMIT") {
+          request.value = Object.assign({}, getRequest(d.data), request.value);
+        } else {
+          request.value.data = d.data;
+        }
+      })
+    }
+    renderOrSubmit();
+  // } else {
+  //   let params = localStorage.getItem("responseDetails");
+  //   params = params ? JSON.parse(params) : "";
+  //   request.value = getRequest();
+  //   alert();
+  //   console.log(request.value)
+  //   if (params.paramKey) {
+  //     const d = await cashier.get(`/param/key/${key}`, params.paramKey).then(() => {
+  //       if (params.payResultType == "POST_SUBMIT") {
+  //         alert('assigningObjectotRequest')
+  //         request.value = Object.assign({}, getRequest(d.data), request.value);
+  //         alert(request.value)
+  //       } else {
+  //         request.value.data = d.data;
+  //       }
+  //     })
+  //   }
+  //   postSubmit();
+  // // }
 });
 </script>
