@@ -668,7 +668,7 @@
             >知道了
           </el-button>
           <el-button class="more" color="#434343"
-            ><a href="/promotion.html" target="_self">查看详情</a></el-button
+            ><a href="/promotion" target="_self">查看详情</a></el-button
           >
         </div>
       </div>

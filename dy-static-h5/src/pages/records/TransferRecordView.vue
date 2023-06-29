@@ -59,26 +59,22 @@ export default defineComponent({
       // },]
     }
     const tableHeaders = ([
-      {
-        key: 'orderNo',
-        label: '单号'
-      },
-      {
-        key: 'statusText',
-        label: '状态'
-      },
-      {
-        key: 'typeText',
-        label: '类型'
-      },
-      {
-        key: 'feedbackTime',
-        label: '催单时间',
-      },
-      {
-        key: 'financeRemark',
-        label: '回复'
-      }
+    {
+        key: 'recordTime',
+        label: '转账时间'
+    },
+    {
+        key: 'platformCode',
+        label: '转账平台'
+    },
+    {
+        key: 'type',
+        label: '转账类型'
+    },
+    {
+        key: 'amount',
+        label: '转账数额',
+    },
     ])
     onMounted(() => {
       loadDepositTable()

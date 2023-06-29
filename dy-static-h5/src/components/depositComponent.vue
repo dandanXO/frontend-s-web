@@ -292,7 +292,7 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 function initPay() {
   $q.loading.show({
-    message: "加载银行信息。 请稍等..."
+    message: "加载数据中... 请稍等..."
   });
 
   payMethods.value = [];
@@ -509,7 +509,7 @@ async function pDepo(deposit) {
       if (res.code === 0) {
         const response = res.data.result
         if (res.data.result.payResultType === "OFFLINE") {
-          
+
         }
         if (res.data.result.payResultType === "RENDER_HTML") {
           isDisplay.value = true;
@@ -548,9 +548,9 @@ async function pDepo(deposit) {
               if (response.payResultType === 'POST_SUBMIT') {
                 localStorage.setItem("responseDetails", JSON.stringify(response));
                 if (response.paramKey === null || response.paramKey === "") {
-                  router.push(`/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`) 
+                  router.push(`/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`)
                 } else {
-                  router.push(`/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`) 
+                  router.push(`/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`)
                 }
                 // isDeposited.value = true;
               }
