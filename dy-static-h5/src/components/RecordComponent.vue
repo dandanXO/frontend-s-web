@@ -28,7 +28,7 @@
                 <div v-else-if="obj === 'commitDate' || obj === 'feedbackTime'">
                   {{ humanDatetime(det[obj]) }}
                 </div>
-                <div v-else-if="obj === 'platformCode' || obj === 'type'">
+                <div v-else-if="obj === 'platformCode' || obj === 'financeRemark'">
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div v-else>
