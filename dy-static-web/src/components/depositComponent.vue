@@ -446,11 +446,11 @@ function doDeposit(data) {
           const newWin = window.open(`/`);
           newWin.localStorage.setItem("formDetails", JSON.stringify(form));
           if (response.payResultType === 'GET_SUBMIT') {
-            isDeposited.value = true;
+            // isDeposited.value = true;
             newWin.location.href = response.requestUrl;
           }
           if (response.payResultType === 'POST_SUBMIT') {
-            isDeposited.value = true;
+            // isDeposited.value = true;
             if (response.paramKey === null || response.paramKey === "") {
               newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
             } else {

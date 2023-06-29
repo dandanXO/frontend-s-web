@@ -365,8 +365,13 @@ export default defineComponent({
             //     }
             //   });
             // }
-            cardRef.value.resetValidation();
-
+            if (cardRef.value) {
+              cardRef.value.resetValidation();
+            }
+            if (amountRef.value) {
+              withdrawInfo.amount = ""
+              amountRef.value.resetValidation();
+            }
         }
       }).catch((error) => {
         console.log("error", error);
