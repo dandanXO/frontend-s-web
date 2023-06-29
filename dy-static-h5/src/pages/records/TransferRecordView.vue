@@ -61,11 +61,11 @@ export default defineComponent({
     const tableHeaders = ([
     {
         key: 'recordTime',
-        label: '游戏时间'
+        label: '转账时间'
     },
     {
         key: 'platformCode',
-        label: '游戏平台'
+        label: '转账平台'
     },
     {
         key: 'type',
