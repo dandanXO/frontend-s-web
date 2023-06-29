@@ -6,7 +6,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Platform } from "quasar";
+import { Platform, openURL } from "quasar";
 import liff from "@line/liff"
 import { cashier } from "src/boot/axios";
 
@@ -57,7 +57,12 @@ function renderHtml() {
 }
 
 function postSubmit() {
-  formRef.value.action = request.value.requestUrl;
+  if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+    formRef.value.action = request.value.requestUrl;
+  }
+  else {
+    formRef.value.action = openURL(request.value.requestUrl);
+  }
   delete request.value.requestUrl;
   delete request.value.payResultType;
   delete request.value.paramKey;
