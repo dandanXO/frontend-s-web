@@ -173,29 +173,19 @@
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
-    <q-card style="width: 100%; padding: 20px" class="bg-dyblue text-black">
-      <q-card-section class="q-mb-md">
-        您已被重定向到您的特定银行以继续进行存款。
-        <br />
-        <br />
-        入金成功后会反映这里。
+    <q-card style="width: 100%;">
+      <q-card-section style="padding: 10px 20px;" class="q-pa-md bg-dyblue text-white">
+        已存款
       </q-card-section>
-      <q-btn @click="clearInfo" label="明白" color="dyblue" />
-    </q-card>
-  </q-dialog>
-
-  <q-dialog width="100%" v-model="isNewUser">
-    <q-card style="width: 100%; padding: 20px" class="text-black">
-      <q-card-section class="q-mb-md">
-        <strong>温馨提示</strong>
-        <br />
-        <br />
-        为保证资金安全，存款前前先绑定手机号
-      </q-card-section>
-      <q-card-actions align="right">
-        <q-btn label="暫不绑定" color="primary" href="/" />
-        <q-btn label="前往绑定" color="dyblue" href="/account/personal" />
-      </q-card-actions>
+      <div style="padding: 20px">
+        <q-card-section class="q-mb-md q-pa-md">
+          您将被重定向到您的银行页面以完成存款。
+          <br />
+          <br />
+          入金成功后会反映这里。
+        </q-card-section>
+        <q-btn @click="clearInfo" label="明白" color="dyblue" />
+    </div>
     </q-card>
   </q-dialog>
 </template>
@@ -217,12 +207,6 @@ import { useRouter } from "vue-router";
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
-const isNewUser = ref(false);
-const checkNewUser = () => {
-  if (store.phone == null) {
-    isNewUser.value = true;
-  }
-};
 const isDeposited = ref(false);
 const isLoading = ref(true);
 const payTypeClass = ref();
@@ -519,51 +503,92 @@ async function pDepo(deposit) {
       // console.log(res)
 
       if (res.code === 0) {
+        const response = res.data.result
+        if (res.data.result.payResultType === "OFFLINE") {
+          
+        }
         if (res.data.result.payResultType === "RENDER_HTML") {
           isDisplay.value = true;
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
-            // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
-            const newWin = window.open(`/depositLoading`, "Bank");
-            newWin.localStorage.setItem("formDetails", JSON.stringify(res));
-          } else {
-            localStorage.setItem("formDetails", JSON.stringify(res));
-            router.push({ path: "/depositLoading" });
-          }
-
-          window.addEventListener(
-            "message",
-            (event) => {
-              if (event.data?.msg) {
-                if (event.data.msg === "success") {
-                  isDeposited.value = true;
-                  localStorage.setItem("isBacked", JSON.stringify(true));
-                } else {
-                  $q.notify({
-                    color: "negative",
-                    position: "top",
-                    message: event.data.msg,
-                    icon: "report_problem"
-                  });
-                }
+          // if (
+          //   (Platform.is.desktop || Platform.is.webkit) &&
+          //   !Platform.is.capacitor &&
+          //   Platform.is.name !== "webkit" &&
+          //   !liff.isInClient()
+          // ) {
+            if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+              // const newWin = window.open(`/depositLoading`, "Bank");
+              // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              const newWin = window.open(`/`);
+              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === 'GET_SUBMIT') {
+                newWin.location.href = response.requestUrl;
+                isDeposited.value = true;
               }
-            },
-            { once: true }
-          );
-        }
-      } else {
+              if (response.payResultType === 'POST_SUBMIT') {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
+                isDeposited.value = true;
+              }
+            } else {
+              localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === 'GET_SUBMIT') {
+                location.href = response.requestUrl;
+                isDeposited.value = true;
+              }
+              if (response.payResultType === 'POST_SUBMIT') {
+                if (response.paramKey === null || response.paramKey === "") {
+                  router.push(`display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`) 
+                } else {
+                  router.push(`display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`) 
+                }
+                isDeposited.value = true;
+              }
+            }
+
+            // window.addEventListener(
+            //   "message",
+            //   (event) => {
+            //     if (event.data?.msg) {
+            //       if (event.data.msg === "success") {
+            //         isDeposited.value = true;
+            //         localStorage.setItem("isBacked", JSON.stringify(true));
+            //       } else {
+            //         $q.notify({
+            //           color: "negative",
+            //           position: "top",
+            //           message: event.data.msg,
+            //           icon: "report_problem"
+            //         });
+            //       }
+            //     }
+            //   },
+            //   { once: true }
+            // );
+      }
         // console.log(res);
         // postMessage({ msg: res.message }, "*");
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
       }
     })
     .catch((error) => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: error.message,
+          icon: "report_problem"
+        });
       // postMessage(
       //   {
       //     msg: error.message
@@ -575,7 +600,6 @@ async function pDepo(deposit) {
 
 onMounted(() => {
   initPay();
-  checkNewUser();
 });
 </script>
 

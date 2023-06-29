@@ -22,18 +22,16 @@ export function doIt(resp) {
 }
 
 function locationUrl(resp) {
-  const newWin = window.open(`/`)
-  newWin.location.href = resp.requestUrl;
-  return null;
+  return resp
 }
 
 function postSubmit(resp) {
-  if (resp.paramKey === null || resp.paramKey === "") {
-    location.href = `display?${resp.data}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
-  } else {
-    location.href = `display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
-  }    
-  return null
+  // if (resp.paramKey === null || resp.paramKey === "") {
+  //   location.href = `display?${resp.data}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
+  // } else {
+  //   location.href = `display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
+  // }
+  return resp
 }
 
 function renderPage(resp) {
@@ -45,6 +43,6 @@ function renderPage(resp) {
     } else {
       location.href = `display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}`;
     }
-    return null
+    return 'renderPage'
   }
 }

@@ -91,7 +91,7 @@
       </template>
     </q-input>
 
-    <!-- <q-input
+    <q-input
       standout
       bg-color="white"
       ref="telRef"
@@ -104,9 +104,9 @@
       <template v-slot:prepend>
         <img src="../assets/images/login/telephone.png" width="20" />
       </template>
-    </q-input> -->
+    </q-input>
 
-    <!-- <q-input
+    <q-input
       standout
       bg-color="white"
       ref="emailRef"
@@ -123,7 +123,7 @@
       <template v-slot:prepend>
         <img src="../assets/images/login/email.png" width="20" />
       </template>
-    </q-input> -->
+    </q-input>
     <q-input
       standout
       bg-color="white"
@@ -191,8 +191,8 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      // telephone: "",
-      // email: "",
+      telephone: "",
+      email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -238,8 +238,8 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      // telRef.value.validate();
-      // emailRef.value.validate();
+      telRef.value.validate();
+      emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: "注册中"
@@ -248,8 +248,8 @@ export default defineComponent({
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
-        // telRef.value.hasError ||
-        // emailRef.value.hasError ||
+        telRef.value.hasError ||
+        emailRef.value.hasError ||
         verificationRef.value.hasError
       ) {
         $q.loading.hide();
@@ -267,13 +267,16 @@ export default defineComponent({
           const sidParam = FingerprintJS.hashComponents(allComponents);
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
-          if ($q.platform.is.capacitor) {
-            if ($q.platform.is.android) {
-              regForm.regDevice = "ANDROID";
-            } else if ($q.platform.is.ios) {
-              regForm.regDevice = "IOS";
+          if (("standalone" in window.navigator) && window.navigator.standalone) {      
+              regForm.regDevice = "IOS"
+            } else {
+              regForm.regDevice = Platform.is.mobile ? "H5" : "WEB";
+              if (Platform.is.capacitor) {
+                if (Platform.is.android) {
+                  regForm.regDevice = "ANDROID"
+                }
+              }
             }
-          }
           api
             .post("/member/register", qs.stringify(regForm))
             .then((ret) => {

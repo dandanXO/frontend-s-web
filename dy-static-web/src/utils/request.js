@@ -49,6 +49,10 @@ const onResponse = (response) => {
     if (SkipErrorCode(res.code)) {
       return response.data;
     }
+    if (res.code === ResponseCode.ERROR_AMOUNT_PRIVILEGE_DEPOSIT) {
+      res.message ='优惠存款金额不符合规则'
+      return res
+    }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       store.token = null;
       location.reload();

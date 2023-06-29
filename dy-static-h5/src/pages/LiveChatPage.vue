@@ -5,7 +5,7 @@
     title="description"
   ></iframe> -->
     <iframe
-    :src="'https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&lang=zh-CN&type=2&way=' + regDevice + '&token=' + store.token"
+    :src="'https://csweb01.amv4xjcbd.com/?partnerId=2&lang=zh-CN&type=2&way=' + regDevice + '&token=' + store.token"
     title="description"
   ></iframe>
   <!-- <div class="iFrameFull">
