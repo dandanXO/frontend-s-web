@@ -129,9 +129,9 @@
         >
           <el-option
             v-for="item in uiControl.payType"
-            :key="item.id"
-            :label="item.name"
-            :value="item.code"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
           />
         </el-select>
         <el-select
@@ -649,9 +649,6 @@ import {
   getAllPrivilegeInfo,
   getAllPrivilegeInfoBySiteId,
 } from '../../../api/privilege-info'
-import {
-  getActivePaymentTypes
-} from '../../../api/payment-type'
 import { useI18n } from 'vue-i18n'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../api/site'
@@ -805,7 +802,10 @@ const uiControl = reactive({
     },
     { key: 4, displayName: t('depositStatus.CLOSED'), value: 'CLOSED' },
   ],
-  payType: [],
+  payType: [
+    { key: 1, displayName: 'BANK', value: 'BANK' },
+    { key: 2, displayName: 'OFFLINE', value: 'OFFLINE' },
+  ],
   clientType: [
     { key: 1, displayName: 'WEB', value: 'WEB' },
     { key: 2, displayName: 'H5', value: 'H5' },
@@ -853,12 +853,6 @@ function convertDateToEnd(date) {
   var m = moment(date)
   m.set({ hour: 23, minute: 59, second: 59 })
   return m.format('YYYY-MM-DD HH:mm:ss')
-}
-
-async function loadPaymentTypes() {
-  const { data: ret } = await getActivePaymentTypes();
-  console.log(ret)
-  uiControl.payType = ret
 }
 const exportPercentage = ref(0)
 
@@ -1161,7 +1155,6 @@ onMounted(async () => {
   loadVips()
   loadRecord()
   loadThirdParty()
-  loadPaymentTypes()
 })
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>

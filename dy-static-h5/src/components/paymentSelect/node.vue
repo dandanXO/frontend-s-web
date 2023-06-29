@@ -274,7 +274,7 @@ $node-color: #4ab6fd;
     padding: 0 30px;
 
     .account-title-container {
-      margin: 0 -30px;
+      // margin: 0 -30px;
       background: none;
     }
 
@@ -426,8 +426,8 @@ $node-color: #4ab6fd;
 
     .promo {
       position: absolute;
-      right: 0;
-      top: 0;
+      right: -10px;
+      top: -10px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
@@ -447,7 +447,7 @@ $node-color: #4ab6fd;
   .node {
     .node {
       .account-title-container {
-        margin: 0 -10px;
+        // margin: 0 -10px;
       }
     }
   }
