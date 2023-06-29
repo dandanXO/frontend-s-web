@@ -381,13 +381,15 @@ const depositForm = ref(null);
 async function onSelect(value) {
   isDisplay.value = false;
 
-  if (!Platform.is.android || !Platform.is.capacitor) {
-    clearInfo();
+  clearInfo();
+  // if (!Platform.is.android || !Platform.is.capacitor) {
+  // }
+  // if (liff.isInClient()) {
+  //   clearInfo();
+  // }
+  if (depositAmtRef.value) {
+    depositAmtRef.value.resetValidation();
   }
-  if (liff.isInClient()) {
-    clearInfo();
-  }
-  // depositAmtRef.value.resetValidation();
   if (value) {
     if (value.group) {
       value.children.forEach((element) => {
@@ -430,7 +432,9 @@ function clearInfo() {
   isDeposited.value = false;
   form.localAmount = null;
   selectedPrivilege.value = "";
-  // depositForm.value.reset();
+  if (depositForm.value) {
+    depositForm.value.reset();
+  }
   checkMinDepositAmt();
 }
 
@@ -525,7 +529,7 @@ async function pDepo(deposit) {
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === 'GET_SUBMIT') {
                 newWin.location.href = response.requestUrl;
-                isDeposited.value = true;
+                // isDeposited.value = true;
               }
               if (response.payResultType === 'POST_SUBMIT') {
                 if (response.paramKey === null || response.paramKey === "") {
@@ -533,13 +537,13 @@ async function pDepo(deposit) {
                 } else {
                   newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                 }
-                isDeposited.value = true;
+                // isDeposited.value = true;
               }
             } else {
               localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === 'GET_SUBMIT') {
                 location.href = response.requestUrl;
-                isDeposited.value = true;
+                // isDeposited.value = true;
               }
               if (response.payResultType === 'POST_SUBMIT') {
                 localStorage.setItem("responseDetails", JSON.stringify(response));
@@ -548,7 +552,7 @@ async function pDepo(deposit) {
                 } else {
                   router.push(`/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`)
                 }
-                isDeposited.value = true;
+                // isDeposited.value = true;
               }
             }
 
