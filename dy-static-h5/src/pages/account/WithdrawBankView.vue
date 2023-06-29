@@ -446,13 +446,13 @@ export default defineComponent({
         ok: {
           push: true,
           color: 'brightbtn',
-          label: "Confirm",
+          label: "确认",
           tabindex: 1
         },
         cancel: {
           push: true,
           color: 'warning',
-          label: "Cancel",
+          label: "取消",
           tabindex: 0
         },
         persistent: true,
