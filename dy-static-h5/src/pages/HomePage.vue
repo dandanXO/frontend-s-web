@@ -86,7 +86,7 @@
       <div class="welcome-liner">
         欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}
       </div>
-      <div>
+      <div v-if="store.token">
         <q-badge color="orange" text-color="black" :label="store.vip" />
         <span class="q-ml-sm">￥{{ store.balance }}</span>
       </div>
