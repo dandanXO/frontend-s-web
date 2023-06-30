@@ -442,7 +442,7 @@ export default defineComponent({
       const dialog = $q.dialog({
         class: "q-px-md q-pt-md",
         title: "解绑 " + card.bankName + "?",
-        message: "你确定要解绑银行卡： " + card.bankName + "?",
+        message: "你确定要解绑： " + card.bankName + "?",
         ok: {
           push: true,
           color: 'brightbtn',
