@@ -1,6 +1,6 @@
-import {defineStore} from "pinia";
-import {api, cashier, eventapi} from "boot/axios";
-import {SessionStorage, Notify, Platform} from "quasar";
+import { defineStore } from "pinia";
+import { api, cashier, eventapi } from "boot/axios";
+import { SessionStorage, Notify, Platform } from "quasar";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -22,9 +22,9 @@ export const userStore = defineStore("userStore", {
       token: SessionStorage.getItem("TOKEN") || "",
       vip: "",
       evip: "",
-      currency: {value: "￥", label: "RMB"},
-      personalAddress: '',
-      unreadInboxMail: 0,
+      currency: { value: "￥", label: "RMB" },
+      personalAddress: "",
+      unreadInboxMail: 0
     };
   },
   actions: {
@@ -32,8 +32,8 @@ export const userStore = defineStore("userStore", {
       return !!SessionStorage.getItem("TOKEN");
     },
     memberLogin(loginInfo) {
-      const regDevice = Platform.is.mobile ? "H5" : "H5"
-      loginInfo.way = regDevice
+      const regDevice = Platform.is.mobile ? "H5" : "H5";
+      loginInfo.way = regDevice;
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {
         if (ret.code === 0) {
@@ -47,6 +47,28 @@ export const userStore = defineStore("userStore", {
           });
         }
       });
+    },
+    autoLogin(token) {
+      SessionStorage.set("TOKEN", token);
+      this.token = token;
+      this.getBalance();
+      this.getMemberInfo();
+    },
+    telephoneLogin(loginInfo) {
+      return mobileLogin(loginInfo)
+        .then((ret) => {
+          if (ret.code === 0) {
+            this.token = ret.data;
+            this.getBalance();
+            this.getMemberInfo();
+          } else {
+            // throw new Error(ret.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          // message.error(err.message);
+        });
     },
     getMemberInfo() {
       api.interceptors.request.use(async (req) => {
@@ -76,14 +98,14 @@ export const userStore = defineStore("userStore", {
           this.memberType = response.data.memberType;
           this.vip = response.data.vip;
           this.profilePicture = response.data.pictureUrl;
-          this.displayName = response.data.displayName
+          this.displayName = response.data.displayName;
           // this.personalAddress = response.data.personalAddress
           if (response.data.evip) {
-            var exclusive = JSON.parse(response.data.evip)
+            var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
           }
 
-          this.unreadInboxMail = 0
+          this.unreadInboxMail = 0;
           this.getBalance();
         } else {
           this.memberLogout();
@@ -91,9 +113,17 @@ export const userStore = defineStore("userStore", {
       });
     },
     getBalance() {
+      // if (this.token) {
+      //   return loadBalance(MAIN).then((ret) => {
+      //     this.balance = ret.data;
+      //   });
+      // }
+
+      // "/session/balance?v=" + new Date().getTime()
+
       if (this.token) {
         return api
-          .get("/session/balance?v=123", {
+          .get("/session/balance?v=" + new Date().getTime(), {
             params: {
               platform: "MAIN"
             }
@@ -108,12 +138,10 @@ export const userStore = defineStore("userStore", {
       }
     },
     memberLogout() {
-      return api
-        .post("/session/logout")
-        .then(() => {
-          SessionStorage.remove("TOKEN");
-          location.reload();
-        });
+      return api.post("/session/logout").then(() => {
+        SessionStorage.remove("TOKEN");
+        location.reload();
+      });
     }
   }
 });

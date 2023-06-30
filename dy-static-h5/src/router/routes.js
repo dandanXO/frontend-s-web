@@ -274,6 +274,17 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
+    path: "/account/records/moneyChange",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/records/MoneyChangeRecordView.vue")
+      }
+    ],
+    meta: {requiresAuth: true}
+  },
+  {
     path: "/account/records/promo",
     component: () => import("layouts/MainLayout.vue"),
     children: [

@@ -29,7 +29,7 @@ export default defineComponent({
         "endDate": moment().format("YYYY-MM-DD")
       }
 
-      api.get("/session/member/transfer", {
+      api.get("/session/member/moneyChange", {
           params: paramData
         },
       ).then((res) => {
@@ -65,29 +65,24 @@ export default defineComponent({
     const tableHeaders = ([
     {
         key: 'serialNumber',
-        label:'转账编码',
+        label:'编码',
     },
     {
         key: 'type',
-        label: '账变类型'
+        label:'账变类型',
     },
     {
-      key: 'platform',
-      label: '游戏平台'
+        key: 'platformCode',
+        label:'平台',
     },
     {
         key: 'amount',
-        label: '金额',
+        label:'金额',
     },
     {
-        key: 'status',
-        label: '状态'
+        key: 'recordTime',
+        label:'时间',
     },
-    {
-        key: 'transferDate',
-        label: '时间'
-    },
-
     ])
     onMounted(() => {
       loadDepositTable()

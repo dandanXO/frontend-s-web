@@ -103,6 +103,8 @@ export const translateRecord = (rec) => {
     return "彩票"; // Lottery
   } else if (rec === null) {
     return "-"; // null
+  } else if (rec === "TRANSFER") {
+    return "转账"; // TRANSFER
   } else {
     return rec;
   }

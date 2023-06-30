@@ -25,10 +25,10 @@
                 <div v-else-if="obj === 'gameType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
-                <div v-else-if="obj === 'commitDate' || obj === 'feedbackTime'">
+                <div v-else-if="obj === 'commitDate' || obj === 'feedbackTime' || obj ==='recordTime' || obj ==='transferDate'">
                   {{ humanDatetime(det[obj]) }}
                 </div>
-                <div v-else-if="obj === 'platformCode' || obj === 'financeRemark'">
+                <div v-else-if="obj === 'platformCode' || obj === 'financeRemark' || obj === 'subType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div v-else>

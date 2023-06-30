@@ -93,6 +93,40 @@
       </template>
     </q-input>
 
+    <!-- <q-input
+      standout
+      bg-color="white"
+      ref="telRef"
+      hide-bottom-space
+      v-model="regForm.telephone"
+      label="电话号码"
+      lazy-rules
+      :rules="[(val) => (val && val.length > 7) || '请输入有效的电话号码']"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/telephone.png" width="20" />
+      </template>
+    </q-input> -->
+
+    <!-- <q-input
+      standout
+      bg-color="white"
+      ref="emailRef"
+      type="email"
+      hide-bottom-space
+      v-model="regForm.email"
+      label="电子邮件"
+      lazy-rules
+      :rules="[
+        (val) => (val && val.length > 0) || '请输入电子邮件',
+        isValidEmail
+      ]"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/email.png" width="20" />
+      </template>
+    </q-input> -->
+
     <q-input
       standout
       bg-color="white"
@@ -118,7 +152,8 @@
       ref="affiliateCodeRef"
       hide-bottom-space
       v-model="regForm.affiliateCode"
-      label="代理代码"
+      label="推荐码"
+      hint="若不是合营下会员无需填写"
     >
       <template v-slot:prepend>
         <img src="../assets/images/login/login_name.png" width="20" />
@@ -145,6 +180,7 @@ import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { api } from "boot/axios";
 import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { userStore } from "stores/index";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -154,11 +190,14 @@ export default defineComponent({
       getCode();
       getReferralCode();
     });
+    const store = userStore();
     const verificationImg = ref("");
     const regForm = reactive({
       loginName: "",
       password: "",
       confirmPwd: "",
+      // telephone: "",
+      // email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -187,7 +226,8 @@ export default defineComponent({
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-
+    // const telRef = ref();
+    // const emailRef = ref();
     const verificationRef = ref();
     const $q = useQuasar();
 
@@ -202,6 +242,8 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
+      // telRef.value.validate();
+      // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: "注册中"
@@ -210,6 +252,8 @@ export default defineComponent({
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
+        // telRef.value.hasError ||
+        // emailRef.value.hasError ||
         verificationRef.value.hasError
       ) {
         $q.loading.hide();
@@ -235,36 +279,46 @@ export default defineComponent({
               if (Platform.is.android) {
                 regForm.regDevice = "ANDROID";
               }
+              if ($q.platform.is.capacitor) {
+                if ($q.platform.is.android) {
+                  regForm.regDevice = "ANDROID";
+                } else if ($q.platform.is.ios) {
+                  regForm.regDevice = "IOS";
+                }
+              }
+              api
+                .post("/member/fbRegister", qs.stringify(regForm))
+                .then((ret) => {
+                  const res = ret;
+                  // console.log("RET");
+                  if (res.code === 0) {
+                    context.emit("changeTab");
+                    $q.notify({
+                      color: "positive",
+                      position: "top",
+                      message: "注册成功",
+                      icon: "check_circle_outline"
+                    });
+                    sessionStorage.removeItem("REFERRAL_CODE");
+                    // console.log(res.data);
+                    store.autoLogin(res.data);
+                    router.push({ path: "/" });
+                  } else {
+                    $q.notify({
+                      color: "negative",
+                      position: "top",
+                      message: res.message,
+                      icon: "report_problem"
+                    });
+                  }
+                  $q.loading.hide();
+                })
+                .catch((_) => {
+                  $q.loading.hide();
+                });
+              getCode();
             }
           }
-          api
-            .post("/member/register", qs.stringify(regForm))
-            .then((ret) => {
-              const res = ret;
-
-              if (res.code === 0) {
-                context.emit("changeTab");
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: "注册成功",
-                  icon: "check_circle_outline"
-                });
-                sessionStorage.removeItem("REFERRAL_CODE");
-              } else {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message: res.message,
-                  icon: "report_problem"
-                });
-              }
-              $q.loading.hide();
-            })
-            .catch((_) => {
-              $q.loading.hide();
-            });
-          getCode();
         })();
       }
     };
@@ -312,6 +366,8 @@ export default defineComponent({
       loginNameRef,
       pwdRef,
       confirmPwdRef,
+      // telRef,
+      // emailRef,
       verificationRef,
       onSubmit,
       isValidEmail,
