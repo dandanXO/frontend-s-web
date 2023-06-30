@@ -20,19 +20,13 @@
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
-          <div
-            class="promo"
-            :style="
-              item.promoStyle +
-              'background-image: url(' +
-              imgURL +
-              'label/' +
-              item.promotionIcon +
-              ')'
-            "
-          >
-            <span class="val">{{ item.promoValue }}</span>
+          <div class="promo">
+            <img
+              v-if="item.promotionIcon"
+              :src="`${imgURL}label/${item.promotionIcon}`"
+            />
           </div>
+
           <div class="payment-method-wrapper">
             <div
               class="payment-method-item"
@@ -45,18 +39,7 @@
             </div>
           </div>
         </div>
-        <!-- <el-icon
-          title="编辑"
-          style="margin: 0 10px"
-          class="pointer"
-          @click.stop="editHandle(item, i, idx)"
-        >
-        <Edit />
-        </el-icon>
-        <el-tag @click.stop="deleteItem(idx, index, element)">x</el-tag>-->
       </div>
-      <!-- </div> -->
-      <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
@@ -82,7 +65,6 @@ const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
-  // setup: (props, { emit }) => {},
   emits: ["clicked"],
   props: {
     list: {
@@ -114,29 +96,6 @@ export default defineComponent({
       imgURL
     };
   },
-  // methods: {
-  //   clickItem(item) {
-  //     this.list.forEach((element) => {
-  //       element.hasActive = false;
-  //     });
-  //     if (item) {
-  //       item.hasActive = true;
-  //       this.selectItem = item;
-  //       this.$emit("clicked", this.selectItem);
-  //       if (item.group) {
-  //         this.clickChildItem(item.children[0]);
-  //       }
-  //     }
-  //   },
-  //   clickChildItem(item) {
-  //     this.list.forEach((element) => {
-  //       element.hasActive = false;
-  //     });
-  //     item.hasActive = true;
-  //     this.selectedItem = item;
-  //     this.$emit("clicked", this.selectedItem);
-  //   },
-  // },
   updated() {
     this.$nextTick().then(() => {
       if (!this.selectItem) {
@@ -238,27 +197,13 @@ $node-color: #4ab6fd;
   left: -10px;
 }
 
-// .node-group {
-//   .payment-method-item {
-//     &.active {
-//       .node-txt-img {
-//         &:before {
-//           bottom: -1px !important;
-//           right: -1px !important;
-//           // background-color: salmon !important;
-//         }
-//       }
-//     }
-//   }
-// }
 .payment-method-wrapper {
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, 200px);
-  // grid-gap: 20px;
-  // margin-top: 10px;
-  display: flex;
+  // display: flex;
   grid-gap: 15px;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
+  // justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   margin-bottom: 20px;
 
   .payment-method-item {
@@ -288,7 +233,7 @@ $node-color: #4ab6fd;
           content: "";
           position: absolute;
           bottom: 23px;
-          right: 8px;
+          right: 3px;
           background-color: #4873f1;
           height: 15px;
           width: 15px;
@@ -321,10 +266,6 @@ $node-color: #4ab6fd;
 
 .node:not(.node) {
   border-bottom: 1px solid #484460;
-  // .node  {
-  //   border-bottom: 1px solid #484460;
-  //   padding: 0 25px;
-  //   margin: 0 -25px;
 }
 
 .node {
@@ -333,76 +274,78 @@ $node-color: #4ab6fd;
     padding: 0 30px;
 
     .account-title-container {
-      margin: 0 -30px;
+      // margin: 0 -30px;
       background: none;
-      // border-top: 1px solid #484460;
-      // font-weight: bold;
     }
 
-    &.node-group {
-      // display: flex;
-      // justify-content: flex-start;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0px;
-      padding: 0 0px;
-      flex-wrap: wrap;
+    // &.node-group {
+    //   align-items: center;
+    //   gap: 10px;
+    //   margin: 10px 0px;
+    //   padding: 0 0px;
+    //   flex-wrap: wrap;
 
-      .account-title-container {
-        margin: 0;
-      }
+    //   .promo {
+    //     right: -12px;
+    //     top: -12px;
+    //     img {
+    //       padding: 0;
+    //       border: 0;
+    //       height: 22px;
+    //       width: auto;
+    //       background-color: transparent;
+    //     }
+    //   }
 
-      .payment-method-wrapper {
-        gap: 5px;
-      }
+    //   .account-title-container {
+    //     margin: 0;
+    //   }
 
-      .payment-method-item {
-        padding: 5px 20px 5px 5px;
-        border: 2px solid transparent;
-        width: auto;
+    //   .payment-method-item {
+    //     padding: 5px 20px 5px 5px;
+    //     border: 2px solid #ddd;
+    //     width: auto;
 
-        &.active {
-          border: 2px solid #4873f1;
+    //     &.active {
+    //       border: 2px solid #4873f1;
 
-          .node-txt-img {
-            &:before {
-              bottom: -1px !important;
-              right: -1px !important;
-              // background-color: salmon !important;
-            }
-          }
-        }
-      }
+    //       .node-txt-img {
+    //         &:before {
+    //           bottom: -1px !important;
+    //           right: -1px !important;
+    //         }
+    //       }
+    //     }
+    //   }
 
-      .node-text {
-        display: flex;
-        gap: 5px;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+    //   .node-text {
+    //     display: flex;
+    //     gap: 5px;
+    //     flex-direction: row;
+    //     justify-content: center;
+    //     align-items: center;
 
-        & > div {
-          font-size: 12px;
-          color: #000000;
-        }
+    //     & > div {
+    //       font-size: 12px;
+    //       color: #000000;
+    //     }
 
-        .node-txt-img {
-          width: auto;
-          height: auto;
-          margin-bottom: 0;
-          border: 0;
-          img {
-            width: 15px;
-            height: auto;
-            border: 0;
-            background-color: #2a313e;
-            // max-width: 1.5rem;
-            padding: 0px;
-            margin-bottom: 0;
-          }
-        }
-      }
-    }
+    //     .node-txt-img {
+    //       width: auto;
+    //       height: auto;
+    //       margin-bottom: 0;
+    //       border: 0;
+    //       img {
+    //         width: 15px;
+    //         height: auto;
+    //         border: 0;
+    //         background-color: #2a313e;
+    //         padding: 0px;
+    //         margin-bottom: 0;
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   .node-content {
@@ -410,27 +353,14 @@ $node-color: #4ab6fd;
 
     .payment-method-item {
       text-align: center;
-      // padding: 10px 8px;
       cursor: pointer;
-      // background: #2b2b4b;
-      // box-shadow: 6px 6px #161b23;
-
-      &:hover {
-      }
-
-      &.active {
-        // background-color: #1c1c32;
-        // border-radius: 6px;
-        // border: solid 1px #1c1c32;
-        // box-shadow: none;
-        // filter: drop-shadow(0px 0px 3px #ffffff);
-      }
     }
 
     .node-item {
       display: flex;
       justify-content: center;
-      width: 5rem;
+      width: 100%;
+      max-width: 4.5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -496,11 +426,16 @@ $node-color: #4ab6fd;
 
     .promo {
       position: absolute;
-      right: 0;
-      top: 0;
+      right: -10px;
+      top: -10px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      img {
+        padding: 0;
+        border: 0;
+        background-color: transparent;
+      }
       ::after {
         position: relative;
       }
@@ -512,7 +447,7 @@ $node-color: #4ab6fd;
   .node {
     .node {
       .account-title-container {
-        margin: 0 -10px;
+        // margin: 0 -10px;
       }
     }
   }

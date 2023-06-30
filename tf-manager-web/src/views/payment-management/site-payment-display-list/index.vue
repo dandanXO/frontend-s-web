@@ -36,14 +36,20 @@
         :prop="column.prop"
         :label="column.label"
       />
+      <!-- <el-table-column :key="a" :prop="paymentId" :label="null"></el-table-column> -->
     </el-table>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
-import { getPaymentDisplayList } from '../../../api/payment-display'
+import {
+  getAllPayments,
+  getPaymentShow,
+  getPaymentShowDetails,
+} from '../../../api/payment-display'
 import { getSiteListSimple } from '../../../api/site'
+import { getFinancialLevels } from '../../../api/financial-level'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
@@ -69,13 +75,27 @@ const request = reactive({
   current: 1,
   siteId: null,
 })
-
+const financialLevels = ref([])
+const paymentList = ref([])
+const payment = ref([])
+const paymentDetails = ref([])
 async function loadPaymentRecord() {
   page.loading = true
-  const { data: ret } = await getPaymentDisplayList(request.siteId)
-  console.log(ret)
-  page.records = ret.paymentDisplayListVOList
-  page.columns = ret.paymentDisplayListColumnVOS
+  const { data: records } = await getAllPayments({
+    status: 'OPEN',
+    siteId: request.siteId,
+  })
+  const { data: nodes } = await getPaymentShow({
+    siteId: request.siteId
+  })
+  const { data: nodeDetails } = await getPaymentShowDetails({
+    siteId: request.siteId
+  })
+  paymentList.value = records
+  payment.value = nodes
+  paymentDetails.value = nodeDetails
+  await loadFinancialLevels()
+  loadTable()
   page.loading = false
 }
 
@@ -85,14 +105,121 @@ async function loadSites() {
 }
 
 function tableRowClassName({ row, rowIndex }) {
-  console.log(row.data.d0)
-  console.log(row.data.d0.includes('MOBILE'))
-  if (row.data.d0.includes('MOBILE')) {
+  if (row.financial.includes('MOBILE')) {
     return 'warning-row'
   }
-  return ''
+}
+async function loadFinancialLevels() {
+  const { data: financial } = await getFinancialLevels({
+    siteId: request.siteId,
+  })
+  financialLevels.value = financial
 }
 
+function loadTable() {
+  var paymentTypes = []
+  var paymentNames = []
+  page.columns = [{
+    label: 'Level',
+    prop: 'financial'
+  }];
+  page.records = []
+  paymentList.value.forEach(element => {
+    if (!paymentTypes.includes(element.payType)) {
+      paymentTypes.push(element.payType);
+      const obj = {
+        label: element.payType,
+        prop: element.payType
+      };
+      page.columns.push(obj);
+    }
+    if (!paymentNames.includes(element.paymentName)) {
+      paymentNames.push(element.paymentName);
+    }
+  });
+  var webTableFormatted = []
+  var mobileTableFormatted = []
+  paymentDetails.value.forEach((element, pidx) => {
+    const payments = paymentList.value.find(el => el.id === element.web.paymentId)
+    var obj = {
+      type: element.web.type,
+      paymentId: element.web.paymentId,
+      financialLevels: element.web.financialLevels.replace(/\s/g, '').split(','),
+      paymentName: payments.paymentName,
+    };
+    webTableFormatted.push(obj)
+
+    // Get the index of obj.type from paymentTypes
+    paymentTypes.forEach((pType, idx, obj) => {
+      if (pType === element.web.type) {
+        obj.splice(idx, 1)
+      }
+    });
+    paymentTypes.forEach(payType => {
+      obj = {
+        type: payType,
+        paymentId: element.web.paymentId,
+        financialLevels: element.web.financialLevels.replace(/\s/g, '').split(','),
+        paymentName: null,
+      }
+      webTableFormatted.push(obj)
+    });
+  });
+  paymentDetails.value.forEach((element, pidx) => {
+    const payments = paymentList.value.find(el => el.id === (element.mobile.paymentId))
+    var obj = {
+      type: element.mobile.type,
+      paymentId: element.mobile.paymentId,
+      financialLevels: element.mobile.financialLevels.replace(/\s/g, '').split(','),
+      paymentName: payments.paymentName,
+    };
+    mobileTableFormatted.push(obj)
+    // Get the index of obj.type from paymentTypes
+    paymentTypes.forEach((pType, idx, obj) => {
+      if (pType === element.mobile.type) {
+        obj.splice(idx, 1)
+      }
+    });
+    paymentTypes.forEach(payType => {
+      obj = {
+        type: payType,
+        paymentId: element.mobile.paymentId,
+        financialLevels: element.mobile.financialLevels.replace(/\s/g, '').split(','),
+        paymentName: null,
+      }
+      mobileTableFormatted.push(obj)
+    });
+  });
+
+  financialLevels.value.forEach((fLevel, findex) => {
+    const webObj = { financial: fLevel.name + ' (WEB)' };
+    const mobileObj = { financial: fLevel.name + ' (MOBILE)' };
+    webTableFormatted.forEach(element => {
+      if (element.financialLevels[findex] === '1' && webObj.financial.includes('WEB')) {
+        webObj[element.type] = element.paymentName
+      } else {
+        console.log(webObj[element.type])
+        webObj[element.type] = '未分配'
+      }
+      if (!webObj[element.type]) {
+        webObj[element.type] = '未分配'
+      }
+    });
+    mobileTableFormatted.forEach(element => {
+      if (element.financialLevels[findex] === '1' && mobileObj.financial.includes('MOBILE')) {
+        mobileObj[element.type] = element.paymentName
+      } else {
+        mobileObj[element.type] = '未分配'
+      }
+      if (!mobileObj[element.type]) {
+        mobileObj[element.type] = '未分配'
+      }
+    });
+
+    page.records.push(webObj);
+    page.records.push(mobileObj);
+  });
+}
 onMounted(async () => {
   await loadSites()
 

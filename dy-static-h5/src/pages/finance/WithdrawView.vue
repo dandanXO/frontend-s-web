@@ -12,7 +12,9 @@
             :class="{ active: i === activeItem }"
           >
             <span class="promo" v-if="method.recommended">Recommended</span>
-            <img :src="imgURL + '/withdraw/' + method.icon" />
+            <div class="withdraw-img">
+              <img :src="imgURL + '/withdraw/' + method.icon" />
+            </div>
             <div class="type-name">{{ method.name }}</div>
           </div>
         </div>
@@ -24,7 +26,7 @@
             v-model="withdrawInfo.cardId"
             option-value="id"
             emit-value
-            :label="isUSDT ? '钱包地址': '提款银行'"
+            :label="isUSDT ? '钱包地址' : '提款银行'"
             color="black"
             :options="withdrawState.bankCardList"
             map-options
@@ -32,22 +34,30 @@
           >
             <template v-slot:no-option>
               <q-item>
-                <q-item-section class="text-grey"
-                  > {{ isUSDT ? '没有可用的钱包地址': '没有可用的卡片' }}
-                  <router-link class="text-bright" to="/account/withdraw"
-                    >{{ isUSDT ? '加钱包地址': '加卡' }}</router-link
-                  ></q-item-section
-                >
+                <q-item-section class="text-grey">
+                  {{ isUSDT ? "没有可用的钱包地址" : "没有可用的卡片" }}
+                  <router-link class="text-bright" to="/account/withdraw">
+                    {{ isUSDT ? "加钱包地址" : "加卡" }}
+                  </router-link>
+                </q-item-section>
               </q-item>
             </template>
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                  <img
+                    style="width: 30px"
+                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                  />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label
-                    >{{ scope.opt.bankName }} -  ****{{ scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length) }}
+                  <q-item-label>
+                    {{ scope.opt.bankName }} - ****{{
+                      scope.opt.cardNumber.slice(
+                        scope.opt.cardNumber.length - 4,
+                        scope.opt.cardNumber.length
+                      )
+                    }}
                   </q-item-label>
                 </q-item-section>
               </q-item>
@@ -66,7 +76,8 @@
                     overflow: hidden;
                     white-space: nowrap;
                   "
-                  >{{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
+                >
+                  {{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
                 </q-item-label>
               </q-item-section>
             </template>
@@ -88,17 +99,18 @@
             ]"
           >
             <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">{{
-                store.currency.value
-              }}</span>
+              <span style="font-size: 26px" class="text-bright">
+                {{ store.currency.value }}
+              </span>
             </template>
             <template v-slot:append>
-              <span style="font-size: 26px" class="text-bright"
-                ><q-btn
+              <span style="font-size: 26px" class="text-bright">
+                <q-btn
                   @click="updateWithdrawAmt"
                   label="全额提款"
                   color="dyblue"
-              /></span>
+                />
+              </span>
             </template>
           </q-input>
           <div
@@ -115,17 +127,17 @@
               {{
                 "单笔提款: " +
                 selectedWithdrawalMethod.withdrawMin +
-                "元 - " +
+                "RMB - " +
                 selectedWithdrawalMethod.withdrawMax +
-                "元"
+                "RMB"
               }}
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
               {{
-                "单日可提款: " +
+                "今日提款: " +
                 selectedWithdrawalMethod.withdrawMaxAmount +
-                "元"
+                "RMB"
               }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
@@ -144,10 +156,10 @@
               "
             >
               <span style="flex: 1">实施汇率：</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm"
-                >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
-                {{ store.currency.value }}</span
-              >
+              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+                1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
+                {{ store.currency.value }}
+              </span>
             </div>
             <div
               class="q-mt-md"
@@ -158,14 +170,14 @@
               "
             >
               <span style="flex: 1">预计到帐：</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm"
-                >{{
+              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+                {{
                   (
                     withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
                   ).toFixed(2)
                 }}
-                USDT</span
-              >
+                USDT
+              </span>
             </div>
             <div class="q-mt-md text-neontb">
               *特别说明：三方自动收取提币 1.00 USDT 手续费！
@@ -296,15 +308,21 @@ export default defineComponent({
                 icon: "check_circle_outline"
               });
             } else {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: response.message,
+              icon: "report_problem"
+            });
+            }
+          }).catch((error) => {
+            console.log("error", error);
             // $q.notify({
             //   color: "negative",
             //   position: "top",
             //   message: response.message,
             //   icon: "report_problem"
             // });
-            }
-          }).catch((error) => {
-            console.log("error", error);
           });
           $q.loading.hide();
       }
@@ -347,8 +365,13 @@ export default defineComponent({
             //     }
             //   });
             // }
-            cardRef.value.resetValidation();
-
+            if (cardRef.value) {
+              cardRef.value.resetValidation();
+            }
+            if (amountRef.value) {
+              withdrawInfo.amount = ""
+              amountRef.value.resetValidation();
+            }
         }
       }).catch((error) => {
         console.log("error", error);
@@ -451,31 +474,41 @@ export default defineComponent({
 // }
 
 .withdrawalmethod {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   text-align: center;
   overflow-x: auto;
   padding: 15px 5px;
-  gap: 30px;
+  grid-gap: 10px;
 
   .withdraw-type-item {
-    width: 60px;
+    // display: flex;
+    // justify-content: center;
+    width: 100%;
+    max-width: 4.5rem;
 
     position: relative;
     cursor: pointer;
+    .withdraw-img {
+      border: 2px solid transparent;
+      border-radius: 6px;
+      margin-bottom: 5px;
+    }
     img {
       width: 100%;
-      padding: 5px;
+      padding: 5px 10px;
     }
     &.active {
       // background: #212534;
       // color: #db7e42;
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
-      img {
-        border: 1px solid #33bcd4;
+      .withdraw-img {
+        border: 2px solid #4873f1;
       }
+      // img {
+      //   border: 2px solid #33bcd4;
+      // }
     }
     .type-name {
       line-height: 15px;

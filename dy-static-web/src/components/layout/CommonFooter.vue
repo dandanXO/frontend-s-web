@@ -48,7 +48,7 @@
           <ul class="index_bottom_des">
               <li>关于东赢</li>
               <li onclick="window.open('/help.html')">关于我们</li>
-              <li onclick="location.href='/promotion.html'">优惠活动</li>
+              <li onclick="location.href='/promotion'">优惠活动</li>
               <li data-toggle="modal" data-target="#registeredModal">免费开户</li>
               <li onclick="location.href='https://partner.dyvip90.com'">代理加盟</li>
           </ul>
@@ -84,7 +84,7 @@
       </div>
     </div>
   </footer>
-  <!-- 
+  <!--
   <RegisterModal ref="regModal" /> -->
 </template>
 <script>
@@ -119,7 +119,7 @@ export default defineComponent({
       .top-ft-left {
         display: flex;
         justify-content: center;
-        align-items: center; 
+        align-items: center;
         padding: 10px;
         .icon {
           width: 40px;
@@ -142,7 +142,7 @@ export default defineComponent({
         }
       }
       .top-ft-rgt {
-        .s1 { 
+        .s1 {
           color: #ffffff;
           font-size: 16px;
         }
@@ -206,7 +206,7 @@ export default defineComponent({
               }
           }
         }
-        
+
         .hzhb-icon {
           width: 55px;
           height: 40px;
@@ -294,7 +294,7 @@ export default defineComponent({
         cursor: pointer;
         font-size: .8rem;
         color: #c2c2c2;
-        svg { 
+        svg {
           width: 20px;
           fill: #c2c2c2;
         }

@@ -106,14 +106,14 @@ export default defineComponent({
         message:
           "BBIN彩票打造着高品质游戏体验、不断地求新求变，寻找最新的创意，秉持最好的服务……，种种这些都注定BBIN彩票的不俗传说，超百种彩票玩法任您赢！"
       },
-      {
-        code: "SGWin",
-        name: "SG-WIN",
-        image: "sgwin",
-        gameCode: "imlotto30000",
-        message:
-          "专注于彩票游戏行业多年，拥有经典彩种、玩法。还有超多独家创新玩法，足够新颖，极易操作的游戏界面，更是在您游戏过程中增光添彩！"
-      }
+      // {
+      //   code: "SGWin",
+      //   name: "SG-WIN",
+      //   image: "sgwin",
+      //   gameCode: "imlotto30000",
+      //   message:
+      //     "专注于彩票游戏行业多年，拥有经典彩种、玩法。还有超多独家创新玩法，足够新颖，极易操作的游戏界面，更是在您游戏过程中增光添彩！"
+      // }
     ]);
     const selectedPlat = ref(platforms.value[0].code);
 
@@ -208,7 +208,7 @@ export default defineComponent({
 
 .lottery-tabs {
   position: relative;
-  padding: 0 0 70px 30px;
+  padding: 0 0 70px 130px;
   justify-content: flex-start;
   border: none;
   display: flex;

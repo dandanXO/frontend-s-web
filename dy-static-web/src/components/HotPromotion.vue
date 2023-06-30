@@ -227,7 +227,7 @@ export default defineComponent({
   data() {
     return {
       isCommonPromo: null,
-      emptyText: "ไม่มีข้อมูล",
+      emptyText: "今天没有获奖者。",
       privilegeClaimedModalVisible: false,
       dataSource: [],
       winnerDataSource: [],

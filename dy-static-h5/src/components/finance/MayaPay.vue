@@ -4,7 +4,7 @@
       <a-select
         v-model:value="selectedBankId"
         @change="selectBank"
-        placeholder="Please select a bank"
+        placeholder="请选择银行"
       >
         <a-select-option
           v-for="bc in props.bankList"

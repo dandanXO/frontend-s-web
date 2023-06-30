@@ -101,6 +101,8 @@ export const translateRecord = (rec) => {
     return "棋牌"; // Poker
   } else if (rec === "LOTTERY") {
     return "彩票"; // Lottery
+  } else if (rec === null) {
+    return "-"; // null
   } else {
     return rec;
   }

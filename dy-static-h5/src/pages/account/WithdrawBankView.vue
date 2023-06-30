@@ -69,10 +69,7 @@
                 <q-select
                   v-model="selectedBankType"
                   filled
-                  :options="[
-                    { name: '银行卡' },
-                    { name: '数字货币' }
-                  ]"
+                  :options="[{ name: '银行卡' }, { name: '数字货币' }]"
                   label="银行 / 数字货币"
                   color="blue"
                   label-color="black"
@@ -94,8 +91,8 @@
                   :options="banksList"
                   option-value="id"
                   option-label="name"
-                  label="选择银行卡"
-                  :rules="[(val) => !!val || '选择银行卡']"
+                  :label="isCrypto ? '选择数字货币' : '选择银行卡'"
+                  :rules="[(val) => !!val || '请选择']"
                   lazy-rules
                   emit-value
                   map-options
@@ -119,8 +116,9 @@
                           overflow: hidden;
                           white-space: nowrap;
                         "
-                        >{{ scope.opt.name }}</q-item-label
                       >
+                        {{ scope.opt.name }}
+                      </q-item-label>
                     </q-item-section>
                   </template>
                   <template v-slot:option="scope">
@@ -174,7 +172,7 @@
             class="q-mb-md"
             v-model="bankCardInfo.cardNumber"
             :label="isCrypto ? '钱包地址' : '银行卡号'"
-            :rules="cardNumberRules"
+            :rules="isCrypto ? cardCryptoRules : cardNumberRules"
             ref="cardNumberRef"
             color="blue"
           />
@@ -250,7 +248,7 @@ import { defineComponent, reactive, ref, onMounted, createVNode } from "vue";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
 import { RiSpamLine, RiLink } from "vue-remix-icons";
 // import { loadMemberInfo, loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/personal/personal";
-// import moment from "moment";
+import moment from "moment";
 import { api } from "boot/axios"
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -367,7 +365,7 @@ export default defineComponent({
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Please enter your real name",
+            message: "请输入您的真实姓名",
             icon: "report_problem"
           });
           router.push("/account/personal");
@@ -398,10 +396,10 @@ export default defineComponent({
       bankCardModalState.banks.forEach(element => {
         if (selectedBankType.value === "银行卡" && element.bankType === 'BANK') {
           banksList.value.push(element);
+          isCrypto.value = false
         }
         if (selectedBankType.value === "数字货币" && element.bankType === 'CRYPTO') {
           isCrypto.value = true
-          // console.log("crypto!")
           banksList.value.push(element);
         }
       })
@@ -448,13 +446,13 @@ export default defineComponent({
         ok: {
           push: true,
           color: 'brightbtn',
-          label: "Confirm",
+          label: "确认",
           tabindex: 1
         },
         cancel: {
           push: true,
           color: 'warning',
-          label: "Cancel",
+          label: "取消",
           tabindex: 0
         },
         persistent: true,
@@ -541,10 +539,10 @@ export default defineComponent({
     //   ]
     // };
     let validateBankLength = (val) => {
-        if (selectedBankType.value === 'Bank') {
-         return (val.length > 5 && val.length < 13) || 'Length should be 6 to 12 characters'
-        } else if (selectedBankType.value === 'Crypto') {
-          return (val.length > 33 && val.length < 38) || 'Length should be 34 to 37 characters.'
+        if (isCrypto.value == true) {
+         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
+        } else if (isCrypto.value == false) {
+          return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
         }
     }
     return {
@@ -571,6 +569,9 @@ export default defineComponent({
       cardNumberRef,
       cardAccountRef,
       cardAddressRef,
+      cardCryptoRules: [
+        val => validateBankLength(val)
+      ],
       cardNumberRules: [
         val => (val && val.length > 0) || '请输入卡号',
         val => (/^\d+$/.test(val)) || '只允许数字',

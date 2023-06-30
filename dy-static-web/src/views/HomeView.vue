@@ -259,14 +259,14 @@
                 <img src="../assets/home/bbin.png" />
                 <div>BBIN彩票</div>
               </div>
-              <div
+              <!-- <div
                 class="game-platform"
                 @click="openGame('SG-WIN彩票', 'SGWin', 'imlotto30000')"
                 style="margin-left: 22px"
               >
                 <img src="../assets/home/sgwin.png" />
                 <div>SG-WIN彩票</div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -668,7 +668,7 @@
             >知道了
           </el-button>
           <el-button class="more" color="#434343"
-            ><a href="/promotion.html" target="_self">查看详情</a></el-button
+            ><a href="/promotion" target="_self">查看详情</a></el-button
           >
         </div>
       </div>

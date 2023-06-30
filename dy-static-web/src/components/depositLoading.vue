@@ -12,15 +12,14 @@
 </template>
 <script setup>
 import { onMounted } from "vue";
-import { verifyAmount, postDeposit } from "@/api/personal/deposit";
-import { doIt } from "@/utils/action";
+import { postDeposit } from "@/api/personal/deposit";
 // import i18n from "../i18n/index";
 
 function pDepo(data) {
   postDeposit(data)
     .then((d) => {
       if (d.code === 0) {
-        doIt(d);
+        // doIt(d);
         window.opener.postMessage({ msg: "success" }, "*");
       }
       // else {
@@ -56,30 +55,30 @@ function pDepo(data) {
     });
 }
 onMounted(async () => {
-  const params = localStorage.getItem("formDetails");
-  var form = params ? JSON.parse(params) : "";
-  await verifyAmount(form.paymentId, form.localAmount)
-    .then((d) => {
-      if (d.code == 0) {
-        // newWin.location.href = d.data;
-        // newWin.location.href = resp
-        const copy = { ...form };
-        const data = {};
-        Object.entries(copy).forEach(([key, value]) => {
-          if (value) {
-            data[key] = value;
-          }
-        });
-        data.bankCardId = 0;
-        pDepo(data);
-      } else {
-        window.opener.postMessage({ msg: d.message }, "*");
-        window.close();
-      }
-    })
-    .catch((error) => {
-      window.opener.postMessage({ msg: error.message }, "*");
-      window.close();
-    });
+  // const params = localStorage.getItem("formDetails");
+  // var form = params ? JSON.parse(params) : "";
+  // await verifyAmount(form.paymentId, form.localAmount)
+  //   .then((d) => {
+  //     if (d.code == 0) {
+  //       // newWin.location.href = d.data;
+  //       // newWin.location.href = resp
+  //       const copy = { ...form };
+  //       const data = {};
+  //       Object.entries(copy).forEach(([key, value]) => {
+  //         if (value) {
+  //           data[key] = value;
+  //         }
+  //       });
+  //       data.bankCardId = 0;
+  //       pDepo(data);
+  //     } else {
+  //       window.opener.postMessage({ msg: d.message }, "*");
+  //       window.close();
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     window.opener.postMessage({ msg: error.message }, "*");
+  //     window.close();
+  //   });
 });
 </script>

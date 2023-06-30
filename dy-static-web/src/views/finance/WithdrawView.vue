@@ -256,6 +256,7 @@ export default defineComponent({
     const selectMethod = (method, index) => {
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
+      withdrawInfo.amount = ""
       selectedWithdrawalMethod.value = method
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;

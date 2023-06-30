@@ -341,13 +341,17 @@ export default defineComponent({
           this.list.push(this.ruleForm)
           this.dialogVisible = false;
           bus.emit('exportNodes')
+          $('#uploadFile').val(null);
+          $('#uploadFileL').val(null);
         }
       })
     },
     deleteItem(item, index) {
       // eslint-disable-next-line vue/no-mutating-props
       this.list.splice(index, 1)
-      bus.emit('exportNodes')
+      bus.emit('exportNodes');
+      $('#uploadFile').val(null);
+      $('#uploadFileL').val(null);
     },
     clickItem(item) {
       this.selectItem = item
@@ -369,6 +373,8 @@ export default defineComponent({
 
           this.dialogVisible = false
           bus.emit('exportNodes')
+          $('#uploadFile').val(null);
+          $('#uploadFileL').val(null);
         }
       })
     },

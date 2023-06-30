@@ -1134,7 +1134,7 @@ export default defineComponent({
     const changePassword = () => {
       updatePasswordForm.value.validate(async (valid) => {
         if (valid) {
-          await updatePassword(props.mbrId, passwordForm.password);
+          await updatePassword(props.mbrId, passwordForm.password, memberDetail.siteId);
           uiControl.dialogVisible = false;
           ElMessage({ message: t('message.updatePasswordSuccess'), type: "success" });
         }

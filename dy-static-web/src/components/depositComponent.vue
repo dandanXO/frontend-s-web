@@ -434,29 +434,46 @@ function doDeposit(data) {
     if (d.code === 0) {
       doIt(d).then((resp) => {
           const response = resp.data.result
+        if (response.payResultType === 'OFFLINE') {
+
+        }
         if (response.payResultType === 'RENDER_HTML') {
           if (response.paramKey === null || response.paramKey === "") {
           isDisplay.value = true;
           submitMessage.value = response.data.split(',');
           }
         } else {
-          const newWin = window.open(`/depositLoading`, "Bank");
-          newWin.localStorage.setItem("formDetails", JSON.stringify(resp));
-          window.addEventListener(
-              "message",
-              (event) => {
-                if (event.data?.msg) {
-                  if (event.data.msg === "success") {
-                    isDeposited.value = true;
-                  } else {
-                    // message.error(event.data.msg, 4);
-                  }
-                }
-              },
-              { once: true }
-          );
+          const newWin = window.open(`/`);
+          newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+          if (response.payResultType === 'GET_SUBMIT') {
+            // isDeposited.value = true;
+            newWin.location.href = response.requestUrl;
+          }
+          if (response.payResultType === 'POST_SUBMIT') {
+            // isDeposited.value = true;
+            if (response.paramKey === null || response.paramKey === "") {
+              newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            } else {
+              newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            }
+          }
+          // window.addEventListener(
+          //     "message",
+          //     (event) => {
+          //       if (event.data?.msg) {
+          //         if (event.data.msg === "success") {
+          //           isDeposited.value = true;
+          //         } else {
+          //           ElMessage.error(event.data.msg);
+          //         }
+          //       }
+          //     },
+          //     { once: true }
+          // );
         }
       });
+    } else {
+      ElMessage.error('优惠存款金额不符合规则')
     }
   }).catch((err) => {
     console.log(err)

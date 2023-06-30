@@ -1,4 +1,3 @@
-import bonus from '.shared/api/endpoint/bonus.js'
 import { server } from "@/utils/request";
 
 export function loadPromo() {
