@@ -2,77 +2,6 @@
   <div class="personal-account">
     <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
     <q-form ref="profileFormRef">
-      <q-input
-        standout
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.nickName"
-        label="账号"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入账号']"
-        label-color=""
-        :readonly="personalState.memberInfo.nickName ? true : false"
-      />
-      <q-input
-        standout
-        ref="realNameRef"
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.realName"
-        label="姓名"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
-        label-color=""
-        :readonly="personalState.memberInfo.realName ? true : false"
-      />
-      <q-input
-        ref="birthdayRef"
-        standout
-        bg-color="white"
-        label="生日"
-        label-color=""
-        lazy-rules
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.birthday"
-        mask="date"
-        :rules="[(val) => (val && val.length > 0) || '请输入生日']"
-      >
-        <template v-slot:append>
-          <q-icon name="event" color="dark" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-
-      <!-- <q-input
-        type="date"
-        class="q-pb-xs"
-        hide-bottom-space
-        filled
-        v-model="formDetail.birthday"
-        label="生日"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入生日']"
-
-        label-color="secondary"
-        color="secondary"
-        :readonly="personalState.memberInfo.birthday ? true : false"
-      /> -->
-
-
       <div class="flex items-center no-wrap">
         <q-input
           standout
@@ -81,101 +10,55 @@
           hide-bottom-space
           v-model="formDetail.phone"
           type="tel"
-          label="电话"
+          label="手机号码"
           lazy-rules
           :rules="[(_) => isValidPhone()]"
           label-color=""
           color=""
-          readonly
+          :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
         ></q-input>
-        <template v-if="!formDetail.phone">
+        <template v-if="showVerifyBtn">
           <div class="q-ml-md">
             <q-btn
-              size="sm"
+              size="md"
               color="dyblue"
-              label="绑定"
-              href="/account/verifyTelephone"
+              label="发送验证码"
+              @click="openVerificationDialog()"
               style="white-space: nowrap"
             />
           </div>
         </template>
       </div>
 
-      <div class="flex items-center no-wrap">
-        <q-input
-          standout
-          bg-color="white"
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.email"
-          label="邮箱"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
-          label-color=""
-          color=""
-          readonly
-          style="width: 100%"
-        />
-        <template v-if="!formDetail.email">
-          <div class="q-ml-md">
-            <q-btn
-              size="sm"
-              color="dyblue"
-              label="绑定"
-              href="/account/verifyEmail"
-              style="white-space: nowrap"
-            />
-          </div>
-        </template>
-      </div>
-
-      <!-- <q-input
-        v-if="!formDetail.phoneVerified"
+      <q-input
         standout
         bg-color="white"
         class="q-pb-xs"
         hide-bottom-space
-        v-model="formDetail.phone"
+        ref="phoneOtpRef"
+        v-model="formDetail.phoneOtpRef"
         type="tel"
         label="手机验证码"
         lazy-rules
-        :rules="[(_) => isValidPhone()]"
+        :rules="[
+          (val) => (val && val.length > 5 && val.length < 7) || '请输入验证码'
+        ]"
         label-color=""
         color=""
-        :readonly="personalState.memberInfo.phone ? true : false"
-      >
-        <template v-slot:append v-if="!formDetail.phoneVerified">
-          <q-btn
-            size="sm"
-            color="dyblue"
-            label="验证"
-            :disable="!formDetail.phone"
-            @click="openVerificationDialog"
-          />
-        </template>
-      </q-input> -->
+        style="width: 100%"
+      ></q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="dyblue" @click="updateState" label="更新信息" />
+        <q-btn
+          size="md"
+          color="dyblue"
+          @click="submitUpdateSecurity()"
+          label="绑定手机号码"
+        />
       </div>
     </q-form>
   </div>
-
-  <q-dialog width="100%" v-model="showCaptchaDialog">
-    <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-white text-black text-center"
-    >
-      <q-card-section class="q-mb-md">
-        <strong>系统提示</strong>
-        <br />
-        <br />
-        请登录后再操作
-      </q-card-section>
-      <q-btn href="/login?redirect=/promo" label="确认" color="dyblue" />
-    </q-card>
-  </q-dialog>
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
@@ -187,7 +70,7 @@
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="captchaRef" label="验证码">
+          <q-input v-model="innerCaptchaRef" label="验证码">
             <template v-slot:append>
               <img
                 :src="verificationImg"
@@ -202,6 +85,13 @@
       </div>
     </q-card>
   </q-dialog>
+
+  <!-- <br />
+  phone: {{ formDetail.phone }}
+  <br />
+  code: {{ formDetail.phoneOtpRef }}
+  <br />
+  codeId: {{ phoneCodeId }} -->
 </template>
 
 <script lang="js">
@@ -246,11 +136,13 @@ export default defineComponent({
       return false;
     });
 
+    const phoneCodeId = ref("")
+
     const personalState = reactive({
       memberInfo: {}
     });
     const verificationDetails = reactive({
-      memberInfo: {}
+
     });
 
     onMounted(() => {
@@ -300,12 +192,12 @@ export default defineComponent({
     const verifyVerificationCode = () => {
       isEmailSending.value = true;
       verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress;
-      const emailDetails = {
+      const phoneDetails = {
         email: updateSecurityVerified.emailAddress,
         captchaCode: updateSecurityVerified.captchaCode,
         codeId: updateSecurityVerified.codeId
       };
-      api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
+      api.post("/otp/sendEmail", qs.stringify(phoneDetails)).then((ret) => {
         if (ret.code === 0) {
           $q.notify({
             color: "positive",
@@ -316,6 +208,7 @@ export default defineComponent({
           verificationDetails.memberInfo.codeId = ret.data.codeId;
           verificationModalVisible.value = false;
           isEmailSending.value = false;
+
         } else {
           // $q.notify({
           //   color: "negative",
@@ -335,29 +228,29 @@ export default defineComponent({
     const emailAddressRef = ref();
     const verificationCodeRef = ref();
     const submitUpdateSecurity = () => {
-      emailAddressRef.value.validate();
-      verificationCodeRef.value.validate();
-      if (emailAddressRef.value.hasError || verificationCodeRef.value.hasError) {
+      phoneOtpRef.value.validate()
+      if (phoneOtpRef.value.hasError) {
       } else {
-        verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode;
-        api.post("/otp/verifyEmail", qs.stringify(verificationDetails.memberInfo)).then((res) => {
+        api.post("/session/verifyAndUpdatePhone", qs.stringify({
+          phone: formDetail.phone,
+          code: formDetail.phoneOtpRef,
+          codeId: phoneCodeId.value})).then((res) => {
           if (res.code === 0) {
             $q.notify({
               color: "positive",
               position: "top",
-              message: "Successfully verified",
+              message: "绑定成功",
               icon: "check_circle_outline"
             });
-            updateSecurityModalVisible.value = false;
-            loadInfo();
+
           }
         }).catch((e) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: e.message,
-          //   icon: "report_problem"
-          // });
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          });
         });
       }
     };
@@ -372,53 +265,15 @@ export default defineComponent({
     const realNameRef = ref();
     const birthdayRef = ref();
     const emailRef = ref();
+    const phoneOtpRef = ref();
 
     const captchaRef = ref();
+    const innerCaptchaRef = ref();
     const showCaptchaDialog = ref(false);
+    const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
 
-    const updateState = () => {
-      const updateInfo = {};
-      if (!personalState.memberInfo.birthday) {
-        birthdayRef.value.validate();
-        if (birthdayRef.value.hasError) {
-          return;
-        }
-      }
-      if (!personalState.memberInfo.realName) {
-        realNameRef.value.validate();
-        if (realNameRef.value.hasError) {
-          return;
-        }
-      }
-      console.log(updateInfo);
-      updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
-      updateInfo.realName = formDetail.realName;
 
-      api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
-        if (r.code === 0) {
-          profileFormRef.value.reset();
-
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: "更新成功",
-            icon: "check_circle_outline"
-          });
-
-          store.getMemberInfo().then(() => {
-            loadInfo();
-          });
-        } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: r.message,
-            icon: "report_problem"
-          });
-        }
-      });
-    };
 
     const isValidName = () => {
       const namePattern =
@@ -438,26 +293,30 @@ export default defineComponent({
 
     const openVerificationDialog = () => {
       getCode()
-
       showCaptchaDialog.value = true
     }
 
     const onCaptchaSubmit = () => {
       api.post(`/otp/sendSms`, qs.stringify({
         telephone: formDetail.phone,
-        captchaCode: captchaRef.value,
+        captchaCode: innerCaptchaRef.value,
         codeId: updateSecurityVerified.codeId
       }))
       .then(res => {
+        getCode();
         let message = res.message || '发送手机验证码成功',
           color = 'positive'
 
         if (res.code === 0)  {
           showCaptchaDialog.value = false
+          showVerifyBtn.value = false;
           showVerificationTokenInput.value = true
+          phoneCodeId.value = res.data.codeId;
+          console.log(res.data.codeId)
         }
         else
           color = 'negative';
+          getCode();
 
         if(message)
           $q.notify({ message, color });
@@ -477,11 +336,9 @@ export default defineComponent({
       isEditRealName,
       isEditEmail,
       isEditPhone,
-      loadInfo,
       isEditBirthday,
       formDetail,
       profileFormRef,
-      updateState,
       verificationModalVisible,
       openVerificationModal,
       isEmailSending,
@@ -493,6 +350,7 @@ export default defineComponent({
       emailAddressRef,
       isEdit,
       emailRef,
+      phoneOtpRef,
       realNameRef,
       birthdayRef,
       moment,
@@ -502,9 +360,12 @@ export default defineComponent({
       showVerificationTokenInput,
       isValidPhone,
       captchaRef,
+      innerCaptchaRef,
       showCaptchaDialog,
       openVerificationDialog,
-      onCaptchaSubmit
+      onCaptchaSubmit,
+      showVerifyBtn,
+      phoneCodeId
     };
   }
 });

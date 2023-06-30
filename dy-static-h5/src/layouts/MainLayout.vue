@@ -287,6 +287,15 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "账户信息";
+        }
+        else if (route.path === "/account/verifyTelephone") {
+          prevPage.value = "account";
+          hasPage.value = true;
+          pageName.value = "手机号码";
+        } else if (route.path === "/account/verifyEmail") {
+          prevPage.value = "account";
+          hasPage.value = true;
+          pageName.value = "邮箱";
         } else if (route.path === "/account/changePwd") {
           prevPage.value = "account";
           hasPage.value = true;
