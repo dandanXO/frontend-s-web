@@ -307,6 +307,7 @@ export default defineComponent({
                 message: "提交成功",
                 icon: "check_circle_outline"
               });
+              getWithdrawalMethods();
             } else {
             $q.notify({
               color: "negative",
