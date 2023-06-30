@@ -43,7 +43,7 @@
             <el-input v-model="form.affiliateName" style="width: 350px;" maxlength="11" />
           </el-form-item>
           <el-form-item :label="t('fields.domain')" prop="domain">
-            <el-input v-model="form.domain" style="width: 350px;" maxlength="11" />
+            <el-input v-model="form.domain" style="width: 350px;" maxlength="100" />
           </el-form-item>
           <div class="dialog-footer">
             <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -55,7 +55,7 @@
             <el-input v-model="form.affiliateName" style="width: 350px;" maxlength="11" disabled />
           </el-form-item>
           <el-form-item :label="t('fields.domain')" prop="domain">
-            <el-input v-model="form.domain" style="width: 350px;" maxlength="11" />
+            <el-input v-model="form.domain" style="width: 350px;" maxlength="100" />
           </el-form-item>
           <div class="dialog-footer">
             <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
