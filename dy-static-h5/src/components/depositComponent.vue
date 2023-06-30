@@ -190,7 +190,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isNewUser">
+  <!-- <q-dialog width="100%" v-model="isNewUser">
     <q-card style="width: 100%; padding: 20px" class="text-black">
       <q-card-section class="q-mb-md">
         <strong>温馨提示</strong>
@@ -203,7 +203,7 @@
         <q-btn label="前往绑定" color="dyblue" href="/account/personal" />
       </q-card-actions>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script setup id="DepositComponent">

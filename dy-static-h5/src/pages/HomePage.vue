@@ -80,10 +80,15 @@
       <RiUserShared2Line />
     </div> -->
   </div>
+  <!-- {{ store }}-~~~ -->
   <div class="details-container">
     <div class="welcome-bar">
       <div class="welcome-liner">
         欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}
+      </div>
+      <div>
+        <q-badge color="orange" text-color="black" :label="store.vip" />
+        <span class="q-ml-sm">￥{{ store.balance }}</span>
       </div>
       <!-- <router-link v-if="!store.token" to="/register" class="login">
         <span class="log">注册</span>
@@ -224,7 +229,9 @@
               :data="lotter"
             />
           </template>
-          <template v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'">
+          <template
+            v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
+          >
             <PlatformBlock
               @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
               dataType="lottery"
@@ -233,10 +240,10 @@
           </template>
           <template v-else>
             <PlatformBlock
-            @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
-            dataType="lottery"
-            :data="lotter"
-          />
+              @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
+              dataType="lottery"
+              :data="lotter"
+            />
           </template>
         </swiper-slide>
         <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
