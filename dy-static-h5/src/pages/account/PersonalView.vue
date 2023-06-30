@@ -108,7 +108,7 @@
         </template>
       </q-input>
 
-      <q-input
+      <!-- <q-input
         v-if="!formDetail.phoneVerified"
         standout
         bg-color="white"
@@ -132,7 +132,7 @@
             @click="openVerificationDialog"
           />
         </template>
-      </q-input>
+      </q-input> -->
 
       <div class="text-center q-mt-md" v-if="canEdit">
         <q-btn size="md" color="dyblue" @click="updateState" label="更新信息" />
@@ -161,7 +161,7 @@
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="明白" color="dyblue" />
+        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue" />
       </div>
     </q-card>
   </q-dialog>
