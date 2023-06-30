@@ -6,7 +6,7 @@
         :loading-claim="loadingClaim"
         @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'"/>
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'"/>
     <GoldenEggPromo
         v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token"
     />
@@ -435,7 +435,7 @@ export default defineComponent({
 
     // List for non common promo
     if (
-        this.list.redirectUrl === "tigercard" ||
+        this.list.redirectUrl === "dy1-tiger-card" ||
         this.list.redirectUrl === "goldenegg" ||
         this.list.redirectUrl === "hongbaoyu" ||
         this.list.redirectUrl === "invitefriend" ||

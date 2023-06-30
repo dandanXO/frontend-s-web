@@ -193,14 +193,17 @@ const transferOutAll = () => {
               platform.isTransferring = false;
               isTransferring.value = false;
             }, 1000);
+          } else {
+            platform.isTransferring = false;
+            isTransferring.value = false;
           }
-        });
-    } else {
-      setTimeout(() => {
-        platform.isTransferring = false;
-        isTransferring.value = false;
-      }, 2000);
+        })
     }
+    setTimeout(() => {
+      platform.isTransferring = false;
+      isTransferring.value = false;
+      refreshBalance('all')
+    }, 2000);
   });
 };
 const refreshBalance = (plat) => {

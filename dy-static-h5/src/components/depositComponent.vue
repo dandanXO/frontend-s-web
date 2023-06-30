@@ -476,6 +476,7 @@ async function confirmDeposit() {
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
             form.localAmount = d.data.suggestion;
+            btnLoading.value = false
           }
           $q.notify({
             color: "negative",
@@ -511,7 +512,6 @@ async function confirmDeposit() {
         }
       });
   }
-  btnLoading.value = false
 }
 
 async function pDepo(deposit) {
@@ -535,12 +535,14 @@ async function pDepo(deposit) {
       if (res.code === 0) {
         const response = res.data.result
         if (res.data.result.payResultType === "OFFLINE") {
+          btnLoading.value = false
 
         }
         if (res.data.result.payResultType === "RENDER_HTML") {
           isDisplay.value = true;
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
+          btnLoading.value = false
         } else {
           // if (
           //   (Platform.is.desktop || Platform.is.webkit) &&
@@ -555,13 +557,16 @@ async function pDepo(deposit) {
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === 'GET_SUBMIT') {
                 newWin.location.href = response.requestUrl;
+                btnLoading.value = false
                 // isDeposited.value = true;
               }
               if (response.payResultType === 'POST_SUBMIT') {
                 if (response.paramKey === null || response.paramKey === "") {
                   newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false
                 } else {
                   newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false
                 }
                 // isDeposited.value = true;
               }
@@ -573,17 +578,21 @@ async function pDepo(deposit) {
               // }
                 if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
                   location.href = response.requestUrl;
+                  btnLoading.value = false
                 }
                 else {
                   openURL(response.requestUrl);
+                  btnLoading.value = false
                 }
               }
               if (response.payResultType === 'POST_SUBMIT') {
                 localStorage.setItem("responseDetails", JSON.stringify(response));
                 if (response.paramKey === null || response.paramKey === "") {
                   router.push(`/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`)
+                  btnLoading.value = false
                 } else {
                   router.push(`/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`)
+                  btnLoading.value = false
                 }
                 // isDeposited.value = true;
               }
@@ -618,6 +627,7 @@ async function pDepo(deposit) {
           message: res.message,
           icon: "report_problem"
         });
+        btnLoading.value = false
       }
     })
     .catch((error) => {
@@ -627,6 +637,7 @@ async function pDepo(deposit) {
           message: error.message,
           icon: "report_problem"
         });
+        btnLoading.value = false
       // postMessage(
       //   {
       //     msg: error.message
@@ -634,7 +645,6 @@ async function pDepo(deposit) {
       //   "*"
       // );
     });
-    btnLoading.value = false
 }
 
 onMounted(() => {

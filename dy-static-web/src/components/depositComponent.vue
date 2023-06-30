@@ -156,16 +156,18 @@ import { ref, reactive, onMounted, shallowRef } from "vue";
 import { loadPay, loadPrivileges,verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { RiSpamLine } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
+import { useRouter } from "vue-router"
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 {
   RiSpamLine;
 }
+const router = useRouter();
 const loadingBtn = ref(false)
 const store = userStore();
 const formRef = ref();
@@ -385,6 +387,29 @@ function clearInfo() {
 }
 
 function confirmDeposit() {
+  if (store.token) {
+    if (!store.phone) {
+      ElMessageBox.confirm(
+      '为保证资金安全，存款前请先绑定手机号',
+      'Warning',
+      {
+        showClose: 'false',
+        cancelButtonClass: 'cancel-btn',
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        draggable: true,
+      }
+    )
+      .then(() => {
+        router.push('/center/personal')
+      })
+      .catch(() => {
+        router.go(-1)
+      })
+      return
+    }
+  }
   loadingBtn.value = true;
   
   if (freePrivilege.value) {
@@ -408,6 +433,7 @@ function confirmDeposit() {
           form.localAmount = d.data.suggestion;
           // message.error(d.message, 4);
           ElMessage.error(d.message);
+          loadingBtn.value = false;
         } else {
           const copy = { ...form };
           const data = {};
@@ -423,9 +449,9 @@ function confirmDeposit() {
       },
   ).catch((err) => {
     console.log(err)
+    loadingBtn.value = false;
   });
 })
-    loadingBtn.value = false;
 }
 
 function doDeposit(data) {
@@ -793,6 +819,13 @@ grid-template-rows: 50px;
     button {
       width: 80px;
     }
+  }
+}
+.el-button.cancel-btn {
+    background-color: #bd4646;
+  &:hover, &:focus {
+    border-color: #dc6666;
+    background-color: #d86d6d;
   }
 }
 </style>
