@@ -509,9 +509,10 @@ function resetQuery() {
 
 function handleSelectionChange(val) {
   chooseRecord = val
-  if (chooseRecord.length === 0) {
+  if (chooseRecord.length === 0 || chooseRecord.length > 3) {
     uiControl.toCheckBtn = true
     uiControl.toPendingBtn = true
+    ElMessage.warning("最多只能选择三条记录");
   } else {
     uiControl.toCheckBtn = false
     uiControl.toPendingBtn = false
