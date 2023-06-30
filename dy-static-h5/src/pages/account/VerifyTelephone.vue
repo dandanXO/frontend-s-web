@@ -96,6 +96,7 @@
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -107,6 +108,7 @@ export default defineComponent({
     // const isCardActive = ref();
     const qs = require("qs");
     const $q = useQuasar();
+    const router = useRouter();
     const searchForm = reactive({
       start: "",
       end: ""
@@ -326,6 +328,7 @@ export default defineComponent({
     }
 
     return {
+      router,
       searchForm,
       personalState,
       updateSecurityFormRef,

@@ -98,6 +98,7 @@
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
+import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 
@@ -106,6 +107,7 @@ export default defineComponent({
   setup() {
     // const isCardActive = ref();
     const qs = require("qs");
+    const router = useRouter();
     const $q = useQuasar();
     const searchForm = reactive({
       start: "",
@@ -296,7 +298,7 @@ export default defineComponent({
     }
 
     const onCaptchaSubmit = () => {
-      api.post(`/otp/sendEmail`, qs.stringify({
+      api.post(`/otp/sendNewEmail`, qs.stringify({
         email: formDetail.email,
         captchaCode: innerCaptchaRef.value,
         codeId: updateSecurityVerified.codeId
@@ -326,6 +328,7 @@ export default defineComponent({
     }
 
     return {
+      router,
       searchForm,
       personalState,
       updateSecurityFormRef,
