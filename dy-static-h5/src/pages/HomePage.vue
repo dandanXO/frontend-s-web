@@ -889,7 +889,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .secondSwiper {
   height: calc(100vh - 410px);
-  padding-bottom: 100px;
+  padding-bottom: 200px;
   padding-top: 25px;
 }
 :deep(.secondSwiper .swiper-wrapper) {

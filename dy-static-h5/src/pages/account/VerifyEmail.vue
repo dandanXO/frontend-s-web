@@ -241,7 +241,7 @@ export default defineComponent({
               message: "绑定成功",
               icon: "check_circle_outline"
             });
-            console.log(res)
+            router.push('/account');
           }
         }).catch((e) => {
           $q.notify({

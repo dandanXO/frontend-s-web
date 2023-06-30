@@ -242,7 +242,7 @@ export default defineComponent({
               message: "绑定成功",
               icon: "check_circle_outline"
             });
-
+            router.push('/account');
           }
         }).catch((e) => {
           $q.notify({
