@@ -1,3 +1,4 @@
+REGISTERPAGEv02
 <template>
   <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
     <q-input
@@ -93,6 +94,39 @@
       </template>
     </q-input>
 
+    <!-- <q-input
+      standout
+      bg-color="white"
+      ref="telRef"
+      hide-bottom-space
+      v-model="regForm.telephone"
+      label="电话号码"
+      lazy-rules
+      :rules="[(val) => (val && val.length > 7) || '请输入有效的电话号码']"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/telephone.png" width="20" />
+      </template>
+    </q-input> -->
+
+    <!-- <q-input
+      standout
+      bg-color="white"
+      ref="emailRef"
+      type="email"
+      hide-bottom-space
+      v-model="regForm.email"
+      label="电子邮件"
+      lazy-rules
+      :rules="[
+        (val) => (val && val.length > 0) || '请输入电子邮件',
+        isValidEmail
+      ]"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/email.png" width="20" />
+      </template>
+    </q-input> -->
     <q-input
       standout
       bg-color="white"
@@ -118,7 +152,8 @@
       ref="affiliateCodeRef"
       hide-bottom-space
       v-model="regForm.affiliateCode"
-      label="代理代码"
+      label="推荐码"
+      hint="若不是合营下会员无需填写"
     >
       <template v-slot:prepend>
         <img src="../assets/images/login/login_name.png" width="20" />
@@ -143,7 +178,9 @@
 <script>
 import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { api } from "boot/axios";
-import { Platform, useQuasar } from "quasar";
+import { useQuasar, Platform } from "quasar";
+import { useRoute, useRouter } from "vue-router";
+import { userStore } from "stores/index";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export default defineComponent({
@@ -159,6 +196,8 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
+      // telephone: "",
+      // email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -184,11 +223,14 @@ export default defineComponent({
         regForm.referrer = refCode;
       }
     };
+    const store = userStore();
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-
+    // const telRef = ref();
+    // const emailRef = ref();
     const verificationRef = ref();
+    const affiliateCodeRef = ref();
     const $q = useQuasar();
 
     const pwdStrength = ref("");
@@ -197,11 +239,13 @@ export default defineComponent({
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
       return emailPattern.test(regForm.email) || "请输入有效电子邮件";
     };
-
+    const router = useRouter();
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
+      // telRef.value.validate();
+      // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: "注册中"
@@ -210,6 +254,8 @@ export default defineComponent({
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
+        // telRef.value.hasError ||
+        // emailRef.value.hasError ||
         verificationRef.value.hasError
       ) {
         $q.loading.hide();
@@ -238,12 +284,16 @@ export default defineComponent({
             }
           }
           api
-            .post("/member/register", qs.stringify(regForm))
+            .post("/member/fbRegister", qs.stringify(regForm))
+            // .post("/member/register", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
-
+              // console.log("RET");
+              // console.log(ret);
               if (res.code === 0) {
-                context.emit("changeTab");
+                store.autoLogin(res.data);
+                // context.emit("changeTab");
+                router.push({ path: "/" });
                 $q.notify({
                   color: "positive",
                   position: "top",
@@ -261,7 +311,7 @@ export default defineComponent({
               }
               $q.loading.hide();
             })
-            .catch((_) => {
+            .catch((error) => {
               $q.loading.hide();
             });
           getCode();
@@ -312,6 +362,8 @@ export default defineComponent({
       loginNameRef,
       pwdRef,
       confirmPwdRef,
+      // telRef,
+      // emailRef,
       verificationRef,
       onSubmit,
       isValidEmail,
@@ -336,5 +388,65 @@ function charType(num) {
   return 8;
 }
 </script>
+<style lang="scss">
+.page-header {
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 28px;
+  text-align: center;
+  font-family: Wave;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  align-content: center;
+  justify-content: center;
+}
 
-<style lang="scss" src="src/css/pages/register.scss"></style>
+.verification {
+  display: flex;
+  padding: 10px;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.password-str-div {
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+  margin-bottom: 5px;
+  justify-content: space-evenly;
+  gap: 5px;
+  height: 50px;
+
+  span {
+    padding: 8px 3px;
+    //border: 1px solid #fff;
+    border-radius: 5px;
+    background: #434343;
+    width: 33%;
+    text-align: center;
+    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
+      sans-serif;
+  }
+
+  span.weak-pwd {
+    background: var(--q-negative);
+  }
+
+  span.normal-pwd {
+    background: var(--q-warning);
+    color: var(--q-primary);
+  }
+
+  span.strong-pwd {
+    //background: linear-gradient(to right, #de4545, #db7e42) !important;
+    background: var(--q-positive);
+    font-weight: 600;
+  }
+}
+</style>

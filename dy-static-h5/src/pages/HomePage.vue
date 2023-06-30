@@ -57,8 +57,7 @@
       class="column no-wrap flex-center"
       :img-src="imgURL + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
-    >
-    </q-carousel-slide>
+    ></q-carousel-slide>
   </q-carousel>
   <div class="midd">
     <div class="station-notice-wrapper">
@@ -81,10 +80,15 @@
       <RiUserShared2Line />
     </div> -->
   </div>
+  <!-- {{ store }}-~~~ -->
   <div class="details-container">
     <div class="welcome-bar">
       <div class="welcome-liner">
         欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}
+      </div>
+      <div v-if="store.token">
+        <q-badge color="orange" text-color="black" :label="store.vip" />
+        <span class="q-ml-sm">￥{{ store.balance }}</span>
       </div>
       <!-- <router-link v-if="!store.token" to="/register" class="login">
         <span class="log">注册</span>
@@ -95,13 +99,12 @@
           <q-icon name="double_arrow" style="color: #536ee0; font-size: 14px" />
         </span>
       </router-link>
-      <router-link v-else to="/account" class="login"
-        ><span class="log">已登录</span
-        ><span class="user"
-          ><q-icon
-            name="double_arrow"
-            style="color: #536ee0; font-size: 14px" /></span
-      ></router-link>
+      <router-link v-else to="/account" class="login">
+        <span class="log">已登录</span>
+        <span class="user">
+          <q-icon name="double_arrow" style="color: #536ee0; font-size: 14px" />
+        </span>
+      </router-link>
     </div>
     <div class="details-bar">
       <!-- <div class="message">
@@ -149,8 +152,9 @@
         v-for="(tab, i) in tabs"
         :key="i"
         style="width: calc(100vw / 6)"
-        >{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</swiper-slide
       >
+        {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
+      </swiper-slide>
     </swiper>
     <div class="index-platform-container" style="overflow: hidden">
       <!-- Main Swiper -> pass thumbs swiper instance -->
@@ -191,11 +195,13 @@
               :data="live"
             />
           </template>
-          <PlatformBlock
-            @click="playGame(live.name, live.code, live.gameCode)"
-            dataType="live"
-            :data="live"
-          />
+          <template v-else>
+            <PlatformBlock
+              @click="playGame(live.name, live.code, live.gameCode)"
+              dataType="live"
+              :data="live"
+            />
+          </template>
         </swiper-slide>
         <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
           <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
@@ -223,18 +229,22 @@
               :data="lotter"
             />
           </template>
-          <template v-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'">
+          <template
+            v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
+          >
             <PlatformBlock
               @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
               dataType="lottery"
               :data="lotter"
             />
           </template>
-          <PlatformBlock
-            @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
-            dataType="lottery"
-            :data="lotter"
-          />
+          <template v-else>
+            <PlatformBlock
+              @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
+              dataType="lottery"
+              :data="lotter"
+            />
+          </template>
         </swiper-slide>
         <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
           <PlatformBlock dataType="slot" :data="slt" />
@@ -563,9 +573,7 @@ export default defineComponent({
               espObj.subtitle = "电竞赛事";
               esport.value.push(espObj);
             }
-            if (
-              element.gameType.includes("SPORT,ESPORT")
-            ) {
+            if (element.gameType.includes("SPORT,ESPORT")) {
               var spObj = Object.assign({}, element);
               if (spObj.code === "IM") {
                 spObj.title = "IM体育";

@@ -462,7 +462,7 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: "Success",
+                message: "操作成功",
                 icon: "check_circle_outline"
               });
               loadCards();

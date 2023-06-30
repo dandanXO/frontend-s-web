@@ -23,8 +23,7 @@
         v-model="formDetail.realName"
         label="姓名"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入姓名',
-                isValidName]"
+        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
         label-color=""
         :readonly="personalState.memberInfo.realName ? true : false"
       />
@@ -50,13 +49,14 @@
             >
               <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
           </q-icon>
         </template>
       </q-input>
+
       <!-- <q-input
         type="date"
         class="q-pb-xs"
@@ -71,6 +71,7 @@
         color="secondary"
         :readonly="personalState.memberInfo.birthday ? true : false"
       /> -->
+
       <q-input
         standout
         bg-color="white"
@@ -90,22 +91,82 @@
         class="q-pb-xs"
         hide-bottom-space
         v-model="formDetail.phone"
+        type="tel"
         label="电话"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入电话']"
+        :rules="[(_) => isValidPhone()]"
         label-color=""
         color=""
         :readonly="personalState.memberInfo.phone ? true : false"
       >
-        <template v-slot:append>
-          <q-btn size="sm" color="dyblue" label="验证" />
+        <template v-slot:append v-if="!formDetail.phoneVerified">
+          <q-btn
+            size="sm"
+            color="dyblue"
+            label="验证"
+            :disable="!formDetail.phone"
+            @click="openVerificationDialog"
+          />
         </template>
       </q-input>
+
+      <!-- <q-input
+        v-if="!formDetail.phoneVerified"
+        standout
+        bg-color="white"
+        class="q-pb-xs"
+        hide-bottom-space
+        v-model="formDetail.phone"
+        type="tel"
+        label="手机验证码"
+        lazy-rules
+        :rules="[(_) => isValidPhone()]"
+        label-color=""
+        color=""
+        :readonly="personalState.memberInfo.phone ? true : false"
+      >
+        <template v-slot:append v-if="!formDetail.phoneVerified">
+          <q-btn
+            size="sm"
+            color="dyblue"
+            label="验证"
+            :disable="!formDetail.phone"
+            @click="openVerificationDialog"
+          />
+        </template>
+      </q-input> -->
+
       <div class="text-center q-mt-md" v-if="canEdit">
         <q-btn size="md" color="dyblue" @click="updateState" label="更新信息" />
       </div>
     </q-form>
   </div>
+
+  <q-dialog v-model="showCaptchaDialog">
+    <q-card>
+      <q-card-section
+        style="padding: 10px 20px"
+        class="q-pa-md bg-dyblue text-white"
+      >
+        验证码
+      </q-card-section>
+      <div style="padding: 20px">
+        <q-card-section class="q-mb-md q-pa-md">
+          <q-input v-model="captchaRef" label="验证码">
+            <template v-slot:append>
+              <img
+                :src="verificationImg"
+                title="点击刷新验证码"
+                style="margin-top: 6px; cursor: pointer"
+                @click="getCode"
+              />
+            </template>
+          </q-input>
+        </q-card-section>
+        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue" />
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="js">
@@ -114,7 +175,6 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
-
 
 export default defineComponent({
   name: "PersonalView",
@@ -141,6 +201,7 @@ export default defineComponent({
       formDetail.birthday = personalState.memberInfo.birthday;
       formDetail.email = personalState.memberInfo.email;
       formDetail.phone = personalState.memberInfo.phone;
+      formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
     };
 
     const canEdit = computed(() => {
@@ -271,11 +332,16 @@ export default defineComponent({
     const isEditPhone = ref(false);
     const isEditBirthday = ref(false);
     const isEdit = ref(false);
-    const emailRef = ref();
+
+    const formDetail = reactive([]);
     const realNameRef = ref();
     const birthdayRef = ref();
-    const phoneRef = ref();
-    const formDetail = reactive([]);
+    const emailRef = ref();
+
+    const captchaRef = ref();
+    const showCaptchaDialog = ref(false);
+    const showVerificationTokenInput = ref(false)
+
     const updateState = () => {
       const updateInfo = {};
       if (!personalState.memberInfo.birthday) {
@@ -324,6 +390,47 @@ export default defineComponent({
         /^([\u4e00-\u9fa5]*)$/;
       return namePattern.test(formDetail.realName) || "请输入中文字符";
     };
+
+    const isValidPhone = () => {
+
+      const reg = /^\d+$/;
+      const { phone } = formDetail;
+
+      const result = '' === phone ? '请验证您的电话号码' : !reg.test(phone) ? '电话号码只允许使用数字' : true;
+
+      return result
+    }
+
+    const openVerificationDialog = () => {
+      getCode()
+
+      showCaptchaDialog.value = true
+    }
+
+    const onCaptchaSubmit = () => {
+      api.post(`/otp/sendSms`, qs.stringify({
+        telephone: formDetail.phone,
+        captchaCode: captchaRef.value,
+        codeId: updateSecurityVerified.codeId
+      }))
+      .then(res => {
+        let message = res.message || '发送手机验证码成功',
+          color = 'positive'
+
+        if (res.code === 0)  {
+          showCaptchaDialog.value = false
+          showVerificationTokenInput.value = true
+        }
+        else
+          color = 'negative';
+
+        if(message)
+          $q.notify({ message, color });
+
+        console.log('onCaptchaSubmit', res)
+      })
+    }
+
     return {
       searchForm,
       personalState,
@@ -353,10 +460,16 @@ export default defineComponent({
       emailRef,
       realNameRef,
       birthdayRef,
-      phoneRef,
       moment,
       canEdit,
-      isValidName
+      isValidName,
+
+      showVerificationTokenInput,
+      isValidPhone,
+      captchaRef,
+      showCaptchaDialog,
+      openVerificationDialog,
+      onCaptchaSubmit
     };
   }
 });

@@ -503,8 +503,8 @@ export default defineComponent({
         `解绑 ${card.bankName} ?`,
         '警告',
         {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Cancel',
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           type: 'warning',
         }
       )

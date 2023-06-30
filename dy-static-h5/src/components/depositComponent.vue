@@ -163,6 +163,7 @@
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
+            :loading="btnLoading"
             color="brightbtn fit"
             @click="confirmDeposit"
             label="确定存款"
@@ -188,6 +189,21 @@
     </div>
     </q-card>
   </q-dialog>
+
+  <!-- <q-dialog width="100%" v-model="isNewUser">
+    <q-card style="width: 100%; padding: 20px" class="text-black">
+      <q-card-section class="q-mb-md">
+        <strong>温馨提示</strong>
+        <br />
+        <br />
+        为保证资金安全，存款前前先绑定手机号
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn label="暫不绑定" color="primary" href="/" />
+        <q-btn label="前往绑定" color="dyblue" href="/account/personal" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog> -->
 </template>
 
 <script setup id="DepositComponent">
@@ -195,7 +211,7 @@ import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
-import { Platform, useQuasar } from "quasar";
+import { Platform, useQuasar, openURL } from "quasar";
 import { doIt } from "boot/action";
 import liff from "@line/liff";
 
@@ -207,8 +223,15 @@ import { useRouter } from "vue-router";
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
+const isNewUser = ref(false);
+const checkNewUser = () => {
+  if (store.phone == null) {
+    isNewUser.value = true;
+  }
+};
 const isDeposited = ref(false);
 const isLoading = ref(true);
+const btnLoading = ref(false);
 const payTypeClass = ref();
 const payMethods = reactive([]);
 const paymentNode = ref([]);
@@ -441,6 +464,7 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
+  btnLoading.value = true
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
   } else {
@@ -487,9 +511,11 @@ async function confirmDeposit() {
         }
       });
   }
+  btnLoading.value = false
 }
 
 async function pDepo(deposit) {
+  btnLoading.value = true
   const obj = {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
@@ -542,8 +568,15 @@ async function pDepo(deposit) {
             } else {
               localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === 'GET_SUBMIT') {
-                location.href = response.requestUrl;
-                // isDeposited.value = true;
+              //   location.href = response.requestUrl;
+              //   // isDeposited.value = true;
+              // }
+                if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+                  location.href = response.requestUrl;
+                }
+                else {
+                  openURL(response.requestUrl);
+                }
               }
               if (response.payResultType === 'POST_SUBMIT') {
                 localStorage.setItem("responseDetails", JSON.stringify(response));
@@ -601,10 +634,12 @@ async function pDepo(deposit) {
       //   "*"
       // );
     });
+    btnLoading.value = false
 }
 
 onMounted(() => {
   initPay();
+  checkNewUser();
 });
 </script>
 

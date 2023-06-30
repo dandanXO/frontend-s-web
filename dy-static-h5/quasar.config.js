@@ -68,9 +68,9 @@ module.exports = configure(function (ctx) {
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       extendWebpack (cfg) {
-        cfg.resolve.alias = { 
+        cfg.resolve.alias = {
           ...cfg.resolve.alias,
-          '.shared' : path.resolve(__dirname, '../.shared') 
+          '.shared' : path.resolve(__dirname, '../.shared')
         }
         cfg.resolve.modules = [
           ...cfg.resolve.modules,
@@ -99,6 +99,7 @@ module.exports = configure(function (ctx) {
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
+      lang: 'zh-CN',
       config: {},
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -211,6 +212,7 @@ module.exports = configure(function (ctx) {
       version: '1.0.0', // string
       // (Optional) If not present, will look for package.json > description
       description: '东赢官网 - 最专业的竞猜网站', // string
+      backButtonExit: '*'
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/configuring-electron

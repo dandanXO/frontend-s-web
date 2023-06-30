@@ -122,60 +122,53 @@
               </div>
             </el-form>
           </div>
+          
           <div class="unbind-record-wrapper">
-            <!-- <el-table
-              :columns="tableColumns.turnover"
-              :datel-source="dataState.turnover"
-              :row-name="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #recordTime="{ text }">
-                <span>{{ humanDatetime(text) }}</span>
-              </template>
-              <template #subType="{ record }">
-                <span v-if="record.type === 'TRANSFER'">
-                  {{
-                    record.subType === "DEPOSIT" ? "TRANSFER IN" : "TRANSFER IN"
-                  }}
-                </span>
-                <span v-else>
-                  {{ record.subType }}
-                </span>
-              </template>
-            </el-table> -->
-
-            <el-table :data="dataState.turnover" :loading="loading">
+            <el-table :data="dataState.deposit" v-loading="loading">
               <template #empty>
                 <EmptyData />
               </template>
 
               <el-table-column
-                v-for="tbl in tableColumns.turnover"
+                v-for="tbl in tableColumns.deposit"
                 :key="tbl.key"
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
                 <template
-                  v-if="tbl.dataIndex === 'recordTime'"
+                  v-if="tbl.dataIndex === 'depositDate'"
                   #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.recordTime }}</span>
+                    <span>{{ scope.row.depositDate }}</span>
                   </div>
                 </template>
 
-                <template v-if="tbl.dataIndex === 'type'" #default="scope">
+                <template v-if="tbl.dataIndex === 'status'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getTurnoverType(scope.row.type) }}
+                    {{ getDepositStatus(scope.row.status) }}
+                  </div>
+                </template>
+                <template
+                  v-if="tbl.dataIndex === 'paymentType'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    {{ getDepositType(scope.row.paymentType) }}
                   </div>
                 </template>
 
-                <template v-if="tbl.dataIndex === 'subType'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    {{ getSubType(scope.row.subType) }}
-                  </div>
+                <template v-if="tbl.dataIndex === 'operation'" #default="scope">
+                  <template v-if="scope.row.status === 'PENDING'">
+                    <div style="display: flex; align-items: center">
+                      <el-button
+                        size="small"
+                        class="common-btn"
+                        @click="openReminder(scope.row)"
+                        >催单
+                      </el-button>
+                    </div>
+                  </template>
                 </template>
               </el-table-column>
             </el-table>
@@ -298,7 +291,7 @@
             />
           </div>
         </el-tab-pane>
-        <!-- <el-tab-pane name="transfer" label="Transfer">
+        <el-tab-pane name="transfer" label="转账记录">
           <div>
             <el-form layout="inline" :model="searchForm.transfer">
               <div class="left">
@@ -316,49 +309,59 @@
                     placeholder=""
                   />
                 </el-form-item>
+                <el-form-item>
+                  <el-button
+                    type="success"
+                    class="common-btn"
+                    @click="searchRecord"
+                    >搜索
+                  </el-button>
+                </el-form-item>
               </div>
-              <el-form-item>
-                <el-button type="success"
-                  class="common-btn"
-                  @click="searchRecord"
-                >搜索
-                </el-button>
-              </el-form-item>
             </el-form>
           </div>
           <div class="unbind-record-wrapper">
-            <el-table
-              :columns="tableColumns.transfer"
-              :datel-source="dataState.transfer"
-              :row-name="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #type="{ record }">
-                <span> {{ record.type }} - {{ record.platform }} </span>
+            <el-table :data="dataState.transfer" v-loading="loading">
+              <template #empty>
+                <EmptyData />
               </template>
-              <template #status="{ text, record }">
-                <span>
-                  <el-tag
-                    :color="
-                      record.status === 'SUCCESS'
-                        ? '#87d068'
-                        : record.status === 'SENDING'
-                        ? '#55acee'
-                        : '#cd201f'
-                    "
-                  >
-                    {{ text }}
-                  </el-tag>
-                </span>
-              </template>
-              <template #transferDate="{ text }">
-                <span>{{ "humanDatetime(text }}</span>
-              </template>
+              
+              <el-table-column
+                v-for="tbl in tableColumns.transfer"
+                :key="tbl.key"
+                :prop="tbl.dataIndex"
+                :label="tbl.title"
+              >
+                <template
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.recordTime }}</span>
+                  </div>
+                </template>
+
+                <template v-if="tbl.dataIndex === 'type'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getTransferType(scope.row.type) }}
+                  </div>
+                </template>
+                <template v-if="tbl.dataIndex === 'status'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getTransferType(scope.row.status) }}
+                  </div>
+                </template>
+              </el-table-column>
             </el-table>
+            <el-divider />
+            <el-pagination
+              @current-change="recordPage"
+              :total="pagination.total"
+              :current-page="searchForm[recordActive].current"
+              :page-size="searchForm[recordActive].size"
+            />
           </div>
-        </el-tab-pane> -->
+        </el-tab-pane>
         <el-tab-pane name="rebates" label="优惠记录">
           <div>
             <el-form layout="inline" :model="searchForm.rebates">
@@ -872,6 +875,11 @@ const tableColumns = {
       slots: {customRender: "type"}
     },
     {
+      title: "游戏平台",
+      dataIndex: "platform",
+      key: "platform"
+    },
+    {
       title: "金额",
       dataIndex: "amount",
       key: "withdrawAmount"
@@ -883,7 +891,7 @@ const tableColumns = {
       slots: {customRender: "status"}
     },
     {
-      title: "转账日期",
+      title: "时间",
       dataIndex: "transferDate",
       key: "transferDate",
       slots: {customRender: "transferDate"}
@@ -1320,6 +1328,54 @@ export default defineComponent({
         return turnoverType
       }
     }
+    const getTransferType = (transferType) => {
+      if (!transferType) {
+        return ''
+      }
+      if (transferType === 'APPLY') {
+        return '申请中' //Applying
+      } else if (transferType === 'FAIL') {
+        return '失败' // Failed
+      } else if (transferType === 'SUCCESS') {
+        return '成功' // Success
+      } else if (transferType === 'STEP_1' || transferType === 'PENDING') {
+        return '审核中' //Under review
+      } else if (transferType === 'STEP_2') {
+        return '待支付' // To be paid
+      } else if (transferType === 'STEP_3') {
+        return '支付中' // Payment on going
+      } else if (transferType === 'STEP_4') {
+        return '自动支付' // Automatic Payment
+      } else if (transferType === 'STEP_5') {
+        return '暂不处理' // Suspend
+      } else if (transferType === 'AUTOPAY') {
+        return '自动支付' // Automatic Payment
+      } else if (transferType === 'WAITING_CALLBACK') {
+        return '自动支付中' // Waiting Callback
+      } else if (transferType === 'PENDING') {
+        return '支付中' // Pending
+      } else if (transferType === 'SUCCESS') {
+        return '成功' // Success
+      } else if (transferType === 'SUPPLEMENT_SUCCESS') {
+        return '成功' // Supplement Success
+      } else if (transferType === 'CLOSED') {
+        return '关闭' // Closed
+      } else if (transferType === 'WITHDRAW_FAIL') {
+        return '提款失败' // Fail Withdrawal
+      } else if (transferType === 'WITHDRAW') {
+        return '提款' // Withdraw
+      }  else if (transferType === 'PROMO') {
+        return '优惠' // 优惠
+      }  else if (transferType === 'DEPOSIT') {
+        return '存款' // 存款
+      }  else if (transferType === 'TRANSFER') {
+        return '转账' // 转账
+      }  else if (transferType === 'ADJUST') {
+        return '账变' // 账变
+      } else {
+        return transferType
+      }
+    }
 
     const getSubType = (subType) => {
       if (!subType) {
@@ -1496,6 +1552,7 @@ export default defineComponent({
       submitReminder,
       getImageLink,
       getTurnoverType,
+      getTransferType,
       getSubType,
       getWithdrawStatus,
       getDepositStatus,

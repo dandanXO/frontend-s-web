@@ -278,7 +278,7 @@ export default defineComponent({
         } else if (route.path === "/account/records") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "账户记录";
+          pageName.value = "交易记录";
         } else if (route.path === "/account/transit") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -346,6 +346,10 @@ export default defineComponent({
           prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "转账记录";
+        } else if (route.path === "/account/records/moneyChange") {
+          prevPage.value = "account/records";
+          hasPage.value = true;
+          pageName.value = "账变记录";
         } else if (route.path === "/account/records/promo") {
           prevPage.value = "account/records";
           hasPage.value = true;
