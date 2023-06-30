@@ -49,13 +49,14 @@
             >
               <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
           </q-icon>
         </template>
       </q-input>
+
       <!-- <q-input
         type="date"
         class="q-pb-xs"
@@ -70,6 +71,7 @@
         color="secondary"
         :readonly="personalState.memberInfo.birthday ? true : false"
       /> -->
+
       <q-input
         standout
         bg-color="white"

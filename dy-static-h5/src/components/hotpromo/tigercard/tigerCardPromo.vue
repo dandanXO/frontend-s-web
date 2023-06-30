@@ -117,16 +117,6 @@
           @reset="resetRegForm"
           class="q-gutter-md"
         >
-          <!-- <q-select color="white" filled v-model="form.type" placeholder="请选择虎卡" label="虎卡" :options="hukaList"
-
-          option-value="id"
-          option-label="name"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || '请选择虎卡'
-          ]"
-        /> -->
-
           <q-select
             hide-bottom-space
             color=""
@@ -179,7 +169,7 @@
         </q-form>
       </q-card>
     </q-dialog>
-    <q-dialog
+    <!-- <q-dialog
       align-center
       class="wonHukaBox"
       v-model="isCardModal"
@@ -197,7 +187,7 @@
           </div>
         </div>
       </span>
-    </q-dialog>
+    </q-dialog> -->
   </div>
 </template>
 <script setup>
