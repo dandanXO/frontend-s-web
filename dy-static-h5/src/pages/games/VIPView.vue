@@ -461,8 +461,8 @@ import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 
-import vipLevel from ".shared/constant/vip-level.js";
-import bonus from ".shared/api/bonus";
+import vipLevel from "src/constant/vip-level.js";
+import { claimBonusItem } from "src/api/index/promo";
 import { openCommonError, openLoginAlert } from ".shared/helper/utils";
 
 export default defineComponent({
@@ -1009,8 +1009,7 @@ program at any time without prior notice.`
       } else {
         const bonusItem = `dy1-vip-${type}`;
 
-        bonus
-          .claim(bonusItem)
+        claimBonusItem(bonusItem)
           .then((res) => {
             if (res.code === 0) {
               // Success

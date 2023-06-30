@@ -1,4 +1,4 @@
-const domain = process.env.VUE_APP_RST_API || process.env.RST_API
+const domain = process.env.VUE_APP_EVT_API || process.env.EVT_API
 const ns = `${domain}bonus`
 
 export default {

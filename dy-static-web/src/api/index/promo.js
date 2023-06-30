@@ -13,7 +13,7 @@ export function loadPromoBanner(category) {
   });
 }
 export function claimBonusItem(item) {
-  return server.EVENT.put(`${bonus.claim}/${item}`);
+  return server.EVENT.put(`/bonus/claim/${item}`);
 }
 
 export function welcomeTaskInit() {

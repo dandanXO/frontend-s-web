@@ -10,7 +10,7 @@ import VipButton from "@/components/vip/Button/main.vue";
 
 import vipLevel from ".shared/constant/vip-level.js";
 
-import bonus from ".shared/api/bonus";
+import { claimBonusItem } from "@/api/index/promo";
 import { openCommonError, openLoginAlert } from ".shared/helper/utils";
 
 const { labels, levels } = vipLevel;
@@ -27,8 +27,7 @@ const onVIPButtonClick = (type) => {
   else {
     const bonusItem = `dy1-vip-${type}`;
 
-    bonus
-      .claim(bonusItem)
+    claimBonusItem(bonusItem)
       .then((res) => {
         if (res.code === 0) {
           // Success
