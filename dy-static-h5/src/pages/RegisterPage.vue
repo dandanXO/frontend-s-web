@@ -51,15 +51,17 @@
           'normal-pwd': pwdStrength == 'normal',
           'strong-pwd': pwdStrength == 'strong'
         }"
-        >弱</span
       >
+        弱
+      </span>
       <span
         :class="{
           'normal-pwd': pwdStrength == 'normal',
           'strong-pwd': pwdStrength == 'strong'
         }"
-        >好</span
       >
+        好
+      </span>
       <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
     </div>
 
@@ -91,39 +93,6 @@
       </template>
     </q-input>
 
-    <q-input
-      standout
-      bg-color="white"
-      ref="telRef"
-      hide-bottom-space
-      v-model="regForm.telephone"
-      label="电话号码"
-      lazy-rules
-      :rules="[(val) => (val && val.length > 7) || '请输入有效的电话号码']"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/images/login/telephone.png" width="20" />
-      </template>
-    </q-input>
-
-    <q-input
-      standout
-      bg-color="white"
-      ref="emailRef"
-      type="email"
-      hide-bottom-space
-      v-model="regForm.email"
-      label="电子邮件"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入电子邮件',
-        isValidEmail
-      ]"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/images/login/email.png" width="20" />
-      </template>
-    </q-input>
     <q-input
       standout
       bg-color="white"
@@ -174,8 +143,7 @@
 <script>
 import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
-import { useRoute, useRouter } from "vue-router";
+import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export default defineComponent({
@@ -191,8 +159,6 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      telephone: "",
-      email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -221,10 +187,8 @@ export default defineComponent({
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    const telRef = ref();
-    const emailRef = ref();
+
     const verificationRef = ref();
-    const affiliateCodeRef = ref();
     const $q = useQuasar();
 
     const pwdStrength = ref("");
@@ -233,13 +197,11 @@ export default defineComponent({
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
       return emailPattern.test(regForm.email) || "请输入有效电子邮件";
     };
-    const router = useRouter();
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      telRef.value.validate();
-      emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: "注册中"
@@ -248,8 +210,6 @@ export default defineComponent({
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
-        telRef.value.hasError ||
-        emailRef.value.hasError ||
         verificationRef.value.hasError
       ) {
         $q.loading.hide();
@@ -267,22 +227,21 @@ export default defineComponent({
           const sidParam = FingerprintJS.hashComponents(allComponents);
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
-          if (("standalone" in window.navigator) && window.navigator.standalone) {      
-              regForm.regDevice = "IOS"
-            } else {
-              regForm.regDevice = Platform.is.mobile ? "H5" : "WEB";
-              if (Platform.is.capacitor) {
-                if (Platform.is.android) {
-                  regForm.regDevice = "ANDROID"
-                }
+          if ("standalone" in window.navigator && window.navigator.standalone) {
+            regForm.regDevice = "IOS";
+          } else {
+            regForm.regDevice = Platform.is.mobile ? "H5" : "WEB";
+            if (Platform.is.capacitor) {
+              if (Platform.is.android) {
+                regForm.regDevice = "ANDROID";
               }
             }
+          }
           api
             .post("/member/register", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
-              // console.log("RET");
-              // console.log(ret);
+
               if (res.code === 0) {
                 context.emit("changeTab");
                 $q.notify({
@@ -302,7 +261,7 @@ export default defineComponent({
               }
               $q.loading.hide();
             })
-            .catch((error) => {
+            .catch((_) => {
               $q.loading.hide();
             });
           getCode();
@@ -353,8 +312,6 @@ export default defineComponent({
       loginNameRef,
       pwdRef,
       confirmPwdRef,
-      telRef,
-      emailRef,
       verificationRef,
       onSubmit,
       isValidEmail,
@@ -379,65 +336,5 @@ function charType(num) {
   return 8;
 }
 </script>
-<style lang="scss">
-.page-header {
-  background-image: linear-gradient(to right, #de4545, #db7e42);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 28px;
-  text-align: center;
-  font-family: Wave;
-  padding: 10px;
-  display: flex;
-  gap: 20px;
-  align-content: center;
-  justify-content: center;
-}
 
-.verification {
-  display: flex;
-  padding: 10px;
-}
-
-.space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.password-str-div {
-  display: flex;
-  align-items: center;
-  margin-top: 3px;
-  margin-bottom: 5px;
-  justify-content: space-evenly;
-  gap: 5px;
-  height: 50px;
-
-  span {
-    padding: 8px 3px;
-    //border: 1px solid #fff;
-    border-radius: 5px;
-    background: #434343;
-    width: 33%;
-    text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
-      sans-serif;
-  }
-
-  span.weak-pwd {
-    background: var(--q-negative);
-  }
-
-  span.normal-pwd {
-    background: var(--q-warning);
-    color: var(--q-primary);
-  }
-
-  span.strong-pwd {
-    //background: linear-gradient(to right, #de4545, #db7e42) !important;
-    background: var(--q-positive);
-    font-weight: 600;
-  }
-}
-</style>
+<style lang="scss" src="src/css/pages/register.scss"></style>

@@ -430,6 +430,7 @@ function confirmDeposit() {
 
 function doDeposit(data) {
   
+  loadingBtn.value = true;
   postDeposit(data).then((d) => {
     if (d.code === 0) {
       doIt(d).then((resp) => {
@@ -472,6 +473,7 @@ function doDeposit(data) {
           // );
         }
       });
+      loadingBtn.value = false;
     } else {
       ElMessage.error('优惠存款金额不符合规则')
     }

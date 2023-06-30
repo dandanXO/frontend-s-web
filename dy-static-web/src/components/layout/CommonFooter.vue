@@ -40,45 +40,45 @@
     <div class="bottom-footer">
         <div class="sitemap">
           <ul class="index_bottom_des">
-              <li>浏览器下载</li>
-              <li onclick="window.location.href='https://s3-ap-northeast-1.amazonaws.com/brows/googlechromestandaloneenterprise64.msi'">谷歌浏览器</li>
-              <li onclick="window.location.href='http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE'">IE9浏览器</li>
-              <li onclick="window.location.href='http://download.firefox.com.cn/releases-sha2/stub/official/zh-CN/Firefox-latest.exe'">火狐浏览器</li>
-          </ul>
-          <ul class="index_bottom_des">
               <li>关于东赢</li>
-              <li onclick="window.open('/help.html')">关于我们</li>
-              <li onclick="location.href='/promotion'">优惠活动</li>
-              <li data-toggle="modal" data-target="#registeredModal">免费开户</li>
-              <li onclick="location.href='https://partner.dyvip90.com'">代理加盟</li>
+              <li><router-link to="/about?id=aboutus">关于我们</router-link></li>
+              <li><router-link to="/promotion">优惠活动</router-link></li>
+              <li @click="openRegPage">免费开户</li>
+              <!-- <li><router-link to="/agent">代理加盟</router-link></li> -->
           </ul>
           <ul class="index_bottom_des">
               <li>产品服务</li>
-              <li onclick="location.href='/games/sport.html'">体育</li>
-              <li onclick="location.href='/games/fish.html'">捕鱼</li>
-              <li onclick="location.href='/games/slots.html'">电子游戏</li>
-              <li onclick="location.href='/games/live.html'">真人娱乐</li>
+              <li><router-link to="/sports">体育</router-link></li>
+              <li><router-link to="/fishing">捕鱼</router-link></li>
+              <li><router-link to="/game">电子游戏</router-link></li>
+              <li><router-link to="/live-casino">真人娱乐</router-link></li>
           </ul>
           <ul class="index_bottom_des">
-              <li onclick="location.href='/help.html'">帮助中心</li>
-              <li onclick="location.href='/help.html?id=2'">存款指南</li>
-              <li onclick="location.href='/help.html?id=3'">新手学堂</li>
-              <li onclick="location.href='/help.html?id=3'">常见问题</li>
-              <li onclick="location.href='/help.html?id=4'">游戏规则</li>
+            <li>帮助中心</li>
+            <li><router-link to="/about?id=finance">存款指南</router-link></li>
+            <li><router-link to="/about?id=privacy">新手学堂</router-link></li>
+            <li><router-link to="/about?id=service">常见问题</router-link></li>
+            <li><router-link to="/about?id=service">游戏规则</router-link></li>
           </ul>
+          <!-- <ul class="index_bottom_des">
+              <li>设为首页</li>
+              <li @click="addToBookmark">加入收藏</li>
+          </ul> -->
           <ul class="index_bottom_des">
-              <li onclick="setHome(this, window.location)">设为首页</li>
-              <li id="footBookmarkme">加入收藏</li>
+              <li>浏览器下载</li>
+              <li><a href="https://s3-ap-northeast-1.amazonaws.com/brows/googlechromestandaloneenterprise64.msi">谷歌浏览器</a></li>
+              <li><a href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE">IE9浏览器</a></li>
+              <li><a href="http://download.firefox.com.cn/releases-sha2/stub/official/zh-CN/Firefox-latest.exe">火狐浏览器</a></li>
           </ul>
         </div>
       <div class="bottom-footer-inner">
         <ul>
-          <li><router-link to="/about?id=about">关于东赢</router-link></li>
-          <li><router-link to="/about?id=contactus">联系我们</router-link></li>
+          <li><router-link to="/about?id=aboutus">关于东赢</router-link></li>
           <li><router-link to="/about?id=terms">法律依据</router-link></li>
           <li><router-link to="/about?id=privacy">隐私条款</router-link></li>
           <li><router-link to="/about?id=service">服务条款</router-link></li>
-          <li><a href="https://ag.xf852.com/">加盟代理</a></li>
+          <li><router-link to="/about?id=contactus">联系我们</router-link></li>
+          <li><a href="/agent">加盟代理</a></li>
         </ul>
         <div class="tagline">东赢是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div>
       </div>
@@ -89,6 +89,8 @@
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
+import { userStore } from '@/store'
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default defineComponent({
   components: {
@@ -96,9 +98,15 @@ export default defineComponent({
   setup() {
     const isFireFox = ref(false);
     const isChrome = ref(false);
+    const store = userStore();
+    const openRegPage = () => {
+      store.regPageVisible = true
+    }
     return {
       isFireFox,
-      isChrome
+      isChrome, 
+      store,
+      openRegPage
     }
   },
 })
@@ -106,6 +114,11 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .footer {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
   font-size: .8rem;
   .top-footer {
     .top-footer-inner {
@@ -353,6 +366,10 @@ export default defineComponent({
             font-size: 14px;
             color: #FFF;
             letter-spacing: -.45px;
+          }
+          a {
+            text-decoration: none;
+            color: #899dc7;
           }
         }
       }

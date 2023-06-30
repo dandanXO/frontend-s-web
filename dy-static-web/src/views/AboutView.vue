@@ -4,36 +4,55 @@
     <el-tabs
       v-model="activeTab"
       :tab-position="windowSize > 768 ? 'left' : 'top'"
+      @tab-click="updateTab"
     >
       <template #tabBarExtraContent v-if="windowSize > 768">
         <!-- <img class="extrel-logo" src="../../assets/images/index/logo_web.png" /> -->
       </template>
-      <el-tab-pane label="法律依据" name="terms">
-        <div class="help-content">
-          <div class="about-title">法律依据</div>
-          <ol>
-            <li><p>本隐私政策严格遵守相关数据保护法；</p></li>
-            <li><p>只有当您达到所居住国家法律规定的法定年龄，才能使用娱乐场和/或网站</p></li>
-            <li><p>如果您未满 18 岁，在任何情况下均不得使用和/或网站。</p></li>
-            <li><p>有些法律管辖区并未声明在线赌博的合法性，而有些则明确规定在线赌博为非法。</p></li>
-          </ol>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="联系我们" name="contactus">
-        <div class="help-content">
-            <div class="about-title">联系我们</div>
-            <p>我们为您提供中/英文双语专业客服和团队为您提供24/7专业服务， 您也可以随时通过以下方式联系我们：<br>
-            客服邮箱：cs@xf966.com<br>
-            市场部邮箱：marketing@xf986.com<br>
-            代理部邮箱：affiliate@xf986.com<br>
-            CEO投诉/意见箱：complaint@xf926.com<br>
-            为您提供24/7全天候服务</p>
-        </div>
-      </el-tab-pane>
       <el-tab-pane label="关于我们" name="aboutus">
         <div class="help-content">
             <div class="about-title">关于我们</div>
             <p>持有菲律宾 NorthCagayan (NCGAC) 博彩合法执照，总部位于菲律宾 Makati 金融中心 PBCOM 大厦。我们提供超过两百多款的经典在线老虎机游戏。并且提供比陆地赌场更高的赔率，玩累积彩金游戏您就有机会赢得超级大彩池和娱乐场大奖！为了确保游戏的公平性，在选择平台方面，东赢经过多方考察最终确定了业界最具公信力的第三方游戏机构PlayTech平台。东赢专业的客服团队每天为您提供24/7小时的热情服务；雄厚的资金和正规的财务团队，为您提供最快的取款体验。我们采用了目前最好的加密技术和防火墙系统保护您的安全、信息私隐，并保证您享受公平，公正的游戏。由于采用了企业级别的加密科技（1024位RSA密钥交 换和 448位blowfish），我们可以为您的数据提供比一般的商业级别的SSL更高的保护。这一科技目前被世界上主要的金融机构所采用。</p>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="财务帮助" name="finance">
+        <div class="help-content">
+          <div class="about-title">财务帮助</div>
+            <div class="content-title">存款帮助</div>
+            <div class="help-main-box">
+                <div class="content-sub-title">1.在线存款：</div>
+                <p>登陆账号后请您点击“出纳柜台”--&gt;“选择支付银行”--&gt; “输入充值金额”--&gt;点击“存款”即可！页面会自动跳转到您的存款银行页面，您根据提示信息进行存款即可！
+                    （会生成一个以 “DY开头的存款编码”）</p>
+                <div class="imgBox"><img src="https://8fzka.latinovelas.com/resources/web_h5/images/help/help_5.png"></div>
+                <div class="content-sub-title">2.支付宝支付</div>
+                <p>登陆账号后请您点击“出纳柜台”--&gt;“选择支付宝支付”--&gt; “输入充值金额”--&gt;点击“存款”即可！页面会自动跳转到您的存款银行页面，您根据提示信息进行存款即可！
+                    （会生成一个以 “DY开头的存款编码”)</p>
+                <div class="imgBox"><img src="https://8fzka.latinovelas.com/resources/web_h5/images/help/help_6.png"></div>
+                <div class="content-sub-title">3.微信支付</div>
+                <p>登陆账号后请您点击“出纳柜台”--&gt;“选择微信支付”--&gt; “输入充值金额”--&gt;点击“存款”即可！页面会自动跳转到您的存款银行页面，您根据提示信息进行存款即可！
+                    （会生成一个以 “DY开头的存款编码”)</p>
+                <div class="imgBox"><img src="https://8fzka.latinovelas.com/resources/web_h5/images/help/help_7.png"></div>
+                <div class="content-sub-title">4.手机短信支付:</div>
+                <p>登陆账号后请您点击“出纳柜台”--&gt;“选择短信支付”--&gt;
+                    “输入充值金额”--&gt;点击“存款”即可！页面会自动跳转到您的存款银行页面，您根据提示信息进行存款即可！ （会生成一个以 “XW开头的存款编码”)</p>
+                <div class="content-sub-title">5.支付宝转账</div>
+                <p>登陆账号后请您点击“出纳柜台”--&gt;“选择支付宝快捷”--&gt; “输入充值金额”--&gt;点击“存款”即可！页面会弹出银行信息，您根据提示信息进行存款即可！
+                    （会生成一个以 “DY开头的存款编码”)</p>
+                <div class="imgBox"><img src="https://8fzka.latinovelas.com/resources/web_h5/images/help/help_8.png"></div>
+                <div class="content-sub-title">6.银行转账</div>
+                <p>登陆账号后请您点击“出纳柜台”--&gt;“选择银行转账”--&gt; “输入充值金额”--&gt;点击“存款”即可！页面会自动跳转到您的存款银行页面，您根据提示信息进行存款即可！
+                    （会生成一个以 “DY开头的存款编码”)</p>
+            </div>
+            <div class="content-title">提款帮助</div>
+            <div class="help-main-box">
+                <div class="content-sub-title">
+                    1.如何绑定银行卡及提款
+                </div>
+                <p>登陆账号后请您点击“出纳柜台”--&gt;“取款”--&gt; “绑定银行”--&gt;填写银行信息 即可！
+                    再点击“申请提款”--&gt;选择提款银行--&gt;填写提款金额--&gt;提交成功</p>
+                <div class="content-sub-title">2.银行解绑记录</div>
+                <p>登陆账号后请您点击“出纳柜台”--&gt;“取款”--&gt; “绑定银行”--&gt;点击“解绑”--&gt;输入完整卡号即可解绑！</p>
+            </div>
         </div>
       </el-tab-pane>
       <el-tab-pane label="隐私条款" name="privacy">
@@ -48,7 +67,7 @@
             每位玩家亦有责任保护您的个人信息，保管好您的密码以免外泄，确保没有人能使用您的东赢账户。当您关闭东赢网站时，谨记注销或点击【x】以正常退出东赢网站。</p>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="服务条款" name="service">
+      <el-tab-pane label="责任博彩" name="service">
         <div class="help-content">
             <div class="about-title">服务条款</div>
             <p>请仔细阅读以下您与东赢有关的法律条款。请仔细阅读并确保您能完全理解其内容。如果您对条款约束的权利和义务有任何疑问，请联系管辖区所在地的律师。</p>
@@ -173,66 +192,86 @@
 用户特此承认并同意，在考虑所有相关因素，包括但不限于用户向东赢提供对价的价值后，本条规所述之所有责任豁免和义务排除代表用户和东赢协议中公平、合理的风险分担和利益分配。用户进一步同意上述免责和限制在适用法律允许的最大范围内具有强制执行力。</p>
         </div>
       </el-tab-pane>
+      <el-tab-pane label="联系我们" name="contactus">
+        <div class="help-content">
+            <div class="about-title">联系我们</div>
+            <p>
+                我们为您提供中/英文双语专业客服和团队为您提供24/7专业服务， 您也可以随时通过以下方式联系我们：<br>
+                客服邮箱：cs@dyvip99.com<br>
+                市场部邮箱：affiliate@dyvip99.com<br>
+                客服电话：<span class="customer_phone">852-81932110</span><br>
+                <!--客服QQ名称：东赢客服（唯一QQ）：<span class="customer_qq_number">2853531804</span><br>-->
+                为您提供24/7全天候服务<br>
+            </p>
+        </div>
+      </el-tab-pane>
     </el-tabs>
     </div>
   </div>
 </template>
 <script lang="js">
 import { ref, onMounted, onUnmounted, defineComponent, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "AboutView",
 
   setup() {
-    const activeTab = ref("legal-grounds")
-    const router = useRoute();
+    const activeTab = ref("aboutus")
+    const route = useRoute();
+    const router = useRouter();
     const windowSize = ref(window.innerWidth)
     onUnmounted(() => { window.removeEventListener('resize', () =>
     {windowSize.value = window.innerWidth}) })
 
-    watch(() => router.query, () => {
-      if (router.query === null) {
+    const updateTab = (pane) => {
+      router.push({query: { id: pane.props.name }})
+    }
+    watch(() => route.query, () => {
+      if (route.query === null) {
         activeTab.value === 'about'
       } else {
-        activeTab.value = router.query.id; window.scrollTo(0, 0);
+        activeTab.value = route.query.id; window.scrollTo(0, 0);
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
     });
 
     onMounted(() => {
-      const router = useRoute();
-      if (router.query.id) {
-        activeTab.value = router.query.id;
+      if (route.query.id) {
+        activeTab.value = route.query.id;
       }
     window.addEventListener('resize', () => {windowSize.value = window.innerWidth} )
     });
 
     return {
       activeTab,
-      windowSize
+      windowSize,
+      updateTab
     };
   }
 });
 </script>
 <style lang="scss">
 .about-container {
+    color: #25415b;
   min-height: 1062px;
-  background: url(../assets/about/abtbg.jpg)no-repeat left top;
-  background-attachment: fixed;
-  background-position: 0% 300%;
   .about-container-inner {
-    max-width: $maxwidth;
-    margin: 0 auto
+    margin: 0 auto;
+    max-width: $maxwidth
   }
 
   .el-tabs .el-tabs__nav {
     float: none;
   }
 .el-tabs .el-tabs__item {
-  text-align: center;
+  text-align: left;
   margin: 10px 0;
+  width: 300px;
+  height: 55px;
+  padding-left: 90px;
+  padding-top: 15px;
+  line-height: 55px;
 }
 .el-tabs .el-tabs__item.is-top {
     padding: 0 20px;
@@ -244,68 +283,94 @@ export default defineComponent({
 .el-tabs__nav-wrap::after {
   display: none;
 }
+.el-tabs__nav-scroll {
+  
+  width: 280px;
+    right: 0;
+    position: absolute;
+    top: 320px;
+}
 .el-tabs__header {
+    // position: fixed;
+    // left: 240px;
+    // top: 350px;
+    // width: 270px;
+    &.is-left {
+    min-height: 1065px;
+    background: url(../assets/about/bg.png)no-repeat left top;
+    // background-attachment: fixed;
     position: fixed;
-    left: 350px;
-    top: 350px;
-    width: 160px;
+    top: 0;
+    // width: 530px;
+    width: 25%;
+    background-position: right 120px;
+    z-index: 2;
+    left: 0;
+    }
 }
 .el-tabs__content {
-    margin-left: 440px;
     padding: 40px;
+    padding-left: 360px;
+    overflow: hidden;
     text-align: left;
 }
 .el-tabs__item {
   font-size: 14px;
   color: #707f9d;
-  &:hover {
-    color: #ffffff;
-    &:before {
-      content: "";
-      width: 100%;
-      background: url(../assets/about/tab-bg.png)no-repeat center center;
-      width: 160px;
-      height: 40px;
-      background-size: contain;
-      left: 5px;
-      position: absolute;
-    }
-  }
-}
-.el-tabs__item.is-active {
+  // &:hover {
+  //   color: #ffffff;
+  //   &:before {
+  //     content: "";
+  //     width: 100%;
+  //     background: url(../assets/about/tab-bg.png)no-repeat center center;
+  //     width: 160px;
+  //     height: 40px;
+  //     background-size: contain;
+  //     left: 5px;
+  //     position: absolute;
+  //   }
+  // }
+  &.is-active, &:hover {
   color: #ffffff;
   &:before {
     content: "";
-    width: 100%;
     background: url(../assets/about/tab-bg.png)no-repeat center center;
-    width: 160px;
-    height: 40px;
+    width: 262px;
+    height: 100%;
     background-size: contain;
-    left: 5px;
+    left: 20px;
     position: absolute;
+    z-index: -1;
   }
+}
 }
 .help-content {
   border-bottom: 2px solid #2e343c;
   > p {
-      font-size: 12px;
+      font-size: 14px;
       line-height: 30px;
-      color: #959dab;
+    color: #25415b;
     }
   ol {
     margin: 0 0 0 15px;
     padding: 0;
     li {
-      font-size: 12px;
-      color: #959dab;
+      font-size: 14px;
+    color: #25415b;
     }
   }
 .about-title {
-
-    padding-top: 40px;
-    font-size: 20px;
-    color: #959dab;
-}
+  padding-top: 40px;
+    border-bottom: 1px solid #d1d1d1;
+    font-size: 22px;
+    padding-bottom: 10px;
+  }
+  .imgBox {
+    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
 }
 }
 </style>
