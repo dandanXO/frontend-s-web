@@ -1,3 +1,4 @@
+REGISTERPAGEv02
 <template>
   <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
     <q-input
@@ -126,7 +127,6 @@
         <img src="../assets/images/login/email.png" width="20" />
       </template>
     </q-input> -->
-
     <q-input
       standout
       bg-color="white"
@@ -178,9 +178,10 @@
 <script>
 import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { api } from "boot/axios";
-import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { useQuasar, Platform } from "quasar";
+import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -190,7 +191,6 @@ export default defineComponent({
       getCode();
       getReferralCode();
     });
-    const store = userStore();
     const verificationImg = ref("");
     const regForm = reactive({
       loginName: "",
@@ -223,12 +223,14 @@ export default defineComponent({
         regForm.referrer = refCode;
       }
     };
+    const store = userStore();
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
     // const telRef = ref();
     // const emailRef = ref();
     const verificationRef = ref();
+    const affiliateCodeRef = ref();
     const $q = useQuasar();
 
     const pwdStrength = ref("");
@@ -237,7 +239,7 @@ export default defineComponent({
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
       return emailPattern.test(regForm.email) || "请输入有效电子邮件";
     };
-
+    const router = useRouter();
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -279,46 +281,40 @@ export default defineComponent({
               if (Platform.is.android) {
                 regForm.regDevice = "ANDROID";
               }
-              if ($q.platform.is.capacitor) {
-                if ($q.platform.is.android) {
-                  regForm.regDevice = "ANDROID";
-                } else if ($q.platform.is.ios) {
-                  regForm.regDevice = "IOS";
-                }
-              }
-              api
-                .post("/member/fbRegister", qs.stringify(regForm))
-                .then((ret) => {
-                  const res = ret;
-                  // console.log("RET");
-                  if (res.code === 0) {
-                    context.emit("changeTab");
-                    $q.notify({
-                      color: "positive",
-                      position: "top",
-                      message: "注册成功",
-                      icon: "check_circle_outline"
-                    });
-                    sessionStorage.removeItem("REFERRAL_CODE");
-                    // console.log(res.data);
-                    store.autoLogin(res.data);
-                    router.push({ path: "/" });
-                  } else {
-                    $q.notify({
-                      color: "negative",
-                      position: "top",
-                      message: res.message,
-                      icon: "report_problem"
-                    });
-                  }
-                  $q.loading.hide();
-                })
-                .catch((_) => {
-                  $q.loading.hide();
-                });
-              getCode();
             }
           }
+          api
+            .post("/member/fbRegister", qs.stringify(regForm))
+            // .post("/member/register", qs.stringify(regForm))
+            .then((ret) => {
+              const res = ret;
+              // console.log("RET");
+              // console.log(ret);
+              if (res.code === 0) {
+                store.autoLogin(res.data);
+                // context.emit("changeTab");
+                router.push({ path: "/" });
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "注册成功",
+                  icon: "check_circle_outline"
+                });
+                sessionStorage.removeItem("REFERRAL_CODE");
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: res.message,
+                  icon: "report_problem"
+                });
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+          getCode();
         })();
       }
     };
@@ -392,5 +388,65 @@ function charType(num) {
   return 8;
 }
 </script>
+<style lang="scss">
+.page-header {
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 28px;
+  text-align: center;
+  font-family: Wave;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  align-content: center;
+  justify-content: center;
+}
 
-<style lang="scss" src="src/css/pages/register.scss"></style>
+.verification {
+  display: flex;
+  padding: 10px;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.password-str-div {
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+  margin-bottom: 5px;
+  justify-content: space-evenly;
+  gap: 5px;
+  height: 50px;
+
+  span {
+    padding: 8px 3px;
+    //border: 1px solid #fff;
+    border-radius: 5px;
+    background: #434343;
+    width: 33%;
+    text-align: center;
+    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
+      sans-serif;
+  }
+
+  span.weak-pwd {
+    background: var(--q-negative);
+  }
+
+  span.normal-pwd {
+    background: var(--q-warning);
+    color: var(--q-primary);
+  }
+
+  span.strong-pwd {
+    //background: linear-gradient(to right, #de4545, #db7e42) !important;
+    background: var(--q-positive);
+    font-weight: 600;
+  }
+}
+</style>
