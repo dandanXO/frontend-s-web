@@ -22,7 +22,8 @@ export const userStore = defineStore("userStore", {
       vip: "",
       evip: "",
       currency: { value: "￥", label: "RMB"},
-      loginPageVisible: false
+      loginPageVisible: false,
+      regPageVisible: false
     };
   },
   actions: {

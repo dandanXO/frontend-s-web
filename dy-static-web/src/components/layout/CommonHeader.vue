@@ -55,10 +55,10 @@
                   <RiMoneyCnyCircleLine style="width: 20px; fill: #a8b5c3" />
                   充值中心
                 </el-dropdown-item>
-                <!-- <el-dropdown-item command="c">
-                  <RiBankCardLine style="width: 20px; fill: #a8b5c3" />
+                <el-dropdown-item command="c">
+                  <RiExchangeDollarLine style="width: 20px; fill: #a8b5c3" />
                   快速转账
-                </el-dropdown-item> -->
+                </el-dropdown-item>
                 <el-dropdown-item command="d">
                   <RiCouponLine style="width: 20px; fill: #a8b5c3" />
                   优惠领取
@@ -297,6 +297,7 @@
       width="1280px"
       align-center
       style="max-width: 1200px"
+      @close="store.regPageVisible = false"
     >
       <div class="register-container">
         <div class="registered-left">
@@ -689,6 +690,7 @@ import {
   RiVolumeUpFill,
   RiAccountCircleLine,
   RiMoneyCnyCircleLine,
+  RiExchangeDollarLine,
   RiBankCardLine,
   RiCouponLine,
   RiLogoutBoxLine,
@@ -734,6 +736,7 @@ export default defineComponent({
     Refresh,
     RiAccountCircleLine,
     RiMoneyCnyCircleLine,
+    RiExchangeDollarLine,
     RiBankCardLine,
     RiCouponLine,
     RiLogoutBoxLine,
@@ -1296,6 +1299,7 @@ export default defineComponent({
                     });
                     store.autoLogin(response.data);
                     registerDialogVisible.value = false;
+                    store.regPageVisible = false
                     // loginDialogVisible.value = true;
 
                     sessionStorage.removeItem("REFERRAL_CODE");
@@ -1379,6 +1383,15 @@ export default defineComponent({
         loginDialogVisible.value = true
       } else {
         loginDialogVisible.value = false
+      }
+      // Optionally you can set immediate: true config for the watcher to run on init
+      // }, { immediate: true });
+    });
+    watch(() => store.regPageVisible, () => {
+      if (store.regPageVisible) {
+        registerDialogVisible.value = true
+      } else {
+        registerDialogVisible.value = false
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
