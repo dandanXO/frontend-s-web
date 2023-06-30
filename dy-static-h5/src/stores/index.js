@@ -32,7 +32,17 @@ export const userStore = defineStore("userStore", {
       return !!SessionStorage.getItem("TOKEN");
     },
     memberLogin(loginInfo) {
-      const regDevice = Platform.is.mobile ? "H5" : "H5";
+      var regDevice = Platform.is.mobile ? "H5" : "WEB";
+      if ("standalone" in window.navigator && window.navigator.standalone) {
+        regDevice = "IOS";
+      } else {
+        regDevice = Platform.is.mobile ? "H5" : "WEB";
+        if (Platform.is.capacitor) {
+          if (Platform.is.android) {
+            regDevice = "ANDROID";
+          }
+        }
+      }
       loginInfo.way = regDevice;
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {

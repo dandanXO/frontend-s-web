@@ -25,7 +25,7 @@ export function updateAccount(updateInfo) {
 
 const recordUrl = {
   deposit: "/session/member/deposit",
-  // transfer: "/session/member/betRecord",
+  transfer: "/session/member/transfer",
   turnover: "/session/member/moneyChange",
   withdraw: "/session/member/withdraw",
   rebates: "/session/member/privilege",

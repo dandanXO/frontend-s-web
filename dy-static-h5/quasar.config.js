@@ -211,6 +211,7 @@ module.exports = configure(function (ctx) {
       version: '1.0.0', // string
       // (Optional) If not present, will look for package.json > description
       description: '东赢官网 - 最专业的竞猜网站', // string
+      backButtonExit: '*'
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/configuring-electron
