@@ -397,12 +397,12 @@
                 </el-input>
               </el-space>
             </el-form-item>
-            <el-row>
+            <!-- <el-row>
               <el-col>
                 <span class="title account">会员资料</span>
               </el-col>
-            </el-row>
-            <el-form-item label="电话号码" prop="telephone">
+            </el-row> -->
+            <!-- <el-form-item label="电话号码" prop="telephone">
               <el-space>
 
               <el-input :disabled="disableSendVerificationButton" class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
@@ -431,6 +431,24 @@
                   placeholder="输入邮件"
                 />
               </el-space>
+            </el-form-item> -->
+            <el-form-item label="推荐码" prop="codeAffiliate">
+              <el-space>
+                <el-input
+                  v-if="!hasAffiliate"
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="若不是合营下会员无需填写输入推荐码"
+                />
+                <el-input
+                  v-else
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="若不是合营下会员无需填写"
+                  readonly
+                  disabled
+                />
+              </el-space>
             </el-form-item>
             <el-form-item label="验证码" prop="captchaCode">
               <el-space>
@@ -444,24 +462,6 @@
                   style="width: 50%; margin-top: 6px"
                   :src="verificationImg"
                   @click="getCode"
-                />
-              </el-space>
-            </el-form-item>
-            <el-form-item label="代理代码" prop="codeAffiliate">
-              <el-space>
-                <el-input
-                  v-if="!hasAffiliate"
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="输入代理代码"
-                />
-                <el-input
-                  v-else
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="输入代理代码"
-                  readonly
-                  disabled
                 />
               </el-space>
             </el-form-item>

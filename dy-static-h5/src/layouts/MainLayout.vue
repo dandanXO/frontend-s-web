@@ -7,9 +7,9 @@
         horizontal
       >
         <div class="logo">
-          <router-link to="/"
-            ><img src="../assets/home/logo.png"
-          /></router-link>
+          <router-link to="/">
+            <img src="../assets/home/logo.png" />
+          </router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">Login</q-btn>
@@ -25,9 +25,9 @@
           no-caps
           flat
         >
-          <span style="font-size: 10px; margin-left: 5px; display: block"
-            >Deposit</span
-          >
+          <span style="font-size: 10px; margin-left: 5px; display: block">
+            Deposit
+          </span>
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
@@ -171,6 +171,7 @@
 <script>
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
+import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 // import EssentialLink from "components/EssentialLink.vue";
@@ -191,6 +192,75 @@ export default defineComponent({
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
+
+    const isH5 = ref(false);
+    const checkPlatform = () => {
+      //Is iOS Webclip App || Is Android Apk
+      if (
+        (Platform.is.ios &&
+          "standalone" in window.navigator &&
+          window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
+      ) {
+        isH5.value = false;
+      } else {
+        isH5.value = true;
+      }
+    };
+
+    const loadTrackingScript = () => {
+      const currentDomain = window.location.hostname;
+      const currentPort = window.location.port;
+      const currentDomainWithPort = `${currentDomain}:${currentPort}`;
+      console.log("Domain:", currentDomainWithPort, "\nisH5:", isH5.value);
+
+      // Determine the tracking script URL based on the current domain
+      let trackingScriptUrl = "";
+      switch (currentDomainWithPort) {
+        case "m.dy86353.com":
+        case "m.dy80252.com":
+          trackingScriptUrl =
+            "https://s9.cnzz.com/z_stat.php?id=1281279658&web_id=1281279658";
+          break;
+        case "m.dy93113.com":
+        case "m.dy96108.com":
+          trackingScriptUrl =
+            "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
+          break;
+        case "m.dy18178.com:8765":
+        case "m.dy50122.com:8765":
+        case "m.dy52506.com:8765":
+        case "m.dy53976.com:8765":
+        case "m.dy70679.com:8765":
+        case "m.dy73953.com:8765":
+          trackingScriptUrl =
+            "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+          break;
+        case "m.dy52373.com:8765":
+        case "m.dy67892.com:8765":
+        case "m.dy93828.com:8765":
+        case "m.dy37378.com:8765":
+        case "m.dy35567.com:8765":
+        case "m.dy25952.com:8765":
+        case "m.dy87265.com:8765":
+        case "m.dy29892.com:8765":
+        case "m.dy38885.com:8765":
+        case "m.dy78299.com:8765":
+          trackingScriptUrl =
+            "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+          break;
+        default:
+          return; // Don't load the tracking script for other domains
+      }
+
+      if (isH5.value === true) {
+        const script = document.createElement("script");
+        script.src = trackingScriptUrl;
+        script.type = "text/javascript";
+        document.body.appendChild(script);
+      }
+    };
+
     // ui.$onAction(({ name, args }) => {
     //   switch (name) {
     //     case "setScrollPosition":
@@ -287,6 +357,14 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "账户信息";
+        } else if (route.path === "/account/verifyTelephone") {
+          prevPage.value = "account";
+          hasPage.value = true;
+          pageName.value = "手机号码";
+        } else if (route.path === "/account/verifyEmail") {
+          prevPage.value = "account";
+          hasPage.value = true;
+          pageName.value = "邮箱";
         } else if (route.path === "/account/changePwd") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -453,7 +531,9 @@ export default defineComponent({
     ]);
 
     onMounted(() => {
+      checkPlatform();
       checkRoute();
+      loadTrackingScript();
     });
     return {
       tab: ref("home"),
@@ -470,7 +550,9 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      changePlatform,
+      checkPlatform,
+      isH5
     };
   }
 });

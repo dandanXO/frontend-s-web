@@ -115,9 +115,7 @@
       <div class="acct-title">
         <div class="acct-title-1">我的功能</div>
         <div id="vipDomain" class="vipurl">
-          专属网址：<a style="color: #000000" href="https://m.dyvip6839.com"
-            >m.dyvip6839.com</a
-          >
+          专属网址：{{ store.evip }}
         </div>
       </div>
       <div class="acct-menu">

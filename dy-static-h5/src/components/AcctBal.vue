@@ -43,7 +43,7 @@
       </div>
     </div>
     <div v-if="isTransfer" class="text-brand q-pa-sm">
-      东赢电竞、IM体育无需转账，共享主钱包
+      除了以下平台需要转账，其它游戏平台都无需转账即可游戏
     </div>
     <q-separator />
     <div
@@ -193,14 +193,17 @@ const transferOutAll = () => {
               platform.isTransferring = false;
               isTransferring.value = false;
             }, 1000);
+          } else {
+            platform.isTransferring = false;
+            isTransferring.value = false;
           }
-        });
-    } else {
-      setTimeout(() => {
-        platform.isTransferring = false;
-        isTransferring.value = false;
-      }, 2000);
+        })
     }
+    setTimeout(() => {
+      platform.isTransferring = false;
+      isTransferring.value = false;
+      refreshBalance('all')
+    }, 2000);
   });
 };
 const refreshBalance = (plat) => {

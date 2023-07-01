@@ -38,7 +38,7 @@
         <div class="account-content">
           <div class="account-tip-text green">
             <el-icon><img src="../../assets/images/account/transfer_tip.png"></el-icon>
-            东赢电竞、IM体育无需转账，充值即可游戏
+            除了以下平台需要转账，其它游戏平台都无需转账即可游戏
           </div>
         </div>
         <!--<div class="account-tip">
@@ -62,7 +62,7 @@
           <div
             class="flex-box flex-justify-space flex-wrap transfer-action-box"
           >
-            <el-button 
+            <el-button
               size="small"
               class="outline transfer-btn in"
               @click="transferModal(0, p)"

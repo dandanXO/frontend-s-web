@@ -475,7 +475,8 @@ body {
 .card-tips {
 	font-size: 15px;
 	margin-top: 20px;
-	color: #fed985;
+  color: #a19100;
+  text-align: center;
 }
 
 .huka-list {
