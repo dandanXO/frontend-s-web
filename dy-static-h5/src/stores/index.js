@@ -31,6 +31,9 @@ export const userStore = defineStore("userStore", {
     hasToken() {
       return !!SessionStorage.getItem("TOKEN");
     },
+    setPhone(tel) {
+      this.phone = tel;
+    },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
       if ("standalone" in window.navigator && window.navigator.standalone) {
