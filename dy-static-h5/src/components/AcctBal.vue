@@ -60,7 +60,7 @@
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
               <div class="name-wrapper">
-                <div class="plat-name">{{ p.code }}</div>
+                <div class="plat-name">{{ platformNames[p.code] }}</div>
               </div>
               <div class="balance-wrapper">
                 <span class="text-bold" v-if="p.isLoading"> 加载中... </span>
@@ -168,6 +168,16 @@ const showPlatform = () => {
 //         refreshBalance('all')
 //     })
 // };
+const platformNames = {
+  "AG": "AG真人",
+  "BBINDY": "BBIN真人",
+  "KYDY": "开元棋牌",
+  "DT": "大唐棋牌",
+  "TCG": "TCG彩票",
+  "SGWin": "双赢彩票",
+  "PTDY": "PT电子",
+  "PGDY": "PG电子",
+};
 const loadBalance = () => {
   isLoadingBalance.value = true;
   store.getBalance().then((res) => {
