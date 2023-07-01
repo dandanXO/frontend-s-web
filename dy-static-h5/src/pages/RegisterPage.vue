@@ -41,10 +41,7 @@
       :type="isPwd ? 'password' : 'text'"
       :rules="[
         (val) => (val && val.length > 0) || '请输入密码',
-        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
-        (val) =>
-          (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) ||
-          '密码安全级别必须至少为好'
+        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
       ]"
     >
       <template v-slot:prepend>
