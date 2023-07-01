@@ -176,29 +176,6 @@ export default defineComponent({
       getWithdrawalMethods();
     });
     const submitWithraw = () => {
-      
-  if (store.token) {
-      if (!store.phone) {
-        ElMessageBox.confirm(
-        '为保证资金安全，存款前请先绑定手机号', "系统提示",
-        {
-          showClose: 'false',
-          cancelButtonClass: 'cancel-btn',
-          confirmButtonText: '确认',
-          cancelButtonText: '取消',
-          type: 'warning',
-          draggable: true,
-          buttonSize: "small"
-        }
-      )
-        .then(() => {
-          router.push('/center/personal')
-        })
-        .catch(() => {
-        })
-        return
-      }
-    }
       loadingBtn.value = true;
       formRef.value
         .validate()
