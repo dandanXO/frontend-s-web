@@ -86,7 +86,7 @@
                   :style="
                     'background-image: url(' +
                     imgURL +
-                    selectedPromo.mobileImgUrl +
+                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
                     ')'
                   "
                 ></div>
@@ -240,15 +240,14 @@ export default defineComponent({
           router.push({path: '/account/vip'});
         } else {
           if (route.query.fromAccount) {
-          router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
-        } else {
-          router.push({path: '/promo', query: {name: promo.redirectUrl }})
+            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+          } else {
+            router.push({path: '/promo', query: {name: promo.redirectUrl }})
+          }
+          isPromoDetail.value = true
+          selectedPromo.value = promo
         }
-        isPromoDetail.value = true
-        selectedPromo.value = promo
-
-        }
-        }
+      }
     }
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
