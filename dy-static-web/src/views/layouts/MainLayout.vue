@@ -31,17 +31,23 @@ export default defineComponent({
   methods: {
     loadTrackingScript() {
       const currentDomain = window.location.hostname;
-      const currentPort = window.location.port;
-      const currentDomainWithPort = `${currentDomain}:${currentPort}`;
-      console.log("Domain:", currentDomainWithPort);
+      // const currentPort = window.location.port;
+      // const currentDomainWithPort = `${currentDomain}:${currentPort}`;
 
       // Determine the tracking script URL based on the current domain
       let trackingScriptUrl = "";
-      switch (currentDomainWithPort) {
-        case "www.dy86353.com":
-        case "www.dy80252.com":
+      switch (currentDomain) {
+        case "www.dy6997.com":
+        case "www.dy8168.com":
+        case "www.dy8169.com":
+        case "www.dy8515.com":
+        case "www.dy9367.com":
+        case "www.dy6918.com":
+        case "www.dy6168.com":
+        case "www.dy5988.com":
+        case "www.dy1698.com":
           trackingScriptUrl =
-            "https://s9.cnzz.com/z_stat.php?id=1281279658&web_id=1281279658";
+              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
         case "www.dy93113.com":
         case "www.dy96108.com":
