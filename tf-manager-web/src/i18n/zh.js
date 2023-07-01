@@ -1114,7 +1114,7 @@ export default {
     'Payment on going': '支付中',
     'Crypto Payment on going': '数字币支付中',
     'Automatic Payment': '自动支付',
-    Suspend: '中止',
+    Suspend: '暂不处理',
     Promotion: '优惠',
     'Privilege Info': '优惠列表',
     'Home Banner': '首页广告',
