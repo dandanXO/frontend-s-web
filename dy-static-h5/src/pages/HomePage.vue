@@ -169,20 +169,6 @@
         :controller="{ control: secondSwiper }"
         class="secondSwiper"
       >
-        <swiper-slide v-for="(es, i) in esport" :key="i" :class="'esport-' + i">
-          <PlatformBlock
-            @click="playGame(es.name, 'platformType', es.code)"
-            dataType="esport"
-            :data="es"
-          />
-        </swiper-slide>
-        <swiper-slide v-for="(sp, i) in sport" :key="i" :class="'sport-' + i">
-          <PlatformBlock
-            @click="playGame(sp.name, sp.code, sp.gameCode)"
-            dataType="sport"
-            :data="sp"
-          />
-        </swiper-slide>
         <swiper-slide
           v-for="(live, i) in livecasino"
           :key="i"
@@ -203,6 +189,52 @@
             />
           </template>
         </swiper-slide>
+        <swiper-slide v-for="(sp, i) in sport" :key="i" :class="'sport-' + i">
+          <PlatformBlock
+            @click="playGame(sp.name, sp.code, sp.gameCode)"
+            dataType="sport"
+            :data="sp"
+          />
+        </swiper-slide>
+        <swiper-slide v-for="(es, i) in esport" :key="i" :class="'esport-' + i">
+          <PlatformBlock
+            @click="playGame(es.name, 'platformType', es.code)"
+            dataType="esport"
+            :data="es"
+          />
+        </swiper-slide>
+
+        <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
+          <PlatformBlock dataType="slot" :data="slt" />
+        </swiper-slide>
+
+        <swiper-slide
+          v-for="(fish, i) in fishing"
+          :key="i"
+          :class="'fish-' + i"
+        >
+          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
+            <PlatformBlock
+              @click="playGame(fish.name, fish.code, '7202')"
+              dataType="fish"
+              :data="fish"
+            />
+          </template>
+
+          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
+            <PlatformBlock
+              @click="playGame(fish.name, fish.code, '6')"
+              dataType="fish"
+              :data="fish"
+            />
+          </template>
+          <PlatformBlock
+            @click="playGame(fish.name, fish.code, fish.code)"
+            dataType="fish"
+            :data="fish"
+          />
+        </swiper-slide>
+
         <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
           <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
             <PlatformBlock
@@ -246,36 +278,7 @@
             />
           </template>
         </swiper-slide>
-        <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
-          <PlatformBlock dataType="slot" :data="slt" />
-        </swiper-slide>
 
-        <swiper-slide
-          v-for="(fish, i) in fishing"
-          :key="i"
-          :class="'fish-' + i"
-        >
-          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
-            <PlatformBlock
-              @click="playGame(fish.name, fish.code, '7202')"
-              dataType="fish"
-              :data="fish"
-            />
-          </template>
-
-          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
-            <PlatformBlock
-              @click="playGame(fish.name, fish.code, '6')"
-              dataType="fish"
-              :data="fish"
-            />
-          </template>
-          <PlatformBlock
-            @click="playGame(fish.name, fish.code, fish.code)"
-            dataType="fish"
-            :data="fish"
-          />
-        </swiper-slide>
       </swiper>
     </div>
   </div>
@@ -376,26 +379,27 @@ export default defineComponent({
     };
     const setSelectedSwiper = (tab) => {
       selectedTab.value = tab.name;
-      if (tab.name === "esport") {
+      if (tab.name === "live") {
         firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
         firstSwiper.value?.slideTo(3, 500);
       }
-      if (tab.name === "live") {
+      if (tab.name === "esport") {
         firstSwiper.value?.slideTo(4, 500);
       }
+      if (tab.name === "slot") {
+        firstSwiper.value?.slideTo(6, 500);
+      }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(7, 500);
+        firstSwiper.value?.slideTo(16, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(9, 500);
+        firstSwiper.value?.slideTo(18, 500);
       }
-      if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(12, 500);
-      }
+
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(14, 500);
+        firstSwiper.value?.slideTo(6, 500);
       }
     };
     const onSlideChange = (swiper) => {
@@ -427,13 +431,13 @@ export default defineComponent({
         }
       }
     };
-    const selectedTab = ref("esport");
+    const selectedTab = ref("live");
     const tabs = ref([
       {
-        name: "esport",
-        icon: "esport",
-        label: "电竞",
-        labelact: "电竞赛事"
+        name: "live",
+        icon: "live",
+        label: "真人",
+        labelact: "真人娱乐"
       },
       {
         name: "sport",
@@ -442,10 +446,16 @@ export default defineComponent({
         labelact: "体育赛事"
       },
       {
-        name: "live",
-        icon: "live",
-        label: "真人",
-        labelact: "真人娱乐"
+        name: "esport",
+        icon: "esport",
+        label: "电竞",
+        labelact: "电竞赛事"
+      },
+      {
+        name: "slot",
+        icon: "slot",
+        label: "电游",
+        labelact: "电子/捕鱼"
       },
       {
         name: "poker",
@@ -458,12 +468,6 @@ export default defineComponent({
         icon: "lottery",
         label: "彩票",
         labelact: "彩票游戏"
-      },
-      {
-        name: "slot",
-        icon: "slot",
-        label: "电游",
-        labelact: "电子/捕鱼"
       }
     ]);
     const esport = ref([]);
