@@ -451,7 +451,7 @@ function charType(num) {
 }
 
 .password-str-div {
-  display: flex;
+  display: none;
   align-items: center;
   margin-top: 3px;
   margin-bottom: 5px;
