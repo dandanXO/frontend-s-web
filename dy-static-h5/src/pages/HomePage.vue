@@ -570,15 +570,12 @@ export default defineComponent({
               if (espObj.code === "IA") {
                 espObj.title = "小艾电竞";
               }
-              if (espObj.code === "IMES") {
-                espObj.title = "IMES";
-              }
               if (espObj.code === "IM") {
                 espObj.title = "IMES";
               }
-              // if (!espObj.title) {
-              //   espObj.title = espObj.code + "电竞";
-              // }
+              if (!espObj.title) {
+                espObj.title = espObj.code + "电竞";
+              }
               espObj.icon = "esport";
               espObj.subtitle = "电竞赛事";
               esport.value.push(espObj);
