@@ -240,6 +240,7 @@ export default defineComponent({
       return emailPattern.test(regForm.email) || "请输入有效电子邮件";
     };
     const router = useRouter();
+    const route = useRoute();
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -292,6 +293,16 @@ export default defineComponent({
               // console.log(ret);
               if (res.code === 0) {
                 store.autoLogin(res.data);
+                sessionStorage.removeItem("REFERRAL_CODE");
+                if (store.hasToken()) {
+                  const jumpUrl = route.query.redirect
+                    ? route.query.redirect
+                    : "/";
+                  router.go(jumpUrl);
+                  if (Platform.is.capacitor && Platform.is.ios) {
+                    location.reload();
+                  }
+                }
                 // context.emit("changeTab");
                 // router.push({ path: "/" });
                 $q.notify({
