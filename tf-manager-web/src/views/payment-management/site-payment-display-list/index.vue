@@ -140,55 +140,59 @@ function loadTable() {
   var webTableFormatted = []
   var mobileTableFormatted = []
   paymentDetails.value.forEach((element, pidx) => {
-    const payments = paymentList.value.find(el => el.id === element.web.paymentId)
-    var obj = {
-      type: element.web.type,
-      paymentId: element.web.paymentId,
-      financialLevels: element.web.financialLevels.replace(/\s/g, '').split(','),
-      paymentName: payments.paymentName,
-    };
-    webTableFormatted.push(obj)
-
-    // Get the index of obj.type from paymentTypes
-    paymentTypes.forEach((pType, idx, obj) => {
-      if (pType === element.web.type) {
-        obj.splice(idx, 1)
-      }
-    });
-    paymentTypes.forEach(payType => {
-      obj = {
-        type: payType,
+    const payments = paymentList.value.find(el => el.id === element.web.paymentId);
+    if (payments) {
+      var obj = {
+        type: element.web.type,
         paymentId: element.web.paymentId,
         financialLevels: element.web.financialLevels.replace(/\s/g, '').split(','),
-        paymentName: null,
-      }
+        paymentName: payments.paymentName,
+      };
       webTableFormatted.push(obj)
-    });
+
+      // Get the index of obj.type from paymentTypes
+      paymentTypes.forEach((pType, idx, obj) => {
+        if (pType === element.web.type) {
+          obj.splice(idx, 1)
+        }
+      });
+      paymentTypes.forEach(payType => {
+        obj = {
+          type: payType,
+          paymentId: element.web.paymentId,
+          financialLevels: element.web.financialLevels.replace(/\s/g, '').split(','),
+          paymentName: null,
+        }
+        webTableFormatted.push(obj)
+      });
+    }
   });
   paymentDetails.value.forEach((element, pidx) => {
-    const payments = paymentList.value.find(el => el.id === (element.mobile.paymentId))
-    var obj = {
-      type: element.mobile.type,
-      paymentId: element.mobile.paymentId,
-      financialLevels: element.mobile.financialLevels.replace(/\s/g, '').split(','),
-      paymentName: payments.paymentName,
-    };
-    mobileTableFormatted.push(obj)
-    // Get the index of obj.type from paymentTypes
-    paymentTypes.forEach((pType, idx, obj) => {
-      if (pType === element.mobile.type) {
-        obj.splice(idx, 1)
-      }
-    });
-    paymentTypes.forEach(payType => {
-      obj = {
-        type: payType,
+    const payments = paymentList.value.find(el => el.id === (element.mobile.paymentId));
+    if (payments) {
+      var obj = {
+        type: element.mobile.type,
         paymentId: element.mobile.paymentId,
         financialLevels: element.mobile.financialLevels.replace(/\s/g, '').split(','),
-        paymentName: null,
-      }
+        paymentName: payments.paymentName,
+      };
       mobileTableFormatted.push(obj)
-    });
+      // Get the index of obj.type from paymentTypes
+      paymentTypes.forEach((pType, idx, obj) => {
+        if (pType === element.mobile.type) {
+          obj.splice(idx, 1)
+        }
+      });
+      paymentTypes.forEach(payType => {
+        obj = {
+          type: payType,
+          paymentId: element.mobile.paymentId,
+          financialLevels: element.mobile.financialLevels.replace(/\s/g, '').split(','),
+          paymentName: null,
+        }
+        mobileTableFormatted.push(obj)
+      });
+    }
   });
 
   financialLevels.value.forEach((fLevel, findex) => {
