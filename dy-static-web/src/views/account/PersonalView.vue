@@ -21,7 +21,7 @@
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">
-                  名字
+                  姓名
                 </div>
                 <div
                   v-if="personalState.memberInfo.realName"
@@ -36,13 +36,13 @@
                       name="realName"
                       prop="realName"
                       :rules="[
-                        { required: true, message: '请输入名字' },
+                        { required: true, message: '请输入姓名' },
                         { pattern: '^([\u4e00-\u9fa5]*)$', message: '请输入中文字符', trigger: 'change'}
                       ]"
                     >
                       <el-input
                         v-model="updateFormDetails.realName"
-                        placeholder="名字"
+                        placeholder="姓名"
                       />
                     </el-form-item>
                   </div>
