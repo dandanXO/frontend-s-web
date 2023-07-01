@@ -197,6 +197,19 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog v-model="isNoCard" persistent>
+      <q-card style="width: 100%; padding: 10px">
+        <q-card-section v-if="!isVirtual" class="q-mb-md">
+          <div class="text-h6 text-center">请先绑定银行卡</div>
+        </q-card-section>
+
+        <div class="flex flex-center">
+          <q-btn class="q-mr-md" label="取消" href="/account" />
+          <q-btn color="dyblue" label="绑定" @click="bankCardModal('bank')" />
+        </div>
+      </q-card>
+    </q-dialog>
+
     <!-- <q-dialog
       wrap-class-name="bankModal"
       width="100%"
@@ -266,6 +279,7 @@ export default defineComponent({
     const $q = useQuasar();
     const isCrypto = ref(false);
     const isCardActive = ref();
+    const isNoCard = ref(false);
     const searchForm = reactive({
       start: "",
       end: ""
@@ -333,6 +347,10 @@ export default defineComponent({
       api.get("/session/bankCard").then((res) => {
         if (res.code === 0) {
           personalState.bankCardList.push(...res.data);
+
+          if (res.data.length === 0){
+            isNoCard.value = true;
+          }
         }
       }).catch((error) => {
         console.log("error", error);
@@ -360,6 +378,7 @@ export default defineComponent({
     const banksList = ref([]);
     const isVirtual = ref(false)
     const bankCardModal = (type) => {
+      isNoCard.value = false;
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "" || store.realName == null) {
           $q.notify({
@@ -562,6 +581,7 @@ export default defineComponent({
       // virtualCurrencyModal,
       showCard,
       isCardActive,
+      isNoCard,
       isCrypto,
       bankName,
       isVirtual,
