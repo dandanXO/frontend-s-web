@@ -196,7 +196,7 @@
         <strong>温馨提示</strong>
         <br />
         <br />
-        为保证资金安全，存款前前先绑定手机号
+        为保证资金安全，存款前先绑定手机号
       </q-card-section>
       <q-card-actions align="right">
         <q-btn label="前往绑定" color="dyblue" href="/account/personal" />
