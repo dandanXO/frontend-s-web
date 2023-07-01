@@ -410,8 +410,9 @@ export default defineComponent({
     // RiVolumeUpLine,
   },
   setup() {
-    const isFirstView = ref(true);
+    const isFirstView = ref(false);
     const closeAlert = () => {
+      localStorage.setItem("indexImgTop", new Date().getTime());
       isFirstView.value = false;
     };
     const thumbsSwiper = ref(null);
@@ -806,7 +807,19 @@ export default defineComponent({
       );
     };
 
+    const checkShowImgTop = () => {
+      const lastTime = localStorage.getItem("indexImgTop");
+      if(lastTime) {
+        const diff = new Date().getTime() - Number(lastTime);
+        if(diff > 1000 * 60 * 60 * 12)
+          isFirstView.value = true
+      } else {
+        isFirstView.value = true
+      }
+    }
+
     onMounted(() => {
+      checkShowImgTop();
       getPlatList();
       loadData();
       loadAnnouncement();
