@@ -278,7 +278,6 @@
             />
           </template>
         </swiper-slide>
-
       </swiper>
     </div>
   </div>
@@ -329,6 +328,19 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="isFirstView">
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <q-card-section class="q-mb-md">
+        <img
+          src="../assets/images/index/popup-h5.jpg"
+          alt=""
+          class="alert-image"
+        />
+        <div class="close-alert" @click="closeAlert()"></div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -367,6 +379,10 @@ export default defineComponent({
     // RiVolumeUpLine,
   },
   setup() {
+    const isFirstView = ref(true);
+    const closeAlert = () => {
+      isFirstView.value = false;
+    };
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
@@ -888,7 +904,9 @@ export default defineComponent({
       secondSwiper,
       setFirstSwiper,
       setSecondSwiper,
-      setSelectedSwiper
+      setSelectedSwiper,
+      isFirstView,
+      closeAlert
     };
   }
 });
@@ -1232,5 +1250,17 @@ export default defineComponent({
 <style>
 .marquee-text-wrap span {
   color: #ffffff !important;
+}
+.alert-image {
+  width: 100%;
+}
+.close-alert {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: transparent;
 }
 </style>

@@ -28,12 +28,12 @@
           <router-link to="/center/deposit">
             <div class="index-operator-btn deposit">我要充值</div>
           </router-link>
-          <router-link to="/app" class="index-operator-btn download"
-            >下载APP</router-link
-          >
-          <router-link to="/promotion" class="index-operator-btn promo"
-            >热门活动</router-link
-          >
+          <router-link to="/app" class="index-operator-btn download">
+            下载APP
+          </router-link>
+          <router-link to="/promotion" class="index-operator-btn promo">
+            热门活动
+          </router-link>
         </div>
         <div class="index-platform-btn-box">
           <router-link class="index-platform-btn" to="/esports">
@@ -399,15 +399,17 @@
         <div>
           <div class="avg-time-nv-box">
             <div class="avg-time-content-box">
-              <span class="avg-advantage avg-dep-box"
-                ><Vue3autocounter
+              <span class="avg-advantage avg-dep-box">
+                <Vue3autocounter
                   ref="counter"
                   :startAmount="0"
                   :endAmount="Math.floor(Math.random() * 31) + 50"
                   :duration="1"
                   separator=","
-                  :autoinit="true" /></span
-              >秒
+                  :autoinit="true"
+                />
+              </span>
+              秒
             </div>
             <img
               src="../assets/home/avg-time-active-bg.png"
@@ -433,21 +435,30 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">DY<br />ADVANTAGE</div>
-          <div><span class="date_color sky_blue"></span>平均存款时间</div>
+          <div class="avg-container-en">
+            DY
+            <br />
+            ADVANTAGE
+          </div>
+          <div>
+            <span class="date_color sky_blue"></span>
+            平均存款时间
+          </div>
         </div>
         <div>
           <div class="avg-time-nv-box">
             <div class="avg-time-content-box">
-              <span class="avg-advantage avg-with-box"
-                ><Vue3autocounter
+              <span class="avg-advantage avg-with-box">
+                <Vue3autocounter
                   ref="counter"
                   :startAmount="0"
                   :endAmount="Math.floor(Math.random() * 31) + 70"
                   :duration="2"
                   separator=","
-                  :autoinit="true" /></span
-              >秒
+                  :autoinit="true"
+                />
+              </span>
+              秒
             </div>
             <img
               src="../assets/home/avg-time-active-bg.png"
@@ -473,21 +484,30 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">DY<br />ADVANTAGE</div>
-          <div><span class="date_color blue"></span>平均取款时间</div>
+          <div class="avg-container-en">
+            DY
+            <br />
+            ADVANTAGE
+          </div>
+          <div>
+            <span class="date_color blue"></span>
+            平均取款时间
+          </div>
         </div>
         <div>
           <div class="avg-time-nv-box">
             <div class="avg-time-content-box">
-              <span class="avg-advantage avg-pay-box"
-                ><Vue3autocounter
+              <span class="avg-advantage avg-pay-box">
+                <Vue3autocounter
                   ref="counter"
                   :startAmount="0"
                   :endAmount="14"
                   :duration="3"
                   separator=","
-                  :autoinit="true" /></span
-              >家
+                  :autoinit="true"
+                />
+              </span>
+              家
             </div>
             <img
               src="../assets/home/avg-time-active-bg.png"
@@ -516,21 +536,30 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">DY<br />ADVANTAGE</div>
-          <div><span class="date_color yellow"></span>合作支付平台</div>
+          <div class="avg-container-en">
+            DY
+            <br />
+            ADVANTAGE
+          </div>
+          <div>
+            <span class="date_color yellow"></span>
+            合作支付平台
+          </div>
         </div>
         <div>
           <div class="avg-time-nv-box">
             <div class="avg-time-content-box">
-              <span class="avg-advantage avg-down-box"
-                ><Vue3autocounter
+              <span class="avg-advantage avg-down-box">
+                <Vue3autocounter
                   ref="counter"
                   :startAmount="0"
                   :endAmount="90"
                   :duration="3"
                   separator=","
-                  :autoinit="true" /></span
-              >万
+                  :autoinit="true"
+                />
+              </span>
+              万
             </div>
             <img
               src="../assets/home/avg-time-active-bg.png"
@@ -559,8 +588,15 @@
               </div>
             </div>
           </div>
-          <div class="avg-container-en">DY<br />ADVANTAGE</div>
-          <div><span class="date_color purple"></span>客户端下载数量</div>
+          <div class="avg-container-en">
+            DY
+            <br />
+            ADVANTAGE
+          </div>
+          <div>
+            <span class="date_color purple"></span>
+            客户端下载数量
+          </div>
         </div>
       </div>
       <div class="index-bottom-container">
@@ -615,7 +651,12 @@
         </div>
       </div>
     </div>
-    <el-dialog
+    <el-dialog class="imptann-modal" v-model="isImportantAnnoucementModal">
+      <!-- <div class="modal-body"> -->
+      <img src="../assets/images/index/popup-web.jpg" class="alert-img" />
+      <!-- </div> -->
+    </el-dialog>
+    <!-- <el-dialog
       class="imptann-modal"
       v-model="isImportantAnnoucementModal"
       align-center
@@ -672,7 +713,7 @@
           >
         </div>
       </div>
-    </el-dialog>
+    </el-dialog> -->
   </div>
   <GameModal ref="gameMenu" />
 </template>
@@ -1519,41 +1560,43 @@ export default defineComponent({
 }
 
 .imptann-modal {
-  max-width: 600px;
+  // max-width: 600px;
+  max-width: 800px;
 
   .el-dialog__body {
-    padding: 50px 64px 40px;
+    // padding: 50px 64px 40px;
+    padding: 0;
 
-    .inoticeContentList {
-      margin: 0;
-      padding: 0;
+    // .inoticeContentList {
+    //   margin: 0;
+    //   padding: 0;
 
-      .inotice-title-li {
-        list-style: none;
-        color: #474747;
-        font-size: 16px;
-        letter-spacing: 2px;
-        line-height: 32px;
+    //   .inotice-title-li {
+    //     list-style: none;
+    //     color: #474747;
+    //     font-size: 16px;
+    //     letter-spacing: 2px;
+    //     line-height: 32px;
 
-        &:before {
-          content: "";
-          display: inline-block;
-          width: 12px;
-          height: 12px;
-          background-color: #0195ff;
-          border-radius: 50%;
-          margin-right: 5px;
-        }
+    //     &:before {
+    //       content: "";
+    //       display: inline-block;
+    //       width: 12px;
+    //       height: 12px;
+    //       background-color: #0195ff;
+    //       border-radius: 50%;
+    //       margin-right: 5px;
+    //     }
 
-        .inotice-modal-content-title {
-          color: #0195ff;
-        }
+    //     .inotice-modal-content-title {
+    //       color: #0195ff;
+    //     }
 
-        .inotice-mod {
-          padding: 0 22px;
-        }
-      }
-    }
+    //     .inotice-mod {
+    //       // padding: 0 22px;
+    //     }
+    //   }
+    // }
 
     .inotice-nomorecheck {
       position: absolute;
@@ -1619,6 +1662,17 @@ export default defineComponent({
         }
       }
     }
+  }
+
+  .alert-img {
+    display: block;
+    width: 100%;
+  }
+
+  .el-dialog__headerbtn {
+    // background: #0fb0ff !important;
+    // height: 36px !important;
+    opacity: 0;
   }
 }
 </style>
