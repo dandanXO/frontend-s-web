@@ -93,11 +93,15 @@
       <!-- <router-link v-if="!store.token" to="/register" class="login">
         <span class="log">注册</span>
       </router-link> -->
-      <router-link v-if="!store.token" to="/login" class="login">
-        <span class="log">请先登录</span>
-        <span class="user">
-          <q-icon name="double_arrow" style="color: #536ee0; font-size: 14px" />
-        </span>
+      <router-link
+        v-if="!store.token"
+        to="/login?register"
+        class="login with-register"
+      >
+        <span class="log">注册</span>
+      </router-link>
+      <router-link v-if="!store.token" to="/login" class="login with-register">
+        <span class="log">登录</span>
       </router-link>
       <router-link v-else to="/account" class="login">
         <span class="log">已登录</span>
@@ -330,7 +334,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isFirstView">
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <q-card style="width: 100%; max-width: 260px" class="bg-bright text-black">
       <q-card-section class="q-mb-md">
         <img
           src="../assets/images/index/popup-h5.jpg"
@@ -578,7 +582,8 @@ export default defineComponent({
         .then((data) => {
           var pf = data;
           pf.forEach((element) => {
-            if (element.gameType.includes("ESPORT")) {
+            const platTypes = element.gameType.split(",");
+            if (platTypes.indexOf("ESPORT") > -1) {
               var espObj = Object.assign({}, element);
               if (espObj.code === "TFGaming") {
                 espObj.title = "东赢电竞";
@@ -596,7 +601,7 @@ export default defineComponent({
               espObj.subtitle = "电竞赛事";
               esport.value.push(espObj);
             }
-            if (element.gameType.includes("SPORT,ESPORT")) {
+            if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
               if (spObj.code === "IM") {
                 spObj.title = "IM体育";
@@ -614,176 +619,42 @@ export default defineComponent({
               spObj.subtitle = "体育赛事";
               sport.value.push(spObj);
             }
-            if (element.gameType.includes("LIVE")) {
+            if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
               liveObj.title = liveObj.name + " 真人";
               liveObj.icon = "live";
               liveObj.subtitle = "真人娱乐";
               livecasino.value.push(liveObj);
             }
-            if (element.gameType.includes("POKER")) {
+            if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
               pokerObj.title = pokerObj.name + " 棋牌";
               pokerObj.icon = "poker";
               pokerObj.subtitle = "棋牌娱乐";
               poker.value.push(pokerObj);
             }
-            if (element.gameType.includes("LOTTERY")) {
+            if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
               lottObj.title = lottObj.name + " 彩票";
               lottObj.icon = "lottery";
               lottObj.subtitle = "彩票游戏";
               lottery.value.push(lottObj);
             }
-            if (element.gameType.includes("SLOT")) {
+            if (platTypes.indexOf("SLOT") > -1) {
               var slotObj = Object.assign({}, element);
               slotObj.title = slotObj.name + " 电子";
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
               slot.value.push(slotObj);
             }
-            if (element.gameType.includes("FISH")) {
+            if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
               fishObj.title = fishObj.name + " 捕鱼";
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
               fishing.value.push(fishObj);
             }
-            // if (element.gameType.includes("POKER")) {
-            //   if (element.code === 'KYDY') {
-            //     element.gameCode = 'ky_lobby';
-            //   }
-            //   element.title = e.name + ' 棋牌'
-            //   element.icon = 'poker'
-            //   element.subtitle = '棋牌娱乐'
-            //   poker.value.push(element);
-            // }
-            // if (element.gameType.includes("LOTTERY")) {
-            //   element.title = element.name + ' 彩票'
-            //   element.icon = 'lottery'
-            //   element.subtitle = '彩票游戏'
-            //   lottery.value.push(element);
-            // }
-            // if (element.gameType.includes("SLOT")) {
-            //   element.title = element.name + ' 电子'
-            //   element.icon = 'slot'
-            //   element.subtitle = '电子游戏'
-            //   slot.value.push(element);
-            // }
-            // if (element.gameType.includes("FISH")) {
-            //   element.title = element.name + ' 捕鱼'
-            //   element.icon = 'fish'
-            //   element.subtitle = '捕鱼游戏'
-            //   fishing.value.push(element);
-            // }
           });
-          // esport.value.forEach(e => {
-          //   e.icon = 'esport'
-          //   e.title = '东赢电竞'
-          //   e.subtitle = '电竞赛事'
-          // });
-          // sport.value.forEach(e => {
-          //   if (e.code === 'IM') {
-          //     e.title = 'IM体育'
-          //   }
-          //   if (e.code === 'IA') {
-          //     e.title = '小艾体育'
-          //   }
-          //   if (e.code === 'CR') {
-          //     e.title = 'CR体育'
-          //   }
-          //   e.icon = 'sport'
-          //   e.subtitle = '体育赛事'
-          // });
-          // livecasino.value.forEach(e => {
-          //   e.title = e.name + ' 真人'
-          //   e.icon = 'live'
-          //   e.subtitle = '真人娱乐'
-          // });
-          //   poker.value.forEach(e => {
-          //     if (e.code === 'KYDY') {
-          //       e.gameCode = 'ky_lobby';
-          //     }
-          //   e.title = e.name + ' 棋牌'
-          //   e.icon = 'poker'
-          //   e.subtitle = '棋牌娱乐'
-          // });
-          // lottery.value.forEach(element => {
-          //   element.title = element.name + ' 彩票'
-          //   element.icon = 'lottery'
-          //   element.subtitle = '彩票游戏'
-          // });
-          // slot.value.forEach(element => {
-          //   element.title = element.name + ' 电子'
-          //   element.icon = 'slot'
-          //   element.subtitle = '电子游戏'
-          // });
-          // fishing.value.forEach(element => {
-          //   element.title = element.name + ' 捕鱼'
-          //   element.icon = 'fish'
-          //   element.subtitle = '捕鱼游戏'
-          // });
-          // });
-          // sport.value = platforms.filter(element => element.gameType.includes("SPORT") && !element.gameType.includes("ESPORT"));
-          // sport.value.forEach(element => {
-          //   if (element.code === 'IM') {
-          //     element.title = 'IM体育'
-          //   }
-          //   if (element.code === 'IA') {
-          //     element.title = '小艾体育'
-          //   }
-          //   if (element.code === 'CR') {
-          //     element.title = 'CR体育'
-          //   }
-          //   element.icon = 'sport'
-          //   element.subtitle = '体育赛事'
-          // });
-          // livecasino.value = platforms.filter(element => element.gameType.includes("LIVE"));
-          // livecasino.value.forEach(element => {
-          //   element.title = element.name + ' 真人'
-          //   element.icon = 'live'
-          //   element.subtitle = '真人娱乐'
-          // });
-          // poker.value = platforms.filter(element => element.gameType.includes("POKER"));
-          // poker.value.forEach(element => {
-          //   element.title = element.name + ' 棋牌'
-          //   element.icon = 'poker'
-          //   element.subtitle = '棋牌娱乐'
-          // });
-          // lottery.value = platforms.filter(element => element.gameType.includes("LOTTERY"));
-          // lottery.value.forEach(element => {
-          //   element.title = element.name + ' 彩票'
-          //   element.icon = 'lottery'
-          //   element.subtitle = '彩票游戏'
-          // });
-          // slot.value = platforms.filter(element => element.gameType.includes("SLOT"));
-          // slot.value.forEach(element => {
-          //   element.title = element.name + ' 电子'
-          //   element.icon = 'slot'
-          //   element.subtitle = '电子游戏'
-          // });
-          // fishing.value = platforms.filter(element => element.gameType.includes("FISH"));
-          // fishing.value.forEach(element => {
-          //   element.title = element.name + ' 捕鱼'
-          //   element.icon = 'fish'
-          //   element.subtitle = '捕鱼游戏'
-          // });
-          // platforms.value = data
-          // platforms.value = data.filter(element => element.gameType.includes("SLOT"));
-          // platforms.value.forEach((e, i) => {
-          //   if (e.code === 'AWS') {
-          //     platforms.value.splice(i, 1)
-          //   }
-          // });
-          // if (!route.query.platform) {
-          //   switchPlat(platforms.value[0]);
-          // } else {
-          //   platforms.value.forEach(element => {
-          //     if (route.query.platform === element.code) {
-          //       switchPlat(element)
-          //     }
-          //   });
-          // }
         })
         .catch((err) => {
           // isLoading.value= false;
@@ -1253,6 +1124,7 @@ export default defineComponent({
 }
 .alert-image {
   width: 100%;
+  margin: auto;
 }
 .close-alert {
   display: block;
@@ -1262,5 +1134,14 @@ export default defineComponent({
   width: 40px;
   height: 40px;
   background: transparent;
+}
+.q-card__section.q-card__section--vert.q-mb-md {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+.login.with-register {
+  font-size: 16px;
+  font-weight: bold;
 }
 </style>
