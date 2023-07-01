@@ -13,11 +13,16 @@
     "android": "quasar build -m capacitor -T android"
   },
   "dependencies": {
+    "@capacitor/android": "^4.8.0",
+    "@capacitor/app": "^4.0.0",
+    "@capacitor/core": "^4.8.0",
+    "@capacitor/splash-screen": "^4.2.0",
     "@fingerprintjs/fingerprintjs": "^3.4.0",
     "@line/liff": "^2.21.4",
     "@quasar/extras": "^1.0.0",
     "@vueuse/core": "^9.2.0",
     "axios": "^0.27.2",
+    "babel-loader": "^9.1.2",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "moment": "^2.29.4",
