@@ -244,6 +244,18 @@ export default defineComponent({
               $q.loading.hide();
               sessionStorage.removeItem("REFERRAL_CODE");
 
+              if (isCheckRmb.value) {
+                localStorage.setItem(
+                  "userpass",
+                  JSON.stringify({
+                    loginName: loginForm.loginName,
+                    password: loginForm.password
+                  })
+                );
+              } else {
+                localStorage.removeItem("userpass");
+              }
+
               loginFormRef.value.reset();
 
               if (store.hasToken()) {
@@ -271,12 +283,23 @@ export default defineComponent({
       tab.value = "login";
     };
 
+    const checkRememberPwd = () => {
+      const d = localStorage.getItem("userpass");
+      let rememberJson = JSON.parse(d);
+      if (rememberJson) {
+        isCheckRmb.value = true;
+        loginForm.loginName = rememberJson.loginName;
+        loginForm.password = rememberJson.password;
+      }
+    };
+
     onMounted(() => {
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
         tab.value = "register";
       }
+      checkRememberPwd();
     });
     return {
       header: "Login",

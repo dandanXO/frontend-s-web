@@ -333,6 +333,32 @@
     </q-card>
   </q-dialog>
 
+  <q-dialog
+    width="100%"
+    class="modal-update-div"
+    v-model="isAppUpdateModal"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div class="titles backgroundColor">更新公告</div>
+        </div>
+        <div class="contents">检测到新版本，你是否要更新？</div>
+        <div class="btnsreas">
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate">
+            取消
+          </div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">
+            立即更新
+          </div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
+
   <q-dialog width="100%" v-model="isFirstView">
     <q-card style="width: 100%; max-width: 260px" class="bg-bright text-black">
       <q-card-section class="q-mb-md">
@@ -368,6 +394,7 @@ import { Thumbs, Controller } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
+
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
@@ -383,8 +410,9 @@ export default defineComponent({
     // RiVolumeUpLine,
   },
   setup() {
-    const isFirstView = ref(true);
+    const isFirstView = ref(false);
     const closeAlert = () => {
+      localStorage.setItem("indexImgTop", new Date().getTime());
       isFirstView.value = false;
     };
     const thumbsSwiper = ref(null);
@@ -533,6 +561,7 @@ export default defineComponent({
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
+
     function loadData() {
       api
         .get("/promo/banner?category=HOME")
@@ -558,6 +587,7 @@ export default defineComponent({
           // });
         });
     }
+
     const platforms = ref([]);
     const selectedPlatId = ref();
     const selectedPlat = ref(platforms.value[0]);
@@ -715,11 +745,87 @@ export default defineComponent({
       const redirectU = "/promo?name=" + banner.redirectUrl;
       router.push(`${redirectU}`);
     };
+
+    const download_url = ref("");
+    const isAppUpdateModal = ref(false);
+    const getVersionNo = async () => {
+      // console.log(Platform);
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        // const info = {
+        //   version: "1.0.1"
+        // };
+        console.log("App Info");
+        console.log(info);
+        // alert(info.version);
+        var current_version = parseInt(
+          info.version.replaceAll(".", "") + info.build
+        );
+        console.log(current_version);
+        // info.version && info.build
+        const appType = "ALL";
+        const device = Platform.is.android ? "ANDROID" : "IOS";
+        const res = await api.get(
+          `/config/appVersionAndUrl?type=${appType}&device=${device}`
+        );
+        // console.log(res);
+        if (res.code === 0) {
+          var version_info = res.data.version;
+          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+          download_url.value = res.data.url;
+
+          console.log(latest_ver_no);
+          // console.log(download_url.value);
+          if (latest_ver_no > current_version) {
+            console.log("Need to Updat");
+            isAppUpdateModal.value = true;
+          }
+        }
+      }
+    };
+
+    const openDownloadPage = () => {
+      console.log("open Page");
+      window.open(download_url.value, "_system");
+      isAppUpdateModal.value = false;
+    };
+    const cancelUpdate = () => {
+      isAppUpdateModal.value = false;
+    };
+
+    const isiOS = () => {
+      return (
+        [
+          "iPad Simulator",
+          "iPhone Simulator",
+          "iPod Simulator",
+          "iPad",
+          "iPhone",
+          "iPod"
+        ].includes(navigator.platform) ||
+        // iPad on iOS 13 detection
+        (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+      );
+    };
+
+    const checkShowImgTop = () => {
+      const lastTime = localStorage.getItem("indexImgTop");
+      if(lastTime) {
+        const diff = new Date().getTime() - Number(lastTime);
+        if(diff > 1000 * 60 * 60 * 12)
+          isFirstView.value = true
+      } else {
+        isFirstView.value = true
+      }
+    }
+
     onMounted(() => {
+      checkShowImgTop();
       getPlatList();
       loadData();
       loadAnnouncement();
       checkPlatform();
+      getVersionNo();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -777,7 +883,10 @@ export default defineComponent({
       setSecondSwiper,
       setSelectedSwiper,
       isFirstView,
-      closeAlert
+      closeAlert,
+      isAppUpdateModal,
+      cancelUpdate,
+      openDownloadPage
     };
   }
 });
@@ -788,6 +897,7 @@ export default defineComponent({
   padding-bottom: 200px;
   padding-top: 25px;
 }
+
 :deep(.secondSwiper .swiper-wrapper) {
   .swiper-slide {
     // height: 120px;
@@ -802,36 +912,44 @@ export default defineComponent({
     min-height: 95px;
     padding-top: 0;
     margin-bottom: 5px;
+
     a {
       display: block;
     }
+
     img {
       width: 100%;
     }
+
     &:first-child {
       // padding-top: 65px;
       // margin-top: -40px;
       // padding-top: 30px;
     }
+
     &-active {
       // padding-top: 30px;
     }
   }
 }
+
 .swiper-container {
   position: relative;
   background: #d2d2de;
+
   .firstSwiper {
     margin-bottom: -30px;
     padding-bottom: 10px;
     z-index: 999;
     text-align: center;
+
     .swiper-slide {
       // background: #23263c;
       background: #ffffff;
       padding: 8px 5px 2px;
       max-width: 60px;
       cursor: pointer;
+
       &.tbact {
         background: url("../assets/images/index/game_tab_active.png") no-repeat
           center center;
@@ -843,6 +961,101 @@ export default defineComponent({
     }
   }
 }
+
+.modal-update-div {
+  .modalcontent {
+    background: #fff;
+    height: 232px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px 0px 16px;
+
+    .headers {
+      width: 100%;
+      box-sizing: border-box;
+      height: 37px;
+      line-height: 37px;
+      background: #1976d2;
+      color: #fff;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .contents {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      text-align: center;
+
+      .contentfonts {
+        text-align: center;
+        color: #333;
+        font-size: 16px;
+        margin: 37px 0 20.5px 0;
+      }
+
+      .inputs {
+        width: 292px;
+        height: 36px;
+        border-radius: 4px 4px;
+        border: 1px solid #666;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding-left: 20px;
+
+        .van-field__control {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .btnsreas {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-top: 23.5px;
+
+      .cacnels {
+        flex: 1;
+        background: #f7fcfd;
+        box-sizing: border-box;
+        color: #1976d2;
+        border: 1px solid #1976d2;
+        border-radius: 6px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: 14px;
+        margin-right: 8px;
+      }
+
+      .confirmsbtns {
+        flex: 1;
+        box-sizing: border-box;
+        border-radius: 6px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        color: #fff;
+        background: #1976d2;
+        letter-spacing: 1px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 .download-top-container {
   .download-top-box {
@@ -852,14 +1065,17 @@ export default defineComponent({
     align-items: center;
     gap: 10px;
     background: #ffffff;
+
     .q-icon {
       font-size: 24px;
       color: #999;
     }
+
     .headicon {
       // flex: 1;
       // width: 5%;
     }
+
     .download-txt-container {
       flex: 5;
       font-size: 0.7rem;
@@ -867,16 +1083,19 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       color: #999;
+
       .download-title {
         font-size: 0.8rem;
         color: #666;
         margin-bottom: 4px;
       }
     }
+
     .buttons {
       display: flex;
       gap: 5px;
     }
+
     .top-btn {
       background-image: linear-gradient(90deg, #3379f5 0, #77bbfc 100%),
         linear-gradient(#5b80e7, #5b80e7);
@@ -889,6 +1108,7 @@ export default defineComponent({
     }
   }
 }
+
 .midd {
   // display: flex;
   // justify-content: center;
@@ -900,6 +1120,7 @@ export default defineComponent({
   position: relative;
   border-radius: 15px 15px 0 0;
   overflow: hidden;
+
   .station-notice-wrapper {
     display: flex;
     background: rgba(44, 44, 44, 0.7);
@@ -910,22 +1131,26 @@ export default defineComponent({
     padding: 5px 10px;
     justify-content: center;
     align-items: center;
+
     .volume {
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
     span {
       margin-right: 10px;
       cursor: pointer;
       color: #000;
     }
+
     .notice {
       img {
         width: 30px;
       }
     }
   }
+
   .share {
     background-image: linear-gradient(to right, #de4545, #db7e42);
     padding: 10px;
@@ -943,6 +1168,7 @@ export default defineComponent({
   width: 100%;
   background-size: 100% 132px;
 }
+
 .welcome-bar {
   display: flex;
   padding: 10px;
@@ -953,16 +1179,20 @@ export default defineComponent({
   align-items: center;
   color: #000;
   font-size: 12px;
+
   .logo {
     flex: 1;
     height: 25px;
+
     img {
       height: 100%;
     }
   }
+
   .welcome-liner {
     flex: 3;
   }
+
   .login {
     flex: 2;
     display: flex;
@@ -971,6 +1201,7 @@ export default defineComponent({
     gap: 12px;
     text-decoration: none;
     color: #000;
+
     .user {
       background: #ffffff;
       padding: 0px 2px;
@@ -978,6 +1209,7 @@ export default defineComponent({
     }
   }
 }
+
 .details-bar {
   gap: 10px;
   // background-color: #1a1c28;
@@ -985,6 +1217,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   .message {
     flex: 1;
     padding: 10px;
@@ -992,11 +1225,13 @@ export default defineComponent({
     color: #000;
     font-size: 16px;
   }
+
   .menulist {
     flex: 4;
     display: flex;
     justify-content: space-evenly;
     gap: 10px;
+
     .men {
       text-decoration: none;
       color: #000000;
@@ -1004,14 +1239,17 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
+
       img {
         width: 30px;
       }
     }
   }
 }
+
 .index-platform-container {
   position: relative;
+
   :deep(.q-splitter__panel.q-splitter__before) {
     position: absolute;
     top: 0;
@@ -1019,9 +1257,11 @@ export default defineComponent({
     top: 0;
     z-index: 99;
   }
+
   .q-dark {
     background: none;
   }
+
   .q-tab-panel {
     padding: 0px;
   }
@@ -1040,19 +1280,23 @@ export default defineComponent({
       display: flex;
       align-items: center;
       padding: 3px 0;
+
       &--active {
         background-image: linear-gradient(0deg, #07404b 0, #058096 100%),
           linear-gradient(#2d879c, #2d879c);
         color: #fff;
       }
     }
+
     .q-tab-panel {
       padding: 5px;
     }
   }
+
   :deep(.q-tab--active .q-tab__indicator) {
     display: none;
   }
+
   .q-tabs--horizontal {
     margin: 0 5px 0 0;
 
@@ -1066,6 +1310,7 @@ export default defineComponent({
       display: flex;
       align-items: center;
       padding: 3px 0;
+
       &--active {
         background-image: unset;
         // background-image: linear-gradient(0deg,#07404b 0,#058096 100%),linear-gradient(#2d879c,#2d879c);
@@ -1073,32 +1318,40 @@ export default defineComponent({
         color: #fff;
       }
     }
+
     .q-tab-panel {
       padding: 5px;
     }
   }
 }
+
 .q-tab--active .q-tab__indicator {
   background: #ffffff;
   top: 0;
 }
+
 .q-tab-panel {
   .tabitems {
     display: grid;
+
     img {
       width: 100%;
       display: block;
     }
+
     &.quarter {
       grid-template-columns: repeat(4, 1fr);
       padding-top: 30px;
     }
+
     &.middle {
       gap: 10px;
     }
+
     &.five {
       grid-template-columns: repeat(2, 1fr);
       gap: 5px;
+
       > div:first-child {
         grid-column-end: 3;
         grid-column-start: 1;
@@ -1106,6 +1359,7 @@ export default defineComponent({
     }
   }
 }
+
 @media (max-width: 400px) {
   .grid {
     .q-card {
@@ -1122,10 +1376,12 @@ export default defineComponent({
 .marquee-text-wrap span {
   color: #ffffff !important;
 }
+
 .alert-image {
   width: 100%;
   margin: auto;
 }
+
 .close-alert {
   display: block;
   position: absolute;
@@ -1135,11 +1391,13 @@ export default defineComponent({
   height: 40px;
   background: transparent;
 }
+
 .q-card__section.q-card__section--vert.q-mb-md {
   background: transparent;
   display: flex;
   justify-content: center;
 }
+
 .login.with-register {
   font-size: 16px;
   font-weight: bold;

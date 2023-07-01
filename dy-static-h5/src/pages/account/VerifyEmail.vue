@@ -60,13 +60,16 @@
     </q-form>
   </div>
 
-  <q-dialog v-model="showCaptchaDialog" width="100%">
+  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
     <q-card width="100%">
       <q-card-section
-        style="padding: 10px 20px"
+        style="padding: 10px 5px"
         class="q-pa-md bg-dyblue text-white"
       >
-        验证码
+        <q-toolbar>
+          <q-toolbar-title>验证码</q-toolbar-title>
+          <q-btn flat v-close-popup round dense icon="close" />
+        </q-toolbar>
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
@@ -388,5 +391,10 @@ export default defineComponent({
   input.q-placeholder {
     color: #333333 !important;
   }
+}
+
+
+.q-toolbar{
+  background: #5b80e8;
 }
 </style>
