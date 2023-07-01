@@ -394,6 +394,7 @@ import { Thumbs, Controller } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
+import { App } from "@capacitor/app";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -750,6 +751,7 @@ export default defineComponent({
     const isAppUpdateModal = ref(false);
     const getVersionNo = async () => {
       // console.log(Platform);
+      // alert("Capacitor" + Platform.is.capacitor);
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
         // const info = {
@@ -775,6 +777,7 @@ export default defineComponent({
           download_url.value = res.data.url;
 
           console.log(latest_ver_no);
+          // alert(latest_ver_no);
           // console.log(download_url.value);
           if (latest_ver_no > current_version) {
             console.log("Need to Updat");
@@ -810,14 +813,13 @@ export default defineComponent({
 
     const checkShowImgTop = () => {
       const lastTime = localStorage.getItem("indexImgTop");
-      if(lastTime) {
+      if (lastTime) {
         const diff = new Date().getTime() - Number(lastTime);
-        if(diff > 1000 * 60 * 60 * 12)
-          isFirstView.value = true
+        if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
       } else {
-        isFirstView.value = true
+        isFirstView.value = true;
       }
-    }
+    };
 
     onMounted(() => {
       checkShowImgTop();

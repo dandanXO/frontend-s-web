@@ -208,13 +208,12 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "An OTP code has been sent to your email.",
+            message: "验证码已经发送，请查收",
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;
           verificationModalVisible.value = false;
           isEmailSending.value = false;
-
         } else {
           // $q.notify({
           //   color: "negative",
@@ -242,6 +241,7 @@ export default defineComponent({
           code: formDetail.phoneOtpRef,
           codeId: phoneCodeId.value})).then((res) => {
           if (res.code === 0) {
+            store.setPhone(formDetail.phone);
             $q.notify({
               color: "positive",
               position: "top",
