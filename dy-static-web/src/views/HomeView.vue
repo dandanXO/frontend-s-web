@@ -651,7 +651,7 @@
         </div>
       </div>
     </div>
-    <el-dialog class="imptann-modal" v-model="isImportantAnnoucementModal">
+    <el-dialog @close="setWithExpiry('isImpt', true, 43200000)" class="imptann-modal" v-model="isImportantAnnoucementModal">
       <!-- <div class="modal-body"> -->
       <img src="../assets/images/index/popup-web.jpg" class="alert-img" />
       <!-- </div> -->
@@ -745,10 +745,31 @@ export default defineComponent({
         src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
       }
     ]);
-    const isImportantAnnoucementModal = ref(true);
+    const isImportantAnnoucementModal = ref(false);
     const openGame = (gameName, platType, gameCode) => {
       gameMenu.value.open(gameName, platType, gameCode);
     };
+    const setWithExpiry = (key, value, interval) => {
+      const now = new Date();
+      const item = {
+        value: value,
+        expiry: now.getTime() + interval,
+      };
+      localStorage.setItem(key, JSON.stringify(item));
+    };
+    const getWithExpiry = (key) => {
+      const itemStr = localStorage.getItem(key)
+      if(!itemStr) {
+        return null;
+      }
+      const item = JSON.parse(itemStr);
+      const now = new Date();
+      if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+      }
+      return item.value;
+    }
     const loadBanners = () => {
       loadPromoBanner("HOME").then((res) => {
         if (res.code === 0) {
@@ -757,6 +778,12 @@ export default defineComponent({
       });
     };
     onMounted(() => {
+      const isImpt = getWithExpiry('isImpt');
+      if (isImpt === null) {
+        isImportantAnnoucementModal.value = true
+      } else {
+        isImportantAnnoucementModal.value = false
+      }
       loadBanners();
     });
     return {
@@ -764,7 +791,9 @@ export default defineComponent({
       isImportantAnnoucementModal,
       gameMenu,
       openGame,
-      imgURL
+      imgURL,
+      getWithExpiry,
+      setWithExpiry
     };
   }
 });
