@@ -93,11 +93,15 @@
       <!-- <router-link v-if="!store.token" to="/register" class="login">
         <span class="log">注册</span>
       </router-link> -->
-      <router-link v-if="!store.token" to="/login" class="login">
-        <span class="log">请先登录</span>
-        <span class="user">
-          <q-icon name="double_arrow" style="color: #536ee0; font-size: 14px" />
-        </span>
+      <router-link
+        v-if="!store.token"
+        to="/login?register"
+        class="login with-register"
+      >
+        <span class="log">注册</span>
+      </router-link>
+      <router-link v-if="!store.token" to="/login" class="login with-register">
+        <span class="log">登录</span>
       </router-link>
       <router-link v-else to="/account" class="login">
         <span class="log">已登录</span>
@@ -330,7 +334,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isFirstView">
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <q-card style="width: 100%; max-width: 260px" class="bg-bright text-black">
       <q-card-section class="q-mb-md">
         <img
           src="../assets/images/index/popup-h5.jpg"
@@ -1120,6 +1124,7 @@ export default defineComponent({
 }
 .alert-image {
   width: 100%;
+  margin: auto;
 }
 .close-alert {
   display: block;
@@ -1129,5 +1134,14 @@ export default defineComponent({
   width: 40px;
   height: 40px;
   background: transparent;
+}
+.q-card__section.q-card__section--vert.q-mb-md {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+.login.with-register {
+  font-size: 16px;
+  font-weight: bold;
 }
 </style>

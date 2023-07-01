@@ -1,6 +1,20 @@
-REGISTERPAGEv02
 <template>
   <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
+    <q-input
+      standout
+      ref="realNameRef"
+      bg-color="white"
+      hide-bottom-space
+      v-model="regForm.realName"
+      label="姓名"
+      lazy-rules
+      :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/login_name.png" width="20" />
+      </template>
+    </q-input>
+
     <q-input
       standout
       bg-color="white"
@@ -127,6 +141,7 @@ REGISTERPAGEv02
         <img src="../assets/images/login/email.png" width="20" />
       </template>
     </q-input> -->
+
     <q-input
       standout
       bg-color="white"
@@ -172,6 +187,10 @@ REGISTERPAGEv02
         rounded
       />
     </div>
+
+    <div class="q-pa-md text-center">
+      <router-link class="txt-tip" to="/">先去逛逛</router-link>
+    </div>
   </q-form>
 </template>
 
@@ -192,6 +211,10 @@ export default defineComponent({
       getReferralCode();
     });
     const verificationImg = ref("");
+    const isValidName = () => {
+      const namePattern = /^([\u4e00-\u9fa5]*)$/;
+      return namePattern.test(regForm.realName) || "请输入中文字符";
+    };
     const regForm = reactive({
       loginName: "",
       password: "",
@@ -230,6 +253,7 @@ export default defineComponent({
     // const telRef = ref();
     // const emailRef = ref();
     const verificationRef = ref();
+    const realNameRef = ref();
     const affiliateCodeRef = ref();
     const $q = useQuasar();
 
@@ -247,6 +271,7 @@ export default defineComponent({
       confirmPwdRef.value.validate();
       // telRef.value.validate();
       // emailRef.value.validate();
+      realNameRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: "注册中"
@@ -257,6 +282,7 @@ export default defineComponent({
         confirmPwdRef.value.hasError ||
         // telRef.value.hasError ||
         // emailRef.value.hasError ||
+        realNameRef.value.hasError ||
         verificationRef.value.hasError
       ) {
         $q.loading.hide();
@@ -370,12 +396,14 @@ export default defineComponent({
       header: "Register Account",
       regForm,
       verificationImg,
+      isValidName,
       loginNameRef,
       pwdRef,
       confirmPwdRef,
       // telRef,
       // emailRef,
       verificationRef,
+      realNameRef,
       onSubmit,
       isValidEmail,
       isPwd: ref(true),
