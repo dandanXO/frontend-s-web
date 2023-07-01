@@ -264,6 +264,15 @@ export default defineComponent({
     //     }
     //   }
     // }
+    img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto;
+      &:nth-child(1) {
+        padding-top: 20px;
+      }
+    }
     table {
       margin: 10px auto;
       min-width: 80%;
