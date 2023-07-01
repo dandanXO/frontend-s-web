@@ -157,7 +157,7 @@
       </q-input> -->
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="dyblue" @click="updateState" label="更新信息" />
+        <q-btn size="md" color="dyblue" @click="updateState" label="保存信息" />
       </div>
     </q-form>
   </div>

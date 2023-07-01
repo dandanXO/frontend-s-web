@@ -17,7 +17,7 @@
           @clicked="onSelect"
         />
       </div>
-      
+
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
           <div class="submit-message">
           <div class="linebox"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
@@ -395,8 +395,8 @@ function confirmDeposit() {
       {
         showClose: 'false',
         cancelButtonClass: 'cancel-btn',
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
         type: 'warning',
         draggable: true,
       }
@@ -411,7 +411,7 @@ function confirmDeposit() {
     }
   }
   loadingBtn.value = true;
-  
+
   if (freePrivilege.value) {
     if (selectedPrivilege.value) {
       form.privilegeId = selectedPrivilege.value + "," + freePrivilege.value.id;
@@ -443,7 +443,7 @@ function confirmDeposit() {
             }
           });
           data.bankCardId = 0;
-          
+
           doDeposit(data);
         }
       },
@@ -456,7 +456,7 @@ function confirmDeposit() {
 }
 
 function doDeposit(data) {
-  
+
   loadingBtn.value = true;
   postDeposit(data).then((d) => {
     if (d.code === 0) {
@@ -784,7 +784,7 @@ grid-template-rows: 50px;
 // }
 </style>
 <style lang="scss">
-.inner-cont {  
+.inner-cont {
   height: 100%;
   display: flex;
   justify-content: center;
