@@ -374,7 +374,7 @@
                 </el-input>
               </el-space>
               <el-row>
-                <div v-if="regForm.password" class="password-str-div">
+                <!-- <div v-if="regForm.password" class="password-str-div">
                   <span
                     :class="{
                       'weak-pwd': pwdStrength == 'weak',
@@ -395,7 +395,7 @@
                   <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">
                     强
                   </span>
-                </div>
+                </div> -->
               </el-row>
             </el-form-item>
             <!-- <el-form-item label="密码" prop="password">
@@ -870,23 +870,23 @@ export default defineComponent({
       // console.log(level);
 
       if (pwd.length >= 6) {
-        switch (level) {
-          case 1:
-            strength = "weak";
-            break;
-          case 2:
-            strength = "normal";
-            break;
-          case 3:
-          case 4:
-            strength = "strong";
-            break;
-        }
-      } else {
-        strength = "weak";
-      }
-      if (strength === "weak") {
-        return Promise.reject("密码至少应该是好的");
+        // switch (level) {
+        //   case 1:
+        //     strength = "weak";
+        //     break;
+        //   case 2:
+        //     strength = "normal";
+        //     break;
+        //   case 3:
+        //   case 4:
+        //     strength = "strong";
+        //     break;
+        // }
+      // } else {
+        // strength = "weak";
+      // }
+      // if (strength === "weak") {
+        // return Promise.reject("密码至少应该是好的");
       } else {
         return Promise.resolve();
       }
@@ -895,6 +895,15 @@ export default defineComponent({
     let validateName = async (r, v) => {
       if (v === "") {
         return Promise.reject("请输入登录名");
+      } else if (!checkName(v)) {
+        return Promise.reject("不允许使用特殊字符");
+      } else {
+        return Promise.resolve();
+      }
+    };
+    let validateRealName = async (r, v) => {
+      if (v === "") {
+        return Promise.reject("请输入登姓名");
       } else if (!checkName(v)) {
         return Promise.reject("不允许使用特殊字符");
       } else {
@@ -1039,7 +1048,7 @@ export default defineComponent({
           trigger: "blur",
         },
         {
-          validator: validateName,
+          validator: validateRealName,
           trigger: "change",
         },
       ],
@@ -1622,44 +1631,44 @@ export default defineComponent({
 
     watch(
         () => regForm.password,
-        () => {
-          pwdStrength.value = "";
+        // () => {
+        //   pwdStrength.value = "";
 
-          var pwd = regForm.password;
-          var result = 0;
-          for (var i = 0, len = pwd.length; i < len; ++i) {
-            result |= charType(pwd.charCodeAt(i));
-          }
+        //   var pwd = regForm.password;
+        //   var result = 0;
+        //   for (var i = 0, len = pwd.length; i < len; ++i) {
+        //     result |= charType(pwd.charCodeAt(i));
+        //   }
 
-          var level = 0;
-          for (i = 0; i <= 4; i++) {
-            if (result & 1) {
-              level++;
-            }
-            result = result >>> 1;
-          }
+        //   var level = 0;
+        //   for (i = 0; i <= 4; i++) {
+        //     if (result & 1) {
+        //       level++;
+        //     }
+        //     result = result >>> 1;
+        //   }
 
-          // console.log(level);
+        //   // console.log(level);
 
-          if (pwd.length >= 6) {
-            switch (level) {
-              case 1:
-                pwdStrength.value = "weak";
-                break;
-              case 2:
-                pwdStrength.value = "normal";
-                break;
-              case 3:
-              case 4:
-                pwdStrength.value = "strong";
-                break;
-            }
-          } else {
-            pwdStrength.value = "weak";
-          }
+        //   if (pwd.length >= 6) {
+        //     switch (level) {
+        //       case 1:
+        //         pwdStrength.value = "weak";
+        //         break;
+        //       case 2:
+        //         pwdStrength.value = "normal";
+        //         break;
+        //       case 3:
+        //       case 4:
+        //         pwdStrength.value = "strong";
+        //         break;
+        //     }
+        //   } else {
+        //     pwdStrength.value = "weak";
+        //   }
 
-          // console.log(pwdStrength.value);
-        },
+        //   // console.log(pwdStrength.value);
+        // },
     );
     const todayDate = () => {
       return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
