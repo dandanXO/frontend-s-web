@@ -138,7 +138,7 @@ import DepositComponent from "components/depositComponent.vue";
 // import { message } from "ant-design-vue";
 import {storeToRefs} from "pinia";
 import {api} from "boot/axios";
-import {useQuasar, Platform, AppFullscreen} from "quasar";
+import {useQuasar, Platform, AppFullscreen, openURL} from "quasar";
 import liff from "@line/liff"
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 const $q = useQuasar();

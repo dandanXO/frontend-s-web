@@ -452,6 +452,7 @@ function confirmDeposit() {
     loadingBtn.value = false;
   });
 })
+    loadingBtn.value = false;
 }
 
 function doDeposit(data) {
@@ -505,7 +506,9 @@ function doDeposit(data) {
     }
   }).catch((err) => {
     console.log(err)
+    loadingBtn.value = false;
   });
+  loadingBtn.value = false;
 
 }
 

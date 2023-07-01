@@ -466,6 +466,7 @@ async function confirmDeposit() {
   btnLoading.value = true
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
+    btnLoading.value = false
   } else {
     await cashier
       .get(
