@@ -293,7 +293,7 @@ export default defineComponent({
               if (res.code === 0) {
                 store.autoLogin(res.data);
                 // context.emit("changeTab");
-                router.push({ path: "/" });
+                // router.push({ path: "/" });
                 $q.notify({
                   color: "positive",
                   position: "top",

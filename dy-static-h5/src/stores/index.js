@@ -60,9 +60,13 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       SessionStorage.set("TOKEN", token);
-      this.token = token;
-      this.getBalance();
-      this.getMemberInfo();
+      if (token) {
+        const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+        router.go(jumpUrl);
+        if (Platform.is.capacitor && Platform.is.ios) {
+          location.reload()
+        }
+      }
     },
     telephoneLogin(loginInfo) {
       return mobileLogin(loginInfo)
