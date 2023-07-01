@@ -750,20 +750,21 @@ export default defineComponent({
     const isAppUpdateModal = ref(false);
     const getVersionNo = async () => {
       // console.log(Platform);
-      if ((Platform.is.android && Platform.is.capacitor)) {
+      if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
         // const info = {
-        //   version: "0.0.9"
+        //   version: "1.0.1"
         // };
         console.log("App Info");
         console.log(info);
+        // alert(info.version);
         var current_version = parseInt(
           info.version.replaceAll(".", "") + info.build
         );
         console.log(current_version);
         // info.version && info.build
         const appType = "ALL";
-        const device = "ANDROID";
+        const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(
           `/config/appVersionAndUrl?type=${appType}&device=${device}`
         );
@@ -978,7 +979,7 @@ export default defineComponent({
       box-sizing: border-box;
       height: 37px;
       line-height: 37px;
-      background: #1976D2;
+      background: #1976d2;
       color: #fff;
       text-align: center;
       font-size: 15px;
@@ -1028,8 +1029,8 @@ export default defineComponent({
         flex: 1;
         background: #f7fcfd;
         box-sizing: border-box;
-        color: #1976D2;
-        border: 1px solid #1976D2;
+        color: #1976d2;
+        border: 1px solid #1976d2;
         border-radius: 6px;
         line-height: 40px;
         height: 40px;
@@ -1047,7 +1048,7 @@ export default defineComponent({
         height: 40px;
         text-align: center;
         color: #fff;
-        background: #1976D2;
+        background: #1976d2;
         letter-spacing: 1px;
         font-size: 14px;
       }
@@ -1390,11 +1391,13 @@ export default defineComponent({
   height: 40px;
   background: transparent;
 }
+
 .q-card__section.q-card__section--vert.q-mb-md {
   background: transparent;
   display: flex;
   justify-content: center;
 }
+
 .login.with-register {
   font-size: 16px;
   font-weight: bold;
