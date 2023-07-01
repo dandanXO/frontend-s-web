@@ -615,7 +615,7 @@ export default defineComponent({
 }
 
 .widthdrawBankView--content-cta {
-  margin-top: auto;
+  margin-bottom: auto;
   padding-block: 1.2em;
 }
 </style>
