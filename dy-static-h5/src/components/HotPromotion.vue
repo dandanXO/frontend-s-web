@@ -156,7 +156,7 @@
     />
 
     <div
-      v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()"
+      v-if="list.redirectUrl === 'dy1-lottery' && store.hasToken()"
       class="promo-4"
     >
       <div class="tabs">
@@ -164,8 +164,8 @@
           <q-tabs
             v-model="activeKey"
             dense
-            class="text-grey"
-            active-color="brand"
+            color="black"
+
             indicator-color="black"
             align="justify"
             narrow-indicator
@@ -193,7 +193,8 @@
                     <q-input
                       v-model="lucky_number"
                       filled
-                      color="white"
+                      bg-color="white"
+                      color="black"
                       type="number"
                       :rules="[
                         (val) => (val && val.length === 3) || '号码长度应为3'
