@@ -641,7 +641,7 @@ export default defineComponent({
 
         var postData = {};
         postData.number = submit_number;
-        postData.promoCode = "jolly88-iphone";
+        postData.promoCode = "dy1-lottery";
 
         var luckyNumberUrl = "/privi/lotteryNumber";
         btnLoading.value = true;
