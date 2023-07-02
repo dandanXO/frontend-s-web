@@ -135,7 +135,7 @@
                         />
                       </q-item-section>
                       <q-item-section>
-                        <q-item-label>{{ scope.opt.name }}</q-item-label>
+                        <q-item-label>{{ scope.opt.name === 'USDTTRC' ? 'USDTTRC20' : scope.opt.name }}</q-item-label>
                       </q-item-section>
                     </q-item>
                   </template>
@@ -194,19 +194,6 @@
             <q-btn color="dyblue" label="提交" @click="submitBankCard" />
           </div>
         </q-form>
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="isNoCard" persistent>
-      <q-card style="width: 100%; padding: 10px">
-        <q-card-section v-if="!isVirtual" class="q-mb-md">
-          <div class="text-h6 text-center">请先绑定银行卡</div>
-        </q-card-section>
-
-        <div class="flex flex-center">
-          <q-btn class="q-mr-md" label="取消" href="/account" />
-          <q-btn color="dyblue" label="绑定" @click="bankCardModal('bank')" />
-        </div>
       </q-card>
     </q-dialog>
 
