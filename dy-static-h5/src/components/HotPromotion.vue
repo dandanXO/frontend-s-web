@@ -336,12 +336,12 @@
       <q-card-section class="row items-center">
         <div class="bonus-svg-div">
           <span class="claim-amt">{{ claimMsg }}</span>
-          <span class="bonus-text">BONUS</span>
+          <span class="bonus-text">恭喜获得奖金</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="同意" color="primary" v-close-popup />
+        <q-btn flat label="确定" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -400,10 +400,9 @@ export default defineComponent({
         .put(eventUrl)
         .then((res) => {
           this.btnLoading = false;
-          var responseCode = res.data;
-          if (responseCode.code === 0) {
-            var rebatePoint = responseCode.data;
-            this.claimMsg = "$" + rebatePoint;
+          if (res.code === 0) {
+            var rebatePoint = res.data;
+            this.claimMsg = "￥" + rebatePoint;
             this.isClaimModal = true;
           } else {
             this.btnLoading = false;
