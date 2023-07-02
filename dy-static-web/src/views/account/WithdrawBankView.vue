@@ -30,7 +30,7 @@
         >
           <div class="cardname">
             <div class="txt-center">
-              <strong>{{ bc.bankName }}</strong>
+              <strong>{{ bc.bankName === 'USDTTRC' ? 'USDTTRC20' : bc.bankName }}</strong>
               <!-- <div>Bank Account Number</div> -->
             </div>
           </div>

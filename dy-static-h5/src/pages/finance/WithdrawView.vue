@@ -221,12 +221,25 @@
         </q-form>
       </div>
     </div>
+
+    <q-dialog v-model="hasWithdrawCard" persistent>
+      <q-card style="width: 100%; padding: 10px">
+        <q-card-section class="q-mb-md">
+          <div class="text-h6 text-center">请先绑定银行卡</div>
+        </q-card-section>
+
+        <div class="flex flex-center">
+          <router-link to="/account"><q-btn class="q-mr-md" label="取消" href="/account" /></router-link>
+          <router-link to="/account/withdraw"><q-btn color="dyblue" label="绑定" /></router-link>
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script lang="js">
 /* eslint-disable */
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -248,6 +261,9 @@ export default defineComponent({
     const withdrawInfo = reactive({
       cardId: undefined,
       amount: "",
+    });
+    const hasWithdrawCard = computed(() => {
+      return withdrawState.bankCardList.length === 0;
     });
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([])
@@ -418,7 +434,8 @@ export default defineComponent({
       isUSDT,
       store,
       updateWithdrawAmt,
-      platforms
+      platforms,
+      hasWithdrawCard
     };
   },
 });
