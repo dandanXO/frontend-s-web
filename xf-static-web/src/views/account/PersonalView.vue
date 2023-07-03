@@ -570,7 +570,7 @@ export default defineComponent({
           // message.success("Success")
 
           ElMessage({
-            message: 'Success',
+            message: '成功',
             type: 'success',
           })
           isEmailSending.value = false
@@ -784,7 +784,7 @@ const verificationPhoneModalVisible = ref(false)
             if (response.code === 0) {
               // message.success("success");
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               updatePwdModalVisible.value = false;
@@ -841,7 +841,7 @@ const verificationPhoneModalVisible = ref(false)
           updateAccount(toRaw(updateFormDetails)).then((ret) => {
             if (ret.code === 0) {
               ElMessage({
-                message: 'Successfully updated',
+                message: '成功更新',
                 type: 'success',
               })
               loadInfo();
