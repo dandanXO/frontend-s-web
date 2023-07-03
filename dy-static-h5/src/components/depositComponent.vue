@@ -174,8 +174,11 @@
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
-    <q-card style="width: 100%;">
-      <q-card-section style="padding: 10px 20px;" class="q-pa-md bg-dyblue text-white">
+    <q-card style="width: 100%">
+      <q-card-section
+        style="padding: 10px 20px"
+        class="q-pa-md bg-dyblue text-white"
+      >
         已存款
       </q-card-section>
       <div style="padding: 20px">
@@ -186,7 +189,7 @@
           入金成功后会反映这里。
         </q-card-section>
         <q-btn @click="clearInfo" label="明白" color="dyblue" />
-    </div>
+      </div>
     </q-card>
   </q-dialog>
 
@@ -312,6 +315,7 @@ const checkAmount = reactive({
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
+
 function initPay() {
   $q.loading.show({
     message: "加载数据中... 请稍等..."
@@ -427,6 +431,7 @@ async function onSelect(value) {
     checkMinDepositAmt();
   }
 }
+
 function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
@@ -463,10 +468,10 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
-  btnLoading.value = true
+  btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
-    btnLoading.value = false
+    btnLoading.value = false;
   } else {
     await cashier
       .get(
@@ -476,7 +481,7 @@ async function confirmDeposit() {
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
             form.localAmount = d.data.suggestion;
-            btnLoading.value = false
+            btnLoading.value = false;
           }
           $q.notify({
             color: "negative",
@@ -515,7 +520,7 @@ async function confirmDeposit() {
 }
 
 async function pDepo(deposit) {
-  btnLoading.value = true
+  btnLoading.value = true;
   const obj = {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
@@ -533,16 +538,15 @@ async function pDepo(deposit) {
       // console.log(res)
 
       if (res.code === 0) {
-        const response = res.data.result
+        const response = res.data.result;
         if (res.data.result.payResultType === "OFFLINE") {
-          btnLoading.value = false
-
+          btnLoading.value = false;
         }
         if (res.data.result.payResultType === "RENDER_HTML") {
           isDisplay.value = true;
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
-          btnLoading.value = false
+          btnLoading.value = false;
         } else {
           // if (
           //   (Platform.is.desktop || Platform.is.webkit) &&
@@ -550,74 +554,87 @@ async function pDepo(deposit) {
           //   Platform.is.name !== "webkit" &&
           //   !liff.isInClient()
           // ) {
-            if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-              // const newWin = window.open(`/depositLoading`, "Bank");
-              // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-              const newWin = window.open(`/`);
-              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-              if (response.payResultType === 'GET_SUBMIT') {
-                newWin.location.href = response.requestUrl;
-                btnLoading.value = false
-                // isDeposited.value = true;
+          if (
+            (Platform.is.desktop || Platform.is.webkit) &&
+            !Platform.is.capacitor &&
+            Platform.is.name !== "webkit" &&
+            !liff.isInClient()
+          ) {
+            // const newWin = window.open(`/depositLoading`, "Bank");
+            // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+            const newWin = window.open(`/`);
+            newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+            if (response.payResultType === "GET_SUBMIT") {
+              newWin.location.href = response.requestUrl;
+              btnLoading.value = false;
+              // isDeposited.value = true;
+            }
+            if (response.payResultType === "POST_SUBMIT") {
+              if (response.paramKey === null || response.paramKey === "") {
+                newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                btnLoading.value = false;
+              } else {
+                newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                btnLoading.value = false;
               }
-              if (response.payResultType === 'POST_SUBMIT') {
-                if (response.paramKey === null || response.paramKey === "") {
-                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                  btnLoading.value = false
-                } else {
-                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                  btnLoading.value = false
-                }
-                // isDeposited.value = true;
-              }
-            } else {
-              localStorage.setItem("formDetails", JSON.stringify(form));
-              if (response.payResultType === 'GET_SUBMIT') {
+              // isDeposited.value = true;
+            }
+          } else {
+            localStorage.setItem("formDetails", JSON.stringify(form));
+            if (response.payResultType === "GET_SUBMIT") {
               //   location.href = response.requestUrl;
               //   // isDeposited.value = true;
               // }
-                if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-                  location.href = response.requestUrl;
-                  btnLoading.value = false
-                }
-                else {
-                  openURL(response.requestUrl);
-                  btnLoading.value = false
-                }
-              }
-              if (response.payResultType === 'POST_SUBMIT') {
-                localStorage.setItem("responseDetails", JSON.stringify(response));
-                if (response.paramKey === null || response.paramKey === "") {
-                  router.push(`/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`)
-                  btnLoading.value = false
-                } else {
-                  router.push(`/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`)
-                  btnLoading.value = false
-                }
-                // isDeposited.value = true;
+              if (
+                (Platform.is.desktop || Platform.is.webkit) &&
+                !Platform.is.capacitor &&
+                Platform.is.name !== "webkit" &&
+                !liff.isInClient()
+              ) {
+                location.href = response.requestUrl;
+                btnLoading.value = false;
+              } else {
+                openURL(response.requestUrl);
+                btnLoading.value = false;
               }
             }
+            if (response.payResultType === "POST_SUBMIT") {
+              localStorage.setItem("responseDetails", JSON.stringify(response));
+              if (response.paramKey === null || response.paramKey === "") {
+                router.push(
+                  `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                );
+                btnLoading.value = false;
+              } else {
+                router.push(
+                  `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                );
+                btnLoading.value = false;
+              }
+              // isDeposited.value = true;
+            }
+          }
 
-            // window.addEventListener(
-            //   "message",
-            //   (event) => {
-            //     if (event.data?.msg) {
-            //       if (event.data.msg === "success") {
-            //         isDeposited.value = true;
-            //         localStorage.setItem("isBacked", JSON.stringify(true));
-            //       } else {
-            //         $q.notify({
-            //           color: "negative",
-            //           position: "top",
-            //           message: event.data.msg,
-            //           icon: "report_problem"
-            //         });
-            //       }
-            //     }
-            //   },
-            //   { once: true }
-            // );
-      }
+          // window.addEventListener(
+          //   "message",
+          //   (event) => {
+          //     if (event.data?.msg) {
+          //       if (event.data.msg === "success") {
+          //         isDeposited.value = true;
+          //         localStorage.setItem("isBacked", JSON.stringify(true));
+          //       } else {
+          //         $q.notify({
+          //           color: "negative",
+          //           position: "top",
+          //           message: event.data.msg,
+          //           icon: "report_problem"
+          //         });
+          //       }
+          //     }
+          //   },
+          //   { once: true }
+          // );
+        }
         // console.log(res);
         // postMessage({ msg: res.message }, "*");
       } else {
@@ -627,17 +644,17 @@ async function pDepo(deposit) {
           message: res.message,
           icon: "report_problem"
         });
-        btnLoading.value = false
+        btnLoading.value = false;
       }
     })
     .catch((error) => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: error.message,
-          icon: "report_problem"
-        });
-        btnLoading.value = false
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: error.message,
+        icon: "report_problem"
+      });
+      btnLoading.value = false;
       // postMessage(
       //   {
       //     msg: error.message
@@ -666,6 +683,7 @@ onMounted(() => {
   align-items: flex-start;
   flex-direction: column;
   color: #000000;
+
   .line {
     display: flex;
     gap: 10px;
@@ -677,14 +695,17 @@ onMounted(() => {
     align-items: center;
     background: #ffffff;
     padding: 15px 0;
+
     span:first-child {
       // flex: 1;
       color: #4669f8;
       width: 80px;
     }
+
     span.info {
       flex: 3;
     }
+
     button {
       width: 80px;
     }

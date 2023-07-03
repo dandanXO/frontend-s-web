@@ -1,10 +1,10 @@
 <template>
-  <div className="table-record">
+  <div class="table-record">
     <RecordComponent
-        recordType="deposit"
-        :loading="visible"
-        :list="tableData"
-        :headers="tableHeaders"
+      recordType="reminder"
+      :loading="visible"
+      :list="tableData"
+      :headers="tableHeaders"
     />
   </div>
 </template>
@@ -30,35 +30,31 @@ export default defineComponent({
         "endDate": moment().format("YYYY-MM-DD")
       }
 
-      api.get("/session/member/deposit", {
-            params: paramData
-          },
+      api.get("/session/member/financeFeedback", {
+          params: paramData
+        },
       ).then((res) => {
-        tableData.value = res.data.records;
-      }).finally(() => {
+        tableData.value= res.data.records;
+      }).finally(()=>{
         visible.value = false;
       })
     };
     const tableHeaders = [
       {
-        key: "depositAmount",
-        label: "金额",
-      },
-      // {
-      //   key: "depositType",
-      //   label: "存款类型",
-      // },
-      {
-        key: "status",
-        label: "存款状态",
+        key: "orderNo",
+        label: "订单号",
       },
       {
-        key: "depositDate",
-        label: "到账时间",
+        key: "financeRemark",
+        label: "财务反馈",
       },
       {
-        key: "serialNumber",
-        label: "存款编码",
+        key: "feedbackTime",
+        label: "反馈时间",
+      },
+      {
+        key: "type",
+        label: "类型",
       }
     ];
     onMounted(() => {
@@ -73,13 +69,22 @@ export default defineComponent({
   }
 });
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .table-record {
   width: 100%;
   gap: 10px;
 
+  .q-card {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
   .label {
-    color: #bacef1;
+    color: #000000;
+  }
+
+  .q-btn {
+    font-size: 11px !important;
   }
 }
 </style>

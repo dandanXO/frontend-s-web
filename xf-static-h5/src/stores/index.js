@@ -30,8 +30,18 @@ export const userStore = defineStore("userStore", {
       return !!SessionStorage.getItem("TOKEN");
     },
     memberLogin(loginInfo) {
-      const regDevice = Platform.is.mobile ? "H5" : "WEB"
-      loginInfo.way = regDevice
+      var regDevice = Platform.is.mobile ? "H5" : "WEB";
+      if ("standalone" in window.navigator && window.navigator.standalone) {
+        regDevice = "IOS";
+      } else {
+        regDevice = Platform.is.mobile ? "H5" : "WEB";
+        if (Platform.is.capacitor) {
+          if (Platform.is.android) {
+            regDevice = "ANDROID";
+          }
+        }
+      }
+      loginInfo.way = regDevice;
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {
         if (ret.code === 0) {
@@ -100,6 +110,9 @@ export const userStore = defineStore("userStore", {
             }
           });
       }
+    },
+    autoLogin(token) {
+      SessionStorage.set("TOKEN", token);
     },
     memberLogout() {
       return api

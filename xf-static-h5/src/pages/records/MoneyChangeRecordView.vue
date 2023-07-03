@@ -1,19 +1,24 @@
 <template>
-    <div class="table-record">
-        <RecordComponent :loading="visible" :list="tableData" :headers="tableHeaders" />
-    </div>
+  <div class="table-record">
+    <RecordComponent
+      :loading="visible"
+      :list="tableData"
+      :headers="tableHeaders"
+    />
+  </div>
 </template>
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue"
 import RecordComponent from "../../components/RecordComponent.vue"
 import moment from "moment";
-import { api } from "boot/axios";
+import {api} from "boot/axios";
 
 export default defineComponent({
   components: {
     RecordComponent
   },
   setup() {
+
     const visible = ref(true);
     const tableData = ref([]);
     const loadDepositTable = () => {
@@ -24,9 +29,9 @@ export default defineComponent({
         "endDate": moment().format("YYYY-MM-DD")
       }
 
-      api.get("/session/member/transfer", {
-            params: paramData
-          },
+      api.get("/session/member/moneyChange", {
+          params: paramData
+        },
       ).then((res) => {
         console.log(res);
         tableData.value= res.data.records;
@@ -58,31 +63,26 @@ export default defineComponent({
       // },]
     }
     const tableHeaders = ([
-      {
+    {
         key: 'serialNumber',
-        label:'转账编码',
-      },
-      {
+        label:'编码',
+    },
+    {
         key: 'type',
-        label: '账变类型'
-      },
-      {
-        key: 'platform',
-        label: '游戏平台'
-      },
-      {
+        label:'账变类型',
+    },
+    {
+        key: 'platformCode',
+        label:'平台',
+    },
+    {
         key: 'amount',
-        label: '金额',
-      },
-      {
-        key: 'status',
-        label: '状态'
-      },
-      {
-        key: 'transferDate',
-        label: '时间'
-      },
-
+        label:'金额',
+    },
+    {
+        key: 'recordTime',
+        label:'时间',
+    },
     ])
     onMounted(() => {
       loadDepositTable()
@@ -95,14 +95,13 @@ export default defineComponent({
     }
   }
 });
-
 </script>
 <style scoped lang="scss">
-    .table-record {
-        width: 100%;
-        gap: 10px;
-        .label {
-            color: #bacef1;
-        }
-    }
+.table-record {
+  width: 100%;
+  gap: 10px;
+  .label {
+    color: #bacef1;
+  }
+}
 </style>

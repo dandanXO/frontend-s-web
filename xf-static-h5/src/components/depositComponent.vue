@@ -1,102 +1,173 @@
 <template>
-  <div class="q-pa-md" style="overflow: hidden;">
+  <div
+      class="q-pa-md"
+      style="overflow: auto;  margin: 8px 8px"
+  >
+    <div class="q-mb-lg">
+      <span class="additional-tips">
+        如有遇到存款问题，请立即联系在线客服咨询！
+      </span>
+    </div>
+
     <div class="node-wrapper">
       <Node
-        :level="1"
-        :list="payMethods"
-        ref="paymentNode"
-        @clicked="onSelect"
+          :level="1"
+          :list="payMethods"
+          ref="paymentNode"
+          @clicked="onSelect"
       />
     </div>
-    <div class="deposit-container">
+
+    <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
+      <div class="submit-message">
+        <div class="line">
+          <span>银行名称：</span>
+          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
+          <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
+            {{ copybtntxt0 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>银行账号：</span>
+          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
+          <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
+            {{ copybtntxt1 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>银行卡号：</span>
+          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
+          <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
+            {{ copybtntxt2 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>存款金额：</span>
+          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
+          <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
+            {{ copybtntxt3 }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <q-input
-          v-if="amountList.length === 0"
-          hide-bottom-space
-          ref="depositAmtRef"
-          label="存款金额"
-          name="localAmount"
-          v-model="form.localAmount"
-          placeholder="输入金额"
-          color="white"
-          :rules="verifyDepositAmount"
-          padding="none"
+            v-if="amountList.length === 0"
+            hide-bottom-space
+            ref="depositAmtRef"
+            label="存款金额"
+            name="localAmount"
+            v-model="form.localAmount"
+            placeholder="输入金额"
+            color="white"
+            :rules="verifyDepositAmount"
+            padding="none"
         >
           <template v-slot:prepend>
-            <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
+            <span style="font-size: 26px" class="text-bright">
+              <template v-if="isUSDT">USDT</template>
+              <template v-else>{{ store.currency.value }}</template>
+            </span>
           </template>
         </q-input>
 
         <q-select
-          v-else
-          ref="depositAmtRef"
-          label="Select an amount"
-          name="localAmount"
-          filled
-          :options="amountList"
-          v-model="form.localAmount"
-          color="white"
-          :rules="verifyDepositAmount"
-          padding="none"
-          >
+            v-else
+            ref="depositAmtRef"
+            label="选择金额"
+            name="localAmount"
+            filled
+            :options="amountList"
+            v-model="form.localAmount"
+            color=""
+            :rules="verifyDepositAmount"
+            padding="none"
+        >
           <template v-slot:prepend>
-            <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
+            <span style="font-size: 26px" class="text-bright">
+              {{ store.currency.value }}
+            </span>
           </template>
         </q-select>
 
-          <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
+        <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
           最低金额:
-          {{ calculatedMinDeposit ? calculatedMinDeposit + ' ' + (store.currency.value) : 0 }} <br />
+          {{
+            calculatedMinDeposit
+                ? calculatedMinDeposit +
+                " " +
+                (isUSDT ? "USDT" : store.currency.value)
+                : 0
+          }}
+          <br />
           最高金额:
-          {{ activeMethod.depositMax ? activeMethod.depositMax + ' ' + (store.currency.value) : "No Limit" }}
-
+          {{
+            activeMethod.depositMax
+                ? activeMethod.depositMax +
+                " " +
+                (isUSDT ? "USDT" : store.currency.value)
+                : "No Limit"
+          }}
         </div>
 
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange Rate">
-            <span style="color: #9bffd1"
-              >1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.value }}</span
-            >
-          </div>
+        <div
+            v-if="isUSDT && activeMethod.currencyRate"
+            class="q-pb-md"
+            label="兑换率"
+        >
+          <span style="color: #fff">
+            1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            {{ store.currency.value }}
+          </span>
+        </div>
         <BankComponent
-          v-show="selectedPayType && bankCardList.length"
-          ref="payTypeClass"
-          :is="selectedPayType"
-          v-model:value="form.bankId"
-          :bank-list="bankCardList"
-          @selected="selectedBank"
-          @successful="isDeposited = true"
+            v-show="selectedPayType && bankCardList.length"
+            ref="payTypeClass"
+            :is="selectedPayType"
+            v-model="form.bankId"
+            :bank-list="bankCardList"
+            @selected="selectedBank"
+            @successful="isDeposited = true"
         ></BankComponent>
         <q-select
-          ref="offerRef"
-          class="q-mt-md"
-          label="选择优惠"
-          filled
-          :options="unselectedPrivileges"
-          v-model="selectedPrivilege"
-          emit-value
-          v-if="hasPrivilege"
-          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-          color="white"
-          @update:model-value="checkMinDepositAmt"
+            ref="offerRef"
+            class="q-mt-md"
+            label="选择优惠"
+            filled
+            :options="unselectedPrivileges"
+            v-model="selectedPrivilege"
+            emit-value
+            v-if="hasPrivilege && !isUSDT"
+            :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+            clearable
+            color="white"
+            @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.name }}</q-item-label>
+                <q-item-label
+                    style="
+                    text-overflow: ellipsis;
+                    overflow: auto;
+                    white-space: nowrap;
+                  "
+                >
+                  {{ scope.opt.name }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-md" v-html="activeMethod.msg">
-        </div>
-        <div class="q-mt-md">
-          更新个人信息的新帐户可以参与促销活动。
-        </div>
+        <div class="q-mt-md" v-html="activeMethod.msg"></div>
+        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
-            color="brightbtn fit"
-            @click="confirmDeposit"
-            label="确定存款"
+              :loading="btnLoading"
+              color="brightbtn fit"
+              @click="confirmDeposit"
+              label="确定存款"
           />
         </div>
       </q-form>
@@ -104,36 +175,66 @@
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
-    <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
-      <q-card-section class="q-mb-md">
-        您已被重定向到您的特定银行以继续进行存款。<br /><br />
-        入金成功后会反映这里。
-      </q-card-section
+    <q-card style="width: 100%">
+      <q-card-section
+          style="padding: 10px 20px"
+          class="q-pa-md bg-primary text-white"
       >
-      <q-btn @click="clearInfo" label="明白" color="brightbtn"/>
+        已存款
+      </q-card-section>
+      <div style="padding: 20px">
+        <q-card-section class="q-mb-md q-pa-md">
+          您将被重定向到您的银行页面以完成存款。
+          <br />
+          <br />
+          入金成功后会反映这里。
+        </q-card-section>
+        <q-btn @click="clearInfo" label="明白" color="brightbtn" />
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isNewUser">
+    <q-card style="width: 100%; padding: 20px" class="text-white">
+      <q-card-section class="q-mb-md">
+        <strong>温馨提示</strong>
+        <br />
+        <br />
+        为保证资金安全，存款前先绑定手机号
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn label="前往绑定" color="brightbtn" href="/account/personal" />
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup id="DepositComponent">
-import {ref, reactive, onMounted, shallowRef, onBeforeUnmount} from "vue";
+import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import {cashier} from "boot/axios";
-import {Platform, useQuasar} from "quasar";
-import liff from '@line/liff';
-
+import { cashier } from "boot/axios";
+import { Platform, useQuasar, openURL } from "quasar";
+import { doIt } from "boot/action";
+import liff from "@line/liff";
 
 var qs = require("qs");
 
-import {userStore} from "stores/index";
-import {useRouter} from "vue-router";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
 
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
+const isNewUser = ref(false);
+const checkNewUser = () => {
+  if (store.phone == null) {
+    isNewUser.value = true;
+  }
+};
 const isDeposited = ref(false);
 const isLoading = ref(true);
+const btnLoading = ref(false);
 const payTypeClass = ref();
 const payMethods = reactive([]);
 const paymentNode = ref([]);
@@ -148,20 +249,57 @@ const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
 const isOpenFromAccount = ref(false);
 const isUSDT = ref(false);
+const isDisplay = ref(false);
+const submitMessage = ref([]);
+const subMsg0 = ref();
+const subMsg1 = ref();
+const subMsg2 = ref();
+const subMsg3 = ref();
+const copybtntxt0 = ref("复制");
+const copybtntxt1 = ref("复制");
+const copybtntxt2 = ref("复制");
+const copybtntxt3 = ref("复制");
+const copyMessage = (position) => {
+  let copyText = null;
+  copyText = eval(`subMsg${position}.value.innerText`);
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement("textarea");
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand("copy");
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt[position].value = "已复制";
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
+const blurCode = () => {
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt.forEach((element) => {
+    element.value = "复制";
+  });
+};
+
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
   (val) =>
-    val > calculatedMinDeposit.value - 1 ||
-    "存款应介于 " +
-    calculatedMinDeposit.value +
-    " - " +
-    activeMethod.value.depositMax,
+      val > calculatedMinDeposit.value - 1 ||
+      "存款应介于 " +
+      calculatedMinDeposit.value +
+      " - " +
+      activeMethod.value.depositMax,
   (val) =>
-    val < activeMethod.value.depositMax + 1 ||
-    "存款应介于 " +
-    calculatedMinDeposit.value +
-    " - " +
-    activeMethod.value.depositMax
+      val < activeMethod.value.depositMax + 1 ||
+      "存款应介于 " +
+      calculatedMinDeposit.value +
+      " - " +
+      activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -177,10 +315,11 @@ const checkAmount = reactive({
 });
 
 const $q = useQuasar();
-const calculatedMinDeposit = ref('');
+const calculatedMinDeposit = ref("");
+
 function initPay() {
   $q.loading.show({
-    message: "加载银行信息。 别挂断..."
+    message: "加载数据中... 请稍等..."
   });
 
   payMethods.value = [];
@@ -199,93 +338,109 @@ function initPay() {
     }
 
     // if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit')) {
-   if (!(((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()))) {
-
-        let isBacked = localStorage.getItem("isBacked");
-        isBacked = isBacked ? JSON.parse(isBacked) : false;
-        if (isBacked === true) {
-          isDeposited.value = true;
-        }
+    if (
+        !(
+            (Platform.is.desktop || Platform.is.webkit) &&
+            !Platform.is.capacitor &&
+            Platform.is.name !== "webkit" &&
+            !liff.isInClient()
+        )
+    ) {
+      let isBacked = localStorage.getItem("isBacked");
+      isBacked = isBacked ? JSON.parse(isBacked) : false;
+      if (isBacked === true) {
+        isDeposited.value = true;
+      }
     }
-      localStorage.removeItem("isBacked");
+    localStorage.removeItem("isBacked");
   });
 }
 
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
-  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
-    if (res.code === 0) {
-      privilegeList.value = res.data.privileges;
-      hasPrivilege.value = true;
-      unselectedPrivileges.value = [];
-      freePrivilege.value = null;
-      privilegeList.value.map((p) => {
-        if (p.payTypes.indexOf(val.payType) >= 0) {
-          if (p.triggerType == "FREE") {
-            freePrivilege.value = p;
-          } else {
-            unselectedPrivileges.value.push(p);
-          }
+  await cashier
+      .get(`/session/payment/${val.paymentId}/privileges`)
+      .then((res) => {
+        if (res.code === 0) {
+          privilegeList.value = res.data.privileges;
+          hasPrivilege.value = true;
+          unselectedPrivileges.value = [];
+          freePrivilege.value = null;
+          privilegeList.value.map((p) => {
+            if (p.payTypes.indexOf(val.payType) >= 0) {
+              if (p.triggerType == "FREE") {
+                freePrivilege.value = p;
+              } else {
+                unselectedPrivileges.value.push(p);
+              }
+            }
+          });
+        } else {
+          hasPrivilege.value = false;
+          privilegeList.value = [];
         }
       });
-    } else {
-      hasPrivilege.value = false;
-      privilegeList.value = [];
-    }
-  });
 }
 
 function selectPayType(value) {
   if (value) {
-      selectedPayType.value = value.payType
-      if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
-        isUSDT.value = true;
-      } else {
-        isUSDT.value = false;
-      }
-      if (value.extra && value.extra.amountArr) {
-        amountList.value = value.extra.amountArr;
-      }
-      if (value.extra && value.extra.banks) {
-        bankCardList.value = value.extra.banks;
-      } else {
-        bankCardList.value = [];
-        form.bankId = null;
-      }
+    selectedPayType.value = value.payType;
+    if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
+      isUSDT.value = true;
+    } else {
+      isUSDT.value = false;
+    }
+    if (value.extra && value.extra.amountArr) {
+      amountList.value = value.extra.amountArr;
+    }
+    if (value.extra && value.extra.banks) {
+      bankCardList.value = value.extra.banks;
+    } else {
+      bankCardList.value = [];
+      form.bankId = null;
+    }
   }
 }
 
-const depositForm = ref(null)
+const depositForm = ref(null);
 
 async function onSelect(value) {
-  if(!Platform.is.android || !Platform.is.capacitor){
-    clearInfo()
+  isDisplay.value = false;
+
+  clearInfo();
+  // if (!Platform.is.android || !Platform.is.capacitor) {
+  // }
+  // if (liff.isInClient()) {
+  //   clearInfo();
+  // }
+  if (depositAmtRef.value) {
+    depositAmtRef.value.resetValidation();
   }
-  if (liff.isInClient()) {
-    clearInfo()
-  }
-  depositAmtRef.value.resetValidation()
   if (value) {
     if (value.group) {
       value.children.forEach((element) => {
         if (element.hasActive) {
           activeMethod.value = element;
-          checkPrivilege(element)
+          checkPrivilege(element);
         }
       });
     } else {
       activeMethod.value = value;
-      checkPrivilege(value)
+      checkPrivilege(value);
     }
-    checkMinDepositAmt()
+    checkMinDepositAmt();
   }
 }
+
 function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
-    calculatedMinDeposit.value = activeMethod.value.depositMin
+    calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin)
+    calculatedMinDeposit.value = Math.max(
+        activeMethod.value.depositMin,
+        selectedPrivilege.value.depositMin
+    );
   }
 }
 
@@ -298,165 +453,276 @@ function checkPrivilege(v) {
 }
 
 function selectedBank(value) {
-  form.bankId = value;
+  form.bankId = value.value.id;
 }
 
 function clearInfo() {
   isDeposited.value = false;
   form.localAmount = null;
   selectedPrivilege.value = "";
-  depositForm.value.reset()
-  checkMinDepositAmt()
+  if (depositForm.value) {
+    depositForm.value.reset();
+  }
+  checkMinDepositAmt();
 }
 
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
+  btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
+    btnLoading.value = false;
   } else {
-    await cashier.get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`).then((d) => {
-      if (d.code === 11002) {
-        if (d.data && d.data.suggestion) {
-          form.localAmount = d.data.suggestion;
+    await cashier
+        .get(
+            `/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`
+        )
+        .then((d) => {
+          if (d.code === 11002) {
+            if (d.data && d.data.suggestion) {
+              form.localAmount = d.data.suggestion;
+              btnLoading.value = false;
+            }
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: d.message,
+              icon: "report_problem"
+            });
+          } else {
+            if (freePrivilege.value) {
+              if (selectedPrivilege.value) {
+                form.privilegeId =
+                    selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              } else {
+                form.privilegeId = "," + freePrivilege.value.id;
+              }
+            } else {
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id;
+              } else {
+                form.privilegeId = null;
+              }
+            }
+            form.paymentId = activeMethod.value.paymentId;
+            const copy = { ...form };
+            const data = {};
+            Object.entries(copy).forEach(([key, value]) => {
+              if (value) {
+                data[key] = value;
+              }
+            });
+            data.bankCardId = 0;
+            pDepo(data);
+          }
+        });
+  }
+}
+
+async function pDepo(deposit) {
+  btnLoading.value = true;
+  const obj = {
+    bankCardId: deposit.bankCardId,
+    localAmount: deposit.localAmount,
+    paymentId: deposit.paymentId,
+    bankId: deposit.bankId
+  };
+
+  if (deposit.privilegeId) {
+    obj.privilegeId = deposit.privilegeId;
+  }
+  await cashier
+      .post("/session/payment/submit", qs.stringify(obj))
+      .then((res) => {
+        // const res = ret.data
+        // console.log(res)
+
+        if (res.code === 0) {
+          const response = res.data.result;
+          if (res.data.result.payResultType === "OFFLINE") {
+            btnLoading.value = false;
+          }
+          if (res.data.result.payResultType === "RENDER_HTML") {
+            isDisplay.value = true;
+            const submitResult = res.data.result.data;
+            submitMessage.value = submitResult.split(",");
+            btnLoading.value = false;
+          } else {
+            // if (
+            //   (Platform.is.desktop || Platform.is.webkit) &&
+            //   !Platform.is.capacitor &&
+            //   Platform.is.name !== "webkit" &&
+            //   !liff.isInClient()
+            // ) {
+            if (
+                (Platform.is.desktop || Platform.is.webkit) &&
+                !Platform.is.capacitor &&
+                Platform.is.name !== "webkit" &&
+                !liff.isInClient()
+            ) {
+              // const newWin = window.open(`/depositLoading`, "Bank");
+              // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              const newWin = window.open(`/`);
+              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+                btnLoading.value = false;
+                // isDeposited.value = true;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
+                }
+                // isDeposited.value = true;
+              }
+            } else {
+              localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                //   location.href = response.requestUrl;
+                //   // isDeposited.value = true;
+                // }
+                if (
+                    (Platform.is.desktop || Platform.is.webkit) &&
+                    !Platform.is.capacitor &&
+                    Platform.is.name !== "webkit" &&
+                    !liff.isInClient()
+                ) {
+                  location.href = response.requestUrl;
+                  btnLoading.value = false;
+                } else {
+                  openURL(response.requestUrl);
+                  btnLoading.value = false;
+                }
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                localStorage.setItem("responseDetails", JSON.stringify(response));
+                if (response.paramKey === null || response.paramKey === "") {
+                  router.push(
+                      `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                  );
+                  btnLoading.value = false;
+                } else {
+                  router.push(
+                      `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                  );
+                  btnLoading.value = false;
+                }
+                // isDeposited.value = true;
+              }
+            }
+
+            // window.addEventListener(
+            //   "message",
+            //   (event) => {
+            //     if (event.data?.msg) {
+            //       if (event.data.msg === "success") {
+            //         isDeposited.value = true;
+            //         localStorage.setItem("isBacked", JSON.stringify(true));
+            //       } else {
+            //         $q.notify({
+            //           color: "negative",
+            //           position: "top",
+            //           message: event.data.msg,
+            //           icon: "report_problem"
+            //         });
+            //       }
+            //     }
+            //   },
+            //   { once: true }
+            // );
+          }
+          // console.log(res);
+          // postMessage({ msg: res.message }, "*");
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          });
+          btnLoading.value = false;
         }
+      })
+      .catch((error) => {
         $q.notify({
           color: "negative",
           position: "top",
-          message: d.message,
+          message: error.message,
           icon: "report_problem"
         });
-      } else {
-        doDeposit();
-      }
-
-    })
-  }
+        btnLoading.value = false;
+        // postMessage(
+        //   {
+        //     msg: error.message
+        //   },
+        //   "*"
+        // );
+      });
 }
-
-function doDeposit() {
-    if (freePrivilege.value) {
-      if (selectedPrivilege.value) {
-        form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
-      } else {
-        form.privilegeId = "," + freePrivilege.value.id;
-      }
-    } else {
-      if (selectedPrivilege.value) {
-        form.privilegeId = selectedPrivilege.value.id
-      } else {
-        form.privilegeId = null
-      }
-    }
-
-  depositAmtRef.value.validate();
-  if (depositAmtRef.value.hasError) {
-  } else {
-      form.paymentId = activeMethod.value.paymentId;
-
-    if (store.token) {
-      if (((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient())) {
-      // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
-        const newWin = window.open(`/depositLoading`, "Bank");
-        newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-      } else {
-        localStorage.setItem("formDetails", JSON.stringify(form));
-        router.push({path: "/depositLoading"});
-      }
-
-
-      window.addEventListener(
-        "message",
-        (event) => {
-          if (event.data?.msg) {
-            if (event.data.msg === "success") {
-              isDeposited.value = true;
-              localStorage.setItem("isBacked", JSON.stringify(true));
-
-            } else {
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: event.data.msg,
-                icon: "report_problem"
-              });
-            }
-          }
-        },
-        {once: true}
-      );
-
-
-    }
-    // cashier
-    //   .get(
-    //     "/session/payment/" +
-    //       form.paymentId +
-    //       "/amount/" +
-    //       form.localAmount +
-    //       "/verify"
-    //   )
-    //   .then((res) => {
-    //     const d = res.data;
-    //     if (d.code === 0) {
-    //       checkAmount.flag = true;
-    //       if (d.message === "System Error") {
-    //         console.log("Error");
-    //       } else {
-    //       }
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     checkAmount.flag = false;
-    //     checkAmount.errorMessage = e.message;
-    //   });
-    // const copy = { ...form };
-    // const data = {};
-    // Object.entries(copy).forEach(([key, value]) => {
-    //   if (value) {
-    //     data[key] = value;
-    //   }
-    // });
-    // data.bankCardId = 0;
-    // payTypeClass.value.submitDeposit(data);
-  }
-}
-
-// async function verifyDepositAmount(r, v) {
-//   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
-//     if (
-//       v < activeMethod.value.depositMin ||
-//       v > activeMethod.value.depositMax
-//     ) {
-//       return Promise.reject(
-//         "Deposit should be between " +
-//           activeMethod.value.depositMin +
-//           " - " +
-//           activeMethod.value.depositMax
-//       );
-//     } else {
-//       if (checkAmount.flag) {
-//         return Promise.resolve();
-//       } else {
-//         return Promise.reject(checkAmount.errorMessage);
-//       }
-//     }
-//   }
-// }
-
-// async function verifyBank(r, v) {
-//   if (bankCardList.value.length) {
-//     return payTypeClass.value.validateBank(v).then((d) => {
-//       if (d) {
-//         return Promise.resolve();
-//       } else {
-//         return Promise.reject("Bank is required");
-//       }
-//     });
-//   }
-// }
 
 onMounted(() => {
   initPay();
+  checkNewUser();
 });
 </script>
+
+<style lang="scss">
+.submit-message {
+  // width: calc(100% - 40px);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  height: auto;
+  gap: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  color: #000000;
+
+  .line {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    // width: calc(100% - 30px);
+    width: 100%;
+    align-items: center;
+    font-size: 14px;
+    align-items: center;
+    background: #ffffff;
+    padding: 15px 0;
+
+    span:first-child {
+      // flex: 1;
+      color: #4669f8;
+      width: 80px;
+    }
+
+    span.info {
+      flex: 3;
+    }
+
+    button {
+      width: 80px;
+    }
+  }
+}
+
+.additional-tips {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff0000;
+  font-size: 14px;
+}
+
+.q-select__dialog .q-field__control {
+  background: #4fb2ff !important;
+}
+</style>
