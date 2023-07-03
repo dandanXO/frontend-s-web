@@ -8,9 +8,23 @@
         <span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
       </div>
       <div class="buttons">
-        <q-btn size="sm" href="/wap/login.html?way=reg" label="注册" color="brightbtn"/>
-        <q-btn size="sm" href="https://xfapp1.com?url=m.xf882.com&amp;agentCode=" target="_blank" label="APP 下载"
-               color="brightbtn"/>
+        <div class="buttons">
+          <!-- <q-btn
+            size="sm"
+            href="/wap/login.html?way=reg"
+            label="注册"
+            color="dyblue"
+          />
+            href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
+          <q-btn
+              size="sm"
+              href="https://xfapp1.app/"
+              target="_blank"
+              label="立即下载"
+              color="brightbtn"
+              class="top-btn"
+          />
+        </div>
       </div>
     </div>
   </div>

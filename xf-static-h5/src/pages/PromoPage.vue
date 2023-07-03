@@ -584,6 +584,15 @@ export default defineComponent({
         }
       }
 
+      h1,h2,h3,h4{
+        margin-top: 15px;
+        margin-bottom: 16px;
+      }
+
+      h3{
+        font-size: 22px;
+      }
+
       .inner {
         max-width: 1400px;
         width: 90%;
