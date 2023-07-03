@@ -144,7 +144,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "Password updated successfully",
+              message: "密码修改成功",
               icon: "check_circle_outline"
             });
             router.go(-1);

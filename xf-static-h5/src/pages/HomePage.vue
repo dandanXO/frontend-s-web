@@ -64,6 +64,17 @@
   <div class="welcome-bar">
     <div class="logo"><img src="../assets/logo.png"/></div>
     <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : '亲爱的用户' }}</div>
+    <div v-if="store.token">
+      <q-badge color="orange" text-color="black" :label="store.vip" />
+      <span class="q-ml-sm">￥{{ store.balance }}</span>
+    </div>
+    <router-link
+        v-if="!store.token"
+        to="/login?register"
+        class="login with-register"
+    >
+      <span class="log">注册</span>
+    </router-link>
     <router-link v-if="!store.token" to="/login" class="login"><span class="log">请登录</span><span class="user"><q-icon
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
     <router-link v-else to="/account" class="login"><span class="log">已登录</span><span class="user"><q-icon
@@ -165,6 +176,32 @@
     </div>
   </div>
   <GameModal ref="allGames"></GameModal>
+
+  <q-dialog
+      width="100%"
+      class="modal-update-div"
+      v-model="isAppUpdateModal"
+      show-cancel-button
+      :showCancelButton="false"
+      :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div class="titles backgroundColor">更新公告</div>
+        </div>
+        <div class="contents">检测到新版本，你是否要更新？</div>
+        <div class="btnsreas">
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate">
+            取消
+          </div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">
+            立即更新
+          </div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%;" class="bg-primary text-white">
@@ -920,6 +957,100 @@ export default defineComponent({
         background-size: cover;
         white-space: nowrap;
         padding: 8px 20px 2px
+      }
+    }
+  }
+}
+
+.modal-update-div {
+  .modalcontent {
+    background: #fff;
+    height: 232px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px 0px 16px;
+
+    .headers {
+      width: 100%;
+      box-sizing: border-box;
+      height: 37px;
+      line-height: 37px;
+      background: #1976d2;
+      color: #fff;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .contents {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      text-align: center;
+
+      .contentfonts {
+        text-align: center;
+        color: #333;
+        font-size: 16px;
+        margin: 37px 0 20.5px 0;
+      }
+
+      .inputs {
+        width: 292px;
+        height: 36px;
+        border-radius: 4px 4px;
+        border: 1px solid #666;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding-left: 20px;
+
+        .van-field__control {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .btnsreas {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-top: 23.5px;
+
+      .cacnels {
+        flex: 1;
+        background: #f7fcfd;
+        box-sizing: border-box;
+        color: #1976d2;
+        border: 1px solid #1976d2;
+        border-radius: 6px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: 14px;
+        margin-right: 8px;
+      }
+
+      .confirmsbtns {
+        flex: 1;
+        box-sizing: border-box;
+        border-radius: 6px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        color: #fff;
+        background: #1976d2;
+        letter-spacing: 1px;
+        font-size: 14px;
       }
     }
   }

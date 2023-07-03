@@ -206,7 +206,7 @@
             <q-btn
                 style="width: 100%"
                 class="q-mt-md fit"
-                color="dyblue"
+                color="brightbtn"
                 @click="submitWithdraw"
                 label="立即提款"
             />
@@ -316,7 +316,7 @@ export default defineComponent({
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
-        message: "Confirming Withdrawal"
+        message: "确认中。。。"
       });
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();

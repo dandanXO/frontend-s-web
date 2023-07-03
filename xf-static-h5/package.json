@@ -22,6 +22,7 @@
     "pinia": "^2.0.17",
     "qs": "^6.11.0",
     "quasar": "^2.7.7",
+    "sweetalert2": "^11.7.12",
     "swiper": "^9.3.2",
     "vue": "^3.0.0",
     "vue-marquee-text-component": "^2.0.1",

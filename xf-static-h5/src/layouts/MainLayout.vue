@@ -268,11 +268,11 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "账户信息";
         } else if (route.path === "/account/verifyTelephone") {
-          prevPage.value = "account";
+          prevPage.value = "account/personal";
           hasPage.value = true;
           pageName.value = "手机号码";
         } else if (route.path === "/account/verifyEmail") {
-          prevPage.value = "account";
+          prevPage.value = "account/personal";
           hasPage.value = true;
           pageName.value = "邮箱";
         } else if (route.path === "/account/changePwd") {
