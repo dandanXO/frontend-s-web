@@ -23,6 +23,21 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          clearable
+          v-model="request.role"
+          size="small"
+          :placeholder="t('fields.role')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in options"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -274,6 +289,11 @@
         <template #default="scope">
           <el-tag v-if="scope.row.attempt === 3 && scope.row.lastAttemptDate === today" type="danger">{{ scope.row.lockStatus = 'LOCKED' }}</el-tag>
           <el-tag v-else type="success">{{ scope.row.lockStatus = 'NORMAL' }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="roles" :label="t('fields.role')" width="200">
+        <template #default="scope">
+          {{ getRolesTxt(scope.row.roles) }}
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
@@ -625,6 +645,18 @@ function toSiteName(row, column, cellValue, index) {
   }
 }
 
+function getRolesTxt(roleIds) {
+  return roleIds.map(rid => roleTxt(rid)).join(',')
+}
+
+function roleTxt(roleId) {
+  for (const r of options.value) {
+    if (r.id === roleId) {
+      return r.name;
+    }
+  }
+}
+
 watch(
   () => form.siteId,
   async (value, oldValue) => {
@@ -657,10 +689,10 @@ watch(
   }
 )
 
-onMounted(() => {
+onMounted(async () => {
+  await loadRoles()
   loadUser()
   loadSites()
-  loadRoles()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false

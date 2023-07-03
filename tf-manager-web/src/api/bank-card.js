@@ -33,8 +33,8 @@ export const checkUniqueIdentityCode = (code) => {
   }, ContentType.form);
 };
 
-export const getWithdrawBankCard = (id) => {
-  return https().request("/system-bank-card/withdrawList", Method.GET, { id: id });
+export const getWithdrawBankCard = (id, wd) => {
+  return https().request("/system-bank-card/withdrawList", Method.GET, { id: id, withdrawDate: wd });
 };
 
 export const getAllWithdrawBankCard = () => {

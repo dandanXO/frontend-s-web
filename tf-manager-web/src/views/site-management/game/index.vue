@@ -2,12 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-input
-          v-model="request.name"
+        <el-select
+          v-model="request.siteId"
           size="small"
-          style="width: 200px"
-          :placeholder="t('fields.gameName')"
-        />
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="loadSearchPlatforms"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-select
           clearable
           v-model="request.platform"
@@ -15,7 +24,6 @@
           :placeholder="t('fields.platform')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
-          @focus="loadPlatformNames"
           filterable
         >
           <el-option
@@ -40,20 +48,12 @@
             :value="item"
           />
         </el-select>
-        <el-select
-          v-model="request.siteId"
+        <el-input
+          v-model="request.name"
           size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in sites.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
+          style="width: 200px"
+          :placeholder="t('fields.gameName')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -238,6 +238,22 @@
           </el-row>
           <!-- <el-input v-model="form.icon" style="width: 350px;" /> -->
         </el-form-item>
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+            filterable
+            @change="handleChangeSite"
+          >
+            <el-option
+              v-for="item in sites.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.platform')" prop="platformName">
           <el-select
             v-model="form.platformName"
@@ -245,29 +261,11 @@
             style="width: 350px"
             filterable
             @change="handleChangePlatform"
-            @focus="loadPlatformNames"
           >
             <el-option
-              v-for="item in platforms.list"
+              v-for="item in dialogPlats.list"
               :key="item.id"
               :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select
-            v-model="form.siteName"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 350px"
-            filterable
-            @change="handleChangeSite"
-            @focus="loadSites"
-          >
-            <el-option
-              v-for="item in sites.list"
-              :key="item.id"
-              :label="item.siteName"
               :value="item.id"
             />
           </el-select>
@@ -399,8 +397,7 @@ import {
   createBatchGame,
 } from '../../../api/game'
 import {
-  getPlatformNames,
-  getPlatformExcelMapping,
+  getPlatformExcelMapping, getPlatformsBySite,
 } from '../../../api/platform'
 import { getSiteListSimple, getSiteExcelMapping } from '../../../api/site'
 import { hasRole, hasPermission } from '../../../utils/util'
@@ -512,6 +509,10 @@ const platforms = reactive({
   list: [],
 })
 
+const dialogPlats = reactive({
+  list: [],
+})
+
 const sites = reactive({
   list: [],
 })
@@ -561,10 +562,13 @@ async function loadGame() {
   page.records = ret.records
   page.loading = false
 }
-
-async function loadPlatformNames() {
-  const { data: ret } = await getPlatformNames()
+async function loadSearchPlatforms() {
+  const { data: ret } = await getPlatformsBySite(request.siteId)
   platforms.list = ret
+}
+async function loadPlatformNames() {
+  const { data: ret } = await getPlatformsBySite(form.siteId)
+  dialogPlats.list = ret
 }
 
 async function loadSites() {
@@ -805,6 +809,7 @@ function handleChangePlatform(value) {
 
 function handleChangeSite(value) {
   form.siteId = value
+  loadPlatformNames(value, false)
 }
 
 function validateClick(ref) {
@@ -849,14 +854,18 @@ async function attachPhoto(event) {
 }
 
 onMounted(async () => {
-  await loadPlatformNames()
-  await loadGameTypes()
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
+  } else {
+    request.siteId = sites.list[0].id;
   }
+  form.siteId = request.siteId
+  await loadSearchPlatforms()
+  await loadGameTypes()
   await loadGame();
+  await loadPlatformNames()
 })
 </script>
 

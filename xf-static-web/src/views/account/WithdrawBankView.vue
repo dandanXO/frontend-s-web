@@ -509,7 +509,7 @@ export default defineComponent({
             if (res.code === 0) {
               ElMessage({
                 type: 'success',
-                message: 'Remove completed',
+                message: '删除完成',
               })
               for (let i = 0; i < personalState.bankCardList.length; i++) {
                 if (personalState.bankCardList[i].id === card.id) {

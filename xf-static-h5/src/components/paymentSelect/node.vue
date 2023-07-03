@@ -252,7 +252,7 @@ $node-color: #33bcd4;
         }
       }
       }
-      
+
     }
   }
 }
@@ -282,7 +282,7 @@ $node-color: #33bcd4;
       margin: 0 -30px;
       background: none;
     }
-    
+
     &.node-group {
       display: flex;
       justify-content: flex-start;
@@ -310,7 +310,7 @@ $node-color: #33bcd4;
           color: #ffffff;
         }
         img {
-          width: 15px;
+          //width: 15px;
           border: 0;
           background-color: #2a313e;
           // max-width: 1.5rem;
