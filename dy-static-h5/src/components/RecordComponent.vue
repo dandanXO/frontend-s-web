@@ -111,7 +111,7 @@
   </div>
 
   <q-input
-    style="width: 100%; display: none"
+    style="width: 100%; opacity:0;"
     filled
     color="white"
     ref="copyinput"

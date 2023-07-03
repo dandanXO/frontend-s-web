@@ -316,7 +316,7 @@ export default defineComponent({
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
-        message: "Confirming Withdrawal"
+        message: "确认中。。。"
       });
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();

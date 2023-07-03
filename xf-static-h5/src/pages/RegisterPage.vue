@@ -225,6 +225,7 @@ export default defineComponent({
               verificationImg.value =
                   "data:image/png;base64," + response.data.img;
               regForm.codeId = response.data.id;
+              regForm.captchaCode= "";
             }
           })
           .catch((e) => {
@@ -300,6 +301,12 @@ export default defineComponent({
                 // console.log("RET");
                 // console.log(ret);
                 if (res.code === 0) {
+                  $q.notify({
+                    color: "positive",
+                    position: "top",
+                    message: "注册成功",
+                    icon: "check_circle_outline"
+                  });
                   store.autoLogin(res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");
                   if (store.hasToken()) {
@@ -313,12 +320,6 @@ export default defineComponent({
                   }
                   // context.emit("changeTab");
                   // router.push({ path: "/" });
-                  $q.notify({
-                    color: "positive",
-                    position: "top",
-                    message: "注册成功",
-                    icon: "check_circle_outline"
-                  });
                   sessionStorage.removeItem("REFERRAL_CODE");
                 } else {
                   $q.notify({

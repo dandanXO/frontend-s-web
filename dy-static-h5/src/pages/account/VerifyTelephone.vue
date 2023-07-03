@@ -135,12 +135,14 @@ export default defineComponent({
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
     };
 
-    const canEdit = computed(() => {
-      if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)) {
-        return true;
-      }
-      return false;
-    });
+    const canEdit = ref(false);
+
+    //   computed(() => {
+    //   if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)) {
+    //     return true;
+    //   }
+    //   return false;
+    // });
 
     const phoneCodeId = ref("")
 
@@ -165,6 +167,7 @@ export default defineComponent({
             verificationImg.value =
               "data:image/png;base64," + response.data.img;
             updateSecurityVerified.codeId = response.data.id;
+            innerCaptchaRef.value= "";
           }
         })
         .catch((e) => {
@@ -248,6 +251,8 @@ export default defineComponent({
               message: "绑定成功",
               icon: "check_circle_outline"
             });
+            store.phoneVerified = true;
+            store.phone = formDetails.phone;
             router.push('/account');
           }
         }).catch((e) => {
@@ -303,6 +308,17 @@ export default defineComponent({
     }
 
     const onCaptchaSubmit = () => {
+      if(!formDetail.phone){
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "手机号码不能为空",
+          icon: "report_problem"
+        });
+        getCode();
+        return;
+      }
+
       api.post(`/otp/sendSms`, qs.stringify({
         telephone: formDetail.phone,
         captchaCode: innerCaptchaRef.value,
@@ -314,6 +330,7 @@ export default defineComponent({
           color = 'positive'
 
         if (res.code === 0)  {
+          canEdit.value= true;
           showCaptchaDialog.value = false
           showVerifyBtn.value = false;
           showVerificationTokenInput.value = true

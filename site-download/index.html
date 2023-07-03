@@ -129,7 +129,7 @@
         }else{
             $(".download").show();
             if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-        
+                alert('若要安装，请先打开设置-通用-设备管理-东赢体育');
 				getIosPath();
             }else if (/(Android)/i.test(navigator.userAgent)){
                 showAndroid();

@@ -8,9 +8,23 @@
         <span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
       </div>
       <div class="buttons">
-        <q-btn size="sm" href="/wap/login.html?way=reg" label="注册" color="brightbtn"/>
-        <q-btn size="sm" href="https://xfapp1.com?url=m.xf882.com&amp;agentCode=" target="_blank" label="APP 下载"
-               color="brightbtn"/>
+        <div class="buttons">
+          <!-- <q-btn
+            size="sm"
+            href="/wap/login.html?way=reg"
+            label="注册"
+            color="dyblue"
+          />
+            href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
+          <q-btn
+              size="sm"
+              href="https://xfapp1.app/"
+              target="_blank"
+              label="立即下载"
+              color="brightbtn"
+              class="top-btn"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -64,6 +78,17 @@
   <div class="welcome-bar">
     <div class="logo"><img src="../assets/logo.png"/></div>
     <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : '亲爱的用户' }}</div>
+    <div v-if="store.token">
+      <q-badge color="orange" text-color="black" :label="store.vip"/>
+      <span class="q-ml-sm">￥{{ store.balance }}</span>
+    </div>
+    <router-link
+        v-if="!store.token"
+        to="/login?register"
+        class="login with-register"
+    >
+      <span class="log">注册</span>
+    </router-link>
     <router-link v-if="!store.token" to="/login" class="login"><span class="log">请登录</span><span class="user"><q-icon
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
     <router-link v-else to="/account" class="login"><span class="log">已登录</span><span class="user"><q-icon
@@ -87,6 +112,7 @@
     </div>
 
   </div>
+
   <div class="swiper-container">
     <!-- Thumbs Swiper -> store swiper instance -->
     <!-- It is also required to set watchSlidesProgress prop -->
@@ -96,18 +122,23 @@
         :freeMode="true"
         :set-wrapper-size="true"
         :scrollbar="{ draggable: true }"
+        :mousewheel="true"
         watch-slides-progress
         @swiper="setSecondSwiper"
         :controller="{ control: firstSwiper }"
         class="firstSwiper"
     >
-      <swiper-slide :class="tab.name && {tbact: selectedTab === tab.name}" @click="setSelectedSwiper(tab)"
-                    v-for="(tab, i) in tabs" :key="i" style="width: calc(100vw / 7);"
-      >{{ selectedTab !== tab.name ? tab.label : tab.labelact }}
-      </swiper-slide
+      <swiper-slide
+          :class="tab.name && { tbact: selectedTab === tab.name }"
+          @click="setSelectedSwiper(tab)"
+          v-for="(tab, i) in tabs"
+          :key="i"
+          style="width: calc(100vw / 6)"
       >
+        {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
+      </swiper-slide>
     </swiper>
-    <div class="index-platform-container" style="overflow: hidden;">
+    <div class="index-platform-container" style="overflow: hidden">
       <!-- Main Swiper -> pass thumbs swiper instance -->
       <swiper
           :modules="[Thumbs, Controller]"
@@ -116,55 +147,149 @@
           slides-per-view="auto"
           :scrollbar="{ draggable: true }"
           @slide-change-transition-end="onSlideChange"
-          :mousewheel="true"
           @swiper="setFirstSwiper"
           :controller="{ control: secondSwiper }"
           class="secondSwiper"
       >
-        <swiper-slide v-for="(slot, i) in slots" :key="i" :class="'slot-' + i">
-          <router-link :to="`slot?platform=${slot.code}`">
-            <!-- <div :style="`width: 100%; height: 100%; background: #eb8707;`">{{ i }}</div> -->
-            <img :src="require(`../assets/images/index/slot/p_slot_${slot.icon}.png`)"/>
-          </router-link>
+        <swiper-slide
+            v-for="(live, i) in livecasino"
+            :key="i"
+            :class="'live-' + i"
+        >
+          <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
+            <PlatformBlock
+                @click="playGame(live.name, live.code, 'bblive_lobby_app')"
+                dataType="live"
+                :data="live"
+            />
+          </template>
+          <template v-else>
+            <PlatformBlock
+                @click="playGame(live.name, live.code, live.gameCode)"
+                dataType="live"
+                :data="live"
+            />
+          </template>
+        </swiper-slide>
+        <swiper-slide v-for="(sp, i) in sport" :key="i" :class="'sport-' + i">
+          <PlatformBlock
+              @click="playGame(sp.name, sp.code, sp.gameCode)"
+              dataType="sport"
+              :data="sp"
+          />
+        </swiper-slide>
+        <swiper-slide v-for="(es, i) in esport" :key="i" :class="'esport-' + i">
+          <PlatformBlock
+              @click="playGame(es.name, 'platformType', es.code)"
+              dataType="esport"
+              :data="es"
+          />
         </swiper-slide>
 
-        <swiper-slide class="esport">
-          <router-link :to="`/e-sport`">
-            <img :src="require(`../assets/images/index/esport/p_esport_xf.png`)"/>
-          </router-link>
+        <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
+          <PlatformBlock dataType="slot" :data="slt"/>
         </swiper-slide>
-        <swiper-slide class="sport-0">
-          <router-link to="/sport">
-            <img :src="require(`../assets/images/index/sport/p_sport_im.png`)"/>
-          </router-link>
-        </swiper-slide>
-        <swiper-slide class="sport-1">
-          <router-link to="/sport">
-            <img :src="require(`../assets/images/index/sport/p_sport_cr.png`)"/>
-          </router-link>
-        </swiper-slide>
-        <swiper-slide v-for="(live, i) in livecasino" :key="i" :class="'live-' + i">
-          <img @click="playGame(live.id, live.code)" :src="require(`../assets/images/index/live/${live.icon}.png`)"/>
 
-        </swiper-slide>
-        <swiper-slide v-for="(poker, i) in pokerList" :key="i" :class="'poker-' + i">
-          <img @click="playGame(poker.id, poker.code)"
-               :src="require(`../assets/images/index/poker/p_poker_${poker.icon}.png`)"/>
+        <swiper-slide
+            v-for="(fish, i) in fishing"
+            :key="i"
+            :class="'fish-' + i"
+        >
+          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
+            <PlatformBlock
+                @click="playGame(fish.name, fish.code, '7202')"
+                dataType="fish"
+                :data="fish"
+            />
+          </template>
 
+          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
+            <PlatformBlock
+                @click="playGame(fish.name, fish.code, '6')"
+                dataType="fish"
+                :data="fish"
+            />
+          </template>
+          <PlatformBlock
+              @click="playGame(fish.name, fish.code, fish.code)"
+              dataType="fish"
+              :data="fish"
+          />
         </swiper-slide>
-        <swiper-slide v-for="(fish, i) in fishing" :key="i" :class="'fishing-' + i">
-          <img @click="playGame(fishing.id, fishing.code)"
-               :src="require(`../assets/images/index/fish/p_fish_${fish.icon}.png`)"/>
 
+        <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
+          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
+            <PlatformBlock
+                @click="playGame(poke.name, poke.code, 'ky_lobby')"
+                dataType="poker"
+                :data="poke"
+            />
+          </template>
+          <PlatformBlock
+              @click="playGame(poke.name, poke.code, poke.gameCode)"
+              dataType="poker"
+              :data="poke"
+          />
         </swiper-slide>
-        <swiper-slide v-for="(mini, i) in minigame" :key="i" :class="'minigame-' + i">
-          <img @click="playGame(minigame.id, minigame.code)"
-               :src="require(`../assets/images/index/minigame/p_mini_${mini.icon}.png`)"/>
+        <swiper-slide
+            v-for="(lotter, i) in lottery"
+            :key="i"
+            :class="'lottery-' + i"
+        >
+          <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
+            <PlatformBlock
+                @click="playGame(lotter.name, lotter.code, 'imlotto30000')"
+                dataType="lottery"
+                :data="lotter"
+            />
+          </template>
+          <template
+              v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
+          >
+            <PlatformBlock
+                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
+                dataType="lottery"
+                :data="lotter"
+            />
+          </template>
+          <template v-else>
+            <PlatformBlock
+                @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
+                dataType="lottery"
+                :data="lotter"
+            />
+          </template>
         </swiper-slide>
       </swiper>
     </div>
   </div>
   <GameModal ref="allGames"></GameModal>
+
+  <q-dialog
+      width="100%"
+      class="modal-update-div"
+      v-model="isAppUpdateModal"
+      show-cancel-button
+      :showCancelButton="false"
+      :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div class="titles backgroundColor">更新公告</div>
+        </div>
+        <div class="contents">检测到新版本，你是否要更新？</div>
+        <div class="btnsreas">
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate">
+            取消
+          </div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">
+            立即更新
+          </div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%;" class="bg-primary text-white">
@@ -219,7 +344,7 @@
 import {defineComponent, onMounted, ref, reactive, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
-import {cached} from "boot/cache";
+import {cached, TIME_EXPIRED} from "boot/cache";
 import {useQuasar, Platform} from "quasar";
 import {userStore} from "stores/index";
 import GameModal from "components/modal/GameModal";
@@ -241,7 +366,10 @@ import {Thumbs, Controller} from 'swiper';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 
-SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
+SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation])
+
+import PlatformBlock from "components/platform/PlatformBlock.vue";
+
 export default defineComponent({
   name: "IndexPage",
   components: {
@@ -249,7 +377,8 @@ export default defineComponent({
     SwiperSlide,
     GameModal,
     MarqueeText,
-    RiVolumeUpLine
+    RiVolumeUpLine,
+    PlatformBlock
   },
   setup() {
     const isFirstView = ref(false);
@@ -257,72 +386,42 @@ export default defineComponent({
       localStorage.setItem("indexImgTop", new Date().getTime());
       isFirstView.value = false;
     };
-
     const thumbsSwiper = ref(null);
-    // const setThumbsSwiper = (swiper) => {
-    //   if (swiper.clickedIndex === 0) {
-    //     // Go to first Slot Slide
-    //     alert('slot')
-    //   }
-    //   if (swiper.clickedIndex === 1) {
-    //     // Go to first Esport Slide
-    //     swiper.activeIndex = 11
-    //     alert('esport')
-    //   }
-    //   if (swiper.clickedIndex === 2) {
-    //     // Go to first Esport Slide
-    //     swiper.activeIndex = 13
-    //     alert('sport')
-    //   }
-
-    // // for (let i = 0; i < slideElements.length; i++) {
-    // //   const slideElement = slideElements[i];
-
-    // //   if (slideElement.classList.contains(targetClass)) {
-    // //     const thumbsSwiperInstance = slideElement.swiper;
-    // //     this.thumbsSwiper = thumbsSwiperInstance;
-    // //     console.log('Set thumbs swiper:', thumbsSwiperInstance);
-    // //     return;
-    // //   }
-    // // }
-
-    // // console.log('No swiper found with the specified class:', targetClass);
-
-    // };
-
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
 
     const setFirstSwiper = (swiper) => {
-      firstSwiper.value = swiper
+      firstSwiper.value = swiper;
     };
     const setSecondSwiper = (swiper) => {
-      secondSwiper.value = swiper
+      secondSwiper.value = swiper;
     };
     const setSelectedSwiper = (tab) => {
-      selectedTab.value = tab.name
-      if (tab.name === 'slot') {
-        firstSwiper.value?.slideTo(0, 500)
+      selectedTab.value = tab.name;
+      console.log(tab.name);
+      if (tab.name === "live") {
+        firstSwiper.value?.slideTo(0, 500);
       }
-      if (tab.name === 'esport') {
-        firstSwiper.value?.slideTo(12, 500)
+      if (tab.name === "sport") {
+        firstSwiper.value?.slideTo(3, 500);
       }
-      if (tab.name === 'sport') {
-        firstSwiper.value?.slideTo(13, 500)
+      if (tab.name === "esport") {
+        firstSwiper.value?.slideTo(4, 500);
       }
-      if (tab.name === 'live') {
-        firstSwiper.value?.slideTo(15, 500)
+      if (tab.name === "slot") {
+        firstSwiper.value?.slideTo(6, 500);
       }
-      if (tab.name === 'poker') {
-        firstSwiper.value?.slideTo(20, 500)
+      if (tab.name === "poker") {
+        firstSwiper.value?.slideTo(20, 500);
       }
-      if (tab.name === 'fishing') {
-        firstSwiper.value?.slideTo(22, 500)
+      if (tab.name === "lottery") {
+        firstSwiper.value?.slideTo(20, 500);
       }
-      if (tab.name === 'minigame') {
-        firstSwiper.value?.slideTo(25, 500)
+
+      if (tab.name === "fishing") {
+        firstSwiper.value?.slideTo(20, 500);
       }
-    }
+    };
     const onSlideChange = (swiper) => {
       // Get the active slide index
       const activeIndex = swiper.activeIndex;
@@ -334,176 +433,71 @@ export default defineComponent({
       const activeSlideClassName = activeSlide.className;
       // Check if the class name contains "sport," "slot," or "esport"
       // Array of keywords to check
-      const keywords = ['sport', 'slot', 'esport', 'fishing', 'live', 'poker', 'minigame'];
+      const keywords = [
+        "sport",
+        "esport",
+        "live",
+        "poker",
+        "lottery",
+        "slot",
+        "fishing"
+      ];
 
       // Iterate over each keyword
       for (const keyword of keywords) {
         // Check if the class name contains the current keyword
         if (activeSlideClassName.includes(keyword)) {
-          selectedTab.value = keyword
+          selectedTab.value = keyword;
         }
       }
     };
-    const selectedTab = ref('slot');
+    const selectedTab = ref("live");
     const tabs = ref([
       {
-        name: 'slot',
-        icon: 'slot',
-        label: '电子',
-        labelact: '电子'
+        name: "live",
+        icon: "live",
+        label: "真人",
+        labelact: "真人娱乐"
       },
       {
-        name: 'esport',
-        icon: 'esport',
-        label: '电竞',
-        labelact: '电竞赛事'
+        name: "sport",
+        icon: "sport",
+        label: "体育",
+        labelact: "体育赛事"
       },
       {
-        name: 'sport',
-        icon: 'sport',
-        label: '体育',
-        labelact: '体育赛事'
+        name: "esport",
+        icon: "esport",
+        label: "电竞",
+        labelact: "电竞赛事"
       },
       {
-        name: 'live',
-        icon: 'live',
-        label: '真人',
-        labelact: '真人娱乐'
+        name: "slot",
+        icon: "slot",
+        label: "电游",
+        labelact: "电子/捕鱼"
       },
       {
-        name: 'poker',
-        icon: 'poker',
-        label: '棋牌',
-        labelact: '棋牌游戏'
+        name: "poker",
+        icon: "poker",
+        label: "棋牌",
+        labelact: "棋牌游戏"
       },
       {
-        name: 'fishing',
-        icon: 'fishing',
-        label: '捕鱼',
-        labelact: '捕鱼'
-      },
-      {
-        name: 'minigame',
-        icon: 'minigame',
-        label: '小游戏',
-        labelact: '小游戏'
-      },
+        name: "lottery",
+        icon: "lottery",
+        label: "彩票",
+        labelact: "彩票游戏"
+      }
     ]);
-    const slots = ref([
-      {
-        id: '20',
-        code: 'PT',
-        icon: 'pt',
-      },
-      {
-        id: '37',
-        code: 'SW',
-        icon: 'sw',
-      },
-      {
-        id: '46',
-        code: 'PP',
-        icon: 'pp',
-      },
-      {
-        id: '38',
-        code: 'PG',
-        icon: 'pg',
-      },
-      {
-        id: '54',
-        code: 'MG_PLUS',
-        icon: 'mg',
-      },
-      {
-        id: '42',
-        code: 'CQ',
-        icon: 'cq',
-      },
-      {
-        id: '28',
-        code: 'SG',
-        icon: 'sg',
-      },
-      {
-        id: '27',
-        code: 'TTG',
-        icon: 'ttg',
-      },
-      {
-        id: '39',
-        code: 'PNG',
-        icon: 'png',
-      },
-      {
-        id: '45',
-        code: 'AE',
-        icon: 'ae',
-      },
-      {
-        id: '52',
-        code: 'BBIN',
-        icon: 'bbin',
-      },
-      {
-        id: '64',
-        code: 'JDB',
-        icon: 'jdb',
-      },
-    ]);
-    const livecasino = [{
-      id: 'zhenren',
-      code: 'AG',
-      icon: 'ag',
-    },
-      {
-        id: 'zhenren',
-        code: 'AG',
-        icon: 'ebet',
-      },
-      {
-        id: 'zhenren',
-        code: 'bbin',
-        icon: 'bbin',
-      }, {
-        id: 'zhenren',
-        code: 'allbet',
-        icon: 'all',
-      }, {
-        id: 'zhenren',
-        code: '',
-        icon: 'jqqd',
-      }]
-    const pokerList = [{
-      id: 'poker',
-      code: 'DT',
-      icon: 'dt',
-    },
-      {
-        id: 'poker',
-        code: 'KY',
-        icon: 'ky',
-      }]
-    const fishing = [{
-      id: 'fish',
-      code: 'AT',
-      icon: 'at',
-    },
-      {
-        id: 'fish',
-        code: 'AG',
-        icon: 'ag',
-      },
-      {
-        id: 'fish',
-        code: 'SG',
-        icon: 'sg',
-      }]
-    const minigame = [{
-      id: 'mini',
-      code: 'GPS',
-      icon: 'gps'
-    }]
+    const esport = ref([]);
+    const sport = ref([]);
+    const livecasino = ref([]);
+    const poker = ref([]);
+    const lottery = ref([]);
+    const slot = ref([]);
+    const fishing = ref([]);
+
     const ui = useUI();
     const scrollPageRef = ref(null);
     const isH5 = ref(false);
@@ -579,20 +573,101 @@ export default defineComponent({
     });
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
-    // const getPlatList = () => {
-    //   api
-    //     .get("/platform")
-    //     .then((res) => {
-    //       const ret = res.data;
-    //       platforms.value = ret.data.filter((element) =>
-    //         element.gameType.includes("SLOT")
-    //       );
-    //       fishPlatforms.value = ret.data.filter((element) =>
-    //         element.gameType.includes("FISH")
-    //       );
-    //     })
-    //     .catch((err) => {});
-    // };
+
+    const getPlatList = () => {
+      cached
+          .get("PLATFORMS", () =>
+              api.get("/platform").then((res) => {
+                return res;
+              })
+          )
+          .then((data) => {
+            var pf = data;
+            pf.forEach((element) => {
+              const platTypes = element.gameType.split(",");
+              if (platTypes.indexOf("ESPORT") > -1) {
+                var espObj = Object.assign({}, element);
+                if (espObj.code === "TFGaming") {
+                  espObj.title = "东赢电竞";
+                }
+                if (espObj.code === "IA") {
+                  espObj.title = "小艾电竞";
+                }
+                if (espObj.code === "IMES") {
+                  espObj.title = "IM电竞";
+                }
+                if (!espObj.title) {
+                  espObj.title = espObj.code + "电竞";
+                }
+                espObj.icon = "esport";
+                espObj.subtitle = "电竞赛事";
+                esport.value.push(espObj);
+              }
+              if (platTypes.indexOf("SPORT") > -1) {
+                var spObj = Object.assign({}, element);
+                if (spObj.code === "IM") {
+                  spObj.title = "IM体育";
+                }
+                if (spObj.code === "IA") {
+                  spObj.title = "小艾体育";
+                }
+                if (spObj.code === "CR") {
+                  spObj.title = "CR体育";
+                }
+                if (spObj.code === "SABA") {
+                  spObj.title = spObj.code + "体育";
+                }
+                spObj.icon = "sport";
+                spObj.subtitle = "体育赛事";
+                sport.value.push(spObj);
+              }
+              if (platTypes.indexOf("LIVE") > -1) {
+                var liveObj = Object.assign({}, element);
+                liveObj.title = liveObj.name + " 真人";
+                liveObj.icon = "live";
+                liveObj.subtitle = "真人娱乐";
+                livecasino.value.push(liveObj);
+              }
+              if (platTypes.indexOf("POKER") > -1) {
+                var pokerObj = Object.assign({}, element);
+                pokerObj.title = pokerObj.name + " 棋牌";
+                pokerObj.icon = "poker";
+                pokerObj.subtitle = "棋牌娱乐";
+                poker.value.push(pokerObj);
+              }
+              if (platTypes.indexOf("LOTTERY") > -1) {
+                var lottObj = Object.assign({}, element);
+                lottObj.title = lottObj.name + " 彩票";
+                lottObj.icon = "lottery";
+                lottObj.subtitle = "彩票游戏";
+                lottery.value.push(lottObj);
+              }
+              if (platTypes.indexOf("SLOT") > -1) {
+                var slotObj = Object.assign({}, element);
+                slotObj.title = slotObj.name + " 电子";
+                slotObj.icon = "slot";
+                slotObj.subtitle = "电子游戏";
+                slot.value.push(slotObj);
+              }
+              if (platTypes.indexOf("FISH") > -1) {
+                var fishObj = Object.assign({}, element);
+                fishObj.title = fishObj.name + " 捕鱼";
+                fishObj.icon = "fish";
+                fishObj.subtitle = "捕鱼游戏";
+                fishing.value.push(fishObj);
+              }
+            });
+          })
+          .catch((err) => {
+            // isLoading.value= false;
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: "Loading failed",
+            //   icon: "report_problem"
+            // });
+          });
+    };
     const liveTabs = ref("");
     const searchList = () => {
       if (gamePage.searchKey) {
@@ -605,126 +680,43 @@ export default defineComponent({
         changePage(1, gamePage.pageSize);
       }
     };
-    const loadGameList = (type) => {
-      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-      const code = selectedPlatId.value;
-      const gameType = type;
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
 
-      cached
-          .get(key, () =>
-              api
-                  .get("/platformGames", {
-                    params: {
-                      platformId: code,
-                      gameType: gameType,
-                      device: regDevice
-                    }
-                  })
-                  .then((response) => {
-                    if (response.code === 0) {
-                      return response;
-                    }
-                  })
-                  .catch((err) => {
-                    // $q.notify({
-                    //   color: "negative",
-                    //   position: "top",
-                    //   message: "Loading failed",
-                    //   icon: "report_problem"
-                    // });
-                  })
-          )
-          .then((res) => {
-            res.forEach((element) => {
-              element.default = require("../assets/images/games/aviator/default.png");
-              element.icon = `${process.env.IMAGE_CDN}/slot/${selectedPlat.value.code}/${element.icon}.png`;
-            });
-            gameListData.value = res;
-            gamePage.total = res.length;
-            changePage(1, gamePage.pageSize);
-          });
-    };
     const changePage = (page, pageSize) => {
       gamePage.gameList = gameListData.value;
       // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
     };
-    const getPlatList = () => {
-      // cached
-      //   .get("PLATFORMS", () =>
-      //     api.get("/platform").then((res) => {
-      //       const response = res.data;
-      //       return response;
-      //     })
-      //   )
-      //   .then((data) => {
-      //     fishPlatforms.value = data.filter((element) =>
-      //       element.gameType.includes("FISH")
-      //     );
-      //     platforms.value = data.filter((element) =>
-      //       element.gameType.includes("SLOT")
-      //     );
-      //     if (currentSelectedMenu.value === "slots") {
-      //       switchPlat(platforms.value[0], "slots");
-      //       platforms.value.forEach((e, i) => {
-      //         if (e.code === "AWS") {
-      //           platforms.value.splice(i, 1);
-      //         }
-      //       });
-      //     } else if (currentSelectedMenu.value === "fish") {
-      //       switchPlat(fishPlatforms.value[0], "fish");
-      //     }
-      //     // if (!route.query.plat) {
-      //     //   switchPlat(platforms.value[0], "slot");
-      //     //   switchPlat(fishPlatforms.value[0], "fish");
-      //     // } else {
-      //     //   platforms.value.forEach((element) => {
-      //     //     if (parseInt(route.query.plat) === element.id) {
-      //     //       switchPlat(element, "slot");
-      //     //     }
-      //     //   });
-      //     // }
-      //   })
-      //   .catch((err) => {
-      //     // $q.notify({
-      //     //   color: "negative",
-      //     //   position: "top",
-      //     //   message: "Loading failed",
-      //     //   icon: "report_problem"
-      //     // });
-      //   });
-    };
-    const announcementList = ref([])
-    const announcementTypes = ref([])
+
+    const announcementList = ref([]);
+    const announcementTypes = ref([]);
     const loadAnnouncement = () => {
       api.get("/announcement").then((res) => {
         if (res.code === 0) {
           if (res.data.announcements) {
-            const d = res.data.announcements
-            announcementList.value = d
+            const d = res.data.announcements;
+            announcementList.value = d;
           }
           if (res.data.type) {
-            announcementTypes.value = res.data.type
-            activeKey.value = res.data.type[0].id
+            announcementTypes.value = res.data.type;
+            activeKey.value = res.data.type[0].id;
           }
           // announcementList.value = d.announcements
           // announcementList.value = res.data.announcements
         }
-      })
-    }
-    const isStationNotice = ref(false)
-    const noticeTitle = ref('')
-    const activeKey = ref(null)
+      });
+    };
+    const isStationNotice = ref(false);
+    const noticeTitle = ref("");
+    const activeKey = ref(null);
     const openPopup = (noticeType) => {
       if (noticeType) {
-        noticeTitle.value = "Announcement"
-        isStationNotice.value = true
+        noticeTitle.value = "Announcement";
+        isStationNotice.value = true;
       }
-    }
+    };
     const gotoPromo = (banner) => {
-      const redirectU = '/promo?id=' + banner.redirectUrl
-      router.push(`${redirectU}`)
-    }
+      const redirectU = "/promo?name=" + banner.redirectUrl;
+      router.push(`${redirectU}`);
+    };
 
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
@@ -790,8 +782,18 @@ export default defineComponent({
       );
     };
 
+    const checkShowImgTop = () => {
+      const lastTime = localStorage.getItem("indexImgTop");
+      if (lastTime) {
+        const diff = new Date().getTime() - Number(lastTime);
+        if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
+      } else {
+        isFirstView.value = true;
+      }
+    };
 
     onMounted(() => {
+      checkShowImgTop();
       getPlatList();
       loadData();
       loadAnnouncement();
@@ -806,10 +808,10 @@ export default defineComponent({
     return {
       imageLoading,
       slide: ref(0),
-      tab: ref("slots"),
+      tab: ref("esport"),
       gamesTab: ref(platforms.value[0]),
       splitterModel: ref(27),
-      imgURL: process.env.IMAGE_CDN + "/",
+      imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
       store,
       platforms,
@@ -834,11 +836,14 @@ export default defineComponent({
       router,
       tabs,
       selectedTab,
-      slots,
+      sport,
+      esport,
+      // slots,
+      slot,
       livecasino,
-      pokerList,
+      poker,
       fishing,
-      minigame,
+      lottery,
       isH5,
       onSlideChange,
       Thumbs,
@@ -920,6 +925,100 @@ export default defineComponent({
         background-size: cover;
         white-space: nowrap;
         padding: 8px 20px 2px
+      }
+    }
+  }
+}
+
+.modal-update-div {
+  .modalcontent {
+    background: #fff;
+    height: 232px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px 0px 16px;
+
+    .headers {
+      width: 100%;
+      box-sizing: border-box;
+      height: 37px;
+      line-height: 37px;
+      background: #1976d2;
+      color: #fff;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .contents {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      text-align: center;
+
+      .contentfonts {
+        text-align: center;
+        color: #333;
+        font-size: 16px;
+        margin: 37px 0 20.5px 0;
+      }
+
+      .inputs {
+        width: 292px;
+        height: 36px;
+        border-radius: 4px 4px;
+        border: 1px solid #666;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding-left: 20px;
+
+        .van-field__control {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .btnsreas {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-top: 23.5px;
+
+      .cacnels {
+        flex: 1;
+        background: #f7fcfd;
+        box-sizing: border-box;
+        color: #1976d2;
+        border: 1px solid #1976d2;
+        border-radius: 6px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: 14px;
+        margin-right: 8px;
+      }
+
+      .confirmsbtns {
+        flex: 1;
+        box-sizing: border-box;
+        border-radius: 6px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        color: #fff;
+        background: #1976d2;
+        letter-spacing: 1px;
+        font-size: 14px;
       }
     }
   }

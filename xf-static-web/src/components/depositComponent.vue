@@ -17,7 +17,7 @@
           @clicked="onSelect"
         />
       </div>
-      
+
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
           <div class="submit-message">
           <div class="linebox"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
@@ -156,16 +156,18 @@ import { ref, reactive, onMounted, shallowRef } from "vue";
 import { loadPay, loadPrivileges,verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { RiSpamLine } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
+import { useRouter } from "vue-router"
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 {
   RiSpamLine;
 }
+const router = useRouter();
 const loadingBtn = ref(false)
 const store = userStore();
 const formRef = ref();
@@ -385,8 +387,30 @@ function clearInfo() {
 }
 
 function confirmDeposit() {
+  if (store.token) {
+    if (!store.phone) {
+      ElMessageBox.confirm(
+      '为保证资金安全，存款前请先绑定手机号', "系统提示",
+      {
+        showClose: 'false',
+        cancelButtonClass: 'cancel-btn',
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+        draggable: true,
+        buttonSize: "small"
+      }
+    )
+      .then(() => {
+        router.push('/center/personal')
+      })
+      .catch(() => {
+      })
+      return
+    }
+  }
   loadingBtn.value = true;
-  
+
   if (freePrivilege.value) {
     if (selectedPrivilege.value) {
       form.privilegeId = selectedPrivilege.value + "," + freePrivilege.value.id;
@@ -408,6 +432,7 @@ function confirmDeposit() {
           form.localAmount = d.data.suggestion;
           // message.error(d.message, 4);
           ElMessage.error(d.message);
+          loadingBtn.value = false;
         } else {
           const copy = { ...form };
           const data = {};
@@ -417,50 +442,72 @@ function confirmDeposit() {
             }
           });
           data.bankCardId = 0;
-          
+
           doDeposit(data);
         }
       },
   ).catch((err) => {
     console.log(err)
+    loadingBtn.value = false;
   });
 })
     loadingBtn.value = false;
 }
 
 function doDeposit(data) {
-  
+
+  loadingBtn.value = true;
   postDeposit(data).then((d) => {
     if (d.code === 0) {
       doIt(d).then((resp) => {
           const response = resp.data.result
+        if (response.payResultType === 'OFFLINE') {
+
+        }
         if (response.payResultType === 'RENDER_HTML') {
           if (response.paramKey === null || response.paramKey === "") {
           isDisplay.value = true;
           submitMessage.value = response.data.split(',');
           }
         } else {
-          const newWin = window.open(`/depositLoading`, "Bank");
-          newWin.localStorage.setItem("formDetails", JSON.stringify(resp));
-          window.addEventListener(
-              "message",
-              (event) => {
-                if (event.data?.msg) {
-                  if (event.data.msg === "success") {
-                    isDeposited.value = true;
-                  } else {
-                    // message.error(event.data.msg, 4);
-                  }
-                }
-              },
-              { once: true }
-          );
+          const newWin = window.open(`/`);
+          newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+          if (response.payResultType === 'GET_SUBMIT') {
+            // isDeposited.value = true;
+            newWin.location.href = response.requestUrl;
+          }
+          if (response.payResultType === 'POST_SUBMIT') {
+            // isDeposited.value = true;
+            if (response.paramKey === null || response.paramKey === "") {
+              newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            } else {
+              newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            }
+          }
+          // window.addEventListener(
+          //     "message",
+          //     (event) => {
+          //       if (event.data?.msg) {
+          //         if (event.data.msg === "success") {
+          //           isDeposited.value = true;
+          //         } else {
+          //           ElMessage.error(event.data.msg);
+          //         }
+          //       }
+          //     },
+          //     { once: true }
+          // );
         }
       });
+      loadingBtn.value = false;
+    } else {
+      ElMessage.error('优惠存款金额不符合规则')
     }
   }).catch((err) => {
     console.log(err)
+    loadingBtn.value = false;
   });
+  loadingBtn.value = false;
 
 }
 
@@ -524,7 +571,7 @@ onMounted(() => {
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
-grid-template-rows: 50px;
+  grid-template-rows: 50px;
   grid-column-gap: 20px;
 
   .payment-channel-item {
@@ -643,9 +690,11 @@ grid-template-rows: 50px;
     :deep(.ant-form-item.select .ant-form-item-control-input) {
       max-width: 280px;
     }
-    :deep(.ant-select-single:not(.ant-select-customize-input)
-        .ant-select-selector
-        .ant-select-selection-search-input) {
+    :deep(
+        .ant-select-single:not(.ant-select-customize-input)
+          .ant-select-selector
+          .ant-select-selection-search-input
+      ) {
       height: 40px;
     }
     :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
@@ -659,7 +708,6 @@ grid-template-rows: 50px;
 }
 </style>
 <style scoped lang="scss">
-
 .txt-center {
   margin: 50px auto 20px;
   text-align: center;
@@ -679,25 +727,29 @@ grid-template-rows: 50px;
   margin-right: 24px;
 }
 
-:deep(.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector) {
+:deep(
+    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector
+  ) {
   height: 42px;
 }
-:deep(.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector
-    .ant-select-selection-search-input) {
+:deep(
+    .ant-select-single:not(.ant-select-customize-input)
+      .ant-select-selector
+      .ant-select-selection-search-input
+  ) {
   height: 40px;
 }
-:deep(.ant-select-single
-    .ant-select-selector
-    .ant-select-selection-placeholder) {
+:deep(
+    .ant-select-single .ant-select-selector .ant-select-selection-placeholder
+  ) {
   line-height: 30px;
 }
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
   line-height: 30px;
 }
 </style>
-// <style scoped lang="scss">
+//
+<style scoped lang="scss">
 // @media (max-width: 768px) {
 //   .account-content .node-wrapper {
 //     padding: 0;
@@ -736,7 +788,7 @@ grid-template-rows: 50px;
 // }
 </style>
 <style lang="scss">
-.inner-cont {  
+.inner-cont {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -753,7 +805,7 @@ grid-template-rows: 50px;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  color:#000000;
+  color: #000000;
   .linebox {
     display: flex;
     gap: 10px;

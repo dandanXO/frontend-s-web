@@ -75,16 +75,16 @@ export default defineComponent({
   gap: 10px;
 
   .q-card {
-    background: #ffffff !important;
-    color: #000000 !important;
+    margin: 14px 16px;
+    border:1px solid #fff;
   }
 
-  .label {
-    color: #000000;
-  }
-
-  .q-btn {
-    font-size: 11px !important;
-  }
+  //.label {
+  //  color: #000000;
+  //}
+  //
+  //.q-btn {
+  //  font-size: 11px !important;
+  //}
 }
 </style>

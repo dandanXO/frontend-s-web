@@ -1,10 +1,10 @@
 <template>
   <div v-if="submitMessage.length > 0" class="inner-cont">
     <div  class="submit-message">
-    <div class="line"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
-    <div class="line"><span>银行账号：</span> <span class="info" ref="subMsg1">{{submitMessage[1]}}</span><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button></div>
-    <div class="line"><span>银行卡号：</span> <span class="info" ref="subMsg2">{{submitMessage[2]}}</span><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">{{ copybtntxt2 }}</button></div>
-    <div class="line"><span>存款金额：</span> <span class="info" ref="subMsg3">{{submitMessage[3]}}</span><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button></div>
+    <div class="linebox"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
+    <div class="linebox"><span>银行账号：</span> <span class="info" ref="subMsg1">{{submitMessage[1]}}</span><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button></div>
+    <div class="linebox"><span>银行卡号：</span> <span class="info" ref="subMsg2">{{submitMessage[2]}}</span><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">{{ copybtntxt2 }}</button></div>
+    <div class="linebox"><span>存款金额：</span> <span class="info" ref="subMsg3">{{submitMessage[3]}}</span><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button></div>
   </div>
   </div>
   <div v-else id="renderArea">
@@ -152,9 +152,8 @@ onMounted(async () => {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  color:#ffffff;
-  
-  .line {
+  color:#000000;
+  .linebox {
     display: flex;
     gap: 10px;
     justify-content: space-between;
@@ -162,11 +161,11 @@ onMounted(async () => {
     align-items: center;
     font-size: 16px;
     align-items: center;
-    background: #222a34;
+    background: #dddddd;
     padding: 15px;
     span:first-child {
       flex: 1;
-      color: #a0bcd6;
+      color: #4669f8;
     }
     span.info {
       flex: 3;
@@ -175,13 +174,5 @@ onMounted(async () => {
       width: 80px;
     }
   }
-}
-</style>
-
-<style scoped lang="scss">
-.account-contents {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

@@ -1,4 +1,6 @@
 <template>
+
+
   <div>
     <q-inner-loading :showing="loading">
       <q-spinner-gears size="50px" color="brand"/>
@@ -77,6 +79,95 @@
       </q-infinite-scroll>
     </div>
   </div>
+
+  <q-input
+      style="width: 100%; opacity:0;"
+      filled
+      color="white"
+      ref="copyinput"
+      v-model="text_copied"
+  />
+
+
+  <q-dialog
+      v-model="reminderDialog"
+      width="100%"
+      no-backdrop-dismiss
+      no-esc-dismis
+  >
+    <q-card
+        class="reminder-dialog-card bg-dark text-white"
+        style="width: 100%; padding: 0px 0px 20px"
+    >
+      <q-card-section>
+        <q-toolbar>
+          <q-toolbar-title>催单</q-toolbar-title>
+          <q-btn flat v-close-popup round dense icon="close"/>
+        </q-toolbar>
+      </q-card-section>
+      <q-card-section>
+        <q-form
+            ref="formRef"
+            v-model="reminderForm"
+            hide-required-mark
+            name="basic"
+            colon
+            autocomplete="off"
+            label-align="left"
+            label-cols="5"
+            class="reminder-dialog-form"
+        >
+          <q-input
+              label="存款编码"
+              filled
+              v-model="reminderForm.orderNo"
+              padding="none"
+              readonly
+              disable
+          />
+          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef"/>
+          <q-input
+              type="textarea"
+              v-model="reminderForm.memberRemark"
+              label="备注"
+              filled
+              autogrow
+              color="white"
+              class="q-mt-md"
+              :rows="2"
+              :max-rows="5"
+          />
+          <q-btn
+              class="common-btn q-mt-md"
+              color="brightbtn"
+              label="提交"
+              @click="submitReminder"
+          />
+        </q-form>
+      </q-card-section>
+
+      <!--      <q-card-actions align="right">-->
+      <!--        <q-btn-->
+      <!--          label="关闭"-->
+      <!--          flat-->
+      <!--          color="dark"-->
+      <!--          @click="reminderDialog = false"-->
+      <!--        />-->
+      <!--      </q-card-actions>-->
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isConfirmWithdraw">
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+      <q-card-section class="q-mb-md">
+        系统提示
+        <br/>
+        <br/>
+        确认到账
+      </q-card-section>
+      <q-btn @click="openWithdrawConfirm()" label="确认" color="brightbtn"/>
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 import {defineComponent, onMounted, reactive, ref} from "vue";
@@ -85,7 +176,6 @@ import FileUpload from "components/FileUpload.vue";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {translateRecord} from "../directives/translate.js";
-
 
 export default defineComponent({
   props: {
@@ -114,6 +204,9 @@ export default defineComponent({
         return [];
       }
     },
+  },
+  components:{
+    FileUpload
   },
   setup(props, {emit}) {
     const truncatedList = ref([])
@@ -179,8 +272,12 @@ export default defineComponent({
     const text_copied = ref("");
     const copyText = (text) => {
       text_copied.value = text;
+      console.log(text_copied.value);
+
       setTimeout(() => {
         const copyText = copyinput.value;
+        console.log(copyText);
+
         copyText.select();
         document.execCommand("copy");
         console.log("Copied");

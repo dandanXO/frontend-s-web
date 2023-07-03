@@ -48,7 +48,11 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-      next(`/register`);
+      next(`/login?register`);
+    }
+
+    if (to.name === "RegisterPage") {
+      next(`/login?register`);
     }
 
     if (user.hasToken()) {

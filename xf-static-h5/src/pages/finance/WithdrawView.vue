@@ -18,7 +18,7 @@
             <div class="type-name">{{ method.name }}</div>
           </div>
         </div>
-        <q-form>
+        <q-form ref="withdrawFormRef">
           <q-select
               hide-bottom-space
               filled
@@ -206,7 +206,7 @@
             <q-btn
                 style="width: 100%"
                 class="q-mt-md fit"
-                color="dyblue"
+                color="brightbtn"
                 @click="submitWithdraw"
                 label="立即提款"
             />
@@ -259,6 +259,7 @@ export default defineComponent({
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
+    const withdrawFormRef= ref(null);
     const withdrawState = reactive({
       bankCardList: []
     });
@@ -316,7 +317,7 @@ export default defineComponent({
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
-        message: "Confirming Withdrawal"
+        message: "确认中。。。"
       });
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
@@ -329,6 +330,7 @@ export default defineComponent({
               message: "提交成功",
               icon: "check_circle_outline"
             });
+            withdrawFormRef.value.reset();
             getWithdrawalMethods();
           } else {
             $q.notify({
@@ -443,7 +445,8 @@ export default defineComponent({
       store,
       updateWithdrawAmt,
       platforms,
-      hasWithdrawCard
+      hasWithdrawCard,
+      withdrawFormRef
     };
   }
 });

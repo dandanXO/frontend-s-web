@@ -18,7 +18,11 @@ const routes = [
     {
         path: "/register",
         component: () => import("layouts/MainLayout.vue"),
-        children: [{path: "", component: () => import("pages/RegisterPage.vue")}]
+        children: [{
+            path: "", name: "RegisterPage",
+            component: () => {
+            }
+        }]
     },
     {
         path: "/forgot-password",
@@ -219,6 +223,17 @@ const routes = [
         meta: {requiresAuth: true}
     },
     {
+        path: "/account/invite",
+        component: () => import("layouts/MainLayout.vue"),
+        children: [
+            {
+                path: "",
+                component: () => import("pages/account/InviteView.vue")
+            }
+        ],
+        meta: {requiresAuth: true}
+    },
+    {
         path: "/account/announcement",
         component: () => import("layouts/MainLayout.vue"),
         children: [
@@ -379,6 +394,28 @@ const routes = [
             {
                 path: "",
                 component: () => import("pages/account/PersonalView.vue")
+            }
+        ],
+        meta: {requiresAuth: true}
+    },
+    {
+        path: "/account/verifyTelephone",
+        component: () => import("layouts/MainLayout.vue"),
+        children: [
+            {
+                path: "",
+                component: () => import("pages/account/VerifyTelephone.vue")
+            }
+        ],
+        meta: {requiresAuth: true}
+    },
+    {
+        path: "/account/verifyEmail",
+        component: () => import("layouts/MainLayout.vue"),
+        children: [
+            {
+                path: "",
+                component: () => import("pages/account/VerifyEmail.vue")
             }
         ],
         meta: {requiresAuth: true}

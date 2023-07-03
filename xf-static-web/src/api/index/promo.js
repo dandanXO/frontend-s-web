@@ -14,7 +14,7 @@ export function loadPromoBanner(category) {
 export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }
-export function welcomeTaskInit(item) {
+export function welcomeTaskInit() {
   return server.EVENT.post(`/welcomeTask/init`);
 }
 

@@ -134,19 +134,12 @@ export default defineComponent({
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
     };
 
-    const canEdit = computed(() => {
-      if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)) {
-        return true;
-      }
-      return false;
-    });
+    const canEdit = ref(false);
 
     const personalState = reactive({
       memberInfo: {}
     });
-    const verificationDetails = reactive({
-
-    });
+    const verificationDetails = reactive({});
 
     onMounted(() => {
       loadInfo();
@@ -164,6 +157,7 @@ export default defineComponent({
             verificationImg.value =
               "data:image/png;base64," + response.data.img;
             updateSecurityVerified.codeId = response.data.id;
+            innerCaptchaRef.value = "";
           }
         })
         .catch((e) => {
@@ -204,6 +198,7 @@ export default defineComponent({
       };
       api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
         if (ret.code === 0) {
+          canEdit.value = true;
           $q.notify({
             color: "positive",
             position: "top",
@@ -232,13 +227,14 @@ export default defineComponent({
     const emailAddressRef = ref();
     const verificationCodeRef = ref();
     const submitUpdateSecurity = () => {
-      emailOtpRef.value.validate()
+      emailOtpRef.value.validate();
       if (emailOtpRef.value.hasError) {
       } else {
         api.post("/session/verifyAndUpdateEmail", qs.stringify({
           email: formDetail.email,
           code: formDetail.emailOtpRef,
-          codeId: emailCodeId.value})).then((res) => {
+          codeId: emailCodeId.value
+        })).then((res) => {
           if (res.code === 0) {
             $q.notify({
               color: "positive",
@@ -246,7 +242,9 @@ export default defineComponent({
               message: "绑定成功",
               icon: "check_circle_outline"
             });
-            router.push('/account');
+            store.emailVerified = true;
+            store.email = formDetail.email;
+            router.push("/account");
           }
         }).catch((e) => {
           $q.notify({
@@ -275,8 +273,7 @@ export default defineComponent({
     const innerCaptchaRef = ref();
     const showCaptchaDialog = ref(false);
     const showVerifyBtn = ref(true);
-    const showVerificationTokenInput = ref(false)
-
+    const showVerificationTokenInput = ref(false);
 
 
     const isValidName = () => {
@@ -290,45 +287,56 @@ export default defineComponent({
       const reg = /^\d+$/;
       const { phone } = formDetail;
 
-      const result = '' === phone ? '请验证您的电话号码' : !reg.test(phone) ? '电话号码只允许使用数字' : true;
+      const result = "" === phone ? "请验证您的电话号码" : !reg.test(phone) ? "电话号码只允许使用数字" : true;
 
-      return result
-    }
+      return result;
+    };
 
     const openVerificationDialog = () => {
-      getCode()
-      showCaptchaDialog.value = true
-    }
+      getCode();
+      showCaptchaDialog.value = true;
+    };
 
     const onCaptchaSubmit = () => {
+      if (!formDetail.email) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "邮箱不能为空",
+          icon: "report_problem"
+        });
+        getCode();
+        return;
+      }
+
       api.post(`/otp/sendNewEmail`, qs.stringify({
         email: formDetail.email,
         captchaCode: innerCaptchaRef.value,
         codeId: updateSecurityVerified.codeId
       }))
-      .then(res => {
-        getCode();
-        let message = res.message || '发送邮箱验证码成功',
-          color = 'positive'
+        .then(res => {
+          getCode();
+          let message = res.message || "发送邮箱验证码成功",
+            color = "positive";
 
-        if (res.code === 0)  {
-          showCaptchaDialog.value = false
-          showVerifyBtn.value = false;
-          showVerificationTokenInput.value = true
+          if (res.code === 0) {
+            canEdit.value = true;
+            showCaptchaDialog.value = false;
+            showVerifyBtn.value = false;
+            showVerificationTokenInput.value = true;
 
-          emailCodeId.value = res.data.codeId;
-        }
-        else
-          color = 'negative';
+            emailCodeId.value = res.data.codeId;
+          } else
+            color = "negative";
           getCode();
 
-        if(message)
-          $q.notify({ message, color });
+          if (message)
+            $q.notify({ message, color });
           getCode();
 
-        console.log('onCaptchaSubmit', res)
-      })
-    }
+          console.log("onCaptchaSubmit", res);
+        });
+    };
 
     return {
       router,
@@ -393,8 +401,7 @@ export default defineComponent({
   }
 }
 
-
-.q-toolbar{
+.q-toolbar {
   background: #5b80e8;
 }
 </style>

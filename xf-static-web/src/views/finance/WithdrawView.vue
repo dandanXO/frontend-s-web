@@ -5,7 +5,7 @@
     </div>
 
     <div class="menu-title-container">
-      <span class="menu-title"> 提款流程：</span>
+      <span class="menu-title">提款流程：</span>
       <div class="account-content withdrawal">
         <div class="flex-box">
           <div class="step-item active">申请中</div>
@@ -33,9 +33,9 @@
             @click="selectMethod(method, i)"
             :class="{ active: i === activeItem }"
           >
-            <span class="promo" v-if="method.recommended">{{
-              "finance.withdraw.recommended"
-            }}</span>
+            <span class="promo" v-if="method.recommended">
+              {{ "finance.withdraw.recommended" }}
+            </span>
             <img :src="imgURL + method.icon" />
             <div class="type-name">{{ method.name }}</div>
           </div>
@@ -53,7 +53,8 @@
                 class="form-input"
                 v-model="withdrawInfo.amount"
                 placeholder="提款金额"
-                ><template #append>{{ store.currency.label }}</template>
+              >
+                <template #append>{{ store.currency.label }}</template>
               </el-input>
             </el-col>
             <el-col :span="12">
@@ -81,27 +82,43 @@
             "
           ></div> -->
         </el-form-item>
+        <el-row>
+          <el-col>
+            <div
+              v-if="!isUSDT && selectedWithdrawalMethod.tips"
+              class="selected-tip"
+              v-html="selectedWithdrawalMethod.tips"
+            ></div>
+          </el-col>
+        </el-row>
         <el-form-item
           v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
           class="helptxt"
           label="实时汇率"
         >
-          <span style="color: #9bffd1"
-            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
-            {{ store.currency.label }}</span
-          >
+          <span style="color: #9bffd1">
+            1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
+            {{ store.currency.label }}
+          </span>
         </el-form-item>
         <el-form-item
           class="select"
           prop="cardId"
-          label="选择银行卡"
+          :label="isUSDT ? '选择钱包地址' : '选择银行卡'"
           :rules="[
-            { required: true, message: '请选择银行卡', trigger: 'blur' },
+            {
+              required: true,
+              message: isUSDT ? '请选择钱包地址' : '请选择银行卡',
+              trigger: 'blur'
+            }
           ]"
         >
           <el-select
+            @click="
+              withdrawState.bankCardList.length === 0 ? checkBankCards() : ''
+            "
             v-model="withdrawInfo.cardId"
-            placeholder="选择银行卡"
+            :placeholder="isUSDT ? '选择钱包地址' : '选择银行卡'"
             style="width: 300px"
           >
             <el-option
@@ -119,17 +136,17 @@
           class="helptxt"
           label="预计到账"
         >
-          <span style="color: #9bffd1"
-            >{{
+          <span style="color: #9bffd1">
+            {{
               (
                 withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
               ).toFixed(2)
             }}
-            USDT</span
-          >
+            USDT
+          </span>
         </el-form-item>
         <div class="flex-box flex-justify-center">
-          <el-button class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
             确定
           </el-button>
         </div>
@@ -142,9 +159,10 @@
 import { defineComponent, reactive, ref, onMounted } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -152,6 +170,8 @@ export default defineComponent({
     RiArrowRightSLine
   },
   setup() {
+    const router = useRouter();
+    const loadingBtn = ref(false);
     const store = userStore();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
     const formRef = ref();
@@ -185,6 +205,7 @@ export default defineComponent({
       getWithdrawalMethods();
     });
     const submitWithraw = () => {
+      loadingBtn.value = true;
       formRef.value
         .validate()
         .then(() => {
@@ -206,6 +227,7 @@ export default defineComponent({
         }).catch((error) => {
           console.log("error", error);
         });
+        loadingBtn.value = false;
     };
     const withdrawRules = {
       amount: [
@@ -225,6 +247,25 @@ export default defineComponent({
         },
       ],
     };
+    const checkBankCards = () => {
+      ElMessageBox.confirm(
+      '请先绑定银行卡', "系统提示",
+      {
+        showClose: 'false',
+        cancelButtonClass: 'cancel-btn',
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+        draggable: true,
+        buttonSize: "small"
+      }
+    )
+      .then(() => {
+        router.push('/center/withdrawbank')
+      })
+      .catch(() => {
+      })
+    }
     const loadCards = () => {
         withdrawState.bankCardList = []
         loadBankCards().then((response) => {
@@ -302,7 +343,9 @@ export default defineComponent({
       imgURL,
       isUSDT,
       verifyWithdrawAmount,
-      store
+      store,
+      loadingBtn,
+      checkBankCards
     };
   },
 });

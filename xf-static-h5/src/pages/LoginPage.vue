@@ -274,6 +274,10 @@ export default defineComponent({
 
     onMounted(() => {
       getCode();
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("register")) {
+        tab.value = "register";
+      }
       // checkRememberPwd();
     });
     return {

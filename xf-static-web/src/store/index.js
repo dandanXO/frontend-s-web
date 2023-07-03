@@ -20,8 +20,10 @@ export const userStore = defineStore("userStore", {
       memberType: "",
       balance: 0,
       vip: "",
-	    evip: "",
-      currency: { value: "￥", label: "RMB"},
+      evip: "",
+      currency: { value: "￥", label: "RMB" },
+      loginPageVisible: false,
+      regPageVisible: false
     };
   },
   actions: {
@@ -41,6 +43,11 @@ export const userStore = defineStore("userStore", {
           // message.error(err.message);
         });
     },
+    autoLogin(token) {
+      this.token = token;
+      this.getBalance();
+      this.getMemberInfo();
+    },
     getMemberInfo() {
       if (this.token) {
         return loadMemberInfo().then((ret) => {
@@ -53,8 +60,8 @@ export const userStore = defineStore("userStore", {
             this.phone = ret.data.telephone;
             this.memberType = ret.data.memberType;
             this.vip = ret.data.vip;
-			var exclusiveurl = JSON.parse(ret.data.evip);
-			this.evip = exclusiveurl;
+            var exclusiveurl = JSON.parse(ret.data.evip);
+            this.evip = exclusiveurl;
           } else {
             throw new Error(ret.message);
           }
@@ -70,6 +77,6 @@ export const userStore = defineStore("userStore", {
     },
     memberLogout() {
       return logout().then(() => (this.token = null));
-    },
-  },
+    }
+  }
 });

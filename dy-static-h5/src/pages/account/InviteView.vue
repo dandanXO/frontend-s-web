@@ -76,10 +76,10 @@
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onMounted, ref} from "vue";
+import {computed, defineComponent, onMounted, ref} from "vue";
 import VueQRCodeComponent from 'vue-qrcode-component'
 import {userStore} from "src/stores";
-import {useQuasar} from "quasar";
+import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios"
 
 
@@ -91,15 +91,25 @@ export default defineComponent({
   setup() {
     const $q= useQuasar();
     const store = userStore();
-    const selfTgurl = ref("https://www.google.com/");
+    const selfTgurl = ref("");
 
     const refCode= ref("");
 
     let tgDomain = location.origin;
+    if (
+      (Platform.is.ios &&
+        "standalone" in window.navigator &&
+        window.navigator.standalone) ||
+      (Platform.is.android && Platform.is.capacitor)
+    ) {
+      tgDomain = '';
+    } else {
 
+    }
 
-    const qrCode= ref( selfTgurl.value);
-
+    const qrCode = computed(() => {
+      return selfTgurl.value;
+    });
 
     const copyText = (text) => {
       copyToClipboard(text);
@@ -143,11 +153,11 @@ export default defineComponent({
         // console.log(reminderForm)
         if (res.code === 0) {
           refCode.value = res.data;
-          selfTgurl.value = tgDomain + "/member/" + refCode.value;
+          selfTgurl.value = tgDomain + "/refer/" + refCode.value;
         }
       });
 
-    })
+    });
 
     return {
       selfTgurl,
