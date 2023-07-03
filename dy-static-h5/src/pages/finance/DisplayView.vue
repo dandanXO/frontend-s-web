@@ -1,28 +1,97 @@
 <template>
-  <div id="renderArea">
-    <form ref="formRef" method="post" style="display: none"></form>
+  <div v-if="submitMessage.length > 0" class="inner-cont">
+    <div class="submit-message">
+      <div class="linebox">
+        <span>银行名称：</span>
+        <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
+        <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
+          {{ copybtntxt0 }}
+        </button>
+      </div>
+      <div class="linebox">
+        <span>银行账号：</span>
+        <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
+        <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
+          {{ copybtntxt1 }}
+        </button>
+      </div>
+      <div class="linebox">
+        <span>银行卡号：</span>
+        <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
+        <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
+          {{ copybtntxt2 }}
+        </button>
+      </div>
+      <div class="linebox">
+        <span>存款金额：</span>
+        <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
+        <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
+          {{ copybtntxt3 }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div v-else id="renderArea">
+    <form ref="formRef" method="post" style="display: none">
+      <input
+        type="text"
+        v-for="input in data"
+        :key="input"
+        :value="input.value"
+        :name="input.name"
+      />
+      <button type="submit" id="submitBtn">提交</button>
+    </form>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { Platform, openURL } from "quasar";
-import liff from "@line/liff"
-import { cashier } from "src/boot/axios";
+import { ref, onMounted, reactive, nextTick } from "vue";
+import { isEmpty } from "boot/utils";
 
 const request = ref({});
 const formRef = ref();
+const data = reactive([]);
+const submitMessage = ref([]);
+const subMsg0 = ref();
+const subMsg1 = ref();
+const subMsg2 = ref();
+const subMsg3 = ref();
+const copybtntxt0 = ref("复制");
+const copybtntxt1 = ref("复制");
+const copybtntxt2 = ref("复制");
+const copybtntxt3 = ref("复制");
+const copyMessage = (position) => {
+  let copyText = null;
+  copyText = eval(`subMsg${position}.value.innerText`);
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement("textarea");
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand("copy");
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt[position].value = "已复制";
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
+
+const blurCode = () => {
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt.forEach((element) => {
+    element.value = "复制";
+  });
+};
+
 function getRequest(url) {
-  if (!url) {
-    if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-      url = window.location.search;
-    } else {
-      url = window.location.search;
-      let params = localStorage.getItem("responseDetails");
-      params = params ? JSON.parse(params) : "";
-      const paramData = '?' + params.data + '&payResultType=' + params.payResultType + '&requestUrl=' + params.requestUrl 
-      url = paramData
-    }
+  if (isEmpty(url)) {
+    url = decodeURIComponent(window.location.search);
   }
   let theRequest = {};
   if (url.indexOf("?") != -1) {
@@ -32,7 +101,6 @@ function getRequest(url) {
   for (let i = 0; i < strs.length; i++) {
     theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
   }
-  console.log(theRequest)
   return theRequest;
 }
 
@@ -53,57 +121,85 @@ function renderOrSubmit() {
 }
 
 function renderHtml() {
-  document.write(request.value.data);
+  submitMessage.value = request.value.data.split(",");
 }
 
 function postSubmit() {
-  if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-    formRef.value.action = request.value.requestUrl;
-  }
-  else {
-    formRef.value.action = openURL(request.value.requestUrl);
-  }
+  formRef.value.action = request.value.requestUrl;
   delete request.value.requestUrl;
   delete request.value.payResultType;
   delete request.value.paramKey;
+
   for (let x in request.value) {
-    let p =
-      "<input type='text' name='" + x + "' value='" + request.value[x] + "'/>";
-    formRef.value.append(p);
+    var dd = {
+      name: x,
+      value: request.value[x]
+    };
+    data.push(dd);
   }
-  formRef.value.submit();
+
+  nextTick(() => {
+    document.getElementById("submitBtn").click();
+  });
 }
 
 onMounted(async () => {
-    request.value = getRequest();
-    if (request.value.paramKey) {
-      const d = await cashier.get(`/param/key/${key}`, request.value.paramKey).then(() => {
-        if (request.value.payResultType == "POST_SUBMIT") {
-          request.value = Object.assign({}, getRequest(d.data), request.value);
-        } else {
-          request.value.data = d.data;
-        }
-      })
+  request.value = getRequest();
+  if (!isEmpty(request.value.paramKey)) {
+    const d = await getParamKey(request.value.paramKey);
+    if (request.value.payResultType == "POST_SUBMIT") {
+      request.value = Object.assign({}, getRequest(d.data.data), request.value);
+    } else {
+      request.value.data = d.data.data;
     }
-    renderOrSubmit();
-  // } else {
-  //   let params = localStorage.getItem("responseDetails");
-  //   params = params ? JSON.parse(params) : "";
-  //   request.value = getRequest();
-  //   alert();
-  //   console.log(request.value)
-  //   if (params.paramKey) {
-  //     const d = await cashier.get(`/param/key/${key}`, params.paramKey).then(() => {
-  //       if (params.payResultType == "POST_SUBMIT") {
-  //         alert('assigningObjectotRequest')
-  //         request.value = Object.assign({}, getRequest(d.data), request.value);
-  //         alert(request.value)
-  //       } else {
-  //         request.value.data = d.data;
-  //       }
-  //     })
-  //   }
-  //   postSubmit();
-  // // }
+  }
+  renderOrSubmit();
 });
 </script>
+<style lang="scss">
+.inner-cont {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-message {
+  width: calc(100% - 40px);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  height: auto;
+  gap: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  color: #000000;
+
+  .linebox {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    width: calc(100% - 30px);
+    align-items: center;
+    font-size: 16px;
+    align-items: center;
+    background: #dddddd;
+    padding: 15px;
+
+    span:first-child {
+      flex: 1;
+      color: #4669f8;
+    }
+
+    span.info {
+      flex: 3;
+    }
+
+    button {
+      width: 80px;
+    }
+  }
+}
+</style>
