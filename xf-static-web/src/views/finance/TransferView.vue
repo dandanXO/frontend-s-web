@@ -7,22 +7,21 @@
       <div class="flex-box transfer-top-container">
         <div class="balance">
           <div class="balance-wrapper">
-            <span class="currency">主账户:</span> ￥{{ mainWallet }}
+            <span class="currency">主账户:</span>
+            ￥{{ mainWallet }}
           </div>
           <!-- <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
 
-          <el-button type="success"
+          <el-button
+            type="success"
             class="common-btn"
             @click="transferOutAllModal"
           >
             一键转出
           </el-button>
-          <el-button type="success"
-            class="common-btn"
-            @click="refreshAllModal"
-          >
+          <el-button type="success" class="common-btn" @click="refreshAllModal">
             一键刷新
           </el-button>
         </div>
@@ -43,26 +42,21 @@
               <div class="plat-name" v-if="p.code === 'FlashTech'">Sport</div>
               <div class="plat-name" v-else>{{ p.code }}</div>
               <div class="balance-wrapper">
-                <span class="currency">余额:</span> {{ p.amount }}
+                <span class="currency">余额:</span>
+                {{ p.amount }}
               </div>
             </div>
             <div class="balance-refresh" @click="refreshBalance(p.code)">
-            <el-icon><Refresh /></el-icon>
+              <el-icon><Refresh /></el-icon>
             </div>
           </div>
           <div
             class="flex-box flex-justify-space flex-wrap transfer-action-box"
           >
-            <button
-              class="outline transfer-btn"
-              @click="transferModal(0, p)"
-            >
+            <button class="outline transfer-btn" @click="transferModal(0, p)">
               转进
             </button>
-            <button
-              class="transfer-btn"
-              @click="transferModal(1, p)"
-            >
+            <button class="transfer-btn" @click="transferModal(1, p)">
               转出
             </button>
           </div>
@@ -78,13 +72,22 @@
       width="300px"
       align-center
     >
-    <template #header>
-      <div :style="transferTypeIndex === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse; justify-content: flex-end;'" class="el-dialog__title">
-      <el-tag type="danger" effect="dark">主账户</el-tag> 
-      <el-icon><Right /></el-icon>
-      <el-tag type="success" effect="dark">{{ transferInfo.platform }}</el-tag> 
-      </div>
-    </template>
+      <template #header>
+        <div
+          :style="
+            transferTypeIndex === 0
+              ? 'flex-direction: row'
+              : 'flex-direction: row-reverse; justify-content: flex-end;'
+          "
+          class="el-dialog__title"
+        >
+          <el-tag type="danger" effect="dark">主账户</el-tag>
+          <el-icon><Right /></el-icon>
+          <el-tag type="success" effect="dark">
+            {{ transferInfo.platform }}
+          </el-tag>
+        </div>
+      </template>
       <el-form
         ref="formRef"
         :hideRequiredMark="true"
@@ -93,10 +96,7 @@
         :label-col="{ span: 4 }"
       >
         <el-form-item ref="amount" name="amount">
-          <el-input
-            v-model="transferInfo.amount"
-            placeholder="Amount"
-          />
+          <el-input v-model="transferInfo.amount" placeholder="金额" />
         </el-form-item>
         <el-form-item class="txt-center">
           <!-- <button
@@ -111,8 +111,8 @@
             :loading="loadingTransfer"
             @click="submitTransfer"
           >
-            Confirm</el-button
-          >
+            确认
+          </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -184,13 +184,13 @@ export default defineComponent({
         if (p.amount > 0) {
           transferInfo.platform = p.code
           transferInfo.amount = p.amount
-          p.status = 'Transferring';
+          p.status = '平台余额转出中';
           withdrawAll(transferInfo).then((res) => {
             if (res.code === 0) {
-              p.status = 'Transferred'
+              p.status = '已转出'
               cancelTransfer();
             } else {
-              p.status = 'Transfer Failed'
+              p.status = '转出失败'
             }
           })
         } else {
@@ -200,7 +200,7 @@ export default defineComponent({
         refreshBalance(p.code);
       });
     }
-    
+
     const refreshAllModal = () => {
       platforms.forEach(p => {
         store.getBalance();
@@ -213,6 +213,7 @@ export default defineComponent({
       transferInfo.platform = p.code;
       transferInfo.currentAmt = p.amount;
       transferModalVisible.value = true;
+      transferInfo.amount = "";
     };
     const refreshBalance = (plat) => {
       setTimeout(()=> {
@@ -262,7 +263,7 @@ export default defineComponent({
       console.log(transferTypeIndex)
       if (transferTypeIndex.value === 1) {
         if (transferInfo.amount > transferInfo.currentAmt) {
-          ElMessage.error('Transfer amount is more than current amount', 4);
+          ElMessage.error(transferInfo.platform + ' 平台余额不足');
           loadingTransfer.value = false
           return
         }
@@ -273,7 +274,7 @@ export default defineComponent({
           transfer(transferTypeIndex.value, transferInfo).then((res) => {
             if (res.code === 0) {
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               store.getBalance();
@@ -295,12 +296,12 @@ export default defineComponent({
       amount: [
         {
           required: true,
-          message: "amount is required",
+          message: "请输入金额",
           trigger: "blur"
         },
         {
           pattern: "^([1-9][0-9]*)$",
-          message: "amount should be a positive number",
+          message: "金额应为正数",
           trigger: "change"
         },
       ]
@@ -329,7 +330,6 @@ export default defineComponent({
 </script>
 <style lang="scss">
 body .transferinout .el-dialog__header .el-dialog__title {
-
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -396,10 +396,10 @@ body .transferinout .el-dialog__header .el-dialog__title {
           display: flex;
           justify-content: center;
           gap: 10px;
-          align-items:  center;
+          align-items: center;
           font-size: 14px;
           margin-right: 50px;
-            color: #30a73b;
+          color: #30a73b;
           .currency {
             color: #a0bcd6;
           }
@@ -449,19 +449,19 @@ body .transferinout .el-dialog__header .el-dialog__title {
         }
         .transfer-action-box {
           display: flex;
-          align-items:  center;
+          align-items: center;
           justify-content: flex-end;
           gap: 15px;
 
           .transfer-btn {
-                background-color: #164a5f;
-                box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
-                border-radius: 2px;
-                border: 1px solid #22737f;
-                color: #a0bcd6;
-                padding: 2px 20px;
-                font-size: 12px;
-                line-height: 14px;
+            background-color: #164a5f;
+            box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
+            border-radius: 2px;
+            border: 1px solid #22737f;
+            color: #a0bcd6;
+            padding: 2px 20px;
+            font-size: 12px;
+            line-height: 14px;
 
             &.outline {
             }
@@ -521,7 +521,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
             display: flex;
             justify-content: flex-end;
             width: 100%;
-            align-items:  center;
+            align-items: center;
             color: #30a73b;
             margin: 10px 0;
             .currency {

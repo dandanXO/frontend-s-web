@@ -76,7 +76,7 @@
             :style="
               'background-image: url(' +
               imgURL +
-              selectedPromo.desktopImgUrl +
+              selectedPromo.desktopBannerUrl +
               ''
             "
           ></div>
@@ -295,17 +295,50 @@ export default defineComponent({
     //     }
     //   }
     // }
+    // table {
+    //       border-collapse: collapse;
+    //       th, td {
+    //         padding: 10px;
+    //       }
+    //   th {
+    //     background-image: linear-gradient(0deg,#07414c 0,#058096 100%),linear-gradient(#d0d1d3,#d0d1d3);
+    //   }
+    //   td {
+    //         background-color: #202228;
+    //         border: 1px solid #2e3039;
+    //   }
+    // }
+    img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto;
+      &:nth-child(1) {
+        padding-top: 20px;
+      }
+    }
     table {
-          border-collapse: collapse;
-          th, td {
-            padding: 10px;
-          }
+      margin: 10px auto;
+      min-width: 80%;
+      text-align: center;
+      tr:first-child td {
+        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%),
+          linear-gradient(#2e3039, #2e3039);
+        color: #ffffff;
+        border: 0;
+      }
+      border-collapse: collapse;
+      th,
+      td {
+        padding: 10px;
+      }
       th {
-        background-image: linear-gradient(0deg,#07414c 0,#058096 100%),linear-gradient(#d0d1d3,#d0d1d3);
+        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%),
+          linear-gradient(#d0d1d3, #d0d1d3);
       }
       td {
-            background-color: #202228;
-            border: 1px solid #2e3039;
+        // background-color: #202228;
+        border: 1px solid #dcdce8;
       }
     }
   }
@@ -434,7 +467,7 @@ export default defineComponent({
               justify-content: center;
               align-items: center;
               gap: 30px;
-              max-height: 90px;
+              max-height: 200px;
               .promo-content {
                 width: 100%;
                 &.isDesktop {
