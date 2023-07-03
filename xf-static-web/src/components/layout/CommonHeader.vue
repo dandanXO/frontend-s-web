@@ -832,23 +832,23 @@ export default defineComponent({
       // console.log(level);
 
       if (pwd.length >= 6) {
-        switch (level) {
-          case 1:
-            strength = "weak";
-            break;
-          case 2:
-            strength = "normal";
-            break;
-          case 3:
-          case 4:
-            strength = "strong";
-            break;
-        }
-      } else {
-        strength = "weak";
-      }
-      if (strength === "weak") {
-        return Promise.reject("密码至少应该是好的");
+      //   switch (level) {
+      //     case 1:
+      //       strength = "weak";
+      //       break;
+      //     case 2:
+      //       strength = "normal";
+      //       break;
+      //     case 3:
+      //     case 4:
+      //       strength = "strong";
+      //       break;
+      //   }
+      // } else {
+      //   strength = "weak";
+      // }
+      // if (strength === "weak") {
+      //   return Promise.reject("密码至少应该是好的");
       } else {
         return Promise.resolve();
       }
