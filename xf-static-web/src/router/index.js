@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue';
 import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
 import PersonalRouter from "./personal";
 import {userStore} from "@/store/index";
+import { ElMessageBox } from "element-plus";
 
 const routes = [
     {
@@ -135,6 +136,16 @@ router.beforeEach((to, from, next) => {
     } else {
         console.log(to)
         if (to.meta.requiresAuth) {
+            ElMessageBox.alert('请登录后再操作', '系统提示', {
+                // if you want to disable its autofocus
+                // autofocus: false,
+                center: true,
+                confirmButtonText: '确认',
+                showClose: false,
+                buttonSize: 'large'
+            }).then(() => {
+                store.loginPageVisible = true
+            })
             next({query: {redirect: to.path}});
         } else {
             next();

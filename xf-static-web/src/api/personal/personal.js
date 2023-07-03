@@ -1,7 +1,7 @@
 import { server } from "@/utils/request";
 
 export function loadBalance(platform) {
-  return server.REST.get("/session/balance?v=123", {
+  return server.REST.get("/session/balance?v=" + new Date().getTime(), {
     params: {
       platform,
     },
@@ -25,7 +25,7 @@ export function updateAccount(updateInfo) {
 
 const recordUrl = {
   deposit: "/session/member/deposit",
-  // transfer: "/session/member/betRecord",
+  transfer: "/session/member/transfer",
   turnover: "/session/member/moneyChange",
   withdraw: "/session/member/withdraw",
   rebates: "/session/member/privilege",
@@ -69,6 +69,10 @@ export function confirmWithdraw(bci) {
   return server.REST.post("/session/withdraw/", bci);
 }
 
+export function confirmationOfWithdrawalReceived(bci) {
+  return server.REST.post("/session/withdraw/confirm", bci);
+}
+
 export function withdrawEntrance() {
   return server.REST.get("/session/withdraw/entrance");
 }
@@ -78,11 +82,11 @@ export function deleteBankCard(cardId) {
 }
 
 export function sendEmail(emailInfo) {
-  return server.REST.post("/otp/sendEmail", emailInfo);
+  return server.REST.post("/otp/sendNewEmail", emailInfo);
 }
 
 export function verifyEmail(emailInfo) {
-  return server.REST.post("/otp/verifyEmail", emailInfo);
+  return server.REST.post("/session/verifyAndUpdateEmail", emailInfo);
 }
 
 export function saveFinanceFeedback(reminderInfo) {

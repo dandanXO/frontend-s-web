@@ -159,6 +159,7 @@
       width="50%"
       align-center
       style="max-width: 800px"
+      @close="store.loginPageVisible = false"
     >
       <span>
         <el-tabs type="card">
@@ -1388,6 +1389,32 @@ getCode();
         store.getBalance();
         store.getMemberInfo();
       }
+
+      if (store.loginPageVisible) {
+        loginDialogVisible.value = true
+      } else {
+        loginDialogVisible.value = false
+      }
+    });
+
+    watch(() => store.loginPageVisible, () => {
+      if (store.loginPageVisible) {
+        loginDialogVisible.value = true
+      } else {
+        loginDialogVisible.value = false
+      }
+      // Optionally you can set immediate: true config for the watcher to run on init
+      // }, { immediate: true });
+    });
+
+    watch(() => store.regPageVisible, () => {
+      if (store.regPageVisible) {
+        registerDialogVisible.value = true
+      } else {
+        registerDialogVisible.value = false
+      }
+      // Optionally you can set immediate: true config for the watcher to run on init
+      // }, { immediate: true });
     });
 
     const getReferalCode = () => {
