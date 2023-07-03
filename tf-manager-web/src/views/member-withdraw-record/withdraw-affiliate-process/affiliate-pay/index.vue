@@ -339,7 +339,7 @@
             class="filter-item"
             style="width: 300px;"
             default-first-option
-            @focus="loadBankCards(recordId)"
+            @focus="loadBankCards(recordId, withdrawDate)"
           >
             <el-option
               v-for="item in bankCardList.list"
@@ -613,6 +613,7 @@ const searchForm = ref(null)
 const toPayForm = ref(null)
 const toFailForm = ref(null)
 const recordId = ref(null)
+const withdrawDate = ref(null)
 const site = ref(null)
 const clicked = reactive({
   pay: false,
@@ -832,8 +833,8 @@ async function loadBanks() {
   }
 }
 
-async function loadBankCards(id) {
-  const { data: bankCard } = await getWithdrawBankCard(id)
+async function loadBankCards(id, wd) {
+  const { data: bankCard } = await getWithdrawBankCard(id, wd)
   bankCardList.list = bankCard
 }
 
@@ -907,7 +908,8 @@ async function showDialog(type, memberWithdrawRecord) {
     }
     addToPayForm(memberWithdrawRecord)
     recordId.value = memberWithdrawRecord.id
-    await loadBankCards(memberWithdrawRecord.id)
+    withdrawDate.value = memberWithdrawRecord.withdrawDate
+    await loadBankCards(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
     payForm.bankCard = bankCardList.list[0].identifyCode
     site.value = siteList.list.find(
       s => s.siteName === memberWithdrawRecord.site
