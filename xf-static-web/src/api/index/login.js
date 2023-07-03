@@ -4,7 +4,7 @@ import { getDevice } from "@/utils/utils";
 export function register(regForm) {
   const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
   regForm.regDevice = regDevice;
-  return server.REST.post("/member/register", regForm);
+  return server.REST.post("/member/fbRegister", regForm);
 }
 
 export function login(loginInfo) {

@@ -1,26 +1,27 @@
 <template>
   <div>
     <q-select
-      filled
-      class="q-mt-md"
-      label="银行"
-      color="white"
-      v-model="selectedBankId"
-      :options="bankList"
-      option-value="id"
-      option-label="name"
-      :rules="verifyBank"
+        filled
+        class="q-mt-md"
+        label="银行"
+        color="white"
+        v-model="selectedBankId"
+        :options="bankList"
+        option-value="id"
+        option-label="name"
+        :rules="verifyBank"
+        @update:model-value="selectBank()"
     />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import {ref} from "vue";
 // import { postDeposit } from "@/api/personal/deposit";
 // import { doIt } from "@/utils/action";
-import { doIt } from "boot/action";
-import { cashier } from "boot/axios";
-import { useQuasar } from "quasar";
+import {doIt} from "boot/action";
+import {cashier} from "boot/axios";
+import {useQuasar} from "quasar";
 
 const $q = useQuasar();
 const props = defineProps({
@@ -37,6 +38,7 @@ const verifyBank = ref([
 const selectedBankId = ref();
 
 function selectBank() {
+  // console.log(selectedBankId)
   emits("selected", selectedBankId);
 }
 
@@ -47,13 +49,18 @@ async function validateBank(value) {
     return false;
   }
 }
+
 const qs = require("qs");
+
 async function submitDeposit(deposit) {
+
   const obj = {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
-    paymentId: deposit.paymentId
+    paymentId: deposit.paymentId,
+    bankId: selectedBankId.value.id
   }
+
   if (deposit.privilegeId) {
     obj.privilegeId = deposit.privilegeId
   }
@@ -73,7 +80,7 @@ async function submitDeposit(deposit) {
   });
 }
 
-defineExpose({ submitDeposit, validateBank });
+defineExpose({submitDeposit, validateBank});
 </script>
 
 <style scoped lang="scss"></style>

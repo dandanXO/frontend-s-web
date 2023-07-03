@@ -5,71 +5,90 @@
         <img :src="require(`../../assets/images/account/${trans.icon}_letters.png`)">
         {{ trans.name }}
         <div class="right">
-            <q-chip v-if="trans.icon === 'inbox'" color="brand" size="sm">
-            {{ store.unreadInboxMail }}
-            </q-chip><RiArrowRightSLine /></div>
+          <!--            <q-chip v-if="trans.icon === 'inbox'" color="brand" size="sm">-->
+          <!--            {{ store.unreadInboxMail }}-->
+          <!--            </q-chip>-->
+          <RiArrowRightSLine/>
+        </div>
       </router-link>
 
     </div>
   </div>
 </template>
-<script setup>
-import { ref } from "vue"
-import { userStore } from "../../stores/index"
-import { RiArrowRightSLine } from "vue-remix-icons"
-components: { 
-  RiArrowRightSLine
-}
-const store = userStore();
-const transitList = ref([
-  {
-    code: 'inbox',
-    icon: 'inbox',
-    name: '收件箱'
+<script lang="js">
+import { defineComponent, ref } from "vue";
+import { userStore } from "../../stores/index";
+import { RiArrowRightSLine } from "vue-remix-icons";
+
+export default defineComponent({
+  name: "IndexPage",
+  components: {
+    RiArrowRightSLine
   },
-  {
-    code: 'outbox',
-    icon: 'outbox',
-    name: '发件箱'
-  },
-  {
-    code: 'write',
-    icon: 'write',
-    name: '写信'
-  },
-]);
+  setup() {
+
+    const store = userStore();
+    const transitList = ref([
+      {
+        code: "inbox",
+        icon: "inbox",
+        name: "收件箱"
+      },
+      {
+        code: "outbox",
+        icon: "outbox",
+        name: "发件箱"
+      },
+      {
+        code: "write",
+        icon: "write",
+        name: "写信"
+      }
+    ]);
+
+    return {
+      store,
+      transitList
+    };
+
+  }
+});
 </script>
 <style scoped lang="scss">
-  .transit-buttons {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    color: #bacef1;
-    .btn {
+.transit-buttons {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #bacef1;
+
+  .btn {
     color: #bacef1;
     text-decoration: none;
-      position: relative;
-      background: #212534;
-      padding: 15px 20px;
+    position: relative;
+    background: #212534;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+
+    img {
+      width: 25px;
+    }
+
+    .right {
+      position: absolute;
+      right: 20px;
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
-      gap: 30px;
-      img {
-        width: 25px;
-      }
-      .right {
-        position: absolute;
-        right: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        svg {
-          fill: #bacef1;
-        }
+
+      svg {
+        fill: #bacef1;
       }
     }
   }
+}
 </style>
 

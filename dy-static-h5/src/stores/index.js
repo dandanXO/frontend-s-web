@@ -31,6 +31,18 @@ export const userStore = defineStore("userStore", {
     hasToken() {
       return !!SessionStorage.getItem("TOKEN");
     },
+    isApp(){
+      if (
+        (Platform.is.ios &&
+          "standalone" in window.navigator &&
+          window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
+      ) {
+        return true;
+      }else{
+        return false;
+      }
+    },
     setPhone(tel) {
       this.phone = tel;
     },
@@ -109,6 +121,8 @@ export const userStore = defineStore("userStore", {
           this.vip = response.data.vip;
           this.profilePicture = response.data.pictureUrl;
           this.displayName = response.data.displayName;
+          this.phoneVerified = response.data.phoneVerified;
+          this.emailVerified = response.data.emailVerified;
           // this.personalAddress = response.data.personalAddress
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);

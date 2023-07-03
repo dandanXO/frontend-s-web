@@ -26,13 +26,13 @@ export default defineComponent({
           delete allComponents[element];
         });
         const sidParam = FingerprintJS.hashComponents(allComponents);
-          const obj = {
-            identifier: sidParam,
-            affiliateCode: affiliateItem,
-          };          
-          api.post('/memberAccessLog', qs.stringify(obj)).then((res) => {
-            if (res.code===0) {}
-          })
+        const obj = {
+          identifier: sidParam,
+          affiliateCode: affiliateItem,
+        };
+        api.post('/memberAccessLog', qs.stringify(obj)).then((res) => {
+          if (res.code===0) {}
+        })
       })();
     };
     onMounted(() => {

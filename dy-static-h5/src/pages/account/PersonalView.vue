@@ -72,7 +72,6 @@
         :readonly="personalState.memberInfo.birthday ? true : false"
       /> -->
 
-
       <div class="flex items-center no-wrap">
         <q-input
           standout
@@ -89,7 +88,7 @@
           readonly
           style="width: 100%"
         ></q-input>
-        <template v-if="!formDetail.phone">
+        <template v-if="isEditPhone">
           <div class="q-ml-md">
             <q-btn
               size="sm"
@@ -117,7 +116,7 @@
           readonly
           style="width: 100%"
         />
-        <template v-if="!formDetail.email">
+        <template v-if="isEditEmail">
           <div class="q-ml-md">
             <q-btn
               size="sm"
@@ -237,6 +236,11 @@ export default defineComponent({
       formDetail.email = personalState.memberInfo.email;
       formDetail.phone = personalState.memberInfo.phone;
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
+      formDetail.emailVerified = personalState.memberInfo.emailVerified;
+
+      isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
+      isEditBirthday.value = (formDetail.birthday == '') ? true : false;
+      isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
     };
 
     const canEdit = computed(() => {
@@ -310,7 +314,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "An OTP code has been sent to your email.",
+            message: "OTP验证码已发送至您的邮箱。",
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;
@@ -345,7 +349,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "Successfully verified",
+              message: "验证成功",
               icon: "check_circle_outline"
             });
             updateSecurityModalVisible.value = false;
@@ -375,7 +379,7 @@ export default defineComponent({
 
     const captchaRef = ref();
     const showCaptchaDialog = ref(false);
-    const showVerificationTokenInput = ref(false)
+    const showVerificationTokenInput = ref(false);
 
     const updateState = () => {
       const updateInfo = {};
@@ -431,16 +435,16 @@ export default defineComponent({
       const reg = /^\d+$/;
       const { phone } = formDetail;
 
-      const result = '' === phone ? '请验证您的电话号码' : !reg.test(phone) ? '电话号码只允许使用数字' : true;
+      const result = "" === phone ? "请验证您的电话号码" : !reg.test(phone) ? "电话号码只允许使用数字" : true;
 
-      return result
-    }
+      return result;
+    };
 
     const openVerificationDialog = () => {
-      getCode()
+      getCode();
 
-      showCaptchaDialog.value = true
-    }
+      showCaptchaDialog.value = true;
+    };
 
     const onCaptchaSubmit = () => {
       api.post(`/otp/sendSms`, qs.stringify({
@@ -448,23 +452,22 @@ export default defineComponent({
         captchaCode: captchaRef.value,
         codeId: updateSecurityVerified.codeId
       }))
-      .then(res => {
-        let message = res.message || '发送手机验证码成功',
-          color = 'positive'
+        .then(res => {
+          let message = res.message || "发送手机验证码成功",
+            color = "positive";
 
-        if (res.code === 0)  {
-          showCaptchaDialog.value = false
-          showVerificationTokenInput.value = true
-        }
-        else
-          color = 'negative';
+          if (res.code === 0) {
+            showCaptchaDialog.value = false;
+            showVerificationTokenInput.value = true;
+          } else
+            color = "negative";
 
-        if(message)
-          $q.notify({ message, color });
+          if (message)
+            $q.notify({ message, color });
 
-        console.log('onCaptchaSubmit', res)
-      })
-    }
+          console.log("onCaptchaSubmit", res);
+        });
+    };
 
     return {
       searchForm,

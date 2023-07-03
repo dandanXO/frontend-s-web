@@ -22,7 +22,7 @@
           :class="{
             active: index === isCardActive,
             inactive: index > isCardActive,
-            USDT: bc.bankName === 'GCASH',
+            USDT: bc.bankName === 'GCASH'
           }"
           @click="showCard(bc, index)"
           v-for="(bc, index) in personalState.bankCardList"
@@ -118,7 +118,12 @@
           :row-key="(record) => record.bankName"
         ></el-table> -->
 
-        <el-table :data="dataSource" style="width: 100%">
+        <el-table
+          :data="dataSource"
+          style="width: 100%"
+          empty-text="暂无数据"
+          v-loading="tblLoading"
+        >
           <el-table-column
             v-for="tbl in columns"
             :key="tbl.key"
@@ -217,7 +222,10 @@
           />
         </el-form-item> -->
         <el-form-item prop="cardNumber" name="cardNumber">
-          <el-input v-model="bankCardInfo.cardNumber" placeholder="银行卡号" />
+          <el-input
+            v-model="bankCardInfo.cardNumber"
+            :placeholder="isUSDT ? '钱包地址' : '银行卡号'"
+          />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress">
           <el-input
@@ -270,8 +278,10 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
+    const tblLoading = ref(false);
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
+    const isUSDT = ref(false);
     const store = userStore();
     const searchForm = reactive({
       startDate: "",
@@ -319,6 +329,7 @@ export default defineComponent({
     });
     const dataSource = ref();
     const searchRecord = () => {
+      tblLoading.value = true;
       loadUnbindRecord(searchForm).then((response) => {
         if (response.code === 0) {
           dataSource.value = response.data.records
@@ -332,6 +343,7 @@ export default defineComponent({
         console.log(e.message);
         // message.error(e.message, 4);
       });
+      tblLoading.value = false;
     };
 
 
@@ -428,9 +440,11 @@ export default defineComponent({
       bankCardModalState.banks.forEach(element => {
         if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
           banksList.value.push(element);
+          isUSDT.value = false;
         }
         if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
           banksList.value.push(element);
+          isUSDT.value = true;
         }
         if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
           banksList.value.push(element);
@@ -547,6 +561,7 @@ export default defineComponent({
       unbindBankCard,
       showCard,
       isCardActive,
+      isUSDT,
       bankName,
       bankTypes,
       selectBankType,
@@ -556,7 +571,8 @@ export default defineComponent({
       dataSource,
       imgURL,
       pagination,
-      handleCurrentChange
+      handleCurrentChange,
+      tblLoading
     };
   }
 });

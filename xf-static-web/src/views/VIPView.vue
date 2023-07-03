@@ -1,351 +1,406 @@
 <template>
   <div class="vip-container">
     <div class="vip_clude">
-        <div class="vip_topImg">
-            <img src="../assets/images/vip/vip_top.jpg" alt="">
+      <div class="vip_topImg">
+        <img src="../assets/images/vip/vip_top.jpg" alt="" />
+      </div>
+      <div class="vip_level">
+        <div class="level_img">
+          <div
+            @click="!store.token ? (selectedVIP = vip.level) : ''"
+            v-for="(vip, n) in vipList"
+            :key="n"
+          >
+            <img
+              :class="{
+                active: vip.level === store.vip,
+                active: selectedVIP === vip.level
+              }"
+              :src="
+                require('../assets/images/vip/badge/v' + vip.level + '.png')
+              "
+            />
+            <p>VIP {{ vip.level }}</p>
+          </div>
         </div>
-        <div class="vip_level">
-            <div class="level_img">
-              <div @click="!store.token ? selectedVIP = vip.level : ''" v-for="(vip ,n) in vipList" :key="n">
-                <img :class="{ active: vip.level === store.vip , active: selectedVIP === vip.level }" :src="require('../assets/images/vip/badge/v' + (vip.level) + '.png')">
-                <p> VIP {{vip.level}} </p>
+      </div>
+      <div class="vip_link">
+        <img @click="reduce" src="../assets/images/vip/vip_link.png" alt="" />
+        <img @click="plus" src="../assets/images/vip/vip_link.png" alt="" />
+      </div>
+      <div class="vip_lable">
+        <div
+          v-for="(vip, n) in vipList"
+          :key="n"
+          class="lable_class"
+          :style="selectedVIP === vip.level ? 'display:flex' : 'display:none'"
+        >
+          <div class="level_card">
+            <div class="card_title">
+              <p>VIP {{ vip.level }}</p>
+              <img
+                :class="'level' + vip.level + '-icon'"
+                :src="
+                  require('../assets/images/vip/badge/v' + vip.level + '.png')
+                "
+                alt=""
+              />
+            </div>
+            <div class="card_content">
+              <ul>
+                <li>
+                  <p>存款要求</p>
+                  <p>累计存款大于{{ vip.morethan }}元</p>
+                </li>
+                <li>
+                  <p>最高彩金</p>
+                  <p>可领取晋升奖金{{ vip.upgrade }}元</p>
+                </li>
+              </ul>
+              <div class="slogan">尊贵特权&nbsp;&nbsp;&nbsp;&nbsp;会员专享</div>
+              <div class="lever_button">
+                <router-link to="/center/deposit">立即申请</router-link>
               </div>
             </div>
-        </div>
-        <div class="vip_link">
-            <img @click="reduce" src="../assets/images/vip/vip_link.png" alt="">
-            <img @click="plus" src="../assets/images/vip/vip_link.png" alt="">
-        </div>
-        <div class="vip_lable">
-            <div v-for="(vip ,n) in vipList" :key="n" class="lable_class" :style="selectedVIP === vip.level ? 'display:flex' : 'display:none' ">
-                <div class="level_card">
-                    <div class="card_title">
-                        <p>VIP {{ vip.level }}</p>
-                        <img :class="'level'+(vip.level)+'-icon'" :src="require('../assets/images/vip/badge/v' + (vip.level) + '.png')" alt="">
-                    </div>
-                    <div class="card_content">
-                        <ul>
-                            <li>
-                                <p>存款要求</p>
-                                <p>累计存款大于{{ vip.morethan }}元</p>
-                            </li>
-                            <li>
-                                <p>最高彩金</p>
-                                <p>可领取晋升奖金{{ vip.upgrade }}元</p>
-                            </li>
-                        </ul>
-                        <div class="slogan">尊贵特权&nbsp;&nbsp;&nbsp;&nbsp;会员专享</div>
-                        <div class="lever_button">
-                          <router-link to="/center/deposit">立即申请</router-link>
-                        </div>
-                    </div>
-                </div>
-                <div class="level2">
-                    <!-- <img src="style/img/vip/vip_left.png" alt=""> -->
-                </div>
-                <div class="level3">
-                    <h3>福利</h3>
-                    <p class="level_p"><span>晋升奖励：</span><span class="deposit">{{ vip.upgrade }}</span></p>
-                    <p><span>生日奖励：</span>
-                        <span class="water">
-                                
-                                   {{ vip.birthdayBonus }}
-                                
-                            </span>
-                        <button class="btn btn-sm" @click="claimBirthdayBonus(vip)">领取</button>
-
-                    </p>
-                    <span class="purple">晋级自动发放</span>
-                </div>
-                <div class="level4">
-                    <h3>提款</h3>
-                    <p class="level_p"><span>提款次数：</span><span class="draw">{{ vip.drawTimes }}</span></p>
-                    <p><span>提款额度：</span><span class="drawLimit">{{ vip.drawLimit }}</span></p>
-                    <span class="purple">提款秒到</span>
-                </div>
-                <div class="level5">
-                    <h3>要求</h3>
-                    <p class="level_p"><span class="promote">{{ vip.level5 }}</span>
-                    </p>
-                    <span class="red">存款勾选后到账</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="vip_table">
-            <table border="0" cellpadding="0" cellspacing="0" id="vip_detail">
-                    <thead>
-                    <tr><th>VIP等级</th>
-                    <th>存款</th>
-                    <th>晋升奖金(1倍)</th>
-                    <th>生日奖金(1倍)</th>
-                    <th>每月优惠</th>
-                    <th>优惠流水要求</th>
-                    </tr></thead>
-                    
-                    <tbody><tr>
-                        <td>VIP 1</td>
-                        <td>5000</td>
-                        <td>8</td>
-                        <td>0</td>
-                        <td>每月单笔≥500元,返现15%, 最高188元</td>
-                        <td>12倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP2</td>
-                        <td>20000</td>
-                        <td>8</td>
-                        <td>0</td>
-                        <td>每月单笔≥500元,返现15%, 最高258元</td>
-                        <td>12倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP3</td>
-                        <td>200000</td>
-                        <td>38</td>
-                        <td>0</td>
-                        <td>每月单笔≥500元,返现15%, 最高288元</td>
-                        <td>12倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP4</td>
-                        <td>500000</td>
-                        <td>88</td>
-                        <td>0</td>
-                        <td>每月单笔≥1000元,返现25%, 最高388元</td>
-                        <td>15倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP5</td>
-                        <td>2000000</td>
-                        <td>288</td>
-                        <td>188</td>
-                        <td>每月单笔≥1000元,返现25%, 最高588元</td>
-                        <td>15倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP6</td>
-                        <td>5000000</td>
-                        <td>588</td>
-                        <td>388</td>
-                        <td>每月单笔≥1000元,返现25%, 最高688元</td>
-                        <td>18倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP7</td>
-                        <td>8000000</td>
-                        <td>1888</td>
-                        <td>588</td>
-                        <td>每月单笔≥2000元,返现35%, 最高888元</td>
-                        <td>15倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP8</td>
-                        <td>10000000</td>
-                        <td>2888</td>
-                        <td>888</td>
-                        <td>每月单笔≥2000元,返现35%, 最高1288元</td>
-                        <td>18倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP9</td>
-                        <td>20000000</td>
-                        <td>5888</td>
-                        <td>1288</td>
-                        <td>每月单笔≥2000元,返现35%, 最高1888元</td>
-                        <td>18倍</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>VIP10</td>
-                        <td>30000000</td>
-                        <td>18888</td>
-                        <td>1588</td>
-                        <td>每月单笔≥2000元,返现40%, 最高2888元</td>
-                        <td>18倍</td>
-                    </tr>
-                    
-                </tbody></table>
-        </div>
-
-        <div class="vip_table">
-            <table border="0" cellpadding="0" cellspacing="0" >
-                <thead>
-                <tr><th>VIP等级</th>
-                <th>VIP0</th>
-                <th>VIP1</th>
-                <th>VIP2</th>
-                <th>VIP3</th>
-                <th>VIP4</th>
-                <th>VIP5</th>
-                <th>VIP6</th>
-                <th>VIP7</th>
-                <th>VIP8</th>
-                <th>VIP9</th>
-                <th>VIP10</th>
-                </tr></thead>
-                <tbody><tr>
-                    <td>体育返水</td>
-                    <td>0.40%</td>
-                    <td>0.40%</td>
-                    <td>0.40%</td>
-                    <td>0.45%</td>
-                    <td>0.50%</td>
-                    <td>0.55%</td>
-                    <td>0.60%</td>
-                    <td>0.65%</td>
-                    <td>0.70%</td>
-                    <td>0.80%</td>
-                    <td>1.00%</td>
-                </tr>
-                <tr>
-                    <td>电竞返水</td>
-                    <td>0.45%</td>
-                    <td>0.45%</td>
-                    <td>0.50%</td>
-                    <td>0.50%</td>
-                    <td>0.55%</td>
-                    <td>0.60%</td>
-                    <td>0.65%</td>
-                    <td>0.70%</td>
-                    <td>0.75%</td>
-                    <td>0.80%</td>
-                    <td>1.00%</td>
-                </tr>
-                <tr>
-                    <td>真人返水</td>
-                    <td>0.50%</td>
-                    <td>0.50%</td>
-                    <td>0.50%</td>
-                    <td>0.50%</td>
-                    <td>0.55%</td>
-                    <td>0.60%</td>
-                    <td>0.65%</td>
-                    <td>0.70%</td>
-                    <td>0.80%</td>
-                    <td>0.90%</td>
-                    <td>1.00%</td>
-                </tr>
-                <tr>
-                    <td>棋牌返水</td>
-                    <td>0.40%</td>
-                    <td>0.45%</td>
-                    <td>0.50%</td>
-                    <td>0.55%</td>
-                    <td>0.60%</td>
-                    <td>0.65%</td>
-                    <td>0.70%</td>
-                    <td>0.75%</td>
-                    <td>0.80%</td>
-                    <td>0.90%</td>
-                    <td>1.00%</td>
-                </tr>
-                <tr>
-                    <td>电子返水</td>
-                    <td>0.45%</td>
-                    <td>0.45%</td>
-                    <td>0.50%</td>
-                    <td>0.55%</td>
-                    <td>0.60%</td>
-                    <td>0.65%</td>
-                    <td>0.70%</td>
-                    <td>0.80%</td>
-                    <td>0.90%</td>
-                    <td>1.00%</td>
-                    <td>1.20%</td>
-                </tr>
-                <tr>
-                    <td>返水上限</td>
-                    <td>8888</td>
-                    <td>12888</td>
-                    <td>15888</td>
-                    <td>16888</td>
-                    <td>18888</td>
-                    <td>28888</td>
-                    <td>38888</td>
-                    <td>58888</td>
-                    <td>88888</td>
-                    <td>128888</td>
-                    <td>188888</td>
-                </tr>
-            </tbody></table>
-        </div>
-        </div>
-
-        <div class="vip_ruler">
-            <div class="ruler_title">
-                <img src="../assets/images/vip/vip.png" alt="">
-                <h1>规则与条款</h1>
-                <img src="../assets/images/vip/vip.png" alt="">
-            </div>
-            <p>1.晋升标准：用户充值达到相应级别即可晋升相应VIP等级。</p>
-            <p>2.晋升顺序：VIP等级可以越级晋升，每天仅限晋升一级。</p>
-            <p>3.晋级奖金：用户晋级后晋级奖金将自动派发到主账户中，每个级别的晋级奖金每位用户仅能获得一次。</p>
-            <p>4.生日奖金：用户在注册90天内过生日，今年将不能领取生日礼金，另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次。</p>
-            <p>5.奖金流水：晋级奖金、生日奖金领取后需要完成一倍流水后可提款，此活动不可以与其他活动共享。</p>
-            <p>6.每月首充：领取彩金需完成相应流水后可提款，有效投注额仅对已结算并产生输赢结果的投注额进行计算，
-                电竞盘：香港盘0.75以下，欧洲盘1.75以下；
-                香港盘＜0.75以下、欧洲盘＜1.75以下、马来盘＜0.75以下、印尼盘＜-1.3以下、美国盘＜-133以下，串关、走盘，注单取消，对冲等情况都不算有效流水。
+          </div>
+          <div class="level2">
+            <!-- <img src="style/img/vip/vip_left.png" alt=""> -->
+          </div>
+          <div class="level3">
+            <h3>福利</h3>
+            <p class="level_p">
+              <span>晋升奖励：</span>
+              <span class="deposit">{{ vip.upgrade }}</span>
             </p>
-            <p>7.凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。</p>
+            <p>
+              <span>生日奖励：</span>
+              <span class="water">
+                {{ vip.birthdayBonus }}
+              </span>
+              <button
+                class="btn btn-sm"
+                @click="onVIPButtonClick('dy1-vip-monthly')"
+              >
+                领取
+              </button>
+            </p>
+            <span class="purple">晋级自动发放</span>
+          </div>
+          <div class="level4">
+            <h3>提款</h3>
+            <p class="level_p">
+              <span>提款次数：</span>
+              <span class="draw">{{ vip.drawTimes }}</span>
+            </p>
+            <p>
+              <span>提款额度：</span>
+              <span class="drawLimit">{{ vip.drawLimit }}</span>
+            </p>
+            <span class="purple">提款秒到</span>
+          </div>
+          <div class="level5">
+            <h3>要求</h3>
+            <p class="level_p">
+              <span class="promote">{{ vip.level5 }}</span>
+            </p>
+            <span class="red">存款勾选后到账</span>
+          </div>
         </div>
+      </div>
+
+      <div class="vip_table">
+        <table border="0" cellpadding="0" cellspacing="0" id="vip_detail">
+          <thead>
+            <tr>
+              <th>VIP等级</th>
+              <th>存款</th>
+              <th>晋升奖金(1倍)</th>
+              <th>生日奖金(1倍)</th>
+              <th>每月优惠</th>
+              <th>优惠流水要求</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>VIP 1</td>
+              <td>5000</td>
+              <td>8</td>
+              <td>0</td>
+              <td>每月单笔≥500元,返现15%, 最高188元</td>
+              <td>12倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP2</td>
+              <td>20000</td>
+              <td>8</td>
+              <td>0</td>
+              <td>每月单笔≥500元,返现15%, 最高258元</td>
+              <td>12倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP3</td>
+              <td>200000</td>
+              <td>38</td>
+              <td>0</td>
+              <td>每月单笔≥500元,返现15%, 最高288元</td>
+              <td>12倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP4</td>
+              <td>500000</td>
+              <td>88</td>
+              <td>0</td>
+              <td>每月单笔≥1000元,返现25%, 最高388元</td>
+              <td>15倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP5</td>
+              <td>2000000</td>
+              <td>288</td>
+              <td>188</td>
+              <td>每月单笔≥1000元,返现25%, 最高588元</td>
+              <td>15倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP6</td>
+              <td>5000000</td>
+              <td>588</td>
+              <td>388</td>
+              <td>每月单笔≥1000元,返现25%, 最高688元</td>
+              <td>18倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP7</td>
+              <td>8000000</td>
+              <td>1888</td>
+              <td>588</td>
+              <td>每月单笔≥2000元,返现35%, 最高888元</td>
+              <td>15倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP8</td>
+              <td>10000000</td>
+              <td>2888</td>
+              <td>888</td>
+              <td>每月单笔≥2000元,返现35%, 最高1288元</td>
+              <td>18倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP9</td>
+              <td>20000000</td>
+              <td>5888</td>
+              <td>1288</td>
+              <td>每月单笔≥2000元,返现35%, 最高1888元</td>
+              <td>18倍</td>
+            </tr>
+
+            <tr>
+              <td>VIP10</td>
+              <td>30000000</td>
+              <td>18888</td>
+              <td>1588</td>
+              <td>每月单笔≥2000元,返现40%, 最高2888元</td>
+              <td>18倍</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="vip_table">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <thead>
+            <tr>
+              <th>VIP等级</th>
+              <th>VIP0</th>
+              <th>VIP1</th>
+              <th>VIP2</th>
+              <th>VIP3</th>
+              <th>VIP4</th>
+              <th>VIP5</th>
+              <th>VIP6</th>
+              <th>VIP7</th>
+              <th>VIP8</th>
+              <th>VIP9</th>
+              <th>VIP10</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>体育返水</td>
+              <td>0.40%</td>
+              <td>0.40%</td>
+              <td>0.40%</td>
+              <td>0.45%</td>
+              <td>0.50%</td>
+              <td>0.55%</td>
+              <td>0.60%</td>
+              <td>0.65%</td>
+              <td>0.70%</td>
+              <td>0.80%</td>
+              <td>1.00%</td>
+            </tr>
+            <tr>
+              <td>电竞返水</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.50%</td>
+              <td>0.50%</td>
+              <td>0.55%</td>
+              <td>0.60%</td>
+              <td>0.65%</td>
+              <td>0.70%</td>
+              <td>0.75%</td>
+              <td>0.80%</td>
+              <td>1.00%</td>
+            </tr>
+            <tr>
+              <td>真人返水</td>
+              <td>0.50%</td>
+              <td>0.50%</td>
+              <td>0.50%</td>
+              <td>0.50%</td>
+              <td>0.55%</td>
+              <td>0.60%</td>
+              <td>0.65%</td>
+              <td>0.70%</td>
+              <td>0.80%</td>
+              <td>0.90%</td>
+              <td>1.00%</td>
+            </tr>
+            <tr>
+              <td>棋牌返水</td>
+              <td>0.40%</td>
+              <td>0.45%</td>
+              <td>0.50%</td>
+              <td>0.55%</td>
+              <td>0.60%</td>
+              <td>0.65%</td>
+              <td>0.70%</td>
+              <td>0.75%</td>
+              <td>0.80%</td>
+              <td>0.90%</td>
+              <td>1.00%</td>
+            </tr>
+            <tr>
+              <td>电子返水</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.50%</td>
+              <td>0.55%</td>
+              <td>0.60%</td>
+              <td>0.65%</td>
+              <td>0.70%</td>
+              <td>0.80%</td>
+              <td>0.90%</td>
+              <td>1.00%</td>
+              <td>1.20%</td>
+            </tr>
+            <tr>
+              <td>返水上限</td>
+              <td>8888</td>
+              <td>12888</td>
+              <td>15888</td>
+              <td>16888</td>
+              <td>18888</td>
+              <td>28888</td>
+              <td>38888</td>
+              <td>58888</td>
+              <td>88888</td>
+              <td>128888</td>
+              <td>188888</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <div class="vip_ruler">
+      <div class="ruler_title">
+        <img src="../assets/images/vip/vip.png" alt="" />
+        <h1>规则与条款</h1>
+        <img src="../assets/images/vip/vip.png" alt="" />
+      </div>
+      <p>1.晋升标准：用户充值达到相应级别即可晋升相应VIP等级。</p>
+      <p>2.晋升顺序：VIP等级可以越级晋升，每天仅限晋升一级。</p>
+      <p>
+        3.晋级奖金：用户晋级后晋级奖金将自动派发到主账户中，每个级别的晋级奖金每位用户仅能获得一次。
+      </p>
+      <p>
+        4.生日奖金：用户在注册90天内过生日，今年将不能领取生日礼金，另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次。
+      </p>
+      <p>
+        5.奖金流水：晋级奖金、生日奖金领取后需要完成一倍流水后可提款，此活动不可以与其他活动共享。
+      </p>
+      <p>
+        6.每月首充：领取彩金需完成相应流水后可提款，有效投注额仅对已结算并产生输赢结果的投注额进行计算，
+        电竞盘：香港盘0.75以下，欧洲盘1.75以下；
+        香港盘＜0.75以下、欧洲盘＜1.75以下、马来盘＜0.75以下、印尼盘＜-1.3以下、美国盘＜-133以下，串关、走盘，注单取消，对冲等情况都不算有效流水。
+      </p>
+      <p>
+        7.凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。
+      </p>
+    </div>
+  </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
+import { claimBonusItem } from "@/api/index/promo";
 
 export default defineComponent({
   setup() {
     const store = userStore();
     const selectedVIP = ref(1);
+    const btnIsDisabled = ref(false);
     const claimBirthdayBonus = (vip) => {
-      alert(vip.level)
-    }
+      alert(vip.level);
+    };
     const vipList = ref([
       {
         level: 1,
         morethan: 5000,
         upgrade: 8,
-        birthdayBonus: '-',
+        birthdayBonus: "-",
         drawTimes: 3,
-        drawLimit: '10万',
-        level5: '每月单笔≥500元,返现15%,最高188元',
+        drawLimit: "10万",
+        level5: "每月单笔≥500元,返现15%,最高188元"
       },
       {
         level: 2,
         morethan: 20000,
         upgrade: 8,
-        birthdayBonus: '-',
+        birthdayBonus: "-",
         drawTimes: 3,
-        drawLimit: '10万',
-        level5: '每月单笔≥500元,返现15%,最高258元',
+        drawLimit: "10万",
+        level5: "每月单笔≥500元,返现15%,最高258元"
       },
       {
         level: 3,
         morethan: 200000,
         upgrade: 38,
-        birthdayBonus: '-',
+        birthdayBonus: "-",
         drawTimes: 3,
-        drawLimit: '10万',
-        level5: '每月单笔≥500元,返现15%,最高288元',
+        drawLimit: "10万",
+        level5: "每月单笔≥500元,返现15%,最高288元"
       },
       {
         level: 4,
         morethan: 500000,
         upgrade: 88,
-        birthdayBonus: '-',
+        birthdayBonus: "-",
         drawTimes: 6,
-        drawLimit: '15万',
-        level5: '每月单笔≥1000元,返现25%,最高388元',
+        drawLimit: "15万",
+        level5: "每月单笔≥1000元,返现25%,最高388元"
       },
       {
         level: 5,
@@ -353,8 +408,8 @@ export default defineComponent({
         upgrade: 288,
         birthdayBonus: 188,
         drawTimes: 8,
-        drawLimit: '20万',
-        level5: '每月单笔≥1000元,返现25%,最高588元',
+        drawLimit: "20万",
+        level5: "每月单笔≥1000元,返现25%,最高588元"
       },
       {
         level: 6,
@@ -362,8 +417,8 @@ export default defineComponent({
         upgrade: 588,
         birthdayBonus: 388,
         drawTimes: 8,
-        drawLimit: '20万',
-        level5: '每月单笔≥1000元,返现25%,最高688元',
+        drawLimit: "20万",
+        level5: "每月单笔≥1000元,返现25%,最高688元"
       },
       {
         level: 7,
@@ -371,8 +426,8 @@ export default defineComponent({
         upgrade: 1888,
         birthdayBonus: 588,
         drawTimes: 8,
-        drawLimit: '20万',
-        level5: '每月单笔≥2000元,返现35%,最高888元',
+        drawLimit: "20万",
+        level5: "每月单笔≥2000元,返现35%,最高888元"
       },
       {
         level: 8,
@@ -380,8 +435,8 @@ export default defineComponent({
         upgrade: 2888,
         birthdayBonus: 888,
         drawTimes: 10,
-        drawLimit: '30万',
-        level5: '每月单笔≥2000元,返现35%,最高1288元',
+        drawLimit: "30万",
+        level5: "每月单笔≥2000元,返现35%,最高1288元"
       },
       {
         level: 9,
@@ -389,8 +444,8 @@ export default defineComponent({
         upgrade: 5888,
         birthdayBonus: 1288,
         drawTimes: 10,
-        drawLimit: '30万',
-        level5: '每月单笔≥2000元,返现35%,最高1888元',
+        drawLimit: "30万",
+        level5: "每月单笔≥2000元,返现35%,最高1888元"
       },
       {
         level: 10,
@@ -398,31 +453,149 @@ export default defineComponent({
         upgrade: 18888,
         birthdayBonus: 1588,
         drawTimes: 12,
-        drawLimit: '30万',
-        level5: '每月单笔≥2000元,返现40%,最高2888元',
-      },
+        drawLimit: "30万",
+        level5: "每月单笔≥2000元,返现40%,最高2888元"
+      }
     ]);
+
+    const errorCount = ref(0);
+    let countdownInterval;
+
+    const onVIPButtonClick = (bonusItem) => {
+      // Check if the button is already disabled
+      if (localStorage.getItem("vipButtonDisabled") === "true") {
+        const currentTime = new Date().getTime();
+        const expirationTime = parseInt(
+          localStorage.getItem("vipButtonExpirationTime"),
+          10
+        );
+
+        // Check if the expiration time has passed
+        if (currentTime < expirationTime) {
+          return; // Exit the function if the button is still disabled
+        } else {
+          localStorage.removeItem("vipButtonDisabled");
+          localStorage.removeItem("vipButtonExpirationTime");
+          clearInterval(countdownInterval);
+        }
+      }
+
+      if (!store.token) {
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
+          // if you want to disable its autofocus
+          // autofocus: false,
+          center: true,
+          confirmButtonText: "确认",
+          showClose: false,
+          buttonSize: "large"
+        }).then(() => {
+          store.loginPageVisible = true;
+        });
+        return;
+      } else {
+        claimBonusItem(bonusItem)
+          .then((res) => {
+            console.log(res);
+
+            if (res.code === 0) {
+              // Success
+              ElMessageBox.alert(`你已领取 ${res.data.value}`, "系统提示", {
+                confirmButtonText: "OK",
+                type: "success"
+              });
+              location.href = `/center/deposit`;
+            }
+          })
+          .catch((err) => {
+            errorCount.value++;
+            console.log(err);
+            if (errorCount.value >= 3) {
+              // Disable the button after 3 or more errors
+              btnIsDisabled.value = true;
+              const currentTime = new Date().getTime();
+              const expirationTime = currentTime + 30000; // 30 secs in milliseconds
+              localStorage.setItem("vipButtonDisabled", "true");
+              localStorage.setItem(
+                "vipButtonExpirationTime",
+                expirationTime.toString()
+              );
+              // Start the countdown
+              startCountdown(expirationTime);
+              ElMessageBox.alert(`按钮将在30秒后启用`, "系统提示", {
+                confirmButtonText: "确认",
+                buttonSize: "large",
+                showClose: false,
+                center: true
+              });
+            }
+          }); // End catch
+      }
+    };
+
+    // Function to start the countdown
+    const startCountdown = (expirationTime) => {
+      countdownInterval = setInterval(() => {
+        const currentTime = new Date().getTime();
+        const remainingTime = expirationTime - currentTime;
+
+        if (remainingTime > 0) {
+          const seconds = Math.floor(remainingTime / 1000) % 60;
+          if (seconds === 0) {
+            btnIsDisabled.value = false;
+            errorCount.value = 0;
+          }
+        } else {
+          clearInterval(countdownInterval); // Clear the countdown interval
+          // Remove the stored disabled state and expiration time
+          localStorage.removeItem("vipButtonDisabled");
+          localStorage.removeItem("vipButtonExpirationTime");
+        }
+      }, 1000);
+    };
+
+    // Check if the button should be initially disabled after a page refresh
+    if (localStorage.getItem("vipButtonDisabled") === "true") {
+      const currentTime = new Date().getTime();
+      const expirationTime = parseInt(
+        localStorage.getItem("vipButtonExpirationTime"),
+        10
+      );
+
+      // Check if the expiration time has passed
+      if (currentTime < expirationTime) {
+        // Disable the button
+        btnIsDisabled.value = true;
+        // Start the countdown
+        startCountdown(expirationTime);
+      } else {
+        // Remove the stored disabled state and expiration time
+        localStorage.removeItem("vipButtonDisabled");
+        localStorage.removeItem("vipButtonExpirationTime");
+      }
+    }
+
     const reduce = () => {
       if (!store.token && Number(selectedVIP.value > 1)) {
-        selectedVIP.value --
+        selectedVIP.value--;
       }
-    }
+    };
     const plus = () => {
-      
       if (!store.token && Number(selectedVIP.value < 10)) {
-        selectedVIP.value ++
+        selectedVIP.value++;
       }
-    }
+    };
     return {
       vipList,
       claimBirthdayBonus,
       store,
       selectedVIP,
       reduce,
-      plus
-    }
-  },
-})
+      plus,
+      onVIPButtonClick,
+      btnIsDisabled
+    };
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -726,9 +899,11 @@ export default defineComponent({
 .level_img > div > img {
   filter: grayscale(100%);
   margin-top: 12px;
-  margin-left: 2px;
+  // margin-left: 2px;
+  margin-left: 12px;
 }
-.level_img > div > img:hover, .level_img > div > img.active {
+.level_img > div > img:hover,
+.level_img > div > img.active {
   filter: none;
 }
 .level_img > div > p {
@@ -828,7 +1003,7 @@ export default defineComponent({
   background-image: url(../assets/images/vip/badge/money.png);
 }
 .level_card .card_content > ul > li:nth-child(2) {
-    background-image: url(../assets/images/vip/badge/highest.png);
+  background-image: url(../assets/images/vip/badge/highest.png);
   /* background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA39pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoxNzJjYTJiNy05N2RiLWRiNGEtYTFlZS02ODhjY2E2N2MxODUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NjZDMkYxOEFDODEzMTFFQTg1RkVERTgyQTE2MjBGOEIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NjZDMkYxODlDODEzMTFFQTg1RkVERTgyQTE2MjBGOEIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjVjZDk4ZjYyLTI4NWItYmI0ZS1iYmY1LWFiNjY0MjVmNmRlZCIgc3RSZWY6ZG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjk4YzdiNDY0LTU0NWUtMTFlYS05OWQ0LWE5MDkxZDEwM2I1NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PoC9x2gAAASsSURBVHjaPJVvaJdVFMfvufdZf8yGOipWI8ag1Noqo39aFEVOxkyG9CL690KKeiGFFUQFQS8iShKZBWtCaISBveiNLwLtD2JGCEZlYlhIaSEajDWdbc9zz+lz7rP1Y8/vd5977vme7/mec8/k4GevhhhjsBBCFGEtQST6b6+IrJUoDyaJRyqJb2Cu3cZvMH/w4XQoH2nXjuH7laoGMys2A1QtLE4xPqUmmwDujhaJaLcFsQ9wOiliOMc5YJsH6uTrGoJOsv1XAW7qOsSEs7M1WcrvNoKt9iwIcJaYBwi2W6KdCp6JA3Hc1HqyhIc0hH58egFYEaMeJ+Jj4J6qcs4wVmyyXGP8mGxuhZESeTtO4zD9CZTa0XLgHAEl5wVI9DbMHsXPfUvGZNmNdSXMPwW4ATh2ArJZHDSmf0Oy59X0Q43SRElz2luphVhJf8ZMflOxBktV9C3gLoss87NVrpuQozyJZsOAepYvADqeC0gsOrr25ozJI3mhJWaAXjeRPzU074Oa5lljWwbzi6u6aboB3UhqoSPZJ8GqMagF1Uza5IGuHAxR59bsVWRRWkdCj8cCFOYyy96CLDqAqRPg2XuIvBQmU6S5NSaCqpTKezAQ+YsElx4W35sCQqqADFEd7xyX6F3I7sdhAzgHLOTJqmmaNd46EtP+RvWoZS3pxrkHViOAvEPRFtPbh5Okl2H1B3tvYbuMM4fRiULKBK34tahdIJhVdV0PeKXptWNVjOctoanGwpg2vI4u34ZzT2gvz2AjzS3U4hecSVlqidVrGm3C7TmEaZX2gnlXXCGaPOWJ0LYS3d0RVPIlluVN1zGldJpAYxRxPe83ieiVLhM3ciuE9pZu8f4m8+w3GD2r3GQrRdJEE2jbUl5dCxugPeLFRvstSLU5Z9tFds/gfj3BDlGM9yxanu9lZ0p5ugg8VWnOZ3nrI/ISbynzC6O20MRGQpaOKqWvGmtGVdQZHQf4JSRZaKrnpLSeldkRSj3kDhiP0edH/Ob9yMad3L4bOyxdjmGKmk9zdBdAs/i9gkwzuVCXtlOCnPMCO7AHLHta+ngtGq/gXBeMdQ9t+XRu5D5yHkgpHmQoYY87YLODOVGK2QK2U61Nee6ytEw92CL2VrudLPcx3TJA4Qc0uhnNXiSnbzlo7lymYSpToAC7+lbSVorEJKRIIrkE4usRrvhdLGpq8lEaurt3mrO1mq3zQUSQ87g66zJfUZabp6WaPl19zGpZSxleWYvt3sbyONldinS7cRlNQ6t6vaI/I8NyVbsBp/s5eQHgQy5JmRVlXrdj3YOUXctlh8UgPjvZv4qC/srORuyn05pV18JKGa3yHbFvB6sXoEEOwN5OAvEP3jMcKuBaQO0inj7WPgVHebp4P0OvP4tK3ziZqrDxFINf0/A43lvIcj3Vfpj3dZJlLxkdxX6GmZE5ugix+yDyAP16dcmD9uJrEzLs86JQeoC97HP/tvj8zvoJDnyulp9Dx34uzDB7w643M6ItqP0/3P+mcDtZMTrtRONYqQWq2vEoJVOmgxdomtftnNlDJ61EyyEuTn8UW+IZAjsJ7gnevwT9C6Q7Vq5zIcjMRntvv/8EGACe1322fntIUwAAAABJRU5ErkJggg==); */
 }
 .level_card .card_content > ul > li > p:nth-child(1) {
@@ -889,8 +1064,8 @@ export default defineComponent({
   text-align: center;
   font-size: 11px;
   border-radius: 5px;
-    width: 100px;
-    margin: 20px auto 0;
+  width: 100px;
+  margin: 20px auto 0;
   a {
     color: #833824;
     text-decoration: none;
@@ -1094,5 +1269,4 @@ table td {
 .privilege span {
   margin-left: 5px;
 }
-
 </style>

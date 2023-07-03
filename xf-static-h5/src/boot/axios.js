@@ -49,10 +49,10 @@ export default boot(({ app, router }) => {
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide()
       if (res.code === ResponseCode.ERROR_SYSTEM) {
-        return response
+        return res
       }
       if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
-        return response;
+        return res;
       }
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
         location.reload();
