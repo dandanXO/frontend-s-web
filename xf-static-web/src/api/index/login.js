@@ -13,6 +13,12 @@ export function login(loginInfo) {
   return server.REST.post("/member/login", loginInfo);
 }
 
+export function mobileLogin(loginInfo) {
+  const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
+  loginInfo.way = regDevice;
+  return server.REST.post("/member/mobileLogin", loginInfo);
+}
+
 export function logout() {
   return server.REST.post("/session/logout");
 }
