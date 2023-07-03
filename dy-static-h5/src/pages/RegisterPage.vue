@@ -2,6 +2,21 @@
   <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
     <q-input
       standout
+      ref="realNameRef"
+      bg-color="white"
+      hide-bottom-space
+      v-model="regForm.realName"
+      label="姓名"
+      lazy-rules
+      :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/login_name.png" width="20" />
+      </template>
+    </q-input>
+
+    <q-input
+      standout
       bg-color="white"
       ref="loginNameRef"
       hide-bottom-space
@@ -26,10 +41,7 @@
       :type="isPwd ? 'password' : 'text'"
       :rules="[
         (val) => (val && val.length > 0) || '请输入密码',
-        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
-        (val) =>
-          (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) ||
-          '密码安全级别必须至少为好'
+        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
       ]"
     >
       <template v-slot:prepend>
@@ -51,15 +63,17 @@
           'normal-pwd': pwdStrength == 'normal',
           'strong-pwd': pwdStrength == 'strong'
         }"
-        >弱</span
       >
+        弱
+      </span>
       <span
         :class="{
           'normal-pwd': pwdStrength == 'normal',
           'strong-pwd': pwdStrength == 'strong'
         }"
-        >好</span
       >
+        好
+      </span>
       <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
     </div>
 
@@ -91,7 +105,7 @@
       </template>
     </q-input>
 
-    <q-input
+    <!-- <q-input
       standout
       bg-color="white"
       ref="telRef"
@@ -104,9 +118,9 @@
       <template v-slot:prepend>
         <img src="../assets/images/login/telephone.png" width="20" />
       </template>
-    </q-input>
+    </q-input> -->
 
-    <q-input
+    <!-- <q-input
       standout
       bg-color="white"
       ref="emailRef"
@@ -123,7 +137,8 @@
       <template v-slot:prepend>
         <img src="../assets/images/login/email.png" width="20" />
       </template>
-    </q-input>
+    </q-input> -->
+
     <q-input
       standout
       bg-color="white"
@@ -149,7 +164,8 @@
       ref="affiliateCodeRef"
       hide-bottom-space
       v-model="regForm.affiliateCode"
-      label="代理代码"
+      label="推荐码"
+      hint="若不是合营下会员无需填写"
     >
       <template v-slot:prepend>
         <img src="../assets/images/login/login_name.png" width="20" />
@@ -168,14 +184,19 @@
         rounded
       />
     </div>
+
+    <div class="q-pa-md text-center">
+      <router-link class="txt-tip" to="/">先去逛逛</router-link>
+    </div>
   </q-form>
 </template>
 
 <script>
 import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
+import { userStore } from "stores/index";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export default defineComponent({
@@ -187,12 +208,16 @@ export default defineComponent({
       getReferralCode();
     });
     const verificationImg = ref("");
+    const isValidName = () => {
+      const namePattern = /^([\u4e00-\u9fa5]*)$/;
+      return namePattern.test(regForm.realName) || "请输入中文字符";
+    };
     const regForm = reactive({
       loginName: "",
       password: "",
       confirmPwd: "",
-      telephone: "",
-      email: "",
+      // telephone: "",
+      // email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -218,12 +243,14 @@ export default defineComponent({
         regForm.referrer = refCode;
       }
     };
+    const store = userStore();
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    const telRef = ref();
-    const emailRef = ref();
+    // const telRef = ref();
+    // const emailRef = ref();
     const verificationRef = ref();
+    const realNameRef = ref();
     const affiliateCodeRef = ref();
     const $q = useQuasar();
 
@@ -234,12 +261,14 @@ export default defineComponent({
       return emailPattern.test(regForm.email) || "请输入有效电子邮件";
     };
     const router = useRouter();
+    const route = useRoute();
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      telRef.value.validate();
-      emailRef.value.validate();
+      // telRef.value.validate();
+      // emailRef.value.validate();
+      realNameRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: "注册中"
@@ -248,8 +277,9 @@ export default defineComponent({
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
-        telRef.value.hasError ||
-        emailRef.value.hasError ||
+        // telRef.value.hasError ||
+        // emailRef.value.hasError ||
+        realNameRef.value.hasError ||
         verificationRef.value.hasError
       ) {
         $q.loading.hide();
@@ -267,21 +297,37 @@ export default defineComponent({
           const sidParam = FingerprintJS.hashComponents(allComponents);
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
-          if ($q.platform.is.capacitor) {
-            if ($q.platform.is.android) {
-              regForm.regDevice = "ANDROID";
-            } else if ($q.platform.is.ios) {
-              regForm.regDevice = "IOS";
+          if ("standalone" in window.navigator && window.navigator.standalone) {
+            regForm.regDevice = "IOS";
+          } else {
+            regForm.regDevice = Platform.is.mobile ? "H5" : "WEB";
+            if (Platform.is.capacitor) {
+              if (Platform.is.android) {
+                regForm.regDevice = "ANDROID";
+              }
             }
           }
           api
-            .post("/member/register", qs.stringify(regForm))
+            .post("/member/fbRegister", qs.stringify(regForm))
+            // .post("/member/register", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
-                context.emit("changeTab");
+                store.autoLogin(res.data);
+                sessionStorage.removeItem("REFERRAL_CODE");
+                if (store.hasToken()) {
+                  const jumpUrl = route.query.redirect
+                    ? route.query.redirect
+                    : "/";
+                  router.go(jumpUrl);
+                  if (Platform.is.capacitor && Platform.is.ios) {
+                    location.reload();
+                  }
+                }
+                // context.emit("changeTab");
+                // router.push({ path: "/" });
                 $q.notify({
                   color: "positive",
                   position: "top",
@@ -347,12 +393,14 @@ export default defineComponent({
       header: "Register Account",
       regForm,
       verificationImg,
+      isValidName,
       loginNameRef,
       pwdRef,
       confirmPwdRef,
-      telRef,
-      emailRef,
+      // telRef,
+      // emailRef,
       verificationRef,
+      realNameRef,
       onSubmit,
       isValidEmail,
       isPwd: ref(true),
@@ -403,7 +451,7 @@ function charType(num) {
 }
 
 .password-str-div {
-  display: flex;
+  display: none;
   align-items: center;
   margin-top: 3px;
   margin-bottom: 5px;

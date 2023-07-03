@@ -57,8 +57,7 @@
       class="column no-wrap flex-center"
       :img-src="imgURL + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
-    >
-    </q-carousel-slide>
+    ></q-carousel-slide>
   </q-carousel>
   <div class="midd">
     <div class="station-notice-wrapper">
@@ -81,27 +80,35 @@
       <RiUserShared2Line />
     </div> -->
   </div>
+  <!-- {{ store }}-~~~ -->
   <div class="details-container">
     <div class="welcome-bar">
       <div class="welcome-liner">
         欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}
       </div>
+      <div v-if="store.token">
+        <q-badge color="orange" text-color="black" :label="store.vip" />
+        <span class="q-ml-sm">￥{{ store.balance }}</span>
+      </div>
       <!-- <router-link v-if="!store.token" to="/register" class="login">
         <span class="log">注册</span>
       </router-link> -->
-      <router-link v-if="!store.token" to="/login" class="login">
-        <span class="log">请先登录</span>
+      <router-link
+        v-if="!store.token"
+        to="/login?register"
+        class="login with-register"
+      >
+        <span class="log">注册</span>
+      </router-link>
+      <router-link v-if="!store.token" to="/login" class="login with-register">
+        <span class="log">登录</span>
+      </router-link>
+      <router-link v-else to="/account" class="login">
+        <span class="log">已登录</span>
         <span class="user">
           <q-icon name="double_arrow" style="color: #536ee0; font-size: 14px" />
         </span>
       </router-link>
-      <router-link v-else to="/account" class="login"
-        ><span class="log">已登录</span
-        ><span class="user"
-          ><q-icon
-            name="double_arrow"
-            style="color: #536ee0; font-size: 14px" /></span
-      ></router-link>
     </div>
     <div class="details-bar">
       <!-- <div class="message">
@@ -149,8 +156,9 @@
         v-for="(tab, i) in tabs"
         :key="i"
         style="width: calc(100vw / 6)"
-        >{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</swiper-slide
       >
+        {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
+      </swiper-slide>
     </swiper>
     <div class="index-platform-container" style="overflow: hidden">
       <!-- Main Swiper -> pass thumbs swiper instance -->
@@ -165,20 +173,6 @@
         :controller="{ control: secondSwiper }"
         class="secondSwiper"
       >
-        <swiper-slide v-for="(es, i) in esport" :key="i" :class="'esport-' + i">
-          <PlatformBlock
-            @click="playGame(es.name, 'platformType', es.code)"
-            dataType="esport"
-            :data="es"
-          />
-        </swiper-slide>
-        <swiper-slide v-for="(sp, i) in sport" :key="i" :class="'sport-' + i">
-          <PlatformBlock
-            @click="playGame(sp.name, sp.code, sp.gameCode)"
-            dataType="sport"
-            :data="sp"
-          />
-        </swiper-slide>
         <swiper-slide
           v-for="(live, i) in livecasino"
           :key="i"
@@ -191,51 +185,29 @@
               :data="live"
             />
           </template>
-          <PlatformBlock
-            @click="playGame(live.name, live.code, live.gameCode)"
-            dataType="live"
-            :data="live"
-          />
-        </swiper-slide>
-        <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
-          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
+          <template v-else>
             <PlatformBlock
-              @click="playGame(poke.name, poke.code, 'ky_lobby')"
-              dataType="poker"
-              :data="poke"
+              @click="playGame(live.name, live.code, live.gameCode)"
+              dataType="live"
+              :data="live"
             />
           </template>
+        </swiper-slide>
+        <swiper-slide v-for="(sp, i) in sport" :key="i" :class="'sport-' + i">
           <PlatformBlock
-            @click="playGame(poke.name, poke.code, poke.gameCode)"
-            dataType="poker"
-            :data="poke"
+            @click="playGame(sp.name, sp.code, sp.gameCode)"
+            dataType="sport"
+            :data="sp"
           />
         </swiper-slide>
-        <swiper-slide
-          v-for="(lotter, i) in lottery"
-          :key="i"
-          :class="'lottery-' + i"
-        >
-          <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
-            <PlatformBlock
-              @click="playGame(lotter.name, lotter.code, 'imlotto30000')"
-              dataType="lottery"
-              :data="lotter"
-            />
-          </template>
-          <template v-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'">
-            <PlatformBlock
-              @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
-              dataType="lottery"
-              :data="lotter"
-            />
-          </template>
+        <swiper-slide v-for="(es, i) in esport" :key="i" :class="'esport-' + i">
           <PlatformBlock
-            @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
-            dataType="lottery"
-            :data="lotter"
+            @click="playGame(es.name, 'platformType', es.code)"
+            dataType="esport"
+            :data="es"
           />
         </swiper-slide>
+
         <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
           <PlatformBlock dataType="slot" :data="slt" />
         </swiper-slide>
@@ -265,6 +237,50 @@
             dataType="fish"
             :data="fish"
           />
+        </swiper-slide>
+
+        <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
+          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
+            <PlatformBlock
+              @click="playGame(poke.name, poke.code, 'ky_lobby')"
+              dataType="poker"
+              :data="poke"
+            />
+          </template>
+          <PlatformBlock
+            @click="playGame(poke.name, poke.code, poke.gameCode)"
+            dataType="poker"
+            :data="poke"
+          />
+        </swiper-slide>
+        <swiper-slide
+          v-for="(lotter, i) in lottery"
+          :key="i"
+          :class="'lottery-' + i"
+        >
+          <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
+            <PlatformBlock
+              @click="playGame(lotter.name, lotter.code, 'imlotto30000')"
+              dataType="lottery"
+              :data="lotter"
+            />
+          </template>
+          <template
+            v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
+          >
+            <PlatformBlock
+              @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
+              dataType="lottery"
+              :data="lotter"
+            />
+          </template>
+          <template v-else>
+            <PlatformBlock
+              @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
+              dataType="lottery"
+              :data="lotter"
+            />
+          </template>
         </swiper-slide>
       </swiper>
     </div>
@@ -316,6 +332,45 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog
+    width="100%"
+    class="modal-update-div"
+    v-model="isAppUpdateModal"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div class="titles backgroundColor">更新公告</div>
+        </div>
+        <div class="contents">检测到新版本，你是否要更新？</div>
+        <div class="btnsreas">
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate">
+            取消
+          </div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">
+            立即更新
+          </div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isFirstView">
+    <q-card style="width: 100%; max-width: 260px" class="bg-bright text-black">
+      <q-card-section class="q-mb-md">
+        <img
+          src="../assets/images/index/popup-h5.jpg"
+          alt=""
+          class="alert-image"
+        />
+        <div class="close-alert" @click="closeAlert()"></div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -339,6 +394,8 @@ import { Thumbs, Controller } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
+import { App } from "@capacitor/app";
+
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
@@ -354,6 +411,11 @@ export default defineComponent({
     // RiVolumeUpLine,
   },
   setup() {
+    const isFirstView = ref(false);
+    const closeAlert = () => {
+      localStorage.setItem("indexImgTop", new Date().getTime());
+      isFirstView.value = false;
+    };
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
@@ -366,26 +428,27 @@ export default defineComponent({
     };
     const setSelectedSwiper = (tab) => {
       selectedTab.value = tab.name;
-      if (tab.name === "esport") {
+      if (tab.name === "live") {
         firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
         firstSwiper.value?.slideTo(3, 500);
       }
-      if (tab.name === "live") {
+      if (tab.name === "esport") {
         firstSwiper.value?.slideTo(4, 500);
       }
+      if (tab.name === "slot") {
+        firstSwiper.value?.slideTo(6, 500);
+      }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(7, 500);
+        firstSwiper.value?.slideTo(16, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(9, 500);
+        firstSwiper.value?.slideTo(18, 500);
       }
-      if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(12, 500);
-      }
+
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(14, 500);
+        firstSwiper.value?.slideTo(6, 500);
       }
     };
     const onSlideChange = (swiper) => {
@@ -417,13 +480,13 @@ export default defineComponent({
         }
       }
     };
-    const selectedTab = ref("esport");
+    const selectedTab = ref("live");
     const tabs = ref([
       {
-        name: "esport",
-        icon: "esport",
-        label: "电竞",
-        labelact: "电竞赛事"
+        name: "live",
+        icon: "live",
+        label: "真人",
+        labelact: "真人娱乐"
       },
       {
         name: "sport",
@@ -432,10 +495,16 @@ export default defineComponent({
         labelact: "体育赛事"
       },
       {
-        name: "live",
-        icon: "live",
-        label: "真人",
-        labelact: "真人娱乐"
+        name: "esport",
+        icon: "esport",
+        label: "电竞",
+        labelact: "电竞赛事"
+      },
+      {
+        name: "slot",
+        icon: "slot",
+        label: "电游",
+        labelact: "电子/捕鱼"
       },
       {
         name: "poker",
@@ -448,12 +517,6 @@ export default defineComponent({
         icon: "lottery",
         label: "彩票",
         labelact: "彩票游戏"
-      },
-      {
-        name: "slot",
-        icon: "slot",
-        label: "电游",
-        labelact: "电子/捕鱼"
       }
     ]);
     const esport = ref([]);
@@ -499,6 +562,7 @@ export default defineComponent({
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
+
     function loadData() {
       api
         .get("/promo/banner?category=HOME")
@@ -524,6 +588,7 @@ export default defineComponent({
           // });
         });
     }
+
     const platforms = ref([]);
     const selectedPlatId = ref();
     const selectedPlat = ref(platforms.value[0]);
@@ -548,13 +613,17 @@ export default defineComponent({
         .then((data) => {
           var pf = data;
           pf.forEach((element) => {
-            if (element.gameType.includes("ESPORT")) {
+            const platTypes = element.gameType.split(",");
+            if (platTypes.indexOf("ESPORT") > -1) {
               var espObj = Object.assign({}, element);
               if (espObj.code === "TFGaming") {
                 espObj.title = "东赢电竞";
               }
               if (espObj.code === "IA") {
                 espObj.title = "小艾电竞";
+              }
+              if (espObj.code === "IMES") {
+                espObj.title = "IM电竞";
               }
               if (!espObj.title) {
                 espObj.title = espObj.code + "电竞";
@@ -563,9 +632,7 @@ export default defineComponent({
               espObj.subtitle = "电竞赛事";
               esport.value.push(espObj);
             }
-            if (
-              element.gameType.includes("SPORT,ESPORT")
-            ) {
+            if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
               if (spObj.code === "IM") {
                 spObj.title = "IM体育";
@@ -583,176 +650,42 @@ export default defineComponent({
               spObj.subtitle = "体育赛事";
               sport.value.push(spObj);
             }
-            if (element.gameType.includes("LIVE")) {
+            if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
               liveObj.title = liveObj.name + " 真人";
               liveObj.icon = "live";
               liveObj.subtitle = "真人娱乐";
               livecasino.value.push(liveObj);
             }
-            if (element.gameType.includes("POKER")) {
+            if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
               pokerObj.title = pokerObj.name + " 棋牌";
               pokerObj.icon = "poker";
               pokerObj.subtitle = "棋牌娱乐";
               poker.value.push(pokerObj);
             }
-            if (element.gameType.includes("LOTTERY")) {
+            if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
               lottObj.title = lottObj.name + " 彩票";
               lottObj.icon = "lottery";
               lottObj.subtitle = "彩票游戏";
               lottery.value.push(lottObj);
             }
-            if (element.gameType.includes("SLOT")) {
+            if (platTypes.indexOf("SLOT") > -1) {
               var slotObj = Object.assign({}, element);
               slotObj.title = slotObj.name + " 电子";
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
               slot.value.push(slotObj);
             }
-            if (element.gameType.includes("FISH")) {
+            if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
               fishObj.title = fishObj.name + " 捕鱼";
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
               fishing.value.push(fishObj);
             }
-            // if (element.gameType.includes("POKER")) {
-            //   if (element.code === 'KYDY') {
-            //     element.gameCode = 'ky_lobby';
-            //   }
-            //   element.title = e.name + ' 棋牌'
-            //   element.icon = 'poker'
-            //   element.subtitle = '棋牌娱乐'
-            //   poker.value.push(element);
-            // }
-            // if (element.gameType.includes("LOTTERY")) {
-            //   element.title = element.name + ' 彩票'
-            //   element.icon = 'lottery'
-            //   element.subtitle = '彩票游戏'
-            //   lottery.value.push(element);
-            // }
-            // if (element.gameType.includes("SLOT")) {
-            //   element.title = element.name + ' 电子'
-            //   element.icon = 'slot'
-            //   element.subtitle = '电子游戏'
-            //   slot.value.push(element);
-            // }
-            // if (element.gameType.includes("FISH")) {
-            //   element.title = element.name + ' 捕鱼'
-            //   element.icon = 'fish'
-            //   element.subtitle = '捕鱼游戏'
-            //   fishing.value.push(element);
-            // }
           });
-          // esport.value.forEach(e => {
-          //   e.icon = 'esport'
-          //   e.title = '东赢电竞'
-          //   e.subtitle = '电竞赛事'
-          // });
-          // sport.value.forEach(e => {
-          //   if (e.code === 'IM') {
-          //     e.title = 'IM体育'
-          //   }
-          //   if (e.code === 'IA') {
-          //     e.title = '小艾体育'
-          //   }
-          //   if (e.code === 'CR') {
-          //     e.title = 'CR体育'
-          //   }
-          //   e.icon = 'sport'
-          //   e.subtitle = '体育赛事'
-          // });
-          // livecasino.value.forEach(e => {
-          //   e.title = e.name + ' 真人'
-          //   e.icon = 'live'
-          //   e.subtitle = '真人娱乐'
-          // });
-          //   poker.value.forEach(e => {
-          //     if (e.code === 'KYDY') {
-          //       e.gameCode = 'ky_lobby';
-          //     }
-          //   e.title = e.name + ' 棋牌'
-          //   e.icon = 'poker'
-          //   e.subtitle = '棋牌娱乐'
-          // });
-          // lottery.value.forEach(element => {
-          //   element.title = element.name + ' 彩票'
-          //   element.icon = 'lottery'
-          //   element.subtitle = '彩票游戏'
-          // });
-          // slot.value.forEach(element => {
-          //   element.title = element.name + ' 电子'
-          //   element.icon = 'slot'
-          //   element.subtitle = '电子游戏'
-          // });
-          // fishing.value.forEach(element => {
-          //   element.title = element.name + ' 捕鱼'
-          //   element.icon = 'fish'
-          //   element.subtitle = '捕鱼游戏'
-          // });
-          // });
-          // sport.value = platforms.filter(element => element.gameType.includes("SPORT") && !element.gameType.includes("ESPORT"));
-          // sport.value.forEach(element => {
-          //   if (element.code === 'IM') {
-          //     element.title = 'IM体育'
-          //   }
-          //   if (element.code === 'IA') {
-          //     element.title = '小艾体育'
-          //   }
-          //   if (element.code === 'CR') {
-          //     element.title = 'CR体育'
-          //   }
-          //   element.icon = 'sport'
-          //   element.subtitle = '体育赛事'
-          // });
-          // livecasino.value = platforms.filter(element => element.gameType.includes("LIVE"));
-          // livecasino.value.forEach(element => {
-          //   element.title = element.name + ' 真人'
-          //   element.icon = 'live'
-          //   element.subtitle = '真人娱乐'
-          // });
-          // poker.value = platforms.filter(element => element.gameType.includes("POKER"));
-          // poker.value.forEach(element => {
-          //   element.title = element.name + ' 棋牌'
-          //   element.icon = 'poker'
-          //   element.subtitle = '棋牌娱乐'
-          // });
-          // lottery.value = platforms.filter(element => element.gameType.includes("LOTTERY"));
-          // lottery.value.forEach(element => {
-          //   element.title = element.name + ' 彩票'
-          //   element.icon = 'lottery'
-          //   element.subtitle = '彩票游戏'
-          // });
-          // slot.value = platforms.filter(element => element.gameType.includes("SLOT"));
-          // slot.value.forEach(element => {
-          //   element.title = element.name + ' 电子'
-          //   element.icon = 'slot'
-          //   element.subtitle = '电子游戏'
-          // });
-          // fishing.value = platforms.filter(element => element.gameType.includes("FISH"));
-          // fishing.value.forEach(element => {
-          //   element.title = element.name + ' 捕鱼'
-          //   element.icon = 'fish'
-          //   element.subtitle = '捕鱼游戏'
-          // });
-          // platforms.value = data
-          // platforms.value = data.filter(element => element.gameType.includes("SLOT"));
-          // platforms.value.forEach((e, i) => {
-          //   if (e.code === 'AWS') {
-          //     platforms.value.splice(i, 1)
-          //   }
-          // });
-          // if (!route.query.platform) {
-          //   switchPlat(platforms.value[0]);
-          // } else {
-          //   platforms.value.forEach(element => {
-          //     if (route.query.platform === element.code) {
-          //       switchPlat(element)
-          //     }
-          //   });
-          // }
         })
         .catch((err) => {
           // isLoading.value= false;
@@ -813,11 +746,88 @@ export default defineComponent({
       const redirectU = "/promo?name=" + banner.redirectUrl;
       router.push(`${redirectU}`);
     };
+
+    const download_url = ref("");
+    const isAppUpdateModal = ref(false);
+    const getVersionNo = async () => {
+      // console.log(Platform);
+      // alert("Capacitor" + Platform.is.capacitor);
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        // const info = {
+        //   version: "1.0.1"
+        // };
+        console.log("App Info");
+        console.log(info);
+        // alert(info.version);
+        var current_version = parseInt(
+          info.version.replaceAll(".", "") + info.build
+        );
+        console.log(current_version);
+        // info.version && info.build
+        const appType = "ALL";
+        const device = Platform.is.android ? "ANDROID" : "IOS";
+        const res = await api.get(
+          `/config/appVersionAndUrl?type=${appType}&device=${device}`
+        );
+        // console.log(res);
+        if (res.code === 0) {
+          var version_info = res.data.version;
+          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+          download_url.value = res.data.url;
+
+          console.log(latest_ver_no);
+          // alert(latest_ver_no);
+          // console.log(download_url.value);
+          if (latest_ver_no > current_version) {
+            console.log("Need to Updat");
+            isAppUpdateModal.value = true;
+          }
+        }
+      }
+    };
+
+    const openDownloadPage = () => {
+      console.log("open Page");
+      window.open(download_url.value, "_system");
+      isAppUpdateModal.value = false;
+    };
+    const cancelUpdate = () => {
+      isAppUpdateModal.value = false;
+    };
+
+    const isiOS = () => {
+      return (
+        [
+          "iPad Simulator",
+          "iPhone Simulator",
+          "iPod Simulator",
+          "iPad",
+          "iPhone",
+          "iPod"
+        ].includes(navigator.platform) ||
+        // iPad on iOS 13 detection
+        (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+      );
+    };
+
+    const checkShowImgTop = () => {
+      const lastTime = localStorage.getItem("indexImgTop");
+      if (lastTime) {
+        const diff = new Date().getTime() - Number(lastTime);
+        if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
+      } else {
+        isFirstView.value = true;
+      }
+    };
+
     onMounted(() => {
+      checkShowImgTop();
       getPlatList();
       loadData();
       loadAnnouncement();
       checkPlatform();
+      getVersionNo();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -873,7 +883,12 @@ export default defineComponent({
       secondSwiper,
       setFirstSwiper,
       setSecondSwiper,
-      setSelectedSwiper
+      setSelectedSwiper,
+      isFirstView,
+      closeAlert,
+      isAppUpdateModal,
+      cancelUpdate,
+      openDownloadPage
     };
   }
 });
@@ -881,9 +896,10 @@ export default defineComponent({
 <style scoped lang="scss">
 .secondSwiper {
   height: calc(100vh - 410px);
-  padding-bottom: 100px;
+  padding-bottom: 200px;
   padding-top: 25px;
 }
+
 :deep(.secondSwiper .swiper-wrapper) {
   .swiper-slide {
     // height: 120px;
@@ -898,36 +914,44 @@ export default defineComponent({
     min-height: 95px;
     padding-top: 0;
     margin-bottom: 5px;
+
     a {
       display: block;
     }
+
     img {
       width: 100%;
     }
+
     &:first-child {
       // padding-top: 65px;
       // margin-top: -40px;
       // padding-top: 30px;
     }
+
     &-active {
       // padding-top: 30px;
     }
   }
 }
+
 .swiper-container {
   position: relative;
   background: #d2d2de;
+
   .firstSwiper {
     margin-bottom: -30px;
     padding-bottom: 10px;
     z-index: 999;
     text-align: center;
+
     .swiper-slide {
       // background: #23263c;
       background: #ffffff;
       padding: 8px 5px 2px;
       max-width: 60px;
       cursor: pointer;
+
       &.tbact {
         background: url("../assets/images/index/game_tab_active.png") no-repeat
           center center;
@@ -939,6 +963,101 @@ export default defineComponent({
     }
   }
 }
+
+.modal-update-div {
+  .modalcontent {
+    background: #fff;
+    height: 232px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px 0px 16px;
+
+    .headers {
+      width: 100%;
+      box-sizing: border-box;
+      height: 37px;
+      line-height: 37px;
+      background: #1976d2;
+      color: #fff;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .contents {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      text-align: center;
+
+      .contentfonts {
+        text-align: center;
+        color: #333;
+        font-size: 16px;
+        margin: 37px 0 20.5px 0;
+      }
+
+      .inputs {
+        width: 292px;
+        height: 36px;
+        border-radius: 4px 4px;
+        border: 1px solid #666;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding-left: 20px;
+
+        .van-field__control {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .btnsreas {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-top: 23.5px;
+
+      .cacnels {
+        flex: 1;
+        background: #f7fcfd;
+        box-sizing: border-box;
+        color: #1976d2;
+        border: 1px solid #1976d2;
+        border-radius: 6px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: 14px;
+        margin-right: 8px;
+      }
+
+      .confirmsbtns {
+        flex: 1;
+        box-sizing: border-box;
+        border-radius: 6px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        color: #fff;
+        background: #1976d2;
+        letter-spacing: 1px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 .download-top-container {
   .download-top-box {
@@ -948,14 +1067,17 @@ export default defineComponent({
     align-items: center;
     gap: 10px;
     background: #ffffff;
+
     .q-icon {
       font-size: 24px;
       color: #999;
     }
+
     .headicon {
       // flex: 1;
       // width: 5%;
     }
+
     .download-txt-container {
       flex: 5;
       font-size: 0.7rem;
@@ -963,16 +1085,19 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       color: #999;
+
       .download-title {
         font-size: 0.8rem;
         color: #666;
         margin-bottom: 4px;
       }
     }
+
     .buttons {
       display: flex;
       gap: 5px;
     }
+
     .top-btn {
       background-image: linear-gradient(90deg, #3379f5 0, #77bbfc 100%),
         linear-gradient(#5b80e7, #5b80e7);
@@ -985,6 +1110,7 @@ export default defineComponent({
     }
   }
 }
+
 .midd {
   // display: flex;
   // justify-content: center;
@@ -996,6 +1122,7 @@ export default defineComponent({
   position: relative;
   border-radius: 15px 15px 0 0;
   overflow: hidden;
+
   .station-notice-wrapper {
     display: flex;
     background: rgba(44, 44, 44, 0.7);
@@ -1006,22 +1133,26 @@ export default defineComponent({
     padding: 5px 10px;
     justify-content: center;
     align-items: center;
+
     .volume {
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
     span {
       margin-right: 10px;
       cursor: pointer;
       color: #000;
     }
+
     .notice {
       img {
         width: 30px;
       }
     }
   }
+
   .share {
     background-image: linear-gradient(to right, #de4545, #db7e42);
     padding: 10px;
@@ -1039,6 +1170,7 @@ export default defineComponent({
   width: 100%;
   background-size: 100% 132px;
 }
+
 .welcome-bar {
   display: flex;
   padding: 10px;
@@ -1049,16 +1181,20 @@ export default defineComponent({
   align-items: center;
   color: #000;
   font-size: 12px;
+
   .logo {
     flex: 1;
     height: 25px;
+
     img {
       height: 100%;
     }
   }
+
   .welcome-liner {
     flex: 3;
   }
+
   .login {
     flex: 2;
     display: flex;
@@ -1067,6 +1203,7 @@ export default defineComponent({
     gap: 12px;
     text-decoration: none;
     color: #000;
+
     .user {
       background: #ffffff;
       padding: 0px 2px;
@@ -1074,6 +1211,7 @@ export default defineComponent({
     }
   }
 }
+
 .details-bar {
   gap: 10px;
   // background-color: #1a1c28;
@@ -1081,6 +1219,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   .message {
     flex: 1;
     padding: 10px;
@@ -1088,11 +1227,13 @@ export default defineComponent({
     color: #000;
     font-size: 16px;
   }
+
   .menulist {
     flex: 4;
     display: flex;
     justify-content: space-evenly;
     gap: 10px;
+
     .men {
       text-decoration: none;
       color: #000000;
@@ -1100,14 +1241,17 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
+
       img {
         width: 30px;
       }
     }
   }
 }
+
 .index-platform-container {
   position: relative;
+
   :deep(.q-splitter__panel.q-splitter__before) {
     position: absolute;
     top: 0;
@@ -1115,9 +1259,11 @@ export default defineComponent({
     top: 0;
     z-index: 99;
   }
+
   .q-dark {
     background: none;
   }
+
   .q-tab-panel {
     padding: 0px;
   }
@@ -1136,19 +1282,23 @@ export default defineComponent({
       display: flex;
       align-items: center;
       padding: 3px 0;
+
       &--active {
         background-image: linear-gradient(0deg, #07404b 0, #058096 100%),
           linear-gradient(#2d879c, #2d879c);
         color: #fff;
       }
     }
+
     .q-tab-panel {
       padding: 5px;
     }
   }
+
   :deep(.q-tab--active .q-tab__indicator) {
     display: none;
   }
+
   .q-tabs--horizontal {
     margin: 0 5px 0 0;
 
@@ -1162,6 +1312,7 @@ export default defineComponent({
       display: flex;
       align-items: center;
       padding: 3px 0;
+
       &--active {
         background-image: unset;
         // background-image: linear-gradient(0deg,#07404b 0,#058096 100%),linear-gradient(#2d879c,#2d879c);
@@ -1169,32 +1320,40 @@ export default defineComponent({
         color: #fff;
       }
     }
+
     .q-tab-panel {
       padding: 5px;
     }
   }
 }
+
 .q-tab--active .q-tab__indicator {
   background: #ffffff;
   top: 0;
 }
+
 .q-tab-panel {
   .tabitems {
     display: grid;
+
     img {
       width: 100%;
       display: block;
     }
+
     &.quarter {
       grid-template-columns: repeat(4, 1fr);
       padding-top: 30px;
     }
+
     &.middle {
       gap: 10px;
     }
+
     &.five {
       grid-template-columns: repeat(2, 1fr);
       gap: 5px;
+
       > div:first-child {
         grid-column-end: 3;
         grid-column-start: 1;
@@ -1202,6 +1361,7 @@ export default defineComponent({
     }
   }
 }
+
 @media (max-width: 400px) {
   .grid {
     .q-card {
@@ -1217,5 +1377,31 @@ export default defineComponent({
 <style>
 .marquee-text-wrap span {
   color: #ffffff !important;
+}
+
+.alert-image {
+  width: 100%;
+  margin: auto;
+}
+
+.close-alert {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+}
+
+.q-card__section.q-card__section--vert.q-mb-md {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.login.with-register {
+  font-size: 16px;
+  font-weight: bold;
 }
 </style>

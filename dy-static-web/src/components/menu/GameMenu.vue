@@ -34,8 +34,8 @@ export default defineComponent({
         { code: "PTDY", icon: "pt", label: "PT" },
         { code: "AG", icon: "ag", label: "AG" },
         { code: "BBINDY", icon: "bbin", label: "BBIN" },
-        { code: "CQ9", icon: "cq", label: "CQ" },
-        { code: "AMEBA", icon: "mg", label: "MG" },
+        // { code: "CQ9", icon: "cq", label: "CQ" },
+        // { code: "AMEBA", icon: "mg", label: "MG" },
         ],
     }),
     setup() {

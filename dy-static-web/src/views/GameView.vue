@@ -365,7 +365,7 @@ export default defineComponent({
       background-position: center center;
       &.isDesktop {
         display: block;
-        height: 430px;
+        height: 500px;
       }
       &.isMobile {
         display: none;

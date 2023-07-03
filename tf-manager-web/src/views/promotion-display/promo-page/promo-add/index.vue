@@ -78,6 +78,70 @@
         </el-row>
       </el-form-item>
     </el-row>
+	<el-row>
+      <el-form-item :label="t('fields.desktopBanner')" prop="desktopBannerUrl">
+        <el-row :gutter="5">
+          <el-col :span="20">
+            <el-input
+              :readonly="true"
+              v-model="form.desktopBannerUrl"
+              class="image-input"
+            />
+          </el-col>
+          <el-col :span="2">
+            <!-- eslint-disable -->
+            <input
+              id="uploadDesktopBannerFile"
+              type="file"
+              ref="inputDesktopBanner"
+              style="display: none"
+              accept="image/*"
+              @change="attachDesktopBanner"
+            />
+            <el-button
+              icon="el-icon-upload"
+              size="mini"
+              type="success"
+              @click="$refs.inputDesktopBanner.click()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-row>
+    <el-row>
+      <el-form-item :label="t('fields.mobileBanner')" prop="mobileBannerUrl">
+        <el-row :gutter="5">
+          <el-col :span="20">
+            <el-input
+              :readonly="true"
+              v-model="form.mobileBannerUrl"
+              class="image-input"
+            />
+          </el-col>
+          <el-col :span="2">
+            <!-- eslint-disable -->
+            <input
+              id="uploadMobileBannerFile"
+              type="file"
+              ref="inputMobileBanner"
+              style="display: none"
+              accept="image/*"
+              @change="attachMobileBanner"
+            />
+            <el-button
+              icon="el-icon-upload"
+              size="mini"
+              type="success"
+              @click="$refs.inputMobileBanner.click()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-row>
     <el-row>
       <el-form-item :label="t('fields.redirect')" prop="redirectUrl">
         <el-input v-model="form.redirectUrl" class="form-input" />
@@ -207,6 +271,8 @@ const form = reactive({
   imgUrl: null,
   desktopImgUrl: null,
   mobileImgUrl: null,
+  desktopBannerUrl: null,
+  mobileBannerUrl: null,
   backgroundImgUrl: null,
   redirectUrl: null,
   siteId: null,
@@ -238,6 +304,8 @@ const formRules = reactive({
   title: [required(t('message.validateTitleRequired'))],
   desktopImgUrl: [required(t('message.validateDesktopImageRequired'))],
   mobileImgUrl: [required(t('message.validateMobileImageRequired'))],
+  desktopBannerUrl: [required(t('message.validateDesktopBannerRequired'))],
+  mobileBannerUrl: [required(t('message.validateMobileBannerRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
   labelType: [required(t('message.validateLabelRequired'))],
   promoType: [required(t('message.validatePromoTypeRequired'))],
@@ -374,6 +442,24 @@ async function attachMobileImg(event) {
   const data = await attachPhoto(event)
   if (data.code === 0) {
     form.mobileImgUrl = data.data
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+async function attachDesktopBanner(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    form.desktopBannerUrl = data.data
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+async function attachMobileBanner(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    form.mobileBannerUrl = data.data
   } else {
     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
   }

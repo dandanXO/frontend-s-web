@@ -25,7 +25,7 @@ export function updateAccount(updateInfo) {
 
 const recordUrl = {
   deposit: "/session/member/deposit",
-  // transfer: "/session/member/betRecord",
+  transfer: "/session/member/transfer",
   turnover: "/session/member/moneyChange",
   withdraw: "/session/member/withdraw",
   rebates: "/session/member/privilege",
@@ -82,11 +82,11 @@ export function deleteBankCard(cardId) {
 }
 
 export function sendEmail(emailInfo) {
-  return server.REST.post("/otp/sendEmail", emailInfo);
+  return server.REST.post("/otp/sendNewEmail", emailInfo);
 }
 
 export function verifyEmail(emailInfo) {
-  return server.REST.post("/otp/verifyEmail", emailInfo);
+  return server.REST.post("/session/verifyAndUpdateEmail", emailInfo);
 }
 
 export function saveFinanceFeedback(reminderInfo) {
@@ -100,3 +100,7 @@ export function getVerifyingFeedbackCount(data) {
 export function sendSms(telephoneInfo) {
   return server.REST.post("/otp/sendSms", telephoneInfo);
 }
+export function verifySms(telephoneInfo) {
+  return server.REST.post("/session/verifyAndUpdatePhone", telephoneInfo);
+}
+

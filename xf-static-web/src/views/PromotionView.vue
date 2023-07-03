@@ -1,7 +1,7 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
-      <div v-if="banner.desktopImgUrl" class="banner-container">
+      <!-- <div v-if="banner.desktopImgUrl" class="banner-container"> -->
         <!-- <div
           class="promo-bg isDesktop"
           :style="
@@ -17,7 +17,7 @@
         <!-- <div class="promo-bg">
           <img src="../assets/promo/bg-top.jpg">
         </div> -->
-      </div>
+      <!-- </div> -->
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
           <div class="type-list">

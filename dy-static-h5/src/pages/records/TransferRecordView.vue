@@ -1,13 +1,17 @@
 <template>
-    <div class="table-record">
-        <RecordComponent :loading="visible" :list="tableData" :headers="tableHeaders" />
-    </div>
+  <div class="table-record">
+    <RecordComponent
+      :loading="visible"
+      :list="tableData"
+      :headers="tableHeaders"
+    />
+  </div>
 </template>
 <script lang="js">
-import {defineComponent, onMounted, ref} from "vue"
-import RecordComponent from "../../components/RecordComponent.vue"
+import { defineComponent, onMounted, ref } from "vue";
+import RecordComponent from "../../components/RecordComponent.vue";
 import moment from "moment";
-import {api} from "boot/axios";
+import { api } from "boot/axios";
 
 export default defineComponent({
   components: {
@@ -21,20 +25,20 @@ export default defineComponent({
 
       visible.value = true;
       let paramData = {
-        "startDate": moment().add(-7, 'days').format("YYYY-MM-DD"),
+        "startDate": moment().add(-7, "days").format("YYYY-MM-DD"),
         "endDate": moment().format("YYYY-MM-DD")
-      }
+      };
 
-      api.get("/session/member/moneyChange", {
+      api.get("/session/member/transfer", {
           params: paramData
-        },
+        }
       ).then((res) => {
         console.log(res);
-        tableData.value= res.data.records;
+        tableData.value = res.data.records;
 
-      }).finally(()=>{
+      }).finally(() => {
         visible.value = false;
-      })
+      });
 
       // tableData.value = [{
       //   amount: 50,
@@ -57,48 +61,53 @@ export default defineComponent({
       //   updateTime: null
       //
       // },]
-    }
+    };
     const tableHeaders = ([
       {
-        key: 'orderNo',
-        label: '单号'
+        key: "serialNumber",
+        label: "转账编码"
       },
       {
-        key: 'statusText',
-        label: '状态'
+        key: "type",
+        label: "账变类型"
       },
       {
-        key: 'typeText',
-        label: '类型'
+        key: "platform",
+        label: "游戏平台"
       },
       {
-        key: 'feedbackTime',
-        label: '催单时间',
+        key: "amount",
+        label: "金额"
       },
       {
-        key: 'financeRemark',
-        label: '回复'
+        key: "status",
+        label: "状态"
+      },
+      {
+        key: "transferDate",
+        label: "时间"
       }
-    ])
+
+    ]);
     onMounted(() => {
-      loadDepositTable()
-    })
+      loadDepositTable();
+    });
 
     return {
       tableData,
       tableHeaders,
       visible
-    }
+    };
   }
 });
-
 </script>
 <style scoped lang="scss">
-    .table-record {
-        width: 100%;
-        gap: 10px;
-        .label {
-            color: #bacef1;
-        }
-    }
+.table-record {
+  width: 100%;
+  gap: 10px;
+
+  .label {
+    color: #bacef1;
+  }
+}
 </style>

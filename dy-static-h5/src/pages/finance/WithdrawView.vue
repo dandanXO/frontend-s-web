@@ -221,16 +221,34 @@
         </q-form>
       </div>
     </div>
+
+    <q-dialog v-model="hasWithdrawCard" persistent>
+      <q-card style="width: 100%; padding: 10px">
+        <q-card-section class="q-mb-md">
+          <div class="text-h6 text-center">请先绑定银行卡</div>
+        </q-card-section>
+
+        <div class="flex flex-center">
+          <router-link to="/account">
+            <q-btn class="q-mr-md" label="取消" href="/account" />
+          </router-link>
+          <router-link to="/account/withdraw">
+            <q-btn color="dyblue" label="绑定" />
+          </router-link>
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script lang="js">
 /* eslint-disable */
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
-import AcctBal from "../../components/AcctBal.vue"
+import AcctBal from "../../components/AcctBal.vue";
+
 export default defineComponent({
   name: "WithdrawView",
   components: { AcctBal },
@@ -242,53 +260,57 @@ export default defineComponent({
     const cardRef = ref();
     const activeItem = ref(0);
     const withdrawState = reactive({
-      bankCardList: [],
+      bankCardList: []
     });
-    const qs = require("qs")
+    const qs = require("qs");
     const withdrawInfo = reactive({
       cardId: undefined,
-      amount: "",
+      amount: ""
+    });
+    const isLoaded = ref(false);
+    const hasWithdrawCard = computed(() => {
+      return (isLoaded == true) && withdrawState.bankCardList.length === 0;
     });
     const withdrawalMethods = ref([]);
-    const selectedWithdrawalMethod = ref([])
+    const selectedWithdrawalMethod = ref([]);
     onMounted(() => {
-      getWithdrawalMethods()
-      store.getBalance()
+      getWithdrawalMethods();
+      store.getBalance();
       // loadPlatform()
     });
     const platforms = reactive([]);
     const loadPlatform = () => {
-        api.get("/platform").then((res) => {
-            res.data.forEach(p => {
-            if (p.walletType !== "SEAMLESS") {
-                platforms.push({
-                id: p.id,
-                code: p.code,
-                amount: 0
-                });
-              }
+      api.get("/platform").then((res) => {
+        res.data.forEach(p => {
+          if (p.walletType !== "SEAMLESS") {
+            platforms.push({
+              id: p.id,
+              code: p.code,
+              amount: 0
             });
-            refreshBalance('all')
-        })
+          }
+        });
+        refreshBalance("all");
+      });
     };
     const refreshBalance = (plat) => {
-        if (plat === 'all') {
-            platforms.forEach(platform => {
-                platform.isLoading = true;
-                if (platform.code) {
-                    api.get('/session/balance', {params: { platform: platform.code }}).then((res) => {
-                        if (platform) {
-                            platform.amount = res.data;
-                            platform.isLoading = false;
-                        }
-                    }).catch((e) => {
-                        platform.isLoading = false;
-                    }
-                    );
+      if (plat === "all") {
+        platforms.forEach(platform => {
+          platform.isLoading = true;
+          if (platform.code) {
+            api.get("/session/balance", { params: { platform: platform.code } }).then((res) => {
+              if (platform) {
+                platform.amount = res.data;
+                platform.isLoading = false;
+              }
+            }).catch((e) => {
+                platform.isLoading = false;
+              }
+            );
 
-                }
-            });
-        }
+          }
+        });
+      }
     };
     const submitWithdraw = () => {
       cardRef.value.validate();
@@ -299,88 +321,96 @@ export default defineComponent({
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
       } else {
-          api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
-            if(response.code === 0) {
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "提交成功",
-                icon: "check_circle_outline"
-              });
-            } else {
+        api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
+          if (response.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "提交成功",
+              icon: "check_circle_outline"
+            });
+            getWithdrawalMethods();
+          } else {
             $q.notify({
               color: "negative",
               position: "top",
               message: response.message,
               icon: "report_problem"
             });
-            }
-          }).catch((error) => {
-            console.log("error", error);
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: response.message,
-            //   icon: "report_problem"
-            // });
-          });
-          $q.loading.hide();
+          }
+        }).catch((error) => {
+          console.log("error", error);
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: response.message,
+          //   icon: "report_problem"
+          // });
+        });
+        $q.loading.hide();
       }
-    }
+    };
     const isUSDT = ref(false);
     const selectMethod = (method, index) => {
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
-      selectedWithdrawalMethod.value = method
+      selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
-      if (withdrawInfo.withdrawCode.includes('USDT')) {
-        isUSDT.value = true
+      if (withdrawInfo.withdrawCode.includes("USDT")) {
+        isUSDT.value = true;
       } else {
-        isUSDT.value = false
+        isUSDT.value = false;
       }
       activeItem.value = index;
-      loadCards()
-    }
+      loadCards();
+    };
 
     const loadCards = () => {
       api.get("/session/bankCard").then((response) => {
-        withdrawState.bankCardList = []
-        if(response.code === 0) {
+        isLoaded.value = true;
+        withdrawState.bankCardList = [];
+        if (response.code === 0) {
           // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
-            response.data.forEach(element => {
-              if (element.bankType === 'BANK') {
-                if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                  withdrawState.bankCardList.push(element)
-                }
-              } else {
-                if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-                  withdrawState.bankCardList.push(element)
-                }
+          response.data.forEach(element => {
+            if (element.bankType === "BANK") {
+              if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+                withdrawState.bankCardList.push(element);
               }
-              });
-            // else {
-            //   response.data.forEach(element => {
-            //     if (element.bankId !== 39) {
-            //       withdrawState.bankCardList.push(element)
-            //     }
-            //   });
-            // }
+            } else {
+              if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+                withdrawState.bankCardList.push(element);
+              }
+            }
+          });
+          // else {
+          //   response.data.forEach(element => {
+          //     if (element.bankId !== 39) {
+          //       withdrawState.bankCardList.push(element)
+          //     }
+          //   });
+          // }
+          if (cardRef.value) {
             cardRef.value.resetValidation();
-
+          }
+          if (amountRef.value) {
+            withdrawInfo.amount = "";
+            amountRef.value.resetValidation();
+          }
         }
       }).catch((error) => {
         console.log("error", error);
-      });}
+      });
+    };
     const getWithdrawalMethods = () => {
       api.get("/session/withdraw/entrance").then((response) => {
         if (response.code === 0) {
-          withdrawalMethods.value = response.data
+          withdrawalMethods.value = response.data;
           //Remove this for real data
           // withdrawalMethods.value = [
           //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
           //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
           if (withdrawalMethods.value.length > 0) {
-              selectMethod(withdrawalMethods.value[0], 0)
+            selectMethod(withdrawalMethods.value[0], 0);
           }
         } else {
           $q.notify({
@@ -390,11 +420,11 @@ export default defineComponent({
             icon: "report_problem"
           });
         }
-      })
-    }
+      });
+    };
     const updateWithdrawAmt = () => {
-      withdrawInfo.amount = JSON.stringify(Math.floor(store.balance))
-    }
+      withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
+    };
 
     return {
       amountRef,
@@ -412,9 +442,10 @@ export default defineComponent({
       isUSDT,
       store,
       updateWithdrawAmt,
-      platforms
+      platforms,
+      hasWithdrawCard
     };
-  },
+  }
 });
 </script>
 
@@ -484,15 +515,18 @@ export default defineComponent({
 
     position: relative;
     cursor: pointer;
+
     .withdraw-img {
       border: 2px solid transparent;
       border-radius: 6px;
       margin-bottom: 5px;
     }
+
     img {
       width: 100%;
       padding: 5px 10px;
     }
+
     &.active {
       // background: #212534;
       // color: #db7e42;
@@ -501,14 +535,17 @@ export default defineComponent({
       .withdraw-img {
         border: 2px solid #4873f1;
       }
+
       // img {
       //   border: 2px solid #33bcd4;
       // }
     }
+
     .type-name {
       line-height: 15px;
       overflow-wrap: break-word;
     }
+
     .promo {
       position: absolute;
       right: 0;
@@ -525,13 +562,16 @@ export default defineComponent({
       line-height: 10px;
       border-radius: 0 10px;
       font-weight: bold;
+
       ::after {
         position: relative;
       }
     }
   }
+
   .withdraw-btn {
     margin: 30px auto;
+
     &.cancel {
       margin-right: 60px;
     }

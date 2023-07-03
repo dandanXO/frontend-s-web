@@ -93,6 +93,16 @@ const transferInfo = ref({
 const qs = require("qs");
 const transferFromOpt = ref([])
 const transferToOpt = ref([])
+const platformNames = {
+  "AG": "AG真人",
+  "BBINDY": "BBIN真人",
+  "KYDY": "开元棋牌",
+  "DT": "大唐棋牌",
+  "TCG": "TCG彩票",
+  "SGWin": "双赢彩票",
+  "PTDY": "PT电子",
+  "PGDY": "PG电子",
+};
 const updateTransferDropdown = () => {
   if (transferFrom.value !== 'main') {
     transferToOpt.value = [{
@@ -111,7 +121,7 @@ const updateTransferDropdown = () => {
     platforms.forEach(plat => {
       var obj = {
         id: plat.id,
-        label: plat.code
+        label: platformNames[plat.code]
       }
       transferToOpt.value.push(obj)
       transferFromOpt.value.push(obj)
@@ -120,18 +130,6 @@ const updateTransferDropdown = () => {
       transferTo.value = (platforms[0].id)
     }
   }
-  // if (transferFrom.value === 'main') {
-  //   transferToOpt.value = []
-  // } else {
-  //   platforms.forEach(plat => {
-  //     var obj = {
-  //       id: plat.id,
-  //       label: plat.code
-  //     }
-  //     transferFromOpt.value.push(obj)
-  //     transferToOpt.value.push(obj)
-  //   });
-  // }
 }
 const isTransferring = ref(false)
 const submitTransfer = () => {
@@ -166,19 +164,6 @@ const submitTransfer = () => {
           }
         }
       });
-      // api.post("/session/balance/transfer/deposit", transferInfo).then(() => {
-      //   store.getBalance();
-      //   refreshBalance(transferInfo.platform);
-      //    cancelTransfer();
-      //     $q.notify({
-      //       color: "positive",
-      //       position: "top",
-      //       message: "成功",
-      //       icon: "check_circle_outline"
-      //     });
-
-      // }).catch((error) => {
-      // });
     } else {
       platforms.forEach(platform => {
         if (platform.id === transferFrom.value) {
@@ -250,12 +235,6 @@ const getPlatBalances = (plat) => {
       platform.amount = res.data.toFixed(2);
     }
   }).catch((e) => {
-    // $q.notify({
-    // color: "negative",
-    // position: "top",
-    // message: e.message,
-    // icon: "report_problem"
-    // })
     platform.isLoading = false;
 
   })

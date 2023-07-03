@@ -25,8 +25,24 @@
                 <div v-else-if="obj === 'gameType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
-                <div v-else-if="obj === 'commitDate' || obj === 'feedbackTime'">
+                <div
+                  v-else-if="
+                    obj === 'commitDate' ||
+                    obj === 'feedbackTime' ||
+                    obj === 'recordTime' ||
+                    obj === 'transferDate'
+                  "
+                >
                   {{ humanDatetime(det[obj]) }}
+                </div>
+                <div
+                  v-else-if="
+                    obj === 'platformCode' ||
+                    obj === 'financeRemark' ||
+                    obj === 'subType'
+                  "
+                >
+                  {{ checkRecord(det[obj]) }}
                 </div>
                 <div v-else>
                   {{ det[obj] }}
@@ -38,15 +54,28 @@
 
                         </div> -->
           </div>
-          <div v-if="recordType === 'deposit'" class="buttons">
+          <div
+            v-if="
+              (det.status == 'PENDING' || det.status == 'APPLY') &&
+              (recordType === 'deposit' || recordType === 'withdraw')
+            "
+            class="buttons"
+          >
             <q-btn
               outline
               label="催单"
               size="sm"
               color="bright"
               class="q-mr-sm"
+              @click="feedbackTrans(det)"
             />
-            <q-btn outline label="复制" size="sm" color="bright" />
+            <q-btn
+              @click="copyText(det.serialNumber)"
+              outline
+              label="复制"
+              size="sm"
+              color="bright"
+            />
           </div>
           <div v-if="recordType === 'withdraw'" class="buttons">
             <template
@@ -81,10 +110,89 @@
     </div>
   </div>
 
+  <q-input
+    style="width: 100%; display: none"
+    filled
+    color="white"
+    ref="copyinput"
+    v-model="text_copied"
+  />
+
+  <q-dialog
+    v-model="reminderDialog"
+    width="100%"
+    no-backdrop-dismiss
+    no-esc-dismis
+  >
+    <q-card
+      class="reminder-dialog-card bg-white text-black"
+      style="width: 100%; padding: 0px 0px 20px"
+    >
+      <q-card-section>
+        <q-toolbar>
+          <q-toolbar-title>催单</q-toolbar-title>
+          <q-btn flat v-close-popup round dense icon="close" />
+        </q-toolbar>
+      </q-card-section>
+      <q-card-section>
+        <q-form
+          ref="formRef"
+          v-model="reminderForm"
+          hide-required-mark
+          name="basic"
+          colon
+          autocomplete="off"
+          label-align="left"
+          label-cols="5"
+          class="reminder-dialog-form"
+        >
+          <q-input
+            label="存款编码"
+            filled
+            v-model="reminderForm.orderNo"
+            color="white"
+            padding="none"
+            readonly
+            disable
+          />
+          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+          <q-input
+            type="textarea"
+            v-model="reminderForm.memberRemark"
+            label="备注"
+            filled
+            autogrow
+            color="white"
+            class="q-mt-md"
+            :rows="2"
+            :max-rows="5"
+          />
+          <q-btn
+            class="common-btn q-mt-md"
+            color="brand"
+            label="提交"
+            @click="submitReminder"
+          />
+        </q-form>
+      </q-card-section>
+
+      <!--      <q-card-actions align="right">-->
+      <!--        <q-btn-->
+      <!--          label="关闭"-->
+      <!--          flat-->
+      <!--          color="dark"-->
+      <!--          @click="reminderDialog = false"-->
+      <!--        />-->
+      <!--      </q-card-actions>-->
+    </q-card>
+  </q-dialog>
+
   <q-dialog width="100%" v-model="isConfirmWithdraw">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
       <q-card-section class="q-mb-md">
-        系统提示<br /><br />
+        系统提示
+        <br />
+        <br />
         确认到账
       </q-card-section>
       <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue" />
@@ -92,12 +200,17 @@
   </q-dialog>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, reactive } from "vue";
 import moment from "moment";
+import FileUpload from "components/FileUpload.vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
+
 export default defineComponent({
+  components: {
+    FileUpload
+  },
   props: {
     list: {
       type: Array,
@@ -182,6 +295,96 @@ export default defineComponent({
         });
     };
 
+    const copyinput = ref(null);
+    const text_copied = ref("");
+    const copyText = (text) => {
+      text_copied.value = text;
+      setTimeout(() => {
+        const copyText = copyinput.value;
+        copyText.select();
+        document.execCommand("copy");
+        console.log("Copied");
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "存款编码复制成功！",
+          icon: "check_circle_outline"
+        });
+      }, 100);
+    };
+
+    const reminderDialog = ref(false);
+    const reminderForm = reactive({});
+    const uploadFileRef = ref();
+    const feedbackTrans = (trans) => {
+      console.log(trans);
+      console.log(trans.serialNumber);
+
+      api.get("/session/getVerifyingFeedbackCount").then((res) => {
+        // console.log(res);
+        if (res.code === 0) {
+          if (res.data < 3) {
+            console.log("Ok here");
+            reminderDialog.value = true;
+            reminderForm.orderNo = trans.serialNumber;
+            reminderForm.memberRemark = null;
+            reminderForm.photos = null;
+            if (props.recordType === "deposit") {
+              reminderForm.type = 1;
+              reminderForm.recordTime = trans.depositDate;
+            } else if (props.recordType === "withdraw") {
+              reminderForm.type = 2;
+              reminderForm.recordTime = trans.withdrawDate;
+            }
+          } else {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: "已有3个正在催收催单。",
+              icon: "report_problem"
+            });
+          }
+        }
+      });
+    };
+
+    const getImageLink = (linkId) => {
+      reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`;
+    };
+
+    const submitReminder = () => {
+      // Check if image upload is empty
+      if (!reminderForm.photos) {
+        // Display an error message here
+        $q.notify({
+          color: "negative",
+          position: "bottom",
+          message: "请上传图片",
+          icon: "report_problem"
+        });
+        return;
+      }
+
+      api
+        .post("/session/saveFinanceFeedback", qs.stringify(reminderForm))
+        .then((res) => {
+          // console.log(reminderForm)
+          const ret = res.data;
+          if (res.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "催单提交成功！",
+              icon: "check_circle_outline"
+            });
+            reminderDialog.value = false;
+            reminderForm.value = {};
+            uploadFileRef.value.clear();
+          }
+        });
+    };
+
     return {
       humanDatetime(ts) {
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
@@ -195,7 +398,15 @@ export default defineComponent({
       openWithdrawConfirmDialog,
       openWithdrawConfirm,
       isConfirmWithdraw,
-      passDet
+      passDet,
+      copyText,
+      text_copied,
+      copyinput,
+      feedbackTrans,
+      submitReminder,
+      reminderDialog,
+      reminderForm,
+      getImageLink
     };
   }
 });
@@ -207,14 +418,21 @@ export default defineComponent({
   justify-content: flex-start;
   gap: 30px;
   margin: 0 0 10px;
+
   .label {
     flex: 1;
   }
+
   .desc {
     flex: 3;
     word-break: break-all;
   }
 }
+
+.reminder-dialog-form {
+  padding: 10px;
+}
+
 .buttons {
   text-align: right;
 }

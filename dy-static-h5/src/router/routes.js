@@ -274,6 +274,17 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
+    path: "/account/records/moneyChange",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/records/MoneyChangeRecordView.vue")
+      }
+    ],
+    meta: {requiresAuth: true}
+  },
+  {
     path: "/account/records/promo",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -379,6 +390,28 @@ const routes = [
       {
         path: "",
         component: () => import("pages/account/PersonalView.vue")
+      }
+    ],
+    meta: {requiresAuth: true}
+  },
+  {
+    path: "/account/verifyTelephone",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/VerifyTelephone.vue")
+      }
+    ],
+    meta: {requiresAuth: true}
+  },
+  {
+    path: "/account/verifyEmail",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/VerifyEmail.vue")
       }
     ],
     meta: {requiresAuth: true}

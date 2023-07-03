@@ -163,6 +163,7 @@
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
+            :loading="btnLoading"
             color="brightbtn fit"
             @click="confirmDeposit"
             label="确定存款"
@@ -173,14 +174,36 @@
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
-    <q-card style="width: 100%; padding: 20px" class="bg-dyblue text-black">
-      <q-card-section class="q-mb-md">
-        您已被重定向到您的特定银行以继续进行存款。
-        <br />
-        <br />
-        入金成功后会反映这里。
+    <q-card style="width: 100%">
+      <q-card-section
+        style="padding: 10px 20px"
+        class="q-pa-md bg-dyblue text-white"
+      >
+        已存款
       </q-card-section>
-      <q-btn @click="clearInfo" label="明白" color="dyblue" />
+      <div style="padding: 20px">
+        <q-card-section class="q-mb-md q-pa-md">
+          您将被重定向到您的银行页面以完成存款。
+          <br />
+          <br />
+          入金成功后会反映这里。
+        </q-card-section>
+        <q-btn @click="clearInfo" label="明白" color="dyblue" />
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isNewUser">
+    <q-card style="width: 100%; padding: 20px" class="text-black">
+      <q-card-section class="q-mb-md">
+        <strong>温馨提示</strong>
+        <br />
+        <br />
+        为保证资金安全，存款前先绑定手机号
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn label="前往绑定" color="dyblue" href="/account/personal" />
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
@@ -190,7 +213,7 @@ import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
-import { Platform, useQuasar } from "quasar";
+import { Platform, useQuasar, openURL } from "quasar";
 import { doIt } from "boot/action";
 import liff from "@line/liff";
 
@@ -202,8 +225,15 @@ import { useRouter } from "vue-router";
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
+const isNewUser = ref(false);
+const checkNewUser = () => {
+  if (store.phone == null) {
+    isNewUser.value = true;
+  }
+};
 const isDeposited = ref(false);
 const isLoading = ref(true);
+const btnLoading = ref(false);
 const payTypeClass = ref();
 const payMethods = reactive([]);
 const paymentNode = ref([]);
@@ -285,9 +315,10 @@ const checkAmount = reactive({
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
+
 function initPay() {
   $q.loading.show({
-    message: "加载银行信息。 请稍等..."
+    message: "加载数据中... 请稍等..."
   });
 
   payMethods.value = [];
@@ -376,13 +407,15 @@ const depositForm = ref(null);
 async function onSelect(value) {
   isDisplay.value = false;
 
-  if (!Platform.is.android || !Platform.is.capacitor) {
-    clearInfo();
+  clearInfo();
+  // if (!Platform.is.android || !Platform.is.capacitor) {
+  // }
+  // if (liff.isInClient()) {
+  //   clearInfo();
+  // }
+  if (depositAmtRef.value) {
+    depositAmtRef.value.resetValidation();
   }
-  if (liff.isInClient()) {
-    clearInfo();
-  }
-  // depositAmtRef.value.resetValidation();
   if (value) {
     if (value.group) {
       value.children.forEach((element) => {
@@ -398,6 +431,7 @@ async function onSelect(value) {
     checkMinDepositAmt();
   }
 }
+
 function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
@@ -425,15 +459,19 @@ function clearInfo() {
   isDeposited.value = false;
   form.localAmount = null;
   selectedPrivilege.value = "";
-  // depositForm.value.reset();
+  if (depositForm.value) {
+    depositForm.value.reset();
+  }
   checkMinDepositAmt();
 }
 
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
+  btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
+    btnLoading.value = false;
   } else {
     await cashier
       .get(
@@ -443,6 +481,7 @@ async function confirmDeposit() {
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
             form.localAmount = d.data.suggestion;
+            btnLoading.value = false;
           }
           $q.notify({
             color: "negative",
@@ -481,6 +520,7 @@ async function confirmDeposit() {
 }
 
 async function pDepo(deposit) {
+  btnLoading.value = true;
   const obj = {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
@@ -498,51 +538,123 @@ async function pDepo(deposit) {
       // console.log(res)
 
       if (res.code === 0) {
+        const response = res.data.result;
+        if (res.data.result.payResultType === "OFFLINE") {
+          btnLoading.value = false;
+        }
         if (res.data.result.payResultType === "RENDER_HTML") {
           isDisplay.value = true;
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
+          btnLoading.value = false;
         } else {
+          // if (
+          //   (Platform.is.desktop || Platform.is.webkit) &&
+          //   !Platform.is.capacitor &&
+          //   Platform.is.name !== "webkit" &&
+          //   !liff.isInClient()
+          // ) {
           if (
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
             Platform.is.name !== "webkit" &&
             !liff.isInClient()
           ) {
-            // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
-            const newWin = window.open(`/depositLoading`, "Bank");
-            newWin.localStorage.setItem("formDetails", JSON.stringify(res));
+            // const newWin = window.open(`/depositLoading`, "Bank");
+            // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+            const newWin = window.open(`/`);
+            newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+            if (response.payResultType === "GET_SUBMIT") {
+              newWin.location.href = response.requestUrl;
+              btnLoading.value = false;
+              // isDeposited.value = true;
+            }
+            if (response.payResultType === "POST_SUBMIT") {
+              if (response.paramKey === null || response.paramKey === "") {
+                newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                btnLoading.value = false;
+              } else {
+                newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                btnLoading.value = false;
+              }
+              // isDeposited.value = true;
+            }
           } else {
-            localStorage.setItem("formDetails", JSON.stringify(res));
-            router.push({ path: "/depositLoading" });
+            localStorage.setItem("formDetails", JSON.stringify(form));
+            if (response.payResultType === "GET_SUBMIT") {
+              //   location.href = response.requestUrl;
+              //   // isDeposited.value = true;
+              // }
+              if (
+                (Platform.is.desktop || Platform.is.webkit) &&
+                !Platform.is.capacitor &&
+                Platform.is.name !== "webkit" &&
+                !liff.isInClient()
+              ) {
+                location.href = response.requestUrl;
+                btnLoading.value = false;
+              } else {
+                openURL(response.requestUrl);
+                btnLoading.value = false;
+              }
+            }
+            if (response.payResultType === "POST_SUBMIT") {
+              localStorage.setItem("responseDetails", JSON.stringify(response));
+              if (response.paramKey === null || response.paramKey === "") {
+                router.push(
+                  `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                );
+                btnLoading.value = false;
+              } else {
+                router.push(
+                  `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                );
+                btnLoading.value = false;
+              }
+              // isDeposited.value = true;
+            }
           }
 
-          window.addEventListener(
-            "message",
-            (event) => {
-              if (event.data?.msg) {
-                if (event.data.msg === "success") {
-                  isDeposited.value = true;
-                  localStorage.setItem("isBacked", JSON.stringify(true));
-                } else {
-                  $q.notify({
-                    color: "negative",
-                    position: "top",
-                    message: event.data.msg,
-                    icon: "report_problem"
-                  });
-                }
-              }
-            },
-            { once: true }
-          );
+          // window.addEventListener(
+          //   "message",
+          //   (event) => {
+          //     if (event.data?.msg) {
+          //       if (event.data.msg === "success") {
+          //         isDeposited.value = true;
+          //         localStorage.setItem("isBacked", JSON.stringify(true));
+          //       } else {
+          //         $q.notify({
+          //           color: "negative",
+          //           position: "top",
+          //           message: event.data.msg,
+          //           icon: "report_problem"
+          //         });
+          //       }
+          //     }
+          //   },
+          //   { once: true }
+          // );
         }
-      } else {
         // console.log(res);
         // postMessage({ msg: res.message }, "*");
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+        btnLoading.value = false;
       }
     })
     .catch((error) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: error.message,
+        icon: "report_problem"
+      });
+      btnLoading.value = false;
       // postMessage(
       //   {
       //     msg: error.message
@@ -554,6 +666,7 @@ async function pDepo(deposit) {
 
 onMounted(() => {
   initPay();
+  checkNewUser();
 });
 </script>
 
@@ -570,6 +683,7 @@ onMounted(() => {
   align-items: flex-start;
   flex-direction: column;
   color: #000000;
+
   .line {
     display: flex;
     gap: 10px;
@@ -581,14 +695,17 @@ onMounted(() => {
     align-items: center;
     background: #ffffff;
     padding: 15px 0;
+
     span:first-child {
       // flex: 1;
       color: #4669f8;
       width: 80px;
     }
+
     span.info {
       flex: 3;
     }
+
     button {
       width: 80px;
     }

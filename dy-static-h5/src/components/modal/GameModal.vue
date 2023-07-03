@@ -138,7 +138,8 @@ import DepositComponent from "components/depositComponent.vue";
 // import { message } from "ant-design-vue";
 import {storeToRefs} from "pinia";
 import {api} from "boot/axios";
-import {useQuasar, Platform, AppFullscreen} from "quasar";
+import {useQuasar, Platform, AppFullscreen, openURL} from "quasar";
+import liff from "@line/liff"
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 const $q = useQuasar();
 
@@ -292,12 +293,17 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
+      // visible.value = true;
       var way = null
-      if (Platform.is.android) {
-        way = "ANDROID"
-      } else if (Platform.is.ios) {
-        way = "IOS"
+      if ("standalone" in window.navigator && window.navigator.standalone) {
+        way = "IOS";
+      } else {
+        way = Platform.is.mobile ? "H5" : "WEB";
+        if (Platform.is.capacitor) {
+          if (Platform.is.android) {
+            way = "ANDROID";
+          }
+        }
       }
       if (platformCode === 'platformType') {
         api
@@ -309,7 +315,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           }
         })
         .then((response) => {
-          src.value = response.data;
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+            const newWin = window.open(`/`, `_blank`);
+            newWin.location.href = response.data
+          }
+          else {
+            openURL(response.data)
+          }
         });
         return
       }
@@ -323,7 +335,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           }
         })
         .then((response) => {
-          src.value = response.data;
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+            const newWin = window.open(`/`, `_blank`);
+            newWin.location.href = response.data
+          }
+          else {
+            openURL(response.data)
+          }
         });
     } else {
       router.push({path: "/login", query: {redirect: route.path}});

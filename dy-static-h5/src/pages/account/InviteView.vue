@@ -95,7 +95,7 @@ export default defineComponent({
 
     const refCode= ref("");
 
-    let tgDomain = "https://m.dyvip989.com";
+    let tgDomain = location.origin;
 
 
     const qrCode= ref( selfTgurl.value);

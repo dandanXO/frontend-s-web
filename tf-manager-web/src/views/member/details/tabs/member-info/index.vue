@@ -395,7 +395,7 @@
           <span v-if="memberDetail.regTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.registerIp')" label-class-name="member-label"
-                              class-name="member-context"
+                              :class-name="memberDetail.dupIp === 'red'?'member-context-red':'member-context'"
         >
           <span
             v-if="memberDetail.regIp !== null && memberDetail.dupIp === 'red'"
@@ -1134,7 +1134,7 @@ export default defineComponent({
     const changePassword = () => {
       updatePasswordForm.value.validate(async (valid) => {
         if (valid) {
-          await updatePassword(props.mbrId, passwordForm.password);
+          await updatePassword(props.mbrId, passwordForm.password, memberDetail.siteId);
           uiControl.dialogVisible = false;
           ElMessage({ message: t('message.updatePasswordSuccess'), type: "success" });
         }

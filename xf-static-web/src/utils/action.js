@@ -22,21 +22,27 @@ export function doIt(resp) {
 }
 
 function locationUrl(resp) {
-  location.href = resp.requestUrl;
+  return resp
 }
 
 function postSubmit(resp) {
-  if (resp.paramKey === null || resp.paramKey === "") {
-    location.href = `center/display?${resp.data}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
-  } else {
-    location.href = `center/display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
-  }
+  // if (resp.paramKey === null || resp.paramKey === "") {
+  //   location.href = `display?${resp.data}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
+  // } else {
+  //   location.href = `display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
+  // }
+  return resp
 }
 
 function renderPage(resp) {
-  if (isEmpty(resp.paramKey)) {
-    location.href = `center/display?data=${resp.data}&payResultType=${resp.payResultType}`;
-  } else {
-    location.href = `center/display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}`;
+  if (resp.payResultType === 'RENDER_HTML') {
+    return resp
+  } else {  
+    if (isEmpty(resp.paramKey)) {
+      location.href = `display?data=${resp.data}&payResultType=${resp.payResultType}`;
+    } else {
+      location.href = `display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}`;
+    }
+    return 'renderPage'
   }
 }

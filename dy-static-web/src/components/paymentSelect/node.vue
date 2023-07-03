@@ -14,6 +14,7 @@
           item.children ? 'node-group' : '',
           selectItem === item ? 'active' : ''
         ]"
+        :style="item.group && item.children.length === 0 ? 'display:none': ''"
         :key="i"
         v-for="(item, i) in list"
       >

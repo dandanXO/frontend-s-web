@@ -147,7 +147,7 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
 
@@ -156,7 +156,7 @@
     />
 
     <div
-      v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()"
+      v-if="list.redirectUrl === 'dy1-lottery' && store.hasToken()"
       class="promo-4"
     >
       <div class="tabs">
@@ -164,8 +164,8 @@
           <q-tabs
             v-model="activeKey"
             dense
-            class="text-grey"
-            active-color="brand"
+            color="black"
+
             indicator-color="black"
             align="justify"
             narrow-indicator
@@ -193,7 +193,8 @@
                     <q-input
                       v-model="lucky_number"
                       filled
-                      color="white"
+                      bg-color="white"
+                      color="black"
                       type="number"
                       :rules="[
                         (val) => (val && val.length === 3) || '号码长度应为3'
@@ -335,12 +336,12 @@
       <q-card-section class="row items-center">
         <div class="bonus-svg-div">
           <span class="claim-amt">{{ claimMsg }}</span>
-          <span class="bonus-text">BONUS</span>
+          <span class="bonus-text">恭喜获得奖金</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="同意" color="primary" v-close-popup />
+        <q-btn flat label="确定" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -399,10 +400,9 @@ export default defineComponent({
         .put(eventUrl)
         .then((res) => {
           this.btnLoading = false;
-          var responseCode = res.data;
-          if (responseCode.code === 0) {
-            var rebatePoint = responseCode.data;
-            this.claimMsg = "$" + rebatePoint;
+          if (res.code === 0) {
+            var rebatePoint = res.data;
+            this.claimMsg = "￥" + rebatePoint;
             this.isClaimModal = true;
           } else {
             this.btnLoading = false;
@@ -420,7 +420,7 @@ export default defineComponent({
       }
     });
     if (
-      this.list.redirectUrl === "tigercard" ||
+      this.list.redirectUrl === "dy1-tiger-card" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||
@@ -640,7 +640,7 @@ export default defineComponent({
 
         var postData = {};
         postData.number = submit_number;
-        postData.promoCode = "jolly88-iphone";
+        postData.promoCode = "dy1-lottery";
 
         var luckyNumberUrl = "/privi/lotteryNumber";
         btnLoading.value = true;

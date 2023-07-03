@@ -1,16 +1,31 @@
 <template>
   <q-form
-    class="q-gutter-y-md rounded-borders"
-    @submit="onSubmit"
+      class="q-gutter-y-md rounded-borders"
+      @submit="onSubmit"
   >
     <q-input
-      ref="loginNameRef"
-      hide-bottom-space
-      v-model="regForm.loginName"
-      label="用户名"
-      lazy-rules
-      :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
-      color="white"
+        ref="realNameRef"
+        hide-bottom-space
+        v-model="regForm.realName"
+        label="姓名"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
+        color="white"
+    >
+      <template v-slot:prepend>
+        <q-icon color="bright" name="person_outline"/>
+      </template>
+    </q-input>
+
+
+    <q-input
+        ref="loginNameRef"
+        hide-bottom-space
+        v-model="regForm.loginName"
+        label="用户名"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
+        color="white"
     >
       <template v-slot:prepend>
         <q-icon color="bright" name="person_outline"/>
@@ -18,13 +33,13 @@
     </q-input>
 
     <q-input
-      ref="pwdRef"
-      hide-bottom-space
-      v-model="regForm.password"
-      label="密码"
-      lazy-rules
-      :type="isPwd ? 'password' : 'text'"
-      :rules="[
+        ref="pwdRef"
+        hide-bottom-space
+        v-model="regForm.password"
+        label="密码"
+        lazy-rules
+        :type="isPwd ? 'password' : 'text'"
+        :rules="[
               (val) => (val && val.length > 0) || '请输入密码',
               (val) =>
                 (val.length > 5 && val.length <= 12) ||
@@ -33,7 +48,7 @@
                 (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) ||
                 '密码安全级别必须至少为好'
             ]"
-      color="white"
+        color="white"
     >
       <template v-slot:prepend>
         <q-icon color="bright" name="lock_open"/>
@@ -48,7 +63,7 @@
     </q-input>
     <div v-if="regForm.password" class="password-str-div">
             <span
-              :class="{
+                :class="{
                 'weak-pwd': pwdStrength == 'weak',
                 'normal-pwd': pwdStrength == 'normal',
                 'strong-pwd': pwdStrength == 'strong'
@@ -56,7 +71,7 @@
             >弱</span
             >
       <span
-        :class="{
+          :class="{
                 'normal-pwd': pwdStrength == 'normal',
                 'strong-pwd': pwdStrength == 'strong'
               }"
@@ -68,20 +83,20 @@
     </div>
 
     <q-input
-      ref="confirmPwdRef"
-      hide-bottom-space
-      :type="isCfmPwd ? 'password' : 'text'"
-      v-model="regForm.confirmPwd"
-      label="确认密码"
-      lazy-rules
-      :rules="[
+        ref="confirmPwdRef"
+        hide-bottom-space
+        :type="isCfmPwd ? 'password' : 'text'"
+        v-model="regForm.confirmPwd"
+        label="确认密码"
+        lazy-rules
+        :rules="[
               (val) => (val && val.length > 0) || '请输入确认密码',
               (val) => val === regForm.password || '密码不一样',
               (val) =>
                 (val.length > 5 && val.length <= 12) ||
                 '密码长度为 6 到 12'
             ]"
-      color="white"
+        color="white"
     >
       <template v-slot:prepend>
         <q-icon color="bright" name="lock_open"/>
@@ -96,48 +111,48 @@
     </q-input>
 
 
-    <q-input
-      ref="telRef"
-      hide-bottom-space
-      v-model="regForm.telephone"
-      label="电话号码"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 7) || '请输入有效的电话号码'
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="smartphone"/>
-      </template>
-    </q-input>
+    <!--    <q-input-->
+    <!--      ref="telRef"-->
+    <!--      hide-bottom-space-->
+    <!--      v-model="regForm.telephone"-->
+    <!--      label="电话号码"-->
+    <!--      lazy-rules-->
+    <!--      :rules="[-->
+    <!--        (val) => (val && val.length > 7) || '请输入有效的电话号码'-->
+    <!--      ]"-->
+    <!--      color="white"-->
+    <!--    >-->
+    <!--      <template v-slot:prepend>-->
+    <!--        <q-icon color="bright" name="smartphone"/>-->
+    <!--      </template>-->
+    <!--    </q-input>-->
 
+    <!--    <q-input-->
+    <!--      ref="emailRef"-->
+    <!--      type="email"-->
+    <!--      hide-bottom-space-->
+    <!--      v-model="regForm.email"-->
+    <!--      label="电子邮件"-->
+    <!--      lazy-rules-->
+    <!--      :rules="[-->
+    <!--        (val) => (val && val.length > 0) || '请输入电子邮件',-->
+    <!--        isValidEmail-->
+    <!--      ]"-->
+    <!--      color="white"-->
+    <!--    >-->
+    <!--      <template v-slot:prepend>-->
+    <!--        <q-icon color="bright" name="mail_outline"/>-->
+    <!--      </template>-->
+    <!--    </q-input>-->
     <q-input
-      ref="emailRef"
-      type="email"
-      hide-bottom-space
-      v-model="regForm.email"
-      label="电子邮件"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入电子邮件',
-        isValidEmail
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="mail_outline"/>
-      </template>
-    </q-input>
-    <q-input
-      ref="verificationRef"
-      hide-bottom-space
-      type="text"
-      v-model="regForm.captchaCode"
-      label="验证码"
-      lazy-rules
-      color="white"
-      :rules="[
+        ref="verificationRef"
+        hide-bottom-space
+        type="text"
+        v-model="regForm.captchaCode"
+        label="验证码"
+        lazy-rules
+        color="white"
+        :rules="[
         (val) => (val && val.length > 3) || '请输入验证码'
       ]"
     >
@@ -146,6 +161,18 @@
       </template>
       <template v-slot:prepend>
         <q-icon color="bright" name="security"/>
+      </template>
+    </q-input>
+
+    <q-input
+        ref="affiliateCodeRef"
+        hide-bottom-space
+        v-model="regForm.affiliateCode"
+        label="推荐码"
+        hint="若不是合营下会员无需填写"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/login_name.png" width="20"/>
       </template>
     </q-input>
 
@@ -160,9 +187,10 @@
 <script>
 import {defineComponent, ref, reactive, onMounted, watch} from "vue";
 import {api} from "boot/axios";
-import {useQuasar} from "quasar";
+import {useQuasar, Platform} from "quasar";
 import {useRoute, useRouter} from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import {userStore} from "stores/index";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -171,30 +199,37 @@ export default defineComponent({
       getCode();
       getReferralCode();
     });
+    const store = userStore();
     const verificationImg = ref("");
+    const isValidName = () => {
+      const namePattern = /^([\u4e00-\u9fa5]*)$/;
+      return namePattern.test(regForm.realName) || "请输入中文字符";
+    };
+
     const regForm = reactive({
       loginName: "",
       password: "",
       confirmPwd: "",
-      telephone: "",
-      email: "",
+      // telephone: "",
+      // email: "",
       captchaCode: "",
       regHost: location.hostname,
-      codeId: ""
+      codeId: "",
+      affiliateCode: ""
     });
     const getCode = () => {
       api
-        .get("/member/verificationCode")
-        .then((response) => {
-          if (response.code === 0) {
-            verificationImg.value =
-              "data:image/png;base64," + response.data.img;
-            regForm.codeId = response.data.id;
-          }
-        })
-        .catch((e) => {
-          console.log(e)
-        });
+          .get("/member/verificationCode")
+          .then((response) => {
+            if (response.code === 0) {
+              verificationImg.value =
+                  "data:image/png;base64," + response.data.img;
+              regForm.codeId = response.data.id;
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+          });
     };
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
@@ -209,11 +244,12 @@ export default defineComponent({
     const emailRef = ref();
     const verificationRef = ref();
     const $q = useQuasar();
+    const route = useRoute();
 
     const pwdStrength = ref("");
     const isValidEmail = () => {
       const emailPattern =
-        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+          /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
       return emailPattern.test(regForm.email) || "请输入有效电子邮件";
     };
     const router = useRouter();
@@ -221,19 +257,19 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      telRef.value.validate();
-      emailRef.value.validate();
+      // telRef.value.validate();
+      // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: "注册中"
       });
       if (
-        loginNameRef.value.hasError ||
-        pwdRef.value.hasError ||
-        confirmPwdRef.value.hasError ||
-        telRef.value.hasError ||
-        emailRef.value.hasError ||
-        verificationRef.value.hasError
+          loginNameRef.value.hasError ||
+          pwdRef.value.hasError ||
+          confirmPwdRef.value.hasError ||
+          // telRef.value.hasError ||
+          // emailRef.value.hasError ||
+          verificationRef.value.hasError
       ) {
         $q.loading.hide();
       } else {
@@ -258,73 +294,85 @@ export default defineComponent({
             }
           }
           api
-            .post("/member/register", qs.stringify(regForm))
-            .then((ret) => {
-              const res = ret;
-              // console.log("RET");
-              // console.log(ret);
-              if (res.code === 0) {
-                router.push("/login");
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: "注册成功",
-                  icon: "check_circle_outline"
-                });
-                sessionStorage.removeItem("REFERRAL_CODE");
-              } else {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message: res.message,
-                  icon: "report_problem"
-                });
-              }
-              $q.loading.hide();
-            })
-            .catch((error) => {
-              $q.loading.hide();
-            });
+              .post("/member/fbRegister", qs.stringify(regForm))
+              .then((ret) => {
+                const res = ret;
+                // console.log("RET");
+                // console.log(ret);
+                if (res.code === 0) {
+                  store.autoLogin(res.data);
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                  if (store.hasToken()) {
+                    const jumpUrl = route.query.redirect
+                        ? route.query.redirect
+                        : "/";
+                    router.go(jumpUrl);
+                    if (Platform.is.capacitor && Platform.is.ios) {
+                      location.reload();
+                    }
+                  }
+                  // context.emit("changeTab");
+                  // router.push({ path: "/" });
+                  $q.notify({
+                    color: "positive",
+                    position: "top",
+                    message: "注册成功",
+                    icon: "check_circle_outline"
+                  });
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                } else {
+                  $q.notify({
+                    color: "negative",
+                    position: "top",
+                    message: res.message,
+                    icon: "report_problem"
+                  });
+                }
+                $q.loading.hide();
+              })
+              .catch((error) => {
+                $q.loading.hide();
+              });
           getCode();
         })();
       }
     };
 
     watch(
-      () => regForm.password,
-      () => {
-        pwdStrength.value = "";
+        () => regForm.password,
+        () => {
+          pwdStrength.value = "";
 
-        var pwd = regForm.password;
-        var result = 0;
-        for (var i = 0, len = pwd.length; i < len; ++i) {
-          result |= charType(pwd.charCodeAt(i));
-        }
+          var pwd = regForm.password;
+          var result = 0;
+          for (var i = 0, len = pwd.length; i < len; ++i) {
+            result |= charType(pwd.charCodeAt(i));
+          }
 
-        var level = 0;
-        for (var i = 0; i <= 4; i++) {
-          if (result & 1) {
-            level++;
+          var level = 0;
+          for (var i = 0; i <= 4; i++) {
+            if (result & 1) {
+              level++;
+            }
+            result = result >>> 1;
           }
-          result = result >>> 1;
-        }
-        if (pwd.length >= 6) {
-          switch (level) {
-            case 1:
-              pwdStrength.value = "weak";
-              break;
-            case 2:
-              pwdStrength.value = "normal";
-              break;
-            case 3:
-            case 4:
-              pwdStrength.value = "strong";
-              break;
+          if (pwd.length >= 6) {
+            switch (level) {
+              case 1:
+                pwdStrength.value = "weak";
+                break;
+              case 2:
+                pwdStrength.value = "normal";
+                break;
+              case 3:
+              case 4:
+                pwdStrength.value = "strong";
+                break;
+            }
+          } else {
+            pwdStrength.value = "weak";
           }
-        } else {
-          pwdStrength.value = "weak";
         }
-      }
     );
     return {
       header: "Register Account",
@@ -342,6 +390,7 @@ export default defineComponent({
       isCfmPwd: ref(true),
       getCode,
       pwdStrength,
+      isValidName
     };
   }
 });

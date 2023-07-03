@@ -21,7 +21,7 @@
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">
-                  名字
+                  姓名
                 </div>
                 <div
                   v-if="personalState.memberInfo.realName"
@@ -36,13 +36,13 @@
                       name="realName"
                       prop="realName"
                       :rules="[
-                        { required: true, message: '请输入名字' },
+                        { required: true, message: '请输入姓名' },
                         { pattern: '^([\u4e00-\u9fa5]*)$', message: '请输入中文字符', trigger: 'change'}
                       ]"
                     >
                       <el-input
                         v-model="updateFormDetails.realName"
-                        placeholder="名字"
+                        placeholder="姓名"
                       />
                     </el-form-item>
                   </div>
@@ -88,7 +88,7 @@
                 </div>
 
                 <div v-else class="basic-info-cell content">
-                  <div class="datewsend" v-if="isEdit">
+                  <!-- <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="phone"
                       prop="phone"
@@ -101,7 +101,14 @@
                         placeholder="电话"
                       />
                     </el-form-item>
-                  </div>
+                  </div> -->
+                  <el-button size="small"
+                    class="common-btn"
+                    v-if="!personalState.memberInfo.phoneVerified"
+                    type="button"
+                    @click="updatePhoneModal"
+                  >验证
+                  </el-button>
                 </div>
               </div>
               <div class="tbl-row">
@@ -115,7 +122,7 @@
                   {{ personalState.memberInfo.email }}
                 </div>
                 <div v-else class="basic-info-cell content">
-                  <div class="datewsend" v-if="isEdit">
+                  <!-- <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="email"
                       prop="email"
@@ -129,7 +136,14 @@
                         placeholder="邮箱"
                       />
                     </el-form-item>
-                  </div>
+                  </div> -->
+                  <el-button size="small"
+                    class="common-btn"
+                    v-if="!personalState.memberInfo.emailVerified"
+                    type="button"
+                    @click="updateSecurityModal"
+                  >验证
+                  </el-button>
                 </div>
               </div>
 
@@ -163,14 +177,6 @@
             >
               修改密码
             </el-button>
-            <el-button size="large"
-              class="common-btn"
-              v-if="!personalState.memberInfo.emailVerified"
-              type="button"
-              @click="updateSecurityModal"
-            >
-              安全验证
-            </el-button>
           </div>
         </div>
           <div class="account-tip-text red">
@@ -194,6 +200,8 @@
       width="500px"
       title="修改密码"
       align-center
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <el-form
         ref="updatePwdFormRef"
@@ -235,6 +243,8 @@
       width="500px"
       title="安全验证"
       align-center
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <el-form
         ref="updateSecurityFormRef"
@@ -282,6 +292,8 @@
       title="验证码"
       width="500px"
       align-center
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
         <el-form-item ref="captchaCode" prop="captchaCode" :rules="[
@@ -308,6 +320,91 @@
         >验证</el-button
       >
     </el-dialog>
+    
+    <el-dialog
+      wrap-class-name="securityModal"
+      v-model="updatePhoneModalVisible"
+      :footer="null"
+      width="500px"
+      title="手机验证"
+      align-center
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <el-form
+        ref="updatePhoneFormRef"
+        :hideRequiredMark="true"
+        :model="updatePhoneVerified"
+        :rules="updatePhoneVerifiedRules"
+      >
+        <el-form-item ref="phone" prop="phone">
+          <el-input
+            v-model="updatePhoneVerified.phone"
+            placeholder="手机号码"
+          />
+        </el-form-item>
+        <el-form-item
+          class="half"
+          ref="verificationCode"
+          prop="verificationCode"
+        >
+        <el-space>
+              <el-input
+                type="password"
+                v-model="updatePhoneVerified.verificationCode"
+                :placeholder="'验证码'"
+              />
+              <el-button
+                :disabled="disableSendPhoneButton"
+                size="small"
+                class="common-btn verification-btn"
+                @click="openPhoneVerificationModal">
+                <span v-if="disableSendPhoneButton">已发送（倒数{{ countDown }}秒)</span>
+                <span v-else >发送验证码</span>
+              </el-button>
+
+              
+            </el-space>
+        </el-form-item>
+        <el-button :loading="loadingPhoneBtn" class="common-btn verification-btn" @click="submitUpdatePhone"
+          >提交
+        </el-button>
+      </el-form>
+    </el-dialog>
+    <el-dialog
+      wrap-class-name="phoneModal"
+      v-model="verificationPhoneModalVisible"
+      title="验证码"
+      width="500px"
+      align-center
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <el-form ref="captchaUpdateRef" :model="updatePhoneVerified">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[
+                        { required: true, message: '请输入验证码' },
+                      ]">
+                      <el-space>
+              <el-input
+                @keypress.enter="verifyPhoneVerificationCode"
+                v-model="updatePhoneVerified.captchaCode"
+                :maxlength="4"
+                placeholder="验证码"
+              />
+
+              <div class="verification" @click="getCode()">
+            <img style="width: 80%; margin-top: 6px;" :src="verificationImg" />
+          </div>
+        </el-space>
+        </el-form-item>
+      </el-form>
+      <el-button
+        class="common-btn"
+        @click="verifyPhoneVerificationCode"
+        :loading="isPhoneSending"
+        >验证</el-button
+      >
+    </el-dialog>
   </div>
 </template>
 
@@ -322,7 +419,9 @@ import {
   changePwd,
   updateAccount,
   sendEmail,
-  verifyEmail
+  verifyEmail,
+  sendSms,
+  verifySms
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
@@ -337,12 +436,14 @@ export default defineComponent({
 
     // Send Verification Code
     const emailKey = `emailKey`
+    const phoneKey = `phoneKey`
     const sendOtpDisabledKey = `sendOtpDisabled`
 
     const sendOtpDisabledTimeout = 60
     const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey)
 
     let cachedEmail = lsGet(emailKey);
+    let cachedTelephone = lsGet(phoneKey);
     let initialSendOtpDisabledTimeout = false
 
     if (sendOtpDisabledTimeoutLeft) {
@@ -350,18 +451,26 @@ export default defineComponent({
     } else {
       lsRemove(sendOtpDisabledKey)
       lsRemove(emailKey)
+      lsRemove(phoneKey)
 
       cachedEmail = '';
+      cachedTelephone = '';
     }
 
     const disableSendVerificationButton = ref(initialSendOtpDisabledTimeout);
+    const disableSendPhoneButton = ref(initialSendOtpDisabledTimeout);
     const countDown = ref(sendOtpDisabledTimeoutLeft);
 
     const loadingBtn = ref(false)
     const loadingPwBtn = ref(false)
     const loadingSecurityBtn = ref(false)
+    const loadingPhoneBtn = ref(false)
     const isEmailSending = ref(false)
+    const isPhoneSending = ref(false)
     const verificationDetails = reactive({
+      memberInfo: {}
+    });
+    const verificationPhoneDetails = reactive({
       memberInfo: {}
     });
     const personalState = reactive({
@@ -389,10 +498,12 @@ export default defineComponent({
     const store = userStore();
     const getCode = () => {
       updateSecurityVerified.captchaCode = ''
+      updatePhoneVerified.captchaCode = ''
       getVerificationCode().then((res) => {
         if (res.code === 0) {
           verificationImg.value = "data:image/png;base64," + res.data.img;
           updateSecurityVerified.codeId = res.data.id;
+          updatePhoneVerified.codeId = res.data.id;
         }
       }).catch(() => {
           // console.log(e.message);
@@ -403,16 +514,18 @@ export default defineComponent({
     const updateSecurityFormRef = ref();
     const captchaUpdateRef = ref();
     const updateSecurityVerified = reactive({
-      mobileNumber: "",
       verificationCode: "",
       emailAddress: "",
+    });
+    const updatePhoneVerified = reactive({
+      verificationCode: "",
+      phone: "",
     });
     const verificationImg = ref("");
     const loadInfo = () => {
       loadMemberInfo().then((response) => {
         if (response.code === 0) {
           personalState.memberInfo = response.data;
-
           if (personalState.memberInfo.birthday) {
             personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
           }
@@ -431,7 +544,6 @@ export default defineComponent({
     const openVerificationModal = () => {
       getCode();
       verificationModalVisible.value = true;
-
     }
     const verifyVerificationCode = () => {
       captchaUpdateRef.value
@@ -448,7 +560,7 @@ export default defineComponent({
       }
 
       sendEmail(emailDetails).then((res) => {
-        if ( res.code === 0) {
+        if (res.code === 0) {
 
           disableSendVerificationButton.value = true
 
@@ -509,6 +621,95 @@ export default defineComponent({
       });
       loadingSecurityBtn.value = false
     };
+    // Phone
+
+    const verificationPhoneModalVisible = ref(false)
+    const openPhoneVerificationModal = () => {
+      getCode();
+      verificationPhoneModalVisible.value = true;
+    }
+    const updatePhoneModalVisible = ref(false)
+    const updatePhoneFormRef = ref();
+    const updatePhoneModal = () => {
+      updatePhoneVerified.phone = cachedTelephone;
+      updatePhoneVerified.phoneCode = "";
+      updatePhoneModalVisible.value = true;
+    };
+    const verifyPhoneVerificationCode = () => {
+      captchaUpdateRef.value
+        .validate()
+        .then(() => {
+
+      isPhoneSending.value = true
+      verificationPhoneDetails.memberInfo.phone = updatePhoneVerified.phone
+      
+      const phoneDetails =  {
+        telephone: updatePhoneVerified.phone,
+        captchaCode: updatePhoneVerified.captchaCode,
+        codeId: updatePhoneVerified.codeId
+      }
+
+      sendSms(phoneDetails).then((res) => {
+        if (res.code === 0) {
+
+          disableSendPhoneButton.value = true
+
+          const now = new Date();
+
+          now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout)
+
+          lsStore(sendOtpDisabledKey, now.getTime());
+          lsStore(phoneKey, verificationPhoneDetails.memberInfo.phone)
+
+          countDown.value = sendOtpDisabledTimeout
+          countdownTimer()
+
+          verificationPhoneDetails.memberInfo.codeId = res.data.codeId
+          verificationPhoneModalVisible.value = false;
+
+          ElMessage({
+            message: '成功',
+            type: 'success',
+          })
+
+          isPhoneSending.value = false
+        }
+     }).catch((e) => {
+          console.log(e.message);
+        // message.error(e.message);
+        getCode()
+        isPhoneSending.value = false
+      });
+
+    })
+    }
+    const submitUpdatePhone = () => {
+      loadingPhoneBtn.value = true
+      updatePhoneFormRef.value
+        .validate()
+        .then(() => {
+          verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode
+          verifySms(verificationPhoneDetails.memberInfo).then((res) => {
+            if (res.code === 0) {
+              ElMessage({
+                message: '成功',
+                type: 'success',
+              })
+              updatePhoneModalVisible.value = false
+              store.getMemberInfo()
+              loadInfo()
+            }
+          }).catch((e) => {
+            console.log(e.message);
+            // message.error(e.message);
+          });
+        }).catch((error) => {
+        console.log("error", error);
+      });
+      
+        
+      loadingPhoneBtn.value = false
+    };
 
     const countdownTimer = () => {
       if (countDown.value > 0) {
@@ -518,7 +719,7 @@ export default defineComponent({
         }, 1000)
       } else {
         lsRemove(sendOtpDisabledKey);
-        lsRemove(emailKey);
+        lsRemove(phoneKey);
 
         disableSendVerificationButton.value = false
       }
@@ -551,6 +752,27 @@ export default defineComponent({
       ],
     };
 
+    const updatePhoneVerifiedRules = {
+      phone: [
+        {
+          required: true,
+          message: "请输入电话地址",
+          trigger: "blur",
+        },
+      ],
+      verificationCode: [
+        {
+          required: true,
+          message: "请输入验证码",
+          trigger: "blur",
+        },
+        {
+          min: 4,
+          message: "长度应为 4",
+          trigger: "blur",
+        },
+      ],
+    };
     //update pwd
     const updatePwdModalVisible = ref(false);
     const updatePwdFormRef = ref();
@@ -653,6 +875,13 @@ export default defineComponent({
       updateSecurityModalVisible,
       updateSecurityVerifiedRules,
       submitUpdateSecurity,
+      updatePhoneFormRef,
+      updatePhoneVerified,
+      updatePhoneModal,
+      updatePhoneModalVisible,
+      updatePhoneVerifiedRules,
+      verificationPhoneModalVisible,
+      submitUpdatePhone,
       updatePwdFormRef,
       updatePwdInfo,
       updatePwdModal,
@@ -666,10 +895,13 @@ export default defineComponent({
       getVerificationCode,
       verificationModalVisible,
       openVerificationModal,
+      openPhoneVerificationModal,
       verificationImg,
       getCode,
       verifyVerificationCode,
+      verifyPhoneVerificationCode,
       isEmailSending,
+      isPhoneSending,
       updateFormRef,
       store,
       regDevice,
@@ -678,7 +910,9 @@ export default defineComponent({
       loadingBtn,
       loadingPwBtn,
       loadingSecurityBtn,
+      loadingPhoneBtn,
       disableSendVerificationButton,
+      disableSendPhoneButton,
       countDown
     };
   }

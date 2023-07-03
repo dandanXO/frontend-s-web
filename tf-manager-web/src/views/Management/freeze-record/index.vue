@@ -2,6 +2,23 @@
   <div class="roles-main">
     <div class="header-container" style="margin-bottom: 40px">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 100px;"
+          default-first-option
+          @focus="loadSites"
+          @change="changeSite"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input v-model="request.memberName" size="small" style="width: 150px;" :placeholder="t('fields.memberName')" />
         <el-select
           clearable
@@ -82,6 +99,7 @@ import moment from "moment";
 import { onMounted, reactive } from "vue";
 import { getFreezeRecords } from "../../../api/freeze";
 import { useI18n } from "vue-i18n";
+import { getSiteListSimple } from "../../../api/site";
 
 const { t } = useI18n();
 const page = reactive({
@@ -160,7 +178,12 @@ const request = reactive({
   memberName: null,
   freezeType: null,
   createBy: null,
+  siteId: 0,
   createTime: [defaultStartDate, defaultEndDate]
+});
+
+const siteList = reactive({
+  list: []
 });
 
 const freezeType = reactive({
@@ -176,6 +199,12 @@ function resetQuery() {
   request.freezeType = null;
   request.createBy = null;
   request.createTime = [];
+  request.siteId = siteList.list[0].id;
+}
+
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
 }
 
 function convertDate(date) {
@@ -209,7 +238,9 @@ function changePage(page) {
   loadFreezeRecords();
 }
 
-onMounted(() => {
+onMounted(async() => {
+  await loadSites();
+  request.siteId = siteList.list[0].id
   loadFreezeRecords();
 });
 

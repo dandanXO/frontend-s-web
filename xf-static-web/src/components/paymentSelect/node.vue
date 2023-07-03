@@ -1,6 +1,6 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div class="" v-if="level === 1">支付方式</div>
+    <div class="" v-if="level === 1"><strong>支付方式</strong></div>
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
@@ -12,21 +12,18 @@
         @click="clickItem(item)"
         :class="[
           item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
+          selectItem === item ? 'active' : ''
         ]"
         :key="i"
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <img :src="imgURL + item.nodeIcon" />
+          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div>{{ item.nodeName }}</div>
           <div
             class="promo"
-            :style="
-              item.promoStyle + 'background-image: url(' + item.promoIcon + ''
-            "
           >
-            <span class="val">{{ item.promoValue }}</span>
+            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`">
           </div>
           <div class="payment-method-wrapper">
             <div
@@ -52,6 +49,7 @@
       </div>
       <!-- </div> -->
       <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
+      
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
@@ -59,7 +57,7 @@
         :name="item.nodeName"
         :class="[
           item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
+          selectItem === item ? 'active' : ''
         ]"
         v-if="selectItem === item"
         :level="parseInt(level) + 1"
@@ -83,29 +81,29 @@ export default defineComponent({
       type: Array,
       default: function () {
         return [];
-      },
+      }
     },
     level: {
       type: Number,
-      default: 0,
+      default: 0
     },
     name: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   data() {
     return {
       ruleForm: {
         name: "",
         icon: "",
-        add: false,
+        add: false
       },
       selectItem: null,
       dialogVisible: false,
       payMethods: reactive([]),
       imgURL: process.env.VUE_APP_IMAGE_CDN + "/payment/",
-      nodeKey: 0,
+      nodeKey: 0
     };
   },
   methods: {
@@ -157,13 +155,14 @@ export default defineComponent({
       item.hasActive = true;
       this.selectedItem = item;
       this.$emit("clicked", this.selectedItem);
-    },
+    }
   },
   mounted() {
     this.$nextTick(() => {
       this.firstTime(this.list[0]);
     });
-  },
+    this.firstTime(this.list[0]);
+  }
 });
 </script>
 <style lang="scss" scoped>
@@ -202,9 +201,9 @@ $node-color: #45fefa;
   // margin-top: 10px;
   display: flex;
   grid-gap: 20px;
-  margin-top: 20px;
+  // margin-top: 20px;
   flex-wrap: wrap;
-  padding-bottom: 20px;
+  // padding-bottom: 20px;
 
   .payment-method-item {
     text-align: center;
@@ -214,17 +213,40 @@ $node-color: #45fefa;
     cursor: pointer;
     // padding: 20px 35px;
     img {
-        border: 2px solid;padding: 5px 15px;
-        border-radius: 3px;
+      border: 2px solid #dddddd;
+      padding: 5px 15px;
+      border-radius: 3px;
     }
     &:hover {
       // border-bottom: 3px solid rgba(255, 255, 255, .4);
     }
     &.active {
       // background: rgba(255,255,255, .2);
-      img {
-        border-color: $node-color;
+      .node-text {
+        .node-txt-img {
+          border-color: $node-color;
+        }
+        img {
+          // border-color: $node-color;
+          // position: relative;
+        }
       }
+
+      // &:before {
+      //   display: block;
+      //   content: "";
+      //   position: absolute;
+      //   bottom: 38px;
+      //   right: 23px;
+      //   background-color: #4873f1;
+      //   height: 15px;
+      //   width: 15px;
+      //   z-index: 3;
+      //   border-radius: 3px;
+      //   background-image: url("../../assets/svg/CheckBox.svg");
+      //   background-size: 100%;
+      //   background-position: center center;
+      // }
     }
 
     // &.node-group {
@@ -267,30 +289,48 @@ $node-color: #45fefa;
       // font-weight: bold;
     }
     &.node-group {
-      display: flex;
-      justify-content: flex-start;
-      align-items:  center;
-      gap: 10px;
+      //   display: flex;
+      //   justify-content: flex-start;
+      //   align-items:  center;
+      //   gap: 10px;
+      // flex-wrap: wrap;
+      display: block;
       .account-title-container {
-        margin: 0 0 20px;
+        margin: 0 15px 0 10px;
+        font-weight: bold;
+        display: block;
+        // float: left;
+        vertical-align: bottom;
+        margin-top: 25px;
+        // min-width: 100px;
+        text-align: left;
       }
       .node-text {
         gap: 5px;
         & > div {
           font-size: 12px;
-          color: #a0bcd6;
+          color: #ffffff;
         }
         img {
-        background-color: #2a313e;
+          background-color: #2a313e;
           max-width: 2.3rem;
           // max-width: 1.5rem;
           margin-bottom: 0;
         }
       }
+      .promo {
+        img {
+          background-color: transparent;
+          box-shadow: none;
+          padding: 0;
+          border: 0;
+        }
+      }
     }
   }
   .node-content {
-    gap: 0;
+    gap: 0 20px;
+    padding: 30px 0 0;
     .payment-method-item {
       text-align: center;
       padding: 10px 8px;
@@ -311,7 +351,7 @@ $node-color: #45fefa;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 2rem;
+      // min-width: 6rem;
       .payment-method-wrapper {
         display: none;
       }
@@ -324,13 +364,32 @@ $node-color: #45fefa;
       flex-direction: column;
       & > div {
         font-size: 12px;
-        color: #a0bcd6;
+        color: #ffffff;
       }
-      img {
+
+      .node-txt-img {
        background-color: #2a313e;
-        // max-width: 2.3rem;
-        max-width: 1.5rem;
-        margin-bottom: 0;
+        // background-color: #f7f7f7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 5px;
+        border: 2px solid #dddddd;
+        // padding: 5px 15px;
+        border-radius: 3px;
+
+        img {
+          max-width: 2.3rem;
+          width: 100%;
+          height: auto;
+          // max-width: 1.5rem;
+          margin-bottom: 0;
+          border: 0;
+          padding: 0;
+        }
       }
     }
   }
@@ -405,6 +464,11 @@ $node-color: #45fefa;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      img {
+       padding: 0;
+       border: 0; 
+       background-color: transparent;
+      }
       // top: -5px;
       // right: 0;
       // background: #dd4645;

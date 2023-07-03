@@ -17,7 +17,16 @@
           @clicked="onSelect"
         />
       </div>
-      <div class="deposit-container">
+      
+      <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
+          <div class="submit-message">
+          <div class="linebox"><span>银行名称：</span> <span class="info" ref="subMsg0">{{submitMessage[0]}}</span><button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button></div>
+          <div class="linebox"><span>银行账号：</span> <span class="info" ref="subMsg1">{{submitMessage[1]}}</span><button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button></div>
+          <div class="linebox"><span>银行卡号：</span> <span class="info" ref="subMsg2">{{submitMessage[2]}}</span><button @blur="blurCode" @click="copyMessage('2')" class="common-btn">{{ copybtntxt2 }}</button></div>
+          <div class="linebox"><span>存款金额：</span> <span class="info" ref="subMsg3">{{submitMessage[3]}}</span><button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button></div>
+        </div>
+        </div>
+      <div class="deposit-container" v-else>
         <el-form
           ref="formRef"
           :model="form"
@@ -26,56 +35,35 @@
           label-width="100px"
           label-suffix=":"
         >
-          <el-row :gutter="20">
-            <el-col :span="9">
+        <el-space>
               <el-form-item class="helptxt" label="金额" prop="localAmount">
-                <!-- <el-input
+                <el-input v-if="amountList.length === 0"
                   v-model="form.localAmount"
-                  placeholder="输入存款余额"
-                /> -->
-                <el-input
-                  v-if="amountList.length === 0"
-                  v-model="form.localAmount"
-                  placeholder="输入存款金额"
+                  :placeholder="isUSDT ? '输入USDT金额' : '输入存款金额'"
                 />
 
-                <el-select
-                  placeholder="选择存款金额"
-                  v-else
-                  v-model="form.localAmount"
-                >
-                  <el-option
-                    v-for="amount in amountList"
-                    :key="amount"
-                    :value="amount"
-                  >
+                <el-select placeholder="选择存款金额" v-else v-model="form.localAmount">
+                  <el-option v-for="amount in amountList" :key="amount" :value="amount">
                     {{ amount }}
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
-            <el-col :span="8">
               <div class="account-tip">
-                最低存款 :
-                {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-                {{ isUSDT ? "USDT" : "RMB" }}
-                <br />
-                最高存款:
-                {{
+                最低存款: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? 'USDT' : store.currency.label }}
+                 <br />
+                最高存款: {{
                   activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
-                }}
-                {{ isUSDT ? "USDT" : "RMB" }}
+                }} {{ isUSDT ? 'USDT' : store.currency.label }}
               </div>
-            </el-col>
-          </el-row>
+            </el-space>
 
           <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
             class="helptxt"
             label="实时汇率"
           >
-            <span style="color: #9bffd1"
-              >1.00 USDT ≈ {{ activeMethod.currencyRate }} RMB</span
+            <span style="color: #17cd27"
+              >1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span
             >
           </el-form-item>
           <el-form-item
@@ -90,13 +78,14 @@
               ref="payTypeClass"
               :is="selectedPayType"
               :bank-list="bankCardList"
+              v-model="form.bankId"
               @selected="selectedBank"
             ></BankComponent>
           </el-form-item>
           <el-form-item
             prop="privilegeId"
             name="privilegeId"
-            v-if="hasPrivilege"
+            v-if="hasPrivilege && !isUSDT"
             label="优惠"
           >
             <el-select
@@ -104,6 +93,7 @@
               placeholder="选择优惠"
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
+              clearable
             >
               <el-option
                 v-for="p in unselectedPrivileges"
@@ -130,7 +120,7 @@
           </el-form-item> -->
           <el-form-item v-if="selectedPayType" class="tip">
             <!-- <template #label></template> -->
-            <span class="account-tip-text" style="margin-bottom: 10px">
+            <span class="account-tip-text" style="margin-bottom: 10px; display: block; width: 100%;">
               <div v-html="activeMethod.msg"></div>
               <!-- {{ activeMethod.msg }} -->
             </span>
@@ -140,14 +130,13 @@
             </div> -->
           </el-form-item>
           <div class="txt-center">
-            <el-button @click="confirmDeposit" class="common-btn">
+            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">
               确定
             </el-button>
           </div>
         </el-form>
       </div>
       <el-dialog
-        class="isDeposit"
         width="500px"
         v-model="isDeposited"
         :maskClosable="false"
@@ -164,12 +153,7 @@
 </template>
 <script setup>
 import { ref, reactive, onMounted, shallowRef } from "vue";
-import {
-  loadPay,
-  loadPrivileges,
-  verifyAmount,
-  postDeposit,
-} from "@/api/personal/deposit";
+import { loadPay, loadPrivileges,verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { RiSpamLine } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
@@ -177,11 +161,12 @@ import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
-import { InfoFilled } from "@element-plus/icons-vue";
+// import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 {
   RiSpamLine;
 }
+const loadingBtn = ref(false)
 const store = userStore();
 const formRef = ref();
 const isDeposited = ref(false);
@@ -211,20 +196,20 @@ const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
-  copyText = eval(`subMsg${position}.value.innerText`);
+    copyText = eval(`subMsg${position}.value.innerText`);
   // Create a temporary textarea element
-  const tempTextarea = document.createElement("textarea");
+  const tempTextarea = document.createElement('textarea');
   tempTextarea.value = copyText;
   document.body.appendChild(tempTextarea);
 
   // Select the text and copy it
   tempTextarea.select();
-  document.execCommand("copy");
+  document.execCommand('copy');
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "已复制";
+  copybtntxt[position].value = '已复制';
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
@@ -232,11 +217,10 @@ const copyMessage = (position) => {
 
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt.forEach((element) => {
-    element.value = "复制";
+  copybtntxt.forEach(element => {
+    element.value = '复制';
   });
 };
-
 const form = reactive({
   paymentId: null,
   privilegeId: null,
@@ -296,7 +280,6 @@ function initPay() {
 
 async function loadPrivilege(val) {
   privilegeList.value = [];
-  // hasPrivilege.value = false;
   await loadPrivileges(val.paymentId).then((d) => {
     if (d.code == 0) {
       privilegeList.value = d.data.privileges;
@@ -346,7 +329,7 @@ function selectPayType(value) {
 }
 
 async function onSelect(value) {
-  isDisplay.value = false;
+  isDisplay.value = false
   clearInfo();
   if (value) {
     if (value.group) {
@@ -389,33 +372,21 @@ function checkPrivilege(v) {
 }
 
 function selectedBank(value) {
-  console.log(value);
-  form.bankId = value;
+  form.bankId = value.value;
+  console.log(form.bankId)
 }
 
 function clearInfo() {
   isDeposited.value = false;
-  formRef.value.resetFields();
   form.localAmount = "";
+  form.bankId = "";
   selectedPrivilege.value = null;
   checkMinDepositAmt();
 }
 
-async function confirmDeposit() {
-  await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
-    (d) => {
-      if (d.code === 11002) {
-        form.localAmount = d.data.suggestion;
-        // message.error(d.message, 4);
-        ElMessage.error(d.message);
-      } else {
-        doDeposit();
-      }
-    }
-  );
-}
-
-function doDeposit() {
+function confirmDeposit() {
+  loadingBtn.value = true;
+  
   if (freePrivilege.value) {
     if (selectedPrivilege.value) {
       form.privilegeId = selectedPrivilege.value + "," + freePrivilege.value.id;
@@ -429,81 +400,68 @@ function doDeposit() {
       form.privilegeId = null;
     }
   }
-  formRef.value.validate().then(() => {
-    form.paymentId = activeMethod.value.paymentId;
-    if (store.token) {
-      verifyAmount(form.paymentId, form.localAmount)
-        .then((d) => {
-          if (d.code == 0) {
-            // newWin.location.href = d.data;
-            // newWin.location.href = resp
-            const copy = { ...form };
-            const data = {};
-            Object.entries(copy).forEach(([key, value]) => {
-              if (value) {
-                data[key] = value;
-              }
-            });
-            data.bankCardId = 0;
-
-            postDeposit(data)
-              .then((d) => {
-                if (d.code === 0) {
-                  doIt(d).then((resp) => {
-                    const response = resp.data.result;
-                    if (response.data) {
-                      if (
-                        response.paramKey === null ||
-                        response.paramKey === ""
-                      ) {
-                        isDisplay.value = true;
-                        submitMessage.value = response.data.split(",");
-                      }
-                      // if (resp.paramKey === null || resp.paramKey === "") {
-                      //   resp.data = ['北京银行,请联系在线客服获取,888888,1233']
-                      //   isDisplay.value = true;
-                      //   submitMessage.value = resp.data.split(',');
-                      // }
-                    } else {
-                      isDeposited.value = true;
-                    }
-                  });
-                } else {
-                  ElMessage.error(d.data.message);
-                }
-              })
-              .catch((error) => {
-                doIt(d).then((resp) => {
-                  if (resp) {
-                    console.log(resp);
-                  }
-                });
-                ElMessage.error(error.message);
-              });
-          } else {
-            ElMessage.error(d.message);
-          }
-        })
-        .catch((error) => {
-          ElMessage.error(error.message);
-        });
-      // const newWin = window.open(`/depositLoading`, "Bank");
-      // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-      // window.addEventListener(
-      //     "message",
-      //     (event) => {
-      //       if (event.data?.msg) {
-      //         if (event.data.msg === "success") {
-      //           isDeposited.value = true;
-      //         } else {
-      //           // message.error(event.data.msg, 4);
-      //         }
-      //       }
-      //     },
-      //     { once: true }
-      // );
-    }
+  form.paymentId = activeMethod.value.paymentId;
+  formRef.value.validate().then(async() => {
+  await verifyAmount(activeMethod.value.paymentId, form.localAmount).then(
+      (d) => {
+        if (d.code === 11002) {
+          form.localAmount = d.data.suggestion;
+          // message.error(d.message, 4);
+          ElMessage.error(d.message);
+        } else {
+          const copy = { ...form };
+          const data = {};
+          Object.entries(copy).forEach(([key, value]) => {
+            if (value) {
+              data[key] = value;
+            }
+          });
+          data.bankCardId = 0;
+          
+          doDeposit(data);
+        }
+      },
+  ).catch((err) => {
+    console.log(err)
   });
+})
+    loadingBtn.value = false;
+}
+
+function doDeposit(data) {
+  
+  postDeposit(data).then((d) => {
+    if (d.code === 0) {
+      doIt(d).then((resp) => {
+          const response = resp.data.result
+        if (response.payResultType === 'RENDER_HTML') {
+          if (response.paramKey === null || response.paramKey === "") {
+          isDisplay.value = true;
+          submitMessage.value = response.data.split(',');
+          }
+        } else {
+          const newWin = window.open(`/depositLoading`, "Bank");
+          newWin.localStorage.setItem("formDetails", JSON.stringify(resp));
+          window.addEventListener(
+              "message",
+              (event) => {
+                if (event.data?.msg) {
+                  if (event.data.msg === "success") {
+                    isDeposited.value = true;
+                  } else {
+                    // message.error(event.data.msg, 4);
+                  }
+                }
+              },
+              { once: true }
+          );
+        }
+      });
+    }
+  }).catch((err) => {
+    console.log(err)
+  });
+
 }
 
 async function verifyDepositAmount(r, v) {
@@ -542,13 +500,6 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
-body {
-  .isDeposit {
-    .el-dialog__body {
-      padding: 20px;
-    }
-  }
-}
 .sm .ant-modal {
   width: 100%;
   max-width: 400px;
@@ -573,7 +524,7 @@ body {
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
-  grid-template-rows: 50px;
+grid-template-rows: 50px;
   grid-column-gap: 20px;
 
   .payment-channel-item {
@@ -641,9 +592,9 @@ body {
   .loading {
     display: flex;
     justify-content: center;
-    padding: 50px 0;
     font-size: 30px;
     height: 100%;
+    padding: 80px 0;
     img {
       width: 100%;
     }
@@ -692,11 +643,9 @@ body {
     :deep(.ant-form-item.select .ant-form-item-control-input) {
       max-width: 280px;
     }
-    :deep(
-        .ant-select-single:not(.ant-select-customize-input)
-          .ant-select-selector
-          .ant-select-selection-search-input
-      ) {
+    :deep(.ant-select-single:not(.ant-select-customize-input)
+        .ant-select-selector
+        .ant-select-selection-search-input) {
       height: 40px;
     }
     :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
@@ -710,44 +659,45 @@ body {
 }
 </style>
 <style scoped lang="scss">
+
+.txt-center {
+  margin: 50px auto 20px;
+  text-align: center;
+}
 :deep(.ant-form-item-label > label) {
   color: #ffffff;
 }
-.account-tip {
-  color: #ffffff;
-  &-text {
-    color: #ffffff;
-  }
-}
+// .account-tip {
+//   color: #ffffff;
+//   &-text {
+//     color: #ffffff;
+//   }
+// }
 :deep(.ant-select) {
   height: 42px;
   width: 280px;
   margin-right: 24px;
 }
 
-:deep(
-    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input)
+    .ant-select-selector) {
   height: 42px;
 }
-:deep(
-    .ant-select-single:not(.ant-select-customize-input)
-      .ant-select-selector
-      .ant-select-selection-search-input
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input)
+    .ant-select-selector
+    .ant-select-selection-search-input) {
   height: 40px;
 }
-:deep(
-    .ant-select-single .ant-select-selector .ant-select-selection-placeholder
-  ) {
+:deep(.ant-select-single
+    .ant-select-selector
+    .ant-select-selection-placeholder) {
   line-height: 30px;
 }
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
   line-height: 30px;
 }
 </style>
-//
-<style scoped lang="scss">
+// <style scoped lang="scss">
 // @media (max-width: 768px) {
 //   .account-content .node-wrapper {
 //     padding: 0;
@@ -784,4 +734,46 @@ body {
 //     }
 //   }
 // }
+</style>
+<style lang="scss">
+.inner-cont {  
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.submit-message {
+  width: calc(100% - 40px);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  height: auto;
+  gap: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  color:#000000;
+  .linebox {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    width: calc(100% - 30px);
+    align-items: center;
+    font-size: 16px;
+    align-items: center;
+    background: #dddddd;
+    padding: 15px;
+    span:first-child {
+      flex: 1;
+      color: #4669f8;
+    }
+    span.info {
+      flex: 3;
+    }
+    button {
+      width: 80px;
+    }
+  }
+}
 </style>

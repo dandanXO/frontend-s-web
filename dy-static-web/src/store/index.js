@@ -22,7 +22,8 @@ export const userStore = defineStore("userStore", {
       vip: "",
       evip: "",
       currency: { value: "￥", label: "RMB"},
-      loginPageVisible: false
+      loginPageVisible: false,
+      regPageVisible: false
     };
   },
   actions: {
@@ -41,6 +42,11 @@ export const userStore = defineStore("userStore", {
           console.log(err);
           // message.error(err.message);
         });
+    },
+    autoLogin(token) {
+      this.token = token;
+      this.getBalance();
+      this.getMemberInfo();
     },
     telephoneLogin(loginInfo) {
       return mobileLogin(loginInfo)
@@ -90,7 +96,7 @@ export const userStore = defineStore("userStore", {
     openLiveChat() {
       const left = (screen.width - 350) * 2;
       const top = (screen.height - 650) / 4;
-      window.open(`https://csweb01.v6kthwlug.com/?partnerId=11&lang=zh-CN&way=WEB&token=${this.token}`, 'Chat Server',
+      window.open(`https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`, 'Chat Server',
           'resizable=yes, width=' + 350
           + ', height=' + 650 + ', top='
           + top + ', left=' + left);

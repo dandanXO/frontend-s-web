@@ -87,6 +87,7 @@
           :rules="[{ required: true, message: isUSDT ? '请选择钱包地址' : '请选择银行卡', trigger: 'blur' }]"
         >
           <el-select
+            @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''" 
             v-model="withdrawInfo.cardId"
             :placeholder="isUSDT ? '选择钱包地址' : '选择银行卡'"
             style="width: 300px;"
@@ -129,9 +130,10 @@
 import { defineComponent, reactive, ref, onMounted } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -139,6 +141,7 @@ export default defineComponent({
     RiArrowRightSLine
   },
   setup() {
+    const router = useRouter();
     const loadingBtn = ref(false);
     const store = userStore();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
@@ -215,6 +218,25 @@ export default defineComponent({
         },
       ],
     };
+    const checkBankCards = () => {
+      ElMessageBox.confirm(
+      '请先绑定银行卡', "系统提示",
+      {
+        showClose: 'false',
+        cancelButtonClass: 'cancel-btn',
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+        draggable: true,
+        buttonSize: "small"
+      }
+    )
+      .then(() => {
+        router.push('/center/withdrawbank')
+      })
+      .catch(() => {
+      })
+    }
     const loadCards = () => {
         withdrawState.bankCardList = []
         loadBankCards().then((response) => {
@@ -256,6 +278,7 @@ export default defineComponent({
     const selectMethod = (method, index) => {
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
+      withdrawInfo.amount = ""
       selectedWithdrawalMethod.value = method
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
@@ -293,7 +316,8 @@ export default defineComponent({
       isUSDT,
       verifyWithdrawAmount,
       store,
-      loadingBtn
+      loadingBtn,
+      checkBankCards
     };
   },
 });

@@ -33,6 +33,11 @@ const transitList = ref([
     name: '转账记录'
   },
   {
+    code: 'moneyChange',
+    icon: 'transfer',
+    name: '账变记录'
+  },
+  {
     code: 'promo',
     icon: 'deposit',
     name: '优惠记录'

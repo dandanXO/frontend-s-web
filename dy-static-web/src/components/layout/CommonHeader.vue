@@ -15,20 +15,19 @@
                   :key="index"
                   v-html="word.content"
                   @click="openPopup(word)"
-                >
-                </span>
+                ></span>
               </Vue3Marquee>
             </div>
           </div>
         </div>
         <div v-if="!store.token" class="right-contents">
           <a class="common-btn grey" @click="loginDialogVisible = true">登录</a>
-          <a class="common-btn" @click="registerDialogVisible = true"
-            >开设账户</a
-          >
-          <a class="common-link" @click="forgetPassDialogVisible = true"
-            >忘记账号？</a
-          >
+          <a class="common-btn" @click="registerDialogVisible = true">
+            开设账户
+          </a>
+          <a class="common-link" @click="forgetPassDialogVisible = true">
+            忘记账号？
+          </a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -38,12 +37,13 @@
                 type="warning"
                 effect="dark"
                 style="margin-right: 10px; font-weight: bold"
-                >{{ store.vip ? store.vip : store.vip }}</el-tag
               >
-              {{ store.nickName
-              }}<el-icon class="el-icon--right"
-                ><arrow-down style="height: 0.8em"
-              /></el-icon>
+                {{ store.vip ? store.vip : store.vip }}
+              </el-tag>
+              {{ store.nickName }}
+              <el-icon class="el-icon--right">
+                <arrow-down style="height: 0.8em" />
+              </el-icon>
             </span>
             <template #dropdown>
               <el-dropdown-menu>
@@ -55,10 +55,10 @@
                   <RiMoneyCnyCircleLine style="width: 20px; fill: #a8b5c3" />
                   充值中心
                 </el-dropdown-item>
-                <!-- <el-dropdown-item command="c">
-                  <RiBankCardLine style="width: 20px; fill: #a8b5c3" />
+                <el-dropdown-item command="c">
+                  <RiExchangeDollarLine style="width: 20px; fill: #a8b5c3" />
                   快速转账
-                </el-dropdown-item> -->
+                </el-dropdown-item>
                 <el-dropdown-item command="d">
                   <RiCouponLine style="width: 20px; fill: #a8b5c3" />
                   优惠领取
@@ -72,20 +72,20 @@
           </el-dropdown>
           <a @click="refreshBalance" class="balance-amt">
             <span>余额：</span>
-            <span class="amount"
-              ><span v-if="isLoadingBalance">Loading...</span
-              ><span v-if="!isLoadingBalance"
-                >{{ store.currency.value }} {{ store.balance }}</span
-              ></span
-            >
+            <span class="amount">
+              <span v-if="isLoadingBalance">Loading...</span>
+              <span v-if="!isLoadingBalance">
+                {{ store.currency.value }} {{ store.balance }}
+              </span>
+            </span>
             <el-icon>
               <Refresh />
             </el-icon>
           </a>
           <div class="top-deposit">
-            <router-link to="/center/deposit" class="common-btn"
-              >充值</router-link
-            >
+            <router-link to="/center/deposit" class="common-btn">
+              充值
+            </router-link>
           </div>
         </div>
       </div>
@@ -230,8 +230,9 @@
                 class="common-btn"
                 style="margin-left: 100px"
                 @click="submitLogin"
-                >登录</el-button
               >
+                登录
+              </el-button>
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="手机登录">
@@ -268,8 +269,9 @@
                       @click="openCaptchaForm('LOGIN')"
                       size="small"
                       color="#3bafda"
-                      >发送验证码</el-button
                     >
+                      发送验证码
+                    </el-button>
                     <el-button v-else disabled size="small" class="common-btn">
                       已发送（倒数{{ loginCountdown }}秒）
                     </el-button>
@@ -283,10 +285,11 @@
                 class="common-btn"
                 style="margin-left: 100px"
                 @click="phoneLogin"
-                >登录</el-button
               >
-            </el-form></el-tab-pane
-          >
+                登录
+              </el-button>
+            </el-form>
+          </el-tab-pane>
         </el-tabs>
       </span>
     </el-dialog>
@@ -297,6 +300,7 @@
       width="1280px"
       align-center
       style="max-width: 1200px"
+      @close="store.regPageVisible = false"
     >
       <div class="register-container">
         <div class="registered-left">
@@ -320,6 +324,28 @@
               </el-col>
             </el-row>
 
+            <el-form-item label="姓名" prop="realName">
+              <el-space>
+                <el-input
+                  class="wTip"
+                  v-model="regForm.realName"
+                  placeholder="输入姓名"
+                  :rules="[
+                    { required: true, message: '请输入姓名' },
+                    {
+                      pattern: '^([\u4e00-\u9fa5]*)$',
+                      message: '请输入中文字符',
+                      trigger: 'change'
+                    }
+                  ]"
+                >
+                  <template #append>
+                    范围在2-12位之间, 由中文字符组成
+                  </template>
+                </el-input>
+              </el-space>
+            </el-form-item>
+
             <el-form-item label="用户名" prop="loginName">
               <el-space>
                 <el-input
@@ -342,32 +368,34 @@
                   type="password"
                   show-password
                 >
-                  <template #append
-                    >密码范围在6-12位之间, 由字母和数字组成
+                  <template #append>
+                    密码范围在6-12位之间, 由字母和数字组成
                   </template>
                 </el-input>
               </el-space>
               <el-row>
-                <div v-if="regForm.password" class="password-str-div">
+                <!-- <div v-if="regForm.password" class="password-str-div">
                   <span
                     :class="{
                       'weak-pwd': pwdStrength == 'weak',
                       'normal-pwd': pwdStrength == 'normal',
                       'strong-pwd': pwdStrength == 'strong'
                     }"
-                    >弱</span
                   >
+                    弱
+                  </span>
                   <span
                     :class="{
                       'normal-pwd': pwdStrength == 'normal',
                       'strong-pwd': pwdStrength == 'strong'
                     }"
-                    >好</span
                   >
-                  <span :class="{ 'strong-pwd': pwdStrength == 'strong' }"
-                    >强</span
-                  >
-                </div>
+                    好
+                  </span>
+                  <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">
+                    强
+                  </span>
+                </div> -->
               </el-row>
             </el-form-item>
             <!-- <el-form-item label="密码" prop="password">
@@ -396,14 +424,14 @@
                 </el-input>
               </el-space>
             </el-form-item>
-            <el-row>
+            <!-- <el-row>
               <el-col>
                 <span class="title account">会员资料</span>
               </el-col>
-            </el-row>
-            <el-form-item label="电话号码" prop="telephone">
+            </el-row> -->
+            <!-- <el-form-item label="电话号码" prop="telephone">
               <el-space>
-              
+
               <el-input :disabled="disableSendVerificationButton" class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
               <el-button :disabled="disableSendVerificationButton" @click="openCaptchaForm('REGISTER')" size="small" class="common-btn">
                 <span v-if="disableSendVerificationButton">已发送（倒数{{ regCountdown }}秒)</span>
@@ -430,6 +458,24 @@
                   placeholder="输入邮件"
                 />
               </el-space>
+            </el-form-item> -->
+            <el-form-item label="推荐码" prop="codeAffiliate">
+              <el-space>
+                <el-input
+                  v-if="!hasAffiliate"
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="若不是合营下会员无需填写输入推荐码"
+                />
+                <el-input
+                  v-else
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="若不是合营下会员无需填写"
+                  readonly
+                  disabled
+                />
+              </el-space>
             </el-form-item>
             <el-form-item label="验证码" prop="captchaCode">
               <el-space>
@@ -446,36 +492,20 @@
                 />
               </el-space>
             </el-form-item>
-            <el-form-item label="代理代码" prop="codeAffiliate">
-              <el-space>
-                <el-input
-                  v-if="!hasAffiliate"
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="输入代理代码"
-                />
-                <el-input
-                  v-else
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="输入代理代码"
-                  readonly
-                  disabled
-                />
-              </el-space>
-            </el-form-item>
           </el-form>
           <el-button
             class="common-btn"
             color="#3bafda"
             @click="resetRegForm(registerRef)"
-            >重新填写
+          >
+            重新填写
           </el-button>
           <el-button
             class="common-btn"
             @click="submitRegisterForm(registerRef)"
             color="#3bafda"
-            >确认注册
+          >
+            确认注册
           </el-button>
         </div>
       </div>
@@ -523,8 +553,9 @@
           class="common-btn"
           style="margin-left: 100px"
           @click="sendOtp"
-          >发送</el-button
         >
+          发送
+        </el-button>
       </el-form>
     </el-dialog>
 
@@ -607,8 +638,9 @@
                 class="common-btn"
                 style="margin-left: 100px"
                 @click="submitForgetPass"
-                >提交</el-button
               >
+                提交
+              </el-button>
             </el-form>
           </el-tab-pane>
         </el-tabs>
@@ -631,9 +663,9 @@
           尊敬的东赢会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！东赢娱乐
           2022/10/13
         </div>
-        <el-button class="common-btn" @click="noticeDialogVisible = false"
-          >确认</el-button
-        >
+        <el-button class="common-btn" @click="noticeDialogVisible = false">
+          确认
+        </el-button>
       </div>
     </el-dialog>
 
@@ -689,6 +721,7 @@ import {
   RiVolumeUpFill,
   RiAccountCircleLine,
   RiMoneyCnyCircleLine,
+  RiExchangeDollarLine,
   RiBankCardLine,
   RiCouponLine,
   RiLogoutBoxLine,
@@ -734,6 +767,7 @@ export default defineComponent({
     Refresh,
     RiAccountCircleLine,
     RiMoneyCnyCircleLine,
+    RiExchangeDollarLine,
     RiBankCardLine,
     RiCouponLine,
     RiLogoutBoxLine,
@@ -836,23 +870,23 @@ export default defineComponent({
       // console.log(level);
 
       if (pwd.length >= 6) {
-        switch (level) {
-          case 1:
-            strength = "weak";
-            break;
-          case 2:
-            strength = "normal";
-            break;
-          case 3:
-          case 4:
-            strength = "strong";
-            break;
-        }
-      } else {
-        strength = "weak";
-      }
-      if (strength === "weak") {
-        return Promise.reject("密码至少应该是好的");
+        // switch (level) {
+        //   case 1:
+        //     strength = "weak";
+        //     break;
+        //   case 2:
+        //     strength = "normal";
+        //     break;
+        //   case 3:
+        //   case 4:
+        //     strength = "strong";
+        //     break;
+        // }
+      // } else {
+        // strength = "weak";
+      // }
+      // if (strength === "weak") {
+        // return Promise.reject("密码至少应该是好的");
       } else {
         return Promise.resolve();
       }
@@ -861,6 +895,15 @@ export default defineComponent({
     let validateName = async (r, v) => {
       if (v === "") {
         return Promise.reject("请输入登录名");
+      } else if (!checkName(v)) {
+        return Promise.reject("不允许使用特殊字符");
+      } else {
+        return Promise.resolve();
+      }
+    };
+    let validateRealName = async (r, v) => {
+      if (v === "") {
+        return Promise.reject("请输入登姓名");
       } else if (!checkName(v)) {
         return Promise.reject("不允许使用特殊字符");
       } else {
@@ -980,6 +1023,7 @@ export default defineComponent({
     };
 
     const regForm = reactive({
+      realName: "",
       loginName: "",
       password: "",
       confirmPwd: "",
@@ -994,6 +1038,20 @@ export default defineComponent({
     });
 
     const regRules = {
+      
+      realName: [
+        {
+          required: false,
+          min: 2,
+          max: 12,
+          message: "长度应为 2 至 12",
+          trigger: "blur",
+        },
+        {
+          validator: validateRealName,
+          trigger: "change",
+        },
+      ],
       loginName: [
         {
           min: 6,
@@ -1194,14 +1252,14 @@ export default defineComponent({
               disableSendVerificationButton.value = true
 
               regForm.smsCodeId = response.data.codeId;
-              
+
               ElMessage({
                 type: 'success',
                 message: '发送手机验证码成功'
               });
 
               captchaDialogVisible.value = false;
-              
+
               regCountdown.value = registerSendOtpDisabledTimeout;
 
               const now = new Date();
@@ -1290,16 +1348,17 @@ export default defineComponent({
                 .then((response) => {
                   const regResult = response.code;
                   if (regResult === 0) {
-
                     ElMessage({
                       type: 'success',
                       message: '注册成功'
                     });
+                    store.autoLogin(response.data);
                     registerDialogVisible.value = false;
-                    loginDialogVisible.value = true;
+                    store.regPageVisible = false
+                    // loginDialogVisible.value = true;
 
                     sessionStorage.removeItem("REFERRAL_CODE");
-                    getCode();
+                    // getCode();
                   } else {
                     getCode();
                     // message.error(response.message);
@@ -1355,7 +1414,7 @@ export default defineComponent({
 
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
-        
+
 
       getAffiliateCode();
       loadAnnouncement();
@@ -1379,6 +1438,15 @@ export default defineComponent({
         loginDialogVisible.value = true
       } else {
         loginDialogVisible.value = false
+      }
+      // Optionally you can set immediate: true config for the watcher to run on init
+      // }, { immediate: true });
+    });
+    watch(() => store.regPageVisible, () => {
+      if (store.regPageVisible) {
+        registerDialogVisible.value = true
+      } else {
+        registerDialogVisible.value = false
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
@@ -1563,44 +1631,44 @@ export default defineComponent({
 
     watch(
         () => regForm.password,
-        () => {
-          pwdStrength.value = "";
+        // () => {
+        //   pwdStrength.value = "";
 
-          var pwd = regForm.password;
-          var result = 0;
-          for (var i = 0, len = pwd.length; i < len; ++i) {
-            result |= charType(pwd.charCodeAt(i));
-          }
+        //   var pwd = regForm.password;
+        //   var result = 0;
+        //   for (var i = 0, len = pwd.length; i < len; ++i) {
+        //     result |= charType(pwd.charCodeAt(i));
+        //   }
 
-          var level = 0;
-          for (i = 0; i <= 4; i++) {
-            if (result & 1) {
-              level++;
-            }
-            result = result >>> 1;
-          }
+        //   var level = 0;
+        //   for (i = 0; i <= 4; i++) {
+        //     if (result & 1) {
+        //       level++;
+        //     }
+        //     result = result >>> 1;
+        //   }
 
-          // console.log(level);
+        //   // console.log(level);
 
-          if (pwd.length >= 6) {
-            switch (level) {
-              case 1:
-                pwdStrength.value = "weak";
-                break;
-              case 2:
-                pwdStrength.value = "normal";
-                break;
-              case 3:
-              case 4:
-                pwdStrength.value = "strong";
-                break;
-            }
-          } else {
-            pwdStrength.value = "weak";
-          }
+        //   if (pwd.length >= 6) {
+        //     switch (level) {
+        //       case 1:
+        //         pwdStrength.value = "weak";
+        //         break;
+        //       case 2:
+        //         pwdStrength.value = "normal";
+        //         break;
+        //       case 3:
+        //       case 4:
+        //         pwdStrength.value = "strong";
+        //         break;
+        //     }
+        //   } else {
+        //     pwdStrength.value = "weak";
+        //   }
 
-          // console.log(pwdStrength.value);
-        },
+        //   // console.log(pwdStrength.value);
+        // },
     );
     const todayDate = () => {
       return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
@@ -2270,7 +2338,7 @@ body {
         background-position-x: -672px;
       }
 
-      &.p120{
+      &.p120 {
         background-position-x: -840px;
       }
 
