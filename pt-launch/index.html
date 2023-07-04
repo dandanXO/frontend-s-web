@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>PT游戏大厅</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
 .game-container {
 	display: flex;
@@ -82,4 +83,88 @@
 	</div>
 </div>
 </body>
+<script type="text/javascript"
+	src="https://login.ld176988.com/jswrapper/integration.js.php?casino=fourblessings88"></script>
+<script type="text/javascript">
+	$(function() {
+		if ('${isLogin}' == 'true') {
+			iapiSetCallout('Login', calloutLogin);
+			iapiSetClientPlatform("mobile&deliveryPlatform=HTML5");
+			iapiLogin("${username}", "${password}", 1, "zh-cn");
+		}
+	});
+
+	var errorList = {1:'PT系统异常，ERROR CODE：1',2:'密码错误，请联系客服同步密码，ERROR CODE：2',3:'登录异常，ERROR CODE：3',6:'PT系统异常，ERROR CODE：6',
+			7:'API权限不足，ERROR CODE：7',12:'玩家已从另一个IP登录，此次登录被拒绝，ERROR CODE：12',22:'密码错误，账户被锁定，请联系在线客服，ERROR CODE：22',
+			23:'账户已被冻结，请联系在线客服，ERROR CODE：23',44:'PT服务器已满负荷，登录失败，ERROR CODE：44',48:'异常IP，登录失败，ERROR CODE：48',
+			102:'PT服务器负载过重，登录失败，ERROR CODE：102',104:'密码错误，请联系在线客服进行密码同步，ERROR CODE：104',107:'密码错误，ERROR CODE：107',
+			119:'验证失败，ERROR CODE：119',125:'验证失败，ERROR CODE：125',127:'验证失败，ERROR CODE：127',128:'验证失败，ERROR CODE：128',
+			129:'PT系统异常，ERROR CODE：129',159:'不允许访问的地区，ERROR CODE：159',160:'PT系统异常，ERROR CODE：160',165:'账户被冻结，请联系在线客服进行解冻，ERROR CODE：165',
+			175:'会话验证失败，ERROR CODE：175',178:'PT系统异常，ERROR CODE：178'};
+	function calloutLogin(response) {
+		console.log(response);
+		if (response.errorCode) {
+			if(errorList[response.errorCode]) {
+				alert(errorList[response.errorCode]);
+			} else {
+				alert("PT登录失败，ERROR CODE：" + response.errorCode);
+			}
+		}else{
+			askTempandLaunchGame('ngm', '${gameCode}');
+		}
+	}
+	
+	iapiSetCallout('GetTemporaryAuthenticationToken',
+			calloutGetTemporaryAuthenticationToken);
+
+	function askTempandLaunchGame(type, game) {
+		if ('${isLogin}' == 'true') {
+			currentgame = game;
+			gametype = type;
+			var realMode = 1;
+			iapiRequestTemporaryToken(realMode, '424', 'GamePlay');
+		} else {
+			alert("您尚未登陆，请先登录系统");
+		}
+	}
+
+	function launchMobileClient(temptoken) {
+		if (gametype == "mps") {
+			var clientUrl = '' + '?username=' + $
+			{
+				username
+			}
+			+'&temptoken=' + temptoken + '&game=' + currentgame + '&real=1';
+		} else if (gametype = "ngm") {
+			var support = 'https://livechat.7wo7dd777.com/chatserver/chatwindow.aspx?planId=4&siteId=100016501'
+			var clientUrl = 'https://hub.ld176988.com/igaming/'
+					+ '?gameId='
+					+ currentgame
+					+ '&real=1'
+					+ '&username='
+					+ '${username}'
+					+ '&lang=zh-cn&tempToken='
+					+ temptoken
+					+ '&lobby='
+					+ location.href.substring(0,
+							location.href.lastIndexOf('/') + 1)
+					+ '/PTGame'
+					+ '&support='
+					+ ''
+					+ '&logout='
+					+ location.href.substring(0,
+							location.href.lastIndexOf('/') + 1) + '/PTGame';
+		}
+		document.location = clientUrl;
+	}
+
+	function calloutGetTemporaryAuthenticationToken(response) {
+		if (response.errorCode) {
+			alert("Token failed. " + response.playerMessage + " Error code: "
+					+ response.errorCode);
+		} else {
+			launchMobileClient(response.sessionToken.sessionToken);
+		}
+	}
+</script>
 </html>
