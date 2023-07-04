@@ -434,20 +434,29 @@
                 <span class="title account">会员资料</span>
               </el-col>
             </el-row> -->
-            <!-- <el-form-item label="电话号码" prop="telephone">
+            <el-form-item label="电话号码" prop="telephone">
               <el-input
                 class="half"
                 v-model="regForm.telephone"
                 placeholder="输入电话号码"
               />
-            </el-form-item> -->
-            <!-- <el-form-item label="邮件" prop="email">
+              <el-button
+                class="common-btn"
+                style="margin-left: 10px"
+                type="button"
+                v-if="!isSendOtp"
+                @click="openCaptchaForm('REGISTER')"
+              >
+                获取验证码
+              </el-button>
+            </el-form-item>
+            <el-form-item label="电话验证码" prop="telephone" v-if="isSendOtp">
               <el-input
                 class="half"
-                v-model="regForm.email"
-                placeholder="输入邮件"
+                v-model="regForm.telephoneCaptcha"
+                placeholder="输入电话验证码"
               />
-            </el-form-item> -->
+            </el-form-item>
             <el-form-item label="验证码" prop="captchaCode">
               <el-row :gutter="10">
                 <el-col :span="17">
@@ -471,6 +480,61 @@
           </el-button>
         </div>
       </div>
+    </el-dialog>
+
+    <el-dialog
+      wrap-class-name="securityModal"
+      v-model="updatePhoneModalVisible"
+      :footer="null"
+      width="500px"
+      title="手机验证"
+      align-center
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <el-form
+        ref="updatePhoneFormRef"
+        :hideRequiredMark="true"
+        :model="updatePhoneVerified"
+        :rules="updatePhoneVerifiedRules"
+      >
+        <el-form-item ref="phone" prop="phone">
+          <el-input
+            v-model="updatePhoneVerified.phone"
+            placeholder="手机号码"
+          />
+        </el-form-item>
+        <el-form-item
+          class="half"
+          ref="verificationCode"
+          prop="verificationCode"
+        >
+          <el-space>
+            <el-input
+              type="password"
+              v-model="updatePhoneVerified.verificationCode"
+              :placeholder="'验证码'"
+            />
+            <el-button
+              :disabled="disableSendPhoneButton"
+              class="common-btn verification-btn"
+              @click="openPhoneVerificationModal"
+            >
+              <span v-if="disableSendPhoneButton">
+                已发送（倒数{{ countDown }}秒)
+              </span>
+              <span v-else>发送验证码</span>
+            </el-button>
+          </el-space>
+        </el-form-item>
+        <el-button
+          :loading="loadingPhoneBtn"
+          class="common-btn verification-btn"
+          @click="submitUpdatePhone"
+        >
+          提交
+        </el-button>
+      </el-form>
     </el-dialog>
 
     <el-dialog
@@ -779,6 +843,27 @@ export default defineComponent({
 
     const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
 
+    const updatePhoneVerifiedRules = {
+      phone: [
+        {
+          required: true,
+          message: "请输入电话地址",
+          trigger: "blur",
+        },
+      ],
+      verificationCode: [
+        {
+          required: true,
+          message: "请输入验证码",
+          trigger: "blur",
+        },
+        {
+          min: 4,
+          message: "长度应为 4",
+          trigger: "blur",
+        },
+      ],
+    };
 
     const loadingBtn = ref(false);
     const store = userStore();
@@ -794,6 +879,7 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
+    const isSendOtp = ref(false);
     const todayDate = () => {
       const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
       return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
@@ -1034,6 +1120,7 @@ export default defineComponent({
       ],
       loginName: [
         {
+          required: true,
           min: 6,
           max: 12,
           message: "长度应为 6 至 12",
@@ -1046,41 +1133,30 @@ export default defineComponent({
       ],
       password: [
         {
+          required: true,
+        },
+        {
           validator: validatePass,
           trigger: "change",
         },
-        // {
-        //   required: true,
-        //   message: "Password is required",
-        //   trigger: "blur",
-        // },
-        // {
-        //   validator: validatePass,
-        //   trigger: "change",
-        // },
-        // {
-        //   validator: validatePassStrength,
-        //   trigger: "change",
-        // },
-        // {
-        //   min: 6,
-        //   max: 12,
-        //   message: "Length should be 6 to 12",
-        //   trigger: "blur",
-        // },
       ],
       confirmPwd: [
-        // {
-        //   required: true,
-        //   message: "Confirm password is required",
-        //   trigger: "blur",
-        // },
+        {
+          required: true,
+          message: "请输入确认密码",
+          trigger: "blur",
+        },
         {
           validator: validatePass2,
           trigger: "change",
         },
       ],
       telephone: [
+      {
+          required: true,
+          message: "请输入手机号码",
+          trigger: "blur",
+        },
         {
           validator: validatePhoneNumber,
           trigger: "change",
@@ -1204,65 +1280,64 @@ export default defineComponent({
     }
 
     const sendOtp = async() => {
+      if (captchaForm.type === 'REGISTER') {
+        const smsDetail = {
+          telephone: regForm.telephone,
+          captchaCode: captchaForm.captchaCode,
+          codeId: captchaForm.codeId
+        }
+        sendSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              disableSendVerificationButton.value = true
+              isSendOtp.value = true;
+              regForm.smsCodeId = response.data.codeId;
 
-if (captchaForm.type === 'REGISTER') {
-  const smsDetail = {
-    telephone: regForm.telephone,
-    captchaCode: captchaForm.captchaCode,
-    codeId: captchaForm.codeId
-  }
-  sendSms(smsDetail)
-    .then((response) => {
-      if (response.code == 0) {
-        disableSendVerificationButton.value = true
+              ElMessage({
+                type: 'success',
+                message: `发送 ${smsDetail.telephone} 手机验证码成功`
+              });
 
-        regForm.smsCodeId = response.data.codeId;
+              captchaDialogVisible.value = false;
 
-        ElMessage({
-          type: 'success',
-          message: '发送手机验证码成功'
-        });
+              regCountdown.value = registerSendOtpDisabledTimeout;
 
-        captchaDialogVisible.value = false;
+              const now = new Date();
 
-        regCountdown.value = registerSendOtpDisabledTimeout;
+              now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
 
-        const now = new Date();
+              lsStore(registerSendOtpDisabledKey, now.getTime());
+              lsStore(registerTelephoneKey, regForm.telephone);
 
-        now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
-
-        lsStore(registerSendOtpDisabledKey, now.getTime());
-        lsStore(registerTelephoneKey, regForm.telephone);
-
-        countdownTimer('REGISTER')
-      } else {
-        getCode();
+              countdownTimer('REGISTER')
+            } else {
+              getCode();
+            }
+          })
+      } else if (captchaForm.type === 'LOGIN') {
+        const smsDetail = {
+          telephone: loginForm.phoneNumber,
+          captchaCode: captchaForm.captchaCode,
+          codeId: captchaForm.codeId
+        }
+        sendSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              loginForm.smsCodeId = response.data.codeId;
+              ElMessage({
+                type: 'success',
+                message: '发送手机验证码成功'
+              });
+              captchaDialogVisible.value = false;
+              getCode();
+              loginCountdown.value = 30;
+              countdownTimer('LOGIN')
+            } else {
+              getCode();
+            }
+          })
       }
-    })
-} else if (captchaForm.type === 'LOGIN') {
-  const smsDetail = {
-    telephone: loginForm.phoneNumber,
-    captchaCode: captchaForm.captchaCode,
-    codeId: captchaForm.codeId
-  }
-  sendSms(smsDetail)
-    .then((response) => {
-      if (response.code == 0) {
-        loginForm.smsCodeId = response.data.codeId;
-        ElMessage({
-          type: 'success',
-          message: '发送手机验证码成功'
-        });
-        captchaDialogVisible.value = false;
-        getCode();
-        loginCountdown.value = 30;
-        countdownTimer('LOGIN')
-      } else {
-        getCode();
-      }
-    })
-}
-};
+    };
 
 const countdownTimer = (type) => {
 if (type === 'REGISTER') {
@@ -1287,12 +1362,12 @@ if (type === 'REGISTER') {
 }
 }
 
-const openCaptchaForm = (type) => {
-captchaForm.captchaCode = "";
-captchaForm.type = type;
-captchaDialogVisible.value = true;
-getCode();
-};
+    const openCaptchaForm = (type) => {
+      captchaForm.captchaCode = "";
+      captchaForm.type = type;
+      captchaDialogVisible.value = true;
+      getCode();
+    };
 
     const submitRegisterForm = async (elForm) => {
       if (!elForm) return
@@ -1697,7 +1772,9 @@ getCode();
       hasAffiliate,
       countdownTimer,
       regCountdown,
-      loginCountdown
+      loginCountdown,
+      isSendOtp,
+      updatePhoneVerifiedRules
     }
   }
 });

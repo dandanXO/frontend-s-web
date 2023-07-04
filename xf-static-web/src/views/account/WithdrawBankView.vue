@@ -130,6 +130,10 @@
             :prop="tbl.dataIndex"
             :label="tbl.title"
           >
+            <template v-if="tbl.dataIndex === 'bankName'" #default="scope">
+              {{ getOptionLabel(scope.row.bankName) }}
+            </template>
+
             <template v-if="tbl.dataIndex === 'cardNumber'" #default="scope">
               {{ maskCardNumber(scope.row.cardNumber) }}
             </template>
@@ -193,13 +197,13 @@
               <el-select
                 class="select"
                 v-model="bankCardInfo.bankId"
-                placeholder="选择银行"
+                :placeholder="isUSDT ? '选择虚拟币' : '选择银行'"
                 style="width: 100%"
               >
                 <el-option
                   v-for="b in banksList"
                   :key="b.id"
-                  :label="b.name"
+                  :label="getOptionLabel(b.name)"
                   :value="b.id"
                 >
                   <el-row
@@ -214,7 +218,7 @@
                       />
                     </el-col>
                     <el-col :span="21">
-                      {{ b.name }}
+                      {{ getOptionLabel(b.name) }}
                     </el-col>
                   </el-row>
                 </el-option>
@@ -222,31 +226,58 @@
             </el-col>
           </el-row>
         </el-form-item>
-
-        <!-- <el-form-item v-if="isVirtual" name="bankId" label="ชื่อธนาคาร">
-          {{ bankName }}
-        </el-form-item> -->
         <el-form-item>
           <el-input disabled v-model="bankCardInfo.cardAccount" />
         </el-form-item>
-        <!-- <el-form-item prop="cardAccount" name="cardAccount">
-          <el-input
-            v-model="bankCardInfo.cardAccount"
-            placeholder="ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)"
-          />
-        </el-form-item> -->
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
             :placeholder="isUSDT ? '虚拟币账户' : '银行卡号'"
           />
         </el-form-item>
-        <el-form-item prop="cardAddress" name="cardAddress">
+        <!-- <el-form-item prop="cardAddress" name="cardAddress">
           <el-input
             v-model="bankCardInfo.cardAddress"
             placeholder="开户行地址"
+            :rules="[
+              { required: true, message: '请输入开户行地址', trigger: 'blur' }
+            ]"
+          />
+        </el-form-item> -->
+
+        <el-form-item name="telephone" prop="telephone">
+          <el-input
+            class="half"
+            v-model="bankCardInfo.telephone"
+            placeholder="输入电话号码"
+            :readonly="isSendOtp"
+            :rules="[
+              { required: true, message: '请输入电话号码', trigger: 'blur' }
+            ]"
+          />
+          <el-button
+            class="common-btn"
+            style="margin-left: 10px"
+            type="button"
+            v-if="!isSendOtp"
+            @click="openCaptchaForm()"
+          >
+            获取验证码
+          </el-button>
+        </el-form-item>
+
+        <el-form-item
+          name="smsCode"
+          prop="smsCode"
+          v-if="isSendOtp"
+        >
+          <el-input
+            class="half"
+            v-model="bankCardInfo.smsCode"
+            placeholder="输入电话验证码"
           />
         </el-form-item>
+
         <el-form-item class="txt-center">
           <el-button class="txt-center common-btn" @click="submitBankCard">
             提交
@@ -254,11 +285,78 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <el-dialog
+      v-model="phoneCaptchaDialogVisible"
+      title="验证码"
+      width="50%"
+      align-center
+      style="max-width: 500px"
+    >
+      <el-button
+        size="large"
+        color="#3bafda"
+        class="common-btn"
+        style="margin-left: 100px"
+        @click="sendOtp"
+      >
+        提交
+      </el-button>
+    </el-dialog>
+
+    <el-dialog
+      v-model="captchaDialogVisible"
+      title="验证码"
+      width="50%"
+      align-center
+      style="max-width: 500px"
+    >
+      <el-form
+        ref="captchaRef"
+        :rules="captchaRules"
+        :model="captchaForm"
+        label-width="100"
+        label-suffix=":"
+      >
+        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+          <el-row
+            :gutter="10"
+            style="justify-content: center; align-items: center"
+          >
+            <el-col :span="12">
+              <el-input
+                v-model="captchaForm.captchaCode"
+                label="验证码"
+                placeholder="验证码"
+                @keyup.enter="sendOtp"
+              />
+            </el-col>
+            <el-col :span="12">
+              <img
+                style="width: 50%; margin-top: 6px"
+                :src="verificationImg"
+                @click="getCode"
+              />
+            </el-col>
+          </el-row>
+        </el-form-item>
+        <el-button
+          size="large"
+          color="#3bafda"
+          class="common-btn"
+          style="margin-left: 100px"
+          @click="sendOtp"
+        >
+          发送
+        </el-button>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted } from "vue";
+import {getVerificationCode} from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
@@ -266,6 +364,7 @@ import { RiLink, RiLinkUnlink } from "vue-remix-icons";
 import { loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard } from "@/api/personal/personal";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import {sendSms} from "@/api/personal/personal";
 import { InfoFilled } from "@element-plus/icons-vue";
 export default defineComponent({
   name: "WithdrawBankView",
@@ -314,11 +413,11 @@ export default defineComponent({
         dataIndex: "cardNumber",
         key: "cardNumber"
       },
-      {
-        title: "开户行",
-        dataIndex: "cardAddress",
-        key: "cardAddress"
-      },
+      // {
+      //   title: "开户行",
+      //   dataIndex: "cardAddress",
+      //   key: "cardAddress"
+      // },
       {
         title: "绑定时间",
         key: "bindTime",
@@ -331,7 +430,7 @@ export default defineComponent({
       }
     ];
     const maskCardNumber = (cardNumber) => {
-      const maskedDigits = cardNumber.slice(0, -4).replace(/\d/g, '*');
+      const maskedDigits = cardNumber.slice(0, -4).replace(/[a-zA-Z0-9]/g, '*');
       const lastFourDigits = cardNumber.slice(-4);
       return maskedDigits + lastFourDigits;
     };
@@ -424,7 +523,10 @@ export default defineComponent({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      cardAddress: ""
+      // cardAddress: "",
+      telephone: "",
+      smsCode: "",
+      smsCodeId: ""
     });
     const bankName = ref()
     const banksList = ref([])
@@ -437,7 +539,9 @@ export default defineComponent({
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
-          bankCardInfo.cardAddress = "";
+          // bankCardInfo.cardAddress = "";
+          bankCardInfo.telephone = "";
+          bankCardInfo.smsCode = "";
           bankCardModalState.visible = true;
           if (bankCardModalState.banks.length === 0) {
             loadBanks().then((res) => {
@@ -470,14 +574,81 @@ export default defineComponent({
         }
       })
     }
+
+    const phoneCaptchaDialogVisible = ref(false)
+    const isSendOtp = ref(false)
+
+    const sendOtp = async() => {
+        const smsDetail = {
+          telephone: bankCardInfo.telephone,
+          captchaCode: captchaForm.captchaCode,
+          codeId: captchaForm.codeId
+        }
+        sendSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              isSendOtp.value = true;
+              captchaForm.smsCodeId = response.data.codeId;
+              bankCardInfo.smsCodeId = response.data.codeId;
+
+              ElMessage({
+                type: 'success',
+                message: `发送 ${smsDetail.telephone} 手机验证码成功`
+              });
+              captchaDialogVisible.value = false;
+            } else {
+              getCode();
+            }
+          })
+    };
+
+    const verificationImg = ref("");
+
+    // const sendSmsForSubmitBankCard = () => {
+    //   bankCardFormRef.value
+    //     .validate()
+    //     .then(() => {
+    //       // console.log(bankCardFormRef.value)
+    //       // bankCardModalState.visible = false;
+    //       // openCaptchaForm();
+    //       phoneCaptchaDialogVisible.value = true;
+    //     }).catch((error) => {
+    //       console.log("error", error)
+    //     })
+    // }
+
+    const getCode = () => {
+      getVerificationCode().then((res) => {
+        if (res.code === 0) {
+          verificationImg.value = "data:image/png;base64," + res.data.img;
+          captchaForm.codeId = res.data.id;
+        }
+      })
+    };
+
+    const captchaForm = reactive({
+      captchaCode: "",
+      codeId: "",
+      smsCodeId: "",
+    });
+
+    const captchaDialogVisible = ref(false)
+
+    const openCaptchaForm = () => {
+      captchaForm.captchaCode = "";
+      captchaDialogVisible.value = true;
+      getCode();
+    };
+
     const submitBankCard = () => {
+      console.log(bankCardInfo)
       bankCardFormRef.value
         .validate()
         .then(() => {
           addBankCard(bankCardInfo).then((response) => {
             if (response.code === 0) {
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               bankCardModalState.visible = false;
@@ -495,41 +666,63 @@ export default defineComponent({
     };
     const bankCardRules = {
       cardNumber: [
-        // {
-        //   required: true,
-        //   message: "Card number is required",
-        //   trigger: "blur",
-        // },
+        {
+          required: true,
+          message: "请输入银行卡号",
+          trigger: "blur",
+        },
         {
           validator: validateBankLength,
           trigger: "blur",
         }
       ],
-      cardAccount: [
+      // cardAddress: [
+      //   {
+      //     required: true,
+      //     message: "请输入开户行地址",
+      //     trigger: "blur"
+      //   }
+      // ],
+      telephone: [
         {
           required: true,
-          message: "请输入银行卡号",
+          message: "请输入电话号码",
+          trigger: "blur"
+        },
+        {
+          pattern: /^1[3-9]\d{9}$/,
+          message: "请输入有效的中国手机号码",
+          trigger: "blur",
+        },
+      ],
+      smsCode: [
+        {
+          required: true,
+          message: "请输入验证码",
           trigger: "blur"
         }
       ]
     };
     const unbindBankCard = (card) => {
-      ElMessageBox.confirm(
-        `解绑 ${card.bankName} ?`,
+
+      ElMessageBox.prompt(
+        `请输入解绑${card.bankName}的卡号`,
         '警告',
         {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Cancel',
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           type: 'warning',
+          inputErrorMessage: '请输入正确的卡号', // Error message to display if input is invalid
         }
       )
-        .then(() => {
+      .then((inputValue) => {
+        if (inputValue.value === card.cardNumber) {
           deleteBankCard(card.id).then((res) => {
             if (res.code === 0) {
               ElMessage({
                 type: 'success',
                 message: '删除完成',
-              })
+              });
               for (let i = 0; i < personalState.bankCardList.length; i++) {
                 if (personalState.bankCardList[i].id === card.id) {
                   personalState.bankCardList.splice(i, 1);
@@ -537,36 +730,31 @@ export default defineComponent({
               }
             }
           }).catch((e) => {
-            console.log("error", e);
+            console.log('error', e);
           });
-        })
-        .catch(() => {
+        } else {
           ElMessage({
-            type: 'info',
-            message: 'Remove canceled',
-          })
-        })
-//       Modal.confirm({
-//         title: "Remove " + card.bankName + "?",
-//         content: "Are you sure you want to remove " + card.bankName + "?",
-//         icon: createVNode(ExclamationCircleOutlined),
-//         width: "100%",
-//         onOk() {
-//           deleteBankCard(card.id
-// ).then((res) => {
-//             if (res.code === 0) {
-//               for (let i = 0; i < personalState.bankCardList.length; i++) {
-//                 if (personalState.bankCardList[i].id === card.id) {
-//                   personalState.bankCardList.splice(i, 1);
-//                 }
-//               }
-//             }
-//           }).catch((e) => {
-//             console.log("error", e);
-//           });
-//         }
-//       });
+            type: 'error',
+            message: '卡号不匹配，请重新输入',
+          });
+        }
+      })
+      .catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '删除取消',
+        });
+      });
     };
+
+    const getOptionLabel = (bankOption) => {
+      if (bankOption === 'USDTTRC') {
+        return 'USDTTRC20'
+      } else {
+        return bankOption
+      }
+    }
+
     return {
       searchForm,
       columns,
@@ -576,6 +764,12 @@ export default defineComponent({
       bankCardInfo,
       bankCardRules,
       submitBankCard,
+      // sendSmsForSubmitBankCard,
+      openCaptchaForm,
+      captchaForm,
+      getCode,
+      verificationImg,
+      captchaDialogVisible,
       bankCardModal,
       unbindBankCard,
       showCard,
@@ -592,7 +786,11 @@ export default defineComponent({
       pagination,
       handleCurrentChange,
       tblLoading,
-      maskCardNumber
+      maskCardNumber,
+      sendOtp,
+      phoneCaptchaDialogVisible,
+      isSendOtp,
+      getOptionLabel,
     };
   }
 });

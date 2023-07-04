@@ -9,6 +9,7 @@
       <!-- </transition> -->
     </router-view>
     <common-footer />
+    <common-sidebar />
   </div>
 </template>
 
@@ -16,11 +17,13 @@
 import { defineComponent } from "vue";
 import CommonHeader from "@/components/layout/CommonHeader.vue";
 import CommonFooter from "@/components/layout/CommonFooter.vue";
+import CommonSidebar from "@/components/layout/CommonSidebar.vue";
 export default defineComponent({
   name: "LayoutView",
   components: {
     CommonHeader,
     CommonFooter,
+    CommonSidebar
   },
   setup() {
     return {};
