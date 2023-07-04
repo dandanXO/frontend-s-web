@@ -209,7 +209,10 @@ export default defineComponent({
     };
 
     const vipLevel = computed(() => {
-      if (store.vip == "VIP1") {
+      if (store.vip == "VIP0") {
+        return 0;
+      }
+      else if (store.vip == "VIP1") {
         return 1;
       } else if (store.vip == "VIP2") {
         return 2;
@@ -236,6 +239,7 @@ export default defineComponent({
       }
       return store.vip;
     });
+    console.log(vipLevel.value);
 
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);

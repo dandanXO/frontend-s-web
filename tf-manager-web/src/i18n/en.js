@@ -57,6 +57,25 @@ export default {
       withdraw: 'WITHDRAW'
     }
   },
+  moneyChange: {
+    type: {
+      DEPOSIT: 'DEPOSIT',
+      WITHDRAW: 'WITHDRAW',
+      PROMO: 'PROMO',
+      TRANSFER: 'TRANSFER',
+      BET: 'BET',
+      WITHDRAW_FAIL: 'WITHDRAW FAIL',
+      ADJUST: 'ADJUST',
+      PAYOUT: 'PAYOUT',
+      ROLLBACK: 'ROLLBACK',
+      PATCH: 'PATCH',
+      BET_N_PAYOUT: 'BET AND PAYOUT'
+    },
+    subType: {
+      DEPOSIT: 'Wallet to Game',
+      WITHDRAW: 'Game to Wallet'
+    }
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',

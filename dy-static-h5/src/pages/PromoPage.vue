@@ -266,13 +266,15 @@ export default defineComponent({
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
 
-          if (route.query.name) {
-            promoState.promoList.forEach(element => {
-              if (String(element.redirectUrl) === route.query.name) {
+          promoState.promoList.forEach(element => {
+            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            } else {
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
-            });
-          }
+            }
+          });
         }
       }).catch((e) => {console.log("error", e);});
       switchPromoType(promoState.active)

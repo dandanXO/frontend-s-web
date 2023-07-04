@@ -57,6 +57,25 @@ export default {
       withdraw: '转出'
     }
   },
+  moneyChange: {
+    type: {
+      DEPOSIT: '存款',
+      WITHDRAW: '提款',
+      PROMO: '优惠',
+      TRANSFER: '转账',
+      BET: '投注',
+      WITHDRAW_FAIL: '提款失败',
+      ADJUST: '账变',
+      PAYOUT: '派彩',
+      ROLLBACK: '回滚',
+      PATCH: '修补',
+      BET_N_PAYOUT: '投注并派彩'
+    },
+    subType: {
+      DEPOSIT: '主账号转入平台',
+      WITHDRAW: '平台转出主账号'
+    }
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',

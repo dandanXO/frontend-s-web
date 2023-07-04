@@ -75,7 +75,7 @@
         side="right"
         elevated
         v-model="ui.drawerRight"
-        :width="200"
+        :width="250"
         :breakpoint="500"
         v-if="hasDrawer"
     >
@@ -89,7 +89,7 @@
       </div>
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
-          <q-btn @click="changePlatform(plat)" size="xs" color="brightbtn" v-for="(plat, n) in platformsList" :key="n"
+          <q-btn @click="changePlatform(plat)" size="md" color="brightbtn" v-for="(plat, n) in platformsList" :key="n"
                  :label="plat.icon"/>
         </div>
       </q-scroll-area>

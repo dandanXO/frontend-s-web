@@ -30,7 +30,7 @@
                   v-model="mailDetailList.title"
                   class="q-mt-md"
                   filled
-                  placeholder="情输入标题" />
+                  placeholder="请输入标题" />
         </div>
         <div class="q-pa-md bg-white q-ma-sm">
             <div class="top q-pb-md">内容

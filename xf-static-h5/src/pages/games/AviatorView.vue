@@ -17,11 +17,11 @@
         <div class="plat-type-container">
           <div class="plat-list">
             <div
-              class="plat-item"
-              v-for="p in platforms"
-              :class="{ active: p.id === selectedPlatId }"
-              :key="p"
-              @click="switchPlat(p)"
+                class="plat-item"
+                v-for="p in platforms"
+                :class="{ active: p.id === selectedPlatId }"
+                :key="p"
+                @click="switchPlat(p)"
             >
               <img :src="require('../../assets/logo/' + p.code + '.png')">
               <!-- <img
@@ -56,7 +56,7 @@
           </div>
         </div>
         <div
-          class="grid-items flex-box flex-align-center search-container web-only-box"
+            class="grid-items flex-box flex-align-center search-container web-only-box"
         ></div>
         <!-- <div class="game-list-wrapper">
           <div
@@ -76,23 +76,23 @@
           </div>
         </div> -->
         <q-scroll-area
-          ref="scrollPageRef"
-          style="height: calc(100vh - 265px)" 
-          :thumb-style="{ width: 0 }"
+            ref="scrollPageRef"
+            style="height: calc(100vh - 265px)"
+            :thumb-style="{ width: 0 }"
         >
           <div class="loading-div" v-if="isLoading">
             <q-spinner-hourglass
-              color="deep-orange"
-              size="8em"
+                color="deep-orange"
+                size="8em"
             />
           </div>
           <q-intersection transition="scale">
             <div class="grid fishing">
               <div
-                class="game-slot"
-                v-for="game in gameListData"
-                :key="game.id"
-                @click="fishGame.open(game.name, selectedPlat.code, game.code, selectedPlat.status)"
+                  class="game-slot"
+                  v-for="game in gameListData"
+                  :key="game.id"
+                  @click="fishGame.open(game.name, selectedPlat.code, game.code, selectedPlat.status)"
               >
                 <div class="slot-img">
                   <!-- <q-img loading="lazy" :src="game.icon" style="height: 150px">
@@ -103,10 +103,10 @@
                       <img :src="game.default"/>
                     </template>
                   </q-img> -->
-                  
-                    <div class="box" style="display: flex; justify-content:center;" :style="`background: url(${game.default})no-repeat center center; background-size: cover`">
-                       <img :src="game.icon" v-bind:alt="game.default" style="height: 150px; left: -50px;" >
-                    </div>
+
+                  <div class="box" style="display: flex; justify-content:center;" :style="`background: url(${game.default})no-repeat center center; background-size: cover`">
+                    <img :src="game.icon" v-bind:alt="game.default" style="height: 150px; left: -50px;" >
+                  </div>
                 </div>
                 <div class="slot-name">
                   <span class="slide"> {{ game.name }}</span>
@@ -132,37 +132,37 @@
     <!--Waves Container-->
     <div>
       <svg
-        class="waves"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 24 150 28"
-        preserveAspectRatio="none"
-        shape-rendering="auto"
+          class="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shape-rendering="auto"
       >
         <defs>
           <path
-            id="gentle-wave"
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
           />
         </defs>
         <g class="parallax">
           <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="0"
-            fill="rgba(36,71,100,0.7"
+              xlink:href="#gentle-wave"
+              x="48"
+              y="0"
+              fill="rgba(36,71,100,0.7"
           />
           <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="3"
-            fill="rgba(36,71,100,0.5)"
+              xlink:href="#gentle-wave"
+              x="48"
+              y="3"
+              fill="rgba(36,71,100,0.5)"
           />
           <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="5"
-            fill="rgba(36,71,100,0.3)"
+              xlink:href="#gentle-wave"
+              x="48"
+              y="5"
+              fill="rgba(36,71,100,0.3)"
           />
           <use xlink:href="#gentle-wave" x="48" y="7" fill="#244764"/>
         </g>
@@ -262,7 +262,7 @@ export default defineComponent({
       var way = null
       if (Platform.is.android) {
         way = "ANDROID"
-      } else if (Platform.is.ios) { 
+      } else if (Platform.is.ios) {
         way="IOS"
       }
       const code = selectedPlatId.value;
@@ -823,8 +823,8 @@ export default defineComponent({
         display: grid;
         grid-auto-rows: 100px;
         // grid-template-columns: repeat(3, 1fr);
-        
-         grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+
+        grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
         gap: 10px;
 
         .game-slot {
@@ -838,7 +838,7 @@ export default defineComponent({
           // transform: scale(0, 0);
           // -webkit-animation-fill-mode: forwards;
           // animation-fill-mode: forwards;
-          
+
           @-webkit-keyframes scale {
             100% {
               -webkit-transform: scale(1, 1);
