@@ -140,17 +140,20 @@
 
 <script lang="js">
 import { ref, defineComponent, onMounted, reactive, watch } from "vue";
+import { userStore } from "@/store";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 
 import HotPromotion from '@/components/HotPromotion'
+import { ElMessage } from "element-plus";
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion
   },
   setup() {
+    const store = userStore();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
@@ -209,15 +212,21 @@ export default defineComponent({
       loadPromo().then((res) => {
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
+          console.log(promoState.promoList)
           res.data.forEach(element => {
-            if (element.redirectUrl === route.query.name) {
-              showPromoDetails(element)
+            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            } else {
+              if (element.redirectUrl === route.query.name) {
+                showPromoDetails(element)
+              }
             }
           });
         }
       }).catch((e) => { console.log("error", e); });
       switchPromoType(promoState.active)
     }
+
     onMounted(() => {
       loadBanner();
       loadAll();
