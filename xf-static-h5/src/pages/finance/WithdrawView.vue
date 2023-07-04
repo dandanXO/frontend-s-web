@@ -97,6 +97,7 @@
                 val <= selectedWithdrawalMethod.withdrawMax ||
                 '请输入正确的提款金额'
             ]"
+              clearable
           >
             <template v-slot:prepend>
               <span style="font-size: 26px" class="text-bright">
@@ -330,8 +331,8 @@ export default defineComponent({
               message: "提交成功",
               icon: "check_circle_outline"
             });
-            withdrawFormRef.value.reset();
             getWithdrawalMethods();
+
           } else {
             $q.notify({
               color: "negative",
