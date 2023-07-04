@@ -372,15 +372,35 @@ export default defineComponent({
     InfoFilled, RiLink, RiLinkUnlink
   },
   setup() {
-    let validateBankLength = async (r, v) => {
-      var min = 6
-      var max = 12
+    let validateEmptyCardNo = async (r, v) => {
       if (selectedBankType.value === 'Bank') {
-        min = 6;
+        if (v === '') {
+          return Promise.reject('请输入银卡号');
+        } else if (/^\d+$/.test(v) === false) {
+          return Promise.reject('银行卡号只能包含数字');
+        } else {
+          return Promise.resolve();
+        }
+      } else if (selectedBankType.value === 'Crypto') {
+        if (v === '') {
+          return Promise.reject('请输入虚拟钱包账号');
+        } else if (/^[A-Za-z0-9]*$/.test(v) === false) {
+          return Promise.reject('虚拟钱包账号只能包含数字及英文字母');
+        } else {
+          return Promise.resolve();
+        }
+      }
+      return Promise.resolve();
+    };
+    let validateBankLength = async (r, v) => {
+      var min = 6;
+      var max = 12;
+      if (selectedBankType.value === 'Bank') {
+        min = 16;
         max = 19;
       } else if (selectedBankType.value === 'Crypto') {
         min = 34;
-        max = 37;
+        max = 36;
       }
       if (v === '') {
         return Promise.reject('请输入卡号');
@@ -571,7 +591,10 @@ export default defineComponent({
         if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
           banksList.value.push(element);
         }
-      })
+      });
+      if(bankCardInfo.cardNumber != ''){
+        bankCardFormRef.value.validateField('cardNumber');
+      }
     }
 
     const phoneCaptchaDialogVisible = ref(false)
@@ -670,14 +693,16 @@ export default defineComponent({
         console.log("error", error);
       });
     };
+
     const bankCardRules = {
       cardNumber: [
         {
           required: true,
-          message: "请输入银行卡号",
+          validator: validateEmptyCardNo,
           trigger: "blur",
         },
         {
+          required: true,
           validator: validateBankLength,
           trigger: "blur",
         },
@@ -797,7 +822,7 @@ export default defineComponent({
       sendOtp,
       phoneCaptchaDialogVisible,
       isSendOtp,
-      getOptionLabel,
+      getOptionLabel
     };
   }
 });
