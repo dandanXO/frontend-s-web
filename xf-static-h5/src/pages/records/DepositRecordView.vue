@@ -44,10 +44,10 @@ export default defineComponent({
         key: "depositAmount",
         label: "金额",
       },
-      // {
-      //   key: "depositType",
-      //   label: "存款类型",
-      // },
+      {
+        key: "paymentType",
+        label: "存款类型",
+      },
       {
         key: "status",
         label: "存款状态",
