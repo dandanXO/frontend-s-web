@@ -369,6 +369,7 @@ import {userStore} from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from 'vue-marquee-text-component';
 import {RiVolumeUpLine} from "vue-remix-icons";
+import { App } from "@capacitor/app";
 
 import {useUI} from "stores/ui";
 import {Scrollbar} from 'swiper';
