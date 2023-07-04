@@ -29,90 +29,12 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                  >
-                    搜索
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
             </el-form>
           </div>
-          <div class="unbind-record-wrapper">
-            <el-table :data="dataState.deposit" :loading="loading">
-              <template #empty>
-                <EmptyData />
-              </template>
-
-              <el-table-column
-                v-for="tbl in tableColumns.deposit"
-                :key="tbl.key"
-                :prop="tbl.dataIndex"
-                :label="tbl.title"
-              >
-                <template
-                  v-if="tbl.dataIndex === 'depositDate'"
-                  #default="scope"
-                >
-                  <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">
-                      {{ humanDatetime(scope.row.depositDate) }}
-                    </span>
-                  </div>
-                </template>
-
-                <template v-if="tbl.dataIndex === 'operation'" #default="scope">
-                  <template v-if="scope.row.status === 'PENDING'">
-                    <div style="display: flex; align-items: center">
-                      <el-button
-                        class="common-btn"
-                        @click="openReminder(scope.row)"
-                      >
-                        催单
-                      </el-button>
-                    </div>
-                  </template>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-divider />
-            <el-pagination
-              @current-change="recordPage"
-              :total="pagination.total"
-              :current-page="searchForm[recordActive].current"
-              :page-size="searchForm[recordActive].size"
-            />
-          </div>
-        </el-tab-pane>
-        <el-tab-pane name="turnover" label="账变记录">
-          <div>
-            <el-form layout="inline" :model="searchForm.turnover">
-              <div class="left">
-                <el-form-item label="开始">
-                  <el-date-picker
-                    v-model="searchForm.turnover.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
-                </el-form-item>
-                <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.turnover.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
-                </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
-                </el-form-item>
-              </div>
-            </el-form>
-          </div>
-
           <div class="unbind-record-wrapper">
             <el-table :data="dataState.deposit" v-loading="loading">
               <template #empty>
@@ -152,15 +74,91 @@
                   <template v-if="scope.row.status === 'PENDING'">
                     <div style="display: flex; align-items: center">
                       <el-button
-                        size="small"
                         class="common-btn"
                         @click="openReminder(scope.row)"
-                      >
-                        催单
+                        >催单
                       </el-button>
                     </div>
                   </template>
                 </template>
+              </el-table-column>
+            </el-table>
+            <el-divider />
+            <el-pagination
+              @current-change="recordPage"
+              :total="pagination.total"
+              :current-page="searchForm[recordActive].current"
+              :page-size="searchForm[recordActive].size"
+            />
+          </div>
+        </el-tab-pane>
+        <el-tab-pane name="turnover" label="账变记录">
+          <div>
+            <el-form layout="inline" :model="searchForm.turnover">
+              <div class="left">
+                <el-form-item label="开始">
+                  <el-date-picker
+                    v-model="searchForm.turnover.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
+                </el-form-item>
+                <el-form-item label="结束">
+                  <el-date-picker
+                    v-model="searchForm.turnover.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
+                </el-form-item>
+                <el-form-item>
+                  <el-button
+                    type="success"
+                    class="common-btn"
+                    @click="searchRecord"
+                    >搜索
+                  </el-button>
+                </el-form-item>
+              </div>
+            </el-form>
+          </div>
+          
+          <div class="unbind-record-wrapper">
+            <el-table :data="dataState.turnover" v-loading="loading">
+              <template #empty>
+                <EmptyData />
+              </template>
+
+              <el-table-column
+                v-for="tbl in tableColumns.turnover"
+                :key="tbl.key"
+                :prop="tbl.dataIndex"
+                :label="tbl.title"
+              >
+
+                <template v-if="tbl.dataIndex === 'type'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getTurnoverType(scope.row.type) }}
+                  </div>
+                </template>
+
+                <template
+                  v-if="tbl.dataIndex === 'subType'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    {{ getDepositType(scope.row.subType) }}
+                  </div>
+                </template>
+
+                <template
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.recordTime }}</span>
+                  </div>
+                </template>
+
               </el-table-column>
             </el-table>
             <el-divider />
@@ -195,8 +193,7 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                  >
-                    搜索
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -232,20 +229,41 @@
                   #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">
-                      {{ humanDatetime(scope.row.recordTime) }}
-                    </span>
+                    <span>{{ scope.row.recordTime }}</span>
+                  </div>
+                </template>
+
+                <template v-if="tbl.dataIndex === 'status'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ getWithdrawStatus(scope.row.status) }}</span>
                   </div>
                 </template>
 
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
-                  <template v-if="scope.row.status === 'SETP_1'">
+                  <template v-if="scope.row.status === 'STEP_1'">
                     <div style="display: flex; align-items: center">
                       <el-button
+                        size="small"
                         class="common-btn"
                         @click="openReminder(scope.row)"
-                      >
-                        催单
+                        >催单
+                      </el-button>
+                    </div>
+                  </template>
+
+                  <template
+                    v-if="
+                      scope.row.status === 'SUCCESS' &&
+                      scope.row.currencyName === 'CNY' &&
+                      scope.row.confirmStatus === 0
+                    "
+                  >
+                    <div style="display: flex; align-items: center">
+                      <el-button
+                        size="small"
+                        class="common-btn"
+                        @click="openWithdrawConfirm(scope.row)"
+                        >确认到账
                       </el-button>
                     </div>
                   </template>
@@ -285,42 +303,18 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                  >
-                    搜索
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
             </el-form>
           </div>
           <div class="unbind-record-wrapper">
-            <!-- <el-table
-              :columns="tableColumns.turnover"
-              :datel-source="dataState.turnover"
-              :row-name="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #recordTime="{ text }">
-                <span>{{ humanDatetime(text) }}</span>
-              </template>
-              <template #subType="{ record }">
-                <span v-if="record.type === 'TRANSFER'">
-                  {{
-                    record.subType === "DEPOSIT" ? "TRANSFER IN" : "TRANSFER IN"
-                  }}
-                </span>
-                <span v-else>
-                  {{ record.subType }}
-                </span>
-              </template>
-            </el-table> -->
-
-            <el-table :data="dataState.transfer" :loading="loading">
+            <el-table :data="dataState.transfer" v-loading="loading">
               <template #empty>
                 <EmptyData />
               </template>
-
+              
               <el-table-column
                 v-for="tbl in tableColumns.transfer"
                 :key="tbl.key"
@@ -356,68 +350,7 @@
               :page-size="searchForm[recordActive].size"
             />
           </div>
-        </el-tab-pane>   
-        <!-- <el-tab-pane name="transfer" label="Transfer">
-          <div>
-            <el-form layout="inline" :model="searchForm.transfer">
-              <div class="left">
-                <el-form-item label="开始">
-                  <el-date-picker
-                    v-model="searchForm.transfer.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
-                </el-form-item>
-                <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.transfer.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
-                </el-form-item>
-              </div>
-              <el-form-item>
-                <el-button type="success"
-                  class="common-btn"
-                  @click="searchRecord"
-                >搜索
-                </el-button>
-              </el-form-item>
-            </el-form>
-          </div>
-          <div class="unbind-record-wrapper">
-            <el-table
-              :columns="tableColumns.transfer"
-              :datel-source="dataState.transfer"
-              :row-name="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #type="{ record }">
-                <span> {{ record.type }} - {{ record.platform }} </span>
-              </template>
-              <template #status="{ text, record }">
-                <span>
-                  <el-tag
-                    :color="
-                      record.status === 'SUCCESS'
-                        ? '#87d068'
-                        : record.status === 'SENDING'
-                        ? '#55acee'
-                        : '#cd201f'
-                    "
-                  >
-                    {{ text }}
-                  </el-tag>
-                </span>
-              </template>
-              <template #transferDate="{ text }">
-                <span>{{ "humanDatetime(text }}</span>
-              </template>
-            </el-table>
-          </div>
-        </el-tab-pane> -->
+        </el-tab-pane>
         <el-tab-pane name="rebates" label="优惠记录">
           <div>
             <el-form layout="inline" :model="searchForm.rebates">
@@ -441,8 +374,7 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                  >
-                    搜索
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -465,9 +397,7 @@
                   #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">
-                      {{ humanDatetime(scope.row.recordTime) }}
-                    </span>
+                    <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
               </el-table-column>
@@ -537,8 +467,7 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                  >
-                    搜索
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -571,9 +500,41 @@
                   #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">
-                      {{ humanDatetime(scope.row.recordTime) }}
-                    </span>
+                    <span>{{ scope.row.recordTime }}</span>
+                  </div>
+                </template>
+                <template
+                  v-if="tbl.dataIndex === 'bet'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span v-if="scope.row.bet !== null">{{ scope.row.bet }}</span>
+                    <span v-else>0</span>
+                  </div>
+                </template>
+                <template
+                  v-if="tbl.dataIndex === 'payout'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span v-if="scope.row.payout !== null">{{ scope.row.payout }}</span>
+                    <span v-else>0</span>
+                  </div>
+                </template>
+                <template
+                  v-if="tbl.dataIndex === 'gameType'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    {{ getGameType(scope.row.gameType) }}
+                  </div>
+                </template>
+                <template
+                  v-if="tbl.dataIndex === 'betStatus'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    {{ getBetStatus(scope.row.betStatus) }}
                   </div>
                 </template>
               </el-table-column>
@@ -610,8 +571,7 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                  >
-                    搜索
+                    >搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -634,17 +594,13 @@
                   #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">
-                      {{ humanDatetime(scope.row.recordTime) }}
-                    </span>
+                    <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span style="margin-left: 10px">
-                      {{ humanDatetime(scope.row.type) }}
-                    </span>
+                    <span>{{ scope.row.type === 1 ? "存款" : "提款" }}</span>
                   </div>
                 </template>
               </el-table-column>
@@ -696,6 +652,7 @@
         width="50%"
         align-center
         style="max-width: 800px"
+        :before-close="clearItems"
       >
         <span>
           <el-form
@@ -714,27 +671,23 @@
               padding-bottom: 50px;
             "
           >
-            <el-form-item
-              tabindex="1"
-              label="Serial Number"
-              prop="serialNumber"
-            >
+            <el-form-item tabindex="1" label="单号" prop="serialNumber">
               <el-input
                 v-model="reminderForm.orderNo"
-                placeholder="Serial Number"
+                placeholder="单号"
                 disabled
               />
             </el-form-item>
 
-            <el-form-item label="Image Upload" prop="photos">
+            <el-form-item label="选择图片" prop="photos">
               <FileUpload @photo-response="getImageLink" ref="uploadFileRef" />
             </el-form-item>
 
-            <el-form-item label="Remarks" prop="remarks">
+            <el-form-item label="备注" prop="remarks">
               <el-input
                 type="textarea"
                 v-model="reminderForm.memberRemark"
-                placeholder="Remarks"
+                placeholder="备注"
                 :rows="2"
                 :autosize="{ minRows: 2, maxRows: 5 }"
               />
@@ -745,10 +698,10 @@
               color="#3bafda"
               class="common-btn"
               style="margin-left: 110px"
+              :loading="loadingBtn"
               @click="submitReminder()"
+              >提交</el-button
             >
-              提交
-            </el-button>
           </el-form>
         </span>
       </el-dialog>
@@ -774,6 +727,7 @@ import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
 
+const loadingBtn = ref(false);
 const store = userStore()
 const uploadFileRef = ref();
 const recordActive = ref("deposit");
@@ -820,7 +774,8 @@ const searchForm = reactive({
     platform: "",
     memberId: store.id,
     current: 1,
-    size: 10
+    size: 10,
+    pagingState: null
   },
   betRecord: {
     platform: "",
@@ -848,7 +803,7 @@ const dataState = reactive({
 });
 const commonColumns = [
   {
-    title: "序列号",
+    title: "编码",
     dataIndex: "serialNumber",
     key: "serialNumber"
   }
@@ -958,7 +913,7 @@ const tableColumns = {
       dataIndex: "amount"
     },
     {
-      title: "账变子类型",
+      title: "平台",
       dataIndex: "subType",
       slots: {customRender: "subType"}
     },
@@ -969,61 +924,31 @@ const tableColumns = {
     }
   ],
   gameBetRecord: [
-    // {
-    //   title: "รหัสเดิมพัน",
-    //   dataIndex: "betId"
-    // },
     {
-      title: "游戏名称",
-      dataIndex: "gameName"
+      title: "游戏时间",
+      dataIndex: "betTime",
+      slots: { customRender: "betTime" }
     },
     {
       title: "游戏平台",
       dataIndex: "platform"
     },
     {
-      title: "赌注",
+      title: "投注",
       dataIndex: "bet"
     },
     {
-      title: "支出",
+      title: "派彩",
       dataIndex: "payout"
     },
-    // {
-    //   title: "วงเงินก่อนหน้า",
-    //   dataIndex: "beforeBalance"
-    // },
-    // {
-    //   title: "วงเงินหลังจาก",
-    //   dataIndex: "afterBalance"
-    // },
-    // {
-    //   title: "สถานะการเดิมพัน",
-    //   dataIndex: "betStatus"
-    // },
     {
       title: "游戏类型",
       dataIndex: "gameType"
     },
-    // {
-    //   title: "เวลาเดิมพัน",
-    //   dataIndex: "betTime",
-    //   slots: { customRender: "betTime" }
-    // },
-    // {
-    //   title: "เวลาชำระเงิน",
-    //   dataIndex: "settleTime",
-    //   slots: { customRender: "settleTime" }
-    // },
-    // {
-    //   title: "ผลลัพท์",
-    //   dataIndex: "result"
-    // },
-    // {
-    //   title: "",
-    //   dataIndex: "actions",
-    //   slots: { customRender: "actions" }
-    // },
+    {
+      title: "投注状态",
+      dataIndex: "betStatus"
+    }
   ],
   betRecord: [
     // {
@@ -1155,11 +1080,13 @@ const tableColumns = {
 const loading = ref(false);
 const pagination = reactive({
   pageSize: 20,
-  total: 0
+  total: 0,
+  pagingState: ""
 });
 const betPagination = reactive({
   pageSize: 20,
-  total: 0
+  total: 0,
+  pagingState: ""
 });
 
 export default defineComponent({
@@ -1197,7 +1124,6 @@ export default defineComponent({
           searchForm[recordActive.value].pagingState = pagination.pagingState;
         }
       }
-
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {
           pagination.total = response.data.total;
@@ -1327,36 +1253,40 @@ export default defineComponent({
       })
     }
     const submitReminder = () => {
-      console.log(reminderForm);
+      loadingBtn.value = true;
       if (!reminderForm.photos) {
         ElMessage.warning(
             `请上传图片提交`
         );
       } else {
+        console.log(reminderForm)
         saveFinanceFeedback(reminderForm).then((res) => {
           if (res.code === 0) {
             ElMessage.success(`催单上传成功。`);
             reminderDialog.value = false;
-            reminderForm.value = {}
+            formRef.value.resetFields();
+            uploadFileRef.value.clear();
           }
         })
       }
+      loadingBtn.value = false;
     }
     const betDetails = (record) => {
       dataState.betRecord = []
       selectedBetRecord.value = record
       const obj = {
-        gameName: record.gameName,
         platform: record.platform,
         betTime: moment(record.betTime).format('YYYY-MM-DD'),
         memberId: searchForm.betRecord.memberId,
         current: searchForm.betRecord.current,
         size: searchForm.betRecord.size,
+        pagingState: searchForm.betRecord.pagingState
       }
       loadRecords("betRecord", obj).then((response) => {
         if (response.code === 0) {
           betPagination.total = response.data.total;
           betRecordDialog.value = true
+          betPagination.pagingState = response.data.pagingState;
           // dataState.betRecord = response.data.records
           dataState.betRecord.push(...response.data.records)
         }
@@ -1364,7 +1294,6 @@ export default defineComponent({
     }
 
     const getImageLink = (linkId) => {
-      console.log(linkId);
       reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
     }
 
@@ -1380,10 +1309,76 @@ export default defineComponent({
         return '优惠' // 优惠
       }  else if (turnoverType === 'DEPOSIT') {
         return '存款' // 存款
+      }  else if (turnoverType === 'TRANSFER') {
+        return '转账' // 转账
+      }  else if (turnoverType === 'ADJUST') {
+        return '账变' // 账变
       } else {
         return turnoverType
       }
     }
+    const getTransferType = (transferType) => {
+      if (!transferType) {
+        return ''
+      }
+      if (transferType === 'APPLY') {
+        return '申请中' //Applying
+      } else if (transferType === 'FAIL') {
+        return '失败' // Failed
+      } else if (transferType === 'SUCCESS') {
+        return '成功' // Success
+      } else if (transferType === 'STEP_1' || transferType === 'PENDING') {
+        return '审核中' //Under review
+      } else if (transferType === 'STEP_2') {
+        return '待支付' // To be paid
+      } else if (transferType === 'STEP_3') {
+        return '支付中' // Payment on going
+      } else if (transferType === 'STEP_4') {
+        return '自动支付' // Automatic Payment
+      } else if (transferType === 'STEP_5') {
+        return '暂不处理' // Suspend
+      } else if (transferType === 'AUTOPAY') {
+        return '自动支付' // Automatic Payment
+      } else if (transferType === 'WAITING_CALLBACK') {
+        return '自动支付中' // Waiting Callback
+      } else if (transferType === 'PENDING') {
+        return '支付中' // Pending
+      } else if (transferType === 'SUCCESS') {
+        return '成功' // Success
+      } else if (transferType === 'SUPPLEMENT_SUCCESS') {
+        return '成功' // Supplement Success
+      } else if (transferType === 'CLOSED') {
+        return '关闭' // Closed
+      } else if (transferType === 'WITHDRAW_FAIL') {
+        return '提款失败' // Fail Withdrawal
+      } else if (transferType === 'WITHDRAW') {
+        return '提款' // Withdraw
+      }  else if (transferType === 'PROMO') {
+        return '优惠' // 优惠
+      }  else if (transferType === 'DEPOSIT') {
+        return '存款' // 存款
+      }  else if (transferType === 'TRANSFER') {
+        return '转账' // 转账
+      }  else if (transferType === 'ADJUST') {
+        return '账变' // 账变
+      } else {
+        return transferType
+      }
+    }
+
+    const getSubType = (subType) => {
+      if (!subType) {
+        return ''
+      }
+      if (subType === 'DEPOSIT') {
+        return '转进' // 转进
+      } else if (subType === 'WITHDRAW') {
+        return '转出' // 转出
+      } else {
+        return subType
+      }
+    }
+
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
         return '申请中' //Applying
@@ -1391,7 +1386,7 @@ export default defineComponent({
         return '失败' // Failed
       } else if (withdrawStatus === 'SUCCESS') {
         return '成功' // Success
-      } else if (withdrawStatus === 'STEP_1') {
+      } else if (withdrawStatus === 'STEP_1' || withdrawStatus === 'PENDING') {
         return '审核中' //Under review
       } else if (withdrawStatus === 'STEP_2') {
         return '待支付' // To be paid
@@ -1400,7 +1395,11 @@ export default defineComponent({
       } else if (withdrawStatus === 'STEP_4') {
         return '自动支付' // Automatic Payment
       } else if (withdrawStatus === 'STEP_5') {
-        return '暂不处理' //Suspend
+        return '暂不处理' // Suspend
+      } else if (withdrawStatus === 'AUTOPAY') {
+        return '自动支付' // Automatic Payment
+      } else if (withdrawStatus === 'WAITING_CALLBACK') {
+        return '自动支付中' // Waiting Callback
       } else {
         return withdrawStatus
       }
@@ -1439,6 +1438,8 @@ export default defineComponent({
         return '小额转卡' // 小额转卡
       } else if (depositType === 'SPECIALPAY') {
         return '网银转账' // 网银转账
+      } else if (depositType === 'ALIPAY') {
+        return '支付宝转卡' // 支付宝转卡
       } else if (depositType === 'ALIPAYCODE') {
         return '支付宝' // 支付宝
       } else if (depositType === 'WECHATCODE') {
@@ -1465,7 +1466,48 @@ export default defineComponent({
         return depositType
       }
     }
+    const getGameType = (gameType) => {
+      if (!gameType) {
+        return ''
+      }
+      if (gameType === 'SLOT') {
+        return '老虎机' // Slot
+      } else if (gameType === 'LIVE') {
+        return '真人' // Live
+      } else if (gameType === 'FISH') {
+        return '捕鱼' // Fish
+      } else if (gameType === 'SPORT') {
+        return '体育' // Sport
+      } else if (gameType === 'ESPORT') {
+        return '电竞' // E-Sport
+      } else if (gameType === 'POKER') {
+        return '棋牌' // Poker
+      } else if (gameType === 'LOTTERY') {
+        return '彩票' // Lottery
+      } else {
+        return gameType
+      }
+    }
 
+    const getBetStatus = (betStatus) => {
+      if (!betStatus) {
+        return ''
+      }
+      if (betStatus === 'BET') {
+        return '投注' // Bet
+      } else if (betStatus === 'SETTLE') {
+        return '结算' // Settle
+      } else if (betStatus === 'BET_N_SETTLE') {
+        return '投注并结算' // Bet & Settled
+      } else if (betStatus === 'CANCEL') {
+        return '取消' // Cancel
+      } else if (betStatus === 'PATCH') {
+        return '修补' // Patch
+      } else {
+        return betStatus
+      }
+    }
+    const formRef = ref(null)
 
     return {
       recordActive,
@@ -1480,9 +1522,6 @@ export default defineComponent({
       pagination,
       getTime,
       chgDate,
-      humanDatetime(ts) {
-        return moment(ts).format("DD-MM-YYYY HH:mm:ss");
-      },
       checkType(ts) {
         if (ts === 1) {
           return 'Deposit'
@@ -1502,11 +1541,17 @@ export default defineComponent({
       submitReminder,
       getImageLink,
       getTurnoverType,
+      getTransferType,
+      getSubType,
       getWithdrawStatus,
       getDepositStatus,
       getDepositType,
+      getGameType,
+      getBetStatus,
+      openWithdrawConfirm,
+      loadingBtn,
       clearItems,
-openWithdrawConfirm
+      formRef
     };
   }
 });

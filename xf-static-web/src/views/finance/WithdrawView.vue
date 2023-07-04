@@ -103,12 +103,13 @@
         </el-form-item>
         <el-form-item
           class="select"
+          style="margin-top:20px;"
           prop="cardId"
-          :label="isUSDT ? '选择钱包地址' : '选择银行卡'"
+          :label="isUSDT ? '选择虚拟币账户' : '选择银行卡'"
           :rules="[
             {
               required: true,
-              message: isUSDT ? '请选择钱包地址' : '请选择银行卡',
+              message: isUSDT ? '请选择虚拟币账户' : '请选择银行卡',
               trigger: 'blur'
             }
           ]"
@@ -118,7 +119,7 @@
               withdrawState.bankCardList.length === 0 ? checkBankCards() : ''
             "
             v-model="withdrawInfo.cardId"
-            :placeholder="isUSDT ? '选择钱包地址' : '选择银行卡'"
+            :placeholder="isUSDT ? '选择虚拟币账户' : '选择银行卡'"
             style="width: 300px"
           >
             <el-option

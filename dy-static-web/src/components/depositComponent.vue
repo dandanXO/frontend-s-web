@@ -744,7 +744,7 @@ grid-template-rows: 50px;
   line-height: 30px;
 }
 </style>
-// <style scoped lang="scss">
+ <style scoped lang="scss">
 // @media (max-width: 768px) {
 //   .account-content .node-wrapper {
 //     padding: 0;
