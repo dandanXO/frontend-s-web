@@ -13,7 +13,7 @@
             <div id="headerAllQrcode" class="download-img-container"><img src="../../assets/app/download.png" /></div>
             <p class="qrcode-scan-txt">扫一扫下载全站APP</p>
             <p class="qrcode-scan-support">支持IOS &amp; Android等全部移动设备</p>
-            <a id="headerAllHref" href="https://xfapp1.com?url=xf882.com&amp;agentCode=" class="download-url">xfapp1.com</a>
+            <a id="headerAllHref" href="https://xf9866.com?url=xf882.com&amp;agentCode=" class="download-url">xf9866.com</a>
         </div>
         </div>
     </div>

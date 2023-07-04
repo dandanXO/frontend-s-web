@@ -1069,9 +1069,14 @@ export default defineComponent({
       telephone: [
         {
           required: true,
-          message: "请输入手机号码",
+          message: "请输入电话号码",
           trigger: "blur"
-        }
+        },
+        {
+          pattern: /^1[3-9]\d{9}$/,
+          message: "请输入有效的中国手机号码",
+          trigger: "blur",
+        },
       ],
       code: [
         {
@@ -1138,7 +1143,7 @@ export default defineComponent({
     const regRules = {
       realName: [
         {
-          required: false,
+          required: true,
           min: 2,
           max: 12,
           message: "长度应为 2 至 12",
@@ -1165,6 +1170,7 @@ export default defineComponent({
       password: [
         {
           required: true,
+          message: "请输入密码",
         },
         {
           validator: validatePass,
@@ -1183,14 +1189,15 @@ export default defineComponent({
         },
       ],
       telephone: [
-      {
+        {
           required: true,
-          message: "请输入手机号码",
-          trigger: "blur",
+          message: "请输入电话号码",
+          trigger: "blur"
         },
         {
-          validator: validatePhoneNumber,
-          trigger: "change",
+          pattern: /^1[3-9]\d{9}$/,
+          message: "请输入有效的中国手机号码",
+          trigger: "blur",
         },
       ],
       // birthday: [

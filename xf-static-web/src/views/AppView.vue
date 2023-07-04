@@ -24,7 +24,7 @@
                     </div>
                     <p style="margin-top: 20px;">扫描二维码下载iOS</p>
                     <p>安卓纯原生手机客户端</p>
-                    <a id="downloadAllHref" href="https://xfapp1.com?url=xf882.com&amp;agentCode=">xfapp1.com</a>
+                    <a id="downloadAllHref" href="https://xf9866.com?url=xf882.com&amp;agentCode=">xf9866.com</a>
                 </div>
                 <div>
                     <img src="https://jsn92.czxinbang.com/xf-resource/web/style/img/download/h5.jpg" alt="">
