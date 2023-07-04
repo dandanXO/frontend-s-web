@@ -637,7 +637,7 @@ export default defineComponent({
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
                 if (espObj.code === "TFGaming") {
-                  espObj.title = "东赢电竞";
+                  espObj.title = "兴發电竞";
                 }
                 if (espObj.code === "IA") {
                   espObj.title = "小艾电竞";
