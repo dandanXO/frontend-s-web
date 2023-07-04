@@ -18,12 +18,14 @@
                 ></span>
               </Vue3Marquee>
             </div>
-            <div class="mailbox-notify">
-              <router-link to="/center/mailbox">
-                <RiMailFill style="fill: #2db9e2; width: 20px" />
-                <div v-if="isMailboxUnread" class="notify-red"></div>
-              </router-link>
-            </div>
+            <template v-if="store.token">
+              <div class="mailbox-notify">
+                <router-link to="/center/mailbox">
+                  <RiMailFill style="fill: #2db9e2; width: 20px" />
+                  <div v-if="isMailboxUnread" class="notify-red"></div>
+                </router-link>
+              </div>
+            </template>
           </div>
         </div>
         <div v-if="!store.token" class="right-contents">
@@ -31,9 +33,7 @@
           <a class="common-btn" @click="registerDialogVisible = true">
             开设账户
           </a>
-          <a class="common-link" @click="openMobileLogin()">
-            忘记密码？
-          </a>
+          <a class="common-link" @click="openMobileLogin()">忘记密码？</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -1153,7 +1153,7 @@ export default defineComponent({
       password: "",
       confirmPwd: "",
       telephone: cachedTelephone ?? '',
-      email: "",
+      // email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -1748,18 +1748,19 @@ if (type === 'REGISTER') {
     const isMailboxUnread = ref(false);
 
     const loadUnreadMailbox = () => {
-      mailUnreadTotal().then((res) => {
+      if (store.token !== null) {
+        mailUnreadTotal().then((res) => {
           if (res.code === 0) {
             const response = res.data;
-            // console.log(response)
             if(response > 0) {
               isMailboxUnread.value = true
             }
           }
         }).catch((error) => {
           console.log(error);
-          // message.error(error.message, 4)
         });
+      }
+
     };
 
     function charType(num) {
