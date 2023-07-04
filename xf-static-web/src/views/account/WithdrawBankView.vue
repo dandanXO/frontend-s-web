@@ -235,7 +235,7 @@
               :placeholder="isUSDT ? '钱包地址' : '银行卡号'"
           />
         </el-form-item>
-        <el-form-item prop="cardAddress" name="cardAddress">
+        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT">
           <el-input
               v-model="bankCardInfo.cardAddress"
               placeholder="开户行地址"
@@ -680,7 +680,8 @@ export default defineComponent({
         {
           validator: validateBankLength,
           trigger: "blur",
-        }
+        },
+
       ],
       cardAddress: [
         {
