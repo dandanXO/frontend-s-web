@@ -310,7 +310,8 @@ const uiControl = reactive({
     { key: 4, displayName: 'FISH', value: 'FISH' },
     { key: 5, displayName: 'POKER', value: 'POKER' },
     { key: 6, displayName: 'PROMO', value: 'PROMO' },
-    { key: 7, displayName: 'HOMEPROMO', value: 'HOMEPROMO' }
+    { key: 7, displayName: 'HOMEPROMO', value: 'HOMEPROMO' },
+    { key: 8, displayName: 'HOMEPOP', value: 'HOMEPOP' },
   ]
 })
 
