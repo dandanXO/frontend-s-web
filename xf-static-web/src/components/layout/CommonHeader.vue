@@ -433,6 +433,12 @@
                 class="half"
                 v-model="regForm.telephone"
                 placeholder="输入电话号码"
+                maxlength="11"
+                :readonly="isSendOtp"
+                :rules="[
+              { required: true, message: '请输入电话号码', trigger: 'blur' },
+              { required: true, message: '请输入有效的电话号码', trigger: 'blur' , pattern: '/^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$/'}
+            ]"
               />
               <el-button
                 class="common-btn"
@@ -1401,10 +1407,19 @@ if (type === 'REGISTER') {
 }
 
     const openCaptchaForm = (type) => {
-      captchaForm.captchaCode = "";
-      captchaForm.type = type;
-      captchaDialogVisible.value = true;
-      getCode();
+      registerRef.value.validateField('telephone').then((resp) => {
+        captchaForm.captchaCode = "";
+        captchaForm.type = type;
+        captchaDialogVisible.value = true;
+        getCode();
+      }).catch((err) => {
+        ElMessage({
+          message: '请输入有效的中国手机号码',
+          type: 'error',
+        })
+      })
+
+
     };
 
     const submitRegisterForm = async (elForm) => {
