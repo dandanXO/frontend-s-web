@@ -27,11 +27,11 @@
           </div>
         </div>
         <div v-if="!store.token" class="right-contents">
-          <a class="common-btn grey" @click="loginDialogVisible = true">登录</a>
+          <a class="common-btn grey" @click="openUsernameLogin()">登录</a>
           <a class="common-btn" @click="registerDialogVisible = true">
             开设账户
           </a>
-          <a class="common-link" @click="forgetPassDialogVisible = true">
+          <a class="common-link" @click="openMobileLogin()">
             忘记密码？
           </a>
         </div>
@@ -156,8 +156,8 @@
       @close="store.loginPageVisible = false"
     >
       <span>
-        <el-tabs type="card">
-          <el-tab-pane label="账户登录">
+        <el-tabs type="card" v-model="loginTabs">
+          <el-tab-pane label="账户登录" name="usernameLogin">
             <el-form
               ref="loginRef"
               :rules="loginRules"
@@ -213,7 +213,7 @@
               </el-button>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane label="手机登录">
+          <el-tab-pane label="手机登录" name="mobileLogin">
             <el-form
               ref="loginRef"
               :rules="mobileLoginRules"
@@ -460,11 +460,7 @@
                 获取验证码
               </el-button>
             </el-form-item>
-            <el-form-item
-              label="电话验证码"
-              prop="smsCode"
-              v-if="isSendOtp"
-            >
+            <el-form-item label="电话验证码" prop="smsCode" v-if="isSendOtp">
               <el-input
                 class="half"
                 v-model="regForm.smsCode"
@@ -915,6 +911,22 @@ export default defineComponent({
         },
       ],
     };
+
+//     loginTabs
+// usernameLogin
+// mobileLogin
+
+    const loginTabs = ref('usernameLogin');
+
+    const openUsernameLogin = () => {
+      loginDialogVisible.value = true;
+      loginTabs.value = 'usernameLogin';
+    }
+
+    const openMobileLogin = () => {
+      loginDialogVisible.value = true;
+      loginTabs.value = 'mobileLogin';
+    }
 
     const loadingBtn = ref(false);
     const store = userStore();
@@ -1877,7 +1889,10 @@ if (type === 'REGISTER') {
       loadUnreadMailbox,
       mailboxUnreadData,
       isMailboxUnread,
-      validatePhoneNumber
+      validatePhoneNumber,
+      loginTabs,
+      openUsernameLogin,
+openMobileLogin
     }
   }
 });
