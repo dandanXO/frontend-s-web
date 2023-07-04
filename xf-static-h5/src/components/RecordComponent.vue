@@ -57,9 +57,8 @@
             </div> -->
           </div>
           <div v-if="
-              (det.status == 'PENDING' || det.status == 'APPLY') &&
-              (recordType === 'deposit' || recordType === 'withdraw')
-            " class="buttons">
+              (recordType === 'deposit' && det.status === 'PENDING') || (recordType === 'withdraw' && det.status == 'STEP_1')"
+               class="buttons">
             <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm"/>
             <q-btn outline label="复制" @click="copyText(det.serialNumber)" size="sm" color="bright"/>
           </div>
@@ -205,7 +204,7 @@ export default defineComponent({
       }
     },
   },
-  components:{
+  components: {
     FileUpload
   },
   setup(props, {emit}) {

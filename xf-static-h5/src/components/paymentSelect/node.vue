@@ -5,7 +5,9 @@
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
-    <div class="node-content payment-method-wrapper">
+    <div class="node-content payment-method-wrapper"
+      :style="gridColAmount"
+    >
       <div
         class="node-item payment-method-item"
         :id="level + '_' + i"
@@ -82,6 +84,10 @@ export default defineComponent({
     name: {
       type: String,
       default: ""
+    },
+    gridcol: {
+      type: Number,
+      default: 4
     }
   },
   data() {
@@ -95,8 +101,12 @@ export default defineComponent({
       dialogVisible: false,
       payMethods: reactive([]),
       nodeKey: 0,
-      imgURL
+      imgURL,
+      gridColAmount: 'grid-template-columns: repeat('+ this.gridcol +', 1fr);'
     };
+  },
+  computed() {
+
   },
   updated() {
     this.$nextTick().then(() => {
@@ -202,10 +212,7 @@ $node-color: #33bcd4;
 .payment-method-wrapper {
   // display: flex;
   grid-gap: 15px;
-  // flex-wrap: wrap;
-  // justify-content: space-evenly;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   margin-bottom: 20px;
     width: 100%;
 
@@ -321,74 +328,6 @@ $node-color: #33bcd4;
       }
     }
 
-    // &.node-group {
-    //   align-items: center;
-    //   gap: 10px;
-    //   margin: 10px 0px;
-    //   padding: 0 0px;
-    //   flex-wrap: wrap;
-
-    //   .promo {
-    //     right: -12px;
-    //     top: -12px;
-    //     img {
-    //       padding: 0;
-    //       border: 0;
-    //       height: 22px;
-    //       width: auto;
-    //       background-color: transparent;
-    //     }
-    //   }
-
-    //   .account-title-container {
-    //     margin: 0;
-    //   }
-
-    //   .payment-method-item {
-    //     padding: 5px 20px 5px 5px;
-    //     border: 2px solid #ddd;
-    //     width: auto;
-
-    //     &.active {
-    //       border: 2px solid #4873f1;
-
-    //       .node-txt-img {
-    //         &:before {
-    //           bottom: -1px !important;
-    //           right: -1px !important;
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   .node-text {
-    //     display: flex;
-    //     gap: 5px;
-    //     flex-direction: row;
-    //     justify-content: center;
-    //     align-items: center;
-
-    //     & > div {
-    //       font-size: 12px;
-    //       color: #000000;
-    //     }
-
-    //     .node-txt-img {
-    //       width: auto;
-    //       height: auto;
-    //       margin-bottom: 0;
-    //       border: 0;
-    //       img {
-    //         width: 15px;
-    //         height: auto;
-    //         border: 0;
-    //         background-color: #2a313e;
-    //         padding: 0px;
-    //         margin-bottom: 0;
-    //       }
-    //     }
-    //   }
-    // }
   }
 
   .node-content {
@@ -495,4 +434,6 @@ $node-color: #33bcd4;
     }
   }
 }
+
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div className="table-record">
+  <div class="table-record">
     <RecordComponent recordType="withdraw" :loading="visible" :list="tableData" :headers="tableHeaders"/>
   </div>
 </template>

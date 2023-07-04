@@ -13,6 +13,7 @@
       <Node
           :level="1"
           :list="payMethods"
+          :gridcol="4"
           ref="paymentNode"
           @clicked="onSelect"
       />

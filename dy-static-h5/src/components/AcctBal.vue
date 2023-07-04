@@ -194,7 +194,7 @@ const transferOutAll = () => {
         amount: platform.amount
       };
       api
-        .post("/session/balance/transfer/withdraw", qs.stringify(transferInfo))
+        .post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo))
         .then((response) => {
           if (response.code === 0) {
             setTimeout(() => {

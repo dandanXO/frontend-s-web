@@ -252,7 +252,7 @@ export default defineComponent({
               icon: "check_circle_outline"
             });
             store.phoneVerified = true;
-            store.phone = formDetails.phone;
+            store.phone = formDetail.phone;
             router.push('/account');
           }
         }).catch((e) => {
