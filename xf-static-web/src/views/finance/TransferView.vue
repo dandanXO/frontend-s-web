@@ -40,7 +40,7 @@
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
               <div class="plat-name" v-if="p.code === 'FlashTech'">Sport</div>
-              <div class="plat-name" v-else>{{ p.code }}</div>
+              <div class="plat-name" v-else>{{ p.name }}</div>
               <div class="balance-wrapper">
                 <span class="currency">余额:</span>
                 {{ p.amount }}
@@ -84,7 +84,7 @@
           <el-tag type="danger" effect="dark">主账户</el-tag>
           <el-icon><Right /></el-icon>
           <el-tag type="success" effect="dark">
-            {{ transferInfo.platform }}
+            {{ transferInfo.name }}
           </el-tag>
         </div>
       </template>
@@ -127,7 +127,7 @@
       <div class="transfer-all-list">
         <div class="transfer-item" v-for="(p, indx) in platforms" :key="indx">
           <div>
-            {{ p.code }}
+            {{ p.name }}
           </div>
           <div>
             {{ p.status }}
@@ -174,6 +174,7 @@ export default defineComponent({
       return transferTypes[transferTypeIndex.value] + " " + transferInfo.platform;
     });
     const transferInfo = reactive({
+      name: "",
       platform: "",
       amount: ""
     });
@@ -183,6 +184,7 @@ export default defineComponent({
       platforms.forEach(p => {
         if (p.amount > 0) {
           transferInfo.platform = p.code
+          transferInfo.name = p.name
           transferInfo.amount = p.amount
           p.status = '平台余额转出中';
           withdrawAll(transferInfo).then((res) => {
@@ -211,6 +213,7 @@ export default defineComponent({
     const transferModal = (i, p) => {
       transferTypeIndex.value = i;
       transferInfo.platform = p.code;
+      transferInfo.name = p.name
       transferInfo.currentAmt = p.amount;
       transferModalVisible.value = true;
       transferInfo.amount = "";
@@ -238,6 +241,7 @@ export default defineComponent({
           platforms.push({
             id: p.id,
             code: p.code,
+            name: p.name,
             amount: 0,
             status: 'Waiting for transfer'
           });
@@ -252,6 +256,7 @@ export default defineComponent({
     };
     const cancelTransfer = () => {
       transferInfo.platform = "";
+      transferInfo.name = "";
       transferInfo.amount = "";
       transferInfo.currentAmt = "";
       transferModalVisible.value = false;
@@ -263,7 +268,7 @@ export default defineComponent({
       console.log(transferTypeIndex)
       if (transferTypeIndex.value === 1) {
         if (transferInfo.amount > transferInfo.currentAmt) {
-          ElMessage.error(transferInfo.platform + ' 平台余额不足');
+          ElMessage.error(transferInfo.name + ' 平台余额不足');
           loadingTransfer.value = false
           return
         }

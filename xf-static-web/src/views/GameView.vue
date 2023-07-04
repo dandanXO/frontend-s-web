@@ -36,7 +36,7 @@
                   :class="{ active: p === activePlat }"
                   @click="switchPlat(p)"
                 >
-                  {{ getGameLabel(p.code) }}
+                  {{ getGameLabel(p.name) }}
                 </div>
               </template>
             </template>
