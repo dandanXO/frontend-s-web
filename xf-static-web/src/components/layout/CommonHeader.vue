@@ -7,28 +7,22 @@
           <div class="station-notice-box">
             <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
-            <RiVolumeUpFill style="fill: #2db9e2; width: 180px" />
+            <RiVolumeUpFill style="fill: #2db9e2; width: 60px" />
             <div class="station-notice">
-              <!-- <Vue3Marquee :clone="true" :duration="50" width="300px;">
+              <Vue3Marquee :clone="true" :duration="50" width="300px;">
                 <span
                   v-for="(word, index) in announcementList"
                   :key="index"
                   v-html="word.content"
                   @click="openPopup(word)"
                 ></span>
-              </Vue3Marquee> -->
-              <Vue3Marquee
-                @click="noticeDialogVisible = true"
-                :clone="true"
-                :duration="50"
-                width="300px;"
-              >
-                <span
-                  v-for="(word, index) in noticesList"
-                  :key="index"
-                  v-html="word"
-                ></span>
               </Vue3Marquee>
+            </div>
+            <div class="mailbox-notify">
+              <router-link to="/center/mailbox">
+                <RiMailFill style="fill: #2db9e2; width: 20px" />
+                <div v-if="isMailboxUnread" class="notify-red" ></div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -698,6 +692,40 @@
     </el-dialog>
 
     <el-dialog
+      class="notice-modal"
+      width="100%"
+      style="max-width: 800px"
+      v-model="isStationNotice"
+      :maskClosable="false"
+      :footer="null"
+      title="站内信"
+    >
+      <el-tabs
+        type="card"
+        class="announcementTabs"
+        v-model="announcementActive"
+        @tab-click="announcementTabChange"
+      >
+        <el-tab-pane
+          v-for="(tab, ind) in announcementTypes"
+          :key="tab.id"
+          :tab="ind"
+          :label="tab.name"
+        >
+          <el-collapse accordion v-model="typeActive">
+            <template v-for="(ann, idx) in announcementList" :key="idx">
+              <template v-if="ann.typeId === tab.id">
+                <el-collapse-item :name="idx" :title="ann.title">
+                  {{ ann.content }}
+                </el-collapse-item>
+              </template>
+            </template>
+          </el-collapse>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
+
+    <el-dialog
       class="noPadding"
       v-model="noticeDialogVisible"
       width="1280px"
@@ -729,6 +757,7 @@ import "vue3-carousel/dist/carousel.css";
 import {defineComponent, onMounted, ref, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
+import { mailUnreadTotal } from "@/api/personal/mailbox";
 import {getVerificationCode, register, findAccount} from "@/api/index/login";
 import {sendSms, getAnnouncement} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
@@ -741,7 +770,8 @@ import {
   RiMoneyCnyCircleLine,
   RiBankCardLine,
   RiCouponLine,
-  RiLogoutBoxLine
+  RiLogoutBoxLine,
+  RiMailFill
 } from 'vue-remix-icons';
 import GameMenu from '@/components/menu/GameMenu.vue'
 import SportsMenu from '@/components/menu/SportsMenu.vue'
@@ -771,6 +801,7 @@ export default defineComponent({
     AppMenu,
     InfoFilled,
     RiVolumeUpFill,
+    RiMailFill,
     ArrowDown,
     Refresh,
     RiAccountCircleLine,
@@ -1453,6 +1484,7 @@ if (type === 'REGISTER') {
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
 
+        loadUnreadMailbox();
 
       getAffiliateCode();
       loadAnnouncement();
@@ -1651,6 +1683,25 @@ if (type === 'REGISTER') {
     // }
     const pwdStrength = ref();
 
+    const mailboxUnreadData = ref([]);
+
+    const isMailboxUnread = ref(false);
+
+    const loadUnreadMailbox = () => {
+      mailUnreadTotal().then((res) => {
+          if (res.code === 0) {
+            const response = res.data;
+            // console.log(response)
+            if(response > 0) {
+              isMailboxUnread.value = true
+            }
+          }
+        }).catch((error) => {
+          console.log(error);
+          // message.error(error.message, 4)
+        });
+    };
+
     function charType(num) {
       if (num >= 48 && num <= 57) {
         return 1;
@@ -1774,7 +1825,10 @@ if (type === 'REGISTER') {
       regCountdown,
       loginCountdown,
       isSendOtp,
-      updatePhoneVerifiedRules
+      updatePhoneVerifiedRules,
+      loadUnreadMailbox,
+      mailboxUnreadData,
+      isMailboxUnread
     }
   }
 });
@@ -2319,5 +2373,20 @@ body {
       padding: 25px 80px;
     }
   }
+}
+
+.notify-red {
+  height: 10px;
+  width: 10px;
+  background: #db0011;
+  position: absolute;
+  border-radius: 50%;
+  bottom: 0;
+  right: -4px;
+}
+
+.mailbox-notify {
+  position: relative;
+  margin-right: 20px;
 }
 </style>

@@ -29,13 +29,14 @@
         <div class="plat-type-container">
           <div class="plat-list">
             <template v-for="p in platforms" :key="p">
-              <template v-if="p.code !== 'AG'">
+              <template v-if="p.code === 'AG'"></template>
+              <template v-else>
                 <div
                   class="plat-item"
                   :class="{ active: p === activePlat }"
                   @click="switchPlat(p)"
                 >
-                  {{ p.code + " 电子" }}
+                  {{ getGameLabel(p.code) }}
                 </div>
               </template>
             </template>
@@ -181,8 +182,9 @@ export default defineComponent({
     const loadGameList = () => {
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
-          element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/slot/${activePlat.value.code}/${element.icon}.png`;
+          // element.default = require("../assets/images/games/aviator/default.png");
+          element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
@@ -216,6 +218,17 @@ export default defineComponent({
     const openGame = (gameName, gameCode) => {
       slotsGame.value.open(gameName, activePlat.value.code, gameCode);
     };
+
+    const getGameLabel = (gameLabel) => {
+      if (gameLabel === 'BBINDY') {
+        return 'BBIN 电子'
+      } else if (gameLabel === 'AMEBA') {
+        return 'AE 电子'
+      } else {
+        return gameLabel + ' 电子'
+      }
+    }
+
     const ptJackpot = ref()
     useScriptTag(
       'https://tickers.playtech.com/jackpots/new_jackpotjs.js',
@@ -298,7 +311,8 @@ export default defineComponent({
       slotsGame,
       banner,
       imgURL,
-      store
+      store,
+      getGameLabel,
     };
   }
 });
