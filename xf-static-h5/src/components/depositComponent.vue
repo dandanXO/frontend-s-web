@@ -101,7 +101,7 @@
                 (isUSDT ? "USDT" : store.currency.value)
                 : 0
           }}
-          <br />
+          <br/>
           最高金额:
           {{
             activeMethod.depositMax
@@ -186,11 +186,11 @@
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           您将被重定向到您的银行页面以完成存款。
-          <br />
-          <br />
+          <br/>
+          <br/>
           入金成功后会反映这里。
         </q-card-section>
-        <q-btn @click="clearInfo" label="明白" color="brightbtn" />
+        <q-btn @click="clearInfo" label="明白" color="brightbtn"/>
       </div>
     </q-card>
   </q-dialog>
@@ -199,38 +199,62 @@
     <q-card style="width: 100%; padding: 20px" class="text-white">
       <q-card-section class="q-mb-md">
         <strong>温馨提示</strong>
-        <br />
-        <br />
+        <br/>
+        <br/>
         为保证资金安全，存款前先绑定手机号
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn label="前往绑定" color="brightbtn" href="/account/personal" />
+        <q-btn label="前往绑定" color="brightbtn" href="/account/personal"/>
+        <q-btn label="前往绑定" color="brightbtn" href="/account/personal"/>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+    <q-card style="width: 100%; padding: 20px" class="text-white">
+      <q-card-section class="q-mb-md">
+        <strong>温馨提示</strong>
+        <br/>
+        <br/>
+        为保证资金安全，存款前先绑定银行卡
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn label="前往绑定" color="brightbtn" href="/account/withdraw"/>
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
+import {ref, reactive, onMounted, shallowRef, onBeforeUnmount} from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { cashier } from "boot/axios";
-import { Platform, useQuasar, openURL } from "quasar";
-import { doIt } from "boot/action";
+import {api, cashier} from "boot/axios";
+import {Platform, useQuasar, openURL} from "quasar";
+import {doIt} from "boot/action";
 import liff from "@line/liff";
 
 var qs = require("qs");
 
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import {userStore} from "stores/index";
+import {useRouter} from "vue-router";
 
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
+const isNoBankCard = ref(false);
 const checkNewUser = () => {
   if (store.phone == null) {
     isNewUser.value = true;
+  } else {
+    api.get("/session/bankCard").then((response) => {
+      if (response.code === 0) {
+        if (response.data.length === 0) {
+          isNoBankCard.value = true;
+        }
+      }
+    });
   }
 };
 const isDeposited = ref(false);
@@ -507,7 +531,7 @@ async function confirmDeposit() {
               }
             }
             form.paymentId = activeMethod.value.paymentId;
-            const copy = { ...form };
+            const copy = {...form};
             const data = {};
             Object.entries(copy).forEach(([key, value]) => {
               if (value) {

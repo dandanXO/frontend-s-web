@@ -102,7 +102,12 @@
       </q-card-section>
     </div>
     <q-item-section class="acct-nav">
-      <div class="acct-title">我的功能</div>
+      <div class="acct-title">
+        <div class="acct-title-1">我的功能</div>
+        <div id="vipDomain" class="vipurl">
+          专属网址：{{ store.evip }}
+        </div>
+      </div>
       <div class="acct-menu">
         <router-link to="/account/records">
           <div class="acct-nav-item">
@@ -116,7 +121,7 @@
             <div class="acct-nav-label">分享好友</div>
           </div>
         </router-link>
-        <router-link to="/account/promotion">
+        <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_promo.png"/>
             <div class="acct-nav-label">优惠领取</div>
@@ -377,31 +382,44 @@ export default defineComponent({
 
   .acct-title {
     display: flex;
-    justify-content: flex-start;
+    margin-top: 4px;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     color: #bacef1;
+    // .acct-header-icon
 
-    &:before {
-      content: "";
-      background: #33bcd4;
-      height: 15px;
-      width: 3px;
-      display: inline-block;
+    .acct-title-1 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      &:before {
+        content: "";
+        // background: #33bcd4;
+        height: 19px;
+        width: 10px;
+        background-size: 100%;
+        display: inline-block;
+        margin-left: -5px;
+      }
     }
   }
 
+
   .acct-menu {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: stretch;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 
     a {
+      width:33.33%;
       text-decoration: none;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 10px;
+      height: 80px;
 
       .acct-nav-item {
         gap: 5px;
