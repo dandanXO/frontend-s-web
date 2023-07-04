@@ -129,7 +129,21 @@
             :key="tbl.key"
             :prop="tbl.dataIndex"
             :label="tbl.title"
-          />
+          >
+            <template v-if="tbl.dataIndex === 'cardNumber'" #default="scope">
+              {{ maskCardNumber(scope.row.cardNumber) }}
+            </template>
+
+            <!-- <template
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.recordTime }}</span>
+                  </div>
+                </template>
+ -->
+          </el-table-column>
         </el-table>
         <el-divider />
         <el-pagination
@@ -224,7 +238,7 @@
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            :placeholder="isUSDT ? '钱包地址' : '银行卡号'"
+            :placeholder="isUSDT ? '虚拟币账户' : '银行卡号'"
           />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress">
@@ -296,9 +310,9 @@ export default defineComponent({
         key: "bankName",
       },
       {
-        title: "账号",
-        dataIndex: "cardAccount",
-        key: "cardAccount"
+        title: "银行卡号",
+        dataIndex: "cardNumber",
+        key: "cardNumber"
       },
       {
         title: "开户行",
@@ -316,6 +330,11 @@ export default defineComponent({
         dataIndex: "unbindTime"
       }
     ];
+    const maskCardNumber = (cardNumber) => {
+      const maskedDigits = cardNumber.slice(0, -4).replace(/\d/g, '*');
+      const lastFourDigits = cardNumber.slice(-4);
+      return maskedDigits + lastFourDigits;
+    };
     const pagination = ref([{
       currentPage: 1,
       totalPage: 1,
@@ -572,7 +591,8 @@ export default defineComponent({
       imgURL,
       pagination,
       handleCurrentChange,
-      tblLoading
+      tblLoading,
+      maskCardNumber
     };
   }
 });
@@ -708,9 +728,10 @@ body {
     width: 300px;
     height: 200px;
     border-radius: 5px;
-    background-image: url("../../assets/images/finance/hk.png");
+    // background-image: url("../../assets/images/finance/hk.png");
     background-position: right;
     // background: #24222e;
+    background: #3d1412;
     // background: url(../../assets/images/account/bank_card_lrg_bg.png) no-repeat
     //   0% 50%;
     background-size: cover;

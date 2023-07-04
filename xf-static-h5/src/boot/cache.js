@@ -3,7 +3,7 @@ import { SessionStorage } from "quasar";
 
 export const TIME_EXPIRED = "TIME_EXPIRED";
 export const GOT_EXPIRED = "GOT_EXPIRED";
-const DEFAULT_EXPIRED_TIME = 0;
+const DEFAULT_EXPIRED_TIME = 60;
 
 function getStorageData(key) {
   const s_data = SessionStorage.getItem(key);

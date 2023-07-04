@@ -5,9 +5,9 @@
         <img :src="require(`../../assets/images/account/${trans.icon}_letters.png`)">
         {{ trans.name }}
         <div class="right">
-          <!--            <q-chip v-if="trans.icon === 'inbox'" color="brand" size="sm">-->
-          <!--            {{ store.unreadInboxMail }}-->
-          <!--            </q-chip>-->
+<!--          <q-chip v-if="trans.icon === 'inbox' && store.unreadInboxMail!= 0" color="brand" size="sm">-->
+<!--            {{ store.unreadInboxMail }}-->
+<!--          </q-chip>-->
           <RiArrowRightSLine/>
         </div>
       </router-link>
@@ -16,9 +16,9 @@
   </div>
 </template>
 <script lang="js">
-import { defineComponent, ref } from "vue";
-import { userStore } from "../../stores/index";
-import { RiArrowRightSLine } from "vue-remix-icons";
+import {defineComponent, onMounted, ref} from "vue";
+import {userStore} from "../../stores/index";
+import {RiArrowRightSLine} from "vue-remix-icons";
 
 export default defineComponent({
   name: "IndexPage",
@@ -45,6 +45,10 @@ export default defineComponent({
         name: "写信"
       }
     ]);
+
+    onMounted(() => {
+      // store.getUnreadTotal();
+    })
 
     return {
       store,

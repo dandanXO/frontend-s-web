@@ -176,15 +176,15 @@
               ref="cardNumberRef"
             color="white"
           />
-          <q-input
-              class="q-mb-md"
-              filled
-              v-model="bankCardInfo.cardAddress"
-              label="开户行地址"
-              :rules="cardAddressRules"
-              ref="cardAddressRef"
-            color="white"
-          />
+<!--          <q-input-->
+<!--              class="q-mb-md"-->
+<!--              filled-->
+<!--              v-model="bankCardInfo.cardAddress"-->
+<!--              label="开户行地址"-->
+<!--              :rules="cardAddressRules"-->
+<!--              ref="cardAddressRef"-->
+<!--            color="white"-->
+<!--          />-->
           <div class="flex flex-center">
             <q-btn
                 class="q-mr-md"
@@ -413,9 +413,11 @@ export default defineComponent({
     const submitBankCard = () => {
       bankCardRef.value.validate();
       cardAccountRef.value.validate();
-      cardAddressRef.value.validate();
+      // cardAddressRef.value.validate();
       cardNumberRef.value.validate();
-      if (bankCardRef.value.hasError || cardAccountRef.value.hasError  || cardAddressRef.value.hasError || cardNumberRef.value.hasError) {
+      if (bankCardRef.value.hasError || cardAccountRef.value.hasError
+          // || cardAddressRef.value.hasError
+          || cardNumberRef.value.hasError) {
       }
       else {
         api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((response) => {

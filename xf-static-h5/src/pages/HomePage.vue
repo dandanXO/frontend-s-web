@@ -17,8 +17,8 @@
           />
             href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
           <q-btn
-              size="sm"
-              href="https://xfapp1.app/"
+              size="md"
+              href="https://www.xfapp111.com/"
               target="_blank"
               label="立即下载"
               color="brightbtn"
@@ -145,6 +145,7 @@
           :thumbs="{ swiper: thumbsSwiper }"
           :direction="'vertical'"
           slides-per-view="auto"
+          :rewind="true"
           :scrollbar="{ draggable: true }"
           @slide-change-transition-end="onSlideChange"
           @swiper="setFirstSwiper"
@@ -865,6 +866,10 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
+.q-page-container{
+  min-height: 100vh;
+}
+
 .secondSwiper {
   height: calc(100vh - 410px);
   padding-bottom: 0px;
@@ -1026,7 +1031,7 @@ export default defineComponent({
 
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 .download-top-container {
-  padding: 10px;
+  padding: 4px 10px;
 
   .download-top-box {
     display: flex;
@@ -1060,6 +1065,11 @@ export default defineComponent({
     .buttons {
       display: flex;
       gap: 5px;
+
+    }
+
+    .q-btn{
+
     }
 
   }

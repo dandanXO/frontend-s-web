@@ -400,7 +400,7 @@
           <span
             v-if="memberDetail.regIp !== null && memberDetail.dupIp === 'red'"
             :style="[selectedIpColor.registerIpColor !== null ? {color: selectedIpColor.registerIpColor}: {}]"
-            style="background:red"
+            style="color:red"
           >
             {{ memberDetail.regIp }}
           </span>

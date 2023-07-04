@@ -14,7 +14,11 @@
         />
         {{ trans.name }}
         <div class="right">
-<!--          <q-chip v-if="trans.icon === 'inbox'" color="dyblue" size="sm">-->
+<!--          <q-chip-->
+<!--            v-if="trans.icon === 'inbox' && store.unreadInboxMail != 0"-->
+<!--            color="brand"-->
+<!--            size="sm"-->
+<!--          >-->
 <!--            {{ store.unreadInboxMail }}-->
 <!--          </q-chip>-->
           <RiArrowRightSLine />
@@ -24,7 +28,7 @@
   </div>
 </template>
 <script lang="js">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted  } from "vue";
 import { userStore } from "../../stores/index";
 import { RiArrowRightSLine } from "vue-remix-icons";
 
@@ -53,6 +57,11 @@ export default defineComponent({
         name: "写信"
       }
     ]);
+
+    onMounted(() => {
+      // store.getUnreadTotal();
+    })
+
 
     return {
       store,

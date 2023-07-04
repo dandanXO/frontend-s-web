@@ -904,8 +904,8 @@ export default defineComponent({
     let validateRealName = async (r, v) => {
       if (v === "") {
         return Promise.reject("请输入登姓名");
-      } else if (!checkName(v)) {
-        return Promise.reject("不允许使用特殊字符");
+      } else if (!checkRealName(v)) {
+        return Promise.reject("请输入中文字符");
       } else {
         return Promise.resolve();
       }
@@ -913,6 +913,11 @@ export default defineComponent({
     const checkName = (v) => {
       const alphanumeric = /^[\p{L}\p{N}]*$/u;
       return v.match(alphanumeric);
+    };
+    const checkRealName = (v) => {
+      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
+      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+      return v.match(chineseCharOnly);
     };
     let validatePass2 = async (r, v) => {
       if (v === "") {

@@ -167,6 +167,7 @@
         :thumbs="{ swiper: thumbsSwiper }"
         :direction="'vertical'"
         slides-per-view="auto"
+        :rewind="true"
         :scrollbar="{ draggable: true }"
         @slide-change-transition-end="onSlideChange"
         @swiper="setFirstSwiper"

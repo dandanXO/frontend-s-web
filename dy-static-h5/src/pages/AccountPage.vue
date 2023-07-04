@@ -171,8 +171,9 @@
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_mailbox.png" />
             <div class="acct-nav-label">
-              站内信({{ store.unreadInboxMail }})
+              站内信
             </div>
+<!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
         <!-- <a href="https://partner.dyvip90.com" target="_blank">
@@ -242,7 +243,7 @@ export default defineComponent({
     onMounted(() => {
       getBalance();
       store.getBalance();
-      console.log(store.vip);
+      // store.getUnreadTotal();
     });
 
     const openDeposit = () => {
