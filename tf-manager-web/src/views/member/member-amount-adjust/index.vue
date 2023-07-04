@@ -23,7 +23,6 @@
           :placeholder="t('fields.site')"
           class="filter-item"
           style="width: 120px;margin-left: 5px"
-          @focus="loadSites"
           @change="loadReqCause"
         >
           <el-option
@@ -102,7 +101,7 @@
           icon="el-icon-download"
           size="mini"
           type="primary"
-          v-permission="['sys:amount:adjust:export:list']"
+          v-permission="['sys:amount:adjust:export']"
           @click="exportExcel"
         >{{ t('fields.exportToExcel') }}
         </el-button>
@@ -158,7 +157,6 @@
             style="width: 350px;"
             filterable
             default-first-option
-            @focus="loadSites"
           >
             <el-option
               v-for="item in siteList.list"
@@ -185,6 +183,9 @@
               :value="item.value"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input type="textarea" :rows="6" v-model="importForm.remark" style="width: 350px" maxlength="500" show-word-limit />
         </el-form-item>
       </el-form>
       <el-table
@@ -246,7 +247,6 @@
             style="width: 350px;"
             filterable
             default-first-option
-            @focus="loadSites"
             @change="loadFormSelect"
           >
             <el-option
@@ -572,8 +572,9 @@ const form = reactive({
 });
 
 const importForm = reactive({
+  siteId: null,
   cause: null,
-  siteId: null
+  remark: null
 });
 
 const loginNameValidator = async(rule, value, callback) => {
@@ -620,6 +621,8 @@ async function loadSites() {
   const { data: site } = await getSiteListSimple();
   siteList.list = site;
   request.siteId = siteList.list[0].id;
+  form.siteId = siteList.list[0].id
+  importForm.siteId = siteList.list[0].id
 };
 
 async function loadFormSelect() {
@@ -850,6 +853,7 @@ async function confirmImport() {
         if (value) {
           item.cause = importForm.cause;
           item.siteId = importForm.siteId;
+          item.remark = importForm.remark;
           Object.entries(value).forEach(([k, v]) => {
             if (k !== "loginName") {
               item[k] = v;
