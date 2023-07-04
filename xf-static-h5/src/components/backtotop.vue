@@ -6,7 +6,7 @@
   >
     <q-btn
       padding="sm"
-      color="deep-orange"
+      color="brightbtn"
       @click="scrollToTop"
       fab
       icon="keyboard_arrow_up"
