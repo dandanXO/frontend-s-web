@@ -77,7 +77,11 @@
           :label="t('fields.type')"
           align="center"
           min-width="180"
-        />
+        >
+          <template #default="scope">
+            <span>{{ t('moneyChange.type.' + scope.row.type) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="subType"
           :label="t('fields.privilege')"
@@ -384,10 +388,10 @@ function f(val) {
     return '-'
   }
   if (val === 'DEPOSIT') {
-    return 'Wallet to Game'
+    return t('moneyChange.subType.DEPOSIT')
   }
   if (val === 'WITHDRAW') {
-    return 'Game to Wallet'
+    return t('moneyChange.subType.WITHDRAW')
   }
   return val
 }
