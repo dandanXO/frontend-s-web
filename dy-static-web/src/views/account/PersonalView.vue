@@ -286,6 +286,7 @@
         </el-button>
       </el-form>
     </el-dialog>
+
     <el-dialog
       wrap-class-name="securityModal"
       v-model="verificationModalVisible"
@@ -371,6 +372,7 @@
         </el-button>
       </el-form>
     </el-dialog>
+    
     <el-dialog
       wrap-class-name="phoneModal"
       v-model="verificationPhoneModalVisible"

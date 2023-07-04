@@ -1,43 +1,45 @@
 <template>
   <div>
-        <div class="balance">
-              <div class="menu-title-container">
-          <el-row style="width: 100%;">
-            <!-- <el-col :span="20"> -->
-              <!-- <div class="balance-wrapper">
+    <div class="balance">
+      <div class="menu-title-container">
+        <el-row style="width: 100%">
+          <!-- <el-col :span="20"> -->
+          <!-- <div class="balance-wrapper">
             <span class="currency">主账户:</span> ￥{{ mainWallet }}
           </div> -->
-                <!-- <span class="menu-title">快速转账</span>
+          <!-- <span class="menu-title">快速转账</span>
             </el-col> -->
-            <el-col :span="4">
-              <el-button type="success"
+          <el-col :span="4">
+            <el-button
+              type="success"
               size="small"
-            class="common-btn"
-            @click="transferOutAllModal"
-          >
-            一键转出
-          </el-button>
-          <el-button type="success"
+              class="common-btn"
+              @click="transferOutAllModal"
+            >
+              一键转出
+            </el-button>
+            <el-button
+              type="success"
               size="small"
-            class="common-btn"
-            @click="refreshAllModal"
-          >
-            一键刷新
-          </el-button>
-            </el-col>
-          </el-row>
-              </div>
-          <!-- <div class="balance-refresh" @click="refreshBalance(MAIN)">
+              class="common-btn"
+              @click="refreshAllModal"
+            >
+              一键刷新
+            </el-button>
+          </el-col>
+        </el-row>
+      </div>
+      <!-- <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
-
-
-        </div>
+    </div>
     <div class="account-content quicktransfer">
       <div class="flex-box transfer-top-container">
         <div class="account-content">
           <div class="account-tip-text green">
-            <el-icon><img src="../../assets/images/account/transfer_tip.png"></el-icon>
+            <el-icon>
+              <img src="../../assets/images/account/transfer_tip.png" />
+            </el-icon>
             除了以下平台需要转账，其它游戏平台都无需转账即可游戏
           </div>
         </div>
@@ -49,14 +51,21 @@
         <div class="transfer-plat-item" v-for="p in platforms" :key="p.id">
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
-              <div class="plat-name" v-if="p.code === 'FlashTech'"><RiWirelessChargingLine />Sport</div>
-              <div class="plat-name" v-else><RiWirelessChargingLine />{{ p.name }}</div>
+              <div class="plat-name" v-if="p.code === 'FlashTech'">
+                <RiWirelessChargingLine />
+                Sport
+              </div>
+              <div class="plat-name" v-else>
+                <RiWirelessChargingLine />
+                {{ p.name }}
+              </div>
               <div class="balance-wrapper">
-                <span class="currency">余额:</span> {{ p.amount }}
+                <span class="currency">余额:</span>
+                {{ p.amount }}
               </div>
             </div>
             <div class="balance-refresh" @click="refreshBalance(p.code)">
-            <el-icon><Refresh /></el-icon>
+              <el-icon><Refresh /></el-icon>
             </div>
           </div>
           <div
@@ -69,7 +78,8 @@
             >
               转进
             </el-button>
-            <el-button size="small"
+            <el-button
+              size="small"
               class="transfer-btn out"
               @click="transferModal(1, p)"
             >
@@ -88,13 +98,22 @@
       width="300px"
       align-center
     >
-    <template #header>
-      <div :style="transferTypeIndex === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse; justify-content: flex-end;'" class="el-dialog__title">
-      <el-tag type="danger" effect="dark">主账户</el-tag>
-      <el-icon><Right /></el-icon>
-      <el-tag type="success" effect="dark">{{ transferInfo.platform }}</el-tag>
-      </div>
-    </template>
+      <template #header>
+        <div
+          :style="
+            transferTypeIndex === 0
+              ? 'flex-direction: row'
+              : 'flex-direction: row-reverse; justify-content: flex-end;'
+          "
+          class="el-dialog__title"
+        >
+          <el-tag type="danger" effect="dark">主账户</el-tag>
+          <el-icon><Right /></el-icon>
+          <el-tag type="success" effect="dark">
+            {{ transferInfo.platform }}
+          </el-tag>
+        </div>
+      </template>
       <el-form
         ref="formRef"
         :hideRequiredMark="true"
@@ -103,10 +122,7 @@
         :label-col="{ span: 4 }"
       >
         <el-form-item ref="amount" prop="amount">
-          <el-input
-            v-model="transferInfo.amount"
-            placeholder="金额"
-          />
+          <el-input v-model="transferInfo.amount" placeholder="金额" />
         </el-form-item>
         <el-form-item class="txt-center">
           <!-- <button
@@ -121,8 +137,8 @@
             :loading="loadingTransfer"
             @click="submitTransfer"
           >
-            确定</el-button
-          >
+            确定
+          </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -356,7 +372,6 @@ export default defineComponent({
 </script>
 <style lang="scss">
 body .transferinout .el-dialog__header .el-dialog__title {
-
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -423,10 +438,10 @@ body .transferinout .el-dialog__header .el-dialog__title {
           display: flex;
           justify-content: flex-start;
           gap: 10px;
-          align-items:  center;
+          align-items: center;
           font-size: 14px;
           margin-right: 50px;
-            color: #30a73b;
+          color: #30a73b;
           .currency {
             color: #000000;
           }
@@ -464,10 +479,11 @@ body .transferinout .el-dialog__header .el-dialog__title {
       // gap: 10px;
       .transfer-plat-item {
         // display: flex;
-        background: url(../../assets/images/account/transfer_item_bg.png)no-repeat center center;
+        background: url(../../assets/images/account/transfer_item_bg.png)
+          no-repeat center center;
         background-size: contain;
-    width: 238px;
-    height: 128px;
+        width: 238px;
+        height: 128px;
         // border-radius: 2px;
         // margin: 0 0 23px 14px;
         // padding: 10px 20px 30px;
@@ -479,24 +495,25 @@ body .transferinout .el-dialog__header .el-dialog__title {
         }
         .transfer-action-box {
           display: flex;
-          align-items:  center;
+          align-items: center;
           justify-content: flex-end;
           gap: 15px;
           width: 78%;
           .transfer-btn {
-                background-color: #3bafda;
-                box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
-                border-radius: 2px;
-                border: 0;
-                // border: 1px solid #22737f;
-                  color: #fff;
-                padding: 2px 20px;
-                font-size: 12px;
-                line-height: 14px;
-                cursor: pointer;
+            background-color: #3bafda;
+            box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
+            border-radius: 2px;
+            border: 0;
+            // border: 1px solid #22737f;
+            color: #fff;
+            padding: 2px 20px;
+            font-size: 12px;
+            line-height: 14px;
+            cursor: pointer;
 
             &.outline {
-                  background-image: linear-gradient(267deg,#78abfa 0,#4877ec 100%),linear-gradient(#5b80e7,#5b80e7);
+              background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%),
+                linear-gradient(#5b80e7, #5b80e7);
             }
           }
         }
@@ -545,7 +562,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
 
             &::after {
               content: " ";
-              background: url(../../assets/images/account/transfer_item_bg.png)no-repeat center center;
+              background: url(../../assets/images/account/transfer_item_bg.png)
+                no-repeat center center;
               background-position: -2px -33px;
               background-size: 1400%;
               display: block;
@@ -584,8 +602,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
             //   border-color: #2494be transparent transparent;
             // }
             .remixicon {
-    fill: #ffffff;
-    width: 15px;
+              fill: #ffffff;
+              width: 15px;
             }
           }
           .balance-wrapper {

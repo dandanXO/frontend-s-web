@@ -68,8 +68,8 @@ module.exports = configure(function (ctx) {
 
       chainWebpack(chain) {
         chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+            .plugin("eslint-webpack-plugin")
+            .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       }
     },
 
@@ -84,6 +84,7 @@ module.exports = configure(function (ctx) {
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
+      lang: 'zh-CN',
       config: {},
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -120,8 +121,8 @@ module.exports = configure(function (ctx) {
 
       chainWebpackWebserver(chain) {
         chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+            .plugin("eslint-webpack-plugin")
+            .use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       middlewares: [
@@ -140,8 +141,8 @@ module.exports = configure(function (ctx) {
 
       chainWebpackCustomSW(chain) {
         chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+            .plugin("eslint-webpack-plugin")
+            .use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       manifest: {
@@ -189,7 +190,14 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: true
+      hideSplashscreen: true,
+      // (Optional) If not present, will look for package.json > name
+      appName: '兴發', // string
+      // (Optional) If not present, will look for package.json > version
+      version: '1.0.2', // string
+      // (Optional) If not present, will look for package.json > description
+      description: '兴發官网 - 最专业的竞猜网站', // string
+      backButtonExit: '*'
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/configuring-electron
@@ -217,14 +225,14 @@ module.exports = configure(function (ctx) {
 
       chainWebpackMain(chain) {
         chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+            .plugin("eslint-webpack-plugin")
+            .use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       chainWebpackPreload(chain) {
         chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+            .plugin("eslint-webpack-plugin")
+            .use(ESLintPlugin, [{ extensions: ["js"] }]);
       }
     }
   };

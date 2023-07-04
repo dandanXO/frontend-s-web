@@ -43,10 +43,7 @@
               (val) => (val && val.length > 0) || '请输入密码',
               (val) =>
                 (val.length > 5 && val.length <= 12) ||
-                '密码长度为 6 到 12',
-              (val) =>
-                (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) ||
-                '密码安全级别必须至少为好'
+                '密码长度为 6 到 12'
             ]"
         color="white"
     >
@@ -111,21 +108,24 @@
     </q-input>
 
 
-    <!--    <q-input-->
-    <!--      ref="telRef"-->
-    <!--      hide-bottom-space-->
-    <!--      v-model="regForm.telephone"-->
-    <!--      label="电话号码"-->
-    <!--      lazy-rules-->
-    <!--      :rules="[-->
-    <!--        (val) => (val && val.length > 7) || '请输入有效的电话号码'-->
-    <!--      ]"-->
-    <!--      color="white"-->
-    <!--    >-->
-    <!--      <template v-slot:prepend>-->
-    <!--        <q-icon color="bright" name="smartphone"/>-->
-    <!--      </template>-->
-    <!--    </q-input>-->
+        <q-input
+          ref="telRef"
+          hide-bottom-space
+          v-model="regForm.telephone"
+          label="电话号码"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 7) || '请输入有效的电话号码'
+          ]"
+          color="white"
+        >
+          <template v-slot:prepend>
+            <q-icon color="bright" name="smartphone"/>
+          </template>
+          <template v-slot:append>
+            <q-btn label="获取验证码" color="brightbtn" @click="getCode()"/>
+          </template>
+        </q-input>
 
     <!--    <q-input-->
     <!--      ref="emailRef"-->
@@ -210,7 +210,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      // telephone: "",
+      telephone: "",
       // email: "",
       captchaCode: "",
       regHost: location.hostname,
@@ -268,7 +268,7 @@ export default defineComponent({
           loginNameRef.value.hasError ||
           pwdRef.value.hasError ||
           confirmPwdRef.value.hasError ||
-          // telRef.value.hasError ||
+          telRef.value.hasError ||
           // emailRef.value.hasError ||
           verificationRef.value.hasError
       ) {

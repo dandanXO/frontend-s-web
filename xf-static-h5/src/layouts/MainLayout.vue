@@ -217,7 +217,12 @@ export default defineComponent({
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = "找回账号";
-        } else if (route.path === "/live-casino") {
+        }else if (route.path === "/forgot-password") {
+          prevPage.value = "login";
+          hasPage.value = true;
+          pageName.value = "找回密码";
+        }
+        else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
         } else if (route.path === "/poker") {
