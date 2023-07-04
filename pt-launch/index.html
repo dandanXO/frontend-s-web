@@ -87,10 +87,10 @@
 	src="https://login.ld176988.com/jswrapper/integration.js.php?casino=fourblessings88"></script>
 <script type="text/javascript">
 	$(function() {
-		if ('${isLogin}' == 'true') {
+		if ('true' === 'true') {
 			iapiSetCallout('Login', calloutLogin);
 			iapiSetClientPlatform("mobile&deliveryPlatform=HTML5");
-			iapiLogin("${username}", "${password}", 1, "zh-cn");
+			iapiLogin(getQueryVariable('username'), getQueryVariable('password'), 1, "zh-cn");
 		}
 	});
 
@@ -101,6 +101,16 @@
 			119:'验证失败，ERROR CODE：119',125:'验证失败，ERROR CODE：125',127:'验证失败，ERROR CODE：127',128:'验证失败，ERROR CODE：128',
 			129:'PT系统异常，ERROR CODE：129',159:'不允许访问的地区，ERROR CODE：159',160:'PT系统异常，ERROR CODE：160',165:'账户被冻结，请联系在线客服进行解冻，ERROR CODE：165',
 			175:'会话验证失败，ERROR CODE：175',178:'PT系统异常，ERROR CODE：178'};
+
+	function getQueryVariable(variable) {
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i=0;i<vars.length;i++) {
+			var pair = vars[i].split("=");
+			if(pair[0] == variable){return pair[1];}
+		}
+		return(false);
+	}
 	function calloutLogin(response) {
 		console.log(response);
 		if (response.errorCode) {
@@ -110,7 +120,7 @@
 				alert("PT登录失败，ERROR CODE：" + response.errorCode);
 			}
 		}else{
-			askTempandLaunchGame('ngm', '${gameCode}');
+			askTempandLaunchGame('ngm', getQueryVariable('gameCode'));
 		}
 	}
 	
@@ -118,7 +128,7 @@
 			calloutGetTemporaryAuthenticationToken);
 
 	function askTempandLaunchGame(type, game) {
-		if ('${isLogin}' == 'true') {
+		if ('true' == 'true') {
 			currentgame = game;
 			gametype = type;
 			var realMode = 1;
@@ -130,10 +140,7 @@
 
 	function launchMobileClient(temptoken) {
 		if (gametype == "mps") {
-			var clientUrl = '' + '?username=' + $
-			{
-				username
-			}
+			var clientUrl = '' + '?username=' + getQueryVariable('username')
 			+'&temptoken=' + temptoken + '&game=' + currentgame + '&real=1';
 		} else if (gametype = "ngm") {
 			var support = 'https://livechat.7wo7dd777.com/chatserver/chatwindow.aspx?planId=4&siteId=100016501'
@@ -142,7 +149,7 @@
 					+ currentgame
 					+ '&real=1'
 					+ '&username='
-					+ '${username}'
+					+ getQueryVariable('username')
 					+ '&lang=zh-cn&tempToken='
 					+ temptoken
 					+ '&lobby='
