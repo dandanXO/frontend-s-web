@@ -335,7 +335,10 @@ export default defineComponent({
     };
 
     const isValidCnPhone = () => {
-      return (regForm.telephone.length === 11 && regForm.telephone.substring(0, 1) == '1') || "请输入有效的电话号码";
+      const phonePattern =
+          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
+
     }
 
     const router = useRouter();

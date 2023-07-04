@@ -212,6 +212,18 @@
           </q-input>
 
           <q-input
+              v-show="!isCrypto"
+              class="q-mb-md"
+              filled
+              v-model="bankCardInfo.cardAddress"
+              label="开户行地址"
+              :rules="cardAddressRules"
+              ref="cardAddressRef"
+              color="white"
+          />
+
+
+          <q-input
               filled
               ref="telRef"
               v-model="bankCardInfo.telephone"
@@ -252,19 +264,13 @@
             </template>
           </q-input>
 
-          <!--          <q-input-->
-          <!--              class="q-mb-md"-->
-          <!--              filled-->
-          <!--              v-model="bankCardInfo.cardAddress"-->
-          <!--              label="开户行地址"-->
-          <!--              :rules="cardAddressRules"-->
-          <!--              ref="cardAddressRef"-->
-          <!--            color="white"-->
-          <!--          />-->
+
+
           <div class="flex flex-center">
             <q-btn
                 class="q-mr-md"
                 label="取消"
+                color="warning"
                 @click="bankCardModalState.visible = false"
             />
             <q-btn color="brightbtn" label="提交" @click="submitBankCard"/>
@@ -474,7 +480,7 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
-    const phoneVerificationRef= ref(null);
+    const phoneVerificationRef = ref(null);
 
     const bankCardInfo = reactive({
       bankId: undefined,
@@ -704,7 +710,10 @@ export default defineComponent({
       }
     }
     const isValidCnPhone = () => {
-      return (bankCardInfo.telephone.length === 11 && bankCardInfo.telephone.substring(0, 1) == '1') || "请输入有效的电话号码";
+      const phonePattern =
+          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      return phonePattern.test(bankCardInfo.telephone) || "请输入有效的电话号码";
+
     }
 
     const openPhoneVeriDialog = () => {
