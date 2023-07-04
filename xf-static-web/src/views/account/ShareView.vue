@@ -101,10 +101,12 @@ export default defineComponent({
     //     key: "deposit",
     //   },
     // ];
+
     const getReferral = () => {
       getReferralLink().then((res) => {
         if(res.code === 0) {
           referralLink.value = `https://xf123.com/refer/${res.data}`;
+          // evip
         }
       }).catch((err) => {
         console.log(err)

@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">绑卡历史</span>
+      <span class="account-title">解绑银行卡记录</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
@@ -232,10 +232,10 @@
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            :placeholder="isUSDT ? '虚拟币账户' : '银行卡号'"
+            :placeholder="isUSDT ? '钱包地址' : '银行卡号'"
           />
         </el-form-item>
-        <!-- <el-form-item prop="cardAddress" name="cardAddress">
+        <el-form-item prop="cardAddress" name="cardAddress">
           <el-input
             v-model="bankCardInfo.cardAddress"
             placeholder="开户行地址"
@@ -243,7 +243,7 @@
               { required: true, message: '请输入开户行地址', trigger: 'blur' }
             ]"
           />
-        </el-form-item> -->
+        </el-form-item>
 
         <el-form-item name="telephone" prop="telephone">
           <el-input
@@ -266,11 +266,7 @@
           </el-button>
         </el-form-item>
 
-        <el-form-item
-          name="smsCode"
-          prop="smsCode"
-          v-if="isSendOtp"
-        >
+        <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
           <el-input
             class="half"
             v-model="bankCardInfo.smsCode"
@@ -413,11 +409,11 @@ export default defineComponent({
         dataIndex: "cardNumber",
         key: "cardNumber"
       },
-      // {
-      //   title: "开户行",
-      //   dataIndex: "cardAddress",
-      //   key: "cardAddress"
-      // },
+      {
+        title: "开户行",
+        dataIndex: "cardAddress",
+        key: "cardAddress"
+      },
       {
         title: "绑定时间",
         key: "bindTime",
@@ -523,7 +519,7 @@ export default defineComponent({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      // cardAddress: "",
+      cardAddress: "",
       telephone: "",
       smsCode: "",
       smsCodeId: ""
@@ -539,7 +535,7 @@ export default defineComponent({
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
-          // bankCardInfo.cardAddress = "";
+          bankCardInfo.cardAddress = "";
           bankCardInfo.telephone = "";
           bankCardInfo.smsCode = "";
           bankCardModalState.visible = true;
@@ -676,13 +672,13 @@ export default defineComponent({
           trigger: "blur",
         }
       ],
-      // cardAddress: [
-      //   {
-      //     required: true,
-      //     message: "请输入开户行地址",
-      //     trigger: "blur"
-      //   }
-      // ],
+      cardAddress: [
+        {
+          required: true,
+          message: "请输入开户行地址",
+          trigger: "blur"
+        }
+      ],
       telephone: [
         {
           required: true,

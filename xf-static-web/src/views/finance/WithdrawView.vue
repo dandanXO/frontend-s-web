@@ -103,13 +103,13 @@
         </el-form-item>
         <el-form-item
           class="select"
-          style="margin-top:20px;"
+          style="margin-top: 20px"
           prop="cardId"
-          :label="isUSDT ? '选择虚拟币账户' : '选择银行卡'"
+          :label="isUSDT ? '选择钱包地址' : '选择银行卡'"
           :rules="[
             {
               required: true,
-              message: isUSDT ? '请选择虚拟币账户' : '请选择银行卡',
+              message: isUSDT ? '请选择钱包地址' : '请选择银行卡',
               trigger: 'blur'
             }
           ]"
@@ -119,7 +119,7 @@
               withdrawState.bankCardList.length === 0 ? checkBankCards() : ''
             "
             v-model="withdrawInfo.cardId"
-            :placeholder="isUSDT ? '选择虚拟币账户' : '选择银行卡'"
+            :placeholder="isUSDT ? '选择钱包地址' : '选择银行卡'"
             style="width: 300px"
           >
             <el-option
@@ -146,8 +146,20 @@
             USDT
           </span>
         </el-form-item>
+
+        <div
+          v-if="isUSDT && selectedWithdrawalMethod.tips"
+          class="selected-tip"
+          v-html="selectedWithdrawalMethod.tips"
+        ></div>
+
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button
+            :loading="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
             确定
           </el-button>
         </div>
@@ -249,16 +261,15 @@ export default defineComponent({
       ],
     };
     const checkBankCards = () => {
-      ElMessageBox.confirm(
+      ElMessageBox.alert(
       '请先绑定银行卡', "系统提示",
       {
         showClose: 'false',
-        cancelButtonClass: 'cancel-btn',
+        showCancelButton: 'false',
         confirmButtonText: '确认',
-        cancelButtonText: '取消',
         type: 'warning',
-        draggable: true,
-        buttonSize: "small"
+        draggable: false,
+        buttonSize: "small",
       }
     )
       .then(() => {

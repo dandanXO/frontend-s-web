@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="app-download customer-div">
-        <a href="https://xfapp1.com/" target="_blank">
+        <a href="https://xf9866.com/" target="_blank">
           <RiDownloadCloudLine />
           <div class="remixicon-download-cloud-line"></div>
           <div style="margin-top: 15px">APP下载</div>

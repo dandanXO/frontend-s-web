@@ -27,8 +27,8 @@ const onRequest = (config) => {
   return config;
 };
 const onResponse = (response) => {
-  const loading = ElLoading.service({ lock: true });
-  loading
+  // const loading = ElLoading.service({ lock: true });
+  // loading
   let res = response.data;
   if (typeof response.data === "string") {
     res = JSON.parse(response.data);
@@ -67,12 +67,12 @@ const onResponse = (response) => {
         location.reload();
       }
       // message.error(res.message, 4);
-    loading.close();
+    // loading.close();
       ElMessage.error(res.message);
     }
     throw new Error(res.message || "Error");
   } else {
-    loading.close();
+    // loading.close();
     return response.data;
   }
 };
