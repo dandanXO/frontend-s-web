@@ -264,12 +264,13 @@ export default defineComponent({
       ElMessageBox.alert(
       '请先绑定银行卡', "系统提示",
       {
-        showClose: 'false',
-        showCancelButton: 'false',
+        showClose: false,
+        showCancelButton: false,
         confirmButtonText: '确认',
-
         draggable: false,
-        buttonSize: "small",
+        buttonSize: 'small',
+        closeOnClickModal: false,
+        center: true,
       }
     )
       .then(() => {

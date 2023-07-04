@@ -18,22 +18,22 @@
                 ></span>
               </Vue3Marquee>
             </div>
-            <div class="mailbox-notify">
-              <router-link to="/center/mailbox">
-                <RiMailFill style="fill: #2db9e2; width: 20px" />
-                <div v-if="isMailboxUnread" class="notify-red" ></div>
-              </router-link>
-            </div>
+            <template v-if="store.token">
+              <div class="mailbox-notify">
+                <router-link to="/center/mailbox">
+                  <RiMailFill style="fill: #2db9e2; width: 20px" />
+                  <div v-if="isMailboxUnread" class="notify-red"></div>
+                </router-link>
+              </div>
+            </template>
           </div>
         </div>
         <div v-if="!store.token" class="right-contents">
-          <a class="common-btn grey" @click="loginDialogVisible = true">登录</a>
+          <a class="common-btn grey" @click="openUsernameLogin()">登录</a>
           <a class="common-btn" @click="registerDialogVisible = true">
             开设账户
           </a>
-          <a class="common-link" @click="forgetPassDialogVisible = true">
-            忘记密码？
-          </a>
+          <a class="common-link" @click="openMobileLogin()">忘记密码？</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -156,8 +156,8 @@
       @close="store.loginPageVisible = false"
     >
       <span>
-        <el-tabs type="card">
-          <el-tab-pane label="账户登录">
+        <el-tabs type="card" v-model="loginTabs">
+          <el-tab-pane label="账户登录" name="usernameLogin">
             <el-form
               ref="loginRef"
               :rules="loginRules"
@@ -213,7 +213,7 @@
               </el-button>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane label="手机登录">
+          <el-tab-pane label="手机登录" name="mobileLogin">
             <el-form
               ref="loginRef"
               :rules="mobileLoginRules"
@@ -436,9 +436,19 @@
                 maxlength="11"
                 :readonly="isSendOtp"
                 :rules="[
-              { required: true, message: '请输入电话号码', trigger: 'blur' },
-              { required: true, message: '请输入有效的电话号码', trigger: 'blur' , pattern: '/^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$/'}
-            ]"
+                  {
+                    required: true,
+                    message: '请输入电话号码',
+                    trigger: 'blur'
+                  },
+                  {
+                    required: true,
+                    message: '请输入有效的电话号码',
+                    trigger: 'blur',
+                    pattern:
+                      '/^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$/'
+                  }
+                ]"
               />
               <el-button
                 class="common-btn"
@@ -450,10 +460,10 @@
                 获取验证码
               </el-button>
             </el-form-item>
-            <el-form-item label="电话验证码" prop="telephone" v-if="isSendOtp">
+            <el-form-item label="电话验证码" prop="smsCode" v-if="isSendOtp">
               <el-input
                 class="half"
-                v-model="regForm.telephoneCaptcha"
+                v-model="regForm.smsCode"
                 placeholder="输入电话验证码"
               />
             </el-form-item>
@@ -902,6 +912,22 @@ export default defineComponent({
       ],
     };
 
+//     loginTabs
+// usernameLogin
+// mobileLogin
+
+    const loginTabs = ref('usernameLogin');
+
+    const openUsernameLogin = () => {
+      loginDialogVisible.value = true;
+      loginTabs.value = 'usernameLogin';
+    }
+
+    const openMobileLogin = () => {
+      loginDialogVisible.value = true;
+      loginTabs.value = 'mobileLogin';
+    }
+
     const loadingBtn = ref(false);
     const store = userStore();
     const {token} = storeToRefs(store);
@@ -1079,7 +1105,7 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          pattern: /^1[3-9]\d{9}$/,
+          pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
           message: "请输入有效的中国手机号码",
           trigger: "blur",
         },
@@ -1127,7 +1153,7 @@ export default defineComponent({
       password: "",
       confirmPwd: "",
       telephone: cachedTelephone ?? '',
-      email: "",
+      // email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -1201,7 +1227,7 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          pattern: /^1[3-9]\d{9}$/,
+          pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
           message: "请输入有效的中国手机号码",
           trigger: "blur",
         },
@@ -1228,6 +1254,19 @@ export default defineComponent({
           max: 50,
           message: "长度应小于 50",
           trigger: "blur",
+        },
+      ],
+      smsCode: [
+        {
+          required: true,
+          message: "需要验证码",
+          trigger: "blur",
+        },
+        {
+          min: 6,
+          max: 6,
+          message: "长度应为 6",
+          trigger: "change",
         },
       ],
       captchaCode: [
@@ -1336,6 +1375,7 @@ export default defineComponent({
               disableSendVerificationButton.value = true
               isSendOtp.value = true;
               regForm.smsCodeId = response.data.codeId;
+              getCode();
 
               ElMessage({
                 type: 'success',
@@ -1408,18 +1448,16 @@ if (type === 'REGISTER') {
 
     const openCaptchaForm = (type) => {
       registerRef.value.validateField('telephone').then((resp) => {
-        captchaForm.captchaCode = "";
-        captchaForm.type = type;
-        captchaDialogVisible.value = true;
-        getCode();
-      }).catch((err) => {
+      captchaForm.captchaCode = "";
+      captchaForm.type = type;
+      captchaDialogVisible.value = true;
+      getCode();
+    }).catch((err) => {
         ElMessage({
           message: '请输入有效的中国手机号码',
           type: 'error',
         })
       })
-
-
     };
 
     const submitRegisterForm = async (elForm) => {
@@ -1710,18 +1748,19 @@ if (type === 'REGISTER') {
     const isMailboxUnread = ref(false);
 
     const loadUnreadMailbox = () => {
-      mailUnreadTotal().then((res) => {
+      if (store.token !== null) {
+        mailUnreadTotal().then((res) => {
           if (res.code === 0) {
             const response = res.data;
-            // console.log(response)
             if(response > 0) {
               isMailboxUnread.value = true
             }
           }
         }).catch((error) => {
           console.log(error);
-          // message.error(error.message, 4)
         });
+      }
+
     };
 
     function charType(num) {
@@ -1850,7 +1889,11 @@ if (type === 'REGISTER') {
       updatePhoneVerifiedRules,
       loadUnreadMailbox,
       mailboxUnreadData,
-      isMailboxUnread
+      isMailboxUnread,
+      validatePhoneNumber,
+      loginTabs,
+      openUsernameLogin,
+openMobileLogin
     }
   }
 });

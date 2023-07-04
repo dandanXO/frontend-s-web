@@ -24,30 +24,30 @@
         <div class="line">
           <span>银行名称：</span>
           <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
-          <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('0')" class="common-btn">
             {{ copybtntxt0 }}
-          </button>
+          </q-btn>
         </div>
         <div class="line">
           <span>银行账号：</span>
           <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
-          <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('1')" class="common-btn">
             {{ copybtntxt1 }}
-          </button>
+          </q-btn>
         </div>
         <div class="line">
           <span>银行卡号：</span>
           <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
-          <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('2')" class="common-btn">
             {{ copybtntxt2 }}
-          </button>
+          </q-btn>
         </div>
         <div class="line">
           <span>存款金额：</span>
           <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
-          <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('3')" class="common-btn">
             {{ copybtntxt3 }}
-          </button>
+          </q-btn>
         </div>
       </div>
     </div>
@@ -204,8 +204,9 @@
         为保证资金安全，存款前先绑定手机号
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn label="前往绑定" color="brightbtn" href="/account/personal"/>
-        <q-btn label="前往绑定" color="brightbtn" href="/account/personal"/>
+        <router-link to="/account/personal">
+          <q-btn label="前往绑定" color="brightbtn"/>
+        </router-link>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -219,7 +220,9 @@
         为保证资金安全，存款前先绑定银行卡
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn label="前往绑定" color="brightbtn" href="/account/withdraw"/>
+        <router-link to="/account/withdraw">
+          <q-btn label="前往绑定" color="brightbtn"/>
+        </router-link>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -699,6 +702,7 @@ onMounted(() => {
 <style lang="scss">
 .submit-message {
   // width: calc(100% - 40px);
+  border-radius: 10px;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -719,17 +723,18 @@ onMounted(() => {
     align-items: center;
     font-size: 14px;
     align-items: center;
-    background: #ffffff;
-    padding: 15px 0;
+    background: #063c50;
+    padding: 15px 10px;
 
     span:first-child {
       // flex: 1;
-      color: #4669f8;
+      color: #4fb2ff;
       width: 80px;
     }
 
     span.info {
       flex: 3;
+      color: #fff;
     }
 
     button {

@@ -106,7 +106,7 @@ export default defineComponent({
     const getReferral = () => {
       getReferralLink().then((res) => {
         if(res.code === 0) {
-          referralLink.value = `https://${evips}/refer/${res.data}`;
+          referralLink.value = `https://www.xf9866.com/refer/${res.data}`;
           // evip
         }
       }).catch((err) => { 
@@ -114,8 +114,8 @@ export default defineComponent({
       })
     };
     const store = userStore();
-    const evips = store.evip ? JSON.parse(store.evip) : '';
-    console.log(evips)
+    // const evips = store.evip ? JSON.parse(store.evip) : '';
+    // console.log(evips)
 
     onMounted(() => {
       getReferral()
@@ -127,7 +127,7 @@ export default defineComponent({
       copyCode,
       blurCode,
       store,
-      evips,
+      // evips,
       referralLink,
       VueQRCodeComponent
     };
