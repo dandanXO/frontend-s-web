@@ -13,6 +13,7 @@
       <Node
           :level="1"
           :list="payMethods"
+          :gridcol="4"
           ref="paymentNode"
           @clicked="onSelect"
       />
@@ -228,7 +229,7 @@ const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
 const checkNewUser = () => {
-  if (store.phone == null || store.phoneVerified === false ) {
+  if (store.phone == null) {
     isNewUser.value = true;
   }
 };

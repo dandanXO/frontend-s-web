@@ -80,7 +80,7 @@
     <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : '亲爱的用户' }}</div>
     <div v-if="store.token">
       <q-badge color="orange" text-color="black" :label="store.vip"/>
-      <span class="q-ml-sm">￥{{ store.balance }}</span>
+<!--      <span class="q-ml-sm">￥{{ store.balance }}</span>-->
     </div>
     <router-link
         v-if="!store.token"
@@ -89,9 +89,9 @@
     >
       <span class="log">注册</span>
     </router-link>
-    <router-link v-if="!store.token" to="/login" class="login"><span class="log">请登录</span><span class="user"><q-icon
+    <router-link v-if="!store.token" to="/login" class="login"><span class="log" style="white-space: nowrap;">请登录</span><span class="user"><q-icon
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
-    <router-link v-else to="/account" class="login"><span class="log">已登录</span><span class="user"><q-icon
+    <router-link v-else to="/account" class="login"><span class="log" style="white-space: nowrap;">已登录</span><span class="user"><q-icon
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
   </div>
   <div class="details-bar">
@@ -133,7 +133,7 @@
           @click="setSelectedSwiper(tab)"
           v-for="(tab, i) in tabs"
           :key="i"
-          style="width: calc(100vw / 5)"
+          style="width: calc(100vw / 6)"
       >
         {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
       </swiper-slide>
@@ -247,11 +247,11 @@
           <template
               v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
           >
-            <PlatformBlock
-                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
-                dataType="lottery"
-                :data="lotter"
-            />
+<!--            <PlatformBlock-->
+<!--                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
+<!--                dataType="lottery"-->
+<!--                :data="lotter"-->
+<!--            />-->
           </template>
           <template v-else>
             <PlatformBlock
@@ -404,23 +404,22 @@ export default defineComponent({
         firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
-        firstSwiper.value?.slideTo(3, 500);
-      }
-      if (tab.name === "esport") {
         firstSwiper.value?.slideTo(4, 500);
       }
+      if (tab.name === "esport") {
+        firstSwiper.value?.slideTo(5, 500);
+      }
       if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(6, 500);
+        firstSwiper.value?.slideTo(7, 500);
       }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(20, 500);
+        firstSwiper.value?.slideTo(21, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(20, 500);
+        firstSwiper.value?.slideTo(23, 500);
       }
-
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(20, 500);
+        firstSwiper.value?.slideTo(19, 500);
       }
     };
     const onSlideChange = (swiper) => {
@@ -476,7 +475,13 @@ export default defineComponent({
         name: "slot",
         icon: "slot",
         label: "电游",
-        labelact: "电子/捕鱼"
+        labelact: "电子"
+      },
+      {
+        name: "fishing",
+        icon: "fishing",
+        label: "捕鱼",
+        labelact: "捕鱼"
       },
       {
         name: "poker",
@@ -648,7 +653,13 @@ export default defineComponent({
                 slotObj.title = slotObj.name + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
-                slot.value.push(slotObj);
+
+                if(element.code=='AG'){
+
+                }else{
+                  slot.value.push(slotObj);
+                }
+
               }
               if (platTypes.indexOf("FISH") > -1) {
                 var fishObj = Object.assign({}, element);
@@ -918,7 +929,7 @@ export default defineComponent({
     .swiper-slide {
       background: #23263c;
       padding: 8px 5px 2px;
-      max-width: 80px;
+      max-width: 60px;
       cursor: pointer;
 
       &.tbact {

@@ -63,6 +63,7 @@
         bordered
         class="bg-primary"
         side="right"
+        width="336"
       >
         <div class="q-pa-sm q-pt-sm">
           <div>
@@ -241,7 +242,7 @@ const closeDialog = () => {
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
   //
-  AppFullscreen.request()
+  // AppFullscreen.request()
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");

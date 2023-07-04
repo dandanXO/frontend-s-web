@@ -52,7 +52,7 @@ const props = defineProps({
   // left: 55%;
   // transform: translate(-50%, -50%);
   top: 30%;
-  left: 200px;
+  left: 165px;
   text-align: left;
 
   .game_title {
