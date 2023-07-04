@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <title>PT游戏大厅</title>
 <style>
+body {
+	background-color: rgba(0,0,0,.7);
+}
 .game-container {
 	display: flex;
 	width: 1100px;
@@ -19,68 +22,48 @@
 	width: 190px;
 	height: 150px;
 }
+.loader {
+margin: 5em auto;
+  font-size: 10px;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  animation: mulShdSpin 1.1s infinite ease;
+  transform: translateZ(0);
+}
+@keyframes mulShdSpin {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #ffffff, 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.5), -1.8em -1.8em 0 0em rgba(255,255,255, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.7), 1.8em -1.8em 0 0em #ffffff, 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.5), 1.8em -1.8em 0 0em rgba(255,255,255, 0.7), 2.5em 0em 0 0em #ffffff, 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.5), 2.5em 0em 0 0em rgba(255,255,255, 0.7), 1.75em 1.75em 0 0em #ffffff, 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.5), 1.75em 1.75em 0 0em rgba(255,255,255, 0.7), 0em 2.5em 0 0em #ffffff, -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.5), 0em 2.5em 0 0em rgba(255,255,255, 0.7), -1.8em 1.8em 0 0em #ffffff, -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.5), -1.8em 1.8em 0 0em rgba(255,255,255, 0.7), -2.6em 0em 0 0em #ffffff, -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.5), -2.6em 0em 0 0em rgba(255,255,255, 0.7), -1.8em -1.8em 0 0em #ffffff;
+  }
+}
 </style>
 </head>
 <body>
-<h1 style="text-align: center;margin-bottom: 60px;">PT游戏大厅</h1>
-<div class="game-container">
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/gpas_lotj_pop.png"/>
-		<div>捷豹的传说™</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/fm.png"/>
-		<div>古怪猴子</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/bfb.png"/>
-		<div>水牛闪电战</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/zeus.png"/>
-		<div>奥林匹斯之国王</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/gpas_rothr_pop.png"/>
-		<div>隐藏王国的攻略</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/bib.png"/>
-		<div>湛蓝深海</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/ct.png"/>
-		<div>船长的宝藏</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/hk.png"/>
-		<div>高速公路之王</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/grbjp.png"/>
-		<div>湛蓝深海JP</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/aeolus.png"/>
-		<div>众神的时代 - 风暴之神™</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/fmjp.png"/>
-		<div>古怪猴子JP</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/frtf.png"/>
-		<div>幸运5</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/zcjbjp.png"/>
-		<div>招财进宝累积</div>
-	</div>
-	<div class="game-item">
-		<img src="https://jsn92.czxinbang.com/xf-resource/web/images/games/slot/pt/bfb.png"/>
-		<div>水牛闪电战</div>
-	</div>
-</div>
+<div class="loader"></div>
 </body>
 <script type="text/javascript"
 	src="https://login.ld176988.com/jswrapper/integration.js.php?casino=winforfun88"></script>
@@ -119,7 +102,7 @@
 				alert("PT登录失败，ERROR CODE：" + response.errorCode);
 			}
 		}else{
-			askTempandLaunchGame('ngm', getQueryVariable('gameCode'));
+			askTempandLaunchGame('ngm', getQueryVariable('gamecode'));
 		}
 	}
 	
