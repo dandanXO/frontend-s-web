@@ -1,7 +1,7 @@
 <template>
 <q-page>
     <iframe
-    :src="'https://csweb01.amv4xjcbd.com/?partnerId=3&lang=en&way=' + regDevice + '&token=' + store.token"
+    :src="'https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&way=' + regDevice + '&token=' + store.token"
     title="description"
   ></iframe>
   <!-- <div class="iFrameFull">
@@ -18,7 +18,7 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const store = userStore();
-    const regDevice = Platform.is.mobile ? "H5" : "WEB"
+    const regDevice = store.getDeviceType();
     return {
       regDevice,
       store

@@ -14,6 +14,7 @@
           item.children ? 'node-group' : '',
           selectItem === item ? 'active' : ''
         ]"
+        :style="item.group && item.children.length === 0 ? 'display:none': ''"
         :key="i"
         v-for="(item, i) in list"
       >
@@ -49,7 +50,7 @@
       </div>
       <!-- </div> -->
       <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
-      
+
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
@@ -466,7 +467,7 @@ $node-color: #45fefa;
       background-position: top center;
       img {
        padding: 0;
-       border: 0; 
+       border: 0;
        background-color: transparent;
       }
       // top: -5px;
