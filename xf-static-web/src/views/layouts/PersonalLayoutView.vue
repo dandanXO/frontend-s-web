@@ -8,15 +8,15 @@
       </div>
       <div class="account-content-wrapper">
         <div class="account-box account-balance">
-          
-            
+
+
                <a @click="refreshBalance" class="balance-container">
                   <span>账户余额：</span>
                   <div class="balance-txt"><span v-if="isLoadingBalance">Loading...</span><span v-if="!isLoadingBalance">￥{{ store.balance }}</span></div>
                   <el-icon><Refresh /></el-icon>
                  <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
               </a>
-            <span style="width: 100px;margin-left: 10pxtext-align: center">专属网址：</span>
+            <span style="width: 100px;margin-left: 10px;text-align: center">专属网址：</span>
             <span id="vipUrl" class="badge badge-info">{{ store.evip.web }}</span>
         </div>
         <div class="account-box account-contents">
@@ -41,7 +41,7 @@ export default defineComponent({
     Refresh
   },
   setup() {
-    
+
     const isLoadingBalance = ref(false)
     const refreshBalance = () => {
       isLoadingBalance.value = true;
