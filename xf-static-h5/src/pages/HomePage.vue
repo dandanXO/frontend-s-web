@@ -18,7 +18,7 @@
             href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
           <q-btn
               size="sm"
-              href="https://xfapp1.app/"
+              href="https://www.xfapp111.com/"
               target="_blank"
               label="立即下载"
               color="brightbtn"
@@ -865,6 +865,10 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
+.q-page-container{
+  min-height: 100vh;
+}
+
 .secondSwiper {
   height: calc(100vh - 410px);
   padding-bottom: 0px;
