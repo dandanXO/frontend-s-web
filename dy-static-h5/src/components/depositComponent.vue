@@ -193,7 +193,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isNewUser">
+  <q-dialog width="100%" v-model="isNewUser" no-esc-dismiss no-backdrop-dismiss>
     <q-card style="width: 100%; padding: 20px" class="text-black">
       <q-card-section class="q-mb-md">
         <strong>温馨提示</strong>
