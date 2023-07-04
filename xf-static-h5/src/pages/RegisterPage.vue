@@ -323,7 +323,7 @@ export default defineComponent({
     const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
-    const phoneVerificationRef= ref();
+    const phoneVerificationRef = ref();
     const $q = useQuasar();
     const route = useRoute();
 
@@ -400,15 +400,15 @@ export default defineComponent({
                   });
                   store.autoLogin(res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");
-                  // if (store.hasToken()) {
-                  //   const jumpUrl = route.query.redirect
-                  //       ? route.query.redirect
-                  //       : "/";
-                  //   router.go(jumpUrl);
-                  //   if (Platform.is.capacitor && Platform.is.ios) {
-                  //     location.reload();
-                  //   }
-                  // }
+                  if (store.hasToken()) {
+                    const jumpUrl = route.query.redirect
+                        ? route.query.redirect
+                        : "/";
+                    router.go(jumpUrl);
+                    if (Platform.is.capacitor && Platform.is.ios) {
+                      location.reload();
+                    }
+                  }
 
                   sessionStorage.removeItem("REFERRAL_CODE");
                 } else {
@@ -535,6 +535,7 @@ export default defineComponent({
       innerCaptchaRef,
       phoneVerificationImg,
       openPhoneVeriDialog,
+      phoneVerificationRef,
       isValidCnPhone
     };
   }
