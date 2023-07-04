@@ -18,7 +18,7 @@
             href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
           <q-btn
               size="md"
-              href="https://www.xfapp111.com/"
+              href="https://xf9866.app/"
               target="_blank"
               label="立即下载"
               color="brightbtn"
@@ -637,7 +637,7 @@ export default defineComponent({
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
                 if (espObj.code === "TFGaming") {
-                  espObj.title = "东赢电竞";
+                  espObj.title = "兴發电竞";
                 }
                 if (espObj.code === "IA") {
                   espObj.title = "小艾电竞";
