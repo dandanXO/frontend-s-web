@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>PT游戏大厅</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
 .game-container {
 	display: flex;
@@ -86,13 +85,13 @@
 <script type="text/javascript"
 	src="https://login.ld176988.com/jswrapper/integration.js.php?casino=winforfun88"></script>
 <script type="text/javascript">
-	$(function() {
+	window.onload=function() {
 		if ('true' === 'true') {
 			iapiSetCallout('Login', calloutLogin);
 			iapiSetClientPlatform("mobile&deliveryPlatform=HTML5");
 			iapiLogin(getQueryVariable('username'), getQueryVariable('password'), 1, "zh-cn");
 		}
-	});
+	}
 
 	var errorList = {1:'PT系统异常，ERROR CODE：1',2:'密码错误，请联系客服同步密码，ERROR CODE：2',3:'登录异常，ERROR CODE：3',6:'PT系统异常，ERROR CODE：6',
 			7:'API权限不足，ERROR CODE：7',12:'玩家已从另一个IP登录，此次登录被拒绝，ERROR CODE：12',22:'密码错误，账户被锁定，请联系在线客服，ERROR CODE：22',
