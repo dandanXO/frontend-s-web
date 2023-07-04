@@ -212,7 +212,6 @@ export default defineComponent({
       loadPromo().then((res) => {
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
-          console.log(promoState.promoList)
           res.data.forEach(element => {
             if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
