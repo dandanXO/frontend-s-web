@@ -67,6 +67,7 @@ import { getReferralLink } from "@/api/personal/share"
 import { RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine
 } from "vue-remix-icons"
 import moment from 'moment'
+import { userStore } from "@/store";
 import VueQRCodeComponent from 'vue-qrcode-component'
 export default defineComponent({
   name: "ShareView",
@@ -105,13 +106,17 @@ export default defineComponent({
     const getReferral = () => {
       getReferralLink().then((res) => {
         if(res.code === 0) {
-          referralLink.value = `https://xf123.com/refer/${res.data}`;
+          referralLink.value = `https://${evips}/refer/${res.data}`;
           // evip
         }
-      }).catch((err) => {
+      }).catch((err) => { 
         console.log(err)
       })
     };
+    const store = userStore();
+    const evips = store.evip ? JSON.parse(store.evip) : '';
+    console.log(evips)
+
     onMounted(() => {
       getReferral()
     })
@@ -121,6 +126,8 @@ export default defineComponent({
       copyinput,
       copyCode,
       blurCode,
+      store,
+      evips,
       referralLink,
       VueQRCodeComponent
     };

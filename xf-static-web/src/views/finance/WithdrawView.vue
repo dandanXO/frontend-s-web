@@ -267,7 +267,7 @@ export default defineComponent({
         showClose: 'false',
         showCancelButton: 'false',
         confirmButtonText: '确认',
-        type: 'warning',
+
         draggable: false,
         buttonSize: "small",
       }

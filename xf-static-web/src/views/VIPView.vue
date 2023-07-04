@@ -79,7 +79,7 @@
               </span>
               <button
                 class="btn btn-sm"
-                @click="onVIPButtonClick('dy1-vip-monthly')"
+                @click="onVIPButtonClick('xf1-vip-birthday')"
               >
                 领取
               </button>
