@@ -26,7 +26,7 @@
                 <img src="../assets/images/finance/withdraw/transfer_icon.png">
             </div>
             <div class="label">
-            一件转出
+            一键转出
             </div>
             </div>
             <div v-else>转出中...</div>
@@ -159,7 +159,7 @@ const transferOutAll = () => {
                 platform: platform.code,
                 amount: platform.amount
             }
-            api.post("/session/balance/transfer/withdraw", qs.stringify(transferInfo)).then((response) => {
+            api.post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo)).then((response) => {
                 if (response.code === 0) {
                     setTimeout(() => {
                         store.getBalance()
