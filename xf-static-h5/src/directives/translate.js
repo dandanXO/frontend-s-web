@@ -105,6 +105,8 @@ export const translateRecord = (rec) => {
     return "-"; // null
   } else if (rec === "TRANSFER") {
     return "转账"; // TRANSFER
+  } else if (rec === "ADJUST") {
+    return "金额调整"; // TRANSFER
   } else {
     return rec;
   }

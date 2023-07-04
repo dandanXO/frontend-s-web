@@ -27,10 +27,10 @@
                   counter
                   bottom-slots
                   maxlength="255"
-                  v-model="mailDetailList.title" 
-                  class="q-mt-md" 
-                  filled 
-                  placeholder="情输入标题" />
+                  v-model="mailDetailList.title"
+                  class="q-mt-md"
+                  filled
+                  placeholder="请输入标题" />
         </div>
         <div class="q-pa-md bg-dark q-ma-sm">
             <div class="top q-pb-md">内容
@@ -47,8 +47,8 @@
                   :auto-size="{ minRows: 4, maxRows: 16 }"
                   class="mail-txtarea q-mb-md"
                   counter
-                  maxlength="500" 
-                  v-model="mailDetailList.content" 
+                  maxlength="500"
+                  v-model="mailDetailList.content"
                   placeholder="请输入您的信息内容" />
         </div>
         <div class="q-ma-sm">
@@ -59,8 +59,8 @@
               label="发送"
             />
         </div>
-        
-            
+
+
         </q-form>
     </div>
 </template>

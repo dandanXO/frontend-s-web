@@ -80,7 +80,7 @@
     <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : '亲爱的用户' }}</div>
     <div v-if="store.token">
       <q-badge color="orange" text-color="black" :label="store.vip"/>
-<!--      <span class="q-ml-sm">￥{{ store.balance }}</span>-->
+      <!--      <span class="q-ml-sm">￥{{ store.balance }}</span>-->
     </div>
     <router-link
         v-if="!store.token"
@@ -89,9 +89,12 @@
     >
       <span class="log">注册</span>
     </router-link>
-    <router-link v-if="!store.token" to="/login" class="login"><span class="log" style="white-space: nowrap;">请登录</span><span class="user"><q-icon
+    <router-link v-if="!store.token" to="/login" class="login"><span class="log"
+                                                                     style="white-space: nowrap;">请登录</span><span
+        class="user"><q-icon
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
-    <router-link v-else to="/account" class="login"><span class="log" style="white-space: nowrap;">已登录</span><span class="user"><q-icon
+    <router-link v-else to="/account" class="login"><span class="log" style="white-space: nowrap;">已登录</span><span
+        class="user"><q-icon
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
   </div>
   <div class="details-bar">
@@ -247,11 +250,11 @@
           <template
               v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
           >
-<!--            <PlatformBlock-->
-<!--                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
-<!--                dataType="lottery"-->
-<!--                :data="lotter"-->
-<!--            />-->
+            <!--            <PlatformBlock-->
+            <!--                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
+            <!--                dataType="lottery"-->
+            <!--                :data="lotter"-->
+            <!--            />-->
           </template>
           <template v-else>
             <PlatformBlock
@@ -337,6 +340,21 @@
 
       </q-card-section
       >
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isFirstView">
+    <q-card style="width: 90%;max-width:500px;margin:0 auto;" class="bg-white text-black">
+      <q-card-section class="q-mb-md">
+        <img
+            :src="homePopupImg"
+            alt=""
+            class="alert-image"
+        />
+        <div class="close-alert" @click="closeAlert()">
+          <q-icon color="white" size="24px" name="close"></q-icon>
+        </div>
+      </q-card-section>
     </q-card>
   </q-dialog>
 </template>
@@ -540,6 +558,31 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
+    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const homePopupImg = ref("");
+    const checkShowImgTop = () => {
+      const lastTime = localStorage.getItem("indexImgTop");
+      if (lastTime) {
+        const diff = new Date().getTime() - Number(lastTime);
+        if (diff > 1000 * 60 * 60 * 12) {
+          isFirstView.value = true;
+        }
+      } else {
+        api
+            .get("/promo/banner?category=HOMEPOP")
+            .then((res) => {
+              if (res.code === 0) {
+                homePopupImg.value = res.data.length > 0 ? imgURL + res.data[0]["mobileImageUrl"] : '';
+                if (homePopupImg.value) {
+                  isFirstView.value = true;
+                }
+              }
+            })
+            .catch(() => {
+            });
+      }
+    }
+
     function loadData() {
       api
           .get("/promo/banner?category=HOME")
@@ -654,9 +697,9 @@ export default defineComponent({
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
 
-                if(element.code=='AG'){
+                if (element.code == 'AG') {
 
-                }else{
+                } else {
                   slot.value.push(slotObj);
                 }
 
@@ -794,23 +837,14 @@ export default defineComponent({
       );
     };
 
-    const checkShowImgTop = () => {
-      const lastTime = localStorage.getItem("indexImgTop");
-      if (lastTime) {
-        const diff = new Date().getTime() - Number(lastTime);
-        if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
-      } else {
-        isFirstView.value = true;
-      }
-    };
 
     onMounted(() => {
-      checkShowImgTop();
       getPlatList();
       loadData();
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
+      checkShowImgTop();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -823,7 +857,7 @@ export default defineComponent({
       tab: ref("esport"),
       gamesTab: ref(platforms.value[0]),
       splitterModel: ref(27),
-      imgURL: process.env.IMAGE_CDN + "/promo/",
+      imgURL,
       banners,
       store,
       platforms,
@@ -871,13 +905,14 @@ export default defineComponent({
       closeAlert,
       isAppUpdateModal,
       cancelUpdate,
-      openDownloadPage
+      openDownloadPage,
+      homePopupImg
     };
   }
 });
 </script>
 <style scoped lang="scss">
-.q-page-container{
+.q-page-container {
   min-height: 100vh;
 }
 
@@ -1075,7 +1110,7 @@ export default defineComponent({
 
     }
 
-    .q-btn{
+    .q-btn {
 
     }
 
@@ -1318,6 +1353,24 @@ export default defineComponent({
       }
     }
   }
+}
+
+.alert-image {
+  width: 100%;
+  margin: auto;
+}
+
+
+.close-alert {
+  display: block;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 28px;
+  padding: 2px;
+  height: 28px;
+  z-index: 2;
+  background: transparent;
 }
 
 @media (max-width: 480px) {
