@@ -108,24 +108,46 @@
     </q-input>
 
 
-        <q-input
-          ref="telRef"
-          hide-bottom-space
-          v-model="regForm.telephone"
-          label="电话号码"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 7) || '请输入有效的电话号码'
+    <q-input
+        ref="telRef"
+        hide-bottom-space
+        v-model="regForm.telephone"
+        label="电话号码"
+        lazy-rules
+        clearable
+        :rules="[
+            (val) => (val && val.length > 7) || '请输入有效的电话号码',
+            isValidCnPhone
           ]"
-          color="white"
-        >
-          <template v-slot:prepend>
-            <q-icon color="bright" name="smartphone"/>
-          </template>
-          <template v-slot:append>
-            <q-btn label="获取验证码" color="brightbtn" @click="getCode()"/>
-          </template>
-        </q-input>
+        color="white"
+    >
+      <template v-slot:prepend>
+        <q-icon color="bright" name="smartphone"/>
+      </template>
+      <template v-slot:append>
+        <q-btn label="获取验证码" color="brightbtn" @click="openPhoneVeriDialog()"/>
+      </template>
+    </q-input>
+
+    <q-input
+        v-show="regForm.smsCodeId"
+        ref="phoneVerificationRef"
+        hide-bottom-space
+        type="text"
+        v-model="regForm.smsCode"
+        label="手机验证码"
+        lazy-rules
+        color="white"
+        maxlength="6"
+        :rules="[
+        (val) => (val && val.length > 3) || '请输入手机验证码'
+      ]"
+    >
+      <template v-slot:prepend>
+        <q-icon color="bright" name="shield"/>
+      </template>
+    </q-input>
+
 
     <!--    <q-input-->
     <!--      ref="emailRef"-->
@@ -182,6 +204,37 @@
 
     </div>
   </q-form>
+
+  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+    <q-card width="100%">
+      <q-card-section
+          style="padding: 10px 5px"
+          class="q-pa-md bg-brightbtn text-white"
+      >
+        <q-toolbar>
+          <q-toolbar-title>验证码</q-toolbar-title>
+          <q-btn flat v-close-popup round dense icon="close"/>
+        </q-toolbar>
+
+      </q-card-section>
+      <div style="padding: 20px">
+        <q-card-section class="q-mb-md q-pa-md">
+          <q-input v-model="innerCaptchaRef" label="验证码">
+            <template v-slot:append>
+              <img
+                  :src="phoneVerificationImg"
+                  title="点击刷新验证码"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+              />
+            </template>
+          </q-input>
+        </q-card-section>
+        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn"/>
+      </div>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script>
@@ -191,6 +244,7 @@ import {useQuasar, Platform} from "quasar";
 import {useRoute, useRouter} from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {userStore} from "stores/index";
+import qs from "qs";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -206,6 +260,12 @@ export default defineComponent({
       return namePattern.test(regForm.realName) || "请输入中文字符";
     };
 
+    const captchaRef = ref();
+    const innerCodeId = ref("");
+    const innerCaptchaRef = ref("");
+    const showCaptchaDialog = ref(false);
+    const phoneVerificationImg = ref("");
+
     const regForm = reactive({
       loginName: "",
       password: "",
@@ -215,7 +275,9 @@ export default defineComponent({
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
-      affiliateCode: ""
+      affiliateCode: "",
+      smsCodeId: "",
+      smsCode: ""
     });
     const getCode = () => {
       api
@@ -225,13 +287,30 @@ export default defineComponent({
               verificationImg.value =
                   "data:image/png;base64," + response.data.img;
               regForm.codeId = response.data.id;
-              regForm.captchaCode= "";
+              regForm.captchaCode = "";
             }
           })
           .catch((e) => {
             console.log(e)
           });
     };
+
+    const getInnerCode = () => {
+      api
+          .get("/member/verificationCode")
+          .then((response) => {
+            if (response.code === 0) {
+              phoneVerificationImg.value =
+                  "data:image/png;base64," + response.data.img;
+              innerCodeId.value = response.data.id;
+              innerCaptchaRef.value = "";
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+          });
+    }
+
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
       if (refCode) {
@@ -253,12 +332,17 @@ export default defineComponent({
           /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
       return emailPattern.test(regForm.email) || "请输入有效电子邮件";
     };
+
+    const isValidCnPhone = () => {
+      return (regForm.telephone.length === 10 && regForm.telephone.substring(0,1) == '1') || "请输入有效的电话号码";
+    }
+
     const router = useRouter();
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      // telRef.value.validate();
+      telRef.value.validate();
       // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
@@ -294,6 +378,10 @@ export default defineComponent({
               regForm.regDevice = "IOS";
             }
           }
+          if(regForm.regHost.indexOf("http://localhost") > -1){
+            regForm.regHost = "app://";
+          }
+
           api
               .post("/member/fbRegister", qs.stringify(regForm))
               .then((ret) => {
@@ -309,17 +397,16 @@ export default defineComponent({
                   });
                   store.autoLogin(res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");
-                  if (store.hasToken()) {
-                    const jumpUrl = route.query.redirect
-                        ? route.query.redirect
-                        : "/";
-                    router.go(jumpUrl);
-                    if (Platform.is.capacitor && Platform.is.ios) {
-                      location.reload();
-                    }
-                  }
-                  // context.emit("changeTab");
-                  // router.push({ path: "/" });
+                  // if (store.hasToken()) {
+                  //   const jumpUrl = route.query.redirect
+                  //       ? route.query.redirect
+                  //       : "/";
+                  //   router.go(jumpUrl);
+                  //   if (Platform.is.capacitor && Platform.is.ios) {
+                  //     location.reload();
+                  //   }
+                  // }
+
                   sessionStorage.removeItem("REFERRAL_CODE");
                 } else {
                   $q.notify({
@@ -375,8 +462,53 @@ export default defineComponent({
           }
         }
     );
+
+    const openPhoneVeriDialog = () => {
+      showCaptchaDialog.value = true;
+      getInnerCode();
+    }
+
+    const onCaptchaSubmit = () => {
+      if (!regForm.telephone) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "手机号码不能为空",
+          icon: "report_problem"
+        });
+        getInnerCode();
+        return;
+      }
+      api.post(`/otp/sendSms`, qs.stringify({
+        telephone: regForm.telephone,
+        captchaCode: innerCaptchaRef.value,
+        codeId: innerCodeId.value
+      }))
+          .then(res => {
+            let message = res.message || '发送手机验证码成功',
+                color = 'positive'
+
+            if (res.code === 0) {
+              showCaptchaDialog.value = false;
+              regForm.smsCode = "";
+              regForm.smsCodeId = res.data.codeId;
+              console.log(res.data.codeId)
+            } else {
+              color = 'negative';
+              getInnerCode();
+            }
+
+            if (message) {
+              $q.notify({message, color});
+            }
+
+            console.log('onCaptchaSubmit', res)
+          })
+    }
+
+
     return {
-      header: "Register Account",
+      header: "注册账号",
       regForm,
       verificationImg,
       loginNameRef,
@@ -390,8 +522,15 @@ export default defineComponent({
       isPwd: ref(true),
       isCfmPwd: ref(true),
       getCode,
+      getInnerCode,
       pwdStrength,
-      isValidName
+      isValidName,
+      showCaptchaDialog,
+      onCaptchaSubmit,
+      innerCaptchaRef,
+      phoneVerificationImg,
+      openPhoneVeriDialog,
+      isValidCnPhone
     };
   }
 });
@@ -469,6 +608,10 @@ function charType(num) {
     background: var(--q-positive);
     font-weight: 600;
   }
+}
+
+.q-toolbar {
+  background: #33bcd4;
 }
 
 </style>

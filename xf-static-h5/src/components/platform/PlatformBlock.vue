@@ -1,5 +1,6 @@
 <script setup>
-import { defineProps } from "vue";
+import {defineProps} from "vue";
+
 const props = defineProps({
   dataType: {
     type: String,
@@ -29,7 +30,7 @@ const props = defineProps({
 <template>
   <router-link :to="dataType === 'slot' ? `${dataType}?platform=${data.code}` : ``">
     <img
-      :src="
+        :src="
         require(`../../assets/images/index/${dataType}/${dataType}_bg_${data.name.toLowerCase()}.png`)
       "
     />
@@ -50,14 +51,16 @@ const props = defineProps({
   // top: 45%;
   // left: 55%;
   // transform: translate(-50%, -50%);
-    top: 25%;
-    left: 150px;
-    text-align: left;
+  top: 30%;
+  left: 200px;
+  text-align: left;
+
   .game_title {
     font-size: 1.2rem;
     color: #fff;
     font-weight: 500;
   }
+
   .game_subtitle {
     font-size: 0.75rem;
     display: flex;
@@ -65,6 +68,7 @@ const props = defineProps({
     gap: 4px;
     color: #000;
   }
+
   .game_num {
     font-size: 1rem;
   }

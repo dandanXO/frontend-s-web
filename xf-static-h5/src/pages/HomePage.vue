@@ -133,7 +133,7 @@
           @click="setSelectedSwiper(tab)"
           v-for="(tab, i) in tabs"
           :key="i"
-          style="width: calc(100vw / 6)"
+          style="width: calc(100vw / 5)"
       >
         {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
       </swiper-slide>
@@ -484,12 +484,12 @@ export default defineComponent({
         label: "棋牌",
         labelact: "棋牌游戏"
       },
-      {
-        name: "lottery",
-        icon: "lottery",
-        label: "彩票",
-        labelact: "彩票游戏"
-      }
+      // {
+      //   name: "lottery",
+      //   icon: "lottery",
+      //   label: "彩票",
+      //   labelact: "彩票游戏"
+      // }
     ]);
     const esport = ref([]);
     const sport = ref([]);
@@ -878,10 +878,6 @@ export default defineComponent({
 
 :deep(.secondSwiper .swiper-wrapper) {
   .swiper-slide {
-    // height: 120px;
-    // width: 95%;
-    // margin: 0 auto;
-    // overflow: hidden;
     height: calc(45vh / 5);
     width: 95%;
     margin: 0 auto;
@@ -922,7 +918,7 @@ export default defineComponent({
     .swiper-slide {
       background: #23263c;
       padding: 8px 5px 2px;
-      max-width: 60px;
+      max-width: 80px;
       cursor: pointer;
 
       &.tbact {

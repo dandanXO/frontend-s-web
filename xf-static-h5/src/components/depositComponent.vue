@@ -228,7 +228,7 @@ const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
 const checkNewUser = () => {
-  if (store.phone == null) {
+  if (store.phone == null || store.phoneVerified === false ) {
     isNewUser.value = true;
   }
 };

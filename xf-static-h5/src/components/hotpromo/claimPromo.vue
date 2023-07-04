@@ -1,6 +1,6 @@
 <template>
   <div class="common-promo">
-    <img :src="require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)" />
+    <img :src="require(`../../assets/images/promotion/hotpromo/common/icon.png`)" />
     <div class="contents">
       The daily reload bonus will be automatically created to the member's
         main wallet once the deposit is successful.
@@ -8,7 +8,7 @@
         class="claim-btn"
         :loading="loadingClaim"
         @click="$emit('daily-slot')"
-        >Claim Daily Rebate</q-btn
+        >领取</q-btn
       >
     <div v-if="promoId === 19" class="orange">
      *The rebate bonus needs 1 times rollover before withdrawing and will
@@ -41,7 +41,7 @@ export default defineComponent({
     return {
     }
   },
-}) 
+})
 </script>
 <style scoped lang="scss">
 .common-promo {

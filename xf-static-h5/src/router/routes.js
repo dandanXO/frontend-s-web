@@ -465,6 +465,17 @@ const routes = [
         meta: {requiresAuth: true}
     },
     {
+        path: "/account/vip",
+        component: () => import("layouts/MainLayout.vue"),
+        children: [
+            {
+                path: "",
+                name: "vip",
+                component: () => import("pages/games/VIPView.vue")
+            }
+        ]
+    },
+    {
         path: "/account/mail/outbox",
         component: () => import("layouts/MainLayout.vue"),
         children: [
