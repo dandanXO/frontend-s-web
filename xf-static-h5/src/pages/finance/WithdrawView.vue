@@ -37,7 +37,7 @@
                 <q-item-section class="text-grey">
                   {{ isUSDT ? "没有可用的钱包地址" : "没有可用的卡片" }}
                   <router-link class="text-bright" to="/account/withdraw">
-                    {{ isUSDT ? "加钱包地址" : "加卡" }}
+                    {{ isUSDT ? "加虚拟钱包" : "绑定银行卡" }}
                   </router-link>
                 </q-item-section>
               </q-item>

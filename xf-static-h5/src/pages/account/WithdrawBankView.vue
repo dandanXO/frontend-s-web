@@ -150,7 +150,7 @@
                           white-space: nowrap;
                         "
                       >
-                        {{ scope.opt.name }}
+                        {{ scope.opt.name === 'USDTTRC' ? 'USDTTRC20' : scope.opt.name }}
                       </q-item-label>
                     </q-item-section>
                   </template>

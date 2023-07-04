@@ -467,8 +467,11 @@ export default defineComponent({
     );
 
     const openPhoneVeriDialog = () => {
-      showCaptchaDialog.value = true;
-      getInnerCode();
+      telRef.value.validate();
+      if (!telRef.value.hasError) {
+        showCaptchaDialog.value = true;
+        getInnerCode();
+      }
     }
 
     const onCaptchaSubmit = () => {
