@@ -7,10 +7,13 @@
           <div class="station-notice-box">
             <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
-            <RiVolumeUpFill
-              style="fill: #2db9e2; width: 60px"
-              @click="openPopup(announcementList)"
-            />
+            <div>
+              <RiVolumeUpFill
+                style="fill: #2db9e2; width: 20px !important"
+                @click="openPopup(announcementList)"
+              />
+            </div>
+
             <div class="station-notice">
               <Vue3Marquee :clone="true" :duration="50" width="300px;">
                 <span
@@ -2060,6 +2063,10 @@ body {
             display: flex;
             gap: 10px;
           }
+        }
+
+        .station-notice {
+          padding-top: 4px;
         }
 
         .right-contents {
