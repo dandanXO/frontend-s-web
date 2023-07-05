@@ -67,6 +67,13 @@ build-image-dy-download:
 
 #===============================================================================================
 
+build-image-xf-maintenance:
+  extends: .docker-build
+  variables:
+    PROJECT: xf-maintenance
+
+#===============================================================================================
+
 build-ph-static-h5:
   extends: .build-projects
   script:
