@@ -763,7 +763,7 @@ export default defineComponent({
     const unbindBankCard = (card) => {
 
       ElMessageBox.prompt(
-          `请输入解绑${card.bankName}的卡号`,
+          `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === 'CRYPTO' ? '钱包地址' : '卡号'}`,
           '警告',
           {
             confirmButtonText: '确定',
