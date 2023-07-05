@@ -481,6 +481,37 @@
                 </el-col>
               </el-row>
             </el-form-item>
+            <el-form-item label="推荐码" prop="codeAffiliate">
+              <el-space>
+                <el-input
+                  v-if="!hasAffiliate"
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="输入推荐码"
+                />
+                <el-input
+                  v-else
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  readonly
+                  disabled
+                />
+                <el-icon>
+                  <InfoFilled style="font-size: 10px; line-height: 20px" />
+                </el-icon>
+                <div class="link">
+                  若不是合营下会员无需填写输入推荐码
+                </div>
+                <!-- <el-tooltip
+                  content="若不是合营下会员无需填写输入推荐码"
+                  placement="right"
+                >
+                  <el-icon :size="10">
+                    <InfoFilled />
+                  </el-icon>
+                </el-tooltip> -->
+              </el-space>
+            </el-form-item>
           </el-form>
           <el-button color="#3bafda" @click="resetRegForm(registerRef)">
             重新填写

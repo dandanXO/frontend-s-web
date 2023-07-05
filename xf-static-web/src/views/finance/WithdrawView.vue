@@ -147,11 +147,11 @@
           </span>
         </el-form-item>
 
-        <div
+        <!-- <div
           v-if="isUSDT && selectedWithdrawalMethod.tips"
           class="selected-tip"
           v-html="selectedWithdrawalMethod.tips"
-        ></div>
+        ></div> -->
 
         <div class="flex-box flex-justify-center">
           <el-button
@@ -642,5 +642,9 @@ export default defineComponent({
     .ant-form-item-has-error .ant-input-affix-wrapper:hover
   ) {
   background: #15141b;
+}
+
+.selected-tip {
+  margin-left: 150px;
 }
 </style>

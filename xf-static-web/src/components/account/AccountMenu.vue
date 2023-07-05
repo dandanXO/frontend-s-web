@@ -3,9 +3,10 @@
     <div class="account-info-wrapper" style="text-align: center;">
         <img
           class="account-avatar"
-          :src="require(`../../assets/images/vip/badge/v1.png`)"
+          :src="require(`../../assets/images/vip/badge/v${(store.vip.split('VIP')[1])}.png`)"
           alt=""
         />
+        
       <div class="account-name">欢迎您 {{ loginName }}</div>
       <div class="account-vip">{{ vip }}</div>
     </div>
