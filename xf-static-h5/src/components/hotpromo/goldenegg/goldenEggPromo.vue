@@ -4,7 +4,7 @@
       <div class="goldeneggs">
         <img @click="hitEgg" v-for="v in 4" :key="v" src="../../../assets/images/promotion/hotpromo/goldenegg/web.png">
       </div>
-      
+
       <div class="goldeneggs">
         <img @click="hitEgg" v-for="v in 4" :key="v" src="../../../assets/images/promotion/hotpromo/goldenegg/web.png">
       </div>
@@ -18,7 +18,7 @@
           {{ winMessage }}
         </div>
         <div class="amount">
-          {{ winAmount }} <span>元</span>
+          {{ info.amount }} <span>元</span>
         </div>
         <q-btn class="prizeBtn" size="large" @click="claimPrize" label="立即领取" />
         </div>
@@ -35,10 +35,8 @@ const info = reactive({
   leftCount: 0,
   amount: 0
 })
-const totalNo = ref(8);
 const isPrizeWon = ref(false);
 const winMessage = ref('恭喜您! 获得奖金')
-const winAmount = ref('999');
 var qs = require('qs')
 const hitEgg = () => {
   eventapi.post("/goldEgg/submit", qs.stringify({promoCode: "xf-gold-egg"})).then((res) => {
@@ -57,7 +55,7 @@ const hitEgg = () => {
 const claimPrize = () => {
   isPrizeWon.value = false
   store.getBalance();
-  
+
 }
 onMounted(() => {
   eventapi.get('/goldEgg/init', {params: { promoCode: "xf-gold-egg" }}).then((res) => {

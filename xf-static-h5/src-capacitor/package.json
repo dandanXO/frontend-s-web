@@ -10,12 +10,12 @@
     "buildios": "npx cap sync && npx cap update ios && npx cap run ios -l"
   },
   "dependencies": {
-    "@capacitor/android": "^4.8.0",
+    "@capacitor/android": "^4.8.1",
     "@capacitor/app": "^4.0.0",
-    "@capacitor/core": "^4.8.0",
-    "@capacitor/splash-screen": "^4.2.0",
     "@capacitor/browser": "^4.0.1",
     "@capacitor/cli": "^4.0.1",
-    "@capacitor/preferences": "^4.0.1"
+    "@capacitor/core": "^4.8.0",
+    "@capacitor/preferences": "^4.0.1",
+    "@capacitor/splash-screen": "^4.2.0"
   }
 }

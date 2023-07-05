@@ -146,7 +146,7 @@
                   #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    {{ getDepositType(scope.row.subType) }}
+                    {{ getSubType(scope.row.subType) }}
                   </div>
                 </template>
 
@@ -332,7 +332,7 @@
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getTransferType(scope.row.type) }}
+                    {{ getTransferChangeType(scope.row.type) }}
                   </div>
                 </template>
                 <template v-if="tbl.dataIndex === 'status'" #default="scope">
@@ -858,7 +858,7 @@ const tableColumns = {
   transfer: [
     ...commonColumns,
     {
-      title: "转账类型",
+      title: "账变类型",
       dataIndex: "type",
       key: "type",
       slots: {customRender: "type"}
@@ -1366,11 +1366,23 @@ export default defineComponent({
       }
     }
 
+    const getTransferChangeType = (transferChangeType) => {
+      if (!transferChangeType) {
+        return ''
+      }
+       if (transferChangeType === 'WITHDRAW') {
+        return '转出' // Withdraw
+      }  else if (transferChangeType === 'DEPOSIT') {
+        return '转入' // DEPOSIT
+      } else {
+        return transferChangeType
+      }
+    }
+
     const getSubType = (subType) => {
       if (!subType) {
         return ''
-      }
-      if (subType === 'DEPOSIT') {
+      } else if (subType === 'DEPOSIT') {
         return '转进' // 转进
       } else if (subType === 'WITHDRAW') {
         return '转出' // 转出
@@ -1551,7 +1563,8 @@ export default defineComponent({
       openWithdrawConfirm,
       loadingBtn,
       clearItems,
-      formRef
+      formRef,
+      getTransferChangeType
     };
   }
 });

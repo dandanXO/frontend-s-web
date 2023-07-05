@@ -12,3 +12,7 @@ export const updateDepositSetting = (depositSetting) => {
 export const getDepositSetting = (depositSetting) => {
   return https().request("/depositSetting", Method.GET, depositSetting, ContentType.form);
 };
+
+export const insertOrUpdate = (depositSetting) => {
+  return https().request("/depositSetting/insertOrUpdate", Method.POST, { depositSetting: JSON.stringify(depositSetting) }, ContentType.form);
+};

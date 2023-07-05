@@ -387,7 +387,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "ลงทะเบียนสำเร็จ",
+                  message: "注册成功",
                   icon: "report_problem"
                 });
               } else {

@@ -48,13 +48,13 @@ export default defineComponent({
         message: '全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！',
         link: '/games/im-sport.html'
       },
-      {
-        code: 'CR',
-        name: 'CR',
-        image: 'cr',
-        message: '倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。',
-        link: '/games/cr-sport.html'
-      }
+      // {
+      //   code: 'CR',
+      //   name: 'CR',
+      //   image: 'cr',
+      //   message: '倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。',
+      //   link: '/games/cr-sport.html'
+      // }
     ])
     const selectedPlat = ref(platforms.value[0].code);
     const clickPlat = (plat) => {

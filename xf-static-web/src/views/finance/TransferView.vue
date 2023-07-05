@@ -218,22 +218,31 @@ export default defineComponent({
       transferModalVisible.value = true;
       transferInfo.amount = "";
     };
-    const refreshBalance = (plat) => {
+    const refreshBalance = async(plat) => {
+      const plaform = platforms.find(p => p.code === plat);
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+      if (plaform) {
+        plaform.amount = '加载中...'
+        await delay(10);
+      }
       setTimeout(()=> {
         if (plat === MAIN){
           store.getBalance();
         } else {
             loadBalance(plat).then((response) => {
-              const plaform = platforms.find(p => p.code === plat);
+              console.log(plat)
               if (plaform) {
                 plaform.amount = response.data;
               }
             }).catch(e => {
+              if (plaform) {
+                plaform.amount = 0;
+              }
               console.log(e)
             });
         }
       }
-      ,1000);
+      , 1000);
     };
     const loadPlatform = () => {
       getPlatforms().then((response) => {

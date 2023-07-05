@@ -90,13 +90,14 @@
         ></q-input>
         <template v-if="isEditPhone">
           <div class="q-ml-md">
-            <q-btn
-              size="sm"
-              color="dyblue"
-              label="绑定"
-              href="/account/verifyTelephone"
-              style="white-space: nowrap"
-            />
+            <router-link to="/account/verifyTelephone">
+              <q-btn
+                size="sm"
+                color="dyblue"
+                label="绑定"
+                style="white-space: nowrap"
+              />
+            </router-link>
           </div>
         </template>
       </div>
@@ -118,13 +119,14 @@
         />
         <template v-if="isEditEmail">
           <div class="q-ml-md">
-            <q-btn
-              size="sm"
-              color="dyblue"
-              label="绑定"
-              href="/account/verifyEmail"
-              style="white-space: nowrap"
-            />
+            <router-link to="/account/verifyEmail">
+              <q-btn
+                size="sm"
+                color="dyblue"
+                label="绑定"
+                style="white-space: nowrap"
+              />
+            </router-link>
           </div>
         </template>
       </div>
@@ -166,13 +168,18 @@
       style="width: 100%; padding: 20px"
       class="bg-white text-black text-center"
     >
-      <q-card-section class="q-mb-md">
+      <q-card-section
+        class="q-mb-md"
+        style="flex-direction: column; display: flex"
+      >
         <strong>系统提示</strong>
         <br />
         <br />
         请登录后再操作
       </q-card-section>
-      <q-btn href="/login?redirect=/promo" label="确认" color="dyblue" />
+      <router-link to="/login?redirect=/promo">
+        <q-btn label="确认" color="dyblue" />
+      </router-link>
     </q-card>
   </q-dialog>
 
@@ -239,7 +246,7 @@ export default defineComponent({
       formDetail.emailVerified = personalState.memberInfo.emailVerified;
 
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
-      isEditBirthday.value = (formDetail.birthday == '') ? true : false;
+      isEditBirthday.value = (formDetail.birthday == "") ? true : false;
       isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
     };
 

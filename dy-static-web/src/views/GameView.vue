@@ -1,8 +1,11 @@
 <template>
-  <div class="casino-container" :style="'background-image: url(https://8fzka.latinovelas.com/resources/dy/style/img/slots/bg.jpg)'">
-   <div class="recreation-money" id="numBox">LOADING...</div>
+  <div
+    class="casino-container"
+    :style="'background-image: url(https://8fzka.latinovelas.com/resources/dy/style/img/slots/bg.jpg)'"
+  >
+    <div class="recreation-money" id="numBox">LOADING...</div>
     <!-- <router-link to="/promotion"> -->
-      <!-- <div
+    <!-- <div
         v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
         class="banner-container"
       >
@@ -24,69 +27,84 @@
     <div class="margin-center game-container">
       <div class="all-game-container">
         <div class="left">
-
           <div class="plat-type-container">
             <div class="plat-list">
-              <div
-                class="plat-item"
-                v-for="p in platforms"
-                :class="{ active: p === activePlat }"
-                :key="p"
-                @click="switchPlat(p)"
-              >
-                <img :src="require(`../assets/game/${(p.code).toLowerCase()}.png`)" />
-                {{ p.name + ' 电子' }}
-              </div>
+              <template v-for="p in platforms" :key="p">
+                <template v-if="p.code !== 'AG'">
+                  <div
+                    class="plat-item"
+                    :class="{ active: p === activePlat }"
+                    @click="switchPlat(p)"
+                  >
+                    <img
+                      :src="
+                        require(`../assets/game/${p.code.toLowerCase()}.png`)
+                      "
+                    />
+                    {{ p.name + " 电子" }}
+                  </div>
+                </template>
+              </template>
             </div>
           </div>
         </div>
         <div class="right">
-        <div
-          class="grid-items flex-box flex-align-center search-container web-only-box"
-        >
-          <el-input
-            class="search-input"
-            v-model="gamePage.searchKey"
-            @keypress.enter="searchList()"
-            placeholder="输入查找游戏名"
-          >
-            <template #suffix>
-              <el-icon :width="15" @click="searchList()">
-              <Search />
-              </el-icon>
-            </template>
-          </el-input>
-        </div>
-        <div class="game-list-wrapper">
           <div
-            class="game-slot animate__animated animate__fadeInRight"
-            v-for="game in gamePage.gameList"
-            :key="game.id"
+            class="grid-items flex-box flex-align-center search-container web-only-box"
           >
-            <a @click="openGame(game.name, game.code)">
-              <div class="slot-img">
-                <el-image :src="game.icon" lazy>
-                  <template #placeholder>
-                    <img :src="game.default" />
-                  </template>
-                  <template #error>
-                    <div class="image-slot">
-                      <img :src="game.default" />
-                    </div>
-                  </template>
-              </el-image>
-                <!-- <img :src="game.icon" v-image="game.icon" /> -->
-              </div>
-              <div class="slot-name">
-                <img src="../assets/images/games/play-icon.png" />
-                {{ game.name }}
-              </div>
-            </a>
+            <el-input
+              class="search-input"
+              v-model="gamePage.searchKey"
+              @keypress.enter="searchList()"
+              placeholder="输入查找游戏名"
+            >
+              <template #suffix>
+                <el-icon :width="15" @click="searchList()">
+                  <Search />
+                </el-icon>
+              </template>
+            </el-input>
           </div>
-        </div>
-        <div class="pagination-wrapper">
-          <el-pagination background layout="prev, pager, next" :total="gamePage.total"  @current-change="changePage(gamePage.currentPage, gamePage.pageSize)" v-model:current-page="gamePage.currentPage" v-model:pageSize="gamePage.pageSize" default-page-size="30"/>
-          <!-- <el-pagination
+          <div class="game-list-wrapper">
+            <div
+              class="game-slot animate__animated animate__fadeInRight"
+              v-for="game in gamePage.gameList"
+              :key="game.id"
+            >
+              <a @click="openGame(game.name, game.code)">
+                <div class="slot-img">
+                  <el-image :src="game.icon" lazy>
+                    <template #placeholder>
+                      <img :src="game.default" />
+                    </template>
+                    <template #error>
+                      <div class="image-slot">
+                        <img :src="game.default" />
+                      </div>
+                    </template>
+                  </el-image>
+                  <!-- <img :src="game.icon" v-image="game.icon" /> -->
+                </div>
+                <div class="slot-name">
+                  <img src="../assets/images/games/play-icon.png" />
+                  {{ game.name }}
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="pagination-wrapper">
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="gamePage.total"
+              @current-change="
+                changePage(gamePage.currentPage, gamePage.pageSize)
+              "
+              v-model:current-page="gamePage.currentPage"
+              v-model:pageSize="gamePage.pageSize"
+              default-page-size="30"
+            />
+            <!-- <el-pagination
 
             v-model:current="gamePage.currentPage"
             v-model:pageSize="gamePage.pageSize"
@@ -95,8 +113,8 @@
             @showSizeChange="onShowSizeChange"
             :showSizeChanger="true"
           /> -->
+          </div>
         </div>
-      </div>
       </div>
     </div>
     <GameModal ref="slotsGame"></GameModal>
@@ -300,19 +318,19 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .el-image {
-    min-height: 120px;
-    display: block;
-    width: 100%;
-    cursor: pointer;
+  min-height: 120px;
+  display: block;
+  width: 100%;
+  cursor: pointer;
 }
 
 @keyframes game-circle-ani {
-    0% {
-        transform: scale(0)
-    }
-    100% {
-        transform: scale(1)
-    }
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 @-webkit-keyframes scale {
   100% {
@@ -347,8 +365,8 @@ export default defineComponent({
 .casino-container {
   color: #ffffff;
   // background: url("../assets/images/common/bg.jpg");
-      background-repeat: no-repeat;
-    background-position: center 0px;
+  background-repeat: no-repeat;
+  background-position: center 0px;
   .recreation-money {
     padding-top: 240px;
     text-align: center;
@@ -582,25 +600,25 @@ export default defineComponent({
         min-height: 1138px;
         min-width: 315px;
         .plat-type-container {
-    padding: 60px 20px;
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px solid rgb(255 255 255 / 15%);
-        align-items: flex-end;
-        /* width */
-        ::-webkit-scrollbar {
-          width: 0px;
-          height: 0px;
-          // display: none;
-        }
-        .plat-list {
-          font-size: 18px;
+          padding: 60px 20px;
           display: flex;
-          gap: 20px;
-        flex-direction: column;
+          justify-content: space-between;
+          border-bottom: 1px solid rgb(255 255 255 / 15%);
+          align-items: flex-end;
+          /* width */
+          ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+            // display: none;
+          }
+          .plat-list {
+            font-size: 18px;
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
 
-              width: 100%;
-          .plat-item {
+            width: 100%;
+            .plat-item {
               height: 45px;
               line-height: 45px;
               text-align: center;
@@ -614,40 +632,39 @@ export default defineComponent({
               justify-content: center;
               align-items: center;
               gap: 15px;
-            // padding: 10px;
-            // cursor: pointer;
-            // // border-bottom: 4px solid transparent;
-            // border-radius: 40px;
-            // background: #003653;
-            // z-index: 2;
-            // box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
-            // // min-width: 100px;
-            // text-align: center;
-            // img {
-            //   max-height: 23px;
-            //   max-width: 100%;
-            //   filter: grayscale(1);
-            // }
-            &.active,
-            &:hover {
-              background: url(../assets/game/menu.png)no-repeat center center;
-              background-size: contain;
-              color: #fff;
-
-            }
-            img {
-              max-height: 40px;
+              // padding: 10px;
+              // cursor: pointer;
+              // // border-bottom: 4px solid transparent;
+              // border-radius: 40px;
+              // background: #003653;
+              // z-index: 2;
+              // box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
+              // // min-width: 100px;
+              // text-align: center;
+              // img {
+              //   max-height: 23px;
+              //   max-width: 100%;
+              //   filter: grayscale(1);
+              // }
+              &.active,
+              &:hover {
+                background: url(../assets/game/menu.png) no-repeat center center;
+                background-size: contain;
+                color: #fff;
+              }
+              img {
+                max-height: 40px;
+              }
             }
           }
         }
-      }
       }
 
       .right {
         background: url(../assets/game/right.jpg);
         width: 100%;
         flex: 8;
-    padding: 20px 50px;
+        padding: 20px 50px;
       }
       .search-container {
         // margin: 30px 0px 30px auto;
@@ -658,8 +675,8 @@ export default defineComponent({
         .search-input {
           // margin-bottom: 10px;
           padding: 20px 20px 20px 30px;
-        margin: 0 0 0 auto;
-        max-width: 460px;
+          margin: 0 0 0 auto;
+          max-width: 460px;
         }
       }
 
@@ -699,7 +716,7 @@ export default defineComponent({
               background-position: center center;
               background-size: 50%;
               opacity: 0;
-              transition: all .3s ease-out;
+              transition: all 0.3s ease-out;
               left: 0;
               z-index: 1;
             }
@@ -1028,6 +1045,4 @@ export default defineComponent({
   margin: 0 auto;
   display: block;
 }
-
-
 </style>

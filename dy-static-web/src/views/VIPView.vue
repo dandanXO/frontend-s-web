@@ -19,7 +19,7 @@
                   ? `btn_vip btn_vip_vip${vip.level} active`
                   : `btn_vip btn_vip_vip${vip.level}`
               "
-              @click="!store.token ? (selectedVIP = vip.level - 1) : ''"
+              @click="selectedVIP = vip.level - 1"
             >
               <!-- <img :class="{ active: vip.level === store.vip , active: selectedVIP === vip.level }" :src="require('../assets/vip/vip_detail_' + (vip.level) + '.png')"> -->
               <!-- <p> VIP {{vip.level}} </p> -->
@@ -59,15 +59,17 @@
                     {{ vip.monthlyBonus ? vip.monthlyBonus + "元" : "无" }}
                   </div>
                   <div v-if="vip.monthlyBonus">
-                    <button
-                      class="vip-btn-get vip-receive-btn"
-                      data-bonu-type="month"
-                      data-vip-lev="10"
-                      @click="onVIPButtonClick('dy1-vip-monthly')"
-                      :disabled="btnIsDisabled"
-                    >
-                      领取
-                    </button>
+                    <template v-if="!store.token || vip.level == store.vip.split('VIP')[1]">
+                      <button
+                        class="vip-btn-get vip-receive-btn"
+                        data-bonu-type="month"
+                        data-vip-lev="10"
+                        @click="onVIPButtonClick('dy1-vip-monthly')"
+                        :disabled="btnIsDisabled"
+                      >
+                        领取
+                      </button>
+                    </template>
                   </div>
                 </div>
                 <div class="vip-detail-promo-box">
@@ -77,15 +79,17 @@
                   </div>
 
                   <div v-if="vip.birthdayBonus">
-                    <button
-                      class="vip-btn-get vip-receive-btn"
-                      data-bonu-type="birth"
-                      data-vip-lev="10"
-                      @click="onVIPButtonClick('dy1-vip-birthday')"
-                      :disabled="btnIsDisabled"
-                    >
-                      领取
-                    </button>
+                    <template v-if="!store.token || vip.level == store.vip.split('VIP')[1]">
+                      <button
+                        class="vip-btn-get vip-receive-btn"
+                        data-bonu-type="birth"
+                        data-vip-lev="10"
+                        @click="onVIPButtonClick('dy1-vip-birthday')"
+                        :disabled="btnIsDisabled"
+                      >
+                        领取
+                      </button>
+                    </template>
                   </div>
                 </div>
                 <div class="vip-detail-promo-box">

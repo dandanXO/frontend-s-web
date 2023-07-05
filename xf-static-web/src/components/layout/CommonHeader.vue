@@ -7,7 +7,13 @@
           <div class="station-notice-box">
             <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
-            <RiVolumeUpFill style="fill: #2db9e2; width: 60px" />
+            <div>
+              <RiVolumeUpFill
+                style="fill: #2db9e2; width: 20px !important"
+                @click="openPopup(announcementList)"
+              />
+            </div>
+
             <div class="station-notice">
               <Vue3Marquee :clone="true" :duration="50" width="300px;">
                 <span
@@ -481,6 +487,35 @@
                 </el-col>
               </el-row>
             </el-form-item>
+            <el-form-item label="推荐码" prop="codeAffiliate">
+              <el-space>
+                <el-input
+                  v-if="!hasAffiliate"
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="输入推荐码"
+                />
+                <el-input
+                  v-else
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  readonly
+                  disabled
+                />
+                <el-icon>
+                  <InfoFilled style="font-size: 10px; line-height: 20px" />
+                </el-icon>
+                <div class="link">若不是合营下会员无需填写输入推荐码</div>
+                <!-- <el-tooltip
+                  content="若不是合营下会员无需填写输入推荐码"
+                  placement="right"
+                >
+                  <el-icon :size="10">
+                    <InfoFilled />
+                  </el-icon>
+                </el-tooltip> -->
+              </el-space>
+            </el-form-item>
           </el-form>
           <el-button color="#3bafda" @click="resetRegForm(registerRef)">
             重新填写
@@ -944,8 +979,9 @@ export default defineComponent({
     const {height} = useElementSize(el);
     const isSendOtp = ref(false);
     const todayDate = () => {
-      const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
-      return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
+      // const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
+      // return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
+      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd') + ' (中国标准时间)';
     }
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
@@ -2029,6 +2065,10 @@ body {
           }
         }
 
+        .station-notice {
+          padding-top: 4px;
+        }
+
         .right-contents {
           flex: 1;
           display: flex;
@@ -2317,6 +2357,10 @@ body {
     }
   }
 
+  &.fish {
+    max-width: 800px;
+  }
+
   &.games {
     .platform-box {
       flex-direction: column;
@@ -2436,6 +2480,9 @@ body {
   &.fish {
     .platform-box {
       padding: 25px 80px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
     }
   }
 }

@@ -1,17 +1,21 @@
 <template>
   <div class="table-record">
     <RecordComponent
+      recordType="promo"
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"
+      @loadnewdata="loadNewData"
+      :isEnded="isEnded"
     />
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onMounted, ref} from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
-import {api} from "boot/axios";
+import { api } from "boot/axios";
 import moment from "moment/moment";
+import { cached, TIME_EXPIRED } from "boot/cache";
 
 export default defineComponent({
   name: "PromoRecordView",
@@ -22,150 +26,80 @@ export default defineComponent({
 
     const visible = ref(true);
     const tableData = ref([]);
-    const loadDepositTable = () => {
 
-      visible.value = true;
-      let paramData = {
-        "startDate": moment().add(-7, 'days').format("YYYY-MM-DD"),
-        "endDate": moment().format("YYYY-MM-DD")
+    var apiUrl = "/session/member/privilege";
+
+    const isEnded = ref(false);
+    var endDate = moment().format("YYYY-MM-DD");
+    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+
+
+    const loadNewData = () => {
+      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
+      console.log(startDate);
+
+      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+      console.log(endDate);
+
+      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
+        console.log("mor than 3 months");
+        isEnded.value = true;
+        return;
       }
+      loadDepositTable(false);
+    };
 
-      api.get("/session/member/privilege", {
+    const loadDepositTable = (isNew = true) => {
+      if (isNew) {
+        visible.value = true;
+      }
+      console.log(startDate);
+      console.log(endDate);
+
+      let paramData = {
+        "startDate": startDate,
+        "endDate": endDate
+      };
+      var apiKey = apiUrl + "_" + startDate + "_" + endDate;
+      console.log(apiKey);
+
+      cached.get(apiKey, () => api.get(apiUrl, {
           params: paramData
-        },
+        }),
+        {expired_value: 60}
       ).then((res) => {
         console.log(res);
-        tableData.value= res.data.records;
 
-      }).finally(()=>{
-        visible.value = false;
-      })
+        if (isNew) {
+          visible.value = false;
+        }
 
-
-      //HARDCODE.
-      // tableData.value = [
-      //   {
-      //     id: "1",
-      //     code: "金额",
-      //     depositAmount: "200",
-      //     depositType: "KDPay",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "2",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "3",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "WECHAT_CODE2",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "4",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "5",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "6",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "金额",
-      //     depositAmount: "200",
-      //     depositType: "KDPay",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "last",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      // ];
-
+        tableData.value.push(...res.records);
+        // console.log("TableData");
+        // console.log(tableData.value);
+      }).catch((err) => {
+        if (isNew) {
+          visible.value = false;
+        }
+      });
     };
+
     const tableHeaders = [
       {
         key: "serialNumber",
-        label: "编码",
+        label: "编码"
       },
       {
         key: "privilegeName",
-        label: "优惠名",
+        label: "优惠名"
       },
       {
         key: "amount",
-        label: "金额",
+        label: "金额"
       },
       {
         key: "recordTime",
-        label: "记录时间",
+        label: "记录时间"
       }
     ];
     onMounted(() => {
@@ -175,8 +109,10 @@ export default defineComponent({
     return {
       tableData,
       visible,
-      tableHeaders
-    }
+      tableHeaders,
+      loadNewData,
+      isEnded
+    };
   }
 });
 </script>

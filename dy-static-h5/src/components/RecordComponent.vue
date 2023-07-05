@@ -22,6 +22,9 @@
                 <div v-else-if="obj === 'betStatus'">
                   {{ checkRecord(det[obj]) }}
                 </div>
+                <div v-else-if="obj === 'paymentType'">
+                  {{ checkRecord(det[obj]) }}
+                </div>
                 <div v-else-if="obj === 'gameType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
@@ -103,7 +106,12 @@
             </div>
           </div>
           <div v-else class="q-pa-md" style="text-align: center">
-            没有更多数据了
+            <div class="row justify-center q-my-md" v-if="!isEnded">
+              <q-spinner-dots color="primary" size="40px" />
+            </div>
+            <span style="padding: 4px 0px; line-height: 36px" v-if="isEnded">
+              没有更多数据了
+            </span>
           </div>
         </template>
       </q-infinite-scroll>
@@ -111,7 +119,7 @@
   </div>
 
   <q-input
-    style="width: 100%; opacity:0;"
+    style="width: 100%; opacity: 0"
     filled
     color="white"
     ref="copyinput"
@@ -175,15 +183,6 @@
           />
         </q-form>
       </q-card-section>
-
-      <!--      <q-card-actions align="right">-->
-      <!--        <q-btn-->
-      <!--          label="关闭"-->
-      <!--          flat-->
-      <!--          color="dark"-->
-      <!--          @click="reminderDialog = false"-->
-      <!--        />-->
-      <!--      </q-card-actions>-->
     </q-card>
   </q-dialog>
 
@@ -235,8 +234,15 @@ export default defineComponent({
       default: function () {
         return [];
       }
+    },
+    isEnded: {
+      type: Boolean,
+      default: function () {
+        return false;
+      }
     }
   },
+  emits: ["loadnewdata"],
   setup(props, { emit }) {
     const truncatedList = ref([]);
     const comList = ref({});
@@ -244,17 +250,25 @@ export default defineComponent({
     const qs = require("qs");
     const isConfirmWithdraw = ref(false);
     const passDet = ref(null);
+
     const onLoad = (index, done) => {
       comList.value = props.list;
+      // console.log("onLoad");
+      // console.log(comList.value);
       setTimeout(() => {
-        if (comList.value.length) {
-          var slicedArray = comList.value.splice(0, 3);
-          slicedArray.forEach((element) => {
-            truncatedList.value.push(element);
-          });
-          done();
+        if (!props.isEnded) {
+          if (comList.value.length) {
+            var slicedArray = comList.value.splice(0, 3);
+            slicedArray.forEach((element) => {
+              truncatedList.value.push(element);
+            });
+            done();
+          } else if (comList.value.length === 0) {
+            emit("loadnewdata");
+            done();
+          }
         }
-      }, 200);
+      }, 100);
     };
 
     const openWithdrawConfirmDialog = (det) => {
@@ -390,7 +404,7 @@ export default defineComponent({
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
       },
       checkRecord(status) {
-        return translateRecord(status);
+        return translateRecord(status, props.recordType);
       },
       onLoad,
       truncatedList,

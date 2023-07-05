@@ -128,7 +128,9 @@
         <br/>
         请登录后再操作
       </q-card-section>
-      <q-btn href="/login?redirect=/promo" label="确认" color="dyblue"/>
+      <router-link to="/login?redirect=/promo">
+        <q-btn label="确认" color="brightbtn"/>
+      </router-link>
     </q-card>
   </q-dialog>
 </template>
@@ -586,12 +588,12 @@ export default defineComponent({
         }
       }
 
-      h1,h2,h3,h4{
+      h1, h2, h3, h4 {
         margin-top: 15px;
         margin-bottom: 16px;
       }
 
-      h3{
+      h3 {
         font-size: 22px;
       }
 

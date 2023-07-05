@@ -1,12 +1,18 @@
-export const translateRecord = (rec) => {
+export const translateRecord = (rec, type = '') => {
   if (rec === "WITHDRAW_FAIL") {
     return "提款失败"; // Fail Withdrawal
   } else if (rec === "WITHDRAW") {
+    if (type === 'transfer') {
+      return "转出";
+    }
     return "提款"; // Withdraw
+  } else if (rec === "DEPOSIT") {
+    if (type === 'transfer') {
+      return "转账";
+    }
+    return "存款"; // 存款
   } else if (rec === "PROMO") {
     return "优惠"; // 优惠
-  } else if (rec === "DEPOSIT") {
-    return "存款"; // 存款
   } else if (rec === "APPLY") {
     return "申请中"; //Applying
   } else if (rec === "FAIL") {
@@ -74,8 +80,14 @@ export const translateRecord = (rec) => {
   } else if (rec === "WAITING_CALLBACK") {
     return "自动支付中"; // Waiting Callback
   } else if (rec === 1) {
+    if(type=='reminder'){
+      return "进行中";
+    }
     return "存款"; // 存款
   } else if (rec === 2) {
+    if(type=='reminder'){
+      return "完成";
+    }
     return "提款"; // 提款
   } else if (rec === "BET") {
     return "投注"; // BET
@@ -105,9 +117,9 @@ export const translateRecord = (rec) => {
     return "-"; // null
   } else if (rec === "TRANSFER") {
     return "转账"; // TRANSFER
-  }else if (rec === "ADJUST") {
+  } else if (rec === "ADJUST") {
     return "金额调整"; // TRANSFER
-  }  else {
+  } else {
     return rec;
   }
 };
