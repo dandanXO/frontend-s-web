@@ -174,7 +174,7 @@ const compoundCard = () => {
       pageInit()
       ElMessage.success({
         type: "success",
-        message: "success"
+        message: "成功"
       })
       isPageLoading.value = false
     }
@@ -279,7 +279,7 @@ const submitRegisterForm = async (elForm) => {
           if(res.code === 0) {
             ElMessage.error({
               type: "success",
-              message: "success"
+              message: "成功"
             })
           isSubmitting.value = false;
           }
