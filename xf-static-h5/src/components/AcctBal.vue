@@ -8,7 +8,7 @@
           <div class="wallet">
             <div class="label">中心钱包</div>
             <div class="balamt text-bright" @click="loadBalance"><span v-if="!isLoadingBalance"> {{ store.currency.value }}{{ store.balance.toFixed(2) }}</span><span v-if="isLoadingBalance">加载中...</span></div>
-          
+
           </div>
         </div>
         <div class="refreshItems">
@@ -47,7 +47,7 @@
             <div class="flex-box flex-justify-space transfer-balance-box">
               <div class="platform-details">
                 <div class="name-wrapper">
-                  <div class="plat-name">{{ p.code }}</div>
+                  <div class="plat-name">{{ p.name }}</div>
                 </div>
                 <div class="balance-wrapper">
                     <span class="text-bold" v-if="p.isLoading">
@@ -127,7 +127,7 @@ const showPlatform = () => {
     transferBox.value = (Math.floor(props.platforms.length / 4)) * 80
     if ((props.platforms.length % 4) > 0) {
         transferBox.value += 80
-    } 
+    }
     console.log(transferBox.value)
 }
 
@@ -171,10 +171,10 @@ const transferOutAll = () => {
             })
         } else {
             setTimeout(() => {
-                platform.isTransferring = false; 
-                    isTransferring.value = false; 
+                platform.isTransferring = false;
+                    isTransferring.value = false;
             }, 2000);
-            
+
         }
     })
 }
@@ -202,7 +202,7 @@ const refreshBalance = (plat) => {
                     platform.isLoading = false;
                 }
                 );
-                
+
             }
         });
     } else {
@@ -230,7 +230,7 @@ const refreshBalance = (plat) => {
 onMounted(() => {
     if (isRefreshingBalance.value) {
         setTimer()
-    } 
+    }
 })
 </script>
 <style scoped lang="scss">
@@ -252,7 +252,7 @@ onMounted(() => {
       gap: 15px;
       .icon {
         width: 25px;
-        img { 
+        img {
             width: 100%;
         }
       }
@@ -262,7 +262,7 @@ onMounted(() => {
             font-weight: bold;
         }
       }
-      
+
     }
     .refreshItems {
       flex: 1;
@@ -277,7 +277,7 @@ onMounted(() => {
       gap: 15px;
       .icon {
         width: 23px;
-        img { 
+        img {
             width: 100%;
         }
       }
@@ -290,7 +290,7 @@ onMounted(() => {
       gap: 15px;
       .icon {
         width: 23px;
-        img { 
+        img {
             width: 100%;
         }
       }
@@ -323,7 +323,7 @@ onMounted(() => {
                 word-break: break-all;
                 color: #bacef1;
                 .plat-name {
-                    
+
     overflow: hidden;
     height: 25px;
 
