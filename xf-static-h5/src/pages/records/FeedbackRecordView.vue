@@ -15,6 +15,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
+import {cached} from "boot/cache";
 
 export default defineComponent({
   components: {
@@ -58,14 +59,24 @@ export default defineComponent({
         "endDate": endDate
       };
 
-      api.get(apiUrl, {
+      var apiKey = apiUrl + "_" + startDate + "_" + endDate;
+      console.log(apiKey);
+
+      cached.get(apiKey, () => api.get(apiUrl, {
             params: paramData
-          }
+          }),
+          { expired_value: 60 }
       ).then((res) => {
-        tableData.value.push(...res.data.records);
+        console.log(res);
+
+        if (isNew) {
+          visible.value = false;
+        }
+
+        tableData.value.push(...res.records);
         // console.log("TableData");
         // console.log(tableData.value);
-      }).finally(() => {
+      }).catch((err) => {
         if (isNew) {
           visible.value = false;
         }
