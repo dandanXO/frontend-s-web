@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="Jolly88" src="~assets/logo.png" style="width: 200px" />
+    <img alt="兴发" src="~assets/logo.png" style="width: 200px" />
   </q-page>
 </template>
 

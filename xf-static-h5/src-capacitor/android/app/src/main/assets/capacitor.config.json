@@ -1,7 +1,0 @@
-{
-	"appId": "com.code9.xingfa",
-	"appName": "兴發",
-	"bundledWebRuntime": false,
-	"npmClient": "npm",
-	"webDir": "www"
-}
