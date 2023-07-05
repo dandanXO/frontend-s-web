@@ -230,6 +230,7 @@
               v-model="bankCardInfo.telephone"
               label="电话号码"
               lazy-rules
+              readonly
               clearable
               :rules="[
             (val) => (val && val.length > 7) || '请输入有效的电话号码',
@@ -511,7 +512,7 @@ export default defineComponent({
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
-          bankCardInfo.telephone = "";
+          bankCardInfo.telephone = store.phone;
           bankCardInfo.smsCodeId = "";
           bankCardInfo.smsCode = "";
 
@@ -551,12 +552,12 @@ export default defineComponent({
       // cardAddressRef.value.validate();
       cardNumberRef.value.validate();
       phoneVerificationRef.value.validate();
-      telRef.value.validate();
+      // telRef.value.validate();
 
       if (bankCardRef.value.hasError || cardAccountRef.value.hasError
           // || cardAddressRef.value.hasError
           || phoneVerificationRef.value.hasError
-          || telRef.value.hasError
+          // || telRef.value.hasError
           || cardNumberRef.value.hasError) {
       } else {
         api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((response) => {
@@ -718,11 +719,11 @@ export default defineComponent({
     }
 
     const openPhoneVeriDialog = () => {
-      telRef.value.validate();
-      if (!telRef.value.hasError) {
+      // telRef.value.validate();
+      // if (!telRef.value.hasError) {
         showCaptchaDialog.value = true;
         getInnerCode();
-      }
+      // }
 
     }
 
@@ -753,8 +754,7 @@ export default defineComponent({
         getInnerCode();
         return;
       }
-      api.post(`/otp/sendSms`, qs.stringify({
-        telephone: bankCardInfo.telephone,
+      api.post(`/session/sendSms`, qs.stringify({
         captchaCode: innerCaptchaRef.value,
         codeId: innerCodeId.value
       }))
