@@ -47,11 +47,11 @@
               label-position="top"
             >
               <el-form-item :label="t('fields.minDeposit')" prop="depositMin">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:insertOrUpdate'])" v-model="form.web.depositMin" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:update'])" v-model="form.web.depositMin" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.web.depositMin" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
               <el-form-item :label="t('fields.maxDeposit')" prop="depositMax">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:insertOrUpdate'])" v-model="form.web.depositMax" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:update'])" v-model="form.web.depositMax" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.web.depositMax" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
             </el-form>
@@ -72,11 +72,11 @@
               label-position="top"
             >
               <el-form-item :label="t('fields.minDeposit')" prop="depositMin">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:insertOrUpdate'])" v-model="form.mobile.depositMin" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:update'])" v-model="form.mobile.depositMin" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.mobile.depositMin" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
               <el-form-item :label="t('fields.maxDeposit')" prop="depositMax">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:insertOrUpdate'])" v-model="form.mobile.depositMax" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:update'])" v-model="form.mobile.depositMax" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.mobile.depositMax" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
             </el-form>
@@ -120,7 +120,7 @@
         </div>
       </el-col>
       <el-col :span="1" style="margin-left: 10px;">
-        <el-button v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:insertOrUpdate'])" type="primary" @click="submit">{{ t('fields.update') }}</el-button>
+        <el-button v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:set:deposit:update'])" type="primary" @click="submit">{{ t('fields.update') }}</el-button>
         <el-button v-else type="primary" @click="submit" disabled>{{ t('fields.update') }}</el-button>
       </el-col>
     </el-row>
