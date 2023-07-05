@@ -341,9 +341,15 @@
                   </div>
                 </template>
 
+                
+                <template v-if="tbl.dataIndex === 'platform'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getPlatform(scope.row.platform) }}
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getTransferType(scope.row.type) }}
+                    {{ getTransferChangeType(scope.row.type) }}
                   </div>
                 </template>
                 <template v-if="tbl.dataIndex === 'status'" #default="scope">
@@ -1377,6 +1383,44 @@ export default defineComponent({
       }
     }
 
+    const getTransferChangeType = (transferChangeType) => {
+      if (!transferChangeType) {
+        return ''
+      }
+       if (transferChangeType === 'WITHDRAW') {
+        return '转出' // Withdraw
+      }  else if (transferChangeType === 'DEPOSIT') {
+        return '转入' // DEPOSIT
+      } else {
+        return transferChangeType
+      }
+    }
+
+    const getPlatform = (platformName) => {
+      if (!platformName) {
+        return ''
+      }
+      if (platformName === 'AG') {
+        return 'AG真人' // AG
+      } else if (platformName === 'BBINDY') {
+        return 'BBIN真人' // BBINDY
+      }  else if (platformName === 'KY') {
+        return '开元棋牌' // KY
+      }  else if (platformName === 'DT') {
+        return '大唐棋牌' // DT
+      }  else if (platformName === 'TCG') {
+        return 'TCG彩票' // TCG
+      }  else if (platformName === 'SGWin') {
+        return '双赢彩票' // SGWin
+      } else if (platformName === 'PTDY') {
+        return 'PT电子' // SGWin
+      } else if (platformName === 'PGDY') {
+        return 'PG电子' // SGWin
+      } else {
+        return platformName
+      }
+    }
+
     const getSubType = (subType) => {
       if (!subType) {
         return ''
@@ -1562,7 +1606,9 @@ export default defineComponent({
       openWithdrawConfirm,
       loadingBtn,
       clearItems,
-      formRef
+      formRef,
+      getTransferChangeType,
+      getPlatform
     };
   }
 });

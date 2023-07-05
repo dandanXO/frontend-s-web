@@ -29,7 +29,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -76,7 +77,8 @@
                       <el-button
                         class="common-btn"
                         @click="openReminder(scope.row)"
-                        >催单
+                      >
+                        催单
                       </el-button>
                     </div>
                   </template>
@@ -115,13 +117,14 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
             </el-form>
           </div>
-          
+
           <div class="unbind-record-wrapper">
             <el-table :data="dataState.turnover" v-loading="loading">
               <template #empty>
@@ -134,6 +137,11 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
+                <template v-if="tbl.dataIndex === 'platform'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getPlatform(scope.row.platform) }}
+                  </div>
+                </template>
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -141,10 +149,7 @@
                   </div>
                 </template>
 
-                <template
-                  v-if="tbl.dataIndex === 'subType'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'subType'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getSubType(scope.row.subType) }}
                   </div>
@@ -158,7 +163,6 @@
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
-
               </el-table-column>
             </el-table>
             <el-divider />
@@ -193,7 +197,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -246,7 +251,8 @@
                         size="small"
                         class="common-btn"
                         @click="openReminder(scope.row)"
-                        >催单
+                      >
+                        催单
                       </el-button>
                     </div>
                   </template>
@@ -263,7 +269,8 @@
                         size="small"
                         class="common-btn"
                         @click="openWithdrawConfirm(scope.row)"
-                        >确认到账
+                      >
+                        确认到账
                       </el-button>
                     </div>
                   </template>
@@ -303,7 +310,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -314,7 +322,7 @@
               <template #empty>
                 <EmptyData />
               </template>
-              
+
               <el-table-column
                 v-for="tbl in tableColumns.transfer"
                 :key="tbl.key"
@@ -374,7 +382,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -467,7 +476,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -503,36 +513,28 @@
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'bet'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'bet'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span v-if="scope.row.bet !== null">{{ scope.row.bet }}</span>
+                    <span v-if="scope.row.bet !== null">
+                      {{ scope.row.bet }}
+                    </span>
                     <span v-else>0</span>
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'payout'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'payout'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span v-if="scope.row.payout !== null">{{ scope.row.payout }}</span>
+                    <span v-if="scope.row.payout !== null">
+                      {{ scope.row.payout }}
+                    </span>
                     <span v-else>0</span>
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'gameType'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'gameType'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'betStatus'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'betStatus'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getBetStatus(scope.row.betStatus) }}
                   </div>
@@ -571,7 +573,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -700,8 +703,9 @@
               style="margin-left: 110px"
               :loading="loadingBtn"
               @click="submitReminder()"
-              >提交</el-button
             >
+              提交
+            </el-button>
           </el-form>
         </span>
       </el-dialog>
@@ -1297,6 +1301,31 @@ export default defineComponent({
       reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
     }
 
+    const getPlatform = (platformName) => {
+      if (!platformName) {
+        return ''
+      }
+      if (platformName === 'AG') {
+        return 'AG真人' // AG
+      } else if (platformName === 'BBINDY') {
+        return 'BBIN真人' // BBINDY
+      }  else if (platformName === 'KY') {
+        return '开元棋牌' // KY
+      }  else if (platformName === 'DT') {
+        return '大唐棋牌' // DT
+      }  else if (platformName === 'TCG') {
+        return 'TCG彩票' // TCG
+      }  else if (platformName === 'SGWin') {
+        return '双赢彩票' // SGWin
+      } else if (platformName === 'PTDY') {
+        return 'PT电子' // SGWin
+      } else if (platformName === 'PGDY') {
+        return 'PG电子' // SGWin
+      } else {
+        return platformName
+      }
+    }
+
     const getTurnoverType = (turnoverType) => {
       if (!turnoverType) {
         return ''
@@ -1564,7 +1593,8 @@ export default defineComponent({
       loadingBtn,
       clearItems,
       formRef,
-      getTransferChangeType
+      getTransferChangeType,
+      getPlatform
     };
   }
 });

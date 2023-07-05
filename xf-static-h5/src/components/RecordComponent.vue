@@ -27,7 +27,7 @@
                 <div v-else-if="obj === 'paymentType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
-                <div v-else-if="obj === 'gameType'">
+                <div v-else-if="obj === 'gameType' || obj === 'platform'">
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div
