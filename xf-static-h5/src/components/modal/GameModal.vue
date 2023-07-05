@@ -62,7 +62,7 @@
             :breakpoint="500"
             overlay
             bordered
-        class="bg-primary"
+            class="bg-primary"
             side="right"
         >
           <div class="q-pa-sm q-pt-sm">
@@ -315,11 +315,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               }
             })
             .then((response) => {
-              if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+              if (way === 'IOS') {
+                const newWin = window.open(`/`, `_system`);
+                newWin.location.href = response.data
+              } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
                 const newWin = window.open(`/`, `_blank`);
                 newWin.location.href = response.data
-              }
-              else {
+              } else {
                 openURL(response.data)
               }
             });
@@ -335,11 +337,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             }
           })
           .then((response) => {
-            if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+            if (way === 'IOS') {
+              const newWin = window.open(`/`, `_system`);
+              newWin.location.href = response.data
+            } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
               const newWin = window.open(`/`, `_blank`);
               newWin.location.href = response.data
-            }
-            else {
+            } else {
               openURL(response.data)
             }
           });
