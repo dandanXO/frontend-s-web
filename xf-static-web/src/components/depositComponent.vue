@@ -489,7 +489,7 @@ function clearInfo() {
 function confirmDeposit() {
   if (store.token) {
     if (!store.phone) {
-      ElMessageBox.alert("为保证资金安全，存款前请先绑定手机号", "系统提示", {
+      ElMessageBox.alert("为保证资金安全，存款前请先验证手机号", "系统提示", {
         showClose: "false",
         cancelButtonClass: "cancel-btn",
         confirmButtonText: "确认",

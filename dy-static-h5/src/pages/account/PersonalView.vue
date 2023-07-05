@@ -94,7 +94,7 @@
               <q-btn
                 size="sm"
                 color="dyblue"
-                label="绑定"
+                label="验证"
                 style="white-space: nowrap"
               />
             </router-link>
@@ -123,7 +123,7 @@
               <q-btn
                 size="sm"
                 color="dyblue"
-                label="绑定"
+                label="验证"
                 style="white-space: nowrap"
               />
             </router-link>
