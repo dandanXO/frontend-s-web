@@ -201,11 +201,11 @@
         <strong>温馨提示</strong>
         <br/>
         <br/>
-        为保证资金安全，存款前先绑定手机号
+        为保证资金安全，存款前需先验证手机号
       </q-card-section>
       <q-card-actions align="right">
         <router-link to="/account/personal">
-          <q-btn label="前往绑定" color="brightbtn"/>
+          <q-btn label="前往验证" color="brightbtn"/>
         </router-link>
       </q-card-actions>
     </q-card>
