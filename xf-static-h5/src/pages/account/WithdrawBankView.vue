@@ -57,7 +57,8 @@
     <q-dialog v-model="isUnbindCardModal" persistent no-backdrop-dismiss no-esc-dismiss>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center">请输入解绑银行卡号</div>
+          <div class="text-h6 text-center" v-if="unbindcarddetail.bankType!='CRYPTO'">请输入解绑银行卡号</div>
+          <div class="text-h6 text-center" v-if="unbindcarddetail.bankType=='CRYPTO'">请输入解绑钱包地址</div>
         </q-card-section>
         <q-form>
           <div>
@@ -67,10 +68,10 @@
                 ref="unbindCardNoRef"
                 class="q-mb-md"
                 v-model="unbindCardNo"
-                label="银行卡号"
+                :label="(unbindcarddetail.bankType=='CRYPTO') ? '钱包地址' : '银行卡号'"
                 color="white"
                 :rules="[
-                        (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || '银行卡号不正确'
+                        (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || ((unbindcarddetail.bankType=='CRYPTO') ? '钱包地址不正确' : '银行卡号不正确')
                       ]"
             />
           </div>
@@ -263,7 +264,6 @@
               <q-icon color="bright" name="shield"/>
             </template>
           </q-input>
-
 
 
           <div class="flex flex-center">
@@ -590,6 +590,7 @@ export default defineComponent({
       unbindCardNo.value = "";
       isUnbindCardModal.value = true;
       unbindcarddetail.value = card;
+      console.log(unbindcarddetail.value);
     }
 
     const unbindBankCard = (card) => {

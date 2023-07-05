@@ -1,6 +1,6 @@
 <template>
     <div class="table-record">
-        <RecordComponent :loading="visible" :list="tableData" :headers="tableHeaders" />
+        <RecordComponent recordType="transfer" :loading="visible" :list="tableData" :headers="tableHeaders" />
     </div>
 </template>
 <script lang="js">

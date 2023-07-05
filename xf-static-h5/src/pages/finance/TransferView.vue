@@ -39,8 +39,8 @@
             {{ amt }}
           </div>
         </div>
-          
-          
+
+
           <q-input
             hide-bottom-space
             ref="amountRef"
@@ -55,7 +55,7 @@
              <span style="font-size:26px;" class="text-bright"><q-btn label="最大金额" @click="updateTransferAmt" color="brightbtn" /></span>
             </template>
           </q-input>
-          
+
             <q-btn
               style="width: 100%;"
               class="q-mt-md fit"
@@ -66,7 +66,7 @@
             />
       </q-form>
     </div>
-    
+
   </div>
 </template>
 <script setup>
@@ -188,7 +188,7 @@ import { useQuasar } from "quasar";
                             $q.notify({
                               color: "positive",
                               position: "top",
-                              message: "成功",
+                              message: "转账成功",
                               icon: "check_circle_outline"
                             });
                             getPlatBalances(platform.code)
@@ -208,7 +208,7 @@ import { useQuasar } from "quasar";
     } else {
       isTransferring.value = false
     }
-    
+
   }
   const updateTransferAmt = () => {
     transferInfo.value.amount = JSON.stringify(Math.floor(store.balance))
@@ -217,7 +217,7 @@ import { useQuasar } from "quasar";
         transferInfo.value.amount = plat.amount
       }
     });
-   
+
   }
   const getPlatList = () => {
     api.get("/platform").then((res) => {
@@ -263,7 +263,7 @@ import { useQuasar } from "quasar";
 </script>
 <style lang="scss">
 .transferfromto {
-  
+
 .q-field--auto-height .q-field__native, .q-field--auto-height .q-field__prefix, .q-field--auto-height .q-field__suffix {
   justify-content: center;
 }
@@ -285,9 +285,9 @@ import { useQuasar } from "quasar";
   .q-select {
     flex: 4;
   }
-  .icon { 
+  .icon {
     flex: 1;
-    img { 
+    img {
       width: 50%;
       margin: 0 auto;
       display: block;

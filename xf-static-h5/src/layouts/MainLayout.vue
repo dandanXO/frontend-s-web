@@ -10,8 +10,8 @@
           <router-link to="/"><img src="../assets/home/logo.png"/></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
-          <q-btn glossy color="brand" to="/login">Login</q-btn>
-          <q-btn outline color="brand" to="/register">Register</q-btn>
+          <q-btn glossy color="brand" to="/login">登录</q-btn>
+          <q-btn outline color="brand" to="/register">注册</q-btn>
         </q-card-actions>
         <!-- <q-card-actions v-if="store.hasToken()">
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
@@ -24,7 +24,7 @@
             flat
         >
           <span style="font-size: 10px; margin-left: 5px; display: block"
-          >Deposit</span
+          >充值</span
           >
         </q-btn>
       </q-card-section>
@@ -50,26 +50,6 @@
         >
       </q-card-actions> -->
     </q-header>
-    <!--
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer> -->
 
     <q-drawer
         side="right"
@@ -131,11 +111,11 @@
           <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png">
           客服
         </q-route-tab>
-        <q-route-tab to="/affiliate" name="affiliate">
-          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">
-          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">
-          加盟
-        </q-route-tab>
+<!--        <q-route-tab to="/affiliate" name="affiliate">-->
+<!--          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">-->
+<!--          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">-->
+<!--          加盟-->
+<!--        </q-route-tab>-->
         <q-route-tab to="/account" name="account">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png">
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png">
@@ -287,7 +267,7 @@ export default defineComponent({
         } else if (route.path === "/account/download") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "东赢下载";
+          pageName.value = "兴發下载";
         } else if (route.path === "/account/invite") {
           prevPage.value = "account";
           hasPage.value = true;

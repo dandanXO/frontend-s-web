@@ -290,7 +290,7 @@
 
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%" class="bg-bright text-black">
-      <q-card-section class="q-mb-md">
+      <q-card-section class="q-mb-md" style="display: flex;flex-direction: column;">
         <q-tabs v-model="activeKey" dense align="justify">
           <q-tab
             v-for="(tab, i) in announcementTypes"

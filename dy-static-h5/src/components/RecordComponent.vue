@@ -22,6 +22,9 @@
                 <div v-else-if="obj === 'betStatus'">
                   {{ checkRecord(det[obj]) }}
                 </div>
+                <div v-else-if="obj === 'paymentType'">
+                  {{ checkRecord(det[obj]) }}
+                </div>
                 <div v-else-if="obj === 'gameType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
@@ -111,7 +114,7 @@
   </div>
 
   <q-input
-    style="width: 100%; opacity:0;"
+    style="width: 100%; opacity: 0"
     filled
     color="white"
     ref="copyinput"
@@ -390,7 +393,7 @@ export default defineComponent({
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
       },
       checkRecord(status) {
-        return translateRecord(status);
+        return translateRecord(status, props.recordType);
       },
       onLoad,
       truncatedList,

@@ -175,7 +175,7 @@
 </template>
 
 <script>
-import {defineComponent, ref, computed, onMounted} from "vue";
+import {defineComponent, ref, computed, onMounted, onBeforeUnmount} from "vue";
 import {userStore} from "stores/index";
 import {useRouter} from "vue-router";
 
@@ -219,6 +219,8 @@ export default defineComponent({
       return store.vip;
     });
 
+    const timerBalance = ref();
+
 
     const vip = computed(() => {
       return store.vip;
@@ -232,6 +234,9 @@ export default defineComponent({
       // store.getUnreadTotal();
       store.getBalance()
     });
+    onBeforeUnmount(() => {
+      clearInterval(timerBalance.value);
+    })
 
     const openDeposit = () => {
       // to="finance/deposit"
@@ -240,7 +245,7 @@ export default defineComponent({
     }
 
     const getBalance = () => {
-      setInterval(function () {
+      timerBalance.value = setInterval(function () {
         if (store.hasToken()) {
           store.getBalance()
         }
@@ -413,7 +418,7 @@ export default defineComponent({
     flex-wrap: wrap;
 
     a {
-      width:33.33%;
+      width: 33.33%;
       text-decoration: none;
       display: flex;
       justify-content: center;

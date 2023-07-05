@@ -202,7 +202,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "An OTP code has been sent to your email.",
+            message: "验证码已发送至您的邮箱。",
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;

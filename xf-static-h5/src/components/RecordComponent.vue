@@ -24,6 +24,9 @@
                 <div v-else-if="obj === 'betStatus'">
                   {{ checkRecord(det[obj]) }}
                 </div>
+                <div v-else-if="obj === 'paymentType'">
+                  {{ checkRecord(det[obj]) }}
+                </div>
                 <div v-else-if="obj === 'gameType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
@@ -51,13 +54,9 @@
                 </div>
               </div>
             </template>
-            <!-- <div v-if="Object.keys(head.key)" class="desc">
-                {{ det.value }}
-
-            </div> -->
           </div>
           <div v-if="
-              (recordType === 'deposit' && det.status === 'PENDING') || (recordType === 'withdraw' && det.status == 'STEP_1')"
+              (recordType === 'deposit' && det.status === 'PENDING') || (recordType === 'withdraw' && det.status === 'STEP_1')"
                class="buttons">
             <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm"/>
             <q-btn outline label="复制" @click="copyText(det.serialNumber)" size="sm" color="bright"/>
@@ -367,7 +366,7 @@ export default defineComponent({
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
       },
       checkRecord(status) {
-        return translateRecord(status);
+        return translateRecord(status, props.recordType);
       },
       onLoad,
       truncatedList,

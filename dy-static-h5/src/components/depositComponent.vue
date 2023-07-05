@@ -5,7 +5,7 @@
   >
     <div class="q-mb-lg">
       <span class="additional-tips">
-        如有遇到存款问题，请立即联系在线客服咨询！
+        如果遇到存款问题，请立即联系在线客服解决！
       </span>
     </div>
 
