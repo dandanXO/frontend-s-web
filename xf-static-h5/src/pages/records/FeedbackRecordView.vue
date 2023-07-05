@@ -1,17 +1,19 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="reminder"
-      :loading="visible"
-      :list="tableData"
-      :headers="tableHeaders"
+        recordType="reminder"
+        :loading="visible"
+        :list="tableData"
+        :headers="tableHeaders"
+        @loadnewdata="loadNewData"
+        :isEnded="isEnded"
     />
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onMounted, ref} from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
-import {api} from "boot/axios";
+import { api } from "boot/axios";
 import moment from "moment/moment";
 
 export default defineComponent({
@@ -19,42 +21,77 @@ export default defineComponent({
     RecordComponent
   },
   setup() {
-
     const visible = ref(true);
     const tableData = ref([]);
-    const loadDepositTable = () => {
 
-      visible.value = true;
-      let paramData = {
-        "startDate": moment().add(-7, 'days').format("YYYY-MM-DD"),
-        "endDate": moment().format("YYYY-MM-DD")
+    var apiUrl = "/session/member/financeFeedback";
+
+    const isEnded = ref(false);
+    var endDate = moment().format("YYYY-MM-DD");
+    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+
+
+    const loadNewData = () => {
+      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
+      console.log(startDate);
+
+      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+      console.log(endDate);
+
+      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
+        console.log("mor than 3 months");
+        isEnded.value = true;
+        return;
       }
-
-      api.get("/session/member/financeFeedback", {
-          params: paramData
-        },
-      ).then((res) => {
-        tableData.value= res.data.records;
-      }).finally(()=>{
-        visible.value = false;
-      })
+      loadDepositTable(false);
     };
+
+    const loadDepositTable = (isNew = true) => {
+      if (isNew) {
+        visible.value = true;
+      }
+      console.log(startDate);
+      console.log(endDate);
+
+      let paramData = {
+        "startDate": startDate,
+        "endDate": endDate
+      };
+
+      api.get(apiUrl, {
+            params: paramData
+          }
+      ).then((res) => {
+        tableData.value.push(...res.data.records);
+        // console.log("TableData");
+        // console.log(tableData.value);
+      }).finally(() => {
+        if (isNew) {
+          visible.value = false;
+        }
+      });
+    };
+
     const tableHeaders = [
       {
         key: "orderNo",
-        label: "订单号",
+        label: "订单号"
+      },
+      {
+        key: "status",
+        label: "状态"
       },
       {
         key: "financeRemark",
-        label: "财务反馈",
+        label: "财务反馈"
       },
       {
         key: "feedbackTime",
-        label: "反馈时间",
+        label: "反馈时间"
       },
       {
         key: "type",
-        label: "类型",
+        label: "类型"
       }
     ];
     onMounted(() => {
@@ -64,8 +101,9 @@ export default defineComponent({
     return {
       tableData,
       visible,
-      tableHeaders
-    }
+      tableHeaders, loadNewData,
+      isEnded
+    };
   }
 });
 </script>
@@ -75,16 +113,16 @@ export default defineComponent({
   gap: 10px;
 
   .q-card {
-    margin: 14px 16px;
-    border:1px solid #fff;
+    background: #ffffff !important;
+    color: #000000 !important;
   }
 
-  //.label {
-  //  color: #000000;
-  //}
-  //
-  //.q-btn {
-  //  font-size: 11px !important;
-  //}
+  .label {
+    color: #000000;
+  }
+
+  .q-btn {
+    font-size: 11px !important;
+  }
 }
 </style>

@@ -1,9 +1,12 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      :loading="visible"
-      :list="tableData"
-      :headers="tableHeaders"
+        recordType="bethistory"
+        :loading="visible"
+        :list="tableData"
+        :headers="tableHeaders"
+        @loadnewdata="loadNewData"
+        :isEnded="isEnded"
     />
   </div>
 </template>
@@ -21,166 +24,89 @@ export default defineComponent({
   },
   setup() {
 
-    const store= userStore()
+    const store = userStore();
     const visible = ref(true);
     const tableData = ref([]);
-    const loadDepositTable = () => {
 
-      visible.value = true;
+    const isEnded = ref(false);
+
+    var apiUrl = "/session/member/gameBetRecord";
+
+
+    var endDate = moment().format("YYYY-MM-DD");
+    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+
+    const loadNewData = () => {
+      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
+      console.log(startDate);
+
+      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+      console.log(endDate);
+
+      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
+        console.log("mor than 3 months");
+        isEnded.value = true;
+        return;
+      }
+      loadDepositTable(false);
+    };
+
+    const loadDepositTable = (isNew = true) => {
+      if (isNew) {
+        visible.value = true;
+      }
+      console.log(startDate);
+      console.log(endDate);
+
       let paramData = {
-        "startDate": moment().add(-7, 'days').format("YYYY-MM-DD"),
-        "endDate": moment().format("YYYY-MM-DD"),
+        "startDate": startDate,
+        "endDate": endDate,
         "platform": "",
         "memberId": store.id,
         "current": 1,
         "size": 10
-      }
+      };
 
-      api.get("/session/member/gameBetRecord", {
-          params: paramData
-        },
+      api.get(apiUrl, {
+            params: paramData
+          }
       ).then((res) => {
-        console.log(res);
-        tableData.value= res.data.records;
-
-      }).finally(()=>{
-        visible.value = false;
-      })
-
-
-      //HARDCODE.
-      // tableData.value = [
-      //   {
-      //     id: "1",
-      //     code: "金额",
-      //     depositAmount: "200",
-      //     depositType: "KDPay",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "2",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "3",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "WECHAT_CODE2",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "4",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "5",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "6",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "金额",
-      //     depositAmount: "200",
-      //     depositType: "KDPay",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      //   {
-      //     id: "last",
-      //     code: "存款类型",
-      //     depositAmount: "200",
-      //     depositType: "QQ_CODE",
-      //     depositStatus: "支付中",
-      //     commitDate: 1672486214000,
-      //     serialNumber: "XFI617020221231193013594",
-      //   },
-      // ];
-
+        tableData.value.push(...res.data.records);
+        // console.log("TableData");
+        // console.log(tableData.value);
+      }).finally(() => {
+        if (isNew) {
+          visible.value = false;
+        }
+      });
     };
+
+
     const tableHeaders = [
-    {
-        key: 'betTime',
-        label: '游戏时间'
-    },
-    {
-        key: 'platform',
-        label: '游戏平台'
-    },
-    {
-        key: 'bet',
-        label: '投注'
-    },
-    {
-        key: 'payout',
-        label: '派彩',
-    },
-    {
-        key: 'gameType',
-        label: '游戏类型'
-    },
-    {
-        key: 'betStatus',
-        label: '投注状态'
-    }
+      {
+        key: "betTime",
+        label: "游戏时间"
+      },
+      {
+        key: "platform",
+        label: "游戏平台"
+      },
+      {
+        key: "bet",
+        label: "投注"
+      },
+      {
+        key: "payout",
+        label: "派彩"
+      },
+      {
+        key: "gameType",
+        label: "游戏类型"
+      },
+      {
+        key: "betStatus",
+        label: "投注状态"
+      }
     ];
     onMounted(() => {
       loadDepositTable();
@@ -189,8 +115,10 @@ export default defineComponent({
     return {
       tableData,
       visible,
-      tableHeaders
-    }
+      tableHeaders,
+      loadNewData,
+      isEnded
+    };
   }
 });
 </script>
