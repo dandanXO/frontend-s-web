@@ -1,0 +1,7 @@
+function getTestFlightIosPath() {
+	return "";
+}
+
+function getIsPath() {
+	return false;
+}

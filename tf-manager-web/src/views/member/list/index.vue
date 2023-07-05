@@ -796,8 +796,8 @@ onMounted(async() => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
-    await changeSite(request.siteId);
   }
+  await changeSite(request.siteId);
   await loadPrivilegeInfos();
   await setIpLabels();
 });

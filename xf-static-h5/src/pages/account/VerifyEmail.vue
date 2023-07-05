@@ -52,7 +52,7 @@
             size="md"
             color="brightbtn"
             @click="submitUpdateSecurity()"
-            label="绑定邮箱"
+            label="验证邮箱"
         />
       </div>
     </q-form>
@@ -238,7 +238,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "绑定成功",
+              message: "验证成功",
               icon: "check_circle_outline"
             });
             store.emailVerified = true;

@@ -54,7 +54,7 @@
           size="md"
           color="dyblue"
           @click="submitUpdateSecurity()"
-          label="绑定手机号码"
+          label="验证手机号"
         />
       </div>
     </q-form>
@@ -248,7 +248,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "绑定成功",
+              message: "验证成功",
               icon: "check_circle_outline"
             });
             store.phoneVerified = true;

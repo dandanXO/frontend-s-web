@@ -97,7 +97,7 @@
             <q-btn
                 size="sm"
                 color="brightbtn"
-                label="绑定"
+                label="验证"
                 @click="goToPage('/account/verifyTelephone')"
                 style="white-space: nowrap"
             />
@@ -124,7 +124,7 @@
             <q-btn
                 size="sm"
                 color="brightbtn"
-                label="绑定"
+                label="验证"
                 @click="goToPage('/account/verifyEmail')"
                 style="white-space: nowrap"
             />

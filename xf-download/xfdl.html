@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- saved from url=(0025)https://www.xfapp111.com/ -->
+<html>
+<script id="youtube-hd-fjdmkanbdloodhegphphhklnjfngoffa">var ythdlog = () => {
+};
+;var ythderror = () => {
+};</script>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>兴发下载</title>
+    <link rel="shortcut icon" href="images/test.ico"/>
+    <link rel="stylesheet" type="text/css" href="styles/css/ba.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/download.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/swiper-3.4.1.min.css">
+    <script type="text/javascript" src="styles/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="styles/js/swiper-3.4.1.min.js"></script>
+    <script type="text/javascript" src="styles/js/download.js"></script>
+    <script type="text/javascript" src="styles/js/clipboard.min.js"></script>
+    <script type="text/javascript" src="styles/js/xf-website.txt"></script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%
+        }
+
+        .weixin_tip {
+            /* background: linear-gradient( to right bottom,#077CCE,#01E9FF);
+            padding: 30px 30px; */
+            color: white;
+            font-size: 14px;
+            height: 100%;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .under-line {
+            margin: 10px 0 30px 0;
+        }
+
+        .under-line:before {
+            content: "";
+            background: #53B9E8;
+            height: 1px;
+            display: block;
+        }
+
+        .tip-list {
+            display: block;
+            text-align: left;
+            margin: 10px 0;
+            padding-left: 40px;
+        }
+
+        .tip-list i {
+            border-radius: 50%;
+            background: #02476C;
+            color: white;
+            font-size: 13px;
+            padding: 5px 9px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="download" style="display: block;">
+    <div class="remind">
+        <div class="content">
+            <a class="logo"><img src="styles/images/logo.png" width="73px" height="73px"></a>
+            <h3>兴发</h3>
+            <div class="remind-txt">
+                全面真人娱乐&nbsp;老虎机&nbsp;捕鱼APP<br>
+                投注最流畅，最快捷，最好用<br>
+                全面支持苹果安卓各类手机在线下载
+            </div>
+            <div class="load">
+                <a class="install" id="download"
+                   data-clipboard-text="ABC{&quot;agentCode&quot;:null,&quot;regFrom&quot;:null,&quot;downloadUrl&quot;:&quot;www.xfapp111.com&quot;}"
+                   href="https://kcx3zdl.ycylbj.com/xf-website.apk">下载安装</a>
+            </div>
+            <p class="tuto">下滑查看教程</p>
+            <span id="consult"></span>
+        </div>
+    </div>
+    <div class="torial">
+        <div class="swiper-container swiper-container-horizontal">
+            <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+            </div>
+            <div class="swiper-pagination swiper-pagination-bullets"><span
+                    class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
+                    class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span
+                    class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+        </div>
+    </div>
+</div>
+<div class="weixin_tip" style="display: none;">
+    <img id="tips" src="styles/images/wxtips_android.png" alt="" style="width:100%;height:auto;">
+    <!-- <div class="wx_title">
+        <span>由于腾讯的安全机制，阁下无法直接下载我们的产品，请跟随下列步骤进行下载。</span>
+        <div class="under-line"></div>
+        <span class="tip-list"><i>1</i>请点击右上角的菜单按钮，打开菜单</span>
+        <span class="tip-list"><i>2</i>点击使用默认浏览器打开下载</span>
+    </div> -->
+</div>
+<script>
+    var andList = [
+        {imgurl: '/styles/images/android/1.png'},
+        {imgurl: '/styles/images/android/2.png'},
+        {imgurl: '/styles/images/android/3.png'},
+        {imgurl: '/styles/images/android/4.png'},
+        {imgurl: '/styles/images/android/5.png'}
+    ];
+    var iosList = [
+        {imgurl: '/styles/images/ios/1.png'},
+        {imgurl: '/styles/images/ios/2.png'},
+        {imgurl: '/styles/images/ios/3.png'},
+        {imgurl: '/styles/images/ios/4.png'},
+        {imgurl: '/styles/images/ios/5.png'},
+        {imgurl: '/styles/images/ios/6.png'}
+    ];
+    $(function () {
+        function is_weixin() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        var isWeixin = is_weixin();
+        if (isWeixin) {
+            $(".weixin_tip").show();
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                $("#tips").attr("src", "/style/images/wxtips_ios.png");
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                $("#tips").attr("src", "/style/images/wxtips_android.png");
+            }
+        } else {
+            $(".download").show();
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                getIosPath();
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                showAndroid();
+            } else {
+                //window.location.href="downloadty_com.html";
+                showAndroid();
+            }
+        }
+        ;
+        var host = window.location.host;
+        var vv = {agentCode: getQueryString("agentCode"), regFrom: getQueryString("url"), downloadUrl: host};
+        $('#download').attr('data-clipboard-text', "ABC" + JSON.stringify(vv));
+        $("#download").click(function () {
+            var url = $(this).attr("href");
+            var type = "ALL_AND";
+            if (url.indexOf(".plist") != -1) {
+                type = "ALL_IOS";
+            }
+
+            postDownloadExtra(type, host);
+        });
+        new ClipboardJS('.install');
+    });
+
+    function showIOS() {
+        for (var i = 0; i < iosList.length; i++) {
+            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + iosList[i].imgurl + '" alt=""/></div>')
+        }
+        ;
+        $('#download').attr('href', 'itms-services://?action=download-manifest&url=https://kcx3zdl.ycylbj.com/xf.plist');
+    }
+
+    function showAndroid() {
+        for (var i = 0; i < andList.length; i++) {
+            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + andList[i].imgurl + '" alt=""/></div>')
+        }
+        ;
+        $('#download').attr('href', 'https://kcx3zdl.ycylbj.com/xf-website.apk');
+    }
+
+    var mySwiper = new Swiper('.swiper-container', {
+        effect: 'slide',
+        pagination: '.swiper-pagination',
+        initialSlide: 0,
+        observer: true,
+        observeParents: true
+    });
+
+    function getIosPath() {
+        try {
+            if (getIsPath()) {
+                var path = getTestFlightIosPath();
+                $('#download').attr('href', path);
+            } else {
+                showIOS();
+            }
+        } catch (err) {
+            showIOS();
+        }
+
+    };
+
+
+</script>
+
+</body>
+</html>

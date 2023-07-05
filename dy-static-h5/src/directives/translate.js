@@ -118,7 +118,23 @@ export const translateRecord = (rec, type = '') => {
   } else if (rec === "TRANSFER") {
     return "转账"; // TRANSFER
   } else if (rec === "ADJUST") {
-    return "金额调整"; // TRANSFER
+    return "金额调整"; // ADJUST
+  } else if (rec === "AG") {
+    return "AG真人"; // AG
+  } else if (rec === "BBINDY") {
+    return "BBIN真人"; // BBINDY
+  } else if (rec === "KY") {
+    return "开元棋牌"; // KY
+  } else if (rec === "DT") {
+    return "大唐棋牌"; // DT
+  } else if (rec === "TCG") {
+    return "TCG彩票"; // TCG
+  } else if (rec === "SGWin") {
+    return "双赢彩票"; // SGWin
+  } else if (rec === "PTDY") {
+    return "PT电子"; // PTDY
+  } else if (rec === "PGDY") {
+    return "PG电子"; // PGDY
   } else {
     return rec;
   }
