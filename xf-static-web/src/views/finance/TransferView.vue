@@ -28,7 +28,7 @@
         <div class="account-content">
           <div class="account-tip-text">
             <el-icon><InfoFilled style="color: #45fdfb" /></el-icon>
-            兴發电竞、IM体育无需转账，充值即可游戏
+            除了以下平台需要转账，其它游戏平台都无需转账即可游戏
           </div>
         </div>
         <!--<div class="account-tip">
