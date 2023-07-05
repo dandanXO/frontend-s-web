@@ -290,7 +290,7 @@
 
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%" class="bg-bright text-black">
-      <q-card-section class="q-mb-md">
+      <q-card-section class="q-mb-md" style="display: flex;flex-direction: column;">
         <q-tabs v-model="activeKey" dense align="justify">
           <q-tab
             v-for="(tab, i) in announcementTypes"
@@ -361,14 +361,15 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isFirstView">
-    <q-card style="width: 100%; max-width: 260px" class="bg-bright text-black">
+    <q-card
+      style="width: 90%; max-width: 500px; margin: 0 auto"
+      class="bg-white text-black"
+    >
       <q-card-section class="q-mb-md">
-        <img
-          src="../assets/images/index/popup-h5.jpg"
-          alt=""
-          class="alert-image"
-        />
-        <div class="close-alert" @click="closeAlert()"></div>
+        <img :src="homePopupImg" alt="" class="alert-image" />
+        <div class="close-alert" @click="closeAlert()">
+          <q-icon color="white" size="24px" name="close"></q-icon>
+        </div>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -812,15 +813,42 @@ export default defineComponent({
       );
     };
 
+    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const homePopupImg = ref("");
     const checkShowImgTop = () => {
       const lastTime = localStorage.getItem("indexImgTop");
       if (lastTime) {
         const diff = new Date().getTime() - Number(lastTime);
-        if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
+        if (diff > 1000 * 60 * 60 * 12) {
+          localStorage.removeItem("indexImgTop");
+        }
       } else {
-        isFirstView.value = true;
+        api
+          .get("/promo/banner?category=HOMEPOP")
+          .then((res) => {
+            if (res.code === 0) {
+              homePopupImg.value =
+                res.data.length > 0
+                  ? imgURL + res.data[0]["mobileImageUrl"]
+                  : "";
+              if (homePopupImg.value) {
+                isFirstView.value = true;
+              }
+            }
+          })
+          .catch(() => {});
       }
     };
+
+    // const checkShowImgTop = () => {
+    //   const lastTime = localStorage.getItem("indexImgTop");
+    //   if (lastTime) {
+    //     const diff = new Date().getTime() - Number(lastTime);
+    //     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
+    //   } else {
+    //     isFirstView.value = true;
+    //   }
+    // };
 
     onMounted(() => {
       checkShowImgTop();
@@ -841,7 +869,7 @@ export default defineComponent({
       tab: ref("esport"),
       gamesTab: ref(platforms.value[0]),
       splitterModel: ref(27),
-      imgURL: process.env.IMAGE_CDN + "/promo/",
+      imgURL,
       banners,
       store,
       platforms,
@@ -889,7 +917,8 @@ export default defineComponent({
       closeAlert,
       isAppUpdateModal,
       cancelUpdate,
-      openDownloadPage
+      openDownloadPage,
+      homePopupImg
     };
   }
 });

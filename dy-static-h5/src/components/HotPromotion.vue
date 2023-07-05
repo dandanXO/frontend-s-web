@@ -654,7 +654,7 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: "ส่งหมายเลข",
+                message: "成功",
                 icon: "check_circle_outline"
               });
             } else {

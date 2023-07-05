@@ -470,7 +470,7 @@ const routes = [
         children: [
             {
                 path: "",
-                name: "vip",
+                name: "accountvip",
                 component: () => import("pages/games/VIPView.vue")
             }
         ]

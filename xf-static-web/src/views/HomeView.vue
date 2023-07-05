@@ -343,6 +343,13 @@
     </div>
   </div>
   <GameModal ref="gameMenu" />
+  <el-dialog
+    @close="setWithExpiry('isImpt', true, 43200000)"
+    class="imptann-modal"
+    v-model="isImportantAnnoucementModal"
+  >
+    <img :src="homePopupImg" class="alert-img" />
+  </el-dialog>
 </template>
 
 <script>
@@ -404,6 +411,35 @@ export default defineComponent({
       });
     };
 
+    const homePopupImg = ref("");
+    const checkShowImgTop = () => {
+      const lastTime = localStorage.getItem("indexImgTop");
+      if (lastTime) {
+        const diff = new Date().getTime() - Number(lastTime);
+        if (diff > 1000 * 60 * 60 * 12) {
+          isFirstView.value = true;
+        }
+      } else {
+        loadPromoBanner("HOMEPOP")
+          .then((res) => {
+            if (res.code === 0) {
+              if (res.data.length > 0) {
+                homePopupImg.value =
+                  res.data.length > 0
+                    ? imgURL + res.data[0]["desktopImageUrl"]
+                    : "";
+                if (homePopupImg.value) {
+                  isFirstView.value = true;
+                }
+              } else {
+                isImportantAnnoucementModal.value = false;
+              }
+            }
+          })
+          .catch(() => {});
+      }
+    };
+
     onMounted(() => {
       const isImpt = getWithExpiry("isImpt");
       if (isImpt === null) {
@@ -412,6 +448,7 @@ export default defineComponent({
         isImportantAnnoucementModal.value = false;
       }
       loadBanners();
+      checkShowImgTop();
     });
     return {
       banners,
@@ -420,7 +457,8 @@ export default defineComponent({
       openGame,
       imgURL,
       getWithExpiry,
-      setWithExpiry
+      setWithExpiry,
+      homePopupImg
     };
   }
 });
@@ -796,6 +834,16 @@ export default defineComponent({
 .home {
   .promo-bg {
     height: 500px;
+  }
+}
+.imptann-modal {
+  .alert-img {
+    display: block;
+    width: 100%;
+  }
+
+  .el-dialog__body {
+    padding: 40px 2px 0;
   }
 }
 </style>

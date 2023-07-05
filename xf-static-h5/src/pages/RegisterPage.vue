@@ -205,7 +205,7 @@
     </div>
   </q-form>
 
-  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
     <q-card width="100%">
       <q-card-section
           style="padding: 10px 5px"
@@ -219,7 +219,7 @@
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" label="验证码">
+          <q-input v-model="innerCaptchaRef" placeholder="验证码">
             <template v-slot:append>
               <img
                   :src="phoneVerificationImg"
@@ -323,6 +323,7 @@ export default defineComponent({
     const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
+    const phoneVerificationRef = ref();
     const $q = useQuasar();
     const route = useRoute();
 
@@ -334,7 +335,10 @@ export default defineComponent({
     };
 
     const isValidCnPhone = () => {
-      return (regForm.telephone.length === 10 && regForm.telephone.substring(0,1) == '1') || "请输入有效的电话号码";
+      const phonePattern =
+          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
+
     }
 
     const router = useRouter();
@@ -343,6 +347,7 @@ export default defineComponent({
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
       telRef.value.validate();
+      phoneVerificationRef.value.validate();
       // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
@@ -353,6 +358,7 @@ export default defineComponent({
           pwdRef.value.hasError ||
           confirmPwdRef.value.hasError ||
           telRef.value.hasError ||
+          phoneVerificationRef.value.hasError ||
           // emailRef.value.hasError ||
           verificationRef.value.hasError
       ) {
@@ -378,7 +384,7 @@ export default defineComponent({
               regForm.regDevice = "IOS";
             }
           }
-          if(regForm.regHost.indexOf("http://localhost") > -1){
+          if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";
           }
 
@@ -397,15 +403,15 @@ export default defineComponent({
                   });
                   store.autoLogin(res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");
-                  // if (store.hasToken()) {
-                  //   const jumpUrl = route.query.redirect
-                  //       ? route.query.redirect
-                  //       : "/";
-                  //   router.go(jumpUrl);
-                  //   if (Platform.is.capacitor && Platform.is.ios) {
-                  //     location.reload();
-                  //   }
-                  // }
+                  if (store.hasToken()) {
+                    const jumpUrl = route.query.redirect
+                        ? route.query.redirect
+                        : "/";
+                    router.go(jumpUrl);
+                    if (Platform.is.capacitor && Platform.is.ios) {
+                      location.reload();
+                    }
+                  }
 
                   sessionStorage.removeItem("REFERRAL_CODE");
                 } else {
@@ -464,8 +470,11 @@ export default defineComponent({
     );
 
     const openPhoneVeriDialog = () => {
-      showCaptchaDialog.value = true;
-      getInnerCode();
+      telRef.value.validate();
+      if (!telRef.value.hasError) {
+        showCaptchaDialog.value = true;
+        getInnerCode();
+      }
     }
 
     const onCaptchaSubmit = () => {
@@ -503,7 +512,9 @@ export default defineComponent({
             }
 
             console.log('onCaptchaSubmit', res)
-          })
+          }).catch(() => {
+        getInnerCode();
+      })
     }
 
 
@@ -530,6 +541,7 @@ export default defineComponent({
       innerCaptchaRef,
       phoneVerificationImg,
       openPhoneVeriDialog,
+      phoneVerificationRef,
       isValidCnPhone
     };
   }

@@ -1,11 +1,11 @@
 <template>
-<q-page>
+  <q-page>
     <iframe
-          @load="loadGame()"
-          :src="src"
-          frameborder="0"
-        ></iframe>
-</q-page>
+        @load="loadGame()"
+        :src="src"
+        frameborder="0"
+    ></iframe>
+  </q-page>
 </template>
 
 <script setup>
@@ -39,29 +39,29 @@ onMounted(() => {
       }
     }
     api
-      .get(`/session/launch?_time=${new Date().getTime()}`, {
-        params: { platform: "SABA", isMobile: isMobile, way: way }
-      })
-      .then((response) => {
-        if (response.code === 0) {
-          src.value = response.data;
-        } else {
-        }
-        $q.loading.hide();
-      });
+        .get(`/session/launch?_time=${new Date().getTime()}`, {
+          params: { platform: "SABA", isMobile: isMobile, way: way }
+        })
+        .then((response) => {
+          if (response.code === 0) {
+            src.value = response.data;
+          } else {
+          }
+          $q.loading.hide();
+        });
   }
 });
 </script>
 
 <style scoped>
-  iframe {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-  }
+iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
 </style>

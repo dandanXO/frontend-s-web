@@ -86,7 +86,9 @@
                   :style="
                     'background-image: url(' +
                     imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
+                    (selectedPromo.mobileBannerUrl
+                      ? selectedPromo.mobileBannerUrl
+                      : selectedPromo.mobileImgUrl) +
                     ')'
                   "
                 ></div>
@@ -122,28 +124,29 @@
       style="width: 100%; padding: 20px"
       class="bg-white text-black text-center"
     >
-      <q-card-section class="q-mb-md">
+      <q-card-section class="q-mb-md gologin-popup">
         <strong>系统提示</strong>
-        <br />
         <br />
         请登录后再操作
       </q-card-section>
-      <q-btn href="/login?redirect=/promo" label="确认" color="dyblue" />
+      <router-link to="/login?redirect=/promo">
+        <q-btn label="确认" color="dyblue" />
+      </router-link>
     </q-card>
   </q-dialog>
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {api} from "boot/axios";
-import {useQuasar} from "quasar";
+import { ref, defineComponent, onMounted, reactive, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
-import HotPromotion from 'components/HotPromotion'
+import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
@@ -152,19 +155,19 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.IMAGE_CDN + '/promo/';
+    const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
-      active: {value: 'ALL', label: 'ALL'},
-      promoList: [],
+      active: { value: "ALL", label: "ALL" },
+      promoList: []
     });
     const promoTypes = ref([
-      { code:"ALL", img: 'all', label: '所有游戏' },
-      { code: "ESPORTS", img: 'esport', label: '电竞'},
-      { code: "SPORTS", img: 'sport', label: '体育'},
-      { code: "POKER", img: 'poker', label: '棋牌'},
-      { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
-      { code: "FISH", img: 'game', label: '老虎机/捕鱼'},
+      { code: "ALL", img: "all", label: "所有游戏" },
+      { code: "ESPORTS", img: "esport", label: "电竞" },
+      { code: "SPORTS", img: "sport", label: "体育" },
+      { code: "POKER", img: "poker", label: "棋牌" },
+      { code: "LIVE CASINO", img: "live", label: "真人娱乐" },
+      { code: "FISH", img: "game", label: "老虎机/捕鱼" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
@@ -173,38 +176,38 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const $q = useQuasar();
-    const ui= useUI();
+    const ui = useUI();
     const isDisplayLogin = ref(false);
 
     const tab = ref("all");
     const tabItems = [
       {
         name: "all",
-        label: "全部",
+        label: "全部"
       },
       {
         name: "sport",
-        label: "体育",
+        label: "体育"
       },
       {
         name: "esport",
-        label: "电竞",
+        label: "电竞"
       },
       {
         name: "livecasino",
-        label: "真人",
+        label: "真人"
       },
       {
         name: "slot game",
-        label: "电游",
-      },
+        label: "电游"
+      }
     ];
 
     watch(() => route.query, () => {
       if (route.query === null) {
-        isPromoDetail.value = false
+        isPromoDetail.value = false;
       } else {
-        isPromoDetail.value = route.query.name
+        isPromoDetail.value = route.query.name;
         ui.setScrollPosition("vertical", 0, 200);
       }
     });
@@ -229,35 +232,35 @@ export default defineComponent({
             // });
           }
           // banners.value = response.data;
-        })
-    }
+        });
+    };
     const showPromoDetails = (promo) => {
       if (!store.token) {
-        isDisplayLogin.value = true
+        isDisplayLogin.value = true;
       } else {
 
         if (promo.redirectUrl.includes("page-vip")) {
-          router.push({path: '/account/vip'});
+          router.push({ path: "/account/vip" });
         } else {
           if (route.query.fromAccount) {
-            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+            router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
           } else {
-            router.push({path: '/promo', query: {name: promo.redirectUrl }})
+            router.push({ path: "/promo", query: { name: promo.redirectUrl } });
           }
-          isPromoDetail.value = true
-          selectedPromo.value = promo
+          isPromoDetail.value = true;
+          selectedPromo.value = promo;
         }
       }
-    }
+    };
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function (promo) {
-          console.log("^^^")
+        filteredArray.value = promoState.promoList.filter(function(promo) {
+          console.log("^^^");
           return (promo.promoType.toLowerCase()).includes(type.value.toLowerCase());
         });
       } else {
-        filteredArray.value = promoState.promoList
+        filteredArray.value = promoState.promoList;
       }
     };
 
@@ -266,17 +269,21 @@ export default defineComponent({
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
 
-          if (route.query.name) {
-            promoState.promoList.forEach(element => {
-              if (String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element)
+          promoState.promoList.forEach(element => {
+            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            } else {
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
+                showPromoDetails(element);
               }
-            });
-          }
+            }
+          });
         }
-      }).catch((e) => {console.log("error", e);});
-      switchPromoType(promoState.active)
-    }
+      }).catch((e) => {
+        console.log("error", e);
+      });
+      switchPromoType(promoState.active);
+    };
     onMounted(() => {
       loadBanner();
       loadAll();
@@ -297,8 +304,8 @@ export default defineComponent({
       tab,
       tabItems,
       isDisplayLogin
-    }
-  },
+    };
+  }
 });
 </script>
 <style lang="scss">
@@ -353,6 +360,7 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   color: #000;
+
   .all-promotions {
     padding-bottom: 20px;
     @keyframes fadein {
@@ -369,6 +377,7 @@ export default defineComponent({
       height: 40vw;
       max-height: 130px;
       margin: 10px;
+
       img {
         width: 100%;
       }
@@ -591,6 +600,7 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
         img {
           margin-bottom: 10px;
         }
@@ -599,20 +609,24 @@ export default defineComponent({
         ul {
           margin: 0;
           padding: 15px;
+
           li {
             margin-bottom: 20px;
           }
         }
+
         table {
           width: 100%;
           border-spacing: 0;
           border-collapse: collapse;
+
           th {
             padding: 5px;
             text-align: center;
             background-image: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%),
               linear-gradient(#d0d1d3, #d0d1d3);
           }
+
           td {
             padding: 5px;
             text-align: center;
@@ -620,10 +634,12 @@ export default defineComponent({
             border: 1px solid #d0d1d3;
           }
         }
+
         img {
           width: 100%;
           display: block;
         }
+
         .hot-promo {
           // background: #272c3d;
           border-radius: 10px;
@@ -689,18 +705,23 @@ export default defineComponent({
     width: 100%;
     margin: 0 auto;
   }
+
   .q-tab {
     min-height: 40px;
   }
+
   .q-tab__content {
     width: 100%;
   }
+
   .q-tab--active {
     color: #3e5cc0;
   }
+
   .q-tab__label {
     font-size: 13px;
   }
+
   .q-tab--active .q-tab__indicator {
     background: url("../assets/images/promotion/tab_bg.png") no-repeat center
       center;
@@ -709,34 +730,46 @@ export default defineComponent({
     height: 10px;
     // background: salmon !important;
   }
+
   .q-tab__label {
     z-index: 1;
   }
+
   .q-tab-panels {
     background: none;
     // padding: 10px;
     padding: 0;
   }
+
   .q-tab-panel {
     padding: 0;
   }
+
   .download-item {
     background: #ffffff;
     padding: 10px;
+
     .imgtext {
       display: flex;
       gap: 10px;
       justify-content: flex-start;
       align-items: flex-start;
+
       img {
         width: 40px;
       }
     }
+
     .download {
       width: 120px;
       margin-left: auto;
       display: block;
     }
   }
+}
+
+.gologin-popup {
+  display: flex;
+  flex-direction: column;
 }
 </style>

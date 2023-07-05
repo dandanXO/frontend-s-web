@@ -128,7 +128,9 @@
         <br/>
         请登录后再操作
       </q-card-section>
-      <q-btn href="/login?redirect=/promo" label="确认" color="dyblue"/>
+      <router-link to="/login?redirect=/promo">
+        <q-btn label="确认" color="brightbtn"/>
+      </router-link>
     </q-card>
   </q-dialog>
 </template>
@@ -266,13 +268,15 @@ export default defineComponent({
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
 
-          if (route.query.name) {
-            promoState.promoList.forEach(element => {
-              if (String(element.redirectUrl) === route.query.name) {
+          promoState.promoList.forEach(element => {
+            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            } else {
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
-            });
-          }
+            }
+          });
         }
       }).catch((e) => {
         console.log("error", e);
@@ -584,12 +588,12 @@ export default defineComponent({
         }
       }
 
-      h1,h2,h3,h4{
+      h1, h2, h3, h4 {
         margin-top: 15px;
         margin-bottom: 16px;
       }
 
-      h3{
+      h3 {
         font-size: 22px;
       }
 

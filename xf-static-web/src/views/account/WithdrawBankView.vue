@@ -18,15 +18,15 @@
       </div> -->
       <div class="flex-box flex-wrap bank-card-list">
         <div
-          class="bank-card-item"
-          :class="{
+            class="bank-card-item"
+            :class="{
             active: index === isCardActive,
             inactive: index > isCardActive,
             USDT: bc.bankName === 'GCASH'
           }"
-          @click="showCard(bc, index)"
-          v-for="(bc, index) in personalState.bankCardList"
-          :key="bc.id"
+            @click="showCard(bc, index)"
+            v-for="(bc, index) in personalState.bankCardList"
+            :key="bc.id"
         >
           <div class="cardname">
             <div class="txt-center">
@@ -36,48 +36,48 @@
           </div>
           <div class="unlink-btn" @click="unbindBankCard(bc)">
             <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
-            <RiLinkUnlink />
+            <RiLinkUnlink/>
           </div>
 
           <div class="flex-box cards">
             <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
             >
               {{ b.slice(0, 4) }}
             </div>
             <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
             >
               ****
             </div>
             <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
             >
               ****
             </div>
             <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
             >
               {{ b.slice(b.length - 4, b.length) }}
             </div>
           </div>
         </div>
         <div class="bank-card-item" @click="bankCardModal('bank')">
-          <RiLink />
+          <RiLink/>
           绑卡
         </div>
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">绑卡历史</span>
+      <span class="account-title">解绑银行卡记录</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
@@ -85,22 +85,22 @@
           <div class="left">
             <el-form-item label="开始日期">
               <el-date-picker
-                v-model="searchForm.startDate"
-                show-time
-                type="date"
-                placeholder="开始日期"
-                valueFormat="YYYY-MM-DD"
-                format="YYYY-MM-DD"
+                  v-model="searchForm.startDate"
+                  show-time
+                  type="date"
+                  placeholder="开始日期"
+                  valueFormat="YYYY-MM-DD"
+                  format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item label="结束日期">
               <el-date-picker
-                v-model="searchForm.endDate"
-                show-time
-                type="date"
-                placeholder="结束日期"
-                valueFormat="YYYY-MM-DD"
-                format="YYYY-MM-DD"
+                  v-model="searchForm.endDate"
+                  show-time
+                  type="date"
+                  placeholder="结束日期"
+                  valueFormat="YYYY-MM-DD"
+                  format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item>
@@ -119,17 +119,21 @@
         ></el-table> -->
 
         <el-table
-          :data="dataSource"
-          style="width: 100%"
-          empty-text="暂无数据"
-          v-loading="tblLoading"
+            :data="dataSource"
+            style="width: 100%"
+            empty-text="暂无数据"
+            v-loading="tblLoading"
         >
           <el-table-column
-            v-for="tbl in columns"
-            :key="tbl.key"
-            :prop="tbl.dataIndex"
-            :label="tbl.title"
+              v-for="tbl in columns"
+              :key="tbl.key"
+              :prop="tbl.dataIndex"
+              :label="tbl.title"
           >
+            <template v-if="tbl.dataIndex === 'bankName'" #default="scope">
+              {{ getOptionLabel(scope.row.bankName) }}
+            </template>
+
             <template v-if="tbl.dataIndex === 'cardNumber'" #default="scope">
               {{ maskCardNumber(scope.row.cardNumber) }}
             </template>
@@ -145,45 +149,45 @@
  -->
           </el-table-column>
         </el-table>
-        <el-divider />
+        <el-divider/>
         <el-pagination
-          @current-change="handleCurrentChange"
-          :total="pagination.totalPage"
-          :current-page="pagination.currentPage"
-          :page-size="pagination.pageSize"
-          :page-count="pagination.pageCount"
+            @current-change="handleCurrentChange"
+            :total="pagination.totalPage"
+            :current-page="pagination.currentPage"
+            :page-size="pagination.pageSize"
+            :page-count="pagination.pageCount"
         />
       </div>
     </div>
     <el-dialog
-      class="bankModal"
-      width="500"
-      v-model="bankCardModalState.visible"
-      :footer="null"
-      title="绑定银行卡"
+        class="bankModal"
+        width="500"
+        v-model="bankCardModalState.visible"
+        :footer="null"
+        title="绑定银行卡"
     >
       <el-form
-        ref="bankCardFormRef"
-        :model="bankCardInfo"
-        :rules="bankCardRules"
+          ref="bankCardFormRef"
+          :model="bankCardInfo"
+          :rules="bankCardRules"
       >
         <el-form-item
-          prop="bankId"
-          :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
+            prop="bankId"
+            :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
         >
           <el-row :gutter="20">
             <el-col :span="6">
               <el-select
-                placeholder="Bank type"
-                v-model="selectedBankType"
-                style="width: 100%"
-                @change="selectBankType"
+                  placeholder="Bank type"
+                  v-model="selectedBankType"
+                  style="width: 100%"
+                  @change="selectBankType"
               >
                 <el-option
-                  v-for="bank in bankTypes"
-                  :key="bank.value"
-                  :value="bank.value"
-                  :label="bank.text"
+                    v-for="bank in bankTypes"
+                    :key="bank.value"
+                    :value="bank.value"
+                    :label="bank.text"
                 >
                   {{ bank.text }}
                 </el-option>
@@ -191,30 +195,30 @@
             </el-col>
             <el-col :span="18">
               <el-select
-                class="select"
-                v-model="bankCardInfo.bankId"
-                placeholder="选择银行"
-                style="width: 100%"
+                  class="select"
+                  v-model="bankCardInfo.bankId"
+                  :placeholder="isUSDT ? '选择虚拟币' : '选择银行'"
+                  style="width: 100%"
               >
                 <el-option
-                  v-for="b in banksList"
-                  :key="b.id"
-                  :label="b.name"
-                  :value="b.id"
+                    v-for="b in banksList"
+                    :key="b.id"
+                    :label="getOptionLabel(b.name)"
+                    :value="b.id"
                 >
                   <el-row
-                    style="align-items: center"
-                    v-if="b.bankIcon"
-                    :gutter="10"
+                      style="align-items: center"
+                      v-if="b.bankIcon"
+                      :gutter="10"
                   >
                     <el-col :span="3">
                       <img
-                        style="max-height: 25px; display: block; margin: 5px"
-                        :src="imgURL + b.bankIcon"
+                          style="max-height: 25px; display: block; margin: 5px"
+                          :src="imgURL + b.bankIcon"
                       />
                     </el-col>
                     <el-col :span="21">
-                      {{ b.name }}
+                      {{ getOptionLabel(b.name) }}
                     </el-col>
                   </el-row>
                 </el-option>
@@ -222,31 +226,56 @@
             </el-col>
           </el-row>
         </el-form-item>
-
-        <!-- <el-form-item v-if="isVirtual" name="bankId" label="ชื่อธนาคาร">
-          {{ bankName }}
-        </el-form-item> -->
         <el-form-item>
-          <el-input disabled v-model="bankCardInfo.cardAccount" />
+          <el-input disabled v-model="bankCardInfo.cardAccount"/>
         </el-form-item>
-        <!-- <el-form-item prop="cardAccount" name="cardAccount">
-          <el-input
-            v-model="bankCardInfo.cardAccount"
-            placeholder="ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)"
-          />
-        </el-form-item> -->
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
-            v-model="bankCardInfo.cardNumber"
-            :placeholder="isUSDT ? '虚拟币账户' : '银行卡号'"
+              v-model="bankCardInfo.cardNumber"
+              :placeholder="isUSDT ? '钱包地址' : '银行卡号'"
           />
         </el-form-item>
-        <el-form-item prop="cardAddress" name="cardAddress">
+        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT">
           <el-input
-            v-model="bankCardInfo.cardAddress"
-            placeholder="开户行地址"
+              v-model="bankCardInfo.cardAddress"
+              placeholder="开户行地址"
+              :rules="[
+              { required: true, message: '请输入开户行地址', trigger: 'blur' }
+            ]"
           />
         </el-form-item>
+
+        <el-form-item name="telephone" prop="telephone">
+          <el-input
+              class="half"
+              v-model="bankCardInfo.telephone"
+              placeholder="输入电话号码"
+              maxlength="11"
+              :readonly="isSendOtp"
+              :rules="[
+              { required: true, message: '请输入电话号码', trigger: 'blur' },
+              { required: true, message: '请输入有效的电话号码', trigger: 'blur' , pattern: '/^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$/'}
+            ]"
+          />
+          <el-button
+              class="common-btn"
+              style="margin-left: 10px"
+              type="button"
+              v-if="!isSendOtp"
+              @click="openCaptchaForm()"
+          >
+            获取验证码
+          </el-button>
+        </el-form-item>
+
+        <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
+          <el-input
+              class="half"
+              v-model="bankCardInfo.smsCode"
+              placeholder="输入电话验证码"
+          />
+        </el-form-item>
+
         <el-form-item class="txt-center">
           <el-button class="txt-center common-btn" @click="submitBankCard">
             提交
@@ -254,19 +283,88 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <el-dialog
+        v-model="phoneCaptchaDialogVisible"
+        title="验证码"
+        width="50%"
+        align-center
+        style="max-width: 500px"
+    >
+      <el-button
+          size="large"
+          color="#3bafda"
+          class="common-btn"
+          style="margin-left: 100px"
+          @click="sendOtp"
+      >
+        提交
+      </el-button>
+    </el-dialog>
+
+    <el-dialog
+        v-model="captchaDialogVisible"
+        title="验证码"
+        width="50%"
+        align-center
+        style="max-width: 500px"
+    >
+      <el-form
+          ref="captchaRef"
+          :rules="captchaRules"
+          :model="captchaForm"
+          label-width="100"
+          label-suffix=":"
+      >
+        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+          <el-row
+              :gutter="10"
+              style="justify-content: center; align-items: center"
+          >
+            <el-col :span="12">
+              <el-input
+                  v-model="captchaForm.captchaCode"
+                  label="验证码"
+                  placeholder="验证码"
+                  @keyup.enter="sendOtp"
+              />
+            </el-col>
+            <el-col :span="12">
+              <img
+                  style="width: 50%; margin-top: 6px"
+                  :src="verificationImg"
+                  @click="getCode"
+              />
+            </el-col>
+          </el-row>
+        </el-form-item>
+        <el-button
+            size="large"
+            color="#3bafda"
+            class="common-btn"
+            style="margin-left: 100px"
+            @click="sendOtp"
+        >
+          发送
+        </el-button>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import {defineComponent, reactive, ref, onMounted} from "vue";
+import {getVerificationCode} from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import { RiLink, RiLinkUnlink } from "vue-remix-icons";
-import { loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard } from "@/api/personal/personal";
-import { userStore } from "@/store";
-import { useRouter } from "vue-router";
-import { InfoFilled } from "@element-plus/icons-vue";
+import {RiLink, RiLinkUnlink} from "vue-remix-icons";
+import {loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard} from "@/api/personal/personal";
+import {userStore} from "@/store";
+import {useRouter} from "vue-router";
+import {sendSms} from "@/api/personal/personal";
+import {InfoFilled} from "@element-plus/icons-vue";
+
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
@@ -274,15 +372,35 @@ export default defineComponent({
     InfoFilled, RiLink, RiLinkUnlink
   },
   setup() {
-    let validateBankLength = async (r, v) => {
-      var min = 6
-      var max = 12
+    let validateEmptyCardNo = async (r, v) => {
       if (selectedBankType.value === 'Bank') {
-        min = 6;
+        if (v === '') {
+          return Promise.reject('请输入银卡号');
+        } else if (/^\d+$/.test(v) === false) {
+          return Promise.reject('银行卡号只能包含数字');
+        } else {
+          return Promise.resolve();
+        }
+      } else if (selectedBankType.value === 'Crypto') {
+        if (v === '') {
+          return Promise.reject('请输入虚拟钱包账号');
+        } else if (/^[A-Za-z0-9]*$/.test(v) === false) {
+          return Promise.reject('虚拟钱包账号只能包含数字及英文字母');
+        } else {
+          return Promise.resolve();
+        }
+      }
+      return Promise.resolve();
+    };
+    let validateBankLength = async (r, v) => {
+      var min = 6;
+      var max = 12;
+      if (selectedBankType.value === 'Bank') {
+        min = 16;
         max = 19;
       } else if (selectedBankType.value === 'Crypto') {
         min = 34;
-        max = 37;
+        max = 36;
       }
       if (v === '') {
         return Promise.reject('请输入卡号');
@@ -331,7 +449,7 @@ export default defineComponent({
       }
     ];
     const maskCardNumber = (cardNumber) => {
-      const maskedDigits = cardNumber.slice(0, -4).replace(/\d/g, '*');
+      const maskedDigits = cardNumber.slice(0, -4).replace(/[a-zA-Z0-9]/g, '*');
       const lastFourDigits = cardNumber.slice(-4);
       return maskedDigits + lastFourDigits;
     };
@@ -341,7 +459,7 @@ export default defineComponent({
       pageSize: 5,
       pageCount: 1
     }])
-    const bankTypes = [{ value: 'Bank', text: '银行卡' }, { value: 'Crypto', text: '数字货币' }]
+    const bankTypes = [{value: 'Bank', text: '银行卡'}, {value: 'Crypto', text: '数字货币'}]
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -383,6 +501,31 @@ export default defineComponent({
       searchForm.endDate = chgDate(0);
       searchRecord();
     };
+
+    const withdrawState = reactive({
+      bankCardList: [],
+    });
+
+    const checkBankCards = () => {
+      ElMessageBox.alert(
+      '请先绑定银行卡', "系统提示",
+      {
+        showClose: false,
+        showCancelButton: false,
+        confirmButtonText: '确认',
+        draggable: false,
+        buttonSize: 'small',
+        closeOnClickModal: false,
+        center: true,
+      }
+    )
+      .then(() => {
+        router.push('/center/withdrawbank')
+      })
+      .catch(() => {
+      })
+    }
+
     onMounted(() => {
       getTime();
       loadCards();
@@ -424,7 +567,10 @@ export default defineComponent({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      cardAddress: ""
+      cardAddress: "",
+      telephone: "",
+      smsCode: "",
+      smsCodeId: ""
     });
     const bankName = ref()
     const banksList = ref([])
@@ -438,6 +584,8 @@ export default defineComponent({
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
+          bankCardInfo.telephone = "";
+          bankCardInfo.smsCode = "";
           bankCardModalState.visible = true;
           if (bankCardModalState.banks.length === 0) {
             loadBanks().then((res) => {
@@ -468,105 +616,202 @@ export default defineComponent({
         if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
           banksList.value.push(element);
         }
-      })
+      });
+      if(bankCardInfo.cardNumber != ''){
+        bankCardFormRef.value.validateField('cardNumber');
+      }
     }
-    const submitBankCard = () => {
-      bankCardFormRef.value
-        .validate()
-        .then(() => {
-          addBankCard(bankCardInfo).then((response) => {
-            if (response.code === 0) {
+
+    const phoneCaptchaDialogVisible = ref(false)
+    const isSendOtp = ref(false)
+
+    const sendOtp = async () => {
+      const smsDetail = {
+        telephone: bankCardInfo.telephone,
+        captchaCode: captchaForm.captchaCode,
+        codeId: captchaForm.codeId
+      }
+      sendSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              isSendOtp.value = true;
+              captchaForm.smsCodeId = response.data.codeId;
+              bankCardInfo.smsCodeId = response.data.codeId;
+
               ElMessage({
-                message: 'Success',
                 type: 'success',
-              })
-              bankCardModalState.visible = false;
-              loadCards();
+                message: `发送 ${smsDetail.telephone} 手机验证码成功`
+              });
+              captchaDialogVisible.value = false;
             } else {
-              // message.error(response.message);
+              getCode();
             }
-          }).catch((error) => {
+          })
+    };
+
+    const verificationImg = ref("");
+
+    // const sendSmsForSubmitBankCard = () => {
+    //   bankCardFormRef.value
+    //     .validate()
+    //     .then(() => {
+    //       // console.log(bankCardFormRef.value)
+    //       // bankCardModalState.visible = false;
+    //       // openCaptchaForm();
+    //       phoneCaptchaDialogVisible.value = true;
+    //     }).catch((error) => {
+    //       console.log("error", error)
+    //     })
+    // }
+
+    const getCode = () => {
+      getVerificationCode().then((res) => {
+        if (res.code === 0) {
+          verificationImg.value = "data:image/png;base64," + res.data.img;
+          captchaForm.codeId = res.data.id;
+        }
+      })
+    };
+
+    const captchaForm = reactive({
+      captchaCode: "",
+      codeId: "",
+      smsCodeId: "",
+    });
+
+    const captchaDialogVisible = ref(false)
+
+    const openCaptchaForm = () => {
+      bankCardFormRef.value.validateField('telephone').then((resp) => {
+        captchaForm.captchaCode = "";
+        captchaDialogVisible.value = true;
+        getCode();
+      }).catch((err) => {
+        ElMessage({
+          message: '请输入有效的中国手机号码',
+          type: 'error',
+        })
+      })
+    };
+
+    const submitBankCard = () => {
+      console.log(bankCardInfo)
+      bankCardFormRef.value
+          .validate()
+          .then(() => {
+            addBankCard(bankCardInfo).then((response) => {
+              if (response.code === 0) {
+                ElMessage({
+                  message: '成功',
+                  type: 'success',
+                })
+                bankCardModalState.visible = false;
+                loadCards();
+              } else {
+                // message.error(response.message);
+              }
+            }).catch((error) => {
               console.log(error.message);
               // message.error(error.message, 4);
-          });
-        }).catch((error) => {
+            });
+          }).catch((error) => {
         console.log("error", error);
       });
     };
+
     const bankCardRules = {
       cardNumber: [
-        // {
-        //   required: true,
-        //   message: "Card number is required",
-        //   trigger: "blur",
-        // },
-        {
-          validator: validateBankLength,
-          trigger: "blur",
-        }
-      ],
-      cardAccount: [
         {
           required: true,
-          message: "请输入银行卡号",
+          validator: validateEmptyCardNo,
+          trigger: "blur",
+        },
+        {
+          required: true,
+          validator: validateBankLength,
+          trigger: "blur",
+        },
+
+      ],
+      cardAddress: [
+        {
+          required: true,
+          message: "请输入开户行地址",
+          trigger: "blur"
+        }
+      ],
+      telephone: [
+        {
+          required: true,
+          message: "请输入电话号码",
+          trigger: "blur"
+        },
+        {
+          pattern: /^1[3-9]\d{9}$/,
+          message: "请输入有效的中国手机号码",
+          trigger: "blur",
+        },
+      ],
+      smsCode: [
+        {
+          required: true,
+          message: "请输入验证码",
           trigger: "blur"
         }
       ]
     };
     const unbindBankCard = (card) => {
-      ElMessageBox.confirm(
-        `解绑 ${card.bankName} ?`,
-        '警告',
-        {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Cancel',
-          type: 'warning',
-        }
+
+      ElMessageBox.prompt(
+          `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === 'CRYPTO' ? '钱包地址' : '卡号'}`,
+          '警告',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            inputErrorMessage: '请输入正确的卡号', // Error message to display if input is invalid
+          }
       )
-        .then(() => {
-          deleteBankCard(card.id).then((res) => {
-            if (res.code === 0) {
-              ElMessage({
-                type: 'success',
-                message: '删除完成',
-              })
-              for (let i = 0; i < personalState.bankCardList.length; i++) {
-                if (personalState.bankCardList[i].id === card.id) {
-                  personalState.bankCardList.splice(i, 1);
+          .then((inputValue) => {
+            if (inputValue.value === card.cardNumber) {
+              deleteBankCard(card.id).then((res) => {
+                if (res.code === 0) {
+                  ElMessage({
+                    type: 'success',
+                    message: '删除完成',
+                  });
+                  for (let i = 0; i < personalState.bankCardList.length; i++) {
+                    if (personalState.bankCardList[i].id === card.id) {
+                      personalState.bankCardList.splice(i, 1);
+                    }
+                  }
                 }
-              }
+              }).catch((e) => {
+                console.log('error', e);
+              });
+            } else {
+              ElMessage({
+                type: 'error',
+                message: '卡号不匹配，请重新输入',
+              });
             }
-          }).catch((e) => {
-            console.log("error", e);
-          });
-        })
-        .catch(() => {
-          ElMessage({
-            type: 'info',
-            message: 'Remove canceled',
           })
-        })
-//       Modal.confirm({
-//         title: "Remove " + card.bankName + "?",
-//         content: "Are you sure you want to remove " + card.bankName + "?",
-//         icon: createVNode(ExclamationCircleOutlined),
-//         width: "100%",
-//         onOk() {
-//           deleteBankCard(card.id
-// ).then((res) => {
-//             if (res.code === 0) {
-//               for (let i = 0; i < personalState.bankCardList.length; i++) {
-//                 if (personalState.bankCardList[i].id === card.id) {
-//                   personalState.bankCardList.splice(i, 1);
-//                 }
-//               }
-//             }
-//           }).catch((e) => {
-//             console.log("error", e);
-//           });
-//         }
-//       });
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '删除取消',
+            });
+          });
     };
+
+    const getOptionLabel = (bankOption) => {
+      if (bankOption === 'USDTTRC') {
+        return 'USDTTRC20'
+      } else {
+        return bankOption
+      }
+    }
+
     return {
       searchForm,
       columns,
@@ -576,6 +821,12 @@ export default defineComponent({
       bankCardInfo,
       bankCardRules,
       submitBankCard,
+      // sendSmsForSubmitBankCard,
+      openCaptchaForm,
+      captchaForm,
+      getCode,
+      verificationImg,
+      captchaDialogVisible,
       bankCardModal,
       unbindBankCard,
       showCard,
@@ -592,7 +843,13 @@ export default defineComponent({
       pagination,
       handleCurrentChange,
       tblLoading,
-      maskCardNumber
+      maskCardNumber,
+      sendOtp,
+      phoneCaptchaDialogVisible,
+      isSendOtp,
+      getOptionLabel,
+      withdrawState,
+      checkBankCards,
     };
   }
 });
@@ -606,6 +863,7 @@ body {
     }
   }
 }
+
 .passwordModal .ant-modal {
   max-width: 520px;
   width: 100%;
@@ -620,6 +878,7 @@ body {
     width: 100%;
   }
 }
+
 .bankModal .ant-modal {
   max-width: 520px;
   width: 100%;
@@ -634,6 +893,7 @@ body {
     width: 100%;
   }
 }
+
 .securityModal .ant-modal {
   width: 100%;
   max-width: 600px;
@@ -648,6 +908,7 @@ body {
     width: 100%;
   }
 }
+
 .ant-modal.ant-modal-confirm {
   width: 100%;
   max-width: 600px;
@@ -657,9 +918,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .ant-space-item:nth-child(1) {
   flex: 2;
 }
+
 .ant-space-item:nth-child(2) {
   flex: 4;
 }
@@ -670,17 +933,21 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+
   .ant-input {
     width: 100%;
     flex-basis: 50%;
   }
 }
+
 :deep(.ant-form-item .ant-select) {
   width: 100%;
 }
+
 :deep(.ant-form-item.select .ant-form-item-control-input) {
   width: 100%;
 }
+
 :deep(
     .ant-select-single:not(.ant-select-customize-input)
       .ant-select-selector
@@ -688,6 +955,7 @@ body {
   ) {
   height: 40px;
 }
+
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
   height: 40px;
   padding: 5px 20px;
@@ -698,14 +966,17 @@ body {
 
 .common-btn {
   cursor: pointer;
+
   &.search-btn {
     margin-top: 0;
     padding: 3px 5px;
     font-size: 14px;
   }
+
   &.verification-btn {
     padding: 5px;
   }
+
   &.submit-btn {
     padding: 5px;
   }
@@ -748,6 +1019,7 @@ body {
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.6);
     filter: grayscale(0.3);
     transform: skewX(5deg);
+
     &.USDT {
       background-image: url("../../assets/images/finance/download.png");
     }
@@ -761,15 +1033,18 @@ body {
       margin: 0 -60px 0 0px;
 
       filter: none;
+
       .unlink-btn {
         display: block;
       }
+
       .txt-center {
         position: relative;
         padding-top: 0;
         transform: rotateZ(0);
         height: unset;
       }
+
       &:hover {
         &:before {
           -webkit-animation: shine 2s;
@@ -777,6 +1052,7 @@ body {
         }
       }
     }
+
     .txt-center {
       position: absolute;
       padding-top: 10px;
@@ -794,18 +1070,21 @@ body {
       white-space: nowrap;
       transition: all 0.3s ease-in-out;
     }
+
     .cards {
       display: flex;
       gap: 10px;
       margin-top: 10px;
       justify-content: center;
     }
+
     &.add-bank-card {
       cursor: pointer;
       align-items: center;
       padding: 0;
       filter: none;
     }
+
     .unlink-btn {
       cursor: pointer;
       position: absolute;
@@ -813,13 +1092,16 @@ body {
       top: 10px;
       left: 10px;
     }
+
     svg {
       fill: #ffffff;
       width: 20px;
     }
+
     .card-num-box {
       // padding: 40px 0 0;
     }
+
     &:before {
       position: absolute;
       top: 0;
@@ -830,9 +1112,9 @@ body {
       width: 50%;
       height: 100%;
       background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 100%
+              to right,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(255, 255, 255, 0.3) 100%
       );
       border-radius: 10px;
       transform: skewX(320deg);
@@ -850,8 +1132,10 @@ body {
     }
   }
 }
+
 .basic-info {
   position: relative;
+
   .buttons {
     position: absolute;
     top: 20px;
@@ -860,6 +1144,7 @@ body {
     flex-direction: column;
     gap: 10px;
   }
+
   .account-btn {
     cursor: pointer;
     padding: 5px 20px;
@@ -867,21 +1152,25 @@ body {
     min-width: 180px;
   }
 }
+
 .basic-info-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 70%;
+
   .tbl-row {
     display: flex;
     justify-content: flex-start;
     padding: 0 20px 15px 0px;
   }
+
   .basic-info-cell {
     padding-bottom: 0.5rem;
 
     &.title {
       width: 150px;
     }
+
     // &.content {
     //   // width: 170px;
     //   width: calc(100% - 100px);
@@ -890,9 +1179,11 @@ body {
     // }
   }
 }
+
 .unbind-record-wrapper {
   margin-top: 20px;
 }
+
 .left {
   display: flex;
   justify-content: flex-start;
@@ -900,9 +1191,11 @@ body {
   gap: 20px;
   margin: 20px 0;
 }
+
 .searchbar .ant-form {
   display: flex;
   justify-content: space-between;
+
   .ant-form-item {
     margin-right: 0;
   }

@@ -6,42 +6,42 @@
       </div>
       <div class="pro-details">
         <span class="nickname-span">{{ store.nickName }}</span>
-        <span v-if="vipLevel === 1"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_1.png"
-        /></span>
-        <span v-else-if="vipLevel === 2"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_2.png"
-        /></span>
-        <span v-else-if="vipLevel === 3"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_3.png"
-        /></span>
-        <span v-else-if="vipLevel === 4"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_4.png"
-        /></span>
-        <span v-else-if="vipLevel === 5"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_5.png"
-        /></span>
-        <span v-else-if="vipLevel === 6"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_6.png"
-        /></span>
-        <span v-else-if="vipLevel === 7"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_7.png"
-        /></span>
-        <span v-else-if="vipLevel === 8"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_8.png"
-        /></span>
-        <span v-else-if="vipLevel === 9"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_9.png"
-        /></span>
-        <span v-else-if="vipLevel === 10"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_10.png"
-        /></span>
-        <span v-else-if="vipLevel === 11"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_11.png"
-        /></span>
-        <span v-else-if="vipLevel === 12"
-          ><img id="personal_vip_img" src="../assets/vip/vip_text_12.png"
-        /></span>
+        <span v-if="vipLevel === 1">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_1.png" />
+        </span>
+        <span v-else-if="vipLevel === 2">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_2.png" />
+        </span>
+        <span v-else-if="vipLevel === 3">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_3.png" />
+        </span>
+        <span v-else-if="vipLevel === 4">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_4.png" />
+        </span>
+        <span v-else-if="vipLevel === 5">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_5.png" />
+        </span>
+        <span v-else-if="vipLevel === 6">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_6.png" />
+        </span>
+        <span v-else-if="vipLevel === 7">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_7.png" />
+        </span>
+        <span v-else-if="vipLevel === 8">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_8.png" />
+        </span>
+        <span v-else-if="vipLevel === 9">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_9.png" />
+        </span>
+        <span v-else-if="vipLevel === 10">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_10.png" />
+        </span>
+        <span v-else-if="vipLevel === 11">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_11.png" />
+        </span>
+        <span v-else-if="vipLevel === 12">
+          <img id="personal_vip_img" src="../assets/vip/vip_text_12.png" />
+        </span>
 
         <br />
         <span v-if="store.evip">专属网址: {{ store.evip }}</span>
@@ -90,17 +90,21 @@
         </q-card-section>
         <!-- <q-separator /> -->
         <q-card-section class="bot-section">
-          <router-link to="/" @click="openDeposit" class="button"
-            ><img src="../assets/images/index/deposit_icon.png" />存款
+          <router-link to="/" @click="openDeposit" class="button">
+            <img src="../assets/images/index/deposit_icon.png" />
+            存款
           </router-link>
-          <router-link to="finance/withdraw" class="button"
-            ><img src="../assets/images/index/withdrawal_icon.png" />提款
+          <router-link to="finance/withdraw" class="button">
+            <img src="../assets/images/index/withdrawal_icon.png" />
+            提款
           </router-link>
-          <router-link to="account/transfer" class="button"
-            ><img src="../assets/images/index/transfer_icon.png" />转账
+          <router-link to="account/transfer" class="button">
+            <img src="../assets/images/index/transfer_icon.png" />
+            转账
           </router-link>
-          <router-link to="account/vip" class="button"
-            ><img src="../assets/images/account/vip_icon.png" />VIP详情
+          <router-link to="account/vip" class="button">
+            <img src="../assets/images/account/vip_icon.png" />
+            VIP详情
           </router-link>
         </q-card-section>
       </q-card-section>
@@ -114,9 +118,7 @@
       </div> -->
       <div class="acct-title">
         <div class="acct-title-1">我的功能</div>
-        <div id="vipDomain" class="vipurl">
-          专属网址：{{ store.evip }}
-        </div>
+        <div id="vipDomain" class="vipurl">专属网址：{{ store.evip }}</div>
       </div>
       <div class="acct-menu">
         <router-link to="/account/records">
@@ -170,10 +172,8 @@
         <router-link to="/account/mail">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_mailbox.png" />
-            <div class="acct-nav-label">
-              站内信
-            </div>
-<!--            ({{ store.unreadInboxMail }})-->
+            <div class="acct-nav-label">站内信</div>
+            <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
         <!-- <a href="https://partner.dyvip90.com" target="_blank">
@@ -193,7 +193,13 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, onMounted } from "vue";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  onBeforeUnmount
+} from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 
@@ -209,7 +215,9 @@ export default defineComponent({
     };
 
     const vipLevel = computed(() => {
-      if (store.vip == "VIP1") {
+      if (store.vip == "VIP0") {
+        return 0;
+      } else if (store.vip == "VIP1") {
         return 1;
       } else if (store.vip == "VIP2") {
         return 2;
@@ -237,6 +245,8 @@ export default defineComponent({
       return store.vip;
     });
 
+    const timerBalance = ref();
+
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
@@ -244,6 +254,9 @@ export default defineComponent({
       getBalance();
       store.getBalance();
       // store.getUnreadTotal();
+    });
+    onBeforeUnmount(() => {
+      clearInterval(timerBalance.value);
     });
 
     const openDeposit = () => {
@@ -253,7 +266,7 @@ export default defineComponent({
     };
 
     const getBalance = () => {
-      setInterval(function () {
+      timerBalance.value = setInterval(function () {
         if (store.hasToken()) {
           store.getBalance();
         }
@@ -427,12 +440,12 @@ export default defineComponent({
   .acct-menu {
     // display: grid;
     // grid-template-columns: repeat(3, 1fr);
-    display:flex;
+    display: flex;
     justify-content: flex-start;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 
     a {
-      width:33.33%;
+      width: 33.33%;
       text-decoration: none;
       display: flex;
       justify-content: center;

@@ -395,11 +395,10 @@
           <span v-if="memberDetail.regTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.registerIp')" label-class-name="member-label"
-                              :class-name="memberDetail.dupIp === 'red'?'member-context-red':'member-context'"
+                              class-name="member-context"
         >
           <span
             v-if="memberDetail.regIp !== null && memberDetail.dupIp === 'red'"
-            :style="[selectedIpColor.registerIpColor !== null ? {color: selectedIpColor.registerIpColor}: {}]"
             style="color:red"
           >
             {{ memberDetail.regIp }}

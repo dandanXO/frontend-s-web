@@ -57,6 +57,25 @@ export default {
       withdraw: 'WITHDRAW'
     }
   },
+  moneyChange: {
+    type: {
+      DEPOSIT: 'DEPOSIT',
+      WITHDRAW: 'WITHDRAW',
+      PROMO: 'PROMO',
+      TRANSFER: 'TRANSFER',
+      BET: 'BET',
+      WITHDRAW_FAIL: 'WITHDRAW FAIL',
+      ADJUST: 'ADJUST',
+      PAYOUT: 'PAYOUT',
+      ROLLBACK: 'ROLLBACK',
+      PATCH: 'PATCH',
+      BET_N_PAYOUT: 'BET AND PAYOUT'
+    },
+    subType: {
+      DEPOSIT: 'Wallet to Game',
+      WITHDRAW: 'Game to Wallet'
+    }
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -414,6 +433,7 @@ export default {
     loginInfo: 'Login Information',
     loginIp: 'Login IP',
     loginName: 'Login Name',
+    loginNameSeparateComma: 'Login Name (Separate by comma)',
     loginStatus: 'Login Status',
     loginTime: 'Login Time',
     loginUrl: 'Login URL',
@@ -458,6 +478,7 @@ export default {
     minDeposit: 'Minimum Deposit',
     minTotalCommission: 'Minimum Total Commission',
     minWithdrawAmount: 'Minimum Withdraw Amount',
+    mobile: 'Mobile',
     mobileImage: 'Mobile Image',
     mobileBanner: 'Mobile Banner',
     mobileMessage: 'Mobile Message',
@@ -752,6 +773,7 @@ export default {
     voteTime: 'Vote Time',
     walletType: 'Wallet Type',
     way: 'Way',
+    web: 'Web',
     webMessage: 'Web Message',
     withdraw: 'Withdraw',
     withdrawArea: 'Withdraw Area',
@@ -1097,6 +1119,7 @@ export default {
     'Member Sms': 'Member Sms History',
     'Import Bet Records': 'Import Bet Records',
     'Member Transfer Record': 'Member Transfer Record',
+    'Member VIP': 'Member VIP',
     Affiliate: 'Affiliate',
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',

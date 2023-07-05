@@ -57,6 +57,25 @@ export default {
       withdraw: '转出'
     }
   },
+  moneyChange: {
+    type: {
+      DEPOSIT: '存款',
+      WITHDRAW: '提款',
+      PROMO: '优惠',
+      TRANSFER: '转账',
+      BET: '投注',
+      WITHDRAW_FAIL: '提款失败',
+      ADJUST: '账变',
+      PAYOUT: '派彩',
+      ROLLBACK: '回滚',
+      PATCH: '修补',
+      BET_N_PAYOUT: '投注并派彩'
+    },
+    subType: {
+      DEPOSIT: '主账号转入平台',
+      WITHDRAW: '平台转出主账号'
+    }
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -414,6 +433,7 @@ export default {
     loginInfo: '登录信息',
     loginIp: '登录IP',
     loginName: '登录名',
+    loginNameSeparateComma: '登录名（以逗号来区分）',
     loginStatus: '登录状态',
     loginTime: '登录时间',
     loginUrl: '登录网址',
@@ -458,6 +478,7 @@ export default {
     minDeposit: '最低存款',
     minTotalCommission: '最低总分红',
     minWithdrawAmount: '最低提款金额',
+    mobile: '手机版',
     mobileImage: '手机图像',
     mobileBanner: '手机广告图',
     mobileMessage: '手机提示信息',
@@ -752,6 +773,7 @@ export default {
     voteTime: '投票时间',
     walletType: '钱包类型',
     way: '设备',
+    web: '电脑版',
     webMessage: '网页提示信息',
     withdraw: '提款',
     withdrawArea: '提款区域',
@@ -1078,6 +1100,7 @@ export default {
     'Member Sms': '发送短信记录',
     'Import Bet Records': '导入投注记录',
     'Member Transfer Record': '会员转账记录',
+    'Member VIP': '会员等级列表',
     Affiliate: '代理',
     'Affiliate Summary': '代理总结',
     'Affiliate Monthly Settlement': '代理结算记录',

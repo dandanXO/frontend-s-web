@@ -7,7 +7,7 @@
       <div class="vip_level">
         <div class="level_img">
           <div
-            @click="!store.token ? (selectedVIP = vip.level) : ''"
+            @click="selectedVIP = vip.level"
             v-for="(vip, n) in vipList"
             :key="n"
           >
@@ -77,12 +77,15 @@
               <span class="water">
                 {{ vip.birthdayBonus }}
               </span>
-              <button
-                class="btn btn-sm"
-                @click="onVIPButtonClick('dy1-vip-monthly')"
-              >
-                领取
-              </button>
+
+              <template v-if="!store.token || n === (store.vip.split('VIP')[1] - 1)">
+                <button
+                  class="btn btn-sm"
+                  @click="onVIPButtonClick('xf1-vip-birthday')"
+                >
+                  领取
+                </button>
+              </template>
             </p>
             <span class="purple">晋级自动发放</span>
           </div>

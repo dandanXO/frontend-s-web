@@ -33,7 +33,7 @@ export default defineComponent({
     data: () => ({
         navigations: [
         { code: "IM", icon: "im", label: "IM", slogan: "赛事最多 玩法新颖" },
-        { code: "CR", icon: "xf", label: "CR", slogan: "崭新玩法 感受精彩" },
+        // { code: "CR", icon: "xf", label: "CR", slogan: "崭新玩法 感受精彩" },
         ],
     }),
     setup() {

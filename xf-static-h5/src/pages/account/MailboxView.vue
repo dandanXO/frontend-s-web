@@ -319,7 +319,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Success",
+                  message: "发送成功",
                   icon: "check_circle_outline"
                 });
                 mailboxState.mailboxList.write.title = "";

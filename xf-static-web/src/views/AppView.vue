@@ -1,42 +1,363 @@
 <template>
   <div class="download-container">
     <div class="app_button">
-        <!--<div>手机H5网页</div>
+      <!--<div>手机H5网页</div>
         <div class="app_active">全站APP下载</div>
         <div>兴發电竞APP下载</div>
         <div>兴發体育APP下载</div>-->
     </div>
     <div class="app_content">
-        <div class="app_pic"><img src="https://jsn92.czxinbang.com/xf-resource/web/style/img/download/app.png" alt=""></div>
-        <div class="app_link">
-            <img src="https://jsn92.czxinbang.com/xf-resource/web/style/img/download/app_text.png" alt="">
-            <div class="app_text">
-                <p>全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量顶尖赛事</p>
-                <p>真人娱乐、捕鱼、棋牌及电子游艺等，最新最全娱乐项目尽在掌中体验</p>
-                <p>扫码下载，即刻拥有！</p> 
-            </div>
-            <div class="app_address">
-                <div>
-                    <div>
-                        <div id="downloadAllQrcode" class="download-img-container">
-
-                        <canvas width="100" height="100"></canvas></div>
-                    </div>
-                    <p style="margin-top: 20px;">扫描二维码下载iOS</p>
-                    <p>安卓纯原生手机客户端</p>
-                    <a id="downloadAllHref" href="https://xfapp1.com?url=xf882.com&amp;agentCode=">xfapp1.com</a>
-                </div>
-                <div>
-                    <img src="https://jsn92.czxinbang.com/xf-resource/web/style/img/download/h5.jpg" alt="">
-                    <p>使用浏览器输入以下网址</p>
-                    <p>免下载访问</p>
-                    <a href="https://m.xf882.com">m.xf871.com</a>
-                </div>
-            </div>
+      <div class="app_pic">
+        <img
+          src="https://jsn92.czxinbang.com/xf-resource/web/style/img/download/app.png"
+          alt=""
+        />
+      </div>
+      <div class="app_link">
+        <img
+          src="https://jsn92.czxinbang.com/xf-resource/web/style/img/download/app_text.png"
+          alt=""
+        />
+        <div class="app_text">
+          <p>全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量顶尖赛事</p>
+          <p>真人娱乐、捕鱼、棋牌及电子游艺等，最新最全娱乐项目尽在掌中体验</p>
+          <p>扫码下载，即刻拥有！</p>
         </div>
+        <div class="app_address">
+          <div>
+            <div>
+              <!-- <div id="downloadAllQrcode" class="download-img-container">
+                <canvas width="100" height="100"></canvas>
+              </div> -->
+              <vue-qrious value="https://xf9866.com" />
+            </div>
+            <p>扫描二维码下载iOS</p>
+            <p>安卓纯原生手机客户端</p>
+            <a
+              id="downloadAllHref"
+              href="https://xf9866.com?url=xf9866.com&amp;agentCode="
+            >
+              xf9866.com
+            </a>
+          </div>
+          <div>
+            <vue-qrious value="https://m.xf9866.com" />
+            <p>使用浏览器输入以下网址</p>
+            <p>免下载访问</p>
+            <a href="https://m.xf9866.com">m.xf9866.com</a>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 </template>
+
+<script>
+import { defineComponent, onMounted, ref } from "vue";
+// import GameModal from "@/components/modal/GameModal";
+import aos from "aos";
+import VueQrious from "vue-qrious";
+
+export default defineComponent({
+    components: {
+        // GameModal,
+        VueQrious,
+    },
+    setup() {
+        const appGame = ref(null);
+        const platforms = ref([
+            // {
+            //     code: "QZ",
+            //     name: "全站",
+            //     image: "qz",
+            //     message:
+            //         "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
+            //     link: "https://dy9367.app",
+            //     mobile: "https://dy9367.app",
+            // },
+            // {
+            //     code: "DJ",
+            //     name: "电竞",
+            //     image: "dj",
+            //     message:
+            //         "独立电竞APP，原生态开发，提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
+            //     link: "https://xwesport.app",
+            //     mobile: "https://dybet1.com",
+            // },
+            // {
+            //     code: "TY",
+            //     name: "体育",
+            //     image: "ty",
+            //     message:
+            //         "独立体育APP，原生态开发，高赔率 玩法多 提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
+            //     link: "https://dygames.app",
+            //     mobile: "https://dygames.app",
+            // },
+        ]);
+        // const selectedPlat = ref(platforms.value[0].code);
+        // const clickPlat = (plat) => {
+        //     selectedPlat.value = plat.code;
+        // };
+
+        const openGame = (gameName, gameCode) => {
+            appGame.value.open(gameName, "onlyPlatform", gameCode);
+        };
+        onMounted(() => {
+            aos.refresh();
+        });
+        return {
+            platforms,
+            // selectedPlat,
+            // clickPlat,
+            openGame,
+            appGame,
+        };
+    },
+});
+</script>
+
 <style scoped lang="scss">
-*{margin:0;padding:0;box-sizing:border-box}body{background-image:url(../assets/app/app_bg.jpg);background-repeat:no-repeat;background-size:cover;min-width:1376px}.download-container{height:946px;font-size:14px;letter-spacing:2px;color:#242424;padding-top:120px}.download-container .download-left{width:950px}.download-container .download-left .app-main-box{position:relative;width:100%;height:724px;background-repeat:no-repeat;background-position:405px 54px;display:none}.download-container .download-left .app-main-box.active{display:block}.download-container .download-left .app-main-box .app-item-box{position:absolute;transition:1s all cubic-bezier(.83,.97,.05,1.44)}.download-container .download-left .app-main-box.app-all-main,.download-container .download-left .app-main-box.app-sport-main{/*background-image:url(../img/download/all_phone.png)*/}.download-container .download-left .app-main-box.app-esports-main{/*background-image:url(../img/download/esport_phone.png)*/}.download-container .download-right{padding-top:100px}.download-container .download-right .app-btn-box{display:flex;margin-bottom:73px}.download-container .download-right .app-type-btn{width:181px;height:50px;background-blend-mode:normal,normal;background-image:linear-gradient(0deg,#f2f2f2 0,#fefefe 100%),linear-gradient(#000,#000);box-shadow:0 6px 20px 2px rgba(103,204,255,.75);border-radius:6px;display:block;font-size:16px;color:#222;cursor:pointer;margin-right:27px;text-align:center;line-height:50px}.download-container .download-right .app-type-btn.active,.download-container .download-right .app-type-btn:hover{background-image:linear-gradient(90deg,#2d74f6 0,#7abdfc 100%),linear-gradient(#000,#000);color:#fff}.download-container .download-right .app-desc-content{width:460px;position:relative}.download-container .download-right .app-desc-content .app-detail-box{position:absolute;left:40px;display:none}.download-container .download-right .app-desc-content .app-detail-box.active{display:block}.download-container .download-right .app-desc-content .app-detail-box.app-detail-fadeout{-webkit-animation:app-detail-fadeout-ani .8s forwards;animation:app-detail-fadeout-ani .8s forwards;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}.download-container .download-right .app-desc-content .app-detail-box.app-detail-fadein{-webkit-animation:app-detail-fadein-ani .8s forwards;animation:app-detail-fadein-ani .8s forwards;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}.download-container .download-right .app-desc-content .app-detail-box .app-desc{line-height:25px;margin:23px 0 39px}.download-container .download-right .app-bottom-box{display:flex;text-align:center;font-size:14px}.download-container .download-right .app-bottom-box .app-img-box{width:230px}.download-container .download-right .app-bottom-box .app-img-box .img-box{height:112px;display:flex;justify-content:center;align-items:center}.download-container .download-right .app-bottom-box .app-img-box .img-desc{margin:30px 0 15px;font-weight:700;color:#454545}.download-container .download-right .app-bottom-box .app-img-box .app-url{letter-spacing:1px;color:#5b91ff}.download-container .download-right .app-bottom-box .app-img-box .qrcode-bg{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABwCAYAAADG4PRLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjM1Nzg5QUE2MzY5ODExRUE5RkMwOTU2MzM2NzJCQkU4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjM1Nzg5QUE3MzY5ODExRUE5RkMwOTU2MzM2NzJCQkU4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzU3ODlBQTQzNjk4MTFFQTlGQzA5NTYzMzY3MkJCRTgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzU3ODlBQTUzNjk4MTFFQTlGQzA5NTYzMzY3MkJCRTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7S5sRRAAAGDUlEQVR42uxd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) center no-repeat;width:112px;height:112px;padding:7px}@-webkit-keyframes app-detail-fadeout-ani{0%{opacity:1}to{-webkit-transform:translate3d(30px,0,0);transform:translate3d(30px,0,0);opacity:0}}@keyframes app-detail-fadeout-ani{0%{opacity:1}to{-webkit-transform:translate3d(30px,0,0);transform:translate3d(30px,0,0);opacity:0}}@-webkit-keyframes app-detail-fadein-ani{0%{-webkit-transform:translate3d(30px,0,0);transform:translate3d(30px,0,0);opacity:0}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}}@keyframes app-detail-fadein-ani{0%{-webkit-transform:translate3d(30px,0,0);transform:translate3d(30px,0,0);opacity:0}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}}.app_button{width:1000px;margin:50px auto;display:flex;cursor:pointer}.app_button>div{width:243px;height:62px;line-height:62px;background-color:#2a313e;border-radius:3px;margin-right:20px;font-size:14px;color:#959dab;text-align:center}.app_active{background-image:linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#2a313e,#2a313e);box-shadow:-2px 2px 7px 0 rgba(0,0,0,.35);border-radius:3px;color:#fff!important}.app_address p,.app_text{font-size:14px;color:#959dab}.app_content{width:1100px;margin:0 auto;display:flex}.app_pic{width:40%}.app_address,.app_link{width:60%;text-align:center}.app_text{margin-top:30px}.app_address{display:flex;margin:30px auto 0}.app_address>div{width:50%}.app_address a{font-size:12px;color:#32ceed}.app_address img{margin-bottom:30px}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-image: url(../assets/app/app_bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-width: 1376px;
+}
+.download-container {
+  height: 946px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #242424;
+  padding-top: 120px;
+}
+.download-container .download-left {
+  width: 950px;
+}
+.download-container .download-left .app-main-box {
+  position: relative;
+  width: 100%;
+  height: 724px;
+  background-repeat: no-repeat;
+  background-position: 405px 54px;
+  display: none;
+}
+.download-container .download-left .app-main-box.active {
+  display: block;
+}
+.download-container .download-left .app-main-box .app-item-box {
+  position: absolute;
+  transition: 1s all cubic-bezier(0.83, 0.97, 0.05, 1.44);
+}
+.download-container .download-left .app-main-box.app-all-main,
+.download-container .download-left .app-main-box.app-sport-main {
+  /*background-image:url(../img/download/all_phone.png)*/
+}
+.download-container .download-left .app-main-box.app-esports-main {
+  /*background-image:url(../img/download/esport_phone.png)*/
+}
+.download-container .download-right {
+  padding-top: 100px;
+}
+.download-container .download-right .app-btn-box {
+  display: flex;
+  margin-bottom: 73px;
+}
+.download-container .download-right .app-type-btn {
+  width: 181px;
+  height: 50px;
+  background-blend-mode: normal, normal;
+  background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%),
+    linear-gradient(#000, #000);
+  box-shadow: 0 6px 20px 2px rgba(103, 204, 255, 0.75);
+  border-radius: 6px;
+  display: block;
+  font-size: 16px;
+  color: #222;
+  cursor: pointer;
+  margin-right: 27px;
+  text-align: center;
+  line-height: 50px;
+}
+.download-container .download-right .app-type-btn.active,
+.download-container .download-right .app-type-btn:hover {
+  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
+    linear-gradient(#000, #000);
+  color: #fff;
+}
+.download-container .download-right .app-desc-content {
+  width: 460px;
+  position: relative;
+}
+.download-container .download-right .app-desc-content .app-detail-box {
+  position: absolute;
+  left: 40px;
+  display: none;
+}
+.download-container .download-right .app-desc-content .app-detail-box.active {
+  display: block;
+}
+.download-container
+  .download-right
+  .app-desc-content
+  .app-detail-box.app-detail-fadeout {
+  -webkit-animation: app-detail-fadeout-ani 0.8s forwards;
+  animation: app-detail-fadeout-ani 0.8s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+.download-container
+  .download-right
+  .app-desc-content
+  .app-detail-box.app-detail-fadein {
+  -webkit-animation: app-detail-fadein-ani 0.8s forwards;
+  animation: app-detail-fadein-ani 0.8s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+.download-container
+  .download-right
+  .app-desc-content
+  .app-detail-box
+  .app-desc {
+  line-height: 25px;
+  margin: 23px 0 39px;
+}
+.download-container .download-right .app-bottom-box {
+  display: flex;
+  text-align: center;
+  font-size: 14px;
+}
+.download-container .download-right .app-bottom-box .app-img-box {
+  width: 230px;
+}
+.download-container .download-right .app-bottom-box .app-img-box .img-box {
+  height: 112px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.download-container .download-right .app-bottom-box .app-img-box .img-desc {
+  margin: 30px 0 15px;
+  font-weight: 700;
+  color: #454545;
+}
+.download-container .download-right .app-bottom-box .app-img-box .app-url {
+  letter-spacing: 1px;
+  color: #5b91ff;
+}
+.download-container .download-right .app-bottom-box .app-img-box .qrcode-bg {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABwCAYAAADG4PRLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjM1Nzg5QUE2MzY5ODExRUE5RkMwOTU2MzM2NzJCQkU4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjM1Nzg5QUE3MzY5ODExRUE5RkMwOTU2MzM2NzJCQkU4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzU3ODlBQTQzNjk4MTFFQTlGQzA5NTYzMzY3MkJCRTgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzU3ODlBQTUzNjk4MTFFQTlGQzA5NTYzMzY3MkJCRTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7S5sRRAAAGDUlEQVR42uxd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)
+    center no-repeat;
+  width: 112px;
+  height: 112px;
+  padding: 7px;
+}
+@-webkit-keyframes app-detail-fadeout-ani {
+  0% {
+    opacity: 1;
+  }
+  to {
+    -webkit-transform: translate3d(30px, 0, 0);
+    transform: translate3d(30px, 0, 0);
+    opacity: 0;
+  }
+}
+@keyframes app-detail-fadeout-ani {
+  0% {
+    opacity: 1;
+  }
+  to {
+    -webkit-transform: translate3d(30px, 0, 0);
+    transform: translate3d(30px, 0, 0);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes app-detail-fadein-ani {
+  0% {
+    -webkit-transform: translate3d(30px, 0, 0);
+    transform: translate3d(30px, 0, 0);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}
+@keyframes app-detail-fadein-ani {
+  0% {
+    -webkit-transform: translate3d(30px, 0, 0);
+    transform: translate3d(30px, 0, 0);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}
+.app_button {
+  width: 1000px;
+  margin: 50px auto;
+  display: flex;
+  cursor: pointer;
+}
+.app_button > div {
+  width: 243px;
+  height: 62px;
+  line-height: 62px;
+  background-color: #2a313e;
+  border-radius: 3px;
+  margin-right: 20px;
+  font-size: 14px;
+  color: #959dab;
+  text-align: center;
+}
+.app_active {
+  background-image: linear-gradient(90deg, #35d8f2 0, #2188c9 100%),
+    linear-gradient(#2a313e, #2a313e);
+  box-shadow: -2px 2px 7px 0 rgba(0, 0, 0, 0.35);
+  border-radius: 3px;
+  color: #fff !important;
+}
+.app_address p,
+.app_text {
+  font-size: 14px;
+  color: #959dab;
+}
+.app_content {
+  width: 1100px;
+  margin: 0 auto;
+  display: flex;
+}
+.app_pic {
+  width: 40%;
+}
+.app_address,
+.app_link {
+  width: 60%;
+  text-align: center;
+}
+.app_text {
+  margin-top: 30px;
+}
+.app_address {
+  display: flex;
+  margin: 30px auto 0;
+}
+.app_address > div {
+  width: 50%;
+}
+.app_address a {
+  font-size: 12px;
+  color: #32ceed;
+}
+.app_address img {
+  margin-bottom: 30px;
+}
 </style>

@@ -75,7 +75,7 @@
           min-width="90"
         >
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-            <router-link :to="`/member/details/${scope.row.memberId}?tab=member-info&site=${site.id}`">
+            <router-link :to="`/member/details/${scope.row.id}?tab=member-info&site=${site.id}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>

@@ -1,8 +1,11 @@
 <template>
-  <div class="casino-container" :style="'background-image: url(https://jsn92.czxinbang.com/xf-resource/web/style/img/recreation/recreation_bg.jpg)'">
-   <div class="recreation-money" id="numBox">LOADING...</div>
+  <div
+    class="casino-container"
+    :style="'background-image: url(https://jsn92.czxinbang.com/xf-resource/web/style/img/recreation/recreation_bg.jpg)'"
+  >
+    <div class="recreation-money" id="numBox">LOADING...</div>
     <!-- <router-link to="/promotion"> -->
-      <!-- <div
+    <!-- <div
         v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
         class="banner-container"
       >
@@ -25,15 +28,18 @@
       <div class="all-game-container">
         <div class="plat-type-container">
           <div class="plat-list">
-            <div
-              class="plat-item"
-              v-for="p in platforms"
-              :class="{ active: p === activePlat }"
-              :key="p"
-              @click="switchPlat(p)"
-            >
-              {{ p.code + ' 电子' }}
-            </div>
+            <template v-for="p in platforms" :key="p">
+              <template v-if="p.code === 'AG'"></template>
+              <template v-else>
+                <div
+                  class="plat-item"
+                  :class="{ active: p === activePlat }"
+                  @click="switchPlat(p)"
+                >
+                  {{ getGameLabel(p.name) }}
+                </div>
+              </template>
+            </template>
           </div>
         </div>
         <div
@@ -47,7 +53,7 @@
           >
             <template #suffix>
               <el-icon :width="15">
-              <Search />
+                <Search />
               </el-icon>
             </template>
           </el-input>
@@ -69,7 +75,7 @@
                       <img :src="game.default" />
                     </div>
                   </template>
-              </el-image>
+                </el-image>
                 <!-- <img :src="game.icon" v-image="game.icon" /> -->
               </div>
               <div class="slot-name">
@@ -80,9 +86,17 @@
           </div>
         </div>
       </div>
-    <div class="pagination-wrapper">
-      <el-pagination background layout="prev, pager, next" :total="gamePage.total"  @current-change="changePage(gamePage.currentPage, gamePage.pageSize)" v-model:current-page="gamePage.currentPage" v-model:pageSize="gamePage.pageSize" default-page-size="30"/>
-      <!-- <el-pagination
+      <div class="pagination-wrapper">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="gamePage.total"
+          @current-change="changePage(gamePage.currentPage, gamePage.pageSize)"
+          v-model:current-page="gamePage.currentPage"
+          v-model:pageSize="gamePage.pageSize"
+          default-page-size="30"
+        />
+        <!-- <el-pagination
 
         v-model:current="gamePage.currentPage"
         v-model:pageSize="gamePage.pageSize"
@@ -91,7 +105,7 @@
         @showSizeChange="onShowSizeChange"
         :showSizeChanger="true"
       /> -->
-    </div>
+      </div>
     </div>
     <GameModal ref="slotsGame"></GameModal>
   </div>
@@ -168,8 +182,9 @@ export default defineComponent({
     const loadGameList = () => {
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
-          element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/slot/${activePlat.value.code}/${element.icon}.png`;
+          // element.default = require("../assets/images/games/aviator/default.png");
+          element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
@@ -203,6 +218,17 @@ export default defineComponent({
     const openGame = (gameName, gameCode) => {
       slotsGame.value.open(gameName, activePlat.value.code, gameCode);
     };
+
+    const getGameLabel = (gameLabel) => {
+      if (gameLabel === 'BBINDY') {
+        return 'BBIN 电子'
+      } else if (gameLabel === 'AMEBA') {
+        return 'AE 电子'
+      } else {
+        return gameLabel + ' 电子'
+      }
+    }
+
     const ptJackpot = ref()
     useScriptTag(
       'https://tickers.playtech.com/jackpots/new_jackpotjs.js',
@@ -285,7 +311,8 @@ export default defineComponent({
       slotsGame,
       banner,
       imgURL,
-      store
+      store,
+      getGameLabel,
     };
   }
 });
@@ -293,9 +320,9 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .el-image {
-    min-height: 140px;
-    width: 100%;
-    cursor: pointer;
+  min-height: 140px;
+  width: 100%;
+  cursor: pointer;
 }
 @-webkit-keyframes scale {
   100% {
@@ -330,9 +357,9 @@ export default defineComponent({
 .casino-container {
   color: #ffffff;
   // background: url("../assets/images/common/bg.jpg");
-      background-repeat: no-repeat;
-    background-position: center 0px;
-    padding-bottom: 200px;
+  background-repeat: no-repeat;
+  background-position: center 0px;
+  padding-bottom: 200px;
   .recreation-money {
     width: 350px;
     padding-top: 150px;
@@ -579,17 +606,17 @@ export default defineComponent({
           flex-wrap: wrap;
 
           .plat-item {
-              width: 115px;
-              height: 45px;
-              line-height: 45px;
-              text-align: center;
-              background-color: #333b44;
-              box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
-              border-radius: 50px;
-              color: #959dab;
-              display: inline-block;
-              cursor: pointer;
-              font-size: 15px;
+            width: 115px;
+            height: 45px;
+            line-height: 45px;
+            text-align: center;
+            background-color: #333b44;
+            box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
+            border-radius: 50px;
+            color: #959dab;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 15px;
             // padding: 10px;
             // cursor: pointer;
             // // border-bottom: 4px solid transparent;
@@ -606,9 +633,9 @@ export default defineComponent({
             }
             &.active,
             &:hover {
-                  background-image: linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#2a313e,#2a313e);
-                  color: #fff;
-
+              background-image: linear-gradient(90deg, #35d8f2 0, #2188c9 100%),
+                linear-gradient(#2a313e, #2a313e);
+              color: #fff;
             }
           }
         }

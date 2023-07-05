@@ -5,7 +5,7 @@
   >
     <div class="q-mb-lg">
       <span class="additional-tips">
-        如有遇到存款问题，请立即联系在线客服咨询！
+        如果遇到存款问题，请立即联系在线客服解决！
       </span>
     </div>
 
@@ -24,30 +24,30 @@
         <div class="line">
           <span>银行名称：</span>
           <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
-          <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('0')" class="common-btn">
             {{ copybtntxt0 }}
-          </button>
+          </q-btn>
         </div>
         <div class="line">
           <span>银行账号：</span>
           <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
-          <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('1')" class="common-btn">
             {{ copybtntxt1 }}
-          </button>
+          </q-btn>
         </div>
         <div class="line">
           <span>银行卡号：</span>
           <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
-          <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('2')" class="common-btn">
             {{ copybtntxt2 }}
-          </button>
+          </q-btn>
         </div>
         <div class="line">
           <span>存款金额：</span>
           <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
-          <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('3')" class="common-btn">
             {{ copybtntxt3 }}
-          </button>
+          </q-btn>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@
                 (isUSDT ? "USDT" : store.currency.value)
                 : 0
           }}
-          <br />
+          <br/>
           最高金额:
           {{
             activeMethod.depositMax
@@ -186,11 +186,11 @@
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           您将被重定向到您的银行页面以完成存款。
-          <br />
-          <br />
+          <br/>
+          <br/>
           入金成功后会反映这里。
         </q-card-section>
-        <q-btn @click="clearInfo" label="明白" color="brightbtn" />
+        <q-btn @click="clearInfo" label="明白" color="brightbtn"/>
       </div>
     </q-card>
   </q-dialog>
@@ -199,38 +199,65 @@
     <q-card style="width: 100%; padding: 20px" class="text-white">
       <q-card-section class="q-mb-md">
         <strong>温馨提示</strong>
-        <br />
-        <br />
+        <br/>
+        <br/>
         为保证资金安全，存款前先绑定手机号
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn label="前往绑定" color="brightbtn" href="/account/personal" />
+        <router-link to="/account/personal">
+          <q-btn label="前往绑定" color="brightbtn"/>
+        </router-link>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+    <q-card style="width: 100%; padding: 20px" class="text-white">
+      <q-card-section class="q-mb-md">
+        <strong>温馨提示</strong>
+        <br/>
+        <br/>
+        为保证资金安全，存款前先绑定银行卡
+      </q-card-section>
+      <q-card-actions align="right">
+        <router-link to="/account/withdraw">
+          <q-btn label="前往绑定" color="brightbtn"/>
+        </router-link>
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
+import {ref, reactive, onMounted, shallowRef, onBeforeUnmount} from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { cashier } from "boot/axios";
-import { Platform, useQuasar, openURL } from "quasar";
-import { doIt } from "boot/action";
+import {api, cashier} from "boot/axios";
+import {Platform, useQuasar, openURL} from "quasar";
+import {doIt} from "boot/action";
 import liff from "@line/liff";
 
 var qs = require("qs");
 
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import {userStore} from "stores/index";
+import {useRouter} from "vue-router";
 
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
+const isNoBankCard = ref(false);
 const checkNewUser = () => {
   if (store.phone == null) {
     isNewUser.value = true;
+  } else {
+    api.get("/session/bankCard").then((response) => {
+      if (response.code === 0) {
+        if (response.data.length === 0) {
+          isNoBankCard.value = true;
+        }
+      }
+    });
   }
 };
 const isDeposited = ref(false);
@@ -507,7 +534,7 @@ async function confirmDeposit() {
               }
             }
             form.paymentId = activeMethod.value.paymentId;
-            const copy = { ...form };
+            const copy = {...form};
             const data = {};
             Object.entries(copy).forEach(([key, value]) => {
               if (value) {
@@ -675,6 +702,7 @@ onMounted(() => {
 <style lang="scss">
 .submit-message {
   // width: calc(100% - 40px);
+  border-radius: 10px;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -695,17 +723,18 @@ onMounted(() => {
     align-items: center;
     font-size: 14px;
     align-items: center;
-    background: #ffffff;
-    padding: 15px 0;
+    background: #063c50;
+    padding: 15px 10px;
 
     span:first-child {
       // flex: 1;
-      color: #4669f8;
+      color: #4fb2ff;
       width: 80px;
     }
 
     span.info {
       flex: 3;
+      color: #fff;
     }
 
     button {

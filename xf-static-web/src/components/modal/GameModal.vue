@@ -7,7 +7,7 @@
     destroyOnClose
     :afterClose="destroyGame"
   >
-    <TFLoading v-if="logoShow"> </TFLoading>
+    <TFLoading v-if="logoShow"></TFLoading>
     <iframe
       @load="loadGame()"
       v-show="!logoShow"
@@ -163,7 +163,7 @@ const title = ref("");
 
 const transferInfo = ref({
   amount: null,
-  platform: null,
+  platform: null
 });
 const isClicked = ref("");
 const submitTransfer = (amount) => {
@@ -188,7 +188,7 @@ const submitTransfer = (amount) => {
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
   transferInfo.value = {
-    platform: platformCode,
+    platform: platformCode
   };
   title.value = gameName;
   const store = userStore();
@@ -196,32 +196,32 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.token) {
-      if (platformCode === 'onlyPlatform') {
+      if (platformCode === "onlyPlatform") {
         launchSessionGame(gameCode, {
-          isMobile: isMobile(),
+          isMobile: isMobile()
         }).then((res) => {
           src.value = res.data;
-      visible.value = true;
+          visible.value = true;
         });
       } else {
-          launchSessionGame(platformCode, {
+        launchSessionGame(platformCode, {
           gameCode: gameCode,
-          isMobile: isMobile(),
+          isMobile: isMobile()
         }).then((res) => {
           src.value = res.data;
-      visible.value = true;
+          visible.value = true;
         });
       }
     } else {
       // router.push("/login");
-      ElMessageBox.alert('请登录后再操作', '系统提示', {
+      ElMessageBox.alert("请登录后再操作", "系统提示", {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
-        confirmButtonText: '确认',
+        confirmButtonText: "确认",
         showClose: false,
-        buttonSize: 'large'
-      })
+        buttonSize: "large"
+      });
     }
   }
 };
@@ -232,7 +232,7 @@ const loadGame = () => {
   }
 };
 defineExpose({
-  open,
+  open
 });
 </script>
 <style lang="scss">
@@ -393,20 +393,21 @@ defineExpose({
   background: #201f2a;
   .bottom-button {
     display: block;
-    transform-origin: left top;
-    padding: 10px;
     font-size: 13px;
     text-align: center;
-    border-radius: 0 10px 10px 0;
-    transform: rotate3d(0, 0, 1, 90deg);
     cursor: pointer;
-    box-shadow: 0px 0px 10px 0 #000;
-    padding: 10px 5px;
-    width: 120px;
-    transform-origin: top left;
-    margin-top: 70px;
-    margin-left: 50px;
+    box-shadow: 0 0 10px 0 #464646;
+    color: #fff;
+    padding: 5px;
+    width: 32px;
+    margin-top: 45px;
+    margin-left: 10px;
     border-radius: 10px;
+    word-break: break-all;
+    white-space: normal;
+    width: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
 :deep(.ant-drawer-content) {
@@ -435,10 +436,11 @@ defineExpose({
   border: 0;
   color: #ffffff;
 }
-:deep(.ant-form-vertical
-    .ant-form-item-label
-    > label, .ant-col-24.ant-form-item-label
-    > label, .ant-col-xl-24.ant-form-item-label > label) {
+:deep(
+    .ant-form-vertical .ant-form-item-label > label,
+    .ant-col-24.ant-form-item-label > label,
+    .ant-col-xl-24.ant-form-item-label > label
+  ) {
   color: #ffffff;
 }
 :deep(.ant-drawer-right.ant-drawer-open) {

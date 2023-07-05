@@ -10,6 +10,7 @@
           :type="isPwd ? 'password' : 'text'"
           label="旧密码"
           lazy-rules
+          clearable
           :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
       >
         <template v-slot:append>
@@ -30,6 +31,7 @@
           :type="isPwd ? 'password' : 'text'"
           label="新密码"
           lazy-rules
+          clearable
           :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
           label-color="brand"
           color="brand"
@@ -52,6 +54,7 @@
           :type="isPwd ? 'password' : 'text'"
           label="确认新密码"
           lazy-rules
+          clearable
           :rules="[
           (val) => (val && val.length > 0) || '请输入确认新密码',
           (val) =>

@@ -289,7 +289,6 @@ export default defineComponent({
     ) {
       this.isCommonPromo = false;
     } else {
-      console.log("HERE");
       this.isCommonPromo = true;
     }
     const store = userStore();

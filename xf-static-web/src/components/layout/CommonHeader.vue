@@ -7,39 +7,39 @@
           <div class="station-notice-box">
             <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
-            <RiVolumeUpFill style="fill: #2db9e2; width: 180px" />
+            <div>
+              <RiVolumeUpFill
+                style="fill: #2db9e2; width: 20px !important"
+                @click="openPopup(announcementList)"
+              />
+            </div>
+
             <div class="station-notice">
-              <!-- <Vue3Marquee :clone="true" :duration="50" width="300px;">
+              <Vue3Marquee :clone="true" :duration="50" width="300px;">
                 <span
                   v-for="(word, index) in announcementList"
                   :key="index"
                   v-html="word.content"
                   @click="openPopup(word)"
                 ></span>
-              </Vue3Marquee> -->
-              <Vue3Marquee
-                @click="noticeDialogVisible = true"
-                :clone="true"
-                :duration="50"
-                width="300px;"
-              >
-                <span
-                  v-for="(word, index) in noticesList"
-                  :key="index"
-                  v-html="word"
-                ></span>
               </Vue3Marquee>
             </div>
+            <template v-if="store.token">
+              <div class="mailbox-notify">
+                <router-link to="/center/mailbox">
+                  <RiMailFill style="fill: #2db9e2; width: 20px" />
+                  <div v-if="isMailboxUnread" class="notify-red"></div>
+                </router-link>
+              </div>
+            </template>
           </div>
         </div>
         <div v-if="!store.token" class="right-contents">
-          <a class="common-btn grey" @click="loginDialogVisible = true">登录</a>
+          <a class="common-btn grey" @click="openUsernameLogin()">登录</a>
           <a class="common-btn" @click="registerDialogVisible = true">
             开设账户
           </a>
-          <a class="common-link" @click="forgetPassDialogVisible = true">
-            忘记密码？
-          </a>
+          <a class="common-link" @click="openMobileLogin()">忘记密码？</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -162,8 +162,8 @@
       @close="store.loginPageVisible = false"
     >
       <span>
-        <el-tabs type="card">
-          <el-tab-pane label="账户登录">
+        <el-tabs type="card" v-model="loginTabs">
+          <el-tab-pane label="账户登录" name="usernameLogin">
             <el-form
               ref="loginRef"
               :rules="loginRules"
@@ -219,7 +219,7 @@
               </el-button>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane label="手机登录">
+          <el-tab-pane label="手机登录" name="mobileLogin">
             <el-form
               ref="loginRef"
               :rules="mobileLoginRules"
@@ -434,20 +434,45 @@
                 <span class="title account">会员资料</span>
               </el-col>
             </el-row> -->
-            <!-- <el-form-item label="电话号码" prop="telephone">
+            <el-form-item label="电话号码" prop="telephone">
               <el-input
                 class="half"
                 v-model="regForm.telephone"
                 placeholder="输入电话号码"
+                maxlength="11"
+                :readonly="isSendOtp"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入电话号码',
+                    trigger: 'blur'
+                  },
+                  {
+                    required: true,
+                    message: '请输入有效的电话号码',
+                    trigger: 'blur',
+                    pattern:
+                      '/^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$/'
+                  }
+                ]"
               />
-            </el-form-item> -->
-            <!-- <el-form-item label="邮件" prop="email">
+              <el-button
+                class="common-btn"
+                style="margin-left: 10px"
+                type="button"
+                v-if="!isSendOtp"
+                @click="openCaptchaForm('REGISTER')"
+              >
+                获取验证码
+              </el-button>
+            </el-form-item>
+            <el-form-item label="电话验证码" prop="smsCode" v-if="isSendOtp">
               <el-input
                 class="half"
-                v-model="regForm.email"
-                placeholder="输入邮件"
+                v-model="regForm.smsCode"
+                placeholder="输入电话验证码"
               />
-            </el-form-item> -->
+            </el-form-item>
             <el-form-item label="验证码" prop="captchaCode">
               <el-row :gutter="10">
                 <el-col :span="17">
@@ -462,6 +487,35 @@
                 </el-col>
               </el-row>
             </el-form-item>
+            <el-form-item label="推荐码" prop="codeAffiliate">
+              <el-space>
+                <el-input
+                  v-if="!hasAffiliate"
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="输入推荐码"
+                />
+                <el-input
+                  v-else
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  readonly
+                  disabled
+                />
+                <el-icon>
+                  <InfoFilled style="font-size: 10px; line-height: 20px" />
+                </el-icon>
+                <div class="link">若不是合营下会员无需填写输入推荐码</div>
+                <!-- <el-tooltip
+                  content="若不是合营下会员无需填写输入推荐码"
+                  placement="right"
+                >
+                  <el-icon :size="10">
+                    <InfoFilled />
+                  </el-icon>
+                </el-tooltip> -->
+              </el-space>
+            </el-form-item>
           </el-form>
           <el-button color="#3bafda" @click="resetRegForm(registerRef)">
             重新填写
@@ -471,6 +525,61 @@
           </el-button>
         </div>
       </div>
+    </el-dialog>
+
+    <el-dialog
+      wrap-class-name="securityModal"
+      v-model="updatePhoneModalVisible"
+      :footer="null"
+      width="500px"
+      title="手机验证"
+      align-center
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <el-form
+        ref="updatePhoneFormRef"
+        :hideRequiredMark="true"
+        :model="updatePhoneVerified"
+        :rules="updatePhoneVerifiedRules"
+      >
+        <el-form-item ref="phone" prop="phone">
+          <el-input
+            v-model="updatePhoneVerified.phone"
+            placeholder="手机号码"
+          />
+        </el-form-item>
+        <el-form-item
+          class="half"
+          ref="verificationCode"
+          prop="verificationCode"
+        >
+          <el-space>
+            <el-input
+              type="password"
+              v-model="updatePhoneVerified.verificationCode"
+              :placeholder="'验证码'"
+            />
+            <el-button
+              :disabled="disableSendPhoneButton"
+              class="common-btn verification-btn"
+              @click="openPhoneVerificationModal"
+            >
+              <span v-if="disableSendPhoneButton">
+                已发送（倒数{{ countDown }}秒)
+              </span>
+              <span v-else>发送验证码</span>
+            </el-button>
+          </el-space>
+        </el-form-item>
+        <el-button
+          :loading="loadingPhoneBtn"
+          class="common-btn verification-btn"
+          @click="submitUpdatePhone"
+        >
+          提交
+        </el-button>
+      </el-form>
     </el-dialog>
 
     <el-dialog
@@ -634,6 +743,40 @@
     </el-dialog>
 
     <el-dialog
+      class="notice-modal"
+      width="100%"
+      style="max-width: 800px"
+      v-model="isStationNotice"
+      :maskClosable="false"
+      :footer="null"
+      title="站内信"
+    >
+      <el-tabs
+        type="card"
+        class="announcementTabs"
+        v-model="announcementActive"
+        @tab-click="announcementTabChange"
+      >
+        <el-tab-pane
+          v-for="(tab, ind) in announcementTypes"
+          :key="tab.id"
+          :tab="ind"
+          :label="tab.name"
+        >
+          <el-collapse accordion v-model="typeActive">
+            <template v-for="(ann, idx) in announcementList" :key="idx">
+              <template v-if="ann.typeId === tab.id">
+                <el-collapse-item :name="idx" :title="ann.title">
+                  {{ ann.content }}
+                </el-collapse-item>
+              </template>
+            </template>
+          </el-collapse>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
+
+    <el-dialog
       class="noPadding"
       v-model="noticeDialogVisible"
       width="1280px"
@@ -665,6 +808,7 @@ import "vue3-carousel/dist/carousel.css";
 import {defineComponent, onMounted, ref, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
+import { mailUnreadTotal } from "@/api/personal/mailbox";
 import {getVerificationCode, register, findAccount} from "@/api/index/login";
 import {sendSms, getAnnouncement} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
@@ -677,7 +821,8 @@ import {
   RiMoneyCnyCircleLine,
   RiBankCardLine,
   RiCouponLine,
-  RiLogoutBoxLine
+  RiLogoutBoxLine,
+  RiMailFill
 } from 'vue-remix-icons';
 import GameMenu from '@/components/menu/GameMenu.vue'
 import SportsMenu from '@/components/menu/SportsMenu.vue'
@@ -707,6 +852,7 @@ export default defineComponent({
     AppMenu,
     InfoFilled,
     RiVolumeUpFill,
+    RiMailFill,
     ArrowDown,
     Refresh,
     RiAccountCircleLine,
@@ -779,6 +925,43 @@ export default defineComponent({
 
     const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
 
+    const updatePhoneVerifiedRules = {
+      phone: [
+        {
+          required: true,
+          message: "请输入电话地址",
+          trigger: "blur",
+        },
+      ],
+      verificationCode: [
+        {
+          required: true,
+          message: "请输入验证码",
+          trigger: "blur",
+        },
+        {
+          min: 4,
+          message: "长度应为 4",
+          trigger: "blur",
+        },
+      ],
+    };
+
+//     loginTabs
+// usernameLogin
+// mobileLogin
+
+    const loginTabs = ref('usernameLogin');
+
+    const openUsernameLogin = () => {
+      loginDialogVisible.value = true;
+      loginTabs.value = 'usernameLogin';
+    }
+
+    const openMobileLogin = () => {
+      loginDialogVisible.value = true;
+      loginTabs.value = 'mobileLogin';
+    }
 
     const loadingBtn = ref(false);
     const store = userStore();
@@ -794,9 +977,11 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
+    const isSendOtp = ref(false);
     const todayDate = () => {
-      const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
-      return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
+      // const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
+      // return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
+      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd') + ' (中国标准时间)';
     }
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
@@ -952,9 +1137,14 @@ export default defineComponent({
       telephone: [
         {
           required: true,
-          message: "请输入手机号码",
+          message: "请输入电话号码",
           trigger: "blur"
-        }
+        },
+        {
+          pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
+          message: "请输入有效的中国手机号码",
+          trigger: "blur",
+        },
       ],
       code: [
         {
@@ -999,7 +1189,7 @@ export default defineComponent({
       password: "",
       confirmPwd: "",
       telephone: cachedTelephone ?? '',
-      email: "",
+      // email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -1021,7 +1211,7 @@ export default defineComponent({
     const regRules = {
       realName: [
         {
-          required: false,
+          required: true,
           min: 2,
           max: 12,
           message: "长度应为 2 至 12",
@@ -1034,6 +1224,7 @@ export default defineComponent({
       ],
       loginName: [
         {
+          required: true,
           min: 6,
           max: 12,
           message: "长度应为 6 至 12",
@@ -1046,35 +1237,20 @@ export default defineComponent({
       ],
       password: [
         {
+          required: true,
+          message: "请输入密码",
+        },
+        {
           validator: validatePass,
           trigger: "change",
         },
-        // {
-        //   required: true,
-        //   message: "Password is required",
-        //   trigger: "blur",
-        // },
-        // {
-        //   validator: validatePass,
-        //   trigger: "change",
-        // },
-        // {
-        //   validator: validatePassStrength,
-        //   trigger: "change",
-        // },
-        // {
-        //   min: 6,
-        //   max: 12,
-        //   message: "Length should be 6 to 12",
-        //   trigger: "blur",
-        // },
       ],
       confirmPwd: [
-        // {
-        //   required: true,
-        //   message: "Confirm password is required",
-        //   trigger: "blur",
-        // },
+        {
+          required: true,
+          message: "请输入确认密码",
+          trigger: "blur",
+        },
         {
           validator: validatePass2,
           trigger: "change",
@@ -1082,8 +1258,14 @@ export default defineComponent({
       ],
       telephone: [
         {
-          validator: validatePhoneNumber,
-          trigger: "change",
+          required: true,
+          message: "请输入电话号码",
+          trigger: "blur"
+        },
+        {
+          pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
+          message: "请输入有效的中国手机号码",
+          trigger: "blur",
         },
       ],
       // birthday: [
@@ -1108,6 +1290,19 @@ export default defineComponent({
           max: 50,
           message: "长度应小于 50",
           trigger: "blur",
+        },
+      ],
+      smsCode: [
+        {
+          required: true,
+          message: "需要验证码",
+          trigger: "blur",
+        },
+        {
+          min: 6,
+          max: 6,
+          message: "长度应为 6",
+          trigger: "change",
         },
       ],
       captchaCode: [
@@ -1204,65 +1399,65 @@ export default defineComponent({
     }
 
     const sendOtp = async() => {
+      if (captchaForm.type === 'REGISTER') {
+        const smsDetail = {
+          telephone: regForm.telephone,
+          captchaCode: captchaForm.captchaCode,
+          codeId: captchaForm.codeId
+        }
+        sendSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              disableSendVerificationButton.value = true
+              isSendOtp.value = true;
+              regForm.smsCodeId = response.data.codeId;
+              getCode();
 
-if (captchaForm.type === 'REGISTER') {
-  const smsDetail = {
-    telephone: regForm.telephone,
-    captchaCode: captchaForm.captchaCode,
-    codeId: captchaForm.codeId
-  }
-  sendSms(smsDetail)
-    .then((response) => {
-      if (response.code == 0) {
-        disableSendVerificationButton.value = true
+              ElMessage({
+                type: 'success',
+                message: `发送 ${smsDetail.telephone} 手机验证码成功`
+              });
 
-        regForm.smsCodeId = response.data.codeId;
+              captchaDialogVisible.value = false;
 
-        ElMessage({
-          type: 'success',
-          message: '发送手机验证码成功'
-        });
+              regCountdown.value = registerSendOtpDisabledTimeout;
 
-        captchaDialogVisible.value = false;
+              const now = new Date();
 
-        regCountdown.value = registerSendOtpDisabledTimeout;
+              now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
 
-        const now = new Date();
+              lsStore(registerSendOtpDisabledKey, now.getTime());
+              lsStore(registerTelephoneKey, regForm.telephone);
 
-        now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
-
-        lsStore(registerSendOtpDisabledKey, now.getTime());
-        lsStore(registerTelephoneKey, regForm.telephone);
-
-        countdownTimer('REGISTER')
-      } else {
-        getCode();
+              countdownTimer('REGISTER')
+            } else {
+              getCode();
+            }
+          })
+      } else if (captchaForm.type === 'LOGIN') {
+        const smsDetail = {
+          telephone: loginForm.phoneNumber,
+          captchaCode: captchaForm.captchaCode,
+          codeId: captchaForm.codeId
+        }
+        sendSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              loginForm.smsCodeId = response.data.codeId;
+              ElMessage({
+                type: 'success',
+                message: '发送手机验证码成功'
+              });
+              captchaDialogVisible.value = false;
+              getCode();
+              loginCountdown.value = 30;
+              countdownTimer('LOGIN')
+            } else {
+              getCode();
+            }
+          })
       }
-    })
-} else if (captchaForm.type === 'LOGIN') {
-  const smsDetail = {
-    telephone: loginForm.phoneNumber,
-    captchaCode: captchaForm.captchaCode,
-    codeId: captchaForm.codeId
-  }
-  sendSms(smsDetail)
-    .then((response) => {
-      if (response.code == 0) {
-        loginForm.smsCodeId = response.data.codeId;
-        ElMessage({
-          type: 'success',
-          message: '发送手机验证码成功'
-        });
-        captchaDialogVisible.value = false;
-        getCode();
-        loginCountdown.value = 30;
-        countdownTimer('LOGIN')
-      } else {
-        getCode();
-      }
-    })
-}
-};
+    };
 
 const countdownTimer = (type) => {
 if (type === 'REGISTER') {
@@ -1287,12 +1482,19 @@ if (type === 'REGISTER') {
 }
 }
 
-const openCaptchaForm = (type) => {
-captchaForm.captchaCode = "";
-captchaForm.type = type;
-captchaDialogVisible.value = true;
-getCode();
-};
+    const openCaptchaForm = (type) => {
+      registerRef.value.validateField('telephone').then((resp) => {
+      captchaForm.captchaCode = "";
+      captchaForm.type = type;
+      captchaDialogVisible.value = true;
+      getCode();
+    }).catch((err) => {
+        ElMessage({
+          message: '请输入有效的中国手机号码',
+          type: 'error',
+        })
+      })
+    };
 
     const submitRegisterForm = async (elForm) => {
       if (!elForm) return
@@ -1378,6 +1580,7 @@ getCode();
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
 
+        loadUnreadMailbox();
 
       getAffiliateCode();
       loadAnnouncement();
@@ -1576,6 +1779,26 @@ getCode();
     // }
     const pwdStrength = ref();
 
+    const mailboxUnreadData = ref([]);
+
+    const isMailboxUnread = ref(false);
+
+    const loadUnreadMailbox = () => {
+      if (store.token !== null) {
+        mailUnreadTotal().then((res) => {
+          if (res.code === 0) {
+            const response = res.data;
+            if(response > 0) {
+              isMailboxUnread.value = true
+            }
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
+
+    };
+
     function charType(num) {
       if (num >= 48 && num <= 57) {
         return 1;
@@ -1697,7 +1920,16 @@ getCode();
       hasAffiliate,
       countdownTimer,
       regCountdown,
-      loginCountdown
+      loginCountdown,
+      isSendOtp,
+      updatePhoneVerifiedRules,
+      loadUnreadMailbox,
+      mailboxUnreadData,
+      isMailboxUnread,
+      validatePhoneNumber,
+      loginTabs,
+      openUsernameLogin,
+openMobileLogin
     }
   }
 });
@@ -1831,6 +2063,10 @@ body {
             display: flex;
             gap: 10px;
           }
+        }
+
+        .station-notice {
+          padding-top: 4px;
         }
 
         .right-contents {
@@ -2121,6 +2357,10 @@ body {
     }
   }
 
+  &.fish {
+    max-width: 800px;
+  }
+
   &.games {
     .platform-box {
       flex-direction: column;
@@ -2240,7 +2480,25 @@ body {
   &.fish {
     .platform-box {
       padding: 25px 80px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
     }
   }
+}
+
+.notify-red {
+  height: 10px;
+  width: 10px;
+  background: #db0011;
+  position: absolute;
+  border-radius: 50%;
+  bottom: 0;
+  right: -4px;
+}
+
+.mailbox-notify {
+  position: relative;
+  margin-right: 20px;
 }
 </style>

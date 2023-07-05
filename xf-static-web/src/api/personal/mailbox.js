@@ -4,7 +4,7 @@ export function loadMailbox(type, pageNum, pageSize) {
   return server.REST.post("auth/mailbox", {
     type,
     pageNum,
-    pageSize,
+    pageSize
   });
 }
 
@@ -14,8 +14,8 @@ export function mailInbox(mailQuery) {
       type: mailQuery.type,
       current: mailQuery.current,
       size: mailQuery.size,
-      orderBy: mailQuery.orderBy,
-    },
+      orderBy: mailQuery.orderBy
+    }
   });
 }
 
@@ -25,11 +25,15 @@ export function mailOutbox(mailQuery) {
       type: mailQuery.type,
       current: mailQuery.current,
       size: mailQuery.size,
-      orderBy: mailQuery.orderBy,
-    },
+      orderBy: mailQuery.orderBy
+    }
   });
 }
 
 export function wirteMail(mail) {
   return server.REST.post("/session/writeOutbox", mail);
+}
+
+export function mailUnreadTotal() {
+  return server.REST.get("/session/inbox/getUnreadTotal", {});
 }
