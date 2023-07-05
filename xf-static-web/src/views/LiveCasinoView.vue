@@ -11,7 +11,7 @@
                       </div>
                   </div>
                   <img src="../assets/live/live_ag_platforms.png" style="margin: 8px 0 68px 50px;"><br>
-                  <div class="play-btn" @click="openGame(det.name, det.code)"></div>
+                  <div class="play-btn" @click="openGame(det.name, det.code, det.gameCode)"></div>
               </div>
               <div class="live-right" data-aos="fade-left"  data-aos-duration="4000">
                 <img class="absolute" src="../assets/live/live_right.png">
@@ -22,7 +22,7 @@
     </div>
     <div class="platform-list-box">
       <span class="platform-list-item platform" v-for="(plat, i) in platforms" :key="i" @click="clickPlat(plat)" :class="{active: selectedPlat === plat.code}">
-        {{plat.code}} 真人
+        {{plat.name}} 真人
       </span>
     </div>
   </div>
@@ -44,25 +44,29 @@ export default defineComponent({
         code: 'AG',
         name: 'AG',
         image: 'ag',
-        message: '全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。'
+        message: '全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。',
+        gameCode: '',
       },
       {
         code: 'EBET',
         name: 'EBET',
         image: 'ebet',
-        message: '玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。'
+        message: '玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。',
+        gameCode: '',
       },
       {
         code: 'ALLBET',
         name: 'AllBet',
         image: 'allbet',
-        message: '玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。'
+        message: '玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。',
+        gameCode: '',
       },
       {
         code: 'BBINDY',
         name: 'BBIN',
         image: 'bbin',
-        message: '20余年来倾力于技术及系统研发，屡获业界国际大奖入围或得奖殊荣予肯定。 近年来，BBIN积极参与国际活动，并赞助多项全球知名赛事，包含方程式赛车、球类赛事等，也主动号召大力支持慈善团体，不遗余力投入各项国际事务，提供业界更开阔多元的视野。'
+        message: '20余年来倾力于技术及系统研发，屡获业界国际大奖入围或得奖殊荣予肯定。 近年来，BBIN积极参与国际活动，并赞助多项全球知名赛事，包含方程式赛车、球类赛事等，也主动号召大力支持慈善团体，不遗余力投入各项国际事务，提供业界更开阔多元的视野。',
+        gameCode: 'bblive_lobby_pc',
       },
 
     ])
@@ -71,8 +75,14 @@ export default defineComponent({
       selectedPlat.value = plat.code
     }
     
-    const openGame = (gameName, gameCode) => {
-      liveGame.value.open(gameName, "onlyPlatform", gameCode);
+    // const openGame = (gameName, gameCode) => {
+    //   liveGame.value.open(gameName, "onlyPlatform", gameCode);
+    // };
+
+    const openGame = (gameName, code, gameCode) => {
+      // console.log(gameName);
+      // console.log(gameCode);
+      liveGame.value.open(gameName, code, gameCode);
     };
     onMounted(() => {
       aos.refresh();
