@@ -230,6 +230,7 @@ export default defineComponent({
                 type: 'success',
               })
               getWithdrawalMethods();
+              loadCards();
             } else {
               // message.error(response.message);
             }
