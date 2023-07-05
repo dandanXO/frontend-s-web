@@ -6,6 +6,7 @@
       </div>
       <div class="pro-details">
         <span class="nickname-span">{{ store.nickName }}</span>
+        <span v-if="store.nickName=='npr100'">&nbsp;1.0.1</span>
         <q-badge class="vip-badge-item" color="orange" text-color="black" :label="store.vip"/>
 
         <!--        <span v-if="vipLevel === 1"-->
