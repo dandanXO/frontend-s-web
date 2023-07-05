@@ -5,6 +5,8 @@
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"
+      @loadnewdata="loadNewData"
+      :isEnded="isEnded"
     />
   </div>
 </template>
@@ -13,6 +15,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
+import { cached, TIME_EXPIRED } from "boot/cache";
 
 export default defineComponent({
   components: {
@@ -22,22 +25,63 @@ export default defineComponent({
 
     const visible = ref(true);
     const tableData = ref([]);
-    const loadDepositTable = () => {
+    const isEnded = ref(false);
 
-      visible.value = true;
+    var apiUrl = "/session/member/deposit";
+
+    var endDate = moment().format("YYYY-MM-DD");
+    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+
+    const loadNewData = () => {
+      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
+      // console.log(startDate);
+
+      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+      // console.log(endDate);
+
+      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
+        console.log("mor than 3 months");
+        isEnded.value = true;
+        return;
+      }
+      loadDepositTable(false);
+    };
+
+    const loadDepositTable = (isNew = true) => {
+      if (isNew) {
+        visible.value = true;
+      }
+      // console.log(startDate);
+      // console.log(endDate);
+
       let paramData = {
-        "startDate": moment().add(-7, "days").format("YYYY-MM-DD"),
-        "endDate": moment().format("YYYY-MM-DD")
+        "startDate": startDate,
+        "endDate": endDate
       };
-      api.get("/session/member/deposit", {
+      var apiKey = apiUrl + "_" + startDate + "_" + endDate;
+      console.log(apiKey);
+
+      cached.get(apiKey, () => api.get(apiUrl, {
           params: paramData
-        }
+        }),
+        { expired_value: 60 }
       ).then((res) => {
-        tableData.value = res.data.records;
-      }).finally(() => {
-        visible.value = false;
+        console.log(res);
+
+        if (isNew) {
+          visible.value = false;
+        }
+
+        tableData.value.push(...res.records);
+        // console.log("TableData");
+        // console.log(tableData.value);
+      }).catch((err) => {
+        if (isNew) {
+          visible.value = false;
+        }
       });
     };
+
     const tableHeaders = [
       {
         key: "depositAmount",
@@ -61,13 +105,16 @@ export default defineComponent({
       }
     ];
     onMounted(() => {
+      tableData.value = [];
       loadDepositTable();
     });
 
     return {
-      tableData,
       visible,
-      tableHeaders
+      isEnded,
+      tableHeaders,
+      loadNewData,
+      tableData
     };
   }
 });

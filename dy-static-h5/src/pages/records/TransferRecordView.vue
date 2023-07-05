@@ -5,6 +5,8 @@
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"
+      @loadnewdata="loadNewData"
+      :isEnded="isEnded"
     />
   </div>
 </template>
@@ -19,50 +21,57 @@ export default defineComponent({
     RecordComponent
   },
   setup() {
-
     const visible = ref(true);
     const tableData = ref([]);
-    const loadDepositTable = () => {
 
-      visible.value = true;
+    const isEnded = ref(false);
+
+    var apiUrl = "/session/member/transfer";
+
+    var endDate = moment().format("YYYY-MM-DD");
+    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+
+    const loadNewData = () => {
+      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
+      console.log(startDate);
+
+      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+      console.log(endDate);
+
+      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
+        console.log("mor than 3 months");
+        isEnded.value = true;
+        return;
+      }
+      loadDepositTable(false);
+    };
+
+    const loadDepositTable = (isNew = true) => {
+      if (isNew) {
+        visible.value = true;
+      }
+      console.log(startDate);
+      console.log(endDate);
+
       let paramData = {
-        "startDate": moment().add(-7, "days").format("YYYY-MM-DD"),
-        "endDate": moment().format("YYYY-MM-DD")
+        "startDate": startDate,
+        "endDate": endDate
       };
 
-      api.get("/session/member/transfer", {
+      api.get(apiUrl, {
           params: paramData
         }
       ).then((res) => {
-        console.log(res);
-        tableData.value = res.data.records;
-
+        tableData.value.push(...res.data.records);
+        // console.log("TableData");
+        // console.log(tableData.value);
       }).finally(() => {
-        visible.value = false;
+        if (isNew) {
+          visible.value = false;
+        }
       });
-
-      // tableData.value = [{
-      //   amount: 50,
-      //   commitTime: null,
-      //   feedbackTime: "2021-11-01 22:33:15",
-      //   financeRemark: "test",
-      //   id: 21,
-      //   loginName: null,
-      //   memberId: 804,
-      //   memberRemark: "oyoyoyoy",
-      //   operaterName: null,
-      //   orderNo: "XF560320211004163950615",
-      //   photos: "944202d1-42a6-4daa-a221-76d001dc9046",
-      //   photosUrl: ["944202d1-42a6-4daa-a221-76d001dc9046"],
-      //   status: 2,
-      //   statusText: "已核实",
-      //   type: 1,
-      //   typeText: "存款",
-      //   updateBy: 0,
-      //   updateTime: null
-      //
-      // },]
     };
+
     const tableHeaders = ([
       {
         key: "serialNumber",
@@ -97,7 +106,9 @@ export default defineComponent({
     return {
       tableData,
       tableHeaders,
-      visible
+      visible,
+      loadNewData,
+      isEnded
     };
   }
 });
