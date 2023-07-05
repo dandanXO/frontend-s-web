@@ -5,3 +5,4 @@ WORKDIR /usr/share/nginx/html
 USER root
 
 ADD . ./
+ADD nginx.conf /etc/nginx/nginx.conf
