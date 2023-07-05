@@ -175,7 +175,7 @@
         <br/>
         请登录后再操作
       </q-card-section>
-      <q-btn href="/login?redirect=/promo" label="确认" color="brightbtn"/>
+      <router-link to="/login?redirect=/account"><q-btn label="确认" color="brightbtn"/></router-link>
     </q-card>
   </q-dialog>
 

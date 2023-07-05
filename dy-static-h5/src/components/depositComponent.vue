@@ -202,7 +202,9 @@
         为保证资金安全，存款前先绑定手机号
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn label="前往绑定" color="dyblue" href="/account/personal" />
+        <router-link to="/account/personal">
+          <q-btn label="前往绑定" color="dyblue" />
+        </router-link>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -571,7 +573,7 @@ async function pDepo(deposit) {
             }
             if (response.payResultType === "POST_SUBMIT") {
               if (response.paramKey === null || response.paramKey === "") {
-                const passData= `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                const passData = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                 // console.log(passData);
                 newWin.location.href = passData;
                 btnLoading.value = false;

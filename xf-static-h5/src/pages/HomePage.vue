@@ -369,7 +369,7 @@ import {userStore} from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from 'vue-marquee-text-component';
 import {RiVolumeUpLine} from "vue-remix-icons";
-import { App } from "@capacitor/app";
+import {App} from "@capacitor/app";
 
 import {useUI} from "stores/ui";
 import {Scrollbar} from 'swiper';
@@ -566,7 +566,7 @@ export default defineComponent({
       if (lastTime) {
         const diff = new Date().getTime() - Number(lastTime);
         if (diff > 1000 * 60 * 60 * 12) {
-          isFirstView.value = true;
+          localStorage.removeItem("indexImgTop");
         }
       } else {
         api

@@ -373,7 +373,6 @@
       </q-card-section>
     </q-card>
   </q-dialog>
-
 </template>
 
 <script>
@@ -821,23 +820,25 @@ export default defineComponent({
       if (lastTime) {
         const diff = new Date().getTime() - Number(lastTime);
         if (diff > 1000 * 60 * 60 * 12) {
-          isFirstView.value = true;
+          localStorage.removeItem("indexImgTop");
         }
       } else {
         api
           .get("/promo/banner?category=HOMEPOP")
           .then((res) => {
             if (res.code === 0) {
-              homePopupImg.value = res.data.length > 0 ? imgURL + res.data[0]["mobileImageUrl"] : '';
+              homePopupImg.value =
+                res.data.length > 0
+                  ? imgURL + res.data[0]["mobileImageUrl"]
+                  : "";
               if (homePopupImg.value) {
                 isFirstView.value = true;
               }
             }
           })
-          .catch(() => {
-          });
+          .catch(() => {});
       }
-    }
+    };
 
     // const checkShowImgTop = () => {
     //   const lastTime = localStorage.getItem("indexImgTop");
@@ -916,7 +917,8 @@ export default defineComponent({
       closeAlert,
       isAppUpdateModal,
       cancelUpdate,
-      openDownloadPage
+      openDownloadPage,
+      homePopupImg
     };
   }
 });

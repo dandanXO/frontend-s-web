@@ -230,7 +230,7 @@
 
         <div class="flex flex-center">
           <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消" href="/account" />
+            <q-btn class="q-mr-md" label="取消" />
           </router-link>
           <router-link to="/account/withdraw">
             <q-btn color="dyblue" label="绑定" />

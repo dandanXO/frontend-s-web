@@ -109,7 +109,7 @@
                 <q-btn
                     @click="updateWithdrawAmt"
                     label="全额提款"
-                    color="dyblue"
+                    color="brightbtn"
                 />
               </span>
             </template>
@@ -231,10 +231,10 @@
 
         <div class="flex flex-center">
           <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消" href="/account"/>
+            <q-btn class="q-mr-md" label="取消"/>
           </router-link>
           <router-link to="/account/withdraw">
-            <q-btn color="dyblue" label="绑定"/>
+            <q-btn color="brightbtn" label="绑定"/>
           </router-link>
         </div>
       </q-card>
@@ -260,7 +260,7 @@ export default defineComponent({
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
-    const withdrawFormRef= ref(null);
+    const withdrawFormRef = ref(null);
     const withdrawState = reactive({
       bankCardList: []
     });
