@@ -226,7 +226,7 @@ export default defineComponent({
             if(response.code === 0) {
               store.getBalance();
               ElMessage({
-                message: 'Success',
+                message: '成功',
                 type: 'success',
               })
               getWithdrawalMethods();

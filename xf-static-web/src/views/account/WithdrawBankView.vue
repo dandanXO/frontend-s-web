@@ -501,6 +501,31 @@ export default defineComponent({
       searchForm.endDate = chgDate(0);
       searchRecord();
     };
+
+    const withdrawState = reactive({
+      bankCardList: [],
+    });
+
+    const checkBankCards = () => {
+      ElMessageBox.alert(
+      '请先绑定银行卡', "系统提示",
+      {
+        showClose: false,
+        showCancelButton: false,
+        confirmButtonText: '确认',
+        draggable: false,
+        buttonSize: 'small',
+        closeOnClickModal: false,
+        center: true,
+      }
+    )
+      .then(() => {
+        router.push('/center/withdrawbank')
+      })
+      .catch(() => {
+      })
+    }
+
     onMounted(() => {
       getTime();
       loadCards();
@@ -822,7 +847,9 @@ export default defineComponent({
       sendOtp,
       phoneCaptchaDialogVisible,
       isSendOtp,
-      getOptionLabel
+      getOptionLabel,
+      withdrawState,
+      checkBankCards,
     };
   }
 });
