@@ -98,6 +98,9 @@ export function getVerifyingFeedbackCount(data) {
 export function sendSms(telephoneInfo) {
   return server.REST.post("/otp/sendSms", telephoneInfo);
 }
+export function sendSessionSms(telephoneInfo) {
+  return server.REST.post("/session/sendSms", telephoneInfo);
+}
 export function verifySms(telephoneInfo) {
   return server.REST.post("/session/verifyAndUpdatePhone", telephoneInfo);
 }
