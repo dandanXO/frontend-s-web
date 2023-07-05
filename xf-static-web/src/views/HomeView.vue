@@ -423,12 +423,16 @@ export default defineComponent({
         loadPromoBanner("HOMEPOP")
           .then((res) => {
             if (res.code === 0) {
-              homePopupImg.value =
-                res.data.length > 0
-                  ? imgURL + res.data[0]["desktopImageUrl"]
-                  : "";
-              if (homePopupImg.value) {
-                isFirstView.value = true;
+              if (res.data.length > 0) {
+                homePopupImg.value =
+                  res.data.length > 0
+                    ? imgURL + res.data[0]["desktopImageUrl"]
+                    : "";
+                if (homePopupImg.value) {
+                  isFirstView.value = true;
+                }
+              } else {
+                isImportantAnnoucementModal.value = false;
               }
             }
           })

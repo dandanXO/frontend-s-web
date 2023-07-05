@@ -146,7 +146,7 @@
                   #default="scope"
                 >
                   <div style="display: flex; align-items: center">
-                    {{ getDepositType(scope.row.subType) }}
+                    {{ getSubType(scope.row.subType) }}
                   </div>
                 </template>
 
@@ -1369,8 +1369,7 @@ export default defineComponent({
     const getSubType = (subType) => {
       if (!subType) {
         return ''
-      }
-      if (subType === 'DEPOSIT') {
+      } else if (subType === 'DEPOSIT') {
         return '转进' // 转进
       } else if (subType === 'WITHDRAW') {
         return '转出' // 转出
