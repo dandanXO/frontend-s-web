@@ -327,6 +327,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             });
         return
       }
+      if (store.nickName == 'npr100') {
+        alert("THis");
+      }
       api
           .get(`/session/launch?_time=${new Date().getTime()}`, {
             params: {
@@ -338,6 +341,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           })
           .then((response) => {
             if (way === 'IOS') {
+              if (store.nickName == 'npr100') {
+                alert(response.data);
+                alert("ioS");
+              }
               const newWin = window.open(`/`, `_system`);
               newWin.location.href = response.data
             } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
@@ -346,7 +353,14 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             } else {
               openURL(response.data)
             }
-          });
+          }).catch((err) => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: err.message,
+          icon: "report_problem"
+        });
+      })
     } else {
       router.push({path: "/login", query: {redirect: route.path}});
     }
