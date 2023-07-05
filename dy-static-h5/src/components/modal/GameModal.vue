@@ -316,8 +316,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             })
             .then((response) => {
               if (way === 'IOS') {
-                const newWin = window.open(`/`, `_system`);
-                newWin.location.href = response.data
+                window.open(response.data, `_system`);
               } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
                 const newWin = window.open(`/`, `_blank`);
                 newWin.location.href = response.data
