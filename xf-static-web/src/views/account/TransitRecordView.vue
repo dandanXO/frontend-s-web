@@ -858,10 +858,6 @@ const tableColumns = {
   transfer: [
     ...commonColumns,
     {
-      title: "转账编码",
-      dataIndex: "serialNumber",
-    },
-    {
       title: "账变类型",
       dataIndex: "type",
       key: "type",
