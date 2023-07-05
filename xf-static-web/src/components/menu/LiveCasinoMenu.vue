@@ -7,7 +7,7 @@
               class="platform-box"
               v-for="nav in navigations"
               :key="nav.code"
-              @click="$emit('loadModal', nav.label, 'onlyPlatform', nav.code)"
+              @click="$emit('loadModal', nav.label, nav.code, nav.gameCode)"
             >
                 <img :src="require('../../assets/live/live_logo_'+ nav.icon + '.png')" style="width: 200px;">
                 <p class="platform-title">{{ nav.label }} 真人</p>
@@ -28,10 +28,10 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     data: () => ({
         navigations: [
-        { code:"AG", icon: "ag", label: "AG", slogan: "全球顶尖, 尊享娱乐" },
-        { code:"EBET", icon: "ebet", label: "EBET", slogan: "全球顶尖, 尊享娱乐"  },
-        { code:"ALLBET", icon: "allbet", label: "ALLBET", slogan: "全球顶尖, 尊享娱乐"  },
-        { code:"BBINDY", icon: "bbin", label: "BBIN", slogan: "全球顶尖, 尊享娱乐"  },
+        { code:"AG", icon: "ag", label: "AG", gameCode: '', slogan: "全球顶尖, 尊享娱乐" },
+        { code:"EBET", icon: "ebet", label: "EBET", gameCode: '', slogan: "全球顶尖, 尊享娱乐"  },
+        { code:"ALLBET", icon: "allbet", label: "ALLBET", gameCode: '', slogan: "全球顶尖, 尊享娱乐"  },
+        { code:"BBINDY", icon: "bbin", label: "BBIN", gameCode: 'bblive_lobby_pc', slogan: "全球顶尖, 尊享娱乐"  },
         ],
     }),
 })
