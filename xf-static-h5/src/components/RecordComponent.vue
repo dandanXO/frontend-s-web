@@ -210,7 +210,7 @@ export default defineComponent({
     FileUpload
   },
   emits: ['loadnewdata'],
-  setup(props, {emit}) {
+  setup(props, context) {
     const truncatedList = ref([])
     const comList = ref({})
     const $q = useQuasar();
@@ -218,6 +218,11 @@ export default defineComponent({
     const isConfirmWithdraw = ref(false);
     const passDet = ref(null);
 
+    const clearTable = () => {
+      truncatedList.value= [];
+    }
+
+    context.expose({ clearTable });
 
     const onLoad = (index, done) => {
       comList.value = props.list;
@@ -232,7 +237,7 @@ export default defineComponent({
             });
             done();
           } else if (comList.value.length === 0) {
-            emit("loadnewdata");
+            context.emit("loadnewdata");
             done();
           }
         }

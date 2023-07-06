@@ -11,11 +11,12 @@
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
-        @change="searchRecord"
+        @update:model-value="searchRecord"
     >
     </q-select>
 
     <RecordComponent
+        ref="recordRef"
         recordType="bethistory"
         :loading="visible"
         :list="tableData"
@@ -44,13 +45,19 @@ export default defineComponent({
     const store = userStore();
     const visible = ref(true);
     const tableData = ref([]);
+    const recordRef = ref();
 
     const searchRecord = () => {
-      console.log("HERe");
-      loadDepositTable(false);
+      // console.log("searchRecord");
+
+      recordRef.value.clearTable();
+
+      endDate = moment().format("YYYY-MM-DD");
+      startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+      loadDepositTable(true);
     }
 
-    const platform= ref("");
+    const platform = ref("");
 
     const isEnded = ref(false);
 
@@ -62,10 +69,10 @@ export default defineComponent({
 
     const loadNewData = () => {
       startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
-      console.log(startDate);
+      // console.log(startDate);
 
       endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-      console.log(endDate);
+      // console.log(endDate);
 
       if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
         console.log("mor than 3 months");
@@ -79,30 +86,33 @@ export default defineComponent({
 
     const loadDepositTable = (isNew = true) => {
       console.log("CHeck");
-      console.log(platformsList.value);
+      console.log(platform.value);
 
       if (isNew) {
         visible.value = true;
+        tableData.value = [];
+        isEnded.value = false;
       }
       console.log(startDate);
       console.log(endDate);
 
+      var platformName = platform.value ? platform.value.value : "";
+
       let paramData = {
         "startDate": startDate,
         "endDate": endDate,
-        "platform": platform.value,
-        "memberId": store.id,
-        "current": 1,
-        "size": 10
+        "platform": platformName,
+        "memberId": store.id
       };
 
       api.get(apiUrl, {
             params: paramData
           }
       ).then((res) => {
-        tableData.value.push(...res.data.records);
-        // console.log("TableData");
-        // console.log(tableData.value);
+        if (res.data.records.length > 0) {
+          tableData.value.push(...res.data.records);
+        }
+
       }).finally(() => {
         if (isNew) {
           visible.value = false;
@@ -115,10 +125,10 @@ export default defineComponent({
         return response
       })).then((data) => {
         console.log(data);
-        _.each(data, function(item, index){
-          var option= {
+        _.each(data, function (item, index) {
+          var option = {
             label: item.name,
-            value: item.name,
+            value: item.code,
           }
           platformsList.value.push(option);
         })
@@ -166,6 +176,7 @@ export default defineComponent({
       isEnded,
       searchRecord,
       platformsList,
+      recordRef,
       platform
     };
   }
@@ -177,12 +188,12 @@ export default defineComponent({
   gap: 10px;
 
   .q-card {
-    background: #ffffff !important;
-    color: #000000 !important;
+    background: rgb(33, 37, 52);
+    color: rgb(186, 206, 241);
   }
 
   .label {
-    color: #000000;
+    color: #fff;
   }
 
   .q-btn {
