@@ -45,6 +45,8 @@
 
         <br />
         <span v-if="store.evip">专属网址: {{ store.evip }}</span>
+        <br/>
+        <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
       </div>
     </div>
     <div class="vipcard">
@@ -202,6 +204,7 @@ import {
 } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import {App} from "@capacitor/app";
 
 export default defineComponent({
   name: "AccountPage",
@@ -213,6 +216,8 @@ export default defineComponent({
         router.push("/");
       });
     };
+
+    const appVersionNo = ref(null);
 
     const vipLevel = computed(() => {
       if (store.vip == "VIP0") {
@@ -250,10 +255,25 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
+
+    const getVersionNo = async () => {
+      if (store.getDeviceType() == "ANDROID") {
+        const info = await App.getInfo();
+        var current_version = info.version + info.build;
+        appVersionNo.value = current_version;
+      } else if (store.getDeviceType() == "IOS") {
+        appVersionNo.value = "iOS v0.2";
+      }else{
+
+      }
+    }
+
+
     onMounted(() => {
       getBalance();
       store.getBalance();
       // store.getUnreadTotal();
+      getVersionNo();
     });
     onBeforeUnmount(() => {
       clearInterval(timerBalance.value);
@@ -279,7 +299,8 @@ export default defineComponent({
       getBalance,
       vipLevel,
       store,
-      openDeposit
+      openDeposit,
+      appVersionNo
     };
   }
 });

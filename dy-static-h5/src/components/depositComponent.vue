@@ -1,7 +1,7 @@
 <template>
   <div
-    class="q-pa-md"
-    style="overflow: auto; background: #fff; margin: 8px 8px"
+      class="q-pa-md"
+      style="overflow: auto; background: #fff; margin: 8px 8px"
   >
     <div class="q-mb-lg">
       <span class="additional-tips">
@@ -11,10 +11,10 @@
 
     <div class="node-wrapper">
       <Node
-        :level="1"
-        :list="payMethods"
-        ref="paymentNode"
-        @clicked="onSelect"
+          :level="1"
+          :list="payMethods"
+          ref="paymentNode"
+          @clicked="onSelect"
       />
     </div>
 
@@ -53,16 +53,16 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <q-input
-          v-if="amountList.length === 0"
-          hide-bottom-space
-          ref="depositAmtRef"
-          label="存款金额"
-          name="localAmount"
-          v-model="form.localAmount"
-          placeholder="输入金额"
-          color="blue"
-          :rules="verifyDepositAmount"
-          padding="none"
+            v-if="amountList.length === 0"
+            hide-bottom-space
+            ref="depositAmtRef"
+            label="存款金额"
+            name="localAmount"
+            v-model="form.localAmount"
+            placeholder="输入金额"
+            color="blue"
+            :rules="verifyDepositAmount"
+            padding="none"
         >
           <template v-slot:prepend>
             <span style="font-size: 26px" class="text-bright">
@@ -73,16 +73,16 @@
         </q-input>
 
         <q-select
-          v-else
-          ref="depositAmtRef"
-          label="选择金额"
-          name="localAmount"
-          filled
-          :options="amountList"
-          v-model="form.localAmount"
-          color=""
-          :rules="verifyDepositAmount"
-          padding="none"
+            v-else
+            ref="depositAmtRef"
+            label="选择金额"
+            name="localAmount"
+            filled
+            :options="amountList"
+            v-model="form.localAmount"
+            color=""
+            :rules="verifyDepositAmount"
+            padding="none"
         >
           <template v-slot:prepend>
             <span style="font-size: 26px" class="text-bright">
@@ -95,26 +95,26 @@
           最低金额:
           {{
             calculatedMinDeposit
-              ? calculatedMinDeposit +
+                ? calculatedMinDeposit +
                 " " +
                 (isUSDT ? "USDT" : store.currency.value)
-              : 0
+                : 0
           }}
-          <br />
+          <br/>
           最高金额:
           {{
             activeMethod.depositMax
-              ? activeMethod.depositMax +
+                ? activeMethod.depositMax +
                 " " +
                 (isUSDT ? "USDT" : store.currency.value)
-              : "No Limit"
+                : "No Limit"
           }}
         </div>
 
         <div
-          v-if="isUSDT && activeMethod.currencyRate"
-          class="q-pb-md"
-          label="兑换率"
+            v-if="isUSDT && activeMethod.currencyRate"
+            class="q-pb-md"
+            label="兑换率"
         >
           <span style="color: #000">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
@@ -122,32 +122,32 @@
           </span>
         </div>
         <BankComponent
-          v-show="selectedPayType && bankCardList.length"
-          ref="payTypeClass"
-          :is="selectedPayType"
-          v-model="form.bankId"
-          :bank-list="bankCardList"
-          @selected="selectedBank"
-          @successful="isDeposited = true"
+            v-show="selectedPayType && bankCardList.length"
+            ref="payTypeClass"
+            :is="selectedPayType"
+            v-model="form.bankId"
+            :bank-list="bankCardList"
+            @selected="selectedBank"
+            @successful="isDeposited = true"
         ></BankComponent>
         <q-select
-          ref="offerRef"
-          class="q-mt-md"
-          label="选择优惠"
-          filled
-          :options="unselectedPrivileges"
-          v-model="selectedPrivilege"
-          emit-value
-          v-if="hasPrivilege && !isUSDT"
-          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-          clearable
-          @update:model-value="checkMinDepositAmt"
+            ref="offerRef"
+            class="q-mt-md"
+            label="选择优惠"
+            filled
+            :options="unselectedPrivileges"
+            v-model="selectedPrivilege"
+            emit-value
+            v-if="hasPrivilege && !isUSDT"
+            :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+            clearable
+            @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section>
                 <q-item-label
-                  style="
+                    style="
                     text-overflow: ellipsis;
                     overflow: auto;
                     white-space: nowrap;
@@ -163,10 +163,10 @@
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
-            :loading="btnLoading"
-            color="brightbtn fit"
-            @click="confirmDeposit"
-            label="确定存款"
+              :loading="btnLoading"
+              color="brightbtn fit"
+              @click="confirmDeposit"
+              label="确定存款"
           />
         </div>
       </q-form>
@@ -176,19 +176,19 @@
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%">
       <q-card-section
-        style="padding: 10px 20px"
-        class="q-pa-md bg-dyblue text-white"
+          style="padding: 10px 20px"
+          class="q-pa-md bg-dyblue text-white"
       >
         已存款
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           您将被重定向到您的银行页面以完成存款。
-          <br />
-          <br />
+          <br/>
+          <br/>
           入金成功后会反映这里。
         </q-card-section>
-        <q-btn @click="clearInfo" label="明白" color="dyblue" />
+        <q-btn @click="clearInfo" label="明白" color="dyblue"/>
       </div>
     </q-card>
   </q-dialog>
@@ -197,13 +197,13 @@
     <q-card style="width: 100%; padding: 20px" class="text-black">
       <q-card-section class="q-mb-md">
         <strong>温馨提示</strong>
-        <br />
-        <br />
+        <br/>
+        <br/>
         为保证资金安全，存款前先验证手机号
       </q-card-section>
       <q-card-actions align="right">
         <router-link to="/account/personal">
-          <q-btn label="前往验证" color="dyblue" />
+          <q-btn label="前往验证" color="dyblue"/>
         </router-link>
       </q-card-actions>
     </q-card>
@@ -211,18 +211,18 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
+import {ref, reactive, onMounted, shallowRef, onBeforeUnmount} from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { cashier } from "boot/axios";
-import { Platform, useQuasar, openURL } from "quasar";
-import { doIt } from "boot/action";
+import {cashier} from "boot/axios";
+import {Platform, useQuasar, openURL} from "quasar";
+import {doIt} from "boot/action";
 import liff from "@line/liff";
 
 var qs = require("qs");
 
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import {userStore} from "stores/index";
+import {useRouter} from "vue-router";
 
 const store = userStore();
 const router = useRouter();
@@ -290,14 +290,14 @@ const blurCode = () => {
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
   (val) =>
-    val > calculatedMinDeposit.value - 1 ||
-    "存款应介于 " +
+      val > calculatedMinDeposit.value - 1 ||
+      "存款应介于 " +
       calculatedMinDeposit.value +
       " - " +
       activeMethod.value.depositMax,
   (val) =>
-    val < activeMethod.value.depositMax + 1 ||
-    "存款应介于 " +
+      val < activeMethod.value.depositMax + 1 ||
+      "存款应介于 " +
       calculatedMinDeposit.value +
       " - " +
       activeMethod.value.depositMax
@@ -340,12 +340,12 @@ function initPay() {
 
     // if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit')) {
     if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
+        !(
+            (Platform.is.desktop || Platform.is.webkit) &&
+            !Platform.is.capacitor &&
+            Platform.is.name !== "webkit" &&
+            !liff.isInClient()
+        )
     ) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
@@ -361,27 +361,27 @@ async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
   await cashier
-    .get(`/session/payment/${val.paymentId}/privileges`)
-    .then((res) => {
-      if (res.code === 0) {
-        privilegeList.value = res.data.privileges;
-        hasPrivilege.value = true;
-        unselectedPrivileges.value = [];
-        freePrivilege.value = null;
-        privilegeList.value.map((p) => {
-          if (p.payTypes.indexOf(val.payType) >= 0) {
-            if (p.triggerType == "FREE") {
-              freePrivilege.value = p;
-            } else {
-              unselectedPrivileges.value.push(p);
+      .get(`/session/payment/${val.paymentId}/privileges`)
+      .then((res) => {
+        if (res.code === 0) {
+          privilegeList.value = res.data.privileges;
+          hasPrivilege.value = true;
+          unselectedPrivileges.value = [];
+          freePrivilege.value = null;
+          privilegeList.value.map((p) => {
+            if (p.payTypes.indexOf(val.payType) >= 0) {
+              if (p.triggerType == "FREE") {
+                freePrivilege.value = p;
+              } else {
+                unselectedPrivileges.value.push(p);
+              }
             }
-          }
-        });
-      } else {
-        hasPrivilege.value = false;
-        privilegeList.value = [];
-      }
-    });
+          });
+        } else {
+          hasPrivilege.value = false;
+          privilegeList.value = [];
+        }
+      });
 }
 
 function selectPayType(value) {
@@ -439,8 +439,8 @@ function checkMinDepositAmt() {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
     calculatedMinDeposit.value = Math.max(
-      activeMethod.value.depositMin,
-      selectedPrivilege.value.depositMin
+        activeMethod.value.depositMin,
+        selectedPrivilege.value.depositMin
     );
   }
 }
@@ -476,48 +476,48 @@ async function confirmDeposit() {
     btnLoading.value = false;
   } else {
     await cashier
-      .get(
-        `/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`
-      )
-      .then((d) => {
-        if (d.code === 11002) {
-          if (d.data && d.data.suggestion) {
-            form.localAmount = d.data.suggestion;
-            btnLoading.value = false;
-          }
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: d.message,
-            icon: "report_problem"
-          });
-        } else {
-          if (freePrivilege.value) {
-            if (selectedPrivilege.value) {
-              form.privilegeId =
-                selectedPrivilege.value.id + "," + freePrivilege.value.id;
-            } else {
-              form.privilegeId = "," + freePrivilege.value.id;
+        .get(
+            `/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`
+        )
+        .then((d) => {
+          if (d.code === 11002) {
+            if (d.data && d.data.suggestion) {
+              form.localAmount = d.data.suggestion;
+              btnLoading.value = false;
             }
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: d.message,
+              icon: "report_problem"
+            });
           } else {
-            if (selectedPrivilege.value) {
-              form.privilegeId = selectedPrivilege.value.id;
+            if (freePrivilege.value) {
+              if (selectedPrivilege.value) {
+                form.privilegeId =
+                    selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              } else {
+                form.privilegeId = "," + freePrivilege.value.id;
+              }
             } else {
-              form.privilegeId = null;
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id;
+              } else {
+                form.privilegeId = null;
+              }
             }
+            form.paymentId = activeMethod.value.paymentId;
+            const copy = {...form};
+            const data = {};
+            Object.entries(copy).forEach(([key, value]) => {
+              if (value) {
+                data[key] = value;
+              }
+            });
+            data.bankCardId = 0;
+            pDepo(data);
           }
-          form.paymentId = activeMethod.value.paymentId;
-          const copy = { ...form };
-          const data = {};
-          Object.entries(copy).forEach(([key, value]) => {
-            if (value) {
-              data[key] = value;
-            }
-          });
-          data.bankCardId = 0;
-          pDepo(data);
-        }
-      });
+        });
   }
 }
 
@@ -534,138 +534,127 @@ async function pDepo(deposit) {
     obj.privilegeId = deposit.privilegeId;
   }
   await cashier
-    .post("/session/payment/submit", qs.stringify(obj))
-    .then((res) => {
-      // const res = ret.data
-      // console.log(res)
+      .post("/session/payment/submit", qs.stringify(obj))
+      .then((res) => {
+        // const res = ret.data
+        // console.log(res)
 
-      if (res.code === 0) {
-        const response = res.data.result;
-        if (res.data.result.payResultType === "OFFLINE") {
-          btnLoading.value = false;
-        }
-        if (res.data.result.payResultType === "RENDER_HTML") {
-          isDisplay.value = true;
-          const submitResult = res.data.result.data;
-          submitMessage.value = submitResult.split(",");
-          btnLoading.value = false;
-        } else {
-          // if (
-          //   (Platform.is.desktop || Platform.is.webkit) &&
-          //   !Platform.is.capacitor &&
-          //   Platform.is.name !== "webkit" &&
-          //   !liff.isInClient()
-          // ) {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
-            // const newWin = window.open(`/depositLoading`, "Bank");
-            // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-            const newWin = window.open(`/`);
-            newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-            if (response.payResultType === "GET_SUBMIT") {
-              newWin.location.href = response.requestUrl;
-              btnLoading.value = false;
-              // isDeposited.value = true;
-            }
-            if (response.payResultType === "POST_SUBMIT") {
-              if (response.paramKey === null || response.paramKey === "") {
-                const passData = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                // console.log(passData);
-                newWin.location.href = passData;
-                btnLoading.value = false;
-              } else {
-                newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                btnLoading.value = false;
-              }
-              // isDeposited.value = true;
-            }
+        if (res.code === 0) {
+          const response = res.data.result;
+          if (res.data.result.payResultType === "OFFLINE") {
+            btnLoading.value = false;
+          }
+          if (res.data.result.payResultType === "RENDER_HTML") {
+            isDisplay.value = true;
+            const submitResult = res.data.result.data;
+            submitMessage.value = submitResult.split(",");
+            btnLoading.value = false;
           } else {
-            localStorage.setItem("formDetails", JSON.stringify(form));
-            if (response.payResultType === "GET_SUBMIT") {
-              //   location.href = response.requestUrl;
-              //   // isDeposited.value = true;
-              // }
-              if (
+            if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
                 Platform.is.name !== "webkit" &&
                 !liff.isInClient()
-              ) {
-                location.href = response.requestUrl;
-                btnLoading.value = false;
+            ) {
+              if (store.getDeviceType() === 'IOS' || store.isMobileSafari()) {
+                const newWin = window.open(`/`, `_self`);
+                if (response.payResultType === "GET_SUBMIT") {
+                  newWin.location.href = response.requestUrl;
+                  btnLoading.value = false;
+                }
+                if (response.payResultType === "POST_SUBMIT") {
+                  if (response.paramKey === null || response.paramKey === "") {
+                    newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    btnLoading.value = false;
+                  } else {
+                    newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    btnLoading.value = false;
+                  }
+                }
               } else {
-                openURL(response.requestUrl);
-                btnLoading.value = false;
+                const newWin = window.open(`/`);
+                newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+                if (response.payResultType === "GET_SUBMIT") {
+                  newWin.location.href = response.requestUrl;
+                  btnLoading.value = false;
+                }
+                if (response.payResultType === "POST_SUBMIT") {
+                  if (response.paramKey === null || response.paramKey === "") {
+                    const passData = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    // console.log(passData);
+                    newWin.location.href = passData;
+                    btnLoading.value = false;
+                  } else {
+                    newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    btnLoading.value = false;
+                  }
+                }
               }
-            }
-            if (response.payResultType === "POST_SUBMIT") {
-              localStorage.setItem("responseDetails", JSON.stringify(response));
-              if (response.paramKey === null || response.paramKey === "") {
-                router.push(
-                  `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
-                );
-                btnLoading.value = false;
-              } else {
-                router.push(
-                  `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
-                );
-                btnLoading.value = false;
-              }
-              // isDeposited.value = true;
-            }
-          }
 
-          // window.addEventListener(
-          //   "message",
-          //   (event) => {
-          //     if (event.data?.msg) {
-          //       if (event.data.msg === "success") {
-          //         isDeposited.value = true;
-          //         localStorage.setItem("isBacked", JSON.stringify(true));
-          //       } else {
-          //         $q.notify({
-          //           color: "negative",
-          //           position: "top",
-          //           message: event.data.msg,
-          //           icon: "report_problem"
-          //         });
-          //       }
-          //     }
-          //   },
-          //   { once: true }
-          // );
+            } else {
+              localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                //   location.href = response.requestUrl;
+                //   // isDeposited.value = true;
+                // }
+                if (
+                    (Platform.is.desktop || Platform.is.webkit) &&
+                    !Platform.is.capacitor &&
+                    Platform.is.name !== "webkit" &&
+                    !liff.isInClient()
+                ) {
+                  location.href = response.requestUrl;
+                  btnLoading.value = false;
+                } else {
+                  openURL(response.requestUrl);
+                  btnLoading.value = false;
+                }
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                localStorage.setItem("responseDetails", JSON.stringify(response));
+                if (response.paramKey === null || response.paramKey === "") {
+                  router.push(
+                      `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                  );
+                  btnLoading.value = false;
+                } else {
+                  router.push(
+                      `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                  );
+                  btnLoading.value = false;
+                }
+                // isDeposited.value = true;
+              }
+            }
+
+          }
+          // console.log(res);
+          // postMessage({ msg: res.message }, "*");
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          });
+          btnLoading.value = false;
         }
-        // console.log(res);
-        // postMessage({ msg: res.message }, "*");
-      } else {
+      })
+      .catch((error) => {
         $q.notify({
           color: "negative",
           position: "top",
-          message: res.message,
+          message: error.message,
           icon: "report_problem"
         });
         btnLoading.value = false;
-      }
-    })
-    .catch((error) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: error.message,
-        icon: "report_problem"
+        // postMessage(
+        //   {
+        //     msg: error.message
+        //   },
+        //   "*"
+        // );
       });
-      btnLoading.value = false;
-      // postMessage(
-      //   {
-      //     msg: error.message
-      //   },
-      //   "*"
-      // );
-    });
 }
 
 onMounted(() => {

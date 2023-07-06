@@ -1,422 +1,479 @@
 <template>
   <div class="roles-main">
+    <div class="header-container">
+      <div class="search">
+        <el-select
+          v-model="form.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left: 5px"
+          @focus="loadSites"
+          @change="handleSiteNameCheckedChange"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </div>
+      <div class="btn-group">
+        <el-radio-group v-model="form.currencyId">
+          <el-radio
+            v-for="c in currencies.list"
+            :key="c.id"
+            :label="c.id"
+            size="small"
+            border
+            @change="loadWithdrawSetting"
+          >{{ c.currencyName }}</el-radio>
+        </el-radio-group>
+      </div>
+    </div>
     <el-row>
       <el-col :span="4">
-        <el-card style="width: 180px; margin-right: 20px">
-          <div class="clearfix">
-            <span>{{ t('fields.siteName') }}</span>
-          </div>
-          <el-radio-group v-model="request.siteId" @change="handleSiteNameCheckedChange">
-            <el-radio v-for="c in sites.list" :label="c.id" :key="c.id">{{ c.siteName }}</el-radio>
-          </el-radio-group>
-        </el-card>
-      </el-col>
-      <el-col :span="20">
-        <div class="header-container" v-if="!hasRole(['SUB_TENANT'])">
-          <div class="btn-group">
-            <el-button
-              :disabled="request.siteId === null"
-              icon="el-icon-plus"
-              size="mini"
-              type="primary"
-              v-permission="['sys:withdraw:set:add']"
-              @click="showDialog('CREATE')"
-            >{{ t('fields.add') }}</el-button>
+        <div class="form-border">
+          <div class="form-header">{{ t('fields.web') }}</div>
+          <div class="form-body">
+            <el-form
+              ref="webWithdrawSettingForm"
+              :model="form.web"
+              :rules="webFormRules"
+              :inline="true"
+              size="small"
+              label-width="150px"
+              label-position="top"
+            >
+              <el-form-item :label="t('fields.minWithdrawAmount')" prop="withdrawMin">
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.web.withdrawMin" style="width: 200px" maxlength="10" />
+                <el-input v-else v-model="form.web.withdrawMin" style="width: 200px" maxlength="10" disabled />
+              </el-form-item>
+              <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawMax">
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.web.withdrawMax" style="width: 200px" maxlength="10" />
+                <el-input v-else v-model="form.web.withdrawMax" style="width: 200px" maxlength="10" disabled />
+              </el-form-item>
+              <el-form-item :label="t('fields.maxDailyWithdrawTimes')" prop="withdrawMaxTimes">
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.web.withdrawMaxTimes" style="width: 200px" maxlength="10" />
+                <el-input v-else v-model="form.web.withdrawMaxTimes" style="width: 200px" maxlength="10" disabled />
+              </el-form-item>
+              <el-form-item :label="t('fields.maxDailyWithdraw')" prop="withdrawMaxAmount">
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.web.withdrawMaxAmount" style="width: 200px" maxlength="10" />
+                <el-input v-else v-model="form.web.withdrawMaxAmount" style="width: 200px" maxlength="10" disabled />
+              </el-form-item>
+            </el-form>
           </div>
         </div>
-        <el-table
-          :data="page.records"
-          v-loading="page.loading"
-          ref="table"
-          row-key="id"
-          size="small"
-          highlight-current-row
-          :empty-text="t('fields.noData')"
-        >
-          <el-table-column prop="financialLevelName" :label="t('fields.financialLevel')" width="150" />
-          <el-table-column prop="currencyName" :label="t('fields.currency')" width="100" />
-          <el-table-column prop="way" :label="t('fields.way')" width="100" />
-          <el-table-column prop="withdrawMin" :label="t('fields.minWithdrawAmount')" width="200">
-            <template #default="scope">
-              $
-              <!--eslint-disable-next-line -->
-              <span v-formatter="{ data: scope.row.withdrawMin, type: 'money' }" />
-            </template>
-          </el-table-column>
-          <el-table-column prop="withdrawMax" :label="t('fields.maxWithdrawAmount')" width="200">
-            <template #default="scope">
-              $
-              <!--eslint-disable-next-line -->
-              <span v-formatter="{ data: scope.row.withdrawMax, type: 'money' }" />
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="withdrawMaxTimes"
-            :label="t('fields.maxDailyWithdrawTimes')"
-            width="250"
-          />
-          <el-table-column
-            prop="withdrawMaxAmount"
-            :label="t('fields.maxDailyWithdraw')"
-            width="250"
-          >
-            <template #default="scope">
-              $
-              <span
-                v-formatter="{
-                  data: scope.row.withdrawMaxAmount,
-                  type: 'money',
-                }"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column
-            :label="t('fields.operate')"
-            align="right"
-            fixed="right"
-            v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])"
-          >
-            <template #default="scope">
-              <el-button
-                icon="el-icon-edit"
-                size="mini"
-                type="success"
-                @click="showEdit(scope.row)"
-              />
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination
-          class="pagination"
-          @current-change="changePage"
-          layout="prev, pager, next"
-          :page-size="request.size"
-          :page-count="page.pages"
-          :current-page="request.current"
-        />
+      </el-col>
+      <el-col :span="4" style="margin-left: 10px;">
+        <div class="form-border">
+          <div class="form-header">{{ t('fields.mobile') }}</div>
+          <div class="form-body">
+            <el-form
+              ref="mobileWithdrawSettingForm"
+              :model="form.mobile"
+              :rules="mobileFormRules"
+              :inline="true"
+              size="small"
+              label-width="150px"
+              label-position="top"
+            >
+              <el-form-item :label="t('fields.minWithdrawAmount')" prop="withdrawMin">
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.mobile.withdrawMin" style="width: 200px" maxlength="10" />
+                <el-input v-else v-model="form.mobile.withdrawMin" style="width: 200px" maxlength="10" disabled />
+              </el-form-item>
+              <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawMax">
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.mobile.withdrawMax" style="width: 200px" maxlength="10" />
+                <el-input v-else v-model="form.mobile.withdrawMax" style="width: 200px" maxlength="10" disabled />
+              </el-form-item>
+              <el-form-item :label="t('fields.maxDailyWithdrawTimes')" prop="withdrawMaxTimes">
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.mobile.withdrawMaxTimes" style="width: 200px" maxlength="10" />
+                <el-input v-else v-model="form.mobile.withdrawMaxTimes" style="width: 200px" maxlength="10" disabled />
+              </el-form-item>
+              <el-form-item :label="t('fields.maxDailyWithdraw')" prop="withdrawMaxAmount">
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.mobile.withdrawMaxAmount" style="width: 200px" maxlength="10" />
+                <el-input v-else v-model="form.mobile.withdrawMaxAmount" style="width: 200px" maxlength="10" disabled />
+              </el-form-item>
+            </el-form>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="7" style="margin-left: 10px;">
+        <div class="form-border">
+          <div class="form-header">
+            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" />
+            {{ t('fields.web') }}
+          </div>
+          <div class="form-body">
+            <el-checkbox-group v-model="form.web.financialLevels" @change="handleCheckedFinancialChange">
+              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f" :key="f.id" style="display: block; margin: 5px 0;">
+                {{ f.name }}
+                <span class="withdraw-class">
+                  <i class="el-icon-caret-top" />: <span v-formatter="{data: getWithdraw(f, 'WEB', 'max'),type: 'money'}" /> <i class="el-icon-caret-bottom" />: <span v-formatter="{data: getWithdraw(f, 'WEB', 'min'),type: 'money'}" /> <i class="el-icon-stopwatch" />: {{ getWithdraw(f, 'WEB', 'maxTimes') }} <i class="el-icon-wallet" />: <span v-formatter="{data: getWithdraw(f, 'WEB', 'maxAmount'),type: 'money'}" />
+                </span>
+              </el-checkbox>
+            </el-checkbox-group>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="7" style="margin-left: 10px;">
+        <div class="form-border">
+          <div class="form-header">
+            <el-checkbox :indeterminate="mobileIsIndeterminate" v-model="checkAllMobile" @change="handleMobileCheckAllChange" />
+            {{ t('fields.mobile') }}
+          </div>
+          <div class="form-body">
+            <el-checkbox-group v-model="form.mobile.financialLevels" @change="handleMobileCheckedFinancialChange">
+              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f" :key="f.id" style="display: block; margin: 5px 0;">
+                {{ f.name }}
+                <span class="withdraw-class">
+                  <i class="el-icon-caret-top" />: <span v-formatter="{data: getWithdraw(f, 'MOBILE', 'max'),type: 'money'}" /> <i class="el-icon-caret-bottom" />: <span v-formatter="{data: getWithdraw(f, 'MOBILE', 'min'),type: 'money'}" /> <i class="el-icon-stopwatch" />: {{ getWithdraw(f, 'MOBILE', 'maxTimes') }} <i class="el-icon-wallet" />: <span v-formatter="{data: getWithdraw(f, 'MOBILE', 'maxAmount'),type: 'money'}" />
+                </span>
+              </el-checkbox>
+            </el-checkbox-group>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="1" style="margin-left: 10px;">
+        <el-button v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" type="primary" @click="submit">{{ t('fields.update') }}</el-button>
+        <el-button v-else type="primary" @click="submit" disabled>{{ t('fields.update') }}</el-button>
       </el-col>
     </el-row>
-    <el-dialog
-      :title="uiControl.dialogTitle"
-      v-model="uiControl.dialogVisible"
-      append-to-body
-      width="730px"
-    >
-      <el-form
-        ref="withdrawSettingForm"
-        :model="form"
-        :rules="formRules"
-        :inline="true"
-        size="small"
-        label-width="270px"
-      >
-        <el-form-item :label="t('fields.siteName')" prop="siteId">
-          <el-select
-            disabled
-            v-model="form.siteId"
-            value-key="id"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 400px"
-            filterable
-            @focus="loadSites"
-          >
-            <el-option
-              v-for="item in sites.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.financialLevel')" prop="financialLevel">
-          <el-select
-            v-model="form.financialLevel"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 400px"
-            filterable
-            @focus="loadFormFinancialLevelInfos"
-          >
-            <el-option
-              v-for="item in financialLevel.list"
-              :key="item.id"
-              :label="item.name"
-              :value="item.level"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.currency')" prop="currencyId">
-          <el-select
-            v-model="form.currencyId"
-            value-key="id"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 400px"
-            filterable
-          >
-            <el-option
-              v-for="item in currencies.list"
-              :key="item.id"
-              :label="item.currencyName"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.device')" prop="way">
-          <el-radio-group v-model="form.way">
-            <el-radio v-for="c in devices.list" :label="c.displayName" :key="c.key">{{ c.value }}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item :label="t('fields.minWithdrawAmount')" prop="withdrawMin">
-          <el-input v-model="form.withdrawMin" style="width: 400px" />
-        </el-form-item>
-        <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawMax">
-          <el-input v-model="form.withdrawMax" style="width: 400px" />
-        </el-form-item>
-        <el-form-item :label="t('fields.maxDailyWithdrawTimes')" prop="withdrawMaxTimes">
-          <el-input v-model="form.withdrawMaxTimes" style="width: 400px" clearable />
-        </el-form-item>
-        <el-form-item :label="t('fields.maxDailyWithdraw')" prop="withdrawMaxAmount">
-          <el-input v-model="form.withdrawMaxAmount" style="width: 400px" />
-        </el-form-item>
-        <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
-        </div>
-      </el-form>
-    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref, computed } from 'vue'
-import { numericOnly, required, isNumeric } from '../../../utils/validate'
+import { onMounted, reactive, ref, computed } from 'vue'
+import { isNumericNonRequired, numericOnlyNonRequired } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
-import {
-  getWithdrawSettings,
-  createWithdrawSetting,
-  updateWithdrawSetting,
-} from '../../../api/withdraw-setting'
+import { getWithdrawSettingList, insertOrUpdate } from '../../../api/withdraw-setting'
 import { getSiteListSimple } from '../../../api/site'
 import { getFinancialLevels } from '../../../api/financial-level'
 import { getCurrencyNames } from '../../../api/currency'
 import { hasRole, hasPermission } from "../../../utils/util";
 import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
+import { TENANT } from '../../../store/modules/user/action-types'
 
 const { t } = useI18n();
 const store = useStore()
-const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
-const siteId = ref(null);
-const withdrawSettingForm = ref(null)
-const uiControl = reactive({
-  dialogVisible: false,
-  dialogTitle: '',
-  dialogType: 'CREATE',
-  editBtn: true,
-})
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
+const webWithdrawSettingForm = ref(null)
+const mobileWithdrawSettingForm = ref(null)
+const checkAll = ref(false)
+const isIndeterminate = ref(false)
+const checkAllMobile = ref(false)
+const mobileIsIndeterminate = ref(false)
+const siteList = reactive({
+  list: []
+});
+const financialList = reactive({
+  list: []
+});
+const currencies = reactive({
+  list: []
+});
+
 const page = reactive({
-  pages: 0,
   records: [],
   loading: false,
-})
-const request = reactive({
-  size: 30,
-  current: 1,
-  siteId: null,
 })
 
 const form = reactive({
   id: null,
   siteId: null,
-  siteName: null,
-  financialLevel: null,
   currencyId: null,
-  way: null,
-  withdrawMin: '',
-  withdrawMax: '',
-  withdrawMaxTimes: null,
-  withdrawMaxAmount: '',
+  web: {
+    withdrawMin: null,
+    withdrawMax: null,
+    withdrawMaxTimes: null,
+    withdrawMaxAmount: null,
+    financialLevels: []
+  },
+  mobile: {
+    withdrawMin: null,
+    withdrawMax: null,
+    withdrawMaxTimes: null,
+    withdrawMaxAmount: null,
+    financialLevels: []
+  }
 })
 
-const validateWithdrawMin = (rule, value, callback) => {
-  if (value < 1) {
-    callback(new Error(t('message.validateMinWithdrawNumber')));
-  } else if (value > form.withdrawMax) {
-    callback(new Error(t('message.validateMinWithdrawLesser')));
+const validateWebWithdrawMin = (rule, value, callback) => {
+  if (value) {
+    if (value < 1) {
+      callback(new Error(t('message.validateMinWithdrawNumber')));
+    } else if (form.web.withdrawMax !== null && value - form.web.withdrawMax > 0) {
+      callback(new Error(t('message.validateMinWithdrawLesser')));
+    } else {
+      callback();
+    }
   } else {
     callback();
   }
 };
 
-const validateWithdrawMax = (rule, value, callback) => {
-  if (value < 1) {
-    callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
-  } else if (value < form.withdrawMin) {
-    callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
+const validateWebWithdrawMax = (rule, value, callback) => {
+  if (value) {
+    if (value < 1) {
+      callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
+    } else if (form.web.withdrawMin !== null && value - form.web.withdrawMin < 0) {
+      callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
+    } else {
+      callback();
+    }
   } else {
     callback();
   }
 };
 
 const validateWithdrawMaxTime = (rule, value, callback) => {
-  if (value < 1) {
+  if (value && value < 1) {
     callback(new Error(t('message.validateMaxDailyWithdrawTimesNumber')));
   } else {
     callback();
   }
 };
 
-const validateWithdrawMaxAmountDaily = (rule, value, callback) => {
-  if (value < 1) {
-    callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
-  } else if (value < form.withdrawMax) {
-    callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
+const validateWebWithdrawMaxAmountDaily = (rule, value, callback) => {
+  if (value) {
+    if (value < 1) {
+      callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
+    } else if (form.web.withdrawMax !== null && value - form.web.withdrawMax < 0) {
+      callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
+    } else {
+      callback();
+    }
   } else {
     callback();
   }
 };
 
-const formRules = reactive({
-  financialLevel: [required(t('message.validateFinancialLevelRequired'))],
-  currencyId: [required(t('message.validateCurrencyRequired'))],
-  way: [required(t('message.validateDeviceRequired'))],
-  withdrawMin: [required(t('message.validateMinWithdrawRequired')), isNumeric(t('message.validateNumberOnly')), { validator: validateWithdrawMin, trigger: "blur" }],
-  withdrawMax: [required(t('message.validateMinWithdrawRequired')), isNumeric(t('message.validateNumberOnly')), { validator: validateWithdrawMax, trigger: "blur" }],
-  withdrawMaxTimes: [required(t('message.validateMaxDailyWithdrawTimesRequired')), numericOnly(t('message.validateWholeNumberOnly')), { validator: validateWithdrawMaxTime, trigger: "blur" }],
-  withdrawMaxAmount: [
-    required(t('message.validateMaxWithdrawAmountRequired')), isNumeric(t('message.validateNumberOnly')), { validator: validateWithdrawMaxAmountDaily, trigger: "blur" }
-  ],
+const validateMobileWithdrawMin = (rule, value, callback) => {
+  if (value) {
+    if (value < 1) {
+      callback(new Error(t('message.validateMinWithdrawNumber')));
+    } else if (form.mobile.withdrawMax !== null && value - form.mobile.withdrawMax > 0) {
+      callback(new Error(t('message.validateMinWithdrawLesser')));
+    } else {
+      callback();
+    }
+  } else {
+    callback();
+  }
+};
+
+const validateMobileWithdrawMax = (rule, value, callback) => {
+  if (value) {
+    if (value < 1) {
+      callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
+    } else if (form.mobile.withdrawMin !== null && value - form.mobile.withdrawMin < 0) {
+      callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
+    } else {
+      callback();
+    }
+  } else {
+    callback();
+  }
+};
+
+const validateMobileWithdrawMaxAmountDaily = (rule, value, callback) => {
+  if (value) {
+    if (value < 1) {
+      callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
+    } else if (form.mobile.withdrawMax !== null && value - form.mobile.withdrawMax < 0) {
+      callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
+    } else {
+      callback();
+    }
+  } else {
+    callback();
+  }
+};
+
+const validateNumeric = (rule, value, callback) => {
+  if (value && !isNumericNonRequired(value)) {
+    callback(new Error(t('message.validateNumberOnly')))
+  } else {
+    callback()
+  }
+}
+
+const validateNumericOnly = (rule, value, callback) => {
+  if (value && !numericOnlyNonRequired(value)) {
+    callback(new Error(t('message.validateWholeNumberOnly')))
+  } else {
+    callback()
+  }
+}
+
+const handleCheckAllChange = (val) => {
+  if (val) {
+    form.web.financialLevels = financialList.list;
+  } else {
+    form.web.financialLevels = [];
+  }
+
+  isIndeterminate.value = false;
+}
+
+const handleCheckedFinancialChange = (value) => {
+  const checkedCount = value.length
+  checkAll.value = checkedCount === financialList.list.length
+  isIndeterminate.value = checkedCount > 0 && checkedCount < financialList.list.length
+}
+
+const handleMobileCheckAllChange = (val) => {
+  if (val) {
+    form.mobile.financialLevels = financialList.list;
+  } else {
+    form.mobile.financialLevels = [];
+  }
+
+  mobileIsIndeterminate.value = false;
+}
+
+const handleMobileCheckedFinancialChange = (value) => {
+  const checkedCount = value.length
+  checkAllMobile.value = checkedCount === financialList.list.map(element => element.name).length
+  mobileIsIndeterminate.value = checkedCount > 0 && checkedCount < financialList.list.length
+}
+
+const webFormRules = reactive({
+  withdrawMin: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateWebWithdrawMin, trigger: "blur" }],
+  withdrawMax: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateWebWithdrawMax, trigger: "blur" }],
+  withdrawMaxTimes: [{ validator: validateNumericOnly, trigger: "blur" }, { validator: validateWithdrawMaxTime, trigger: "blur" }],
+  withdrawMaxAmount: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateWebWithdrawMaxAmountDaily, trigger: "blur" }],
 })
 
-const sites = reactive({
-  list: [],
-})
-
-const financialLevelInfos = reactive({
-  list: [],
-})
-
-const financialLevel = reactive({
-  list: []
-})
-
-const currencies = reactive({
-  list: [],
-})
-
-const devices = reactive({
-  list: [
-    { key: 1, displayName: 'WEB', value: 'WEB' },
-    { key: 2, displayName: 'MOBILE', value: 'MOBILE' },
-  ],
+const mobileFormRules = reactive({
+  withdrawMin: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateMobileWithdrawMin, trigger: "blur" }],
+  withdrawMax: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateMobileWithdrawMax, trigger: "blur" }],
+  withdrawMaxTimes: [{ validator: validateNumericOnly, trigger: "blur" }, { validator: validateWithdrawMaxTime, trigger: "blur" }],
+  withdrawMaxAmount: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateMobileWithdrawMaxAmountDaily, trigger: "blur" }],
 })
 
 async function handleSiteNameCheckedChange() {
-  const site = sites.list.filter(s => s.id === request.siteId)[0]
+  const site = siteList.list.filter(s => s.id === form.siteId)[0]
+  await loadCurrencies(site.currency)
+  form.currencyId = currencies.list[0].id;
+  await loadFinancialLevels()
   await loadWithdrawSetting()
-  await loadFinancialLevelInfos()
-  loadCurrencies(site.currency)
 }
 
 async function loadWithdrawSetting() {
   page.loading = true
-  const { data: ret } = await getWithdrawSettings(request)
-  page.pages = ret.pages
-  page.records = ret.records
+  const query = {};
+  query.siteId = form.siteId;
+  query.currencyId = form.currencyId;
+  const { data: ret } = await getWithdrawSettingList(query)
+  page.records = ret
   page.loading = false
 }
 
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
-  sites.list = ret
+  siteList.list = ret
 }
 
-async function loadFinancialLevelInfos() {
-  const { data: ret } = await getFinancialLevels({ siteId: request.siteId })
-  financialLevelInfos.list = ret
-}
-
-async function loadFormFinancialLevelInfos() {
-  const { data: ret } = await getFinancialLevels({ siteId: siteId.value })
-  financialLevel.list = ret
-}
+async function loadFinancialLevels() {
+  const { data: financial } = await getFinancialLevels({ siteId: form.siteId });
+  financialList.list = financial;
+};
 
 async function loadCurrencies(siteCurrencies) {
   const { data: ret } = await getCurrencyNames()
   currencies.list = ret.filter(c => siteCurrencies.includes(c.currencyCode))
 }
 
-function changePage(page) {
-  request.current = page
-  loadWithdrawSetting()
-}
-
-async function showDialog(type) {
-  if (type === 'CREATE') {
-    if (withdrawSettingForm.value) {
-      withdrawSettingForm.value.resetFields()
-    }
-    form.id = null
-    form.siteId = request.siteId
-    siteId.value = form.siteId;
-    await loadFormFinancialLevelInfos();
-    form.financialLevel = financialLevelInfos.list[0].level
-    form.currencyId = currencies.list[0].id
-    uiControl.dialogTitle = t('fields.addWithdrawSetting')
-  } else if (type === 'EDIT') {
-    uiControl.dialogTitle = t('fields.editWithdrawSetting')
-  }
-  uiControl.dialogType = type
-  uiControl.dialogVisible = true
-}
-
-async function showEdit(withdrawSetting) {
-  showDialog('EDIT')
-  await nextTick(() => {
-    for (const key in withdrawSetting) {
-      if (Object.keys(form).find(k => k === key)) {
-        form[key] = withdrawSetting[key]
+async function submit() {
+  const withdrawSetting = [];
+  if (webWithdrawSettingForm.value) {
+    webWithdrawSettingForm.value.validate((valid) => {
+      if (valid && form.web.withdrawMin && form.web.withdrawMax && form.web.withdrawMaxTimes && form.web.withdrawMaxAmount) {
+        form.web.financialLevels.forEach(f => {
+          const record = {};
+          record.financialLevel = f.level;
+          record.siteId = form.siteId;
+          record.currencyId = form.currencyId;
+          record.way = 'WEB';
+          record.withdrawMin = form.web.withdrawMin;
+          record.withdrawMax = form.web.withdrawMax;
+          record.withdrawMaxTimes = form.web.withdrawMaxTimes;
+          record.withdrawMaxAmount = form.web.withdrawMaxAmount;
+          withdrawSetting.push(record);
+        })
       }
-    }
-  })
-  siteId.value = form.siteId;
-  await loadFormFinancialLevelInfos();
-}
-
-function create() {
-  withdrawSettingForm.value.validate(async valid => {
-    if (valid) {
-      await createWithdrawSetting(form)
-      uiControl.dialogVisible = false
-      await loadWithdrawSetting()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
-    }
-  })
-}
-
-function edit() {
-  withdrawSettingForm.value.validate(async valid => {
-    if (valid) {
-      await updateWithdrawSetting(form)
-      uiControl.dialogVisible = false
-      await loadWithdrawSetting()
-      ElMessage({ message: t('message.editSuccess'), type: 'success' })
-    }
-  })
-}
-
-function submit() {
-  if (uiControl.dialogType === 'CREATE') {
-    create()
-  } else if (uiControl.dialogType === 'EDIT') {
-    edit()
+    })
+  }
+  if (mobileWithdrawSettingForm.value) {
+    mobileWithdrawSettingForm.value.validate((valid) => {
+      if (valid && form.mobile.withdrawMin && form.mobile.withdrawMax && form.mobile.withdrawMaxTimes && form.mobile.withdrawMaxAmount) {
+        form.mobile.financialLevels.forEach(f => {
+          const record = {};
+          record.financialLevel = f.level;
+          record.siteId = form.siteId;
+          record.currencyId = form.currencyId;
+          record.way = 'MOBILE';
+          record.withdrawMin = form.mobile.withdrawMin;
+          record.withdrawMax = form.mobile.withdrawMax;
+          record.withdrawMaxTimes = form.mobile.withdrawMaxTimes;
+          record.withdrawMaxAmount = form.mobile.withdrawMaxAmount;
+          withdrawSetting.push(record);
+        })
+      }
+    })
+  }
+  if (withdrawSetting.length > 0) {
+    await insertOrUpdate(withdrawSetting);
+    clearForm();
+    ElMessage({ message: t('message.updateSuccess'), type: 'success' });
+    await loadWithdrawSetting();
   }
 }
 
-onMounted(() => {
-  loadSites()
-  if (LOGIN_USER_SITEID.value != null) {
-    siteId.value = LOGIN_USER_SITEID.value
+function clearForm() {
+  form.web.withdrawMin = null;
+  form.web.withdrawMax = null;
+  form.web.withdrawMaxTimes = null;
+  form.web.withdrawMaxAmount = null;
+  form.web.financialLevels = [];
+  form.mobile.withdrawMin = null;
+  form.mobile.withdrawMax = null;
+  form.mobile.withdrawMaxTimes = null;
+  form.mobile.withdrawMaxAmount = null;
+  form.mobile.financialLevels = [];
+  isIndeterminate.value = false;
+  checkAll.value = false;
+  mobileIsIndeterminate.value = false;
+  checkAllMobile.value = false;
+}
+
+function getWithdraw(financial, way, withdraw) {
+  const record = page.records.find((item) => item.way === way && item.financialLevel === financial.level);
+  if (withdraw === 'min') {
+    return record ? record.withdrawMin : 0;
+  } else if (withdraw === 'max') {
+    return record ? record.withdrawMax : 0;
+  } else if (withdraw === 'maxTimes') {
+    return record ? record.withdrawMaxTimes : 0;
+  } else if (withdraw === 'maxAmount') {
+    return record ? record.withdrawMaxAmount : 0;
   }
+}
+
+onMounted(async() => {
+  await loadSites()
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    form.siteId = site.value.id;
+  } else {
+    site.value = siteList.list[0];
+    form.siteId = site.value.id;
+  }
+  await handleSiteNameCheckedChange();
 })
 </script>
 
@@ -451,5 +508,50 @@ onMounted(() => {
 }
 .clearfix:after {
   clear: both;
+}
+
+:deep(.el-radio__input) {
+  display: none !important;
+}
+
+:deep(.el-radio.is-bordered.is-checked) {
+  background-color: var(--el-color-primary);
+}
+
+:deep(.is-checked .el-radio__label) {
+  color: white;
+}
+
+.el-radio {
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.el-radio.is-bordered+.el-radio.is-bordered {
+  margin-left: 0;
+}
+
+.form-border {
+  border-color: #dcdfe6;
+  border-style: solid;
+  border-width: 1px
+}
+
+.form-header {
+  color: white;
+  background-color: var(--el-color-primary);
+  padding: 10px;
+}
+
+.form-body {
+  padding: 10px;
+}
+
+.el-icon-caret-top {
+  color: red;
+}
+
+.el-icon-caret-bottom {
+  color: green;
 }
 </style>

@@ -88,3 +88,13 @@ export const checkJson = (rule, value, callback) => {
   }
   callback();
 }
+
+export const isNumericNonRequired = (val) => {
+  const reg = /^0*[1-9]\d*(\.\d{1,4})?$/;
+  return reg.test(val);
+};
+
+export const numericOnlyNonRequired = (val) => {
+  const reg = /^[0-9]*$/;
+  return reg.test(val);
+};

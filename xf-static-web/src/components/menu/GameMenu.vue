@@ -18,7 +18,7 @@
             <p class="fs-title">电子游艺</p>
             <p class="fs-name">SLOT<br>GAME</p>
             <p class="fs-desc">返水最高可达</p>
-            <div class="fs-percentage p128"></div>
+            <div class="fs-percentage p120"></div>
         </div>
         </div>
     </div>
@@ -30,7 +30,7 @@ export default defineComponent({
     data: () => ({
         navigations: [
         { code: "PP", icon: "pp", label: "PP" },
-        { code: "MG", icon: "mg", label: "MG" },
+        { code: "MGP", icon: "mg", label: "MGP" },
         { code: "PT", icon: "pt", label: "PT" },
         { code: "SW", icon: "sw", label: "SW" },
         { code: "PG", icon: "pg", label: "PG" },

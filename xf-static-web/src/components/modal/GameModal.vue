@@ -43,7 +43,7 @@
         </div>
       </div> -->
       <div>
-        <span class="bottom-button" @click="showDrawer">提款</span>
+        <span class="bottom-button" @click="showDrawer">存款</span>
       </div>
     </div>
     <el-drawer

@@ -60,12 +60,12 @@
         v-if="hasDrawer"
     >
       <div class="q-pa-md bg-brightbtn">
-        老虎机大厅
+        游戏平台
       </div>
-      <div class="platforms">
-        <div class="text-red q-px-sm q-pt-md">
-          游戏平台
-        </div>
+      <div class="platforms q-pt-md">
+<!--        <div class="text-bright q-px-sm q-pt-md">-->
+<!--          -->
+<!--        </div>-->
       </div>
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
@@ -111,11 +111,11 @@
           <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png">
           客服
         </q-route-tab>
-<!--        <q-route-tab to="/affiliate" name="affiliate">-->
-<!--          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">-->
-<!--          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">-->
-<!--          加盟-->
-<!--        </q-route-tab>-->
+        <!--        <q-route-tab to="/affiliate" name="affiliate">-->
+        <!--          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">-->
+        <!--          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">-->
+        <!--          加盟-->
+        <!--        </q-route-tab>-->
         <q-route-tab to="/account" name="account">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png">
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png">
@@ -178,7 +178,7 @@ export default defineComponent({
     );
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
-      ui.drawerRight = true
+      ui.drawerRight = false;
     };
     const checkRoute = () => {
       if (route) {
@@ -191,18 +191,18 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            pageName.value = `${route.query.platform}游戏大厅`;
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : route.query.platform;
+            pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = "找回账号";
-        }else if (route.path === "/forgot-password") {
+        } else if (route.path === "/forgot-password") {
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = "找回密码";
-        }
-        else if (route.path === "/live-casino") {
+        } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
         } else if (route.path === "/poker") {
@@ -364,44 +364,24 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const platformsList = ref([
       {
-        id: '20',
-        code: 'PT',
-        icon: 'pt',
+        id: '64',
+        code: 'JDB',
+        icon: 'jdb',
       },
       {
-        id: '37',
-        code: 'SW',
-        icon: 'sw',
+        id: '81',
+        code: 'BBINDY',
+        icon: 'bbin',
       },
+      // {
+      //   id: '26',
+      //   code: 'AG',
+      //   icon: 'ag',
+      // },
       {
-        id: '46',
-        code: 'PP',
-        icon: 'pp',
-      },
-      {
-        id: '38',
-        code: 'PG',
-        icon: 'pg',
-      },
-      {
-        id: '54',
-        code: 'MG_PLUS',
-        icon: 'mg',
-      },
-      {
-        id: '42',
-        code: 'CQ',
-        icon: 'cq',
-      },
-      {
-        id: '28',
-        code: 'SG',
-        icon: 'sg',
-      },
-      {
-        id: '27',
-        code: 'TTG',
-        icon: 'ttg',
+        id: '73',
+        code: 'MGP',
+        icon: 'MGP',
       },
       {
         id: '39',
@@ -409,19 +389,34 @@ export default defineComponent({
         icon: 'png',
       },
       {
-        id: '45',
-        code: 'AE',
-        icon: 'ae',
+        id: '27',
+        code: 'TTG',
+        icon: 'ttg',
       },
       {
-        id: '52',
-        code: 'BBIN',
-        icon: 'bbin',
+        id: '28',
+        code: 'SG',
+        icon: 'sg',
       },
       {
-        id: '64',
-        code: 'JDB',
-        icon: 'jdb',
+        id: '46',
+        code: 'PP',
+        icon: 'pp',
+      },
+      {
+        id: '70',
+        code: 'AMEBA',
+        icon: 'AMEBA',
+      },
+      {
+        id: '54',
+        code: 'PT',
+        icon: 'pt',
+      },
+      {
+        id: '33',
+        code: 'CQ9',
+        icon: 'CQ9',
       },
     ]);
 

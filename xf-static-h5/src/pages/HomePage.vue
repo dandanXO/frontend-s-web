@@ -98,7 +98,9 @@
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
   </div>
   <div class="details-bar">
-    <div class="message">{{ store.token ? '¥' + mainWallet.toFixed(2) : '早上好~' }}</div>
+    <div class="message" @click="refreshBalance">
+      {{ store.token ? (!isLoadingBalance ? '¥' + mainWallet.toFixed(2) : '加载中...') : '早上好~' }}
+    </div>
     <div class="menulist">
       <router-link to="/finance/deposit" class="men deposit-menu">
         <img src="../assets/images/index/deposit_icon.png">
@@ -136,7 +138,7 @@
           @click="setSelectedSwiper(tab)"
           v-for="(tab, i) in tabs"
           :key="i"
-          style="width: calc(100vw / 6)"
+          style="width: calc(100vw / 5)"
       >
         {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
       </swiper-slide>
@@ -389,6 +391,7 @@ import 'swiper/css/scrollbar';
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation])
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
+import {translateRecord} from "src/directives/translate";
 
 export default defineComponent({
   name: "IndexPage",
@@ -423,23 +426,24 @@ export default defineComponent({
         firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
-        firstSwiper.value?.slideTo(4, 500);
+        firstSwiper.value?.slideTo(3, 500);
       }
       if (tab.name === "esport") {
-        firstSwiper.value?.slideTo(5, 500);
+        firstSwiper.value?.slideTo(4, 500);
       }
       if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(7, 500);
-      }
-      if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(21, 500);
-      }
-      if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(23, 500);
+        firstSwiper.value?.slideTo(5, 500);
       }
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(19, 500);
+        firstSwiper.value?.slideTo(15, 500);
       }
+      if (tab.name === "poker") {
+        firstSwiper.value?.slideTo(17, 500);
+      }
+      if (tab.name === "lottery") {
+        firstSwiper.value?.slideTo(20, 500);
+      }
+
     };
     const onSlideChange = (swiper) => {
       // Get the active slide index
@@ -478,12 +482,12 @@ export default defineComponent({
         label: "真人",
         labelact: "真人娱乐"
       },
-      {
-        name: "sport",
-        icon: "sport",
-        label: "体育",
-        labelact: "体育赛事"
-      },
+      // {
+      //   name: "sport",
+      //   icon: "sport",
+      //   label: "体育",
+      //   labelact: "体育赛事"
+      // },
       {
         name: "esport",
         icon: "esport",
@@ -637,6 +641,8 @@ export default defineComponent({
               const platTypes = element.gameType.split(",");
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
+                console.log(espObj);
+
                 if (espObj.code === "TFGaming") {
                   espObj.title = "兴發电竞";
                 }
@@ -669,7 +675,11 @@ export default defineComponent({
                 }
                 spObj.icon = "sport";
                 spObj.subtitle = "体育赛事";
-                sport.value.push(spObj);
+                if (spObj.code === "IM") {
+                } else {
+                  sport.value.push(spObj);
+                }
+
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
@@ -680,7 +690,7 @@ export default defineComponent({
               }
               if (platTypes.indexOf("POKER") > -1) {
                 var pokerObj = Object.assign({}, element);
-                pokerObj.title = pokerObj.name + " 棋牌";
+                pokerObj.title = translateRecord(pokerObj.name);
                 pokerObj.icon = "poker";
                 pokerObj.subtitle = "棋牌娱乐";
                 poker.value.push(pokerObj);
@@ -697,9 +707,7 @@ export default defineComponent({
                 slotObj.title = slotObj.name + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
-
-                if (element.code == 'AG') {
-
+                if (slotObj.code === "AG") {
                 } else {
                   slot.value.push(slotObj);
                 }
@@ -741,6 +749,16 @@ export default defineComponent({
       gamePage.gameList = gameListData.value;
       // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
     };
+
+    const isLoadingBalance = ref(false);
+    const refreshBalance = () => {
+      if (store.token) {
+        isLoadingBalance.value = true;
+        store.getBalance().then((res) => {
+          isLoadingBalance.value = false
+        })
+      }
+    }
 
     const announcementList = ref([]);
     const announcementTypes = ref([]);
@@ -885,7 +903,6 @@ export default defineComponent({
       selectedTab,
       sport,
       esport,
-      // slots,
       slot,
       livecasino,
       poker,
@@ -907,7 +924,9 @@ export default defineComponent({
       isAppUpdateModal,
       cancelUpdate,
       openDownloadPage,
-      homePopupImg
+      homePopupImg,
+      refreshBalance,
+      isLoadingBalance
     };
   }
 });
@@ -965,7 +984,7 @@ export default defineComponent({
     .swiper-slide {
       background: #23263c;
       padding: 8px 5px 2px;
-      max-width: 60px;
+      max-width: 75px;
       cursor: pointer;
 
       &.tbact {

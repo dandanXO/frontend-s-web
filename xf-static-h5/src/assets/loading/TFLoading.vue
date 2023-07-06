@@ -101,7 +101,6 @@
     }
   }
 }
-$loadingwidth: 300px;
 .loading {
   .txt {
     display: block;
@@ -116,7 +115,7 @@ $loadingwidth: 300px;
   ul {
     margin: auto;
     height: 10px;
-    width: $loadingwidth;
+    width: 300px;
     top: 0;
     left: 0;
     right: 0;
@@ -130,7 +129,7 @@ $loadingwidth: 300px;
   }
 
   li {
-    width: calc($loadingwidth/5);
+    width: calc(300px/5);
     height: 10px;
     margin-right: 10px;
   }

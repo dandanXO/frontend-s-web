@@ -23,7 +23,7 @@ export default defineComponent({
     data: () => ({
         navigations: [
         {
-            gameCode: 'gps_planecatch1943',
+            gameCode: '7202',
             name: '决战中途岛',
             code: 'GPS',
             image: 'gps',

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { login, logout } from "@/api/index/login";
+import { login, logout, mobileLogin } from "@/api/index/login";
 import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
@@ -47,6 +47,22 @@ export const userStore = defineStore("userStore", {
       this.token = token;
       this.getBalance();
       this.getMemberInfo();
+    },
+    telephoneLogin(loginInfo) {
+      return mobileLogin(loginInfo)
+      .then((ret) => {
+        if (ret.code === 0) {
+          this.token = ret.data;
+          this.getBalance();
+          this.getMemberInfo();
+        } else {
+          // throw new Error(ret.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        // message.error(err.message);
+      });
     },
     getMemberInfo() {
       if (this.token) {

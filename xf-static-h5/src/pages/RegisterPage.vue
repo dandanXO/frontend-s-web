@@ -24,7 +24,10 @@
         v-model="regForm.loginName"
         label="用户名"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
+        :rules="[
+            (val) => (val && val.length > 0) || '请输入用户名',
+            (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间',
+            ]"
         color="white"
     >
       <template v-slot:prepend>
@@ -256,7 +259,8 @@ export default defineComponent({
     const store = userStore();
     const verificationImg = ref("");
     const isValidName = () => {
-      const namePattern = /^([\u4e00-\u9fa5]*)$/;
+      const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
+      // const namePattern = /^[\u4e00-\u9fa5]{2,4}$/;
       return namePattern.test(regForm.realName) || "请输入中文字符";
     };
 
