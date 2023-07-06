@@ -327,7 +327,7 @@ async function loadDaily(row, expandedRows) {
       }
     }
 
-    dailyquery.id = row.withdrawId
+    dailyquery.withdraw = row.name
     dailyquery.siteId = row.siteId
 
     const { data: ret } = await getDailyReport(dailyquery)
