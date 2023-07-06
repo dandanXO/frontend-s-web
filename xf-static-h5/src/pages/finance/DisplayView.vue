@@ -34,6 +34,7 @@
   <div v-else id="renderArea">
     <form ref="formRef" method="post"
           :target="targetType"
+          style="display: none;"
     >
       <input
           type="text"
@@ -108,12 +109,14 @@ function getRequest(url) {
         targetType.value = "_blank";
       }
     } else {
+      // url = route.fullPath;
       url = decodeURIComponent(window.location.search);
     }
   }
   let theRequest = {};
   if (url.indexOf("?") != -1) {
-    url = url.substr(1);
+    var spliturl= url.split("?");
+    url = spliturl[1];
   }
   let strs = url.split("&");
   for (let i = 0; i < strs.length; i++) {
@@ -159,7 +162,7 @@ function postSubmit() {
   console.log(data);
 
   nextTick(() => {
-    document.getElementById("submitBtn").click();
+    // document.getElementById("submitBtn").click();
   });
 }
 
