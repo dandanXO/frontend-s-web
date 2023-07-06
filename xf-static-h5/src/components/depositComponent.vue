@@ -640,10 +640,22 @@ async function pDepo(deposit) {
               if (response.payResultType === "POST_SUBMIT") {
                 localStorage.setItem("responseDetails", JSON.stringify(response));
                 if (response.paramKey === null || response.paramKey === "") {
-                  router.push(
-                      `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
-                  );
-                  btnLoading.value = false;
+
+                  if (store.getDeviceType() == 'ANDROID') {
+                    // alert("Adnroid");
+                    var preUrl = 'https://' + store.evip + `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+
+                    // alert(preUrl);
+                    const newWin = window.open(preUrl, `_blank`);
+                  } else {
+                    router.push(
+                        `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                    );
+                    btnLoading.value = false;
+
+                  }
+
+
                 } else {
                   router.push(
                       `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`

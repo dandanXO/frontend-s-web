@@ -162,7 +162,7 @@ function postSubmit() {
   console.log(data);
 
   nextTick(() => {
-    // document.getElementById("submitBtn").click();
+    document.getElementById("submitBtn").click();
   });
 }
 
