@@ -271,6 +271,7 @@
             class="half"
             v-model="bankCardInfo.smsCode"
             placeholder="输入电话验证码"
+            @keyup.enter="submitBankCard"
           />
         </el-form-item>
 
@@ -305,6 +306,8 @@
       width="50%"
       align-center
       style="max-width: 500px"
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
     >
       <el-form
         ref="captchaRef"
@@ -356,7 +359,7 @@ import {getVerificationCode} from "@/api/index/login";
 import {ElMessage, ElMessageBox} from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
 import {RiLink, RiLinkUnlink} from "vue-remix-icons";
-import {loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard, loadMemberInfo} from "@/api/personal/personal";
+import {loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard, loadMemberInfo, loadMemberTelephone} from "@/api/personal/personal";
 import {userStore} from "@/store";
 import {useRouter} from "vue-router";
 import {sendSessionSms} from "@/api/personal/personal";
@@ -495,7 +498,7 @@ export default defineComponent({
     };
 
     const getTime = () => {
-      searchForm.startDate = chgDate(7);
+      searchForm.startDate = chgDate(30);
       searchForm.endDate = chgDate(0);
       searchRecord();
     };
@@ -508,7 +511,7 @@ export default defineComponent({
       loadMemberInfo().then((response) => {
         if (response.code === 0) {
           personalState.memberInfo = response.data;
-          bankCardInfo.telephone = personalState.memberInfo.telephone;
+          // bankCardInfo.telephone = personalState.memberInfo.telephone;
           // console.log(bankCardInfo.telephone)
           // if (personalState.memberInfo.birthday) {
           //   personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
@@ -517,6 +520,13 @@ export default defineComponent({
       }).catch((error) => {
         console.log("error", error);
       });
+      loadMemberTelephone().then((response) => {
+        if (response.code === 0) {
+          bankCardInfo.telephone = response.data;
+        }
+      }).catch((error) => {
+        console.log("error", error);
+      })
     }
 
     const checkBankCards = () => {
@@ -793,8 +803,10 @@ export default defineComponent({
                 if (res.code === 0) {
                   ElMessage({
                     type: 'success',
-                    message: '删除完成',
+                    message: '解绑完成',
                   });
+                  // loadCards();
+                  searchRecord();
                   for (let i = 0; i < personalState.bankCardList.length; i++) {
                     if (personalState.bankCardList[i].id === card.id) {
                       personalState.bankCardList.splice(i, 1);

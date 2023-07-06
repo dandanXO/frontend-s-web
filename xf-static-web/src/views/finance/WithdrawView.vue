@@ -312,8 +312,8 @@ export default defineComponent({
                     withdrawState.bankCardList.push(element)
                   }
                 } else {
-                  console.log(selectedWithdrawalMethod.value.code)
-                  if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+                  // console.log(selectedWithdrawalMethod.value.code)
+                  if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
                     withdrawState.bankCardList.push(element)
                   }
                 }

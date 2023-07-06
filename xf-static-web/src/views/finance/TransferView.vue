@@ -230,7 +230,7 @@ export default defineComponent({
           store.getBalance();
         } else {
             loadBalance(plat).then((response) => {
-              console.log(plat)
+              // console.log(plat) 
               if (plaform) {
                 plaform.amount = response.data;
               }

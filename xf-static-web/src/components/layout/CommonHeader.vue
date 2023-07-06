@@ -39,7 +39,7 @@
           <a class="common-btn" @click="registerDialogVisible = true">
             开设账户
           </a>
-          <a class="common-link" @click="openMobileLogin()">忘记密码？</a>
+          <a class="common-link" @click="openMobileLogin()">手机登录</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -221,7 +221,7 @@
           </el-tab-pane>
           <el-tab-pane label="手机登录" name="mobileLogin">
             <el-form
-              ref="loginRef"
+              ref="mobileLoginRef"
               :rules="mobileLoginRules"
               :model="loginForm"
               label-width="100"
@@ -234,16 +234,16 @@
                   placeholder="输入手机号"
                 />
               </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="captchaCode">
+              <el-form-item tabindex="2" label="手机验证码" prop="smsCode">
                 <el-row
                   :gutter="10"
                   style="justify-content: center; align-items: center"
                 >
                   <el-col :span="12">
                     <el-input
-                      v-model="loginForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
+                      v-model="loginForm.smsCode"
+                      label="手机验证码"
+                      placeholder="输入手机验证码"
                       @keyup.enter="submitLogin"
                     />
                   </el-col>
@@ -929,7 +929,7 @@ export default defineComponent({
     const todayDate = () => {
       // const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
       // return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
-      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd') + ' (中国标准时间)';
+      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, HH:mm:ss ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
@@ -1082,7 +1082,7 @@ export default defineComponent({
     };
 
     const mobileLoginRules = {
-      telephone: [
+      phoneNumber: [
         {
           required: true,
           message: "请输入电话号码",
@@ -1094,7 +1094,7 @@ export default defineComponent({
           trigger: "blur",
         },
       ],
-      code: [
+      smsCode: [
         {
           required: true,
           message: "请输入验证码",
@@ -1431,17 +1431,35 @@ export default defineComponent({
     }
 
     const openCaptchaForm = (type) => {
-      registerRef.value.validateField('telephone').then((resp) => {
-      // captchaForm.captchaCode = "";
-      captchaForm.type = type;
-      captchaDialogVisible.value = true;
-      getCode();
-    }).catch((err) => {
-        ElMessage({
-          message: '请输入有效的中国手机号码',
-          type: 'error',
+      if (type === 'REGISTER') {
+        registerRef.value.validateField('telephone').then((resp) => {
+          // captchaForm.captchaCode = "";
+          captchaForm.type = type;
+          captchaDialogVisible.value = true;
+          getCode();
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的中国手机号码',
+              type: 'error',
+            })
         })
-      })
+      } else if (type === 'LOGIN') {
+        mobileLoginRef.value.validateField('phoneNumber').then((resp) => {
+          // captchaForm.captchaCode = "";
+          captchaForm.type = type;
+          captchaDialogVisible.value = true;
+          getCode();
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的中国手机号码',
+              type: 'error',
+            })
+        })
+      } else {
+        captchaForm.type = type;
+        captchaDialogVisible.value = true;
+        getCode();
+      }
     };
 
     const submitRegisterForm = async (elForm) => {
@@ -1495,10 +1513,11 @@ export default defineComponent({
     const announcementTypes = ref([])
     const loadAnnouncement = () => {
       getAnnouncement().then((res) => {
+        // console.log(res)
         if (res.code === 0) {
           const d = res.data.announcements
           announcementTypes.value = res.data.type
-          if (res.data.type.length > 0) {
+          if (res.data.length > 0) {
             announcementActive.value = res.data.type[0].id
           }
           announcementList.value = d
@@ -1669,7 +1688,7 @@ export default defineComponent({
               .telephoneLogin({
                 phoneNumber: loginForm.phoneNumber,
                 sid: sidParam,
-                code: loginForm.code,
+                code: loginForm.smsCode,
                 smsCodeId: loginForm.smsCodeId,
               })
               .then(() => {
@@ -2352,6 +2371,10 @@ body {
 
       &.p128 {
         background-position-x: -672px;
+      }
+
+      &.p120 {
+        background-position-x: -842px;
       }
     }
   }

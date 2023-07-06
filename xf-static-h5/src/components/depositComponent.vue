@@ -365,7 +365,6 @@ function initPay() {
       }
     }
 
-    // if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit')) {
     if (
         !(
             (Platform.is.desktop || Platform.is.webkit) &&
@@ -567,6 +566,9 @@ async function pDepo(deposit) {
         // console.log(res)
 
         if (res.code === 0) {
+          console.log("After SDubmit");
+          console.log(res);
+
           const response = res.data.result;
           if (res.data.result.payResultType === "OFFLINE") {
             btnLoading.value = false;
@@ -577,43 +579,51 @@ async function pDepo(deposit) {
             submitMessage.value = submitResult.split(",");
             btnLoading.value = false;
           } else {
-            // if (
-            //   (Platform.is.desktop || Platform.is.webkit) &&
-            //   !Platform.is.capacitor &&
-            //   Platform.is.name !== "webkit" &&
-            //   !liff.isInClient()
-            // ) {
             if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
                 Platform.is.name !== "webkit" &&
                 !liff.isInClient()
             ) {
-              // const newWin = window.open(`/depositLoading`, "Bank");
-              // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-              const newWin = window.open(`/`);
-              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-              if (response.payResultType === "GET_SUBMIT") {
-                newWin.location.href = response.requestUrl;
-                btnLoading.value = false;
-                // isDeposited.value = true;
-              }
-              if (response.payResultType === "POST_SUBMIT") {
-                if (response.paramKey === null || response.paramKey === "") {
-                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                  btnLoading.value = false;
-                } else {
-                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+              if (store.getDeviceType() === 'IOS' || store.isMobileSafari()) {
+                const newWin = window.open(`/`, `_self`);
+                if (response.payResultType === "GET_SUBMIT") {
+                  newWin.location.href = response.requestUrl;
                   btnLoading.value = false;
                 }
-                // isDeposited.value = true;
+                if (response.payResultType === "POST_SUBMIT") {
+                  if (response.paramKey === null || response.paramKey === "") {
+                    newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    btnLoading.value = false;
+                  } else {
+                    newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    btnLoading.value = false;
+                  }
+                }
+
+              } else {
+                const newWin = window.open(`/`);
+                newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+                if (response.payResultType === "GET_SUBMIT") {
+                  newWin.location.href = response.requestUrl;
+                  btnLoading.value = false;
+                  // isDeposited.value = true;
+                }
+                if (response.payResultType === "POST_SUBMIT") {
+                  if (response.paramKey === null || response.paramKey === "") {
+                    newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    btnLoading.value = false;
+                  } else {
+                    newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    btnLoading.value = false;
+                  }
+                }
               }
+
+
             } else {
               localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
-                //   location.href = response.requestUrl;
-                //   // isDeposited.value = true;
-                // }
                 if (
                     (Platform.is.desktop || Platform.is.webkit) &&
                     !Platform.is.capacitor &&
@@ -640,32 +650,10 @@ async function pDepo(deposit) {
                   );
                   btnLoading.value = false;
                 }
-                // isDeposited.value = true;
               }
             }
 
-            // window.addEventListener(
-            //   "message",
-            //   (event) => {
-            //     if (event.data?.msg) {
-            //       if (event.data.msg === "success") {
-            //         isDeposited.value = true;
-            //         localStorage.setItem("isBacked", JSON.stringify(true));
-            //       } else {
-            //         $q.notify({
-            //           color: "negative",
-            //           position: "top",
-            //           message: event.data.msg,
-            //           icon: "report_problem"
-            //         });
-            //       }
-            //     }
-            //   },
-            //   { once: true }
-            // );
           }
-          // console.log(res);
-          // postMessage({ msg: res.message }, "*");
         } else {
           $q.notify({
             color: "negative",

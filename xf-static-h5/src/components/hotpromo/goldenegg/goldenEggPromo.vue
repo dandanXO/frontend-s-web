@@ -81,19 +81,21 @@ onMounted(() => {
     width: 100%;
     position: relative;
     height: 7.5rem;
-    margin-bottom: 30px;
-    background: url(../../../assets/images/promotion/hotpromo/goldenegg/bg.png)no-repeat center 100%;
+    min-height:120px;
+    background: url(../../../assets/images/promotion/hotpromo/goldenegg/bg.png)no-repeat bottom;
+    background-size:100% 40%;
+    padding-bottom:50px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    max-width: 350px;
-    margin: 20px auto;
+    max-width: 500px;
+    margin: 20px 0px;
     gap: 15px;
-    background-size: contain;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+
     img {
       cursor: pointer;
-      width: 18%;
+      width: 18% !important;
       &.bg {
         width: 100%;
       }

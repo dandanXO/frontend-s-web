@@ -315,7 +315,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               }
             })
             .then((response) => {
-              if (way === 'IOS') {
+              if (way === 'IOS' || store.isMobileSafari()) {
                 const newWin = window.open(`/`, `_self`);
                 newWin.location.href = response.data
               } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
@@ -344,7 +344,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             }
           })
           .then((response) => {
-            if (way === 'IOS') {
+            if (way === 'IOS' || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               newWin.location.href = response.data
             } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {

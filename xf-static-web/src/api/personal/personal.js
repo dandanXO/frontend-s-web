@@ -15,6 +15,10 @@ export function loadMemberInfo() {
   return server.REST.get("/session/member");
 }
 
+export function loadMemberTelephone() {
+  return server.REST.get("/session/member/telephone");
+}
+
 export function changePwd(oldPassword, password) {
   return server.REST.post("/session/password", { oldPassword, password });
 }

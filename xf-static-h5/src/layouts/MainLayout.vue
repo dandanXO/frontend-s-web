@@ -111,11 +111,11 @@
           <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png">
           客服
         </q-route-tab>
-<!--        <q-route-tab to="/affiliate" name="affiliate">-->
-<!--          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">-->
-<!--          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">-->
-<!--          加盟-->
-<!--        </q-route-tab>-->
+        <!--        <q-route-tab to="/affiliate" name="affiliate">-->
+        <!--          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">-->
+        <!--          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">-->
+        <!--          加盟-->
+        <!--        </q-route-tab>-->
         <q-route-tab to="/account" name="account">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png">
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png">
@@ -191,18 +191,18 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            pageName.value = `${route.query.platform}游戏大厅`;
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : route.query.platform;
+            pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = "找回账号";
-        }else if (route.path === "/forgot-password") {
+        } else if (route.path === "/forgot-password") {
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = "找回密码";
-        }
-        else if (route.path === "/live-casino") {
+        } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
         } else if (route.path === "/poker") {
