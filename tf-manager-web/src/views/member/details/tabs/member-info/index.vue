@@ -152,9 +152,9 @@
             type="info"
             size="mini"
             style="float: right;"
+            :disabled="memberDetail.email === null"
             v-permission="['sys:member:detail:unmask']"
             @click="unmaskDetail('EMAIL')"
-            :disabled="memberDetail.email === null"
           >
             {{ t('fields.show') }}
           </el-button>
