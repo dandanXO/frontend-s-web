@@ -24,10 +24,12 @@
             <img src="../assets/home/game_left.png" alt="" />
           </div>
           <div class="game-content">
-            <router-link class="quick-plat" to="/eSports">
+            <!-- <router-link class="quick-plat" to="/eSports"> -->
+            <router-link class="quick-plat" to="/" @click="checkMaintenance">
               <img src="../assets/home/index_quick_plat_esports.png" alt="" />
             </router-link>
-            <router-link class="quick-plat" to="/sports">
+            <!-- <router-link class="quick-plat" to="/sports"> -->
+              <router-link class="quick-plat" to="/" @click="checkMaintenance">
               <img src="../assets/home/index_quick_plat_sport.png" alt="" />
             </router-link>
             <router-link class="quick-plat" to="/live-casino">
@@ -359,15 +361,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { loadPromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
-
-// import { defineComponent, onMounted, reactive, ref, watch } from "vue";
-// import { Search } from "@element-plus/icons-vue";
-// import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
-// import GameModal from "@/components/modal/GameModal";
-// import { loadPromoBanner } from "@/api/index/promo";
-// import { useRoute, useRouter } from 'vue-router';
-// import { useScriptTag } from '@vueuse/core'
-// import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
 
 export default defineComponent({
   // directives: {
@@ -449,6 +443,18 @@ export default defineComponent({
       }
     };
 
+    const checkMaintenance = () => {
+      ElMessageBox.alert("系统维护中", {
+        center: true,
+        confirmButtonText: "确认",
+        showClose: false,
+        buttonSize: "large"
+      }).then(() => {
+        router.push("/");
+      });
+      return;
+    };
+
     onMounted(() => {
       const isImpt = getWithExpiry("isImpt");
       if (isImpt === null) {
@@ -467,7 +473,8 @@ export default defineComponent({
       imgURL,
       getWithExpiry,
       setWithExpiry,
-      homePopupImg
+      homePopupImg,
+      checkMaintenance
     };
   }
 });
