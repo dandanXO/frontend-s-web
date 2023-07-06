@@ -929,7 +929,7 @@ export default defineComponent({
     const todayDate = () => {
       // const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
       // return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
-      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd') + ' (中国标准时间)';
+      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, HH:mm:ss ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
