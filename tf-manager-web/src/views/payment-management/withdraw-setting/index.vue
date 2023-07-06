@@ -205,7 +205,7 @@ const validateWebWithdrawMin = (rule, value, callback) => {
   if (value) {
     if (value < 1) {
       callback(new Error(t('message.validateMinWithdrawNumber')));
-    } else if (value - form.web.withdrawMax > 0) {
+    } else if (form.web.withdrawMax !== null && value - form.web.withdrawMax > 0) {
       callback(new Error(t('message.validateMinWithdrawLesser')));
     } else {
       callback();
@@ -219,7 +219,7 @@ const validateWebWithdrawMax = (rule, value, callback) => {
   if (value) {
     if (value < 1) {
       callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
-    } else if (value - form.web.withdrawMin < 0) {
+    } else if (form.web.withdrawMin !== null && value - form.web.withdrawMin < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
     } else {
       callback();
@@ -241,7 +241,7 @@ const validateWebWithdrawMaxAmountDaily = (rule, value, callback) => {
   if (value) {
     if (value < 1) {
       callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
-    } else if (value - form.web.withdrawMax < 0) {
+    } else if (form.web.withdrawMax !== null && value - form.web.withdrawMax < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
     } else {
       callback();
@@ -255,7 +255,7 @@ const validateMobileWithdrawMin = (rule, value, callback) => {
   if (value) {
     if (value < 1) {
       callback(new Error(t('message.validateMinWithdrawNumber')));
-    } else if (value - form.mobile.withdrawMax > 0) {
+    } else if (form.mobile.withdrawMax !== null && value - form.mobile.withdrawMax > 0) {
       callback(new Error(t('message.validateMinWithdrawLesser')));
     } else {
       callback();
@@ -269,7 +269,7 @@ const validateMobileWithdrawMax = (rule, value, callback) => {
   if (value) {
     if (value < 1) {
       callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
-    } else if (value - form.mobile.withdrawMin < 0) {
+    } else if (form.mobile.withdrawMin !== null && value - form.mobile.withdrawMin < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
     } else {
       callback();
@@ -283,7 +283,7 @@ const validateMobileWithdrawMaxAmountDaily = (rule, value, callback) => {
   if (value) {
     if (value < 1) {
       callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
-    } else if (value - form.mobile.withdrawMax < 0) {
+    } else if (form.mobile.withdrawMax !== null && value - form.mobile.withdrawMax < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
     } else {
       callback();
@@ -379,7 +379,7 @@ async function loadSites() {
 }
 
 async function loadFinancialLevels() {
-  const { data: financial } = await getFinancialLevels({ siteId: site.value.id });
+  const { data: financial } = await getFinancialLevels({ siteId: form.siteId });
   financialList.list = financial;
 };
 
