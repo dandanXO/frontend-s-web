@@ -316,7 +316,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             })
             .then((response) => {
               if (way === 'IOS') {
-                window.open(response.data, `_system`);
+                const newWin = window.open(`/`, `_self`);
+                newWin.location.href = response.data
               } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
                 const newWin = window.open(`/`, `_blank`);
                 newWin.location.href = response.data
@@ -337,7 +338,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           })
           .then((response) => {
             if (way === 'IOS') {
-              const newWin = window.open(`/`, `_system`);
+              const newWin = window.open(`/`, `_self`);
               newWin.location.href = response.data
             } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
               const newWin = window.open(`/`, `_blank`);
