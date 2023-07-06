@@ -83,11 +83,16 @@ build-image-pt-launch:
 #===============================================================================================
 
 build-image-xf-download:
-  extends:
-    - .docker-build
-    - .p8s1-rules
+  extends: .docker-build
   variables:
     PROJECT: xf-download
+
+#===============================================================================================
+
+build-image-dy-download:
+  extends: .docker-build
+  variables:
+    PROJECT: dy-download
 
 #===============================================================================================
 
