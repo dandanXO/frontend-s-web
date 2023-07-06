@@ -81,6 +81,7 @@ import VueQRCodeComponent from 'vue-qrcode-component'
 import {userStore} from "src/stores";
 import {useQuasar, Platform} from "quasar";
 import {api} from "boot/axios"
+import { Clipboard } from '@capacitor/clipboard';
 
 
 export default defineComponent({
@@ -119,7 +120,12 @@ export default defineComponent({
 
     async function copyToClipboard(textToCopy) {
       // Navigator clipboard api needs a secure context (https)
-      if (navigator.clipboard && window.isSecureContext) {
+      if(store.getDeviceType()==='ANDROID'){
+        await Clipboard.write({
+          string: textToCopy
+        });
+      }
+      else if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(textToCopy);
       } else {
         // Use the 'out of viewport hidden text area' trick

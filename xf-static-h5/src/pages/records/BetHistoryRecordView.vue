@@ -1,19 +1,19 @@
 <template>
   <div class="table-record">
 
-    <q-select
-        allowClear
-        rounded
-        outlined
-        dense
-        color="white"
-        style="width: 320px;margin:10px auto 8px;"
-        v-model="platform"
-        :options="platformsList"
-        placeholder="选择平台"
-        @update:model-value="searchRecord"
-    >
-    </q-select>
+<!--    <q-select-->
+<!--        allowClear-->
+<!--        rounded-->
+<!--        outlined-->
+<!--        dense-->
+<!--        color="white"-->
+<!--        style="width: 320px;margin:10px auto 8px;"-->
+<!--        v-model="platform"-->
+<!--        :options="platformsList"-->
+<!--        placeholder="选择平台"-->
+<!--        @update:model-value="searchRecord"-->
+<!--    >-->
+<!--    </q-select>-->
 
     <RecordComponent
         ref="recordRef"
