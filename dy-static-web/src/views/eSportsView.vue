@@ -102,16 +102,16 @@ export default defineComponent({
         left: "最全赛事",
         right: "一应俱全"
       },
-      // {
-      //   code: "IM",
-      //   name: "IM",
-      //   image: "im",
-      //   message:
-      //     "倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。",
-      //   link: "",
-      //   left: "赛事齐全",
-      //   right: "玩法新颖"
-      // },
+      {
+        code: "IMES",
+        name: "IM",
+        image: "im",
+        message:
+          "倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。",
+        link: "",
+        left: "赛事齐全",
+        right: "玩法新颖"
+      },
       // {
       //   code: "IA",
       //   name: "小艾",

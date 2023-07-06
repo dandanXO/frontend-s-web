@@ -248,7 +248,6 @@
                   <template v-if="scope.row.status === 'STEP_1'">
                     <div style="display: flex; align-items: center">
                       <el-button
-                        size="small"
                         class="common-btn"
                         @click="openReminder(scope.row)"
                       >
@@ -266,7 +265,6 @@
                   >
                     <div style="display: flex; align-items: center">
                       <el-button
-                        size="small"
                         class="common-btn"
                         @click="openWithdrawConfirm(scope.row)"
                       >

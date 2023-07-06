@@ -243,7 +243,7 @@ export default defineComponent({
             });
             store.emailVerified = true;
             store.email= formDetail.email;
-            router.push('/account');
+            router.go(-1);
           }
         }).catch((e) => {
           $q.notify({

@@ -2,10 +2,10 @@
   <q-scroll-area
   >
     <q-dialog
-      v-model="visible"
-      class="gameDialog"
-      full-height
-      full-width
+        v-model="visible"
+        class="gameDialog"
+        full-height
+        full-width
     >
       <!-- <q-toolbar>
       <q-avatar>
@@ -23,47 +23,47 @@
         <div class="topActions">
           <q-toolbar-title></q-toolbar-title>
           <q-btn
-            v-if="!drawerVisible"
-            flat
-            @click="closeDialog()"
-            round
-            dense
-            icon="close"
+              v-if="!drawerVisible"
+              flat
+              @click="closeDialog()"
+              round
+              dense
+              icon="close"
           />
           <q-btn
-            v-if="!drawerVisible"
-            flat
-            @click="drawerVisible = !drawerVisible"
-            round
-            dense
-            icon="menu_open"
+              v-if="!drawerVisible"
+              flat
+              @click="drawerVisible = !drawerVisible"
+              round
+              dense
+              icon="menu_open"
           />
           <q-btn
-            v-if="drawerVisible"
-            flat
-            @click="drawerVisible = !drawerVisible"
-            round
-            dense
-            icon="read_more"
+              v-if="drawerVisible"
+              flat
+              @click="drawerVisible = !drawerVisible"
+              round
+              dense
+              icon="read_more"
           />
         </div>
 
         <iframe
-          @load="loadGame()"
-          v-show="!logoShow"
-          :src="src"
-          id="game-iframe"
-          scrolling="no"
-          frameborder="0"
-          class="game-iframe"
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
         ></iframe>
         <q-drawer
-          v-model="drawerVisible"
-          :breakpoint="500"
-          overlay
-          bordered
-          class="bg-white"
-          side="right"
+            v-model="drawerVisible"
+            :breakpoint="500"
+            overlay
+            bordered
+            class="bg-white"
+            side="right"
         >
           <div class="q-pa-sm q-pt-sm">
             <div>
@@ -118,9 +118,9 @@
       </q-toolbar>
     </q-dialog>
     <q-dialog
-      v-model="visibleComingSoon"
-      class="gameDialog"
-      style="width: 100%; margin: 0 auto"
+        v-model="visibleComingSoon"
+        class="gameDialog"
+        style="width: 100%; margin: 0 auto"
     >
       <img src="../../assets/logo-coming.png" style="width: 80%;"/>
     </q-dialog>
@@ -209,32 +209,32 @@ const isClicked = ref("");
 const submitTransfer = (amount) => {
   transferInfo.value.amount = amount;
   api
-    .post("/session/balance/transfer/deposit", transferInfo.value)
-    .then((response) => {
-      if (response.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "转账成功",
-          icon: "check_circle_outline"
-        });
-        isClicked.value = amount;
-        if (token) {
-          store.getBalance();
+      .post("/session/balance/transfer/deposit", transferInfo.value)
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "转账成功",
+            icon: "check_circle_outline"
+          });
+          isClicked.value = amount;
+          if (token) {
+            store.getBalance();
+          }
+          setTimeout(function () {
+            isClicked.value = null;
+          }, 1000);
         }
-        setTimeout(function () {
-          isClicked.value = null;
-        }, 1000);
-      }
-    })
-    .catch((error) => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: error.message,
-      //   icon: "report_problem"
-      // });
-    });
+      })
+      .catch((error) => {
+        // $q.notify({
+        //   color: "negative",
+        //   position: "top",
+        //   message: error.message,
+        //   icon: "report_problem"
+        // });
+      });
 };
 const closeDialog = () => {
   visible.value = !visible.value
@@ -307,42 +307,46 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       }
       if (platformCode === 'platformType') {
         api
-        .get(`/session/launch?_time=${new Date().getTime()}`, {
-          params: {
-            platform: gameCode,
-            isMobile: Platform.is.mobile ? true : false,
-            way: way
-          }
-        })
-        .then((response) => {
-          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-            const newWin = window.open(`/`, `_blank`);
-            newWin.location.href = response.data
-          }
-          else {
-            openURL(response.data)
-          }
-        });
+            .get(`/session/launch?_time=${new Date().getTime()}`, {
+              params: {
+                platform: gameCode,
+                isMobile: Platform.is.mobile ? true : false,
+                way: way
+              }
+            })
+            .then((response) => {
+              if (way === 'IOS' || store.isMobileSafari()) {
+                const newWin = window.open(`/`, `_self`);
+                newWin.location.href = response.data
+              } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+                const newWin = window.open(`/`, `_blank`);
+                newWin.location.href = response.data
+              } else {
+                openURL(response.data)
+              }
+            });
         return
       }
       api
-        .get(`/session/launch?_time=${new Date().getTime()}`, {
-          params: {
-            platform: platformCode,
-            gameCode: gameCode,
-            isMobile: Platform.is.mobile ? true : false,
-            way: way
-          }
-        })
-        .then((response) => {
-          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-            const newWin = window.open(`/`, `_blank`);
-            newWin.location.href = response.data
-          }
-          else {
-            openURL(response.data)
-          }
-        });
+          .get(`/session/launch?_time=${new Date().getTime()}`, {
+            params: {
+              platform: platformCode,
+              gameCode: gameCode,
+              isMobile: Platform.is.mobile ? true : false,
+              way: way
+            }
+          })
+          .then((response) => {
+            if (way === 'IOS' || store.isMobileSafari()) {
+              const newWin = window.open(`/`, `_self`);
+              newWin.location.href = response.data
+            } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+              const newWin = window.open(`/`, `_blank`);
+              newWin.location.href = response.data
+            } else {
+              openURL(response.data)
+            }
+          });
     } else {
       router.push({path: "/login", query: {redirect: route.path}});
     }

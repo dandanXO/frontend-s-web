@@ -39,7 +39,7 @@
           <a class="common-btn" @click="registerDialogVisible = true">
             开设账户
           </a>
-          <a class="common-link" @click="openMobileLogin()">忘记密码？</a>
+          <a class="common-link" @click="openMobileLogin()">手机登录</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -111,7 +111,17 @@
             v-for="nav in navigations"
             :key="nav.name"
           >
+            <a
+              v-if="nav.enName === 'Esports' || nav.enName === 'Sports'"
+              @click="checkMaintenance"
+              to="/"
+            >
+              <span>{{ nav.name }}</span>
+              <span>{{ nav.enName }}</span>
+            </a>
+
             <router-link
+            v-else
               @mouseover="showSubMenu(nav)"
               @mouseup="selectedMenu = ''"
               :to="nav.path"
@@ -131,6 +141,7 @@
               v-if="selectedMenu === 'Sports'"
               @load-modal="openGame"
             />
+
             <LiveCasinoMenu
               ref="el"
               v-if="selectedMenu === 'Live Casino'"
@@ -221,7 +232,7 @@
           </el-tab-pane>
           <el-tab-pane label="手机登录" name="mobileLogin">
             <el-form
-              ref="loginRef"
+              ref="mobileLoginRef"
               :rules="mobileLoginRules"
               :model="loginForm"
               label-width="100"
@@ -234,16 +245,16 @@
                   placeholder="输入手机号"
                 />
               </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="captchaCode">
+              <el-form-item tabindex="2" label="手机验证码" prop="smsCode">
                 <el-row
                   :gutter="10"
                   style="justify-content: center; align-items: center"
                 >
                   <el-col :span="12">
                     <el-input
-                      v-model="loginForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
+                      v-model="loginForm.smsCode"
+                      label="手机验证码"
+                      placeholder="输入手机验证码"
                       @keyup.enter="submitLogin"
                     />
                   </el-col>
@@ -480,6 +491,7 @@
                     v-model="regForm.captchaCode"
                     label="验证码"
                     placeholder="验证码"
+                    @keyup.enter="submitRegisterForm(registerRef)"
                   />
                 </el-col>
                 <el-col :span="7">
@@ -528,66 +540,13 @@
     </el-dialog>
 
     <el-dialog
-      wrap-class-name="securityModal"
-      v-model="updatePhoneModalVisible"
-      :footer="null"
-      width="500px"
-      title="手机验证"
-      align-center
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-    >
-      <el-form
-        ref="updatePhoneFormRef"
-        :hideRequiredMark="true"
-        :model="updatePhoneVerified"
-        :rules="updatePhoneVerifiedRules"
-      >
-        <el-form-item ref="phone" prop="phone">
-          <el-input
-            v-model="updatePhoneVerified.phone"
-            placeholder="手机号码"
-          />
-        </el-form-item>
-        <el-form-item
-          class="half"
-          ref="verificationCode"
-          prop="verificationCode"
-        >
-          <el-space>
-            <el-input
-              type="password"
-              v-model="updatePhoneVerified.verificationCode"
-              :placeholder="'验证码'"
-            />
-            <el-button
-              :disabled="disableSendPhoneButton"
-              class="common-btn verification-btn"
-              @click="openPhoneVerificationModal"
-            >
-              <span v-if="disableSendPhoneButton">
-                已发送（倒数{{ countDown }}秒)
-              </span>
-              <span v-else>发送验证码</span>
-            </el-button>
-          </el-space>
-        </el-form-item>
-        <el-button
-          :loading="loadingPhoneBtn"
-          class="common-btn verification-btn"
-          @click="submitUpdatePhone"
-        >
-          提交
-        </el-button>
-      </el-form>
-    </el-dialog>
-
-    <el-dialog
       v-model="captchaDialogVisible"
       title="验证码"
       width="50%"
       align-center
       style="max-width: 500px"
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
     >
       <el-form
         ref="captchaRef"
@@ -749,7 +708,7 @@
       v-model="isStationNotice"
       :maskClosable="false"
       :footer="null"
-      title="站内信"
+      title="公告"
     >
       <el-tabs
         type="card"
@@ -838,6 +797,7 @@ import {storeToRefs} from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {getSiteParamFromServer} from "@/api/index/site";
+import { ElMessageBox } from "element-plus";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -947,9 +907,17 @@ export default defineComponent({
       ],
     };
 
-//     loginTabs
-// usernameLogin
-// mobileLogin
+    const checkMaintenance = () => {
+      ElMessageBox.alert("系统维护中", {
+        center: true,
+        confirmButtonText: "确认",
+        showClose: false,
+        buttonSize: "large"
+      }).then(() => {
+        router.push("/");
+      });
+      return;
+    };
 
     const loginTabs = ref('usernameLogin');
 
@@ -981,7 +949,7 @@ export default defineComponent({
     const todayDate = () => {
       // const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
       // return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
-      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd') + ' (中国标准时间)';
+      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, HH:mm:ss ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
@@ -1134,7 +1102,7 @@ export default defineComponent({
     };
 
     const mobileLoginRules = {
-      telephone: [
+      phoneNumber: [
         {
           required: true,
           message: "请输入电话号码",
@@ -1146,7 +1114,7 @@ export default defineComponent({
           trigger: "blur",
         },
       ],
-      code: [
+      smsCode: [
         {
           required: true,
           message: "请输入验证码",
@@ -1459,41 +1427,59 @@ export default defineComponent({
       }
     };
 
-const countdownTimer = (type) => {
-if (type === 'REGISTER') {
-  if (regCountdown.value > 0) {
-    setTimeout(() => {
-      regCountdown.value -= 1
-      countdownTimer('REGISTER')
-    }, 1000)
-  } else {
-    lsRemove(registerSendOtpDisabledKey);
-    lsRemove(registerTelephoneKey);
+    const countdownTimer = (type) => {
+      if (type === 'REGISTER') {
+        if (regCountdown.value > 0) {
+          setTimeout(() => {
+            regCountdown.value -= 1
+            countdownTimer('REGISTER')
+          }, 1000)
+        } else {
+          lsRemove(registerSendOtpDisabledKey);
+          lsRemove(registerTelephoneKey);
 
-    disableSendVerificationButton.value = false
-  }
-} else if (type === 'LOGIN') {
-  if (loginCountdown.value > 0) {
-    setTimeout(() => {
-      loginCountdown.value -= 1
-      countdownTimer('LOGIN')
-    }, 1000)
-  }
-}
-}
+          disableSendVerificationButton.value = false
+        }
+      } else if (type === 'LOGIN') {
+        if (loginCountdown.value > 0) {
+          setTimeout(() => {
+            loginCountdown.value -= 1
+            countdownTimer('LOGIN')
+          }, 1000)
+        }
+      }
+    }
 
     const openCaptchaForm = (type) => {
-      registerRef.value.validateField('telephone').then((resp) => {
-      captchaForm.captchaCode = "";
-      captchaForm.type = type;
-      captchaDialogVisible.value = true;
-      getCode();
-    }).catch((err) => {
-        ElMessage({
-          message: '请输入有效的中国手机号码',
-          type: 'error',
+      if (type === 'REGISTER') {
+        registerRef.value.validateField('telephone').then((resp) => {
+          // captchaForm.captchaCode = "";
+          captchaForm.type = type;
+          captchaDialogVisible.value = true;
+          getCode();
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的中国手机号码',
+              type: 'error',
+            })
         })
-      })
+      } else if (type === 'LOGIN') {
+        mobileLoginRef.value.validateField('phoneNumber').then((resp) => {
+          // captchaForm.captchaCode = "";
+          captchaForm.type = type;
+          captchaDialogVisible.value = true;
+          getCode();
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的中国手机号码',
+              type: 'error',
+            })
+        })
+      } else {
+        captchaForm.type = type;
+        captchaDialogVisible.value = true;
+        getCode();
+      }
     };
 
     const submitRegisterForm = async (elForm) => {
@@ -1547,10 +1533,11 @@ if (type === 'REGISTER') {
     const announcementTypes = ref([])
     const loadAnnouncement = () => {
       getAnnouncement().then((res) => {
+        // console.log(res)
         if (res.code === 0) {
           const d = res.data.announcements
           announcementTypes.value = res.data.type
-          if (res.data.type.length > 0) {
+          if (res.data.length > 0) {
             announcementActive.value = res.data.type[0].id
           }
           announcementList.value = d
@@ -1721,7 +1708,7 @@ if (type === 'REGISTER') {
               .telephoneLogin({
                 phoneNumber: loginForm.phoneNumber,
                 sid: sidParam,
-                code: loginForm.code,
+                code: loginForm.smsCode,
                 smsCodeId: loginForm.smsCodeId,
               })
               .then(() => {
@@ -1929,7 +1916,8 @@ if (type === 'REGISTER') {
       validatePhoneNumber,
       loginTabs,
       openUsernameLogin,
-openMobileLogin
+      openMobileLogin,
+      checkMaintenance
     }
   }
 });
@@ -2141,6 +2129,7 @@ body {
 
             &:hover,
             &.router-link-active {
+
               span:first-child {
                 color: $link-active;
               }
@@ -2404,6 +2393,10 @@ body {
 
       &.p128 {
         background-position-x: -672px;
+      }
+
+      &.p120 {
+        background-position-x: -842px;
       }
     }
   }

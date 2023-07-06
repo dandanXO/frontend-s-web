@@ -32,7 +32,7 @@ export const userStore = defineStore("userStore", {
         hasToken() {
             return !!SessionStorage.getItem("TOKEN");
         },
-        getDeviceType(){
+        getDeviceType() {
             var regDevice = Platform.is.mobile ? "H5" : "WEB";
             if ("standalone" in window.navigator && window.navigator.standalone) {
                 regDevice = "IOS";
@@ -43,6 +43,12 @@ export const userStore = defineStore("userStore", {
                 }
             }
             return regDevice;
+        },
+        isMobileSafari() {
+            if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
+                return true;
+            }
+            return false;
         },
         isApp() {
             if (
@@ -72,6 +78,31 @@ export const userStore = defineStore("userStore", {
             loginInfo.way = regDevice;
             var string = qs.stringify(loginInfo);
             return api.post("/member/login", string).then((ret) => {
+                if (ret.code === 0) {
+                    SessionStorage.set("TOKEN", ret.data);
+                } else {
+                    Notify.create({
+                        color: "negative",
+                        position: "top",
+                        message: ret.message,
+                        icon: "report_problem"
+                    });
+                }
+            });
+        },
+        memberLoginviaPhone(loginInfo) {
+            var regDevice = Platform.is.mobile ? "H5" : "WEB";
+            if ("standalone" in window.navigator && window.navigator.standalone) {
+                regDevice = "IOS";
+            } else {
+                regDevice = Platform.is.mobile ? "H5" : "WEB";
+                if (Platform.is.capacitor && Platform.is.android) {
+                    regDevice = "ANDROID";
+                }
+            }
+            loginInfo.way = regDevice;
+            var string = qs.stringify(loginInfo);
+            return api.post("/member/mobileLogin", string).then((ret) => {
                 if (ret.code === 0) {
                     SessionStorage.set("TOKEN", ret.data);
                 } else {

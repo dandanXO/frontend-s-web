@@ -9,7 +9,7 @@
           class="filter-item"
           style="width: 120px;margin-left: 5px"
           @focus="loadSites"
-          @change="populateFinancialLevel"
+          @change="handleSiteNameCheckedChange"
         >
           <el-option
             v-for="item in siteList.list"
@@ -39,7 +39,7 @@
           <div class="form-body">
             <el-form
               ref="webDepositSettingForm"
-              :model="form"
+              :model="form.web"
               :rules="webFormRules"
               :inline="true"
               size="small"
@@ -64,7 +64,7 @@
           <div class="form-body">
             <el-form
               ref="mobileDepositSettingForm"
-              :model="form"
+              :model="form.mobile"
               :rules="mobileFormRules"
               :inline="true"
               size="small"
@@ -139,6 +139,7 @@ import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
+import { isNumericNonRequired } from "../../../utils/validate";
 
 const { t } = useI18n();
 const store = useStore();
@@ -195,6 +196,14 @@ const validateMobileDepositAmount = (rule, value, callback) => {
   callback();
 };
 
+const validateNumeric = (rule, value, callback) => {
+  if (value && !isNumericNonRequired(value)) {
+    callback(new Error(t('message.validateNumberOnly')))
+  } else {
+    callback()
+  }
+}
+
 const handleCheckAllChange = (val) => {
   if (val) {
     form.web.financialLevels = financialList.list;
@@ -228,23 +237,25 @@ const handleMobileCheckedFinancialChange = (value) => {
 }
 
 const webFormRules = reactive({
-  depositMin: [{ validator: validateWebDepositAmount, trigger: "blur" }],
-  depositMax: [{ validator: validateWebDepositAmount, trigger: "blur" }]
+  depositMin: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateWebDepositAmount, trigger: "blur" }],
+  depositMax: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateWebDepositAmount, trigger: "blur" }]
 });
 
 const mobileFormRules = reactive({
-  depositMin: [{ validator: validateMobileDepositAmount, trigger: "blur" }],
-  depositMax: [{ validator: validateMobileDepositAmount, trigger: "blur" }]
+  depositMin: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateMobileDepositAmount, trigger: "blur" }],
+  depositMax: [{ validator: validateNumeric, trigger: "blur" }, { validator: validateMobileDepositAmount, trigger: "blur" }]
 });
 
 async function loadFinancialLevels() {
-  const { data: financial } = await getFinancialLevels({ siteId: site.value.id });
+  const { data: financial } = await getFinancialLevels({ siteId: form.siteId });
   financialList.list = financial;
 };
 
-async function populateFinancialLevel() {
-  site.value.id = form.siteId;
-  await loadFinancialLevels();
+async function handleSiteNameCheckedChange() {
+  await loadPayTypes()
+  form.payType = payTypeList.list[0].code;
+  await loadFinancialLevels()
+  await loadDepositSetting()
 }
 
 async function loadSites() {
@@ -268,7 +279,6 @@ async function loadDepositSetting() {
 }
 
 async function submit() {
-  console.log(form)
   const depositSetting = [];
   if (webDepositSettingForm.value) {
     webDepositSettingForm.value.validate((valid) => {
@@ -323,8 +333,8 @@ function clearForm() {
   checkAllMobile.value = false;
 }
 
-function getDeposit(financial, payType, deposit) {
-  const record = page.records.find((item) => item.way === payType && item.financialLevel === financial.level);
+function getDeposit(financial, way, deposit) {
+  const record = page.records.find((item) => item.way === way && item.financialLevel === financial.level);
   if (deposit === 'min') {
     return record ? record.depositMin : 0;
   } else if (deposit === 'max') {

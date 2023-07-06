@@ -205,7 +205,7 @@ export default defineComponent({
             });
             store.phoneVerified = true;
             store.phone = formDetails.phone;
-            router.push('/account');
+            router.go(-1);
           }
         }).catch((e) => {
           $q.notify({

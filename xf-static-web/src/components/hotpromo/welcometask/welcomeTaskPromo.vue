@@ -278,7 +278,7 @@
           <button @click="gotoMainPage()">去投注</button>
         </div>
       </div>
-      <div class="noob-title">
+      <!-- <div class="noob-title">
         <img src="../../../assets/promo/welcometask/noob_ruler.png" alt="" />
       </div>
       <div class="noob-active">
@@ -296,7 +296,7 @@
         <p>
           6：凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。
         </p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

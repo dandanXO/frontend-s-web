@@ -62,7 +62,7 @@
             :breakpoint="500"
             overlay
             bordered
-        class="bg-primary"
+            class="bg-primary"
             side="right"
         >
           <div class="q-pa-sm q-pt-sm">
@@ -315,15 +315,24 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               }
             })
             .then((response) => {
-              if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+              if (way === 'IOS' || store.isMobileSafari()) {
+                const newWin = window.open(`/`, `_self`);
+                newWin.location.href = response.data
+              } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
                 const newWin = window.open(`/`, `_blank`);
                 newWin.location.href = response.data
-              }
-              else {
+              } else {
                 openURL(response.data)
               }
-            });
-        return
+            }).catch((err) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: err.message,
+            icon: "report_problem"
+          });
+        });
+        return;
       }
       api
           .get(`/session/launch?_time=${new Date().getTime()}`, {
@@ -335,14 +344,23 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             }
           })
           .then((response) => {
-            if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+            if (way === 'IOS' || store.isMobileSafari()) {
+              const newWin = window.open(`/`, `_self`);
+              newWin.location.href = response.data
+            } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
               const newWin = window.open(`/`, `_blank`);
               newWin.location.href = response.data
-            }
-            else {
+            } else {
               openURL(response.data)
             }
-          });
+          }).catch((err) => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: err.message,
+          icon: "report_problem"
+        });
+      })
     } else {
       router.push({path: "/login", query: {redirect: route.path}});
     }
