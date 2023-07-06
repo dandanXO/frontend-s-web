@@ -32,7 +32,9 @@
     </div>
   </div>
   <div v-else id="renderArea">
-    <form ref="formRef" method="post" style="display: none">
+    <form ref="formRef" method="post"
+          :target="targetType"
+    >
       <input
           type="text"
           v-for="input in data"
@@ -46,9 +48,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, nextTick } from "vue";
-import { isEmpty } from "boot/utils";
+import {ref, onMounted, reactive, nextTick} from "vue";
+import {isEmpty} from "boot/utils";
+import {useRoute} from "vue-router";
+import {userStore} from "src/stores";
 
+const store = userStore();
+const route = useRoute();
 const request = ref({});
 const formRef = ref();
 const data = reactive([]);
@@ -89,9 +95,21 @@ const blurCode = () => {
   });
 };
 
+const targetType = ref("");
+
 function getRequest(url) {
   if (isEmpty(url)) {
-    url = decodeURIComponent(window.location.search);
+    // console.log(route.fullPath);
+    if (store.getDeviceType() == 'IOS' || store.getDeviceType() == 'ANDROID' || store.isMobileSafari() == true) {
+      url = route.fullPath;
+      if (store.getDeviceType() == 'IOS' || store.isMobileSafari() == true) {
+        targetType.value = "_self";
+      } else {
+        targetType.value = "_blank";
+      }
+    } else {
+      url = decodeURIComponent(window.location.search);
+    }
   }
   let theRequest = {};
   if (url.indexOf("?") != -1) {
@@ -137,6 +155,8 @@ function postSubmit() {
     };
     data.push(dd);
   }
+
+  console.log(data);
 
   nextTick(() => {
     document.getElementById("submitBtn").click();

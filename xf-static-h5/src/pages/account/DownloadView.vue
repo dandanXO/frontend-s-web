@@ -50,7 +50,7 @@ const androidItems = ([
     icon: "xf",
     title: "兴發全站",
     content: "安全便捷，支持各大平台游戏",
-    downloadLink: "https://xfapp1.com/?url=m.xf882.com&agentCode=",
+    downloadLink: "https://xf9866.app/",
   },
   {
     icon: "pt",
@@ -64,7 +64,7 @@ const appleItems = ([
     icon: "xf",
     title: "兴發全站",
     content: "安全便捷，支持各大平台游戏",
-    downloadLink: "",
+    downloadLink: "https://xf9866.app/",
   }
 ])
 </script>

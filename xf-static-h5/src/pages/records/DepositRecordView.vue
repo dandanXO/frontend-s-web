@@ -125,12 +125,12 @@ export default defineComponent({
   gap: 10px;
 
   .q-card {
-    background: #ffffff !important;
-    color: #000000 !important;
+    background: rgb(33, 37, 52);
+    color: rgb(186, 206, 241);
   }
 
   .label {
-    color: #000000;
+    color: #fff;
   }
 
   .q-btn {
