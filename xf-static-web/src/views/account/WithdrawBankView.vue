@@ -359,7 +359,7 @@ import {getVerificationCode} from "@/api/index/login";
 import {ElMessage, ElMessageBox} from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
 import {RiLink, RiLinkUnlink} from "vue-remix-icons";
-import {loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard, loadMemberInfo} from "@/api/personal/personal";
+import {loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard, loadMemberInfo, loadMemberTelephone} from "@/api/personal/personal";
 import {userStore} from "@/store";
 import {useRouter} from "vue-router";
 import {sendSessionSms} from "@/api/personal/personal";
@@ -511,7 +511,7 @@ export default defineComponent({
       loadMemberInfo().then((response) => {
         if (response.code === 0) {
           personalState.memberInfo = response.data;
-          bankCardInfo.telephone = personalState.memberInfo.telephone;
+          // bankCardInfo.telephone = personalState.memberInfo.telephone;
           // console.log(bankCardInfo.telephone)
           // if (personalState.memberInfo.birthday) {
           //   personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
@@ -520,6 +520,13 @@ export default defineComponent({
       }).catch((error) => {
         console.log("error", error);
       });
+      loadMemberTelephone().then((response) => {
+        if (response.code === 0) {
+          bankCardInfo.telephone = response.data;
+        }
+      }).catch((error) => {
+        console.log("error", error);
+      })
     }
 
     const checkBankCards = () => {
