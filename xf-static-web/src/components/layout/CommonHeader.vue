@@ -2363,6 +2363,10 @@ body {
       &.p128 {
         background-position-x: -672px;
       }
+
+      &.p120{
+        background-position-x: -842px;
+      }
     }
   }
 
