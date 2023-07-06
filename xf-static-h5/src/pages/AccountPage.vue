@@ -6,7 +6,6 @@
       </div>
       <div class="pro-details">
         <span class="nickname-span">{{ store.nickName }}</span>
-        <span v-if="store.nickName=='npr100'">&nbsp;1.0.2</span>
         <q-badge class="vip-badge-item" color="orange" text-color="black" :label="store.vip"/>
 
         <!--        <span v-if="vipLevel === 1"-->
@@ -47,6 +46,8 @@
         <!--        /></span>-->
         <br>
         专属网址: {{ store.evip }}
+        <br/>
+        <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
       </div>
     </div>
     <div class="vipcard">
@@ -179,6 +180,7 @@
 import {defineComponent, ref, computed, onMounted, onBeforeUnmount} from "vue";
 import {userStore} from "stores/index";
 import {useRouter} from "vue-router";
+import {App} from "@capacitor/app";
 
 export default defineComponent({
   name: "AccountPage",
@@ -190,6 +192,8 @@ export default defineComponent({
         router.push('/')
       });
     };
+
+    const appVersionNo = ref(null);
 
     const vipLevel = computed(() => {
       if (store.vip == "VIP1") {
@@ -227,6 +231,18 @@ export default defineComponent({
       return store.vip;
     });
 
+    const getVersionNo = async () => {
+      if (store.getDeviceType() == "ANDROID") {
+        const info = await App.getInfo();
+        var current_version = info.version + info.build;
+        appVersionNo.value = current_version;
+      } else if (store.getDeviceType() == "IOS") {
+        appVersionNo.value = "iOS v0.2";
+      }else{
+
+      }
+    }
+
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
@@ -234,7 +250,10 @@ export default defineComponent({
       getBalance()
       // store.getUnreadTotal();
       store.getBalance()
+      getVersionNo();
     });
+
+
     onBeforeUnmount(() => {
       clearInterval(timerBalance.value);
     })
@@ -259,7 +278,8 @@ export default defineComponent({
       getBalance,
       store,
       openDeposit,
-      vipLevel
+      vipLevel,
+      appVersionNo
     };
   }
 });
