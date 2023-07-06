@@ -535,7 +535,7 @@ export default defineComponent({
           }
         });
       } else {
-        const bonusItem = `dy1-vip-${type}`;
+        const bonusItem = `xf1-vip-${type}`;
         eventapi
             .put("/bonus/claim/" + bonusItem)
             .then((res) => {

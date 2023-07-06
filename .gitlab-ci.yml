@@ -91,6 +91,15 @@ build-image-dy-download:
 
 #===============================================================================================
 
+build-image-xf-download:
+  extends:
+    - .docker-build
+    - .p8s1-rules
+  variables:
+    PROJECT: xf-download
+
+#===============================================================================================
+
 build-image-xf-maintenance:
   extends:
     - .docker-build
@@ -104,6 +113,10 @@ build-tf-manager-web:
   extends:
     - .build-projects
     - .build-web
+  script:
+    - cd $PROJECT
+    - npm install
+    - npm run build:prod
   variables:
     PROJECT: tf-manager-web
   rules:
