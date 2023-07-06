@@ -8,7 +8,7 @@
     </div>
     <div class="account-content deposit">
       <span class="additional-tips"
-        >如有遇到存款问题，请立即联系在线客服咨询！</span
+        >如果遇到存款问题，请立即联系在线客服解决！</span
       >
       <DepositComponent />
     </div>
