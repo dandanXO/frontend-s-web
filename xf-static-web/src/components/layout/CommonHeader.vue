@@ -1433,25 +1433,33 @@ export default defineComponent({
     const openCaptchaForm = (type) => {
       if (type === 'REGISTER') {
         registerRef.value.validateField('telephone').then((resp) => {
-      // captchaForm.captchaCode = "";
-      captchaForm.type = type;
-      captchaDialogVisible.value = true;
-      getCode();
-    }).catch((err) => {
-        ElMessage({
-          message: '请输入有效的中国手机号码',
-          type: 'error',
+          // captchaForm.captchaCode = "";
+          captchaForm.type = type;
+          captchaDialogVisible.value = true;
+          getCode();
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的中国手机号码',
+              type: 'error',
+            })
         })
-      })
+      } else if (type === 'LOGIN') {
+        mobileLoginRef.value.validateField('phoneNumber').then((resp) => {
+          // captchaForm.captchaCode = "";
+          captchaForm.type = type;
+          captchaDialogVisible.value = true;
+          getCode();
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的中国手机号码',
+              type: 'error',
+            })
+        })
       } else {
-
-      // captchaForm.captchaCode = "";
-      captchaForm.type = type;
-      captchaDialogVisible.value = true;
-      getCode();
-
+        captchaForm.type = type;
+        captchaDialogVisible.value = true;
+        getCode();
       }
-
     };
 
     const submitRegisterForm = async (elForm) => {
@@ -1505,10 +1513,11 @@ export default defineComponent({
     const announcementTypes = ref([])
     const loadAnnouncement = () => {
       getAnnouncement().then((res) => {
+        console.log(res)
         if (res.code === 0) {
           const d = res.data.announcements
           announcementTypes.value = res.data.type
-          if (res.data.type.length > 0) {
+          if (res.data.length > 0) {
             announcementActive.value = res.data.type[0].id
           }
           announcementList.value = d
@@ -2364,7 +2373,7 @@ body {
         background-position-x: -672px;
       }
 
-      &.p120{
+      &.p120 {
         background-position-x: -842px;
       }
     }
