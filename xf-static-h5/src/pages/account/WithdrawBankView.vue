@@ -194,7 +194,7 @@
               class=""
               filled
               v-model="bankCardInfo.cardAccount"
-              label="特卡人姓名"
+              label="持卡人姓名"
               :rules="cardAccountRules"
               lazy-rules
               :readonly="true"

@@ -89,7 +89,7 @@
                 autocomplete="username"
             >
               <template v-slot:prepend>
-                <q-icon color="bright" name="person_outline"/>
+                <q-icon color="bright" name="phone"/>
               </template>
             </q-input>
             <q-input
@@ -115,7 +115,7 @@
           </div>
           <div class="align-right">
           <span @click="loginType = !loginType">
-          {{ loginType ? '手机号记录' : '用户名登陆' }}
+          {{ loginType ? '用户名登陆' : '手机号登录' }}
           </span>
           </div>
 
@@ -205,60 +205,67 @@ export default defineComponent({
           delete allComponents[element];
         });
         const sidParam = FingerprintJS.hashComponents(allComponents);
-        loginNameRef.value.validate();
-        passwordRef.value.validate();
-        verificationRef.value.validate();
-        $q.loading.show({
-          message: "登录中"
-        });
-        if (
-            loginNameRef.value.hasError ||
-            passwordRef.value.hasError ||
-            verificationRef.value.hasError
-        ) {
-          $q.loading.hide();
-        } else {
-          store
-              .memberLogin({
-                loginName: loginForm.loginName,
-                password: loginForm.password,
-                sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId
-              })
-              .then(() => {
-                $q.loading.hide();
-                getCode();
-                sessionStorage.removeItem("REFERRAL_CODE");
 
-                // if (isCheckRmb.value) {
-                //   localStorage.setItem(
-                //       "userpass",
-                //       JSON.stringify({
-                //         loginName: loginForm.loginName,
-                //         password: loginForm.password
-                //       })
-                //   );
-                // } else {
-                //   localStorage.removeItem("userpass");
-                // }
+        if(loginType.value === false) {
+          loginNameRef.value.validate();
+          passwordRef.value.validate();
+          verificationRef.value.validate();
+          $q.loading.show({
+            message: "登录中"
+          });
+          if (
+              loginNameRef.value.hasError ||
+              passwordRef.value.hasError ||
+              verificationRef.value.hasError
+          ) {
+            $q.loading.hide();
+          } else {
+            store
+                .memberLogin({
+                  loginName: loginForm.loginName,
+                  password: loginForm.password,
+                  sid: sidParam,
+                  captchaCode: loginForm.captchaCode,
+                  codeId: loginForm.codeId
+                })
+                .then(() => {
+                  $q.loading.hide();
+                  getCode();
+                  sessionStorage.removeItem("REFERRAL_CODE");
 
-                loginFormRef.value.reset();
+                  // if (isCheckRmb.value) {
+                  //   localStorage.setItem(
+                  //       "userpass",
+                  //       JSON.stringify({
+                  //         loginName: loginForm.loginName,
+                  //         password: loginForm.password
+                  //       })
+                  //   );
+                  // } else {
+                  //   localStorage.removeItem("userpass");
+                  // }
 
-                if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
-                  if (Platform.is.capacitor && Platform.is.ios) {
-                    location.reload()
+                  loginFormRef.value.reset();
+
+                  if (store.hasToken()) {
+                    const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                    router.go(jumpUrl);
+                    if (Platform.is.capacitor && Platform.is.ios) {
+                      location.reload()
+                    }
                   }
-                }
-              })
-              .catch((error) => {
-                loginForm.captchaCode = "";
-                getCode();
-                $q.loading.hide();
-              });
+                })
+                .catch((error) => {
+                  loginForm.captchaCode = "";
+                  getCode();
+                  $q.loading.hide();
+                });
+          }
+        }else{
+          alert("jere");
         }
+
+
       })();
     };
 

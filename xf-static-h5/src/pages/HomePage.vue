@@ -98,7 +98,7 @@
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
   </div>
   <div class="details-bar">
-    <div class="message">{{ store.token ? '¥' + mainWallet.toFixed(2) : '早上好~' }}</div>
+    <div class="message" @click="refreshBalance">{{ store.token ? (!isLoadingBalance ? '¥' + mainWallet.toFixed(2) : '加载中...') : '早上好~' }}</div>
     <div class="menulist">
       <router-link to="/finance/deposit" class="men deposit-menu">
         <img src="../assets/images/index/deposit_icon.png">
@@ -742,6 +742,16 @@ export default defineComponent({
       // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
     };
 
+    const isLoadingBalance = ref(false);
+    const refreshBalance= () => {
+      if(store.token){
+        isLoadingBalance.value= true;
+        store.getBalance().then((res) => {
+          isLoadingBalance.value = false
+        })
+      }
+    }
+
     const announcementList = ref([]);
     const announcementTypes = ref([]);
     const loadAnnouncement = () => {
@@ -885,7 +895,6 @@ export default defineComponent({
       selectedTab,
       sport,
       esport,
-      // slots,
       slot,
       livecasino,
       poker,
@@ -907,7 +916,9 @@ export default defineComponent({
       isAppUpdateModal,
       cancelUpdate,
       openDownloadPage,
-      homePopupImg
+      homePopupImg,
+      refreshBalance,
+      isLoadingBalance
     };
   }
 });
