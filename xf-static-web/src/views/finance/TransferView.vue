@@ -39,8 +39,7 @@
         <div class="transfer-plat-item" v-for="p in platforms" :key="p.id">
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
-              <div class="plat-name" v-if="p.code === 'FlashTech'">Sport</div>
-              <div class="plat-name" v-else>{{ p.name }}</div>
+              <div class="plat-name">{{ platNames[p.code] || p.name }}</div>
               <div class="balance-wrapper">
                 <span class="currency">余额:</span>
                 {{ p.amount }}
@@ -179,6 +178,8 @@ export default defineComponent({
       amount: ""
     });
 
+    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN"};
+
     const transferOutAllModal = () => {
       transferAllModalVisible.value = true
       platforms.forEach(p => {
@@ -230,7 +231,7 @@ export default defineComponent({
           store.getBalance();
         } else {
             loadBalance(plat).then((response) => {
-              // console.log(plat) 
+              // console.log(plat)
               if (plaform) {
                 plaform.amount = response.data;
               }
@@ -337,7 +338,8 @@ export default defineComponent({
       transferOutAllModal,
       transferAllModalVisible,
       loadingTransfer,
-      refreshAllModal
+      refreshAllModal,
+      platNames
     };
   }
 });
