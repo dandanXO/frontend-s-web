@@ -573,10 +573,10 @@ export default defineComponent({
     background-size: contain;
     gap: 30px;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
 
     img{
-      max-width: 120px;
+      max-width: 100px;
       margin: 0 auto;
     }
 
@@ -806,7 +806,7 @@ export default defineComponent({
   .hot-promo {
     .promo-bg {
       img {
-        max-width: 140px;
+        max-width: 100px;
       }
     }
 

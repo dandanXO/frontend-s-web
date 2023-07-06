@@ -32,7 +32,7 @@ export const userStore = defineStore("userStore", {
         hasToken() {
             return !!SessionStorage.getItem("TOKEN");
         },
-        getDeviceType(){
+        getDeviceType() {
             var regDevice = Platform.is.mobile ? "H5" : "WEB";
             if ("standalone" in window.navigator && window.navigator.standalone) {
                 regDevice = "IOS";
@@ -43,6 +43,12 @@ export const userStore = defineStore("userStore", {
                 }
             }
             return regDevice;
+        },
+        isMobileSafari() {
+            if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
+                return true;
+            }
+            return false;
         },
         isApp() {
             if (

@@ -136,7 +136,7 @@
           @click="setSelectedSwiper(tab)"
           v-for="(tab, i) in tabs"
           :key="i"
-          style="width: calc(100vw / 6)"
+          style="width: calc(100vw / 5)"
       >
         {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
       </swiper-slide>
@@ -389,6 +389,7 @@ import 'swiper/css/scrollbar';
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation])
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
+import {translateRecord} from "src/directives/translate";
 
 export default defineComponent({
   name: "IndexPage",
@@ -423,23 +424,24 @@ export default defineComponent({
         firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
-        firstSwiper.value?.slideTo(4, 500);
+        firstSwiper.value?.slideTo(3, 500);
       }
       if (tab.name === "esport") {
-        firstSwiper.value?.slideTo(5, 500);
+        firstSwiper.value?.slideTo(4, 500);
       }
       if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(7, 500);
-      }
-      if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(21, 500);
-      }
-      if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(23, 500);
+        firstSwiper.value?.slideTo(5, 500);
       }
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(19, 500);
+        firstSwiper.value?.slideTo(16, 500);
       }
+      if (tab.name === "poker") {
+        firstSwiper.value?.slideTo(18, 500);
+      }
+      if (tab.name === "lottery") {
+        firstSwiper.value?.slideTo(21, 500);
+      }
+
     };
     const onSlideChange = (swiper) => {
       // Get the active slide index
@@ -478,12 +480,12 @@ export default defineComponent({
         label: "真人",
         labelact: "真人娱乐"
       },
-      {
-        name: "sport",
-        icon: "sport",
-        label: "体育",
-        labelact: "体育赛事"
-      },
+      // {
+      //   name: "sport",
+      //   icon: "sport",
+      //   label: "体育",
+      //   labelact: "体育赛事"
+      // },
       {
         name: "esport",
         icon: "esport",
@@ -637,6 +639,8 @@ export default defineComponent({
               const platTypes = element.gameType.split(",");
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
+                console.log(espObj);
+
                 if (espObj.code === "TFGaming") {
                   espObj.title = "兴發电竞";
                 }
@@ -669,7 +673,11 @@ export default defineComponent({
                 }
                 spObj.icon = "sport";
                 spObj.subtitle = "体育赛事";
-                sport.value.push(spObj);
+                if (spObj.code === "IM") {
+                }else{
+                  sport.value.push(spObj);
+                }
+
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
@@ -680,7 +688,7 @@ export default defineComponent({
               }
               if (platTypes.indexOf("POKER") > -1) {
                 var pokerObj = Object.assign({}, element);
-                pokerObj.title = pokerObj.name + " 棋牌";
+                pokerObj.title = translateRecord(pokerObj.name);
                 pokerObj.icon = "poker";
                 pokerObj.subtitle = "棋牌娱乐";
                 poker.value.push(pokerObj);
@@ -698,11 +706,7 @@ export default defineComponent({
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
 
-                if (element.code == 'AG') {
-
-                } else {
-                  slot.value.push(slotObj);
-                }
+                slot.value.push(slotObj);
 
               }
               if (platTypes.indexOf("FISH") > -1) {
@@ -976,7 +980,7 @@ export default defineComponent({
     .swiper-slide {
       background: #23263c;
       padding: 8px 5px 2px;
-      max-width: 60px;
+      max-width: 75px;
       cursor: pointer;
 
       &.tbact {
