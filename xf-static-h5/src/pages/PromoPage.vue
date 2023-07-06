@@ -1,12 +1,12 @@
 <template>
-  <div class="promo-container" style="background: #090b19;">
+  <div class="promo-container" style="background: #090b19">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab
-            v-for="(tab, i) in tabItems"
-            :key="i"
-            :name="tab.name"
-            :label="tab.label"
+          v-for="(tab, i) in tabItems"
+          :key="i"
+          :name="tab.name"
+          :label="tab.label"
         />
       </q-tabs>
 
@@ -17,15 +17,15 @@
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
                 <div
-                    class="promo-item"
-                    v-for="(promo, i) in filteredArray"
-                    :key="i"
-                    data-aos="zoom-in"
-                    data-aos-easing="ease-out"
-                    data-aos-duration="1000"
+                  class="promo-item"
+                  v-for="(promo, i) in filteredArray"
+                  :key="i"
+                  data-aos="zoom-in"
+                  data-aos-easing="ease-out"
+                  data-aos-duration="1000"
                 >
                   <template
-                      v-if="
+                    v-if="
                       promo.promoType
                         .toLowerCase()
                         .split(',')
@@ -42,8 +42,8 @@
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img
-                              class="promo-content"
-                              :src="imgURL + promo.mobileImgUrl"
+                            class="promo-content"
+                            :src="imgURL + promo.mobileImgUrl"
                           />
                         </div>
                       </div>
@@ -62,8 +62,8 @@
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img
-                              class="promo-content"
-                              :src="imgURL + promo.mobileImgUrl"
+                            class="promo-content"
+                            :src="imgURL + promo.mobileImgUrl"
                           />
                         </div>
                       </div>
@@ -81,7 +81,7 @@
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
               <div class="banner-container">
-                <div
+                <!-- <div
                     class="promo-bg"
                     :style="
                     'background-image: url(' +
@@ -89,14 +89,21 @@
                     (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
                     ')'
                   "
-                ></div>
+                ></div> -->
+                <!-- <div class="promo-bg"> -->
+                  <img
+                    class="promo-content"
+                    :src="imgURL + selectedPromo.mobileBannerUrl"
+                    style="display: block; width: 100%"
+                  />
+                <!-- </div> -->
               </div>
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
-                  <HotPromotion :list="selectedPromo"/>
+                  <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                    :class="{
+                  :class="{
                     welcome:
                       selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -104,7 +111,7 @@
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino:
                       selectedPromo.promoType.toLowerCase() === 'livecasino',
-                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game',
                   }"
                 >
                   <div v-html="selectedPromo.pageContent"></div>
@@ -119,17 +126,17 @@
 
   <q-dialog width="100%" v-model="isDisplayLogin">
     <q-card
-        style="width: 100%; padding: 20px"
-        class="bg-white text-black text-center"
+      style="width: 100%; padding: 20px"
+      class="bg-white text-black text-center"
     >
       <q-card-section class="q-mb-md">
         <strong>系统提示</strong>
-        <br/>
-        <br/>
+        <br />
+        <br />
         请登录后再操作
       </q-card-section>
       <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="brightbtn"/>
+        <q-btn label="确认" color="brightbtn" />
       </router-link>
     </q-card>
   </q-dialog>
@@ -588,7 +595,10 @@ export default defineComponent({
         }
       }
 
-      h1, h2, h3, h4 {
+      h1,
+      h2,
+      h3,
+      h4 {
         margin-top: 15px;
         margin-bottom: 16px;
       }
@@ -628,7 +638,8 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            background-image: linear-gradient(0deg, #07414c 0, #058096 100%),
+              linear-gradient(#d0d1d3, #d0d1d3);
           }
 
           td {
@@ -727,7 +738,8 @@ export default defineComponent({
   }
 
   .q-tab--active .q-tab__indicator {
-    background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
+    background: url("../assets/images/promotion/tab_bg.png") no-repeat center
+      center;
     background-size: 20px 10px;
     width: 100%;
     height: 10px;
