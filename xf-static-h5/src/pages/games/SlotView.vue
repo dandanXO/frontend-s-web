@@ -34,7 +34,7 @@
           </q-form>
         </div>
       </div>
-      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px);">
+      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px);" v-if="!isLoading">
         <div class="grid" style="padding-bottom: 20px;">
           <div
               v-for="(game, index) in gamePage.gameList"
@@ -99,6 +99,7 @@ import {cached} from "boot/cache";
 import {useUI} from "stores/ui";
 import BacktoTop from "components/backtotop.vue"
 import {scroll, SessionStorage} from 'quasar'
+import {userStore} from "src/stores";
 
 const qs = require("qs");
 export default defineComponent({
@@ -108,7 +109,8 @@ export default defineComponent({
   },
   setup() {
     const $q = useQuasar();
-    const route = useRoute()
+    const route = useRoute();
+    const store= userStore();
     const slotsGame = ref(null);
     const platforms = ref([]);
     const selectedCatId = ref(1);
@@ -148,96 +150,7 @@ export default defineComponent({
           getPlatList();
         }
     );
-    // const categoryList = ref([]);
-    // const getCategoryList = () => {
-    //   selectedPlat.value = route.query.platform
-    //   if (selectedPlat.value === 'PT') {
-    //     categoryList.value = [
-    //       {
-    //         id: 1,
-    //         code: 'hot',
-    //         name: '',
-    //         label: '热门游戏'
-    //       },
-    //       {
-    //         id: 2,
-    //         code: 'recommend',
-    //         name: '',
-    //         label: '精选推荐'
-    //       },
-    //       {
-    //         id: 3,
-    //         code: 'slot',
-    //         name: '',
-    //         label: '老虎机'
-    //       },
-    //       {
-    //         id: 4,
-    //         code: 'bonusslot',
-    //         name: '',
-    //         label: '累计奖池老虎机'
-    //       },
-    //       {
-    //         id: 5,
-    //         code: 'cards',
-    //         name: '',
-    //         label: '纸牌游戏'
-    //       },
-    //       {
-    //         id: 6,
-    //         code: 'table',
-    //         name: '',
-    //         label: '桌面游戏'
-    //       }
 
-    //     ]
-
-    //   } else if (selectedPlat.value === 'PG') {
-    //     categoryList.value = [
-    //       {
-    //         id: 1,
-    //         code: 'hot',
-    //         name: '',
-    //         label: '热门游戏'
-    //       },
-    //       {
-    //         id: 2,
-    //         code: 'portrait',
-    //         name: '',
-    //         label: 'PG竖版老虎机'
-    //       },
-    //       {
-    //         id: 3,
-    //         code: 'hotgame',
-    //         name: '',
-    //         label: '热门游戏'
-    //       }
-    //     ]
-    //   } else {
-    //     categoryList.value = [
-    //       {
-    //         id: 1,
-    //         code: 'hot',
-    //         name: '',
-    //         label: '热门游戏'
-    //       },
-    //       {
-    //         id: 2,
-    //         code: 'portrait',
-    //         name: '',
-    //         label: 'PG竖版老虎机'
-    //       },
-    //       {
-    //         id: 3,
-    //         code: 'hotgame',
-    //         name: '',
-    //         label: '热门游戏'
-    //       }
-    //     ]
-
-    //   }
-    //   switchCategory(categoryList.value[0]);
-    // }
     const getPlatList = () => {
       cached.get("PLATFORMS", () => api.get("/platform").then((res) => {
         return res
@@ -279,36 +192,14 @@ export default defineComponent({
       }
     };
     const loadGameList = () => {
-      // if (selectedPlat.value === 'PT') {
-      // gameListData.value = [
-      //   {
-      //     name: '水牛闪电战',
-      //     default: require("../../assets/images/games/aviator/default.png"),
-      //     icon: 'https://jsn92.czxinbang.com/xf-resource/app/games_new/PT/bfb.png'
-      //   },
 
-      //   {
-      //     name: '三倍猴子',
-      //     default: require("../../assets/images/games/aviator/default.png"),
-      //     icon: 'https://jsn92.czxinbang.com/xf-resource/app/games_new/PT/trpmnk.png'
-      //   }
-      // ]
-
-      // } else {
-      //   gameListData.value = []
-      // }
-      // changePage(1, gamePage.pageSize);
-      isLoading.value = true;
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB"
       const code = selectedPlatId.value;
       const gameType = "SLOT";
       const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
-      var way = null
-      if (Platform.is.android) {
-        way = "ANDROID"
-      } else if (Platform.is.ios) {
-        way = "IOS"
-      }
+      var way = store.getDeviceType();
+
+      isLoading.value = true;
       cached.get(key, () => api.get("/platformGames", {
         params: {platformId: code, gameType: gameType, device: regDevice, way: way},
       }).then((res) => {
@@ -317,6 +208,7 @@ export default defineComponent({
           return res
         }
       }).catch((err) => {
+        isLoading.value = false;
       })).then((res) => {
         res.forEach(element => {
           element.default = require("../../assets/images/games/aviator/default.png");

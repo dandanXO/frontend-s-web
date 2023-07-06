@@ -60,12 +60,12 @@
         v-if="hasDrawer"
     >
       <div class="q-pa-md bg-brightbtn">
-        老虎机大厅
+        游戏平台
       </div>
-      <div class="platforms">
-        <div class="text-red q-px-sm q-pt-md">
-          游戏平台
-        </div>
+      <div class="platforms q-pt-md">
+<!--        <div class="text-bright q-px-sm q-pt-md">-->
+<!--          -->
+<!--        </div>-->
       </div>
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
@@ -178,7 +178,7 @@ export default defineComponent({
     );
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
-      ui.drawerRight = true
+      ui.drawerRight = false;
     };
     const checkRoute = () => {
       if (route) {
@@ -364,44 +364,24 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const platformsList = ref([
       {
-        id: '20',
-        code: 'PT',
-        icon: 'pt',
+        id: '64',
+        code: 'JDB',
+        icon: 'jdb',
       },
       {
-        id: '37',
-        code: 'SW',
-        icon: 'sw',
+        id: '81',
+        code: 'BBINDY',
+        icon: 'bbin',
       },
+      // {
+      //   id: '26',
+      //   code: 'AG',
+      //   icon: 'ag',
+      // },
       {
-        id: '46',
-        code: 'PP',
-        icon: 'pp',
-      },
-      {
-        id: '38',
-        code: 'PG',
-        icon: 'pg',
-      },
-      {
-        id: '54',
-        code: 'MG_PLUS',
-        icon: 'mg',
-      },
-      {
-        id: '42',
-        code: 'CQ',
-        icon: 'cq',
-      },
-      {
-        id: '28',
-        code: 'SG',
-        icon: 'sg',
-      },
-      {
-        id: '27',
-        code: 'TTG',
-        icon: 'ttg',
+        id: '73',
+        code: 'MGP',
+        icon: 'MGP',
       },
       {
         id: '39',
@@ -409,19 +389,34 @@ export default defineComponent({
         icon: 'png',
       },
       {
-        id: '45',
-        code: 'AE',
-        icon: 'ae',
+        id: '27',
+        code: 'TTG',
+        icon: 'ttg',
       },
       {
-        id: '52',
-        code: 'BBIN',
-        icon: 'bbin',
+        id: '28',
+        code: 'SG',
+        icon: 'sg',
       },
       {
-        id: '64',
-        code: 'JDB',
-        icon: 'jdb',
+        id: '46',
+        code: 'PP',
+        icon: 'pp',
+      },
+      {
+        id: '70',
+        code: 'AMEBA',
+        icon: 'AMEBA',
+      },
+      {
+        id: '54',
+        code: 'PT',
+        icon: 'pt',
+      },
+      {
+        id: '33',
+        code: 'CQ9',
+        icon: 'CQ9',
       },
     ]);
 
