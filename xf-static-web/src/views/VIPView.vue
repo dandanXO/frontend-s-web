@@ -78,7 +78,7 @@
                 {{ vip.birthdayBonus }}
               </span>
 
-              <template v-if="!store.token || n === (store.vip.split('VIP')[1] - 1)">
+              <template v-if="!store.token || (n === (store.vip.split('VIP')[1] - 1) && (store.vip.split('VIP')[1] > 4))">
                 <button
                   class="btn btn-sm"
                   @click="onVIPButtonClick('xf1-vip-birthday')"
