@@ -271,6 +271,7 @@
             class="half"
             v-model="bankCardInfo.smsCode"
             placeholder="输入电话验证码"
+            @keyup.enter="submitBankCard"
           />
         </el-form-item>
 
@@ -305,6 +306,8 @@
       width="50%"
       align-center
       style="max-width: 500px"
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
     >
       <el-form
         ref="captchaRef"
@@ -495,7 +498,7 @@ export default defineComponent({
     };
 
     const getTime = () => {
-      searchForm.startDate = chgDate(7);
+      searchForm.startDate = chgDate(30);
       searchForm.endDate = chgDate(0);
       searchRecord();
     };
@@ -793,8 +796,10 @@ export default defineComponent({
                 if (res.code === 0) {
                   ElMessage({
                     type: 'success',
-                    message: '删除完成',
+                    message: '解绑完成',
                   });
+                  // loadCards();
+                  searchRecord();
                   for (let i = 0; i < personalState.bankCardList.length; i++) {
                     if (personalState.bankCardList[i].id === card.id) {
                       personalState.bankCardList.splice(i, 1);

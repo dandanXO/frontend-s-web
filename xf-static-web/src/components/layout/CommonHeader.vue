@@ -39,7 +39,7 @@
           <a class="common-btn" @click="registerDialogVisible = true">
             开设账户
           </a>
-          <a class="common-link" @click="openMobileLogin()">忘记密码？</a>
+          <a class="common-link" @click="openMobileLogin()">手机登录</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -221,7 +221,7 @@
           </el-tab-pane>
           <el-tab-pane label="手机登录" name="mobileLogin">
             <el-form
-              ref="loginRef"
+              ref="mobileLoginRef"
               :rules="mobileLoginRules"
               :model="loginForm"
               label-width="100"
@@ -234,16 +234,16 @@
                   placeholder="输入手机号"
                 />
               </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="captchaCode">
+              <el-form-item tabindex="2" label="手机验证码" prop="smsCode">
                 <el-row
                   :gutter="10"
                   style="justify-content: center; align-items: center"
                 >
                   <el-col :span="12">
                     <el-input
-                      v-model="loginForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
+                      v-model="loginForm.smsCode"
+                      label="手机验证码"
+                      placeholder="输入手机验证码"
                       @keyup.enter="submitLogin"
                     />
                   </el-col>
@@ -1082,7 +1082,7 @@ export default defineComponent({
     };
 
     const mobileLoginRules = {
-      telephone: [
+      phoneNumber: [
         {
           required: true,
           message: "请输入电话号码",
@@ -1094,7 +1094,7 @@ export default defineComponent({
           trigger: "blur",
         },
       ],
-      code: [
+      smsCode: [
         {
           required: true,
           message: "请输入验证码",
@@ -1431,7 +1431,8 @@ export default defineComponent({
     }
 
     const openCaptchaForm = (type) => {
-      registerRef.value.validateField('telephone').then((resp) => {
+      if (type === 'REGISTER') {
+        registerRef.value.validateField('telephone').then((resp) => {
       // captchaForm.captchaCode = "";
       captchaForm.type = type;
       captchaDialogVisible.value = true;
@@ -1442,6 +1443,15 @@ export default defineComponent({
           type: 'error',
         })
       })
+      } else {
+
+      // captchaForm.captchaCode = "";
+      captchaForm.type = type;
+      captchaDialogVisible.value = true;
+      getCode();
+
+      }
+
     };
 
     const submitRegisterForm = async (elForm) => {
@@ -1669,7 +1679,7 @@ export default defineComponent({
               .telephoneLogin({
                 phoneNumber: loginForm.phoneNumber,
                 sid: sidParam,
-                code: loginForm.code,
+                code: loginForm.smsCode,
                 smsCodeId: loginForm.smsCodeId,
               })
               .then(() => {

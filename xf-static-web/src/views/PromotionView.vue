@@ -2,7 +2,7 @@
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
       <!-- <div v-if="banner.desktopImgUrl" class="banner-container"> -->
-        <!-- <div
+      <!-- <div
           class="promo-bg isDesktop"
           :style="
             'background-image: url(' + imgURL + banner.desktopImageUrl + ''
@@ -14,7 +14,7 @@
             'background-image: url(' + imgURL + banner.mobileImageUrl + ''
           "
         ></div> -->
-        <!-- <div class="promo-bg">
+      <!-- <div class="promo-bg">
           <img src="../assets/promo/bg-top.jpg">
         </div> -->
       <!-- </div> -->
@@ -33,7 +33,7 @@
                 src="../assets/images/index/game_icon_all.png"
               />
               <template v-else>{{ p.label }}</template> -->
-             <img :src="require('../assets/promo/menu-' + p.img + '.png')">
+              <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
               {{ p.label }}
             </div>
           </div>
@@ -103,7 +103,7 @@
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino:
                 selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
             <!-- <div class="game-title"><img src="../assets/images/promotion/hotpromo/common/title_txt_content.png"></div> -->
@@ -146,7 +146,7 @@ import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 
 import HotPromotion from '@/components/HotPromotion'
-import { ElMessage } from "element-plus";
+import { ElMessageBox } from "element-plus";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -189,15 +189,39 @@ export default defineComponent({
         }
       })
     }
+    // const showPromoDetails = (promo) => {
+    //   if (promo.redirectUrl.includes("page-vip")) {
+    //     router.push("/vip");
+    //   } else {
+    //     router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+    //     isPromoDetail.value = true
+    //     selectedPromo.value = promo
+    //   }
+    // }
     const showPromoDetails = (promo) => {
-      if (promo.redirectUrl.includes("page-vip")) {
-        router.push("/vip");
-      } else {
-        router.push({name: 'promotion', query: {name: promo.redirectUrl}})
-        isPromoDetail.value = true
-        selectedPromo.value = promo
-      }
-    }
+
+if (!store.token) {
+    ElMessageBox.alert('请登录后再操作', '系统提示', {
+        // if you want to disable its autofocus
+        // autofocus: false,
+        center: true,
+        confirmButtonText: '确认',
+        showClose: false,
+        buttonSize: 'large'
+    }).then(() => {
+        store.loginPageVisible = true
+    })
+    return
+} else {
+  if (promo.redirectUrl.includes("page-vip")) {
+    router.push("/vip");
+  } else {
+    router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+    isPromoDetail.value = true
+    selectedPromo.value = promo
+  }
+}
+}
     const switchPromoType = (type) => {
       promoTabActive.value = type;
       if (type !== "ALL") {
@@ -262,7 +286,7 @@ export default defineComponent({
 .promo-container {
   background: #090b19;
   .all-promotions {
-    background: url(../assets/promo/bg-top.jpg)no-repeat center top;
+    background: url(../assets/promo/bg-top.jpg) no-repeat center top;
     background-size: cover;
     min-height: 40vh;
     padding: 50px;
@@ -387,12 +411,12 @@ export default defineComponent({
       }
     }
     .promo-main-container {
-        width: 100%;
-        max-width: $maxwidth;
-        background-color: #222a34;
-        box-shadow: 0 5px 8px 0 rgb(0 0 0 / 30%);
-        border-radius: 8px;
-        margin: 0 auto;
+      width: 100%;
+      max-width: $maxwidth;
+      background-color: #222a34;
+      box-shadow: 0 5px 8px 0 rgb(0 0 0 / 30%);
+      border-radius: 8px;
+      margin: 0 auto;
       .promo-type-wrapper {
         display: flex;
         justify-content: center;
@@ -437,7 +461,8 @@ export default defineComponent({
             &:hover {
               // background: #4b4e66;
               // box-shadow: 0 0 5px #ffffff;
-              background-image: linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#5243bd,#5243bd);
+              background-image: linear-gradient(90deg, #35d8f2 0, #2188c9 100%),
+                linear-gradient(#5243bd, #5243bd);
               img {
                 filter: grayscale(1) brightness(100);
               }
