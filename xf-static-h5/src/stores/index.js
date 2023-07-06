@@ -84,6 +84,31 @@ export const userStore = defineStore("userStore", {
                 }
             });
         },
+        memberLoginviaPhone(loginInfo) {
+            var regDevice = Platform.is.mobile ? "H5" : "WEB";
+            if ("standalone" in window.navigator && window.navigator.standalone) {
+                regDevice = "IOS";
+            } else {
+                regDevice = Platform.is.mobile ? "H5" : "WEB";
+                if (Platform.is.capacitor && Platform.is.android) {
+                    regDevice = "ANDROID";
+                }
+            }
+            loginInfo.way = regDevice;
+            var string = qs.stringify(loginInfo);
+            return api.post("/member/mobileLogin", string).then((ret) => {
+                if (ret.code === 0) {
+                    SessionStorage.set("TOKEN", ret.data);
+                } else {
+                    Notify.create({
+                        color: "negative",
+                        position: "top",
+                        message: ret.message,
+                        icon: "report_problem"
+                    });
+                }
+            });
+        },
         getMemberInfo() {
             api.interceptors.request.use(async (req) => {
                 const token = SessionStorage.getItem("TOKEN");
