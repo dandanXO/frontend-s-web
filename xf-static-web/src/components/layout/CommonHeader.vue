@@ -111,7 +111,17 @@
             v-for="nav in navigations"
             :key="nav.name"
           >
+            <a
+              v-if="nav.enName === 'Esports' || nav.enName === 'Sports'"
+              @click="checkMaintenance"
+              to="/"
+            >
+              <span>{{ nav.name }}</span>
+              <span>{{ nav.enName }}</span>
+            </a>
+
             <router-link
+            v-else
               @mouseover="showSubMenu(nav)"
               @mouseup="selectedMenu = ''"
               :to="nav.path"
@@ -131,6 +141,7 @@
               v-if="selectedMenu === 'Sports'"
               @load-modal="openGame"
             />
+
             <LiveCasinoMenu
               ref="el"
               v-if="selectedMenu === 'Live Casino'"
@@ -786,6 +797,7 @@ import {storeToRefs} from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {getSiteParamFromServer} from "@/api/index/site";
+import { ElMessageBox } from "element-plus";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -895,9 +907,17 @@ export default defineComponent({
       ],
     };
 
-//     loginTabs
-// usernameLogin
-// mobileLogin
+    const checkMaintenance = () => {
+      ElMessageBox.alert("系统维护中", {
+        center: true,
+        confirmButtonText: "确认",
+        showClose: false,
+        buttonSize: "large"
+      }).then(() => {
+        router.push("/");
+      });
+      return;
+    };
 
     const loginTabs = ref('usernameLogin');
 
@@ -1896,7 +1916,8 @@ export default defineComponent({
       validatePhoneNumber,
       loginTabs,
       openUsernameLogin,
-openMobileLogin
+      openMobileLogin,
+      checkMaintenance
     }
   }
 });
@@ -2108,6 +2129,7 @@ body {
 
             &:hover,
             &.router-link-active {
+
               span:first-child {
                 color: $link-active;
               }

@@ -98,7 +98,9 @@
         name="person" style="color: #2dbfd4; font-size: 14px;"/></span></router-link>
   </div>
   <div class="details-bar">
-    <div class="message" @click="refreshBalance">{{ store.token ? (!isLoadingBalance ? '¥' + mainWallet.toFixed(2) : '加载中...') : '早上好~' }}</div>
+    <div class="message" @click="refreshBalance">
+      {{ store.token ? (!isLoadingBalance ? '¥' + mainWallet.toFixed(2) : '加载中...') : '早上好~' }}
+    </div>
     <div class="menulist">
       <router-link to="/finance/deposit" class="men deposit-menu">
         <img src="../assets/images/index/deposit_icon.png">
@@ -433,13 +435,13 @@ export default defineComponent({
         firstSwiper.value?.slideTo(5, 500);
       }
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(16, 500);
+        firstSwiper.value?.slideTo(15, 500);
       }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(18, 500);
+        firstSwiper.value?.slideTo(17, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(21, 500);
+        firstSwiper.value?.slideTo(20, 500);
       }
 
     };
@@ -674,7 +676,7 @@ export default defineComponent({
                 spObj.icon = "sport";
                 spObj.subtitle = "体育赛事";
                 if (spObj.code === "IM") {
-                }else{
+                } else {
                   sport.value.push(spObj);
                 }
 
@@ -705,8 +707,10 @@ export default defineComponent({
                 slotObj.title = slotObj.name + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
-
-                slot.value.push(slotObj);
+                if (slotObj.code === "AG") {
+                } else {
+                  slot.value.push(slotObj);
+                }
 
               }
               if (platTypes.indexOf("FISH") > -1) {
@@ -747,9 +751,9 @@ export default defineComponent({
     };
 
     const isLoadingBalance = ref(false);
-    const refreshBalance= () => {
-      if(store.token){
-        isLoadingBalance.value= true;
+    const refreshBalance = () => {
+      if (store.token) {
+        isLoadingBalance.value = true;
         store.getBalance().then((res) => {
           isLoadingBalance.value = false
         })

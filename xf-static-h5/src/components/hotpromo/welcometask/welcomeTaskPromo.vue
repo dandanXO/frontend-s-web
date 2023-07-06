@@ -302,14 +302,12 @@
 </template>
 <script setup>
 import { onMounted, reactive, ref } from "vue";
-import { welcomeTaskClaimBonus, welcomeTaskInit } from "@/api/index/promo";
-import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import { eventapi } from "boot/axios";
 const router = useRouter();
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
-const store = userStore();
 const checkInDays = ref(3);
 
 const welcomeState = reactive({
@@ -319,15 +317,11 @@ const checkInRewardState = reactive({
   stateDetails: {},
 });
 onMounted(() => {
-  if (store.token) {
-    pageInit();
-  } else {
-    router.push("/login");
-  }
+  pageInit();
 });
 
 const pageInit = () => {
-  welcomeTaskInit().then((res) => {
+  eventapi.post("/welcomeTask/init").then((res) => {
     if (res.code === 0) {
       welcomeState.stateDetails = res.data;
       if (welcomeState.stateDetails.checkInRewardState !== "NO") {
@@ -340,8 +334,7 @@ const pageInit = () => {
 };
 
 const claimBonus = (promoCode) => {
-  welcomeTaskClaimBonus(promoCode)
-    .then((res) => {
+  eventapi.put(`/welcomeTask/claim/${promoCode}`).then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data;
 
