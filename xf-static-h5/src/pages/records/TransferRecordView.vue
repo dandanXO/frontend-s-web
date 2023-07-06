@@ -128,8 +128,17 @@ export default defineComponent({
   width: 100%;
   gap: 10px;
 
+  .q-card {
+    background: rgb(33, 37, 52);
+    color: rgb(186, 206, 241);
+  }
+
   .label {
-    color: #bacef1;
+    color: #fff;
+  }
+
+  .q-btn {
+    font-size: 11px !important;
   }
 }
 </style>

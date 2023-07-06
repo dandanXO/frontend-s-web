@@ -921,14 +921,14 @@ onMounted(() => {
 .inner-cont {
   height: 100%;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
 }
 .submit-message {
   width: calc(100% - 40px);
   max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 0;
+  padding: 20px 0;
   height: auto;
   gap: 1px;
   display: flex;
@@ -944,14 +944,15 @@ onMounted(() => {
     align-items: center;
     font-size: 16px;
     align-items: center;
-    background: #dddddd;
+    // background: #063c50;
     padding: 15px;
     span:first-child {
       flex: 1;
-      color: #4669f8;
+      color: #4fb2ff;
     }
     span.info {
       flex: 3;
+      color:#ffffff;
     }
     button {
       width: 80px;

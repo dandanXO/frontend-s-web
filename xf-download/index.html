@@ -62,7 +62,7 @@
     <div class="remind">
         <div class="content">
             <a class="logo"><img src="styles/images/logo.png?v=1" width="88px" height="88px"></a>
-            <h3>兴發</h3>
+            <h3>兴發 App<span id="verNo"></span></h3>
             <div class="remind-txt">
                 全面真人娱乐&nbsp;老虎机&nbsp;捕鱼APP<br>
                 投注最流畅，最快捷，最好用<br>
@@ -98,6 +98,8 @@
     </div> -->
 </div>
 <script>
+    var versionNo = "1.0.4";
+
     var andList = [
         {imgurl: '/styles/images/android/1.png'},
         {imgurl: '/styles/images/android/2.png'},
@@ -143,6 +145,8 @@
             }
         }
         ;
+
+        $("#verNo").html("(" + versionNo + ")");
         var host = window.location.host;
         var vv = {agentCode: getQueryString("agentCode"), regFrom: getQueryString("url"), downloadUrl: host};
         $('#download').attr('data-clipboard-text', "ABC" + JSON.stringify(vv));
@@ -171,7 +175,7 @@
             $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + andList[i].imgurl + '" alt=""/></div>')
         }
         ;
-        $('#download').attr('href', './xf_app.apk');
+        $('#download').attr('href', './xf_app.apk?v=' + Date.now());
     }
 
     var mySwiper = new Swiper('.swiper-container', {
