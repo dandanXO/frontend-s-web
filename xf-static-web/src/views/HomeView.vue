@@ -42,16 +42,16 @@
           </div>
         </div>
       </div>
-      <div class="avg-list">
+      <!-- <div class="avg-list">
         <img src="../assets/home/list_money.png" alt="" />
         <img class="list-title" src="../assets/home/list_all.png" alt="" />
-      </div>
-      <div class="avg-earth">
+      </div> -->
+      <!-- <div class="avg-earth">
         <div
           class="list-content"
           style="justify-content: space-between; width: 1270px; margin: 0 auto"
         >
-          <div onclick="fun_openGame('diaochan', 38)">
+          <div @click="openGame('全能宙斯帝国', 'MGP', 'SMG_almightyZeusEmpire')">
             <img src="../assets/home/hot_game1.png" alt="" />
             <span>进入游戏</span>
           </div>
@@ -76,7 +76,7 @@
           />
           <img class="serve-bg" src="../assets/home/server_bg.png" alt="" />
         </div>
-      </div>
+      </div> -->
       <div class="avg-container">
         <div>
           <div class="avg-time-nv-box">
@@ -342,7 +342,7 @@
       </div>
     </div>
   </div>
-  <GameModal ref="gameMenu" />
+  <GameModal ref="gameMenu"></GameModal>
   <el-dialog
     @close="setWithExpiry('isImpt', true, 43200000)"
     class="imptann-modal"
@@ -354,11 +354,20 @@
 
 <script>
 /* eslint-disable */
-import GameModal from "@/components/modal/GameModal.vue";
+import GameModal from "@/components/modal/GameModal";
 import { defineComponent, ref, onMounted } from "vue";
 import { loadPromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
+
+// import { defineComponent, onMounted, reactive, ref, watch } from "vue";
+// import { Search } from "@element-plus/icons-vue";
+// import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
+// import GameModal from "@/components/modal/GameModal";
+// import { loadPromoBanner } from "@/api/index/promo";
+// import { useRoute, useRouter } from 'vue-router';
+// import { useScriptTag } from '@vueuse/core'
+// import { userStore } from "@/store";
 
 export default defineComponent({
   // directives: {

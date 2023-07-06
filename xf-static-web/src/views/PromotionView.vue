@@ -287,10 +287,16 @@ if (!store.token) {
   background: #090b19;
   .all-promotions {
     background: url(../assets/promo/bg-top.jpg) no-repeat center top;
-    background-size: cover;
-    min-height: 40vh;
-    padding: 50px;
+    // background-size: cover;
+    // min-height: 40vh;
+    // padding: 50px;
     position: relative;
+
+    padding-top: 420px;
+    padding-bottom: 20px;
+    background-color: #0e121b;
+    background-repeat: no-repeat;
+    background-position: top 120px;
   }
   .promo-view-container {
     line-height: 30px;

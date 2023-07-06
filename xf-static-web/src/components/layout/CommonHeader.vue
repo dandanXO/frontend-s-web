@@ -1513,7 +1513,7 @@ export default defineComponent({
     const announcementTypes = ref([])
     const loadAnnouncement = () => {
       getAnnouncement().then((res) => {
-        console.log(res)
+        // console.log(res)
         if (res.code === 0) {
           const d = res.data.announcements
           announcementTypes.value = res.data.type
