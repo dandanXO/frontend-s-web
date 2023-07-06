@@ -944,14 +944,15 @@ onMounted(() => {
     align-items: center;
     font-size: 16px;
     align-items: center;
-    background: #dddddd;
+    background: #063c50;
     padding: 15px;
     span:first-child {
       flex: 1;
-      color: #4669f8;
+      color: #4fb2ff;
     }
     span.info {
       flex: 3;
+      color:#ffffff;
     }
     button {
       width: 80px;

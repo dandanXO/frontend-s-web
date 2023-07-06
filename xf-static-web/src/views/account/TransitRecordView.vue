@@ -458,7 +458,7 @@
                       :key="p.name"
                       :value="p.name"
                     >
-                      {{ p.name }}
+                      {{ getPlatform(p.name) }}
                     </el-option>
                   </el-select>
                 </el-form-item>
