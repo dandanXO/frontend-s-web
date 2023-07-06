@@ -131,7 +131,7 @@ const pageNumChange = (i) => {
 }
 
 const pageInit = () => {
-  tigerCardInit({promoCode: "xf-tiger-card"}).then((res) => {
+  tigerCardInit({promoCode: "xf1-tiger-card"}).then((res) => {
     if(res.code === 0) {
       cardInfo.cardDetail = res.data
     }
@@ -150,7 +150,7 @@ const pageLoadingText = ref('');
 const getNewTigerCard = () => {
   isPageLoading.value = true
   pageLoadingText.value = "正领取虎卡"
-  getMemberCard({promoCode: "xf-tiger-card"}).then((res) => {
+  getMemberCard({promoCode: "xf1-tiger-card"}).then((res) => {
     if(res.code === 0) {
       cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1
       isCardModal.value = true;
@@ -162,14 +162,14 @@ const getNewTigerCard = () => {
         message: res.message
       })
     }
-    isPageLoading.value = false
   })
+  isPageLoading.value = false
 }
 
 const compoundCard = () => {
   isPageLoading.value = true
   pageLoadingText.value = "正合成大奖卡"
-  synthesisCard({promoCode: "xf-tiger-card"}).then((res) => {
+  synthesisCard({promoCode: "xf1-tiger-card"}).then((res) => {
     if(res.code === 0) {
       pageInit()
       ElMessage.success({
@@ -274,7 +274,7 @@ const submitRegisterForm = async (elForm) => {
   await elForm.validate((valid) => {
     if (valid) {
         isSubmitting.value = true;
-        form.promoCode = "xf-tiger-card"
+        form.promoCode = "xf1-tiger-card"
         giveCardToFriend(form).then((res) => {
           if(res.code === 0) {
             ElMessage.error({

@@ -42,7 +42,7 @@
                   </div>
                   <div class="vip-badgecontent">
                     <span>
-                      {{ `>${vip.saving}存款` }}
+                      {{ `>${vip.saving}` }}
                     </span>
                     <span>
                       {{ `>${vip.monthlySaving}${vip.oneMonthSaving}` }}
@@ -65,7 +65,7 @@
                       <img src="../../assets/vip/deposit.png"/>
                     </div>
                     <div class="txt" style="margin-right: 20px">
-                      每月存送: {{ vip.cunsong }}
+                      晋升奖励：{{ vip.cunsong }}
                     </div>
                   </div>
                   <!-- <template v-if="vip.cunsong !== '无'">
@@ -77,24 +77,24 @@
                     />
                   </template> -->
                 </div>
-                <div class="bft-row-cnt">
-                  <div class="left">
-                    <div class="icon">
-                      <img src="../../assets/vip/red_box.png"/>
-                    </div>
-                    <div class="txt">每月红包: {{ vip.monthlyBonus }}</div>
-                  </div>
-                  <template v-if="vip.monthlyBonus !== '无'">
-                    <q-btn
-                        class="btn"
-                        color="brightbtn"
-                        label="领取"
-                        :disable="btnIsDisabled"
-                        @click="onVIPButtonClick('monthly')"
-                        :loading="false"
-                    />
-                  </template>
-                </div>
+<!--                <div class="bft-row-cnt">-->
+<!--                  <div class="left">-->
+<!--                    <div class="icon">-->
+<!--                      <img src="../../assets/vip/red_box.png"/>-->
+<!--                    </div>-->
+<!--                    <div class="txt">每月红包: {{ vip.monthlyBonus }}</div>-->
+<!--                  </div>-->
+<!--                  <template v-if="vip.monthlyBonus !== '无'">-->
+<!--                    <q-btn-->
+<!--                        class="btn"-->
+<!--                        color="brightbtn"-->
+<!--                        label="领取"-->
+<!--                        :disable="btnIsDisabled"-->
+<!--                        @click="onVIPButtonClick('monthly')"-->
+<!--                        :loading="false"-->
+<!--                    />-->
+<!--                  </template>-->
+<!--                </div>-->
                 <div class="bft-row-cnt">
                   <div class="left">
                     <div class="icon">
@@ -114,7 +114,7 @@
                 </div>
                 <div class="bft-row-cnt">
                   <div class="left">
-                    <div class="txt">流水要求: {{ vip.drawTimes }}</div>
+                    <div class="txt">流水要求: {{ vip.drawTimes }}倍</div>
                   </div>
                 </div>
               </div>
@@ -893,141 +893,141 @@ program at any time without prior notice.`
     const vipList = ref([
       {
         level: 1,
-        description: "> 有一笔存款",
+        description: "升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款",
         monthlyBonus: `无`,
         birthdayBonus: `无`,
-        cunsong: `无`,
-        drawTimes: `无`,
-        perEsport: "0.40%",
+        cunsong: `8元`,
+        drawTimes: `12`,
+        perEsport: "0.45%",
         perSport: "0.40%",
-        perLive: "0.40%",
+        perLive: "0.50%",
+        perSlot: "0.45%",
+        perPoker: "0.45%"
+      },
+      {
+        level: 2,
+        description: `升级要求 &gt; 20000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款`,
+        monthlyBonus: "28",
+        birthdayBonus: "无",
+        cunsong: `8元`,
+        drawTimes: "12",
+        perEsport: "0.50%",
+        perSport: "0.40%",
+        perLive: "0.50%",
         perSlot: "0.50%",
         perPoker: "0.50%"
       },
       {
-        level: 2,
-        description: `升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款`,
-        monthlyBonus: "28",
-        birthdayBonus: "38",
-        cunsong: `存款至少100元可申请每月一次再存20% 最高奖金588元`,
+        level: 3,
+        description: `升级要求 &gt; 200000≤累积存款<br>
+							保级要求 &gt; 10888≤一个月内累积存款`,
+        monthlyBonus: "88",
+        birthdayBonus: "无",
+        cunsong: `38元`,
         drawTimes: "12",
-        perEsport: "0.40%",
-        perSport: "0.40%",
-        perLive: "0.40%",
+        perEsport: "0.50%",
+        perSport: "0.45%",
+        perLive: "0.50%",
+        perSlot: "0.55%",
+        perPoker: "0.55%"
+      },
+      {
+        level: 4,
+        description: `升级要求 &gt; 500000≤累积存款<br>
+							保级要求 &gt; 38888≤一个月内累积存款`,
+        monthlyBonus: "188",
+        birthdayBonus: "无",
+        cunsong: `88元`,
+        drawTimes: "15",
+        perEsport: "0.55%",
+        perSport: "0.50%",
+        perLive: "0.55%",
         perSlot: "0.60%",
         perPoker: "0.60%"
       },
       {
-        level: 3,
-        description: `升级要求 &gt; 50000≤累积存款<br>
-							保级要求 &gt; 10888≤一个月内累积存款`,
-        monthlyBonus: "88",
-        birthdayBonus: "108",
-        cunsong: `存款至少100元可申请每月一次再存20% 最高奖金888元`,
-        drawTimes: "12",
-        perEsport: "0.45%",
-        perSport: "0.45%",
-        perLive: "0.45%",
+        level: 5,
+        description: `升级要求 &gt; 2000000≤累积存款<br>
+							保级要求 &gt; 58888≤一个月内累积存款`,
+        monthlyBonus: "388",
+        birthdayBonus: "188",
+        cunsong: `288元`,
+        drawTimes: "15",
+        perEsport: "0.60%",
+        perSport: "0.55%",
+        perLive: "0.60%",
+        perSlot: "0.65%",
+        perPoker: "0.65%"
+      },
+      {
+        level: 6,
+        description: `升级要求 &gt; 5000000≤累积存款<br>
+							保级要求 &gt; 88888≤一个月内累积存款`,
+        monthlyBonus: "888",
+        birthdayBonus: "388",
+        cunsong: `588元`,
+        drawTimes: "15",
+        perEsport: "0.65%",
+        perSport: "0.60%",
+        perLive: "0.65%",
         perSlot: "0.70%",
         perPoker: "0.70%"
       },
       {
-        level: 4,
-        description: `升级要求 &gt; 250000≤累积存款<br>
-							保级要求 &gt; 38888≤一个月内累积存款`,
-        monthlyBonus: "188",
-        birthdayBonus: "388",
-        cunsong: `存款至少100元可申请每周一次再存25% 最高奖金888元`,
-        drawTimes: "12",
-        perEsport: "0.45%",
-        perSport: "0.45%",
-        perLive: "0.45%",
+        level: 7,
+        description: `升级要求 &gt; 8000000≤累积存款<br>
+							保级要求 &gt; 188888≤一个月内累积存款`,
+        monthlyBonus: "2888",
+        birthdayBonus: "588",
+        cunsong: `1888元`,
+        drawTimes: "18",
+        perEsport: "0.65%",
+        perSport: "0.70%",
+        perLive: "0.70%",
         perSlot: "0.80%",
         perPoker: "0.75%"
       },
       {
-        level: 5,
-        description: `升级要求 &gt; 500000≤累积存款<br>
-							保级要求 &gt; 58888≤一个月内累积存款`,
-        monthlyBonus: "388",
-        birthdayBonus: "688",
-        cunsong: `存款至少500元可申请每月一次再存50% 最高奖金1888元`,
-        drawTimes: "15",
-        perEsport: "0.50%",
-        perSport: "0.50%",
-        perLive: "0.50%",
+        level: 8,
+        description: `升级要求 &gt; 10000000≤累积存款<br>
+							保级要求 &gt; 288888≤一个月内累积存款`,
+        monthlyBonus: "5888",
+        birthdayBonus: "888",
+        cunsong: `2888元`,
+        drawTimes: "18",
+        perEsport: "0.75%",
+        perSport: "0.70%",
+        perLive: "0.80%",
         perSlot: "0.90%",
         perPoker: "0.80%"
       },
       {
-        level: 6,
-        description: `升级要求 &gt; 2500000≤累积存款<br>
-							保级要求 &gt; 88888≤一个月内累积存款`,
-        monthlyBonus: "888",
-        birthdayBonus: "1088",
-        cunsong: `存款至少500元可申请每周一次再存30% 最高奖金2888元`,
-        drawTimes: "15",
-        perEsport: "0.55%",
-        perSport: "0.55%",
-        perLive: "0.55%",
-        perSlot: "1.20%",
-        perPoker: "0.85%"
-      },
-      {
-        level: 7,
-        description: `升级要求 &gt; 5000000≤累积存款<br>
-							保级要求 &gt; 188888≤一个月内累积存款`,
-        monthlyBonus: "2888",
-        birthdayBonus: "6888",
-        cunsong: `存款至少500元可申请每周一次再存35% 最高奖金3888元`,
-        drawTimes: "15",
-        perEsport: "0.65%",
-        perSport: "0.65%",
-        perLive: "0.65%",
-        perSlot: "1.50%",
+        level: 9,
+        description: `升级要求 &gt; 20000000≤累积存款<br>
+							保级要求 &gt; 588888≤一个月内累积存款`,
+        monthlyBonus: "6888",
+        birthdayBonus: "1288",
+        cunsong: `5888元`,
+        drawTimes: "18",
+        perEsport: "0.80%",
+        perSport: "0.80%",
+        perLive: "0.90%",
+        perSlot: "1.00%",
         perPoker: "0.90%"
       },
       {
-        level: 8,
-        description: `升级要求 &gt; 8000000≤累积存款<br>
-							保级要求 &gt; 288888≤一个月内累积存款`,
-        monthlyBonus: "5888",
-        birthdayBonus: "8888",
-        cunsong: `存款至少500元可申请每周一次再存40% 最高奖金5888元`,
-        drawTimes: "15",
-        perEsport: "0.80%",
-        perSport: "0.80%",
-        perLive: "0.80%",
-        perSlot: "1.80%",
-        perPoker: "0.95%"
-      },
-      {
-        level: 9,
-        description: `升级要求 &gt; 12000000≤累积存款<br>
-							保级要求 &gt; 588888≤一个月内累积存款`,
-        monthlyBonus: "6888",
-        birthdayBonus: "10888",
-        cunsong: `存款至少500元可申请每周一次再存45% 最高奖金8888元`,
-        drawTimes: "15",
-        perEsport: "0.90%",
-        perSport: "0.90%",
-        perLive: "0.90%",
-        perSlot: "1.90%",
-        perPoker: "1.00%"
-      },
-      {
         level: 10,
-        description: `升级要求 &gt; 20000000≤累积存款<br>
+        description: `升级要求 &gt; 30000000≤累积存款<br>
 							保级要求 &gt; 888888≤一个月内累积存款`,
         monthlyBonus: "8888",
-        birthdayBonus: "18888",
-        cunsong: `存款至少500元可申请每周一次再存50% 最高奖金12888元`,
-        drawTimes: "15",
+        birthdayBonus: "1588",
+        cunsong: `18888元`,
+        drawTimes: "18",
         perEsport: "1.00%",
         perSport: "1.00%",
         perLive: "1.00%",
-        perSlot: "2.00%",
-        perPoker: "1.20%"
+        perSlot: "1.20%",
+        perPoker: "1.00%"
       }
     ]);
 
@@ -1036,90 +1036,90 @@ program at any time without prior notice.`
         vipLevel: "1",
         monthly: "",
         birthday: "",
-        saving: "有一笔",
+        saving: "累计存款大于5000元",
         monthlySaving: "",
-        oneMonthSaving: "无保级要求"
+        oneMonthSaving: "每月单笔≥500元"
       },
       {
         vipLevel: "2",
         upgrade: "70,000",
         monthly: "188",
         birthday: "",
-        saving: "5000≤累积",
-        monthlySaving: "1888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "累计存款大于20000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥500元"
       },
       {
         vipLevel: "3",
         upgrade: "500,000",
         monthly: "688",
         birthday: "888",
-        saving: "50000≤累积",
-        monthlySaving: "10888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "累计存款大于200000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥500元"
       },
       {
         vipLevel: "4",
         upgrade: "2,000,000",
         monthly: "1,588",
         birthday: "2,888",
-        saving: "250000≤累积",
-        monthlySaving: "38888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "累计存款大于500000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥1000元"
       },
       {
         vipLevel: "5",
         upgrade: "7,000,000",
         monthly: "2,888",
         birthday: "5,888",
-        saving: "500000≤累积",
-        monthlySaving: "58888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "累计存款大于2000000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥1000元"
       },
       {
         vipLevel: "6",
         upgrade: "20,000,000",
         monthly: "6,888",
         birthday: "8,888",
-        saving: "2500000≤累积",
-        monthlySaving: "88888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "累计存款大于5000000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥1000元"
       },
       {
         vipLevel: "7",
         upgrade: "60,000,000",
         monthly: "18,888",
         birthday: "48,888",
-        saving: "5000000≤累积",
-        monthlySaving: "188888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "5累计存款大于8000000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥2000元"
       },
       {
         vipLevel: "8",
         upgrade: "60,000,000",
         monthly: "18,888",
         birthday: "48,888",
-        saving: "8000000≤累积",
-        monthlySaving: "288888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "累计存款大于10000000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥2000元"
       },
       {
         vipLevel: "9",
         upgrade: "60,000,000",
         monthly: "18,888",
         birthday: "48,888",
-        saving: "12000000≤累积",
-        monthlySaving: "588888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "累计存款大于20000000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥2000元"
       },
       {
         vipLevel: "10",
         upgrade: "60,000,000",
         monthly: "18,888",
         birthday: "48,888",
-        saving: "20000000≤累积",
-        monthlySaving: "888888≤",
-        oneMonthSaving: "一个月内累积存款"
+        saving: "累计存款大于30000000元",
+        monthlySaving: "",
+        oneMonthSaving: "每月单笔≥2000元"
       }
     ];
 
@@ -1363,7 +1363,7 @@ program at any time without prior notice.`
       .vip-badgecontent {
         margin-top: 5px;
         font-size: 11px;
-        color: #73561f;
+        color: #33bcd4;
 
         span {
           display: block;
