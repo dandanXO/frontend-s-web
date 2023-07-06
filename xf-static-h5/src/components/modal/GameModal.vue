@@ -316,7 +316,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             })
             .then((response) => {
               if (way === 'IOS') {
-                const newWin = window.open(`/`, `_system`);
+                const newWin = window.open(`/`, `_self`);
                 newWin.location.href = response.data
               } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
                 const newWin = window.open(`/`, `_blank`);
@@ -324,42 +324,44 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               } else {
                 openURL(response.data)
               }
-            });
-        return
-      }
-      if (store.nickName == 'npr100') {
-        alert("THis");
-      }
-      api
-          .get(`/session/launch?_time=${new Date().getTime()}`, {
-            params: {
-              platform: platformCode,
-              gameCode: gameCode,
-              isMobile: Platform.is.mobile ? true : false,
-              way: way
-            }
-          })
-          .then((response) => {
-            if (way === 'IOS') {
-              if (store.nickName == 'npr100') {
-                alert(response.data);
-                alert("ioS");
+            }).catch((err) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: err.message,
+            icon: "report_problem"
+          });
+        })
+      } else {
+        api
+            .get(`/session/launch?_time=${new Date().getTime()}`, {
+              params: {
+                platform: platformCode,
+                gameCode: gameCode,
+                isMobile: Platform.is.mobile ? true : false,
+                way: way
               }
-              window.open( response.data, `_system`);
-            } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-              const newWin = window.open(`/`, `_blank`);
-              newWin.location.href = response.data
-            } else {
-              openURL(response.data)
-            }
-          }).catch((err) => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: err.message,
-          icon: "report_problem"
-        });
-      })
+            })
+            .then((response) => {
+              if (way === 'IOS') {
+                const newWin = window.open(`/`, `_self`);
+                newWin.location.href = response.data
+              } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+                const newWin = window.open(`/`, `_blank`);
+                newWin.location.href = response.data
+              } else {
+                openURL(response.data)
+              }
+            }).catch((err) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: err.message,
+            icon: "report_problem"
+          });
+        })
+      }
+
     } else {
       router.push({path: "/login", query: {redirect: route.path}});
     }
