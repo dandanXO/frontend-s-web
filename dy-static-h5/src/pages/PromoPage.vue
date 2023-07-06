@@ -81,7 +81,7 @@
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
               <div class="banner-container">
-                <div
+                <!-- <div
                   class="promo-bg"
                   :style="
                     'background-image: url(' +
@@ -91,7 +91,13 @@
                       : selectedPromo.mobileImgUrl) +
                     ')'
                   "
-                ></div>
+                ></div> -->
+                <div>
+                  <img
+                    :src="imgURL + selectedPromo.mobileBannerUrl"
+                    style="width: 100%; display: block"
+                  />
+                </div>
               </div>
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
