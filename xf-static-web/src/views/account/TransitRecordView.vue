@@ -336,6 +336,13 @@
                   </div>
                 </template>
 
+                
+                <template v-if="tbl.dataIndex === 'platform'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getPlatform(scope.row.platform) }}
+                  </div>
+                </template>
+
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getTransferChangeType(scope.row.type) }}
