@@ -59,7 +59,7 @@
           </div>
           <div
             v-if="
-              (det.status == 'PENDING' || det.status == 'APPLY') &&
+              (det.status == 'PENDING' || det.status == 'STEP_1') &&
               (recordType === 'deposit' || recordType === 'withdraw')
             "
             class="buttons"
