@@ -482,6 +482,7 @@ export default defineComponent({
         width: 40px;
         padding: 2px 20px;
         background: #2a313e;
+        border: 1px solid transparent;
       }
       &.active {
         // border-bottom: 4px solid #1bcef1;
