@@ -1,5 +1,20 @@
 <template>
   <div class="table-record">
+
+    <q-select
+        allowClear
+        rounded
+        outlined
+        dense
+        color="white"
+        style="width: 320px;margin:10px auto 8px;"
+        v-model="platform"
+        :options="platformsList"
+        placeholder="选择平台"
+        @change="searchRecord"
+    >
+    </q-select>
+
     <RecordComponent
         recordType="bethistory"
         :loading="visible"
@@ -16,6 +31,8 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import {api} from "boot/axios";
 import moment from "moment/moment";
 import {userStore} from "src/stores";
+import {cached} from "boot/cache";
+import * as _ from "lodash"
 
 export default defineComponent({
   name: "BetHistoryRecordView",
@@ -27,6 +44,13 @@ export default defineComponent({
     const store = userStore();
     const visible = ref(true);
     const tableData = ref([]);
+
+    const searchRecord = () => {
+      console.log("HERe");
+      loadDepositTable(false);
+    }
+
+    const platform= ref("");
 
     const isEnded = ref(false);
 
@@ -51,7 +75,12 @@ export default defineComponent({
       loadDepositTable(false);
     };
 
+    const platformsList = ref([]);
+
     const loadDepositTable = (isNew = true) => {
+      console.log("CHeck");
+      console.log(platformsList.value);
+
       if (isNew) {
         visible.value = true;
       }
@@ -61,7 +90,7 @@ export default defineComponent({
       let paramData = {
         "startDate": startDate,
         "endDate": endDate,
-        "platform": "",
+        "platform": platform.value,
         "memberId": store.id,
         "current": 1,
         "size": 10
@@ -80,6 +109,22 @@ export default defineComponent({
         }
       });
     };
+
+    const loadPlatformLists = () => {
+      cached.get("PLATFORMS", () => api.get("/platform").then((response) => {
+        return response
+      })).then((data) => {
+        console.log(data);
+        _.each(data, function(item, index){
+          var option= {
+            label: item.name,
+            value: item.name,
+          }
+          platformsList.value.push(option);
+        })
+
+      });
+    }
 
 
     const tableHeaders = [
@@ -108,8 +153,9 @@ export default defineComponent({
         label: "投注状态"
       }
     ];
-    onMounted(() => {
-      loadDepositTable();
+    onMounted(async () => {
+      await loadPlatformLists();
+      await loadDepositTable();
     });
 
     return {
@@ -117,7 +163,10 @@ export default defineComponent({
       visible,
       tableHeaders,
       loadNewData,
-      isEnded
+      isEnded,
+      searchRecord,
+      platformsList,
+      platform
     };
   }
 });
