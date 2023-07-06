@@ -9,7 +9,7 @@
           class="filter-item"
           style="width: 120px;margin-left: 5px"
           @focus="loadSites"
-          @change="populateFinancialLevel"
+          @change="handleSiteNameCheckedChange"
         >
           <el-option
             v-for="item in siteList.list"
@@ -247,13 +247,15 @@ const mobileFormRules = reactive({
 });
 
 async function loadFinancialLevels() {
-  const { data: financial } = await getFinancialLevels({ siteId: site.value.id });
+  const { data: financial } = await getFinancialLevels({ siteId: form.siteId });
   financialList.list = financial;
 };
 
-async function populateFinancialLevel() {
-  site.value.id = form.siteId;
-  await loadFinancialLevels();
+async function handleSiteNameCheckedChange() {
+  await loadPayTypes()
+  form.payType = payTypeList.list[0].code;
+  await loadFinancialLevels()
+  await loadDepositSetting()
 }
 
 async function loadSites() {

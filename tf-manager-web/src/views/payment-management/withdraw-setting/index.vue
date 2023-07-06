@@ -379,7 +379,7 @@ async function loadSites() {
 }
 
 async function loadFinancialLevels() {
-  const { data: financial } = await getFinancialLevels({ siteId: site.value.id });
+  const { data: financial } = await getFinancialLevels({ siteId: form.siteId });
   financialList.list = financial;
 };
 
