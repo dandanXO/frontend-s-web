@@ -140,9 +140,9 @@
             </p>
           </section>
         </div>
-        <hr class="sign-line" />
+        <!-- <hr class="sign-line" /> -->
         <div class="sign-process" id="process">
-          <div id="firstSign">
+          <div id="firstSign" class="sign-element">
             <section>
               <span class="sign-day">第一天</span>
             </section>
@@ -159,7 +159,7 @@
               已签
             </section>
           </div>
-          <div>
+          <div class="sign-element">
             <section>
               <span class="sign-day">第二天</span>
             </section>
@@ -176,7 +176,7 @@
               已签
             </section>
           </div>
-          <div>
+          <div class="sign-element">
             <section>
               <span class="sign-day">第三天</span>
             </section>
@@ -193,7 +193,7 @@
               已签
             </section>
           </div>
-          <div>
+          <div class="sign-element">
             <section>
               <span class="sign-day">第四天</span>
             </section>
@@ -210,7 +210,7 @@
               已签
             </section>
           </div>
-          <div>
+          <div class="sign-element last-element">
             <section>
               <span class="sign-day">第五天</span>
             </section>
@@ -274,8 +274,10 @@
         </div>
         <div class="sign-button">
           <p>每日签到条件 : 每日累计存款≥100元且有效投注额≥500元</p>
-          <button @click="gotoDepositPage()">去存款</button>
-          <button @click="gotoMainPage()">去投注</button>
+          <div class="sign-btn-container">
+            <button @click="gotoDepositPage()">去存款</button>
+            <button @click="gotoMainPage()">去投注</button>
+          </div>
         </div>
       </div>
       <!-- <div class="noob-title">
@@ -334,7 +336,9 @@ const pageInit = () => {
 };
 
 const claimBonus = (promoCode) => {
-  eventapi.put(`/welcomeTask/claim/${promoCode}`).then((res) => {
+  eventapi
+    .put(`/welcomeTask/claim/${promoCode}`)
+    .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data;
 
@@ -397,14 +401,15 @@ body {
 }
 
 .noob-container {
-  background-color: #090b19;
+  // background-color: #090b19;
   font-size: 14px;
   color: #d0d1d3;
+  margin: auto;
 }
 
 .noob-banner {
   width: 100%;
-  height: 500px;
+  // height: 500px;
 }
 
 .noob-banner > img {
@@ -412,7 +417,8 @@ body {
 }
 
 .noob-content {
-  width: 1153px;
+  // width: 1153px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -422,17 +428,20 @@ body {
 }
 
 .noob-task {
-  width: 1153px;
-  height: 386px;
+  // width: 1153px;
+  // height: 386px;
+  width: 100%;
   margin-bottom: 50px;
   background-color: #151825;
   box-shadow: 0 5px 10px 0 rgba(12, 3, 7, 0.2);
   border-radius: 8px;
+  padding-bottom: 30px;
 }
 
 .message-title {
   display: flex;
   text-align: start;
+  width: 90%;
 }
 
 .message-title > section > h2,
@@ -442,7 +451,7 @@ body {
 }
 
 .message-title > section {
-  height: 65px;
+  // height: 65px;
   margin-top: 20px;
 }
 
@@ -450,7 +459,7 @@ body {
   font-size: 65px;
   color: #d0d1d3;
   width: 100px;
-  height: 100px;
+  // height: 100px;
   padding-left: 18px;
   text-align: center;
 }
@@ -477,9 +486,15 @@ body {
 }
 
 .card-coupons,
-.game-card,
 .message-icon {
   display: flex;
+}
+
+.game-card {
+  position: relative;
+  margin-top: 70px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .line {
@@ -549,21 +564,22 @@ body {
   background-color: #454b62;
 }
 
-.game-card {
-  margin-top: 70px;
-}
-
 .game-card section {
-  width: 320px;
-  height: 140px;
-  margin-left: 50px;
+  // width: 320px;
+  // height: 140px;
+  width: 100%;
+  // margin-left: 50px;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkYAAADgCAMAAADR2VmEAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACkVBMVEUAAABGTGNGTGNGTGNGTGPMsJHMsJHMsJHMsJFESWBGTGPMsJHMsJE8QVVGTGPMsJHMsJFFS2HMsJFFS2LMsJFGTGPMsJFGTGMyN01CSF4vNEo4PVAoLD8JCg1CSF4vNEoHBwoAAAAXGSFCSF0vNEkREhoAAAAAAAAGBwkzN0hBR1xFS2IxNk0uM0gkKDkEBQdGTGNGS2NGS2JFS2JFSmJFSmFESmFESWFESWBDSWBDSGBDSF9CSF9CR19CR15BR15BRl5BRl1ARl1ARV1ARVw/RVw/RFw/RFs+RFs+Q1s+Q1o9Q1o9Qlo9Qlk8Qlk8QVk8QVg7QVg7QFg7QFc6QFc6P1c6P1Y5P1Y5PlY5PlU4PlU4PVQ3PVQ3PFM2PFM2PFI2O1I1O1I1O1E1OlE0OlE0OlA0OVAzOVCPgXfMsJE9QFSznYddWmJ8cm+aiXw3PFK2n4hPT1xlYGV5cG6Mfnaci32qloO/pozHrI/Lr5DEqYuqkniDcFwGBga7ooUgGxZEOjBsXUyzmn9TRzqXgmuhinJ4Z1Q0LCRgUkONeWS1nodITWZrcIlSV3BqZGdDRleLfnVgXGOejX5vaGlAQ1WolIF0a2ukkYAzOU9uZ2g3PFGXhnpdWmG8pIqAdHBCRFWdi30zOE9eWWG3oIjLsJGIenRDRFaWhnpPTluhj39YVV+plIJcWGGplYJdWGGIe3S3n4h/c3BdWWE3O1FuZ2mlkYBAQlWnk4FAQlRvZ2mejH00OE9fW2KLfXVDRVZqY2ePgHe0noeznYaPgHY8QFNcWWF8cW+2n4e2noeaiXt8cW5cWGA8P1IyN04yOE82O1FOTlt5b22cinyqloK/pouqlYJlX2ROTVo2OlAyOE4AAAAjl+NKAAAAMHRSTlMABm7H8/jObgYcz88cB9DSCG9vydD5+/r10tKJiTXb3DUsUdzdUSg4R5na9/famUdg7wM2AAAAAWJLR0QAiAUdSAAAAAlwSFlzAAALEgAACxIB0t1+/AAABp1JREFUeNrt3Gd3HNUBgOGlBwgtlJDQewcFQui9BXBC7yUhYJsJxHSwd7W70gpUqCYYYyDEDL333hM6wYCNIfBvmJldtd0dWdKFcwA97wcdrY4+PueWuXe2UCgst/wKK3Z0dPyuqd1HtEdTvx9uz+H+MKK9htp7qH2G27fefsPtP9QBWQcOddBgB2cdMtShgx2WdvhwRzQ6Mumo4f7Y6OikY4Y7ttG0adP+NKI/NzruuONHdkKjE088aWQn1zvllFNHdVqj088Y3ZmNzmrq7EbntHRuvb/8tbXz6v3t/HZdkDV9+vQZ7ZuZdGE0+VZaeZVfFJJWXa0jC6OpyujvFwUwSlr9l4XCGmt2YDS1GV0cpiiK1lq7sE4HRlOc0T9CGUW/KqyL0VRnNCuY0XqF9TGa4owuuTSY0QaFDoymOKPLghVFEUZTntHlGGEUzugKjDAKZ3QlRhiFM7oKI4zCGV2NEUbhjML3+xhhNPMajDAKZzQbI4zCGc0ZE0ixVCpihFEgo85yuRJFlc6mKhhhNP5JrVgtl7uiqFRuqoQRRuNfYnemZrqjWk9WV2Kq/lsNI4zGveFPBqPu7nL52sbH61qGIYwwWvbjx95kZVRMxqDa0NhkiY3RRA9DKuVyZxTVquW++m6tP10nYYRRG0ZjHM32lKuVgWI0UC7396Yromq5Wl8aYYRRE6P8iyIJn4G+ZIGdcOrtGbVRwwijJka519Zq6V6/M11VV65NJPUMPjPqxgijFka5l2j70qV1slfrqc9vndlTyEr2EAkjjJoY5V7p703lpMNRbZBRKdvwY4RRK6PcF4yK3dnPvlKEEUaTf92xNFQNI4wm+/L18M6sByOMlvVVENdPgJElNkbtGS3ri2myZ9mDjKKfAaMbbrwJo++f0c1jM8quHGWMrsMIo1xGt+TNalF6lJae8jd2ar3lPowwymE0c26Oolpf9+D9x4xRX7kfI4zyGN2aw6g/uWpUH4wyRomfvhpGGOUwmvHPnDktuWrUnw1GUa1UibrSTdtAu3/ECKOk2/JmtWp2h7ZeciTbn3zuLmKEUVtG827PcZTszRpXH4vd6YF/LTmv7aphhFE7RjPn5+3VehujUSn1U6zPc9USRhi1YzTvjjxHXemN/kqyQsoU1ee2oTv+GGE0ktGCO/MYpTexK+kSqXPwL4mj6k/6dUeMfjBGd92d52igv5gskUa+mTZQbV4dYYRRxmjBv+6Jxmj06NOyV8MIozqjBf+OJh9GGDUYLbwXI4yCGcX33Y8RRsGM4vkPYIRRMKP4QYwwCmf00MMYYRTMKH7kUYwwCmYUP/Y4RhgFM4qfeBIjjIIZxU9NZjzCCKPRjOLHJrE+wgijJkbxIxPfr2GEUTOj+KGnJ/ocEiOMWhglz7OfwQijYEbxfRM7p8UIo3aM4oXP3oMRRqGM4vi5uzHCKJhR/PwLL2KEUSijOH5p/ssYYRTKKI5fefU1jDAKZRTHr7/x5vUYYRTIKOmtt9/5z1iI/vsuRhgtk1HSe+9/MOvDdoQ++viT/326CCOMxsPos6TPv7h88dwlX364dPacObOXfvTVkjcXf/3/bxalYYTReBklfZu2qDWMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMPqRM0rDCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwggjjDDCCCOMMMIII4wwwgijFka/xgijUEYbFn6DEUahjH5b2AgjjEIZbVzYZFOMMApjtNnmhS223AojjEIYbb3NFoVtt9t+hx13wgijyTHaeZddd9tu2+8AWbd8SC7UQ1cAAAAASUVORK5CYII=);
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  margin-bottom: 20px;
+  // margin-left: 20px;
+  // margin-right: 20px;
 }
 
 .card-number {
-  width: 90px;
+  // width: 90px;
+  width: 130px;
   line-height: 140px;
   position: relative;
 }
@@ -583,7 +599,7 @@ body {
 }
 
 .card-text {
-  position: absolute;
+  // position: absolute;
   top: -42px;
 }
 
@@ -591,6 +607,29 @@ body {
 .sign-day,
 .sign-line {
   position: relative;
+}
+
+.sign-btn-container {
+  display: flex;
+  gap: 25px;
+  margin: 0 20px;
+
+  button {
+    width: 100%;
+    height: 48px;
+    background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%),
+      linear-gradient(#fff, #fff);
+    background-blend-mode: normal, normal;
+    box-shadow: 0 3px 4px 0 rgba(13, 110, 200, 0.29);
+
+    line-height: 48px;
+    font-size: 18px;
+    // margin-right: 22px;
+    border-radius: 6px;
+    border: none;
+    text-align: center;
+    color: #fff;
+  }
 }
 
 .card-content {
@@ -621,7 +660,32 @@ body {
 
 .sign-process {
   display: flex;
-  margin: 50px 0 0 115px;
+  margin: 40px 20px 0 20px;
+  flex-direction: column;
+}
+
+.sign-element {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  justify-content: center;
+  position: relative;
+
+  &:before {
+    content: "";
+    border-left: 1px solid #454b62;
+    height: 100%;
+    width: 1px;
+    position: absolute;
+    left: 30%;
+    top: 50px;
+  }
+
+  &.last-element {
+    &:before {
+      display: none;
+    }
+  }
 }
 
 .sign-button > button,
@@ -630,14 +694,14 @@ body {
   display: inline-block;
 }
 
-.sign-line {
-  width: 500px;
-  height: 1px;
-  top: 68px;
-  left: 150px;
-  color: #454b62;
-  border: none;
-}
+// .sign-line {
+//   width: 500px;
+//   height: 1px;
+//   top: 68px;
+//   left: 150px;
+//   color: #454b62;
+//   border: none;
+// }
 
 .sign-day,
 .sign-round {
@@ -685,9 +749,10 @@ body {
 }
 
 .sign-in {
-  width: 200px;
+  // width: 200px;
   text-align: center;
-  margin-left: 120px;
+  // margin-left: 120px;
+  margin-top: 30px;
 }
 
 .sign-in > p {
@@ -718,9 +783,10 @@ body {
 
 .sign-button > p {
   font-size: 14px;
-  margin: 0 155px 0 117px;
+  // margin: 0 155px 0 117px;
+  margin: 20px;
   color: #d0d1d3;
-  top: 20px;
+  // top: 20px;
 }
 
 .sign-button > button {
@@ -743,4 +809,8 @@ body {
   color: #d0d1d3;
 }
 </style>
-<style scoped lang="scss"></style>
+<style lang="scss">
+html {
+  margin: auto;
+}
+</style>
