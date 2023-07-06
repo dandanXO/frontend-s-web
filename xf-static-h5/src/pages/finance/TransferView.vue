@@ -76,6 +76,7 @@ import {userStore} from "../../stores/index";
 import AcctBal from "../../components/AcctBal.vue"
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
+import {translateRecord} from "src/directives/translate";
 
 components: {
   AcctBal
@@ -230,7 +231,7 @@ const getPlatList = () => {
         platforms.push({
           id: p.id,
           code: p.code,
-          name: p.name,
+          name: translateRecord(p.name),
           amount: 0
         });
         getPlatBalances(p.code)
