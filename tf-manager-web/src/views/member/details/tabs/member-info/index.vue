@@ -146,13 +146,13 @@
               {{ t('fields.email') }}
             </div>
           </template>
-          <span v-if="memberDetail.email !== null">{{ memberDetail.email }}</span>
-          <span v-if="memberDetail.email === null">-</span>
+          <span v-if="memberDetail.email !== ''">{{ memberDetail.email }}</span>
+          <span v-if="memberDetail.email === ''">-</span>
           <el-button
             type="info"
             size="mini"
             style="float: right;"
-            :disabled="memberDetail.email === null"
+            :disabled="memberDetail.email === ''"
             v-permission="['sys:member:detail:unmask']"
             @click="unmaskDetail('EMAIL')"
           >
@@ -1358,7 +1358,7 @@ export default defineComponent({
       await setIpLabelsIfEmpty();
       const data = await getMemberDetails(props.mbrId, site.id, 1);
       Object.keys({ ...data.data }).forEach(detailField => {
-        memberDetail[detailField] = data.data[detailField];
+        memberDetail[detailField] = data.data[detailField] ? data.data[detailField] : "";
       });
 
       const { data: aff } = await getAffiliateInfo(props.mbrId, site.id);
