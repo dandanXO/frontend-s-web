@@ -91,6 +91,15 @@ build-image-dy-download:
 
 #===============================================================================================
 
+build-image-xf-download:
+  extends:
+    - .docker-build
+    - .p8s1-rules
+  variables:
+    PROJECT: xf-download
+
+#===============================================================================================
+
 build-image-xf-maintenance:
   extends:
     - .docker-build
