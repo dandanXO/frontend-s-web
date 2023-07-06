@@ -480,6 +480,7 @@
                     v-model="regForm.captchaCode"
                     label="验证码"
                     placeholder="验证码"
+                    @keyup.enter="submitRegisterForm(registerRef)"
                   />
                 </el-col>
                 <el-col :span="7">
@@ -528,66 +529,13 @@
     </el-dialog>
 
     <el-dialog
-      wrap-class-name="securityModal"
-      v-model="updatePhoneModalVisible"
-      :footer="null"
-      width="500px"
-      title="手机验证"
-      align-center
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-    >
-      <el-form
-        ref="updatePhoneFormRef"
-        :hideRequiredMark="true"
-        :model="updatePhoneVerified"
-        :rules="updatePhoneVerifiedRules"
-      >
-        <el-form-item ref="phone" prop="phone">
-          <el-input
-            v-model="updatePhoneVerified.phone"
-            placeholder="手机号码"
-          />
-        </el-form-item>
-        <el-form-item
-          class="half"
-          ref="verificationCode"
-          prop="verificationCode"
-        >
-          <el-space>
-            <el-input
-              type="password"
-              v-model="updatePhoneVerified.verificationCode"
-              :placeholder="'验证码'"
-            />
-            <el-button
-              :disabled="disableSendPhoneButton"
-              class="common-btn verification-btn"
-              @click="openPhoneVerificationModal"
-            >
-              <span v-if="disableSendPhoneButton">
-                已发送（倒数{{ countDown }}秒)
-              </span>
-              <span v-else>发送验证码</span>
-            </el-button>
-          </el-space>
-        </el-form-item>
-        <el-button
-          :loading="loadingPhoneBtn"
-          class="common-btn verification-btn"
-          @click="submitUpdatePhone"
-        >
-          提交
-        </el-button>
-      </el-form>
-    </el-dialog>
-
-    <el-dialog
       v-model="captchaDialogVisible"
       title="验证码"
       width="50%"
       align-center
       style="max-width: 500px"
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
     >
       <el-form
         ref="captchaRef"
@@ -749,7 +697,7 @@
       v-model="isStationNotice"
       :maskClosable="false"
       :footer="null"
-      title="站内信"
+      title="公告"
     >
       <el-tabs
         type="card"
@@ -1459,32 +1407,32 @@ export default defineComponent({
       }
     };
 
-const countdownTimer = (type) => {
-if (type === 'REGISTER') {
-  if (regCountdown.value > 0) {
-    setTimeout(() => {
-      regCountdown.value -= 1
-      countdownTimer('REGISTER')
-    }, 1000)
-  } else {
-    lsRemove(registerSendOtpDisabledKey);
-    lsRemove(registerTelephoneKey);
+    const countdownTimer = (type) => {
+      if (type === 'REGISTER') {
+        if (regCountdown.value > 0) {
+          setTimeout(() => {
+            regCountdown.value -= 1
+            countdownTimer('REGISTER')
+          }, 1000)
+        } else {
+          lsRemove(registerSendOtpDisabledKey);
+          lsRemove(registerTelephoneKey);
 
-    disableSendVerificationButton.value = false
-  }
-} else if (type === 'LOGIN') {
-  if (loginCountdown.value > 0) {
-    setTimeout(() => {
-      loginCountdown.value -= 1
-      countdownTimer('LOGIN')
-    }, 1000)
-  }
-}
-}
+          disableSendVerificationButton.value = false
+        }
+      } else if (type === 'LOGIN') {
+        if (loginCountdown.value > 0) {
+          setTimeout(() => {
+            loginCountdown.value -= 1
+            countdownTimer('LOGIN')
+          }, 1000)
+        }
+      }
+    }
 
     const openCaptchaForm = (type) => {
       registerRef.value.validateField('telephone').then((resp) => {
-      captchaForm.captchaCode = "";
+      // captchaForm.captchaCode = "";
       captchaForm.type = type;
       captchaDialogVisible.value = true;
       getCode();

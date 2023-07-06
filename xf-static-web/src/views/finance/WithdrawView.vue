@@ -262,23 +262,45 @@ export default defineComponent({
       ],
     };
     const checkBankCards = () => {
-      ElMessageBox.alert(
-      '请先绑定银行卡', "系统提示",
-      {
-        showClose: false,
-        showCancelButton: false,
-        confirmButtonText: '确认',
-        draggable: false,
-        buttonSize: 'small',
-        closeOnClickModal: false,
-        center: true,
+
+      if(isUSDT.value == true){
+        ElMessageBox.alert(
+          '请先绑定虚拟币钱包', "系统提示",
+          {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: '确认',
+            draggable: false,
+            buttonSize: 'small',
+            closeOnClickModal: false,
+            center: true,
+          }
+        )
+          .then(() => {
+            router.push('/center/withdrawbank')
+          })
+          .catch(() => {
+          })
+      } else{
+        ElMessageBox.alert(
+          '请先绑定银行卡', "系统提示",
+          {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: '确认',
+            draggable: false,
+            buttonSize: 'small',
+            closeOnClickModal: false,
+            center: true,
+          }
+        )
+          .then(() => {
+            router.push('/center/withdrawbank')
+          })
+          .catch(() => {
+          })
       }
-    )
-      .then(() => {
-        router.push('/center/withdrawbank')
-      })
-      .catch(() => {
-      })
+
     }
     const loadCards = () => {
         withdrawState.bankCardList = []
