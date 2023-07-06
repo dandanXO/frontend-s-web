@@ -445,7 +445,7 @@
           <div>
             <el-form layout="inline" :model="searchForm.gameBetRecord">
               <div class="left">
-                <el-form-item label="平台">
+                <!-- <el-form-item label="平台">
                   <el-select
                     allowClear
                     style="width: 300px"
@@ -461,7 +461,7 @@
                       {{ getPlatform(p.name) }}
                     </el-option>
                   </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="开始">
                   <el-date-picker
                     v-model="searchForm.gameBetRecord.startDate"
