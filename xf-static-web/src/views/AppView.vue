@@ -29,22 +29,22 @@
               <!-- <div id="downloadAllQrcode" class="download-img-container">
                 <canvas width="100" height="100"></canvas>
               </div> -->
-              <vue-qrious value="https://xf9866.com" />
+              <vue-qrious value="https://xf9866.app" />
             </div>
             <p>扫描二维码下载iOS</p>
             <p>安卓纯原生手机客户端</p>
             <a
               id="downloadAllHref"
-              href="https://xf9866.com?url=xf9866.com&amp;agentCode="
+              href="https://xf9866.app?url=xf9866.app&amp;agentCode="
             >
-              xf9866.com
+              xf9866.app
             </a>
           </div>
           <div>
-            <vue-qrious value="https://m.xf9866.com" />
+            <vue-qrious value="https://xf9866.app" />
             <p>使用浏览器输入以下网址</p>
             <p>免下载访问</p>
-            <a href="https://m.xf9866.com">m.xf9866.com</a>
+            <a href="https://xf9866.app">xf9866.app</a>
           </div>
         </div>
       </div>

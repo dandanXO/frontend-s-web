@@ -45,11 +45,11 @@
         </div>
       </div>
       <div class="app-download customer-div">
-        <a href="https://xf9866.com/" target="_blank">
+        <router-link to="/app">
           <RiDownloadCloudLine />
           <div class="remixicon-download-cloud-line"></div>
           <div style="margin-top: 15px">APP下载</div>
-        </a>
+        </router-link>
       </div>
       <div class="back-top customer-div" @click="scrollToTop">
         <RiRocketLine />

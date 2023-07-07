@@ -2,7 +2,7 @@
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-bar-wrapper">
       <div class="top-bar-inner">
-        <div class="timebox">{{ todayDate() }}</div>
+        <div class="timebox">{{ headTimeTxt }}</div>
         <div class="station-notice-container">
           <div class="station-notice-box">
             <!-- Since svg icons do not carry any attributes by default -->
@@ -15,13 +15,14 @@
             </div>
 
             <div class="station-notice">
-              <Vue3Marquee :clone="true" :duration="50" width="300px;">
-                <span
+              <Vue3Marquee :clone="false" :duration="50" style="width: 680px;">
+                <div
                   v-for="(word, index) in announcementList"
                   :key="index"
                   v-html="word.content"
                   @click="openPopup(word)"
-                ></span>
+                  class="station-notice-item"
+                ></div>
               </Vue3Marquee>
             </div>
             <template v-if="store.token">
@@ -764,7 +765,7 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, ref, reactive, watch} from "vue";
+import {defineComponent, onMounted, onBeforeUnmount, ref, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
 import { mailUnreadTotal } from "@/api/personal/mailbox";
@@ -946,10 +947,11 @@ export default defineComponent({
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
     const isSendOtp = ref(false);
+    const headTimeTxt = ref("");
     const todayDate = () => {
       // const date = moment().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (中国标准时间)');
       // return date.replace('GMT', 'GMT').replace(/(\d{2})(\d{2})$/, '$1:$2');
-      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, HH:mm:ss ') + moment(new Date()).locale('zh-cn').format('dddd');
+      headTimeTxt.value = 'GTM+8 ' + moment().utcOffset('+08:00').format('YYYY-MM-DD HH:mm:ss ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
@@ -1563,6 +1565,8 @@ export default defineComponent({
       }
     }
 
+    let headTimer = null;
+
     onMounted(() => {
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
@@ -1585,6 +1589,16 @@ export default defineComponent({
       } else {
         loginDialogVisible.value = false
       }
+      if (headTimer) {
+        clearInterval(headTimer);
+      } else {
+        headTimer = setInterval(todayDate, 1000);
+      }
+    });
+
+    onBeforeUnmount(() => {
+      clearInterval(headTimer);
+      headTimer = null;
     });
 
     watch(() => store.loginPageVisible, () => {
@@ -1890,7 +1904,7 @@ export default defineComponent({
       resetRegForm,
       openGame,
       modalGame,
-      todayDate,
+      headTimeTxt,
       sendOtp,
       phoneLogin,
       openCaptchaForm,
@@ -2055,6 +2069,10 @@ body {
 
         .station-notice {
           padding-top: 4px;
+
+          .station-notice-item {
+            margin-right: 30px;
+          }
         }
 
         .right-contents {
