@@ -1302,8 +1302,10 @@ export default defineComponent({
       })
     }
 
+    const imgURL = process.env.VUE_APP_IMAGE_CDN;
+
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://p8s1-files.s3.ap-northeast-1.amazonaws.com/order/1/${linkId}`
+      reminderForm.photos = `${imgURL}/order/1/${linkId}`
     }
 
     const getPlatform = (platformName) => {
@@ -1599,7 +1601,8 @@ export default defineComponent({
       clearItems,
       formRef,
       getTransferChangeType,
-      getPlatform
+      getPlatform,
+      imgURL
     };
   }
 });
