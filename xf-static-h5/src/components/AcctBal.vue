@@ -177,7 +177,7 @@ const transferOutAll = () => {
       setTimeout(() => {
         platform.isTransferring = false;
         isTransferring.value = false;
-      }, 2000);
+      }, 1000);
 
     }
   })

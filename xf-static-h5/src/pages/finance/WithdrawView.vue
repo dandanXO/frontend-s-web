@@ -20,6 +20,7 @@
         </div>
         <q-form ref="withdrawFormRef">
           <q-select
+              v-show="isLoaded"
               hide-bottom-space
               filled
               ref="cardRef"
@@ -392,6 +393,7 @@ export default defineComponent({
           //     }
           //   });
           // }
+
           if (cardRef.value) {
             cardRef.value.resetValidation();
           }
@@ -447,7 +449,8 @@ export default defineComponent({
       updateWithdrawAmt,
       platforms,
       hasWithdrawCard,
-      withdrawFormRef
+      withdrawFormRef,
+      isLoaded
     };
   }
 });

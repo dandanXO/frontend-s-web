@@ -7,15 +7,21 @@
           <div class="station-notice-box">
             <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
-            <RiVolumeUpFill style="fill: #5c78f0; width: 180px" />
+            <div>
+              <RiVolumeUpFill
+                style="fill: #2db9e2; width: 20px !important"
+                @click="openPopup(announcementList)"
+              />
+            </div>
             <div class="station-notice">
-              <Vue3Marquee :clone="true" :duration="50" width="300px;">
-                <span
+              <Vue3Marquee :clone="false" :duration="50" style="width: 680px">
+                <div
                   v-for="(word, index) in announcementList"
                   :key="index"
                   v-html="word.content"
                   @click="openPopup(word)"
-                ></span>
+                  class="station-notice-item"
+                ></div>
               </Vue3Marquee>
             </div>
           </div>
@@ -678,7 +684,7 @@
       v-model="isStationNotice"
       :maskClosable="false"
       :footer="null"
-      title="站内信"
+      title="公告"
     >
       <el-tabs
         type="card"
