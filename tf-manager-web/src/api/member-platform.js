@@ -16,3 +16,7 @@ export const manualRegister = (row) => {
 export const deleteMemberPlatform = (ids) => {
   return https().request(`/member-platform?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
+
+export const updatePassword = (row) => {
+  return https().request("/member-platform/updatePassword", Method.GET, row, ContentType.form);
+};
