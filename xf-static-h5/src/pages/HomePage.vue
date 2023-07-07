@@ -199,7 +199,7 @@
         <swiper-slide
             v-for="(fish, i) in fishing"
             :key="i"
-            :class="'fish-' + i"
+            :class="'fishing-' + i"
         >
           <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
             <PlatformBlock
@@ -421,31 +421,46 @@ export default defineComponent({
     };
     const setSelectedSwiper = (tab) => {
       selectedTab.value = tab.name;
-      console.log(tab.name);
+      // console.log(tab.name);
+      var slideIndex = 0;
       if (tab.name === "live") {
-        firstSwiper.value?.slideTo(0, 500);
+        slideIndex = 0;
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "sport") {
-        firstSwiper.value?.slideTo(3, 500);
+        slideIndex = livecasino.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "esport") {
-        firstSwiper.value?.slideTo(4, 500);
+        slideIndex = livecasino.value.length + sport.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(5, 500);
+        slideIndex = livecasino.value.length + sport.value.length + esport.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(15, 500);
+        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(17, 500);
+        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(20, 500);
+        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length + poker.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
 
     };
     const onSlideChange = (swiper) => {
+      // console.log("Swiping hEre")
       // Get the active slide index
       const activeIndex = swiper.activeIndex;
 
@@ -457,19 +472,20 @@ export default defineComponent({
       // Check if the class name contains "sport," "slot," or "esport"
       // Array of keywords to check
       const keywords = [
+        "live",
         "sport",
         "esport",
-        "live",
+        "slot",
+        "fishing",
         "poker",
         "lottery",
-        "slot",
-        "fishing"
       ];
 
       // Iterate over each keyword
       for (const keyword of keywords) {
         // Check if the class name contains the current keyword
         if (activeSlideClassName.includes(keyword)) {
+          // console.log("select: "+ keyword);
           selectedTab.value = keyword;
         }
       }
