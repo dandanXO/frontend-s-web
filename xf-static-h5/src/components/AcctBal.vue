@@ -156,9 +156,11 @@ const loadBalance = () => {
 }
 const transferOutAll = () => {
   isTransferring.value = true;
+  var gotTransfer = false;
   props.platforms.forEach(platform => {
     platform.isTransferring = true;
     if (platform.code && platform.amount > 0) {
+      gotTransfer = true;
       const transferInfo = {
         platform: platform.code,
         amount: platform.amount
@@ -166,7 +168,7 @@ const transferOutAll = () => {
       api.post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo)).then((response) => {
         if (response.code === 0) {
           setTimeout(() => {
-            store.getBalance()
+            loadBalance();
             refreshBalance(platform.code)
             platform.isTransferring = false;
             isTransferring.value = false;
@@ -178,9 +180,17 @@ const transferOutAll = () => {
         platform.isTransferring = false;
         isTransferring.value = false;
       }, 1000);
-
     }
-  })
+  });
+  if (gotTransfer === true) {
+    setTimeout(() => {
+      loadBalance();
+    }, 3000);
+    setTimeout(() => {
+      loadBalance();
+    }, 5000);
+  }
+
 }
 const refreshBalance = (plat) => {
   if (plat === 'all') {

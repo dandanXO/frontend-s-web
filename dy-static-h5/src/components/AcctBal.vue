@@ -3,7 +3,7 @@
     <div class="top-balance">
       <div class="mainbal">
         <div class="icon">
-          <img src="../assets/images/finance/withdraw/wallet.png" />
+          <img src="../assets/images/finance/withdraw/wallet.png"/>
         </div>
         <div class="wallet">
           <div class="label">中心钱包</div>
@@ -13,29 +13,29 @@
             ><span v-if="isLoadingBalance">加载中...</span>
           </div>
           <div @click="loadBalance" class="icon">
-            <img src="../assets/images/finance/withdraw/refresh.png" />
+            <img src="../assets/images/finance/withdraw/refresh.png"/>
           </div>
         </div>
       </div>
       <div class="refreshItems">
         <div
-          v-if="!isRefreshingBalance"
-          class="refreshAll"
-          @click="refreshBalance('all')"
+            v-if="!isRefreshingBalance"
+            class="refreshAll"
+            @click="refreshBalance('all')"
         >
           <div class="icon">
-            <img src="../assets/images/finance/withdraw/refresh.png" />
+            <img src="../assets/images/finance/withdraw/refresh.png"/>
           </div>
           <div class="label">一键刷新</div>
         </div>
         <div class="refreshAll" v-else>请稍等{{ seconds }}秒</div>
         <div
-          v-if="isTransfer && !isTransferring"
-          class="transferAll"
-          @click="transferOutAll"
+            v-if="isTransfer && !isTransferring"
+            class="transferAll"
+            @click="transferOutAll"
         >
           <div class="icon">
-            <img src="../assets/images/finance/withdraw/transfer_icon.png" />
+            <img src="../assets/images/finance/withdraw/transfer_icon.png"/>
           </div>
           <div class="label">一键转出</div>
         </div>
@@ -45,17 +45,17 @@
     <div v-if="isTransfer" class="text-brand q-pa-sm">
       除了以下平台需要转账，其它游戏平台都无需转账即可游戏
     </div>
-    <q-separator />
+    <q-separator/>
     <div
-      class="transfer-plat-wrapper"
-      :style="isExpanded ? `height: ${transferBox}px` : 'height: 80px;'"
+        class="transfer-plat-wrapper"
+        :style="isExpanded ? `height: ${transferBox}px` : 'height: 80px;'"
     >
       <div class="transfer-plat-inner">
         <div
-          class="transfer-plat-item"
-          v-for="p in props.platforms"
-          :key="p.id"
-          @click="refreshBalance(p.code)"
+            class="transfer-plat-item"
+            v-for="p in props.platforms"
+            :key="p.id"
+            @click="refreshBalance(p.code)"
         >
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
@@ -98,20 +98,20 @@
       </div>
     </div>
     <div
-      @click="showPlatform"
-      v-if="!isExpanded"
-      class="showall text-center text-brand q-pt-md"
+        @click="showPlatform"
+        v-if="!isExpanded"
+        class="showall text-center text-brand q-pt-md"
     >
       显示所有场馆
-      <q-icon name="expand_more" />
+      <q-icon name="expand_more"/>
     </div>
     <div
-      @click="showPlatform"
-      v-if="isExpanded"
-      class="showall text-center text-brand q-pt-md"
+        @click="showPlatform"
+        v-if="isExpanded"
+        class="showall text-center text-brand q-pt-md"
     >
       收起所有场馆
-      <q-icon name="expand_less" />
+      <q-icon name="expand_less"/>
     </div>
   </div>
 </template>
@@ -121,10 +121,10 @@ const props = defineProps({
   isTransfer: Boolean,
   platforms: Array
 });
-import { ref, reactive, onMounted } from "vue";
-import { userStore } from "stores/index";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import {ref, reactive, onMounted} from "vue";
+import {userStore} from "stores/index";
+import {api} from "boot/axios";
+import {useQuasar} from "quasar";
 
 const isLoadingBalance = ref(false);
 const isRefreshingBalance = ref(true);
@@ -185,29 +185,31 @@ const loadBalance = () => {
   });
 };
 const transferOutAll = () => {
+  var gotTransfer = false;
   isTransferring.value = true;
   props.platforms.forEach((platform) => {
     platform.isTransferring = true;
     if (platform.code && platform.amount > 0) {
+      gotTransfer = true;
       const transferInfo = {
         platform: platform.code,
         amount: platform.amount
       };
       api
-        .post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo))
-        .then((response) => {
-          if (response.code === 0) {
-            setTimeout(() => {
-              store.getBalance();
-              refreshBalance(platform.code);
+          .post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo))
+          .then((response) => {
+            if (response.code === 0) {
+              setTimeout(() => {
+                store.getBalance();
+                refreshBalance(platform.code);
+                platform.isTransferring = false;
+                isTransferring.value = false;
+              }, 1000);
+            } else {
               platform.isTransferring = false;
               isTransferring.value = false;
-            }, 1000);
-          } else {
-            platform.isTransferring = false;
-            isTransferring.value = false;
-          }
-        })
+            }
+          })
     }
     setTimeout(() => {
       platform.isTransferring = false;
@@ -215,6 +217,16 @@ const transferOutAll = () => {
       refreshBalance('all')
     }, 2000);
   });
+  if (gotTransfer == true) {
+    setTimeout(() => {
+      loadBalance();
+    }, 3000);
+    setTimeout(() => {
+      loadBalance();
+    }, 5000);
+  }
+
+
 };
 const refreshBalance = (plat) => {
   if (plat === "all") {
@@ -226,22 +238,22 @@ const refreshBalance = (plat) => {
       platform.isLoading = true;
       if (platform.code) {
         api
-          .get("/session/balance", { params: { platform: platform.code } })
-          .then((res) => {
-            if (platform) {
-              platform.amount = res.data;
+            .get("/session/balance", {params: {platform: platform.code}})
+            .then((res) => {
+              if (platform) {
+                platform.amount = res.data;
+                platform.isLoading = false;
+              }
+            })
+            .catch((e) => {
+              // $q.notify({
+              // color: "negative",
+              // position: "top",
+              // message: e.message,
+              // icon: "report_problem"
+              // })
               platform.isLoading = false;
-            }
-          })
-          .catch((e) => {
-            // $q.notify({
-            // color: "negative",
-            // position: "top",
-            // message: e.message,
-            // icon: "report_problem"
-            // })
-            platform.isLoading = false;
-          });
+            });
       }
     });
   } else {
@@ -249,22 +261,22 @@ const refreshBalance = (plat) => {
     platform.amount = 0;
     platform.isLoading = true;
     api
-      .get("/session/balance", { params: { platform: plat } })
-      .then((res) => {
-        if (platform) {
-          platform.amount = res.data;
+        .get("/session/balance", {params: {platform: plat}})
+        .then((res) => {
+          if (platform) {
+            platform.amount = res.data;
+            platform.isLoading = false;
+          }
+        })
+        .catch((e) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          });
           platform.isLoading = false;
-        }
-      })
-      .catch((e) => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: e.message,
-          icon: "report_problem"
         });
-        platform.isLoading = false;
-      });
   }
 };
 onMounted(() => {
