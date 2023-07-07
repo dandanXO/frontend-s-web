@@ -760,7 +760,8 @@ import {
   getMemberEmail,
   getMemberTelephone, normalMember, getAffiliateInfo,
   updateMemberType,
-  unlockMember
+  unlockMember,
+  refreshBalance
 } from "../../../../../api/member";
 import { getPlatformsBySite } from "../../../../../api/platform";
 import { selectIpLabelAll } from "../../../../../api/ip-label";
@@ -1294,6 +1295,12 @@ export default defineComponent({
       Object.entries(loading.balance).forEach(([key, value]) => {
         loading.balance[key] = true;
       });
+
+      const { data: balance } = await refreshBalance(props.mbrId, site.id);
+      memberDetail.balance = balance.balance;
+      memberDetail.totalDeposit = balance.totalDeposit;
+      memberDetail.totalWithdraw = balance.totalWithdraw;
+      memberDetail.totalBonus = balance.totalBonus;
 
       for (const key of Object.keys(platformWallet.value)) {
         const { data: balance } = await getPlatformBalance(props.mbrId, key, site.id);
