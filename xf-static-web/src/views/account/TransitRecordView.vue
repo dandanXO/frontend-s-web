@@ -336,7 +336,7 @@
                   </div>
                 </template>
 
-                
+
                 <template v-if="tbl.dataIndex === 'platform'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getPlatform(scope.row.platform) }}
@@ -1303,7 +1303,7 @@ export default defineComponent({
     }
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
+      reminderForm.photos = `https://p8s1-files.s3.ap-northeast-1.amazonaws.com/order/1/${linkId}`
     }
 
     const getPlatform = (platformName) => {
