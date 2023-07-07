@@ -45,7 +45,7 @@
             hide-bottom-space
             ref="amountRef"
             v-model="transferInfo.amount"
-            label="Amount"
+            label="金额"
             color="white"
         >
           <template v-slot:prepend>
