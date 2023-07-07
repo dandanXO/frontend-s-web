@@ -50,9 +50,7 @@ export default defineComponent({
       csclient.set('openanimation', false);
 
       csclient.set('notification-type', {
-        'type': 'breathing',
-        'color': '#5b80e8',
-        'speed': 1000
+        'type': 'none',
       });
 
 

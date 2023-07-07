@@ -81,7 +81,7 @@
             filled
             :options="amountList"
             v-model="form.localAmount"
-            color=""
+            color="bright"
             :rules="verifyDepositAmount"
             padding="none"
         >
