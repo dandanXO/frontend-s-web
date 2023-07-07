@@ -24,12 +24,12 @@
             <img src="../assets/home/game_left.png" alt="" />
           </div>
           <div class="game-content">
-            <router-link class="quick-plat" to="/eSports">
-            <!-- <router-link class="quick-plat" to="/" @click="checkMaintenance"> -->
+            <!-- <router-link class="quick-plat" to="/eSports"> -->
+            <router-link class="quick-plat" to="/" @click="checkMaintenance">
               <img src="../assets/home/index_quick_plat_esports.png" alt="" />
             </router-link>
-            <router-link class="quick-plat" to="/sports">
-              <!-- <router-link class="quick-plat" to="/" @click="checkMaintenance"> -->
+            <!-- <router-link class="quick-plat" to="/sports"> -->
+              <router-link class="quick-plat" to="/" @click="checkMaintenance">
               <img src="../assets/home/index_quick_plat_sport.png" alt="" />
             </router-link>
             <router-link class="quick-plat" to="/live-casino">
@@ -362,6 +362,7 @@ import { loadPromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
 import { ElMessageBox } from "element-plus";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   // directives: {
@@ -442,6 +443,9 @@ export default defineComponent({
           .catch(() => {});
       }
     };
+
+    
+    const router = useRouter();
 
     const checkMaintenance = () => {
       ElMessageBox.alert("系统维护中", {

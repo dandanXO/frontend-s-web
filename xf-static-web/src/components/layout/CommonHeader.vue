@@ -112,7 +112,17 @@
             v-for="nav in navigations"
             :key="nav.name"
           >
+            <a
+              v-if="nav.enName === 'Esports' || nav.enName === 'Sports'"
+              @click="checkMaintenance"
+              to="/"
+            >
+              <span>{{ nav.name }}</span>
+              <span>{{ nav.enName }}</span>
+            </a>
+
             <router-link
+              v-else
               @mouseover="showSubMenu(nav)"
               @mouseup="selectedMenu = ''"
               :to="nav.path"
