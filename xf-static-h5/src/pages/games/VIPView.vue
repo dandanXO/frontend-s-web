@@ -1038,7 +1038,7 @@ program at any time without prior notice.`
         birthday: "",
         saving: "累计存款大于5000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥500元"
+        oneMonthSaving: "每月单笔≥500元, 返现15%, 最高188元"
       },
       {
         vipLevel: "2",
@@ -1047,7 +1047,7 @@ program at any time without prior notice.`
         birthday: "",
         saving: "累计存款大于20000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥500元"
+        oneMonthSaving: "每月单笔≥500元, 返现15%, 最高258元"
       },
       {
         vipLevel: "3",
@@ -1056,7 +1056,7 @@ program at any time without prior notice.`
         birthday: "888",
         saving: "累计存款大于200000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥500元"
+        oneMonthSaving: "每月单笔≥500元,返现15%, 最高288元"
       },
       {
         vipLevel: "4",
@@ -1065,7 +1065,7 @@ program at any time without prior notice.`
         birthday: "2,888",
         saving: "累计存款大于500000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥1000元"
+        oneMonthSaving: "每月单笔≥1000元,返现25%, 最高388元"
       },
       {
         vipLevel: "5",
@@ -1074,7 +1074,7 @@ program at any time without prior notice.`
         birthday: "5,888",
         saving: "累计存款大于2000000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥1000元"
+        oneMonthSaving: "每月单笔≥1000元,返现25%, 最高588元"
       },
       {
         vipLevel: "6",
@@ -1083,7 +1083,7 @@ program at any time without prior notice.`
         birthday: "8,888",
         saving: "累计存款大于5000000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥1000元"
+        oneMonthSaving: "每月单笔≥1000元,返现25%, 最高688元"
       },
       {
         vipLevel: "7",
@@ -1092,7 +1092,7 @@ program at any time without prior notice.`
         birthday: "48,888",
         saving: "5累计存款大于8000000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥2000元"
+        oneMonthSaving: "每月单笔≥2000元,返现35%, 最高888元"
       },
       {
         vipLevel: "8",
@@ -1101,7 +1101,7 @@ program at any time without prior notice.`
         birthday: "48,888",
         saving: "累计存款大于10000000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥2000元"
+        oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1288元"
       },
       {
         vipLevel: "9",
@@ -1110,7 +1110,7 @@ program at any time without prior notice.`
         birthday: "48,888",
         saving: "累计存款大于20000000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥2000元"
+        oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1888元"
       },
       {
         vipLevel: "10",
@@ -1119,7 +1119,7 @@ program at any time without prior notice.`
         birthday: "48,888",
         saving: "累计存款大于30000000元",
         monthlySaving: "",
-        oneMonthSaving: "每月单笔≥2000元"
+        oneMonthSaving: "每月单笔≥2000元,返现40%, 最高2888元"
       }
     ];
 
@@ -1331,7 +1331,7 @@ program at any time without prior notice.`
       text-align: left;
       display: flex;
       flex-direction: column;
-      padding: 35px 10px 10px 65px;
+      padding: 35px 10px 10px 35px;
 
       .vip-badgelevel {
         display: flex;
@@ -1361,7 +1361,7 @@ program at any time without prior notice.`
       }
 
       .vip-badgecontent {
-        margin-top: 5px;
+        margin-top: 1px;
         font-size: 11px;
         color: #33bcd4;
 

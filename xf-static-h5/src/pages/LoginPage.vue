@@ -38,7 +38,7 @@
                 v-model="loginForm.password"
                 label="用户密码"
                 :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || '情输入用户密码']"
+                :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
                 color="white"
                 label-color="brand"
                 autocomplete="current-password"
@@ -58,11 +58,13 @@
             <q-input
                 ref="verificationRef"
                 hide-bottom-space
+                clearable
                 type="text"
                 v-model="loginForm.captchaCode"
                 label="验证码"
                 :rules="[
-              (val) => (val && val.length > 3) || '验证码为四个'
+              (val) => (val && val.length > 0) || '请输入验证码',
+              (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
             ]"
                 color="white"
                 label-color="brand"
@@ -125,7 +127,7 @@
           </div>
           <div class="align-right">
           <span @click="loginType = !loginType">
-          {{ loginType ? '用户名登陆' : '手机号登录' }}
+          {{ loginType ? '用户名登录' : '手机号登录' }}
           </span>
           </div>
 

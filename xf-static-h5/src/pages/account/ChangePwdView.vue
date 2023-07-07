@@ -56,7 +56,7 @@
           lazy-rules
           clearable
           :rules="[
-          (val) => (val && val.length > 0) || '请输入确认新密码',
+          (val) => (val && val.length > 0) || '请再次输入新密码',
           (val) =>
                   val === updatePwdInfo.password ||
                  '确认密码与新密码不符合' ,

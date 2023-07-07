@@ -18,13 +18,13 @@ export default boot(({ app, router }) => {
       eventapi.defaults.headers["token"] = store.token
     }
     // config.headers["Authorization"] = process.env.SITE;
-    
+
     if (config.data) {
       config.data = config.data;
     }
     return config;
   };
-  
+
   const onResponseError = (error) => {
     // message.error(error.message);
     Notify.create({
@@ -36,7 +36,7 @@ export default boot(({ app, router }) => {
     Loading.hide()
     return Promise.reject(error);
   };
-  
+
   // const route = useRoute();
   // const router = useRouter();
   const onResponse = (response) => {
@@ -45,7 +45,7 @@ export default boot(({ app, router }) => {
     if (typeof response.data === "string") {
       res = JSON.parse(response.data);
     }
-    
+
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide()
       if (res.code === ResponseCode.ERROR_SYSTEM) {
@@ -63,7 +63,7 @@ export default boot(({ app, router }) => {
             title: '请登录',
             message: "请登录后操作",
             cancel: { color: "negative", label: "取消" },
-            ok: { color: "brightbtn", label: "去登陆" },
+            ok: { color: "brightbtn", label: "去登录" },
             padding: '20px'
           }).onOk(() => {
             router.push("/login")
@@ -104,7 +104,7 @@ export default boot(({ app, router }) => {
   cashier.interceptors.response.use(onResponse, onResponseError);
   eventapi.interceptors.request.use(onRequest);
   eventapi.interceptors.response.use(onResponse, onResponseError);
-  
+
 });
 
 export { axios, api, cashier, eventapi };
