@@ -133,7 +133,7 @@
                     </el-form-item>
                   </div> -->
                   <el-button
-                  class="common-btn"
+                    class="common-btn"
                     v-if="!personalState.memberInfo.emailVerified"
                     type="button"
                     @click="updateSecurityModal"
@@ -261,10 +261,11 @@
               type="password"
               v-model="updateSecurityVerified.verificationCode"
               :placeholder="'验证码'"
+              @keyup.enter="submitUpdateSecurity"
+              
             />
             <el-button
               :disabled="disableSendVerificationButton"
-
               class="common-btn verification-btn"
               @click="openVerificationModal"
             >
@@ -303,10 +304,10 @@
         >
           <el-space>
             <el-input
-              @keyup.enter="verifyVerificationCode"
               v-model="updateSecurityVerified.captchaCode"
               :maxlength="4"
               placeholder="验证码"
+              @keyup.enter="verifyVerificationCode"
             />
 
             <div class="verification" @click="getCode()">
@@ -541,7 +542,7 @@ export default defineComponent({
         console.log("error", error);
       });
     }
-
+    const isSendEmailOTP = ref(false)
     const verificationModalVisible = ref(false)
     const updateSecurityModal = () => {
       updateSecurityVerified.emailAddress = cachedEmail;
@@ -549,9 +550,18 @@ export default defineComponent({
       updateSecurityModalVisible.value = true;
     };
     const openVerificationModal = () => {
-      getCode();
-      verificationModalVisible.value = true;
 
+      updateSecurityFormRef.value.validateField('emailAddress').then((resp) => {
+          // captchaForm.captchaCode = "";
+          getCode();
+          verificationModalVisible.value = true;
+          isSendEmailOTP.value = true;
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的邮件',
+              type: 'error',
+            })
+        })
     }
     const verifyVerificationCode = () => {
       captchaUpdateRef.value
@@ -924,7 +934,8 @@ const verificationPhoneModalVisible = ref(false)
       loadingPhoneBtn,
       disableSendVerificationButton,
       disableSendPhoneButton,
-      countDown
+      countDown,
+      isSendEmailOTP
     };
   }
 });
