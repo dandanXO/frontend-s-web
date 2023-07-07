@@ -138,7 +138,7 @@
           @click="setSelectedSwiper(tab)"
           v-for="(tab, i) in tabs"
           :key="i"
-          style="width: calc(100vw / 5)"
+          style="width: calc(100vw / 6)"
       >
         {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
       </swiper-slide>
@@ -498,12 +498,12 @@ export default defineComponent({
         label: "真人",
         labelact: "真人娱乐"
       },
-      // {
-      //   name: "sport",
-      //   icon: "sport",
-      //   label: "体育",
-      //   labelact: "体育赛事"
-      // },
+      {
+        name: "sport",
+        icon: "sport",
+        label: "体育",
+        labelact: "体育赛事"
+      },
       {
         name: "esport",
         icon: "esport",
@@ -691,10 +691,9 @@ export default defineComponent({
                 }
                 spObj.icon = "sport";
                 spObj.subtitle = "体育赛事";
-                if (spObj.code === "IM") {
-                } else {
-                  sport.value.push(spObj);
-                }
+
+                sport.value.push(spObj);
+
 
               }
               if (platTypes.indexOf("LIVE") > -1) {
@@ -1000,7 +999,7 @@ export default defineComponent({
     .swiper-slide {
       background: #23263c;
       padding: 8px 5px 2px;
-      max-width: 75px;
+      max-width: 60px;
       cursor: pointer;
 
       &.tbact {
