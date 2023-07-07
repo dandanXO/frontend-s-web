@@ -1212,7 +1212,7 @@ async function advancedSearch() {
   searchForm.value.validate(async valid => {
     if (valid) {
       await loadRecord()
-      resetQuery()
+      // resetQuery()
     }
   })
 }
