@@ -49,7 +49,7 @@
             clearable
             color="white"
             :rules="[
-                (val) => (val ) || '请输入转账金额'
+                (val) => (!!val) || '请输入转账金额'
                 ]"
         >
           <template v-slot:prepend>
@@ -166,7 +166,7 @@ const submitTransfer = () => {
                   });
                   getPlatBalances(platform.code)
                   store.getBalance();
-                  transferInfo.value.amount = 0;
+                  transferInfo.value.amount = null;
                   transferFormRef.value.reset();
                   isTransferring.value = false
                 }, 1000);
