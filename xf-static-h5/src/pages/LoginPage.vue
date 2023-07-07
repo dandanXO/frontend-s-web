@@ -58,11 +58,13 @@
             <q-input
                 ref="verificationRef"
                 hide-bottom-space
+                clearable
                 type="text"
                 v-model="loginForm.captchaCode"
                 label="验证码"
                 :rules="[
-              (val) => (val && val.length > 3) || '验证码为四个'
+              (val) => (val && val.length > 0) || '请输入验证码',
+              (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
             ]"
                 color="white"
                 label-color="brand"
