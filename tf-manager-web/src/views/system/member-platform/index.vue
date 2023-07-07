@@ -101,7 +101,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column type="title" :label="t('fields.action')">
+      <el-table-column type="title" :label="t('fields.memberPlatformAction')">
         <template #default="scope">
           <el-button
             icon="el-icon-refresh"
@@ -117,6 +117,19 @@
           />
         </template>
       </el-table-column>
+
+      <el-table-column type="title" :label="t('fields.memberPlatformUpdate')">
+        <template #default="scope">
+          <el-button
+            v-if="scope.row.platform === 'PT'"
+            icon="el-icon-refresh"
+            size="mini"
+            type="success"
+            @click="update(scope.row)"
+          />
+        </template>
+      </el-table-column>
+
     </el-table>
     <el-pagination
       class="pagination"
@@ -137,6 +150,7 @@ import {
   getPlatformList,
   manualRegister,
   deleteMemberPlatform,
+  updatePassword,
 } from '../../../api/member-platform'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -202,6 +216,15 @@ async function loadPlatform() {
 async function manual(row) {
   const { data: p } = await manualRegister(row)
   if (p === '注册成功') {
+    ElMessage({ message: p, type: "success" });
+  } else {
+    ElMessage({ message: p, type: "error" });
+  }
+}
+
+async function update(row) {
+  const { data: p } = await updatePassword(row)
+  if (p === '同步成功') {
     ElMessage({ message: p, type: "success" });
   } else {
     ElMessage({ message: p, type: "error" });
