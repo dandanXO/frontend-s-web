@@ -2,7 +2,7 @@
   <div>
     <AcctBal :isTransfer="true" :platforms="platforms"/>
     <div class="q-pa-md bg-dark q-mx-sm q-my-md">
-      <q-form>
+      <q-form ref="transferFormRef">
         <div class="transferfromto q-mb-md">
           <q-select
               hide-bottom-space
@@ -46,7 +46,11 @@
             ref="amountRef"
             v-model="transferInfo.amount"
             label="金额"
+            clearable
             color="white"
+            :rules="[
+                (val) => (!!val) || '请输入转账金额'
+                ]"
         >
           <template v-slot:prepend>
             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
@@ -86,6 +90,8 @@ const $q = useQuasar();
 const transferFrom = ref('main');
 const transferTo = ref('');
 const platforms = reactive([]);
+const amountRef= ref();
+const transferFormRef= ref();
 const transferInfo = ref({
   amount: 0
 });
@@ -134,6 +140,10 @@ const updateTransferDropdown = () => {
 }
 const isTransferring = ref(false)
 const submitTransfer = () => {
+  amountRef.value.validate();
+  if(amountRef.value.hasError){
+    return;
+  }
   isTransferring.value = true
   if (transferInfo.value.amount > 0) {
     if (transferFrom.value === 'main') {
@@ -156,7 +166,8 @@ const submitTransfer = () => {
                   });
                   getPlatBalances(platform.code)
                   store.getBalance();
-                  transferInfo.value.amount = 0
+                  transferInfo.value.amount = null;
+                  transferFormRef.value.reset();
                   isTransferring.value = false
                 }, 1000);
               }
@@ -166,19 +177,6 @@ const submitTransfer = () => {
           }
         }
       });
-      // api.post("/session/balance/transfer/deposit", transferInfo).then(() => {
-      //   store.getBalance();
-      //   refreshBalance(transferInfo.platform);
-      //    cancelTransfer();
-      //     $q.notify({
-      //       color: "positive",
-      //       position: "top",
-      //       message: "成功",
-      //       icon: "check_circle_outline"
-      //     });
-
-      // }).catch((error) => {
-      // });
     } else {
       platforms.forEach(platform => {
         if (platform.id === transferFrom.value) {

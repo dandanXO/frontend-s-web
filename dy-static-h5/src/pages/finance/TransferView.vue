@@ -2,38 +2,38 @@
   <div>
     <AcctBal :isTransfer="true" :platforms="platforms"/>
     <div class="q-pa-md transfer-section q-mx-sm q-my-md">
-      <q-form>
+      <q-form ref="transferFormRef">
         <div class="transferfromto q-mb-md">
           <q-select
-            hide-bottom-space
-            rounded
-            outlined
-            dense
-            v-model="transferFrom"
-            option-value="id"
-            emit-value
-            color="blue"
-            bg-color="white"
-            :options="transferFromOpt"
-            map-options
-            @update:model-value="updateTransferDropdown"
+              hide-bottom-space
+              rounded
+              outlined
+              dense
+              v-model="transferFrom"
+              option-value="id"
+              emit-value
+              color="blue"
+              bg-color="white"
+              :options="transferFromOpt"
+              map-options
+              @update:model-value="updateTransferDropdown"
           />
           <div class="icon">
             <img src="../../assets/images/finance/withdraw/arrow_right.png">
           </div>
           <q-select
-            hide-bottom-space
-            rounded
-            outlined
-            dense
-            v-model="transferTo"
-            option-value="id"
-            emit-value
-            color="blue"
-            bg-color="white"
-            :options="transferToOpt"
-            map-options
-            @update:model-value="updateTransferDropdown"
+              hide-bottom-space
+              rounded
+              outlined
+              dense
+              v-model="transferTo"
+              option-value="id"
+              emit-value
+              color="blue"
+              bg-color="white"
+              :options="transferToOpt"
+              map-options
+              @update:model-value="updateTransferDropdown"
           />
         </div>
         <div class="transferamounts q-my-md">
@@ -44,11 +44,15 @@
 
 
         <q-input
-          hide-bottom-space
-          ref="amountRef"
-          v-model="transferInfo.amount"
-          label="Amount"
-          color="white"
+            hide-bottom-space
+            ref="amountRef"
+            v-model="transferInfo.amount"
+            label="金额"
+            clearable
+            color="white"
+            :rules="[
+                (val) => (!!val) || '请输入转账金额'
+                ]"
         >
           <template v-slot:prepend>
             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
@@ -60,12 +64,12 @@
         </q-input>
 
         <q-btn
-          style="width: 100%;"
-          class="q-mt-md fit"
-          color="dyblue"
-          @click="submitTransfer"
-          label="立即转账"
-          :loading="isTransferring"
+            style="width: 100%;"
+            class="q-mt-md fit"
+            color="dyblue"
+            @click="submitTransfer"
+            label="立即转账"
+            :loading="isTransferring"
         />
       </q-form>
     </div>
@@ -86,6 +90,8 @@ const store = userStore();
 const $q = useQuasar();
 const transferFrom = ref('main');
 const transferTo = ref('');
+const amountRef = ref();
+const transferFormRef = ref();
 const platforms = reactive([]);
 const transferInfo = ref({
   amount: 0
@@ -133,6 +139,10 @@ const updateTransferDropdown = () => {
 }
 const isTransferring = ref(false)
 const submitTransfer = () => {
+  amountRef.value.validate();
+  if (amountRef.value.hasError) {
+    return;
+  }
   isTransferring.value = true
   if (transferInfo.value.amount > 0) {
     if (transferFrom.value === 'main') {
@@ -154,7 +164,8 @@ const submitTransfer = () => {
                   });
                   getPlatBalances(platform.code)
                   store.getBalance();
-                  transferInfo.value.amount = 0
+                  transferInfo.value.amount = null;
+                  transferFormRef.value.reset();
                   isTransferring.value = false
                 }, 1000);
               }

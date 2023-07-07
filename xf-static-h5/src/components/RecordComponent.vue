@@ -61,6 +61,25 @@
             <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm"/>
             <q-btn outline label="复制" @click="copyText(det.serialNumber)" size="sm" color="bright"/>
           </div>
+
+          <div v-if="recordType === 'withdraw'" class="buttons">
+            <template
+                v-if="
+                det.status === 'SUCCESS' &&
+                det.currencyName === 'CNY' &&
+                det.confirmStatus === 0
+              "
+            >
+              <q-btn
+                  @click="openWithdrawConfirmDialog(det)"
+                  outline
+                  label="确认到账"
+                  size="sm"
+                  color="bright"
+              />
+            </template>
+          </div>
+
         </q-card>
 
         <template v-slot:loading>

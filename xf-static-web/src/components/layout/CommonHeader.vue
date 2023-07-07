@@ -15,7 +15,7 @@
             </div>
 
             <div class="station-notice">
-              <Vue3Marquee :clone="false" :duration="50" style="width: 680px;">
+              <Vue3Marquee :clone="false" :duration="50" style="width: 680px">
                 <div
                   v-for="(word, index) in announcementList"
                   :key="index"
@@ -112,17 +112,17 @@
             v-for="nav in navigations"
             :key="nav.name"
           >
-            <a
+            <!-- <a
               v-if="nav.enName === 'Esports' || nav.enName === 'Sports'"
               @click="checkMaintenance"
               to="/"
             >
               <span>{{ nav.name }}</span>
               <span>{{ nav.enName }}</span>
-            </a>
+            </a> -->
 
             <router-link
-            v-else
+             
               @mouseover="showSubMenu(nav)"
               @mouseup="selectedMenu = ''"
               :to="nav.path"
@@ -2147,7 +2147,6 @@ body {
 
             &:hover,
             &.router-link-active {
-
               span:first-child {
                 color: $link-active;
               }
