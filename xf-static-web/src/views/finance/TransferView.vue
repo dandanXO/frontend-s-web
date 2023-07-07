@@ -70,6 +70,7 @@
       class="transferinout"
       width="300px"
       align-center
+      @keydown.enter.prevent
     >
       <template #header>
         <div
@@ -95,7 +96,11 @@
         :label-col="{ span: 4 }"
       >
         <el-form-item ref="amount" name="amount">
-          <el-input v-model="transferInfo.amount" placeholder="金额" />
+          <el-input
+            v-model="transferInfo.amount"
+            placeholder="金额"
+            @keyup.enter="submitTransfer"
+          />
         </el-form-item>
         <el-form-item class="txt-center">
           <!-- <button
@@ -205,8 +210,8 @@ export default defineComponent({
     }
 
     const refreshAllModal = () => {
+      store.getBalance();
       platforms.forEach(p => {
-        store.getBalance();
         p.amount = 'Loading'
         refreshBalance(p.code);
       });
@@ -276,12 +281,13 @@ export default defineComponent({
     const submitTransfer = () => {
       loadingTransfer.value = true
       console.log(transferTypeIndex)
-      if (transferTypeIndex.value === 1) {
-        if (transferInfo.amount > transferInfo.currentAmt) {
-          ElMessage.error(transferInfo.name + ' 平台余额不足');
-          loadingTransfer.value = false
-          return
-        }
+      if (transferInfo.amount > 0) {
+        if (transferTypeIndex.value === 1) {
+          if (transferInfo.amount > transferInfo.currentAmt) {
+            ElMessage.error(transferInfo.name + ' 平台余额不足');
+            loadingTransfer.value = false
+            return
+          }
       }
       formRef.value
         .validate()
@@ -305,6 +311,11 @@ export default defineComponent({
             console.log(err.message);
             loadingTransfer.value = false;
         });
+      } else {
+        ElMessage.error('金额无效');
+          loadingTransfer.value = false
+          return
+      }
     };
     const formRef = ref();
     const rules = {

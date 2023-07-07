@@ -24,12 +24,12 @@
             <img src="../assets/home/game_left.png" alt="" />
           </div>
           <div class="game-content">
-            <!-- <router-link class="quick-plat" to="/eSports"> -->
-            <router-link class="quick-plat" to="/" @click="checkMaintenance">
+            <router-link class="quick-plat" to="/eSports">
+            <!-- <router-link class="quick-plat" to="/" @click="checkMaintenance"> -->
               <img src="../assets/home/index_quick_plat_esports.png" alt="" />
             </router-link>
-            <!-- <router-link class="quick-plat" to="/sports"> -->
-              <router-link class="quick-plat" to="/" @click="checkMaintenance">
+            <router-link class="quick-plat" to="/sports">
+              <!-- <router-link class="quick-plat" to="/" @click="checkMaintenance"> -->
               <img src="../assets/home/index_quick_plat_sport.png" alt="" />
             </router-link>
             <router-link class="quick-plat" to="/live-casino">

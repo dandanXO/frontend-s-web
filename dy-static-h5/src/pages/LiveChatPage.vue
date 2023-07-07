@@ -4,10 +4,10 @@
     :src="'https://csweb01.amv4xjcbd.com/?partnerId=5&lang=th&way=' + regDevice + '&token=' + store.token"
     title="description"
   ></iframe> -->
-    <iframe
-    :src="'https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&lang=zh-CN&way=' + regDevice + '&token=' + store.token"
-    title="description"
-  ></iframe>
+<!--    <iframe-->
+<!--    :src="'https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&lang=zh-CN&way=' + regDevice + '&token=' + store.token"-->
+<!--    title="description"-->
+<!--  ></iframe>-->
   <!-- <div class="iFrameFull">
   </div> -->
 </q-page>
