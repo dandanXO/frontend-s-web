@@ -144,8 +144,14 @@
       >
         <template
           #default="scope"
-          v-if="hasPermission(['sys:member:review:detail'])"
+          v-if="hasPermission(['sys:member:detail'])"
         >
+          <router-link
+            v-if="scope.row.memberType === 'AFFILIATE'"
+            :to="`/affiliate/details/${scope.row.memberId}`"
+          >
+            <el-link type="primary">{{ scope.row.name }}</el-link>
+          </router-link>
           <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
             <el-link type="primary">{{ scope.row.name }}</el-link>
           </router-link>
