@@ -204,6 +204,18 @@
           align="center"
           min-width="150"
         />
+        <el-table-column
+          :label="t('fields.operate')"
+          align="center"
+          min-width="300"
+          fixed="right"
+        >
+          <template #default="scope">
+            <el-button size="mini" type="success" @click="toSuccess(scope.row)">
+              {{ t('fields.success') }}
+            </el-button>
+          </template>
+        </el-table-column>
         <!-- <el-table-column
           :label="t('fields.operate')"
           align="center"
@@ -455,6 +467,7 @@ import {
   getTotalWithdrawAmountByStatus,
   fromAutopayToPay,
   fromAutopayToFail,
+  fromAutopayToSuccess,
 } from '../../../../api/member-withdraw-record'
 import { getConfigList } from '../../../../api/config'
 import { getSiteListSimple } from '../../../../api/site'
@@ -716,6 +729,12 @@ async function toPay() {
   await fromAutopayToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
   await loadRecord()
   ElMessage({ message: t('message.updateToPaySuccess'), type: 'success' })
+}
+
+async function toSuccess(memberWithdrawRecord) {
+  await fromAutopayToSuccess(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
+  await loadRecord()
+  ElMessage({ message: t('message.autopaySuccess'), type: 'success' })
 }
 
 async function showDialog(type, memberWithdrawRecord) {

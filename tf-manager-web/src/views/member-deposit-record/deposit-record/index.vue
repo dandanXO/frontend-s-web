@@ -126,12 +126,13 @@
           class="filter-item"
           style="width: 200px;margin-right:10px"
           default-first-option
+          @focus="loadPayTypeList"
         >
           <el-option
-            v-for="item in uiControl.payType"
-            :key="item.key"
-            :label="item.displayName"
-            :value="item.value"
+            v-for="item in uiControl.payTypeList"
+            :key="item.code"
+            :label="item.code"
+            :value="item.code"
           />
         </el-select>
         <el-select
@@ -652,6 +653,7 @@ import {
 import { useI18n } from 'vue-i18n'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../api/site'
+import { getAllPaymentTypes } from "../../../api/payment-type";
 
 const { t } = useI18n()
 const store = useStore()
@@ -802,10 +804,6 @@ const uiControl = reactive({
     },
     { key: 4, displayName: t('depositStatus.CLOSED'), value: 'CLOSED' },
   ],
-  payType: [
-    { key: 1, displayName: 'BANK', value: 'BANK' },
-    { key: 2, displayName: 'OFFLINE', value: 'OFFLINE' },
-  ],
   clientType: [
     { key: 1, displayName: 'WEB', value: 'WEB' },
     { key: 2, displayName: 'H5', value: 'H5' },
@@ -896,6 +894,7 @@ const request = reactive({
   cardAccount: null,
   transactionTime: uiControl.timeList[0].value,
   thirdPartyName: null,
+  paymentType: null,
   siteId: null,
 })
 
@@ -941,6 +940,7 @@ function resetQuery() {
   request.maxDepositAmount = null
   request.cardAccount = null
   request.thirdPartyName = uiControl.thirdPartyNameList[0].paymentName
+  request.paymentType = uiControl.payTypeList[0].code
   request.transactionTime = uiControl.timeList[0].value
   uiControl.dialogVisible = false
   request.siteId = siteList.list[0].id
@@ -977,6 +977,19 @@ async function loadFinancialLevels() {
 
   if (!request.financialId) {
     request.financialId = financialList.list[0].id
+  }
+}
+
+async function loadPayTypeList() {
+  const { data: payType } = await getAllPaymentTypes()
+  uiControl.payTypeList = payType
+  uiControl.payTypeList.unshift({
+    id: 0,
+    code: 'ALL',
+  })
+
+  if (!request.paymentType) {
+    request.paymentType = uiControl.payTypeList[0].code
   }
 }
 
@@ -1034,6 +1047,10 @@ function checkQuery() {
 
   if (request.thirdPartyName === 'ALL') {
     query.thirdPartyName = null
+  }
+
+  if (request.paymentType === 'ALL') {
+    query.paymentType = null
   }
   return query
 }
@@ -1152,6 +1169,7 @@ onMounted(async () => {
     loadPrivilegeInfos()
   }
   loadFinancialLevels()
+  loadPayTypeList()
   loadVips()
   loadRecord()
   loadThirdParty()
