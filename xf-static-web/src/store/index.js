@@ -98,8 +98,8 @@ export const userStore = defineStore("userStore", {
       const left = (screen.width - 350) * 2;
       const top = (screen.height - 650) / 4;
       window.open(`https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&token=${this.token}`, 'Chat Server',
-          'resizable=yes, width=' + 350
-          + ', height=' + 650 + ', top='
+          'resizable=yes, width=' + 800
+          + ', height=' + 880 + ', top='
           + top + ', left=' + left);
     }
   }
