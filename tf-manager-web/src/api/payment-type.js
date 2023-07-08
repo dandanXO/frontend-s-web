@@ -24,3 +24,7 @@ export const updatePaymentTypeStatus = (id, status) => {
 export const deletePaymentType = async (ids) => {
   await https().request(`/paymentType?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
+
+export const getAllPaymentTypes = () => {
+  return https().request("/paymentType/all", Method.GET);
+};

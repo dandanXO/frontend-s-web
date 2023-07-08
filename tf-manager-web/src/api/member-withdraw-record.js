@@ -177,6 +177,14 @@ export const fromAffiliateAutopayToFail = (id, cancelType, remark, wd) => {
   return https().request(`/memberWithdrawRecord/${id}/affiliateAutopayToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
 };
 
+export const fromAutopayToSuccess = (id, wd) => {
+  return https().request(`/memberWithdrawRecord/${id}/autopayToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+};
+
+export const fromAffiliateAutopayToSuccess = (id, wd) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliateAutopayToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+};
+
 export const getMemberWithdrawRecord = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord", Method.GET, memberWithdrawRecord, ContentType.form);
 };

@@ -28,7 +28,7 @@
       </div>
     </div>
   </div>
-  <q-carousel class="home" autoplay navigation v-model="slide" swipeable>
+  <q-carousel class="home" autoplay navigation v-model="slide" swipeable infinite>
     <template v-slot:navigation-icon="{ active, onClick }">
       <q-btn
           padding="3px"
