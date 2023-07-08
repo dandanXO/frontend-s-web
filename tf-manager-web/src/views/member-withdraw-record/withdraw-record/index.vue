@@ -142,6 +142,37 @@
           min-width="110"
         />
         <el-table-column
+          prop="status"
+          :label="t('fields.status')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
+              {{ t('withdrawStatus.' + scope.row.status) }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
+              {{ t('withdrawStatus.' + scope.row.status) }}
+            </el-tag>
+            <el-tag v-else>{{ t('withdrawStatus.' + scope.row.status) }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="confirm status"
+          :label="t('fields.confirmStatus')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.confirmStatus === '0' && scope.row.status === 'SUCCESS'" type="danger">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.confirmStatus === '1' && scope.row.status === 'SUCCESS'" type="success">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="vip"
           :label="t('fields.vipLevel')"
           align="center"
@@ -305,37 +336,6 @@
             <span v-if="scope.row.paymentCard !== null">
               {{ scope.row.paymentCard }}
             </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="status"
-          :label="t('fields.status')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
-              {{ t('withdrawStatus.' + scope.row.status) }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
-              {{ t('withdrawStatus.' + scope.row.status) }}
-            </el-tag>
-            <el-tag v-else>{{ t('withdrawStatus.' + scope.row.status) }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="confirm status"
-          :label="t('fields.confirmStatus')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.confirmStatus === '0' && scope.row.status === 'SUCCESS'" type="danger">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.confirmStatus === '1' && scope.row.status === 'SUCCESS'" type="success">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
           </template>
         </el-table-column>
         <el-table-column

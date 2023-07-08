@@ -153,8 +153,10 @@
           <el-table-column prop="name" :label="t('fields.roleName')" width="200" />
           <el-table-column prop="siteName" :label="t('fields.siteName')" width="200" />
           <el-table-column prop="remark" :label="t('fields.describe')" width="200" />
-          <el-table-column prop="createTime" :label="t('fields.createBy')" width="200" />
-          <el-table-column prop="createBy" :label="t('fields.createTime')" />
+          <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
+          <el-table-column prop="createBy" :label="t('fields.createBy')" width="200" />
+          <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200" />
+          <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="200" />
           <el-table-column :label="t('fields.operate')" align="right"
                            v-if="hasPermission(['sys:roles:update']) || hasPermission(['sys:roles:delete'])"
           >
