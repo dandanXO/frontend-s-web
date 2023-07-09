@@ -1081,6 +1081,7 @@ async function showDialog(type) {
 async function exportExcel() {
   uiControl.progressBarVisible = true
   const query = checkQuery()
+  query.current = 1;
   const { data: ret } = await getDepositRecord(query)
   const exportData = [EXPORT_HEADER]
   const maxLength = []
