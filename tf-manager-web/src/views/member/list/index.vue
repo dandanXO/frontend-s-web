@@ -307,6 +307,7 @@
             </router-link>
           </template>
         </el-table-column>
+        <el-table-column prop="vipName" :label="t('menu.VIP')" width="200" />
         <el-table-column prop="realName" :label="t('fields.realName')" width="150">
           <template #default="scope">
             <span v-if="scope.row.realName === null">-</span>
