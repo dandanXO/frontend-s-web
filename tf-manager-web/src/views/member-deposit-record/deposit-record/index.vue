@@ -286,16 +286,13 @@
           prop="status"
           :label="t('fields.status')"
           align="center"
-          min-width="110"
+          min-width="145"
         >
           <template #default="scope">
-            <el-tag
-              v-if="
-                scope.row.status === 'SUCCESS' ||
-                  scope.row.status === 'SUPPLEMENT_SUCCESS'
-              "
-              type="success"
-            >
+            <el-tag v-if="scope.row.status === 'SUCCESS'" type="success">
+              {{ t('depositStatus.' + scope.row.status) }}
+            </el-tag>
+            <el-tag v-if="scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success">
               {{ t('depositStatus.' + scope.row.status) }}
             </el-tag>
             <el-tag v-if="scope.row.status === 'CLOSED'" type="danger">
