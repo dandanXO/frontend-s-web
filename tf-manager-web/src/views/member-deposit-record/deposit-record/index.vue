@@ -286,7 +286,7 @@
           prop="status"
           :label="t('fields.status')"
           align="center"
-          min-width="110"
+          min-width="145"
         >
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'SUCCESS'" type="success">
