@@ -152,7 +152,11 @@
           :label="t('fields.financialLevel')"
           align="center"
           min-width="110"
-        />
+        >
+          <template #default="scope">
+            <span :style="{color: scope.row.financialColor}">{{ scope.row.financial }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="cardAccount"
           :label="t('fields.accountHolder')"
