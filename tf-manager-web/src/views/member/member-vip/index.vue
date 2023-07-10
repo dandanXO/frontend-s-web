@@ -10,7 +10,6 @@
           style="width: 250px;"
           default-first-option
           @focus="loadSites"
-          @change="changeSite"
         >
           <el-option
             v-for="item in siteList.list"
@@ -19,10 +18,10 @@
             :value="item.id"
           />
         </el-select>
-        <el-input type="textarea" v-model="request.loginName" :rows="4" style="width: 400px; margin-top: 5px;" maxlength="500" show-word-limit :placeholder="t('fields.loginNameSeparateComma')" />
+        <el-input type="textarea" v-model="request.loginName" :rows="4" style="width: 400px; margin-top: 5px;" :placeholder="t('fields.loginName')" />
         <div class="btn-group">
-          <el-button icon="el-icon-search" size="mini" type="success" @click="loadMemberVip">
-            {{ t('fields.search') }}
+          <el-button icon="el-icon-download" size="mini" type="success" @click="loadMemberVip">
+            {{ t('fields.exportToExcel') }}
           </el-button>
           <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
             {{ t('fields.reset') }}
@@ -30,32 +29,31 @@
         </div>
       </div>
     </div>
-    <el-table
-      :data="page.records"
-      v-loading="page.loading"
-      ref="table"
-      row-key="id"
-      size="small"
-      highlight-current-row
-      style="width: 100%;margin: 20px;"
-      :empty-text="t('fields.noData')"
-    >
-      <el-table-column prop="loginName" :label="t('fields.loginName')" min-width="250" />
-      <el-table-column prop="vipName" :label="t('fields.vipLevel')" min-width="250" />
-    </el-table>
-    <el-pagination class="pagination"
-                   @current-change="changePage"
-                   layout="prev, pager, next"
-                   :page-size="request.size"
-                   :page-count="page.pages"
-                   :current-page="request.current"
-    />
   </div>
+  <el-dialog :title="t('fields.exportToExcel')" v-model="page.progressBarVisible" append-to-body width="500px"
+             :close-on-click-modal="false" :close-on-press-escape="false"
+  >
+    <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
+                 :color="page.colors" v-if="exportPercentage !== 100"
+    />
+    <el-result
+      icon="success"
+      :title="t('fields.successfullyExport')"
+      v-if="exportPercentage === 100"
+    />
+    <div class="dialog-footer">
+      <el-button type="primary" :disabled="exportPercentage !== 100"
+                 @click="page.progressBarVisible = false"
+      >{{ t('fields.done') }}
+      </el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
 
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import * as XLSX from 'xlsx';
 import { getMemberVip } from "../../../api/member-vip";
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from "../../../api/site";
@@ -64,8 +62,17 @@ const { t } = useI18n();
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
+  progressBarVisible: false,
+  colors: [
+    { color: '#f56c6c', percentage: 30 },
+    { color: '#e6a23c', percentage: 70 },
+    { color: '#5cb87a', percentage: 100 }
+  ],
 });
+
+const exportPercentage = ref(0);
+
+const EXPORT_HEADER = ['Login Name', 'VIP Level'];
 
 const request = reactive({
   size: 30,
@@ -89,7 +96,7 @@ async function loadSites() {
 }
 
 async function loadMemberVip() {
-  page.loading = true;
+  page.progressBarVisible = true;
   const requestCopy = { ...request };
   const query = {};
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -97,15 +104,51 @@ async function loadMemberVip() {
       query[key] = value;
     }
   });
+  if (query.loginName !== null) {
+    query.loginName = query.loginName.replaceAll('\n', ',');
+  }
+  query.current = 1;
   const { data: ret } = await getMemberVip(query);
-  page.pages = ret.pages;
-  page.records = ret.records;
-  page.loading = false;
+  const exportData = [EXPORT_HEADER];
+  const maxLength = [];
+
+  pushRecordToData(ret.records, exportData);
+  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  query.current = ret.current;
+
+  while (query.current < ret.pages) {
+    query.current += 1;
+    const { data: ret } = await getMemberVip(query);
+    pushRecordToData(ret.records, exportData);
+    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  }
+  const ws = XLSX.utils.aoa_to_sheet(exportData);
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] = typeof value === 'number'
+        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
+        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
+    });
+  });
+  const wsCols = maxLength.map(w => { return { width: w } });
+  ws['!cols'] = wsCols;
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push('Member_VIP');
+  wb.Sheets.Member_VIP = ws;
+  XLSX.writeFile(wb, "member_vip.xlsx");
+  exportPercentage.value = 100;
 }
 
-function changePage(page) {
-  request.current = page;
-  loadMemberVip();
+function pushRecordToData(records, exportData) {
+  records.forEach(item => {
+    delete item.id;
+    delete item.vipId;
+    delete item.vipLevel;
+  })
+  const data = records.map(record => Object.values(record).map(item => item !== 0 && (!item || item === '') ? '-' : item));
+  exportData.push(...data);
 }
 
 onMounted(async() => {

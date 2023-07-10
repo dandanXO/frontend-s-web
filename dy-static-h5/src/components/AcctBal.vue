@@ -185,39 +185,34 @@ const loadBalance = () => {
   });
 };
 const transferOutAll = () => {
-  var gotTransfer = false;
   isTransferring.value = true;
-  props.platforms.forEach((platform) => {
+  var gotTransfer = false;
+  props.platforms.forEach(platform => {
     platform.isTransferring = true;
     if (platform.code && platform.amount > 0) {
       gotTransfer = true;
       const transferInfo = {
         platform: platform.code,
         amount: platform.amount
-      };
-      api
-          .post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo))
-          .then((response) => {
-            if (response.code === 0) {
-              setTimeout(() => {
-                store.getBalance();
-                refreshBalance(platform.code);
-                platform.isTransferring = false;
-                isTransferring.value = false;
-              }, 1000);
-            } else {
-              platform.isTransferring = false;
-              isTransferring.value = false;
-            }
-          })
+      }
+      api.post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo)).then((response) => {
+        if (response.code === 0) {
+          setTimeout(() => {
+            loadBalance();
+            refreshBalance(platform.code)
+            platform.isTransferring = false;
+            isTransferring.value = false;
+          }, 1000);
+        }
+      })
+    } else {
+      setTimeout(() => {
+        platform.isTransferring = false;
+        isTransferring.value = false;
+      }, 1000);
     }
-    setTimeout(() => {
-      platform.isTransferring = false;
-      isTransferring.value = false;
-      refreshBalance('all')
-    }, 2000);
   });
-  if (gotTransfer == true) {
+  if (gotTransfer === true) {
     setTimeout(() => {
       loadBalance();
     }, 3000);
@@ -226,8 +221,7 @@ const transferOutAll = () => {
     }, 5000);
   }
 
-
-};
+}
 const refreshBalance = (plat) => {
   if (plat === "all") {
     isRefreshingBalance.value = true;

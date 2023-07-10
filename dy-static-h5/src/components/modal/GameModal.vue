@@ -305,6 +305,39 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           }
         }
       }
+
+      if (store.isMobileSafari()) {
+        const newWin = window.open(`/`, `_blank`);
+        if (platformCode === 'platformType') {
+          api
+              .get(`/session/launch?_time=${new Date().getTime()}`, {
+                params: {
+                  platform: gameCode,
+                  isMobile: Platform.is.mobile ? true : false,
+                  way: way
+                }
+              })
+              .then((response) => {
+                newWin.location.href = response.data;
+              });
+          return;
+        }
+
+        api
+            .get(`/session/launch?_time=${new Date().getTime()}`, {
+              params: {
+                platform: platformCode,
+                gameCode: gameCode,
+                isMobile: Platform.is.mobile ? true : false,
+                way: way
+              }
+            })
+            .then((response) => {
+              newWin.location.href = response.data;
+            });
+        return;
+      }
+
       if (platformCode === 'platformType') {
         api
             .get(`/session/launch?_time=${new Date().getTime()}`, {
@@ -315,7 +348,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               }
             })
             .then((response) => {
-              if (way === 'IOS' || store.isMobileSafari()) {
+              if (way === 'IOS') {
                 const newWin = window.open(`/`, `_self`);
                 newWin.location.href = response.data
               } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
@@ -337,7 +370,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             }
           })
           .then((response) => {
-            if (way === 'IOS' || store.isMobileSafari()) {
+            if (way === 'IOS') {
               const newWin = window.open(`/`, `_self`);
               newWin.location.href = response.data
             } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
