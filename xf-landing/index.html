@@ -41,17 +41,66 @@
             }, 1000);
         };
 
+        var successfulUrls = [];
+        let urls = [
+            "xf9866.com",
+            "xf9698.com",
+            "xf8799.com",
+            "xf8578.com",
+            "xf6877.com",
+        ];
+        let urlsWithFavicon = [];
+
+        function placeFavicon(urls) {
+            for (const url of urls) {
+                urlsWithFavicon.push("https://" + url + "/favicon.ico");
+            }
+        }
+
+        function testURLs(urls) {
+            for (const url of urls) {
+                const img = new Image();
+                img.onload = function () {
+                    console.log(`Successful URL: ${url}`);
+                    successfulUrls.push(url.replace("/favicon.ico", ""));
+                };
+                img.onerror = () => console.log(`Failed URL: ${url}`);
+                img.src = url;
+            }
+        }
+
+        placeFavicon(urls);
+        testURLs(urlsWithFavicon);
+
         let toLink = function () {
+            console.log(urls);
+                console.log(successfulUrls);
             setTimeout(function () {
-                let index = Math.floor(Math.random() * 10) % 1;
-                // 域名更改
-                let domains = ["xf9866.com"]; 
-                referer = document.referrer
-                    .replace(/^http:?\/\//i, "")
-                    .replace("/", "");
-                if (domains[index] != "") {
-                    window.location.href =
-                        "https://" + domains[index] + referer;
+                
+
+                for (const url of urls) {
+                    const img = new Image();
+                    img.onload = () =>
+                        successfulUrls.push(url.replace("/favicon.ico", ""));
+                    img.onerror = () => console.log(`Failed URL: ${url}`);
+                    img.src = url;
+                }
+
+                if (successfulUrls.length > 0) {
+                    let randomIndex = Math.floor(
+                        Math.random() * successfulUrls.length
+                    );
+                    let domain = successfulUrls[randomIndex];
+
+                    referer = document.referrer
+                        .replace(/^http:?\/\//i, "")
+                        .replace("/", "");
+
+                    if (domain !== "") {
+                        window.location.href = domain;
+                    }
+                } else {
+                    console.log("No successful URLs");
                 }
             }, 1000);
         };
