@@ -14,5 +14,5 @@ export const getMemberBetRecords = (query) => {
 // };
 
 export const getExport = (query) => {
-  return https().request("/memberBetRecord/export", Method.GET, query, ContentType.form);
+  return https().request("/memberBetRecord/export", Method.POST, query, ContentType.form);
 };
