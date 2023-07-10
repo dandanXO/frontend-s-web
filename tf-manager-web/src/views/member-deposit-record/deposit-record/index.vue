@@ -213,7 +213,7 @@
           min-width="210"
         />
         <el-table-column
-          v-if="hasPermission(['sys:member:thirdParty'])"
+          v-if="hasPermission(['sys:deposit:thirdParty'])"
           prop="cardAccount"
           :label="t('fields.thirdParty')"
           align="center"
