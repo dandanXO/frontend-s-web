@@ -265,7 +265,6 @@
         >
         <el-space>
               <el-input
-                type="password"
                 v-model="updateSecurityVerified.verificationCode"
                 :placeholder="'验证码'"
               />
