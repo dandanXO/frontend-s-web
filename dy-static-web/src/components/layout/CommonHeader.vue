@@ -523,6 +523,8 @@
       width="50%"
       align-center
       style="max-width: 500px"
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
     >
       <el-form
         ref="captchaRef"
@@ -2466,7 +2468,7 @@ body {
         background-image: url(../../assets/home/header_sport_new_2.png);
         // background-size: 320%;
 
-        background-size: 310%;
+        background-size: 410%;
         overflow: hidden;
         transition: all 0.5s ease-out;
         background-repeat: no-repeat;

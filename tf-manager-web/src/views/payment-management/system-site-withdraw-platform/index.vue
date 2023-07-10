@@ -165,4 +165,7 @@ onMounted(async() => {
   margin-left: 15px;
   padding: 6px 5px;
 }
+.transfer-container >>> .el-transfer-panel__footer {
+  height: 35px;
+}
 </style>

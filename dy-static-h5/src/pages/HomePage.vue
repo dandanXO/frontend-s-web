@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <q-carousel class="home" autoplay navigation v-model="slide" swipeable>
+  <q-carousel class="home" autoplay navigation v-model="slide" swipeable infinite>
     <template v-slot:navigation-icon="{ active, onClick }">
       <q-btn
           padding="3px"
@@ -80,7 +80,6 @@
       <RiUserShared2Line />
     </div> -->
   </div>
-  <!-- {{ store }}-~~~ -->
   <div class="details-container">
     <div class="welcome-bar">
       <div class="welcome-liner">
@@ -431,28 +430,43 @@ export default defineComponent({
     };
     const setSelectedSwiper = (tab) => {
       selectedTab.value = tab.name;
+      // console.log(tab.name);
+      var slideIndex = 0;
       if (tab.name === "live") {
-        firstSwiper.value?.slideTo(0, 500);
+        slideIndex = 0;
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "sport") {
-        firstSwiper.value?.slideTo(3, 500);
+        slideIndex = livecasino.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "esport") {
-        firstSwiper.value?.slideTo(4, 500);
+        slideIndex = livecasino.value.length + sport.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "slot") {
-        firstSwiper.value?.slideTo(6, 500);
+        slideIndex = livecasino.value.length + sport.value.length + esport.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
+      }
+      if (tab.name === "fishing") {
+        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "poker") {
-        firstSwiper.value?.slideTo(16, 500);
+        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "lottery") {
-        firstSwiper.value?.slideTo(18, 500);
+        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length + poker.value.length;
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
       }
 
-      if (tab.name === "fishing") {
-        firstSwiper.value?.slideTo(6, 500);
-      }
     };
     const onSlideChange = (swiper) => {
       // Get the active slide index
@@ -615,6 +629,7 @@ export default defineComponent({
           )
           .then((data) => {
             var pf = data;
+            ui.slotLists = [];
             pf.forEach((element) => {
               const platTypes = element.gameType.split(",");
               if (platTypes.indexOf("ESPORT") > -1) {
@@ -639,6 +654,9 @@ export default defineComponent({
                 var spObj = Object.assign({}, element);
                 if (spObj.code === "IM") {
                   spObj.title = "IM体育";
+                }
+                if (spObj.code === "PM") {
+                  spObj.title = "PM体育";
                 }
                 if (spObj.code === "IA") {
                   spObj.title = "小艾体育";
@@ -676,9 +694,16 @@ export default defineComponent({
               }
               if (platTypes.indexOf("SLOT") > -1) {
                 var slotObj = Object.assign({}, element);
-                slotObj.title = slotObj.name + " 电子";
+                slotObj.title = translateRecord(slotObj.name) + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
+
+                let slotItem = {
+                  id: slotObj.id,
+                  code: slotObj.code,
+                  icon: slotObj.name
+                }
+                ui.slotLists.push(slotItem);
                 slot.value.push(slotObj);
               }
               if (platTypes.indexOf("FISH") > -1) {
@@ -928,7 +953,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .secondSwiper {
   height: calc(100vh - 410px);
-  padding-bottom: 200px;
+  padding-bottom: 0px;
   padding-top: 25px;
 }
 

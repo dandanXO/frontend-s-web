@@ -653,11 +653,12 @@ export default defineComponent({
           )
           .then((data) => {
             var pf = data;
+            ui.slotLists = [];
             pf.forEach((element) => {
               const platTypes = element.gameType.split(",");
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
-                console.log(espObj);
+                // console.log(espObj);
 
                 if (espObj.code === "TFGaming") {
                   espObj.title = "兴發电竞";
@@ -691,10 +692,7 @@ export default defineComponent({
                 }
                 spObj.icon = "sport";
                 spObj.subtitle = "体育赛事";
-
                 sport.value.push(spObj);
-
-
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
@@ -718,15 +716,23 @@ export default defineComponent({
                 lottery.value.push(lottObj);
               }
               if (platTypes.indexOf("SLOT") > -1) {
+                // console.log(element)
                 var slotObj = Object.assign({}, element);
-                slotObj.title = slotObj.name + " 电子";
+                slotObj.title = translateRecord(slotObj.name) + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
+                // console.log(slotObj);
                 if (slotObj.code === "AG") {
                 } else {
+                  let slotItem = {
+                    id: slotObj.id,
+                    code: slotObj.code,
+                    icon: slotObj.name
+                  }
+                  // console.log(slotItem);
+                  ui.slotLists.push(slotItem);
                   slot.value.push(slotObj);
                 }
-
               }
               if (platTypes.indexOf("FISH") > -1) {
                 var fishObj = Object.assign({}, element);

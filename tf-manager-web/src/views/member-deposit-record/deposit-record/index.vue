@@ -217,6 +217,7 @@
           :label="t('fields.thirdParty')"
           align="center"
           min-width="120"
+          v-permission="['sys:deposit:column:third']"
         >
           <template #default="scope">
             <span v-if="scope.row.cardAccount === null">-</span>
@@ -1137,6 +1138,7 @@ function pushRecordToData(records, exportData) {
   records.forEach(item => {
     delete item.memberId
     delete item.thirdParty
+    delete item.financialColor
   })
   const data = records.map(record =>
     Object.values(record).map(item => (!item || item === '' ? '-' : item))

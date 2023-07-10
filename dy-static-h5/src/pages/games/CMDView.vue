@@ -34,7 +34,7 @@ const loadGame = () => {
   }
 };
 onMounted(() => {
-  $q.loading.show({ message: "正加载页面" });
+  $q.loading.show({ message: "正在加载页面" });
 
   if (store.hasToken()) {
     const isMobile = Platform.is.mobile;

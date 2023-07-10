@@ -211,7 +211,7 @@ const compoundCard = () => {
       pageInit()
       ElMessage.success({
         type: "success",
-        message: "success"
+        message: "成功"
       })
       isPageLoading.value = false
     }

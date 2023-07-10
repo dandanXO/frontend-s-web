@@ -41,7 +41,7 @@
                         require(`../assets/game/${p.code.toLowerCase()}.png`)
                       "
                     />
-                    {{ p.name + " 电子" }}
+                    {{ getGameLabel(p.name) }}
                   </div>
                 </template>
               </template>
@@ -162,6 +162,19 @@ export default defineComponent({
       gamePage.currentPage = 1;
       loadGameList();
     };
+
+    const getGameLabel = (gameLabel) => {
+      if (gameLabel === 'BBINDY') {
+        return 'BBIN 电子'
+      } else if (gameLabel === 'AMEBA') {
+        return 'AE 电子'
+      } else if (gameLabel === 'MGP') {
+        return 'MG 电子'
+      } else {
+        return gameLabel + ' 电子'
+      }
+    }
+
     const getPlatList = () => {
       getPlatformList().then((data) => {
         platforms.value = data.filter(element => element.gameType.includes("SLOT"));
@@ -310,7 +323,8 @@ export default defineComponent({
       onShowSizeChange,
       slotsGame,
       banner,
-      imgURL
+      imgURL,
+      getGameLabel
     };
   }
 });

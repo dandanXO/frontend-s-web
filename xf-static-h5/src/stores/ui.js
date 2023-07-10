@@ -7,7 +7,8 @@ export const useUI = defineStore("ui-store", {
       drawerRight: false,
       footer: true,
       orientation: 'landscape',
-      pageName: '优惠详细信息'
+      pageName: '优惠详细信息',
+      slotLists: []
     };
   },
   actions: {

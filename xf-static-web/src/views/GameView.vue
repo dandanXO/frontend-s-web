@@ -224,6 +224,8 @@ export default defineComponent({
         return 'BBIN 电子'
       } else if (gameLabel === 'AMEBA') {
         return 'AE 电子'
+      } else if (gameLabel === 'MGP') {
+        return 'MG 电子'
       } else {
         return gameLabel + ' 电子'
       }

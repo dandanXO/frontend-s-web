@@ -43,7 +43,9 @@ export default defineComponent({
       var regDevice = store.getDeviceType();
       // console.log("Footer OnMounted");
 
-      csclient = new CsClient('DYCS', regDevice, 'zh-CN', '2', 'prod');
+      // 'DYCS' / 4
+      csclient = new CsClient('DYCS', regDevice, 'zh-CN', '2','prod', 'https://csweb01.c8nhwrqx4.com/');
+      // csclient = new CsClient('DYCS', regDevice, 'zh-CN', '2','local', '');
 
       csclient.set('pageurl', '/liveChat');
       csclient.set('btnid', 'cs-web-id');

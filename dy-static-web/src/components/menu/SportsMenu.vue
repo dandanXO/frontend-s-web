@@ -35,6 +35,7 @@ export default defineComponent({
     data: () => ({
         navigations: [
         { code: "IM", icon: "im", label: "IM", slogan: "赛事最多 玩法新颖", percentage: "5px;" },
+        { code: "PM", icon: "pm", label: "PM", slogan: "最强滚球 超高水位", percentage: "-960px;" },
         // { code: "SABA", icon: "saba", label: "沙巴", slogan: "最佳水位 最强赛事", percentage: "-270px;" },
         // { code: "CR", icon: "xf", label: "CR", slogan: "崭新玩法 感受精彩", percentage: "-560px;" },
         ],
