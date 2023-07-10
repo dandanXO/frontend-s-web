@@ -81,10 +81,10 @@ export default boot(({ app, router }) => {
           type: 'negative',
           timeout: 1000,
           position: 'top',
-          message: res.message || "Error"
+          message: res.message || "错误"
         })
       }
-      throw new Error(res.message || "Error");
+      throw new Error(res.message || "错误");
     } else {
       Loading.hide()
       return res;

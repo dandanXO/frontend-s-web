@@ -45,7 +45,8 @@ export default defineComponent({
       var regDevice = store.getDeviceType();
       // console.log("Footer OnMounted");
 
-      csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod');
+      // 'XFCS' / 2
+      csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
 
       csclient.set('pageurl', '/liveChat');
       csclient.set('btnid', 'cs-web-id');

@@ -8,12 +8,11 @@ const TOKEN_KEY = "TOKEN";
 export const userStore = defineStore("userStore", {
     state: () => {
         return {
-            id: "",
+            id: 0,
             profilePicture: "",
             displayName: "",
             nickName: "",
             realName: "",
-            loginName: "",
             birthday: "",
             phone: "",
             email: "",
@@ -23,8 +22,10 @@ export const userStore = defineStore("userStore", {
             vip: "",
             evip: "",
             currency: {value: "￥", label: "RMB"},
-            personalAddress: "",
-            unreadInboxMail: 0
+            personalAddress: '',
+            unreadInboxMail: 0,
+            phoneVerified: false,
+            emailVerified: false
         };
     },
     actions: {
@@ -70,10 +71,8 @@ export const userStore = defineStore("userStore", {
                 regDevice = "IOS";
             } else {
                 regDevice = Platform.is.mobile ? "H5" : "WEB";
-                if (Platform.is.capacitor) {
-                    if (Platform.is.android) {
-                        regDevice = "ANDROID";
-                    }
+                if (Platform.is.capacitor && Platform.is.android) {
+                    regDevice = "ANDROID";
                 }
             }
             loginInfo.way = regDevice;
@@ -91,24 +90,30 @@ export const userStore = defineStore("userStore", {
                 }
             });
         },
-        autoLogin(token) {
-            SessionStorage.set("TOKEN", token);
-        },
-        telephoneLogin(loginInfo) {
-            return mobileLogin(loginInfo)
-                .then((ret) => {
-                    if (ret.code === 0) {
-                        this.token = ret.data;
-                        this.getBalance();
-                        this.getMemberInfo();
-                    } else {
-                        // throw new Error(ret.message);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    // message.error(err.message);
-                });
+        memberLoginviaPhone(loginInfo) {
+            var regDevice = Platform.is.mobile ? "H5" : "WEB";
+            if ("standalone" in window.navigator && window.navigator.standalone) {
+                regDevice = "IOS";
+            } else {
+                regDevice = Platform.is.mobile ? "H5" : "WEB";
+                if (Platform.is.capacitor && Platform.is.android) {
+                    regDevice = "ANDROID";
+                }
+            }
+            loginInfo.way = regDevice;
+            var string = qs.stringify(loginInfo);
+            return api.post("/member/mobileLogin", string).then((ret) => {
+                if (ret.code === 0) {
+                    SessionStorage.set("TOKEN", ret.data);
+                } else {
+                    Notify.create({
+                        color: "negative",
+                        position: "top",
+                        message: ret.message,
+                        icon: "report_problem"
+                    });
+                }
+            });
         },
         getMemberInfo() {
             api.interceptors.request.use(async (req) => {
@@ -130,7 +135,6 @@ export const userStore = defineStore("userStore", {
                 if (response.code === 0) {
                     this.id = response.data.id;
                     this.nickName = response.data.loginName;
-                    this.loginName = response.data.loginName;
                     this.realName = response.data.realName;
                     this.birthday = response.data.birthday;
                     this.email = response.data.email;
@@ -138,44 +142,27 @@ export const userStore = defineStore("userStore", {
                     this.memberType = response.data.memberType;
                     this.vip = response.data.vip;
                     this.profilePicture = response.data.pictureUrl;
-                    this.displayName = response.data.displayName;
+                    this.displayName = response.data.displayName
+                    // this.personalAddress = response.data.personalAddress
                     this.phoneVerified = response.data.phoneVerified;
                     this.emailVerified = response.data.emailVerified;
-                    // this.personalAddress = response.data.personalAddress
                     if (response.data.evip) {
                         var exclusive = JSON.parse(response.data.evip);
                         this.evip = exclusive.wap;
                     }
 
                     this.unreadInboxMail = 0;
+                    // this.unreadInboxMail = 16;
                     this.getBalance();
                 } else {
                     this.memberLogout();
                 }
             });
         },
-        getUnreadTotal() {
-            if (this.token) {
-                return api.get('/session/inbox/getUnreadTotal').then((total) => {
-                    console.log(total);
-                    if (total.code === 0) {
-                        this.unreadInboxMail = total.data;
-                    }
-                })
-            }
-        },
         getBalance() {
-            // if (this.token) {
-            //   return loadBalance(MAIN).then((ret) => {
-            //     this.balance = ret.data;
-            //   });
-            // }
-
-            // "/session/balance?v=" + new Date().getTime()
-
             if (this.token) {
                 return api
-                    .get("/session/balance?v=" + new Date().getTime(), {
+                    .get("/session/balance?v=123", {
                         params: {
                             platform: "MAIN"
                         }
@@ -189,11 +176,26 @@ export const userStore = defineStore("userStore", {
                     });
             }
         },
+        getUnreadTotal() {
+            if (this.token) {
+                return api.get('/session/inbox/getUnreadTotal').then((total) => {
+                    console.log(total);
+                    if (total.code === 0) {
+                        this.unreadInboxMail = total.data;
+                    }
+                })
+            }
+        },
+        autoLogin(token) {
+            SessionStorage.set("TOKEN", token);
+        },
         memberLogout() {
-            return api.post("/session/logout").then(() => {
-                SessionStorage.remove("TOKEN");
-                location.reload();
-            });
+            return api
+                .post("/session/logout")
+                .then(() => {
+                    SessionStorage.remove("TOKEN");
+                    location.reload();
+                });
         }
     }
 });
