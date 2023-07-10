@@ -30,7 +30,7 @@ export default defineComponent({
     data: () => ({
         navigations: [
         { code: "PP", icon: "pp", label: "PP" },
-        { code: "MGP", icon: "mg", label: "MGP" },
+        { code: "MGP", icon: "mg", label: "MG" },
         { code: "PT", icon: "pt", label: "PT" },
         { code: "SW", icon: "sw", label: "SW" },
         { code: "PG", icon: "pg", label: "PG" },
