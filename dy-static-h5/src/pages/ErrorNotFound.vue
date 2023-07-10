@@ -13,7 +13,7 @@
         text-color="blue"
         unelevated
         to="/"
-        label="Go Home"
+        label="返回"
         no-caps
       />
     </div>

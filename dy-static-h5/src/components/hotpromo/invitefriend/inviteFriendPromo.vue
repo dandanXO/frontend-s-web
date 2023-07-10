@@ -16,7 +16,7 @@
                       <div class="row items-center justify-end">
                         <q-btn
                           v-close-popup
-                          label="Close"
+                          label="关闭"
                           color="primary"
                           flat
                         />

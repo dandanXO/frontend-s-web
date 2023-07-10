@@ -523,6 +523,8 @@
       width="50%"
       align-center
       style="max-width: 500px"
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
     >
       <el-form
         ref="captchaRef"

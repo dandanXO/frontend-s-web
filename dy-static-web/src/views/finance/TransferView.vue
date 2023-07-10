@@ -57,7 +57,7 @@
               </div>
               <div class="plat-name" v-else>
                 <RiWirelessChargingLine />
-                {{ p.name }}
+                {{ platNames[p.code] || p.name }}
               </div>
               <div class="balance-wrapper">
                 <span class="currency">余额:</span>
@@ -97,6 +97,7 @@
       class="transferinout"
       width="300px"
       align-center
+      @keydown.enter.prevent
     >
       <template #header>
         <div
@@ -122,7 +123,11 @@
         :label-col="{ span: 4 }"
       >
         <el-form-item ref="amount" prop="amount">
-          <el-input v-model="transferInfo.amount" placeholder="金额" />
+          <el-input
+            v-model="transferInfo.amount"
+            placeholder="金额"
+            @keyup.enter="submitTransfer"
+          />
         </el-form-item>
         <el-form-item class="txt-center">
           <!-- <button
@@ -205,6 +210,8 @@ export default defineComponent({
       platform: "",
       amount: ""
     });
+
+    const platNames = {"KYDY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "SGWin": "双赢彩票", };
 
     const transferOutAllModal = () => {
       transferAllModalVisible.value = true
@@ -365,7 +372,8 @@ export default defineComponent({
       transferOutAllModal,
       transferAllModalVisible,
       loadingTransfer,
-      refreshAllModal
+      refreshAllModal,
+      platNames
     };
   }
 });

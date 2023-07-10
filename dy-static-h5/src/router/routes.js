@@ -502,7 +502,7 @@ const routes = [
         component: () => import("pages/finance/DisplayView.vue")
       }
     ],
-    meta: {requiresAuth: true}
+    meta: {requiresAuth: false}
   },
   {
     path: "/depositLoading",

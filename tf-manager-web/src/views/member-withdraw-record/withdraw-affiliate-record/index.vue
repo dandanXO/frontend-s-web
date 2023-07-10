@@ -1465,6 +1465,7 @@ function pushRecordToData(records, exportData) {
     delete item.memberId
     delete item.withdrawCode
     delete item.withdrawName
+    delete item.financialColor
   })
   const data = records.map(record =>
     Object.values(record).map(item => (!item || item === '' ? '-' : item))
