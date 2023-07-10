@@ -653,6 +653,7 @@ export default defineComponent({
           )
           .then((data) => {
             var pf = data;
+            ui.slotLists = [];
             pf.forEach((element) => {
               const platTypes = element.gameType.split(",");
               if (platTypes.indexOf("ESPORT") > -1) {

@@ -35,15 +35,8 @@
           <RiArrowDropLeftLine />
         </router-link>
         {{ pageName }}
-        <!-- <q-btn
-          v-if="hasDrawer"
-          style="position: absolute; right: 10px"
-          flat
-          @click="ui.drawerRight = !ui.drawerRight"
-          round
-          dense
-          icon="menu"
-        /> -->
+        <q-btn v-if="hasDrawer" style="position:absolute; right: 10px;" flat @click="ui.drawerRight = !ui.drawerRight"
+               round dense icon="menu"/>
       </q-card-section>
       <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
         <q-card-section class="acct-section">
@@ -169,13 +162,12 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, onMounted, ref, watch, computed } from "vue";
 import { userStore } from "stores/index";
 import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import {translateRecord} from "src/directives/translate";
-// import EssentialLink from "components/EssentialLink.vue";
 
 import { RiArrowDropLeftLine } from "vue-remix-icons";
 
@@ -475,69 +467,71 @@ export default defineComponent({
     const hasPage = ref(false);
     const hasDrawer = ref(false);
     const leftDrawerOpen = ref(false);
-    const platformsList = ref([
+    const platformsFixed = ref([
       {
-        id: "20",
-        code: "PT",
-        icon: "pt"
+        id: '81',
+        code: 'BBINDY',
+        icon: 'bbin',
       },
       {
-        id: "37",
-        code: "SW",
-        icon: "sw"
+        id: '21',
+        code: 'PG',
+        icon: 'PG',
       },
       {
-        id: "46",
-        code: "PP",
-        icon: "pp"
+        id: '73',
+        code: 'MGP',
+        icon: 'MG',
       },
       {
-        id: "38",
-        code: "PG",
-        icon: "pg"
+        id: '27',
+        code: 'TTG',
+        icon: 'ttg',
       },
       {
-        id: "54",
-        code: "MG_PLUS",
-        icon: "mg"
+        id: '28',
+        code: 'SG',
+        icon: 'sg',
       },
       {
-        id: "42",
-        code: "CQ",
-        icon: "cq"
+        id: '46',
+        code: 'PP',
+        icon: 'pp',
       },
       {
-        id: "28",
-        code: "SG",
-        icon: "sg"
+        id: '64',
+        code: 'JDB',
+        icon: 'jdb',
       },
       {
-        id: "27",
-        code: "TTG",
-        icon: "ttg"
+        id: '70',
+        code: 'AMEBA',
+        icon: 'AMEBA',
       },
       {
-        id: "39",
-        code: "PNG",
-        icon: "png"
+        id: '54',
+        code: 'PT',
+        icon: 'pt',
       },
       {
-        id: "45",
-        code: "AE",
-        icon: "ae"
+        id: '65',
+        code: 'SW',
+        icon: 'SW',
       },
       {
-        id: "52",
-        code: "BBIN",
-        icon: "bbin"
+        id: '33',
+        code: 'CQ9',
+        icon: 'CQ9',
       },
-      {
-        id: "64",
-        code: "JDB",
-        icon: "jdb"
-      }
     ]);
 
+    const platformsList = computed(() => {
+      if (ui.slotLists.length === 0) {
+        return platformsFixed.value;
+      }
+      return ui.slotLists;
+    });
+    // console.log(platformsList.value);
     onMounted(() => {
       checkPlatform();
       checkRoute();

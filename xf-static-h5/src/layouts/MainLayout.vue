@@ -427,7 +427,7 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    console.log(platformsList.value);
+    // console.log(platformsList.value);
 
     onMounted(() => {
       checkRoute();

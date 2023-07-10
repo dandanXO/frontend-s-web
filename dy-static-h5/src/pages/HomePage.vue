@@ -629,6 +629,7 @@ export default defineComponent({
           )
           .then((data) => {
             var pf = data;
+            ui.slotLists = [];
             pf.forEach((element) => {
               const platTypes = element.gameType.split(",");
               if (platTypes.indexOf("ESPORT") > -1) {
@@ -696,7 +697,16 @@ export default defineComponent({
                 slotObj.title = translateRecord(slotObj.name) + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
-                slot.value.push(slotObj);
+                if (slotObj.code === "AG") {
+                } else {
+                  let slotItem = {
+                    id: slotObj.id,
+                    code: slotObj.code,
+                    icon: slotObj.name
+                  }
+                  ui.slotLists.push(slotItem);
+                  slot.value.push(slotObj);
+                }
               }
               if (platTypes.indexOf("FISH") > -1) {
                 var fishObj = Object.assign({}, element);
