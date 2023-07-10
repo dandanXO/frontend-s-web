@@ -97,6 +97,7 @@
       class="transferinout"
       width="300px"
       align-center
+      @keydown.enter.prevent
     >
       <template #header>
         <div
@@ -122,7 +123,11 @@
         :label-col="{ span: 4 }"
       >
         <el-form-item ref="amount" prop="amount">
-          <el-input v-model="transferInfo.amount" placeholder="金额" />
+          <el-input
+            v-model="transferInfo.amount"
+            placeholder="金额"
+            @keyup.enter="submitTransfer"
+          />
         </el-form-item>
         <el-form-item class="txt-center">
           <!-- <button

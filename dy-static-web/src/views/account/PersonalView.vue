@@ -267,6 +267,7 @@
               <el-input
                 v-model="updateSecurityVerified.verificationCode"
                 :placeholder="'验证码'"
+                @keyup.enter="submitUpdateSecurity"
               />
               <el-button
                 :disabled="disableSendVerificationButton"
@@ -294,6 +295,7 @@
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
+      @keydown.enter.prevent
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
         <el-form-item ref="captchaCode" prop="captchaCode" :rules="[
@@ -301,7 +303,7 @@
                       ]">
                       <el-space>
               <el-input
-                @keypress.enter="verifyVerificationCode"
+                @keyup.enter="verifyVerificationCode"
                 v-model="updateSecurityVerified.captchaCode"
                 :maxlength="4"
                 placeholder="验证码"
