@@ -513,10 +513,12 @@ async function exportExcel() {
   pushRecordToData(ret.records, exportData);
   exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
   query.current = ret.current;
+  query.pagingState = ret.pagingState
 
   while (query.current < ret.pages) {
     query.current += 1;
     const { data: ret } = await getExport(query);
+    query.pagingState = ret.pagingState
     pushRecordToData(ret.records, exportData);
     exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
   }
