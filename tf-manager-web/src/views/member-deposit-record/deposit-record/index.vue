@@ -1137,6 +1137,7 @@ function pushRecordToData(records, exportData) {
   records.forEach(item => {
     delete item.memberId
     delete item.thirdParty
+    delete item.financialColor
   })
   const data = records.map(record =>
     Object.values(record).map(item => (!item || item === '' ? '-' : item))
