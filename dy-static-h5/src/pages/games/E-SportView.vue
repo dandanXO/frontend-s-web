@@ -33,7 +33,7 @@ const loadGame = () => {
 };
 
 onMounted(() => {
-  $q.loading.show({ message: "Loading Page" });
+  $q.loading.show({ message: "正在加载页面" });
   if (store.token) {
     const isMobile = Platform.is.mobile;
     // launchSessionGame("TFGaming").then((ret) => {

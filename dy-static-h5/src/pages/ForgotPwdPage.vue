@@ -258,7 +258,7 @@ export default defineComponent({
       emailRef.value.validate();
       ftCaptchaRef.value.validate();
       $q.loading.show({
-        message: "Registering"
+        message: "注册中..."
       });
       if (emailRef.value.hasError || ftCaptchaRef.value.hasError) {
         $q.loading.hide();
@@ -296,7 +296,7 @@ export default defineComponent({
       newPwdRef.value.validate();
       captchaRef.value.validate();
       $q.loading.show({
-        message: "กำลังตรวจสอบ"
+        message: "提交中.."
       });
       if (
         codeRef.value.hasError ||

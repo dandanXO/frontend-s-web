@@ -114,7 +114,7 @@
                   v-model="mailboxState.mailboxList.write.content"
                   placeholder="Contents"
                 />
-                <q-btn color="brand" @click="onSubmit" label="Submit" />
+                <q-btn color="brand" @click="onSubmit" label="提交" />
               </q-form>
             </div>
           </div>
@@ -194,7 +194,7 @@ export default defineComponent({
           orderBy: "sendTime"
         }
         $q.loading.show({
-          message: 'Loading Inbox...'
+          message: '信箱加载中...'
         })
         api.get("/session/inbox", {
           params: {
@@ -221,7 +221,7 @@ export default defineComponent({
           orderBy: "createTime"
         }
         $q.loading.show({
-          message: 'Loading Outbox...'
+          message: '信箱加载中...'
         })
         api.get("/session/outbox", {
           params: {
@@ -281,24 +281,24 @@ export default defineComponent({
       title: [
         {
           required: true,
-          message: "title is required",
+          message: "请输入标题",
           trigger: "blur",
         },
         {
           max: 255,
-          message: "Length should less then 255",
+          message: "标题长度需小于 255 字",
           trigger: "change",
         },
       ],
       content: [
         {
           required: true,
-          message: "content is required",
+          message: "请输入内容",
           trigger: "blur",
         },
         {
           max: 500,
-          message: "Length should less then 500",
+          message: "内容长度需小于 500 字",
           trigger: "change",
         },
       ],

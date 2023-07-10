@@ -11,7 +11,7 @@
                 type="email"
                 filled
                 v-model="loginForm.email"
-                label="อีเมลล์"
+                label="邮箱"
                 lazy-rules
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณาใส่ที่อยู่อีเมลล์',
@@ -27,7 +27,7 @@
               <div class="row justify-between items-center">
                 <q-btn
                   @click.prevent="onSubmit"
-                  label="Submit"
+                  label="提交"
                   type="submit"
                   color="brand"
                 />
@@ -365,7 +365,7 @@ export default defineComponent({
       emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
-        message: "Registering"
+        message: "注册中..."
       });
       if (
         loginNameRef.value.hasError ||
