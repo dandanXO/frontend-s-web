@@ -136,6 +136,7 @@ import {useRoute, useRouter} from "vue-router";
 import {
   RiArrowDropLeftLine
 } from "vue-remix-icons";
+import {translateRecord} from "src/directives/translate";
 
 export default defineComponent({
   name: "MainLayout",
@@ -191,7 +192,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : route.query.platform;
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
@@ -381,7 +382,7 @@ export default defineComponent({
       {
         id: '73',
         code: 'MGP',
-        icon: 'MGP',
+        icon: 'MG',
       },
       {
         id: '39',

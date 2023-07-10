@@ -718,8 +718,9 @@ export default defineComponent({
                 lottery.value.push(lottObj);
               }
               if (platTypes.indexOf("SLOT") > -1) {
+                // console.log(element)
                 var slotObj = Object.assign({}, element);
-                slotObj.title = slotObj.name + " 电子";
+                slotObj.title = translateRecord(slotObj.name) + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
                 if (slotObj.code === "AG") {
