@@ -259,6 +259,11 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
+      start.setTime(
+        moment(start)
+          .startOf('day')
+          .format('x')
+      )
       return [start, end];
     }
   },
@@ -267,8 +272,8 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').format('x'));
+      start.setTime(moment(start).subtract(1, 'days').startOf('day').format('x'));
+      end.setTime(moment(end).subtract(1, 'days').endOf('day').format('x'));
       return [start, end];
     }
   },

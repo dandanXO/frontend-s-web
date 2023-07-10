@@ -306,6 +306,11 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
+      start.setTime(
+        moment(start)
+          .startOf('day')
+          .format('x')
+      )
       return [start, end];
     }
   },
@@ -314,8 +319,8 @@ const shortcuts = [
     value: () => {
       const end = new Date();
       const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').format('x'));
+      start.setTime(moment(start).subtract(1, 'days').startOf('day').format('x'));
+      end.setTime(moment(end).subtract(1, 'days').endOf('day').format('x'));
       return [start, end];
     }
   },
@@ -513,10 +518,12 @@ async function exportExcel() {
   pushRecordToData(ret.records, exportData);
   exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
   query.current = ret.current;
+  query.pagingState = ret.pagingState
 
   while (query.current < ret.pages) {
     query.current += 1;
     const { data: ret } = await getExport(query);
+    query.pagingState = ret.pagingState
     pushRecordToData(ret.records, exportData);
     exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
   }

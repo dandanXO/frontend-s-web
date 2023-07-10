@@ -256,7 +256,11 @@
           :label="t('fields.financialLevel')"
           align="center"
           min-width="110"
-        />
+        >
+          <template #default="scope">
+            <span :style="{color: scope.row.financialColor}">{{ scope.row.financial }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="depositAmount"
           :label="t('fields.depositAmount')"
@@ -683,6 +687,11 @@ const shortcuts = [
     value: () => {
       const end = new Date()
       const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('day')
+          .format('x')
+      )
       return [start, end]
     },
   },
@@ -694,11 +703,13 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .subtract(1, 'days')
+          .startOf('day')
           .format('x')
       )
       end.setTime(
         moment(end)
           .subtract(1, 'days')
+          .endOf('day')
           .format('x')
       )
       return [start, end]
