@@ -33,7 +33,7 @@
           </q-form>
           </div>
       </div>
-       <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px);">
+       <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px);" v-if="!isLoading">
       <div class="grid" style="padding-bottom: 20px;">
         <div
             v-for="(game, index) in gamePage.gameList"
@@ -277,25 +277,6 @@ export default defineComponent({
       }
     };
     const loadGameList = () => {
-      // if (selectedPlat.value === 'PT') {
-      // gameListData.value = [
-      //   {
-      //     name: '水牛闪电战',
-      //     default: require("../../assets/images/games/aviator/default.png"),
-      //     icon: 'https://jsn92.czxinbang.com/xf-resource/app/games_new/PT/bfb.png'
-      //   },
-
-      //   {
-      //     name: '三倍猴子',
-      //     default: require("../../assets/images/games/aviator/default.png"),
-      //     icon: 'https://jsn92.czxinbang.com/xf-resource/app/games_new/PT/trpmnk.png'
-      //   }
-      // ]
-
-      // } else {
-      //   gameListData.value = []
-      // }
-      // changePage(1, gamePage.pageSize);
       isLoading.value= true;
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB"
       const code = selectedPlatId.value;
@@ -315,6 +296,7 @@ export default defineComponent({
           return res
         }
       }).catch((err) => {
+        isLoading.value = false;
       })).then((res) => {
           res.forEach(element => {
             element.default = require("../../assets/images/games/aviator/default.png");

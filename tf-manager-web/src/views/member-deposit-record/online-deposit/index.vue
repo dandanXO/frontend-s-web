@@ -71,7 +71,7 @@
       >
         <el-table-column prop="serialNumber" :label="t('fields.serialNo')" align="center" min-width="210" />
         <el-table-column prop="thirdSerialNumber" :label="t('fields.thirdSerialNo')" align="center" min-width="210" />
-        <el-table-column prop="cardAccount" :label="t('fields.thirdParty')" align="center" min-width="120">
+        <el-table-column v-permission="['sys:deposit:column:third']" prop="cardAccount" :label="t('fields.thirdParty')" align="center" min-width="120">
           <template #default="scope">
             <span v-if="scope.row.cardAccount === null">-</span>
             <span v-if="scope.row.cardAccount !== null">{{ scope.row.cardAccount }}</span>

@@ -217,6 +217,7 @@
           :label="t('fields.thirdParty')"
           align="center"
           min-width="120"
+          v-permission="['sys:deposit:column:third']"
         >
           <template #default="scope">
             <span v-if="scope.row.cardAccount === null">-</span>
