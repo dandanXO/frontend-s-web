@@ -10,7 +10,6 @@
           style="width: 250px;"
           default-first-option
           @focus="loadSites"
-          @change="changeSite"
         >
           <el-option
             v-for="item in siteList.list"
@@ -19,7 +18,7 @@
             :value="item.id"
           />
         </el-select>
-        <el-input type="textarea" v-model="request.loginName" :rows="4" style="width: 400px; margin-top: 5px;" maxlength="500" show-word-limit :placeholder="t('fields.loginNameSeparateComma')" />
+        <el-input type="textarea" v-model="request.loginName" :rows="4" style="width: 400px; margin-top: 5px;" :placeholder="t('fields.loginName')" />
         <div class="btn-group">
           <el-button icon="el-icon-search" size="mini" type="success" @click="loadMemberVip">
             {{ t('fields.search') }}
@@ -97,6 +96,10 @@ async function loadMemberVip() {
       query[key] = value;
     }
   });
+  if (query.loginName !== null) {
+    query.loginName = query.loginName.replaceAll('\n', ',');
+  }
+  console.log(query.loginName)
   const { data: ret } = await getMemberVip(query);
   page.pages = ret.pages;
   page.records = ret.records;
