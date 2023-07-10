@@ -63,9 +63,9 @@
         游戏平台
       </div>
       <div class="platforms q-pt-md">
-<!--        <div class="text-bright q-px-sm q-pt-md">-->
-<!--          -->
-<!--        </div>-->
+        <!--        <div class="text-bright q-px-sm q-pt-md">-->
+        <!--          -->
+        <!--        </div>-->
       </div>
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import {userStore} from "stores/index";
 import {useUI} from "stores/ui";
 import {useRoute, useRouter} from "vue-router";
@@ -136,6 +136,7 @@ import {useRoute, useRouter} from "vue-router";
 import {
   RiArrowDropLeftLine
 } from "vue-remix-icons";
+import {translateRecord} from "src/directives/translate";
 
 export default defineComponent({
   name: "MainLayout",
@@ -191,7 +192,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : route.query.platform;
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
@@ -362,31 +363,21 @@ export default defineComponent({
     const hasPage = ref(false);
     const hasDrawer = ref(false);
     const leftDrawerOpen = ref(false);
-    const platformsList = ref([
-      {
-        id: '64',
-        code: 'JDB',
-        icon: 'jdb',
-      },
+    const platformsFixed = ref([
       {
         id: '81',
         code: 'BBINDY',
         icon: 'bbin',
       },
-      // {
-      //   id: '26',
-      //   code: 'AG',
-      //   icon: 'ag',
-      // },
+      {
+        id: '21',
+        code: 'PG',
+        icon: 'PG',
+      },
       {
         id: '73',
         code: 'MGP',
-        icon: 'MGP',
-      },
-      {
-        id: '39',
-        code: 'PNG',
-        icon: 'png',
+        icon: 'MG',
       },
       {
         id: '27',
@@ -404,6 +395,11 @@ export default defineComponent({
         icon: 'pp',
       },
       {
+        id: '64',
+        code: 'JDB',
+        icon: 'jdb',
+      },
+      {
         id: '70',
         code: 'AMEBA',
         icon: 'AMEBA',
@@ -414,11 +410,24 @@ export default defineComponent({
         icon: 'pt',
       },
       {
+        id: '65',
+        code: 'SW',
+        icon: 'SW',
+      },
+      {
         id: '33',
         code: 'CQ9',
         icon: 'CQ9',
       },
     ]);
+
+    const platformsList = computed(() => {
+      if (ui.slotLists.length === 0) {
+        return platformsFixed.value;
+      }
+      return ui.slotLists;
+    });
+    console.log(platformsList.value);
 
     onMounted(() => {
       checkRoute();

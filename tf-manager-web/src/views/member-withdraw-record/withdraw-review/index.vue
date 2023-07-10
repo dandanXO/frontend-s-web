@@ -169,15 +169,159 @@
     </div>
 
     <el-table
+      :data="totalwithdraw.records"
+      ref="table"
+      v-loading="page.loading"
+      height="100"
+      border
+      :header-cell-style="{background: 'lightgray'}"
+      :empty-text="t('fields.noData')"
+    >
+      <el-table-column prop="deposit" :label="t('fields.totalDeposit')" width="120">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.deposit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="depositCount"
+        :label="t('fields.totalDepositCount')"
+        width="120"
+      />
+      <el-table-column
+        prop="withdraw"
+        :label="t('fields.totalWithdraw')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.withdraw,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="withdrawCount"
+        :label="t('fields.totalWithdrawCount')"
+        width="130"
+      />
+      <el-table-column
+        prop="totalBet"
+        :label="t('fields.totalBet')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.totalBet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalPayout"
+        :label="t('fields.totalPayout')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.totalPayout,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="transferIn"
+        :label="t('fields.totalTransferIn')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.transferIn,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="transferOut"
+        :label="t('fields.totalTransferOut')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.transferOut,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="promo" :label="t('fields.totalPromo')" width="120">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.promo,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="adjustment"
+        :label="t('fields.totalAdjustment')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.adjustment,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="profit" :label="t('fields.totalProfit')" width="120">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.profit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-table
       :data="page.records"
       ref="table"
       row-key="id"
       size="small"
       highlight-current-row
       v-loading="page.loading"
-      :summary-method="getSummaries"
-      show-summary
       height="500"
+      :header-cell-style="{background: 'lightgray'}"
       :empty-text="t('fields.noData')"
     >
       <el-table-column
@@ -432,7 +576,7 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getMemberReport, addReview } from '../../../api/report-summary'
+import { getMemberReport, addReview, getTotalWithdrawReview } from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -511,6 +655,10 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+})
+const totalwithdraw = reactive({
+  pages: 0,
+  records: [],
 })
 const reviewForm = ref(null)
 const form = reactive({
@@ -737,9 +885,12 @@ async function loadMemberRecord() {
     }
 
     const { data: ret } = await getMemberReport(query)
-
     page.pages = ret.pages
     page.records = ret.records
+
+    const { data: ret1 } = await getTotalWithdrawReview(query)
+    totalwithdraw.records = ret1
+
     page.loading = false
   }
 }
@@ -862,55 +1013,55 @@ function pushRecordToData(records, exportData) {
   exportData.push(...data)
 }
 
-function getSummaries(param) {
-  if (hasPermission(['sys:report:summary:total'])) {
-    const { columns, data } = param
-    var sums = []
-    columns.forEach((column, index) => {
-      if (index === 0) {
-        sums[index] = 'Total'
-        return
-      }
-      const values = data.map(item => Number(item[column.property]))
+// function getSummaries(param) {
+//   if (hasPermission(['sys:report:summary:total'])) {
+//     const { columns, data } = param
+//     var sums = []
+//     columns.forEach((column, index) => {
+//       if (index === 0) {
+//         sums[index] = 'Total'
+//         return
+//       }
+//       const values = data.map(item => Number(item[column.property]))
 
-      if (
-        !values.every(value => Number.isNaN(value)) &&
-        index !== 3 &&
-        index !== 5 &&
-        index !== 13 &&
-        index !== 14 &&
-        index !== 15
-      ) {
-        sums[index] = `$ ${values
-          .reduce((prev, curr) => {
-            const value = Number(curr)
-            if (!Number.isNaN(value)) {
-              return prev + curr
-            } else {
-              return prev
-            }
-          }, 0)
-          .toFixed(2)}`
-      } else if (
-        !values.every(value => Number.isNaN(value)) &&
-        (index === 3 || index === 5)
-      ) {
-        sums[index] = `${values.reduce((prev, curr) => {
-          const value = Number(curr)
-          if (!Number.isNaN(value)) {
-            return prev + curr
-          } else {
-            return prev
-          }
-        }, 0)}`
-      }
-    })
+//       if (
+//         !values.every(value => Number.isNaN(value)) &&
+//         index !== 3 &&
+//         index !== 5 &&
+//         index !== 13 &&
+//         index !== 14 &&
+//         index !== 15
+//       ) {
+//         sums[index] = `$ ${values
+//           .reduce((prev, curr) => {
+//             const value = Number(curr)
+//             if (!Number.isNaN(value)) {
+//               return prev + curr
+//             } else {
+//               return prev
+//             }
+//           }, 0)
+//           .toFixed(2)}`
+//       } else if (
+//         !values.every(value => Number.isNaN(value)) &&
+//         (index === 3 || index === 5)
+//       ) {
+//         sums[index] = `${values.reduce((prev, curr) => {
+//           const value = Number(curr)
+//           if (!Number.isNaN(value)) {
+//             return prev + curr
+//           } else {
+//             return prev
+//           }
+//         }, 0)}`
+//       }
+//     })
 
-    return sums
-  } else {
-    return '-'
-  }
-}
+//     return sums
+//   } else {
+//     return '-'
+//   }
+// }
 
 async function loadDetail() {
   loadVipList()

@@ -174,6 +174,7 @@ import { userStore } from "stores/index";
 import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
+import {translateRecord} from "src/directives/translate";
 // import EssentialLink from "components/EssentialLink.vue";
 
 import { RiArrowDropLeftLine } from "vue-remix-icons";
@@ -307,7 +308,8 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            pageName.value = `${route.query.platform}游戏大厅`;
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform);
+            pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";

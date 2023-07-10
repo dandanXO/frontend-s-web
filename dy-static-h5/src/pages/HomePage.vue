@@ -693,7 +693,7 @@ export default defineComponent({
               }
               if (platTypes.indexOf("SLOT") > -1) {
                 var slotObj = Object.assign({}, element);
-                slotObj.title = slotObj.name + " 电子";
+                slotObj.title = translateRecord(slotObj.name) + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
                 slot.value.push(slotObj);
