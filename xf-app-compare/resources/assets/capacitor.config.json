@@ -1,0 +1,7 @@
+{
+	"appId": "com.xf.client",
+	"appName": "兴發",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "www"
+}

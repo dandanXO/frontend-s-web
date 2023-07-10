@@ -697,16 +697,14 @@ export default defineComponent({
                 slotObj.title = translateRecord(slotObj.name) + " 电子";
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
-                if (slotObj.code === "AG") {
-                } else {
-                  let slotItem = {
-                    id: slotObj.id,
-                    code: slotObj.code,
-                    icon: slotObj.name
-                  }
-                  ui.slotLists.push(slotItem);
-                  slot.value.push(slotObj);
+
+                let slotItem = {
+                  id: slotObj.id,
+                  code: slotObj.code,
+                  icon: slotObj.name
                 }
+                ui.slotLists.push(slotItem);
+                slot.value.push(slotObj);
               }
               if (platTypes.indexOf("FISH") > -1) {
                 var fishObj = Object.assign({}, element);
