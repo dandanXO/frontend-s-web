@@ -654,6 +654,9 @@ export default defineComponent({
                 if (spObj.code === "IM") {
                   spObj.title = "IM体育";
                 }
+                if (spObj.code === "PM") {
+                  spObj.title = "PM体育";
+                }
                 if (spObj.code === "IA") {
                   spObj.title = "小艾体育";
                 }
