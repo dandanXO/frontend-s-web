@@ -298,6 +298,8 @@
       </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="100" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200" />
+      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="100" />
       <el-table-column :label="t('fields.operate')" align="center" fixed="right" min-width="500"
                        v-if="hasPermission(['sys:user:update:password'])||hasPermission(['sys:user:update'])||hasPermission(['sys:user:delete'])"
       >

@@ -59,9 +59,7 @@
           </div>
           <div
             v-if="
-              (det.status == 'PENDING' || det.status == 'STEP_1') &&
-              (recordType === 'deposit' || recordType === 'withdraw')
-            "
+            (recordType === 'deposit' && det.status === 'PENDING') || (recordType === 'withdraw' && det.status === 'STEP_1')"
             class="buttons"
           >
             <q-btn

@@ -256,7 +256,11 @@
           :label="t('fields.financialLevel')"
           align="center"
           min-width="110"
-        />
+        >
+          <template #default="scope">
+            <span :style="{color: scope.row.financialColor}">{{ scope.row.financial }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="depositAmount"
           :label="t('fields.depositAmount')"
@@ -286,16 +290,13 @@
           prop="status"
           :label="t('fields.status')"
           align="center"
-          min-width="110"
+          min-width="145"
         >
           <template #default="scope">
-            <el-tag
-              v-if="
-                scope.row.status === 'SUCCESS' ||
-                  scope.row.status === 'SUPPLEMENT_SUCCESS'
-              "
-              type="success"
-            >
+            <el-tag v-if="scope.row.status === 'SUCCESS'" type="success">
+              {{ t('depositStatus.' + scope.row.status) }}
+            </el-tag>
+            <el-tag v-if="scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success">
               {{ t('depositStatus.' + scope.row.status) }}
             </el-tag>
             <el-tag v-if="scope.row.status === 'CLOSED'" type="danger">
@@ -686,6 +687,11 @@ const shortcuts = [
     value: () => {
       const end = new Date()
       const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('day')
+          .format('x')
+      )
       return [start, end]
     },
   },
@@ -697,11 +703,13 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .subtract(1, 'days')
+          .startOf('day')
           .format('x')
       )
       end.setTime(
         moment(end)
           .subtract(1, 'days')
+          .endOf('day')
           .format('x')
       )
       return [start, end]
@@ -1084,6 +1092,7 @@ async function showDialog(type) {
 async function exportExcel() {
   uiControl.progressBarVisible = true
   const query = checkQuery()
+  query.current = 1;
   const { data: ret } = await getDepositRecord(query)
   const exportData = [EXPORT_HEADER]
   const maxLength = []
