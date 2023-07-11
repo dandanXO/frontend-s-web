@@ -99,7 +99,7 @@
               <p>邀请好友累计充值200元奖励18元</p>
               <button
                 v-show="welcomeState.stateDetails.firstFriendState != 'CLAIMED'"
-                :disabled="welcomeState.stateDetails.firstDepositState != 'YES'"
+                :disabled="welcomeState.stateDetails.firstFriendState != 'YES'"
                 :class="[
                   invite - button,
                   welcomeState.stateDetails.firstFriendState != 'YES'
@@ -112,7 +112,7 @@
               </button>
               <button
                 v-show="welcomeState.stateDetails.firstFriendState == 'CLAIMED'"
-                :disabled="welcomeState.stateDetails.firstDepositState != 'YES'"
+                :disabled="welcomeState.stateDetails.firstFriendState != 'YES'"
                 :class="[
                   invite - button,
                   welcomeState.stateDetails.firstFriendState != 'YES'
