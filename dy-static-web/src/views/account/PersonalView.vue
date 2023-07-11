@@ -9,9 +9,7 @@
           <div class="basic-info">
             <div class="basic-info-table">
               <div class="tbl-row">
-                <div class="basic-info-cell title">
-                  昵称
-                </div>
+                <div class="basic-info-cell title">昵称</div>
                 <div
                   v-if="personalState.memberInfo.loginName"
                   class="basic-info-cell content"
@@ -20,9 +18,7 @@
                 </div>
               </div>
               <div class="tbl-row">
-                <div class="basic-info-cell title">
-                  姓名
-                </div>
+                <div class="basic-info-cell title">姓名</div>
                 <div
                   v-if="personalState.memberInfo.realName"
                   class="basic-info-cell content"
@@ -37,7 +33,11 @@
                       prop="realName"
                       :rules="[
                         { required: true, message: '请输入姓名' },
-                        { pattern: '^([\u4e00-\u9fa5]*)$', message: '请输入中文字符', trigger: 'change'}
+                        {
+                          pattern: '^([\u4e00-\u9fa5]*)$',
+                          message: '请输入中文字符',
+                          trigger: 'change'
+                        }
                       ]"
                     >
                       <el-input
@@ -49,9 +49,7 @@
                 </div>
               </div>
               <div class="tbl-row">
-                <div class="basic-info-cell title">
-                  生日
-                </div>
+                <div class="basic-info-cell title">生日</div>
                 <div
                   v-if="personalState.memberInfo.birthday"
                   class="basic-info-cell content"
@@ -67,7 +65,7 @@
                       :rules="[{ required: true, message: '请输入生日' }]"
                     >
                       <el-date-picker
-                        style="max-width: 190px;"
+                        style="max-width: 190px"
                         v-model="updateFormDetails.birthday"
                         value-format="YYYY-MM-DD"
                         placeholder="生日"
@@ -77,9 +75,7 @@
                 </div>
               </div>
               <div class="tbl-row">
-                <div class="basic-info-cell title">
-                  电话
-                </div>
+                <div class="basic-info-cell title">电话</div>
                 <div
                   v-if="personalState.memberInfo.telephone"
                   class="basic-info-cell content"
@@ -102,19 +98,19 @@
                       />
                     </el-form-item>
                   </div> -->
-                  <el-button size="small"
+                  <el-button
+                    size="small"
                     class="common-btn"
                     v-if="!personalState.memberInfo.phoneVerified"
                     type="button"
                     @click="updatePhoneModal"
-                  >验证
+                  >
+                    验证
                   </el-button>
                 </div>
               </div>
               <div class="tbl-row">
-                <div class="basic-info-cell title">
-                  邮箱
-                </div>
+                <div class="basic-info-cell title">邮箱</div>
                 <div
                   v-if="personalState.memberInfo.email"
                   class="basic-info-cell content"
@@ -137,24 +133,27 @@
                       />
                     </el-form-item>
                   </div> -->
-                  <el-button size="small"
+                  <el-button
+                    size="small"
                     class="common-btn"
                     v-if="!personalState.memberInfo.emailVerified"
                     type="button"
                     @click="updateSecurityModal"
-                  >验证
+                  >
+                    验证
                   </el-button>
                 </div>
               </div>
 
-                <el-button
-                  style="margin-top: 10px;"
-                  :loading="loadingBtn"
-                  class="common-btn"
-                  v-if="isEdit"
-                  @click="updateState"
-                  >提交</el-button
-                >
+              <el-button
+                style="margin-top: 10px"
+                :loading="loadingBtn"
+                class="common-btn"
+                v-if="isEdit"
+                @click="updateState"
+              >
+                提交
+              </el-button>
 
               <el-button
                 class="common-btn"
@@ -166,12 +165,14 @@
                     !personalState.memberInfo.telephone)
                 "
                 @click="isEdit = !isEdit"
-                >编辑</el-button
               >
+                编辑
+              </el-button>
             </div>
           </div>
           <div class="buttons">
-            <el-button size="large"
+            <el-button
+              size="large"
               class="common-btn light"
               @click="updatePwdModal"
             >
@@ -179,19 +180,15 @@
             </el-button>
           </div>
         </div>
-          <div class="account-tip-text red">
-            <el-icon>
-            <InfoFilled style="font-size: 15px; line-height: 20px;" />
-            </el-icon>
-            <div class="link">
+        <div class="account-tip-text red">
+          <el-icon>
+            <InfoFilled style="font-size: 15px; line-height: 20px" />
+          </el-icon>
+          <div class="link">
             如果您需要修改个人资料，请您联系我们的
-            <a
-              @click.stop.prevent="store.openLiveChat()"
-            >
-              在线客服
-            </a>
-            </div>
+            <a @click.stop.prevent="store.openLiveChat()">在线客服</a>
           </div>
+        </div>
       </el-form>
     </div>
     <el-dialog
@@ -263,26 +260,31 @@
           ref="verificationCode"
           prop="verificationCode"
         >
-        <el-space>
-              <el-input
-                v-model="updateSecurityVerified.verificationCode"
-                :placeholder="'验证码'"
-                @keyup.enter="submitUpdateSecurity"
-              />
-              <el-button
-                :disabled="disableSendVerificationButton"
-                size="small"
-                class="common-btn verification-btn"
-                @click="openVerificationModal">
-                <span v-if="disableSendVerificationButton">已发送（倒数{{ countDown }}秒)</span>
-                <span v-else >发送验证码</span>
-              </el-button>
-
-              
-            </el-space>
+          <el-space>
+            <el-input
+              v-model="updateSecurityVerified.verificationCode"
+              :placeholder="'验证码'"
+              @keyup.enter="submitUpdateSecurity"
+            />
+            <el-button
+              :disabled="disableSendVerificationButton"
+              size="small"
+              class="common-btn verification-btn"
+              @click="openVerificationModal"
+            >
+              <span v-if="disableSendVerificationButton">
+                已发送（倒数{{ countDown }}秒)
+              </span>
+              <span v-else>发送验证码</span>
+            </el-button>
+          </el-space>
         </el-form-item>
-        <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity"
-          >提交
+        <el-button
+          :loading="loadingSecurityBtn"
+          class="common-btn verification-btn"
+          @click="submitUpdateSecurity"
+        >
+          提交
         </el-button>
       </el-form>
     </el-dialog>
@@ -298,31 +300,34 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[
-                        { required: true, message: '请输入验证码' },
-                      ]">
-                      <el-space>
-              <el-input
-                @keyup.enter="verifyVerificationCode"
-                v-model="updateSecurityVerified.captchaCode"
-                :maxlength="4"
-                placeholder="验证码"
-              />
+        <el-form-item
+          ref="captchaCode"
+          prop="captchaCode"
+          :rules="[{ required: true, message: '请输入验证码' }]"
+        >
+          <el-space>
+            <el-input
+              @keyup.enter="verifyVerificationCode"
+              v-model="updateSecurityVerified.captchaCode"
+              :maxlength="4"
+              placeholder="验证码"
+            />
 
-              <div class="verification" @click="getCode()">
-            <img style="width: 80%; margin-top: 6px;" :src="verificationImg" />
-          </div>
-        </el-space>
+            <div class="verification" @click="getCode()">
+              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+            </div>
+          </el-space>
         </el-form-item>
       </el-form>
       <el-button
         class="common-btn"
         @click="verifyVerificationCode"
         :loading="isEmailSending"
-        >验证</el-button
       >
+        验证
+      </el-button>
     </el-dialog>
-    
+
     <el-dialog
       wrap-class-name="securityModal"
       v-model="updatePhoneModalVisible"
@@ -350,30 +355,34 @@
           ref="verificationCode"
           prop="verificationCode"
         >
-        <el-space>
-              <el-input
-                type="password"
-                v-model="updatePhoneVerified.verificationCode"
-                :placeholder="'验证码'"
-              />
-              <el-button
-                :disabled="disableSendPhoneButton"
-                size="small"
-                class="common-btn verification-btn"
-                @click="openPhoneVerificationModal">
-                <span v-if="disableSendPhoneButton">已发送（倒数{{ countDown }}秒)</span>
-                <span v-else >发送验证码</span>
-              </el-button>
-
-              
-            </el-space>
+          <el-space>
+            <el-input
+              v-model="updatePhoneVerified.verificationCode"
+              :placeholder="'验证码'"
+            />
+            <el-button
+              :disabled="disableSendPhoneButton"
+              size="small"
+              class="common-btn verification-btn"
+              @click="openPhoneVerificationModal"
+            >
+              <span v-if="disableSendPhoneButton">
+                已发送（倒数{{ countDown }}秒)
+              </span>
+              <span v-else>发送验证码</span>
+            </el-button>
+          </el-space>
         </el-form-item>
-        <el-button :loading="loadingPhoneBtn" class="common-btn verification-btn" @click="submitUpdatePhone"
-          >提交
+        <el-button
+          :loading="loadingPhoneBtn"
+          class="common-btn verification-btn"
+          @click="submitUpdatePhone"
+        >
+          提交
         </el-button>
       </el-form>
     </el-dialog>
-    
+
     <el-dialog
       wrap-class-name="phoneModal"
       v-model="verificationPhoneModalVisible"
@@ -384,29 +393,32 @@
       :close-on-press-escape="false"
     >
       <el-form ref="captchaUpdateRef" :model="updatePhoneVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[
-                        { required: true, message: '请输入验证码' },
-                      ]">
-                      <el-space>
-              <el-input
-                @keypress.enter="verifyPhoneVerificationCode"
-                v-model="updatePhoneVerified.captchaCode"
-                :maxlength="4"
-                placeholder="验证码"
-              />
+        <el-form-item
+          ref="captchaCode"
+          prop="captchaCode"
+          :rules="[{ required: true, message: '请输入验证码' }]"
+        >
+          <el-space>
+            <el-input
+              @keypress.enter="verifyPhoneVerificationCode"
+              v-model="updatePhoneVerified.captchaCode"
+              :maxlength="4"
+              placeholder="验证码"
+            />
 
-              <div class="verification" @click="getCode()">
-            <img style="width: 80%; margin-top: 6px;" :src="verificationImg" />
-          </div>
-        </el-space>
+            <div class="verification" @click="getCode()">
+              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+            </div>
+          </el-space>
         </el-form-item>
       </el-form>
       <el-button
         class="common-btn"
         @click="verifyPhoneVerificationCode"
         :loading="isPhoneSending"
-        >验证</el-button
       >
+        验证
+      </el-button>
     </el-dialog>
   </div>
 </template>
@@ -463,6 +475,7 @@ export default defineComponent({
     const disableSendVerificationButton = ref(initialSendOtpDisabledTimeout);
     const disableSendPhoneButton = ref(initialSendOtpDisabledTimeout);
     const countDown = ref(sendOtpDisabledTimeoutLeft);
+    const countDownPhone = ref(sendOtpDisabledTimeoutLeft);
 
     const loadingBtn = ref(false)
     const loadingPwBtn = ref(false)
@@ -545,17 +558,25 @@ export default defineComponent({
       updateSecurityModalVisible.value = true;
     };
     const openVerificationModal = () => {
-      getCode();
-      verificationModalVisible.value = true;
+      updateSecurityFormRef.value.validateField('emailAddress').then((resp) => {
+          // captchaForm.captchaCode = "";
+          getCode();
+          verificationModalVisible.value = true;
+
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的邮件',
+              type: 'error',
+            })
+        })
     }
     const verifyVerificationCode = () => {
       captchaUpdateRef.value
         .validate()
         .then(() => {
-
       isEmailSending.value = true
       verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
-      
+
       const emailDetails =  {
         email: updateSecurityVerified.emailAddress,
         captchaCode: updateSecurityVerified.captchaCode,
@@ -613,7 +634,7 @@ export default defineComponent({
               updateSecurityModalVisible.value = false
 
               loadInfo()
-              
+
             }
           }).catch((e) => {
             console.log(e.message);
@@ -627,10 +648,25 @@ export default defineComponent({
     // Phone
 
     const verificationPhoneModalVisible = ref(false)
+    // const openPhoneVerificationModal = () => {
+    //   getCode();
+    //   verificationPhoneModalVisible.value = true;
+    // }
     const openPhoneVerificationModal = () => {
-      getCode();
-      verificationPhoneModalVisible.value = true;
+      updatePhoneFormRef.value.validateField('phone').then((resp) => {
+          // captchaForm.captchaCode = "";
+          getCode();
+          verificationPhoneModalVisible.value = true;
+          console.log()
+
+        }).catch((err) => {
+            ElMessage({
+              message: '请输入有效的电话号码',
+              type: 'error',
+            })
+        })
     }
+
     const updatePhoneModalVisible = ref(false)
     const updatePhoneFormRef = ref();
     const updatePhoneModal = () => {
@@ -645,7 +681,7 @@ export default defineComponent({
 
       isPhoneSending.value = true
       verificationPhoneDetails.memberInfo.phone = updatePhoneVerified.phone
-      
+
       const phoneDetails =  {
         telephone: updatePhoneVerified.phone,
         captchaCode: updatePhoneVerified.captchaCode,
@@ -709,8 +745,8 @@ export default defineComponent({
         }).catch((error) => {
         console.log("error", error);
       });
-      
-        
+
+
       loadingPhoneBtn.value = false
     };
 
@@ -725,6 +761,7 @@ export default defineComponent({
         lsRemove(phoneKey);
 
         disableSendVerificationButton.value = false
+        disableSendPhoneButton.value = false
       }
     }
 
@@ -759,7 +796,7 @@ export default defineComponent({
       phone: [
         {
           required: true,
-          message: "请输入电话地址",
+          message: "请输入电话号码",
           trigger: "blur",
         },
       ],
@@ -866,7 +903,7 @@ export default defineComponent({
             console.log(err.message);
           })
         })
- 
+
       loadingBtn.value = false
     }
 
@@ -916,7 +953,8 @@ export default defineComponent({
       loadingPhoneBtn,
       disableSendVerificationButton,
       disableSendPhoneButton,
-      countDown
+      countDown,
+      countDownPhone
     };
   }
 });
@@ -924,23 +962,23 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .personal-container {
-    border-radius: 3px;
+  border-radius: 3px;
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  margin: 0 auto;
+  .el-form {
+    width: 100%;
+  }
+  .personal-wrapper {
     display: flex;
-    padding: 20px;
     justify-content: space-between;
-    margin: 0 auto;
-    .el-form {
-      width: 100%;
-    }
-    .personal-wrapper {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      gap: 50px;
-      .basic-info {
-        padding-bottom: 20px;
-        flex: 1;
-        border-right: 1px solid #aaaaaa;
+    width: 100%;
+    gap: 50px;
+    .basic-info {
+      padding-bottom: 20px;
+      flex: 1;
+      border-right: 1px solid #aaaaaa;
 
       .basic-info-table {
         display: flex;
@@ -948,32 +986,30 @@ export default defineComponent({
         justify-content: center;
         align-items: flex-start;
         flex-direction: column;
-      .tbl-row {
-        display: flex;
-        justify-content: flex-start;
-        gap: 10px;
-        align-items: center;
-        .basic-info-cell {
-          &.title {
-            width: 40px;
+        .tbl-row {
+          display: flex;
+          justify-content: flex-start;
+          gap: 10px;
+          align-items: center;
+          .basic-info-cell {
+            &.title {
+              width: 40px;
+            }
+            &.content {
+              padding: 5px 0;
+            }
           }
-          &.content {
-            padding: 5px 0;
+          .el-form-item {
+            margin: 0;
           }
         }
-        .el-form-item {
-          margin: 0;
-        }
-      }
-      }
-      }
-      .buttons {
-        flex: 1;
-        display: flex;
-        justify-content: flex-end;
       }
     }
-
+    .buttons {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
 }
-
 </style>
