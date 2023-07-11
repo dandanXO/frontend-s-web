@@ -1,7 +1,7 @@
 <template>
   <div v-if="isH5" class="download-top-container">
     <div class="download-top-box">
-      <q-icon name="close" @click="isH5 = false"/>
+      <q-icon name="close" @click="closeTopBox"/>
       <img
           class="headicon"
           src="../assets/images/index/head_logo.png"
@@ -172,6 +172,7 @@
           @swiper="setFirstSwiper"
           :controller="{ control: secondSwiper }"
           class="secondSwiper"
+          id="btm-second-swiper"
       >
         <swiper-slide
             v-for="(live, i) in livecasino"
@@ -867,6 +868,13 @@ export default defineComponent({
       }
     };
 
+    const closeTopBox = () => {
+      isH5.value = false;
+      var btmSwiper = document.getElementById("btm-second-swiper");
+      btmSwiper.classList.add('longer-swiper');
+
+    }
+
     // const checkShowImgTop = () => {
     //   const lastTime = localStorage.getItem("indexImgTop");
     //   if (lastTime) {
@@ -945,7 +953,8 @@ export default defineComponent({
       isAppUpdateModal,
       cancelUpdate,
       openDownloadPage,
-      homePopupImg
+      homePopupImg,
+      closeTopBox
     };
   }
 });
@@ -955,6 +964,10 @@ export default defineComponent({
   height: calc(100vh - 410px);
   padding-bottom: 0px;
   padding-top: 25px;
+}
+
+.longer-swiper {
+  height: calc(100vh - 380px);
 }
 
 :deep(.secondSwiper .swiper-wrapper) {
@@ -990,6 +1003,10 @@ export default defineComponent({
       // padding-top: 30px;
     }
   }
+}
+
+:deep(.firstSwiper .swiper-wrapper) {
+  background: #fff;
 }
 
 .swiper-container {

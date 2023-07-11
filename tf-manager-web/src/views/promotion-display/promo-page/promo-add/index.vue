@@ -332,6 +332,7 @@ const promoTypes = [
   { typeName: 'FISH', value: 4 },
   { typeName: 'LIVE CASINO', value: 5 },
   { typeName: 'SLOT GAME', value: 6 },
+  { typeName: 'POKER', value: 7 }
 ]
 
 function handleCheckedChangePromoType() {

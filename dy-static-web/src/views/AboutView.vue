@@ -3,7 +3,6 @@
     <div class="about-container-inner">
     <el-tabs
       v-model="activeTab"
-      :tab-position="windowSize > 768 ? 'left' : 'top'"
       @tab-click="updateTab"
     >
       <template #tabBarExtraContent v-if="windowSize > 768">
@@ -254,28 +253,39 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .about-container {
-    color: #25415b;
-  min-height: 1062px;
+  // min-height: 1062px;
+    min-height: calc(100vh - 330px);
+    height: 570px;
+    background: url(../assets/about/bg.png)no-repeat left top;
+    background-position: -80px 0px;
+    overflow: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+    }
   .about-container-inner {
+    max-width: calc($maxwidth - 150px);
     margin: 0 auto;
-    max-width: $maxwidth
+    margin-left: 500px;
   }
-
+  
   .el-tabs .el-tabs__nav {
     float: none;
   }
 .el-tabs .el-tabs__item {
   text-align: left;
   margin: 10px 0;
-  width: 300px;
-  height: 55px;
-  padding-left: 90px;
-  padding-top: 15px;
-  line-height: 55px;
 }
 .el-tabs .el-tabs__item.is-top {
-    padding: 0 20px;
+  padding-left: 80px;
+  line-height: 55px;
   display: block;
+  margin: 20px 0;
+}
+.el-tabs--left .el-tabs__header.is-left, .el-tabs--left .el-tabs__header.is-right, .el-tabs--left .el-tabs__nav-scroll, .el-tabs--left .el-tabs__nav-wrap.is-left, .el-tabs--left .el-tabs__nav-wrap.is-right, .el-tabs--right .el-tabs__header.is-left, .el-tabs--right .el-tabs__header.is-right, .el-tabs--right .el-tabs__nav-scroll, .el-tabs--right .el-tabs__nav-wrap.is-left, .el-tabs--right .el-tabs__nav-wrap.is-right {
+
+  height: auto;
 }
 .el-tabs__active-bar {
   display: none;
@@ -283,94 +293,95 @@ export default defineComponent({
 .el-tabs__nav-wrap::after {
   display: none;
 }
-.el-tabs__nav-scroll {
-  
-  width: 280px;
-    right: 0;
-    position: absolute;
-    top: 320px;
-}
 .el-tabs__header {
-    // position: fixed;
-    // left: 240px;
-    // top: 350px;
-    // width: 270px;
-    &.is-left {
-    min-height: 1065px;
-    background: url(../assets/about/bg.png)no-repeat left top;
-    // background-attachment: fixed;
-    position: fixed;
-    top: 0;
-    // width: 530px;
-    width: 25%;
-    background-position: right 120px;
-    z-index: 2;
-    left: 0;
-    }
+    position: absolute;
+    left: 200px;
+    top: 300px;
+    width: 285px;
 }
 .el-tabs__content {
     padding: 40px;
-    padding-left: 360px;
-    overflow: hidden;
     text-align: left;
-}
-.el-tabs__item {
-  font-size: 14px;
-  color: #707f9d;
-  // &:hover {
-  //   color: #ffffff;
-  //   &:before {
-  //     content: "";
-  //     width: 100%;
-  //     background: url(../assets/about/tab-bg.png)no-repeat center center;
-  //     width: 160px;
-  //     height: 40px;
-  //     background-size: contain;
-  //     left: 5px;
-  //     position: absolute;
-  //   }
-  // }
-  &.is-active, &:hover {
-  color: #ffffff;
-  &:before {
-    content: "";
-    background: url(../assets/about/tab-bg.png)no-repeat center center;
-    width: 262px;
-    height: 100%;
-    background-size: contain;
-    left: 20px;
-    position: absolute;
-    z-index: -1;
-  }
-}
-}
-.help-content {
-  border-bottom: 2px solid #2e343c;
-  > p {
+    p {
       font-size: 14px;
       line-height: 30px;
-    color: #25415b;
+      color: #25415b;
     }
   ol {
     margin: 0 0 0 15px;
     padding: 0;
     li {
       font-size: 14px;
-    color: #25415b;
+      color: #25415b;
+      margin: 15px 0;
+    }
+  }
+}
+.el-tabs__item {
+  font-size: 14px;
+  color: #707f9d;
+  &:hover, &.is-active {
+    color: #ffffff;
+    background: unset;
+    &:before {
+      content: "";
+      width: 100%;
+      background: url(../assets/about/tab-bg.png)no-repeat 0 0;
+      height: 80px;
+      background-size: contain;
+      left: 5px;
+      position: absolute;
+      z-index: -1;
+    }
+  }
+}
+// .el-tabs__item.is-active {
+//   color: #ffffff;
+//   background: unset;
+//   &:before {
+//     content: "";
+//     width: 100%;
+//     background: url(../assets/about/tab-bg.png)no-repeat center center;
+//     width: 260px;
+//     height: 50px;
+//     background-size: contain;
+//     left: 5px;
+//     position: absolute;
+//     z-index: -1;
+//   }
+// }
+.help-content {
+  border-bottom: 2px solid #2e343c;
+  > p {
+      font-size: 14px;
+      line-height: 30px;
+      color: #25415b;
+    }
+  ol {
+    margin: 0 0 0 15px;
+    padding: 0;
+    li {
+      font-size: 14px;
+      color: #25415b;
+      margin: 15px 0;
     }
   }
 .about-title {
-  padding-top: 40px;
+
+    padding-top: 40px;
+    font-size: 20px;
     border-bottom: 1px solid #d1d1d1;
     font-size: 22px;
     padding-bottom: 10px;
-  }
-  .imgBox {
-    width: 100%;
-    img {
-      width: 100%;
+    &:first-child {
+      padding-top: 0;
     }
-  }
+}
+.content-title {
+  margin: 10px 0;
+  font-size: 20px;
+  color: #5665f2;
+}
 }
 }
 </style>

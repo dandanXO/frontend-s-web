@@ -1,7 +1,7 @@
 <template>
   <div v-if="isH5" class="download-top-container">
     <div class="download-top-box">
-      <q-icon name="close" @click="isH5 = false"/>
+      <q-icon name="close" @click="closeTopBox"/>
       <img class="headicon" src="../assets/images/index/head_logo.png">
       <div class="download-txt-container">
         <span class="download-title text-bold">兴發 APP</span>
@@ -156,6 +156,7 @@
           @swiper="setFirstSwiper"
           :controller="{ control: secondSwiper }"
           class="secondSwiper"
+          id="btm-second-swiper"
       >
         <swiper-slide
             v-for="(live, i) in livecasino"
@@ -877,6 +878,13 @@ export default defineComponent({
       );
     };
 
+    const closeTopBox = () => {
+      isH5.value = false;
+      var btmSwiper= document.getElementById("btm-second-swiper");
+      btmSwiper.classList.add('longer-swiper');
+
+    }
+
 
     onMounted(() => {
       getPlatList();
@@ -947,7 +955,8 @@ export default defineComponent({
       openDownloadPage,
       homePopupImg,
       refreshBalance,
-      isLoadingBalance
+      isLoadingBalance,
+      closeTopBox
     };
   }
 });
@@ -962,6 +971,11 @@ export default defineComponent({
   padding-bottom: 0px;
   padding-top: 25px;
 }
+
+.longer-swiper{
+  height: calc(100vh - 380px);
+}
+
 
 :deep(.secondSwiper .swiper-wrapper) {
   .swiper-slide {
@@ -991,6 +1005,10 @@ export default defineComponent({
       // padding-top: 30px;
     }
   }
+}
+
+:deep(.firstSwiper .swiper-wrapper) {
+  background: #23263c;
 }
 
 .swiper-container {

@@ -39,7 +39,7 @@
           <div class="customer-num">
             <RiPhoneFill />
             <span style="margin-left: 5px">
-              <span class="customer_phone">852-81932110</span>
+              <span class="customer_phone">852-81929166</span>
             </span>
           </div>
         </div>

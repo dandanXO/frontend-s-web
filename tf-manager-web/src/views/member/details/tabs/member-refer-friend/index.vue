@@ -99,6 +99,10 @@ export default defineComponent({
     mbrId: {
       type: String,
       required: true
+    },
+    siteId: {
+      type: String,
+      required: true
     }
   },
   setup(props) {
@@ -210,6 +214,7 @@ export default defineComponent({
         query.regTime = formData.regTime.join(",");
       }
       query.referrerId = props.mbrId;
+      query.siteId = props.siteId;
       await getMemberReferFriend(query).then(res => {
         memberData.records = res?.data?.records;
         memberData.pages = res?.data?.pages;
