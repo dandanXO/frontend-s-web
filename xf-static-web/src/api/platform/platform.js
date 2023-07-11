@@ -6,6 +6,10 @@ export function getPlatformList() {
   return cached.get("PLATFORMS", () => server.REST.get("/platform"));
 }
 
+export function getLoggedInPlatformList() {
+	return cached.get("PLATFORMS", () => server.REST.get("/session/loggedInPlatform"));
+  }
+
 export function getPlatformGames(code, gameType) {
   const regDevice = getDevice();
   var way = null;
@@ -24,6 +28,25 @@ export function getPlatformGames(code, gameType) {
     })
   );
 }
+
+export function getLoggedInPlatformGames(code, gameType) {
+	const regDevice = getDevice();
+	var way = null;
+	if (getDevice() === "MOBILE") {
+	  way = getMobileOS();
+	}
+	const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+	return cached.get(key, () =>
+	  server.REST.get("/session/loggedInPlatformGames", {
+		params: {
+		  platformId: code,
+		  gameType: gameType,
+		  device: regDevice,
+		  way: way,
+		},
+	  })
+	);
+  }
 
 export function launchSessionGame(
   platform,

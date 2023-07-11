@@ -114,7 +114,7 @@
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
-import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
+import { getPlatformGames, getPlatformList, getLoggedInPlatformList, getLoggedInPlatformGames } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
 import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
@@ -153,24 +153,48 @@ export default defineComponent({
       loadGameList();
     };
     const getPlatList = () => {
-      getPlatformList().then((data) => {
-        platforms.value = data.filter(element => element.gameType.includes("SLOT"));
-        if (!route.query.plat) {
-          switchPlat(platforms.value[0]);
-        } else {
-          platforms.value.forEach(element => {
-            if (route.query.plat === element.code) {
-              switchPlat(element)
-            }
-          });
-        }
-      }).catch((err) => {
-        console.log(err.message)
-        // message.error(
-        //   err.message,
-        //   4
-        // );
-      });
+
+		if (!store.token) {
+			getPlatformList().then((data) => {
+				platforms.value = data.filter(element => element.gameType.includes("SLOT"));
+				if (!route.query.plat) {
+				switchPlat(platforms.value[0]);
+				} else {
+				platforms.value.forEach(element => {
+					if (route.query.plat === element.code) {
+					switchPlat(element)
+					}
+				});
+				}
+			}).catch((err) => {
+				console.log(err.message)
+				// message.error(
+				//   err.message,
+				//   4
+				// );
+			});
+		} else {
+			getLoggedInPlatformList().then((data) => {
+				platforms.value = data.filter(element => element.gameType.includes("SLOT"));
+				if (!route.query.plat) {
+				switchPlat(platforms.value[0]);
+				} else {
+				platforms.value.forEach(element => {
+					if (route.query.plat === element.code) {
+					switchPlat(element)
+					}
+				});
+				}
+			}).catch((err) => {
+				console.log(err.message)
+				// message.error(
+				//   err.message,
+				//   4
+				// );
+			});
+		}
+
+
     };
     const searchList = () => {
       if (gamePage.searchKey) {
@@ -180,22 +204,41 @@ export default defineComponent({
       }
     };
     const loadGameList = () => {
-      getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
-        data.forEach(element => {
-          // element.default = require("../assets/images/games/aviator/default.png");
-          element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
-        });
-        gameListData.value = data;
-        gamePage.total = data.length;
-        changePage(1, gamePage.pageSize);
-      }).catch((err) => {
-        console.log(err.message);
-        // message.error(
-        //   err.message,
-        //   4
-        // );
-      });
+		if (!store.token) {
+			getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
+				data.forEach(element => {
+				// element.default = require("../assets/images/games/aviator/default.png");
+				element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+				element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+				});
+				gameListData.value = data;
+				gamePage.total = data.length;
+				changePage(1, gamePage.pageSize);
+			}).catch((err) => {
+				console.log(err.message);
+				// message.error(
+				//   err.message,
+				//   4
+				// );
+			});
+		} else {
+			getLoggedInPlatformGames(activePlat.value.id, "SLOT").then((data) => {
+				data.forEach(element => {
+				// element.default = require("../assets/images/games/aviator/default.png");
+				element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+				element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+				});
+				gameListData.value = data;
+				gamePage.total = data.length;
+				changePage(1, gamePage.pageSize);
+			}).catch((err) => {
+				console.log(err.message);
+				// message.error(
+				//   err.message,
+				//   4
+				// );
+			});
+		}
     };
 
     const changePage = (page, pageSize) => {
