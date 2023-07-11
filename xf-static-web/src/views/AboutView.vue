@@ -224,10 +224,15 @@ export default defineComponent({
 <style lang="scss">
 .about-container {
   // min-height: 1062px;
-  min-height: 800px;
-  background: url(../assets/about/abtbg.jpg)no-repeat left center;
-  background-attachment: fixed;
-    background-position: -80px 130px;
+    height: 570px;
+  background: url(../assets/about/abtbg.jpg)no-repeat left top;
+    background-position: -80px 0px;
+    overflow: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+    }
   .about-container-inner {
     max-width: calc($maxwidth - 150px);
     margin: 0 auto;
@@ -256,7 +261,7 @@ export default defineComponent({
   display: none;
 }
 .el-tabs__header {
-    position: fixed;
+    position: absolute;
     left: 275px;
     top: 350px;
     width: 160px;
