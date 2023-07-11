@@ -58,7 +58,7 @@
           $ <span v-formatter="{data: scope.row.depositAmount,type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.bonusReceived')" prop="bonusReceived"
+      <!-- <el-table-column :label="t('fields.bonusReceived')" prop="bonusReceived"
                        align="center" min-width="180"
       >
         <template #default="scope">
@@ -72,7 +72,7 @@
           <span v-if="scope.row.dateReceived !== null" v-formatter="{data: scope.row.dateReceived,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
           <span v-else>-</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <el-pagination
       :total="total"
