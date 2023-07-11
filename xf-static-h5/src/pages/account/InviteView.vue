@@ -130,7 +130,7 @@ export default defineComponent({
         await Clipboard.write({
           string: textToCopy
         });
-      } else if (navigator.clipboard && Platform.is.chrome) {
+      } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
         await navigator.clipboard.writeText(textToCopy);
       } else {
         // Use the 'out of viewport hidden text area' trick
