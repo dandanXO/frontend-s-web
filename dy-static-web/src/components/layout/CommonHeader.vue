@@ -1821,7 +1821,6 @@ body {
     span {
       min-width: 40px;
       text-align: right;
-      width: auto;
       white-space: nowrap;
     }
 
@@ -1834,6 +1833,7 @@ body {
       height: 2em;
       width: 2em;
       line-height: 2em;
+      cursor: pointer;
 
       svg {
         width: 1.3em;
