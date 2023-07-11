@@ -1821,6 +1821,8 @@ body {
     span {
       min-width: 40px;
       text-align: right;
+      width: auto;
+      white-space: nowrap;
     }
 
     .amount {
