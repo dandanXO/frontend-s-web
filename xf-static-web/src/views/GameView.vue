@@ -204,41 +204,31 @@ export default defineComponent({
       }
     };
     const loadGameList = () => {
-		if (!store.token) {
-			getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
-				data.forEach(element => {
-				// element.default = require("../assets/images/games/aviator/default.png");
-				element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
-				element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
-				});
-				gameListData.value = data;
-				gamePage.total = data.length;
-				changePage(1, gamePage.pageSize);
-			}).catch((err) => {
-				console.log(err.message);
-				// message.error(
-				//   err.message,
-				//   4
-				// );
-			});
-		} else {
-			getLoggedInPlatformGames(activePlat.value.id, "SLOT").then((data) => {
-				data.forEach(element => {
-				// element.default = require("../assets/images/games/aviator/default.png");
-				element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
-				element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
-				});
-				gameListData.value = data;
-				gamePage.total = data.length;
-				changePage(1, gamePage.pageSize);
-			}).catch((err) => {
-				console.log(err.message);
-				// message.error(
-				//   err.message,
-				//   4
-				// );
-			});
-		}
+      // if (!store.token) {
+        getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
+          data.forEach(element => {
+          element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          });
+          gameListData.value = data;
+          gamePage.total = data.length;
+          changePage(1, gamePage.pageSize);
+        }).catch((err) => {
+          console.log(err.message);
+        });
+      // } else {
+      //   getLoggedInPlatformGames(activePlat.value.id, "SLOT").then((data) => {
+      //     data.forEach(element => {
+      //     element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+      //     element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+      //     });
+      //     gameListData.value = data;
+      //     gamePage.total = data.length;
+      //     changePage(1, gamePage.pageSize);
+      //   }).catch((err) => {
+      //     console.log(err.message);
+      //   });
+      // }
     };
 
     const changePage = (page, pageSize) => {
