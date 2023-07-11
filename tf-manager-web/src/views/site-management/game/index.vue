@@ -604,12 +604,13 @@ function showDialog(type) {
 }
 
 function showEdit(game) {
-  const selectedPlatform = platforms.list.find(item => item.id === game.platformId)
-  platformCode.value = selectedPlatform.code
-  showDialog('EDIT')
   if (!game) {
     game = chooseGame[0]
   }
+  const selectedPlatform = platforms.list.find(item => item.id === game.platformId)
+  platformCode.value = selectedPlatform.code
+  showDialog('EDIT')
+
   nextTick(() => {
     for (const key in game) {
       if (Object.keys(form).find(k => k === key)) {
