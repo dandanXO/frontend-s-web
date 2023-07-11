@@ -62,25 +62,25 @@
           prop="content"
           :label="t('fields.smsContent')"
           align="center"
-          min-width="300"
+          min-width="100"
         />
         <el-table-column
           prop="status"
           :label="t('fields.status')"
           align="center"
-          min-width="50"
+          min-width="80"
         >
           <template #default="scope">
-            <span v-if="scope.row.status === 0">发送中</span>
-            <span v-if="scope.row.status === 1">成功</span>
-            <span v-if="scope.row.status === 1">失败</span>
+            <el-tag v-if="scope.row.status === 0" type="warning">发送中</el-tag>
+            <el-tag v-if="scope.row.status === 1" type="danger">失败</el-tag>
+            <el-tag v-if="scope.row.status === 2" type="success">成功</el-tag>
           </template>
         </el-table-column>
         <el-table-column
           prop="sendTime"
           :label="t('fields.smsSendTime')"
           align="center"
-          min-width="100"
+          min-width="150"
         />
         <el-table-column
           prop="type"
