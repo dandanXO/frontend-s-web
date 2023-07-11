@@ -129,7 +129,7 @@ import {useQuasar} from "quasar";
 const isLoadingBalance = ref(false);
 const isRefreshingBalance = ref(true);
 const isTransferring = ref(false);
-const seconds = ref(10);
+const seconds = ref(5);
 const store = userStore();
 const isExpanded = ref(false);
 const transferRef = ref();
@@ -225,8 +225,8 @@ const transferOutAll = () => {
 const refreshBalance = (plat) => {
   if (plat === "all") {
     isRefreshingBalance.value = true;
-    seconds.value = 10;
-    setTimer();
+    seconds.value = 5;
+    // setTimer();
     loadBalance();
     props.platforms.forEach((platform) => {
       platform.isLoading = true;
