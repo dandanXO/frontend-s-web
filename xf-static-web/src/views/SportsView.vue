@@ -49,6 +49,13 @@ export default defineComponent({
         link: '/games/im-sport.html'
       },
       // {
+      //   code: 'PM',
+      //   name: 'PM',
+      //   image: 'pm',
+      //   message: '最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。',
+      //   link: '/games/pm-sport.html'
+      // },
+      // {
       //   code: 'CR',
       //   name: 'CR',
       //   image: 'cr',

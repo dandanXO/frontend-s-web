@@ -245,27 +245,19 @@
           />
         </el-form-item>
 
-        <!-- <el-form-item name="telephone" prop="telephone"> -->
-        <!-- <el-input
-              class="half"
-              v-model="bankCardInfo.telephone"
-              placeholder="输入电话号码"
-              maxlength="11"
-              readonly
-              :value="personalState.memberInfo.telephone"
-          /> -->
         <el-form-item>
-          <el-button
-            class="common-btn"
-            v-if="!isSendOtp"
-            @click="openCaptchaForm()"
-          >
+          <el-input
+            class="half"
+            v-model="bankCardInfo.telephone"
+            placeholder="输入电话号码"
+            readonly
+            :value="personalState.memberInfo.telephone"
+          />
+          <el-button class="common-btn" @click="openCaptchaForm()">
             获取验证码
           </el-button>
         </el-form-item>
-
-        <!-- </el-form-item> -->
-
+        
         <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
           <el-input
             class="half"

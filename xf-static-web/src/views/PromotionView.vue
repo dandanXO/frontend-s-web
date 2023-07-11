@@ -161,7 +161,7 @@ export default defineComponent({
       promoList: [],
     });
     const promoTypes = ref([
-      { code:"ALL", img: 'all', label: '所有游戏' },
+      { code:"ALL", img: 'all', label: '全部优惠' },
       { code: "SLOT GAME", img: 'game', label: '老虎机优惠'},
       { code: "FISH", img: 'game', label: '捕鱼优惠'},
       { code: "LIVE CASINO", img: 'spade', label: '真人优惠'},

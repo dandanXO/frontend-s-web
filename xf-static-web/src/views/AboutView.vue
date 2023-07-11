@@ -8,15 +8,10 @@
       <template #tabBarExtraContent v-if="windowSize > 768">
         <!-- <img class="extrel-logo" src="../../assets/images/index/logo_web.png" /> -->
       </template>
-      <el-tab-pane label="法律依据" name="terms">
+      <el-tab-pane label="关于我们" name="about">
         <div class="help-content">
-          <div class="about-title">法律依据</div>
-          <ol>
-            <li><p>本隐私政策严格遵守相关数据保护法；</p></li>
-            <li><p>只有当您达到所居住国家法律规定的法定年龄，才能使用娱乐场和/或网站</p></li>
-            <li><p>如果您未满 18 岁，在任何情况下均不得使用和/或网站。</p></li>
-            <li><p>有些法律管辖区并未声明在线赌博的合法性，而有些则明确规定在线赌博为非法。</p></li>
-          </ol>
+            <div class="about-title">关于我们</div>
+            <p>兴發持有菲律宾 NorthCagayan (NCGAC) 博彩合法执照，总部位于菲律宾 Makati 金融中心 PBCOM 大厦。我们提供超过两百多款的经典在线老虎机游戏。并且提供比陆地赌场更高的赔率，玩累积彩金游戏您就有机会赢得超级大彩池和娱乐场大奖！为了确保游戏的公平性，在选择平台方面，兴發经过多方考察最终确定了业界最具公信力的第三方游戏机构PlayTech平台。兴發专业的客服团队每天为您提供24/7小时的热情服务；雄厚的资金和正规的财务团队，为您提供最快的取款体验。我们采用了目前最好的加密技术和防火墙系统保护您的安全、信息私隐，并保证您享受公平，公正的游戏。由于采用了企业级别的加密科技（1024位RSA密钥交 换和 448位blowfish），我们可以为您的数据提供比一般的商业级别的SSL更高的保护。这一科技目前被世界上主要的金融机构所采用。</p>
         </div>
       </el-tab-pane>
       <el-tab-pane label="联系我们" name="contactus">
@@ -30,10 +25,15 @@
             为您提供24/7全天候服务</p>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="关于我们" name="aboutus">
+      <el-tab-pane label="法律依据" name="terms">
         <div class="help-content">
-            <div class="about-title">关于我们</div>
-            <p>兴發持有菲律宾 NorthCagayan (NCGAC) 博彩合法执照，总部位于菲律宾 Makati 金融中心 PBCOM 大厦。我们提供超过两百多款的经典在线老虎机游戏。并且提供比陆地赌场更高的赔率，玩累积彩金游戏您就有机会赢得超级大彩池和娱乐场大奖！为了确保游戏的公平性，在选择平台方面，兴發经过多方考察最终确定了业界最具公信力的第三方游戏机构PlayTech平台。兴發专业的客服团队每天为您提供24/7小时的热情服务；雄厚的资金和正规的财务团队，为您提供最快的取款体验。我们采用了目前最好的加密技术和防火墙系统保护您的安全、信息私隐，并保证您享受公平，公正的游戏。由于采用了企业级别的加密科技（1024位RSA密钥交 换和 448位blowfish），我们可以为您的数据提供比一般的商业级别的SSL更高的保护。这一科技目前被世界上主要的金融机构所采用。</p>
+          <div class="about-title">法律依据</div>
+          <ol>
+            <li><p>本隐私政策严格遵守相关数据保护法；</p></li>
+            <li><p>只有当您达到所居住国家法律规定的法定年龄，才能使用娱乐场和/或网站</p></li>
+            <li><p>如果您未满 18 岁，在任何情况下均不得使用和/或网站。</p></li>
+            <li><p>有些法律管辖区并未声明在线赌博的合法性，而有些则明确规定在线赌博为非法。</p></li>
+          </ol>
         </div>
       </el-tab-pane>
       <el-tab-pane label="隐私条款" name="privacy">
@@ -179,34 +179,39 @@
 </template>
 <script lang="js">
 import { ref, onMounted, onUnmounted, defineComponent, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "AboutView",
 
   setup() {
-    const activeTab = ref("legal-grounds")
-    const router = useRoute();
+    const activeTab = ref("about")
+    const route = useRoute();
+    const router = useRouter();
     const windowSize = ref(window.innerWidth)
     onUnmounted(() => { window.removeEventListener('resize', () =>
     {windowSize.value = window.innerWidth}) })
 
-    watch(() => router.query, () => {
-      if (router.query === null) {
+    watch(() => route.query, () => {
+      if (route.query.id === null) {
         activeTab.value === 'about'
       } else {
-        activeTab.value = router.query.id; window.scrollTo(0, 0);
+        activeTab.value = route.query.id; 
+        window.scrollTo(0, 0);
       }
       // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
+      }, { immediate: true });
+    // });
+    watch(() => activeTab.value, () => {
+      router.push({ query:{ id: activeTab.value }})
     });
-
     onMounted(() => {
-      const router = useRoute();
-      if (router.query.id) {
-        activeTab.value = router.query.id;
+      const route = useRoute();
+      if (route.query.id) {
+        activeTab.value = route.query.id;
+        window.scrollTo(0, 0);
       }
-    window.addEventListener('resize', () => {windowSize.value = window.innerWidth} )
+      window.addEventListener('resize', () => {windowSize.value = window.innerWidth} )
     });
 
     return {
@@ -218,13 +223,21 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .about-container {
-  min-height: 1062px;
-  background: url(../assets/about/abtbg.jpg)no-repeat left top;
-  background-attachment: fixed;
-  background-position: 0% 300%;
+  // min-height: 1062px;
+    min-height: calc(100vh - 330px);
+    height: 570px;
+    background: url(../assets/about/abtbg.jpg)no-repeat left top;
+    background-position: -80px 0px;
+    overflow: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+    }
   .about-container-inner {
-    max-width: $maxwidth;
-    margin: 0 auto
+    max-width: calc($maxwidth - 150px);
+    margin: 0 auto;
+    margin-left: 500px;
   }
   
   .el-tabs .el-tabs__nav {
@@ -238,6 +251,10 @@ export default defineComponent({
     padding: 0 20px;
   display: block;
 }
+.el-tabs--left .el-tabs__header.is-left, .el-tabs--left .el-tabs__header.is-right, .el-tabs--left .el-tabs__nav-scroll, .el-tabs--left .el-tabs__nav-wrap.is-left, .el-tabs--left .el-tabs__nav-wrap.is-right, .el-tabs--right .el-tabs__header.is-left, .el-tabs--right .el-tabs__header.is-right, .el-tabs--right .el-tabs__nav-scroll, .el-tabs--right .el-tabs__nav-wrap.is-left, .el-tabs--right .el-tabs__nav-wrap.is-right {
+
+  height: auto;
+}
 .el-tabs__active-bar {
   display: none;
 }
@@ -245,13 +262,12 @@ export default defineComponent({
   display: none;
 }
 .el-tabs__header {
-    position: fixed;
-    left: 350px;
+    position: absolute;
+    left: 275px;
     top: 350px;
     width: 160px;
 }
 .el-tabs__content {
-    margin-left: 440px;
     padding: 40px;
     text-align: left;
 }
@@ -260,6 +276,7 @@ export default defineComponent({
   color: #707f9d;
   &:hover {
     color: #ffffff;
+    background: unset;
     &:before {
       content: "";
       width: 100%;
@@ -274,6 +291,7 @@ export default defineComponent({
 }
 .el-tabs__item.is-active {
   color: #ffffff;
+  background: unset;
   &:before {
     content: "";
     width: 100%;
@@ -298,6 +316,7 @@ export default defineComponent({
     li {
       font-size: 12px;
       color: #959dab;
+      margin: 15px 0;
     }
   }
 .about-title {
@@ -305,6 +324,9 @@ export default defineComponent({
     padding-top: 40px;
     font-size: 20px;
     color: #959dab;
+    &:first-child {
+      padding-top: 0;
+    }
 }
 }
 }

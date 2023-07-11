@@ -25,7 +25,7 @@
           <li><router-link to="/about?id=terms">法律依据</router-link></li>
           <li><router-link to="/about?id=privacy">隐私条款</router-link></li>
           <li><router-link to="/about?id=service">服务条款</router-link></li>
-          <li><a href="https://ag.xf852.com/">加盟代理</a></li>
+          <!-- <li><router-link to="/agent">加盟代理</router-link></li> -->
         </ul>
         <div class="tagline">兴發娱乐是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR所颁发的离岸博彩许可证，并受其监管</div>
       </div>

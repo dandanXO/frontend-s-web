@@ -219,9 +219,9 @@
       <el-pagination
         class="pagination"
         :total="page.total"
-        :page-sizes="[20, 50, 100, 150]"
+        :page-sizes="[20, 50, 100, 150, 200]"
         @current-change="changepage"
-        layout="total,sizes,prev, pager, next"
+        layout="total,sizes,prev, next"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
@@ -511,6 +511,7 @@ async function exportExcel() {
   uiControl.progressBarVisible = true;
   const query = checkQuery();
   query.current = 1;
+  query.size = 200;
   const { data: ret } = await getExport(query);
   const exportData = [EXPORT_HEADER];
   const maxLength = [];

@@ -114,11 +114,11 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .footer {
-  z-index: 2;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
+  // z-index: 2;
+  // position: absolute;
+  // left: 0;
+  // right: 0;
+  // margin: auto;
   font-size: .8rem;
   .top-footer {
     .top-footer-inner {

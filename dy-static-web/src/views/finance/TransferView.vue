@@ -239,7 +239,6 @@ export default defineComponent({
     const refreshAllModal = () => {
       store.getBalance();
       platforms.forEach(p => {
-        store.getBalance();
         p.amount = '加载中'
         refreshBalance(p.code);
       });

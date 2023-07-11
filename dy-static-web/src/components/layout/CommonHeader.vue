@@ -1821,6 +1821,7 @@ body {
     span {
       min-width: 40px;
       text-align: right;
+      white-space: nowrap;
     }
 
     .amount {
@@ -1832,6 +1833,7 @@ body {
       height: 2em;
       width: 2em;
       line-height: 2em;
+      cursor: pointer;
 
       svg {
         width: 1.3em;
