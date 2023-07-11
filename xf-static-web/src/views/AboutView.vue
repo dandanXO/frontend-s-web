@@ -202,7 +202,9 @@ export default defineComponent({
       // Optionally you can set immediate: true config for the watcher to run on init
       }, { immediate: true });
     // });
-
+    watch(() => activeTab.value, () => {
+      router.push({ query:{ id: activeTab.value }})
+    });
     onMounted(() => {
       const route = useRoute();
       if (route.query.id) {
