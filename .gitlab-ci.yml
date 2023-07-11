@@ -217,3 +217,29 @@ build-image-dy-static-web:
     PROJECT: dy-static-web
   needs:
     - build-dy-static-web
+
+#===============================================================================================
+
+build-affiliate-static-web:
+  extends:
+    - .build-projects
+    - .build-web
+  script:
+    - cd $PROJECT
+    - npm install
+    - npm run build:prod
+  variables:
+    PROJECT: affiliate-static-web
+  rules:
+    - <<: *p8s0-rules
+    - <<: *p8s1-rules
+
+build-image-affiliate-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: affiliate-static-web
+  needs:
+    - build-affiliate-static-web
+  rules:
+    - <<: *p8s0-rules
+    - <<: *p8s1-rules

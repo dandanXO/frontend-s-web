@@ -193,17 +193,31 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isNewUser" no-esc-dismiss no-backdrop-dismiss>
-    <q-card style="width: 100%; padding: 20px" class="text-black">
-      <q-card-section class="q-mb-md">
+  <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+    <q-card style="width: 100%; padding: 20px;" class="text-black">
+      <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
         <strong>温馨提示</strong>
         <br/>
-        <br/>
-        为保证资金安全，存款前先验证手机号
+        为保证资金安全，存款前需先验证手机号
       </q-card-section>
       <q-card-actions align="right">
         <router-link to="/account/personal">
           <q-btn label="前往验证" color="dyblue"/>
+        </router-link>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+    <q-card style="width: 100%; padding: 20px; flex-direction:column;" class="text-black">
+      <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
+        <strong>温馨提示</strong>
+        <br/>
+        为保证资金安全，存款前先绑定银行卡
+      </q-card-section>
+      <q-card-actions align="right">
+        <router-link to="/account/withdraw">
+          <q-btn label="前往绑定" color="dyblue"/>
         </router-link>
       </q-card-actions>
     </q-card>
@@ -214,7 +228,7 @@
 import {ref, reactive, onMounted, shallowRef, onBeforeUnmount} from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import {cashier} from "boot/axios";
+import {api, cashier} from "boot/axios";
 import {Platform, useQuasar, openURL} from "quasar";
 import {doIt} from "boot/action";
 import liff from "@line/liff";
@@ -228,9 +242,18 @@ const store = userStore();
 const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
+const isNoBankCard = ref(false);
 const checkNewUser = () => {
-  if (store.phone == null) {
+  if (store.phone == "") {
     isNewUser.value = true;
+  } else {
+    api.get("/session/bankCard").then((response) => {
+      if (response.code === 0) {
+        if (response.data.length === 0) {
+          isNoBankCard.value = true;
+        }
+      }
+    });
   }
 };
 const isDeposited = ref(false);

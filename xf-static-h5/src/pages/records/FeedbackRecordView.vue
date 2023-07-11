@@ -65,7 +65,7 @@ export default defineComponent({
       cached.get(apiKey, () => api.get(apiUrl, {
             params: paramData
           }),
-          { expired_value: 60 }
+          { expired_value: 30 }
       ).then((res) => {
         console.log(res);
 

@@ -248,7 +248,7 @@ const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
 const checkNewUser = () => {
-  if (store.phone == null) {
+  if (store.phone == "") {
     isNewUser.value = true;
   } else {
     api.get("/session/bankCard").then((response) => {
