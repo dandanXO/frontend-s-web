@@ -221,7 +221,7 @@
         :total="page.total"
         :page-sizes="[20, 50, 100, 150, 200]"
         @current-change="changepage"
-        layout="total,sizes,prev, pager, next"
+        layout="total,sizes,prev, next"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
