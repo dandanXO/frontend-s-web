@@ -31,7 +31,7 @@
       <MemberBetRecordTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.referredFriends')" name="member-refer-friend">
-      <MemberReferFriendTab :mbr-id="id" />
+      <MemberReferFriendTab :mbr-id="id" :site-id="siteId" />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -71,10 +71,12 @@ export default defineComponent({
     const router = useRouter()
     const activeName = computed(() => router.currentRoute.value.query.tab || 'member-info')
     const id = computed(() => router.currentRoute.value.params.id)
+    const siteId = computed(() => router.currentRoute.value.query.site)
 
     return {
       activeName,
       id,
+      siteId,
       t
     }
   }
