@@ -224,7 +224,7 @@ export default defineComponent({
 <style lang="scss">
 .about-container {
   // min-height: 1062px;
-  min-height: calc(100vh - 330px);
+  min-height: 800px;
   background: url(../assets/about/abtbg.jpg)no-repeat left center;
   background-attachment: fixed;
     background-position: -80px 130px;
