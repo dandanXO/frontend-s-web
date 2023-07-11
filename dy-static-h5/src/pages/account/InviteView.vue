@@ -74,21 +74,27 @@ export default defineComponent({
 
     const copyText = (text) => {
       copyToClipboard(text);
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: "复制成功！",
-        icon: "check_circle_outline"
-      });
+      setTimeout(() => {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "复制成功！",
+          icon: "check_circle_outline"
+        });
+      }, 100)
+
     }
 
     async function copyToClipboard(textToCopy) {
+      // alert(window.isSecureContext);
+      // alert(navigator.clipboard);
+      // alert(Platform.is.chrome);
       // Navigator clipboard api needs a secure context (https)
       if (store.getDeviceType() === 'ANDROID') {
         await Clipboard.write({
           string: textToCopy
         });
-      } else if (navigator.clipboard && window.isSecureContext) {
+      } else if (navigator.clipboard && Platform.is.chrome) {
         await navigator.clipboard.writeText(textToCopy);
       } else {
         // Use the 'out of viewport hidden text area' trick
@@ -100,6 +106,7 @@ export default defineComponent({
         textArea.style.left = "-999999px";
 
         document.body.prepend(textArea);
+        textArea.focus();
         textArea.select();
 
         try {
@@ -107,10 +114,10 @@ export default defineComponent({
         } catch (error) {
           console.error(error);
         } finally {
-          textArea.remove();
+          document.body.removeChild(textArea);
+          // textArea.remove();
         }
       }
-      ;
     }
 
     onMounted(() => {
