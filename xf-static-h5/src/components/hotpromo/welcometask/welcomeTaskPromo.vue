@@ -32,7 +32,7 @@
                   first - button,
                   welcomeState.stateDetails.firstDepositState != 'YES'
                     ? 'active-disabled'
-                    : '',
+                    : ''
                 ]"
                 @click="claimBonus('xf-welcome-first-deposit')"
               >
@@ -47,7 +47,7 @@
                   first - button,
                   welcomeState.stateDetails.firstDepositState != 'YES'
                     ? 'active-disabled'
-                    : '',
+                    : ''
                 ]"
               >
                 已领取
@@ -69,7 +69,7 @@
                   first - cast,
                   welcomeState.stateDetails.firstBetState != 'YES'
                     ? 'active-disabled'
-                    : '',
+                    : ''
                 ]"
                 @click="claimBonus('xf-welcome-first-bet')"
               >
@@ -82,7 +82,7 @@
                   first - cast,
                   welcomeState.stateDetails.firstBetState != 'YES'
                     ? 'active-disabled'
-                    : '',
+                    : ''
                 ]"
               >
                 已领取
@@ -104,7 +104,7 @@
                   invite - button,
                   welcomeState.stateDetails.firstFriendState != 'YES'
                     ? 'active-disabled'
-                    : '',
+                    : ''
                 ]"
                 @click="claimBonus('xf-welcome-friend')"
               >
@@ -117,7 +117,7 @@
                   invite - button,
                   welcomeState.stateDetails.firstFriendState != 'YES'
                     ? 'active-disabled'
-                    : '',
+                    : ''
                 ]"
               >
                 已领取
@@ -234,10 +234,11 @@
             v-show="welcomeState.stateDetails.checkInRewardState != 'NO'"
           >
             <p>
-              您已累计签到<span class="checkDay">{{
-                checkInRewardState.stateDetails.checkInDays
-              }}</span
-              >天
+              您已累计签到
+              <span class="checkDay">
+                {{ checkInRewardState.stateDetails.checkInDays }}
+              </span>
+              天
             </p>
             <button
               :disabled="
@@ -247,7 +248,7 @@
                 check - sign,
                 checkInRewardState.stateDetails.todayCheckInState != 'YES'
                   ? 'active-disabled'
-                  : '',
+                  : ''
               ]"
               @click="claimBonus('xf-welcome-check-in')"
             >
@@ -265,7 +266,7 @@
                 check - sign,
                 welcomeState.stateDetails.checkInRewardState == 'NO'
                   ? 'active-disabled'
-                  : '',
+                  : ''
               ]"
             >
               点击签到
@@ -306,6 +307,7 @@
 import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
+import { Dialog } from "quasar";
 const router = useRouter();
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
@@ -313,10 +315,10 @@ const winAmount = ref(0);
 const checkInDays = ref(3);
 
 const welcomeState = reactive({
-  stateDetails: {},
+  stateDetails: {}
 });
 const checkInRewardState = reactive({
-  stateDetails: {},
+  stateDetails: {}
 });
 onMounted(() => {
   pageInit();
@@ -341,7 +343,11 @@ const claimBonus = (promoCode) => {
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data;
-
+        Dialog.create({
+          title: "系统提示",
+          message: `你已领取 ${res.data}元`,
+          ok: { color: "brightbtn" },
+        });
         // this.privilegeClaimedModalVisible = true;
         // this.loadingClaim = false;
         // this.store.getBalance();
@@ -361,10 +367,10 @@ const claimBonus = (promoCode) => {
   pageInit();
 };
 const gotoDepositPage = () => {
-  router.push({ name: "deposit" });
+  router.push("finance/deposit");
 };
 const gotoMainPage = () => {
-  router.push({ name: "home" });
+  router.push("/");
 };
 </script>
 <style lang="scss">
@@ -812,5 +818,12 @@ body {
 <style lang="scss">
 html {
   margin: auto;
+}
+
+.q-dialog__title,
+.q-dialog__message,
+.q-card__actions--horiz {
+  text-align: center;
+  justify-content: center;
 }
 </style>
