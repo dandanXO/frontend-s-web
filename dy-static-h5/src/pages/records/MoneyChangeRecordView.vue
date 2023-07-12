@@ -1,7 +1,7 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="moneychange"
+      recordType="moneyChange"
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"

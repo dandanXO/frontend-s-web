@@ -229,6 +229,13 @@ function checkQuery() {
   return query;
 }
 
+function changePage(page) {
+  if (request.current >= 1) {
+    request.current = page;
+    loadAffiliateDailyReport();
+  }
+}
+
 onMounted(async() => {
   await loadAffiliateDailyReport();
 });

@@ -325,12 +325,12 @@ const uiControl = reactive({
   editDialogVisible: false,
   loading: false,
   selectTime: [
-    { key: 0, displayName: 'Today', value: 'Today' },
-    { key: 1, displayName: 'Yesterday', value: 'Yesterday' },
-    { key: 2, displayName: 'This Week', value: 'This Week' },
-    { key: 3, displayName: 'Last Week', value: 'Last Week' },
-    { key: 4, displayName: 'This Month', value: 'This Month' },
-    { key: 5, displayName: 'Last Month', value: 'Last Month' }
+    { key: 0, displayName: t('fields.today'), value: 'Today' },
+    { key: 1, displayName: t('fields.yesterday'), value: 'Yesterday' },
+    { key: 2, displayName: t('fields.thisWeek'), value: 'This Week' },
+    { key: 3, displayName: t('fields.lastWeek'), value: 'Last Week' },
+    { key: 4, displayName: t('fields.thisMonth'), value: 'This Month' },
+    { key: 5, displayName: t('fields.lastMonth'), value: 'Last Month' }
   ]
 });
 const request = reactive({
@@ -371,7 +371,7 @@ const eForm = reactive({
 });
 
 const eFormRules = reactive({
-  realName: [required(t('message.requiredRealName'))]
+  realName: [required(t('message.requiredRealName')), { pattern: '^([\u4e00-\u9fa5]*)$', message: '请输入中文字符', trigger: 'change' }]
 });
 
 async function resetSummary() {
@@ -457,7 +457,9 @@ async function loadReferralLink() {
   // } else if (store.state.user.siteId === 9 || store.state.user.siteId === "9") {
   //   link.value = "https://www.jolly8858.com/agent/" + affInfo.affiliateCode;
   if (store.state.user.siteId === 1 || store.state.user.siteId === "1") {
-    link.value = "https://xf-web.jolly88-ph01.com/agent/" + affInfo.affiliateCode;
+    link.value = "http://xf9866.com/agent/" + affInfo.affiliateCode;
+  } else if (store.state.user.siteId === 2 || store.state.user.siteId === "2") {
+    link.value = "https://www.dy9367.com/agent/" + affInfo.affiliateCode;
   } else {
     link.value = "";
   }

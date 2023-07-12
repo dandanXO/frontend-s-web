@@ -46,8 +46,8 @@
             {{ $t('message.remaining') }} : {{ selectedWithdrawalMethod.withdrawMaxTimes }} {{ $t('message.times') }}
           </template>
         </div>
-        <el-form-item :label="t('fields.selectBankCard')" prop="cardId">
-          <el-select value-key="id" v-model="withdrawInfo.cardId" :placeholder="t('fields.select')" size="large">
+        <el-form-item :label="isUSDT === true ? t('fields.usdtWallet') : t('fields.bankCard')" prop="cardId">
+          <el-select @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''" value-key="id" v-model="withdrawInfo.cardId" :placeholder="t('fields.select')" size="large">
             <el-option
               v-for="item in withdrawState.bankCardList"
               :key="item.id"
@@ -70,14 +70,17 @@ import { defineComponent, reactive, ref, onMounted } from "vue";
 import { ElMessageBox, ElNotification } from 'element-plus';
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/affiliate";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 // import { useStore } from "@/store"
 
 export default defineComponent({
   setup() {
+    const router = useRouter();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
     const formRef = ref();
     const activeItem = ref(0);
     const { t } = useI18n();
+    const isUSDT = ref(false);
     const withdrawState = reactive({
       bankCardList: [],
     });
@@ -134,6 +137,22 @@ export default defineComponent({
         }
       }, 1000);
     };
+    const validateSelection = async (r, v) => {
+      if (!isUSDT.value) {
+        if (v === null) {
+          return Promise.reject(new Error(t('message.selectBankCard')));
+        } else {
+          return Promise.resolve();
+        }
+      } else if (isUSDT.value) {
+        if (v === null) {
+          return Promise.reject(new Error(t('message.selectUsdtWallet')));
+        } else {
+          return Promise.resolve();
+        }
+      }
+      return Promise.resolve();
+    };
     const withdrawRules = {
       amount: [
         {
@@ -151,7 +170,7 @@ export default defineComponent({
       cardId: [
         {
           required: true,
-          message: t('message.selectBankCard'),
+          validator: validateSelection,
           trigger: "blur"
         }
       ]
@@ -165,7 +184,51 @@ export default defineComponent({
       selectedWithdrawalMethod.value = method
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
+      if (withdrawInfo.withdrawCode.includes('USDT')) {
+        isUSDT.value = true
+      } else {
+        isUSDT.value = false
+      }
       loadCards()
+    }
+    const checkBankCards = () => {
+      if (isUSDT.value === true) {
+        ElMessageBox.alert(
+          t('message.bindUsdtWallet'), t('fields.systemAlert'),
+          {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: t('fields.confirm'),
+            draggable: false,
+            buttonSize: 'small',
+            closeOnClickModal: false,
+            center: true,
+          }
+        )
+          .then(() => {
+            router.push('/affiliate/bankCard')
+          })
+          .catch(() => {
+          })
+      } else {
+        ElMessageBox.alert(
+          t('message.bindBankCard'), t('fields.systemAlert'),
+          {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: t('fields.confirm'),
+            draggable: false,
+            buttonSize: 'small',
+            closeOnClickModal: false,
+            center: true,
+          }
+        )
+          .then(() => {
+            router.push('/affiliate/bankCard')
+          })
+          .catch(() => {
+          })
+      }
     }
     const loadCards = () => {
       withdrawState.bankCardList = []
@@ -219,6 +282,8 @@ export default defineComponent({
       selectedWithdrawalMethod,
       loadCards,
       selectedCard,
+      checkBankCards,
+      isUSDT,
       t
     };
   }

@@ -25,8 +25,8 @@ export const getAffiliateChild = (id) => {
   return https().request(`/affiliate/${id}/affiliateChild`, Method.GET);
 };
 
-export const getAffiliateDetails = (id) => {
-  return https().request(`/affiliate/${id}`, Method.GET, {}, ContentType.form);
+export const getAffiliateDetails = (id, site) => {
+  return https().request(`/affiliate/${id}`, Method.GET, { siteId: site }, ContentType.form);
 };
 
 export const approveAffiliate = (id, approveBy) => {

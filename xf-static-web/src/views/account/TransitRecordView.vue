@@ -438,7 +438,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
-          <div class="payout-total">
+          <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
           </div>
@@ -453,6 +453,7 @@
                     placeholder="平台"
                     @change="searchRecord"
                   >
+                    <el-option key="" value="">-</el-option>
                     <el-option
                       v-for="p in platformsList"
                       :key="p.name"

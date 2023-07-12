@@ -82,6 +82,19 @@
             <router-link to="/xf/login" class="signlog">已经有帐号?请登录</router-link>
           </div>
           <div v-if="step === 2">
+            <el-form-item prop="realName">
+              <el-input
+                ref="realNameRef"
+                v-model="loginForm.realName"
+                :placeholder="'姓名'"
+                name="realName"
+                type="text"
+                tabindex="4"
+                autocomplete="on"
+              >
+                <template #prepend><i><img src="../../../assets/images/xf/icon_name.png"></i></template>
+              </el-input>
+            </el-form-item>
             <el-form-item prop="telephone">
               <el-input
                 ref="telephoneRef"
@@ -199,6 +212,21 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
+    const validateRealName = async (r, v) => {
+      if (v === "") {
+        return Promise.reject(new Error("请输入登姓名"));
+      } else if (!checkRealName(v)) {
+        return Promise.reject(new Error("请输入中文字符"));
+      } else {
+        return Promise.resolve();
+      }
+    };
+
+    const checkRealName = (v) => {
+      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
+      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+      return v.match(chineseCharOnly);
+    };
     const getCode = () => {
       getVerificationCode()
         .then((res) => {
@@ -214,6 +242,7 @@ export default defineComponent({
     const userNameRef = ref(null);
     const passwordRef = ref(null);
     const confirmPwdRef = ref(null);
+    const realNameRef = ref(null);
     const telephoneRef = ref(null);
     const emailRef = ref(null);
     const birthdayRef = ref(null);
@@ -229,6 +258,7 @@ export default defineComponent({
         userName: "",
         password: "",
         confirmPwd: "",
+        realName: "",
         telephone: "",
         email: "",
         captchaCode: "",
@@ -272,6 +302,19 @@ export default defineComponent({
             validator: validatePass2,
             trigger: "blur",
           },
+        ],
+        realName: [
+          {
+            required: true,
+            min: 2,
+            max: 12,
+            message: "长度应为 2 至 12",
+            trigger: "blur",
+          },
+          {
+            validator: validateRealName,
+            trigger: "blur",
+          }
         ],
         telephone: [
           {
@@ -354,7 +397,7 @@ export default defineComponent({
         });
       },
       handleRegister: () => {
-        state.loginForm.siteId = 8;
+        state.loginForm.siteId = 1;
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             if (step.value === 1) {
@@ -428,6 +471,7 @@ export default defineComponent({
       userNameRef,
       passwordRef,
       confirmPwdRef,
+      realNameRef,
       telephoneRef,
       emailRef,
       birthdayRef,

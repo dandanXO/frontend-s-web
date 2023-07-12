@@ -2,13 +2,13 @@ export const translateRecord = (rec, type = "") => {
   if (rec === "WITHDRAW_FAIL") {
     return "提款失败"; // Fail Withdrawal
   } else if (rec === "WITHDRAW") {
-    if (type === "transfer") {
+    if (type === "transfer" || type === "moneyChange") {
       return "转出";
     }
     return "提款"; // Withdraw
   } else if (rec === "DEPOSIT") {
-    if (type === "transfer") {
-      return "转账";
+    if (type === "transfer" || type === "moneyChange") {
+      return "转入";
     }
     return "存款"; // 存款
   } else if (rec === "PROMO") {
@@ -130,6 +130,10 @@ export const translateRecord = (rec, type = "") => {
     return "BBIN真人"; // BBINDY
   } else if (rec === "KY") {
     return "开元棋牌"; // KY
+  } else if (rec === "DYKY") {
+    return "开元棋牌"; // KY
+  } else if (rec === "GPS") {
+    return "GPS捕鱼"; // KY
   } else if (rec === "DT") {
     return "大唐棋牌"; // DT
   } else if (rec === "TCG") {

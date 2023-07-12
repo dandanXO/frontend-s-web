@@ -53,7 +53,7 @@ const onResponse = (response) => {
       location.reload();
     } else {
       // const router = useRouter()
-      if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED) {
+      if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED || res.code === ResponseCode.ERROR_TOKEN_INVALID) {
         const store = useStore()
         store.dispatch(UserActionTypes.ACTION_LOGOUT);
         location.reload();

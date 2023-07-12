@@ -94,6 +94,21 @@
                 color="bright"
               />
             </template>
+            <template
+              v-if="
+                det.status === 'SUCCESS' &&
+                det.currencyName === 'CNY' &&
+                det.confirmStatus === 1
+              "
+            >
+              <q-btn
+                disable
+                outline
+                label="已确认"
+                size="sm"
+                color="bright"
+              />
+            </template>
           </div>
         </q-card>
 
