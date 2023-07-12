@@ -460,8 +460,8 @@ const shortcuts = [
 
 const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
-const defaultStartDate = convertDate(startDate)
-const defaultEndDate = convertDate(new Date())
+const defaultStartDate = convertDateToStart(startDate)
+const defaultEndDate = convertDateToEnd(new Date())
 
 const request = reactive({
   withdrawDate: [defaultStartDate, defaultEndDate],
@@ -497,8 +497,16 @@ const sort = column => {
   request.orderBy = column.prop
   loadWithdrwalInfo()
 }
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
+function convertDateToStart(date) {
+  var m = moment(date)
+  m.set({ hour: 0, minute: 0, second: 0 })
+  return m.format('YYYY-MM-DD HH:mm:ss');
+}
+
+function convertDateToEnd(date) {
+  var m = moment(date)
+  m.set({ hour: 23, minute: 59, second: 59 })
+  return m.format('YYYY-MM-DD HH:mm:ss');
 }
 
 function disabledDate(time) {

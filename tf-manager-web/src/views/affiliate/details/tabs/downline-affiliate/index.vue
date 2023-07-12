@@ -105,6 +105,7 @@
 import { onMounted, defineProps, reactive } from 'vue';
 import { getAffiliateDownline, getAffiliateChild } from '../../../../../api/member-affiliate';
 import { useI18n } from "vue-i18n";
+import { useRoute } from 'vue-router';
 
 // eslint-disable-next-line
 const { t } = useI18n();
@@ -127,6 +128,11 @@ const page = reactive({
   loading: false
 });
 
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
+});
+
 async function loadDownlineAffiliates() {
   page.loading = true;
   const requestCopy = { ...request };
@@ -137,6 +143,7 @@ async function loadDownlineAffiliates() {
     }
   });
   query.memberTypes = "AFFILIATE";
+  query.siteId = site.id;
   const { data: ret } = await getAffiliateDownline(props.affId, query);
   page.pages = ret.pages;
   page.total = ret.total;
@@ -150,7 +157,7 @@ async function loadDownlineAffiliates() {
 }
 
 async function getChildren(record, treeNode, resolve) {
-  const { data: ret } = await getAffiliateChild(record.id);
+  const { data: ret } = await getAffiliateChild(record.id, site.id);
   record.children = ret;
   for (const child of record.children) {
     if (child.downlineAffiliate > 0) {
