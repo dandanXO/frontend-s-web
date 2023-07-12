@@ -14,10 +14,10 @@ export const actions = {
     { commit },
     userInfo
   ) {
-    let { userName, password } = userInfo;
+    let { userName, password, site } = userInfo;
     userName = userName.trim();
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
-    const { data: loginInfo } = await loginRequest({ userName: userName, password, way: regDevice });
+    const { data: loginInfo } = await loginRequest({ userName: userName, password, siteCode: site, way: regDevice });
     commit(UserMutationTypes.SET_TOKEN, loginInfo.token);
     commit(UserMutationTypes.SET_ID, loginInfo.id);
     commit(UserMutationTypes.SET_LOGIN_NAME, loginInfo.loginName);

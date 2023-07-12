@@ -84,8 +84,7 @@ const https = (forAffiliate) => {
   const config = {
     baseURL: isAff ? process.env.VUE_APP_RST_API : process.env.VUE_APP_BASE_API,
     headers: {
-      TOKEN: token,
-      Authorization: process.env.VUE_APP_SITE
+      TOKEN: token
     },
     timeout: process.env.TIMEOUT,
   };
