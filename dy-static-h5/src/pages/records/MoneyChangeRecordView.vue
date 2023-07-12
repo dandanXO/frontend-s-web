@@ -1,7 +1,7 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="moneychange"
+      recordType="moneyChange"
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"
@@ -91,7 +91,7 @@ export default defineComponent({
         label: "编码"
       },
       {
-        key: "type",
+        key: "subType",
         label: "账变类型"
       },
       {
