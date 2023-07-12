@@ -477,6 +477,15 @@
               >
                 获取验证码
               </el-button>
+              <el-button
+                class="common-btn"
+                style="margin-left: 10px"
+                type="button"
+                v-if="isSendOtp"
+                disabled
+              >
+                获取已发送（倒数 {{countdown}}秒)
+              </el-button>
             </el-form-item>
             <el-form-item label="电话验证码" prop="smsCode" v-if="isSendOtp">
               <el-input
@@ -1368,6 +1377,21 @@ export default defineComponent({
       formEl.resetFields()
     }
 
+    const countdown = ref(60)
+    const startCountdown = () => {
+      const countdownInterval = setInterval(() => {
+        countdown.value--;
+        if (countdown.value === 0) {
+          triggerFunction();
+          clearInterval(countdownInterval);
+        }
+      }, 1000);
+    };
+
+    const triggerFunction = () => {
+      isSendOtp.value = false;
+    };
+
     const sendOtp = async() => {
       if (captchaForm.type === 'REGISTER') {
         const smsDetail = {
@@ -1380,6 +1404,7 @@ export default defineComponent({
             if (response.code == 0) {
               disableSendVerificationButton.value = true
               isSendOtp.value = true;
+              startCountdown();
               regForm.smsCodeId = response.data.codeId;
               getCode();
 
@@ -1931,7 +1956,9 @@ export default defineComponent({
       loginTabs,
       openUsernameLogin,
       openMobileLogin,
-      checkMaintenance
+      checkMaintenance,
+      countdown,
+      startCountdown
     }
   }
 });
