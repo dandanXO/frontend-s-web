@@ -99,10 +99,10 @@
         <el-form-item ref="cardNumber" prop="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            :placeholder="t('fields.cardNumber')"
+            :placeholder="selectedBankType === 'Bank' ? t('fields.cardNumber') : t('fields.usdtWalletAddress')"
           />
         </el-form-item>
-        <el-form-item ref="cardNumber" prop="cardAddress">
+        <el-form-item ref="cardNumber" prop="cardAddress" v-if="selectedBankType === 'Bank'">
           <el-input
             v-model="bankCardInfo.cardAddress"
             :placeholder="t('fields.cardAddress')"
@@ -132,6 +132,7 @@ onMounted(() => {
 });
 const store = useStore();
 const { t } = useI18n();
+const selectedBankType = ref("Bank")
 
 const bankTypes = [
   { key: 1, displayName: t('fields.bank'), value: 'Bank' },
@@ -159,17 +160,56 @@ const bankCardInfo = reactive({
 });
 const centerDialogVisible = ref(false)
 
+const validateEmptyCardNo = async (r, v) => {
+  if (selectedBankType.value === 'Bank') {
+    if (v === '') {
+      return Promise.reject(new Error(t('message.requiredCardNumber')));
+    } else if (/^\d+$/.test(v) === false) {
+      return Promise.reject(new Error(t('message.validateBankCardNumber')));
+    } else {
+      return Promise.resolve();
+    }
+  } else if (selectedBankType.value === 'Crypto') {
+    if (v === '') {
+      return Promise.reject(new Error(t('message.requiredUsdtWallet')));
+    } else if (/^[A-Za-z0-9]*$/.test(v) === false) {
+      return Promise.reject(new Error(t('message.validateUsdtWallet')));
+    } else {
+      return Promise.resolve();
+    }
+  }
+  return Promise.resolve();
+};
+
+const validateBankLength = async (r, v) => {
+  var min = 6;
+  var max = 12;
+  if (selectedBankType.value === 'Bank') {
+    min = 16;
+    max = 19;
+  } else if (selectedBankType.value === 'Crypto') {
+    min = 34;
+    max = 36;
+  }
+  if (v === '') {
+    return Promise.reject(new Error(t('message.requiredCardNumber')));
+  } else if (v.length < min || v.length > max) {
+    return Promise.reject(new Error(t('message.lengthShouldBe') + min + '-' + max));
+  } else {
+    return Promise.resolve();
+  }
+};
+
 const bankCardRules = {
   cardNumber: [
     {
       required: true,
-      message: t('message.requiredCardNumber'),
+      validator: validateEmptyCardNo,
       trigger: "blur",
     },
     {
-      min: 16,
-      max: 19,
-      message: t('message.length16To19'),
+      required: true,
+      validator: validateBankLength,
       trigger: "blur",
     }
   ],
@@ -282,7 +322,6 @@ const openDialog = (type) => {
   // }
   centerDialogVisible.value = true
 }
-const selectedBankType = ref("Bank")
 const selectBankType = () => {
   banksList.value = []
   bankCardInfo.bankId = null

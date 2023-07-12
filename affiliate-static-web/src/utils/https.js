@@ -53,7 +53,7 @@ const onResponse = (response) => {
       location.reload();
     } else {
       // const router = useRouter()
-      if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED) {
+      if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED || res.code === ResponseCode.ERROR_TOKEN_INVALID) {
         const store = useStore()
         store.dispatch(UserActionTypes.ACTION_LOGOUT);
         location.reload();
@@ -84,8 +84,7 @@ const https = (forAffiliate) => {
   const config = {
     baseURL: isAff ? process.env.VUE_APP_RST_API : process.env.VUE_APP_BASE_API,
     headers: {
-      TOKEN: token,
-      Authorization: process.env.VUE_APP_SITE
+      TOKEN: token
     },
     timeout: process.env.TIMEOUT,
   };

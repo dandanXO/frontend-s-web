@@ -145,7 +145,11 @@ export default defineComponent({
         });
       },
       handleLogin: () => {
-        state.loginForm.siteId = 5;
+        if (route.path.split('/')[1] === 'xf') {
+          state.loginForm.site = 'XF1';
+        } else if (route.path.split('/')[1] === 'dy') {
+          state.loginForm.site = 'DY1';
+        }
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             state.loading = true;
