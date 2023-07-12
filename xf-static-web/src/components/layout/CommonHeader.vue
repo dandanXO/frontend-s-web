@@ -122,7 +122,6 @@
             </a> -->
 
             <router-link
-             
               @mouseover="showSubMenu(nav)"
               @mouseup="selectedMenu = ''"
               :to="nav.path"
@@ -484,7 +483,7 @@
                 v-if="isSendOtp"
                 disabled
               >
-                获取已发送（倒数 {{countdown}}秒)
+                获取已发送（倒数 {{ countdown }}秒)
               </el-button>
             </el-form-item>
             <el-form-item label="电话验证码" prop="smsCode" v-if="isSendOtp">
@@ -1711,6 +1710,7 @@ export default defineComponent({
                 const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                 if (store.token) {
                   router.push(jumpUrl);
+                  window.scroll({ behavior: "smooth", left: 0, top: 0 });
                   loginDialogVisible.value = false;
 
                   sessionStorage.removeItem("REFERRAL_CODE");
