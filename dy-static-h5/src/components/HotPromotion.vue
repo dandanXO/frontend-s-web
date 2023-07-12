@@ -141,6 +141,7 @@
 
       </div>
     </div> -->
+
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
