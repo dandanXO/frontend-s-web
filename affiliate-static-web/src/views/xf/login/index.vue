@@ -93,7 +93,8 @@ export default defineComponent({
     const state = reactive({
       loginForm: {
         userName: "",
-        password: ""
+        password: "",
+        site: "XF1"
       },
       loginRules: {
         userName: [
@@ -145,11 +146,6 @@ export default defineComponent({
         });
       },
       handleLogin: () => {
-        if (route.path.split('/')[1] === 'xf') {
-          state.loginForm.site = 'XF1';
-        } else if (route.path.split('/')[1] === 'dy') {
-          state.loginForm.site = 'DY1';
-        }
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             state.loading = true;
