@@ -91,7 +91,7 @@ export default defineComponent({
         label: "编码"
       },
       {
-        key: "subType",
+        key: "type",
         label: "账变类型"
       },
       {
