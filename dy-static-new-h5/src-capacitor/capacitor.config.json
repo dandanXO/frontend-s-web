@@ -1,0 +1,7 @@
+{
+  "appId": "com.code9.newdy",
+  "appName": "东赢",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

@@ -458,7 +458,6 @@ export default defineComponent({
         display: grid;
         margin-top: 20px;
         grid-template-columns: 1fr;
-        grid-gap: 18px;
 
         .promo-item {
           position: relative;
