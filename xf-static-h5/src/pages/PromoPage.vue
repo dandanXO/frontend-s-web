@@ -110,7 +110,7 @@
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino:
-                      selectedPromo.promoType.toLowerCase() === 'livecasino',
+                      selectedPromo.promoType.toLowerCase() === 'live casino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game',
                   }"
                 >
@@ -200,7 +200,7 @@ export default defineComponent({
         label: "电竞",
       },
       {
-        name: "livecasino",
+        name: "live casino",
         label: "真人",
       },
       {
