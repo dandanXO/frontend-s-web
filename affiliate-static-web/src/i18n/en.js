@@ -97,6 +97,7 @@ export default {
   },
   message: {
     addSuccess: "Add Success",
+    chineseCharacters: "Please input chinese characters",
     editSuccess: "Edit Success",
     inputRealName: "Member real name has not been set",
     emailFormat: "Please input the correct email address format",

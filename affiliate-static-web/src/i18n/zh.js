@@ -97,6 +97,7 @@ export default {
   },
   message: {
     addSuccess: "新增成功",
+    chineseCharacters: "请输入中文字符",
     editSuccess: "编辑成功",
     inputRealName: "会员真实名字未填",
     emailFormat: "请输入正确的邮箱格式",
@@ -118,7 +119,7 @@ export default {
     requiredEmail: "邮箱必填",
     requiredLoginName: "用户名必填",
     requiredPassword: "密码必填",
-    requiredRealName: "真实名字必填",
+    requiredRealName: "请输入姓名",
     requiredRevenueShare: "收入必填",
     requiredTelephone: "电话号码必填",
     requiredUserName: "用户名必填",

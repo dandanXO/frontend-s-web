@@ -371,7 +371,7 @@ const eForm = reactive({
 });
 
 const eFormRules = reactive({
-  realName: [required(t('message.requiredRealName'))]
+  realName: [required(t('message.requiredRealName')), { pattern: '^([\u4e00-\u9fa5]*)$', message: '请输入中文字符', trigger: 'change' }]
 });
 
 async function resetSummary() {
@@ -457,7 +457,7 @@ async function loadReferralLink() {
   // } else if (store.state.user.siteId === 9 || store.state.user.siteId === "9") {
   //   link.value = "https://www.jolly8858.com/agent/" + affInfo.affiliateCode;
   if (store.state.user.siteId === 1 || store.state.user.siteId === "1") {
-    link.value = "https://xf-web.jolly88-ph01.com/agent/" + affInfo.affiliateCode;
+    link.value = "https://xf-web.psnaback.com/agent/" + affInfo.affiliateCode;
   } else {
     link.value = "";
   }
