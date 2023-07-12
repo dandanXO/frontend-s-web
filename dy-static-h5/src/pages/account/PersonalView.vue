@@ -87,7 +87,12 @@
           color=""
           readonly
           style="width: 100%"
-        ></q-input>
+          @click="goToVerifyTelephone()"
+        >
+          <template v-slot:append>
+            <span style="font-size: 50%">请点击验证按钮</span>
+          </template>
+        </q-input>
         <template v-if="isEditPhone">
           <div class="q-ml-md">
             <router-link to="/account/verifyTelephone">
@@ -116,7 +121,12 @@
           color=""
           readonly
           style="width: 100%"
-        />
+          @click="goToVerifyEmail()"
+        >
+          <template v-slot:append>
+            <span style="font-size: 50%">请点击验证按钮</span>
+          </template>
+        </q-input>
         <template v-if="isEditEmail">
           <div class="q-ml-md">
             <router-link to="/account/verifyEmail">
@@ -216,6 +226,8 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
+import {useRouter} from "vue-router";
+
 
 export default defineComponent({
   name: "PersonalView",
@@ -227,6 +239,16 @@ export default defineComponent({
       start: "",
       end: ""
     });
+
+    const router = useRouter();
+
+    const goToVerifyTelephone = () => {
+      router.push(`/account/verifyTelephone`);
+    }
+
+    const goToVerifyEmail = () => {
+      router.push(`/account/verifyEmail`);
+    }
 
     const profileFormRef = ref();
 
@@ -514,7 +536,9 @@ export default defineComponent({
       captchaRef,
       showCaptchaDialog,
       openVerificationDialog,
-      onCaptchaSubmit
+      onCaptchaSubmit,
+      goToVerifyTelephone,
+      goToVerifyEmail
     };
   }
 });

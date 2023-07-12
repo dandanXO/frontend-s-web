@@ -28,10 +28,10 @@ export const actions = {
     { commit },
     userInfo
   ) {
-    let { userName, password, confirmPwd, telephone, email, siteId, captchaCode, codeId, codeAffiliate, codePersonalAffiliate, birthday } = userInfo;
+    let { userName, password, realName, confirmPwd, telephone, email, siteId, captchaCode, codeId, codeAffiliate, codePersonalAffiliate, birthday } = userInfo;
     userName = userName.trim();
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
-    await registerRequest({ loginName: userName, password, confirmPwd: confirmPwd, telephone, email, siteId, captchaCode, codePersonalAffiliate, codeId, codeAffiliate, birthday, regDevice: regDevice });
+    await registerRequest({ loginName: userName, password, realName, confirmPwd: confirmPwd, telephone, email, siteId, captchaCode, codePersonalAffiliate, codeId, codeAffiliate, birthday, regDevice: regDevice });
   },
 
   [UserActionTypes.ACTION_RESET_TOKEN](
