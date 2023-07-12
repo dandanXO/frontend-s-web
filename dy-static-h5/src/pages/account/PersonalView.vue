@@ -87,7 +87,11 @@
           color=""
           readonly
           style="width: 100%"
-        ></q-input>
+        >
+          <template v-slot:append>
+            <span style="font-size: 50%">请点击验证按钮</span>
+          </template>
+        </q-input>
         <template v-if="isEditPhone">
           <div class="q-ml-md">
             <router-link to="/account/verifyTelephone">
@@ -116,7 +120,11 @@
           color=""
           readonly
           style="width: 100%"
-        />
+        >
+          <template v-slot:append>
+            <span style="font-size: 50%">请点击验证按钮</span>
+          </template>
+        </q-input>
         <template v-if="isEditEmail">
           <div class="q-ml-md">
             <router-link to="/account/verifyEmail">
