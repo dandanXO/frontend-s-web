@@ -183,14 +183,14 @@
                 <img src="../assets/home/dy.png" />
                 <div>东赢电竞</div>
               </a>
-              <!-- <a
+              <a
                 class="game-platform"
                 @click="openGame('小艾', 'onlyPlatform', 'IA')"
                 style="margin-left: 30px"
               >
                 <img src="../assets/home/dy.png" />
                 <div>小艾电竞</div>
-              </a> -->
+              </a>
               <div
                 class="game-platform"
                 @click="openGame('IM', 'onlyPlatform', 'IMES')"
