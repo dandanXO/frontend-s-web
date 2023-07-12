@@ -544,6 +544,7 @@
 
 <script setup>
 import { computed, defineProps, nextTick, onMounted, reactive, ref } from "vue";
+import { useRoute } from 'vue-router'
 import { hasPermission } from "../../../../../utils/util";
 import { ElMessage } from "element-plus";
 import { required, size } from "../../../../../utils/validate";
@@ -569,6 +570,10 @@ const props = defineProps({
   }
 });
 const unmaskedValue = ref(null);
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
+});
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -1028,7 +1033,7 @@ onMounted(async () => {
   loading.loginInfo = true;
   loading.affiliateInfo = true;
   await loadFinancialLevels();
-  const data = await getAffiliateDetails(props.affId);
+  const data = await getAffiliateDetails(props.affId, site.id);
   Object.keys({ ...data.data }).forEach(detailField => {
     memberDetail[detailField] = data.data[detailField];
   });

@@ -67,7 +67,7 @@
       >
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="left" min-width="100">
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-            <router-link :to="`/affiliate/details/${scope.row.id}`">
+            <router-link :to="`/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -163,7 +163,7 @@
       >
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="left" min-width="100">
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-            <router-link :to="`/member/details/${scope.row.memberId}`">
+            <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -371,7 +371,7 @@ function resetQuery() {
   request.loginName = null;
   request.affiliateCode = null;
   request.activeMember = 0;
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
 };
 
 const page = reactive({
@@ -461,6 +461,7 @@ function changePage(page) {
 
 onMounted(async() => {
   await loadSites();
+  request.siteId = siteList.list[0].id
 });
 
 </script>

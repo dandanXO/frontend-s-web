@@ -229,7 +229,7 @@
       >
         <el-table-column prop="loginName" :label="t('fields.loginName')" width="180">
           <template #default="scope" v-if="hasPermission(['sys:affiliate:detail'])">
-            <router-link :to="`details/${scope.row.id}`">
+            <router-link :to="`details/${scope.row.id}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -561,7 +561,7 @@ function resetQuery() {
   request.loginName = null;
   request.affiliateStatus = null;
   request.affiliateCode = null;
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
   uiControl.searchDialogVisible = false;
 }
 
@@ -702,6 +702,7 @@ function freeze() {
 
 onMounted(async () => {
   await loadSites();
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;

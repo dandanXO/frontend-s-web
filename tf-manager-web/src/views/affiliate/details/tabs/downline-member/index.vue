@@ -66,6 +66,7 @@
 import { onMounted, defineProps, reactive } from 'vue';
 import { getAffiliateDownline } from '../../../../../api/member-affiliate';
 import { useI18n } from "vue-i18n";
+import { useRoute } from 'vue-router';
 
 // eslint-disable-next-line
 const { t } = useI18n();
@@ -88,8 +89,13 @@ const page = reactive({
   loading: false
 });
 
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
+});
+
 async function loadAffiliateMembers() {
-  page.loading = true;
+  // page.loading = true;
   const requestCopy = { ...request };
   const query = {};
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -98,6 +104,7 @@ async function loadAffiliateMembers() {
     }
   });
   query.memberTypes = "NORMAL,TEST";
+  query.siteId = site.id;
   const { data: ret } = await getAffiliateDownline(props.affId, query);
   page.pages = ret.pages;
   page.records = ret.records;

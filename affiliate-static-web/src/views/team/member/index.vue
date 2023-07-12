@@ -20,6 +20,7 @@
           :shortcuts="shortcuts"
           :disabled-date="disabledDate"
           :editable="false"
+          :clearable="false"
         />
         <el-input v-model="request.loginName" class="input-small" :placeholder="t('fields.loginName')" />
         <el-input v-model="request.realName" class="input-small" :placeholder="t('fields.name')" />
@@ -183,7 +184,7 @@ function disabledDate(time) {
 }
 
 function resetQuery() {
-  request.regTime = [];
+  request.regTime = [defaultDate, defaultDate];
   request.loginName = null;
   request.realName = null;
   request.telephone = null;
@@ -204,6 +205,7 @@ async function loadAffiliateMembers() {
       query.regTime = request.regTime.join(",");
     }
   }
+  query.siteId = store.state.user.siteId;
   query.memberTypes = "NORMAL,TEST";
   const { data: ret } = await getAffiliateDownline(store.state.user.id, query);
   page.pages = ret.pages;

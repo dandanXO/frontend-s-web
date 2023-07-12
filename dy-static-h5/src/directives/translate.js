@@ -2,13 +2,13 @@ export const translateRecord = (rec, type = "") => {
   if (rec === "WITHDRAW_FAIL") {
     return "提款失败"; // Fail Withdrawal
   } else if (rec === "WITHDRAW") {
-    if (type === "transfer") {
+    if (type === "transfer" || type === "moneyChange") {
       return "转出";
     }
     return "提款"; // Withdraw
   } else if (rec === "DEPOSIT") {
-    if (type === "transfer") {
-      return "转账";
+    if (type === "transfer" || type === "moneyChange") {
+      return "转入";
     }
     return "存款"; // 存款
   } else if (rec === "PROMO") {

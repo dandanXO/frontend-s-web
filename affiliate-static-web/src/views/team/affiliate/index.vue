@@ -20,8 +20,9 @@
           :shortcuts="shortcuts"
           :disabled-date="disabledDate"
           :editable="false"
+          :clearable="false"
         />
-        <el-input class="input-small" v-model="request.loginName" size="small" maxlength="50" :placeholder="t('fields.loginName')" />
+        <el-input class="input-small" v-model="request.loginName" maxlength="50" :placeholder="t('fields.loginName')" />
         <div class="grp-btn">
           <el-button icon="el-icon-search" type="primary" @click="loadDownlineAffiliates()" size="mini">
             {{ $t('fields.search') }}
@@ -67,12 +68,12 @@
             <span v-if="scope.row.commission !== null">{{ scope.row.commission * 100 }} %</span>
           </template>
         </el-table-column>
-        <el-table-column prop="revenueShare" :label="t('fields.revenueShare')" align="center" min-width="120">
+        <!-- <el-table-column prop="revenueShare" :label="t('fields.revenueShare')" align="center" min-width="120">
           <template #default="scope">
             <span v-if="scope.row.revenueShare === null">0 %</span>
             <span v-if="scope.row.revenueShare !== null">{{ scope.row.revenueShare * 100 }} %</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="downlineMember" :label="t('fields.totalDownlineMember')" align="center" min-width="160">
           <template #default="scope">
             <span v-if="scope.row.downlineMember === null">-</span>
@@ -94,7 +95,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="site" :label="t('fields.site')" align="center" min-width="120" />
-        <el-table-column prop="balance" label="Balance" align="center" min-width="120">
+        <el-table-column prop="balance" :label="t('fields.balance')" align="center" min-width="120">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.balance,type: 'money'}" />
           </template>
@@ -190,9 +191,9 @@
         <el-form-item :label="t('fields.commission')" prop="commission">
           <el-input v-model="cForm.commission" style="width: 350px;" :maxlength="uiControl.commissionMax" @keypress="restrictCommissionDecimalInput($event)" />
         </el-form-item>
-        <el-form-item :label="t('fields.revenueShare')" prop="revenueShare">
+        <!-- <el-form-item :label="t('fields.revenueShare')" prop="revenueShare">
           <el-input v-model="cForm.revenueShare" style="width: 350px;" :maxlength="uiControl.revenueMax" @keypress="restrictRevenueDecimalInput($event)" />
-        </el-form-item>
+        </el-form-item> -->
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ $t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="addAffiliate">{{ $t('fields.confirm') }}</el-button>
@@ -209,9 +210,9 @@
         <el-form-item :label="t('fields.commissionRate')" prop="commission">
           <el-input v-model="eForm.commission" style="width: 250px" :maxlength="uiControl.commissionMax" @keypress="restrictCommissionDecimalInput($event)" />
         </el-form-item>
-        <el-form-item :label="t('fields.revenueShareRate')" prop="revenueShare">
+        <!-- <el-form-item :label="t('fields.revenueShareRate')" prop="revenueShare">
           <el-input v-model="eForm.revenueShare" style="width: 250px" :maxlength="uiControl.revenueMax" @keypress="restrictRevenueDecimalInput($event)" />
-        </el-form-item>
+        </el-form-item> -->
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible=false">{{ $t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="editAffiliate()">{{ $t('fields.confirm') }}</el-button>
@@ -336,7 +337,7 @@ const cForm = reactive({
   affiliateLevel: null,
   affiliateCode: null,
   commission: 0,
-  revenueShare: 0
+  // revenueShare: 0
 });
 
 const eForm = reactive({
@@ -344,7 +345,7 @@ const eForm = reactive({
   loginName: null,
   affiliateCode: null,
   commission: null,
-  revenueShare: null
+  // revenueShare: null
 });
 
 function convertDate(date) {
@@ -378,14 +379,14 @@ const validateCommission = (rule, value, callback) => {
   callback();
 };
 
-const validateRevenue = (rule, value, callback) => {
-  if (value !== "" &&
-    ((cForm.revenueShare < 0 || cForm.revenueShare > 1) ||
-    (eForm.revenueShare < 0 || eForm.revenueShare > 1))) {
-    callback(new Error(t('message.validateRevenueShare')))
-  }
-  callback();
-};
+// const validateRevenue = (rule, value, callback) => {
+//   if (value !== "" &&
+//     ((cForm.revenueShare < 0 || cForm.revenueShare > 1) ||
+//     (eForm.revenueShare < 0 || eForm.revenueShare > 1))) {
+//     callback(new Error(t('message.validateRevenueShare')))
+//   }
+//   callback();
+// };
 
 const cFormRules = reactive({
   affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
@@ -395,12 +396,12 @@ const cFormRules = reactive({
   telephone: [required(t('message.requiredTelephone'))],
   email: [required(t('message.requiredEmail')), email(t('message.emailFormat'))],
   commission: [required(t('message.requiredCommission')), { validator: validateCommission, trigger: "blur" }],
-  revenueShare: [{ validator: validateRevenue, trigger: "blur" }]
+  // revenueShare: [{ validator: validateRevenue, trigger: "blur" }]
 });
 
 const eFormRules = reactive({
   commission: [required(t('message.requiredCommission')), { validator: validateCommission, trigger: "blur" }],
-  revenueShare: [{ validator: validateRevenue, trigger: "blur" }]
+  // revenueShare: [{ validator: validateRevenue, trigger: "blur" }]
 });
 
 function restrictCommissionDecimalInput(event) {
@@ -428,33 +429,33 @@ function restrictCommissionDecimalInput(event) {
   }
 }
 
-function restrictRevenueDecimalInput(event) {
-  var charCode = event.which ? event.which : event.keyCode
-  if (
-    (charCode < 48 || charCode > 57) && charCode !== 46
-  ) {
-    event.preventDefault();
-  }
+// function restrictRevenueDecimalInput(event) {
+//   var charCode = event.which ? event.which : event.keyCode
+//   if (
+//     (charCode < 48 || charCode > 57) && charCode !== 46
+//   ) {
+//     event.preventDefault();
+//   }
 
-  if (
-    (eForm.revenueShare !== null &&
-    eForm.revenueShare.toString().indexOf('.') > -1) ||
-    (cForm.revenueShare !== null &&
-    cForm.revenueShare.toString().indexOf('.') > -1)
-  ) {
-    if (charCode === 46) {
-      event.preventDefault();
-    }
-    uiControl.revenueMax = 4;
-  } else if (eForm.revenueShare === "1" || cForm.revenueShare === "1") {
-    uiControl.revenueMax = 1;
-  } else {
-    uiControl.revenueMax = 2;
-  }
-}
+//   if (
+//     (eForm.revenueShare !== null &&
+//     eForm.revenueShare.toString().indexOf('.') > -1) ||
+//     (cForm.revenueShare !== null &&
+//     cForm.revenueShare.toString().indexOf('.') > -1)
+//   ) {
+//     if (charCode === 46) {
+//       event.preventDefault();
+//     }
+//     uiControl.revenueMax = 4;
+//   } else if (eForm.revenueShare === "1" || cForm.revenueShare === "1") {
+//     uiControl.revenueMax = 1;
+//   } else {
+//     uiControl.revenueMax = 2;
+//   }
+// }
 
 function resetQuery() {
-  request.regTime = [];
+  request.regTime = [defaultDate, defaultDate];
   request.loginName = null;
 }
 
@@ -472,6 +473,7 @@ async function loadDownlineAffiliates() {
       query.regTime = request.regTime.join(",");
     }
   }
+  query.siteId = site.value.id;
   query.memberTypes = "AFFILIATE";
   const { data: ret } = await getAffiliateDownline(store.state.user.id, query);
   page.pages = ret.pages;
@@ -531,7 +533,7 @@ async function editAffiliate() {
     if (valid) {
       const form = {};
       form.commission = eForm.commission;
-      form.revenueShare = eForm.revenueShare;
+      // form.revenueShare = eForm.revenueShare;
       await editAffiliateCommission(eForm.id, form);
       uiControl.dialogVisible = false;
       ElMessage({ message: t('message.editSuccess'), type: 'success' });
@@ -550,10 +552,10 @@ async function loadAffiliateInfo() {
   affInfo.value = a;
 }
 
-onMounted(() => {
-  loadAffiliateInfo();
-  loadSite();
-  loadDownlineAffiliates();
+onMounted(async() => {
+  await loadSite();
+  await loadAffiliateInfo();
+  await loadDownlineAffiliates();
 });
 </script>
 

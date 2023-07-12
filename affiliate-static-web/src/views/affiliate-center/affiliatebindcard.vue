@@ -57,7 +57,7 @@
       </el-col>
     </el-row>
     <el-dialog
-      width="90%"
+      width="700px"
       :title="t('fields.addBankCard')"
       v-model="centerDialogVisible"
       :close-on-click-modal="false"
@@ -69,9 +69,9 @@
               <el-select value-key="bankType" v-model="selectedBankType" :placeholder="t('fields.select')" size="large" @change="selectBankType">
                 <el-option
                   v-for="item in bankTypes"
-                  :key="item.value"
-                  :label="item.value"
-                  :value="item"
+                  :key="item.key"
+                  :label="item.displayName"
+                  :value="item.value"
                 />
               </el-select>
             </el-col>
@@ -133,7 +133,10 @@ onMounted(() => {
 const store = useStore();
 const { t } = useI18n();
 
-const bankTypes = ['Bank', 'Crypto']
+const bankTypes = [
+  { key: 1, displayName: t('fields.bank'), value: 'Bank' },
+  { key: 2, displayName: t('fields.crypto'), value: 'Crypto' }
+]
 const personalState = reactive({
   bankCardList: []
 });
@@ -164,9 +167,9 @@ const bankCardRules = {
       trigger: "blur",
     },
     {
-      min: 6,
-      max: 12,
-      message: t('message.length6To12'),
+      min: 16,
+      max: 19,
+      message: t('message.length16To19'),
       trigger: "blur",
     }
   ],
