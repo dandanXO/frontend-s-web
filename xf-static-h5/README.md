@@ -48,7 +48,7 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quas
 quasar build -m capacitor -T android
 
 2. go to folder: src-capacitor
-cd src-cacitor
+cd src-capacitor
 
 3. sync Android
 npx cap sync
@@ -65,7 +65,7 @@ npx cap open android
 ### Change Android Version Name
 
 1. open src-capacitor/android/app/build.gradle
-2. Edit Version No: 
+2. Edit Version No:
   -     versionCode 7
         versionName "1.0"
 3. Rebuild Apk.

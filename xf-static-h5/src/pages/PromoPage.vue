@@ -269,7 +269,6 @@ export default defineComponent({
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function (promo) {
-          console.log("^^^")
           return (promo.promoType.toLowerCase()).includes(type.value.toLowerCase());
         });
       } else {
@@ -465,7 +464,6 @@ export default defineComponent({
         display: grid;
         margin-top: 20px;
         grid-template-columns: 1fr;
-        grid-gap: 18px;
 
         .promo-item {
           position: relative;
