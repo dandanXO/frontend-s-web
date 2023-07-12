@@ -91,11 +91,11 @@
                   "
                 ></div> -->
                 <!-- <div class="promo-bg"> -->
-                  <img
-                    class="promo-content"
-                    :src="imgURL + selectedPromo.mobileBannerUrl"
-                    style="display: block; width: 100%"
-                  />
+                <img
+                  class="promo-content"
+                  :src="imgURL + selectedPromo.mobileBannerUrl"
+                  style="display: block; width: 100%"
+                />
                 <!-- </div> -->
               </div>
               <div class="inner">
@@ -111,7 +111,7 @@
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino:
                       selectedPromo.promoType.toLowerCase() === 'live casino',
-                    slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
                   <div v-html="selectedPromo.pageContent"></div>
@@ -187,26 +187,33 @@ export default defineComponent({
 
     const tab = ref("all");
     const tabItems = [
-      {
-        name: "all",
-        label: "全部",
-      },
-      {
-        name: "sport",
-        label: "体育",
-      },
-      {
-        name: "esport",
-        label: "电竞",
-      },
-      {
-        name: "live casino",
-        label: "真人",
-      },
-      {
-        name: "slot game",
-        label: "电游",
-      },
+
+    { name:"all", label: '全部' },
+      { name: "slot game", label: '电游'},
+      { name: "fish", label: '捕鱼'},
+      { name: "live casino", label: '真人'},
+      { name: "poker", label: '棋牌'},
+
+      // {
+      //   name: "all",
+      //   label: "全部",
+      // },
+      // {
+      //   name: "sport",
+      //   label: "体育",
+      // },
+      // {
+      //   name: "esport",
+      //   label: "电竞",
+      // },
+      // {
+      //   name: "live casino",
+      //   label: "真人",
+      // },
+      // {
+      //   name: "slot game",
+      //   label: "电游",
+      // },
     ];
 
     watch(() => route.query, () => {
