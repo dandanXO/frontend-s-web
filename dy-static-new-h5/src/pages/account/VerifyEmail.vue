@@ -2,111 +2,6 @@
   <div class="personal-account">
     <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
     <q-form ref="profileFormRef">
-      <q-input
-        standout
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.nickName"
-        label="账号"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入账号']"
-        label-color=""
-        :readonly="personalState.memberInfo.nickName ? true : false"
-      />
-      <q-input
-        standout
-        ref="realNameRef"
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.realName"
-        label="姓名"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
-        label-color=""
-        :readonly="personalState.memberInfo.realName ? true : false"
-      />
-      <q-input
-        ref="birthdayRef"
-        standout
-        bg-color="white"
-        label="生日"
-        label-color=""
-        lazy-rules
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.birthday"
-        mask="date"
-        :rules="[(val) => (val && val.length > 0) || '请输入生日']"
-      >
-        <template v-slot:append>
-          <q-icon name="event" color="dark" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-
-      <!-- <q-input
-        type="date"
-        class="q-pb-xs"
-        hide-bottom-space
-        filled
-        v-model="formDetail.birthday"
-        label="生日"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入生日']"
-
-        label-color="secondary"
-        color="secondary"
-        :readonly="personalState.memberInfo.birthday ? true : false"
-      /> -->
-
-      <div class="flex items-center no-wrap">
-        <q-input
-          standout
-          bg-color="white"
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.phone"
-          type="tel"
-          label="电话"
-          lazy-rules
-          :rules="[(_) => isValidPhone()]"
-          label-color=""
-          color=""
-          readonly
-          style="width: 100%"
-          @click="goToVerifyTelephone()"
-        >
-          <template v-slot:append>
-            <span style="font-size: 50%">请点击验证按钮</span>
-          </template>
-        </q-input>
-        <template v-if="isEditPhone">
-          <div class="q-ml-md">
-            <router-link to="/account/verifyTelephone">
-              <q-btn
-                size="sm"
-                color="dyblue"
-                label="验证"
-                style="white-space: nowrap"
-              />
-            </router-link>
-          </div>
-        </template>
-      </div>
-
       <div class="flex items-center no-wrap">
         <q-input
           standout
@@ -119,91 +14,66 @@
           :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
           label-color=""
           color=""
-          readonly
+          :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
-          @click="goToVerifyEmail()"
-        >
-          <template v-slot:append>
-            <span style="font-size: 50%">请点击验证按钮</span>
-          </template>
-        </q-input>
-        <template v-if="isEditEmail">
+        />
+        <template v-if="showVerifyBtn">
           <div class="q-ml-md">
-            <router-link to="/account/verifyEmail">
-              <q-btn
-                size="sm"
-                color="dyblue"
-                label="验证"
-                style="white-space: nowrap"
-              />
-            </router-link>
+            <q-btn
+              size="md"
+              color="dyblue"
+              label="发送验证码"
+              @click="openVerificationDialog()"
+              style="white-space: nowrap"
+            />
           </div>
         </template>
       </div>
 
-      <!-- <q-input
-        v-if="!formDetail.phoneVerified"
+      <q-input
         standout
         bg-color="white"
         class="q-pb-xs"
         hide-bottom-space
-        v-model="formDetail.phone"
+        ref="emailOtpRef"
+        v-model="formDetail.emailOtpRef"
         type="tel"
-        label="手机验证码"
+        label="邮箱验证码"
         lazy-rules
-        :rules="[(_) => isValidPhone()]"
+        :rules="[
+          (val) =>
+            (val && val.length > 5 && val.length < 7) || '请输入邮箱验证码'
+        ]"
         label-color=""
         color=""
-        :readonly="personalState.memberInfo.phone ? true : false"
-      >
-        <template v-slot:append v-if="!formDetail.phoneVerified">
-          <q-btn
-            size="sm"
-            color="dyblue"
-            label="验证"
-            :disable="!formDetail.phone"
-            @click="openVerificationDialog"
-          />
-        </template>
-      </q-input> -->
+        style="width: 100%"
+      ></q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="dyblue" @click="updateState" label="保存信息" />
+        <q-btn
+          size="md"
+          color="dyblue"
+          @click="submitUpdateSecurity()"
+          label="验证邮箱"
+        />
       </div>
     </q-form>
   </div>
 
-  <q-dialog width="100%" v-model="showCaptchaDialog">
-    <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-white text-black text-center"
-    >
-      <q-card-section
-        class="q-mb-md"
-        style="flex-direction: column; display: flex"
-      >
-        <strong>系统提示</strong>
-        <br />
-        <br />
-        请登录后再操作
-      </q-card-section>
-      <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="dyblue" />
-      </router-link>
-    </q-card>
-  </q-dialog>
-
-  <q-dialog v-model="showCaptchaDialog" width="100%">
+  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
     <q-card width="100%">
       <q-card-section
-        style="padding: 10px 20px"
+        style="padding: 10px 5px"
         class="q-pa-md bg-dyblue text-white"
       >
-        验证码
+        <q-toolbar>
+          <q-toolbar-title>验证码</q-toolbar-title>
+          <q-btn flat v-close-popup round dense icon="close" />
+        </q-toolbar>
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="captchaRef" label="验证码">
+          <q-input v-model="innerCaptchaRef" label="验证码">
             <template v-slot:append>
               <img
                 :src="verificationImg"
@@ -218,37 +88,34 @@
       </div>
     </q-card>
   </q-dialog>
+
+  <!-- <br />
+  email: {{ formDetail.email }}
+  <br />
+  code: {{ formDetail.emailOtpRef }}
+  <br />
+  codeId: {{ emailCodeId }} -->
 </template>
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
+import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
-import {useRouter} from "vue-router";
-
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
     // const isCardActive = ref();
     const qs = require("qs");
+    const router = useRouter();
     const $q = useQuasar();
     const searchForm = reactive({
       start: "",
       end: ""
     });
-
-    const router = useRouter();
-
-    const goToVerifyTelephone = () => {
-      router.push(`/account/verifyTelephone`);
-    }
-
-    const goToVerifyEmail = () => {
-      router.push(`/account/verifyEmail`);
-    }
 
     const profileFormRef = ref();
 
@@ -265,31 +132,21 @@ export default defineComponent({
       formDetail.email = personalState.memberInfo.email;
       formDetail.phone = personalState.memberInfo.phone;
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
-      formDetail.emailVerified = personalState.memberInfo.emailVerified;
-
-      isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
-      isEditBirthday.value = (formDetail.birthday == "") ? true : false;
-      isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
     };
 
-    const canEdit = computed(() => {
-      if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)) {
-        return true;
-      }
-      return false;
-    });
+    const canEdit = ref(false);
 
     const personalState = reactive({
       memberInfo: {}
     });
-    const verificationDetails = reactive({
-      memberInfo: {}
-    });
+    const verificationDetails = reactive({});
 
     onMounted(() => {
       loadInfo();
       getCode();
     });
+
+    const emailCodeId = ref("");
 
     const verificationImg = ref("");
     const getCode = () => {
@@ -300,6 +157,7 @@ export default defineComponent({
             verificationImg.value =
               "data:image/png;base64," + response.data.img;
             updateSecurityVerified.codeId = response.data.id;
+            innerCaptchaRef.value = "";
           }
         })
         .catch((e) => {
@@ -340,10 +198,11 @@ export default defineComponent({
       };
       api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
         if (ret.code === 0) {
+          canEdit.value = true;
           $q.notify({
             color: "positive",
             position: "top",
-            message: "OTP验证码已发送至您的邮箱。",
+            message: "验证码已发送至您的邮箱。",
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;
@@ -368,12 +227,14 @@ export default defineComponent({
     const emailAddressRef = ref();
     const verificationCodeRef = ref();
     const submitUpdateSecurity = () => {
-      emailAddressRef.value.validate();
-      verificationCodeRef.value.validate();
-      if (emailAddressRef.value.hasError || verificationCodeRef.value.hasError) {
+      emailOtpRef.value.validate();
+      if (emailOtpRef.value.hasError) {
       } else {
-        verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode;
-        api.post("/otp/verifyEmail", qs.stringify(verificationDetails.memberInfo)).then((res) => {
+        api.post("/session/verifyAndUpdateEmail", qs.stringify({
+          email: formDetail.email,
+          code: formDetail.emailOtpRef,
+          codeId: emailCodeId.value
+        })).then((res) => {
           if (res.code === 0) {
             $q.notify({
               color: "positive",
@@ -381,16 +242,17 @@ export default defineComponent({
               message: "验证成功",
               icon: "check_circle_outline"
             });
-            updateSecurityModalVisible.value = false;
-            loadInfo();
+            store.emailVerified = true;
+            store.email = formDetail.email;
+            router.push("/account");
           }
         }).catch((e) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: e.message,
-          //   icon: "report_problem"
-          // });
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          });
         });
       }
     };
@@ -405,53 +267,14 @@ export default defineComponent({
     const realNameRef = ref();
     const birthdayRef = ref();
     const emailRef = ref();
+    const emailOtpRef = ref();
 
     const captchaRef = ref();
+    const innerCaptchaRef = ref();
     const showCaptchaDialog = ref(false);
+    const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false);
 
-    const updateState = () => {
-      const updateInfo = {};
-      if (!personalState.memberInfo.birthday) {
-        birthdayRef.value.validate();
-        if (birthdayRef.value.hasError) {
-          return;
-        }
-      }
-      if (!personalState.memberInfo.realName) {
-        realNameRef.value.validate();
-        if (realNameRef.value.hasError) {
-          return;
-        }
-      }
-      console.log(updateInfo);
-      updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
-      updateInfo.realName = formDetail.realName;
-
-      api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
-        if (r.code === 0) {
-          profileFormRef.value.reset();
-
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: "更新成功",
-            icon: "check_circle_outline"
-          });
-
-          store.getMemberInfo().then(() => {
-            loadInfo();
-          });
-        } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: r.message,
-            icon: "report_problem"
-          });
-        }
-      });
-    };
 
     const isValidName = () => {
       const namePattern =
@@ -471,34 +294,52 @@ export default defineComponent({
 
     const openVerificationDialog = () => {
       getCode();
-
       showCaptchaDialog.value = true;
     };
 
     const onCaptchaSubmit = () => {
-      api.post(`/otp/sendSms`, qs.stringify({
-        telephone: formDetail.phone,
-        captchaCode: captchaRef.value,
+      if (!formDetail.email) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "邮箱不能为空",
+          icon: "report_problem"
+        });
+        getCode();
+        return;
+      }
+
+      api.post(`/otp/sendNewEmail`, qs.stringify({
+        email: formDetail.email,
+        captchaCode: innerCaptchaRef.value,
         codeId: updateSecurityVerified.codeId
       }))
         .then(res => {
-          let message = res.message || "发送手机验证码成功",
+          getCode();
+          let message = res.message || "发送邮箱验证码成功",
             color = "positive";
 
           if (res.code === 0) {
+            canEdit.value = true;
             showCaptchaDialog.value = false;
+            showVerifyBtn.value = false;
             showVerificationTokenInput.value = true;
+
+            emailCodeId.value = res.data.codeId;
           } else
             color = "negative";
+          getCode();
 
           if (message)
             $q.notify({ message, color });
+          getCode();
 
           console.log("onCaptchaSubmit", res);
         });
     };
 
     return {
+      router,
       searchForm,
       personalState,
       updateSecurityFormRef,
@@ -509,15 +350,14 @@ export default defineComponent({
       isEditRealName,
       isEditEmail,
       isEditPhone,
-      loadInfo,
       isEditBirthday,
       formDetail,
       profileFormRef,
-      updateState,
       verificationModalVisible,
       openVerificationModal,
       isEmailSending,
       verificationImg,
+      emailCodeId,
       verifyVerificationCode,
       getCode,
       verificationDetails,
@@ -525,6 +365,7 @@ export default defineComponent({
       emailAddressRef,
       isEdit,
       emailRef,
+      emailOtpRef,
       realNameRef,
       birthdayRef,
       moment,
@@ -534,11 +375,11 @@ export default defineComponent({
       showVerificationTokenInput,
       isValidPhone,
       captchaRef,
+      innerCaptchaRef,
       showCaptchaDialog,
       openVerificationDialog,
       onCaptchaSubmit,
-      goToVerifyTelephone,
-      goToVerifyEmail
+      showVerifyBtn
     };
   }
 });
@@ -558,5 +399,9 @@ export default defineComponent({
   input.q-placeholder {
     color: #333333 !important;
   }
+}
+
+.q-toolbar {
+  background: #5b80e8;
 }
 </style>
