@@ -508,21 +508,24 @@
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item label="推荐码" prop="codeAffiliate">
+            <el-form-item
+              label="推荐码"
+              prop="codeAffiliate"
+              v-if="!hasAffiliate"
+            >
               <el-space>
                 <el-input
-                  v-if="!hasAffiliate"
                   class="half"
                   v-model="regForm.codeAffiliate"
                   placeholder="输入推荐码"
                 />
-                <el-input
+                <!-- <el-input
                   v-else
                   class="half"
                   v-model="regForm.codeAffiliate"
                   readonly
                   disabled
-                />
+                /> -->
                 <el-icon>
                   <InfoFilled style="font-size: 10px; line-height: 20px" />
                 </el-icon>
@@ -1362,6 +1365,7 @@ export default defineComponent({
       if (affCode) {
         hasAffiliate.value = true
         regForm.codeAffiliate = affCode;
+        registerDialogVisible.value = true;
       }
     }
 
@@ -1651,6 +1655,7 @@ export default defineComponent({
       // console.log(referCode);
       if (referCode && route.query && route.query.refer) {
         registerDialogVisible.value = true;
+        hasAffiliate.value = true
         regForm.referrer = referCode;
       }
     }
