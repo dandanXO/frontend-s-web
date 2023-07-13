@@ -32,7 +32,7 @@
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage ? '/' + prevPage : '/'">
-          <RiArrowDropLeftLine />
+          <RiArrowLeftLine />
         </router-link>
         {{ pageName }}
         <q-btn v-if="hasDrawer" style="position:absolute; right: 10px;" flat @click="ui.drawerRight = !ui.drawerRight"
@@ -119,40 +119,51 @@
         align="justify"
       >
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/homeBar.png" />
+          <img class="inactive" src="../assets/images/index/menu/ft-home.svg" />
           <img
             class="hover"
-            src="../assets/images/index/menu/homeBar_active.png"
+            src="../assets/images/index/menu/ft-home-active.svg"
           />
           首页
+        </q-route-tab>
+        <q-route-tab to="/sport" name="sport">
+          <img
+            class="inactive"
+            src="../assets/images/index/menu/ft-sport.svg"
+          />
+          <img
+            class="hover"
+            src="../assets/images/index/menu/ft-sport-active.svg"
+          />
+          优惠
         </q-route-tab>
         <q-route-tab to="/promo" name="promo">
           <img
             class="inactive"
-            src="../assets/images/index/menu/promotionBar.png"
+            src="../assets/images/index/menu/ft-promo.svg"
           />
           <img
             class="hover"
-            src="../assets/images/index/menu/promotionBar_active.png"
+            src="../assets/images/index/menu/ft-promo-active.svg"
           />
           优惠
         </q-route-tab>
         <q-route-tab to="/liveChat" id="cs-web-id" name="live">
           <img
             class="inactive"
-            src="../assets/images/index/menu/customerBar.png"
+            src="../assets/images/index/menu/ft-livechat.svg"
           />
           <img
             class="hover"
-            src="../assets/images/index/menu/customerBar_active.png"
+            src="../assets/images/index/menu/ft-livechat-active.svg"
           />
           客服
         </q-route-tab>
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/meBar.png" />
+          <img class="inactive" src="../assets/images/index/menu/ft-me.svg" />
           <img
             class="hover"
-            src="../assets/images/index/menu/meBar_active.png"
+            src="../assets/images/index/menu/ft-me-active.svg"
           />
           我的
         </q-route-tab>
@@ -169,13 +180,13 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import {translateRecord} from "src/directives/translate";
 
-import { RiArrowDropLeftLine } from "vue-remix-icons";
+import { RiArrowLeftLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    RiArrowDropLeftLine
+    RiArrowLeftLine
   },
 
   setup() {
@@ -605,6 +616,9 @@ svg path {
 
 .page-wrapper {
   background: #4fb2ff;
+  background: url(../assets/images/common/bgheader.png)no-repeat center center;
+  padding-top: 20px;
+  background-size: cover;
 }
 
 .page-title {

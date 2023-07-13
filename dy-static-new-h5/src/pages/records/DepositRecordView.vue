@@ -120,21 +120,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.table-record {
-  width: 100%;
-  gap: 10px;
 
-  .q-card {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-
-  .label {
-    color: #000000;
-  }
-
-  .q-btn {
-    font-size: 11px !important;
-  }
-}
 </style>

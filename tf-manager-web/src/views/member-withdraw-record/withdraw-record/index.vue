@@ -416,7 +416,7 @@
         @current-change="loadRecord"
         @size-change="loadRecord"
       />
-      <div class="table-footer">
+      <div class="table-footer" v-permission="['sys:withdraw:record:sum']">
         <span>{{ t('fields.noOfWithdrawTimes') }}</span>
         <span style="margin-left: 10px">{{ page.total }}</span>
         <span style="margin-left: 30px">{{ t('fields.totalWithdrawAmount') }}</span>

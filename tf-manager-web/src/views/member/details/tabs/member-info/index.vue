@@ -22,6 +22,10 @@
           </template>
           <span v-if="memberDetail.loginName !== null">{{ memberDetail.loginName }}</span>
           <span v-if="memberDetail.loginName === null">-</span>
+          <el-button type="info" size="mini" v-permission="['sys:member:logout-player']"
+                     style="float: right;" @click="logoutPlayer"
+          >{{ t('fields.logoutPlayer') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" :class-name="memberDetail.dupName === 'red'?'member-context-red':'member-context'">
           <template #label>
@@ -761,7 +765,8 @@ import {
   getMemberTelephone, normalMember, getAffiliateInfo,
   updateMemberType,
   unlockMember,
-  refreshBalance
+  refreshBalance,
+  forceLogout
 } from "../../../../../api/member";
 import { getPlatformsBySite } from "../../../../../api/platform";
 import { selectIpLabelAll } from "../../../../../api/ip-label";
@@ -1357,6 +1362,11 @@ export default defineComponent({
       ElMessage({ message: t('message.unlockMemberSuccess'), type: "success" });
     }
 
+    async function logoutPlayer() {
+      await forceLogout(props.mbrId, site.id);
+      ElMessage({ message: t('message.logoutPlayerSuccess'), type: "success" });
+    }
+
     onMounted(async () => {
       loading.accountInfo = true;
       loading.affiliateInfo = true;
@@ -1455,7 +1465,8 @@ export default defineComponent({
       userTypeFormRules,
       editUserType,
       unlock,
-      t
+      t,
+      logoutPlayer
     };
   }
 });

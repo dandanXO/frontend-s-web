@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+
+  namespace 'com.xf.client.website'
+  compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.xf.client.website"
         minSdkVersion rootProject.ext.minSdkVersion

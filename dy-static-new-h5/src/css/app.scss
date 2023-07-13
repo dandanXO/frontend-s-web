@@ -14,7 +14,7 @@ body {
 
 #q-app {
   // background: #11131f;
-  background: #d2d2de;
+  background: #ffffff;
 }
 
 .q-layout,
@@ -54,7 +54,8 @@ body {
 }
 
 .q-page-container {
-  background: #d2d2de;
+  background: #ffffff;
+  box-shadow:0px 0px 4px rgba(0,0,0,0.25);
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> is used. */
 
@@ -128,7 +129,8 @@ body.platform-ios .q-dialog__inner--minimized > div {
 
     svg {
       display: block;
-      width: 40px;
+      width: 30px;
+      padding-left: 10px;
       fill: #ffffff;
     }
   }
@@ -165,6 +167,8 @@ svg {
 .q-carousel.home {
   height: 60vw;
   max-height: 210px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 
   .q-panel > div {
     background-repeat: no-repeat;
@@ -194,8 +198,9 @@ svg {
 
 .q-footer {
   border-radius: 20px 20px 0 0;
-  box-shadow: 0 0 0px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+  box-shadow: 0 0 0px 0px #75757550;
+  //overflow: hidden;
+  font-size: 12px;
 
   .q-tabs {
     background: #d2d2de !important;
@@ -207,7 +212,7 @@ svg {
     color: #929292;
 
     img {
-      width: 25px;
+      height: 18px;
 
       &.inactive {
         display: block;
@@ -227,7 +232,7 @@ svg {
     }
 
     &--active {
-      color: #3f5fc7;
+      color: #0089ED;
 
       img {
         &.inactive {
@@ -268,7 +273,7 @@ svg {
 
 .text-bright {
   // color: #33bcd4;
-  color: #5b80e7;
+  color: #0089ED;
 }
 
 .bg-bright {
@@ -277,13 +282,18 @@ svg {
 }
 
 .bg-brightbtn {
-  background: #5b80e8;
+  background: #0089ED;
   color: #ffffff;
 }
 
 .bg-dyblue {
-  background: #5b80e8;
+  background: #0089ED;
   color: #ffffff;
+}
+
+.bg-greyblue{
+  background: #333;
+  color: #0089ED;
 }
 
 .bg-darkbtn {
@@ -324,17 +334,7 @@ svg {
   justify-content: center;
 }
 
-// .fullscreen {
-//   max-width: 500px;
-//   margin: 0 auto;
-// }
-// .q-body--fullscreen-mixin,
-// .q-body--prevent-scroll {
-//   max-width: 500px;
-//   width: 100%;
-//   margin: 0 auto;
-//   right: 0;
-// }
+
 .q-field--filled.q-field--readonly .q-field__control:before {
   border-bottom: 0;
 }
@@ -342,4 +342,60 @@ svg {
 .q-field--readonly.q-field--float .q-field__native,
 .q-field--readonly.q-field--float .q-field__input {
   color: #bacef1;
+}
+
+.gap-8{
+  gap: 8px;
+}
+
+.gap-3{
+  gap: 3px;
+}
+
+.gap-10{
+  gap: 10px;
+}
+
+.gap-5{
+  gap: 5px;
+}
+
+a:hover{
+  filter: brightness(0.8);
+}
+
+a:active{
+  filter: brightness(0.8);
+}
+
+a:visited{
+  span{
+    text-decoration: none;
+  }
+  text-decoration: none;
+}
+
+.txt-link{
+  text-decoration: none;
+  color: #0089ED;
+}
+
+.table-record {
+  width: 100%;
+  gap: 6px;
+
+
+  .q-card {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin-bottom:20px;
+  }
+
+  .label {
+    color: #000000;
+  }
+
+  .q-btn {
+    font-size: 11px !important;
+  }
 }

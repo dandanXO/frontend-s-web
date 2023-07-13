@@ -1702,6 +1702,6 @@ h2#swal2-title.swal2-title {
 }
 .swal2-confirm.swal2-styled {
   font-size: 14px;
-  background-color: #5b80e8;
+  background-color: #0089ED;
 }
 </style>
