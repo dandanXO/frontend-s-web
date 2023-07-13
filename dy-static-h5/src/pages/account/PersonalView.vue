@@ -87,10 +87,10 @@
           color=""
           readonly
           style="width: 100%"
-          @click="goToVerifyTelephone()"
+          @click="isEditPhone ? goToVerifyTelephone() : ''"
         >
-          <template v-slot:append>
-            <span style="font-size: 50%">请点击验证按钮</span>
+          <template v-slot:append v-if="isEditPhone">
+            <span style="font-size: 50%" @click="goToVerifyTelephone()">请点击验证按钮</span>
           </template>
         </q-input>
         <template v-if="isEditPhone">
@@ -121,10 +121,10 @@
           color=""
           readonly
           style="width: 100%"
-          @click="goToVerifyEmail()"
+          @click="isEditPhone ? goToVerifyEmail() : ''"
         >
-          <template v-slot:append>
-            <span style="font-size: 50%">请点击验证按钮</span>
+          <template v-slot:append v-if="isEditEmail">
+            <span style="font-size: 50%" @click="goToVerifyEmail()">请点击验证按钮</span>
           </template>
         </q-input>
         <template v-if="isEditEmail">
