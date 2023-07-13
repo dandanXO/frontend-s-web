@@ -205,7 +205,7 @@ export default defineComponent({
       },
       {
         name: "slot game",
-        label: "电游"
+        label: "电子"
       }
     ];
 

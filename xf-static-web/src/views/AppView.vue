@@ -37,14 +37,14 @@
               id="downloadAllHref"
               :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"
             >
-              xf9866.app
+              {{ downloadUrl }}
             </a>
           </div>
           <div>
             <vue-qrious :value="`${downloadUrl}`" />
             <p>使用浏览器输入以下网址</p>
             <p>免下载访问</p>
-            <a :href="`${downloadUrl}`">xf9866.app</a>
+            <a :href="`${downloadUrl}`">{{ downloadUrl }}</a>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@ export default defineComponent({
         })
         .catch((err) => {
           console.log(err);
-          downloadUrl.value = 'xf9866.app';
+          downloadUrl.value = "xf9866.app";
         });
     };
 
