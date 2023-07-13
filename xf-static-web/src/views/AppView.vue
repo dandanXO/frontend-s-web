@@ -29,22 +29,22 @@
               <!-- <div id="downloadAllQrcode" class="download-img-container">
                 <canvas width="100" height="100"></canvas>
               </div> -->
-              <vue-qrious value="https://xf9866.app" />
+              <vue-qrious :value="`${downloadUrl}`" />
             </div>
             <p>扫描二维码下载iOS</p>
             <p>安卓纯原生手机客户端</p>
             <a
               id="downloadAllHref"
-              href="https://xf9866.app?url=xf9866.app&amp;agentCode="
+              :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"
             >
               xf9866.app
             </a>
           </div>
           <div>
-            <vue-qrious value="https://xf9866.app" />
+            <vue-qrious :value="`${downloadUrl}`" />
             <p>使用浏览器输入以下网址</p>
             <p>免下载访问</p>
-            <a href="https://xf9866.app">xf9866.app</a>
+            <a :href="`${downloadUrl}`">xf9866.app</a>
           </div>
         </div>
       </div>
@@ -57,62 +57,81 @@ import { defineComponent, onMounted, ref } from "vue";
 // import GameModal from "@/components/modal/GameModal";
 import aos from "aos";
 import VueQrious from "vue-qrious";
+import { getAppDownloadUrlFromServer } from "@/api/index/site";
 
 export default defineComponent({
-    components: {
-        // GameModal,
-        VueQrious,
-    },
-    setup() {
-        const appGame = ref(null);
-        const platforms = ref([
-            // {
-            //     code: "QZ",
-            //     name: "全站",
-            //     image: "qz",
-            //     message:
-            //         "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
-            //     link: "https://dy9367.app",
-            //     mobile: "https://dy9367.app",
-            // },
-            // {
-            //     code: "DJ",
-            //     name: "电竞",
-            //     image: "dj",
-            //     message:
-            //         "独立电竞APP，原生态开发，提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
-            //     link: "https://xwesport.app",
-            //     mobile: "https://dybet1.com",
-            // },
-            // {
-            //     code: "TY",
-            //     name: "体育",
-            //     image: "ty",
-            //     message:
-            //         "独立体育APP，原生态开发，高赔率 玩法多 提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
-            //     link: "https://dygames.app",
-            //     mobile: "https://dygames.app",
-            // },
-        ]);
-        // const selectedPlat = ref(platforms.value[0].code);
-        // const clickPlat = (plat) => {
-        //     selectedPlat.value = plat.code;
-        // };
+  components: {
+    // GameModal,
+    VueQrious
+  },
+  setup() {
+    const appGame = ref(null);
+    const platforms = ref([
+      // {
+      //     code: "QZ",
+      //     name: "全站",
+      //     image: "qz",
+      //     message:
+      //         "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
+      //     link: "https://dy9367.app",
+      //     mobile: "https://dy9367.app",
+      // },
+      // {
+      //     code: "DJ",
+      //     name: "电竞",
+      //     image: "dj",
+      //     message:
+      //         "独立电竞APP，原生态开发，提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
+      //     link: "https://xwesport.app",
+      //     mobile: "https://dybet1.com",
+      // },
+      // {
+      //     code: "TY",
+      //     name: "体育",
+      //     image: "ty",
+      //     message:
+      //         "独立体育APP，原生态开发，高赔率 玩法多 提供业界最多的赛事玩法和最佳水位，竞技视频同步直播，盘口信息准确无误，界面投注一目了然，极速尽享！",
+      //     link: "https://dygames.app",
+      //     mobile: "https://dygames.app",
+      // },
+    ]);
+    // const selectedPlat = ref(platforms.value[0].code);
+    // const clickPlat = (plat) => {
+    //     selectedPlat.value = plat.code;
+    // };
 
-        const openGame = (gameName, gameCode) => {
-            appGame.value.open(gameName, "onlyPlatform", gameCode);
-        };
-        onMounted(() => {
-            aos.refresh();
+    const openGame = (gameName, gameCode) => {
+      appGame.value.open(gameName, "onlyPlatform", gameCode);
+    };
+
+    const downloadUrl = ref("");
+
+    const getAppDownloadUrl = () => {
+      getAppDownloadUrlFromServer()
+        .then((res) => {
+          // console.log(res);
+          downloadUrl.value = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          downloadUrl.value = 'xf9866.app';
         });
-        return {
-            platforms,
-            // selectedPlat,
-            // clickPlat,
-            openGame,
-            appGame,
-        };
-    },
+    };
+
+    onMounted(() => {
+      aos.refresh();
+      getAppDownloadUrl();
+    });
+    return {
+      platforms,
+      // selectedPlat,
+      // clickPlat,
+      openGame,
+      appGame,
+      getAppDownloadUrl,
+      downloadUrl
+    };
+  }
 });
 </script>
 

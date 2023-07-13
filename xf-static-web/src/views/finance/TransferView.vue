@@ -145,7 +145,7 @@
 <script lang="js">
 import { defineComponent, ref, reactive, computed, onMounted } from "vue";
 import { loadBalance } from "@/api/personal/personal";
-import { transfer, withdrawAll, getPlatforms } from "@/api/personal/transfer";
+import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList } from "@/api/personal/transfer";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
@@ -251,23 +251,43 @@ export default defineComponent({
       , 1000);
     };
     const loadPlatform = () => {
-      getPlatforms().then((response) => {
-        response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
-          platforms.push({
-            id: p.id,
-            code: p.code,
-            name: p.name,
-            amount: 0,
-            status: 'Waiting for transfer'
+      if(store.memberType === 'TEST') {
+        getLoggedInPlatformList().then((response) => {
+          response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
+            platforms.push({
+              id: p.id,
+              code: p.code,
+              name: p.name,
+              amount: 0,
+              status: 'Waiting for transfer'
+            });
           });
+          platforms.forEach(element => {
+            refreshBalance(element.code)
+          });
+        }).catch((error) => {
+            console.log(error.message);
+          // message.error(error.message, 4);
         });
-        platforms.forEach(element => {
-          refreshBalance(element.code)
+      } else {
+        getPlatforms().then((response) => {
+          response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
+            platforms.push({
+              id: p.id,
+              code: p.code,
+              name: p.name,
+              amount: 0,
+              status: 'Waiting for transfer'
+            });
+          });
+          platforms.forEach(element => {
+            refreshBalance(element.code)
+          });
+        }).catch((error) => {
+            console.log(error.message);
+          // message.error(error.message, 4);
         });
-      }).catch((error) => {
-          console.log(error.message);
-        // message.error(error.message, 4);
-      });
+      }
     };
     const cancelTransfer = () => {
       transferInfo.platform = "";
