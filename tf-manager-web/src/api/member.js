@@ -160,3 +160,7 @@ export const unlockMember = (id, siteId) => {
 export const refreshBalance = (id, site) => {
   return https().request(`/member/balance/${id}/${site}`, Method.GET, {}, ContentType.form);
 };
+
+export const forceLogout = (id, siteId) => {
+  return https().request(`/member/logoutPLayer/${id}`, Method.POST, { siteId: siteId }, ContentType.form);
+};
