@@ -1382,6 +1382,7 @@ export default defineComponent({
 
     const countdown = ref(60)
     const startCountdown = () => {
+      countdown.value = 60;
       const countdownInterval = setInterval(() => {
         countdown.value--;
         if (countdown.value === 0) {
