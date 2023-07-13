@@ -124,12 +124,5 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-.table-record {
-  width: 100%;
-  gap: 10px;
 
-  .label {
-    color: #bacef1;
-  }
-}
 </style>

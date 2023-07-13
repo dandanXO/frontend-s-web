@@ -1,3 +1,4 @@
+<!-- NOT USING -->
 <template>
     <div class="table-record">
         <RecordComponent :loading="visible" :list="tableData" :headers="tableHeaders" />
@@ -32,7 +33,7 @@ const loadDepositTable = () => {
         typeText: "存款",
         updateBy: 0,
         updateTime: null
-        
+
     },]
 }
 const tableHeaders = ([

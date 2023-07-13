@@ -62,6 +62,25 @@
         :scrollbar="{ draggable: true }"
         :mousewheel="true"
         :space-between="8"
+        :breakpoints="{
+          300: {
+            slidesPerView: 2,
+            spaceBetween: 8
+          },
+          350: {
+            slidesPerView: 3,
+            spaceBetween: 8
+          },
+          430: {
+            slidesPerView: 4,
+            spaceBetween: 8
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 5,
+            spaceBetween: 8
+          },
+        }"
         watch-slides-progress
         @swiper="setSecondSwiper"
         :controller="{ control: firstSwiper }"
@@ -72,9 +91,9 @@
           @click="setSelectedSwiper(tab)"
           v-for="(tab, i) in tabs"
           :key="i"
-          style="width: calc(100vw / 6)"
       >
-        <div class="home-select-slide column items-center justify-center gap-3" :class="( selectedTab == tab.name) ? 'selected' : ''">
+        <div class="home-select-slide column items-center justify-center gap-3"
+             :class="( selectedTab == tab.name) ? 'selected' : ''">
           <img :src="require('../assets/index/' + tab.icon)"/>
           <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
         </div>
@@ -124,7 +143,6 @@
       ></q-carousel-slide>
     </q-carousel>
   </div>
-
 
   <div class="midd">
     <div class="station-notice-wrapper">
@@ -218,134 +236,219 @@
           class="secondSwiper"
           id="btm-second-swiper"
       >
-        <swiper-slide
-            v-for="(live, i) in livecasino"
-            :key="i"
-            :class="'live-' + i"
+        <swiper-slide class="live-slides">
+
+          <div class="home-game-boards">
+            <h2>真人娱乐</h2>
+
+            <div class="game-list-div">
+              <div v-for="(live, i) in livecasino"
+                   :key="i"
+                   class="game-item-div">
+                <div class="game-board"
+                >
+                  <img class="game-bg"
+                       :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--          <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">-->
+          <!--            <PlatformBlock-->
+          <!--                @click="playGame(live.name, live.code, 'bblive_lobby_app')"-->
+          <!--                dataType="live"-->
+          <!--                :data="live"-->
+          <!--            />-->
+          <!--          </template>-->
+          <!--          <template v-else>-->
+          <!--            <PlatformBlock-->
+          <!--                @click="playGame(live.name, live.code, live.gameCode)"-->
+          <!--                dataType="live"-->
+          <!--                :data="live"-->
+          <!--            />-->
+          <!--          </template>-->
+        </swiper-slide>
+        <swiper-slide :class="sport-slides">
+
+          <div class="home-game-boards">
+            <h2>体育赛事</h2>
+
+            <div class="game-list-div">
+              <div v-for="(sp, i) in sport" :key="i"
+                   class="game-item-div">
+                <div class="game-board">
+                  <img src="../assets/index/slides/game-bg-ag.png"/>
+                  <h3>{{ sp.name }}</h3>
+                  <span>体育赛事</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--          <PlatformBlock-->
+          <!--              @click="playGame(sp.name, sp.code, sp.gameCode)"-->
+          <!--              dataType="sport"-->
+          <!--              :data="sp"-->
+          <!--          />-->
+        </swiper-slide>
+        <swiper-slide class="esport-slides">
+
+          <div class="home-game-boards">
+            <h2>电竞赛事</h2>
+
+            <div class="game-list-div">
+              <div v-for="(es, i) in esport" :key="i"
+                   class="game-item-div">
+                <div class="game-board">
+                  <img src="../assets/index/slides/game-bg-ag.png"/>
+                  <h3>{{ es.name }}</h3>
+                  <span>电竞赛事</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--          <PlatformBlock-->
+          <!--              @click="playGame(es.name, 'platformType', es.code)"-->
+          <!--              dataType="esport"-->
+          <!--              :data="es"-->
+          <!--          />-->
+        </swiper-slide>
+
+        <swiper-slide :key="i" :class="'slot-' + i">
+
+          <div class="home-game-boards">
+            <h2>电子游戏</h2>
+
+            <div class="game-list-div">
+              <div v-for="(slt, i) in slot" :key="i"
+                   class="game-item-div">
+                <div class="game-board">
+                  <img src="../assets/index/slides/game-bg-ag.png"/>
+                  <h3>{{ slt.name }}</h3>
+                  <span>电子游戏</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--          <PlatformBlock dataType="slot" :data="slt"/>-->
+        </swiper-slide>
+
+
+        <swiper-slide class="fish-slides"
         >
 
-<!--          <div class="home-game-boards">-->
-<!--            <h2>真人娱乐</h2>-->
+          <div class="home-game-boards">
+            <h2>捕鱼游戏</h2>
 
-<!--            <div class="game-list-div">-->
+            <div class="game-list-div">
+              <div v-for="(fish, i) in fishing"
+                   :key="i"
+                   class="game-item-div">
+                <div class="game-board">
+                  <img src="../assets/index/slides/game-bg-ag.png"/>
+                  <h3>{{ fish.name }}</h3>
+                  <span>捕鱼游戏</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-<!--              <div class="game-item-div">-->
+          <!--          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">-->
+          <!--            <PlatformBlock-->
+          <!--                @click="playGame(fish.name, fish.code, '7202')"-->
+          <!--                dataType="fish"-->
+          <!--                :data="fish"-->
+          <!--            />-->
+          <!--          </template>-->
 
-<!--                <div class="">-->
-<!--                  <img src="../assets/index/live/live-1.png" />-->
-<!--                  <h3>AG真人</h3>-->
-<!--                  <span>真人娱乐</span>-->
-<!--                </div>-->
-
-<!--              </div>-->
-
-<!--            </div>-->
-
-<!--          </div>-->
-
-<!--          <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">-->
-<!--            <PlatformBlock-->
-<!--                @click="playGame(live.name, live.code, 'bblive_lobby_app')"-->
-<!--                dataType="live"-->
-<!--                :data="live"-->
-<!--            />-->
-<!--          </template>-->
-<!--          <template v-else>-->
-<!--            <PlatformBlock-->
-<!--                @click="playGame(live.name, live.code, live.gameCode)"-->
-<!--                dataType="live"-->
-<!--                :data="live"-->
-<!--            />-->
-<!--          </template>-->
-        </swiper-slide>
-        <swiper-slide v-for="(sp, i) in sport" :key="i" :class="'sport-' + i">
-          <PlatformBlock
-              @click="playGame(sp.name, sp.code, sp.gameCode)"
-              dataType="sport"
-              :data="sp"
-          />
-        </swiper-slide>
-        <swiper-slide v-for="(es, i) in esport" :key="i" :class="'esport-' + i">
-          <PlatformBlock
-              @click="playGame(es.name, 'platformType', es.code)"
-              dataType="esport"
-              :data="es"
-          />
+          <!--          <template v-if="fish.code === 'AG' && fish.name === 'AG'">-->
+          <!--            <PlatformBlock-->
+          <!--                @click="playGame(fish.name, fish.code, '6')"-->
+          <!--                dataType="fish"-->
+          <!--                :data="fish"-->
+          <!--            />-->
+          <!--          </template>-->
+          <!--          <PlatformBlock-->
+          <!--              @click="playGame(fish.name, fish.code, fish.code)"-->
+          <!--              dataType="fish"-->
+          <!--              :data="fish"-->
+          <!--          />-->
         </swiper-slide>
 
-        <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
-          <PlatformBlock dataType="slot" :data="slt"/>
-        </swiper-slide>
+        <swiper-slide class="poker-slides">
 
-        <swiper-slide
-            v-for="(fish, i) in fishing"
-            :key="i"
-            :class="'fish-' + i"
-        >
-          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
-            <PlatformBlock
-                @click="playGame(fish.name, fish.code, '7202')"
-                dataType="fish"
-                :data="fish"
-            />
-          </template>
+          <div class="home-game-boards">
+            <h2>棋牌游戏</h2>
 
-          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
-            <PlatformBlock
-                @click="playGame(fish.name, fish.code, '6')"
-                dataType="fish"
-                :data="fish"
-            />
-          </template>
-          <PlatformBlock
-              @click="playGame(fish.name, fish.code, fish.code)"
-              dataType="fish"
-              :data="fish"
-          />
-        </swiper-slide>
+            <div class="game-list-div">
+              <div v-for="(poke, i) in poker" :key="i"
+                   class="game-item-div">
+                <div class="game-board">
+                  <img src="../assets/index/slides/game-bg-ag.png"/>
+                  <h3>{{ poke.name }}</h3>
+                  <span>棋牌游戏</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
-          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
-            <PlatformBlock
-                @click="playGame(poke.name, poke.code, 'ky_lobby')"
-                dataType="poker"
-                :data="poke"
-            />
-          </template>
-          <PlatformBlock
-              @click="playGame(poke.name, poke.code, poke.gameCode)"
-              dataType="poker"
-              :data="poke"
-          />
+          <!--          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">-->
+          <!--            <PlatformBlock-->
+          <!--                @click="playGame(poke.name, poke.code, 'ky_lobby')"-->
+          <!--                dataType="poker"-->
+          <!--                :data="poke"-->
+          <!--            />-->
+          <!--          </template>-->
+          <!--          <PlatformBlock-->
+          <!--              @click="playGame(poke.name, poke.code, poke.gameCode)"-->
+          <!--              dataType="poker"-->
+          <!--              :data="poke"-->
+          <!--          />-->
         </swiper-slide>
-        <swiper-slide
-            v-for="(lotter, i) in lottery"
-            :key="i"
-            :class="'lottery-' + i"
-        >
-          <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
-            <PlatformBlock
-                @click="playGame(lotter.name, lotter.code, 'imlotto30000')"
-                dataType="lottery"
-                :data="lotter"
-            />
-          </template>
-          <template
-              v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
-          >
-            <PlatformBlock
-                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
-                dataType="lottery"
-                :data="lotter"
-            />
-          </template>
-          <template v-else>
-            <PlatformBlock
-                @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
-                dataType="lottery"
-                :data="lotter"
-            />
-          </template>
+        <swiper-slide class="lottery-slides">
+
+          <div class="home-game-boards">
+            <h2>彩票游戏</h2>
+
+            <div class="game-list-div">
+              <div v-for="(lotter, i) in lottery"
+                   :key="i"
+                   class="game-item-div">
+                <div class="game-board">
+                  <img src="../assets/index/slides/game-bg-ag.png"/>
+                  <h3>{{ lotter.name }}</h3>
+                  <span>彩票游戏</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--          <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">-->
+          <!--            <PlatformBlock-->
+          <!--                @click="playGame(lotter.name, lotter.code, 'imlotto30000')"-->
+          <!--                dataType="lottery"-->
+          <!--                :data="lotter"-->
+          <!--            />-->
+          <!--          </template>-->
+          <!--          <template-->
+          <!--              v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"-->
+          <!--          >-->
+          <!--            <PlatformBlock-->
+          <!--                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
+          <!--                dataType="lottery"-->
+          <!--                :data="lotter"-->
+          <!--            />-->
+          <!--          </template>-->
+          <!--          <template v-else>-->
+          <!--            <PlatformBlock-->
+          <!--                @click="playGame(lotter.name, lotter.code, lotter.gameCode)"-->
+          <!--                dataType="lottery"-->
+          <!--                :data="lotter"-->
+          <!--            />-->
+          <!--          </template>-->
         </swiper-slide>
       </swiper>
     </div>
@@ -443,6 +546,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import {defineComponent, onMounted, ref, reactive, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
@@ -501,54 +605,28 @@ export default defineComponent({
       // console.log(tab.name);
       var slideIndex = 0;
       if (tab.name === "live") {
-        slideIndex = 0;
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
-        slideIndex = livecasino.value.length;
 
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        firstSwiper.value?.slideTo(1, 500);
       }
       if (tab.name === "esport") {
-        slideIndex = livecasino.value.length + sport.value.length;
 
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        firstSwiper.value?.slideTo(2, 500);
       }
       if (tab.name === "slot") {
-        slideIndex =
-            livecasino.value.length + sport.value.length + esport.value.length;
 
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        firstSwiper.value?.slideTo(3, 500);
       }
-      if (tab.name === "fishing") {
-        slideIndex =
-            livecasino.value.length +
-            sport.value.length +
-            esport.value.length +
-            slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
+      // if (tab.name === "fishing") {
+      //   firstSwiper.value?.slideTo(4, 500);
+      // }
       if (tab.name === "poker") {
-        slideIndex =
-            livecasino.value.length +
-            sport.value.length +
-            esport.value.length +
-            slot.value.length +
-            fishing.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        firstSwiper.value?.slideTo(5, 500);
       }
       if (tab.name === "lottery") {
-        slideIndex =
-            livecasino.value.length +
-            sport.value.length +
-            esport.value.length +
-            slot.value.length +
-            fishing.value.length +
-            poker.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        firstSwiper.value?.slideTo(6, 500);
       }
     };
     const onSlideChange = (swiper) => {
@@ -581,10 +659,11 @@ export default defineComponent({
       }
     };
     const selectedTab = ref("live");
+    const game_bg_color = ref([]);
     const tabs = ref([
       {
         name: "live",
-        icon: "slide-sport-icon.png",
+        icon: "slide-live-icon.png",
         label: "真人娱乐",
         labelact: "真人娱乐"
       },
@@ -601,16 +680,16 @@ export default defineComponent({
         labelact: "电竞赛事"
       },
       {
-        name: "poker",
-        icon: "slide-poker-icon.png",
-        label: "棋牌游戏",
-        labelact: "棋牌游戏"
-      },
-      {
         name: "slot",
         icon: "slide-fish-icon.png",
         label: "电子/捕鱼",
         labelact: "电子/捕鱼"
+      },
+      {
+        name: "poker",
+        icon: "slide-poker-icon.png",
+        label: "棋牌游戏",
+        labelact: "棋牌游戏"
       },
       {
         name: "lottery",
@@ -797,6 +876,7 @@ export default defineComponent({
                 fishing.value.push(fishObj);
               }
             });
+            console.log(livecasino.value);
           })
           .catch((err) => {
             // isLoading.value= false;
@@ -1113,26 +1193,27 @@ export default defineComponent({
 
   .home-select-slide {
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.4);
-    width: 75px;
+    width: 85px;
     height: 50px;
     border-radius: 8px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    margin-left: 20px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
 
 
     span {
       color: #0089ED;
     }
 
-    &.selected{
-      background: linear-gradient(180deg, #52ACFF, #3559DA );
+    &.selected {
+      background: linear-gradient(180deg, #52ACFF, #3559DA);
 
-      span{
+      span {
         color: #fff;
       }
 
-      img{
+      img {
         filter: brightness(0) invert(1);
       }
     }
@@ -1140,7 +1221,7 @@ export default defineComponent({
 
   .firstSwiper {
     height: 70px;
-    padding-right: 40px;
+    padding-right: 10px;
     z-index: 999;
 
   }
@@ -1154,7 +1235,8 @@ export default defineComponent({
 .secondSwiper {
   height: calc(100vh - 410px);
   padding-bottom: 0px;
-  padding-top: 16px;
+  padding-top: 10px;
+  //min-height: 380px;
 }
 
 .longer-swiper {
@@ -1163,18 +1245,17 @@ export default defineComponent({
 
 :deep(.secondSwiper .swiper-wrapper) {
   .swiper-slide {
-    // height: 120px;
-    // width: 95%;
-    // margin: 0 auto;
-    // overflow: hidden;
-    height: calc(45vh / 4);
+    //height: calc(45vh / 4);
     width: 95%;
     margin: 0 auto;
     overflow: hidden;
-    // min-height: 25vw;
-    min-height: 95px;
+    height: 230px;
     padding-top: 0;
     margin-bottom: 5px;
+
+    &.slot-slides, &.lottery-slides {
+      height: 480px;
+    }
 
     a {
       display: block;
@@ -1192,6 +1273,35 @@ export default defineComponent({
 
     &-active {
       // padding-top: 30px;
+    }
+  }
+
+  .home-game-boards {
+    h2 {
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-weight: 800;
+      line-height: 20px;
+      letter-spacing: 2px;
+      font-size: 16px;
+    }
+
+    .game-list-div {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 16px;
+      row-gap: 10px;
+      justify-content: flex-start;
+
+      .game-item-div {
+        width: calc((100% - 35px) / 3);
+        flex-wrap: nowrap;
+
+        .game-board {
+          position: relative;
+          height: 170px;
+        }
+      }
     }
   }
 }
@@ -1216,7 +1326,7 @@ export default defineComponent({
       // background: #23263c;
       background: #ffffff;
       padding: 8px 5px 2px;
-      max-width: 90px;
+      max-width: 110px;
       cursor: pointer;
 
       &.tbact {
