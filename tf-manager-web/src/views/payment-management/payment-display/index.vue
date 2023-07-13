@@ -1,58 +1,5 @@
 <template>
   <div>
-    <!-- <el-drawer
-      title="Switch Payment"
-      v-model="uiControl.searchDialogVisible"
-      direction="rtl"
-      size="40%"
-    >
-      <el-card class="search-card">
-        <div class="clearfix">
-          <span>{{ t('fields.way') }}</span>
-        </div>
-        <el-switch
-          v-model="searchCondition.way"
-          active-text="WEB"
-          active-value="WEB"
-          active-color="#13ce66"
-          inactive-text="MOBILE"
-          inactive-color="rgb(13 79 229)"
-          inactive-value="MOBILE"
-        />
-      </el-card>
-      <el-card class="search-card">
-        <div class="clearfix">
-          <span>{{ t('fields.site') }}</span>
-        </div>
-        <el-radio-group
-          v-model="searchCondition.siteId"
-          @change="handleSiteNameCheckedChange"
-        >
-          <el-radio v-for="c in page.sites" :label="c.id" :key="c.id">
-            {{ c.siteName }}
-          </el-radio>
-        </el-radio-group>
-      </el-card>
-      <el-card class="search-card">
-        <div class="clearfix">
-          <span>{{ t('fields.financialLevel') }}</span>
-        </div>
-        <el-radio-group v-model="searchCondition.financialLevel">
-          <el-radio v-for="c in page.financials" :label="c.level" :key="c.id">
-            {{ c.name }}
-          </el-radio>
-        </el-radio-group>
-      </el-card>
-      <el-card class="search-card">
-        <el-button
-          type="primary"
-          @click="loadPayments"
-          :disabled="uiControl.dialogEditBtn"
-        >
-          {{ t('fields.switch') }}
-        </el-button>
-      </el-card>
-    </el-drawer> -->
     <el-dialog
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
@@ -92,24 +39,6 @@
                 <h3 style="margin: 0;">{{ t('fields.paymentArea') }}</h3>
               </el-col>
             </el-row>
-            <!-- <el-tag-group>
-              <span style="font-size: 12px; margin-right: 10px;">
-                {{ t('fields.searchCondition') }}:
-              </span>
-              <el-tag>
-                {{ t('fields.way') + ': ' + selectedCondition.way }}
-              </el-tag>
-              <el-tag>
-                {{ t('fields.site') + ': ' + selectedCondition.siteName }}
-              </el-tag>
-              <el-tag>
-                {{
-                  t('fields.financialLevel') +
-                    ': ' +
-                    selectedCondition.financialLevel
-                }}
-              </el-tag>
-            </el-tag-group> -->
           </div>
         </template>
         <el-row>
@@ -132,7 +61,7 @@
           <el-row>
             <el-col :span="4">
               <el-button
-                v-show="page.webPaymentShowNodes.length === 0"
+                v-show="page.paymentShowNodes.length === 0"
                 class="add"
                 icon="el-icon-plus"
                 size="mini"
@@ -142,7 +71,7 @@
             </el-col>
             <el-col :span="20" align="right">
               <el-button
-                v-if="page.webPaymentShowNodes.length > 0 && !isNodesUpdated"
+                v-if="!isNodesUpdated"
                 type="success"
                 v-permission="['sys:payment:show:update']"
                 @click="confirmUpdate"
@@ -154,7 +83,7 @@
           <div class="container">
             <Node
               :level="1"
-              :list="page.webPaymentShowNodes"
+              :list="page.paymentShowNodes"
               :type-list="page.originPaymentRecords"
               ref="paymentArea"
               :pageList="searchCondition"
@@ -179,12 +108,13 @@
             >
               {{ t('fields.switch') }}
             </el-button> -->
-            <el-row style="margin: 50px 0;">
-              <el-col :span="2" style="margin: 10px 0 30px; display: block;">
+            <el-row style="margin: 50px 0; align-items: center;">
+              <el-col :span="5" style="display: block;">
                 <span>Payment Type</span>
               </el-col>
               <el-col :span="5">
                 <el-select
+                  v-if="!isSavedPaymentType || isSavedPaymentType === 'null'"
                   v-model="selectedPaymentType"
                   class="filter-item"
                   style="width: 100%"
@@ -200,9 +130,12 @@
                     <span>{{ item }}</span>
                   </el-option>
                 </el-select>
+                <div v-else>
+                  {{ isSavedPaymentType }}
+                </div>
               </el-col>
-              <el-col :span="17" align="right">
-                <el-button type="success" @click="savePaymentValues">{{ t('fields.updatePayment') }}</el-button>
+              <el-col :span="14" align="right">
+                <el-button type="success" @click="savePaymentValues">{{ t('message.updatePayment') }}</el-button>
               </el-col>
             </el-row>
             <el-row style="margin: 50px 0;">
@@ -216,8 +149,8 @@
                           Payment
                         </div>
                       </template>
-                      <el-radio-group v-model="nodeValues.web.paymentId" @change="changeWebPaymentId">
-                        <el-radio v-for="c in page.paymentRecords" :label="c.paymentName" v-model="c.id" :key="c" style="display: block;" />
+                      <el-radio-group v-model="nodeValues.web.payment" @change="changeWebPaymentId">
+                        <el-radio :value-key="c.id" v-for="c in page.paymentRecords" :label="c.id" :key="c" style="display: block;">{{ c.paymentName }}</el-radio>
                       </el-radio-group>
                     </el-card>
                   </el-col>
@@ -229,8 +162,8 @@
                           Payment
                         </div>
                       </template>
-                      <el-radio-group v-model="nodeValues.mobile.paymentId" @change="changeMobilePaymentId">
-                        <el-radio v-for="c in page.paymentRecords" :label="c.paymentName" :key="c" style="display: block;">
+                      <el-radio-group v-model="nodeValues.mobile.payment" @change="changeMobilePaymentId">
+                        <el-radio v-for="c in page.paymentRecords" :label="c.id" :key="c" style="display: block;">
                           {{ c.paymentName }}
                         </el-radio>
                       </el-radio-group>
@@ -245,8 +178,8 @@
                         </div>
                       </template>
                       <el-checkbox-group v-model="nodeValues.web.financialLevels" @change="handleCheckedFinancialChange">
-                        <el-checkbox :value-key="c.id" v-for="c in page.financials" :label="c" :key="c.id" style="display: block; margin: 5px 0;">
-                          {{ c.name }} <span :class="{'red': !c.selectedWebPaymentName}">{{ c.selectedWebPaymentName ? c.selectedWebPaymentName : '未分配' }}</span>
+                        <el-checkbox :value-key="c.id" v-for="c in page.financials" :label="c.name" :key="c.id" style="display: block; margin: 5px 0;">
+                          {{ c.name }}  <span :class="{'red': !c.selectedWebPayment || c.selectedWebPayment === '未分配'}">{{ c.selectedWebPayment }}</span>
                         </el-checkbox>
                       </el-checkbox-group>
                     </el-card>
@@ -260,8 +193,8 @@
                         </div>
                       </template>
                       <el-checkbox-group v-model="nodeValues.mobile.financialLevels" @change="handleMobileCheckedFinancialChange">
-                        <el-checkbox v-for="c in page.financials" :label="c" :key="c.id" style="display: block; margin: 5px 0;">
-                          {{ c.name }} <span :class="{'red': !c.selectedMobilePaymentName}">{{ c.selectedMobilePaymentName ? c.selectedMobilePaymentName : '未分配' }}</span>
+                        <el-checkbox v-for="c in page.financials" :label="c.name" :key="c.id" style="display: block; margin: 5px 0;">
+                          {{ c.name }} <span :class="{'red': !c.selectedMobilePayment || c.selectedMobilePayment === '未分配'}">{{ c.selectedMobilePayment }}</span>
                         </el-checkbox>
                       </el-checkbox-group>
                     </el-card>
@@ -316,7 +249,6 @@
     </el-dialog>
   </div>
 </template>
-
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { toRaw } from '@vue/reactivity'
@@ -338,6 +270,48 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
+const uiControl = reactive({
+  dialogVisible: false,
+  dialogTitle: '',
+  dialogLoading: false,
+  searchDialogVisible: false,
+  updateDialogVisible: false,
+})
+const searchCondition = reactive({
+  siteId: 1,
+})
+const form = reactive({
+  selectedGroup: '',
+  selectedLevel: '',
+  selectedPaymentNodes: [],
+})
+const page = reactive({
+  paymentRecords: [],
+  originPaymentRecords: [],
+  payTypeList: [],
+  paymentShowNodes: [],
+  initialPaymentShowNodeDetails: [],
+  loading: false,
+  sites: [],
+  financials: [],
+})
+const addNodeData = reactive({
+  selectValue: '',
+  addNode: {},
+  parentNodes: [],
+  root: { name: 'root', id: -1 },
+})
+const arr = reactive({
+  item: [],
+})
+const selectedPaymentType = ref(null);
+const isSavedPaymentType = ref(null);
+const checkAll = ref(false)
+const isIndeterminate = ref(true);
+const isCodeSelected = ref(false);
+const selectedChild = ref(null);
+const isNodesUpdated = ref(true)
+const paymentArea = ref();
 const nodeValues = ref({
   code: null,
   web: {
@@ -349,109 +323,394 @@ const nodeValues = ref({
     financialLevels: [],
   }
 })
-const selectedPaymentType = ref(null);
-const checkAll = ref(false)
-const isIndeterminate = ref(true)
 
-const handleCheckAllChange = (val) => {
-  console.log(page.financials)
-  if (val) {
-    nodeValues.value.web.financialLevels = page.financials;
-  } else {
-    nodeValues.value.web.financialLevels = [];
-  }
-
-  isIndeterminate.value = false;
-}
-const handleCheckedFinancialChange = (value) => {
-  const checkedCount = value.length
-  checkAll.value = checkedCount === page.financials.length
-  isIndeterminate.value = checkedCount > 0 && checkedCount < page.financials.length
-}
-const checkAllMobile = ref(false)
-const mobileIsIndeterminate = ref(true)
-
-const handleMobileCheckAllChange = (val) => {
-  if (val) {
-    nodeValues.value.mobile.financialLevels = page.financials;
-  } else {
-    nodeValues.value.mobile.financialLevels = [];
-  }
-
-  mobileIsIndeterminate.value = false;
-}
-const handleMobileCheckedFinancialChange = (value) => {
-  const checkedCount = value.length
-  checkAllMobile.value = checkedCount === page.financials.map(element => element.name).length
-  mobileIsIndeterminate.value = checkedCount > 0 && checkedCount < page.financials.length
-}
-const uiControl = reactive({
-  dialogVisible: false,
-  dialogTitle: '',
-  dialogLoading: false,
-  searchDialogVisible: false,
-  updateDialogVisible: false,
-})
-const addNodeData = reactive({
-  selectValue: '',
-  addNode: {},
-  parentNodes: [],
-  root: { name: 'root', id: -1 },
-})
-const page = reactive({
-  paymentRecords: [],
-  originPaymentRecords: [],
-  mobileOriginPaymentRecords: [],
-  payTypeList: [],
-  webPaymentShowNodes: [],
-  mobilePaymentShowNodes: [],
-  loading: false,
-  sites: [],
-  financials: [],
-})
-const searchCondition = reactive({
-  siteId: 1,
-})
-const arr = reactive({
-  item: [],
-})
-
-const form = reactive({
-  selectedGroup: '',
-  selectedLevel: '',
-  selectedPaymentNodes: [],
-})
-
-const copy = reactive({
-  selectedLevel: [],
-  financials: [],
-  checked: false,
-})
-
-const span = reactive({
-  copyWay: '',
-})
-const isCodeSelected = ref(false);
-const selectedChild = ref(null);
-const isNodesUpdated = ref(true)
-
-const paymentArea = ref()
-let newNodeId = 0
-
-function showNodesUpdated() {
-  isNodesUpdated.value = false
-}
-const originType = ref(null)
-const originWebPaymentName = ref(null)
-const originMobilePaymentName = ref(null)
-const originWebLevels = ref(null)
-const originMobileLevels = ref(null)
-
-const selectedWebPaymentName = ref(null)
-const selectedMobilePaymentName = ref(null)
+var selectedNode = reactive()
+const selectedWebPayment = ref({})
+const selectedMobilePayment = ref({})
 const selectedWebLevels = ref(null)
 const selectedMobileLevels = ref(null)
+let newNodeId = 0
 
+function getSelectedChild(item, onUpd) {
+  selectedNode = {
+    code: null,
+    web: {
+      paymentId: 0,
+      financialLevels: []
+    },
+    mobile: {
+      paymentId: 0,
+      financialLevels: []
+    }
+  }
+  page.financials.forEach((e) => {
+    selectedNode.web.financialLevels.push(0)
+    selectedNode.mobile.financialLevels.push(0)
+  })
+  if (isNodesUpdated.value === false) {
+    ElMessage.error(t('message.updateProceed'))
+    return
+  }
+  if (item === 'groupSelected') {
+    isCodeSelected.value = false
+    selectedChild.value = null
+    return
+  }
+  isSavedPaymentType.value = ""
+  selectedPaymentType.value = ""
+  nodeValues.value.mobile.payment = null
+  nodeValues.value.mobile.financialLevels = []
+  nodeValues.value.web.payment = null
+  nodeValues.value.web.financialLevels = []
+
+  page.financials.forEach((e) => {
+    e.selectedWebPayment = null
+    e.selectedMobilePayment = null
+  })
+  if (item.code) {
+    selectedNode.code = item.code
+    nodeValues.value.code = item.code
+    isCodeSelected.value = true
+    selectedChild.value = item
+  }
+  // checkAll.value = false
+  // checkAllMobile.value = false
+  isIndeterminate.value = false
+  mobileIsIndeterminate.value = false
+  page.initialPaymentShowNodeDetails.forEach((el) => {
+    if (el.code === item.code) {
+      selectedNode = el
+    }
+  })
+  if (selectedNode) {
+    console.log(selectedNode.mobile.type)
+    if (selectedNode.web.type === 'null') {
+      isSavedPaymentType.value = selectedNode.mobile.type
+      selectedPaymentType.value = selectedNode.mobile.type
+    } else {
+      isSavedPaymentType.value = selectedNode.web.type
+      selectedPaymentType.value = selectedNode.web.type
+    }
+    console.log(isSavedPaymentType.value)
+    checkPayTypeSelected(selectedPaymentType.value)
+    nodeValues.value.code = selectedNode.code
+
+    // Payment
+    page.paymentRecords.forEach((payRec) => {
+      if (payRec.id === selectedNode.web.paymentId) {
+        nodeValues.value.web.payment = payRec.id
+        selectedWebPayment.value = payRec
+      }
+      if (payRec.id === selectedNode.mobile.paymentId) {
+        console.log(payRec.id)
+        nodeValues.value.mobile.payment = payRec.id
+        selectedMobilePayment.value = payRec
+      }
+    })
+    page.financials.forEach((element, index) => {
+      var webArray = JSON.parse("[" + selectedNode.web.financialLevels + "]");
+      var mobileArray = JSON.parse("[" + selectedNode.mobile.financialLevels + "]");
+      // webArray.forEach((web) => {
+      //   page.paymentRecords.forEach((payRecord) => {
+      //     console.log(payRecord.id)
+      //     console.log(web)
+      //     if (payRecord.id === web) {
+      //       element.selectedWebPayment = payRecord.paymentName
+      //       changeWebPaymentId(selectedNode.web.paymentId)
+      //     }
+      //   })
+      // })
+      // mobileArray.forEach((mob) => {
+      //   page.paymentRecords.forEach((payRecord) => {
+      //     if (payRecord.id === mob) {
+      //       element.selectedMobilePayment = payRecord.paymentName
+      //       changeMobilePaymentId(selectedNode.mobile.paymentId)
+      //     }
+      //   })
+      // })
+      // console.log(mobileArray[index])
+      page.paymentRecords.forEach(payRecord => {
+        if (payRecord.id === webArray[index]) {
+          element.selectedWebPayment = payRecord.paymentName
+          // nodeValues.value.web.financialLevels[index] = element.name
+          changeWebPaymentId(selectedNode.web.paymentId)
+        }
+        if (payRecord.id === mobileArray[index]) {
+          element.selectedMobilePayment = payRecord.paymentName
+          // nodeValues.value.mobile.financialLevels[index] = element.name
+          changeMobilePaymentId(selectedNode.mobile.paymentId)
+        }
+      });
+      // if (webArray[index] !== 0 || mobileArray[index] !== 0) {
+      //   // if (element.id === webArray[index]) {
+      //   // nodeValues.value.web.financialLevels[index] =
+      //   //   console.log(element.name)
+      //   // }
+      //   // console.log(page.initialPaymentShowNodeDetails)
+      // }
+      //  else {
+      //   element.selectedWebPayment = null
+      //   element.selectedMobilePayment = null
+      // }
+      // if (mobileArray[index] !== 0) {
+      //   element.selectedMobilePayment = selectedMobilePayment.value.paymentName
+      //   nodeValues.value.mobile.financialLevels[index] = element.name
+      // } else {
+      //   element.selectedMobilePayment = null
+      // }
+    });
+    selectedWebLevels.value = page.financials
+    selectedMobileLevels.value = nodeValues.value.mobile.financialLevels
+  }
+  console.log(selectedNode)
+}
+
+function changeMobilePaymentId(value) {
+  selectedMobilePayment.value = value
+  nodeValues.value.mobile.financialLevels = []
+  page.paymentRecords.forEach(element => {
+    if (element.id === value) {
+      page.financials.forEach((e) => {
+        if (e.selectedMobilePayment === element.paymentName) {
+          nodeValues.value.mobile.financialLevels.push(e.name);
+          mobileIsIndeterminate.value = true
+        }
+      })
+    }
+  });
+}
+
+function changeWebPaymentId(value) {
+  selectedWebPayment.value = value
+  nodeValues.value.web.financialLevels = []
+  page.paymentRecords.forEach(element => {
+    if (element.id === value) {
+      page.financials.forEach((e) => {
+        if (e.selectedWebPayment === element.paymentName) {
+          nodeValues.value.web.financialLevels.push(e.name);
+          isIndeterminate.value = true
+        }
+      })
+    }
+  });
+}
+async function confirmUpdate() {
+  ElMessageBox.confirm(t('message.confirmUpdate'), t('fields.notice'), {
+    confirmButtonText: t('fields.update'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'info',
+  }).then(async () => {
+    page.loading = true
+    const obj = {
+      nodes: toRaw(paymentArea.value.list),
+      siteId: searchCondition.siteId
+    }
+    await updatePaymentShow(obj)
+    uiControl.updateDialogVisible = false;
+    ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+    isNodesUpdated.value = true
+    page.loading = false
+    handleSiteNameCheckedChange()
+  })
+}
+function savePaymentValues() {
+  arr.item = []
+  const paymentValues = {}
+  Object.assign(paymentValues, nodeValues.value)
+  // page.financials.forEach((fin) => {
+  //   if (paymentValues.web.financialLevels.findIndex(e => e === fin.name)) {
+  //     console.log(fin.id)
+  //   }
+  // })
+  var selectedWebArray = JSON.parse("[" + selectedNode.web.financialLevels + "]");
+  var selectedMobileArray = JSON.parse("[" + selectedNode.mobile.financialLevels + "]");
+  const financials = page.financials;
+  const financialWebLevels = paymentValues.web.financialLevels;
+  const financialMobileLevels = paymentValues.mobile.financialLevels;
+  const webIndexes = financials
+    .map((financial) => financial.name)
+    .filter((name) => financialWebLevels.includes(name))
+    .map((name) => financials.findIndex((financial) => financial.name === name));
+  const mobileIndexes = financials
+    .map((financial) => financial.name)
+    .filter((name) => financialMobileLevels.includes(name))
+    .map((name) => financials.findIndex((financial) => financial.name === name));
+
+  financials.forEach((f, findex) => {
+    if (webIndexes.includes(findex)) {
+      selectedWebArray[findex] = paymentValues.web.payment
+    } else {
+      if (selectedWebArray[findex] === null) {
+        selectedWebArray[findex] = 0
+      }
+    }
+    if (mobileIndexes.includes(findex)) {
+      selectedMobileArray[findex] = paymentValues.mobile.payment
+    } else {
+      if (selectedMobileArray[findex] === null) {
+        selectedMobileArray[findex] = 0
+      }
+    }
+    // paymentValues.web.financialLevels
+  });
+  const obj = {
+    code: paymentValues.code,
+    web: {
+      paymentId: paymentValues.web.payment,
+      financialLevels: selectedWebArray
+    },
+    mobile: {
+      paymentId: paymentValues.mobile.payment,
+      financialLevels: selectedMobileArray
+    },
+  }
+  if (obj.web.paymentId === 0) {
+    obj.web.financialLevels.forEach(element => {
+      if (element !== 0) {
+        obj.web.paymentId = element
+      }
+    });
+  }
+  if (obj.mobile.paymentId === 0) {
+    obj.mobile.financialLevels.forEach(element => {
+      if (element !== 0) {
+        obj.mobile.paymentId = element
+      }
+    });
+  }
+  // const obj = {
+  //   code: paymentValues.code,
+  //   mobile: {
+  //     financialLevels: []
+  //   },
+  //   web: {
+  //     financialLevels: []
+  //   }
+  // }
+  // page.originPaymentRecords.forEach(element => {
+  //   if (element.paymentName === paymentValues.mobile.paymentId) {
+  //     obj.mobile.paymentId = element.id
+  //   }
+  //   if (element.paymentName === paymentValues.web.paymentId) {
+  //     obj.web.paymentId = element.id
+  //   }
+  // });
+  // obj.web.financialLevels = paymentValues.web.financialLevels
+  // const levels = page.initialPaymentShowNodeDetails[0].mobile.financialLevels.split(',');
+  // const nonZeroIndexes = [];
+
+  // for (let i = 0; i < levels.length; i++) {
+  //   const element = levels[i].trim();
+  //   if (parseInt(element) !== 0) {
+  //     nonZeroIndexes.push(i);
+  //   }
+  // }
+  // Full List
+  // page.financials.forEach((element, index) => {
+  //   // If current selected values, place selected mobile Payment
+  //   if (paymentValues.web.financialLevels.some(e => e.id === element.id)) {
+  //     obj.mobile.financialLevels[index] = selectedMobilePayment.value.id;
+  //   } else {
+  //   }
+  // });
+  if (!selectedPaymentType.value) {
+    ElMessage.error(t('message.selectPaymentType'));
+    return
+  }
+  // if (!obj.web.paymentId) {
+  //   obj.web.paymentId = 0
+  // }
+  // if (!obj.mobile.paymentId) {
+  //   obj.mobile.paymentId = 0
+  // }
+  ElMessageBox.confirm(t('message.confirmUpdatePayment'), t('fields.notice'), {
+    confirmButtonText: t('fields.update'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'info',
+  }).then(async () => {
+    arr.item.push(obj);
+    arr.siteId = searchCondition.siteId
+    updatePaymentShowDetails(arr).then((res) => {
+      if (res.code === 0) {
+        ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+        getPaymentShowDetails({
+          siteId: searchCondition.siteId
+        }).then((res) => {
+          if (res.code === 0) {
+            page.initialPaymentShowNodeDetails = res.data
+            let selectedElement = null;
+            res.data.forEach(element => {
+              if (element.code === selectedChild.value.code) {
+                selectedElement = element
+              }
+            });
+            if (selectedElement !== null) {
+              // Perform operations with the selectedElement
+              getSelectedChild(selectedElement, 'onupdate');
+            } else {
+              console.log("No matching element found.");
+            }
+          }
+        })
+      }
+    })
+  });
+}
+function addNewNodesToSelectedGroup() {
+  paymentArea.value.addHandle()
+}
+function handleRemoveNode(tag) {
+  form.selectedPaymentNodes.splice(form.selectedPaymentNodes.indexOf(tag), 1)
+}
+function checkPayTypeSelected(value) {
+  // page.originPaymentRecords.forEach((el) => {
+  // })
+  page.paymentRecords = page.originPaymentRecords.filter((el) => el.payType === value);
+  page.paymentRecords.push({ id: 0, paymentName: "未分配" })
+  if (value === 'null') {
+    selectedPaymentType.value = null
+  }
+  // if (selectedPaymentType.value === value) {
+  //   nodeValues.value.web.paymentId = selectedWebPayment.value.name;
+  //   nodeValues.value.mobile.paymentId = selectedMobilePayment.value.name;
+  // }
+  // nodeValues.value.web.financialLevels = Object.assign(nodeValues.value.web.financialLevels, selectedWebLevels.value);
+  // nodeValues.value.mobile.financialLevels = Object.assign(nodeValues.value.mobile.financialLevels, selectedMobileLevels.value);
+  // nodeValues.value.web.financialLevels.forEach(level => {
+  //   level.selectedWebPaymentName = originWebPaymentName.value
+  // });
+  // nodeValues.value.mobile.financialLevels.forEach(level => {
+  //   level.selectedMobilePaymentName = originMobilePaymentName.value
+  // });
+  // } else {
+  //   nodeValues.value.web.paymentId = null;
+  //   nodeValues.value.mobile.paymentId = null;
+  //   nodeValues.value.web.financialLevels = [];
+  //   nodeValues.value.mobile.financialLevels = [];
+  //   page.financials.forEach(element => {
+  //     element.selectedWebPaymentName = null
+  //     element.selectedMobilePaymentName = null
+  //   });
+  // }
+  // nodeValues.value.web.paymentId = null;
+  // nodeValues.value.mobile.paymentId = null;
+  // nodeValues.value.web.financialLevels = [];
+  // nodeValues.value.mobile.financialLevels = [];
+}
+function addNodesToSelectedGroup({ list, level, name }) {
+  console.log(list, level, name)
+  form.selectedPaymentNodes = []
+  form.selectedLevel = level
+  Object.assign(form.selectedPaymentNodes, list)
+  if (level < 2) {
+    form.selectedGroup = addNodeData.root.name
+    uiControl.dialogTitle = t('fields.addNodes')
+  } else {
+    form.selectedGroup = name
+    uiControl.dialogTitle = t('fields.selectNodeAddTo') + form.selectedGroup
+  }
+  uiControl.dialogVisible = true
+}
 function addNewNode() {
   if (!form.selectedGroup || form.selectedGroup === addNodeData.root.name) {
     page.paymentShowNodes = []
@@ -461,11 +720,7 @@ function addNewNode() {
     runCode(page.paymentShowNodes)
   }
   addNodeData.addNode = {
-    // childId: value.id,
     id: --newNodeId,
-    // name: value.name,
-    // paymentName: value.paymentName,
-    // icon: value.payType,
     children: [],
     siteId: searchCondition.siteId,
     level: searchCondition.financialLevel,
@@ -487,339 +742,9 @@ function runCode(arr) {
     }
   }
 }
-function getSelectedChild(item, onUpd) {
-  if (isNodesUpdated.value === false) {
-    ElMessage.error(t('message.updateProceed'))
-    return
-  }
-  if (item === 'groupSelected') {
-    isCodeSelected.value = false
-    selectedChild.value = null
-    return
-  }
-  if (item.code) {
-    nodeValues.value.code = item.code
-    isCodeSelected.value = true
-    selectedChild.value = item
-  }
-  let selectedNode = null
-  page.webPaymentShowNodeDetails.forEach((el) => {
-    if (el.code === item.code) {
-      selectedNode = el
-    }
-  })
-  if (selectedNode) {
-    selectedPaymentType.value = selectedNode.web.type
-    // if (onUpd === 'onupdate') {
-    //   originType.value = selectedNode.web.type
-    // } else {
-    //   originType.value = selectedNode.web.type
-    // }
-    originType.value = selectedNode.web.type
-    checkPayTypeSelected(selectedPaymentType.value)
-    nodeValues.value.code = selectedNode.code
-    selectedWebPaymentName.value = null
-    selectedMobilePaymentName.value = null
-    page.originPaymentRecords.forEach((payRec) => {
-      if (payRec.id === selectedNode.web.paymentId) {
-        originWebPaymentName.value = payRec.paymentName
-        selectedWebPaymentName.value = payRec.paymentName
-        nodeValues.value.web.paymentId = payRec.paymentName
-      }
-      if (payRec.id === selectedNode.mobile.paymentId) {
-        originMobilePaymentName.value = payRec.paymentName
-        selectedMobilePaymentName.value = payRec.paymentName
-        nodeValues.value.mobile.paymentId = payRec.paymentName
-      }
-    })
-    nodeValues.value.web.financialLevels = []
-    nodeValues.value.mobile.financialLevels = []
-    page.financials.forEach((element, index) => {
-      var webArray = JSON.parse("[" + selectedNode.web.financialLevels + "]");
-      var mobileArray = JSON.parse("[" + selectedNode.mobile.financialLevels + "]");
-      if (webArray[index] === 1) {
-        element.selectedWebPaymentName = selectedWebPaymentName.value
-        nodeValues.value.web.financialLevels.push(element)
-      } else {
-        element.selectedWebPaymentName = null
-      }
-      if (mobileArray[index] === 1) {
-        element.selectedMobilePaymentName = selectedWebPaymentName.value
-        nodeValues.value.mobile.financialLevels.push(element)
-      } else {
-        element.selectedMobilePaymentName = null
-      }
-    });
-    // nodeValues.value.web.financialLevels.forEach(level => {
-    //   level.selectedWebPaymentName = selectedWebPaymentName.value
-    // });
-    // nodeValues.value.mobile.financialLevels.forEach(level => {
-    //   level.selectedMobilePaymentName = selectedMobilePaymentName.value
-    // });
-    selectedWebLevels.value = nodeValues.value.web.financialLevels
-    selectedMobileLevels.value = nodeValues.value.mobile.financialLevels
-    originWebLevels.value = nodeValues.value.web.financialLevels
-    originMobileLevels.value = nodeValues.value.mobile.financialLevels
-    // originMobileLevels.value = nodeValues.value.mobile.financialLevels
-  } else {
-    selectedPaymentType.value = ""
-    nodeValues.value.mobile.paymentId = null
-    nodeValues.value.mobile.financialLevels = []
-    nodeValues.value.web.paymentId = null
-    nodeValues.value.web.financialLevels = []
-  }
+function showNodesUpdated() {
+  isNodesUpdated.value = false
 }
-function savePaymentValues() {
-  arr.item = []
-  const paymentValues = nodeValues.value
-  const obj = {
-    code: paymentValues.code,
-    mobile: {
-      paymentId: null,
-      financialLevels: []
-    },
-    web: {
-      paymentId: null,
-      financialLevels: []
-    }
-  }
-  page.originPaymentRecords.forEach(element => {
-    if (element.paymentName === paymentValues.mobile.paymentId) {
-      obj.mobile.paymentId = element.id
-    }
-    if (element.paymentName === paymentValues.web.paymentId) {
-      obj.web.paymentId = element.id
-    }
-  });
-  page.financials.forEach(element => {
-    if (paymentValues.mobile.financialLevels.some(e => e.name === element.name)) {
-      obj.mobile.financialLevels.push(1);
-    } else {
-      obj.mobile.financialLevels.push(0);
-    }
-    if (paymentValues.web.financialLevels.some(e => e.name === element.name)) {
-      obj.web.financialLevels.push(1);
-    } else {
-      obj.web.financialLevels.push(0);
-    }
-  });
-  if (!selectedPaymentType.value) {
-    ElMessage.error(t('message.selectPaymentType'));
-    return
-  }
-  if (!obj.web.paymentId) {
-    ElMessage.error(t('message.selectWebPayment'));
-    return
-  }
-  if (!obj.mobile.paymentId) {
-    ElMessage.error(t('message.selectMobilePayment'));
-    return
-  }
-  ElMessageBox.confirm(t('message.confirmUpdatePayment'), t('fields.notice'), {
-    confirmButtonText: t('fields.update'),
-    cancelButtonText: t('fields.cancel'),
-    type: 'info',
-  }).then(async () => {
-    arr.item.push(obj);
-    updatePaymentShowDetails(arr).then((res) => {
-      if (res.code === 0) {
-        ElMessage({ message: t('message.updateSuccess'), type: 'success' })
-        getPaymentShowDetails({
-          siteId: searchCondition.siteId
-        }).then((res) => {
-          if (res.code === 0) {
-            page.webPaymentShowNodeDetails = res.data
-            let selectedElement = null;
-            res.data.forEach(element => {
-              if (element.code === selectedChild.value.code) {
-                selectedElement = element
-              }
-            });
-            if (selectedElement !== null) {
-              // Perform operations with the selectedElement
-              getSelectedChild(selectedElement, 'onupdate');
-            } else {
-              console.log("No matching element found.");
-            }
-          }
-        })
-      }
-    })
-  });
-}
-function addNodesToSelectedGroup({ list, level, name }) {
-  console.log(list, level, name)
-  form.selectedPaymentNodes = []
-  form.selectedLevel = level
-  Object.assign(form.selectedPaymentNodes, list)
-  if (level < 2) {
-    form.selectedGroup = addNodeData.root.name
-    uiControl.dialogTitle = t('fields.addNodes')
-  } else {
-    form.selectedGroup = name
-    uiControl.dialogTitle = t('fields.selectNodeAddTo') + form.selectedGroup
-  }
-  uiControl.dialogVisible = true
-}
-function addNewNodesToSelectedGroup() {
-  paymentArea.value.addHandle()
-}
-function handleRemoveNode(tag) {
-  form.selectedPaymentNodes.splice(form.selectedPaymentNodes.indexOf(tag), 1)
-}
-function checkPayTypeSelected(value) {
-  // page.payTypeList = [];
-  // page.originPaymentRecords.forEach((el) => {
-  //   if (el.payType === value) {
-  //     page.payTypeList.push(el)
-  //   }
-  // })
-  page.paymentRecords = page.originPaymentRecords.filter((el) => el.payType === value);
-  if (originType.value === value) {
-    nodeValues.value.web.paymentId = originWebPaymentName.value;
-    nodeValues.value.mobile.paymentId = originMobilePaymentName.value;
-    nodeValues.value.web.financialLevels = Object.assign(nodeValues.value.web.financialLevels, selectedWebLevels.value);
-    nodeValues.value.mobile.financialLevels = Object.assign(nodeValues.value.mobile.financialLevels, selectedMobileLevels.value);
-    nodeValues.value.web.financialLevels.forEach(level => {
-      level.selectedWebPaymentName = originWebPaymentName.value
-    });
-    nodeValues.value.mobile.financialLevels.forEach(level => {
-      level.selectedMobilePaymentName = originMobilePaymentName.value
-    });
-  } else {
-    nodeValues.value.web.paymentId = null;
-    nodeValues.value.mobile.paymentId = null;
-    nodeValues.value.web.financialLevels = [];
-    nodeValues.value.mobile.financialLevels = [];
-    page.financials.forEach(element => {
-      element.selectedWebPaymentName = null
-      element.selectedMobilePaymentName = null
-    });
-  }
-  console.log(originType.value)
-  console.log(originWebPaymentName.value)
-  console.log(originMobilePaymentName.value)
-  console.log(originWebLevels.value)
-  console.log(originMobileLevels.value)
-  // nodeValues.value.web.paymentId = null;
-  // nodeValues.value.mobile.paymentId = null;
-  // nodeValues.value.web.financialLevels = [];
-  // nodeValues.value.mobile.financialLevels = [];
-}
-function changeWebPaymentId(value) {
-  var previouslySelectedWebPaymentName = {}
-  previouslySelectedWebPaymentName = Object.assign(selectedWebPaymentName.value, previouslySelectedWebPaymentName);
-  var previouslySelectedLevels = {}
-  previouslySelectedLevels = Object.assign(selectedWebLevels.value, previouslySelectedLevels);
-  if (value === (previouslySelectedWebPaymentName.toString())) {
-    console.log(previouslySelectedLevels)
-    nodeValues.value.web.financialLevels = previouslySelectedLevels
-    previouslySelectedLevels.forEach(level => {
-      level.selectedWebPaymentName = selectedWebPaymentName.value
-    });
-  } else {
-    nodeValues.value.web.financialLevels = []
-    page.financials.forEach(level => {
-      level.selectedWebPaymentName = null
-    });
-  }
-}
-function changeMobilePaymentId(value) {
-  var previouslySelectedMobilePaymentName = {}
-  previouslySelectedMobilePaymentName = Object.assign(selectedMobilePaymentName.value, previouslySelectedMobilePaymentName);
-  var previouslySelectedLevels = {}
-  previouslySelectedLevels = Object.assign(selectedMobileLevels.value, previouslySelectedLevels);
-  if (value === (previouslySelectedMobilePaymentName.toString())) {
-    console.log(previouslySelectedLevels)
-    nodeValues.value.mobile.financialLevels = previouslySelectedLevels
-    previouslySelectedLevels.forEach(level => {
-      level.selectedMobilePaymentName = selectedMobilePaymentName.value
-    });
-  } else {
-    nodeValues.value.mobile.financialLevels = []
-    page.financials.forEach(level => {
-      level.selectedMobilePaymentName = null
-    });
-  }
-}
-async function loadPayments() {
-  // searchCondition.way = 'WEB'
-  const { data: records } = await getAllPayments({
-    // way: searchCondition.way,
-    status: 'OPEN',
-    siteId: searchCondition.siteId,
-  })
-  const { data: nodes } = await getPaymentShow({
-    siteId: searchCondition.siteId,
-    // way: searchCondition.way,
-  })
-  const { data: nodeDetails } = await getPaymentShowDetails({
-    siteId: searchCondition.siteId,
-    // way: searchCondition.way,
-  })
-  page.webPaymentShowNodeDetails = nodeDetails
-  page.webPaymentShowNodes = nodes
-  page.originPaymentRecords = records
-  page.paymentRecords = records
-  const payTypes = new Set();
-  records.forEach((el) => {
-    payTypes.add(el.payType);
-  })
-  page.payTypeList = Array.from(payTypes);
-  uiControl.searchDialogVisible = false
-}
-
-async function confirmUpdate() {
-  ElMessageBox.confirm(t('message.confirmUpdate'), t('fields.notice'), {
-    confirmButtonText: t('fields.update'),
-    cancelButtonText: t('fields.cancel'),
-    type: 'info',
-  }).then(async () => {
-    page.loading = true
-    const obj = {
-      nodes: toRaw(paymentArea.value.list),
-      siteId: searchCondition.siteId
-    }
-    await updatePaymentShow(obj)
-    uiControl.updateDialogVisible = false;
-    ElMessage({ message: t('message.updateSuccess'), type: 'success' })
-    isNodesUpdated.value = true
-    page.loading = false
-  })
-}
-
-async function loadSearchCondition() {
-  page.loading = true
-  const { data: ret } = await getSiteListSimple()
-  page.sites = ret
-  await loadFinancialLevels()
-  await loadPayments()
-  page.loading = false
-}
-async function loadFinancialLevels() {
-  const { data: financial } = await getFinancialLevels({
-    siteId: searchCondition.siteId,
-  })
-  page.financials = financial
-}
-
-function handleSiteNameCheckedChange() {
-  isCodeSelected.value = false
-  isNodesUpdated.value = true
-  loadSearchCondition()
-}
-
-function isAllLocations(a) {
-  if (a[a.length - 1] === '-1') {
-    copy.selectedLevel = []
-    copy.financials.forEach(loc => {
-      if (loc.level !== '-1') {
-        copy.selectedLevel.push(loc.level)
-      }
-    })
-  }
-}
-
 onMounted(async () => {
   await loadSearchCondition()
   if (LOGIN_USER_SITEID.value != null) {
@@ -837,6 +762,79 @@ onUnmounted(() => {
   bus.off('exportChildItem')
   bus.off('exportNodes')
 })
+
+function handleSiteNameCheckedChange() {
+  isCodeSelected.value = false
+  isNodesUpdated.value = true
+  loadSearchCondition()
+}
+async function loadSearchCondition() {
+  page.loading = true
+  const { data: ret } = await getSiteListSimple()
+  page.sites = ret
+  await loadFinancialLevels()
+  await loadPayments()
+  page.loading = false
+}
+async function loadFinancialLevels() {
+  const { data: financial } = await getFinancialLevels({
+    siteId: searchCondition.siteId,
+  })
+  page.financials = financial
+}
+async function loadPayments() {
+  const { data: records } = await getAllPayments({
+    status: 'OPEN',
+    siteId: searchCondition.siteId,
+  })
+  const { data: nodes } = await getPaymentShow({
+    siteId: searchCondition.siteId,
+  })
+  const { data: nodeDetails } = await getPaymentShowDetails({
+    siteId: searchCondition.siteId,
+  })
+  page.initialPaymentShowNodeDetails = nodeDetails
+  page.paymentShowNodes = nodes
+  page.originPaymentRecords = records
+  page.paymentRecords = records
+  const payTypes = new Set();
+  records.forEach((el) => {
+    payTypes.add(el.payType);
+  })
+  page.payTypeList = Array.from(payTypes);
+}
+
+const handleCheckAllChange = (val) => {
+  if (val) {
+    nodeValues.value.web.financialLevels = page.financials.map((financial) => financial.name);
+  } else {
+    nodeValues.value.web.financialLevels = [];
+  }
+
+  isIndeterminate.value = false;
+}
+const handleCheckedFinancialChange = (value) => {
+  const checkedCount = value.length
+  checkAll.value = checkedCount === page.financials.length
+  isIndeterminate.value = checkedCount > 0 && checkedCount < page.financials.length
+}
+const checkAllMobile = ref(false)
+const mobileIsIndeterminate = ref(true)
+
+const handleMobileCheckAllChange = (val) => {
+  if (val) {
+    nodeValues.value.mobile.financialLevels = page.financials.map((financial) => financial.name);
+  } else {
+    nodeValues.value.mobile.financialLevels = [];
+  }
+
+  mobileIsIndeterminate.value = false;
+}
+const handleMobileCheckedFinancialChange = (value) => {
+  const checkedCount = value.length
+  checkAllMobile.value = checkedCount === page.financials.map(element => element.name).length
+  mobileIsIndeterminate.value = checkedCount > 0 && checkedCount < page.financials.length
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
