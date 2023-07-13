@@ -90,6 +90,7 @@
               @add-nodes-to-selected-group="addNodesToSelectedGroup()"
               @export-child-item="getSelectedChild()"
               @export-nodes="showNodesUpdated()"
+              @delete-child-item="deleteChild()"
             />
           </div>
         </el-card>
@@ -258,7 +259,8 @@ import {
   getPaymentShow,
   getPaymentShowDetails,
   updatePaymentShow,
-  updatePaymentShowDetails
+  updatePaymentShowDetails,
+  deletePaymentShowDetails,
 } from '../../../api/payment-display'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getSiteListSimple } from '../../../api/site'
@@ -329,6 +331,9 @@ const selectedWebPayment = ref({})
 const selectedMobilePayment = ref({})
 const selectedWebLevels = ref(null)
 const selectedMobileLevels = ref(null)
+
+var objChild = reactive(null)
+const deleteChildArray = reactive([])
 let newNodeId = 0
 
 function getSelectedChild(item, onUpd) {
@@ -464,6 +469,22 @@ function getSelectedChild(item, onUpd) {
   }
   console.log(selectedNode)
 }
+function deleteChild(item, onDel) {
+  if (onDel === 'isGroup') {
+    return
+  }
+  if (item.children.length) {
+    item.children.forEach((child) => {
+      deleteChildArray.push(child.code)
+    })
+  } else {
+    deleteChildArray.push(item.code)
+  }
+  objChild = {
+    siteId: searchCondition.siteId,
+    item: deleteChildArray
+  }
+}
 
 function changeMobilePaymentId(value) {
   selectedMobilePayment.value = value
@@ -506,6 +527,13 @@ async function confirmUpdate() {
       siteId: searchCondition.siteId
     }
     await updatePaymentShow(obj)
+    if (objChild) {
+      deletePaymentShowDetails(objChild).then((res) => {
+        if (res.code === 0) {
+          objChild = null
+        }
+      })
+    }
     uiControl.updateDialogVisible = false;
     ElMessage({ message: t('message.updateSuccess'), type: 'success' })
     isNodesUpdated.value = true
@@ -755,11 +783,13 @@ onMounted(async () => {
   bus.on('addNodesToSelectedGroup', addNodesToSelectedGroup)
   bus.on('exportChildItem', getSelectedChild)
   bus.on('exportNodes', showNodesUpdated)
+  bus.on('deleteChildItem', deleteChild)
 })
 
 onUnmounted(() => {
   bus.off('addNodesToSelectedGroup')
   bus.off('exportChildItem')
+  bus.off('deleteChildItem')
   bus.off('exportNodes')
 })
 

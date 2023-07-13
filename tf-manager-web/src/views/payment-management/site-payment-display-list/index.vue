@@ -198,11 +198,20 @@ function loadTable() {
   financialLevels.value.forEach((fLevel, findex) => {
     const webObj = { financial: fLevel.name + ' (WEB)' };
     const mobileObj = { financial: fLevel.name + ' (MOBILE)' };
+    if (webTableFormatted.length === 0 || mobileTableFormatted.length === 0) {
+      paymentTypes.forEach(type => {
+        webObj[type] = '未分配'
+        mobileObj[type] = '未分配'
+      })
+    }
+    // const nullObj = paymentList.value.find(obj => obj.id === parseInt(fLevel[findex]));
+    // webObj[nullObj.payType] = '未分配'
+    // mobileObj[nullObj.payType] = '未分配'
     webTableFormatted.forEach(element => {
-      if (element.financialLevels[findex] === '1' && webObj.financial.includes('WEB')) {
-        webObj[element.type] = element.paymentName
+      const foundObject = paymentList.value.find(obj => obj.id === parseInt(element.financialLevels[findex]));
+      if (foundObject) {
+        webObj[foundObject.payType] = foundObject.paymentName
       } else {
-        console.log(webObj[element.type])
         webObj[element.type] = '未分配'
       }
       if (!webObj[element.type]) {
@@ -210,8 +219,9 @@ function loadTable() {
       }
     });
     mobileTableFormatted.forEach(element => {
-      if (element.financialLevels[findex] === '1' && mobileObj.financial.includes('MOBILE')) {
-        mobileObj[element.type] = element.paymentName
+      const foundObject = paymentList.value.find(obj => obj.id === parseInt(element.financialLevels[findex]));
+      if (foundObject) {
+        mobileObj[foundObject.payType] = foundObject.paymentName
       } else {
         mobileObj[element.type] = '未分配'
       }
@@ -219,6 +229,16 @@ function loadTable() {
         mobileObj[element.type] = '未分配'
       }
     });
+    // mobileTableFormatted.forEach(element => {
+    //   if (element.financialLevels[findex] === '1' && mobileObj.financial.includes('MOBILE')) {
+    //     mobileObj[element.type] = element.paymentName
+    //   } else {
+    //     mobileObj[element.type] = '未分配'
+    //   }
+    //   if (!mobileObj[element.type]) {
+    //     mobileObj[element.type] = '未分配'
+    //   }
+    // });
 
     page.records.push(webObj);
     page.records.push(mobileObj);
