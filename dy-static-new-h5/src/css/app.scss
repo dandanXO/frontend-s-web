@@ -14,7 +14,7 @@ body {
 
 #q-app {
   // background: #11131f;
-  background: #d2d2de;
+  background: #ffffff;
 }
 
 .q-layout,
@@ -54,7 +54,7 @@ body {
 }
 
 .q-page-container {
-  background: #d2d2de;
+  background: #ffffff;
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> is used. */
 
@@ -128,7 +128,8 @@ body.platform-ios .q-dialog__inner--minimized > div {
 
     svg {
       display: block;
-      width: 40px;
+      width: 30px;
+      padding-left: 10px;
       fill: #ffffff;
     }
   }
@@ -196,6 +197,7 @@ svg {
   border-radius: 20px 20px 0 0;
   box-shadow: 0 0 0px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  font-size: 12px;
 
   .q-tabs {
     background: #d2d2de !important;
@@ -207,7 +209,7 @@ svg {
     color: #929292;
 
     img {
-      width: 25px;
+      height: 18px;
 
       &.inactive {
         display: block;
@@ -227,7 +229,7 @@ svg {
     }
 
     &--active {
-      color: #3f5fc7;
+      color: #0089ED;
 
       img {
         &.inactive {
@@ -277,12 +279,12 @@ svg {
 }
 
 .bg-brightbtn {
-  background: #5b80e8;
+  background: #0089ED;
   color: #ffffff;
 }
 
 .bg-dyblue {
-  background: #5b80e8;
+  background: #0089ED;
   color: #ffffff;
 }
 
