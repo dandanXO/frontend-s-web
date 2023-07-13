@@ -438,6 +438,7 @@ export default {
     loginTime: 'Login Time',
     loginUrl: 'Login URL',
     loginWay: 'Login Way',
+    logoutPlayer: 'Logout Player',
     lotteryRecordList: 'Lottery Record List',
     lotteryResultList: 'Lottery Result List',
     mallCode: 'Mall Code',
@@ -865,6 +866,7 @@ export default {
     invalidFileType: 'Invalid file type ',
     length6To12: 'Length should be 6 to 12',
     levelUpCreditMoreThan: 'Level up credit must be more than ',
+    logoutPlayerSuccess: 'Logout Player Success',
     maxGreaterThanMin: 'Maximum must be greater than minimum',
     memberNotInSite: 'Member could not be found in this site',
     multipleQuerySeparatedBySpace:
@@ -1257,6 +1259,7 @@ export default {
     602: 'Token has expired',
     603: 'Token is missed',
     604: 'Account already login',
+    605: 'Account already logged out',
     700: 'Old and new password cannot be the same',
     701: 'Parameter already exist',
     707: 'Insufficient balance',
