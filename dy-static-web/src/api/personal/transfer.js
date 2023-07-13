@@ -12,3 +12,7 @@ export function withdrawAll(list) {
 export function getPlatforms() {
   return server.REST.get("/platform");
 }
+
+export function getLoggedInPlatformList() {
+  return server.REST.get("/session/loggedInPlatform")
+}

@@ -33,39 +33,37 @@
           :key="i"
           v-for="(item, i) in list"
         >
-          <div>
-            <el-row :gutter="10" justify="space-between" align="middle">
-              <el-col :span="6" style="position: relative">
-                <!-- eslint-disable -->
-                <img
-                  v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
-                  :src="paymethodicon + '/000/fff.png&text=payment'"
-                />
-                <img v-else :src="paymethodicon + '/payment/' + item.icon" />
-              </el-col>
-              <el-col :span="12">
-                <div class="node-text">
-                  <div class="group-node">
-                    <div>{{ item.name }}</div>
-                  </div>
+          <el-row :gutter="10" justify="space-between" align="middle">
+            <el-col :span="6" style="position: relative">
+              <!-- eslint-disable -->
+              <img
+                v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
+                :src="paymethodicon + '/000/fff.png&text=payment'"
+              />
+              <img v-else :src="paymethodicon + '/payment/' + item.icon" />
+            </el-col>
+            <el-col :span="12">
+              <div class="node-text">
+                <div class="group-node">
+                  <div>{{ item.name }}</div>
                 </div>
-              </el-col>
-              <el-col :span="6" class="icons">
-                <i
-                  class="el-icon-edit"
-                  size="mini"
-                  type="success"
-                  @click.stop="editHandle(item, i, idx)"
-                />
-                <i
-                  class="el-icon-remove"
-                  size="mini"
-                  type="danger"
-                  @click.stop="deleteItem(item, i, idx)"
-                />
-              </el-col>
-            </el-row>
-          </div>
+              </div>
+            </el-col>
+            <el-col :span="6" class="icons">
+              <i
+                class="el-icon-edit"
+                size="mini"
+                type="success"
+                @click.stop="editHandle(item, i, idx)"
+              />
+              <i
+                class="el-icon-remove"
+                size="mini"
+                type="danger"
+                @click.stop="deleteItem(item, i, idx)"
+              />
+            </el-col>
+          </el-row>
           <!-- <div
             :class="{ before: item.dragtype === 1, after: item.dragtype === 2 }"
           ></div> -->
@@ -350,6 +348,13 @@ export default defineComponent({
       // eslint-disable-next-line vue/no-mutating-props
       this.list.splice(index, 1)
       bus.emit('exportNodes');
+      if (item) {
+        bus.emit('deleteChildItem', item)
+      } else {
+        if (item) {
+          bus.emit('deleteChildItem', 'isGroup')
+        }
+      }
       $('#uploadFile').val(null);
       $('#uploadFileL').val(null);
     },
@@ -727,7 +732,7 @@ $node-color: #309799;
   }
 
   .node-group {
-    margin: 15px;
+    // margin: 15px;
     color: $group-color;
 
     .el-icon-edit {

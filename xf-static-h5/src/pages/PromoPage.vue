@@ -265,7 +265,7 @@ export default defineComponent({
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function (promo) {
-          return (promo.promoType.toLowerCase()).includes(type.value.toLowerCase());
+          return promo.promoType.toLowerCase().split(',').includes(type.value.toLowerCase());
         });
       } else {
         filteredArray.value = promoState.promoList

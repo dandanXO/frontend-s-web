@@ -48,7 +48,10 @@ export default defineComponent({
         .get("/config/customerAddress")
         .then((res) => {
           // console.log(res);
-          CSAUrl = res.data;
+          const url = new URL(res.data);
+          CSAUrl = url.hostname;
+          initCsWeb();
+          console.log(CSAUrl);
         })
         .catch((err) => {
           console.log(err);
@@ -61,6 +64,7 @@ export default defineComponent({
       // console.log("Footer OnMounted");
 
       // 'XFCS' / 2
+      // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
       csclient = new CsClient(
         "XFCS",
         regDevice,
@@ -102,7 +106,7 @@ export default defineComponent({
     };
     onMounted(() => {
       checkSID();
-      initCsWeb();
+      // initCsWeb();
       getCSA();
     });
   }

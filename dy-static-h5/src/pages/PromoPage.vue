@@ -168,7 +168,7 @@ export default defineComponent({
       promoList: []
     });
     const promoTypes = ref([
-      { code: "ALL", img: "all", label: "所有游戏" },
+      { code: "ALL", img: "all", label: "所有优惠" },
       { code: "ESPORTS", img: "esport", label: "电竞" },
       { code: "SPORTS", img: "sport", label: "体育" },
       { code: "POKER", img: "poker", label: "棋牌" },
@@ -200,12 +200,12 @@ export default defineComponent({
         label: "电竞"
       },
       {
-        name: "livecasino",
+        name: "live casino",
         label: "真人"
       },
       {
         name: "slot game",
-        label: "电游"
+        label: "电子"
       }
     ];
 
@@ -262,8 +262,7 @@ export default defineComponent({
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function(promo) {
-          console.log("^^^");
-          return (promo.promoType.toLowerCase()).includes(type.value.toLowerCase());
+          return promo.promoType.toLowerCase().split(',').includes(type.value.toLowerCase());
         });
       } else {
         filteredArray.value = promoState.promoList;

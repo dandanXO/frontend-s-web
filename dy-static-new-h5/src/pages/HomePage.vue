@@ -75,11 +75,6 @@
             slidesPerView: 4,
             spaceBetween: 8
           },
-          // when window width is >= 480px
-          480: {
-            slidesPerView: 5,
-            spaceBetween: 8
-          },
         }"
         watch-slides-progress
         @swiper="setSecondSwiper"
@@ -249,6 +244,10 @@
                 >
                   <img class="game-bg"
                        :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                  <div class="game-title">
+                    <h3>{{ live.name }}</h3>
+                    <span>真人娱乐</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -269,7 +268,7 @@
           <!--            />-->
           <!--          </template>-->
         </swiper-slide>
-        <swiper-slide :class="sport-slides">
+        <swiper-slide class="sport-slides">
 
           <div class="home-game-boards">
             <h2>体育赛事</h2>
@@ -278,9 +277,12 @@
               <div v-for="(sp, i) in sport" :key="i"
                    class="game-item-div">
                 <div class="game-board">
-                  <img src="../assets/index/slides/game-bg-ag.png"/>
-                  <h3>{{ sp.name }}</h3>
-                  <span>体育赛事</span>
+                  <img class="game-bg"
+                       :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>
+                  <div class="game-title">
+                    <h3>{{ sp.name }}</h3>
+                    <span>体育赛事</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -301,9 +303,14 @@
               <div v-for="(es, i) in esport" :key="i"
                    class="game-item-div">
                 <div class="game-board">
-                  <img src="../assets/index/slides/game-bg-ag.png"/>
-                  <h3>{{ es.name }}</h3>
-                  <span>电竞赛事</span>
+
+                  <img class="game-bg"
+                       :src="require(`../assets/index/${es.icon}/slide-${es.icon}-${es.name.toLowerCase()}.png`)"/>
+                  <div class="game-title">
+                    <h3>{{ es.name }}</h3>
+                    <span>电竞赛事</span>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -316,21 +323,43 @@
           <!--          />-->
         </swiper-slide>
 
-        <swiper-slide :key="i" :class="'slot-' + i">
+        <swiper-slide class="slot-slides">
 
           <div class="home-game-boards">
             <h2>电子游戏</h2>
 
-            <div class="game-list-div">
-              <div v-for="(slt, i) in slot" :key="i"
-                   class="game-item-div">
-                <div class="game-board">
-                  <img src="../assets/index/slides/game-bg-ag.png"/>
-                  <h3>{{ slt.name }}</h3>
-                  <span>电子游戏</span>
+
+            <swiper
+                :modules="[Thumbs, Controller]"
+                :freeMode="true"
+                :set-wrapper-size="true"
+                :scrollbar="{ draggable: true }"
+                :mousewheel="true"
+                :space-between="16"
+                :slides-per-view="3"
+                watch-slides-progress
+                class="slot-swiper"
+            >
+              <swiper-slide
+                  v-for="(slt, i) in slot" :key="i"
+              >
+                <div class="game-list-div">
+                  <div
+                       class="game-item-div slot-item">
+                    <div class="game-board">
+                      <img class="game-bg"
+                           :src="require(`../assets/index/${slt.icon}/slide-${slt.icon}-${slt.name.toLowerCase()}.png`)"/>
+                      <div class="game-title">
+                        <h3>{{ slt.name }}</h3>
+                        <span>电子游戏</span>
+                      </div>
+
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </swiper-slide>
+            </swiper>
+
           </div>
 
           <!--          <PlatformBlock dataType="slot" :data="slt"/>-->
@@ -348,9 +377,15 @@
                    :key="i"
                    class="game-item-div">
                 <div class="game-board">
-                  <img src="../assets/index/slides/game-bg-ag.png"/>
-                  <h3>{{ fish.name }}</h3>
-                  <span>捕鱼游戏</span>
+
+                  <img class="game-bg"
+                       :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                  <div class="game-title">
+                    <h3>{{ fish.name }}</h3>
+                    <span>捕鱼游戏</span>
+                  </div>
+
+
                 </div>
               </div>
             </div>
@@ -387,9 +422,15 @@
               <div v-for="(poke, i) in poker" :key="i"
                    class="game-item-div">
                 <div class="game-board">
-                  <img src="../assets/index/slides/game-bg-ag.png"/>
-                  <h3>{{ poke.name }}</h3>
-                  <span>棋牌游戏</span>
+
+                  <img class="game-bg"
+                       :src="require(`../assets/index/${poke.icon}/slide-${poke.icon}-${poke.name.toLowerCase()}.png`)"/>
+                  <div class="game-title">
+                    <h3>{{ poke.name }}</h3>
+                    <span>棋牌游戏</span>
+                  </div>
+
+
                 </div>
               </div>
             </div>
@@ -418,9 +459,13 @@
                    :key="i"
                    class="game-item-div">
                 <div class="game-board">
-                  <img src="../assets/index/slides/game-bg-ag.png"/>
-                  <h3>{{ lotter.name }}</h3>
-                  <span>彩票游戏</span>
+
+                  <img class="game-bg"
+                       :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
+                  <div class="game-title">
+                    <h3>{{ lotter.name }}</h3>
+                    <span>彩票游戏</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1297,9 +1342,48 @@ export default defineComponent({
         width: calc((100% - 35px) / 3);
         flex-wrap: nowrap;
 
+        &.slot-item{
+          width:100%;
+        }
+
         .game-board {
           position: relative;
           height: 170px;
+
+          .game-title {
+            position: absolute;
+            z-index: 2;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            width: 100%;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+          }
+
+          h3 {
+            line-height: 24px;
+            font-size: 20px;
+            color: #fff;
+            margin-top: 0px;
+            margin-bottom: 3px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 1px;
+          }
+
+          span {
+            font-size: 10px;
+            font-weight: 300;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 5px;
+            width: 100%;
+            letter-spacing: 1px;
+          }
+
         }
       }
     }

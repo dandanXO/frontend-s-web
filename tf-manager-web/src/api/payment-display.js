@@ -28,6 +28,10 @@ export const updatePaymentShowDetails = (nodes) => {
   return https().request("/system-payment/paymentShow/details/update?_method=PUT", Method.POST, nodes, ContentType.json);
 };
 
+export const deletePaymentShowDetails = (nodes) => {
+  return https().request("/system-payment/paymentShow/details/delete?_method=PUT", Method.POST, nodes, ContentType.json);
+};
+
 export const getSystemPaymentShowBySiteIdGroupByNodeName = (data) => {
   return https().request("/system-payment/showNoteById/", Method.GET, data, ContentType.form);
 };

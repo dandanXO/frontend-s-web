@@ -29,7 +29,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -77,7 +78,8 @@
                         size="small"
                         class="common-btn"
                         @click="openReminder(scope.row)"
-                        >催单
+                      >
+                        催单
                       </el-button>
                     </div>
                   </template>
@@ -116,13 +118,14 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
             </el-form>
           </div>
-          
+
           <div class="unbind-record-wrapper">
             <el-table :data="dataState.deposit" v-loading="loading">
               <template #empty>
@@ -165,7 +168,8 @@
                         size="small"
                         class="common-btn"
                         @click="openReminder(scope.row)"
-                        >催单
+                      >
+                        催单
                       </el-button>
                     </div>
                   </template>
@@ -204,7 +208,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -257,7 +262,8 @@
                         size="small"
                         class="common-btn"
                         @click="openReminder(scope.row)"
-                        >催单
+                      >
+                        催单
                       </el-button>
                     </div>
                   </template>
@@ -274,7 +280,8 @@
                         size="small"
                         class="common-btn"
                         @click="openWithdrawConfirm(scope.row)"
-                        >确认到账
+                      >
+                        确认到账
                       </el-button>
                     </div>
                   </template>
@@ -314,7 +321,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -325,7 +333,7 @@
               <template #empty>
                 <EmptyData />
               </template>
-              
+
               <el-table-column
                 v-for="tbl in tableColumns.transfer"
                 :key="tbl.key"
@@ -341,7 +349,6 @@
                   </div>
                 </template>
 
-                
                 <template v-if="tbl.dataIndex === 'platform'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getPlatform(scope.row.platform) }}
@@ -391,7 +398,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -441,7 +449,10 @@
           </div>
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
-          <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
+          <div
+            v-if="searchForm.gameBetRecord.platform.length === 0"
+            class="payout-total"
+          >
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
           </div>
@@ -485,7 +496,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -521,36 +533,28 @@
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'bet'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'bet'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span v-if="scope.row.bet !== null">{{ scope.row.bet }}</span>
+                    <span v-if="scope.row.bet !== null">
+                      {{ scope.row.bet }}
+                    </span>
                     <span v-else>0</span>
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'payout'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'payout'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span v-if="scope.row.payout !== null">{{ scope.row.payout }}</span>
+                    <span v-if="scope.row.payout !== null">
+                      {{ scope.row.payout }}
+                    </span>
                     <span v-else>0</span>
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'gameType'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'gameType'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'betStatus'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'betStatus'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getBetStatus(scope.row.betStatus) }}
                   </div>
@@ -589,7 +593,8 @@
                     type="success"
                     class="common-btn"
                     @click="searchRecord"
-                    >搜索
+                  >
+                    搜索
                   </el-button>
                 </el-form-item>
               </div>
@@ -718,8 +723,9 @@
               style="margin-left: 110px"
               :loading="loadingBtn"
               @click="submitReminder()"
-              >提交</el-button
             >
+              提交
+            </el-button>
           </el-form>
         </span>
       </el-dialog>
@@ -1527,7 +1533,7 @@ export default defineComponent({
         return ''
       }
       if (gameType === 'SLOT') {
-        return '老虎机' // Slot
+        return '电子' // Slot
       } else if (gameType === 'LIVE') {
         return '真人' // Live
       } else if (gameType === 'FISH') {
