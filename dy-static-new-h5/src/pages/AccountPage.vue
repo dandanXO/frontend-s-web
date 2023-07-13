@@ -498,7 +498,7 @@ export default defineComponent({
 .acct-logout {
   padding: 10px;
   margin: 5px 10px;
-  background-color: #5b80e7;
+  background-color: #0089ED;
   text-align: center;
   color: #ffffff;
 }

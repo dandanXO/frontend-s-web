@@ -292,6 +292,7 @@
             />
           </template>
         </swiper-slide>
+        <swiper-slide style="opacity: 0;"></swiper-slide>
       </swiper>
     </div>
   </div>
@@ -1006,7 +1007,7 @@ export default defineComponent({
 }
 
 .secondSwiper {
-  height: calc(100vh - 410px);
+  height: calc(100vh - 380px);
   padding-bottom: 0px;
   padding-top: 25px;
 }

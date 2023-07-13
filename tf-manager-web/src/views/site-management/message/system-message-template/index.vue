@@ -482,7 +482,7 @@ function showDialog() {
   if (dialogForm.value) {
     dialogForm.value.resetFields()
   }
-  form.receiveType = 'ALL'
+  form.receiveType = 'MULTIPLE'
   handleVipFilter()
   uiControl.dialogVisible = true
 }

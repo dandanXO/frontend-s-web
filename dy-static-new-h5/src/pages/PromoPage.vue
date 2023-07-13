@@ -33,12 +33,6 @@
                     "
                   >
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
-                        <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
-                      <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img
@@ -46,6 +40,10 @@
                             :src="imgURL + promo.mobileImgUrl"
                           />
                         </div>
+                      </div>
+                      <div class="promo-info">
+                        <span class="viewdetail">{{ promo.title }}</span>
+                        <span class="detaildate">活动时间：{{ promo.date }}</span>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
                     </a>
@@ -53,12 +51,6 @@
 
                   <template v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
-                        <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
-                      <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img
@@ -66,6 +58,10 @@
                             :src="imgURL + promo.mobileImgUrl"
                           />
                         </div>
+                      </div>
+                      <div class="promo-info">
+                        <span class="viewdetail">{{ promo.title }}</span>
+                        <span class="detaildate">活动时间：{{ promo.date }}</span>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
                     </a>
@@ -128,11 +124,10 @@
   <q-dialog width="100%" v-model="isDisplayLogin">
     <q-card
       style="width: 100%; padding: 20px"
-      class="bg-white text-black text-center"
+      class="bg-white text-black text-right"
     >
       <q-card-section class="q-mb-md gologin-popup">
-        <strong>系统提示</strong>
-        <br />
+        <strong><RiErrorWarningLine />系统提示</strong>
         请登录后再操作
       </q-card-section>
       <router-link to="/login?redirect=/promo">
@@ -149,6 +144,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
+import { RiErrorWarningLine } from "vue-remix-icons";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
@@ -157,7 +153,7 @@ import HotPromotion from "components/HotPromotion";
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion, RiErrorWarningLine
   },
   setup() {
     const store = userStore();
@@ -358,7 +354,8 @@ export default defineComponent({
   }
 
   a {
-    color: #db7e42;
+    color: #000000;
+    font-weight: 600;
     font-size: 17px;
   }
 }
@@ -380,9 +377,9 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 40vw;
-      max-height: 130px;
-      margin: 10px;
+      // height: 40vw;
+      // max-height: 130px;
+      // margin: 10px;
 
       img {
         width: 100%;
@@ -454,11 +451,8 @@ export default defineComponent({
       }
 
       .promo-list-wrapper {
-        margin-top: 30px;
         display: grid;
-        margin-top: 20px;
         grid-template-columns: 1fr;
-        grid-gap: 18px;
 
         .promo-item {
           position: relative;
@@ -468,6 +462,13 @@ export default defineComponent({
           animation-name: scalein;
           animation-duration: 1s;
           transition: 0.4s ease-in;
+          a {
+            margin-bottom: 15px;
+            display: block;
+            box-shadow: 0px 0px 30px -15px #000;
+            border-radius: 10px;
+            overflow: hidden;
+          }
 
           img {
           }
@@ -485,9 +486,8 @@ export default defineComponent({
               background-position: center center;
               margin: 0;
               background: #ffffff;
-              padding: 25px 3px 3px;
-              border-radius: 4px;
-              // border-radius: 10px 10px 0 0;
+              // border-radius: 4px;
+              border-radius: 10px 10px 0 0;
 
               &:hover {
                 transform: scale(1.2);
@@ -530,48 +530,54 @@ export default defineComponent({
             // align-items: center;
             display: flex;
             justify-content: flex-start;
-            align-items: center;
+            align-items: flex-start;
+            padding: 10px;
+            flex-direction: column;
 
             .viewdetail {
               // color: #000;
               // padding: 0 4px;
-              position: absolute;
-              top: -5px;
-              left: -2px;
-              font-size: 12px;
-              color: #3a3a3a;
-              z-index: 2;
-              width: 100%;
-              // padding: 4px;
-              background: #d2d2de;
+              // position: absolute;
+              // top: -5px;
+              // left: -2px;
+              // font-size: 12px;
+              // color: #3a3a3a;
+              // z-index: 2;
+              // width: 100%;
+              // // padding: 4px;
+              // background: #d2d2de;
 
-              &:before {
-                display: block;
-                content: "";
-                background: #ffffff;
-                height: 100%;
-                width: 70px;
-                position: absolute;
-                top: -2px;
-                right: -2px;
-              }
+              // &:before {
+              //   display: block;
+              //   content: "";
+              //   background: #ffffff;
+              //   height: 100%;
+              //   width: 70px;
+              //   position: absolute;
+              //   top: -2px;
+              //   right: -2px;
+              // }
 
-              &:after {
-                display: block;
-                content: "";
-                top: -2px;
-                right: 48px;
-                position: absolute;
-                width: 0;
-                height: 0;
-                border-left: 20px solid transparent;
-                border-right: 20px solid transparent;
-                border-top: 20px solid #ffffff;
-                transform: rotate(180deg);
-                clear: both;
-              }
+              // &:after {
+              //   display: block;
+              //   content: "";
+              //   top: -2px;
+              //   right: 48px;
+              //   position: absolute;
+              //   width: 0;
+              //   height: 0;
+              //   border-left: 20px solid transparent;
+              //   border-right: 20px solid transparent;
+              //   border-top: 20px solid #ffffff;
+              //   transform: rotate(180deg);
+              //   clear: both;
+              // }
             }
-
+            .detaildate {
+              color: #858585;
+              font-weight: 400;
+              font-size: 14px;
+            }
             .detail-arrow {
               margin-right: 20px;
               height: 100%;
@@ -682,53 +688,58 @@ export default defineComponent({
   }
 }
 
-.pad-title {
-  position: absolute;
-  top: -7px;
-  right: 5px;
-  z-index: 3;
-  font-size: 12px;
-  color: #3e5cc0;
-}
 
 .pad-label.label-new {
-  background: url(../assets/promo/yh_label_new.png) no-repeat;
-  // background-size: 100%;
-  background-size: 78px 45px;
   font-size: 12px;
   color: #ffffff;
-  padding: 12px 7px;
+  padding: 5px;
   position: absolute;
-  bottom: 10px;
-  left: 0;
-  width: 100%;
+  top: 0px;
+  left: 10px;
+    background: linear-gradient(180deg, #FF4D42, #CA0C00);
+    border-radius: 0 0 10px 10px;
+    font-weight: 600;
 }
 
 .promo {
   .q-tabs {
     // background: rgba(113, 125, 146, 0.2);
     background: #ffffff;
-    width: 100%;
-    margin: 0 auto;
+    box-shadow: 0px 0px 25px -15px #000;
+    // width: 100%;
+    // margin: 0 auto;
+    margin: 10px;
+    border-radius: 50px;
+    overflow: hidden;
+    padding: 5px;
+    font-family: 'Courier Prime';
   }
 
   .q-tab {
-    min-height: 40px;
+    min-height: unset;
+    border-radius: 50px;
+    color: #858585;
+    padding: 2px 10px 0;
   }
 
   .q-tab__content {
     width: 100%;
+    padding: 10px 0;
   }
 
   .q-tab--active {
-    color: #3e5cc0;
+    background: #68BCEC;
+    color: #ffffff;
   }
 
   .q-tab__label {
-    font-size: 13px;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 600;
   }
 
   .q-tab--active .q-tab__indicator {
+    display: none;
     background: url("../assets/images/promotion/tab_bg.png") no-repeat center
       center;
     background-size: 20px 10px;
@@ -777,5 +788,19 @@ export default defineComponent({
 .gologin-popup {
   display: flex;
   flex-direction: column;
+    align-items: flex-start;
+    color: #6C6C6E;
+    gap: 15px;
+  strong {
+    color: #000000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    svg {
+      fill: #0089ED;
+    }
+  }
 }
 </style>
