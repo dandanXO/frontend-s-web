@@ -48,7 +48,10 @@ export default defineComponent({
         .get("/config/customerAddress")
         .then((res) => {
           // console.log(res);
-          CSAUrl = res.data;
+          const url = new URL(res.data);
+          CSAUrl = url.hostname;
+          initCsWeb();
+          console.log(CSAUrl);
         })
         .catch((err) => {
           console.log(err);
@@ -68,7 +71,7 @@ export default defineComponent({
         "zh-CN",
         "2",
         "prod",
-        `${CSAUrl}`
+        `https://${CSAUrl}`
       );
 
       csclient.set("pageurl", "/liveChat");
@@ -103,7 +106,7 @@ export default defineComponent({
     };
     onMounted(() => {
       checkSID();
-      initCsWeb();
+      // initCsWeb();
       getCSA();
     });
   }
