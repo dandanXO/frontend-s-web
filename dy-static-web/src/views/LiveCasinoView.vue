@@ -31,7 +31,7 @@
               <img class="imgabs img-left-right fbbin6" src="../assets/live/left_float_bbin_6.webp">
               <img class="imgabs img-right-left fbbin7" src="../assets/live/left_float_bbin_7.webp">
             </template>
-            <template v-if="det.code === 'PM'">
+            <template v-if="det.code === 'PMLIVE'">
               <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp">
               <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp">
               <img class="imgabs img-down-up fag1" src="../assets/live/left_float_ag_1.webp">
@@ -112,13 +112,13 @@ export default defineComponent({
         gameCode: '',
         message: '玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。'
       },
-      // {
-      //   code: 'PM',
-      //   name: 'PM',
-      //   image: 'pm',
-      //   gameCode: '',
-      //   message: ''
-      // },
+      {
+        code: 'PMLIVE',
+        name: 'PM',
+        image: 'pm',
+        gameCode: '',
+        message: ''
+      },
       // {
       //   code: 'BG',
       //   name: 'BG',
@@ -553,7 +553,7 @@ export default defineComponent({
   .platform-list-box {
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     gap: 25px;
     margin: 35px auto 90px;

@@ -191,7 +191,7 @@
       v-if="!hasAffiliate"
       ref="affiliateCodeRef"
       hide-bottom-space
-      v-model="regForm.affiliateCode"
+      v-model="regForm.referrer"
       label="推荐码"
       hint="若不是合营下会员无需填写"
     >
@@ -290,6 +290,7 @@ export default defineComponent({
       regHost: location.hostname,
       codeId: "",
       affiliateCode: "",
+      referrer: "",
       smsCodeId: "",
       smsCode: ""
     });

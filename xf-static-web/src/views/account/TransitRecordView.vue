@@ -1520,7 +1520,7 @@ export default defineComponent({
         return ''
       }
       if (gameType === 'SLOT') {
-        return '老虎机' // Slot
+        return '电子' // Slot
       } else if (gameType === 'LIVE') {
         return '真人' // Live
       } else if (gameType === 'FISH') {

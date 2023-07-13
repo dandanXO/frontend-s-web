@@ -70,10 +70,6 @@
                       <div class="pad-label label-new">最新活动</div>
                     </a>
                   </template>
-
-                  <!-- <template v-if="tab.name === promo.promoType.toLowerCase()"> -->
-
-                  <!-- </template> -->
                 </div>
               </div>
             </div>
@@ -189,7 +185,7 @@ export default defineComponent({
     const tabItems = [
 
     { name:"all", label: '全部' },
-      { name: "slot game", label: '电游'},
+      { name: "slot game", label: '电子'},
       { name: "fish", label: '捕鱼'},
       { name: "live casino", label: '真人'},
       { name: "poker", label: '棋牌'},
