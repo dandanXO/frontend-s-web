@@ -187,18 +187,18 @@
       </template>
     </q-input>
 
-<!--    <q-input-->
-<!--      v-if="!hasAffiliate"-->
-<!--      ref="affiliateCodeRef"-->
-<!--      hide-bottom-space-->
-<!--      v-model="regForm.affiliateCode"-->
-<!--      label="推荐码"-->
-<!--      hint="若不是合营下会员无需填写"-->
-<!--    >-->
-<!--      <template v-slot:prepend>-->
-<!--        <img src="../assets/images/login/login_name.png" width="20" />-->
-<!--      </template>-->
-<!--    </q-input>-->
+    <q-input
+      v-if="!hasAffiliate"
+      ref="affiliateCodeRef"
+      hide-bottom-space
+      v-model="regForm.referrer"
+      label="推荐码"
+      hint="若不是合营下会员无需填写"
+    >
+      <template v-slot:prepend>
+        <img src="../assets/images/login/login_name.png" width="20" />
+      </template>
+    </q-input>
 
     <div class="row justify-between items-center">
       <q-btn
@@ -290,6 +290,7 @@ export default defineComponent({
       regHost: location.hostname,
       codeId: "",
       affiliateCode: "",
+      referrer: "",
       smsCodeId: "",
       smsCode: ""
     });
