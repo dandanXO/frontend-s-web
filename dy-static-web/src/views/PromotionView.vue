@@ -115,7 +115,7 @@ export default defineComponent({
       promoList: [],
     });
     const promoTypes = ref([
-      { code:"ALL", img: 'all', label: '所有游戏' },
+      { code:"ALL", img: 'all', label: '所有优惠' },
       { code: "ESPORTS", img: 'esport', label: '电竞'},
       { code: "SPORTS", img: 'sport', label: '体育'},
       { code: "POKER", img: 'poker', label: '棋牌'},
@@ -172,7 +172,7 @@ export default defineComponent({
       promoTabActive.value = type;
       if (type !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function(promo) {
-          return (promo.promoType.toLowerCase()).includes(type.toLowerCase());
+          return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
         });
       } else {
         filteredArray.value = promoState.promoList

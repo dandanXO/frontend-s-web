@@ -226,7 +226,7 @@ if (!store.token) {
       promoTabActive.value = type;
       if (type !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function(promo) {
-          return (promo.promoType.toLowerCase()).includes(type.toLowerCase());
+          return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
         });
       } else {
         filteredArray.value = promoState.promoList
