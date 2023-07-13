@@ -3,6 +3,7 @@ import { login, logout, mobileLogin } from "@/api/index/login";
 import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
+import { getCSAFromServer } from "@/api/index/site";
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -50,19 +51,19 @@ export const userStore = defineStore("userStore", {
     },
     telephoneLogin(loginInfo) {
       return mobileLogin(loginInfo)
-      .then((ret) => {
-        if (ret.code === 0) {
-          this.token = ret.data;
-          this.getBalance();
-          this.getMemberInfo();
-        } else {
-          // throw new Error(ret.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        // message.error(err.message);
-      });
+        .then((ret) => {
+          if (ret.code === 0) {
+            this.token = ret.data;
+            this.getBalance();
+            this.getMemberInfo();
+          } else {
+            // throw new Error(ret.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          // message.error(err.message);
+        });
     },
     getMemberInfo() {
       if (this.token) {
@@ -97,10 +98,27 @@ export const userStore = defineStore("userStore", {
     openLiveChat() {
       const left = (screen.width - 350) * 2;
       const top = (screen.height - 650) / 4;
-      window.open(`https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&token=${this.token}`, 'Chat Server',
-          'resizable=yes, width=' + 800
-          + ', height=' + 880 + ', top='
-          + top + ', left=' + left);
+
+      return getCSAFromServer()
+        .then((res) => {
+          console.log(res.data);
+          window.open(
+            // `https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&token=${this.token}`,
+            `${res.data}${this.token}`,
+            "Chat Server",
+            "resizable=yes, width=" +
+              800 +
+              ", height=" +
+              880 +
+              ", top=" +
+              top +
+              ", left=" +
+              left
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 });

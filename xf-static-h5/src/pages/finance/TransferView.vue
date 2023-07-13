@@ -244,20 +244,37 @@ const updateTransferAmt = () => {
   });
 };
 const getPlatList = () => {
-  api.get("/platform").then((res) => {
-    res.data.forEach((p) => {
-      if (p.walletType !== "SEAMLESS") {
-        platforms.push({
-          id: p.id,
-          code: p.code,
-          name: translateRecord(p.name),
-          amount: 0
-        });
-        getPlatBalances(p.code);
-      }
+  if (store.memberType === "TEST") {
+    api.get("/session/loggedInPlatform").then((res) => {
+      res.data.forEach((p) => {
+        if (p.walletType !== "SEAMLESS") {
+          platforms.push({
+            id: p.id,
+            code: p.code,
+            name: translateRecord(p.name),
+            amount: 0
+          });
+          getPlatBalances(p.code);
+        }
+      });
+      updateTransferDropdown();
     });
-    updateTransferDropdown();
-  });
+  } else {
+    api.get("/platform").then((res) => {
+      res.data.forEach((p) => {
+        if (p.walletType !== "SEAMLESS") {
+          platforms.push({
+            id: p.id,
+            code: p.code,
+            name: translateRecord(p.name),
+            amount: 0
+          });
+          getPlatBalances(p.code);
+        }
+      });
+      updateTransferDropdown();
+    });
+  }
 };
 const getPlatBalances = (plat) => {
   const platform = platforms.find((p) => p.code === plat);

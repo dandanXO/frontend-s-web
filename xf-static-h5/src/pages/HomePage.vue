@@ -18,7 +18,7 @@
             href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
           <q-btn
             size="md"
-            href="https://xf9866.app/"
+            :href="`https://${downloadUrl}`"
             target="_blank"
             label="立即下载"
             color="brightbtn"
@@ -292,7 +292,7 @@
             />
           </template>
         </swiper-slide>
-        <swiper-slide style="opacity: 0;"></swiper-slide>
+        <swiper-slide style="opacity: 0"></swiper-slide>
       </swiper>
     </div>
   </div>
@@ -554,7 +554,7 @@ export default defineComponent({
       {
         name: "slot",
         icon: "slot",
-        label: "电游",
+        label: "电子",
         labelact: "电子"
       },
       {
@@ -688,113 +688,207 @@ export default defineComponent({
     const fishPlatforms = ref([]);
 
     const getPlatList = () => {
-      cached
-        .get("PLATFORMS", () =>
-          api.get("/platform").then((res) => {
-            return res;
-          })
-        )
-        .then((data) => {
-          var pf = data;
-          ui.slotLists = [];
-          pf.forEach((element) => {
-            const platTypes = element.gameType.split(",");
-            if (platTypes.indexOf("ESPORT") > -1) {
-              var espObj = Object.assign({}, element);
-              // console.log(espObj);
+      if (store.token && store.memberType === "TEST") {
+        cached
+          .get("PLATFORMS", () =>
+            api.get("/session/loggedInPlatform").then((res) => {
+              return res;
+            })
+          )
+          .then((data) => {
+            var pf = data;
+            ui.slotLists = [];
+            pf.forEach((element) => {
+              const platTypes = element.gameType.split(",");
+              if (platTypes.indexOf("ESPORT") > -1) {
+                var espObj = Object.assign({}, element);
+                // console.log(espObj);
 
-              if (espObj.code === "TFGaming") {
-                espObj.title = "兴發电竞";
+                if (espObj.code === "TFGaming") {
+                  espObj.title = "兴發电竞";
+                }
+                if (espObj.code === "IA") {
+                  espObj.title = "小艾电竞";
+                }
+                if (espObj.code === "IMES") {
+                  espObj.title = "IM电竞";
+                }
+                if (!espObj.title) {
+                  espObj.title = espObj.code + "电竞";
+                }
+                espObj.icon = "esport";
+                espObj.subtitle = "电竞赛事";
+                esport.value.push(espObj);
               }
-              if (espObj.code === "IA") {
-                espObj.title = "小艾电竞";
+              if (platTypes.indexOf("SPORT") > -1) {
+                var spObj = Object.assign({}, element);
+                if (spObj.code === "IM") {
+                  spObj.title = "IM体育";
+                }
+                if (spObj.code === "IA") {
+                  spObj.title = "小艾体育";
+                }
+                if (spObj.code === "CR") {
+                  spObj.title = "CR体育";
+                }
+                if (spObj.code === "SABA") {
+                  spObj.title = spObj.code + "体育";
+                }
+                spObj.icon = "sport";
+                spObj.subtitle = "体育赛事";
+                sport.value.push(spObj);
               }
-              if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
+              if (platTypes.indexOf("LIVE") > -1) {
+                var liveObj = Object.assign({}, element);
+                liveObj.title = liveObj.name + " 真人";
+                liveObj.icon = "live";
+                liveObj.subtitle = "真人娱乐";
+                livecasino.value.push(liveObj);
               }
-              if (!espObj.title) {
-                espObj.title = espObj.code + "电竞";
+              if (platTypes.indexOf("POKER") > -1) {
+                var pokerObj = Object.assign({}, element);
+                pokerObj.title = translateRecord(pokerObj.name);
+                pokerObj.icon = "poker";
+                pokerObj.subtitle = "棋牌娱乐";
+                poker.value.push(pokerObj);
               }
-              espObj.icon = "esport";
-              espObj.subtitle = "电竞赛事";
-              esport.value.push(espObj);
-            }
-            if (platTypes.indexOf("SPORT") > -1) {
-              var spObj = Object.assign({}, element);
-              if (spObj.code === "IM") {
-                spObj.title = "IM体育";
+              if (platTypes.indexOf("LOTTERY") > -1) {
+                var lottObj = Object.assign({}, element);
+                lottObj.title = lottObj.name + " 彩票";
+                lottObj.icon = "lottery";
+                lottObj.subtitle = "彩票游戏";
+                lottery.value.push(lottObj);
               }
-              if (spObj.code === "IA") {
-                spObj.title = "小艾体育";
+              if (platTypes.indexOf("SLOT") > -1) {
+                // console.log(element)
+                var slotObj = Object.assign({}, element);
+                slotObj.title = translateRecord(slotObj.name) + " 电子";
+                slotObj.icon = "slot";
+                slotObj.subtitle = "电子游戏";
+                // console.log(slotObj);
+                if (slotObj.code === "AG") {
+                } else {
+                  let slotItem = {
+                    id: slotObj.id,
+                    code: slotObj.code,
+                    icon: slotObj.name
+                  };
+                  // console.log(slotItem);
+                  ui.slotLists.push(slotItem);
+                  slot.value.push(slotObj);
+                }
               }
-              if (spObj.code === "CR") {
-                spObj.title = "CR体育";
+              if (platTypes.indexOf("FISH") > -1) {
+                var fishObj = Object.assign({}, element);
+                fishObj.title = fishObj.name + " 捕鱼";
+                fishObj.icon = "fish";
+                fishObj.subtitle = "捕鱼游戏";
+                fishing.value.push(fishObj);
               }
-              if (spObj.code === "SABA") {
-                spObj.title = spObj.code + "体育";
+            });
+          })
+          .catch((err) => {});
+      } else {
+        cached
+          .get("PLATFORMS", () =>
+            api.get("/platform").then((res) => {
+              return res;
+            })
+          )
+          .then((data) => {
+            var pf = data;
+            ui.slotLists = [];
+            pf.forEach((element) => {
+              const platTypes = element.gameType.split(",");
+              if (platTypes.indexOf("ESPORT") > -1) {
+                var espObj = Object.assign({}, element);
+                // console.log(espObj);
+
+                if (espObj.code === "TFGaming") {
+                  espObj.title = "兴發电竞";
+                }
+                if (espObj.code === "IA") {
+                  espObj.title = "小艾电竞";
+                }
+                if (espObj.code === "IMES") {
+                  espObj.title = "IM电竞";
+                }
+                if (!espObj.title) {
+                  espObj.title = espObj.code + "电竞";
+                }
+                espObj.icon = "esport";
+                espObj.subtitle = "电竞赛事";
+                esport.value.push(espObj);
               }
-              spObj.icon = "sport";
-              spObj.subtitle = "体育赛事";
-              sport.value.push(spObj);
-            }
-            if (platTypes.indexOf("LIVE") > -1) {
-              var liveObj = Object.assign({}, element);
-              liveObj.title = liveObj.name + " 真人";
-              liveObj.icon = "live";
-              liveObj.subtitle = "真人娱乐";
-              livecasino.value.push(liveObj);
-            }
-            if (platTypes.indexOf("POKER") > -1) {
-              var pokerObj = Object.assign({}, element);
-              pokerObj.title = translateRecord(pokerObj.name);
-              pokerObj.icon = "poker";
-              pokerObj.subtitle = "棋牌娱乐";
-              poker.value.push(pokerObj);
-            }
-            if (platTypes.indexOf("LOTTERY") > -1) {
-              var lottObj = Object.assign({}, element);
-              lottObj.title = lottObj.name + " 彩票";
-              lottObj.icon = "lottery";
-              lottObj.subtitle = "彩票游戏";
-              lottery.value.push(lottObj);
-            }
-            if (platTypes.indexOf("SLOT") > -1) {
-              // console.log(element)
-              var slotObj = Object.assign({}, element);
-              slotObj.title = translateRecord(slotObj.name) + " 电子";
-              slotObj.icon = "slot";
-              slotObj.subtitle = "电子游戏";
-              // console.log(slotObj);
-              if (slotObj.code === "AG") {
-              } else {
-                let slotItem = {
-                  id: slotObj.id,
-                  code: slotObj.code,
-                  icon: slotObj.name
-                };
-                // console.log(slotItem);
-                ui.slotLists.push(slotItem);
-                slot.value.push(slotObj);
+              if (platTypes.indexOf("SPORT") > -1) {
+                var spObj = Object.assign({}, element);
+                if (spObj.code === "IM") {
+                  spObj.title = "IM体育";
+                }
+                if (spObj.code === "IA") {
+                  spObj.title = "小艾体育";
+                }
+                if (spObj.code === "CR") {
+                  spObj.title = "CR体育";
+                }
+                if (spObj.code === "SABA") {
+                  spObj.title = spObj.code + "体育";
+                }
+                spObj.icon = "sport";
+                spObj.subtitle = "体育赛事";
+                sport.value.push(spObj);
               }
-            }
-            if (platTypes.indexOf("FISH") > -1) {
-              var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
-              fishObj.icon = "fish";
-              fishObj.subtitle = "捕鱼游戏";
-              fishing.value.push(fishObj);
-            }
-          });
-        })
-        .catch((err) => {
-          // isLoading.value= false;
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
-        });
+              if (platTypes.indexOf("LIVE") > -1) {
+                var liveObj = Object.assign({}, element);
+                liveObj.title = liveObj.name + " 真人";
+                liveObj.icon = "live";
+                liveObj.subtitle = "真人娱乐";
+                livecasino.value.push(liveObj);
+              }
+              if (platTypes.indexOf("POKER") > -1) {
+                var pokerObj = Object.assign({}, element);
+                pokerObj.title = translateRecord(pokerObj.name);
+                pokerObj.icon = "poker";
+                pokerObj.subtitle = "棋牌娱乐";
+                poker.value.push(pokerObj);
+              }
+              if (platTypes.indexOf("LOTTERY") > -1) {
+                var lottObj = Object.assign({}, element);
+                lottObj.title = lottObj.name + " 彩票";
+                lottObj.icon = "lottery";
+                lottObj.subtitle = "彩票游戏";
+                lottery.value.push(lottObj);
+              }
+              if (platTypes.indexOf("SLOT") > -1) {
+                // console.log(element)
+                var slotObj = Object.assign({}, element);
+                slotObj.title = translateRecord(slotObj.name) + " 电子";
+                slotObj.icon = "slot";
+                slotObj.subtitle = "电子游戏";
+                // console.log(slotObj);
+                if (slotObj.code === "AG") {
+                } else {
+                  let slotItem = {
+                    id: slotObj.id,
+                    code: slotObj.code,
+                    icon: slotObj.name
+                  };
+                  // console.log(slotItem);
+                  ui.slotLists.push(slotItem);
+                  slot.value.push(slotObj);
+                }
+              }
+              if (platTypes.indexOf("FISH") > -1) {
+                var fishObj = Object.assign({}, element);
+                fishObj.title = fishObj.name + " 捕鱼";
+                fishObj.icon = "fish";
+                fishObj.subtitle = "捕鱼游戏";
+                fishing.value.push(fishObj);
+              }
+            });
+          })
+          .catch((err) => {});
+      }
     };
     const liveTabs = ref("");
     const searchList = () => {
@@ -926,6 +1020,21 @@ export default defineComponent({
       btmSwiper.classList.add("longer-swiper");
     };
 
+    const downloadUrl = ref("");
+
+    const getAppDownloadUrl = () => {
+      api
+        .get("/config/appDownloadUrl")
+        .then((res) => {
+          // console.log(res);
+          downloadUrl.value = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          downloadUrl.value = "xf9866.app";
+        });
+    };
+
     onMounted(() => {
       getPlatList();
       loadData();
@@ -933,6 +1042,7 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       checkShowImgTop();
+      getAppDownloadUrl();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -996,7 +1106,9 @@ export default defineComponent({
       homePopupImg,
       refreshBalance,
       isLoadingBalance,
-      closeTopBox
+      closeTopBox,
+      getAppDownloadUrl,
+      downloadUrl
     };
   }
 });
