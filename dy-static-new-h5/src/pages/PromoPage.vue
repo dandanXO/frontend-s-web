@@ -43,7 +43,7 @@
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                        <span class="detaildate">活动时间：{{ promo.date }}</span>
+                        <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
                       <div class="pad-label label-new">最新活动</div>
                     </a>
@@ -61,7 +61,7 @@
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                        <span class="detaildate">活动时间：{{ promo.date }}</span>
+                        <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
                       <div class="pad-label label-new">最新活动</div>
                     </a>
@@ -712,7 +712,7 @@ export default defineComponent({
     border-radius: 50px;
     overflow: hidden;
     padding: 5px;
-    font-family: 'Courier Prime';
+    // font-family: 'Courier Prime';
   }
 
   .q-tab {
@@ -735,7 +735,7 @@ export default defineComponent({
   .q-tab__label {
     font-size: 16px;
     line-height: 16px;
-    font-weight: 600;
+    // font-weight: 600;
   }
 
   .q-tab--active .q-tab__indicator {

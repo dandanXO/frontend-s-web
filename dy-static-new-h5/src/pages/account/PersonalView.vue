@@ -524,11 +524,11 @@ export default defineComponent({
   padding: 10px;
 
   .web {
-    color: #3764d6;
+    color: #0089ed;
     text-align: center;
     padding: 0 0 10px;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 15px;
   }
 
   input.q-placeholder {

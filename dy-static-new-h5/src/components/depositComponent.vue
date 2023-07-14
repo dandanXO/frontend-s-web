@@ -169,8 +169,9 @@
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
+              color="dygreen"
               :loading="btnLoading"
-              class="confirm-btn"
+              class="fit"
               @click="confirmDeposit"
               label="确定存款"
           />

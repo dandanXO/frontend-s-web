@@ -14,7 +14,6 @@
                 v-if="bc.bankName"
                 @click="showCard(bc, index)"
                 class="q-pa-sm text-left row items-center"
-                style="color: #000; border-radius: 0"
             >
               <div class="bank-icon-div">
                 <img src="../../assets/account/bank-icon.png"/>

@@ -57,15 +57,15 @@
             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
           </template>
           <template v-slot:append>
-            <q-btn style="margin-left:10px;" class="bigamount-btn" label="最大金额"
+            <q-btn label="最大金额"
                    @click="updateTransferAmt"
                    color="dyblue"/>
           </template>
         </q-input>
 
         <q-btn
-            style="width: 100%;"
-            class="q-mt-md fit transfer-btn"
+            color="dygreen"
+            class="q-mt-md fit"
             @click="submitTransfer"
             label="立即转账"
             :loading="isTransferring"

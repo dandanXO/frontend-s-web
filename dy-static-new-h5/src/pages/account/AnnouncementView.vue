@@ -177,10 +177,12 @@ export default defineComponent({
   }
 
   .q-item {
+    background: #0078e910;
     // background: #fff;
-    background: rgba(255, 255, 255, 0.5);
-    border-left: 0.5px solid #757575;
-    border-right: 0.5px solid #757575;
+    // background: #0078ed10;
+    // background: rgba(255, 255, 255, 0.5);
+    // border-left: 0.5px solid #757575;
+    // border-right: 0.5px solid #757575;
   }
 
   .q-tab--active .q-tab__indicator {
@@ -203,16 +205,16 @@ export default defineComponent({
 
   .q-expansion-item--expanded {
     .q-item {
-      background: #eee;
+      // background: #eee;
     }
   }
 
   .q-expansion-item__content {
     background: #fff;
-    padding: 10px 10px 15px;
-    border-left: 0.5px solid #757575;
-    border-right: 0.5px solid #757575;
-    border-bottom: 0.5px solid #757575;
+    // padding: 10px 10px 15px;
+    // border-left: 0.5px solid #757575;
+    // border-right: 0.5px solid #757575;
+    // border-bottom: 0.5px solid #757575;
   }
 
   .download-item {
@@ -245,8 +247,9 @@ export default defineComponent({
     color: #000;
 
     .btn {
-      border-top: 0.5px solid #0089ED50;
-      color: #333;
+      border-top: 0.5px solid #00000010;
+      // color: #333;
+      color: #0078e999;
       height: 46px;
       text-decoration: none;
       position: relative;
@@ -256,7 +259,6 @@ export default defineComponent({
       justify-content: flex-start;
       align-items: center;
       gap: 24px;
-      font-weight: 600;
       font-size: 16px;
       letter-spacing: 1px;
 
@@ -286,9 +288,10 @@ export default defineComponent({
 
   .empty-field {
     padding: 8px 20px;
+    text-align: center;
 
     p{
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 400;
     }
   }

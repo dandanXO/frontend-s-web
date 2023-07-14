@@ -148,7 +148,7 @@ export default defineComponent({
 
 .personal-content-box {
   margin-top: 0px;
-  padding: 20px 25px 100px;
+  padding: 20px 20px 100px;
   color: #2a2a2a;
 }
 
@@ -291,16 +291,20 @@ export default defineComponent({
   font-weight: 600;
 }
 
-.personal-content-box #selfTgurl {
+.personal-content-box a {
   font-size: 14px;
   display: block;
   padding: 0px 5px;
   margin-bottom: 0px;
   line-height: 48px;
-  border: 1px solid #aaa;
+  border-radius: 4px;
+  overflow: hidden;
+  // border: 1px solid #aaa;
   background: #F2F2F2;
+  flex: 1;
   height: 48px;
   color: #000;
+  text-decoration: none;
 }
 
 .share-link-div .copy-btn {

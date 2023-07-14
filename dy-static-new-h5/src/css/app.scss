@@ -167,6 +167,7 @@ svg {
 .q-card {
   margin: 10px;
   border-radius: 10px;
+  box-shadow: 0px 0px 20px -15px #000;
 }
 
 .q-card__section--vert {
@@ -276,7 +277,12 @@ svg {
 }
 
 .bg-dyblue {
-  background: #0089ED;
+  // background: #0089ED;
+  background: linear-gradient(180deg, #52ACFF, #3559DA);
+  color: #ffffff;
+}
+.bg-dygreen {
+  background: linear-gradient(180deg, #58DB8C, #0D932B);
   color: #ffffff;
 }
 
@@ -386,5 +392,8 @@ a:visited{
 
   .q-btn {
     font-size: 11px !important;
+    &:before {
+      box-shadow: none;
+    }
   }
 }

@@ -426,7 +426,10 @@ onMounted(() => {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       width: 100%;
-
+      .transfer-balance-box {
+        flex: 1;
+        padding: 5px;
+      }
       .transfer-plat-item {
         height: 80px;
         display: flex;
@@ -471,7 +474,7 @@ onMounted(() => {
   }
 }
 
-@media (max-width: 450px){
+@media (max-width: 440px){
   .acct-balances .transfer-plat-wrapper .transfer-plat-inner{
     grid-template-columns: repeat(3, 1fr);
 
