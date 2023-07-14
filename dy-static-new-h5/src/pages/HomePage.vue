@@ -63,15 +63,15 @@
         :mousewheel="true"
         :space-between="8"
         :breakpoints="{
-          300: {
+          200: {
             slidesPerView: 2,
             spaceBetween: 8
           },
-          350: {
+          300: {
             slidesPerView: 3,
             spaceBetween: 8
           },
-          430: {
+          360: {
             slidesPerView: 4,
             spaceBetween: 8
           },
