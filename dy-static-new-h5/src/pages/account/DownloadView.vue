@@ -13,7 +13,7 @@
       <q-tab-panel name="android">
         <div class="downloads">
           <div
-            class="download-item q-my-sm"
+            class="download-item q-my-sm q-mb-md"
             v-for="(dn, i) in androidItems"
             :key="i"
           >
@@ -34,7 +34,7 @@
       <q-tab-panel name="apple">
         <div class="downloads">
           <div
-            class="download-item q-my-sm"
+            class="download-item q-my-sm q-mb-md"
             v-for="(dn, i) in appleItems"
             :key="i"
           >
