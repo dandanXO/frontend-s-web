@@ -209,17 +209,18 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <!-- <a href="https://partner.dyvip90.com" target="_blank">
+        <a href="#" target="_blank">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_agent.png" />
+            <img src="../assets/images/account/menu_affiliate.svg" />
             <div class="acct-nav-label">加盟</div>
           </div>
-        </a> -->
+        </a>
       </div>
     </q-item-section>
     <a @click="logout">
       <div class="acct-logout">
-        <div class="acct-nav-label">退出登录</div>
+        <img src="../assets/images/account/menu_logout.svg" />
+        <div class="acct-nav-label">退出</div>
       </div>
     </a>
   </q-page>
@@ -364,6 +365,7 @@ export default defineComponent({
   .avatar {
     width: 60px;
     max-width: 60px;
+    min-width: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -606,8 +608,8 @@ export default defineComponent({
 
   .acct-menu {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 40px 30px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 30px;
     // display: flex;
     // justify-content: space-between;
     // flex-wrap: wrap;
@@ -647,6 +649,10 @@ export default defineComponent({
   width: 90%;
   margin: 10px auto 40px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .vip-badge {
@@ -657,5 +663,24 @@ export default defineComponent({
 
 #personal_vip_img {
   height: 14px;
+}
+
+@media (max-width: 400px){
+  .acct-nav {
+    .acct-menu {
+      
+      grid-template-columns: repeat(4, 1fr);
+
+    }
+  }
+}
+@media (max-width: 320px){
+  .acct-nav {
+    .acct-menu {
+      
+      grid-template-columns: repeat(3, 1fr);
+
+    }
+  }
 }
 </style>
