@@ -18,7 +18,7 @@
             href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
           <q-btn
             size="md"
-            :href="`https://${downloadUrl}`"
+            :href="`${downloadUrl}`"
             target="_blank"
             label="立即下载"
             color="brightbtn"
