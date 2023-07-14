@@ -68,8 +68,8 @@
                 <div class="plat-name">{{ platformNames[p.code] }}</div>
               </div>
               <div class="balance-wrapper">
-                <span class="text-bold row items-center gap-5" v-if="p.isLoading">
-                 <img style="margin-bottom: 5px;" src="../assets/account/finance/refresh-btn-blue.png"/>
+                <span class="text-bold row justify-center items-center gap-5 no-wrap" v-if="p.isLoading">
+                 <img style="margin-bottom: 5px;width:14px;" src="../assets/account/finance/refresh-btn-blue.png"/>
                   加载中...
                 </span>
                 <span class="text-bold" v-else-if="p.isTransferring">
@@ -424,7 +424,7 @@ onMounted(() => {
 
     .transfer-plat-inner {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       width: 100%;
       .transfer-balance-box {
         flex: 1;

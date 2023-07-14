@@ -1,5 +1,5 @@
 <template>
-  <div class="personal-account">
+  <div class="verify-section">
 <!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
@@ -11,10 +11,9 @@
           v-model="formDetail.phone"
           type="tel"
           label="手机号码"
+          clearable
           lazy-rules
           :rules="[(_) => isValidPhone()]"
-          label-color=""
-          color=""
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
         ></q-input>
@@ -294,12 +293,10 @@ export default defineComponent({
 
     const isValidPhone = () => {
 
-      const reg = /^\d+$/;
-      const { phone } = formDetail;
+      const phonePattern =
+          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      return phonePattern.test(formDetail.phone) || "请输入有效的电话号码";
 
-      const result = '' === phone ? '请验证您的电话号码' : !reg.test(phone) ? '电话号码只允许使用数字' : true;
-
-      return result
     }
 
     const openVerificationDialog = () => {
@@ -395,7 +392,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.personal-account {
+.verify-section {
   padding: 10px;
 
   .web {
@@ -408,6 +405,11 @@ export default defineComponent({
 
   input.q-placeholder {
     color: #333333 !important;
+  }
+  .q-field{
+    border: 1px solid #d7d7d7;
+    border-radius:10px;
+    margin-bottom: 10px;
   }
 }
 
