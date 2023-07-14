@@ -1238,15 +1238,11 @@ export default defineComponent({
 
   .home-select-slide {
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.4);
-    width: 85px;
-    height: 50px;
     border-radius: 8px;
-    margin-right: 4px;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    margin-left: 4px;
-
-
+    align-items: center;
+    padding: 5px;
+    min-height: 50px;
+    margin: 10px 0;
     span {
       color: #0089ED;
     }
@@ -1265,10 +1261,12 @@ export default defineComponent({
   }
 
   .firstSwiper {
-    height: 70px;
-    padding-right: 10px;
-    z-index: 999;
-
+    // height: 70px;
+    // padding-right: 10px;
+    // z-index: 999;
+    background: #fff;
+    justify-content: flex-start;
+    align-items: stretch;
   }
 }
 
@@ -1296,7 +1294,7 @@ export default defineComponent({
     overflow: hidden;
     height: 230px;
     padding-top: 0;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
 
     &.slot-slides, &.lottery-slides {
       height: 480px;
@@ -1308,6 +1306,7 @@ export default defineComponent({
 
     img {
       width: 100%;
+      display: block;
     }
 
     &:first-child {
@@ -1348,7 +1347,7 @@ export default defineComponent({
 
         .game-board {
           position: relative;
-          height: 170px;
+          // height: 170px;
 
           .game-title {
             position: absolute;
@@ -1364,8 +1363,10 @@ export default defineComponent({
           }
 
           h3 {
-            line-height: 24px;
-            font-size: 20px;
+            // line-height: 24px;
+            // font-size: 20px;
+            line-height: 1rem;
+            font-size: 1rem;
             color: #fff;
             margin-top: 0px;
             margin-bottom: 3px;

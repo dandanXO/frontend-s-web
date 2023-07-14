@@ -212,10 +212,16 @@ svg {
 
     &--inactive {
       opacity: 1;
+      &:active, &:hover {
+        filter: none;
+      }
     }
 
     &--active {
       color: #0089ED;
+      &:active, &:hover {
+        filter: none;
+      }
 
       img {
         &.inactive {
