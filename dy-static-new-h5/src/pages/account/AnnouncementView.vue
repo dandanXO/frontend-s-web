@@ -1,28 +1,29 @@
 <template>
   <div class="announcement-section">
-    <q-tabs
-      active-color="white"
-      indicator-color="bright"
-      align="justify"
-      v-model="activeKey"
-    >
-      <q-tab
-        v-for="(tab, i) in tabItems"
-        :key="i"
-        :name="tab.id"
-        :label="tab.name"
-      />
-    </q-tabs>
 
-    <q-tab-panels v-model="activeKey" animated>
-      <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.id">
-        <q-list class="rounded-borders">
+    <div class="transit-buttons">
+      <div class="" v-for="(trans, i) in tabItems" :key="i"
+      >
+        <div class="btn" @click="openAnnounce(trans)">
+          <img :src="require(`../../assets/account/announce/announce-icon-${trans.id}.png`)">
+          {{ trans.name }}
+          <div class="right">
+            <q-icon name="keyboard_arrow_right" v-if="!(selectedId==trans.id)" size="md"/>
+            <q-icon name="keyboard_arrow_down" v-if="selectedId==trans.id" size="md"/>
+          </div>
+        </div>
+
+        <div class="announce-field">
+          <div class="empty-field" v-if="(selectedId==trans.id) && isEmptyAnnoucements(trans.id)">
+            <p>暂无公告。</p>
+          </div>
+          <q-list class="rounded-borders" v-if="selectedId==trans.id">
           <span v-for="ann in announcementsList" :key="ann">
-            <div v-if="ann.typeId === tab.id">
+            <div v-if="ann.typeId === selectedId">
               <q-expansion-item
-                class="expansion-bg"
-                expand-separator
-                :label="ann.title"
+                  class="expansion-bg"
+                  expand-separator
+                  :label="ann.title"
               >
                 <q-card>
                   <q-card-section>
@@ -31,30 +32,44 @@
                 </q-card>
               </q-expansion-item>
               <div
-                class="text-center q-pa-md text-brand"
-                v-if="ann.content.length === 0"
+                  class="text-center q-pa-md text-brand"
+                  v-if="ann.content.length === 0"
               >
                 暂时无通知
               </div>
             </div>
           </span>
-        </q-list>
-      </q-tab-panel>
-    </q-tab-panels>
+          </q-list>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
   </div>
 </template>
 <script lang="js">
-import { defineComponent, onMounted, ref } from "vue";
-import { api } from "boot/axios";
+import {defineComponent, onMounted, ref} from "vue";
+import {api} from "boot/axios";
+import {RiArrowRightSLine} from "vue-remix-icons"
+import * as _ from "lodash"
 
 export default defineComponent({
   name: "AnnouncementView",
+  components: [
+    RiArrowRightSLine
+  ],
   setup() {
     const tab = ref("");
     const tabItems = ref([]);
     const announcementsList = ref([]);
     const announcementTypes = ref([]);
     const activeKey = ref(null);
+    const isAnnounceShow = ref(false);
+    const selectedId = ref(-1);
+
 
     const loadAnnouncement = () => {
       api.get("/announcement").then((res) => {
@@ -69,11 +84,42 @@ export default defineComponent({
             tabItems.value = e;
             activeKey.value = res.data.type[0].id;
           }
-          // announcementList.value = d.announcements
-          // announcementList.value = res.data.announcements
         }
       });
     };
+
+    const isEmptyAnnoucements = (id) => {
+      if (selectedId.value === -1) {
+        return false;
+      }
+      var hasAnnounce = true;
+
+      _.each(announcementsList.value, function (item, index) {
+        if (item.typeId == id) {
+          hasAnnounce = false;
+        }
+      });
+
+      return hasAnnounce;
+    }
+
+    const openAnnounce = (announce) => {
+      console.log(announce);
+      if (selectedId.value === -1) {
+        selectedId.value = announce.id;
+        isAnnounceShow.value = true;
+      } else {
+        if (selectedId.value != announce.id) {
+          selectedId.value = announce.id;
+          isAnnounceShow.value = true;
+        } else {
+          selectedId.value = -1;
+          isAnnounceShow.value = false;
+        }
+      }
+
+
+    }
 
     onMounted(() => {
       loadAnnouncement();
@@ -84,7 +130,11 @@ export default defineComponent({
       tabItems,
       announcementsList,
       announcementTypes,
-      activeKey
+      activeKey,
+      openAnnounce,
+      isAnnounceShow,
+      selectedId,
+      isEmptyAnnoucements
     };
   }
 });
@@ -129,11 +179,12 @@ export default defineComponent({
   .q-item {
     // background: #fff;
     background: rgba(255, 255, 255, 0.5);
+    border-left: 0.5px solid #757575;
+    border-right: 0.5px solid #757575;
   }
 
   .q-tab--active .q-tab__indicator {
-    background: url("../../assets/images/promotion/tab_bg.png") no-repeat center
-      center;
+    background: url("../../assets/images/promotion/tab_bg.png") no-repeat center center;
     background-size: 20px 10px;
     width: 100%;
     height: 10px;
@@ -159,6 +210,9 @@ export default defineComponent({
   .q-expansion-item__content {
     background: #fff;
     padding: 10px 10px 15px;
+    border-left: 0.5px solid #757575;
+    border-right: 0.5px solid #757575;
+    border-bottom: 0.5px solid #757575;
   }
 
   .download-item {
@@ -182,5 +236,64 @@ export default defineComponent({
       display: block;
     }
   }
+
+  .transit-buttons {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    color: #000;
+
+    .btn {
+      border-top: 0.5px solid #0089ED50;
+      color: #333;
+      height: 46px;
+      text-decoration: none;
+      position: relative;
+      background: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24px;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 1px;
+
+      img {
+        width: 16px;
+      }
+
+      .right {
+        position: absolute;
+        right: 18px;
+
+        svg {
+          fill: #757575;
+        }
+      }
+
+      &:last-child {
+        border-bottom: 0.5px solid #0089ED50;
+      }
+
+      &:active {
+        filter: brightness(0.85);
+      }
+
+    }
+  }
+
+  .empty-field {
+    padding: 8px 20px;
+
+    p{
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+
 }
+
+
 </style>

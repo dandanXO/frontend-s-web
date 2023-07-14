@@ -126,17 +126,17 @@
           />
           首页
         </q-route-tab>
-        <q-route-tab to="/sport" name="sport">
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/ft-sport.svg"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/ft-sport-active.svg"
-          />
-          优惠
-        </q-route-tab>
+<!--        <q-route-tab to="/sport" name="sport">-->
+<!--          <img-->
+<!--            class="inactive"-->
+<!--            src="../assets/images/index/menu/ft-sport.svg"-->
+<!--          />-->
+<!--          <img-->
+<!--            class="hover"-->
+<!--            src="../assets/images/index/menu/ft-sport-active.svg"-->
+<!--          />-->
+<!--          优惠-->
+<!--        </q-route-tab>-->
         <q-route-tab to="/promo" name="promo">
           <img
             class="inactive"
@@ -626,5 +626,6 @@ svg path {
   display: flex;
   padding: 8px;
   font-weight: 500;
+  letter-spacing: 1px;
 }
 </style>
