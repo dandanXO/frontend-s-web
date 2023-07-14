@@ -82,30 +82,12 @@ build-image-pt-launch:
 
 #===============================================================================================
 
-build-image-xf-landing:
-  extends:
-    - .docker-build
-    - .p8s1-rules
-  variables:
-    PROJECT: xf-landing
-
-#===============================================================================================
-
 build-image-dy-download:
   extends:
     - .docker-build
     - .p8s0-rules
   variables:
     PROJECT: dy-download
-
-#===============================================================================================
-
-build-image-xf-download:
-  extends:
-    - .docker-build
-    - .p8s1-rules
-  variables:
-    PROJECT: xf-download
 
 #===============================================================================================
 
@@ -122,10 +104,6 @@ build-tf-manager-web:
   extends:
     - .build-projects
     - .build-web
-  script:
-    - cd $PROJECT
-    - npm install
-    - npm run build:prod
   variables:
     PROJECT: tf-manager-web
   rules:
@@ -218,28 +196,22 @@ build-image-dy-static-web:
   needs:
     - build-dy-static-web
 
+
 #===============================================================================================
 
-build-affiliate-static-web:
+build-dy-static-new-h5:
   extends:
     - .build-projects
-    - .build-web
-  script:
-    - cd $PROJECT
-    - npm install
-    - npm run build:prod
+    - .build-h5
+    - .p8s0-rules
   variables:
-    PROJECT: affiliate-static-web
-  rules:
-    - <<: *p8s0-rules
-    - <<: *p8s1-rules
+    PROJECT: dy-static-new-h5
 
-build-image-affiliate-static-web:
-  extends: .docker-build
+build-image-dy-static-new-h5:
+  extends:
+    - .docker-build
+    - .p8s0-rules
   variables:
-    PROJECT: affiliate-static-web
+    PROJECT: dy-static-new-h5
   needs:
-    - build-affiliate-static-web
-  rules:
-    - <<: *p8s0-rules
-    - <<: *p8s1-rules
+    - build-dy-static-new-h5
