@@ -1,5 +1,6 @@
 <template>
-  <div v-if="isH5 && !store.hasClosedDL" class="download-top-container">
+  <!--  && !store.hasClosedDL-->
+  <div v-if="isH5 " class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox"/>
       <img
@@ -13,7 +14,7 @@
       <div class="buttons">
         <q-btn
             size="13px"
-            href="https://dy9367.app/"
+            :href="`${downloadUrl}`"
             target="_blank"
             label="立即下载"
             color="dyblue"
@@ -273,6 +274,20 @@
                 <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
                   <div class="game-board"
                        @click="playGame(live.name, live.code, 'bblive_lobby_app')"
+                  >
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ live.name }}</h3>
+                      <span>真人娱乐</span>
+                    </div>
+                  </div>
+                </template>
+                <template
+                    v-else-if="live.code === 'PMLIVE' && live.name === 'PMLIVE'"
+                >
+                  <div class="game-board"
+                       @click="playGame(live.name, live.code, live.gameCode)"
                   >
                     <img class="game-bg"
                          :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
@@ -1252,9 +1267,24 @@ export default defineComponent({
       }
     };
 
+    const downloadUrl = ref("");
+
+    const getAppDownloadUrl = () => {
+      api
+          .get("/config/appDownloadUrl")
+          .then((res) => {
+            // console.log(res);
+            downloadUrl.value = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+            downloadUrl.value = "https://dy9367.app/";
+          });
+    };
+
     const closeTopBox = () => {
       isH5.value = false;
-      store.hasClosedDL= true;
+      store.hasClosedDL = true;
       var btmSwiper = document.getElementById("btm-second-swiper");
       btmSwiper.classList.add("longer-swiper");
     };
@@ -1277,6 +1307,7 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
+      getAppDownloadUrl();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -1343,7 +1374,9 @@ export default defineComponent({
       cancelUpdate,
       openDownloadPage,
       homePopupImg,
-      closeTopBox
+      closeTopBox,
+      getAppDownloadUrl,
+      downloadUrl
     };
   }
 });

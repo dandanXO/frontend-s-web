@@ -55,55 +55,98 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { api } from "boot/axios";
+
 import { RiDownload2Fill } from "vue-remix-icons";
+
 const tab = ref("android");
-const androidItems = [
-  {
-    icon: "dy",
-    title: "东赢全站APP",
-    content: "安全便捷，支持各大平台游戏",
-    downloadLink: "https://dy232.app/?url=m.dyvip1.com&agentCode=",
-  },
-  {
-    icon: "dy",
-    title: "东赢电竞APP",
-    content: "电竞原生态APP,覆盖世界各地电竞赛事",
-    downloadLink: "https://dyvip52esport.app/?url=m.dyvip1.com&agentCode=",
-  },
-  {
-    icon: "dy",
-    title: "东赢体育APP",
-    content: "所有赛事 一网打尽 方便快捷 安全稳定",
-    downloadLink: "https://dygames.app/?url=m.dyvip1.com&agentCode=",
-  },
-  {
-    icon: "pt",
-    title: "PT安卓APP",
-    content: "最火的老虎机平台",
-    downloadLink: "http://m.ld176988.com/download.html",
-  },
-];
-const appleItems = [
-  {
-    icon: "dy",
-    title: "东赢全站APP",
-    content: "安全便捷，支持各大平台游戏",
-    downloadLink: "https://dy232.app/?url=m.dyvip1.com&agentCode=",
-  },
-  {
-    icon: "dy",
-    title: "东赢电竞APP",
-    content: "电竞原生态APP,覆盖世界各地电竞赛事",
-    downloadLink: "https://dyvip52esport.app/?url=m.dyvip1.com&agentCode=",
-  },
-  {
-    icon: "dy",
-    title: "东赢体育APP",
-    content: "所有赛事 一网打尽 方便快捷 安全稳定",
-    downloadLink: "https://dygames.app/?url=m.dyvip1.com&agentCode=",
-  },
-];
+
+const downloadUrl = ref("");
+
+const androidItems = computed(() => {
+  return [
+    {
+      icon: "dy",
+      title: "东赢全站APP",
+      content: "安全便捷，支持各大平台游戏",
+      downloadLink: downloadUrl.value
+    }
+  ];
+})
+
+const appleItems = computed(() => {
+  return [
+    {
+      icon: "dy",
+      title: "东赢全站APP",
+      content: "安全便捷，支持各大平台游戏",
+      downloadLink: downloadUrl.value
+    }
+  ];
+})
+
+// const androidItems = [
+//   {
+//     icon: "dy",
+//     title: "东赢全站APP",
+//     content: "安全便捷，支持各大平台游戏",
+//     downloadLink: "https://dy232.app/?url=m.dyvip1.com&agentCode=",
+//   },
+//   {
+//     icon: "dy",
+//     title: "东赢电竞APP",
+//     content: "电竞原生态APP,覆盖世界各地电竞赛事",
+//     downloadLink: "https://dyvip52esport.app/?url=m.dyvip1.com&agentCode=",
+//   },
+//   {
+//     icon: "dy",
+//     title: "东赢体育APP",
+//     content: "所有赛事 一网打尽 方便快捷 安全稳定",
+//     downloadLink: "https://dygames.app/?url=m.dyvip1.com&agentCode=",
+//   },
+//   // {
+//   //   icon: "pt",
+//   //   title: "PT安卓APP",
+//   //   content: "最火的老虎机平台",
+//   //   downloadLink: "http://m.ld176988.com/download.html",
+//   // },
+// ];
+
+// const appleItems = [
+//   {
+//     icon: "dy",
+//     title: "东赢全站APP",
+//     content: "安全便捷，支持各大平台游戏",
+//     downloadLink: "https://dy232.app/?url=m.dyvip1.com&agentCode=",
+//   },
+//   {
+//     icon: "dy",
+//     title: "东赢电竞APP",
+//     content: "电竞原生态APP,覆盖世界各地电竞赛事",
+//     downloadLink: "https://dyvip52esport.app/?url=m.dyvip1.com&agentCode=",
+//   },
+//   {
+//     icon: "dy",
+//     title: "东赢体育APP",
+//     content: "所有赛事 一网打尽 方便快捷 安全稳定",
+//     downloadLink: "https://dygames.app/?url=m.dyvip1.com&agentCode=",
+//   },
+// ];
+
+const getAppDownloadUrl = () => {
+  api
+      .get("/config/appDownloadUrl")
+      .then((res) => {
+        // console.log(res);
+        downloadUrl.value = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+};
+
+onMounted(getAppDownloadUrl);
 </script>
 <style lang="scss">
 .download {
