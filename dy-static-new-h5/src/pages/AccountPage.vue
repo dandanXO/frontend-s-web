@@ -575,7 +575,10 @@ export default defineComponent({
   margin: 10px auto;
   padding: 5px;
   gap: 10px;
-
+  a {
+    padding: 5px;
+    display: block;
+  }
   .acct-title {
     display: flex;
     margin-top: 4px;
@@ -665,7 +668,7 @@ export default defineComponent({
   height: 14px;
 }
 
-@media (max-width: 400px){
+@media (max-width: 430px){
   .acct-nav {
     .acct-menu {
       
@@ -674,7 +677,7 @@ export default defineComponent({
     }
   }
 }
-@media (max-width: 320px){
+@media (max-width: 350px){
   .acct-nav {
     .acct-menu {
       
