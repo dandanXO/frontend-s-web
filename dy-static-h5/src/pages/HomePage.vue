@@ -21,7 +21,7 @@
           href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
         <q-btn
           size="sm"
-          :href="`https://${downloadUrl}`"
+          :href="`${downloadUrl}`"
           target="_blank"
           label="立即下载"
           color="dyblue"
@@ -192,6 +192,15 @@
           <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
             <PlatformBlock
               @click="playGame(live.name, live.code, 'bblive_lobby_app')"
+              dataType="live"
+              :data="live"
+            />
+          </template>
+          <template
+            v-else-if="live.code === 'PMLIVE' && live.name === 'PMLIVE'"
+          >
+            <PlatformBlock
+              @click="playGame(live.name, live.code, live.gameCode)"
               dataType="live"
               :data="live"
             />
@@ -688,6 +697,9 @@ export default defineComponent({
                 if (spObj.code === "IM") {
                   spObj.title = "IM体育";
                 }
+                if (spObj.code === "PM") {
+                  spObj.title = "PM体育";
+                }
                 if (spObj.code === "IA") {
                   spObj.title = "小艾体育";
                 }
@@ -703,7 +715,12 @@ export default defineComponent({
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
-                liveObj.title = liveObj.name + " 真人";
+                if (liveObj.code === "PMLIVE") {
+                  liveObj.title = "PM 真人";
+                } else {
+                  liveObj.title = liveObj.name + " 真人";
+                }
+
                 liveObj.icon = "live";
                 liveObj.subtitle = "真人娱乐";
                 livecasino.value.push(liveObj);
@@ -729,7 +746,7 @@ export default defineComponent({
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
                 // console.log(slotObj);
-                if (slotObj.code === "AG") {
+                if (slotObj.code === "AG" && slotObj === "AG") {
                 } else {
                   let slotItem = {
                     id: slotObj.id,
@@ -788,6 +805,9 @@ export default defineComponent({
                 if (spObj.code === "IM") {
                   spObj.title = "IM体育";
                 }
+                if (spObj.code === "PM") {
+                  spObj.title = "PM体育";
+                }
                 if (spObj.code === "IA") {
                   spObj.title = "小艾体育";
                 }
@@ -803,7 +823,11 @@ export default defineComponent({
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
-                liveObj.title = liveObj.name + " 真人";
+                if (liveObj.code === "PMLIVE") {
+                  liveObj.title = "PM 真人";
+                } else {
+                  liveObj.title = liveObj.name + " 真人";
+                }
                 liveObj.icon = "live";
                 liveObj.subtitle = "真人娱乐";
                 livecasino.value.push(liveObj);
@@ -1021,7 +1045,6 @@ export default defineComponent({
         })
         .catch((err) => {
           console.log(err);
-          downloadUrl.value = "xf9866.app";
         });
     };
 

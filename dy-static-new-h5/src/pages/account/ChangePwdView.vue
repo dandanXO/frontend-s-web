@@ -2,84 +2,84 @@
   <div class="change-pwd">
     <q-form @submit="submitUpdatePwd">
       <q-input
-        ref="oldPasswordRef"
-        standout
-        bg-color="white"
-        v-model="updatePwdInfo.oldPassword"
-        class="q-pb-xs"
-        hide-bottom-space
-        :type="isPwd ? 'password' : 'text'"
-        label="旧密码"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
+          ref="oldPasswordRef"
+          standout
+          bg-color="white"
+          v-model="updatePwdInfo.oldPassword"
+          class="q-pb-xs"
+          hide-bottom-space
+          :type="isPwd ? 'password' : 'text'"
+          placeholder="旧密码"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
       >
         <template v-slot:append>
           <q-icon
-            color="brand"
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
+              color="brand"
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
           />
         </template>
       </q-input>
       <q-input
-        ref="passwordRef"
-        standout
-        bg-color="white"
-        v-model="updatePwdInfo.password"
-        class="q-pb-xs"
-        hide-bottom-space
-        :type="isPwd ? 'password' : 'text'"
-        label="新密码"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
-        label-color="brand"
-        color="brand"
+          ref="passwordRef"
+          standout
+          bg-color="white"
+          v-model="updatePwdInfo.password"
+          class="q-pb-xs"
+          hide-bottom-space
+          :type="isPwd ? 'password' : 'text'"
+          placeholder="新密码"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
+          label-color="brand"
+          color="brand"
       >
         <template v-slot:append>
           <q-icon
-            color="brand"
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
+              color="brand"
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
           />
         </template>
       </q-input>
       <q-input
-        ref="confirmPasswordRef"
-        standout
-        bg-color="white"
-        v-model="updatePwdInfo.confirmNewPwd"
-        class="q-pb-xs"
-        hide-bottom-space
-        :type="isPwd ? 'password' : 'text'"
-        label="确认新密码"
-        lazy-rules
-        :rules="[
+          ref="confirmPasswordRef"
+          standout
+          bg-color="white"
+          v-model="updatePwdInfo.confirmNewPwd"
+          class="q-pb-xs"
+          hide-bottom-space
+          :type="isPwd ? 'password' : 'text'"
+          placeholder="确认新密码"
+          lazy-rules
+          :rules="[
           (val) => (val && val.length > 0) || '请输入确认新密码',
           (val) =>
                   val === updatePwdInfo.password ||
                  '确认密码与新密码不符合' ,
           ]"
-        label-color="brand"
-        color="brand"
+          label-color="brand"
+          color="brand"
       >
         <template v-slot:append>
           <q-icon
-            color="brand"
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
+              color="brand"
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
           />
         </template>
       </q-input>
       <q-btn
-        type="submit"
-        class="q-mt-md"
-        label="修改密码"
-        width="100%"
-        color="dyblue"
-        style="width: 100%"
+          type="submit"
+          class="q-mt-md submit-btn"
+          label="修改密码"
+          width="100%"
+          color="dyblue"
+          style="width: 100%"
       />
     </q-form>
   </div>
@@ -180,6 +180,18 @@ export default defineComponent({
 
   input.q-placeholder {
     color: #333333 !important;
+  }
+
+  .q-input{
+    border: 1px solid #E4E7ED;
+    margin-bottom: 10px;
+  }
+
+  .submit-btn {
+    height: 45px;
+    font-size: 16px;
+    border-radius: 8px;
+    background: linear-gradient(180deg,#52ACFF ,#3559Da);
   }
 }
 </style>

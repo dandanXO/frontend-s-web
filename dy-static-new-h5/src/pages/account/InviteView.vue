@@ -23,7 +23,7 @@
       <div class="share-qr-section">
 
         <div class="flex-c-c-center">
-          <div>
+          <div style="width:100%;">
             <span class="span-text">推广二维码</span>
           </div>
           <div class="share-qr-div">
@@ -148,7 +148,7 @@ export default defineComponent({
 
 .personal-content-box {
   margin-top: 0px;
-  padding: 20px 40px 100px;
+  padding: 20px 20px 100px;
   color: #2a2a2a;
 }
 
@@ -168,7 +168,7 @@ export default defineComponent({
 
 .personal-content-box .top-line1-content {
   line-height: 26px;
-  text-align: center;
+  text-align: left;
   font-size: 16px;
 }
 
@@ -187,13 +187,13 @@ export default defineComponent({
 
 
 .personal-content-box .title-top-line2 {
-  margin-top: 20px;
+  margin-top: 6px;
   padding-bottom: 30px;
 }
 
 
 .personal-content-box .share-qr-section {
-  padding-top: 30px;
+  padding-top: 10px;
 }
 
 .share-qr-section .flex-c-c-center {
@@ -287,34 +287,39 @@ export default defineComponent({
 }
 
 .personal-content-box .span-text {
-  font-size: 18px;
-
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.personal-content-box #selfTgurl {
-  color: #32afda;
-  font-size: 13px;
+.personal-content-box a {
+  font-size: 14px;
   display: block;
-  margin-bottom: 15px;
-  border: 1px solid #aaa;
+  padding: 0px 5px;
+  margin-bottom: 0px;
+  line-height: 48px;
+  border-radius: 4px;
+  overflow: hidden;
+  // border: 1px solid #aaa;
+  background: #F2F2F2;
+  flex: 1;
+  height: 48px;
+  color: #000;
+  text-decoration: none;
 }
 
 .share-link-div .copy-btn {
   font-size: 14px;
-  letter-spacing: 0px;
   color: #fff;
-  width: 90px;
-  height: 35px;
-  background-image: linear-gradient(90deg,
-      #587beb 0%,
-      #86c0ff 100%),
-  linear-gradient(
-          #4b7bed,
-          #4b7bed);
+  width: 60px;
+  height: 48px;
+  background-image: linear-gradient(180deg,
+      #52ACFF 0%,
+      #3559DA 100%);
   background-blend-mode: normal,
   normal;
-  border-radius: 15px;
-  border: 0px
+  border-radius: 4px;
+  border: 0px;
+  letter-spacing: 2px;
 }
 
 .share-link-div .copy-btn:hover {
@@ -338,13 +343,19 @@ export default defineComponent({
 .personal-content-box .share-link-section {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 18px;
   flex-direction: column;
 }
 
 .personal-content-box .share-link-div {
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap:8px;
 }
 
 .share-info-box > span {
@@ -377,8 +388,9 @@ export default defineComponent({
 .personal-content-box .personal-title-box {
   width: 100%;
   padding-bottom: 10px;
-  text-align: center;
+  text-align: left;
   font-size: 18px;
+  font-weight: 600;
 }
 
 

@@ -1,5 +1,6 @@
 <template>
-  <div v-if="isH5" class="download-top-container">
+  <!--  && !store.hasClosedDL-->
+  <div v-if="isH5 " class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox"/>
       <img
@@ -13,7 +14,7 @@
       <div class="buttons">
         <q-btn
             size="13px"
-            href="https://dy9367.app/"
+            :href="`${downloadUrl}`"
             target="_blank"
             label="立即下载"
             color="dyblue"
@@ -23,13 +24,13 @@
     </div>
   </div>
 
-  <div class="home-header-section">
+  <div class="home-header-section" style="height: 64px;">
     <div class="header-left">
       <img class="top-logo" id="logo" src="../assets/index/logo.png"/>
     </div>
     <div class="header-right">
 
-      <div class="row justify-center items-center gap-10">
+      <div v-if="!store.hasToken()" class="row justify-center items-center gap-10">
         <q-btn
             to="/login?register"
             rounded
@@ -50,6 +51,35 @@
 
       </div>
 
+      <div v-if="store.hasToken()" class="column justify-start items-end gap-3">
+
+        <div class="row items-center justify-between  gap-10">
+          <div class="welcome-liner">
+            {{ store.nickName }}
+          </div>
+          <router-link to="/account/vip" class="badge-div">
+            <div class="icon-div">
+              <img src="../assets/index/diamon-vip.png"/>
+            </div>
+            <q-badge color="dyblue" class="vip-badge" text-color="white" :label="store.vip"/>
+          </router-link>
+
+        </div>
+        <div class="row items-start justify-start gap-10" style="margin-right: 50px;">
+          <span class="balance-text" v-if="isLoadingBalance" style="font-size: 16px;">加载中</span>
+          <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
+          <q-btn
+              flat
+              class="refresh-btn"
+              size="xs"
+              @click="refreshBalance()"
+              :disable="isLoadingBalance ? true : false"
+          >
+            <img src="../assets/index/refresh-bal-icon.png"/>
+          </q-btn>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -63,15 +93,15 @@
         :mousewheel="true"
         :space-between="8"
         :breakpoints="{
-          300: {
+          200: {
             slidesPerView: 2,
             spaceBetween: 8
           },
-          350: {
+          300: {
             slidesPerView: 3,
             spaceBetween: 8
           },
-          430: {
+          360: {
             slidesPerView: 4,
             spaceBetween: 8
           },
@@ -160,13 +190,13 @@
 
   <!--  <div class="details-container">-->
   <!--    <div class="welcome-bar">-->
-  <!--      <div class="welcome-liner">-->
-  <!--        欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}-->
-  <!--      </div>-->
-  <!--      <div v-if="store.token">-->
-  <!--        <q-badge color="orange" text-color="black" :label="store.vip"/>-->
-  <!--        <span class="q-ml-sm">￥{{ store.balance }}</span>-->
-  <!--      </div>-->
+  <!--        <div class="welcome-liner">-->
+  <!--          欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}-->
+  <!--        </div>-->
+  <!--        <div v-if="store.token">-->
+  <!--          <q-badge color="orange" text-color="black" :label="store.vip"/>-->
+  <!--          <span class="q-ml-sm">￥{{ store.balance }}</span>-->
+  <!--        </div>-->
   <!--      &lt;!&ndash; <router-link v-if="!store.token" to="/register" class="login">-->
   <!--        <span class="log">注册</span>-->
   <!--      </router-link> &ndash;&gt;-->
@@ -240,15 +270,45 @@
               <div v-for="(live, i) in livecasino"
                    :key="i"
                    class="game-item-div">
-                <div class="game-board"
-                >
-                  <img class="game-bg"
-                       :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
-                  <div class="game-title">
-                    <h3>{{ live.name }}</h3>
-                    <span>真人娱乐</span>
+
+                <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
+                  <div class="game-board"
+                       @click="playGame(live.name, live.code, 'bblive_lobby_app')"
+                  >
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ live.name }}</h3>
+                      <span>真人娱乐</span>
+                    </div>
                   </div>
-                </div>
+                </template>
+                <template
+                    v-else-if="live.code === 'PMLIVE' && live.name === 'PMLIVE'"
+                >
+                  <div class="game-board"
+                       @click="playGame(live.name, live.code, live.gameCode)"
+                  >
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ live.name }}</h3>
+                      <span>真人娱乐</span>
+                    </div>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="game-board"
+                       @click="playGame(live.name, live.code, live.gameCode)"
+                  >
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ live.name }}</h3>
+                      <span>真人娱乐</span>
+                    </div>
+                  </div>
+                </template>
               </div>
             </div>
           </div>
@@ -276,7 +336,9 @@
             <div class="game-list-div">
               <div v-for="(sp, i) in sport" :key="i"
                    class="game-item-div">
-                <div class="game-board">
+                <div class="game-board"
+                     @click="playGame(sp.name, sp.code, sp.gameCode)"
+                >
                   <img class="game-bg"
                        :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>
                   <div class="game-title">
@@ -302,12 +364,11 @@
             <div class="game-list-div">
               <div v-for="(es, i) in esport" :key="i"
                    class="game-item-div">
-                <div class="game-board">
-
+                <div class="game-board" @click="playGame(es.name, 'platformType', es.code)">
                   <img class="game-bg"
                        :src="require(`../assets/index/${es.icon}/slide-${es.icon}-${es.name.toLowerCase()}.png`)"/>
                   <div class="game-title">
-                    <h3>{{ es.name }}</h3>
+                    <h3>{{ es.title }}</h3>
                     <span>电竞赛事</span>
                   </div>
 
@@ -326,7 +387,28 @@
         <swiper-slide class="slot-slides">
 
           <div class="home-game-boards">
-            <h2>电子游戏</h2>
+            <h2 class="row items-center justify-between">
+              电子游戏
+
+              <div class="row items-center justify-center">
+                <q-btn
+                    flat
+                    size="xs"
+                    @click="changeSlotSlide(1)"
+                    :disable="isSlotSlideBegin"
+                >
+                  <img src="../assets/index/slot/slot-arrow-left.png"/>
+                </q-btn>
+                <q-btn
+                    flat
+                    :disable="isSlotSlideEnd"
+                    size="xs"
+                    @click="changeSlotSlide(2)"
+                >
+                  <img src="../assets/index/slot/slot-arrow-right.png"/>
+                </q-btn>
+              </div>
+            </h2>
 
 
             <swiper
@@ -339,22 +421,23 @@
                 :slides-per-view="3"
                 watch-slides-progress
                 class="slot-swiper"
+                @swiper="setSlotSwiper"
+                :controller="{ control: slotSwiper }"
             >
               <swiper-slide
                   v-for="(slt, i) in slot" :key="i"
               >
                 <div class="game-list-div">
                   <div
-                       class="game-item-div slot-item">
-                    <div class="game-board">
+                      class="game-item-div slot-item">
+                    <router-link :to="`slot?platform=${slt.code}`" class="game-board">
                       <img class="game-bg"
                            :src="require(`../assets/index/${slt.icon}/slide-${slt.icon}-${slt.name.toLowerCase()}.png`)"/>
                       <div class="game-title">
-                        <h3>{{ slt.name }}</h3>
+                        <h3>{{ slt.title }}</h3>
                         <span>电子游戏</span>
                       </div>
-
-                    </div>
+                    </router-link>
                   </div>
                 </div>
               </swiper-slide>
@@ -362,7 +445,7 @@
 
           </div>
 
-          <!--          <PlatformBlock dataType="slot" :data="slt"/>-->
+          <!--                    <PlatformBlock dataType="slot" :data="slt"/>-->
         </swiper-slide>
 
 
@@ -376,41 +459,68 @@
               <div v-for="(fish, i) in fishing"
                    :key="i"
                    class="game-item-div">
-                <div class="game-board">
 
-                  <img class="game-bg"
-                       :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
-                  <div class="game-title">
-                    <h3>{{ fish.name }}</h3>
-                    <span>捕鱼游戏</span>
+                <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
+                  <div class="game-board" @click="playGame(fish.name, fish.code, '7202')">
+
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ fish.name }}</h3>
+                      <span>捕鱼游戏</span>
+                    </div>
                   </div>
+                </template>
+                <template v-else-if="fish.code === 'AG' && fish.name === 'AG'">
+                  <div class="game-board" @click="playGame(fish.name, fish.code, '6')">
+
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ fish.name }}</h3>
+                      <span>捕鱼游戏</span>
+                    </div>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="game-board" @click="playGame(fish.name, fish.code, fish.code)">
+
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ fish.name }}</h3>
+                      <span>捕鱼游戏</span>
+                    </div>
 
 
-                </div>
+                  </div>
+                </template>
+
+
               </div>
             </div>
           </div>
 
-          <!--          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">-->
-          <!--            <PlatformBlock-->
-          <!--                @click="playGame(fish.name, fish.code, '7202')"-->
-          <!--                dataType="fish"-->
-          <!--                :data="fish"-->
-          <!--            />-->
-          <!--          </template>-->
+          <!--                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">-->
+          <!--                      <PlatformBlock-->
+          <!--                          @click="playGame(fish.name, fish.code, '7202')"-->
+          <!--                          dataType="fish"-->
+          <!--                          :data="fish"-->
+          <!--                      />-->
+          <!--                    </template>-->
 
-          <!--          <template v-if="fish.code === 'AG' && fish.name === 'AG'">-->
-          <!--            <PlatformBlock-->
-          <!--                @click="playGame(fish.name, fish.code, '6')"-->
-          <!--                dataType="fish"-->
-          <!--                :data="fish"-->
-          <!--            />-->
-          <!--          </template>-->
-          <!--          <PlatformBlock-->
-          <!--              @click="playGame(fish.name, fish.code, fish.code)"-->
-          <!--              dataType="fish"-->
-          <!--              :data="fish"-->
-          <!--          />-->
+          <!--                    <template v-if="fish.code === 'AG' && fish.name === 'AG'">-->
+          <!--                      <PlatformBlock-->
+          <!--                          @click="playGame(fish.name, fish.code, '6')"-->
+          <!--                          dataType="fish"-->
+          <!--                          :data="fish"-->
+          <!--                      />-->
+          <!--                    </template>-->
+          <!--                    <PlatformBlock-->
+          <!--                        @click="playGame(fish.name, fish.code, fish.code)"-->
+          <!--                        dataType="fish"-->
+          <!--                        :data="fish"-->
+          <!--                    />-->
         </swiper-slide>
 
         <swiper-slide class="poker-slides">
@@ -421,33 +531,48 @@
             <div class="game-list-div">
               <div v-for="(poke, i) in poker" :key="i"
                    class="game-item-div">
-                <div class="game-board">
 
-                  <img class="game-bg"
-                       :src="require(`../assets/index/${poke.icon}/slide-${poke.icon}-${poke.name.toLowerCase()}.png`)"/>
-                  <div class="game-title">
-                    <h3>{{ poke.name }}</h3>
-                    <span>棋牌游戏</span>
+                <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
+                  <div class="game-board" @click="playGame(poke.name, poke.code, 'ky_lobby')">
+
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${poke.icon}/slide-${poke.icon}-${poke.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ poke.title }}</h3>
+                      <span>棋牌游戏</span>
+                    </div>
                   </div>
+                </template>
+                <template v-else>
+                  <div class="game-board" @click="playGame(poke.name, poke.code, poke.gameCode)">
+
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${poke.icon}/slide-${poke.icon}-${poke.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ poke.title }}</h3>
+                      <span>棋牌游戏</span>
+                    </div>
 
 
-                </div>
+                  </div>
+                </template>
+
               </div>
             </div>
           </div>
 
-          <!--          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">-->
-          <!--            <PlatformBlock-->
-          <!--                @click="playGame(poke.name, poke.code, 'ky_lobby')"-->
-          <!--                dataType="poker"-->
-          <!--                :data="poke"-->
-          <!--            />-->
-          <!--          </template>-->
-          <!--          <PlatformBlock-->
-          <!--              @click="playGame(poke.name, poke.code, poke.gameCode)"-->
-          <!--              dataType="poker"-->
-          <!--              :data="poke"-->
-          <!--          />-->
+          <!--                    <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">-->
+          <!--                      <PlatformBlock-->
+          <!--                          @click="playGame(poke.name, poke.code, 'ky_lobby')"-->
+          <!--                          dataType="poker"-->
+          <!--                          :data="poke"-->
+          <!--                      />-->
+          <!--                    </template>-->
+          <!--                    <PlatformBlock-->
+          <!--                        @click="playGame(poke.name, poke.code, poke.gameCode)"-->
+          <!--                        dataType="poker"-->
+          <!--                        :data="poke"-->
+          <!--                    />-->
         </swiper-slide>
         <swiper-slide class="lottery-slides">
 
@@ -458,42 +583,63 @@
               <div v-for="(lotter, i) in lottery"
                    :key="i"
                    class="game-item-div">
-                <div class="game-board">
 
-                  <img class="game-bg"
-                       :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
-                  <div class="game-title">
-                    <h3>{{ lotter.name }}</h3>
-                    <span>彩票游戏</span>
+                <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
+                  <div class="game-board" @click="playGame(lotter.name, lotter.code, 'imlotto30000')">
+
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ lotter.title }}</h3>
+                      <span>彩票游戏</span>
+                    </div>
                   </div>
-                </div>
+                  <!--                  <PlatformBlock-->
+                  <!--                      @click="playGame(lotter.name, lotter.code, 'imlotto30000')"-->
+                  <!--                      dataType="lottery"-->
+                  <!--                      :data="lotter"-->
+                  <!--                  />-->
+                </template>
+                <template
+                    v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
+                >
+                  <div class="game-board" @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')">
+
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ lotter.name }}</h3>
+                      <span>彩票游戏</span>
+                    </div>
+                  </div>
+                  <!--                  <PlatformBlock-->
+                  <!--                      @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
+                  <!--                      dataType="lottery"-->
+                  <!--                      :data="lotter"-->
+                  <!--                  />-->
+                </template>
+                <template v-else>
+                  <div class="game-board" @click="playGame(lotter.name, lotter.code, lotter.gameCode)">
+
+                    <img class="game-bg"
+                         :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
+                    <div class="game-title">
+                      <h3>{{ lotter.name }}</h3>
+                      <span>彩票游戏</span>
+                    </div>
+                  </div>
+                  <!--                  <PlatformBlock-->
+                  <!--                      @click="playGame(lotter.name, lotter.code, lotter.gameCode)"-->
+                  <!--                      dataType="lottery"-->
+                  <!--                      :data="lotter"-->
+                  <!--                  />-->
+                </template>
+
+
               </div>
             </div>
           </div>
 
-          <!--          <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">-->
-          <!--            <PlatformBlock-->
-          <!--                @click="playGame(lotter.name, lotter.code, 'imlotto30000')"-->
-          <!--                dataType="lottery"-->
-          <!--                :data="lotter"-->
-          <!--            />-->
-          <!--          </template>-->
-          <!--          <template-->
-          <!--              v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"-->
-          <!--          >-->
-          <!--            <PlatformBlock-->
-          <!--                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
-          <!--                dataType="lottery"-->
-          <!--                :data="lotter"-->
-          <!--            />-->
-          <!--          </template>-->
-          <!--          <template v-else>-->
-          <!--            <PlatformBlock-->
-          <!--                @click="playGame(lotter.name, lotter.code, lotter.gameCode)"-->
-          <!--                dataType="lottery"-->
-          <!--                :data="lotter"-->
-          <!--            />-->
-          <!--          </template>-->
         </swiper-slide>
       </swiper>
     </div>
@@ -638,6 +784,7 @@ export default defineComponent({
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
+    const slotSwiper = ref(null);
 
     const setFirstSwiper = (swiper) => {
       firstSwiper.value = swiper;
@@ -645,6 +792,10 @@ export default defineComponent({
     const setSecondSwiper = (swiper) => {
       secondSwiper.value = swiper;
     };
+    const setSlotSwiper = (swiper) => {
+      slotSwiper.value = swiper;
+    };
+
     const setSelectedSwiper = (tab) => {
       selectedTab.value = tab.name;
       // console.log(tab.name);
@@ -782,6 +933,14 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance;
     });
+
+    const isLoadingBalance = ref(false);
+    const refreshBalance = () => {
+      isLoadingBalance.value = true;
+      store.getBalance().then((res) => {
+        isLoadingBalance.value = false;
+      });
+    }
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
@@ -901,14 +1060,14 @@ export default defineComponent({
               }
               if (platTypes.indexOf("SLOT") > -1) {
                 var slotObj = Object.assign({}, element);
-                slotObj.title = translateRecord(slotObj.name, "SLOT") + " 电子";
+                slotObj.title = translateRecord(slotObj.name, "SLOT");
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
 
                 let slotItem = {
                   id: slotObj.id,
                   code: slotObj.code,
-                  icon: slotObj.name
+                  icon: slotObj.title
                 };
                 ui.slotLists.push(slotItem);
                 slot.value.push(slotObj);
@@ -945,6 +1104,39 @@ export default defineComponent({
         changePage(1, gamePage.pageSize);
       }
     };
+
+    const isSlotSlideEnd = computed(() => {
+      if (slotSwiper.value) {
+        return slotSwiper.value.isEnd;
+      }
+      return false;
+    })
+    const isSlotSlideBegin = computed(() => {
+      if (slotSwiper.value) {
+        return slotSwiper.value.isBeginning;
+      }
+      return false;
+    })
+    const changeSlotSlide = (type) => {
+      console.log(slotSwiper.value);
+      if (type === 1) {
+        slotSwiper.value?.slidePrev(500);
+        // if (slotSwiper.value.isBeginning) {
+        //   isSlotSlideBegin.value = true;
+        // } else {
+        //   isSlotSlideBegin.value = false
+        // }
+        isSlotSlideEnd.value = false;
+      } else if (type === 2) {
+        slotSwiper.value?.slideNext(500);
+        // if (slotSwiper.value.isEnd) {
+        //   isSlotSlideEnd.value = true;
+        // } else {
+        //   isSlotSlideEnd.value = false;
+        // }
+        isSlotSlideBegin.value = false;
+      }
+    }
 
     const changePage = (page, pageSize) => {
       gamePage.gameList = gameListData.value;
@@ -986,9 +1178,8 @@ export default defineComponent({
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
     const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
+      // console.log(store.hasCheckedVersion);
+      if (Platform.is.android && Platform.is.capacitor && !store.hasCheckedVersion) {
         const info = await App.getInfo();
         // const info = {
         //   version: "1.0.1"
@@ -1018,6 +1209,7 @@ export default defineComponent({
           if (latest_ver_no > current_version) {
             console.log("Need to Updat");
             isAppUpdateModal.value = true;
+            store.hasCheckedVersion = true;
           }
         }
       }
@@ -1075,11 +1267,28 @@ export default defineComponent({
       }
     };
 
+    const downloadUrl = ref("");
+
+    const getAppDownloadUrl = () => {
+      api
+          .get("/config/appDownloadUrl")
+          .then((res) => {
+            // console.log(res);
+            downloadUrl.value = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+            downloadUrl.value = "https://dy9367.app/";
+          });
+    };
+
     const closeTopBox = () => {
       isH5.value = false;
+      store.hasClosedDL = true;
       var btmSwiper = document.getElementById("btm-second-swiper");
       btmSwiper.classList.add("longer-swiper");
     };
+
 
     // const checkShowImgTop = () => {
     //   const lastTime = localStorage.getItem("indexImgTop");
@@ -1098,12 +1307,11 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
+      getAppDownloadUrl();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
-    // const openGame = (gameName, gameCode) => {
-    //   casinoGame.value.open(gameName, selectedPlat.value.code, gameCode);
-    // };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1115,6 +1323,8 @@ export default defineComponent({
       store,
       platforms,
       mainWallet,
+      refreshBalance,
+      isLoadingBalance,
       playGame,
       allGames,
       // casinoGame,
@@ -1137,7 +1347,11 @@ export default defineComponent({
       selectedTab,
       sport,
       esport,
-      // slots,
+      changeSlotSlide,
+      slotSwiper,
+      setSlotSwiper,
+      isSlotSlideEnd,
+      isSlotSlideBegin,
       slot,
       livecasino,
       poker,
@@ -1160,7 +1374,9 @@ export default defineComponent({
       cancelUpdate,
       openDownloadPage,
       homePopupImg,
-      closeTopBox
+      closeTopBox,
+      getAppDownloadUrl,
+      downloadUrl
     };
   }
 });
@@ -1225,8 +1441,14 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
 
+  .header-left {
+    height: 100%;
+  }
+
   .top-logo {
-    width: 110px;
+    width: auto;
+    height: 100%;
+    max-height: 64px;
   }
 
   .header-right {
@@ -1234,18 +1456,59 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
+
+
+    .welcome-liner {
+      flex: 3;
+      color: #757575;
+      font-size: 20px;
+    }
+
+    .badge-div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .icon-div {
+        color: #fff;
+        position: relative;
+        z-index: 22;
+        font-size: 18px;
+        text-align: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #F67600;
+      }
+    }
+
+    .vip-badge {
+      padding-left: 20px;
+      margin-left: -15px;
+      border-radius: 18px;
+      height: 18px;
+      padding-right: 10px;
+    }
+
+    .refresh-btn {
+      padding: 0px;
+    }
+
+    .balance-text {
+      font-size: 24px;
+      line-height: 24px;
+      font-weight: 600;
+      min-width: 40px;
+    }
   }
 
   .home-select-slide {
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.4);
-    width: 85px;
-    height: 50px;
     border-radius: 8px;
-    margin-right: 4px;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    margin-left: 4px;
-
+    align-items: center;
+    padding: 5px;
+    min-height: 50px;
+    margin: 10px 0;
 
     span {
       color: #0089ED;
@@ -1265,10 +1528,12 @@ export default defineComponent({
   }
 
   .firstSwiper {
-    height: 70px;
-    padding-right: 10px;
-    z-index: 999;
-
+    // height: 70px;
+    // padding-right: 10px;
+    // z-index: 999;
+    background: #fff;
+    justify-content: flex-start;
+    align-items: stretch;
   }
 }
 
@@ -1296,10 +1561,14 @@ export default defineComponent({
     overflow: hidden;
     height: 230px;
     padding-top: 0;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
 
-    &.slot-slides, &.lottery-slides {
-      height: 480px;
+    &.slot-slides {
+      height: 260px;
+    }
+
+    &.lottery-slides {
+      height: 390px;
     }
 
     a {
@@ -1308,6 +1577,7 @@ export default defineComponent({
 
     img {
       width: 100%;
+      display: block;
     }
 
     &:first-child {
@@ -1342,13 +1612,13 @@ export default defineComponent({
         width: calc((100% - 35px) / 3);
         flex-wrap: nowrap;
 
-        &.slot-item{
-          width:100%;
+        &.slot-item {
+          width: 100%;
         }
 
         .game-board {
           position: relative;
-          height: 170px;
+          // height: 170px;
 
           .game-title {
             position: absolute;
@@ -1357,15 +1627,17 @@ export default defineComponent({
             left: 0px;
             right: 0px;
             width: 100%;
-            display:flex;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
           }
 
           h3 {
-            line-height: 24px;
-            font-size: 20px;
+            // line-height: 24px;
+            // font-size: 20px;
+            line-height: 1rem;
+            font-size: 1rem;
             color: #fff;
             margin-top: 0px;
             margin-bottom: 3px;
@@ -1384,6 +1656,15 @@ export default defineComponent({
             letter-spacing: 1px;
           }
 
+          &:hover {
+            filter: brightness(1.05);
+          }
+
+          &:active {
+            filter: brightness(1.15);
+            transform: translate(1px, 1px);
+          }
+
         }
       }
     }
@@ -1392,6 +1673,10 @@ export default defineComponent({
 
 :deep(.firstSwiper .swiper-wrapper) {
   background: #fff;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: none;
 }
 
 .swiper-container {
@@ -1569,46 +1854,43 @@ export default defineComponent({
   background-size: 100% 132px;
 }
 
-.welcome-bar {
-  display: flex;
-  padding: 10px;
-  gap: 20px;
-  // background-color: #212534;
-  height: 35px;
-  justify-content: space-evenly;
-  align-items: center;
-  color: #000;
-  font-size: 12px;
-
-  .logo {
-    flex: 1;
-    height: 25px;
-
-    img {
-      height: 100%;
-    }
-  }
-
-  .welcome-liner {
-    flex: 3;
-  }
-
-  .login {
-    flex: 2;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: #000;
-
-    .user {
-      background: #ffffff;
-      padding: 0px 2px;
-      border-radius: 50%;
-    }
-  }
-}
+//.welcome-bar {
+//  display: flex;
+//  padding: 10px;
+//  gap: 20px;
+//  // background-color: #212534;
+//  height: 35px;
+//  justify-content: space-evenly;
+//  align-items: center;
+//  color: #000;
+//  font-size: 12px;
+//
+//  .logo {
+//    flex: 1;
+//    height: 25px;
+//
+//    img {
+//      height: 100%;
+//    }
+//  }
+//
+//
+//  .login {
+//    flex: 2;
+//    display: flex;
+//    justify-content: flex-end;
+//    align-items: center;
+//    gap: 12px;
+//    text-decoration: none;
+//    color: #000;
+//
+//    .user {
+//      background: #ffffff;
+//      padding: 0px 2px;
+//      border-radius: 50%;
+//    }
+//  }
+//}
 
 .details-bar {
   gap: 10px;

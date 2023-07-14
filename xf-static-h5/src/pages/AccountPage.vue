@@ -2,11 +2,16 @@
   <q-page>
     <div class="profile">
       <div class="avatar">
-        <img src="../assets/images/account/profile-img.png">
+        <img src="../assets/images/account/profile-img.png" />
       </div>
       <div class="pro-details">
         <span class="nickname-span">{{ store.nickName }}</span>
-        <q-badge class="vip-badge-item" color="orange" text-color="black" :label="store.vip"/>
+        <q-badge
+          class="vip-badge-item"
+          color="orange"
+          text-color="black"
+          :label="store.vip"
+        />
 
         <!--        <span v-if="vipLevel === 1"-->
         <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_1.png"-->
@@ -44,9 +49,9 @@
         <!--        <span v-else-if="vipLevel === 12"-->
         <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_12.png"-->
         <!--        /></span>-->
-        <br>
+        <br />
         专属网址: {{ store.evip }}
-        <br/>
+        <br />
         <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
       </div>
     </div>
@@ -91,77 +96,84 @@
           <div class="label">中心钱包:</div>
           <div class="amt">{{ mainWallet }}</div>
         </q-card-section>
-        <q-separator/>
+        <q-separator />
         <q-card-section class="bot-section">
-          <router-link to="/" @click="openDeposit" class="button"><img src="../assets/images/index/deposit_icon.png">存款
+          <router-link to="/" @click="openDeposit" class="button">
+            <img src="../assets/images/index/deposit_icon.png" />
+            存款
           </router-link>
-          <router-link to="finance/withdraw" class="button"><img src="../assets/images/index/withdrawal_icon.png">提款
+          <router-link to="finance/withdraw" class="button">
+            <img src="../assets/images/index/withdrawal_icon.png" />
+            提款
           </router-link>
-          <router-link to="account/transfer" class="button"><img src="../assets/images/index/transfer_icon.png">转账
+          <router-link to="account/transfer" class="button">
+            <img src="../assets/images/index/transfer_icon.png" />
+            转账
           </router-link>
-          <router-link to="vip" class="button"><img src="../assets/images/account/vip_icon.png">VIP</router-link>
+          <router-link to="vip" class="button">
+            <img src="../assets/images/account/vip_icon.png" />
+            VIP
+          </router-link>
         </q-card-section>
       </q-card-section>
     </div>
     <q-item-section class="acct-nav">
       <div class="acct-title">
         <div class="acct-title-1">我的功能</div>
-        <div id="vipDomain" class="vipurl">
-          专属网址：{{ store.evip }}
-        </div>
+        <div id="vipDomain" class="vipurl">专属网址：{{ store.evip }}</div>
       </div>
       <div class="acct-menu">
         <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_record.png"/>
+            <img src="../assets/images/account/menu_record.png" />
             <div class="acct-nav-label">交易记录</div>
           </div>
         </router-link>
         <router-link to="/account/invite">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.png"/>
+            <img src="../assets/images/account/menu_share.png" />
             <div class="acct-nav-label">分享好友</div>
           </div>
         </router-link>
         <router-link to="/promo">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_promo.png"/>
+            <img src="../assets/images/account/menu_promo.png" />
             <div class="acct-nav-label">优惠领取</div>
           </div>
         </router-link>
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_personal.png"/>
+            <img src="../assets/images/account/menu_personal.png" />
             <div class="acct-nav-label">个人信息</div>
           </div>
         </router-link>
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_changePwd.png"/>
+            <img src="../assets/images/account/menu_changePwd.png" />
             <div class="acct-nav-label">密码</div>
           </div>
         </router-link>
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_bank.png"/>
+            <img src="../assets/images/account/menu_bank.png" />
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
-        <router-link to="/account/download">
+        <router-link v-if="!store.isApp() && isH5" to="/account/download">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_download.png"/>
+            <img src="../assets/images/account/menu_download.png" />
             <div class="acct-nav-label">下载中心</div>
           </div>
         </router-link>
         <router-link to="/account/announcement">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_announcement.png"/>
+            <img src="../assets/images/account/menu_announcement.png" />
             <div class="acct-nav-label">系统公告</div>
           </div>
         </router-link>
         <router-link to="/account/mail">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.png"/>
+            <img src="../assets/images/account/menu_mailbox.png" />
             <div class="acct-nav-label">站内信</div>
             <!--          ({{ store.unreadInboxMail }})-->
           </div>
@@ -177,10 +189,17 @@
 </template>
 
 <script>
-import {defineComponent, ref, computed, onMounted, onBeforeUnmount} from "vue";
-import {userStore} from "stores/index";
-import {useRouter} from "vue-router";
-import {App} from "@capacitor/app";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  onBeforeUnmount
+} from "vue";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
+import { App } from "@capacitor/app";
+import { Platform } from "quasar";
 
 export default defineComponent({
   name: "AccountPage",
@@ -189,7 +208,7 @@ export default defineComponent({
     const store = userStore();
     const logout = () => {
       store.memberLogout().then(() => {
-        router.push('/')
+        router.push("/");
       });
     };
 
@@ -226,7 +245,6 @@ export default defineComponent({
 
     const timerBalance = ref();
 
-
     const vip = computed(() => {
       return store.vip;
     });
@@ -238,39 +256,56 @@ export default defineComponent({
         appVersionNo.value = current_version;
       } else if (store.getDeviceType() == "IOS") {
         appVersionNo.value = "iOS v0.3";
-      }else{
+      } else {
 
       }
-    }
+    };
 
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
     onMounted(() => {
-      getBalance()
+      getBalance();
       // store.getUnreadTotal();
-      store.getBalance()
+      store.getBalance();
       getVersionNo();
+      checkPlatform();
     });
-
 
     onBeforeUnmount(() => {
       clearInterval(timerBalance.value);
-    })
+
+    });
 
     const openDeposit = () => {
       // to="finance/deposit"
       localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
-      router.push('finance/deposit');
-    }
+      router.push("finance/deposit");
+    };
 
     const getBalance = () => {
       timerBalance.value = setInterval(function () {
         if (store.hasToken()) {
-          store.getBalance()
+          store.getBalance();
         }
       }, 20000);
-    }
+    };
+
+    const isH5 = ref(false);
+    const checkPlatform = () => {
+      //Is iOS Webclip App || Is Android Apk
+      if (
+        (Platform.is.ios &&
+          "standalone" in window.navigator &&
+          window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
+      ) {
+        isH5.value = false;
+      } else {
+        isH5.value = true;
+      }
+    };
+
     return {
       header: "Account",
       logout,
@@ -279,14 +314,17 @@ export default defineComponent({
       store,
       openDeposit,
       vipLevel,
-      appVersionNo
+      appVersionNo,
+      isH5,
+      checkPlatform
     };
   }
 });
 </script>
 <style scoped lang="scss">
 .profile {
-  background: url(../assets/images/account/account-bg.png) no-repeat center center;
+  background: url(../assets/images/account/account-bg.png) no-repeat center
+    center;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -317,7 +355,8 @@ export default defineComponent({
   margin: -20px auto 0;
   border-radius: 15px;
   width: 95%;
-  background: url(../assets/images/account/personal_details_bg.png) no-repeat center center;
+  background: url(../assets/images/account/personal_details_bg.png) no-repeat
+    center center;
   background-size: cover;
 
   .q-card__section--vert {
@@ -347,7 +386,7 @@ export default defineComponent({
     text-align: left;
     justify-content: space-evenly;
     padding: 10px 20px;
-    border-bottom: 1px solid #2E3445;
+    border-bottom: 1px solid #2e3445;
     width: 100%;
     color: #bacef1;
 
@@ -431,7 +470,6 @@ export default defineComponent({
       }
     }
   }
-
 
   .acct-menu {
     display: flex;
