@@ -106,7 +106,7 @@
           <img class="hover" src="../assets/images/index/menu/promo-icon-hover.png">
           优惠
         </q-route-tab>
-        <q-route-tab to="/liveChat" id="cs-web-id" name="live">
+        <q-route-tab to="/liveChat" id="cs-web-id" name="live" target="_blank">
           <img class="inactive" src="../assets/images/index/menu/livechat-icon.png">
           <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png">
           客服

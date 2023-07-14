@@ -196,6 +196,15 @@
               :data="live"
             />
           </template>
+          <template
+            v-else-if="live.code === 'PMLIVE' && live.name === 'PMLIVE'"
+          >
+            <PlatformBlock
+              @click="playGame(live.name, live.code, live.gameCode)"
+              dataType="live"
+              :data="live"
+            />
+          </template>
           <template v-else>
             <PlatformBlock
               @click="playGame(live.name, live.code, live.gameCode)"
@@ -688,6 +697,9 @@ export default defineComponent({
                 if (spObj.code === "IM") {
                   spObj.title = "IM体育";
                 }
+                if (spObj.code === "PM") {
+                  spObj.title = "PM体育";
+                }
                 if (spObj.code === "IA") {
                   spObj.title = "小艾体育";
                 }
@@ -703,6 +715,9 @@ export default defineComponent({
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
+                if (spObj.code === "PMLIVE") {
+                  spObj.title = "PM 真人";
+                }
                 liveObj.title = liveObj.name + " 真人";
                 liveObj.icon = "live";
                 liveObj.subtitle = "真人娱乐";

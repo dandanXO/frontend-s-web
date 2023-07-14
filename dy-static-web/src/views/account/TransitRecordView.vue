@@ -1413,6 +1413,8 @@ export default defineComponent({
         return 'BBIN真人' // BBINDY
       }  else if (platformName === 'KY') {
         return '开元棋牌' // KY
+      }  else if (platformName === 'KYDY') {
+        return '开元棋牌' // KYDY
       }  else if (platformName === 'DT') {
         return '大唐棋牌' // DT
       }  else if (platformName === 'TCG') {

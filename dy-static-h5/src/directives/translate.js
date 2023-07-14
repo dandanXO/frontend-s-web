@@ -132,6 +132,8 @@ export const translateRecord = (rec, type = "") => {
     return "开元棋牌"; // KY
   } else if (rec === "DYKY") {
     return "开元棋牌"; // KY
+  } else if (rec === "KYDY") {
+    return "开元棋牌"; // KY
   } else if (rec === "GPS") {
     return "GPS捕鱼"; // KY
   } else if (rec === "DT") {
