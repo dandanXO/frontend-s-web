@@ -715,10 +715,12 @@ export default defineComponent({
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
-                if (spObj.code === "PMLIVE") {
-                  spObj.title = "PM 真人";
+                if (liveObj.code === "PMLIVE") {
+                  liveObj.title = "PM 真人";
+                } else {
+                  liveObj.title = liveObj.name + " 真人";
                 }
-                liveObj.title = liveObj.name + " 真人";
+
                 liveObj.icon = "live";
                 liveObj.subtitle = "真人娱乐";
                 livecasino.value.push(liveObj);
@@ -821,7 +823,11 @@ export default defineComponent({
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
-                liveObj.title = liveObj.name + " 真人";
+                if (liveObj.code === "PMLIVE") {
+                  liveObj.title = "PM 真人";
+                } else {
+                  liveObj.title = liveObj.name + " 真人";
+                }
                 liveObj.icon = "live";
                 liveObj.subtitle = "真人娱乐";
                 livecasino.value.push(liveObj);
