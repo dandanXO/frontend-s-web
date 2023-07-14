@@ -927,7 +927,7 @@ const tableColumns = {
       dataIndex: "amount"
     },
     {
-      title: "账变子类型",
+      title: "平台",
       dataIndex: "subType",
       slots: {customRender: "subType"}
     },

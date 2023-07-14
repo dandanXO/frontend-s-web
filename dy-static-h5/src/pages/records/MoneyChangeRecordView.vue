@@ -94,10 +94,10 @@ export default defineComponent({
         key: "type",
         label: "账变类型"
       },
-      {
-        key: "platformCode",
-        label: "平台"
-      },
+      // {
+      //   key: "platformCode",
+      //   label: "平台"
+      // },
       {
         key: "amount",
         label: "金额"
