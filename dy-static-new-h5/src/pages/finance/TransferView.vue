@@ -6,7 +6,6 @@
         <div class="transferfromto q-mb-md">
           <q-select
               hide-bottom-space
-              rounded
               outlined
               dense
               v-model="transferFrom"
@@ -19,11 +18,10 @@
               @update:model-value="updateTransferDropdown"
           />
           <div class="icon">
-            <img src="../../assets/images/finance/withdraw/arrow_right.png">
+            <img src="../../assets/account/finance/rewind-icon.png">
           </div>
           <q-select
               hide-bottom-space
-              rounded
               outlined
               dense
               v-model="transferTo"
@@ -43,11 +41,12 @@
         </div>
 
 
+        <label class="">金额</label>
         <q-input
             hide-bottom-space
             ref="amountRef"
             v-model="transferInfo.amount"
-            label="金额"
+            placeholder="0.00"
             clearable
             color="white"
             :rules="[
@@ -58,15 +57,15 @@
             <span style="font-size:26px;" class="text-bright">{{ store.currency.value }}</span>
           </template>
           <template v-slot:append>
-            <span style="font-size:26px;" class="text-bright"><q-btn label="最大金额" @click="updateTransferAmt"
-                                                                     color="dyblue"/></span>
+            <q-btn style="margin-left:10px;" class="bigamount-btn" label="最大金额"
+                   @click="updateTransferAmt"
+                   color="dyblue"/>
           </template>
         </q-input>
 
         <q-btn
             style="width: 100%;"
-            class="q-mt-md fit"
-            color="dyblue"
+            class="q-mt-md fit transfer-btn"
             @click="submitTransfer"
             label="立即转账"
             :loading="isTransferring"
@@ -94,7 +93,7 @@ const amountRef = ref();
 const transferFormRef = ref();
 const platforms = reactive([]);
 const transferInfo = ref({
-  amount: 0
+  amount: ""
 });
 const qs = require("qs");
 const transferFromOpt = ref([])
@@ -251,7 +250,7 @@ const getPlatBalances = (plat) => {
   })
 }
 const amounts = [
-  100, 500, 1000, 2000, 5000
+  50, 100, 500, 1000, 2000, 5000
 ]
 onMounted(() => {
   store.getBalance();
@@ -261,63 +260,87 @@ onMounted(() => {
 </script>
 <style lang="scss">
 .transfer-section {
-  background: #edeef4;
-}
+  //background: #edeef4;
 
-.transferfromto {
-
-  .q-field--auto-height .q-field__native, .q-field--auto-height .q-field__prefix, .q-field--auto-height .q-field__suffix {
-    justify-content: center;
+  .bigamount-btn {
+    background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
+    height: 45px;
+    width: 100px;
   }
 
-  .q-field--dark .q-field__control:before {
-    background: #505771;
-    border: 0px solid;
-  }
+  .transferfromto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 
-  .q-field__after, .q-field__append {
-    padding: 0;
-  }
-}
-</style>
-<style lang="scss" scoped>
-.transferfromto {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
+    .q-select {
+      flex: 4;
+    }
 
-  .q-select {
-    flex: 4;
-  }
+    .icon {
+      flex: 1;
 
-  .icon {
-    flex: 1;
+      img {
+        width: 50%;
+        margin: 0 auto;
+        display: block;
+      }
+    }
 
-    img {
-      width: 50%;
-      margin: 0 auto;
-      display: block;
+    .q-field--auto-height .q-field__native, .q-field--auto-height .q-field__prefix, .q-field--auto-height .q-field__suffix {
+      justify-content: center;
+    }
+
+    .q-field--dark .q-field__control:before {
+      background: #505771;
+      border: 0px solid;
+    }
+
+    .q-field__after, .q-field__append {
+      padding: 0;
     }
   }
-}
 
-.transferamounts {
-  display: flex;
-  font-size: 20px;
-  line-height: 20px;
-  color: #bacef1;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
+  .transferamounts {
+    display: grid;
+    grid-template-columns: repeat( 3, 1fr);
+    row-gap: 15px;
+    column-gap: 20px;
+    font-size: 20px;
+    line-height: 20px;
+    color: #bacef1;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
 
-  .val {
-    cursor: pointer;
-    border: 1px solid #377df5;
-    color: #000;
-    padding: 5px 8px;
-    border-radius: 5px;
-    text-align: center;
+    .val {
+      cursor: pointer;
+      background: #d7d7d7;
+      color: #000;
+      font-size: 16px;
+      padding: 5px 10px;
+      height: 35px;
+      line-height: 25px;
+      font-weight: 600;
+      border-radius: 15px;
+      text-align: center;
+
+      &:active {
+        filter: brightness(0.85);
+      }
+    }
+  }
+
+  .transfer-btn {
+    height: 48px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: linear-gradient(180deg, #58DB8C, #0D932B);
   }
 }
+
+
 </style>

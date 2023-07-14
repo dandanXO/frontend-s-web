@@ -2,19 +2,23 @@
   <div class="acct-balances q-ma-sm q-pa-sm">
     <div class="top-balance">
       <div class="mainbal">
-        <div class="icon">
-          <img src="../assets/images/finance/withdraw/wallet.png"/>
-        </div>
+        <!--        <div class="icon">-->
+        <!--          <img src="../assets/images/finance/withdraw/wallet.png"/>-->
+        <!--        </div>-->
         <div class="wallet">
-          <div class="label">中心钱包</div>
-          <div class="balamt text-dark" @click="loadBalance">
+          <div class="label">我的钱包</div>
+          <div class="wallet-amt-div  row justify-between items-center">
+            <div class="balamt text-dark" @click="loadBalance">
             <span v-if="!isLoadingBalance">
               {{ store.currency.value }}{{ store.balance.toFixed(2) }}</span
             ><span v-if="isLoadingBalance">加载中...</span>
+            </div>
+            <div @click="loadBalance" class="icon">
+              <!--              <q-icon name="refresh" ></q-icon>-->
+              <img src="../assets/account/finance/refresh-icon.png"/>
+            </div>
           </div>
-          <div @click="loadBalance" class="icon">
-            <img src="../assets/images/finance/withdraw/refresh.png"/>
-          </div>
+
         </div>
       </div>
       <div class="refreshItems">
@@ -24,7 +28,7 @@
             @click="refreshBalance('all')"
         >
           <div class="icon">
-            <img src="../assets/images/finance/withdraw/refresh.png"/>
+            <img src="../assets/account/finance/refresh-btn-blue.png"/>
           </div>
           <div class="label">一键刷新</div>
         </div>
@@ -42,13 +46,14 @@
         <div class="transferAll" v-else>转出中...</div>
       </div>
     </div>
-    <div v-if="isTransfer" class="text-brand q-pa-sm">
+
+    <div v-if="isTransfer" class="text-grey-8 q-pa-sm text-center">
       除了以下平台需要转账，其它游戏平台都无需转账即可游戏
     </div>
-    <q-separator/>
+    <q-separator style="margin-bottom:10px;"/>
     <div
         class="transfer-plat-wrapper"
-        :style="isExpanded ? `height: ${transferBox}px` : 'height: 80px;'"
+        :style="isExpanded ? `height: auto;` : 'height: 80px;'"
     >
       <div class="transfer-plat-inner">
         <div
@@ -63,11 +68,14 @@
                 <div class="plat-name">{{ platformNames[p.code] }}</div>
               </div>
               <div class="balance-wrapper">
-                <span class="text-bold" v-if="p.isLoading"> 加载中... </span>
+                <span class="text-bold row items-center gap-5" v-if="p.isLoading">
+                 <img style="margin-bottom: 5px;" src="../assets/account/finance/refresh-btn-blue.png"/>
+                  加载中...
+                </span>
                 <span class="text-bold" v-else-if="p.isTransferring">
                   转出中...
                 </span>
-                <span v-else>
+                <span class="text-bold" v-else>
                   {{ store.currency.value }}
                   {{
                     p.amount ? Number(p.amount).toFixed(2) : (0.0).toFixed(2)
@@ -100,7 +108,7 @@
     <div
         @click="showPlatform"
         v-if="!isExpanded"
-        class="showall text-center text-brand q-pt-md"
+        class="showall text-center text-blue-6 q-pt-md"
     >
       显示所有场馆
       <q-icon name="expand_more"/>
@@ -108,7 +116,7 @@
     <div
         @click="showPlatform"
         v-if="isExpanded"
-        class="showall text-center text-brand q-pt-md"
+        class="showall text-center text-blue-6 q-pt-md"
     >
       收起所有场馆
       <q-icon name="expand_less"/>
@@ -281,10 +289,10 @@ onMounted(() => {
 </script>
 <style scoped lang="scss">
 .acct-balances {
-  background: #edeef4;
+  //background: ;
 
   .top-balance {
-    padding: 0 0 10px;
+    padding: 0 0 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -302,7 +310,12 @@ onMounted(() => {
       gap: 15px;
 
       .icon {
-        width: 25px;
+        width: 20px;
+        margin-right: 16px;
+
+        &:active {
+          filter: brightness(0.85);
+        }
 
         img {
           width: 100%;
@@ -311,13 +324,37 @@ onMounted(() => {
 
       .wallet {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        border: 1px solid #C2C2C2;
+        border-radius: 12px;
+        align-items: flex-start;
         justify-content: flex-start;
-        gap: 10px;
+        gap: 6px;
+        padding: 10px 20px 12px;
+
+        .wallet-amt-div {
+          width: 100%;
+          background: #D9D9D950;
+          padding: 8px 6px;
+          border-radius: 50px;
+          height: 40px;
+          align-items: center;
+        }
 
         .balamt {
+          margin-left: 6px;
           font-size: 19px;
           font-weight: bold;
+
+          span {
+            color: #000;
+          }
+        }
+
+        .label {
+          font-weight: 600;
+          font-size: 16px;
         }
       }
     }
@@ -330,6 +367,8 @@ onMounted(() => {
       flex-direction: row;
       margin: 8px auto 8px;
       width: 100%;
+      font-weight: 600;
+      font-size: 16px;
 
       .refreshAll {
         display: flex;
@@ -337,6 +376,11 @@ onMounted(() => {
         align-items: center;
         gap: 15px;
         width: 50%;
+
+        .label {
+          font-weight: 600;
+          font-size: 16px;
+        }
 
         .icon {
           width: 25px;
@@ -354,6 +398,11 @@ onMounted(() => {
         align-items: center;
         gap: 15px;
         width: 50%;
+
+        .label {
+          font-weight: 600;
+          font-size: 16px;
+        }
 
         .icon {
           width: 25px;
@@ -384,13 +433,16 @@ onMounted(() => {
         justify-content: center;
         align-items: center;
         overflow: hidden;
-        border-bottom: 1px solid #606e7b;
 
         .platform-details {
           display: flex;
           justify-content: center;
           align-items: center;
           flex-direction: column;
+          border: 1px solid #C2C2C2;
+          padding: 10px 20px;
+          border-radius: 12px;
+
 
           .name-wrapper {
             word-break: break-all;
@@ -412,8 +464,25 @@ onMounted(() => {
   }
 
   .showall {
-    border-top: 1px solid #c8c7cc;
+    border-bottom: 1px solid #c8c7cc;
     cursor: pointer;
+    font-size: 16px;
+    padding-bottom: 12px;
   }
 }
+
+@media (max-width: 450px){
+  .acct-balances .transfer-plat-wrapper .transfer-plat-inner{
+    grid-template-columns: repeat(3, 1fr);
+
+    .transfer-plat-item {
+
+
+      .platform-details {
+        padding: 10px 10px;
+      }
+    }
+  }
+}
+
 </style>
