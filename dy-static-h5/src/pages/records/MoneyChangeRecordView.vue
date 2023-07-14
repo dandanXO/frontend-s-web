@@ -1,7 +1,7 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="deposit"
+      recordType="moneyChange"
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"
@@ -28,8 +28,7 @@ export default defineComponent({
 
     const isEnded = ref(false);
 
-    // var apiUrl = "/session/member/moneyChange";
-    var apiUrl = "/session/member/deposit";
+    var apiUrl = "/session/member/moneyChange";
 
 
     var endDate = moment().format("YYYY-MM-DD");
@@ -87,47 +86,30 @@ export default defineComponent({
 
 
     const tableHeaders = ([
-      // {
-      //   key: "serialNumber",
-      //   label: "编码"
-      // },
-      // {
-      //   key: "type",
-      //   label: "账变类型"
-      // },
-      // {
-      //   key: "platformCode",
-      //   label: "平台"
-      // },
-      // {
-      //   key: "amount",
-      //   label: "金额"
-      // },
-      // {
-      //   key: "recordTime",
-      //   label: "时间"
-      // }
       {
         key: "serialNumber",
         label: "编码"
       },
       {
-        key: "depositAmount",
+        key: "type",
+        label: "账变类型"
+      },
+      {
+        key: "platformCode",
+        label: "平台"
+      },
+      {
+        key: "amount",
         label: "金额"
       },
       {
-        key: "status",
-        label: "存款状态"
+        key: "subType",
+        label: "账变子类型"
       },
       {
-        key: "paymentType",
-        label: "存款类型"
-      },
-      {
-        key: "depositDate",
-        label: "到账时间"
+        key: "recordTime",
+        label: "时间"
       }
-
     ]);
     onMounted(() => {
       loadDepositTable();
