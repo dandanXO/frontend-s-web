@@ -45,7 +45,7 @@
             <img id="personal_vip_img" src="../assets/vip/vip_text_12.png" />
           </span> -->
 
-          <span v-if="store.evip">专属网址: {{ store.evip }}</span>
+          <span v-if="store.evip">专属网址: <a style="text-decoration: none; color: #000000; font-size: 17px;" :href="store.evip" target="_blank">{{ store.evip }}</a></span>
           <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
         </div>
       </div>
@@ -369,10 +369,12 @@ export default defineComponent({
     justify-content: center;
     align-items: flex-start;
     padding-right: 80px;
+    width: 100%;
   }
 
   .avatar {
     width: 60px;
+    max-width: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
