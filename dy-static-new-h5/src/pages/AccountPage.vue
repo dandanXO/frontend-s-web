@@ -49,9 +49,9 @@
           <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
         </div>
       </div>
-      <div class="livechat">
+      <router-link :to="'/liveChat'" class="livechat">
         在线客服
-      </div>
+      </router-link>
     </div>
     <div class="vipcard">
       <q-card-section class="top-section">
@@ -160,8 +160,8 @@
         </router-link>
         <router-link to="/account/invite">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.svg" />
-            <div class="acct-nav-label">分享好友</div>
+            <img src="../assets/account/mene-share-icon-s.png" />
+            <div class="acct-nav-label">呼朋唤友</div>
           </div>
         </router-link>
         <router-link to="/promo?redirect=account">
@@ -641,5 +641,11 @@ export default defineComponent({
 
 #personal_vip_img {
   height: 14px;
+}
+
+.acct-nav-label{
+  &:active{
+    filter: brightness(0.85);
+  }
 }
 </style>
