@@ -45,7 +45,7 @@
 
         <br />
         <span v-if="store.evip">专属网址: {{ store.evip }}</span>
-        <br/>
+        <br />
         <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
       </div>
     </div>
@@ -159,7 +159,7 @@
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
-        <router-link to="/account/download">
+        <router-link to="/account/download" v-if="isH5">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_download.png" />
             <div class="acct-nav-label">下载中心</div>
@@ -204,7 +204,8 @@ import {
 } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import {App} from "@capacitor/app";
+import { App } from "@capacitor/app";
+import { Platform } from "quasar";
 
 export default defineComponent({
   name: "AccountPage",
@@ -263,17 +264,16 @@ export default defineComponent({
         appVersionNo.value = current_version;
       } else if (store.getDeviceType() == "IOS") {
         appVersionNo.value = "iOS v0.2";
-      }else{
-
+      } else {
       }
-    }
-
+    };
 
     onMounted(() => {
       getBalance();
       store.getBalance();
       // store.getUnreadTotal();
       getVersionNo();
+      checkPlatform();
     });
     onBeforeUnmount(() => {
       clearInterval(timerBalance.value);
@@ -292,6 +292,22 @@ export default defineComponent({
         }
       }, 20000);
     };
+
+    const isH5 = ref(false);
+    const checkPlatform = () => {
+      //Is iOS Webclip App || Is Android Apk
+      if (
+        (Platform.is.ios &&
+          "standalone" in window.navigator &&
+          window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
+      ) {
+        isH5.value = false;
+      } else {
+        isH5.value = true;
+      }
+    };
+
     return {
       header: "Account",
       logout,
@@ -300,7 +316,9 @@ export default defineComponent({
       vipLevel,
       store,
       openDeposit,
-      appVersionNo
+      appVersionNo,
+      isH5,
+      checkPlatform
     };
   }
 });

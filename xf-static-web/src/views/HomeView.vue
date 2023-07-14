@@ -1,4 +1,5 @@
 <template>
+  --- {{ isImportantAnnoucementModal }} -- {{ homePopupImg }}
   <div class="home">
     <el-carousel height="500px">
       <el-carousel-item v-for="banner in banners" :key="banner">
@@ -25,7 +26,7 @@
           </div>
           <div class="game-content">
             <router-link class="quick-plat" to="/eSports">
-            <!-- <router-link class="quick-plat" to="/" @click="checkMaintenance"> -->
+              <!-- <router-link class="quick-plat" to="/" @click="checkMaintenance"> -->
               <img src="../assets/home/index_quick_plat_esports.png" alt="" />
             </router-link>
             <router-link class="quick-plat" to="/sports">
@@ -345,6 +346,7 @@
     </div>
   </div>
   <GameModal ref="gameMenu"></GameModal>
+
   <el-dialog
     @close="setWithExpiry('isImpt', true, 43200000)"
     class="imptann-modal"
@@ -415,6 +417,8 @@ export default defineComponent({
       });
     };
 
+    const isImpt = getWithExpiry("isImpt");
+
     const homePopupImg = ref("");
     const checkShowImgTop = () => {
       const lastTime = localStorage.getItem("indexImgTop");
@@ -428,12 +432,16 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               if (res.data.length > 0) {
-                homePopupImg.value =
-                  res.data.length > 0
-                    ? imgURL + res.data[0]["desktopImageUrl"]
-                    : "";
-                if (homePopupImg.value) {
-                  isFirstView.value = true;
+                if (isImpt === null) {
+                  isImportantAnnoucementModal.value = true;
+
+                  homePopupImg.value =
+                    res.data.length > 0
+                      ? imgURL + res.data[0]["desktopImageUrl"]
+                      : "";
+                  if (homePopupImg.value) {
+                    isFirstView.value = true;
+                  }
                 }
               } else {
                 isImportantAnnoucementModal.value = false;
@@ -444,7 +452,6 @@ export default defineComponent({
       }
     };
 
-    
     const router = useRouter();
 
     const checkMaintenance = () => {
@@ -460,12 +467,6 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      const isImpt = getWithExpiry("isImpt");
-      if (isImpt === null) {
-        isImportantAnnoucementModal.value = true;
-      } else {
-        isImportantAnnoucementModal.value = false;
-      }
       loadBanners();
       checkShowImgTop();
     });
@@ -478,7 +479,8 @@ export default defineComponent({
       getWithExpiry,
       setWithExpiry,
       homePopupImg,
-      checkMaintenance
+      checkMaintenance,
+      isImpt
     };
   }
 });

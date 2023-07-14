@@ -1,15 +1,16 @@
 <template>
   <div
-      class="q-pa-md"
+      class="q-pa-md deposit-section"
       style="overflow: auto; background: #fff; margin: 8px 8px"
   >
-    <div class="q-mb-lg">
+    <div class="q-mb-sm">
       <span class="additional-tips">
         如果遇到存款问题，请立即联系在线客服解决！
       </span>
     </div>
 
-    <div class="node-wrapper">
+    <label class="label">请选择</label>
+    <div class="node-wrapper q-mt-xs">
       <Node
           :level="1"
           :list="payMethods"
@@ -17,6 +18,7 @@
           @clicked="onSelect"
       />
     </div>
+
 
     <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
       <div class="submit-message">
@@ -51,6 +53,8 @@
       </div>
     </div>
     <div class="deposit-container" v-else>
+
+      <label class="label">存款金额</label>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <q-input
             v-if="amountList.length === 0"
@@ -58,6 +62,7 @@
             ref="depositAmtRef"
             label="存款金额"
             name="localAmount"
+            clearable
             v-model="form.localAmount"
             placeholder="输入金额"
             color="blue"
@@ -116,7 +121,8 @@
             class="q-pb-md"
             label="兑换率"
         >
-          <span style="color: #000">
+          <label class="label">实时汇率</label>
+          <span class="text-positive" style="font-size: 16px;font-weight: 600;">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
             {{ store.currency.value }}
           </span>
@@ -163,8 +169,9 @@
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
+              color="dygreen"
               :loading="btnLoading"
-              color="brightbtn fit"
+              class="fit"
               @click="confirmDeposit"
               label="确定存款"
           />
@@ -740,4 +747,25 @@ onMounted(() => {
 .q-select__dialog .q-field__control {
   background: #4fb2ff !important;
 }
+
+.deposit-section {
+  .label {
+    font-weight: 600;
+    font-size: 16px;
+    padding-bottom: 6px;
+    display: block;
+  }
+
+  .confirm-btn {
+    background: linear-gradient(180deg, #58DB8C, #0D932B);
+    font-size: 16px;
+    font-weight: 600;
+    height: 45px;
+    width: 100%;
+    color: #fff;
+    letter-spacing: 1px;
+    border-radius: 12px;
+  }
+}
+
 </style>

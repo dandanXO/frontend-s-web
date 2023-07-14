@@ -30,20 +30,16 @@
           <div class="plat-type-container">
             <div class="plat-list">
               <template v-for="p in platforms" :key="p">
-                <template v-if="p.code !== 'AG'">
-                  <div
-                    class="plat-item"
-                    :class="{ active: p === activePlat }"
-                    @click="switchPlat(p)"
-                  >
-                    <img
-                      :src="
-                        require(`../assets/game/${p.code.toLowerCase()}.png`)
-                      "
-                    />
-                    {{ getGameLabel(p.name) }}
-                  </div>
-                </template>
+                <div
+                  class="plat-item"
+                  :class="{ active: p === activePlat }"
+                  @click="switchPlat(p)"
+                >
+                  <img
+                    :src="require(`../assets/game/${p.code.toLowerCase()}.png`)"
+                  />
+                  {{ getGameLabel(p.name) }}
+                </div>
               </template>
             </div>
           </div>

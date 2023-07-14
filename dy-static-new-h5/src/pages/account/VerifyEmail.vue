@@ -1,6 +1,6 @@
 <template>
-  <div class="personal-account">
-    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
+  <div class="verify-section">
+<!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -10,10 +10,9 @@
           hide-bottom-space
           v-model="formDetail.email"
           label="邮箱"
+          clearable
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
-          label-color=""
-          color=""
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
         />
@@ -385,7 +384,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.personal-account {
+.verify-section {
   padding: 10px;
 
   .web {
@@ -398,6 +397,11 @@ export default defineComponent({
 
   input.q-placeholder {
     color: #333333 !important;
+  }
+  .q-field{
+    border: 1px solid #d7d7d7;
+    border-radius:10px;
+    margin-bottom: 10px;
   }
 }
 

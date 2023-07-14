@@ -115,54 +115,54 @@
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane key="3" label="获奖名单">
-            <div class="tab3">
-              <el-form :model="winnersQuery" :layout="'inline'">
-                <el-row gutter="20" class="firstrow">
-                  <el-col span="6">
-                  <el-date-picker
-                      placeholder="选择日期"
-                      v-model="winnersQuery.resultTime"
-                      value-format="YYYY-MM-DD"
-                      format="YYYY-MM-DD"
-                      @change="retrieveWinnerList"
-                  /></el-col>
-                  <el-col span="6">
-                  <el-form-item
-                  >
-                    <div class="common-btn" @click="retrieveWinnerList">
-                      搜索
-                    </div>
-                  </el-form-item
-                  >
-                  </el-col>
-                  </el-row>
-              </el-form>
-              <div class="table">
-                <!-- <el-table
-                    :columns="winnerColumns"
-                    row-key="loginName"
-                    :datel-source="winnerDataSource"
-                    :locale="{ emptyText: emptyText }"
-                >
-                  <template #resultTime="{ text }">
-                    <span>{{ humanDatetime(text) }}</span>
-                  </template>
-                </el-table> -->
-                <el-table
-                  :data="winnerDataSource"
-                >
-                <template #empty>
-                  <p>没有数据</p>
-                </template>
-                  <el-table-column prop="number" label="号码" />
-                  <el-table-column prop="loginName" label="登录名" />
-                  <el-table-column prop="winStatus" label="获奖状态" />
-                  <el-table-column prop="resultTime" label="公告日期" />
-                </el-table>
-              </div>
-            </div>
-          </el-tab-pane>
+<!--          <el-tab-pane key="3" label="获奖名单">-->
+<!--            <div class="tab3">-->
+<!--              <el-form :model="winnersQuery" :layout="'inline'">-->
+<!--                <el-row gutter="20" class="firstrow">-->
+<!--                  <el-col span="6">-->
+<!--                  <el-date-picker-->
+<!--                      placeholder="选择日期"-->
+<!--                      v-model="winnersQuery.resultTime"-->
+<!--                      value-format="YYYY-MM-DD"-->
+<!--                      format="YYYY-MM-DD"-->
+<!--                      @change="retrieveWinnerList"-->
+<!--                  /></el-col>-->
+<!--                  <el-col span="6">-->
+<!--                  <el-form-item-->
+<!--                  >-->
+<!--                    <div class="common-btn" @click="retrieveWinnerList">-->
+<!--                      搜索-->
+<!--                    </div>-->
+<!--                  </el-form-item-->
+<!--                  >-->
+<!--                  </el-col>-->
+<!--                  </el-row>-->
+<!--              </el-form>-->
+<!--              <div class="table">-->
+<!--                &lt;!&ndash; <el-table-->
+<!--                    :columns="winnerColumns"-->
+<!--                    row-key="loginName"-->
+<!--                    :datel-source="winnerDataSource"-->
+<!--                    :locale="{ emptyText: emptyText }"-->
+<!--                >-->
+<!--                  <template #resultTime="{ text }">-->
+<!--                    <span>{{ humanDatetime(text) }}</span>-->
+<!--                  </template>-->
+<!--                </el-table> &ndash;&gt;-->
+<!--                <el-table-->
+<!--                  :data="winnerDataSource"-->
+<!--                >-->
+<!--                <template #empty>-->
+<!--                  <p>没有数据</p>-->
+<!--                </template>-->
+<!--                  <el-table-column prop="number" label="号码" />-->
+<!--                  <el-table-column prop="loginName" label="登录名" />-->
+<!--                  <el-table-column prop="winStatus" label="获奖状态" />-->
+<!--                  <el-table-column prop="resultTime" label="公告日期" />-->
+<!--                </el-table>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </el-tab-pane>-->
         </el-tabs>
       </div>
     </div>
@@ -396,7 +396,25 @@ export default defineComponent({
       luckyNumberList(this.query, this.memberId)
           .then((res) => {
             if (res.code === 0) {
-              this.dataSource = res.data;
+              let newArray = [];
+              for (let i = 0; i < res.data.length; i++) {
+                let obj = res.data[i];
+                let status = "";
+                switch (obj.winStatus){
+                  case "BET":
+                    status = "未开奖";
+                    break;
+                  case "WIN":
+                    status = "已中奖";
+                    break;
+                  case "LOSS":
+                    status = "未中奖";
+                    break;
+                }
+                obj.winStatus = status;
+                newArray.push(obj)
+              }
+              this.dataSource = newArray;
             }
           })
           .catch((err) => {

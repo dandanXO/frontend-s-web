@@ -293,13 +293,10 @@ export default defineComponent({
     };
 
     const isValidPhone = () => {
+      const phonePattern =
+          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      return phonePattern.test(formDetail.phone) || "请输入有效的电话号码";
 
-      const reg = /^\d+$/;
-      const { phone } = formDetail;
-
-      const result = '' === phone ? '请验证您的电话号码' : !reg.test(phone) ? '电话号码只允许使用数字' : true;
-
-      return result
     }
 
     const openVerificationDialog = () => {

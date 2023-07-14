@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">东赢</string>
     <string name="title_activity_main">东赢</string>
-    <string name="package_name">com.code9.newdy</string>
-    <string name="custom_url_scheme">com.code9.newdy</string>
+    <string name="package_name">com.code9.dongying</string>
+    <string name="custom_url_scheme">com.code9.dongying</string>
 </resources>

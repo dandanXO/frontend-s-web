@@ -1,22 +1,22 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="moneyChange"
-      :loading="visible"
-      :list="tableData"
-      :headers="tableHeaders"
-      @loadnewdata="loadNewData"
-      :isEnded="isEnded"
+        recordType="moneyChange"
+        :loading="visible"
+        :list="tableData"
+        :headers="tableHeaders"
+        @loadnewdata="loadNewData"
+        :isEnded="isEnded"
     />
   </div>
 </template>
 <script lang="js">
-import { defineComponent, onMounted, ref } from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import moment from "moment";
-import { api } from "boot/axios";
-import { userStore } from "src/stores";
-import { cached, TIME_EXPIRED } from "boot/cache";
+import {api} from "boot/axios";
+import {userStore} from "src/stores";
+import {cached, TIME_EXPIRED} from "boot/cache";
 
 export default defineComponent({
   components: {
@@ -64,9 +64,9 @@ export default defineComponent({
       console.log(apiKey);
 
       cached.get(apiKey, () => api.get(apiUrl, {
-          params: paramData
-        }),
-        { expired_value: 30 }
+            params: paramData
+          }),
+          {expired_value: 30}
       ).then((res) => {
         console.log(res);
 
@@ -94,13 +94,17 @@ export default defineComponent({
         key: "type",
         label: "账变类型"
       },
-      {
-        key: "platformCode",
-        label: "平台"
-      },
+      // {
+      //   key: "platformCode",
+      //   label: "平台"
+      // },
       {
         key: "amount",
         label: "金额"
+      },
+      {
+        key: "subType",
+        label: "账变子类型"
       },
       {
         key: "recordTime",

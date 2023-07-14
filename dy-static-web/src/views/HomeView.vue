@@ -651,11 +651,25 @@
         </div>
       </div>
     </div>
-    <el-dialog @close="setWithExpiry('isImpt', true, 43200000)" class="imptann-modal" v-model="isImportantAnnoucementModal">
-      <!-- <div class="modal-body"> -->
-      <img src="../assets/images/index/popup-web.jpg" class="alert-img" />
-      <!-- </div> -->
+
+    <el-dialog
+      @close="setWithExpiry('isImpt', true, 43200000)"
+      class="imptann-modal"
+      v-model="isImportantAnnoucementModal"
+      v-if="!isImpt"
+    >
+      <img :src="homePopupImg" class="alert-img" />
     </el-dialog>
+
+    <!-- <el-dialog
+      @close="setWithExpiry('isImpt', true, 43200000)"
+      class="imptann-modal"
+      v-model="isImportantAnnoucementModal"
+    >
+
+      <img src="../assets/images/index/popup-web.jpg" class="alert-img" />
+
+    </el-dialog> -->
     <!-- <el-dialog
       class="imptann-modal"
       v-model="isImportantAnnoucementModal"
@@ -753,13 +767,13 @@ export default defineComponent({
       const now = new Date();
       const item = {
         value: value,
-        expiry: now.getTime() + interval,
+        expiry: now.getTime() + interval
       };
       localStorage.setItem(key, JSON.stringify(item));
     };
     const getWithExpiry = (key) => {
-      const itemStr = localStorage.getItem(key)
-      if(!itemStr) {
+      const itemStr = localStorage.getItem(key);
+      if (!itemStr) {
         return null;
       }
       const item = JSON.parse(itemStr);
@@ -769,7 +783,7 @@ export default defineComponent({
         return null;
       }
       return item.value;
-    }
+    };
     const loadBanners = () => {
       loadPromoBanner("HOME").then((res) => {
         if (res.code === 0) {
@@ -777,14 +791,42 @@ export default defineComponent({
         }
       });
     };
-    onMounted(() => {
-      const isImpt = getWithExpiry('isImpt');
-      if (isImpt === null) {
-        isImportantAnnoucementModal.value = true
+    const isImpt = getWithExpiry("isImpt");
+    const homePopupImg = ref("");
+    const checkShowImgTop = () => {
+      const lastTime = localStorage.getItem("indexImgTop");
+      if (lastTime) {
+        const diff = new Date().getTime() - Number(lastTime);
+        if (diff > 1000 * 60 * 60 * 12) {
+          isFirstView.value = true;
+        }
       } else {
-        isImportantAnnoucementModal.value = false
+        loadPromoBanner("HOMEPOP")
+          .then((res) => {
+            if (res.code === 0) {
+              if (res.data.length > 0) {
+                if (isImpt === null) {
+                  isImportantAnnoucementModal.value = true;
+
+                  homePopupImg.value =
+                    res.data.length > 0
+                      ? imgURL + res.data[0]["desktopImageUrl"]
+                      : "";
+                  if (homePopupImg.value) {
+                    isFirstView.value = true;
+                  }
+                }
+              } else {
+                isImportantAnnoucementModal.value = false;
+              }
+            }
+          })
+          .catch(() => {});
       }
+    };
+    onMounted(() => {
       loadBanners();
+      checkShowImgTop();
     });
     return {
       banners,
@@ -793,7 +835,9 @@ export default defineComponent({
       openGame,
       imgURL,
       getWithExpiry,
-      setWithExpiry
+      setWithExpiry,
+      homePopupImg,
+      isImpt
     };
   }
 });

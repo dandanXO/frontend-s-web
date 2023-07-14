@@ -636,7 +636,7 @@ body {
   flex: 2;
   .huka {
     position: relative;
-    width: 38%;
+    width: calc(25% - 9px);
     margin: 0 9px;
     cursor: pointer;
   }

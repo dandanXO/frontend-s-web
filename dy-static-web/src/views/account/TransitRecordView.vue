@@ -127,52 +127,42 @@
           </div>
 
           <div class="unbind-record-wrapper">
-            <el-table :data="dataState.deposit" v-loading="loading">
+            <el-table :data="dataState.turnover" v-loading="loading">
               <template #empty>
                 <EmptyData />
               </template>
 
               <el-table-column
-                v-for="tbl in tableColumns.deposit"
+                v-for="tbl in tableColumns.turnover"
                 :key="tbl.key"
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'depositDate'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'platform'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.depositDate }}</span>
+                    {{ getPlatform(scope.row.platform) }}
                   </div>
                 </template>
 
-                <template v-if="tbl.dataIndex === 'status'" #default="scope">
+                <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getDepositStatus(scope.row.status) }}
-                  </div>
-                </template>
-                <template
-                  v-if="tbl.dataIndex === 'paymentType'"
-                  #default="scope"
-                >
-                  <div style="display: flex; align-items: center">
-                    {{ getDepositType(scope.row.paymentType) }}
+                    {{ getTurnoverType(scope.row.type) }}
                   </div>
                 </template>
 
-                <template v-if="tbl.dataIndex === 'operation'" #default="scope">
-                  <template v-if="scope.row.status === 'PENDING'">
-                    <div style="display: flex; align-items: center">
-                      <el-button
-                        size="small"
-                        class="common-btn"
-                        @click="openReminder(scope.row)"
-                      >
-                        催单
-                      </el-button>
-                    </div>
-                  </template>
+                <template v-if="tbl.dataIndex === 'subType'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getSubType(scope.row.subType) }}
+                  </div>
+                </template>
+
+                <template
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.recordTime }}</span>
+                  </div>
                 </template>
               </el-table-column>
             </el-table>
@@ -937,7 +927,7 @@ const tableColumns = {
       dataIndex: "amount"
     },
     {
-      title: "账变子类型",
+      title: "平台",
       dataIndex: "subType",
       slots: {customRender: "subType"}
     },
@@ -1413,6 +1403,8 @@ export default defineComponent({
         return 'BBIN真人' // BBINDY
       }  else if (platformName === 'KY') {
         return '开元棋牌' // KY
+      }  else if (platformName === 'KYDY') {
+        return '开元棋牌' // KYDY
       }  else if (platformName === 'DT') {
         return '大唐棋牌' // DT
       }  else if (platformName === 'TCG') {

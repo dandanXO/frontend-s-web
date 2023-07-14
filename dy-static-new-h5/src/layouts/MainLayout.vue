@@ -76,8 +76,9 @@
     <q-drawer
       side="right"
       elevated
+      overlay
       v-model="ui.drawerRight"
-      :width="200"
+      :width="250"
       :breakpoint="500"
       v-if="hasDrawer"
     >
@@ -89,7 +90,7 @@
         <div class="q-pa-sm platform-list">
           <q-btn
             @click="changePlatform(plat)"
-            size="xs"
+            size="md"
             color="dyblue"
             v-for="(plat, n) in platformsList"
             :key="n"
@@ -126,17 +127,17 @@
           />
           首页
         </q-route-tab>
-        <q-route-tab to="/sport" name="sport">
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/ft-sport.svg"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/ft-sport-active.svg"
-          />
-          优惠
-        </q-route-tab>
+<!--        <q-route-tab to="/sport" name="sport">-->
+<!--          <img-->
+<!--            class="inactive"-->
+<!--            src="../assets/images/index/menu/ft-sport.svg"-->
+<!--          />-->
+<!--          <img-->
+<!--            class="hover"-->
+<!--            src="../assets/images/index/menu/ft-sport-active.svg"-->
+<!--          />-->
+<!--          优惠-->
+<!--        </q-route-tab>-->
         <q-route-tab to="/promo" name="promo">
           <img
             class="inactive"
@@ -298,7 +299,7 @@ export default defineComponent({
     );
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
-      ui.drawerRight = true;
+      ui.drawerRight = false;
     };
     const checkRoute = () => {
       if (route) {
@@ -311,7 +312,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform);
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform, "SLOT");
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
@@ -347,6 +348,9 @@ export default defineComponent({
             } else {
               prevPage.value = "promo";
             }
+          }else if (route.query.redirect){
+            var redirectPage= route.query.redirect;
+            prevPage.value = redirectPage;
           }
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";
@@ -367,7 +371,7 @@ export default defineComponent({
         } else if (route.path === "/account/personal") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "账户信息";
+          pageName.value = "个人信息";
         } else if (route.path === "/account/verifyTelephone") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -471,6 +475,10 @@ export default defineComponent({
           prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "催单记录";
+        }else if (route.path === "/account/vip") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = "VIP优惠";
         }
       }
     };
@@ -626,5 +634,6 @@ svg path {
   display: flex;
   padding: 8px;
   font-weight: 500;
+  letter-spacing: 1px;
 }
 </style>

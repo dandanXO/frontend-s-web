@@ -1,45 +1,59 @@
 <template>
   <div class="personal-account">
-    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
+<!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <q-input
-        standout
+
         bg-color="white"
         class="q-pb-xs"
         hide-bottom-space
         v-model="formDetail.nickName"
-        label="账号"
+        placeholder="账号"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || '请输入账号']"
         label-color=""
         :readonly="personalState.memberInfo.nickName ? true : false"
-      />
+      >
+        <template v-slot:prepend>
+          <q-icon name="person_outline" />
+          <label class="header-label">账号</label>
+        </template>
+
+      </q-input>
       <q-input
-        standout
         ref="realNameRef"
         bg-color="white"
         class="q-pb-xs"
         hide-bottom-space
         v-model="formDetail.realName"
-        label="姓名"
+        placeholder="姓名"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
         label-color=""
         :readonly="personalState.memberInfo.realName ? true : false"
-      />
+      >
+        <template v-slot:prepend>
+          <q-icon name="badge" class="material-icons-outlined" />
+          <label class="header-label">姓名</label>
+        </template>
+
+      </q-input>
       <q-input
         ref="birthdayRef"
-        standout
         bg-color="white"
-        label="生日"
+        placeholder="生日"
         label-color=""
         lazy-rules
-        class="q-pb-xs"
+        class=" border-input"
         hide-bottom-space
         v-model="formDetail.birthday"
         mask="date"
         :rules="[(val) => (val && val.length > 0) || '请输入生日']"
       >
+        <template v-slot:prepend>
+          <q-icon name="cake" class="material-icons-outlined" />
+          <label class="header-label">生日</label>
+        </template>
         <template v-slot:append>
           <q-icon name="event" color="dark" class="cursor-pointer">
             <q-popup-proxy
@@ -57,42 +71,37 @@
         </template>
       </q-input>
 
-      <!-- <q-input
-        type="date"
-        class="q-pb-xs"
-        hide-bottom-space
-        filled
-        v-model="formDetail.birthday"
-        label="生日"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入生日']"
-
-        label-color="secondary"
-        color="secondary"
-        :readonly="personalState.memberInfo.birthday ? true : false"
-      /> -->
-
       <div class="flex items-center no-wrap">
         <q-input
-          standout
           bg-color="white"
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.phone"
           type="tel"
-          label="电话"
+          placeholder="电话"
           lazy-rules
           :rules="[(_) => isValidPhone()]"
           label-color=""
           color=""
           readonly
           style="width: 100%"
-        ></q-input>
+          @click="isEditPhone ? goToVerifyTelephone() : ''"
+        >
+
+          <template v-slot:append v-if="isEditPhone">
+            <span style="font-size: 50%" @click="goToVerifyTelephone()">请点击验证按钮</span>
+          </template>
+          <template v-slot:prepend>
+            <q-icon name="phone_in_talk" class="material-icons-outlined" />
+            <label class="header-label">电话</label>
+          </template>
+
+        </q-input>
         <template v-if="isEditPhone">
           <div class="q-ml-md">
             <router-link to="/account/verifyTelephone">
               <q-btn
-                size="sm"
+                size="md"
                 color="dyblue"
                 label="验证"
                 style="white-space: nowrap"
@@ -104,24 +113,33 @@
 
       <div class="flex items-center no-wrap">
         <q-input
-          standout
           bg-color="white"
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.email"
-          label="邮箱"
+          placeholder="邮箱"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
           label-color=""
           color=""
           readonly
           style="width: 100%"
-        />
+          @click="isEditPhone ? goToVerifyEmail() : ''"
+        >
+          <template v-slot:append v-if="isEditEmail">
+            <span style="font-size: 50%" @click="goToVerifyEmail()">请点击验证按钮</span>
+          </template>
+          <template v-slot:prepend>
+            <q-icon name="mail" class="material-icons-outlined" />
+            <label class="header-label">邮箱</label>
+          </template>
+
+        </q-input>
         <template v-if="isEditEmail">
           <div class="q-ml-md">
             <router-link to="/account/verifyEmail">
               <q-btn
-                size="sm"
+                size="md"
                 color="dyblue"
                 label="验证"
                 style="white-space: nowrap"
@@ -158,7 +176,7 @@
       </q-input> -->
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="dyblue" @click="updateState" label="保存信息" />
+        <q-btn size="md" color="dyblue fit" @click="updateState" label="保存信息" />
       </div>
     </q-form>
   </div>
@@ -216,6 +234,7 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "PersonalView",
@@ -227,6 +246,7 @@ export default defineComponent({
       start: "",
       end: ""
     });
+    const router = useRouter();
 
     const profileFormRef = ref();
 
@@ -437,6 +457,14 @@ export default defineComponent({
       return namePattern.test(formDetail.realName) || "请输入中文字符";
     };
 
+    const goToVerifyTelephone = () => {
+      router.push(`/account/verifyTelephone`);
+    }
+
+    const goToVerifyEmail = () => {
+      router.push(`/account/verifyEmail`);
+    }
+
     const isValidPhone = () => {
 
       const reg = /^\d+$/;
@@ -508,13 +536,14 @@ export default defineComponent({
       moment,
       canEdit,
       isValidName,
-
       showVerificationTokenInput,
       isValidPhone,
       captchaRef,
       showCaptchaDialog,
       openVerificationDialog,
-      onCaptchaSubmit
+      onCaptchaSubmit,
+      goToVerifyTelephone,
+      goToVerifyEmail
     };
   }
 });
@@ -523,12 +552,22 @@ export default defineComponent({
 .personal-account {
   padding: 10px;
 
+  .header-label{
+    font-size: 16px;
+    font-weight: 600;
+    margin-left:4px;
+  }
+
   .web {
-    color: #3764d6;
+    color: #0089ed;
     text-align: center;
     padding: 0 0 10px;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 15px;
+  }
+
+  .border-input{
+    border-bottom:1px dashed #d7d7d7;
   }
 
   input.q-placeholder {

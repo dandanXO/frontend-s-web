@@ -44,13 +44,16 @@
           </div>
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">佣金如何计划</div>
-            <table>
-					<tbody><tr>
+            <table border="0" cellpadding="0" cellspacing="0">
+              <thead>
+                <tr>
 						<th>代理</th>
 						<th>盈利</th>
 						<th>有效活跃会员</th>
 						<th>佣金比例</th>
 					</tr>
+              </thead>
+					<tbody>
 					<tr>
 						<td>铜牌</td>
 						<td>＜10W</td>
@@ -192,7 +195,7 @@
 				</div>
           </div>
         </div>
-      <div class="agent-demo-btm" style="margin-top: 20px;padding-bottom: 40px;">
+      <div style="margin-top: 20px;padding-bottom: 40px;">
 			<a href="/register.jsp" class="agent-reg-btn">立即申请代理</a>
 		</div>
     <div class="agent-contact-bg">
@@ -206,21 +209,25 @@
 				<div class="agent-contact-ways">
 					<div class="agent-ways-box" style="margin-top: 0;">
 						<div class="agent-ways-way">合营部电邮</div>
-						<div class="agent-ways-val">affiliate@xf926.com</div>
+						<div class="agent-ways-val">affiliate@dyvip99.com</div>
 					</div>
 					<div class="agent-ways-box">
 						<div class="agent-ways-way">合营QQ</div>
 						<div class="agent-ways-val">
 
-						1193911745（工作时间：14:00-23:00）</div>
+              1903577733（工作时间：14:00-23:00）</div>
 					</div>
 					<div class="agent-ways-box">
 						<div class="agent-ways-way">合营Skype</div>
-						<div class="agent-ways-val">live:.cid.2e3257b6f3c30c1（ <a href=""><img src="../assets/images/affiliate/agent_skype.png"></a> 点击图标以联系，联系时请提供用户名)</div>
+						<div class="agent-ways-val">live:.cid.7b0e3647b2036b38（ <a href=""><img src="../assets/images/affiliate/agent_skype.png"></a> 点击图标以联系，联系时请提供用户名)</div>
 					</div>
 					<div class="agent-ways-box">
                         <div class="agent-ways-way">合营Flygram</div>
-                        <div class="agent-ways-val">搜索ID：XF666888 (下载链接: https://www.flygram8.com)</div>
+                        <div class="agent-ways-val">dybet5 (下载链接: <a href="https://www.flygram8.com" style="color: #428bca;text-decoration: underline;">https://www.flygram8.com</a>)</div>
+                    </div>
+					<div class="agent-ways-box">
+                        <div class="agent-ways-way">合营蝙蝠ID</div>
+                        <div class="agent-ways-val">12830840 (下载链接: <a href="https://www.batchat.com/#/" style="color: #428bca;text-decoration: underline;">https://www.batchat.com/#/</a>)</div>
                     </div>
 					<!-- <div class="agent-ways-box">
 						<div class="agent-ways-way">合营微信</div>
@@ -316,59 +323,57 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .wrapper {
-  // background: url("../../assets/images/common/bg.jpg") no-repeat center top;
-    background: url("assets/images/affiliate/agent_index_top_bg_vg.jpg") no-repeat center 95%;
-    background-attachment: fixed;
-    background-color: #000000;
     font-size: 15px;
 
   .affiliate {
-    background: #000000;
-    margin: 0 auto;
+    align-items: center;
+    background: #fff;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    .buttons {
-      display: flex;
-    gap: 20px;
-    width: 100%;
     margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 50px 0;
+    background: url(../assets/images/affiliate/top_banner.png)no-repeat center top;
+    background-size: contain;
+    padding-top: 200px;
+    margin-top: -40px;
+    .buttons {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 20px 0;
+      width: 100%;
       a {
+        color: #e4e4e4;
+        cursor: pointer;
         text-decoration: none;
-    display: block;
-    width: 221px;
-    height: 78px;
-    text-align: center;
-    line-height: 78px;
-    color: #e4e4e4;
-    letter-spacing: 2px;
-    font-size: 18px;
-    cursor: pointer;
-    background-image: url(../assets/images/affiliate/agent_index_btn.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+        background: #0089de;
+        padding: 10px;
+        display: flex;
+        width: 50%;
+        justify-content: center;
+        align-items: center;
+        background-image: linear-gradient(-90deg, #518bf7 0%, #65adff 100%), linear-gradient(#d0d0d0, #d0d0d0);
+        box-shadow: 0px 2px 3px 0px rgba(12, 3, 7, 0.15);
+        border-radius: 5rem;
       }
     }
     .steps {
       background: #1e1b2e;
-      padding: 40px;
-      width: 95%;
-      margin: 50px auto;
-      max-width: 1200px;
       display: flex;
       justify-content: space-between;
+      margin: 50px auto;
+      max-width: 1200px;
+      padding: 40px;
+      width: 95%;
       .step {
+        align-items: center;
+        color: #fff;
         display: flex;
-        color: #ffffff;
         gap: 10px;
         justify-content: flex-start;
-        align-items: center;
         .stepdesc {
           flex-direction: column;
           display: flex;
@@ -381,27 +386,28 @@ export default defineComponent({
     }
   }
   .affiliate-program {
-    color: #96b6d4;
+    padding: 20px;
     text-align: left;
     width: 100%;
-    padding: 20px;
-    margin: 10px auto 0;
+    background: #ffffff;
     .affiliate-main-title {
+      color: #0089de;
       font-size: 24px;
-      color: #45fdfb;
       margin-bottom: 20px;
+      text-align: center;
     }
     .affiliate-subgroup {
-      display: flex;
-      justify-content: flex-start;
       align-items: flex-start;
+      display: flex;
       flex-direction: column;
+      justify-content: flex-start;
       .affiliate-sub {
         flex: 1;
-        margin-top: 60px;
+        margin-top: 40px;
+        width: 100%;
         .affiliate-subtitle {
-          font-size: 18px;
-          color: #ffffff;
+          font-size: 14px;
+          color: #000000;
         }
       }
     }
@@ -416,12 +422,12 @@ export default defineComponent({
     }
     .agent-content-item ul li {
       list-style: decimal;
-      margin-bottom: 41px;
+      margin-bottom: 10px;
     }
     .agent-content-item table {
       width: 100%;
-      background-color: #151823;
-      margin-top: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 5px 4px 0 rgba(12, 3, 7, 0.1);
     }
     .agent-content-item table td, .agent-content-item table th {
         width: 25%;
@@ -431,20 +437,23 @@ export default defineComponent({
       height: 60px;
     }
     .agent-content-item table th {
+      background-color: #105a67;
       color: #fff;
+      font-weight: 400;
       height: 56px;
-      font-weight: normal;
-      background-color: #193f6a;
+      border-color: #105a67;
     }
     .agent-stress-tip {
       color: #ee4148;
-    margin-top: 21px;
+      margin-top: 21px;
+      font-size: 16px;
     }
 .agent-demo-bg {
-background-color: #151823;
-padding: 10px 40px 24px 40px;
-line-height: 40px;
-margin-top: 10px;
+  background-color: #f8f8f8;
+  line-height: 40px;
+  margin-top: 10px;
+  padding: 10px;
+  box-shadow: 0px 5px 4px 0px rgba(12, 3, 7, 0.1);
 }
 .agent-demo-btm {
 border-bottom: 1px solid #242c3f;
@@ -467,37 +476,30 @@ text-align: left!important;
 text-align: right!important;
 }
 .agent-reg-btn {
+  background-color: #0089de;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  margin: 0 auto;
+  text-align: center;
+  text-decoration: none;
   width: 100%;
-height: 98px;
-background-color: #349ebc;
-font-size: 26px;
-color: #ffffff;
-line-height: 98px;
-letter-spacing: 3px;
-margin: 0 auto;
-text-align: center;
-cursor: pointer;
-display: block;
-text-decoration: none;
+  padding: 5px;
 }
 .agent-contact-bg {
-background-color: #0f121f;
-border-radius: 5px;
-margin-top: 50px;
+
 }
 .agent-contact-main {
-margin: 0 auto;
-display: flex;
-align-items: center;
-justify-content: space-between;
-flex-direction: column;
-padding: 30px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
 }
 .agent-contact-logo {
-width: 150px;
-text-align: center;
-font-size: 24px;
-color: #bacef1;
+    font-size: 24px;
+    text-align: center;
 }
 .agent-contact-ways {
 }
@@ -505,11 +507,11 @@ color: #bacef1;
 margin-top: 25px;
 }
 .agent-ways-way {
-font-size: 16px;
-color: #bacef1;
+// font-size: 16px;
+color: #686c6f;
 }
 .agent-ways-val {
-font-size: 16px;
+// font-size: 16px;
 color: #506180;
 }
 .agent-contact-ewm {

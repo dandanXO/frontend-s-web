@@ -137,7 +137,7 @@
           />
           优惠
         </q-route-tab>
-        <q-route-tab to="/liveChat" id="cs-web-id" name="live">
+        <q-route-tab to="/liveChat" id="cs-web-id" name="live" target="_blank">
           <img
             class="inactive"
             src="../assets/images/index/menu/customerBar.png"
