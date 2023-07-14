@@ -85,7 +85,12 @@
           color=""
           readonly
           style="width: 100%"
+          @click="isEditPhone ? goToVerifyTelephone() : ''"
         >
+
+          <template v-slot:append v-if="isEditPhone">
+            <span style="font-size: 50%" @click="goToVerifyTelephone()">请点击验证按钮</span>
+          </template>
           <template v-slot:prepend>
             <q-icon name="phone_in_talk" class="material-icons-outlined" />
             <label class="header-label">电话</label>
@@ -119,7 +124,11 @@
           color=""
           readonly
           style="width: 100%"
+          @click="isEditPhone ? goToVerifyEmail() : ''"
         >
+          <template v-slot:append v-if="isEditEmail">
+            <span style="font-size: 50%" @click="goToVerifyEmail()">请点击验证按钮</span>
+          </template>
           <template v-slot:prepend>
             <q-icon name="mail" class="material-icons-outlined" />
             <label class="header-label">邮箱</label>
@@ -225,6 +234,7 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "PersonalView",
@@ -236,6 +246,7 @@ export default defineComponent({
       start: "",
       end: ""
     });
+    const router = useRouter();
 
     const profileFormRef = ref();
 
@@ -446,6 +457,14 @@ export default defineComponent({
       return namePattern.test(formDetail.realName) || "请输入中文字符";
     };
 
+    const goToVerifyTelephone = () => {
+      router.push(`/account/verifyTelephone`);
+    }
+
+    const goToVerifyEmail = () => {
+      router.push(`/account/verifyEmail`);
+    }
+
     const isValidPhone = () => {
 
       const reg = /^\d+$/;
@@ -517,13 +536,14 @@ export default defineComponent({
       moment,
       canEdit,
       isValidName,
-
       showVerificationTokenInput,
       isValidPhone,
       captchaRef,
       showCaptchaDialog,
       openVerificationDialog,
-      onCaptchaSubmit
+      onCaptchaSubmit,
+      goToVerifyTelephone,
+      goToVerifyEmail
     };
   }
 });

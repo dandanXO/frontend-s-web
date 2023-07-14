@@ -26,7 +26,8 @@ export const userStore = defineStore("userStore", {
             unreadInboxMail: 0,
             phoneVerified: false,
             emailVerified: false,
-            hasCheckedVersion: false
+            hasCheckedVersion: false,
+            hasClosedDL: false
         };
     },
     actions: {

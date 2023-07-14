@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isH5" class="download-top-container">
+  <div v-if="isH5 && !store.hasClosedDL" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox"/>
       <img
@@ -1254,9 +1254,11 @@ export default defineComponent({
 
     const closeTopBox = () => {
       isH5.value = false;
+      store.hasClosedDL= true;
       var btmSwiper = document.getElementById("btm-second-swiper");
       btmSwiper.classList.add("longer-swiper");
     };
+
 
     // const checkShowImgTop = () => {
     //   const lastTime = localStorage.getItem("indexImgTop");
