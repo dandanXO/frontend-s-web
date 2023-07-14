@@ -396,7 +396,25 @@ export default defineComponent({
       luckyNumberList(this.query, this.memberId)
           .then((res) => {
             if (res.code === 0) {
-              this.dataSource = res.data;
+              let newArray = [];
+              for (let i = 0; i < res.data.length; i++) {
+                let obj = res.data[i];
+                let status = "";
+                switch (obj.winStatus){
+                  case "BET":
+                    status = "未开奖";
+                    break;
+                  case "WIN":
+                    status = "已中奖";
+                    break;
+                  case "LOSS":
+                    status = "未中奖";
+                    break;
+                }
+                obj.winStatus = status;
+                newArray.push(obj)
+              }
+              this.dataSource = newArray;
             }
           })
           .catch((err) => {
