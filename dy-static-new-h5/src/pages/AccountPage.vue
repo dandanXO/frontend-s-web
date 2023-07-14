@@ -357,7 +357,7 @@ export default defineComponent({
     display: flex;
     gap: 15px;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     padding-right: 80px;
     width: 100%;
   }
