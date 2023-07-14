@@ -235,9 +235,6 @@ export default defineComponent({
     //       }
     //     ]
 
-    //   }
-    //   switchCategory(categoryList.value[0]);
-    // }
     const getPlatList = () => {
       cached.get("PLATFORMS", () => api.get("/platform").then((res) => {
         return res

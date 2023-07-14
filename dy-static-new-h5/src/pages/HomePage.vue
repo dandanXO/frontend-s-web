@@ -56,12 +56,12 @@
           <div class="welcome-liner">
             {{ store.nickName }}
           </div>
-          <div class="badge-div">
+          <router-link to="/account/vip" class="badge-div">
             <div class="icon-div">
               <img src="../assets/index/diamon-vip.png"/>
             </div>
             <q-badge color="dyblue" class="vip-badge" text-color="white" :label="store.vip"/>
-          </div>
+          </router-link>
 
         </div>
         <div class="row items-start justify-start gap-10" style="margin-right: 50px;">
@@ -353,7 +353,7 @@
                   <img class="game-bg"
                        :src="require(`../assets/index/${es.icon}/slide-${es.icon}-${es.name.toLowerCase()}.png`)"/>
                   <div class="game-title">
-                    <h3>{{ es.name }}</h3>
+                    <h3>{{ es.title }}</h3>
                     <span>电竞赛事</span>
                   </div>
 
@@ -415,11 +415,11 @@
                 <div class="game-list-div">
                   <div
                       class="game-item-div slot-item">
-                    <router-link :to="`slot?platform=${slt.code}`" class="game-board" >
+                    <router-link :to="`slot?platform=${slt.code}`" class="game-board">
                       <img class="game-bg"
                            :src="require(`../assets/index/${slt.icon}/slide-${slt.icon}-${slt.name.toLowerCase()}.png`)"/>
                       <div class="game-title">
-                        <h3>{{ slt.name }}</h3>
+                        <h3>{{ slt.title }}</h3>
                         <span>电子游戏</span>
                       </div>
                     </router-link>
@@ -430,7 +430,7 @@
 
           </div>
 
-<!--                    <PlatformBlock dataType="slot" :data="slt"/>-->
+          <!--                    <PlatformBlock dataType="slot" :data="slt"/>-->
         </swiper-slide>
 
 
@@ -523,7 +523,7 @@
                     <img class="game-bg"
                          :src="require(`../assets/index/${poke.icon}/slide-${poke.icon}-${poke.name.toLowerCase()}.png`)"/>
                     <div class="game-title">
-                      <h3>{{ poke.name }}</h3>
+                      <h3>{{ poke.title }}</h3>
                       <span>棋牌游戏</span>
                     </div>
                   </div>
@@ -534,7 +534,7 @@
                     <img class="game-bg"
                          :src="require(`../assets/index/${poke.icon}/slide-${poke.icon}-${poke.name.toLowerCase()}.png`)"/>
                     <div class="game-title">
-                      <h3>{{ poke.name }}</h3>
+                      <h3>{{ poke.title }}</h3>
                       <span>棋牌游戏</span>
                     </div>
 
@@ -575,7 +575,7 @@
                     <img class="game-bg"
                          :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
                     <div class="game-title">
-                      <h3>{{ lotter.name }}</h3>
+                      <h3>{{ lotter.title }}</h3>
                       <span>彩票游戏</span>
                     </div>
                   </div>
@@ -1045,14 +1045,14 @@ export default defineComponent({
               }
               if (platTypes.indexOf("SLOT") > -1) {
                 var slotObj = Object.assign({}, element);
-                slotObj.title = translateRecord(slotObj.name, "SLOT") + " 电子";
+                slotObj.title = translateRecord(slotObj.name, "SLOT");
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
 
                 let slotItem = {
                   id: slotObj.id,
                   code: slotObj.code,
-                  icon: slotObj.name
+                  icon: slotObj.title
                 };
                 ui.slotLists.push(slotItem);
                 slot.value.push(slotObj);
@@ -1090,25 +1090,35 @@ export default defineComponent({
       }
     };
 
-    const isSlotSlideEnd = ref(false);
-    const isSlotSlideBegin = ref(true);
+    const isSlotSlideEnd = computed(() => {
+      if (slotSwiper.value) {
+        return slotSwiper.value.isEnd;
+      }
+      return false;
+    })
+    const isSlotSlideBegin = computed(() => {
+      if (slotSwiper.value) {
+        return slotSwiper.value.isBeginning;
+      }
+      return false;
+    })
     const changeSlotSlide = (type) => {
       console.log(slotSwiper.value);
       if (type === 1) {
         slotSwiper.value?.slidePrev(500);
-        if (slotSwiper.value.isBeginning) {
-          isSlotSlideBegin.value = true;
-        } else {
-          isSlotSlideBegin.value = false
-        }
+        // if (slotSwiper.value.isBeginning) {
+        //   isSlotSlideBegin.value = true;
+        // } else {
+        //   isSlotSlideBegin.value = false
+        // }
         isSlotSlideEnd.value = false;
       } else if (type === 2) {
         slotSwiper.value?.slideNext(500);
-        if (slotSwiper.value.isEnd) {
-          isSlotSlideEnd.value = true;
-        } else {
-          isSlotSlideEnd.value = false;
-        }
+        // if (slotSwiper.value.isEnd) {
+        //   isSlotSlideEnd.value = true;
+        // } else {
+        //   isSlotSlideEnd.value = false;
+        // }
         isSlotSlideBegin.value = false;
       }
     }
@@ -1153,9 +1163,8 @@ export default defineComponent({
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
     const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
+      // console.log(store.hasCheckedVersion);
+      if (Platform.is.android && Platform.is.capacitor && !store.hasCheckedVersion) {
         const info = await App.getInfo();
         // const info = {
         //   version: "1.0.1"
@@ -1185,6 +1194,7 @@ export default defineComponent({
           if (latest_ver_no > current_version) {
             console.log("Need to Updat");
             isAppUpdateModal.value = true;
+            store.hasCheckedVersion = true;
           }
         }
       }
@@ -1518,8 +1528,12 @@ export default defineComponent({
     padding-top: 0;
     // margin-bottom: 5px;
 
-    &.slot-slides, &.lottery-slides {
-      height: 360px;
+    &.slot-slides {
+      height: 260px;
+    }
+
+    &.lottery-slides {
+      height: 390px;
     }
 
     a {
@@ -1624,6 +1638,10 @@ export default defineComponent({
 
 :deep(.firstSwiper .swiper-wrapper) {
   background: #fff;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: none;
 }
 
 .swiper-container {

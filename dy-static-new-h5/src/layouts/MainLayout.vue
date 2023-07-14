@@ -78,7 +78,7 @@
       elevated
       overlay
       v-model="ui.drawerRight"
-      :width="200"
+      :width="250"
       :breakpoint="500"
       v-if="hasDrawer"
     >
@@ -90,7 +90,7 @@
         <div class="q-pa-sm platform-list">
           <q-btn
             @click="changePlatform(plat)"
-            size="xs"
+            size="md"
             color="dyblue"
             v-for="(plat, n) in platformsList"
             :key="n"
@@ -312,7 +312,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform);
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform, "SLOT");
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
@@ -475,6 +475,10 @@ export default defineComponent({
           prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "催单记录";
+        }else if (route.path === "/account/vip") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = "VIP优惠";
         }
       }
     };

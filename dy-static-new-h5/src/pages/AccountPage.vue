@@ -45,7 +45,8 @@
             <img id="personal_vip_img" src="../assets/vip/vip_text_12.png" />
           </span> -->
 
-          <span v-if="store.evip">专属网址: <a style="text-decoration: none; color: #000000; font-size: 17px;" :href="store.evip" target="_blank">{{ store.evip }}</a></span>
+          <span v-if="store.evip">专属网址: <a style="text-decoration: none; color: #000000; font-size: 17px;"
+                                               :href="selfTgurl" target="_blank">{{ store.evip }}</a></span>
           <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
         </div>
       </div>
@@ -162,7 +163,7 @@
         </router-link>
         <router-link to="/account/invite">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.svg" />
+            <img src="../assets/images/account/menu_share.svg"/>
             <div class="acct-nav-label">呼朋唤友</div>
           </div>
         </router-link>
@@ -211,7 +212,7 @@
         </router-link>
         <a href="#" target="_blank">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_affiliate.svg" />
+            <img src="../assets/images/account/menu_affiliate.svg"/>
             <div class="acct-nav-label">加盟</div>
           </div>
         </a>
@@ -219,7 +220,7 @@
     </q-item-section>
     <a @click="logout">
       <div class="acct-logout">
-        <img src="../assets/images/account/menu_logout.svg" />
+        <img src="../assets/images/account/menu_logout.svg"/>
         <div class="acct-nav-label">退出</div>
       </div>
     </a>
@@ -296,6 +297,10 @@ export default defineComponent({
       }
     };
     const isLoadingBalance = ref(false)
+
+    const selfTgurl = ref('https://' + store.evip);
+
+
     onMounted(() => {
       getBalance();
       store.getBalance();
@@ -330,7 +335,8 @@ export default defineComponent({
       store,
       openDeposit,
       appVersionNo,
-      isLoadingBalance
+      isLoadingBalance,
+      selfTgurl
     };
   }
 });
@@ -373,6 +379,7 @@ export default defineComponent({
     img {
       width: 100%;
     }
+
     flex: 1;
   }
 
@@ -575,10 +582,12 @@ export default defineComponent({
   margin: 10px auto;
   padding: 5px;
   gap: 10px;
+
   a {
     padding: 5px;
     display: block;
   }
+
   .acct-title {
     display: flex;
     margin-top: 4px;
@@ -611,8 +620,11 @@ export default defineComponent({
 
   .acct-menu {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
+    gap:20px;
+    row-gap: 20px;
+    height: 300px;
     // display: flex;
     // justify-content: space-between;
     // flex-wrap: wrap;
@@ -620,7 +632,9 @@ export default defineComponent({
 
     a {
       text-decoration: none;
-      font-size: 12px;
+      font-size: 14px;
+      height: 80px;
+      display:block;
 
       .acct-nav-item {
         gap: 5px;
@@ -668,21 +682,22 @@ export default defineComponent({
   height: 14px;
 }
 
-@media (max-width: 430px){
+@media (max-width: 430px) {
   .acct-nav {
     .acct-menu {
-      
+
       grid-template-columns: repeat(4, 1fr);
 
     }
   }
 }
-@media (max-width: 350px){
+
+@media (max-width: 350px) {
   .acct-nav {
     .acct-menu {
-      
-      grid-template-columns: repeat(3, 1fr);
 
+      grid-template-columns: repeat(3, 1fr);
+      height: 380px;
     }
   }
 }
