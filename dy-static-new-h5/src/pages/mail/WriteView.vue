@@ -6,7 +6,7 @@
                 <div class="title">
                     标题
                 </div>
-                <q-btn-dropdown color="dyblue" label="快捷输入" menu-anchor="bottom end">
+                <q-btn-dropdown border label="快捷输入" menu-anchor="bottom end">
                 <q-list>
                     <q-item v-for="(item, i) in options" :key="i" clickable v-close-popup @click="onItemClick(item)">
                     <q-item-section>
@@ -51,7 +51,7 @@
                   v-model="mailDetailList.content"
                   placeholder="请输入您的信息内容" />
         </div>
-        <div class="q-ma-sm">
+        <div class="q-ma-sm q-pa-md">
             <q-btn
               class="fit"
               color="dyblue"

@@ -9,7 +9,7 @@
             <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" :class="{active: isSelectedMail === det.title }" style="" @click="selectMail(det)">
                     <div style="display:flex; justify-content: space-between; align-items: center">
                     <div>
-                    <q-icon name="mail" />
+                    <q-icon color="blue" name="mail" />
                     {{ det.title }}
                     </div>
                     <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0" />
