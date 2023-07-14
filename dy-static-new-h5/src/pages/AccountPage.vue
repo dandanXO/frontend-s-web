@@ -4,7 +4,7 @@
     <div class="profile">
       <div class="left">
         <div class="avatar">
-          <img src="../assets/images/account/avatar.png" />
+          <img src="../assets/images/account/avatar.png"/>
         </div>
         <div class="pro-details">
           <span class="nickname-span">{{ store.nickName }}</span>
@@ -92,21 +92,23 @@
         <!-- <div class="name">{{ header }}</div> -->
         <q-card-section class="acct-section">
           <div class="left-sect">
-          <div class="label"><img src="../assets/images/account/wallet.svg">中心钱包:</div>
-        </div>
-        <div class="right-sect">
-          <router-link to="/" @click="openDeposit" class="button">
-            存款
-          </router-link>
-          <router-link to="finance/withdraw" class="button">
-            提款
-          </router-link>
-          <router-link to="account/transfer" class="button">
-            转账
-          </router-link>
-        </div>
+            <div class="label"><img src="../assets/images/account/wallet.svg">中心钱包:</div>
+          </div>
+          <div class="right-sect">
+            <router-link to="/" @click="openDeposit" class="button">
+              存款
+            </router-link>
+            <router-link to="finance/withdraw" class="button">
+              提款
+            </router-link>
+            <router-link to="account/transfer" class="button">
+              转账
+            </router-link>
+          </div>
         </q-card-section>
-          <div class="amt" @click="getBalance">{{ !isLoadingBalance ? mainWallet : 'Loading...' }}<RiRefreshLine /></div>
+        <div class="amt" @click="getBalance">{{ !isLoadingBalance ? mainWallet : 'Loading...' }}
+          <RiRefreshLine/>
+        </div>
         <!-- <q-separator /> -->
         <!-- <q-card class="bluecard">
           <div class="vipline">
@@ -154,55 +156,55 @@
       <div class="acct-menu">
         <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_record.svg" />
+            <img src="../assets/images/account/menu_record.svg"/>
             <div class="acct-nav-label">交易记录</div>
           </div>
         </router-link>
         <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_share.svg" />
-            <div class="acct-nav-label">分享好友</div>
+            <div class="acct-nav-label">呼朋唤友</div>
           </div>
         </router-link>
         <router-link to="/promo?redirect=account">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_promo.svg" />
+            <img src="../assets/images/account/menu_promo.svg"/>
             <div class="acct-nav-label">优惠领取</div>
           </div>
         </router-link>
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_personal.svg" />
+            <img src="../assets/images/account/menu_personal.svg"/>
             <div class="acct-nav-label">个人信息</div>
           </div>
         </router-link>
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_changePwd.svg" />
+            <img src="../assets/images/account/menu_changePwd.svg"/>
             <div class="acct-nav-label">密码</div>
           </div>
         </router-link>
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_bank.svg" />
+            <img src="../assets/images/account/menu_bank.svg"/>
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
-        <router-link to="/account/download">
+        <router-link v-if="!store.isApp()" to="/account/download">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_download.svg" />
+            <img src="../assets/images/account/menu_download.svg"/>
             <div class="acct-nav-label">下载中心</div>
           </div>
         </router-link>
         <router-link to="/account/announcement">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_announcement.svg" />
+            <img src="../assets/images/account/menu_announcement.svg"/>
             <div class="acct-nav-label">系统公告</div>
           </div>
         </router-link>
         <router-link to="/account/mail">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.svg" />
+            <img src="../assets/images/account/menu_mailbox.svg"/>
             <div class="acct-nav-label">站内信</div>
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
@@ -231,119 +233,105 @@ import {
   onMounted,
   onBeforeUnmount
 } from "vue";
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import {userStore} from "stores/index";
+import {useRouter} from "vue-router";
 import {App} from "@capacitor/app";
-import { RiRefreshLine } from "vue-remix-icons";
+import {RiRefreshLine} from "vue-remix-icons";
 
 export default defineComponent({
-    name: "AccountPage",
-    components: { RiRefreshLine },
-    setup() {
-        const router = useRouter();
-        const store = userStore();
-        const logout = () => {
-            store.memberLogout().then(() => {
-                router.push("/");
-            });
-        };
-        const appVersionNo = ref(null);
-        const vipLevel = computed(() => {
-            if (store.vip == "VIP0") {
-                return 0;
-            }
-            else if (store.vip == "VIP1") {
-                return 1;
-            }
-            else if (store.vip == "VIP2") {
-                return 2;
-            }
-            else if (store.vip == "VIP3") {
-                return 3;
-            }
-            else if (store.vip == "VIP4") {
-                return 4;
-            }
-            else if (store.vip == "VIP5") {
-                return 5;
-            }
-            else if (store.vip == "VIP6") {
-                return 6;
-            }
-            else if (store.vip == "VIP7") {
-                return 7;
-            }
-            else if (store.vip == "VIP8") {
-                return 8;
-            }
-            else if (store.vip == "VIP9") {
-                return 9;
-            }
-            else if (store.vip == "VIP10") {
-                return 10;
-            }
-            else if (store.vip == "VIP11") {
-                return 11;
-            }
-            else if (store.vip == "VIP12") {
-                return 12;
-            }
-            return store.vip;
-        });
-        const timerBalance = ref();
-        const mainWallet = computed(() => {
-            return store.balance.toFixed(2);
-        });
-        const getVersionNo = async () => {
-            if (store.getDeviceType() == "ANDROID") {
-                const info = await App.getInfo();
-                var current_version = info.version + "." + info.build;
-                appVersionNo.value = current_version;
-            }
-            else if (store.getDeviceType() == "IOS") {
-                appVersionNo.value = "iOS v0.2";
-            }
-            else {
-            }
-        };
-        const isLoadingBalance = ref(false)
-        onMounted(() => {
-            getBalance();
-            store.getBalance();
-            // store.getUnreadTotal();
-            getVersionNo();
-        });
-        onBeforeUnmount(() => {
-            clearInterval(timerBalance.value);
-        });
-        const openDeposit = () => {
-            // to="finance/deposit"
-            localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
-            router.push("finance/deposit");
-        };
-        const getBalance = () => {
-            isLoadingBalance.value = true;
-            store.getBalance().then(() => {
-              isLoadingBalance.value = false
-            });
-            timerBalance.value = setInterval(function () {
-                if (store.hasToken()) {
-                    store.getBalance();
-                }
-            }, 20000);
-        };
-        return {
-            header: "Account",
-            logout,
-            mainWallet,
-            getBalance,
-            vipLevel,
-            store,
-            openDeposit,
-            appVersionNo,
-            isLoadingBalance
-        };
-    }
+  name: "AccountPage",
+  components: {RiRefreshLine},
+  setup() {
+    const router = useRouter();
+    const store = userStore();
+    const logout = () => {
+      store.memberLogout().then(() => {
+        router.push("/");
+      });
+    };
+    const appVersionNo = ref(null);
+    const vipLevel = computed(() => {
+      if (store.vip == "VIP0") {
+        return 0;
+      } else if (store.vip == "VIP1") {
+        return 1;
+      } else if (store.vip == "VIP2") {
+        return 2;
+      } else if (store.vip == "VIP3") {
+        return 3;
+      } else if (store.vip == "VIP4") {
+        return 4;
+      } else if (store.vip == "VIP5") {
+        return 5;
+      } else if (store.vip == "VIP6") {
+        return 6;
+      } else if (store.vip == "VIP7") {
+        return 7;
+      } else if (store.vip == "VIP8") {
+        return 8;
+      } else if (store.vip == "VIP9") {
+        return 9;
+      } else if (store.vip == "VIP10") {
+        return 10;
+      } else if (store.vip == "VIP11") {
+        return 11;
+      } else if (store.vip == "VIP12") {
+        return 12;
+      }
+      return store.vip;
+    });
+    const timerBalance = ref();
+    const mainWallet = computed(() => {
+      return store.balance.toFixed(2);
+    });
+    const getVersionNo = async () => {
+      if (store.getDeviceType() == "ANDROID") {
+        const info = await App.getInfo();
+        var current_version = info.version + "." + info.build;
+        appVersionNo.value = current_version;
+      } else if (store.getDeviceType() == "IOS") {
+        appVersionNo.value = "iOS v0.2";
+      } else {
+      }
+    };
+    const isLoadingBalance = ref(false)
+    onMounted(() => {
+      getBalance();
+      store.getBalance();
+      // store.getUnreadTotal();
+      getVersionNo();
+    });
+    onBeforeUnmount(() => {
+      clearInterval(timerBalance.value);
+    });
+    const openDeposit = () => {
+      // to="finance/deposit"
+      localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
+      router.push("finance/deposit");
+    };
+    const getBalance = () => {
+      isLoadingBalance.value = true;
+      store.getBalance().then(() => {
+        isLoadingBalance.value = false
+      });
+      timerBalance.value = setInterval(function () {
+        if (store.hasToken()) {
+          store.getBalance();
+        }
+      }, 20000);
+    };
+    return {
+      header: "Account",
+      logout,
+      mainWallet,
+      getBalance,
+      vipLevel,
+      store,
+      openDeposit,
+      appVersionNo,
+      isLoadingBalance
+    };
+  }
 });
 </script>
 <style scoped lang="scss">
@@ -352,8 +340,9 @@ export default defineComponent({
   // height: 80px;
   // background-size: cover;
 }
+
 .profile {
-  background: url(../assets/images/common/bgheader.png)no-repeat center center;
+  background: url(../assets/images/common/bgheader.png) no-repeat center center;
   background-size: cover;
   display: flex;
   justify-content: space-between;
@@ -395,11 +384,12 @@ export default defineComponent({
 
     .nickname-span {
       font-size: 18px;
-      line-height:  21px;
+      line-height: 21px;
       font-weight: 700;
       word-break: break-all;
     }
   }
+
   .livechat {
     background: #0089ED;
     color: #ffffff;
@@ -449,25 +439,30 @@ export default defineComponent({
     // border-bottom: 1px solid #2e3445;
     width: 100%;
     color: #000000;
+
     .left-sect {
 
       .label {
-      font-size: 14px;
-      line-height: 17px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;padding-top: 5px;
-      gap: 5px;
-      svg {
-        fill: #0089ED;
+        font-size: 14px;
+        line-height: 17px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 5px;
+        gap: 5px;
+
+        svg {
+          fill: #0089ED;
+        }
+
+        img {
+          display: block;
+          margin-bottom: 3px;
+        }
       }
-      img {
-        display: block;
-        margin-bottom: 3px;
-      }
-    }
 
     }
+
     .right-sect {
       border: 1px solid #0089ED;
       padding: 5px 15px;
@@ -475,6 +470,7 @@ export default defineComponent({
       justify-content: space-between;
       border-radius: 20px;
       max-width: 195px;
+
       a {
         display: block;
         color: #0089ed;
@@ -483,41 +479,49 @@ export default defineComponent({
     }
 
   }
-    .amt {
-      font-size: 24px;
-      width: calc(100% - 25px);
-      margin-left: 25px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      svg {
-        height: 20px;
-        fill: #434343;
-      }
+
+  .amt {
+    font-size: 24px;
+    width: calc(100% - 25px);
+    margin-left: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    svg {
+      height: 20px;
+      fill: #434343;
     }
+  }
+
   .bluecard {
     width: 90%;
     margin: 0 10px;
-    background: url(../assets/images/common/bgheader.png)no-repeat top right;
+    background: url(../assets/images/common/bgheader.png) no-repeat top right;
     padding: 10px;
+
     .vipline {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .circle {
         border: 1px solid #ffffff;
         border-radius: 50%;
-        width: 40px; height: 40px;
+        width: 40px;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
         color: #ffffff;
         background: linear-gradient(180deg, #AAD6FF, #0075E1);
+
         .bigV {
           font-weight: 700;
           font-size: 25px;
           line-height: 13px;
         }
+
         .small {
           font-size: 13px;
           line-height: 13px;
@@ -525,6 +529,7 @@ export default defineComponent({
       }
     }
   }
+
   .bot-section {
     display: flex;
     justify-content: space-evenly;

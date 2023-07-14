@@ -76,6 +76,7 @@
     <q-drawer
       side="right"
       elevated
+      overlay
       v-model="ui.drawerRight"
       :width="200"
       :breakpoint="500"
@@ -298,7 +299,7 @@ export default defineComponent({
     );
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
-      ui.drawerRight = true;
+      ui.drawerRight = false;
     };
     const checkRoute = () => {
       if (route) {
