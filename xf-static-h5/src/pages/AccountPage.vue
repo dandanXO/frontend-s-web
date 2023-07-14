@@ -147,7 +147,7 @@
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
-        <router-link to="/account/download">
+        <router-link v-if="!store.isApp()" to="/account/download">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_download.png"/>
             <div class="acct-nav-label">下载中心</div>
@@ -238,7 +238,7 @@ export default defineComponent({
         appVersionNo.value = current_version;
       } else if (store.getDeviceType() == "IOS") {
         appVersionNo.value = "iOS v0.3";
-      }else{
+      } else {
 
       }
     }

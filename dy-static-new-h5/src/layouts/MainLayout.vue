@@ -347,6 +347,9 @@ export default defineComponent({
             } else {
               prevPage.value = "promo";
             }
+          }else if (route.query.redirect){
+            var redirectPage= route.query.redirect;
+            prevPage.value = redirectPage;
           }
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";
@@ -367,7 +370,7 @@ export default defineComponent({
         } else if (route.path === "/account/personal") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "账户信息";
+          pageName.value = "个人信息";
         } else if (route.path === "/account/verifyTelephone") {
           prevPage.value = "account";
           hasPage.value = true;

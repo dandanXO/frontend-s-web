@@ -114,7 +114,7 @@
             <div class="middle">
               <div class="left">成长值</div>
               <div class="right">0/1</div>
-              
+
 
             </div>
             <div class="circle">v1</div>
@@ -164,7 +164,7 @@
             <div class="acct-nav-label">分享好友</div>
           </div>
         </router-link>
-        <router-link to="/promo">
+        <router-link to="/promo?redirect=account">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_promo.svg" />
             <div class="acct-nav-label">优惠领取</div>
