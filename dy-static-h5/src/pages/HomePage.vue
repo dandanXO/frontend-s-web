@@ -746,7 +746,7 @@ export default defineComponent({
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
                 // console.log(slotObj);
-                if (slotObj.code === "AG") {
+                if (slotObj.code === "AG" && slotObj === "AG") {
                 } else {
                   let slotItem = {
                     id: slotObj.id,
