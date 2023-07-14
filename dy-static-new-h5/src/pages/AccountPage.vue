@@ -49,7 +49,7 @@
           <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
         </div>
       </div>
-      <router-link :to="'/liveChat'" class="livechat">
+      <router-link to="/liveChat" class="livechat">
         在线客服
       </router-link>
     </div>
@@ -160,8 +160,8 @@
         </router-link>
         <router-link to="/account/invite">
           <div class="acct-nav-item">
-            <img src="../assets/account/mene-share-icon-s.png" />
-            <div class="acct-nav-label">呼朋唤友</div>
+            <img src="../assets/images/account/menu_share.svg" />
+            <div class="acct-nav-label">分享好友</div>
           </div>
         </router-link>
         <router-link to="/promo?redirect=account">
@@ -365,22 +365,28 @@ export default defineComponent({
   // top: 0;
   .left {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding-right: 80px;
   }
 
   .avatar {
     width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     img {
       width: 100%;
     }
+    flex: 1;
   }
 
   .pro-details {
+    flex: 3;
     font-size: 14px;
-    line-height: 15px;
+    line-height: 17px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -389,7 +395,7 @@ export default defineComponent({
       font-size: 18px;
       line-height:  21px;
       font-weight: 700;
-      margin-right: 6px;
+      word-break: break-all;
     }
   }
   .livechat {
@@ -398,7 +404,11 @@ export default defineComponent({
     border-radius: 50px;
     cursor: pointer;
     padding: 5px 10px;
-    margin-top: 10px;
+    // margin-top: 10px;
+    text-decoration: none;
+    position: absolute;
+    right: 15px;
+    top: 15px;
   }
 }
 
@@ -426,7 +436,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
   }
 
   .acct-section {
@@ -458,14 +468,13 @@ export default defineComponent({
     }
     .right-sect {
       border: 1px solid #0089ED;
-      padding: 10px 15px;
+      padding: 5px 15px;
       display: flex;
       justify-content: space-between;
       border-radius: 20px;
       max-width: 195px;
       a {
         display: block;
-        line-height: 15px;
         color: #0089ed;
         text-decoration: none;
       }
@@ -591,7 +600,7 @@ export default defineComponent({
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 40px 20px;
+    grid-gap: 40px 30px;
     // display: flex;
     // justify-content: space-between;
     // flex-wrap: wrap;
@@ -641,11 +650,5 @@ export default defineComponent({
 
 #personal_vip_img {
   height: 14px;
-}
-
-.acct-nav-label{
-  &:active{
-    filter: brightness(0.85);
-  }
 }
 </style>
