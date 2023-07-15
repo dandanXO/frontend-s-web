@@ -597,7 +597,7 @@ export default defineComponent({
         val => validateBankLength(val)
       ],
       cardAccountRules: [
-        val => (val && val.length > 0) || '情书入银行卡号',
+        val => (val && val.length > 0) || '请输入银行卡号',
       ],
       cardAddressRules: [],
       selectedBankType,

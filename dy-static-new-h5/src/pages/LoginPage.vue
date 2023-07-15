@@ -49,7 +49,7 @@
                   v-model="loginForm.password"
                   placeholder="用户密码"
                   :type="isPwd ? 'password' : 'text'"
-                  :rules="[(val) => (val && val.length > 0) || '情输入用户密码']"
+                  :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
                   label-color=""
                   clearable
                   autocomplete="current-password"
