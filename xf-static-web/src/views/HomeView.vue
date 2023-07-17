@@ -1,5 +1,4 @@
 <template>
-  --- {{ isImportantAnnoucementModal }} -- {{ homePopupImg }}
   <div class="home">
     <el-carousel height="500px">
       <el-carousel-item v-for="banner in banners" :key="banner">
