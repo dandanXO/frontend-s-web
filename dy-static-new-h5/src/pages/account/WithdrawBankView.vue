@@ -44,7 +44,7 @@
 
                 >
                   解绑
-<!--                  <img src="../../assets/account/unbind-icon.png"/>-->
+                  <!--                  <img src="../../assets/account/unbind-icon.png"/>-->
                 </q-btn>
               </div>
 
@@ -245,6 +245,7 @@
             <q-btn
                 class="q-mr-md"
                 label="取消"
+                color="warning"
                 @click="bankCardModalState.visible = false"
             />
             <q-btn color="dyblue" label="提交" @click="submitBankCard"/>
@@ -282,7 +283,6 @@
         </div>
       </q-card>
     </q-dialog>
-
 
 
     <!-- <q-dialog
