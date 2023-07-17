@@ -2,13 +2,13 @@
   <q-layout view="hHh Lpr fFf">
     <q-header v-if="hasPage" class="page-wrapper">
       <q-card-section
-        v-if="!hasPage"
-        class="top-section justify-between items-center"
-        horizontal
+          v-if="!hasPage"
+          class="top-section justify-between items-center"
+          horizontal
       >
         <div class="logo">
           <router-link to="/">
-            <img src="../assets/home/logo.png" />
+            <img src="../assets/home/logo.png"/>
           </router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
@@ -19,11 +19,11 @@
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
         </q-card-actions> -->
         <q-btn
-          v-if="store.hasToken()"
-          class="flex"
-          to="/finance/deposit"
-          no-caps
-          flat
+            v-if="store.hasToken()"
+            class="flex"
+            to="/finance/deposit"
+            no-caps
+            flat
         >
           <span style="font-size: 10px; margin-left: 5px; display: block">
             Deposit
@@ -32,7 +32,7 @@
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage ? '/' + prevPage : '/'">
-          <RiArrowLeftLine />
+          <RiArrowLeftLine/>
         </router-link>
         {{ pageName }}
         <q-btn v-if="hasDrawer" style="position:absolute; right: 10px;" flat @click="ui.drawerRight = !ui.drawerRight"
@@ -74,13 +74,13 @@
     </q-drawer> -->
 
     <q-drawer
-      side="right"
-      elevated
-      overlay
-      v-model="ui.drawerRight"
-      :width="250"
-      :breakpoint="500"
-      v-if="hasDrawer"
+        side="right"
+        elevated
+        overlay
+        v-model="ui.drawerRight"
+        :width="250"
+        :breakpoint="500"
+        v-if="hasDrawer"
     >
       <div class="q-pa-md bg-brightbtn">老虎机大厅</div>
       <div class="platforms">
@@ -89,12 +89,12 @@
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
           <q-btn
-            @click="changePlatform(plat)"
-            size="md"
-            color="dyblue"
-            v-for="(plat, n) in platformsList"
-            :key="n"
-            :label="plat.icon"
+              @click="changePlatform(plat)"
+              size="md"
+              color="dyblue"
+              v-for="(plat, n) in platformsList"
+              :key="n"
+              :label="plat.icon"
           />
         </div>
       </q-scroll-area>
@@ -109,62 +109,62 @@
     </q-scroll-area> -->
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs
-        v-model="tab"
-        no-caps
-        class="bg-primary text-white shadow-2"
-        :breakpoint="0"
-        align="justify"
+          v-model="tab"
+          no-caps
+          class="bg-primary text-white shadow-2"
+          :breakpoint="0"
+          align="justify"
       >
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/ft-home.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-home.svg"/>
           <img
-            class="hover"
-            src="../assets/images/index/menu/ft-home-active.svg"
+              class="hover"
+              src="../assets/images/index/menu/ft-home-active.svg"
           />
           首页
         </q-route-tab>
-<!--        <q-route-tab to="/sport" name="sport">-->
-<!--          <img-->
-<!--            class="inactive"-->
-<!--            src="../assets/images/index/menu/ft-sport.svg"-->
-<!--          />-->
-<!--          <img-->
-<!--            class="hover"-->
-<!--            src="../assets/images/index/menu/ft-sport-active.svg"-->
-<!--          />-->
-<!--          优惠-->
-<!--        </q-route-tab>-->
+        <!--        <q-route-tab to="/sport" name="sport">-->
+        <!--          <img-->
+        <!--            class="inactive"-->
+        <!--            src="../assets/images/index/menu/ft-sport.svg"-->
+        <!--          />-->
+        <!--          <img-->
+        <!--            class="hover"-->
+        <!--            src="../assets/images/index/menu/ft-sport-active.svg"-->
+        <!--          />-->
+        <!--          优惠-->
+        <!--        </q-route-tab>-->
         <q-route-tab to="/promo" name="promo">
           <img
-            class="inactive"
-            src="../assets/images/index/menu/ft-promo.svg"
+              class="inactive"
+              src="../assets/images/index/menu/ft-promo.svg"
           />
           <img
-            class="hover"
-            src="../assets/images/index/menu/ft-promo-active.svg"
+              class="hover"
+              src="../assets/images/index/menu/ft-promo-active.svg"
           />
           优惠
         </q-route-tab>
         <q-route-tab to="/liveChat" id="cs-web-id" name="live">
           <img
-            class="inactive"
-            src="../assets/images/index/menu/ft-livechat.svg"
+              class="inactive"
+              src="../assets/images/index/menu/ft-livechat.svg"
           />
           <img
-            class="hover"
-            src="../assets/images/index/menu/ft-livechat-active.svg"
+              class="hover"
+              src="../assets/images/index/menu/ft-livechat-active.svg"
           />
           客服
         </q-route-tab>
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/ft-me.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-me.svg"/>
           <img
-            class="hover"
-            src="../assets/images/index/menu/ft-me-active.svg"
+              class="hover"
+              src="../assets/images/index/menu/ft-me-active.svg"
           />
           我的
         </q-route-tab>
@@ -174,14 +174,14 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, watch, computed } from "vue";
-import { userStore } from "stores/index";
-import { Platform } from "quasar";
-import { useUI } from "stores/ui";
-import { useRoute, useRouter } from "vue-router";
+import {defineComponent, onMounted, ref, watch, computed} from "vue";
+import {userStore} from "stores/index";
+import {Platform} from "quasar";
+import {useUI} from "stores/ui";
+import {useRoute, useRouter} from "vue-router";
 import {translateRecord} from "src/directives/translate";
 
-import { RiArrowLeftLine } from "vue-remix-icons";
+import {RiArrowLeftLine} from "vue-remix-icons";
 
 export default defineComponent({
   name: "MainLayout",
@@ -202,10 +202,10 @@ export default defineComponent({
     const checkPlatform = () => {
       //Is iOS Webclip App || Is Android Apk
       if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
+          (Platform.is.ios &&
+              "standalone" in window.navigator &&
+              window.navigator.standalone) ||
+          (Platform.is.android && Platform.is.capacitor)
       ) {
         isH5.value = false;
       } else {
@@ -231,12 +231,12 @@ export default defineComponent({
         case "m.dy5988.com":
         case "m.dy1698.com":
           trackingScriptUrl =
-            "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
         case "m.dy93113.com":
         case "m.dy96108.com":
           trackingScriptUrl =
-            "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
+              "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
           break;
         case "m.dy18178.com:8765":
         case "m.dy50122.com:8765":
@@ -245,7 +245,7 @@ export default defineComponent({
         case "m.dy70679.com:8765":
         case "m.dy73953.com:8765":
           trackingScriptUrl =
-            "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
         case "m.dy52373.com:8765":
         case "m.dy67892.com:8765":
@@ -258,7 +258,7 @@ export default defineComponent({
         case "m.dy38885.com:8765":
         case "m.dy78299.com:8765":
           trackingScriptUrl =
-            "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
         default:
           return; // Don't load the tracking script for other domains
@@ -285,17 +285,17 @@ export default defineComponent({
       });
     };
     watch(
-      () => route.path,
-      async () => {
-        checkRoute();
-      }
+        () => route.path,
+        async () => {
+          checkRoute();
+        }
     );
 
     watch(
-      () => route.query,
-      async () => {
-        checkRoute();
-      }
+        () => route.query,
+        async () => {
+          checkRoute();
+        }
     );
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
@@ -348,8 +348,8 @@ export default defineComponent({
             } else {
               prevPage.value = "promo";
             }
-          }else if (route.query.redirect){
-            var redirectPage= route.query.redirect;
+          } else if (route.query.redirect) {
+            var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
           }
         } else if (route.path === "/finance/withdraw") {
@@ -475,10 +475,14 @@ export default defineComponent({
           prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "催单记录";
-        }else if (route.path === "/account/vip") {
+        } else if (route.path === "/account/vip") {
           prevPage.value = "";
           hasPage.value = true;
           pageName.value = "VIP优惠";
+          if (route.query.redirect) {
+            var redirectPage = route.query.redirect;
+            prevPage.value = redirectPage;
+          }
         }
       }
     };
@@ -624,7 +628,7 @@ svg path {
 
 .page-wrapper {
   background: #4fb2ff;
-  background: url(../assets/images/common/bgheader.png)no-repeat center center;
+  background: url(../assets/images/common/bgheader.png) no-repeat center center;
   padding-top: 20px;
   background-size: cover;
 }
