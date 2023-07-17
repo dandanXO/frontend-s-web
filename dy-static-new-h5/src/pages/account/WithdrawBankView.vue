@@ -41,9 +41,10 @@
                 <q-btn
                     @click="unbindBankCard(bc)"
                     class="unbind-btn"
-                    round
+
                 >
-                  <img src="../../assets/account/unbind-icon.png"/>
+                  解绑
+<!--                  <img src="../../assets/account/unbind-icon.png"/>-->
                 </q-btn>
               </div>
 
@@ -625,7 +626,7 @@ export default defineComponent({
 }
 
 .bank-card-info {
-  width: calc(100% - 100px);
+  width: calc(100% - 132px);
   padding: 0px 5px;
   display: flex;
   flex-direction: column;
@@ -648,10 +649,10 @@ export default defineComponent({
 }
 
 .unbind-btn {
-  width: 30px;
-  height: 30px;
-  min-width: 30px;
-  min-height: 30px;
+  width: 60px;
+  height: 32px;
+  //min-width: 30px;
+  //min-height: 30px;
   background: #d9d9d9;
 }
 

@@ -524,7 +524,7 @@ export default defineComponent({
             if (res.code === 0) {
               Swal.fire({
                 title: "系统提示",
-                text: `你已领取 ${res.data.value}`,
+                text: `您已成功领取 ${res.data.value}`,
                 confirmButtonText: "确认"
               }).then((dialog) => {
                 if (dialog.isConfirmed) {

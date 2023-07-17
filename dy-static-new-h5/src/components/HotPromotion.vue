@@ -205,7 +205,7 @@
                       :loading="btnLoading"
                       @click="submitLuckyNumber()"
                       color="brand"
-                      label="发送"
+                      label="确定"
                     />
                   </q-form>
                 </div>

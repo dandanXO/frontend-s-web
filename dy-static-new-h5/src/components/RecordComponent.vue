@@ -14,7 +14,7 @@
             <template v-for="obj in Object.keys(det)" :key="obj">
               <div v-if="obj === head.key" class="desc">
                 <div v-if="obj === 'type'">
-                  {{ translateRecord(det[obj], 'type') }}
+                  {{ translateRecord(det[obj], recordType) }}
                 </div>
                 <div v-else-if="obj === 'depositAmount'">
 
@@ -42,13 +42,13 @@
                   <div
                       v-if="det[obj]=='PENDING' || det[obj]=='STEP_1'"
                       class="row items-center justify-start gap-3">
-                    <img src="../assets/records/info-icon.png"/>
-                    <span class="text-dark">
+<!--                    <img src="../assets/records/info-icon.png"/>-->
+                    <span class="text-black text-bold">
                       {{ checkRecord(det[obj], recordType) }}
                     </span>
                   </div>
                   <div
-                      v-else-if="det[obj]=='SUCCESS'"
+                      v-else-if="det[obj]=='SUCCESS' || det[obj]===2 || det[obj]=='SUPPLEMENT_SUCCESS'"
                       class="row items-center justify-start gap-3">
                     <img src="../assets/records/success-icon.png"/>
                     <span class="text-positive">
@@ -74,8 +74,8 @@
                   <div
                       v-else
                       class="row items-center justify-start gap-3">
-                    <img src="../assets/records/info-icon.png"/>
-                    <span class="text-dark">
+<!--                    <img src="../assets/records/info-icon.png"/>-->
+                    <span class="text-black text-bold">
                       {{ checkRecord(det[obj], recordType) }}
                     </span>
                   </div>

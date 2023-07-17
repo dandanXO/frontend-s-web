@@ -92,7 +92,7 @@
 
           <q-separator style="margin-top: 14px;margin-bottom:14px;"/>
 
-          <label class="label">存款金额</label>
+          <label class="label">提款金额</label>
           <q-input
               hide-bottom-space
               ref="amountRef"

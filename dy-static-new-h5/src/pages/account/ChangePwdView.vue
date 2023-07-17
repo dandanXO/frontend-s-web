@@ -53,10 +53,10 @@
           class="q-pb-xs"
           hide-bottom-space
           :type="isPwd ? 'password' : 'text'"
-          placeholder="确认新密码"
+          placeholder="请再次输入新密码"
           lazy-rules
           :rules="[
-          (val) => (val && val.length > 0) || '请输入确认新密码',
+          (val) => (val && val.length > 0) || '请再次输入新密码',
           (val) =>
                   val === updatePwdInfo.password ||
                  '确认密码与新密码不符合' ,
