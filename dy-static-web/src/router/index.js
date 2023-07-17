@@ -84,6 +84,11 @@ const routes = [
                 component: () => import(/* webpackChunkName: "Game" */ '../views/VIPView.vue')
             },
             {
+                path: "/maintenance",
+                name: "maintenance",
+                component: () => import(/* webpackChunkName: "Maintenance" */ '../views/MaintenanceView.vue')
+            },
+            {
                 path: "/refer/:referralCode",
                 name: "referCode",
                 component: () => {

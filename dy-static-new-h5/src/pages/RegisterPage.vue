@@ -11,7 +11,9 @@
         v-model="regForm.realName"
         placeholder="请输入姓名"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
+        :rules="[(val) => (val && val.length > 0) || '请输入姓名',
+        (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间'
+        , isValidName]"
     >
       <template v-slot:prepend>
         <img src="../assets/login/user-icon.png" width="16"/>
@@ -191,24 +193,24 @@
 <!--      </template>-->
 <!--    </q-input>-->
 
-    <div class="row justify-center items-center gap-5">
-      <q-checkbox
-          rounded
-          v-model="isConfirmTerm"
-          label="我已阅读并同意"
-          size="sm"
-          checked-icon="task_alt"
-          unchecked-icon="highlight_off"
-          color="light-blue-9"
-      />
-      <router-link class="txt-link" to="/">
-        [条款与规则]
-      </router-link>
-      和
-      <router-link class="txt-link" to="/">
-        [隐私政策]
-      </router-link>
-    </div>
+<!--    <div class="row justify-center items-center gap-5">-->
+<!--      <q-checkbox-->
+<!--          rounded-->
+<!--          v-model="isConfirmTerm"-->
+<!--          label="我已阅读并同意"-->
+<!--          size="sm"-->
+<!--          checked-icon="task_alt"-->
+<!--          unchecked-icon="highlight_off"-->
+<!--          color="light-blue-9"-->
+<!--      />-->
+<!--      <router-link class="txt-link" to="/">-->
+<!--        [条款与规则]-->
+<!--      </router-link>-->
+<!--      和-->
+<!--      <router-link class="txt-link" to="/">-->
+<!--        [隐私政策]-->
+<!--      </router-link>-->
+<!--    </div>-->
 
     <div class="row justify-between items-center">
       <q-btn

@@ -72,7 +72,11 @@
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" label="验证码">
+          <q-input
+              :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+              v-model="innerCaptchaRef" label="验证码"
+            ref="refInnerCaptchaCode"
+          >
             <template v-slot:append>
               <img
                 :src="verificationImg"
@@ -267,6 +271,7 @@ export default defineComponent({
     const birthdayRef = ref();
     const emailRef = ref();
     const emailOtpRef = ref();
+    const refInnerCaptchaCode= ref();
 
     const captchaRef = ref();
     const innerCaptchaRef = ref();
@@ -302,6 +307,16 @@ export default defineComponent({
           color: "negative",
           position: "top",
           message: "邮箱不能为空",
+          icon: "report_problem"
+        });
+        getCode();
+        return;
+      }
+      if(refInnerCaptchaCode.value.hasError){
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "验证码必须为4个字符串",
           icon: "report_problem"
         });
         getCode();
@@ -346,6 +361,7 @@ export default defineComponent({
       updateSecurityModal,
       updateSecurityModalVisible,
       submitUpdateSecurity,
+      refInnerCaptchaCode,
       isEditRealName,
       isEditEmail,
       isEditPhone,

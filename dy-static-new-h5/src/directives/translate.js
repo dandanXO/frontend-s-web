@@ -130,6 +130,8 @@ export const translateRecord = (rec, type = "") => {
     return "BBIN真人"; // BBINDY
   } else if (rec === "KY") {
     return "开元棋牌"; // KY
+  } else if (rec === "KYDY") {
+    return "开元棋牌"; // KY
   } else if (rec === "DT") {
     return "大唐棋牌"; // DT
   } else if (rec === "TCG") {
