@@ -93,7 +93,7 @@
               <div class="col-12">
                 <q-select
                     ref="bankCardRef"
-                    class="q-mb-md"
+                    class=""
                     color="blue"
                     filled
                     label-color="grey"
@@ -158,7 +158,7 @@
             <q-input
                 filled
                 ref="bankCardRef"
-                class="q-mb-md"
+                class=""
                 v-model="bankName"
                 disable
                 readonly
@@ -167,7 +167,7 @@
             />
           </div>
           <q-input
-              class="q-mb-md"
+              class=""
               filled
               v-model="bankCardInfo.cardAccount"
               label="特卡人姓名"
@@ -175,26 +175,72 @@
               lazy-rules
               :readonly="true"
               ref="cardAccountRef"
-              color="blue"
+              color="dark"
           />
           <q-input
               filled
-              class="q-mb-md"
+              class=""
               v-model="bankCardInfo.cardNumber"
               :label="isCrypto ? '钱包地址' : '银行卡号'"
               :rules="isCrypto ? cardCryptoRules : cardNumberRules"
               ref="cardNumberRef"
               color="blue"
           />
-          <!--          <q-input-->
-          <!--            class="q-mb-md"-->
-          <!--            filled-->
-          <!--            v-model="bankCardInfo.cardAddress"-->
-          <!--            label="开户行地址"-->
-          <!--            :rules="cardAddressRules"-->
-          <!--            ref="cardAddressRef"-->
-          <!--            color="blue"-->
-          <!--          />-->
+
+          <q-input
+              v-show="!isCrypto"
+              class="q-mb-md"
+              filled
+              v-model="bankCardInfo.cardAddress"
+              label="开户行地址"
+              :rules="cardAddressRules"
+              ref="cardAddressRef"
+              color="white"
+          />
+
+          <q-input
+              filled
+              ref="telRef"
+              v-model="bankCardInfo.telephone"
+              label="电话号码"
+              lazy-rules
+              readonly
+              clearable
+              :rules="[
+            (val) => (val && val.length > 7) || '请输入有效的电话号码',
+            isValidCnPhone
+          ]"
+              color="white"
+          >
+            <template v-slot:prepend>
+              <q-icon color="dark" name="smartphone"/>
+            </template>
+            <template v-slot:append>
+              <q-btn label="获取验证码" color="brightbtn" @click="openPhoneVeriDialog()"/>
+            </template>
+          </q-input>
+
+          <q-input
+              filled
+              class="q-mb-md"
+              v-show="bankCardInfo.smsCodeId"
+              ref="phoneVerificationRef"
+              type="text"
+              v-model="bankCardInfo.smsCode"
+              label="手机验证码"
+              lazy-rules
+              color="white"
+              maxlength="6"
+              :rules="[
+        (val) => (val && val.length > 3) || '请输入手机验证码'
+      ]"
+          >
+            <template v-slot:prepend>
+              <q-icon color="dark" name="shield"/>
+            </template>
+          </q-input>
+
+
           <div class="flex flex-center">
             <q-btn
                 class="q-mr-md"
@@ -206,6 +252,38 @@
         </q-form>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
+      <q-card width="100%">
+        <q-card-section
+            style="padding: 10px 5px"
+            class="q-pa-md bg-dyblue text-white"
+        >
+          <q-toolbar>
+            <q-toolbar-title>验证码</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close"/>
+          </q-toolbar>
+
+        </q-card-section>
+        <div style="padding: 20px">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input v-model="innerCaptchaRef" placeholder="验证码">
+              <template v-slot:append>
+                <img
+                    :src="phoneVerificationImg"
+                    title="点击刷新验证码"
+                    style="margin-top: 6px; cursor: pointer"
+                    @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue"/>
+        </div>
+      </q-card>
+    </q-dialog>
+
+
 
     <!-- <q-dialog
       wrap-class-name="bankModal"
@@ -364,12 +442,28 @@ export default defineComponent({
     const cardNumberRef = ref();
     const cardAccountRef = ref();
     const cardAddressRef = ref();
+    const telRef = ref();
+
+    const unbindCardNoRef = ref(null);
+    const isUnbindCardModal = ref(false);
+    const unbindCardNo = ref("");
+    const unbindcarddetail = ref({});
+    const captchaRef = ref();
+    const innerCodeId = ref("");
+    const innerCaptchaRef = ref("");
+    const showCaptchaDialog = ref(false);
+    const phoneVerificationImg = ref("");
+    const phoneVerificationRef = ref(null);
+
 
     const bankCardInfo = reactive({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      cardAddress: ""
+      cardAddress: "",
+      telephone: "",
+      smsCode: "",
+      smsCodeId: ""
     });
     const router = useRouter();
     const bankName = ref();
@@ -391,6 +485,10 @@ export default defineComponent({
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
+          bankCardInfo.telephone = store.phone;
+          bankCardInfo.smsCodeId = "";
+          bankCardInfo.smsCode = "";
+
           bankCardModalState.visible = true;
           if (bankCardModalState.banks.length === 0) {
             api.get("/session/withdraw/card").then((res) => {
@@ -422,13 +520,17 @@ export default defineComponent({
       })
     }
     const submitBankCard = () => {
-
       bankCardRef.value.validate();
       cardAccountRef.value.validate();
       // cardAddressRef.value.validate();
       cardNumberRef.value.validate();
+      phoneVerificationRef.value.validate();
+      // telRef.value.validate();
+
       if (bankCardRef.value.hasError || cardAccountRef.value.hasError
           // || cardAddressRef.value.hasError
+          || phoneVerificationRef.value.hasError
+          // || telRef.value.hasError
           || cardNumberRef.value.hasError) {
       } else {
         api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((response) => {
@@ -564,6 +666,78 @@ export default defineComponent({
         return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
       }
     }
+    const isValidCnPhone = () => {
+      const phonePattern =
+          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      return phonePattern.test(bankCardInfo.telephone) || "请输入有效的电话号码";
+
+    }
+
+    const openPhoneVeriDialog = () => {
+      // telRef.value.validate();
+      // if (!telRef.value.hasError) {
+      showCaptchaDialog.value = true;
+      getInnerCode();
+      // }
+
+    }
+
+    const getInnerCode = () => {
+      api
+          .get("/member/verificationCode")
+          .then((response) => {
+            if (response.code === 0) {
+              phoneVerificationImg.value =
+                  "data:image/png;base64," + response.data.img;
+              innerCodeId.value = response.data.id;
+              innerCaptchaRef.value = "";
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+          });
+    }
+
+    const onCaptchaSubmit = () => {
+      if (!bankCardInfo.telephone) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "手机号码不能为空",
+          icon: "report_problem"
+        });
+        getInnerCode();
+        return;
+      }
+      api.post(`/session/sendSms`, qs.stringify({
+        captchaCode: innerCaptchaRef.value,
+        codeId: innerCodeId.value
+      }))
+          .then(res => {
+            let message = res.message || '发送手机验证码成功',
+                color = 'positive'
+
+            if (res.code === 0) {
+              showCaptchaDialog.value = false;
+              bankCardInfo.smsCode = "";
+              bankCardInfo.smsCodeId = res.data.codeId;
+              console.log(res.data.codeId)
+            } else {
+              color = 'negative';
+              getInnerCode();
+            }
+
+            if (message) {
+              $q.notify({message, color});
+            }
+
+            console.log('onCaptchaSubmit', res)
+          }).catch(() => {
+        getInnerCode();
+      })
+    }
+
+
     return {
       searchForm,
       columns,
@@ -573,6 +747,14 @@ export default defineComponent({
       submitBankCard,
       bankCardModal,
       unbindBankCard,
+      telRef,
+      openPhoneVeriDialog,
+      showCaptchaDialog,
+      phoneVerificationImg,
+      innerCaptchaRef,
+      getInnerCode,
+      onCaptchaSubmit,
+      phoneVerificationRef,
       // virtualCurrencyModalState,
       // virtualCurrencyFormRef,
       // virtualCurrencyInfo,
@@ -678,5 +860,9 @@ export default defineComponent({
 .widthdrawBankView--content-cta {
   margin-bottom: auto;
   padding-block: 1.2em;
+}
+
+.q-toolbar {
+  background: transparent;
 }
 </style>
