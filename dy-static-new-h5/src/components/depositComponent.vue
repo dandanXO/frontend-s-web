@@ -204,7 +204,7 @@
     <q-card style="width: 100%; padding: 20px;" class="text-black">
       <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
         <strong>温馨提示</strong>
-        <br/>
+        <br/><br/>
         为保证资金安全，存款前需先验证手机号
       </q-card-section>
       <q-card-actions align="right">
@@ -251,7 +251,7 @@ const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
 const checkNewUser = () => {
-  if (store.phone == "") {
+  if (store.phone === "" || store.phone === null) {
     isNewUser.value = true;
   } else {
     api.get("/session/bankCard").then((response) => {

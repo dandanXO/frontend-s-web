@@ -284,6 +284,20 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; padding: 20px;" class="text-black">
+        <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
+          <strong>温馨提示</strong>
+          <br/><br/>
+          为保证资金安全，绑卡前需先验证手机号
+        </q-card-section>
+        <q-card-actions align="right">
+          <router-link to="/account/personal">
+            <q-btn label="前往验证" color="dyblue"/>
+          </router-link>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <!-- <q-dialog
       wrap-class-name="bankModal"
@@ -391,6 +405,13 @@ export default defineComponent({
       }
     ];
 
+    const isNewUser = ref(false);
+    const checkNewUser = () => {
+      if (store.phone === "" || store.phone === null) {
+        isNewUser.value = true;
+      }
+    };
+
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -408,6 +429,7 @@ export default defineComponent({
         console.log("error", error);
       });
       loadCards();
+      checkNewUser();
     });
     const showCard = (item, index) => {
       // if (index === isCardActive.value) {
@@ -755,6 +777,7 @@ export default defineComponent({
       getInnerCode,
       onCaptchaSubmit,
       phoneVerificationRef,
+      isNewUser,
       // virtualCurrencyModalState,
       // virtualCurrencyFormRef,
       // virtualCurrencyInfo,

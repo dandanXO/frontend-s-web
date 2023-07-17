@@ -216,20 +216,18 @@
       </div>
     </div>
 
-    <q-dialog v-model="hasWithdrawCard" persistent>
-      <q-card style="width: 100%; padding: 10px">
-        <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center">请先绑定银行卡</div>
+    <q-dialog width="100%" v-model="hasWithdrawCard" no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; padding: 20px; flex-direction:column;" class="text-black">
+        <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
+          <strong>温馨提示</strong>
+          <br/>     <br/>
+          为保证资金安全，存款前先绑定银行卡
         </q-card-section>
-
-        <div class="flex flex-center">
-          <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消"/>
-          </router-link>
+        <q-card-actions align="right">
           <router-link to="/account/withdraw">
-            <q-btn color="dyblue" label="绑定"/>
+            <q-btn label="前往绑定" color="dyblue"/>
           </router-link>
-        </div>
+        </q-card-actions>
       </q-card>
     </q-dialog>
   </div>
@@ -262,9 +260,7 @@ export default defineComponent({
       amount: ""
     });
     const isLoaded = ref(false);
-    const hasWithdrawCard = computed(() => {
-      return (isLoaded == true) && withdrawState.bankCardList.length === 0;
-    });
+    const hasWithdrawCard = ref(false);
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([]);
     onMounted(() => {
@@ -389,6 +385,9 @@ export default defineComponent({
           if (amountRef.value) {
             withdrawInfo.amount = "";
             amountRef.value.resetValidation();
+          }
+          if(withdrawState.bankCardList.length===0){
+            hasWithdrawCard.value= true;
           }
         }
       }).catch((error) => {

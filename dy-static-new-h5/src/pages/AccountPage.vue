@@ -241,12 +241,12 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-<!--        <a href="https://agt.wrxjpo3vh.com/" target="_blank">-->
-<!--          <div class="acct-nav-item">-->
-<!--            <img src="../assets/images/account/menu_affiliate.svg"/>-->
-<!--            <div class="acct-nav-label">加盟</div>-->
-<!--          </div>-->
-<!--        </a>-->
+        <a href="https://agt.wrxjpo3vh.com/dy/login" target="_blank">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/menu_affiliate.svg"/>
+            <div class="acct-nav-label">加盟</div>
+          </div>
+        </a>
         <a @click="logout">
           <div class="acct-nav-item">
             <img src="../assets/account/btn-logout.png"/>
@@ -396,7 +396,7 @@ export default defineComponent({
 .acc-head {
   background: url(../assets/images/common/bgheader.png) no-repeat center center;
   background-size: cover;
-  height: 80px;
+  height: 50px;
 }
 
 .profile {
