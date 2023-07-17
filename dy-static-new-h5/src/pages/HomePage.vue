@@ -3,7 +3,7 @@
   <q-page-container>
     <q-page>
 
-      <div class="sticky-header">
+      <div class="sticky-header" id="id-sticky-header">
         <div v-if="isH5 " class="download-top-container">
           <div class="download-top-box">
             <q-icon name="close" @click="closeTopBox"/>
@@ -369,7 +369,7 @@
                       :modules="[Thumbs, Controller]"
                       class="slot-swiper"
                       @swiper="setSlotSwiper"
-                      :controller="{ control: slotSwiper }"
+                      :controller="{ control: slotSwiper2 }"
                   >
                     <swiper-slide
                         v-for="(slt, i) in slot_odds" :key="i"
@@ -403,7 +403,7 @@
                       :modules="[Thumbs, Controller]"
                       class="slot-swiper"
                       @swiper="setSlotSwiper2"
-                      :controller="{ control: slotSwiper2 }"
+                      :controller="{ control: slotSwiper }"
                   >
                     <swiper-slide
                         v-for="(slt, i) in slot_evens" :key="i"
@@ -797,7 +797,10 @@ export default defineComponent({
     };
     const setSlotSwiper2 = (swiper) => {
       slotSwiper2.value = swiper;
+      // slotSwiper.value.controller.control = slotSwiper2.value;
     }
+
+
 
     const setSelectedSwiper = (tab) => {
       selectedTab.value = tab.name;
@@ -832,6 +835,8 @@ export default defineComponent({
         // firstSwiper.value?.slideTo(6, 500);
       }
     };
+
+
     const onSlideChange = (swiper) => {
       // Get the active slide index
       const activeIndex = swiper.activeIndex;
@@ -968,7 +973,7 @@ export default defineComponent({
 
 
     const onHomeScroll = (position) => {
-      console.log(position);
+      // console.log(position);
       scrollPosition.value = position;
       if (position === 0) {
         isZeroScrollPos.value = true;
@@ -977,24 +982,45 @@ export default defineComponent({
       }
 
       if (!isScrolling.value) {
-        if (position <= 519) {
-          selectedTab.value = 'live';
-          secondSwiper.value?.slideTo(0, 500);
-        }if (position > 520 && position <= 750) {
-          selectedTab.value = 'sport';
-          secondSwiper.value?.slideTo(1, 500);
-        } else if (position > 750 && position <= 980) {
-          selectedTab.value = 'esport';
-          secondSwiper.value?.slideTo(2, 500);
-        } else if (position > 980 && position <= 1675) {
-          selectedTab.value = 'slot';
-          secondSwiper.value?.slideTo(3, 500);
-        } else if (position > 1675 && position <= 1890) {
-          selectedTab.value = 'poker';
-          secondSwiper.value?.slideTo(4, 500);
-        } else if (position > 1890 && position <= 2100) {
+        var topHeight = document.getElementById("id-sticky-header").offsetHeight + 15;
+        var checkItem1 = document.getElementById("id-live-slide");
+        var checkItem2 = document.getElementById("id-sport-slide");
+        var checkItem3 = document.getElementById("id-esport-slide");
+        var checkItem4 = document.getElementById("id-slot-slide");
+        var checkItem5 = document.getElementById("id-poker-slide");
+        var checkItem6 = document.getElementById("id-lottery-slide");
+
+        var positionTop1 = checkItem1.getBoundingClientRect().top;
+        var positionTop2 = checkItem2.getBoundingClientRect().top;
+        var positionTop3 = checkItem3.getBoundingClientRect().top;
+        var positionTop4 = checkItem4.getBoundingClientRect().top;
+        var positionTop5 = checkItem5.getBoundingClientRect().top;
+        var positionTop6 = checkItem6.getBoundingClientRect().top;
+
+        // console.log(topHeight);
+        // console.log(positionTop6);
+        // console.log(positionTop6 - 40 <= topHeight);
+
+        if (positionTop6 - 40 <= topHeight) {
           selectedTab.value = 'lottery';
           secondSwiper.value?.slideTo(5, 500);
+
+        } else if (positionTop5 <= topHeight) {
+          selectedTab.value = 'poker';
+          secondSwiper.value?.slideTo(4, 500);
+
+        } else if (positionTop4 <= topHeight) {
+          selectedTab.value = 'slot';
+          secondSwiper.value?.slideTo(3, 500);
+        } else if (positionTop3 <= topHeight) {
+          selectedTab.value = 'esport';
+          secondSwiper.value?.slideTo(2, 500);
+        } else if (positionTop2 <= topHeight) {
+          selectedTab.value = 'sport';
+          secondSwiper.value?.slideTo(1, 500);
+        } else if (positionTop1 <= topHeight) {
+          selectedTab.value = 'live';
+          secondSwiper.value?.slideTo(0, 500);
         }
       }
 
@@ -1428,6 +1454,7 @@ export default defineComponent({
       esport,
       changeSlotSlide,
       slotSwiper,
+      slotSwiper2,
       setSlotSwiper,
       setSlotSwiper2,
       isSlotSlideEnd,
