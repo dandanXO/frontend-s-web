@@ -183,22 +183,13 @@ export default defineComponent({
 
     const tab = ref("all");
     const tabItems = [
-      {
-        name: "all",
-        label: "全部"
-      },
+      { name:"all", label: '全部' },
       {
         name: "sport",
         label: "体育"
       },
-      {
-        name: "esport",
-        label: "电竞"
-      },
-      {
-        name: "livecasino",
-        label: "真人"
-      },
+      { name: "fish", label: '捕鱼'},
+      { name: "live casino", label: '真人'},
       {
         name: "slot game",
         label: "电子"

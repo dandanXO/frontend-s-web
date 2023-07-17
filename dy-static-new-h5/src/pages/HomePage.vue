@@ -1442,13 +1442,13 @@ export default defineComponent({
   align-items: center;
 
   .header-left {
-    height: 100%;
+    height: 48px;
   }
 
   .top-logo {
     width: auto;
     height: 100%;
-    max-height: 64px;
+    max-height: 48px;
   }
 
   .header-right {
