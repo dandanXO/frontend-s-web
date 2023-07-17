@@ -396,7 +396,7 @@ export default defineComponent({
 .acc-head {
   background: url(../assets/images/common/bgheader.png) no-repeat center center;
   background-size: cover;
-  height: 80px;
+  height: 50px;
 }
 
 .profile {
