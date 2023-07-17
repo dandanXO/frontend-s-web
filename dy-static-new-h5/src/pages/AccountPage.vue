@@ -115,35 +115,41 @@
         <q-card class="bluecard vip-info-board" @click="goToVip">
 
           <div class="vipline q-mt-sm">
-            <div class="circle"><span class="bigV">v</span><span class="small">0</span></div>
+            <div class="circle"><span class="bigV">v</span><span class="small">{{ vipLevel }}</span></div>
             <div class="middle">
               <div class="row items-center justify-between">
                 <div class="left">成长值</div>
-                <div class="right">0/1</div>
+                <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div>
               </div>
 
               <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white"/>
 
             </div>
-            <div class="circle"><span class="bigV">v</span><span class="small">1</span></div>
+            <div class="circle"><span class="bigV">v</span><span class="small">{{ vipLevel + 1 }}</span></div>
           </div>
 
           <div class="vip-get-div row justify-between items-center q-mt-sm">
 
             <div class="vip-getpromo-div">
-              <img src="../assets/account/vip-tick-icon.png"/>
+              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
               <span>晋级礼包</span>
             </div>
             <div class="vip-getpromo-div">
-              <img src="../assets/account/vip-tick-icon.png"/>
+              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+
+              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
               <span>生日礼金</span>
             </div>
             <div class="vip-getpromo-div">
-              <img src="../assets/account/vip-tick-icon.png"/>
+              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+
+              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
               <span>每月活动</span>
             </div>
             <div class="vip-getpromo-div">
-              <img src="../assets/account/vip-tick-icon.png"/>
+              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
               <span>专属活动</span>
             </div>
           </div>
@@ -235,12 +241,12 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <a href="#" target="_blank">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_affiliate.svg"/>
-            <div class="acct-nav-label">加盟</div>
-          </div>
-        </a>
+<!--        <a href="https://agt.wrxjpo3vh.com/" target="_blank">-->
+<!--          <div class="acct-nav-item">-->
+<!--            <img src="../assets/images/account/menu_affiliate.svg"/>-->
+<!--            <div class="acct-nav-label">加盟</div>-->
+<!--          </div>-->
+<!--        </a>-->
         <a @click="logout">
           <div class="acct-nav-item">
             <img src="../assets/account/btn-logout.png"/>
@@ -320,7 +326,7 @@ export default defineComponent({
       }
       return store.vip;
     });
-    const vip_progress = ref(1);
+    const vip_progress = ref(store.currentDeposit / store.levelUpDeposit);
     const goToVip = () => {
       router.push("/account/vip?redirect=account");
     }
@@ -739,6 +745,14 @@ export default defineComponent({
     align-items: center;
     justify-content: flex-start;
     gap: 3px;
+
+    .getpromo-icon {
+      width: 13px;
+      background: #fff;
+      border-radius: 50%;
+      height: 13px;
+      line-height: 13px;
+    }
 
     span {
       color: #fff;
