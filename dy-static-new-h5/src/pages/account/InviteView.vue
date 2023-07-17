@@ -90,12 +90,13 @@ export default defineComponent({
       // alert(navigator.clipboard);
       // alert(Platform.is.chrome);
       // Navigator clipboard api needs a secure context (https)
+    // else if (navigator.clipboard && Platform.is.chrome) {
+    //     await navigator.clipboard.writeText(textToCopy);
+    //   }
       if (store.getDeviceType() === 'ANDROID') {
         await Clipboard.write({
           string: textToCopy
         });
-      } else if (navigator.clipboard && Platform.is.chrome) {
-        await navigator.clipboard.writeText(textToCopy);
       } else {
         // Use the 'out of viewport hidden text area' trick
         const textArea = document.createElement("textarea");
