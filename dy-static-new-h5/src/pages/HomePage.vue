@@ -17,7 +17,7 @@
           <div class="buttons">
             <q-btn
                 rounded
-                size="13px"
+                size="12px"
                 :href="`${downloadUrl}`"
                 target="_blank"
                 label="立即下载"
@@ -1551,7 +1551,7 @@ export default defineComponent({
         margin-bottom: 1px;
       }
       .download-content {
-        max-width: 12rem;
+        max-width: 11rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -1569,7 +1569,7 @@ export default defineComponent({
   text-align: center;
   height: 32px;
   color: #fff;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   border-radius: 16px;
 }
 }
