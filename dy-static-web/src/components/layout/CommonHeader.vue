@@ -14,7 +14,7 @@
               />
             </div>
             <div class="station-notice">
-              <Vue3Marquee :clone="false" :duration="50" style="width: 680px">
+              <Vue3Marquee :clone="false" :duration="30" style="width: 780px">
                 <div
                   v-for="(word, index) in announcementList"
                   :key="index"
@@ -345,9 +345,7 @@
                     }
                   ]"
                 >
-                  <template #append>
-                    范围在2-12位之间, 由中文字符组成
-                  </template>
+                  <template #append>范围在2-12位之间, 由中文字符组成</template>
                 </el-input>
               </el-space>
             </el-form-item>
@@ -1051,7 +1049,7 @@ export default defineComponent({
     });
 
     const regRules = {
-      
+
       realName: [
         {
           required: false,
@@ -1906,6 +1904,10 @@ body {
               display: flex;
               justify-content: center;
               align-items: center;
+
+              .station-notice-item {
+                margin-right: 50px;
+              }
             }
           }
         }
