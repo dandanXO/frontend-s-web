@@ -56,12 +56,12 @@ export const constantRoutes = [
     ]
   },
   {
-    name: "Team",
+    name: "Downline Info",
     path: "/team",
     component: Layout,
     meta:
     {
-      title: "Team",
+      title: "Downline Info",
       icon: "team",
       hidden: false
     },
@@ -93,7 +93,20 @@ export const constantRoutes = [
         },
         alwaysShow: true,
         redirect: null,
-      }
+      },
+      // {
+      //   name: "Bet Record",
+      //   path: "bet-record",
+      //   component: () => import('@/views/team/bet-record/index.vue'),
+      //   meta:
+      //   {
+      //     title: "Bet Record",
+      //     icon: "money",
+      //     hidden: false
+      //   },
+      //   alwaysShow: true,
+      //   redirect: null,
+      // }
     ]
   },
   {
@@ -177,6 +190,65 @@ export const constantRoutes = [
         redirect: null,
       }
     ]
+  },
+  {
+    name: "Referral Management",
+    path: "/referral",
+    component: Layout,
+    meta:
+    {
+      title: "Referral Link",
+      icon: "link",
+      hidden: false
+    },
+    alwaysShow: true,
+    redirect: "noredirect",
+    children: [
+      {
+        name: "Referral Link",
+        path: "/referral-link",
+        component: () => import('@/views/referral/referral-link/index.vue'),
+        meta:
+        {
+          title: "Referral Link",
+          icon: "link",
+          hidden: false
+        },
+        alwaysShow: true,
+        redirect: null,
+      },
+      {
+        name: "Affiliate Domain",
+        path: "/affiliate-domain",
+        component: () => import('@/views/referral/affiliate-domain/index.vue'),
+        meta:
+        {
+          title: "Affiliate Domain",
+          icon: "web",
+          hidden: false
+        },
+        alwaysShow: true,
+        redirect: null,
+      }
+    ]
+  },
+  {
+    name: "Personal Center",
+    path: "/personal",
+    component: Layout,
+    children: [
+      {
+        path: "",
+        component: () => import(/* webpackChunkName: "personal" */ "../views/personal/index.vue"),
+        name: "Personal Center",
+        meta: {
+          title: "Personal Center",
+          icon: "people"
+        }
+      }
+    ],
+    alwaysShow: true,
+    redirect: "noredirect"
   },
   {
     path: "/my/login",
