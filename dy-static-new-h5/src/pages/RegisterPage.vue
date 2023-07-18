@@ -166,7 +166,7 @@
         v-model="regForm.captchaCode"
         placeholder="验证码"
         lazy-rules
-        :rules="[(val) => (val && val.length > 3) || '请输入验证码']"
+        :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
     >
       <template v-slot:append>
         <img :src="verificationImg" @click="getCode()"/>

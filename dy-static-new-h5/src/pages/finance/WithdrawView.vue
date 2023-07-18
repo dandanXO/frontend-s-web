@@ -386,7 +386,8 @@ export default defineComponent({
             withdrawInfo.amount = "";
             amountRef.value.resetValidation();
           }
-          if(withdrawState.bankCardList.length===0){
+
+          if(!response.data || response.data.length===0){
             hasWithdrawCard.value= true;
           }
         }

@@ -268,7 +268,10 @@
         </q-card-section>
         <div style="padding: 20px">
           <q-card-section class="q-mb-md q-pa-md">
-            <q-input v-model="innerCaptchaRef" placeholder="验证码">
+            <q-input
+                ref="refInnerCaptcha"
+                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+                v-model="innerCaptchaRef" placeholder="验证码">
               <template v-slot:append>
                 <img
                     :src="phoneVerificationImg"
@@ -476,7 +479,7 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
     const phoneVerificationRef = ref(null);
-
+    const refInnerCaptcha= ref();
 
     const bankCardInfo = reactive({
       bankId: undefined,
@@ -730,7 +733,17 @@ export default defineComponent({
         });
         getInnerCode();
         return;
+      }else if (refInnerCaptcha.value?.hasError) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "验证码必须为4个字符串",
+          icon: "report_problem"
+        });
+        getInnerCode();
+        return;
       }
+
       api.post(`/session/sendSms`, qs.stringify({
         captchaCode: innerCaptchaRef.value,
         codeId: innerCodeId.value
@@ -774,6 +787,7 @@ export default defineComponent({
       showCaptchaDialog,
       phoneVerificationImg,
       innerCaptchaRef,
+      refInnerCaptcha,
       getInnerCode,
       onCaptchaSubmit,
       phoneVerificationRef,

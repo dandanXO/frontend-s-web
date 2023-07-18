@@ -9,7 +9,7 @@
           class="q-pb-xs"
           hide-bottom-space
           :type="isPwd ? 'password' : 'text'"
-          placeholder="旧密码"
+          placeholder="请输入旧密码"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
       >
@@ -30,7 +30,7 @@
           class="q-pb-xs"
           hide-bottom-space
           :type="isPwd ? 'password' : 'text'"
-          placeholder="新密码"
+          placeholder="请输入新密码"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
           label-color="brand"

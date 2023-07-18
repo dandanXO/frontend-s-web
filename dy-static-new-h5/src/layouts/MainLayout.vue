@@ -8,7 +8,7 @@
       >
         <div class="logo">
           <router-link to="/">
-            <img src="../assets/home/logo.png"/>
+            <img src="../assets/index/logo.png"/>
           </router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">

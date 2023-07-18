@@ -52,3 +52,7 @@ export const getAffiliateBalance = (id) => {
 export const updateRealName = (updateInfo) => {
   return https('affiliate').request(`/session/account`, Method.POST, updateInfo, ContentType.form);
 }
+
+export const getAffiliateDomain = (id) => {
+  return https().request(`/affiliate/${id}/domain`, Method.GET);
+};

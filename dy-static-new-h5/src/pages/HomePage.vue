@@ -629,9 +629,10 @@
   </q-page-container>
 
   <q-page-sticky
+      v-if="isShowBackTop"
       position="bottom-right"
       :offset="[18, 68]"
-      style="transform: none"
+      style="transform: none; z-index:999;"
   >
     <q-btn
         padding="sm"
@@ -801,7 +802,6 @@ export default defineComponent({
     }
 
 
-
     const setSelectedSwiper = (tab) => {
       selectedTab.value = tab.name;
       // console.log(tab.name);
@@ -967,11 +967,12 @@ export default defineComponent({
         });
         setTimeout(() => {
           isScrolling.value = false;
-        }, 2000)
+        }, 1500)
       }
     }
 
 
+    const isShowBackTop = ref(false);
     const onHomeScroll = (position) => {
       // console.log(position);
       scrollPosition.value = position;
@@ -979,6 +980,11 @@ export default defineComponent({
         isZeroScrollPos.value = true;
       } else {
         isZeroScrollPos.value = false;
+      }
+      if (position > 400) {
+        isShowBackTop.value = true;
+      } else {
+        isShowBackTop.value = false;
       }
 
       if (!isScrolling.value) {
@@ -1487,7 +1493,8 @@ export default defineComponent({
       downloadUrl,
       isZeroScrollPos,
       scrollPosition,
-      scrollSlotRef
+      scrollSlotRef,
+      isShowBackTop
     };
   }
 });
@@ -1549,6 +1556,7 @@ export default defineComponent({
   top: 0px;
   z-index: 999;
   width: 100%;
+  max-width: 500px;
   height: auto;
   background: #fff;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
@@ -1983,12 +1991,6 @@ export default defineComponent({
 
 }
 
-.details-container {
-  background: url("../assets/images/index/details_bg.png") no-repeat;
-  // height: 2.5rem;
-  width: 100%;
-  background-size: 100% 132px;
-}
 
 //.welcome-bar {
 //  display: flex;

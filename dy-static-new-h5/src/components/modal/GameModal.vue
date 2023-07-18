@@ -122,7 +122,7 @@
         class="gameDialog"
         style="width: 100%; margin: 0 auto"
     >
-      <img src="../../assets/logo-coming.png" style="width: 80%;"/>
+<!--      <img src="../../assets/logo-coming.png" style="width: 80%;"/>-->
     </q-dialog>
   </q-scroll-area>
 </template>
