@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div id="id-sticky-header"
-      :class="(isShowDownload==false) ? 'sticky-header' : ''"
+         :class="(isShowDownload==false) ? 'sticky-header' : ''"
     >
       <div v-if="isH5 && isShowDownload" class="download-top-container">
         <div class="download-top-box">
@@ -138,7 +138,7 @@
     </div>
 
     <div class="home-all-slider"
-         :class="(isH5 && isShowDownload) ? '' : 'padding-normal'"
+         :class="(isShowDownload) ? '' : 'padding-normal'"
          v-scroll="onHomeScroll">
 
       <div class="home-top-slider">
@@ -961,7 +961,7 @@ export default defineComponent({
       if (slideItem) {
         var positionY = slideItem.offsetTop;
         console.log(positionY);
-        var y_axis = positionY + 215;
+        var y_axis = positionY + 225;
 
         window.scroll({
           top: y_axis,
@@ -977,7 +977,7 @@ export default defineComponent({
     const store = userStore();
     const isShowBackTop = ref(false);
     const isShowDownload = ref(true);
-    if(store.hasToken()){
+    if (store.hasToken()) {
       isShowDownload.value = false;
     }
 
@@ -989,7 +989,7 @@ export default defineComponent({
       } else {
         isZeroScrollPos.value = false;
       }
-      if(!store.hasToken()){
+      if (!store.hasToken()) {
         if (position > 55) {
           isShowDownload.value = false;
         } else {
@@ -1705,6 +1705,8 @@ padding-top: 225px;
 padding-top: 148px;
 }
 
+  &.padding-second {
+  }
 }
 
 .home-top-slider {
@@ -1743,7 +1745,7 @@ padding-top: 0;
 }
 
 &.lottery-slides {
-  height: 250px;
+      //height: 400px;
 }
 
 a {
