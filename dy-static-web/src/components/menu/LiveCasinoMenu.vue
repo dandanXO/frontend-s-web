@@ -3,7 +3,7 @@
     <div class="platform-menu live">
       <div
         class="platform-box"
-        v-for="nav in navigations"
+        v-for="nav in filteredNavigations"
         :key="nav.code"
         @click="$emit('loadModal', nav.label, nav.code, nav.gameCode)"
       >
@@ -27,12 +27,18 @@
     </div>
   </div>
 </template>
+
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
+import {
+  getPlatformListDisplay,
+  getLoggedInPlatformList
+} from "@/api/platform/platform";
+import { userStore } from "@/store";
 
 export default defineComponent({
-  data: () => ({
-    navigations: [
+  setup() {
+    const navigations = [
       {
         code: "AG",
         icon: "ag",
@@ -63,7 +69,44 @@ export default defineComponent({
       }
       // { code:"BG", icon: "bg", label: "BG", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
       // { code:"Sexy", icon: "sexy", label: "Sexy", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
-    ]
-  })
+    ];
+
+    const store = userStore();
+    const platformsList = ref([]);
+    const platformsListDisplay = ref([]);
+    const getPlatList = () => {
+      if (store.memberType === "TEST") {
+        getLoggedInPlatformList().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.includes("LIVE")
+          );
+        });
+      } else {
+        getPlatformListDisplay().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.includes("LIVE")
+          );
+        });
+      }
+    };
+    const filteredNavigations = computed(() => {
+      return navigations.filter((nav) =>
+        platformsListDisplay.value.some(
+          (platform) => platform.code === nav.code
+        )
+      );
+    });
+
+    onMounted(() => {
+      getPlatList();
+    });
+
+    return {
+      filteredNavigations,
+      getPlatList
+    };
+  }
 });
 </script>

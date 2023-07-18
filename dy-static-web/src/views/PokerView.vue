@@ -2,11 +2,11 @@
   <div class="poker-container">
       <div class="poker-container-list">
           <div class="platform-list-box">
-            <span class="platform-list-item platform" v-for="(plat, i) in platforms" :key="i" @click="clickPlat(plat)" :class="{active: selectedPlat === plat.code}">
+            <span class="platform-list-item platform" v-for="(plat, i) in filteredPlatforms" :key="i" @click="clickPlat(plat)" :class="{active: selectedPlat === plat.code}">
               {{plat.name}}棋牌
             </span>
           </div>
-          <template v-for="(det, idx) in platforms" :key="idx">
+          <template v-for="(det, idx) in filteredPlatforms" :key="idx">
             <div class="poker-container-inner" v-if="selectedPlat === det.code" :class="det.style">
               <!-- <div class="poker-left" data-aos="fade-right" data-aos-duration="4000">
                   <img :src="require('../assets/poker/title_poker_' + det.image + '.png')" style="margin-bottom: 54px;">
@@ -57,10 +57,17 @@
   </div>
   <GameModal ref="pokerGame"></GameModal>
 </template>
+
 <script>
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, ref, onMounted, watch } from "vue";
 import GameModal from "@/components/modal/GameModal";
+import { useRoute, useRouter } from "vue-router";
 import aos from "aos";
+import {
+  getPlatformListDisplay,
+  getLoggedInPlatformList
+} from "@/api/platform/platform";
+import { userStore } from "@/store";
 
 export default defineComponent({
   components: {
@@ -68,8 +75,12 @@ export default defineComponent({
   },
   setup() {
     const pokerGame = ref(null);
+    const route = useRoute();
+    const router = useRouter();
+    const store = userStore();
+
     const platforms = ref([
-      {
+    {
         code: 'DT',
         name: '大唐',
         image: 'tx',
@@ -85,27 +96,95 @@ export default defineComponent({
         gameCode: 'ky_lobby',
         message: '双赢棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！'
       },
-    ])
-    const selectedPlat = ref(platforms.value[0].code);
+    ]);
+
+    const filteredPlatforms = ref([]);
+    const platformsList = ref([]);
+    const platformsListDisplay = ref([]);
+    const getPlatList = () => {
+      if (store.memberType === "TEST") {
+        getLoggedInPlatformList().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.includes("POKER")
+          );
+          setFilteredPlatforms();
+        });
+      } else {
+        getPlatformListDisplay().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.includes("POKER")
+          );
+          setFilteredPlatforms();
+        });
+      }
+    };
+
+    const setFilteredPlatforms = () => {
+      filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
+        platformsListDisplay.value.some(
+          (platform) => platform.code === displayPlatform.code
+        )
+      );
+
+      filteredPlatforms.value.forEach((element) => {
+        if (element.code === route.query.plat) {
+          clickPlat(element);
+        }
+      });
+      setSelectedPlat();
+    };
+
+    const selectedPlat = ref(null);
+    const setSelectedPlat = () => {
+      if (filteredPlatforms.value.length > 0) {
+        selectedPlat.value = filteredPlatforms.value[0].code;
+      } else {
+        selectedPlat.value = null;
+      }
+    };
+
     const clickPlat = (plat) => {
-      selectedPlat.value = plat.code
-    }
+      router.push({ path: "poker", query: { plat: plat.code } });
+      selectedPlat.value = plat.code;
+    };
 
     const openGame = (gameName, code, gameCode) => {
       pokerGame.value.open(gameName, code, gameCode);
     };
+
     onMounted(() => {
       aos.refresh();
+      getPlatList();
     });
+
+    watch(
+      () => route.query.plat,
+      () => {
+        if (route.path === "/poker") {
+          filteredPlatforms.value.forEach((element) => {
+            if (element.code === route.query.plat) {
+              clickPlat(element);
+            }
+          });
+        }
+      }
+    );
+
     return {
       platforms,
       selectedPlat,
       clickPlat,
       openGame,
-      pokerGame
-    }
-  },
-})
+      pokerGame,
+      filteredPlatforms,
+      setSelectedPlat,
+      getPlatList,
+      setFilteredPlatforms
+    };
+  }
+});
 </script>
 
 <style scoped lang="scss">

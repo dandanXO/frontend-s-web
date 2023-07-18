@@ -55,7 +55,7 @@
           <label class="header-label">生日</label>
         </template>
         <template v-slot:append>
-          <q-icon name="event" color="dark" class="cursor-pointer">
+          <q-icon v-if="isEditBirthday" name="event" color="dark" class="cursor-pointer">
             <q-popup-proxy
               cover
               transition-show="scale"

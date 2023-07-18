@@ -191,14 +191,14 @@
                 <img src="../assets/home/dy.png" />
                 <div>小艾电竞</div>
               </a>
-              <div
+              <!-- <div
                 class="game-platform"
                 @click="openGame('IM', 'onlyPlatform', 'IMES')"
                 style="margin-left: 14px"
               >
                 <img src="../assets/home/dy.png" />
                 <div>IM电竞</div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

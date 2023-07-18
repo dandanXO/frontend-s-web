@@ -267,9 +267,9 @@
                     >
                       发送验证码
                     </el-button>
-                    <el-button v-else disabled size="small" class="common-btn">
+                    <div v-else disabled>
                       已发送（倒数{{ loginCountdown }}秒）
-                    </el-button>
+                    </div>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -476,15 +476,9 @@
               >
                 获取验证码
               </el-button>
-              <el-button
-                class="common-btn"
-                style="margin-left: 10px"
-                type="button"
-                v-if="isSendOtp"
-                disabled
-              >
+              <div style="margin-left: 10px" v-if="isSendOtp">
                 获取已发送（倒数 {{ countdown }}秒)
-              </el-button>
+              </div>
             </el-form-item>
             <el-form-item label="电话验证码" prop="smsCode" v-if="isSendOtp">
               <el-input
