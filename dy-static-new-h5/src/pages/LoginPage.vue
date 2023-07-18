@@ -411,8 +411,8 @@ export default defineComponent({
                 .then(() => {
                   $q.loading.hide();
                   sessionStorage.removeItem("REFERRAL_CODE");
-
-                  phoneLoginForm.value.reset();
+                  
+                  loginFormRef.value.reset();
 
                   if (store.hasToken()) {
                     const jumpUrl = route.query.redirect ? route.query.redirect : "/";
