@@ -1,7 +1,7 @@
 <template>
   <div class="welcome-page">
     <div class="logo">
-      <img src="../assets/welcome/logo.png">
+<!--      <img src="../assets/welcome/logo.png">-->
     </div>
     <div class="promotionlist">
       <span v-for="i in 4" :key="i">

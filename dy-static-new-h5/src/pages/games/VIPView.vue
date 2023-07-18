@@ -1227,7 +1227,7 @@ program at any time without prior notice.`
 
 
   .banner-container {
-    background: url("../../assets/vip/banner.png") no-repeat center center;
+    //background: url("../../assets/vip/banner.png") no-repeat center center;
     background-size: cover;
     margin-bottom: -200px;
     padding-top: 100px;

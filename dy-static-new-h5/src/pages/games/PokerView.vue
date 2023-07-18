@@ -47,7 +47,7 @@
           </div>
           <GameModal ref="casinoGame"></GameModal>
         </div>
-        <img src="../../assets/images/games/liveCasino/live-bg.png" />
+<!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
       </q-intersection>
     </q-scroll-area>
   </div>
@@ -81,34 +81,34 @@ function playGame(gameName, platformCode, gameCode, gameStatus) {
 //     });
 // };
 const pokerGames = [
-  {
-    code: "JILI",
-    name: "Jili Games",
-    status: "NORMAL",
-    gameName: "Jili",
-    gameCode: "64",
-    bg: require("../../assets/images/games/poker/jili.png"),
-    main: require("../../assets/images/games/poker/poker1_1.png"),
-    logo: require("../../assets/images/common/logo/jl.png")
-  },
-  {
-    code: "RICH88",
-    name: "Rich88",
-    status: "NORMAL",
-    gameName: "Rich88",
-    bg: require("../../assets/images/games/poker/rich88.png"),
-    main: require("../../assets/images/games/poker/poker2_01.png"),
-    logo: require("../../assets/images/common/logo/RICH88.png")
-  },
-  {
-    code: "KM",
-    name: "KM",
-    status: "NORMAL",
-    gameName: "KM",
-    bg: require("../../assets/images/games/poker/kingmaker.png"),
-    main: require("../../assets/images/games/poker/poker3_01.png"),
-    logo: require("../../assets/images/common/logo/km.png")
-  }
+  // {
+  //   code: "JILI",
+  //   name: "Jili Games",
+  //   status: "NORMAL",
+  //   gameName: "Jili",
+  //   gameCode: "64",
+  //   bg: require("../../assets/images/games/poker/jili.png"),
+  //   main: require("../../assets/images/games/poker/poker1_1.png"),
+  //   logo: require("../../assets/images/common/logo/jl.png")
+  // },
+  // {
+  //   code: "RICH88",
+  //   name: "Rich88",
+  //   status: "NORMAL",
+  //   gameName: "Rich88",
+  //   bg: require("../../assets/images/games/poker/rich88.png"),
+  //   main: require("../../assets/images/games/poker/poker2_01.png"),
+  //   logo: require("../../assets/images/common/logo/RICH88.png")
+  // },
+  // {
+  //   code: "KM",
+  //   name: "KM",
+  //   status: "NORMAL",
+  //   gameName: "KM",
+  //   bg: require("../../assets/images/games/poker/kingmaker.png"),
+  //   main: require("../../assets/images/games/poker/poker3_01.png"),
+  //   logo: require("../../assets/images/common/logo/km.png")
+  // }
 ];
 onMounted(() => {});
 </script>

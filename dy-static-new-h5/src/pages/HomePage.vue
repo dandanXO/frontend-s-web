@@ -629,9 +629,10 @@
   </q-page-container>
 
   <q-page-sticky
+      v-if="isShowBackTop"
       position="bottom-right"
       :offset="[18, 68]"
-      style="transform: none"
+      style="transform: none; z-index:999;"
   >
     <q-btn
         padding="sm"
@@ -799,7 +800,6 @@ export default defineComponent({
       slotSwiper2.value = swiper;
       // slotSwiper.value.controller.control = slotSwiper2.value;
     }
-
 
 
     const setSelectedSwiper = (tab) => {
@@ -972,6 +972,7 @@ export default defineComponent({
     }
 
 
+    const isShowBackTop = ref(false);
     const onHomeScroll = (position) => {
       // console.log(position);
       scrollPosition.value = position;
@@ -979,6 +980,11 @@ export default defineComponent({
         isZeroScrollPos.value = true;
       } else {
         isZeroScrollPos.value = false;
+      }
+      if (position > 400) {
+        isShowBackTop.value = true;
+      } else {
+        isShowBackTop.value = false;
       }
 
       if (!isScrolling.value) {
@@ -1487,7 +1493,8 @@ export default defineComponent({
       downloadUrl,
       isZeroScrollPos,
       scrollPosition,
-      scrollSlotRef
+      scrollSlotRef,
+      isShowBackTop
     };
   }
 });

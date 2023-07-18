@@ -75,17 +75,6 @@ const routes = [
     ]
   },
   {
-    path: "/live-casino",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "live-casino",
-        component: () => import("pages/games/LiveCasinoView.vue")
-      }
-    ]
-  },
-  {
     path: "/sport",
     component: () => import("layouts/MainLayout.vue"),
     children: [
