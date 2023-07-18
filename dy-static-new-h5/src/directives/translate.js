@@ -7,7 +7,9 @@ export const translateRecord = (rec, type = "") => {
     }
     return "提款"; // Withdraw
   } else if (rec === "DEPOSIT") {
-    if (type === "transfer" || type === "moneyChange") {
+    if (type === "transfer") {
+      return "转进";
+    }else if(type === "moneyChange"){
       return "转账";
     }
     return "存款"; // 存款
