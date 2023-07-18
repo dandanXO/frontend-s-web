@@ -3,7 +3,7 @@
     <div class="platform-list-box">
       <span
         class="platform-list-item platform"
-        v-for="(plat, i) in platforms"
+        v-for="(plat, i) in filteredPlatforms"
         :key="i"
         @click="clickPlat(plat)"
         :class="{ active: selectedPlat === plat.code }"
@@ -13,7 +13,7 @@
     </div>
     <div class="nav-pane">
       <div class="esports-container-inner">
-        <template v-for="(det, idx) in platforms" :key="idx">
+        <template v-for="(det, idx) in filteredPlatforms" :key="idx">
           <template v-if="selectedPlat === det.code">
             <div class="top" :class="det.image">
               <img
@@ -78,10 +78,16 @@
   </div>
   <GameModal ref="sportsGame"></GameModal>
 </template>
+
 <script>
 import { defineComponent, ref, onMounted, watch } from "vue";
 import GameModal from "@/components/modal/GameModal";
 import { useRoute, useRouter } from "vue-router";
+import {
+  getPlatformListDisplay,
+  getLoggedInPlatformList
+} from "@/api/platform/platform";
+import { userStore } from "@/store";
 
 export default defineComponent({
   components: {
@@ -91,6 +97,8 @@ export default defineComponent({
     const sportsGame = ref(null);
     const route = useRoute();
     const router = useRouter();
+    const store = userStore();
+
     const platforms = ref([
       {
         code: "TFGaming",
@@ -123,7 +131,54 @@ export default defineComponent({
         right: "全新体验"
       }
     ]);
-    const selectedPlat = ref(platforms.value[0].code);
+
+    const filteredPlatforms = ref([]);
+    const platformsList = ref([]);
+    const platformsListDisplay = ref([]);
+    const getPlatList = () => {
+      if (store.memberType === "TEST") {
+        getLoggedInPlatformList().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.includes("ESPORT")
+          );
+          setFilteredPlatforms();
+        });
+      } else {
+        getPlatformListDisplay().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.includes("ESPORT")
+          );
+          setFilteredPlatforms();
+        });
+      }
+    };
+
+    const setFilteredPlatforms = () => {
+      filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
+        platformsListDisplay.value.some(
+          (platform) => platform.code === displayPlatform.code
+        )
+      );
+
+      filteredPlatforms.value.forEach((element) => {
+        if (element.code === route.query.plat) {
+          clickPlat(element);
+        }
+      });
+      setSelectedPlat();
+    };
+
+    const selectedPlat = ref(null);
+    const setSelectedPlat = () => {
+      if (filteredPlatforms.value.length > 0) {
+        selectedPlat.value = filteredPlatforms.value[0].code;
+      } else {
+        selectedPlat.value = null;
+      }
+    };
+
     const clickPlat = (plat) => {
       router.push({ path: "esports", query: { plat: plat.code } });
       selectedPlat.value = plat.code;
@@ -133,11 +188,15 @@ export default defineComponent({
       sportsGame.value.open(gameName, "onlyPlatform", gameCode);
     };
 
+    onMounted(() => {
+      getPlatList();
+    });
+
     watch(
       () => route.query.plat,
       () => {
         if (route.path === "/esports") {
-          platforms.value.forEach((element) => {
+          filteredPlatforms.value.forEach((element) => {
             if (element.code === route.query.plat) {
               clickPlat(element);
             }
@@ -145,19 +204,17 @@ export default defineComponent({
         }
       }
     );
-    onMounted(() => {
-      platforms.value.forEach((element) => {
-        if (element.code === route.query.plat) {
-          clickPlat(element);
-        }
-      });
-    });
+
     return {
       platforms,
       selectedPlat,
       clickPlat,
       openGame,
-      sportsGame
+      sportsGame,
+      filteredPlatforms,
+      setSelectedPlat,
+      getPlatList,
+      setFilteredPlatforms
     };
   }
 });

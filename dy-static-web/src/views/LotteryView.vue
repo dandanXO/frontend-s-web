@@ -3,7 +3,7 @@
     <div class="game-tab-content">
       <div class="pane-bg"></div>
 
-      <template v-for="(det, idx) in platforms" :key="idx">
+      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
         <template v-if="selectedPlat === det.code">
           <div
             :class="'lottery-pane-bg lottery-pane-' + det.image + '-bg'"
@@ -58,7 +58,7 @@
       </template>
     </div>
     <ul class="nav nav-tabs lottery-tabs" id="myTab" role="tablist">
-      <template v-for="(det, idx) in platforms" :key="idx">
+      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
         <li class="nav-item custom-nav-item">
           <a
             :class="[
@@ -77,11 +77,18 @@
   </div>
   <GameModal ref="liveGame"></GameModal>
 </template>
+
 <script>
-import { defineComponent, onMounted, ref } from "vue";
-import GameModal from "@/components/modal/GameModal";
+import { defineComponent, ref, onMounted, watch } from "vue";
 import aos from "aos";
+import GameModal from "@/components/modal/GameModal";
+import { useRoute, useRouter } from "vue-router";
 import { TweenMax } from "gsap";
+import {
+  getPlatformListDisplay,
+  getLoggedInPlatformList
+} from "@/api/platform/platform";
+import { userStore } from "@/store";
 
 export default defineComponent({
   components: {
@@ -89,8 +96,12 @@ export default defineComponent({
   },
   setup() {
     const liveGame = ref(null);
+    const route = useRoute();
+    const router = useRouter();
+    const store = userStore();
+
     const platforms = ref([
-      {
+    {
         code: "TCG",
         name: "TCG",
         image: "tcg",
@@ -115,11 +126,63 @@ export default defineComponent({
       //     "专注于彩票游戏行业多年，拥有经典彩种、玩法。还有超多独家创新玩法，足够新颖，极易操作的游戏界面，更是在您游戏过程中增光添彩！"
       // }
     ]);
-    const selectedPlat = ref(platforms.value[0].code);
+
+    const filteredPlatforms = ref([]);
+    const platformsList = ref([]);
+    const platformsListDisplay = ref([]);
+    const getPlatList = () => {
+      if (store.memberType === "TEST") {
+        getLoggedInPlatformList().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.includes("LOTTERY")
+          );
+          setFilteredPlatforms();
+        });
+      } else {
+        getPlatformListDisplay().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.includes("LOTTERY")
+          );
+          setFilteredPlatforms();
+        });
+      }
+    };
+
+    const setFilteredPlatforms = () => {
+      filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
+        platformsListDisplay.value.some(
+          (platform) => platform.code === displayPlatform.code
+        )
+      );
+
+      filteredPlatforms.value.forEach((element) => {
+        if (element.code === route.query.plat) {
+          clickPlat(element);
+        }
+      });
+      setSelectedPlat();
+    };
+
+    const selectedPlat = ref(null);
+    const setSelectedPlat = () => {
+      if (filteredPlatforms.value.length > 0) {
+        selectedPlat.value = filteredPlatforms.value[0].code;
+      } else {
+        selectedPlat.value = null;
+      }
+    };
+
+    // const clickPlat = (plat) => {
+    //   router.push({ path: "live-casino", query: { plat: plat.code } });
+    //   selectedPlat.value = plat.code;
+    // };
 
     const clickPlat = (plat) => {
       setTimeout(() => {
         selectedPlat.value = plat;
+        router.push({ path: "lottery", query: { plat: plat.code } });
       }, 300);
 
       TweenMax.fromTo(
@@ -165,21 +228,44 @@ export default defineComponent({
     };
 
     const openGame = (gameName, code, gameCode) => {
+      // console.log(gameName);
+      // console.log(gameCode);
       liveGame.value.open(gameName, code, gameCode);
     };
+
     onMounted(() => {
       aos.refresh();
+      getPlatList();
     });
+
+    watch(
+      () => route.query.plat,
+      () => {
+        if (route.path === "/lottery") {
+          filteredPlatforms.value.forEach((element) => {
+            if (element.code === route.query.plat) {
+              clickPlat(element);
+            }
+          });
+        }
+      }
+    );
+
     return {
       platforms,
       selectedPlat,
       clickPlat,
       openGame,
-      liveGame
+      liveGame,
+      filteredPlatforms,
+      setSelectedPlat,
+      getPlatList,
+      setFilteredPlatforms
     };
   }
 });
 </script>
+
 
 <style scoped lang="scss">
 .game-container {
