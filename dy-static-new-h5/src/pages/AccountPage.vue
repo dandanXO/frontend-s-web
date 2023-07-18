@@ -241,12 +241,12 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-<!--        <a href="https://agt.wrxjpo3vh.com/" target="_blank">-->
-<!--          <div class="acct-nav-item">-->
-<!--            <img src="../assets/images/account/menu_affiliate.svg"/>-->
-<!--            <div class="acct-nav-label">加盟</div>-->
-<!--          </div>-->
-<!--        </a>-->
+        <a href="https://agt.wrxjpo3vh.com/dy/login" target="_blank">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/menu_affiliate.svg"/>
+            <div class="acct-nav-label">加盟</div>
+          </div>
+        </a>
         <a @click="logout">
           <div class="acct-nav-item">
             <img src="../assets/account/btn-logout.png"/>
@@ -259,7 +259,8 @@
 
     <q-card class="card-account-banner">
       <q-card-section>
-        <img class="account-banner-img" src="../assets/account/account-banner-img.png"/>
+        <img class="account-banner-img"
+             src="https://xinfa-files.s3.ap-southeast-1.amazonaws.com/promo/40bf26d5-2b63-45e6-901e-256eeede63de.jpg"/>
       </q-card-section>
     </q-card>
     <!--    <a @click="logout">-->
@@ -283,6 +284,7 @@ import {userStore} from "stores/index";
 import {useRouter} from "vue-router";
 import {App} from "@capacitor/app";
 import {RiRefreshLine} from "vue-remix-icons";
+import {api} from "boot/axios";
 
 export default defineComponent({
   name: "AccountPage",
@@ -355,7 +357,22 @@ export default defineComponent({
       store.getBalance();
       // store.getUnreadTotal();
       getVersionNo();
+      getPromoImage();
     });
+
+    const btm_banners = ref();
+    const getPromoImage = () => {
+      api
+          .get("/promo/banner?category=CENTERPROMO")
+          .then((res) => {
+            if (res.code === 0) {
+              btm_banners.value = res.data;
+            }
+          })
+          .catch(() => {
+          });
+    }
+
     onBeforeUnmount(() => {
       clearInterval(timerBalance.value);
     });
@@ -387,7 +404,8 @@ export default defineComponent({
       isLoadingBalance,
       selfTgurl,
       vip_progress,
-      goToVip
+      goToVip,
+      btm_banners
     };
   }
 });
@@ -396,7 +414,7 @@ export default defineComponent({
 .acc-head {
   background: url(../assets/images/common/bgheader.png) no-repeat center center;
   background-size: cover;
-  height: 80px;
+  height: 50px;
 }
 
 .profile {
@@ -768,6 +786,8 @@ export default defineComponent({
 
   .account-banner-img {
     width: 100%;
+    border-radius: 10px 10px 0px 0px;
+
   }
 }
 
