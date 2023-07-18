@@ -115,7 +115,7 @@
       <q-tabs
           v-model="tab"
           no-caps
-          class="bg-primary text-white shadow-2"
+          class="bg-primary text-white "
           :breakpoint="0"
           align="justify"
       >
@@ -127,17 +127,17 @@
           />
           首页
         </q-route-tab>
-        <!--        <q-route-tab to="/sport" name="sport">-->
-        <!--          <img-->
-        <!--            class="inactive"-->
-        <!--            src="../assets/images/index/menu/ft-sport.svg"-->
-        <!--          />-->
-        <!--          <img-->
-        <!--            class="hover"-->
-        <!--            src="../assets/images/index/menu/ft-sport-active.svg"-->
-        <!--          />-->
-        <!--          优惠-->
-        <!--        </q-route-tab>-->
+                <q-route-tab to="/sport" name="sport">
+                  <img
+                    class="inactive"
+                    src="../assets/images/index/menu/ft-sport.svg"
+                  />
+                  <img
+                    class="hover"
+                    src="../assets/images/index/menu/ft-sport-active.svg"
+                  />
+                  电竞
+                </q-route-tab>
         <q-route-tab to="/promo" name="promo">
           <img
               class="inactive"
@@ -329,8 +329,8 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "电子竞技";
         } else if (route.path === "/sport") {
-          hasPage.value = true;
-          pageName.value = "体育";
+          hasPage.value = false;
+          pageName.value = "电竞";
         } else if (route.path === "/fish") {
           hasPage.value = true;
           pageName.value = "捕鱼达人";
