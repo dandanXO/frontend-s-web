@@ -4,6 +4,12 @@ export default {
     logout: "Logout",
     changePassword: "Change Password"
   },
+  depositStatus: {
+    SUCCESS: 'Success',
+    SUPPLEMENT_SUCCESS: 'Supplement Success',
+    CLOSED: 'Closed',
+    PENDING: 'Pending'
+  },
   fields: {
     account: "Account",
     accountInfo: "Account Information",
@@ -44,6 +50,8 @@ export default {
     deposit: "Deposit",
     depositAmount: "Deposit Amount",
     depositCount: "Deposit Count",
+    depositDate: "Deposit Date",
+    depositRecord: "Deposit Record",
     domainAffiliate: "Affiliate Domain",
     domainApp: "PC Domain",
     domainWeb: "Mobile Domain",
@@ -55,6 +63,7 @@ export default {
     email: "Email",
     endDate: "End Date",
     enterTheWithdrawalAmount: "Enter the withdrawal amount",
+    finishDate: "Finish Date",
     firstDepositUsers: "First Deposit Users",
     gameName: "Game Name",
     gameType: "Game Type",
@@ -73,6 +82,7 @@ export default {
     noData: "No Data",
     operate: "Operate",
     password: "Password",
+    paymentName: "Payment Name",
     payout: "Payout",
     platform: "Platform",
     profit: "Profit",
@@ -90,6 +100,7 @@ export default {
     selectACard: "Select a card",
     selectBankCard: "Select bank card",
     selectUsdtWallet: "Please select a USDT wallet",
+    serialNumber: "Serial Number",
     settleTime: "Settle Time",
     site: "Site",
     startDate: "Start Date",
@@ -172,6 +183,7 @@ export default {
     Member: "Member",
     Affiliate: "Affiliate",
     "Bet Record": "Bet Record",
+    "Deposit Record": "Deposit Record",
     Statistics: "Statistics",
     "Game Stats": "Game Stats",
     "Affiliate Daily Report": "Affiliate Daily Report",

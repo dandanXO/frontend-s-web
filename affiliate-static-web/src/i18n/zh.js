@@ -4,6 +4,12 @@ export default {
     logout: "登出",
     changePassword: "更改密码"
   },
+  depositStatus: {
+    SUCCESS: '存款成功',
+    SUPPLEMENT_SUCCESS: '存款补单成功',
+    CLOSED: '已关闭',
+    PENDING: '待存款'
+  },
   fields: {
     account: "账号",
     accountInfo: "账号信息",
@@ -44,6 +50,8 @@ export default {
     deposit: "存款",
     depositAmount: "存款金额",
     depositCount: "存款次数",
+    depositDate: "订单提交时间",
+    depositRecord: "充值记录",
     domainAffiliate: "专属域名",
     domainApp: "移动端专属域名",
     domainWeb: "PC端专属域名",
@@ -55,6 +63,7 @@ export default {
     email: "邮箱",
     endDate: "结束日期",
     enterTheWithdrawalAmount: "请输入提款金额",
+    finishDate: "订单处理时间",
     firstDepositUsers: "首充人数",
     gameName: "游戏名称",
     gameType: "游戏类型",
@@ -73,6 +82,7 @@ export default {
     noData: "查无数据",
     operate: "操作",
     password: "密码",
+    paymentName: "充值渠道",
     payout: "派彩金额",
     platform: "平台",
     profit: "利润",
@@ -90,6 +100,7 @@ export default {
     selectACard: "选择银行卡",
     selectBankCard: "选择银行卡",
     selectUsdtWallet: "请选择虚拟钱包账号",
+    serialNumber: "订单号",
     settleTime: "结算时间",
     site: "站点",
     startDate: "开始日期",
@@ -172,6 +183,7 @@ export default {
     Member: "会员",
     Affiliate: "代理",
     "Bet Record": "投注记录",
+    "Deposit Record": "充值记录",
     Statistics: "统计",
     "Game Stats": "游戏统计",
     "Affiliate Daily Report": "代理每日报表",
