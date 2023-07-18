@@ -94,19 +94,19 @@ export const constantRoutes = [
         alwaysShow: true,
         redirect: null,
       },
-      // {
-      //   name: "Bet Record",
-      //   path: "bet-record",
-      //   component: () => import('@/views/team/bet-record/index.vue'),
-      //   meta:
-      //   {
-      //     title: "Bet Record",
-      //     icon: "money",
-      //     hidden: false
-      //   },
-      //   alwaysShow: true,
-      //   redirect: null,
-      // }
+      {
+        name: "Bet Record",
+        path: "bet-record",
+        component: () => import('@/views/team/bet-record/index.vue'),
+        meta:
+        {
+          title: "Bet Record",
+          icon: "money",
+          hidden: false
+        },
+        alwaysShow: true,
+        redirect: null,
+      }
     ]
   },
   {
