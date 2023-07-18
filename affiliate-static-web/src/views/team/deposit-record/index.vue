@@ -102,9 +102,6 @@ import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const { t } = useI18n();
-const date = new Date();
-const defaultStartDate = convertStartDate(date);
-const defaultEndDate = convertDate(date);
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -177,7 +174,7 @@ const shortcuts = [
 const request = reactive({
   size: 20,
   current: 1,
-  depositDate: [defaultStartDate, defaultEndDate],
+  depositDate: [convertStartDate(new Date()), convertDate(new Date())],
   loginName: null
 });
 
@@ -200,7 +197,7 @@ function disabledDate(time) {
 }
 
 function resetQuery() {
-  request.depositDate = [defaultStartDate, defaultEndDate];
+  request.depositDate = [convertStartDate(new Date()), convertDate(new Date())];
   request.loginName = null;
 }
 

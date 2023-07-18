@@ -246,9 +246,6 @@ import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const { t } = useI18n();
-const date = new Date();
-const defaultStartDate = convertStartDate(date);
-const defaultEndDate = convertDate(date);
 const betRecords = ref([]);
 const list = reactive({
   platform: [],
@@ -357,7 +354,7 @@ const shortcuts = [
 const request = reactive({
   size: 20,
   current: 1,
-  betTime: [defaultStartDate, defaultEndDate],
+  betTime: [convertStartDate(new Date()), convertDate(new Date())],
   loginName: null,
   platform: null,
   gameType: [],
@@ -383,7 +380,7 @@ function disabledDate(time) {
 }
 
 function resetQuery() {
-  request.betTime = [defaultStartDate, defaultEndDate];
+  request.betTime = [convertStartDate(new Date()), convertDate(new Date())];
   request.loginName = null;
   request.platform = null;
   request.gameType = null;
