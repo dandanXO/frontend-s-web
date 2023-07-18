@@ -1,4 +1,4 @@
-package com.code9.newdy;
+package com.dy.client;
 
 import com.getcapacitor.BridgeActivity;
 
