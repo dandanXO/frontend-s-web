@@ -139,7 +139,7 @@
       </div>
 
       <div class="home-all-slider"
-           :class="isH5 ? 'padding-big' : 'padding-normal'"
+           :class="(isH5 && isShowDownload) ? 'padding-big' : 'padding-normal'"
            v-scroll="onHomeScroll">
 
         <div class="home-top-slider">
@@ -962,7 +962,7 @@ export default defineComponent({
       if (slideItem) {
         var positionY = slideItem.offsetTop;
         console.log(positionY);
-        var y_axis = positionY + 330;
+        var y_axis = positionY + 270;
 
         window.scroll({
           top: y_axis,
@@ -1684,7 +1684,7 @@ export default defineComponent({
 
 .home-all-slider {
   &.padding-big {
-    padding-top: 215px;
+    padding-top: 225px;
   }
 
   &.padding-normal {
