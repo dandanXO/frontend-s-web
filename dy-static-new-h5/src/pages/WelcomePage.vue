@@ -49,7 +49,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('../assets/welcome/welcome-bg-h5.png')no-repeat center center;
+    //background: url('../assets/welcome/welcome-bg-h5.png')no-repeat center center;
     background-size: cover;
     min-height: 100vh;
     width: 100%;

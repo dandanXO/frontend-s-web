@@ -967,7 +967,7 @@ export default defineComponent({
         });
         setTimeout(() => {
           isScrolling.value = false;
-        }, 2000)
+        }, 1500)
       }
     }
 
@@ -1984,12 +1984,6 @@ export default defineComponent({
 
 }
 
-.details-container {
-  background: url("../assets/images/index/details_bg.png") no-repeat;
-  // height: 2.5rem;
-  width: 100%;
-  background-size: 100% 132px;
-}
 
 //.welcome-bar {
 //  display: flex;
