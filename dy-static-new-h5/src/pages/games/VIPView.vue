@@ -1469,9 +1469,7 @@ program at any time without prior notice.`
       //  width: 10px;
       //  height: 19px;
       //  display: inline-block;
-      //  background-image: url(../../assets/vip/privilege.png);
-      //  background-position: center center;
-      //  background-size: 100%;
+
       //}
     }
 

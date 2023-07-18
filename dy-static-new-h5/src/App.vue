@@ -9,6 +9,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {api} from "boot/axios";
 import CsClient from "csweb-client";
 import {userStore} from "src/stores";
+import {cached} from "boot/cache";
 
 export default defineComponent({
   name: "App",
@@ -43,21 +44,19 @@ export default defineComponent({
     let CSAUrl;
 
     const getCSA = () => {
-      api
-          .get("/config/customerAddress")
-          .then((res) => {
-            // console.log(res);
-            // res.data = https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=
-            // CSAUrl = res.data;
-            const url = new URL(res.data);
-            CSAUrl = url.hostname;
-            initCsWeb();
-            console.log(CSAUrl)
-          })
-          .catch((err) => {
-            console.log(err);
-            CSAUrl = "csweb01.c8nhwrqx4.com";
-          });
+      cached.get("customerAddress", () => api.get("/config/customerAddress").then((res) => {
+        return res
+      })).then((data) => {
+        // console.log("here");
+        // console.log(data);
+        const url = new URL(data);
+        CSAUrl = url.hostname;
+        initCsWeb();
+        console.log(CSAUrl)
+      }).catch((err) => {
+        console.log(err);
+        CSAUrl = "csweb01.c8nhwrqx4.com";
+      });
     };
 
     const initCsWeb = () => {

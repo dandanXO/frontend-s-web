@@ -31,11 +31,13 @@
                   placeholder="用户名"
                   :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
                   label-color=""
-                  clearable
                   autocomplete="username"
               >
                 <template v-slot:prepend>
-                  <img src="../assets/login/user-icon.png" width="16"/>
+                  <img src="../assets/login/user-icon.png" width="18"/>
+                </template>
+                <template v-slot:append>
+                  <img @click="clearLoginName" src="../assets/login/input-close-icon.png" style="margin-right:3px;" width="20"/>
                 </template>
               </q-input>
 
@@ -55,15 +57,12 @@
                   autocomplete="current-password"
               >
                 <template v-slot:prepend>
-                  <img src="../assets/login/pass-icon.png" width="16"/>
+                  <img src="../assets/login/pass-icon.png" width="18"/>
                 </template>
                 <template v-slot:append>
-                  <q-icon
-                      color="dark"
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                  />
+                  <img v-if="!isPwd" @click="isPwd = !isPwd" src="../assets/login/eye-line.png" style="margin-right:3px;" width="20"/>
+                  <img v-if="isPwd" @click="isPwd = !isPwd" src="../assets/login/eye-close-line.png" style="margin-right:3px;" width="20"/>
+
                 </template>
               </q-input>
               <q-input
@@ -83,7 +82,7 @@
                   <img :src="verificationImg" @click="getCode"/>
                 </template>
                 <template v-slot:prepend>
-                  <img src="../assets/login/veri-icon.png" width="16"/>
+                  <img src="../assets/login/veri-icon.png" width="18"/>
                 </template>
               </q-input>
             </div>
@@ -131,7 +130,7 @@
                   />
                 </template>
                 <template v-slot:prepend>
-                  <img src="../assets/login/veri-icon.png" width="16"/>
+                  <img src="../assets/login/veri-icon.png" width="18"/>
                 </template>
               </q-input>
             </div>
@@ -148,7 +147,8 @@
                     rounded
                     v-model="isCheckRmb"
                     label="记住密码"
-                    size="sm"
+                    size="md"
+                    style="font-size: 14px;"
                     checked-icon="task_alt"
                     unchecked-icon="highlight_off"
                     color="light-blue-9"
@@ -162,8 +162,8 @@
                 class="q-mt-lg"
                 label="登录"
                 width="100%"
-                color="dyblue"
-                style="width: 100%"
+                color="primary"
+                style="width: 100%;letter-spacing: 2px;"
                 size="16px"
                 rounded
             />
@@ -244,6 +244,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import {defineComponent, ref, reactive, onMounted} from "vue";
 import {userStore} from "stores/index";
 import {api} from "boot/axios";
@@ -312,6 +313,11 @@ export default defineComponent({
     };
 
     const isCheckRmb = ref(false);
+
+    const clearLoginName= () => {
+      loginForm.loginName='';
+      loginFormRef.value.reset();
+    }
 
     const onSubmit = () => {
       const fpPromise = FingerprintJS.load();
@@ -550,7 +556,8 @@ export default defineComponent({
       showCaptchaDialog,
       phoneVerificationImg,
       getInnerCode,
-      refinnerCaptchaRef
+      refinnerCaptchaRef,
+      clearLoginName
     };
   }
 });
@@ -569,7 +576,7 @@ export default defineComponent({
 
   .login-tab-div {
     background: #fff;
-    padding: 30px 12px 40px;
+    padding: 30px 20px 40px;
     border-radius: 20px;
     position: relative;
     top: -35px;
@@ -665,6 +672,7 @@ export default defineComponent({
 
   .forgetpass-div {
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
     width: calc(100% - 4px);

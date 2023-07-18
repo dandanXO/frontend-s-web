@@ -1,11 +1,10 @@
 <template>
-  <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
+  <q-form ref="regFormRef" class="q-gutter-y-md rounded-borders" @submit="onSubmit">
     <q-input
         height="32px"
         rounded
         standout
         bg-color="grey-2"
-        clearable
         ref="realNameRef"
         hide-bottom-space
         v-model="regForm.realName"
@@ -16,7 +15,10 @@
         , isValidName]"
     >
       <template v-slot:prepend>
-        <img src="../assets/login/user-icon.png" width="16"/>
+        <img src="../assets/login/user-icon.png" width="18"/>
+      </template>
+      <template v-slot:append>
+        <img @click="clearRealName" src="../assets/login/input-close-icon.png" style="margin-right:3px;" width="20"/>
       </template>
     </q-input>
 
@@ -25,7 +27,6 @@
         rounded
         standout
         bg-color="grey-2"
-        clearable
         hide-bottom-space
         ref="loginNameRef"
         v-model="regForm.loginName"
@@ -35,7 +36,10 @@
           (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间']"
     >
       <template v-slot:prepend>
-        <img src="../assets/login/user-icon.png" width="16"/>
+        <img src="../assets/login/user-icon.png" width="18"/>
+      </template>
+      <template v-slot:append>
+        <img @click="clearLoginName" src="../assets/login/input-close-icon.png" style="margin-right:3px;" width="20"/>
       </template>
     </q-input>
 
@@ -57,15 +61,18 @@
       ]"
     >
       <template v-slot:prepend>
-        <img src="../assets/login/pass-icon.png" width="16"/>
+        <img src="../assets/login/pass-icon.png" width="18"/>
       </template>
       <template v-slot:append>
-        <q-icon
-            color="dark"
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
-        />
+        <img v-if="!isPwd" @click="isPwd = !isPwd" src="../assets/login/eye-line.png" style="margin-right:3px;" width="20"/>
+        <img v-if="isPwd" @click="isPwd = !isPwd" src="../assets/login/eye-close-line.png" style="margin-right:3px;" width="20"/>
+
+        <!--        <q-icon-->
+<!--            color="dark"-->
+<!--            :name="isPwd ? 'visibility_off' : 'visibility'"-->
+<!--            class="cursor-pointer"-->
+<!--            @click="isPwd = !isPwd"-->
+<!--        />-->
       </template>
     </q-input>
     <div v-if="regForm.password" class="password-str-div">
@@ -108,15 +115,13 @@
       ]"
     >
       <template v-slot:prepend>
-        <img src="../assets/login/pass-icon.png" width="16"/>
+        <img src="../assets/login/pass-icon.png" width="18"/>
       </template>
       <template v-slot:append>
-        <q-icon
-            color="dark"
-            :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isCfmPwd = !isCfmPwd"
-        />
+
+        <img v-if="!isCfmPwd" @click="isCfmPwd = !isCfmPwd" src="../assets/login/eye-line.png" style="margin-right:3px;" width="20"/>
+        <img v-if="isCfmPwd" @click="isCfmPwd = !isCfmPwd" src="../assets/login/eye-close-line.png" style="margin-right:3px;" width="20"/>
+
       </template>
     </q-input>
 
@@ -172,7 +177,7 @@
         <img :src="verificationImg" @click="getCode()"/>
       </template>
       <template v-slot:prepend>
-        <img src="../assets/login/veri-icon.png" width="16"/>
+        <img src="../assets/login/veri-icon.png" width="18"/>
       </template>
     </q-input>
 
@@ -219,8 +224,8 @@
           class="q-mt-lg"
           label="注册"
           width="100%"
-          color="dyblue"
-          style="width: 100%"
+          color="primary"
+          style="width: 100%;letter-spacing: 2px;"
           size="16px"
           rounded
       />
@@ -257,6 +262,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
+      realName: "",
       // telephone: "",
       // email: "",
       captchaCode: "",
@@ -284,6 +290,18 @@ export default defineComponent({
         regForm.referrer = refCode;
       }
     };
+
+    const regFormRef= ref();
+    const clearLoginName= () => {
+      regForm.loginName='';
+      regFormRef.value.reset();
+    }
+
+    const clearRealName= () => {
+      regForm.realName='';
+      regFormRef.value.reset();
+    }
+
     const store = userStore();
     const loginNameRef = ref();
     const pwdRef = ref();
@@ -450,7 +468,10 @@ export default defineComponent({
       isCfmPwd: ref(true),
       getCode,
       pwdStrength,
-      isConfirmTerm
+      isConfirmTerm,
+      clearLoginName,
+      clearRealName,
+      regFormRef
     };
   }
 });

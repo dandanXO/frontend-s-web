@@ -4,7 +4,7 @@
     <q-page>
 
       <div class="sticky-header" id="id-sticky-header">
-        <div v-if="isH5 " class="download-top-container">
+        <div v-if="isH5 && isShowDownload" class="download-top-container">
           <div class="download-top-box">
             <q-icon name="close" @click="closeTopBox"/>
             <img
@@ -17,11 +17,12 @@
             </div>
             <div class="buttons">
               <q-btn
+                  rounded
                   size="13px"
                   :href="`${downloadUrl}`"
                   target="_blank"
                   label="立即下载"
-                  color="dyblue"
+                  color="primary"
                   class="top-btn"
               />
             </div>
@@ -56,25 +57,27 @@
 
             </div>
 
-            <div v-if="store.hasToken()" class="column justify-start items-end gap-3">
+            <div v-if="store.hasToken()" class="column justify-start items-end ">
 
               <div class="row items-center justify-between  gap-10">
                 <div class="welcome-liner">
                   {{ store.nickName }}
                 </div>
-                <router-link to="/account/vip" class="badge-div">
+                <div class="badge-div">
                   <div class="icon-div">
                     <img src="../assets/index/diamon-vip.png"/>
                   </div>
                   <q-badge color="dyblue" class="vip-badge" text-color="white" :label="store.vip"/>
-                </router-link>
+                </div>
 
               </div>
-              <div class="row items-start justify-start gap-10" style="margin-right: 50px;">
-                <span class="balance-text" v-if="isLoadingBalance" style="font-size: 16px;">加载中</span>
+              <div class="row items-center justify-start gap-10" style="margin-right: 50px;">
+                <span class="balance-text text-positive" v-if="isLoadingBalance"
+                      style="font-size: 20px;">加载中...</span>
                 <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
                 <q-btn
                     flat
+                    style="margin-bottom:3px;"
                     class="refresh-btn"
                     size="xs"
                     @click="refreshBalance()"
@@ -89,6 +92,7 @@
         </div>
 
         <div class="home-header-section"
+             style="height:85px;"
         >
           <swiper
               :modules="[Thumbs, Controller]"
@@ -185,7 +189,7 @@
             <div class="notice">
               <img src="../assets/index/home-announce-icon.png" width="18px"/>
             </div>
-            <marquee-text :repeat="5" :duration="announcementList.length * 120">
+            <marquee-text :repeat="5" :duration="announcementList.length * 30">
               <div v-if="announcementList">
           <span
               v-for="(a, i) in announcementList"
@@ -958,7 +962,7 @@ export default defineComponent({
       if (slideItem) {
         var positionY = slideItem.offsetTop;
         console.log(positionY);
-        var y_axis = positionY + 270;
+        var y_axis = positionY + 330;
 
         window.scroll({
           top: y_axis,
@@ -973,6 +977,7 @@ export default defineComponent({
 
 
     const isShowBackTop = ref(false);
+    const isShowDownload = ref(true);
     const onHomeScroll = (position) => {
       // console.log(position);
       scrollPosition.value = position;
@@ -980,6 +985,11 @@ export default defineComponent({
         isZeroScrollPos.value = true;
       } else {
         isZeroScrollPos.value = false;
+      }
+      if (position > 56) {
+        isShowDownload.value = false;
+      } else {
+        isShowDownload.value = true;
       }
       if (position > 400) {
         isShowBackTop.value = true;
@@ -1007,7 +1017,7 @@ export default defineComponent({
         // console.log(positionTop6);
         // console.log(positionTop6 - 40 <= topHeight);
 
-        if (positionTop6 - 40 <= topHeight) {
+        if (positionTop6 - 100 <= topHeight) {
           selectedTab.value = 'lottery';
           secondSwiper.value?.slideTo(5, 500);
 
@@ -1494,7 +1504,8 @@ export default defineComponent({
       isZeroScrollPos,
       scrollPosition,
       scrollSlotRef,
-      isShowBackTop
+      isShowBackTop,
+      isShowDownload
     };
   }
 });
@@ -1507,7 +1518,8 @@ export default defineComponent({
     padding: 10px;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 4px;
+    height: 55px;
     background: #50AEF330;
 
     .q-icon {
@@ -1516,7 +1528,7 @@ export default defineComponent({
     }
 
     .headicon {
-      width: 75px;
+      width: 65px;
     }
 
     .download-txt-container {
@@ -1525,11 +1537,11 @@ export default defineComponent({
       line-height: 0.8rem;
       display: flex;
       flex-direction: column;
-      color: #999;
+      color: #333;
 
       .download-title {
         font-size: 0.8rem;
-        color: #666;
+        color: #000;
         margin-bottom: 4px;
       }
     }
@@ -1543,10 +1555,10 @@ export default defineComponent({
       background-image: linear-gradient(180deg, #52ACFF 0, #3559DA 100%),
       linear-gradient(#52ACFF, #3559DA);
       text-align: center;
-      height: 35px;
+      height: 32px;
       color: #fff;
       letter-spacing: 2px;
-      border-radius: 4px;
+      border-radius: 16px;
     }
   }
 }
@@ -1589,7 +1601,7 @@ export default defineComponent({
     .welcome-liner {
       flex: 3;
       color: #757575;
-      font-size: 20px;
+      font-size: 21px;
     }
 
     .badge-div {
@@ -1623,8 +1635,8 @@ export default defineComponent({
     }
 
     .balance-text {
-      font-size: 24px;
-      line-height: 24px;
+      font-size: 28px;
+      line-height: 28px;
       font-weight: 600;
       min-width: 40px;
     }
@@ -1634,16 +1646,21 @@ export default defineComponent({
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.4);
     border-radius: 8px;
     align-items: center;
-    padding: 5px;
+    padding: 4px 5px;
     min-height: 50px;
-    margin: 10px 0;
+    margin: 5px 0;
+
+    img {
+      width: 23px;
+    }
 
     span {
       color: #0089ED;
     }
 
     &.selected {
-      background: linear-gradient(180deg, #52ACFF, #3559DA);
+      //background: linear-gradient(180deg, #52ACFF, #3559DA);
+      background: linear-gradient(180deg, #7dd4fd 0, #4c9dec 100%);
 
       span {
         color: #fff;
@@ -1739,10 +1756,10 @@ export default defineComponent({
     h2 {
       margin-top: 25px;
       margin-bottom: 8px;
-      font-weight: 800;
+      font-weight: 550;
       line-height: 20px;
-      letter-spacing: 2px;
-      font-size: 16px;
+      letter-spacing: 1px;
+      font-size: 18px;
     }
 
     .game-list-div {

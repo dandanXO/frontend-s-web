@@ -306,6 +306,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         }
       }
 
+      $q.loading.show({ message: "加载中..." });
+
       if (store.isMobileSafari()) {
         const newWin = window.open(`/`, `_blank`);
         if (platformCode === 'platformType') {
@@ -318,6 +320,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 }
               })
               .then((response) => {
+                $q.loading.hide();
                 newWin.location.href = response.data;
               });
           return;
@@ -333,6 +336,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               }
             })
             .then((response) => {
+              $q.loading.hide();
               newWin.location.href = response.data;
             });
         return;
@@ -348,6 +352,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               }
             })
             .then((response) => {
+              $q.loading.hide();
               if (way === 'IOS') {
                 const newWin = window.open(`/`, `_self`);
                 newWin.location.href = response.data
@@ -370,6 +375,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             }
           })
           .then((response) => {
+            $q.loading.hide();
             if (way === 'IOS') {
               const newWin = window.open(`/`, `_self`);
               newWin.location.href = response.data

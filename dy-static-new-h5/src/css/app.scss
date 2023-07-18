@@ -10,6 +10,7 @@ html {
 // app global css in SCSS form
 body {
   //font-family: "Jura";
+  font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Segoe UI,Arial,Roboto,"PingFang SC","miui","Hiragino Sans GB","Microsoft Yahei",sans-serif;
   background: #ffffff;
 }
 
@@ -98,7 +99,7 @@ body.platform-ios .q-dialog__inner--minimized > div {
 .page-title {
   margin: 5px;
   color: #bacef1;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
   padding: 10px;
   display: flex;
@@ -186,7 +187,7 @@ svg {
   border-radius: 20px 20px 0 0;
   //box-shadow: 0 0 0px 0px #75757550;
   //overflow: hidden;
-  font-size: 12px;
+  font-size: 14.5px;
 
   .q-tabs {
     background: #d2d2de !important;
@@ -198,7 +199,8 @@ svg {
     color: #929292;
 
     img {
-      height: 18px;
+      height: 22px;
+      margin-bottom:5px;
 
       &.inactive {
         display: block;
@@ -302,35 +304,6 @@ svg {
 //   background: #ffffff;
 //   color: #000;
 // }
-.menu-title {
-  color: #db7e42;
-  background-image: linear-gradient(to right, #de4545, #db7e42);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #db7e42;
-  font-size: 28px;
-  text-align: center;
-  font-family: Wave;
-  padding: 15px;
-  display: flex;
-  gap: 20px;
-  align-content: center;
-  justify-content: center;
-}
-
-.page-header {
-  background-image: linear-gradient(to right, #de4545, #db7e42);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #db7e42;
-  font-size: 28px;
-  text-align: center;
-  font-family: Wave;
-  padding: 10px;
-  display: flex;
-  gap: 20px;
-  align-content: center;
-  justify-content: center;
-}
-
 
 .q-field--filled.q-field--readonly .q-field__control:before {
   border-bottom: 0;

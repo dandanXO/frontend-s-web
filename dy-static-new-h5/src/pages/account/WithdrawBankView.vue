@@ -41,7 +41,8 @@
                 <q-btn
                     @click="unbindBankCard(bc)"
                     class="unbind-btn"
-
+                    rounded
+                    color="secondary"
                 >
                   解绑
                   <!--                  <img src="../../assets/account/unbind-icon.png"/>-->
