@@ -76,7 +76,7 @@
                   type="text"
                   v-model="loginForm.captchaCode"
                   placeholder="请输入验证码"
-                  :rules="[(val) => (val && val.length > 3) || '验证码为四个']"
+                  :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
                   label-color=""
               >
                 <template v-slot:append>
