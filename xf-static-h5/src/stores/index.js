@@ -105,7 +105,6 @@ export const userStore = defineStore("userStore", {
             return api.post("/member/mobileLogin", string).then((ret) => {
                 if (ret.code === 0) {
                     SessionStorage.set("TOKEN", ret.data);
-                    location.reload();
                 } else {
                     Notify.create({
                         color: "negative",

@@ -94,22 +94,39 @@
         <q-card-section class="acct-section">
           <div class="left-sect">
             <div class="label"><img src="../assets/images/account/wallet.svg">中心钱包:</div>
+            <div class="amt" @click="getBalance">{{ !isLoadingBalance ? mainWallet : '加载中...' }}
+              <RiRefreshLine/>
+            </div>
           </div>
           <div class="right-sect">
-            <router-link to="/" @click="openDeposit" class="button">
-              存款
-            </router-link>
-            <router-link to="finance/withdraw" class="button">
-              提款
-            </router-link>
-            <router-link to="account/transfer" class="button">
-              转账
-            </router-link>
+
+            <q-btn
+                label="存款"
+                rounded
+                color="primary"
+                style="width:80px;font-size:16px;height:36px;min-height:36px;"
+                @click="openDeposit"
+            />
+
+            <q-btn
+                label="提款"
+                rounded
+                color="secondary"
+                style="width:80px;font-size:16px;height:36px;min-height:36px;"
+                to="finance/withdraw"
+            />
+
+            <q-btn
+                label="转账"
+                rounded
+                color="accent"
+                style="width:80px;font-size:16px;height:36px;min-height:36px;"
+                to="account/transfer"
+            />
+
           </div>
         </q-card-section>
-        <div class="amt" @click="getBalance">{{ !isLoadingBalance ? mainWallet : 'Loading...' }}
-          <RiRefreshLine/>
-        </div>
+
         <!-- <q-separator /> -->
 
         <q-card class="bluecard vip-info-board" @click="goToVip">
@@ -174,6 +191,13 @@
         </q-card-section> -->
       </q-card-section>
     </div>
+
+    <div class="privilege-vip-div">
+      <router-link to="/account/vip?redirect=account">
+        <img src="../assets/account/vip_button_icon.png" alt="">
+      </router-link>
+    </div>
+
     <q-item-section class="acct-nav">
       <!-- <div class="acct-header-icon">
         <img
@@ -247,28 +271,68 @@
             <div class="acct-nav-label">加盟</div>
           </div>
         </a>
-        <a @click="logout">
-          <div class="acct-nav-item">
-            <img src="../assets/account/btn-logout.png"/>
-            <div class="acct-nav-label">退出</div>
-          </div>
-        </a>
+        <!--        <a @click="logout">-->
+        <!--          <div class="acct-nav-item">-->
+        <!--            <img src="../assets/account/btn-logout.png"/>-->
+        <!--            <div class="acct-nav-label">退出</div>-->
+        <!--          </div>-->
+        <!--        </a>-->
 
       </div>
     </q-item-section>
 
     <q-card class="card-account-banner">
       <q-card-section>
-        <img class="account-banner-img"
-             src="https://xinfa-files.s3.ap-southeast-1.amazonaws.com/promo/40bf26d5-2b63-45e6-901e-256eeede63de.jpg"/>
+        <q-carousel
+            class="home"
+            autoplay
+            navigation
+            v-model="slide"
+            swipeable
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            animated
+            infinite
+        >
+          <template v-slot:navigation-icon="{ active, onClick }">
+            <q-btn
+                padding="3px"
+                v-if="active"
+                size="xs"
+                color="white"
+                @click="onClick"
+                style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+            />
+            <q-btn
+                padding="3px"
+                v-else
+                size="xs"
+                color="transparent"
+                @click="onClick"
+                style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+            />
+          </template>
+
+          <q-carousel-slide
+              v-for="(banner, i) in btm_banners"
+              :key="i"
+              :name="i"
+              class="column no-wrap flex-center"
+              :img-src="imgURL + banner.mobileImageUrl"
+              @click="gotoPromo(banner)"
+          ></q-carousel-slide>
+        </q-carousel>
+
+        <!--        <img class="account-banner-img"-->
+        <!--             src="https://xinfa-files.s3.ap-southeast-1.amazonaws.com/promo/40bf26d5-2b63-45e6-901e-256eeede63de.jpg"/>-->
       </q-card-section>
     </q-card>
-    <!--    <a @click="logout">-->
-    <!--      <div class="acct-logout">-->
-    <!--        <img src="../assets/images/account/menu_logout.svg"/>-->
-    <!--        <div class="acct-nav-label">退出</div>-->
-    <!--      </div>-->
-    <!--    </a>-->
+    <a @click="logout">
+      <div class="acct-logout">
+        <img src="../assets/images/account/menu_logout.svg"/>
+        <div class="acct-nav-label">退出登录</div>
+      </div>
+    </a>
   </q-page>
 </template>
 
@@ -343,7 +407,7 @@ export default defineComponent({
         var current_version = info.version + "." + info.build;
         appVersionNo.value = current_version;
       } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.2";
+        appVersionNo.value = "iOS v0.3";
       } else {
       }
     };
@@ -360,6 +424,7 @@ export default defineComponent({
       getPromoImage();
     });
 
+    const imgURL = process.env.IMAGE_CDN + "/promo/";
     const btm_banners = ref();
     const getPromoImage = () => {
       api
@@ -372,6 +437,10 @@ export default defineComponent({
           .catch(() => {
           });
     }
+    const gotoPromo = (banner) => {
+      const redirectU = "/promo?name=" + banner.redirectUrl;
+      router.push(`${redirectU}`);
+    };
 
     onBeforeUnmount(() => {
       clearInterval(timerBalance.value);
@@ -405,7 +474,10 @@ export default defineComponent({
       selfTgurl,
       vip_progress,
       goToVip,
-      btm_banners
+      btm_banners,
+      imgURL,
+      gotoPromo,
+      slide: ref(0)
     };
   }
 });
@@ -473,7 +545,8 @@ export default defineComponent({
     cursor: pointer;
     padding: 5px 15px;
     font-size: 16px;
-    width: 120px;
+    width: auto;
+    white-space: nowrap;
     margin-top: 6px;
     text-decoration: none;
   }
@@ -483,8 +556,8 @@ export default defineComponent({
   margin: 15px auto;
   border-radius: 15px;
   width: 95%;
-  box-shadow: 0px 0px 30px -15px #000;
-  background: #ffffff;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  background: #f5f5f5;
 
   .q-card__section--vert {
     padding: 0;
@@ -504,18 +577,21 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+
   }
 
   .acct-section {
     display: flex;
     text-align: left;
     justify-content: space-evenly;
-    align-items: flex-end;
+    align-items: flex-start;
     // border-bottom: 1px solid #2e3445;
     width: 100%;
     color: #000000;
+    margin-bottom: 12px;
 
     .left-sect {
+      flex-wrap: nowrap;
 
       .label {
         font-size: 14px;
@@ -539,14 +615,16 @@ export default defineComponent({
     }
 
     .right-sect {
-      border: 1px solid #0089ED;
-      background-image: linear-gradient(180deg, #52ACFF 0, #3559DA 100%),
-      linear-gradient(#52ACFF, #3559DA);
-      padding: 5px 15px;
+      //border: 1px solid #0089ED;
+      //background-image: linear-gradient(180deg, #52ACFF 0, #3559DA 100%),
+      //linear-gradient(#52ACFF, #3559DA);
+      //padding: 5px 15px;
       display: flex;
       justify-content: space-between;
-      border-radius: 20px;
-      max-width: 215px;
+      //border-radius: 20px;
+      max-width: 260px;
+      gap: 6px;
+
 
       a {
         font-size: 16px;
@@ -574,11 +652,14 @@ export default defineComponent({
   }
 
   .bluecard {
-    width: 90%;
-    margin: 0 10px;
+    width: 98%;
+    margin: 0 0px !important;
     background: url(../assets/images/common/bgheader.png) no-repeat top right;
-    padding: 10px;
+    padding: 20px 15px;
     background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 
     .vipline {
       display: flex;
@@ -654,6 +735,15 @@ export default defineComponent({
   }
 }
 
+.privilege-vip-div {
+  width: 95%;
+  margin: 10px auto 16px;
+
+  img {
+    width: 100%;
+  }
+}
+
 .acct-nav {
   width: 95%;
   margin: 10px auto;
@@ -714,6 +804,7 @@ export default defineComponent({
       display: block;
 
       .acct-nav-item {
+        font-size: 16px;
         gap: 5px;
         cursor: pointer;
         display: flex;
@@ -724,7 +815,7 @@ export default defineComponent({
         text-decoration: none;
 
         img {
-          height: 46px;
+          height: 50px;
           fill: white;
           padding: 0;
         }
@@ -734,19 +825,21 @@ export default defineComponent({
 }
 
 .acct-logout {
-  padding: 8px;
+  padding: 12px;
   border: 1px solid #0089ED;
   text-align: center;
+  font-size: 20px;
   color: #0089ED;
   border-radius: 30px;
   line-height: 15px;
   width: 90%;
-  margin: 10px auto 40px;
+  letter-spacing: 1px;
+  margin: 20px auto 40px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
 .vip-badge {
@@ -762,19 +855,25 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 3px;
+    gap: 4px;
 
     .getpromo-icon {
-      width: 13px;
+      width: 16px;
       background: #fff;
       border-radius: 50%;
-      height: 13px;
-      line-height: 13px;
+      height: 16px;
+      line-height: 16px;
+
+
+    }
+
+    img {
+      width: 16px;
     }
 
     span {
       color: #fff;
-      font-size: 13px;
+      font-size: 15px;
       text-decoration: none;
     }
   }
@@ -799,10 +898,21 @@ export default defineComponent({
 @media (max-width: 430px) {
   .acct-nav {
     .acct-menu {
-
       grid-template-columns: repeat(4, 1fr);
-
     }
+  }
+
+  .vipcard .acct-section {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .vipcard .acct-section .right-sect {
+    width: 100%;
+    text-align: center;
+  }
+
+  .q-carousel.home {
+
   }
 }
 

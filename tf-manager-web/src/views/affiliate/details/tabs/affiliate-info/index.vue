@@ -842,7 +842,7 @@ function showDialog(type) {
 function changePassword() {
   updatePasswordForm.value.validate(async (valid) => {
     if (valid) {
-      await updateAffiliatePassword(props.affId, passwordForm.password);
+      await updateAffiliatePassword(props.affId, passwordForm.password, memberDetail.siteId);
       uiControl.dialogVisible = false;
       ElMessage({ message: t('message.updatePasswordSuccess'), type: "success" });
     }

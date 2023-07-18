@@ -106,6 +106,19 @@ export const constantRoutes = [
         },
         alwaysShow: true,
         redirect: null,
+      },
+      {
+        name: "Deposit Record",
+        path: "deposit-record",
+        component: () => import('@/views/team/deposit-record/index.vue'),
+        meta:
+        {
+          title: "Deposit Record",
+          icon: "doc",
+          hidden: false
+        },
+        alwaysShow: true,
+        redirect: null,
       }
     ]
   },
