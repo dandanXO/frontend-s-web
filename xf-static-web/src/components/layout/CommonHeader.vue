@@ -15,7 +15,7 @@
             </div>
 
             <div class="station-notice">
-              <Vue3Marquee :clone="false" :duration="50" style="width: 680px">
+              <Vue3Marquee :clone="false" :duration="90" style="width: 780px">
                 <div
                   v-for="(word, index) in announcementList"
                   :key="index"
@@ -2087,8 +2087,7 @@ body {
         gap: 5px;
 
         .timebox {
-          flex: 1;
-          min-width: 300px;
+          min-width: 225px;
         }
 
         .station-notice-container {
@@ -2097,14 +2096,16 @@ body {
           .station-notice-box {
             display: flex;
             gap: 10px;
+            width: 100%;
           }
         }
 
         .station-notice {
           padding-top: 4px;
+          width: 100%;
 
           .station-notice-item {
-            margin-right: 30px;
+            margin-right: 50px;
           }
         }
 

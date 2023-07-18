@@ -13,7 +13,9 @@ import "@/icons";
 import SvgIcon from "@/components/SvgIcon/index.vue";
 import ElementPlus from 'element-plus'
 import { createPinia } from "pinia";
+import dayjs from 'dayjs';
 
+dayjs.Ls.en.weekStart = 1;
 const app = createApp(App);
 app.use(ElementPlus)
 

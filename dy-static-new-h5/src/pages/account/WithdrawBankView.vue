@@ -268,7 +268,10 @@
         </q-card-section>
         <div style="padding: 20px">
           <q-card-section class="q-mb-md q-pa-md">
-            <q-input v-model="innerCaptchaRef" placeholder="验证码">
+            <q-input
+                ref="refInnerCaptcha"
+                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+                v-model="innerCaptchaRef" placeholder="验证码">
               <template v-slot:append>
                 <img
                     :src="phoneVerificationImg"
@@ -284,6 +287,20 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; padding: 20px;" class="text-black">
+        <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
+          <strong>温馨提示</strong>
+          <br/><br/>
+          为保证资金安全，绑卡前需先验证手机号
+        </q-card-section>
+        <q-card-actions align="right">
+          <router-link to="/account/personal">
+            <q-btn label="前往验证" color="dyblue"/>
+          </router-link>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <!-- <q-dialog
       wrap-class-name="bankModal"
@@ -391,6 +408,13 @@ export default defineComponent({
       }
     ];
 
+    const isNewUser = ref(false);
+    const checkNewUser = () => {
+      if (store.phone === "" || store.phone === null) {
+        isNewUser.value = true;
+      }
+    };
+
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -408,6 +432,7 @@ export default defineComponent({
         console.log("error", error);
       });
       loadCards();
+      checkNewUser();
     });
     const showCard = (item, index) => {
       // if (index === isCardActive.value) {
@@ -454,7 +479,7 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
     const phoneVerificationRef = ref(null);
-
+    const refInnerCaptcha= ref();
 
     const bankCardInfo = reactive({
       bankId: undefined,
@@ -708,7 +733,17 @@ export default defineComponent({
         });
         getInnerCode();
         return;
+      }else if (refInnerCaptcha.value?.hasError) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "验证码必须为4个字符串",
+          icon: "report_problem"
+        });
+        getInnerCode();
+        return;
       }
+
       api.post(`/session/sendSms`, qs.stringify({
         captchaCode: innerCaptchaRef.value,
         codeId: innerCodeId.value
@@ -752,9 +787,11 @@ export default defineComponent({
       showCaptchaDialog,
       phoneVerificationImg,
       innerCaptchaRef,
+      refInnerCaptcha,
       getInnerCode,
       onCaptchaSubmit,
       phoneVerificationRef,
+      isNewUser,
       // virtualCurrencyModalState,
       // virtualCurrencyFormRef,
       // virtualCurrencyInfo,

@@ -111,18 +111,49 @@
           <RiRefreshLine/>
         </div>
         <!-- <q-separator /> -->
-        <!-- <q-card class="bluecard">
-          <div class="vipline">
-            <div class="circle"><span class="bigV">v</span><span class="small">0</span></div>
-            <div class="middle">
-              <div class="left">成长值</div>
-              <div class="right">0/1</div>
 
+        <q-card class="bluecard vip-info-board" @click="goToVip">
+
+          <div class="vipline q-mt-sm">
+            <div class="circle"><span class="bigV">v</span><span class="small">{{ vipLevel }}</span></div>
+            <div class="middle">
+              <div class="row items-center justify-between">
+                <div class="left">成长值</div>
+                <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div>
+              </div>
+
+              <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white"/>
 
             </div>
-            <div class="circle">v1</div>
+            <div class="circle"><span class="bigV">v</span><span class="small">{{ vipLevel + 1 }}</span></div>
           </div>
-        </q-card> -->
+
+          <div class="vip-get-div row justify-between items-center q-mt-sm">
+
+            <div class="vip-getpromo-div">
+              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <span>晋级礼包</span>
+            </div>
+            <div class="vip-getpromo-div">
+              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+
+              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <span>生日礼金</span>
+            </div>
+            <div class="vip-getpromo-div">
+              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+
+              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <span>每月活动</span>
+            </div>
+            <div class="vip-getpromo-div">
+              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <span>专属活动</span>
+            </div>
+          </div>
+        </q-card>
         <!-- <q-card-section class="bot-section">
           <router-link to="/" @click="openDeposit" class="button">
             <img src="../assets/images/index/deposit_icon.png" />
@@ -210,20 +241,34 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <a href="#" target="_blank">
+        <a href="https://agt.wrxjpo3vh.com/dy/login" target="_blank">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_affiliate.svg"/>
             <div class="acct-nav-label">加盟</div>
           </div>
         </a>
+        <a @click="logout">
+          <div class="acct-nav-item">
+            <img src="../assets/account/btn-logout.png"/>
+            <div class="acct-nav-label">退出</div>
+          </div>
+        </a>
+
       </div>
     </q-item-section>
-    <a @click="logout">
-      <div class="acct-logout">
-        <img src="../assets/images/account/menu_logout.svg"/>
-        <div class="acct-nav-label">退出</div>
-      </div>
-    </a>
+
+    <q-card class="card-account-banner">
+      <q-card-section>
+        <img class="account-banner-img"
+             src="https://xinfa-files.s3.ap-southeast-1.amazonaws.com/promo/40bf26d5-2b63-45e6-901e-256eeede63de.jpg"/>
+      </q-card-section>
+    </q-card>
+    <!--    <a @click="logout">-->
+    <!--      <div class="acct-logout">-->
+    <!--        <img src="../assets/images/account/menu_logout.svg"/>-->
+    <!--        <div class="acct-nav-label">退出</div>-->
+    <!--      </div>-->
+    <!--    </a>-->
   </q-page>
 </template>
 
@@ -239,6 +284,7 @@ import {userStore} from "stores/index";
 import {useRouter} from "vue-router";
 import {App} from "@capacitor/app";
 import {RiRefreshLine} from "vue-remix-icons";
+import {api} from "boot/axios";
 
 export default defineComponent({
   name: "AccountPage",
@@ -282,6 +328,11 @@ export default defineComponent({
       }
       return store.vip;
     });
+    const vip_progress = ref(store.currentDeposit / store.levelUpDeposit);
+    const goToVip = () => {
+      router.push("/account/vip?redirect=account");
+    }
+
     const timerBalance = ref();
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
@@ -306,7 +357,22 @@ export default defineComponent({
       store.getBalance();
       // store.getUnreadTotal();
       getVersionNo();
+      getPromoImage();
     });
+
+    const btm_banners = ref();
+    const getPromoImage = () => {
+      api
+          .get("/promo/banner?category=CENTERPROMO")
+          .then((res) => {
+            if (res.code === 0) {
+              btm_banners.value = res.data;
+            }
+          })
+          .catch(() => {
+          });
+    }
+
     onBeforeUnmount(() => {
       clearInterval(timerBalance.value);
     });
@@ -336,35 +402,36 @@ export default defineComponent({
       openDeposit,
       appVersionNo,
       isLoadingBalance,
-      selfTgurl
+      selfTgurl,
+      vip_progress,
+      goToVip,
+      btm_banners
     };
   }
 });
 </script>
 <style scoped lang="scss">
 .acc-head {
-  // background: url(../assets/images/common/bgheader.png)no-repeat center center;
-  // height: 80px;
-  // background-size: cover;
+  background: url(../assets/images/common/bgheader.png) no-repeat center center;
+  background-size: cover;
+  height: 50px;
 }
 
 .profile {
-  background: url(../assets/images/common/bgheader.png) no-repeat center center;
-  background-size: cover;
+  background: #fff;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 15px;
   gap: 10px;
   width: 100%;
-  // position: absolute;
-  // top: 0;
+
   .left {
     display: flex;
     gap: 15px;
     justify-content: center;
     align-items: center;
-    padding-right: 80px;
+    padding-right: 10px;
     width: 100%;
   }
 
@@ -404,12 +471,11 @@ export default defineComponent({
     color: #ffffff;
     border-radius: 50px;
     cursor: pointer;
-    padding: 5px 10px;
-    // margin-top: 10px;
+    padding: 5px 15px;
+    font-size: 16px;
+    width: 120px;
+    margin-top: 6px;
     text-decoration: none;
-    position: absolute;
-    right: 15px;
-    top: 15px;
   }
 }
 
@@ -474,15 +540,19 @@ export default defineComponent({
 
     .right-sect {
       border: 1px solid #0089ED;
+      background-image: linear-gradient(180deg, #52ACFF 0, #3559DA 100%),
+      linear-gradient(#52ACFF, #3559DA);
       padding: 5px 15px;
       display: flex;
       justify-content: space-between;
       border-radius: 20px;
-      max-width: 195px;
+      max-width: 215px;
 
       a {
+        font-size: 16px;
         display: block;
-        color: #0089ed;
+        //color: #0089ed;
+        color: #fff;
         text-decoration: none;
       }
     }
@@ -508,11 +578,18 @@ export default defineComponent({
     margin: 0 10px;
     background: url(../assets/images/common/bgheader.png) no-repeat top right;
     padding: 10px;
+    background-size: 100% 100%;
 
     .vipline {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
+      gap: 5px;
+
+      .middle {
+        color: #fff;
+        flex: 6;
+      }
 
       .circle {
         border: 1px solid #ffffff;
@@ -622,7 +699,7 @@ export default defineComponent({
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
-    gap:20px;
+    gap: 20px;
     row-gap: 20px;
     height: 300px;
     // display: flex;
@@ -634,7 +711,7 @@ export default defineComponent({
       text-decoration: none;
       font-size: 14px;
       height: 80px;
-      display:block;
+      display: block;
 
       .acct-nav-item {
         gap: 5px;
@@ -677,6 +754,43 @@ export default defineComponent({
   left: 10px;
   top: -40px;
 }
+
+.vip-info-board {
+  margin-top: 10px !important;
+
+  .vip-getpromo-div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3px;
+
+    .getpromo-icon {
+      width: 13px;
+      background: #fff;
+      border-radius: 50%;
+      height: 13px;
+      line-height: 13px;
+    }
+
+    span {
+      color: #fff;
+      font-size: 13px;
+      text-decoration: none;
+    }
+  }
+}
+
+.card-account-banner {
+  margin: 10px 10px 0px;
+  border-radius: 10px 10px 0px 0px;
+
+  .account-banner-img {
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+
+  }
+}
+
 
 #personal_vip_img {
   height: 14px;

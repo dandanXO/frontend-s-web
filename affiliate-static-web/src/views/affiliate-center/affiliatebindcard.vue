@@ -260,7 +260,7 @@ const banksList = ref([])
 // const isBankCard = ref(false)
 const openDialog = (type) => {
   if (!store.state.user.realName || store.state.user.realName === "" || store.state.user.realName === "undefined" || store.state.user.realName === "null") {
-    router.push("/dashboard?name=realname");
+    router.push("/personal?name=realname");
   } else {
     bankCardInfo.bankId = undefined;
     bankCardInfo.cardNumber = "";

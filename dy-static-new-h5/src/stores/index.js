@@ -23,6 +23,8 @@ export const userStore = defineStore("userStore", {
             evip: "",
             currency: {value: "￥", label: "RMB"},
             personalAddress: '',
+            levelUpDeposit: 0,
+            currentDeposit: 0,
             unreadInboxMail: 0,
             phoneVerified: false,
             emailVerified: false,
@@ -148,6 +150,8 @@ export const userStore = defineStore("userStore", {
                     // this.personalAddress = response.data.personalAddress
                     this.phoneVerified = response.data.phoneVerified;
                     this.emailVerified = response.data.emailVerified;
+                    this.levelUpDeposit= response.data.levelUpDeposit ? parseInt(response.data.levelUpDeposit) : 0;
+                    this.currentDeposit= response.data.currentDeposit ? parseInt(response.data.currentDeposit) : 0;
                     if (response.data.evip) {
                         var exclusive = JSON.parse(response.data.evip);
                         this.evip = exclusive.wap;

@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <img src="../../assets/logo.png" />
+    <img src="../../assets/logo.png"/>
     <ul>
       <li v-for="v in 5" :key="v"></li>
     </ul>
@@ -35,11 +35,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   .loading-txt {
     margin-top: 50px;
     display: flex;
     flex-direction: row;
   }
+
   .loading__letter {
     font-size: 24px;
     font-weight: normal;
@@ -55,27 +57,35 @@
   .loading__letter:nth-child(2) {
     animation-delay: 0.1s;
   }
+
   .loading__letter:nth-child(3) {
     animation-delay: 0.2s;
   }
+
   .loading__letter:nth-child(4) {
     animation-delay: 0.3s;
   }
+
   .loading__letter:nth-child(5) {
     animation-delay: 0.4s;
   }
+
   .loading__letter:nth-child(6) {
     animation-delay: 0.5s;
   }
+
   .loading__letter:nth-child(7) {
     animation-delay: 0.6s;
   }
+
   .loading__letter:nth-child(8) {
     animation-delay: 0.8s;
   }
+
   .loading__letter:nth-child(9) {
     animation-delay: 1s;
   }
+
   .loading__letter:nth-child(10) {
     animation-delay: 1.2s;
   }
@@ -101,6 +111,7 @@
     }
   }
 }
+
 $loadingwidth: 300px;
 .loading {
   .txt {
@@ -108,11 +119,13 @@ $loadingwidth: 300px;
     font-size: 30px;
     color: #ffffff;
   }
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 20px;
+
   ul {
     margin: auto;
     height: 10px;
@@ -130,7 +143,7 @@ $loadingwidth: 300px;
   }
 
   li {
-    width: calc($loadingwidth/5);
+    width: calc($loadingwidth / 5);
     height: 10px;
     margin-right: 10px;
   }
@@ -138,12 +151,12 @@ $loadingwidth: 300px;
   li:nth-child(-n + 3) {
     background: rgba(255, 255, 255, 0.9);
     box-shadow: inset 0px 0px 10px 2px rgb(255 75 0),
-      0px 0px 20px rgb(255 153 0 / 90%);
+    0px 0px 20px rgb(255 153 0 / 90%);
   }
 
   li:nth-child(n + 4) {
     box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4),
-      0px 0px 20px rgba(255, 102, 0, 0.1);
+    0px 0px 20px rgba(255, 102, 0, 0.1);
   }
 
   li:nth-child(3) {
@@ -155,12 +168,12 @@ $loadingwidth: 300px;
     0% {
       background: rgba(255, 255, 255, 1);
       box-shadow: inset 0px 0px 10px 2px rgb(255 75 0),
-        0px 0px 20px rgb(255 153 0 / 90%);
+      0px 0px 20px rgb(255 153 0 / 90%);
     }
     100% {
       background: rgba(255, 255, 255, 0);
       box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4),
-        0px 0px 20px rgba(255, 102, 0, 0.1);
+      0px 0px 20px rgba(255, 102, 0, 0.1);
     }
   }
 
@@ -168,12 +181,12 @@ $loadingwidth: 300px;
     0% {
       background: rgba(255, 255, 255, 1);
       box-shadow: inset 0px 0px 10px 2px rgb(255 75 0),
-        0px 0px 20px rgb(255 153 0 / 90%);
+      0px 0px 20px rgb(255 153 0 / 90%);
     }
     100% {
       background: rgba(255, 255, 255, 0);
       box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4),
-        0px 0px 20px rgba(255, 102, 0, 0.1);
+      0px 0px 20px rgba(255, 102, 0, 0.1);
     }
   }
 }

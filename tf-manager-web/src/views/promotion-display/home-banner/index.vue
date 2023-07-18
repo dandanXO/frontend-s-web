@@ -312,6 +312,7 @@ const uiControl = reactive({
     { key: 6, displayName: 'PROMO', value: 'PROMO' },
     { key: 7, displayName: 'HOMEPROMO', value: 'HOMEPROMO' },
     { key: 8, displayName: 'HOMEPOP', value: 'HOMEPOP' },
+    { key: 9, displayName: 'CENTERPROMO', value: 'CENTERPROMO' }
   ]
 })
 

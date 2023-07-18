@@ -47,7 +47,7 @@
           </div>
           <GameModal ref="casinoGame"></GameModal>
         </div>
-        <img src="../../assets/images/games/liveCasino/live-bg.png" />
+<!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
       </q-intersection>
     </q-scroll-area>
   </div>
