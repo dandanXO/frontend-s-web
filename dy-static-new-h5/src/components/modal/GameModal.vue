@@ -19,6 +19,7 @@
               round
               dense
               icon="close"
+              style="width:24px;height:24px;min-height:24px;min-width:24px;"
           />
           <!--                  <q-btn-->
           <!--                      v-if="!drawerVisible"-->
@@ -747,6 +748,7 @@ defineExpose({
     display: flex;
     justify-content: flex-end;
     width: 100%;
+    height:26px;
   }
 }
 
@@ -759,7 +761,7 @@ defineExpose({
   bottom: 0px;
 
   &.game-header-iframe {
-    top: 35px;
+    top: 26px;
   }
 }
 
