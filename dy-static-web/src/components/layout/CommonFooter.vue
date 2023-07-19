@@ -44,7 +44,7 @@
               <li><router-link to="/about?id=aboutus">关于我们</router-link></li>
               <li><router-link to="/promotion">优惠活动</router-link></li>
               <li @click="openRegPage">免费开户</li>
-              <li><router-link to="/agent">代理加盟</router-link></li>
+<!--              <li><router-link to="/agent">代理加盟</router-link></li>-->
           </ul>
           <ul class="index_bottom_des">
               <li>产品服务</li>
@@ -78,7 +78,7 @@
           <li><router-link to="/about?id=privacy">隐私条款</router-link></li>
           <li><router-link to="/about?id=service">服务条款</router-link></li>
           <li><router-link to="/about?id=contactus">联系我们</router-link></li>
-          <li><a href="/agent">加盟代理</a></li>
+<!--          <li><a href="/agent">加盟代理</a></li>-->
         </ul>
         <div class="tagline">东赢是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div>
       </div>
@@ -104,7 +104,7 @@ export default defineComponent({
     }
     return {
       isFireFox,
-      isChrome, 
+      isChrome,
       store,
       openRegPage
     }
