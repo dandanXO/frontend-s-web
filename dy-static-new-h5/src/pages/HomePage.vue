@@ -1106,10 +1106,13 @@ export default defineComponent({
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
 
+
+    var platformApiUrl = (store.hasToken()) ? '/session/loggedInPlatform' : "/platform";
+    var platformApiKey =  (store.hasToken()) ? 'LOGGEDPLATFORMS' : "PLATFORMS";
     const getPlatList = () => {
       cached
-          .get("PLATFORMS", () =>
-              api.get("/platform").then((res) => {
+          .get(platformApiKey, () =>
+              api.get(platformApiUrl).then((res) => {
                 return res;
               })
           )

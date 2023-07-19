@@ -575,7 +575,8 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .login-container {
-  min-height: 100vh;
+  height: fit-content;
+  //min-height: 100vh;
 
   .top-image-div {
     width: 100%;
