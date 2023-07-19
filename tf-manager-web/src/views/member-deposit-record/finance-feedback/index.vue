@@ -351,7 +351,7 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate())
 // const defaultStartDate = convertDate(startDate)
 // const defaultEndDate = convertDate(new Date())
-
+const reviewForm = ref()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
@@ -525,6 +525,9 @@ async function submit() {
   }
   await updateFinanceFeedback(form.id, form.remark)
   uiControl.dialogVisible = false
+  if (reviewForm.value) {
+    reviewForm.value.resetFields()
+  }
   await loadFinanceFeedback()
 }
 
@@ -596,6 +599,9 @@ onMounted(async () => {
 })
 
 async function showDialog(record) {
+  if (reviewForm.value) {
+    reviewForm.value.resetFields()
+  }
   form.id = record.id
   uiControl.dialogVisible = true
 }

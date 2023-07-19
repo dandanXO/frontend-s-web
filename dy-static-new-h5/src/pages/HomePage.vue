@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div id="id-sticky-header"
-         :class="(isShowDownload==false) ? 'sticky-header' : ''"
+         :class="(!isH5 || isShowDownload==false) ? 'sticky-header' : ''"
     >
       <div v-if="isH5 && isShowDownload" class="download-top-container">
         <div class="download-top-box">
@@ -29,7 +29,7 @@
       </div>
 
       <div class="home-header-section"
-           style="height: 56px;">
+           style="height: 50px;">
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png"/>
         </div>
@@ -138,7 +138,7 @@
     </div>
 
     <div class="home-all-slider"
-         :class="(isShowDownload) ? '' : 'padding-normal'"
+         :class="(isShowDownload && isH5) ? '' : 'padding-normal'"
          v-scroll="onHomeScroll">
 
       <div class="home-top-slider">
@@ -949,7 +949,7 @@ export default defineComponent({
       if (slideItem) {
         var positionY = slideItem.offsetTop;
         console.log(positionY);
-        var y_axis = positionY + 225;
+        var y_axis = positionY + 230;
 
         window.scroll({
           top: y_axis,
@@ -1596,7 +1596,7 @@ export default defineComponent({
 }
 
 .home-header-section {
-  padding: 2px 10px;
+  padding: 1px 10px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -1622,7 +1622,7 @@ export default defineComponent({
     .welcome-liner {
       flex: 3;
       color: #757575;
-      font-size: 21px;
+      font-size: 18px;
     }
 
     .badge-div {
@@ -1656,8 +1656,8 @@ export default defineComponent({
     }
 
     .balance-text {
-      font-size: 24px;
-      line-height: 24px;
+      font-size: 22px;
+      line-height: 22px;
       font-weight: 600;
       min-width: 40px;
     }
@@ -1711,10 +1711,11 @@ export default defineComponent({
   }
 
   &.padding-normal {
-    padding-top: 148px;
+    padding-top: 136px;
   }
 
   &.padding-second {
+
   }
 }
 

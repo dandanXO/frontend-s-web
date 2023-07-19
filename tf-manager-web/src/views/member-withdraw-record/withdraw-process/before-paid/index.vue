@@ -60,6 +60,7 @@
         type="primary"
         :disabled="uiControl.toPayBtn"
         @click="toPay()"
+        @keydown.enter.prevent
       >
         {{ t('fields.toPaymentOnGoing') }}
       </el-button>
@@ -221,7 +222,7 @@
           fixed="right"
         >
           <template #default="scope">
-            <el-button size="mini" type="primary" @click="toPay(scope.row)">
+            <el-button size="mini" type="primary" @click="toPay(scope.row)" @keydown.enter.prevent>
               {{ t('fields.toPaymentOnGoing') }}
             </el-button>
           </template>
