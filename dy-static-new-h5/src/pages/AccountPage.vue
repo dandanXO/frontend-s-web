@@ -265,12 +265,12 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <a href="https://agt.wrxjpo3vh.com/dy/login" target="_blank">
+        <router-link to="/affiliate">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_affiliate.svg"/>
             <div class="acct-nav-label">加盟</div>
           </div>
-        </a>
+        </router-link>
         <!--        <a @click="logout">-->
         <!--          <div class="acct-nav-item">-->
         <!--            <img src="../assets/account/btn-logout.png"/>-->
