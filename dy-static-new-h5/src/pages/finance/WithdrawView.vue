@@ -493,8 +493,8 @@ export default defineComponent({
       }
 
       .type-name {
-        line-height: 18px;
-        font-size: 16px;
+        line-height: 1.1em;
+        font-size: .9em;
         font-weight:600;
         overflow-wrap: break-word;
       }
