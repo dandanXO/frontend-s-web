@@ -579,7 +579,7 @@ export default defineComponent({
 
   .top-image-div {
     width: 100%;
-    max-height:220px;
+    max-height:205px;
 
     img {
       width: 100%;
@@ -588,11 +588,11 @@ export default defineComponent({
 
   .login-tab-div {
     background: #fff;
-    padding: 18px 20px 20px;
+    padding: 15px 20px 15px;
     border-radius: 20px;
     position: relative;
-    top: -40px;
-    box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.5);
+    top: -45px;
+    box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.1);
   }
 
   .q-tab {
@@ -632,8 +632,8 @@ export default defineComponent({
   }
 
   .login-bottom-section {
-    margin-top:-15px;
-    padding-bottom: 60px;
+    margin-top:-24px;
+    padding-bottom: 8px;
 
     > div {
       gap: 40px;

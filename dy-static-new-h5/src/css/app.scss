@@ -155,7 +155,8 @@ svg {
   height: 40vw;
   max-height: 150px;
   border-radius: 8px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  box-shadow: none;
+
 
   .q-panel > div {
     background-repeat: no-repeat;
