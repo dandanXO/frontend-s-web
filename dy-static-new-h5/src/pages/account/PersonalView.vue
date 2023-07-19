@@ -41,15 +41,15 @@
       <q-input
         ref="birthdayRef"
         bg-color="white"
-        placeholder="生日"
         label-color=""
         lazy-rules
-        type="date"
-        class=" border-input"
+        class="border-input"
         hide-bottom-space
+        placeholder="DD/MM/YYYY"
         v-model="formDetail.birthday"
-        mask="date"
-        :rules="[(val) => (val && val.length > 0) || '请输入生日']"
+        :rules="[(val) => (val && val.length > 0) || '请输入生日',
+          isValidBirth
+        ]"
       >
         <template v-slot:prepend>
           <q-icon name="cake" class="material-icons-outlined" />
@@ -62,7 +62,7 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
+              <q-date v-model="formDetail.birthday" mask="DD/MM/YYYY">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="关闭" color="primary" flat />
                 </div>
@@ -256,7 +256,7 @@ export default defineComponent({
     const loadInfo = () => {
       personalState.memberInfo = userStore();
       if (personalState.memberInfo.birthday > 0) {
-        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
+        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD/MM/YYYY");
       }
       formDetail.nickName = personalState.memberInfo.nickName;
       formDetail.realName = personalState.memberInfo.realName;
@@ -476,6 +476,17 @@ export default defineComponent({
       return result;
     };
 
+    const isValidBirth= () => {
+      const reg= /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/ ;
+
+      console.log("Bir");
+      console.log(formDetail.birthday);
+
+      const result = !reg.test(formDetail.birthday) ? "请输入正确的日期" : true;
+
+      return result;
+    }
+
     const openVerificationDialog = () => {
       getCode();
 
@@ -521,6 +532,7 @@ export default defineComponent({
       formDetail,
       profileFormRef,
       updateState,
+      isValidBirth,
       verificationModalVisible,
       openVerificationModal,
       isEmailSending,
