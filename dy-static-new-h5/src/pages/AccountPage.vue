@@ -265,12 +265,12 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <a href="https://agt.wrxjpo3vh.com/dy/login" target="_blank">
+        <router-link to="/affiliate">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_affiliate.svg"/>
             <div class="acct-nav-label">加盟</div>
           </div>
-        </a>
+        </router-link>
         <!--        <a @click="logout">-->
         <!--          <div class="acct-nav-item">-->
         <!--            <img src="../assets/account/btn-logout.png"/>-->
@@ -284,7 +284,7 @@
     <q-card class="card-account-banner">
       <q-card-section>
         <q-carousel
-            class="home"
+            class="account"
             autoplay
             navigation
             v-model="slide"
@@ -323,8 +323,6 @@
           ></q-carousel-slide>
         </q-carousel>
 
-        <!--        <img class="account-banner-img"-->
-        <!--             src="https://xinfa-files.s3.ap-southeast-1.amazonaws.com/promo/40bf26d5-2b63-45e6-901e-256eeede63de.jpg"/>-->
       </q-card-section>
     </q-card>
     <a @click="logout">
@@ -425,13 +423,17 @@ export default defineComponent({
     });
 
     const imgURL = process.env.IMAGE_CDN + "/promo/";
-    const btm_banners = ref();
+    const btm_banners = ref([]);
     const getPromoImage = () => {
       api
           .get("/promo/banner?category=CENTERPROMO")
           .then((res) => {
             if (res.code === 0) {
               btm_banners.value = res.data;
+              if (btm_banners.value.length === 1) {
+                btm_banners.value.push(res.data[0]);
+              }
+
             }
           })
           .catch(() => {
@@ -486,7 +488,7 @@ export default defineComponent({
 .acc-head {
   background: url(../assets/images/common/bgheader.png) no-repeat center center;
   background-size: cover;
-  height: 50px;
+  height: 0px;
 }
 
 .profile {
@@ -804,7 +806,7 @@ export default defineComponent({
       display: block;
 
       .acct-nav-item {
-        font-size: 16px;
+        font-size: 14px;
         gap: 5px;
         cursor: pointer;
         display: flex;

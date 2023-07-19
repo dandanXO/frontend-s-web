@@ -846,7 +846,7 @@ export default defineComponent({
 }
 
 .bank-card-info {
-  width: calc(100% - 132px);
+  width: calc(100% - 142px);
   padding: 0px 5px;
   display: flex;
   flex-direction: column;
@@ -869,10 +869,9 @@ export default defineComponent({
 }
 
 .unbind-btn {
-  width: 60px;
+  width: 70px;
   height: 32px;
-  //min-width: 30px;
-  //min-height: 30px;
+  white-space: normal;
   background: #d9d9d9;
 }
 

@@ -144,7 +144,7 @@
               <div
                 class="game-platform"
                 @click="openGame('AG真人', 'AG', '')"
-                style="margin-top: 59px; margin-left: 46px"
+                style="margin-top: 48px; margin-left: 46px"
               >
                 <img src="../assets/home/ag.png" />
                 <div>AG真人</div>
@@ -178,7 +178,7 @@
               <a
                 class="game-platform"
                 @click="openGame('东赢', 'onlyPlatform', 'TFGaming')"
-                style="margin-top: 59px; margin-left: 46px"
+                style="margin-top: 125px; margin-left: 36px"
               >
                 <img src="../assets/home/dy.png" />
                 <div>东赢电竞</div>
@@ -186,7 +186,7 @@
               <a
                 class="game-platform"
                 @click="openGame('小艾', 'onlyPlatform', 'IA')"
-                style="margin-left: 30px"
+                style="margin-left: 19px"
               >
                 <img src="../assets/home/dy.png" />
                 <div>小艾电竞</div>
@@ -212,7 +212,7 @@
               <a
                 class="game-platform"
                 @click="openGame('东赢体育', 'DY', '')"
-                style="margin-top: 59px; margin-left: 38px"
+                style="margin-top: 170px; margin-left: 30px;"
               >
                 <img src="../assets/home/dy.png" />
                 <div>东赢体育</div>
@@ -246,7 +246,7 @@
               <div
                 class="game-platform"
                 @click="openGame('TCG彩票', 'TCG', '')"
-                style="margin-top: 59px; margin-left: 38px"
+                style="margin-top: 125px; margin-left: 36px"
               >
                 <img src="../assets/home/tcg.png" />
                 <div>TCG彩票</div>
@@ -254,7 +254,7 @@
               <div
                 class="game-platform"
                 @click="openGame('BBIN彩票', 'BBINDY', 'bbkeno_lobby_pc')"
-                style="margin-left: 22px"
+                style="margin-left: 19px"
               >
                 <img src="../assets/home/bbin.png" />
                 <div>BBIN彩票</div>
@@ -288,7 +288,7 @@
               <div
                 class="game-platform"
                 @click="openGame('大唐棋牌', 'DT', '')"
-                style="margin-left: 22px"
+                style="margin-left: 21px"
               >
                 <img src="../assets/home/tx.png" />
                 <div>大唐棋牌</div>
@@ -314,7 +314,7 @@
               <router-link
                 class="game-platform"
                 to="/slot"
-                style="margin-left: 22px"
+                style="margin-left: 21px"
               >
                 <img src="../assets/home/index_slot.png" />
                 <div>老虎机</div>

@@ -6,17 +6,17 @@
           :href="
             'https://affiliate-web.gwd4jptunz.com/dy/register?agent=' +
             (affCode ? affCode : '')
-          "
+          " target="_blank"
         >
         加入我们
         </a>
-        <a href="https://affiliate-web.gwd4jptunz.com/dy/login">
+        <a href="https://affiliate-web.gwd4jptunz.com/dy/login" target="_blank">
         登录
         </a>
         <a
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerId=6&lang=en&way=${regDevice}&token=${store.token}`,
+              `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=${regDevice}&lang=zh-CN&token=${store.token}`,
               'Chat Server',
               350,
               650,
@@ -196,7 +196,10 @@
           </div>
         </div>
       <div style="margin-top: 20px;padding-bottom: 40px;">
-			<a href="/register.jsp" class="agent-reg-btn">立即申请代理</a>
+			<a :href="
+            'https://affiliate-web.gwd4jptunz.com/dy/register?agent=' +
+            (affCode ? affCode : '')
+          " class="agent-reg-btn" target="_blank">立即申请代理</a>
 		</div>
     <div class="agent-contact-bg">
 			<div id="contactDetail" class="agent-contact-main">
@@ -219,7 +222,7 @@
 					</div>
 					<div class="agent-ways-box">
 						<div class="agent-ways-way">合营Skype</div>
-						<div class="agent-ways-val">live:.cid.7b0e3647b2036b38（ <a href=""><img src="../assets/images/affiliate/agent_skype.png"></a> 点击图标以联系，联系时请提供用户名)</div>
+						<div class="agent-ways-val">live:.cid.4665ed71bfa2d711(<a href="skype:live:.cid.4665ed71bfa2d711?chat"><img src="../assets/images/affiliate/agent_skype.png"></a> 点击图标以联系，联系时请提供用户名)</div>
 					</div>
 					<div class="agent-ways-box">
                         <div class="agent-ways-way">合营Flygram</div>

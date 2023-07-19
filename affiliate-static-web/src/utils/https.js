@@ -58,10 +58,17 @@ const onResponse = (response) => {
         store.dispatch(UserActionTypes.ACTION_LOGOUT);
         location.reload();
       }
-      ElMessage({
-        message: i18n.global.t('error.' + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error",
-        type: "error"
-      });
+      if (res.code === 11000) {
+        ElMessage({
+          message: res.message || "Error",
+          type: "error"
+        });
+      } else {
+        ElMessage({
+          message: i18n.global.t('error.' + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error",
+          type: "error"
+        });
+      }
     }
     throw new Error(res.message || "Error");
   } else {
@@ -77,12 +84,13 @@ const onResponseError = (error) => {
   return Promise.reject(error);
 };
 
-const https = (forAffiliate) => {
+const https = (api) => {
   const store = useStore()
   const token = store.state.user.token;
-  const isAff = forAffiliate === 'affiliate'
+  const isAff = api === 'affiliate'
+  const isCr = api === 'cashier'
   const config = {
-    baseURL: isAff ? process.env.VUE_APP_RST_API : process.env.VUE_APP_BASE_API,
+    baseURL: isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_BASE_API),
     headers: {
       TOKEN: token
     },

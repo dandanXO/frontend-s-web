@@ -14,7 +14,7 @@
             <template v-for="obj in Object.keys(det)" :key="obj">
               <div v-if="obj === head.key" class="desc">
                 <div v-if="obj === 'type'">
-                  {{ translateRecord(det[obj], recordType) }}
+                  {{ translateRecord(det[obj], '') }}
                 </div>
                 <div v-else-if="obj === 'depositAmount'">
 
@@ -38,59 +38,13 @@
                   </div>
 
                 </div>
-                <div v-else-if="obj === 'status'">
-                  <div
-                      v-if="det[obj]=='PENDING' || det[obj]=='STEP_1'"
-                      class="row items-center justify-start gap-3">
-<!--                    <img src="../assets/records/info-icon.png"/>-->
-                    <span class="text-black text-bold">
-                      {{ checkRecord(det[obj], recordType) }}
-                    </span>
-                  </div>
-                  <div
-                      v-else-if="det[obj]=='SUCCESS' || det[obj]===2 || det[obj]=='SUPPLEMENT_SUCCESS'"
-                      class="row items-center justify-start gap-3">
-                    <img src="../assets/records/success-icon.png"/>
-                    <span class="text-positive">
-                      {{ checkRecord(det[obj], recordType) }}
-                    </span>
-                  </div>
-                  <div
-                      v-else-if="det[obj]=='FAIL'"
-                      class="row items-center justify-start gap-3">
-                    <img src="../assets/records/error-icon.png"/>
-                    <span class="text-negative">
-                      {{ checkRecord(det[obj], recordType) }}
-                    </span>
-                  </div>
-                  <div
-                      v-else-if="det[obj]=='CANCEL' "
-                      class="row items-center justify-start gap-3">
-                    <img src="../assets/records/warning-icon.png"/>
-                    <span class="text-warning">
-                      {{ checkRecord(det[obj], recordType) }}
-                    </span>
-                  </div>
-                  <div
-                      v-else
-                      class="row items-center justify-start gap-3">
-<!--                    <img src="../assets/records/info-icon.png"/>-->
-                    <span class="text-black text-bold">
-                      {{ checkRecord(det[obj], recordType) }}
-                    </span>
-                  </div>
-
-                </div>
-                <div v-else-if="obj === 'betStatus'">
-                  {{ checkRecord(det[obj]) }}
-                </div>
-                <div v-else-if="obj === 'paymentType'">
-
+                <div v-else-if="obj === 'withdrawAmount'">
                   <div class="row items-center justify-between">
-                    <div>{{ checkRecord(det[obj]) }}</div>
+                    <div>{{ det[obj] }}</div>
+
                     <div
                         v-if="
-            (recordType === 'deposit' && det.status === 'PENDING') || (recordType === 'withdraw' && det.status === 'STEP_1')"
+             (recordType === 'withdraw' && det.status === 'STEP_1')"
                         class="buttons"
                     >
                       <q-btn
@@ -103,6 +57,52 @@
                         <img src="../assets/records/quote-request-icon.png"/>
                       </q-btn>
                     </div>
+
+                  </div>
+                </div>
+                <div v-else-if="obj === 'status'">
+                  <div class="row items-center justify-between">
+                    <div
+                        v-if="det[obj]=='PENDING' || det[obj]=='STEP_1'"
+                        class="row items-center justify-start gap-3">
+                      <!--                    <img src="../assets/records/info-icon.png"/>-->
+                      <span class="text-black text-bold">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+                    <div
+                        v-else-if="det[obj]=='SUCCESS' || det[obj]===2 || det[obj]=='SUPPLEMENT_SUCCESS'"
+                        class="row items-center justify-start gap-3">
+                      <img src="../assets/records/success-icon.png"/>
+                      <span class="text-positive">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+                    <div
+                        v-else-if="det[obj]=='FAIL'"
+                        class="row items-center justify-start gap-3">
+                      <img src="../assets/records/error-icon.png"/>
+                      <span class="text-negative">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+                    <div
+                        v-else-if="det[obj]=='CANCEL' "
+                        class="row items-center justify-start gap-3">
+                      <img src="../assets/records/warning-icon.png"/>
+                      <span class="text-warning">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+                    <div
+                        v-else
+                        class="row items-center justify-start gap-3">
+                      <!--                    <img src="../assets/records/info-icon.png"/>-->
+                      <span class="text-black text-bold">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+
                     <div v-if="recordType === 'withdraw'" class="buttons">
                       <template
                           v-if="
@@ -137,6 +137,33 @@
                         />
                       </template>
                     </div>
+                  </div>
+
+
+                </div>
+                <div v-else-if="obj === 'betStatus'">
+                  {{ checkRecord(det[obj]) }}
+                </div>
+                <div v-else-if="obj === 'paymentType'">
+
+                  <div class="row items-center justify-between">
+                    <div>{{ checkRecord(det[obj]) }}</div>
+                    <div
+                        v-if="
+            (recordType === 'deposit' && det.status === 'PENDING') "
+                        class="buttons"
+                    >
+                      <q-btn
+                          round
+                          size="xs"
+                          color="bright"
+                          class="btn-deposit"
+                          @click="feedbackTrans(det)"
+                      >
+                        <img src="../assets/records/quote-request-icon.png"/>
+                      </q-btn>
+                    </div>
+
                   </div>
 
                 </div>

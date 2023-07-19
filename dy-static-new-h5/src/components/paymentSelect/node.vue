@@ -231,8 +231,8 @@ $node-color: #4ab6fd;
           display: block;
           content: "";
           position: absolute;
-          top: -3px;
-          left: 3px;
+          top: 0px;
+          left: 0px;
           background-color: #0089ED;
           height: 15px;
           width: 15px;
@@ -304,7 +304,7 @@ $node-color: #4ab6fd;
       display: flex;
       justify-content: center;
       width: 100%;
-      max-width: 5.5rem;
+      max-width: 5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -345,7 +345,7 @@ $node-color: #4ab6fd;
       }
 
       .overflow {
-        font-size: 16px;
+        font-size: .9em;
       }
     }
   }

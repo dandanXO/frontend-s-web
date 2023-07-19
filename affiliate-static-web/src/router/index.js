@@ -177,9 +177,22 @@ export const constantRoutes = [
     redirect: "noredirect",
     children: [
       {
+        name: "Deposit",
+        path: "deposit",
+        component: () => import('@/views/affiliate-center/deposit/index.vue'),
+        meta:
+        {
+          title: "Deposit",
+          icon: "bank",
+          hidden: false
+        },
+        alwaysShow: true,
+        redirect: null,
+      },
+      {
         name: "Bind Bank Cards",
         path: "bankcard",
-        component: () => import('@/views/affiliate-center/affiliatebindcard.vue'),
+        component: () => import('@/views/affiliate-center/withdraw/affiliatebindcard.vue'),
         meta:
         {
           title: "member",
@@ -192,7 +205,7 @@ export const constantRoutes = [
       {
         name: "Bank Withdrawal",
         path: "withdraw",
-        component: () => import('@/views/affiliate-center/withdraw.vue'),
+        component: () => import('@/views/affiliate-center/withdraw/withdraw.vue'),
         meta:
         {
           title: "Bank Withdrawal",

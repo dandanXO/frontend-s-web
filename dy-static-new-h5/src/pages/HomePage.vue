@@ -253,7 +253,7 @@
                         <img class="game-bg"
                              :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
                         <div class="game-title">
-                          <h3>{{ live.name }}</h3>
+                          <h3>{{ live.title }}</h3>
                           <span>真人娱乐</span>
                         </div>
                       </div>
@@ -575,11 +575,7 @@
                           <span>彩票游戏</span>
                         </div>
                       </div>
-                      <!--                  <PlatformBlock-->
-                      <!--                      @click="playGame(lotter.name, lotter.code, 'imlotto30000')"-->
-                      <!--                      dataType="lottery"-->
-                      <!--                      :data="lotter"-->
-                      <!--                  />-->
+
                     </template>
                     <template
                         v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
@@ -589,15 +585,11 @@
                         <img class="game-bg"
                              :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
                         <div class="game-title">
-                          <h3>{{ lotter.name }}</h3>
+                          <h3>{{ lotter.title }}</h3>
                           <span>彩票游戏</span>
                         </div>
                       </div>
-                      <!--                  <PlatformBlock-->
-                      <!--                      @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
-                      <!--                      dataType="lottery"-->
-                      <!--                      :data="lotter"-->
-                      <!--                  />-->
+
                     </template>
                     <template v-else>
                       <div class="game-board" @click="playGame(lotter.name, lotter.code, lotter.gameCode)">
@@ -605,15 +597,11 @@
                         <img class="game-bg"
                              :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
                         <div class="game-title">
-                          <h3>{{ lotter.name }}</h3>
+                          <h3>{{ lotter.title }}</h3>
                           <span>彩票游戏</span>
                         </div>
                       </div>
-                      <!--                  <PlatformBlock-->
-                      <!--                      @click="playGame(lotter.name, lotter.code, lotter.gameCode)"-->
-                      <!--                      dataType="lottery"-->
-                      <!--                      :data="lotter"-->
-                      <!--                  />-->
+
                     </template>
 
 
@@ -732,7 +720,7 @@
       <q-card-section class="q-mb-md">
         <img :src="homePopupImg" alt="" class="alert-image"/>
         <div class="close-alert" @click="closeAlert()">
-          <q-icon color="white" size="24px" name="close"></q-icon>
+          <!--          <q-icon color="white" size="24px" name="close"></q-icon>-->
         </div>
       </q-card-section>
     </q-card>
@@ -763,6 +751,7 @@ import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/scrollbar";
 import {App} from "@capacitor/app";
+import * as _ from "lodash"
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -801,7 +790,6 @@ export default defineComponent({
     };
     const setSlotSwiper2 = (swiper) => {
       slotSwiper2.value = swiper;
-      // slotSwiper.value.controller.control = slotSwiper2.value;
     }
 
 
@@ -919,13 +907,13 @@ export default defineComponent({
 
     const slot_odds = computed(() => {
       var filtered = slot.value.filter(function (element, index, array) {
-        return (index % 2 === 1);
+        return (index % 2 === 0);
       });
       return filtered;
     });
     const slot_evens = computed(() => {
       var filtered = slot.value.filter(function (element, index, array) {
-        return (index % 2 === 0);
+        return (index % 2 === 1);
       });
       return filtered;
     })
@@ -977,9 +965,9 @@ export default defineComponent({
     const store = userStore();
     const isShowBackTop = ref(false);
     const isShowDownload = ref(true);
-    if (store.hasToken()) {
-      isShowDownload.value = false;
-    }
+    // if (store.hasToken()) {
+    //   isShowDownload.value = false;
+    // }
 
     const onHomeScroll = (position) => {
       // console.log(position);
@@ -989,13 +977,13 @@ export default defineComponent({
       } else {
         isZeroScrollPos.value = false;
       }
-      if (!store.hasToken()) {
-        if (position > 55) {
-          isShowDownload.value = false;
-        } else {
-          isShowDownload.value = true;
-        }
+      // if (!store.hasToken()) {
+      if (position > 55) {
+        isShowDownload.value = false;
+      } else {
+        isShowDownload.value = true;
       }
+      // }
 
       if (position > 400) {
         isShowBackTop.value = true;
@@ -1127,6 +1115,11 @@ export default defineComponent({
             var pf = data;
             ui.slotLists = [];
             pf.forEach((element) => {
+              var gameStatus= element.status;
+              if(gameStatus === "TEST" && store.memberType !== 'TEST'){
+                return;
+              }
+
               const platTypes = element.gameType.split(",");
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
@@ -1169,7 +1162,7 @@ export default defineComponent({
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
-                liveObj.title = liveObj.name + " 真人";
+                liveObj.title = translateRecord(liveObj.name);
                 liveObj.icon = "live";
                 liveObj.subtitle = "真人娱乐";
                 livecasino.value.push(liveObj);
@@ -1194,6 +1187,26 @@ export default defineComponent({
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
 
+                if (slotObj.name == 'PG') {
+                  slotObj.num = 1;
+                } else if (slotObj.name == 'PT') {
+                  slotObj.num = 3;
+                } else if (slotObj.name == 'MGP') {
+                  slotObj.num = 5;
+                } else if (slotObj.name == 'SW') {
+                  slotObj.num = 2;
+                } else if (slotObj.name == 'BBIN') {
+                  slotObj.num = 4;
+                } else if (slotObj.name == 'AG') {
+                  slotObj.num = 6;
+                } else if (slotObj.name == 'CQ') {
+                  slotObj.num = 7;
+                } else if (slotObj.name == 'JDB') {
+                  slotObj.num = 8;
+                } else {
+                  slotObj.num = 9;
+                }
+
                 let slotItem = {
                   id: slotObj.id,
                   code: slotObj.code,
@@ -1210,16 +1223,11 @@ export default defineComponent({
                 fishing.value.push(fishObj);
               }
             });
-            console.log(livecasino.value);
+
+            slot.value = _.orderBy(slot.value, ['num'], ['asc']);
+            console.log(slot.value);
           })
           .catch((err) => {
-            // isLoading.value= false;
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: "Loading failed",
-            //   icon: "report_problem"
-            // });
           });
     };
     const liveTabs = ref("");
@@ -1812,15 +1820,13 @@ export default defineComponent({
           }
 
           h3 {
-            // line-height: 24px;
-            // font-size: 20px;
             line-height: 1rem;
-            font-size: 1rem;
+            font-size: 22px;
             color: #fff;
             margin-top: 0px;
-            margin-bottom: 3px;
+            margin-bottom: 7px;
             text-align: center;
-            font-weight: 600;
+            font-weight: 500;
             letter-spacing: 1px;
           }
 

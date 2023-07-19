@@ -46,6 +46,10 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter()
     }
 
+    if (to.name === "agentCode") {
+      sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+      next(`/login?register`);
+    }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
       next(`/login?register`);

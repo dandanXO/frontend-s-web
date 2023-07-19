@@ -37,7 +37,8 @@
                   <img src="../assets/login/user-icon.png" width="18"/>
                 </template>
                 <template v-slot:append>
-                  <img @click="clearLoginName" src="../assets/login/input-close-icon.png" style="margin-right:3px;" width="20"/>
+                  <img @click="clearLoginName" src="../assets/login/input-close-icon.png" style="margin-right:3px;"
+                       width="20"/>
                 </template>
               </q-input>
 
@@ -53,15 +54,19 @@
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
                   label-color=""
-                  clearable
                   autocomplete="current-password"
               >
                 <template v-slot:prepend>
                   <img src="../assets/login/pass-icon.png" width="18"/>
                 </template>
                 <template v-slot:append>
-                  <img v-if="!isPwd" @click="isPwd = !isPwd" src="../assets/login/eye-line.png" style="margin-right:3px;" width="20"/>
-                  <img v-if="isPwd" @click="isPwd = !isPwd" src="../assets/login/eye-close-line.png" style="margin-right:3px;" width="20"/>
+                  <img v-if="loginForm.password" @click="clearPwName" src="../assets/login/input-close-icon.png"
+                       style="margin-right:3px;" width="20"/>
+
+                  <img v-if="!isPwd" @click="isPwd = !isPwd" src="../assets/login/eye-line.png"
+                       style="margin-right:3px;" width="20"/>
+                  <img v-if="isPwd" @click="isPwd = !isPwd" src="../assets/login/eye-close-line.png"
+                       style="margin-right:3px;" width="20"/>
 
                 </template>
               </q-input>
@@ -314,8 +319,13 @@ export default defineComponent({
 
     const isCheckRmb = ref(false);
 
-    const clearLoginName= () => {
-      loginForm.loginName='';
+    const clearLoginName = () => {
+      loginForm.loginName = '';
+      loginFormRef.value.reset();
+    }
+
+    const clearPwName = () => {
+      loginForm.password = '';
       loginFormRef.value.reset();
     }
 
@@ -411,7 +421,7 @@ export default defineComponent({
                 .then(() => {
                   $q.loading.hide();
                   sessionStorage.removeItem("REFERRAL_CODE");
-                  
+
                   loginFormRef.value.reset();
 
                   if (store.hasToken()) {
@@ -557,7 +567,8 @@ export default defineComponent({
       phoneVerificationImg,
       getInnerCode,
       refinnerCaptchaRef,
-      clearLoginName
+      clearLoginName,
+      clearPwName
     };
   }
 });

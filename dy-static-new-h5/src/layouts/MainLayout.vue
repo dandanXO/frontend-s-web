@@ -136,7 +136,7 @@
                     class="hover"
                     src="../assets/images/index/menu/ft-sport-active.svg"
                   />
-                  电竞
+                  体育
                 </q-route-tab>
 
         <q-route-tab to="/poker" name="poker">

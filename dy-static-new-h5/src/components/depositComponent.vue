@@ -215,20 +215,20 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
-    <q-card style="width: 100%; padding: 20px; flex-direction:column;" class="text-black">
-      <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
-        <strong>温馨提示</strong>
-        <br/>
-        为保证资金安全，存款前先绑定银行卡
-      </q-card-section>
-      <q-card-actions align="right">
-        <router-link to="/account/withdraw">
-          <q-btn label="前往绑定" color="dyblue"/>
-        </router-link>
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+<!--  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>-->
+<!--    <q-card style="width: 100%; padding: 20px; flex-direction:column;" class="text-black">-->
+<!--      <q-card-section class="q-mb-md text-center" style="flex-direction:column;">-->
+<!--        <strong>温馨提示</strong>-->
+<!--        <br/>-->
+<!--        为保证资金安全，存款前先绑定银行卡-->
+<!--      </q-card-section>-->
+<!--      <q-card-actions align="right">-->
+<!--        <router-link to="/account/withdraw">-->
+<!--          <q-btn label="前往绑定" color="dyblue"/>-->
+<!--        </router-link>-->
+<!--      </q-card-actions>-->
+<!--    </q-card>-->
+<!--  </q-dialog>-->
 </template>
 
 <script setup id="DepositComponent">
@@ -253,15 +253,16 @@ const isNoBankCard = ref(false);
 const checkNewUser = () => {
   if (store.phone === "" || store.phone === null) {
     isNewUser.value = true;
-  } else {
-    api.get("/session/bankCard").then((response) => {
-      if (response.code === 0) {
-        if (response.data.length === 0) {
-          isNoBankCard.value = true;
-        }
-      }
-    });
   }
+  // else {
+  //   api.get("/session/bankCard").then((response) => {
+  //     if (response.code === 0) {
+  //       if (response.data.length === 0) {
+  //         isNoBankCard.value = true;
+  //       }
+  //     }
+  //   });
+  // }
 };
 const isDeposited = ref(false);
 const isLoading = ref(true);

@@ -136,8 +136,8 @@
                 <template #prepend><i style="padding: 0 10px" class="el-icon-s-check" /></template>
               </el-input>
             </el-form-item>
-            <el-form-item prop="codeAffiliate">
-              <el-input v-if="hasAffiliate"
+            <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+              <!-- <el-input v-if="hasAffiliate"
                         ref="codeAffiliateRef"
                         v-model="loginForm.codeAffiliate"
                         :placeholder="'代理码'"
@@ -146,15 +146,15 @@
                         tabindex="8"
                         autocomplete="on"
                         :disabled="true"
-              />
-              <el-input v-if="!hasAffiliate"
-                        ref="codeAffiliateRef"
-                        v-model="loginForm.codeAffiliate"
-                        :placeholder="'代理码'"
-                        name="codeAffiliate"
-                        type="text"
-                        tabindex="8"
-                        autocomplete="on"
+              /> -->
+              <el-input
+                ref="codeAffiliateRef"
+                v-model="loginForm.codeAffiliate"
+                :placeholder="'代理码'"
+                name="codeAffiliate"
+                type="text"
+                tabindex="8"
+                autocomplete="on"
               />
             </el-form-item>
             <el-button
@@ -230,6 +230,7 @@ export default defineComponent({
         userName: "",
         password: "",
         confirmPwd: "",
+        realName: "",
         telephone: "",
         email: "",
         captchaCode: "",

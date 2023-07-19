@@ -123,6 +123,8 @@ export const translateRecord = (rec, type = "") => {
     return "金额调整"; // ADJUST
   }else if (rec === "MGP") {
     return "MG"; // AG
+  }else if (rec === "PMLIVE") {
+    return "PM真人"; // BET
   } else if (rec === "AG") {
     if(type == "SLOT"){
       return "AG";
