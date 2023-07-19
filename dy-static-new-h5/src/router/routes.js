@@ -153,6 +153,10 @@ const routes = [
     // component: () => {},
   },
   {
+    path: "/loading",
+    component: () => import("pages/LoadingPage.vue")
+  },
+  {
     path: "/refer/:referralCode",
     name: "referCode",
     component: () => {
