@@ -56,7 +56,9 @@
                       v-model="lucky_number"
                       filled
                       bg-color="white"
+                      label-color="black"
                       color="black"
+                      :input-style="{color: 'black'}"
                       type="number"
                       :rules="[
                         (val) => (val && val.length === 3) || '号码长度应为3'
@@ -504,7 +506,7 @@ export default defineComponent({
 
         var postData = {};
         postData.number = submit_number;
-        postData.promoCode = "xf1-lottery";
+        postData.promoCode = "xf-iphone";
 
         var luckyNumberUrl = "/privi/lotteryNumber";
         btnLoading.value = true;
