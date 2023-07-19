@@ -10,11 +10,13 @@ import {api} from "boot/axios";
 import CsClient from "csweb-client";
 import {userStore} from "src/stores";
 import {cached} from "boot/cache";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
+    var router= useRouter();
     const store = userStore();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
@@ -95,14 +97,14 @@ export default defineComponent({
       });
 
       //CsClient Event Listener.
-      // window.addEventListener('message', function (event) {
-      //   console.log("Message received from the iframe: " + event.data); // Message received from child
-      //   if (_.isString(event.data)) {
-      //     if (event.data == 'closenotice') {
-      //       router.go(-1);
-      //     }
-      //   }
-      // });
+      window.addEventListener('message', function (event) {
+        // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
+        if (_.isString(event.data)) {
+          if (event.data == 'sess_timeout') {
+            router.push({ path: "/" });
+          }
+        }
+      });
     };
     onMounted(() => {
       checkSID();

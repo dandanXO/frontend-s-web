@@ -7,7 +7,7 @@
           horizontal
       >
         <div class="logo">
-          <router-link to="/"><img src="../assets/home/logo.png"/></router-link>
+          <router-link to="/"><img src="../assets/logo.png"/></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>

@@ -10,7 +10,8 @@ html {
 // app global css in SCSS form
 body {
   //font-family: "Jura";
-  font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Segoe UI,Arial,Roboto,"PingFang SC","miui","Hiragino Sans GB","Microsoft Yahei",sans-serif;
+  //font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Segoe UI,Arial,Roboto,"PingFang SC","miui","Hiragino Sans GB","Microsoft Yahei",sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
   background: #ffffff;
 }
 
@@ -58,7 +59,7 @@ body {
 .q-page-container {
   background: #fff;
   min-height: calc(100vh - 49px);
-  box-shadow:0px 0px 4px rgba(0,0,0,0.25);
+  //box-shadow:0px 0px 4px rgba(0,0,0,0.25);
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> is used. */
 
@@ -151,15 +152,15 @@ svg {
 }
 
 .q-carousel.home {
-  height: 60vw;
-  max-height: 210px;
+  height: 40vw;
+  max-height: 150px;
   border-radius: 8px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 100% 100%;
+    background-size: 100% auto;
   }
 
   .q-carousel__navigation--bottom {
@@ -187,7 +188,7 @@ svg {
   border-radius: 20px 20px 0 0;
   //box-shadow: 0 0 0px 0px #75757550;
   //overflow: hidden;
-  font-size: 14.5px;
+  font-size: 12px;
 
   .q-tabs {
     background: #d2d2de !important;
@@ -282,7 +283,8 @@ svg {
 
 .bg-dyblue {
   // background: #0089ED;
-  background: linear-gradient(180deg, #52ACFF, #3559DA);
+  // background: linear-gradient(180deg, #52ACFF, #3559DA);
+  background-color: #4c9dec;
   color: #ffffff;
 }
 .bg-dygreen {
@@ -377,3 +379,14 @@ a:visited{
   display:none !important;
 }
 
+.q-layout__shadow:after{
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+.no-shadow{
+  &:before{
+    transition: none !important;
+    box-shadow:none !important;
+  }
+
+}

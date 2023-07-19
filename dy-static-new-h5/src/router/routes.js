@@ -61,7 +61,8 @@ const routes = [
         name: "poker",
         component: () => import("pages/games/PokerView.vue")
       }
-    ]
+    ],
+    meta: {requiresAuth: true}
   },
   {
     path: "/slot",

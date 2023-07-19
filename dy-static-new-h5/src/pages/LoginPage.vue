@@ -198,7 +198,7 @@
 
       <div class="text-center">
         如需帮助，请
-        <router-link class="txt-link q-ml-xs" to="/liveChat">联系客服</router-link>
+        <router-link class="txt-link q-ml-xs" id="cs-web-id" to="/liveChat">联系客服</router-link>
       </div>
 
 
@@ -411,8 +411,8 @@ export default defineComponent({
                 .then(() => {
                   $q.loading.hide();
                   sessionStorage.removeItem("REFERRAL_CODE");
-
-                  phoneLoginForm.value.reset();
+                  
+                  loginFormRef.value.reset();
 
                   if (store.hasToken()) {
                     const jumpUrl = route.query.redirect ? route.query.redirect : "/";
