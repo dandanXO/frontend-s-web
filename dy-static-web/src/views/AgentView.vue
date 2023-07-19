@@ -193,7 +193,10 @@
           </div>
         </div>
       <div class="agent-demo-btm" style="margin-top: 20px;padding-bottom: 40px;">
-			<a href="/register.jsp" class="agent-reg-btn">立即申请代理</a>
+			<a :href="
+            'https://affiliate-web.gwd4jptunz.com/dy/register?agent=' +
+            (affCode ? affCode : '')
+          " class="agent-reg-btn">立即申请代理</a>
 		</div>
     <div class="agent-contact-bg">
 			<div id="contactDetail" class="agent-contact-main">
@@ -514,7 +517,7 @@ justify-content: space-between;
 width: 150px;
 text-align: center;
 font-size: 24px;
-color: #bacef1;
+color: #518bf7;
 }
 .agent-contact-ways {
 width: 515px;
