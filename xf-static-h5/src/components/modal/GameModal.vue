@@ -20,33 +20,33 @@
     </q-toolbar> -->
       <q-toolbar
       >
-        <div class="topActions">
-          <q-toolbar-title></q-toolbar-title>
-          <q-btn
-              v-if="!drawerVisible"
-              flat
-              @click="closeDialog()"
-              round
-              dense
-              icon="close"
-          />
-          <q-btn
-              v-if="!drawerVisible"
-              flat
-              @click="drawerVisible = !drawerVisible"
-              round
-              dense
-              icon="menu_open"
-          />
-          <q-btn
-              v-if="drawerVisible"
-              flat
-              @click="drawerVisible = !drawerVisible"
-              round
-              dense
-              icon="read_more"
-          />
-        </div>
+<!--        <div class="topActions">-->
+<!--          <q-toolbar-title></q-toolbar-title>-->
+<!--          <q-btn-->
+<!--              v-if="!drawerVisible"-->
+<!--              flat-->
+<!--              @click="closeDialog()"-->
+<!--              round-->
+<!--              dense-->
+<!--              icon="close"-->
+<!--          />-->
+<!--          <q-btn-->
+<!--              v-if="!drawerVisible"-->
+<!--              flat-->
+<!--              @click="drawerVisible = !drawerVisible"-->
+<!--              round-->
+<!--              dense-->
+<!--              icon="menu_open"-->
+<!--          />-->
+<!--          <q-btn-->
+<!--              v-if="drawerVisible"-->
+<!--              flat-->
+<!--              @click="drawerVisible = !drawerVisible"-->
+<!--              round-->
+<!--              dense-->
+<!--              icon="read_more"-->
+<!--          />-->
+<!--        </div>-->
 
         <iframe
             @load="loadGame()"
@@ -57,64 +57,64 @@
             frameborder="0"
             class="game-iframe"
         ></iframe>
-        <q-drawer
-            v-model="drawerVisible"
-            :breakpoint="500"
-            overlay
-            bordered
-            class="bg-primary"
-            side="right"
-        >
-          <div class="q-pa-sm q-pt-sm">
-            <div>
-              <!-- Uncomment for quick Transfer -->
-              <!-- <q-btn-group push>
-                <q-btn
-                  size="sm"
-                  :color="quickTransferTab ? 'white' : 'primary'"
-                  glossy
-                  :text-color="quickTransferTab ? 'black' : 'white'"
-                  push
-                  label="Quick Transfer"
-                  icon="multiple_stop"
-                  @click="quickTransferTab = true"
-                />
+<!--        <q-drawer-->
+<!--            v-model="drawerVisible"-->
+<!--            :breakpoint="500"-->
+<!--            overlay-->
+<!--            bordered-->
+<!--            class="bg-primary"-->
+<!--            side="right"-->
+<!--        >-->
+<!--          <div class="q-pa-sm q-pt-sm">-->
+<!--            <div>-->
+<!--              &lt;!&ndash; Uncomment for quick Transfer &ndash;&gt;-->
+<!--              &lt;!&ndash; <q-btn-group push>-->
+<!--                <q-btn-->
+<!--                  size="sm"-->
+<!--                  :color="quickTransferTab ? 'white' : 'primary'"-->
+<!--                  glossy-->
+<!--                  :text-color="quickTransferTab ? 'black' : 'white'"-->
+<!--                  push-->
+<!--                  label="Quick Transfer"-->
+<!--                  icon="multiple_stop"-->
+<!--                  @click="quickTransferTab = true"-->
+<!--                />-->
 
-                <q-btn
-                  size="sm"
-                  :color="!quickTransferTab ? 'white' : 'primary'"
-                  glossy
-                  :text-color="!quickTransferTab ? 'black' : 'white'"
-                  push
-                  label="Bank Transfer"
-                  icon="account_balance"
-                  @click="quickTransferTab = false"
-                />
-              </q-btn-group> -->
+<!--                <q-btn-->
+<!--                  size="sm"-->
+<!--                  :color="!quickTransferTab ? 'white' : 'primary'"-->
+<!--                  glossy-->
+<!--                  :text-color="!quickTransferTab ? 'black' : 'white'"-->
+<!--                  push-->
+<!--                  label="Bank Transfer"-->
+<!--                  icon="account_balance"-->
+<!--                  @click="quickTransferTab = false"-->
+<!--                />-->
+<!--              </q-btn-group> &ndash;&gt;-->
 
-              <!-- <template v-if="quickTransferTab">
-                <div class="numbers">
-                  <div class="instruction">Transfer amount to platform</div>
+<!--              &lt;!&ndash; <template v-if="quickTransferTab">-->
+<!--                <div class="numbers">-->
+<!--                  <div class="instruction">Transfer amount to platform</div>-->
 
-                  <q-btn
-                    class="full-width"
-                    push
-                    glossy
-                    color="brand"
-                    v-for="(val, valIndex) in values"
-                    :key="valIndex"
-                    @click="submitTransfer(val)"
-                  >
-                    {{ val }}
-                  </q-btn>
-                </div>
-              </template> -->
-              <template v-if="!quickTransferTab">
-                <DepositComponent/>
-              </template>
-            </div>
-          </div>
-        </q-drawer>
+<!--                  <q-btn-->
+<!--                    class="full-width"-->
+<!--                    push-->
+<!--                    glossy-->
+<!--                    color="brand"-->
+<!--                    v-for="(val, valIndex) in values"-->
+<!--                    :key="valIndex"-->
+<!--                    @click="submitTransfer(val)"-->
+<!--                  >-->
+<!--                    {{ val }}-->
+<!--                  </q-btn>-->
+<!--                </div>-->
+<!--              </template> &ndash;&gt;-->
+<!--              <template v-if="!quickTransferTab">-->
+<!--                <DepositComponent/>-->
+<!--              </template>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </q-drawer>-->
       </q-toolbar>
     </q-dialog>
     <q-dialog
@@ -122,8 +122,22 @@
         class="gameDialog"
         style="width: 100%; margin: 0 auto"
     >
-      <img src="../../assets/logo-coming.png" style="width: 80%;"/>
+<!--      <img src="../../assets/logo-coming.png" style="width: 80%;"/>-->
     </q-dialog>
+
+    <q-page-sticky position="bottom-right" :offset="fabPos">
+      <q-fab
+          @click="closeDialog()"
+          icon="replay"
+          direction="up"
+          color="bright"
+          style="z-index:999;"
+          v-touch-pan.prevent.mouse="moveFab"
+      >
+      </q-fab>
+    </q-page-sticky>
+
+
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
@@ -155,6 +169,18 @@ const bankCardList = ref([]);
 const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
+
+const fabPos = ref([ 18, 18 ])
+const draggingFab = ref(false);
+
+const moveFab = (ev) => {
+  draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
+
+  fabPos.value = [
+    fabPos.value[ 0 ] - ev.delta.x,
+    fabPos.value[ 1 ] - ev.delta.y
+  ]
+}
 
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
@@ -239,7 +265,7 @@ const submitTransfer = (amount) => {
 const closeDialog = () => {
   visible.value = !visible.value
   src.value = ""
-  AppFullscreen.exit()
+  // AppFullscreen.exit()
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
   //
@@ -336,13 +362,87 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               newWin.location.href = response.data;
             });
         return;
-      }
+      } else if (way === "ANDROID") {
 
-      if (platformCode === 'platformType') {
+        if (platformCode === 'platformType') {
+          api
+              .get(`/session/launch?_time=${new Date().getTime()}`, {
+                params: {
+                  platform: gameCode,
+                  isMobile: Platform.is.mobile ? true : false,
+                  way: way
+                }
+              })
+              .then((response) => {
+                src.value = response.data;
+                visible.value = true;
+              }).catch((err) => {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: err.message,
+              icon: "report_problem"
+            });
+          });
+          return;
+        }
         api
             .get(`/session/launch?_time=${new Date().getTime()}`, {
               params: {
-                platform: gameCode,
+                platform: platformCode,
+                gameCode: gameCode,
+                isMobile: Platform.is.mobile ? true : false,
+                way: way
+              }
+            })
+            .then((response) => {
+              src.value = response.data;
+              visible.value = true;
+            }).catch((err) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: err.message,
+            icon: "report_problem"
+          });
+        })
+
+      } else {
+
+        if (platformCode === 'platformType') {
+          api
+              .get(`/session/launch?_time=${new Date().getTime()}`, {
+                params: {
+                  platform: gameCode,
+                  isMobile: Platform.is.mobile ? true : false,
+                  way: way
+                }
+              })
+              .then((response) => {
+                if (way === 'IOS') {
+                  const newWin = window.open(`/`, `_self`);
+                  newWin.location.href = response.data
+                } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+                  const newWin = window.open(`/`, `_blank`);
+                  newWin.location.href = response.data
+                } else {
+                  openURL(response.data)
+                }
+              }).catch((err) => {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: err.message,
+              icon: "report_problem"
+            });
+          });
+          return;
+        }
+        api
+            .get(`/session/launch?_time=${new Date().getTime()}`, {
+              params: {
+                platform: platformCode,
+                gameCode: gameCode,
                 isMobile: Platform.is.mobile ? true : false,
                 way: way
               }
@@ -364,36 +464,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             message: err.message,
             icon: "report_problem"
           });
-        });
-        return;
+        })
       }
-      api
-          .get(`/session/launch?_time=${new Date().getTime()}`, {
-            params: {
-              platform: platformCode,
-              gameCode: gameCode,
-              isMobile: Platform.is.mobile ? true : false,
-              way: way
-            }
-          })
-          .then((response) => {
-            if (way === 'IOS') {
-              const newWin = window.open(`/`, `_self`);
-              newWin.location.href = response.data
-            } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-              const newWin = window.open(`/`, `_blank`);
-              newWin.location.href = response.data
-            } else {
-              openURL(response.data)
-            }
-          }).catch((err) => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: err.message,
-          icon: "report_problem"
-        });
-      })
+
     } else {
       router.push({path: "/login", query: {redirect: route.path}});
     }
@@ -641,7 +714,6 @@ defineExpose({
 
   .topActions {
     display: flex;
-
     justify-content: flex-end;
     width: 100%;
   }
@@ -649,7 +721,7 @@ defineExpose({
 
 .game-iframe {
   width: 100%;
-  height: calc(100% - 35px);
+  height: 100%;
 }
 
 // .game-iframe {
@@ -778,7 +850,7 @@ defineExpose({
   position: fixed;
   width: 100vw;
   z-index: 1;
-  top: 35px;
+  top: 0px;
 }
 
 .q-toolbar .topActions {

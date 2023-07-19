@@ -53,8 +53,8 @@ export const updateCommissionRate = (id, commission) => {
   return https().request(`/affiliate/${id}/commission?_method=PUT`, Method.POST, { commission: commission }, ContentType.form);
 };
 
-export const updateAffiliatePassword = (id, password) => {
-  return https().request(`/affiliate/${id}/password?_method=PUT`, Method.POST, { password: password }, ContentType.form);
+export const updateAffiliatePassword = (id, password, site) => {
+  return https().request(`/affiliate/${id}/password?_method=PUT`, Method.POST, { password: password, site: site }, ContentType.form);
 };
 
 export const updateAffiliateFinancial = (id, financialId) => {

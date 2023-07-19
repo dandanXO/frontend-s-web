@@ -26,7 +26,7 @@
 
 <style scoped lang="scss">
 .logo {
-  background-image: url("../../assets/images/games/loading/logo.png");
+  background-image: url("../../assets/logo.png");
   background-position: center;
   background-repeat: no-repeat;
   width: 389px;

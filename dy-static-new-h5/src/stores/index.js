@@ -29,8 +29,7 @@ export const userStore = defineStore("userStore", {
             phoneVerified: false,
             emailVerified: false,
             hasCheckedVersion: false,
-            hasClosedDL: false,
-            isInitEsport: false
+            hasClosedDL: false
         };
     },
     actions: {

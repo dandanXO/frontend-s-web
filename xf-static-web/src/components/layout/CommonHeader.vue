@@ -853,7 +853,7 @@ export default defineComponent({
 					this.navigations.push({code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true});
 				}
 			}
-			// this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"});
+			this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"});
 			this.navigations.push({code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", submenu: true});
 			this.navigations.push({code: "App", name: "手机APP", enName: "App", path: "/app", submenu: true});
 			this.navigations.push({code: "VIP", name: "VIP", enName: "VIP", path: "/vip"});
@@ -861,7 +861,7 @@ export default defineComponent({
 		console.log(err)
 		this.navigations.splice(0);
 		this.navigations.push({code: "Home", name: "首页", enName: "Home", path: "/home"})
-		// this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"});
+		this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"});
 		this.navigations.push({code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", submenu: true});
 		this.navigations.push({code: "App", name: "手机APP", enName: "App", path: "/app", submenu: true});
 		this.navigations.push({code: "VIP", name: "VIP", enName: "VIP", path: "/vip"});

@@ -1,19 +1,19 @@
 <template>
   <div class="welcome-page">
-    <div class="logo">
-      <img src="../assets/welcome/logo.png">
-    </div>
-    <div class="promotionlist">
-      <span v-for="i in 4" :key="i">
-      <img @click="checkPromo(i)" :src="require(`../assets/welcome/promo-${i}.png`)">
-      </span>
-    </div>
-    <router-link to="/register">
-      สมัคร
-    </router-link>
-    <div class="slogan">
-      www.jolly88.com &nbsp; | &nbsp; Casino Online and Slot Game Betting
-    </div>
+<!--    <div class="logo">-->
+<!--      <img src="../assets/welcome/logo.png">-->
+<!--    </div>-->
+<!--    <div class="promotionlist">-->
+<!--      <span v-for="i in 4" :key="i">-->
+<!--      <img @click="checkPromo(i)" :src="require(`../assets/welcome/promo-${i}.png`)">-->
+<!--      </span>-->
+<!--    </div>-->
+<!--    <router-link to="/register">-->
+<!--      สมัคร-->
+<!--    </router-link>-->
+<!--    <div class="slogan">-->
+<!--      www.jolly88.com &nbsp; | &nbsp; Casino Online and Slot Game Betting-->
+<!--    </div>-->
   </div>
 </template>
 <script>
@@ -49,7 +49,6 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('../assets/welcome/welcome-bg-h5.png')no-repeat center center;
     background-size: cover;
     min-height: 100vh;
     width: 100%;
@@ -71,7 +70,6 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
-      background: url('../assets/welcome/button.png')no-repeat center center;
       background-size: cover;
       color: #000000;
       font-size: 35px;

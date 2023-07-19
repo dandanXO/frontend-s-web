@@ -1205,7 +1205,6 @@ program at any time without prior notice.`
   min-height: 100vh;
 
   .banner-container {
-    background: url("../../assets/vip/banner.png") no-repeat center center;
     background-size: cover;
     margin-bottom: -200px;
     padding-top: 100px;
@@ -1655,7 +1654,6 @@ program at any time without prior notice.`
 
 .carousel__item {
   background: url(../../assets/vip/vipbg.png) no-repeat top center;
-  // background: url(../../assets/images/vip/vipbg.png)no-repeat center center;
   background-size: cover;
   font-size: 20px;
 }

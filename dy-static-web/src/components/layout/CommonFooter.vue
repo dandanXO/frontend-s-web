@@ -44,7 +44,7 @@
               <li><router-link to="/about?id=aboutus">关于我们</router-link></li>
               <li><router-link to="/promotion">优惠活动</router-link></li>
               <li @click="openRegPage">免费开户</li>
-              <!-- <li><router-link to="/agent">代理加盟</router-link></li> -->
+              <li><router-link to="/agent">代理加盟</router-link></li>
           </ul>
           <ul class="index_bottom_des">
               <li>产品服务</li>
