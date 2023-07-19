@@ -761,6 +761,7 @@ defineExpose({
   bottom: 0px;
 
   &.game-header-iframe {
+    height: calc(100vh - 26px);
     top: 26px;
   }
 }

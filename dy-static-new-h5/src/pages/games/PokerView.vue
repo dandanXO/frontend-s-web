@@ -9,6 +9,7 @@
           round
           dense
           icon="close"
+          style="width:26px;height:26px;min-height: 26px; min-width: 26px;"
       />
     </div>
 
@@ -91,11 +92,11 @@ onMounted(() => {
 <style scoped>
 iframe {
   width: 100%;
-  height: calc(100vh - 35px);
+  height: calc(100vh - 26px);
   position: absolute;
   left: 0;
   right: 0;
-  top: 35px;
+  top: 26px;
   bottom: 0;
   margin: auto;
 }
@@ -105,5 +106,6 @@ iframe {
   background: #d7d7d7;
   justify-content: flex-end;
   width: 100%;
+  height:26px;
 }
 </style>
