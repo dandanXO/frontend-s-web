@@ -219,7 +219,7 @@
 					</div>
 					<div class="agent-ways-box">
 						<div class="agent-ways-way">合营Skype</div>
-						<div class="agent-ways-val">live:.cid.2e3257b6f3c30c1（ <a href=""><img src="../assets/images/affiliate/agent_skype.png"></a> 点击图标以联系，联系时请提供用户名)</div>
+						<div class="agent-ways-val">live:.cid.2e3257b6f3c30c1(<a href="skype:live:.cid.2e3257b6f3c30c1?chat"><img src="../assets/images/affiliate/agent_skype.png"></a> 点击图标以联系，联系时请提供用户名)</div>
 					</div>
 					<div class="agent-ways-box">
                         <div class="agent-ways-way">合营Flygram</div>
