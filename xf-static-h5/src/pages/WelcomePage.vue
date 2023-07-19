@@ -3,17 +3,17 @@
 <!--    <div class="logo">-->
 <!--      <img src="../assets/welcome/logo.png">-->
 <!--    </div>-->
-    <div class="promotionlist">
-      <span v-for="i in 4" :key="i">
-      <img @click="checkPromo(i)" :src="require(`../assets/welcome/promo-${i}.png`)">
-      </span>
-    </div>
-    <router-link to="/register">
-      สมัคร
-    </router-link>
-    <div class="slogan">
-      www.jolly88.com &nbsp; | &nbsp; Casino Online and Slot Game Betting
-    </div>
+<!--    <div class="promotionlist">-->
+<!--      <span v-for="i in 4" :key="i">-->
+<!--      <img @click="checkPromo(i)" :src="require(`../assets/welcome/promo-${i}.png`)">-->
+<!--      </span>-->
+<!--    </div>-->
+<!--    <router-link to="/register">-->
+<!--      สมัคร-->
+<!--    </router-link>-->
+<!--    <div class="slogan">-->
+<!--      www.jolly88.com &nbsp; | &nbsp; Casino Online and Slot Game Betting-->
+<!--    </div>-->
   </div>
 </template>
 <script>
