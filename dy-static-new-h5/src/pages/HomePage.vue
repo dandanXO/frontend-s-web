@@ -1779,7 +1779,8 @@ export default defineComponent({
       text-align: center;
       height: 32px;
       color: #fff;
-      letter-spacing: 1px;
+      white-space: nowrap;
+      letter-spacing: 0px;
       border-radius: 16px;
     }
   }
