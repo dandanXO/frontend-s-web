@@ -127,17 +127,17 @@
           />
           首页
         </q-route-tab>
-                <q-route-tab to="/sport" name="sport">
-                  <img
-                    class="inactive"
-                    src="../assets/images/index/menu/ft-sport.svg"
-                  />
-                  <img
-                    class="hover"
-                    src="../assets/images/index/menu/ft-sport-active.svg"
-                  />
-                  体育
-                </q-route-tab>
+        <q-route-tab to="/sport" name="sport">
+          <img
+              class="inactive"
+              src="../assets/images/index/menu/ft-sport.svg"
+          />
+          <img
+              class="hover"
+              src="../assets/images/index/menu/ft-sport-active.svg"
+          />
+          体育
+        </q-route-tab>
 
         <q-route-tab to="/poker" name="poker">
           <img
@@ -307,6 +307,7 @@ export default defineComponent({
         hasDrawer.value = false;
         hasPage.value = false;
         pageName.value = "";
+        ui.footer = true;
         if (route.path === "/slot") {
           prevPage.value = "";
           hasPage.value = true;
@@ -323,16 +324,18 @@ export default defineComponent({
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
-        }  else if (route.path === "/e-sport") {
+        } else if (route.path === "/e-sport") {
           hasPage.value = true;
           pageName.value = "电子竞技";
         } else if (route.path === "/sport") {
-          hasPage.value = false;
-          pageName.value = "电竞";
+          hasPage.value = true;
+          pageName.value = "体育";
+          ui.footer = false;
         } else if (route.path === "/poker") {
           hasPage.value = false;
           pageName.value = "棋牌";
-        }else if (route.path === "/fish") {
+          ui.footer = false;
+        } else if (route.path === "/fish") {
           hasPage.value = true;
           pageName.value = "捕鱼达人";
         } else if (route.path === "/finance/deposit") {

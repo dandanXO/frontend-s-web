@@ -38,6 +38,13 @@
           <!--                  />-->
         </div>
 
+        <div v-if="!src" class="loading-div">
+          <q-spinner-hourglass
+              color="blue-6"
+              size="8em"
+          />
+        </div>
+
         <iframe
             @load="loadGame()"
             v-show="!logoShow"
@@ -738,7 +745,6 @@ defineExpose({
 
   .topActions {
     display: flex;
-
     justify-content: flex-end;
     width: 100%;
   }
