@@ -307,7 +307,6 @@ export default defineComponent({
         hasDrawer.value = false;
         hasPage.value = false;
         pageName.value = "";
-        ui.footer = true;
         if (route.path === "/slot") {
           prevPage.value = "";
           hasPage.value = true;
@@ -330,11 +329,11 @@ export default defineComponent({
         } else if (route.path === "/sport") {
           hasPage.value = true;
           pageName.value = "体育";
-          ui.footer = false;
+          ui.hiddenFooter();
         } else if (route.path === "/poker") {
           hasPage.value = false;
           pageName.value = "棋牌";
-          ui.footer = false;
+          ui.hiddenFooter();
         } else if (route.path === "/fish") {
           hasPage.value = true;
           pageName.value = "捕鱼达人";
