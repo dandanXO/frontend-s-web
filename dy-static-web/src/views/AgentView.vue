@@ -514,7 +514,7 @@ justify-content: space-between;
 width: 150px;
 text-align: center;
 font-size: 24px;
-color: #bacef1;
+color: #518bf7;
 }
 .agent-contact-ways {
 width: 515px;
