@@ -49,7 +49,6 @@ const LocalStorage = {
     },
     getItem(keyName, defaultValue = null) {
 
-
         return this.get(keyName, defaultValue);
     },
     has(keyName) {

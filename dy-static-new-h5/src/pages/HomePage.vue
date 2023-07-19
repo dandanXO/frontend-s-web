@@ -1456,7 +1456,7 @@ export default defineComponent({
       return false;
     })
     const changeSlotSlide = (type) => {
-      console.log(slotSwiper.value);
+      // console.log(slotSwiper.value);
       if (type === 1) {
         slotSwiper.value?.slidePrev(500);
         slotSwiper2.value?.slidePrev(500);
@@ -1548,7 +1548,7 @@ export default defineComponent({
     };
 
     const openDownloadPage = () => {
-      console.log("open Page");
+      // console.log("open Page");
       window.open(download_url.value, "_system");
       isAppUpdateModal.value = false;
     };
