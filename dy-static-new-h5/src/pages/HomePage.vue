@@ -253,7 +253,7 @@
                         <img class="game-bg"
                              :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
                         <div class="game-title">
-                          <h3>{{ live.name }}</h3>
+                          <h3>{{ live.title }}</h3>
                           <span>真人娱乐</span>
                         </div>
                       </div>
@@ -575,11 +575,7 @@
                           <span>彩票游戏</span>
                         </div>
                       </div>
-                      <!--                  <PlatformBlock-->
-                      <!--                      @click="playGame(lotter.name, lotter.code, 'imlotto30000')"-->
-                      <!--                      dataType="lottery"-->
-                      <!--                      :data="lotter"-->
-                      <!--                  />-->
+
                     </template>
                     <template
                         v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
@@ -589,15 +585,11 @@
                         <img class="game-bg"
                              :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
                         <div class="game-title">
-                          <h3>{{ lotter.name }}</h3>
+                          <h3>{{ lotter.title }}</h3>
                           <span>彩票游戏</span>
                         </div>
                       </div>
-                      <!--                  <PlatformBlock-->
-                      <!--                      @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
-                      <!--                      dataType="lottery"-->
-                      <!--                      :data="lotter"-->
-                      <!--                  />-->
+
                     </template>
                     <template v-else>
                       <div class="game-board" @click="playGame(lotter.name, lotter.code, lotter.gameCode)">
@@ -605,15 +597,11 @@
                         <img class="game-bg"
                              :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
                         <div class="game-title">
-                          <h3>{{ lotter.name }}</h3>
+                          <h3>{{ lotter.title }}</h3>
                           <span>彩票游戏</span>
                         </div>
                       </div>
-                      <!--                  <PlatformBlock-->
-                      <!--                      @click="playGame(lotter.name, lotter.code, lotter.gameCode)"-->
-                      <!--                      dataType="lottery"-->
-                      <!--                      :data="lotter"-->
-                      <!--                  />-->
+
                     </template>
 
 
@@ -802,7 +790,6 @@ export default defineComponent({
     };
     const setSlotSwiper2 = (swiper) => {
       slotSwiper2.value = swiper;
-      // slotSwiper.value.controller.control = slotSwiper2.value;
     }
 
 
@@ -1128,6 +1115,11 @@ export default defineComponent({
             var pf = data;
             ui.slotLists = [];
             pf.forEach((element) => {
+              var gameStatus= element.status;
+              if(gameStatus === "TEST" && store.memberType !== 'TEST'){
+                return;
+              }
+
               const platTypes = element.gameType.split(",");
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
@@ -1170,7 +1162,7 @@ export default defineComponent({
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
-                liveObj.title = liveObj.name + " 真人";
+                liveObj.title = translateRecord(liveObj.name);
                 liveObj.icon = "live";
                 liveObj.subtitle = "真人娱乐";
                 livecasino.value.push(liveObj);

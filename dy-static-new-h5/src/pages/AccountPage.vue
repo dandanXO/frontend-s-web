@@ -806,7 +806,7 @@ export default defineComponent({
       display: block;
 
       .acct-nav-item {
-        font-size: 16px;
+        font-size: 14px;
         gap: 5px;
         cursor: pointer;
         display: flex;

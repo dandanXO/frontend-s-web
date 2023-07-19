@@ -3,10 +3,10 @@
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab
-          v-for="(tab, i) in tabItems"
-          :key="i"
-          :name="tab.name"
-          :label="tab.label"
+            v-for="(tab, i) in tabItems"
+            :key="i"
+            :name="tab.name"
+            :label="tab.label"
         />
       </q-tabs>
 
@@ -17,15 +17,15 @@
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
                 <div
-                  class="promo-item"
-                  v-for="(promo, i) in filteredArray"
-                  :key="i"
-                  data-aos="zoom-in"
-                  data-aos-easing="ease-out"
-                  data-aos-duration="1000"
+                    class="promo-item"
+                    v-for="(promo, i) in filteredArray"
+                    :key="i"
+                    data-aos="zoom-in"
+                    data-aos-easing="ease-out"
+                    data-aos-duration="1000"
                 >
                   <template
-                    v-if="
+                      v-if="
                       promo.promoType
                         .toLowerCase()
                         .split(',')
@@ -36,8 +36,8 @@
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img
-                            class="promo-content"
-                            :src="imgURL + promo.mobileImgUrl"
+                              class="promo-content"
+                              :src="imgURL + promo.mobileImgUrl"
                           />
                         </div>
                       </div>
@@ -54,8 +54,8 @@
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img
-                            class="promo-content"
-                            :src="imgURL + promo.mobileImgUrl"
+                              class="promo-content"
+                              :src="imgURL + promo.mobileImgUrl"
                           />
                         </div>
                       </div>
@@ -90,17 +90,17 @@
                 ></div> -->
                 <div>
                   <img
-                    :src="imgURL + selectedPromo.mobileBannerUrl"
-                    style="width: 100%; display: block"
+                      :src="imgURL + selectedPromo.mobileBannerUrl"
+                      style="width: 100%; display: block"
                   />
                 </div>
               </div>
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
-                  <HotPromotion :list="selectedPromo" />
+                  <HotPromotion :list="selectedPromo"/>
                 </div>
                 <div
-                  :class="{
+                    :class="{
                     welcome:
                       selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -123,28 +123,30 @@
 
   <q-dialog width="100%" v-model="isDisplayLogin">
     <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-white text-black text-right"
+        style="width: 100%; padding: 20px"
+        class="bg-white text-black text-right"
     >
       <q-card-section class="q-mb-md gologin-popup">
-        <strong><RiErrorWarningLine />系统提示</strong>
+        <strong>
+          <RiErrorWarningLine/>
+          系统提示</strong>
         请登录后再操作
       </q-card-section>
       <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="dyblue" />
+        <q-btn label="确认" color="dyblue"/>
       </router-link>
     </q-card>
   </q-dialog>
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
-import { useUI } from "stores/ui";
-import { userStore } from "stores/index";
-import { RiErrorWarningLine } from "vue-remix-icons";
+import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {api} from "boot/axios";
+import {useQuasar} from "quasar";
+import {useUI} from "stores/ui";
+import {userStore} from "stores/index";
+import {RiErrorWarningLine} from "vue-remix-icons";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
@@ -160,16 +162,16 @@ export default defineComponent({
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
-      active: { value: "ALL", label: "ALL" },
+      active: {value: "ALL", label: "ALL"},
       promoList: []
     });
     const promoTypes = ref([
-      { code: "ALL", img: "all", label: "所有游戏" },
-      { code: "ESPORTS", img: "esport", label: "电竞" },
-      { code: "SPORTS", img: "sport", label: "体育" },
-      { code: "POKER", img: "poker", label: "棋牌" },
-      { code: "LIVE CASINO", img: "live", label: "真人娱乐" },
-      { code: "FISH", img: "game", label: "老虎机/捕鱼" }
+      {code: "ALL", img: "all", label: "所有游戏"},
+      {code: "ESPORTS", img: "esport", label: "电竞"},
+      {code: "SPORTS", img: "sport", label: "体育"},
+      {code: "POKER", img: "poker", label: "棋牌"},
+      {code: "LIVE CASINO", img: "live", label: "真人娱乐"},
+      {code: "FISH", img: "game", label: "老虎机/捕鱼"}
     ]);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
@@ -183,13 +185,13 @@ export default defineComponent({
 
     const tab = ref("all");
     const tabItems = [
-      { name:"all", label: '全部' },
+      {name: "all", label: '全部'},
       {
         name: "sport",
         label: "体育"
       },
-      { name: "fish", label: '捕鱼'},
-      { name: "live casino", label: '真人'},
+      {name: "fish", label: '捕鱼'},
+      {name: "live casino", label: '真人'},
       {
         name: "slot game",
         label: "电子"
@@ -211,21 +213,20 @@ export default defineComponent({
       //   }
       // })
       api
-        .get("/promo/banner?category=PROMO")
-        .then((response) => {
-          if (response.code === 0) {
-            banner.value = response.data[0];
-            // console.log(banner.value)
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: ret.message,
-            //   icon: "report_problem"
-            // });
-          }
-          // banners.value = response.data;
-        });
+          .get("/promo/banner?category=PROMO")
+          .then((response) => {
+            if (response.code === 0) {
+              banner.value = response.data[0];
+            } else {
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: ret.message,
+              //   icon: "report_problem"
+              // });
+            }
+            // banners.value = response.data;
+          });
     };
     const showPromoDetails = (promo) => {
       if (!store.token) {
@@ -233,12 +234,12 @@ export default defineComponent({
       } else {
 
         if (promo.redirectUrl.includes("page-vip")) {
-          router.push({ path: "/account/vip" });
+          router.push({path: "/account/vip"});
         } else {
           if (route.query.fromAccount) {
-            router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+            router.push({path: "/promo", query: {name: promo.redirectUrl, fromAccount: true}});
           } else {
-            router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+            router.push({path: "/promo", query: {name: promo.redirectUrl}});
           }
           isPromoDetail.value = true;
           selectedPromo.value = promo;
@@ -248,8 +249,8 @@ export default defineComponent({
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function(promo) {
-          console.log("^^^");
+        filteredArray.value = promoState.promoList.filter(function (promo) {
+
           return (promo.promoType.toLowerCase()).includes(type.value.toLowerCase());
         });
       } else {
@@ -263,7 +264,7 @@ export default defineComponent({
           promoState.promoList.push(...res.data);
 
           promoState.promoList.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST") || element.privilegeStatus === "CLOSE" || element.privilegeStatus === null) {
               promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             } else {
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
@@ -271,6 +272,9 @@ export default defineComponent({
               }
             }
           });
+          // console.log("Final Promos");
+          // console.log(promoState.promoList);
+
         }
       }).catch((e) => {
         console.log("error", e);
@@ -453,6 +457,7 @@ export default defineComponent({
           animation-name: scalein;
           animation-duration: 1s;
           transition: 0.4s ease-in;
+
           a {
             margin-bottom: 15px;
             display: block;
@@ -564,11 +569,13 @@ export default defineComponent({
               //   clear: both;
               // }
             }
+
             .detaildate {
               color: #858585;
               font-weight: 400;
               font-size: 14px;
             }
+
             .detail-arrow {
               margin-right: 20px;
               height: 100%;
@@ -627,7 +634,7 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
             background-image: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%),
-              linear-gradient(#d0d1d3, #d0d1d3);
+            linear-gradient(#d0d1d3, #d0d1d3);
           }
 
           td {
@@ -687,9 +694,9 @@ export default defineComponent({
   position: absolute;
   top: 0px;
   left: 10px;
-    background: linear-gradient(180deg, #FF4D42, #CA0C00);
-    border-radius: 0 0 10px 10px;
-    font-weight: 600;
+  background: linear-gradient(180deg, #FF4D42, #CA0C00);
+  border-radius: 0 0 10px 10px;
+  font-weight: 600;
 }
 
 .promo {
@@ -731,8 +738,7 @@ export default defineComponent({
 
   .q-tab--active .q-tab__indicator {
     display: none;
-    background: url("../assets/images/promotion/tab_bg.png") no-repeat center
-      center;
+    background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
     background-size: 20px 10px;
     width: 100%;
     height: 10px;
@@ -779,9 +785,10 @@ export default defineComponent({
 .gologin-popup {
   display: flex;
   flex-direction: column;
-    align-items: flex-start;
-    color: #6C6C6E;
-    gap: 15px;
+  align-items: flex-start;
+  color: #6C6C6E;
+  gap: 15px;
+
   strong {
     color: #000000;
     display: flex;
@@ -789,6 +796,7 @@ export default defineComponent({
     align-items: center;
     font-size: 20px;
     font-weight: 700;
+
     svg {
       fill: #0089ED;
     }
