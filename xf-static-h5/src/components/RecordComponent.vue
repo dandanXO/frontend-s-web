@@ -16,7 +16,7 @@
             <template v-for="obj in Object.keys(det)" :key="obj">
               <div v-if="obj === head.key" class="desc">
                 <div v-if="obj === 'type'">
-                  {{ checkRecord(det[obj]) }}
+                  {{ translateRecord(det[obj], '') }}
                 </div>
                 <div v-else-if="obj === 'status'">
                   {{ checkRecord(det[obj]) }}
@@ -403,6 +403,7 @@ export default defineComponent({
       checkRecord(status) {
         return translateRecord(status, props.recordType);
       },
+      translateRecord,
       onLoad,
       truncatedList,
       comList,
