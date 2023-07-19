@@ -4,13 +4,13 @@
       <div class="buttons">
         <a
           :href="
-            'https://affiliate-web.gwd4jptunz.com/dy/register?agent=' +
+            'https://agt.wrxjpo3vh.com/dy/register?agent=' +
             (affCode ? affCode : '')
           " target="_blank"
         >
         加入我们
         </a>
-        <a href="https://affiliate-web.gwd4jptunz.com/dy/login" target="_blank">
+        <a href="https://agt.wrxjpo3vh.com/dy/login" target="_blank">
         登录
         </a>
         <a
@@ -197,7 +197,7 @@
         </div>
       <div style="margin-top: 20px;padding-bottom: 40px;">
 			<a :href="
-            'https://affiliate-web.gwd4jptunz.com/dy/register?agent=' +
+            'https://agt.wrxjpo3vh.com/dy/register?agent=' +
             (affCode ? affCode : '')
           " class="agent-reg-btn" target="_blank">立即申请代理</a>
 		</div>
