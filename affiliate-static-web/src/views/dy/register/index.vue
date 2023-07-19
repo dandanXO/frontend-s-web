@@ -230,6 +230,7 @@ export default defineComponent({
         userName: "",
         password: "",
         confirmPwd: "",
+        realName: "",
         telephone: "",
         email: "",
         captchaCode: "",
