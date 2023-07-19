@@ -534,18 +534,17 @@ export default defineComponent({
               if (res.code === 0) {
                 Swal.fire({
                   title: "系统提示",
-                  text: `您已成功领取 ${res.data.value}`,
+                  text: `您已成功领取 ${res.data}`,
                   confirmButtonText: "确认"
                 }).then((dialog) => {
-                  if (dialog.isConfirmed) {
-                    router.push({path: "/finance/deposit"});
-                  }
+                  // if (dialog.isConfirmed) {
+                  //   router.push({path: "/finance/deposit"});
+                  // }
                 });
               }
             })
             .catch((err) => {
               errorCount.value++;
-              console.log(err);
               if (errorCount.value >= 3) {
                 // Disable the button after 3 or more errors
                 btnIsDisabled.value = true;
@@ -561,7 +560,7 @@ export default defineComponent({
                 startCountdown(expirationTime);
                 Swal.fire({
                   title: "系统提示",
-                  text: `按钮将在30秒后启用`,
+                  text: `${err}`,
                   confirmButtonText: "确认"
                 });
               }

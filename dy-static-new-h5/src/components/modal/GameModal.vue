@@ -324,7 +324,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           $q.loading.show({message: "加载中..."});
 
           if (store.isMobileSafari()) {
-            const newWin = window.open(`/loading`, `_blank`);
+            // const newWin = window.open(`/loading`, `_blank`);
             if (platformCode === 'platformType') {
               api
                   .get(`/session/launch?_time=${new Date().getTime()}`, {
@@ -336,7 +336,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                   })
                   .then((response) => {
                     $q.loading.hide();
-                    newWin.location.href = response.data;
+                    src.value = response.data;
+                    visible.value = true;
+                    // newWin.location.href = response.data;
                   });
               return;
             }
@@ -352,7 +354,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 })
                 .then((response) => {
                   $q.loading.hide();
-                  newWin.location.href = response.data;
+                  src.value = response.data;
+                  visible.value = true;
+                  // newWin.location.href = response.data;
                 });
             return;
           } else if (way === "ANDROID") {
@@ -748,7 +752,7 @@ defineExpose({
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    height:26px;
+    height: 26px;
   }
 }
 

@@ -1,60 +1,59 @@
 <template>
-  <div class="personal-account">
-    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
+  <div class="verify-section">
+    <!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
-          standout
-          bg-color="white"
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.email"
-          label="邮箱"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
-          label-color=""
-          color=""
-          :readonly="showVerifyBtn ? false : true"
-          style="width: 100%"
+            standout
+            bg-color="white"
+            class="q-pb-xs"
+            hide-bottom-space
+            v-model="formDetail.email"
+            label="邮箱"
+            clearable
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
+            :readonly="showVerifyBtn ? false : true"
+            style="width: 100%"
         />
         <template v-if="showVerifyBtn">
           <div class="q-ml-md">
             <q-btn
-              size="md"
-              color="dyblue"
-              label="发送验证码"
-              @click="openVerificationDialog()"
-              style="white-space: nowrap"
+                size="md"
+                color="dyblue"
+                label="发送验证码"
+                @click="openVerificationDialog()"
+                style="white-space: nowrap"
             />
           </div>
         </template>
       </div>
 
       <q-input
-        standout
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        ref="emailOtpRef"
-        v-model="formDetail.emailOtpRef"
-        type="tel"
-        label="邮箱验证码"
-        lazy-rules
-        :rules="[
+          standout
+          bg-color="white"
+          class="q-pb-xs"
+          hide-bottom-space
+          ref="emailOtpRef"
+          v-model="formDetail.emailOtpRef"
+          type="tel"
+          label="邮箱验证码"
+          lazy-rules
+          :rules="[
           (val) =>
             (val && val.length > 5 && val.length < 7) || '请输入邮箱验证码'
         ]"
-        label-color=""
-        color=""
-        style="width: 100%"
+          label-color=""
+          color=""
+          style="width: 100%"
       ></q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
         <q-btn
-          size="md"
-          color="dyblue"
-          @click="submitUpdateSecurity()"
-          label="验证邮箱"
+            size="md"
+            color="dyblue"
+            @click="submitUpdateSecurity()"
+            label="验证邮箱"
         />
       </div>
     </q-form>
@@ -63,28 +62,32 @@
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
     <q-card width="100%">
       <q-card-section
-        style="padding: 10px 5px"
-        class="q-pa-md bg-dyblue text-white"
+          style="padding: 10px 5px"
+          class="q-pa-md bg-dyblue text-white"
       >
         <q-toolbar>
           <q-toolbar-title>验证码</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
+          <q-btn flat v-close-popup round dense icon="close"/>
         </q-toolbar>
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" label="验证码">
+          <q-input
+              :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+              v-model="innerCaptchaRef" label="验证码"
+              ref="refInnerCaptchaCode"
+          >
             <template v-slot:append>
               <img
-                :src="verificationImg"
-                title="点击刷新验证码"
-                style="margin-top: 6px; cursor: pointer"
-                @click="getCode"
+                  :src="verificationImg"
+                  title="点击刷新验证码"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue" />
+        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue"/>
       </div>
     </q-card>
   </q-dialog>
@@ -98,12 +101,12 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import {defineComponent, reactive, ref, onMounted, computed} from "vue";
 import moment from "moment";
-import { api } from "boot/axios";
-import { useRoute, useRouter } from "vue-router";
-import { useQuasar } from "quasar";
-import { userStore } from "src/stores";
+import {api} from "boot/axios";
+import {useRoute, useRouter} from "vue-router";
+import {useQuasar} from "quasar";
+import {userStore} from "src/stores";
 
 export default defineComponent({
   name: "PersonalView",
@@ -151,23 +154,23 @@ export default defineComponent({
     const verificationImg = ref("");
     const getCode = () => {
       api
-        .get("/member/verificationCode")
-        .then((response) => {
-          if (response.code === 0) {
-            verificationImg.value =
-              "data:image/png;base64," + response.data.img;
-            updateSecurityVerified.codeId = response.data.id;
-            innerCaptchaRef.value = "";
-          }
-        })
-        .catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
+          .get("/member/verificationCode")
+          .then((response) => {
+            if (response.code === 0) {
+              verificationImg.value =
+                  "data:image/png;base64," + response.data.img;
+              updateSecurityVerified.codeId = response.data.id;
+              innerCaptchaRef.value = "";
+            }
+          })
+          .catch((e) => {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: e.message,
+              icon: "report_problem"
+            });
           });
-        });
     };
     //update security
 
@@ -219,10 +222,10 @@ export default defineComponent({
           getCode();
         }
       })
-        .catch((e) => {
-          getCode();
-          isEmailSending.value = false;
-        });
+          .catch((e) => {
+            getCode();
+            isEmailSending.value = false;
+          });
     };
     const emailAddressRef = ref();
     const verificationCodeRef = ref();
@@ -268,6 +271,7 @@ export default defineComponent({
     const birthdayRef = ref();
     const emailRef = ref();
     const emailOtpRef = ref();
+    const refInnerCaptchaCode = ref();
 
     const captchaRef = ref();
     const innerCaptchaRef = ref();
@@ -278,14 +282,14 @@ export default defineComponent({
 
     const isValidName = () => {
       const namePattern =
-        /^([\u4e00-\u9fa5]*)$/;
+          /^([\u4e00-\u9fa5]*)$/;
       return namePattern.test(formDetail.realName) || "请输入中文字符";
     };
 
     const isValidPhone = () => {
 
       const reg = /^\d+$/;
-      const { phone } = formDetail;
+      const {phone} = formDetail;
 
       const result = "" === phone ? "请验证您的电话号码" : !reg.test(phone) ? "电话号码只允许使用数字" : true;
 
@@ -308,34 +312,48 @@ export default defineComponent({
         getCode();
         return;
       }
+      if (refInnerCaptchaCode.value.hasError) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "验证码必须为4个字符串",
+          icon: "report_problem"
+        });
+        getCode();
+        return;
+      }
 
       api.post(`/otp/sendNewEmail`, qs.stringify({
         email: formDetail.email,
         captchaCode: innerCaptchaRef.value,
         codeId: updateSecurityVerified.codeId
       }))
-        .then(res => {
-          getCode();
-          let message = res.message || "发送邮箱验证码成功",
-            color = "positive";
+          .then(res => {
+            let message = res.message || "发送邮箱验证码成功",
+                color = "positive";
 
-          if (res.code === 0) {
-            canEdit.value = true;
-            showCaptchaDialog.value = false;
-            showVerifyBtn.value = false;
-            showVerificationTokenInput.value = true;
+            if (res.code === 0) {
+              canEdit.value = true;
+              showCaptchaDialog.value = false;
+              showVerifyBtn.value = false;
+              showVerificationTokenInput.value = true;
 
-            emailCodeId.value = res.data.codeId;
-          } else
-            color = "negative";
-          getCode();
+              emailCodeId.value = res.data.codeId;
+            } else{
+              color = "negative";
+              getCode();
+            }
 
-          if (message)
-            $q.notify({ message, color });
-          getCode();
+            if (message){
+              $q.notify({message, color});
+            }
 
-          console.log("onCaptchaSubmit", res);
-        });
+            getCode();
+
+            console.log("onCaptchaSubmit", res);
+          }).catch((err) => {
+        getCode();
+      })
     };
 
     return {
@@ -347,6 +365,7 @@ export default defineComponent({
       updateSecurityModal,
       updateSecurityModalVisible,
       submitUpdateSecurity,
+      refInnerCaptchaCode,
       isEditRealName,
       isEditEmail,
       isEditPhone,
@@ -385,7 +404,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.personal-account {
+.verify-section {
   padding: 10px;
 
   .web {
@@ -399,9 +418,15 @@ export default defineComponent({
   input.q-placeholder {
     color: #333333 !important;
   }
+
+  .q-field {
+    border: 1px solid #d7d7d7;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
 }
 
 .q-toolbar {
-  background: #5b80e8;
+  background: #0089ED;
 }
 </style>

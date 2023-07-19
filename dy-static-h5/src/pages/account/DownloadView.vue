@@ -2,8 +2,7 @@
   <div class="download">
     <q-tabs
       v-model="tab"
-      active-color="white"
-      indicator-color="bright"
+      indicator-color="white"
       align="justify"
     >
       <q-tab name="android" label="安卓系统" />
@@ -14,22 +13,19 @@
       <q-tab-panel name="android">
         <div class="downloads">
           <div
-            class="download-item q-my-sm"
+            class="download-item q-my-sm q-mb-md"
             v-for="(dn, i) in androidItems"
             :key="i"
           >
             <div class="imgtext">
               <img :src="require(`../../assets/download/${dn.icon}.png`)" />
-              <div>
+              <div class="textcont">
                 {{ dn.title }}<br />
                 <span class="dn-content">{{ dn.content }}</span>
               </div>
             </div>
             <a :href="dn.downloadLink" target="_blank">
-              <img
-                class="download"
-                src="../../assets/download/btn_download.png"
-              />
+              <RiDownload2Fill />
             </a>
           </div>
         </div>
@@ -38,22 +34,19 @@
       <q-tab-panel name="apple">
         <div class="downloads">
           <div
-            class="download-item q-my-sm"
+            class="download-item q-my-sm q-mb-md"
             v-for="(dn, i) in appleItems"
             :key="i"
           >
             <div class="imgtext">
               <img :src="require(`../../assets/download/${dn.icon}.png`)" />
-              <div>
+              <div class="textcont">
                 {{ dn.title }}<br />
                 <span class="dn-content">{{ dn.content }}</span>
               </div>
             </div>
             <a :href="dn.downloadLink" target="_blank">
-              <img
-                class="download"
-                src="../../assets/download/btn_download.png"
-              />
+              <RiDownload2Fill />
             </a>
           </div>
         </div>
@@ -64,6 +57,8 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { api } from "boot/axios";
+
+import { RiDownload2Fill } from "vue-remix-icons";
 
 const tab = ref("android");
 
@@ -141,14 +136,14 @@ const appleItems = computed(() => {
 
 const getAppDownloadUrl = () => {
   api
-    .get("/config/appDownloadUrl")
-    .then((res) => {
-      // console.log(res);
-      downloadUrl.value = res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get("/config/appDownloadUrl")
+      .then((res) => {
+        // console.log(res);
+        downloadUrl.value = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 };
 
 onMounted(getAppDownloadUrl);
@@ -156,9 +151,12 @@ onMounted(getAppDownloadUrl);
 <style lang="scss">
 .download {
   .q-tabs {
-    background: rgba(113, 125, 146, 0.2);
-    width: 100%;
-    margin: 0 auto;
+    width: 95%;
+    margin: 10px auto;
+    color: #757575;
+    border: 1px solid #0078e953;
+    padding: 2px;
+    border-radius: 50px;
   }
   .q-tab {
     min-height: 40px;
@@ -166,26 +164,64 @@ onMounted(getAppDownloadUrl);
   .q-tab__content {
     width: 100%;
   }
+  .q-tab--active {
+    color: #0078e9;
+    border: 1px solid #0078e9;
+    border-radius: 50px;
+    overflow: hidden;
+  }
   .q-tab--active .q-tab__indicator {
     height: 100%;
+    background: #DBF0FF;
   }
   .q-tab__label {
     z-index: 1;
+    font-weight: 600;
   }
   .q-tab-panels {
     background: none;
+    padding: 0px;
+    margin: 20px auto;
+  }
+  .q-tab-panel {
     padding: 10px;
   }
   .download-item {
     background: #ffffff;
+    box-shadow: 0px 0px 30px -15px #000;
+    border-radius: 15px;
     padding: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
     .imgtext {
       display: flex;
       gap: 10px;
       justify-content: flex-start;
       align-items: flex-start;
       img {
-        width: 40px;
+        width: 60px;
+        background: #68bcec20;
+        border-radius: 15px;
+        padding: 10px;
+      }
+      .textcont {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+    a {
+      background: #0089ED10;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      svg {
+        fill: #0078e9;
+        width: 18px;
       }
     }
     .download {
@@ -194,7 +230,7 @@ onMounted(getAppDownloadUrl);
       display: block;
     }
     .dn-content {
-      color: #8f8f94;
+      color: #343A4080;
     }
   }
 }

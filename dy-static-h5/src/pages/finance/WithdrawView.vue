@@ -1,36 +1,43 @@
 <template>
-  <div>
+  <div class="withdraw-section">
     <!--    <AcctBal :platforms="platforms" />-->
     <div class="q-pa-md bg-white q-mx-sm q-my-md">
       <div class="account-content last">
+
+        <label class="label">选择提款方式</label>
+
         <div class="withdrawalmethod">
           <div
-            v-for="(method, i) in withdrawalMethods"
-            :key="i"
-            class="txt-center withdraw-type-item"
-            @click="selectMethod(method, i)"
-            :class="{ active: i === activeItem }"
+              v-for="(method, i) in withdrawalMethods"
+              :key="i"
+              class="txt-center withdraw-type-item"
+              @click="selectMethod(method, i)"
+              :class="{ active: i === activeItem }"
           >
             <span class="promo" v-if="method.recommended">Recommended</span>
             <div class="withdraw-img">
-              <img :src="imgURL + '/withdraw/' + method.icon" />
+              <img :src="imgURL + '/withdraw/' + method.icon"/>
             </div>
             <div class="type-name">{{ method.name }}</div>
           </div>
         </div>
+
+        <q-separator style="margin-top:12px;margin-bottom: 15px;" />
+
+        <label class="label">{{ (isUSDT ) ? '钱包地址' : '银行卡' }}</label>
         <q-form>
           <q-select
-            hide-bottom-space
-            filled
-            ref="cardRef"
-            v-model="withdrawInfo.cardId"
-            option-value="id"
-            emit-value
-            :label="isUSDT ? '钱包地址' : '提款银行'"
-            color="black"
-            :options="withdrawState.bankCardList"
-            map-options
-            :rules="[(val) => !!val || '请选择银行/钱包地址']"
+              hide-bottom-space
+              outlined
+              ref="cardRef"
+              v-model="withdrawInfo.cardId"
+              option-value="id"
+              emit-value
+              :label="isUSDT ? '钱包地址' : '提款银行'"
+              color="black"
+              :options="withdrawState.bankCardList"
+              map-options
+              :rules="[(val) => !!val || '请选择银行/钱包地址']"
           >
             <template v-slot:no-option>
               <q-item>
@@ -46,16 +53,16 @@
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
                   <img
-                    style="width: 30px"
-                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                      style="width: 30px"
+                      :src="imgURL + '/payment/' + scope.opt.bankIcon"
                   />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>
                     {{ scope.opt.bankName }} - ****{{
                       scope.opt.cardNumber.slice(
-                        scope.opt.cardNumber.length - 4,
-                        scope.opt.cardNumber.length
+                          scope.opt.cardNumber.length - 4,
+                          scope.opt.cardNumber.length
                       )
                     }}
                   </q-item-label>
@@ -65,13 +72,13 @@
             <template v-slot:selected-item="scope">
               <q-item-section avatar v-if="scope.opt.bankIcon">
                 <img
-                  style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
                 />
               </q-item-section>
               <q-item-section>
                 <q-item-label
-                  style="
+                    style="
                     text-overflow: ellipsis;
                     overflow: hidden;
                     white-space: nowrap;
@@ -82,13 +89,18 @@
               </q-item-section>
             </template>
           </q-select>
+
+          <q-separator style="margin-top: 14px;margin-bottom:14px;"/>
+
+          <label class="label">提款金额</label>
           <q-input
-            hide-bottom-space
-            ref="amountRef"
-            v-model="withdrawInfo.amount"
-            label="金额"
-            color="white"
-            :rules="[
+              hide-bottom-space
+              ref="amountRef"
+              v-model="withdrawInfo.amount"
+              placeholder="输入金额"
+              clearable
+              color="white"
+              :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) =>
                 val >= selectedWithdrawalMethod.withdrawMin ||
@@ -106,20 +118,21 @@
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
                 <q-btn
-                  @click="updateWithdrawAmt"
-                  label="全额提款"
-                  color="dyblue"
+                    class="bigamount-btn"
+                    @click="updateWithdrawAmt"
+                    label="全额提款"
+                    color="dyblue"
                 />
               </span>
             </template>
           </q-input>
           <div
-            class="q-mt-md q-mb-md text-grey text-bold q-pb-md"
-            style="border-bottom: 1px solid #434343"
-            v-show="selectedWithdrawalMethod"
+              class="q-mt-md q-mb-md text-center text-grey text-bold q-pb-md"
+              style="border-bottom: 1px solid #434343"
+              v-show="selectedWithdrawalMethod"
           >
             <template
-              v-if="
+                v-if="
                 selectedWithdrawalMethod.withdrawMin &&
                 selectedWithdrawalMethod.withdrawMin
               "
@@ -131,7 +144,7 @@
                 selectedWithdrawalMethod.withdrawMax +
                 "RMB"
               }}
-              <br />
+              <br style="margin-top:10px;"/>
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
               {{
@@ -148,32 +161,32 @@
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div
-              class="q-my-md"
-              style="
+                class="q-my-md"
+                style="
                 display: flex;
                 justify-content: center;
                 align-items: center;
               "
             >
-              <span style="flex: 1">实施汇率：</span>
+              <span style="flex: 1;font-size:16px">实施汇率：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
             <div
-              class="q-mt-md"
-              style="
+                class="q-mt-md"
+                style="
                 display: flex;
                 justify-content: center;
                 align-items: center;
               "
             >
-              <span style="flex: 1">预计到帐：</span>
+              <span style="flex: 1;font-size:16px">预计到帐：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{
                   (
-                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
+                      withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
                   ).toFixed(2)
                 }}
                 USDT
@@ -183,59 +196,38 @@
               *特别说明：三方自动收取提币 1.00 USDT 手续费！
             </div>
           </div>
-          <!-- <a-form-item
-            class="select"
-            name="cardId"
-            label="Select Bank Card"
-            :rules="[{ required: true, message: 'Please select a bank card' }]"
-          >
-            <a-select
-              v-model:value="withdrawInfo.cardId"
-              placeholder="Please select a bank card"
-            >
-              <a-select-option
-                v-for="b in withdrawState.bankCardList"
-                :key="b.id"
-                :value="b.id"
-              >
-                {{ b.bankName }} - {{ b.cardNumber }}
-              </a-select-option>
-            </a-select>
-          </a-form-item> -->
+
           <div class="flex-box flex-justify-center">
             <q-btn
-              style="width: 100%"
-              class="q-mt-md fit"
-              color="dyblue"
-              @click="submitWithdraw"
-              label="立即提款"
+                style="width: 100%"
+                class="q-mt-md submit-btn"
+                @click="submitWithdraw"
+                label="立即提款"
             />
           </div>
           <div class="q-py-md text-orange">
             <div
-              v-if="!isUSDT && selectedWithdrawalMethod.tips"
-              class="selected-tip"
-              v-html="selectedWithdrawalMethod.tips"
+                v-if="!isUSDT && selectedWithdrawalMethod.tips"
+                class="selected-tip"
+                v-html="selectedWithdrawalMethod.tips"
             ></div>
           </div>
         </q-form>
       </div>
     </div>
 
-    <q-dialog v-model="hasWithdrawCard" persistent>
-      <q-card style="width: 100%; padding: 10px">
-        <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center">请先绑定银行卡</div>
+    <q-dialog width="100%" v-model="hasWithdrawCard" no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; padding: 20px; flex-direction:column;" class="text-black">
+        <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
+          <strong>温馨提示</strong>
+          <br/>     <br/>
+          为保证资金安全，存款前先绑定银行卡
         </q-card-section>
-
-        <div class="flex flex-center">
-          <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消" />
-          </router-link>
+        <q-card-actions align="right">
           <router-link to="/account/withdraw">
-            <q-btn color="dyblue" label="绑定" />
+            <q-btn label="前往绑定" color="dyblue"/>
           </router-link>
-        </div>
+        </q-card-actions>
       </q-card>
     </q-dialog>
   </div>
@@ -243,15 +235,15 @@
 
 <script lang="js">
 /* eslint-disable */
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
-import { userStore } from "stores/index";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import {userStore} from "stores/index";
+import {api} from "boot/axios";
+import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 
 export default defineComponent({
   name: "WithdrawView",
-  components: { AcctBal },
+  components: {AcctBal},
   setup() {
     const store = userStore();
     const $q = useQuasar();
@@ -268,9 +260,7 @@ export default defineComponent({
       amount: ""
     });
     const isLoaded = ref(false);
-    const hasWithdrawCard = computed(() => {
-      return (isLoaded == true) && withdrawState.bankCardList.length === 0;
-    });
+    const hasWithdrawCard = ref(false);
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([]);
     onMounted(() => {
@@ -298,14 +288,14 @@ export default defineComponent({
         platforms.forEach(platform => {
           platform.isLoading = true;
           if (platform.code) {
-            api.get("/session/balance", { params: { platform: platform.code } }).then((res) => {
+            api.get("/session/balance", {params: {platform: platform.code}}).then((res) => {
               if (platform) {
                 platform.amount = res.data;
                 platform.isLoading = false;
               }
             }).catch((e) => {
-                platform.isLoading = false;
-              }
+                  platform.isLoading = false;
+                }
             );
 
           }
@@ -396,6 +386,10 @@ export default defineComponent({
             withdrawInfo.amount = "";
             amountRef.value.resetValidation();
           }
+
+          if(!response.data || response.data.length===0){
+            hasWithdrawCard.value= true;
+          }
         }
       }).catch((error) => {
         console.log("error", error);
@@ -450,131 +444,116 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-// :deep(.ant-form-item) {
-//   align-items: center;
-//   &.tip {
-//     margin-top: -20px;
-//     color: #ffffff;
-//   }
-// }
-// .helptxt {
-//   display: flex;
-//   align-items: flex-start;
-//   .ant-input {
-//     background: #212534;
-//     width: 50%;
-//     max-width: 280px;
-//     padding: 10px;
-//     border: #212534;
-//   }
-//   :deep(.ant-form-item-control-input-content) {
-//     display: flex;
-//     justify-content: flex-start;
-//     gap: 10px;
-//     align-items: flex-start;
-//   }
-// }
-// :deep(.ant-form-horizontal .ant-form-item-label) {
-//   width: 160px;
-// }
-// :deep(.ant-form-horizontal .ant-form-item-control) {
-//   width: unset;
-// }
-// :deep(.ant-form-item .ant-select) {
-//   width: 280px;
-// }
-// :deep(.ant-form-item.select .ant-form-item-control-input) {
-//   max-width: 280px;
-// }
-// :deep(.ant-select-single:not(.ant-select-customize-input)
-//     .ant-select-selector
-//     .ant-select-selection-search-input) {
-//   height: 40px;
-// }
-// :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
-//   height: 40px;
-//   padding: 5px 20px;
-//   background: #212534;
-//   color: #ffffff;
-//   border: 0;
-// }
+.withdraw-section {
 
-.withdrawalmethod {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  text-align: center;
-  overflow-x: auto;
-  padding: 15px 5px;
-  grid-gap: 10px;
 
-  .withdraw-type-item {
-    // display: flex;
-    // justify-content: center;
-    width: 100%;
-    max-width: 4.5rem;
+  .withdrawalmethod {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    overflow-x: auto;
+    padding: 5px 5px 10px;
+    grid-gap: 10px;
 
-    position: relative;
-    cursor: pointer;
-
-    .withdraw-img {
-      border: 2px solid transparent;
-      border-radius: 6px;
-      margin-bottom: 5px;
-    }
-
-    img {
+    .withdraw-type-item {
+      // display: flex;
+      // justify-content: center;
       width: 100%;
-      padding: 5px 10px;
-    }
+      max-width: 5rem;
 
-    &.active {
-      // background: #212534;
-      // color: #db7e42;
-      // box-shadow: none;
-      // filter: drop-shadow(0px 0px 3px #ffffff);
+      position: relative;
+      cursor: pointer;
+
       .withdraw-img {
-        border: 2px solid #4873f1;
+        border: 2px solid #d7d7d7;
+        border-radius: 6px;
+        margin-bottom: 5px;
+        padding: 8px;
+        display:flex;
+        align-items: center;
       }
 
-      // img {
-      //   border: 2px solid #33bcd4;
-      // }
-    }
+      img {
+        width: 100%;
+        padding: 5px 10px;
+      }
 
-    .type-name {
-      line-height: 15px;
-      overflow-wrap: break-word;
-    }
+      &.active {
+        // background: #212534;
+        // color: #db7e42;
+        // box-shadow: none;
+        // filter: drop-shadow(0px 0px 3px #ffffff);
+        .withdraw-img {
+          border: 2px solid #4873f1;
+        }
 
-    .promo {
-      position: absolute;
-      right: 0;
-      top: 0;
-      background-repeat: no-repeat;
-      background-size: 100%;
-      background-position: top center;
-      top: -8px;
-      right: -1px;
-      background: linear-gradient(to right, #de4545, #db7e42);
-      padding: 5px;
-      color: #ffffff;
-      font-size: 12px;
-      line-height: 10px;
-      border-radius: 0 10px;
-      font-weight: bold;
+        // img {
+        //   border: 2px solid #33bcd4;
+        // }
+      }
 
-      ::after {
-        position: relative;
+      .type-name {
+        line-height: 1.1em;
+        font-size: .9em;
+        font-weight:600;
+        overflow-wrap: break-word;
+      }
+
+      .promo {
+        position: absolute;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: top center;
+        top: -8px;
+        right: -1px;
+        background: linear-gradient(to right, #de4545, #db7e42);
+        padding: 5px;
+        color: #ffffff;
+        font-size: 12px;
+        line-height: 10px;
+        border-radius: 0 10px;
+        font-weight: bold;
+
+        ::after {
+          position: relative;
+        }
       }
     }
+
+    .withdraw-btn {
+      margin: 30px auto;
+
+      &.cancel {
+        margin-right: 60px;
+      }
+    }
+
+
+
   }
 
-  .withdraw-btn {
-    margin: 30px auto;
+  .bigamount-btn {
+    background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
+    height: 45px;
+    width: 100px;
+    letter-spacing: 1px;
+    border-radius: 12px;
+  }
 
-    &.cancel {
-      margin-right: 60px;
-    }
+
+  .label {
+    font-weight: 600;
+    font-size: 16px;
+    padding-bottom: 6px;
+    display: block;
+  }
+
+  .submit-btn {
+    background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
+    height: 45px;
+    letter-spacing: 1px;
+    color: #fff;
+    border-radius: 12px;
   }
 }
 </style>

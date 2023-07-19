@@ -1,344 +1,834 @@
 <template>
-  <div v-if="isH5" class="download-top-container">
-    <div class="download-top-box">
-      <q-icon name="close" @click="closeTopBox" />
-      <img
-        class="headicon"
-        src="../assets/images/index/head_logo.png"
-        width="41"
-      />
-      <div class="download-txt-container">
-        <span class="download-title text-bold">东赢 APP</span>
-        <span>覆盖全部游戏，体验更流畅，更安全，更快捷</span>
+  <q-page>
+    <div id="id-sticky-header"
+         :class="(!isH5 || isShowDownload==false) ? 'sticky-header' : ''"
+    >
+      <div v-if="isH5 && isShowDownload" class="download-top-container">
+        <div class="download-top-box">
+          <q-icon name="close" @click="closeTopBox"/>
+          <img
+              class="headicon"
+              src="../assets/index/logo-char.png"
+          />
+          <div class="download-txt-container">
+            <span class="download-title text-bold">东赢 APP</span>
+            <span class="download-content">覆盖全部游戏，体验更流畅，更安全，更快捷</span>
+          </div>
+          <div class="buttons">
+            <q-btn
+                rounded
+                size="12px"
+                :href="`${downloadUrl}`"
+                target="_blank"
+                label="立即下载"
+                color="primary"
+                class="top-btn no-shadow"
+            />
+          </div>
+        </div>
       </div>
-      <div class="buttons">
-        <!-- <q-btn
-          size="sm"
-          href="/wap/login.html?way=reg"
-          label="注册"
-          color="dyblue"
-        />
-          href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
-        <q-btn
-          size="sm"
-          :href="`${downloadUrl}`"
-          target="_blank"
-          label="立即下载"
-          color="dyblue"
-          class="top-btn"
-        />
+
+      <div class="home-header-section"
+           style="height: 50px;">
+        <div class="header-left">
+          <img class="top-logo" id="logo" src="../assets/index/logo.png"/>
+        </div>
+        <div class="header-right">
+
+          <div v-if="!store.hasToken()" class="row justify-center items-center gap-10">
+            <q-btn
+                to="/login?register"
+                rounded
+                outline
+                color="blue-6"
+                class="q-px-lg"
+                label="注册"
+            />
+
+            <q-btn
+                to="/login"
+                rounded
+                color="dyblue"
+                label="登录"
+                class="q-px-lg no-shadow"
+                width="48px"
+            />
+
+          </div>
+
+          <div v-if="store.hasToken()" class="column justify-start items-end ">
+
+            <div class="row items-center justify-between  gap-10">
+              <div class="welcome-liner">
+                {{ store.nickName }}
+              </div>
+              <div class="badge-div">
+                <div class="icon-div">
+                  <img src="../assets/index/diamon-vip.png"/>
+                </div>
+                <q-badge color="dyblue" class="vip-badge" text-color="white" :label="store.vip"/>
+              </div>
+
+            </div>
+            <div class="row items-center justify-start gap-10" style="margin-right: 50px;">
+                <span class="balance-text text-positive" v-if="isLoadingBalance"
+                      style="font-size: 20px;">加载中...</span>
+              <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
+              <q-btn
+                  flat
+                  style="margin-bottom:3px;"
+                  class="refresh-btn"
+                  size="xs"
+                  @click="refreshBalance()"
+                  :disable="isLoadingBalance ? true : false"
+              >
+                <img src="../assets/index/refresh-bal-icon.png"/>
+              </q-btn>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="home-header-section"
+           style="height:68px;"
+      >
+        <swiper
+            :modules="[Thumbs, Controller]"
+            slides-per-view="auto"
+            :freeMode="true"
+            :set-wrapper-size="true"
+            :scrollbar="{ draggable: true }"
+            :mousewheel="true"
+            :space-between="8"
+            :breakpoints="{
+          200: {
+            slidesPerView: 3,
+            spaceBetween: 8
+          },
+          300: {
+            slidesPerView: 4,
+            spaceBetween: 8
+          },
+          360: {
+            slidesPerView: 5,
+            spaceBetween: 8
+          },
+        }"
+            watch-slides-progress
+            @swiper="setSecondSwiper"
+            :controller="{ control: firstSwiper }"
+            class="firstSwiper"
+        >
+          <swiper-slide
+              :class="tab.name && { tbact: selectedTab === tab.name }"
+              @click="setSelectedSwiper(tab)"
+              v-for="(tab, i) in tabs"
+              :key="i"
+          >
+            <div class="home-select-slide column items-center justify-center gap-3"
+                 :class="( selectedTab == tab.name) ? 'selected' : ''">
+              <img :src="require('../assets/index/' + tab.icon)"/>
+              <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
+            </div>
+
+          </swiper-slide>
+        </swiper>
       </div>
     </div>
-  </div>
-  <q-carousel
-    class="home"
-    autoplay
-    navigation
-    v-model="slide"
-    swipeable
-    transition-next="slide-left"
-    transition-prev="slide-right"
-    animated
-    infinite
-  >
-    <template v-slot:navigation-icon="{ active, onClick }">
-      <q-btn
-        padding="3px"
-        v-if="active"
-        size="xs"
-        color="white"
-        @click="onClick"
-        style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
-      />
-      <q-btn
-        padding="3px"
-        v-else
-        size="xs"
-        color="transparent"
-        @click="onClick"
-        style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-      />
-    </template>
 
-    <q-carousel-slide
-      v-for="(banner, i) in banners"
-      :key="i"
-      :name="i"
-      class="column no-wrap flex-center"
-      :img-src="imgURL + banner.mobileImageUrl"
-      @click="gotoPromo(banner)"
-    ></q-carousel-slide>
-  </q-carousel>
-  <div class="midd">
-    <div class="station-notice-wrapper">
-      <div class="notice">
-        <img src="../assets/images/index/notice.png" />
+    <div class="home-all-slider"
+         :class="(isShowDownload && isH5) ? '' : 'padding-normal'"
+         v-scroll="onHomeScroll">
+
+      <div class="home-top-slider">
+        <q-carousel
+            class="home"
+            autoplay
+            navigation
+            v-model="slide"
+            swipeable
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            animated
+            infinite
+        >
+          <template v-slot:navigation-icon="{ active, onClick }">
+            <q-btn
+                padding="3px"
+                v-if="active"
+                size="xs"
+                color="white"
+                @click="onClick"
+                style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+            />
+            <q-btn
+                padding="3px"
+                v-else
+                size="xs"
+                color="transparent"
+                @click="onClick"
+                style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+            />
+          </template>
+
+          <q-carousel-slide
+              v-for="(banner, i) in banners"
+              :key="i"
+              :name="i"
+              class="column no-wrap flex-center"
+              :img-src="imgURL + banner.mobileImageUrl"
+              @click="gotoPromo(banner)"
+          ></q-carousel-slide>
+        </q-carousel>
       </div>
-      <marquee-text :repeat="5" :duration="announcementList.length * 120">
-        <div v-if="announcementList">
+
+      <div class="midd">
+        <div class="station-notice-wrapper">
+          <div class="notice">
+            <img src="../assets/index/home-announce-icon.png" width="18px"/>
+          </div>
+          <marquee-text :repeat="5" :duration="announcementList.length * 30">
+            <div v-if="announcementList">
           <span
-            v-for="(a, i) in announcementList"
-            :key="i"
-            @click="openPopup(a)"
+              v-for="(a, i) in announcementList"
+              :key="i"
+              @click="openPopup(a)"
           >
             {{ a.content }}
           </span>
+            </div>
+          </marquee-text>
         </div>
-      </marquee-text>
-    </div>
-    <!-- <div class="share" @click="router.push('/promo?id=35')">
-      <RiUserShared2Line />
-    </div> -->
-  </div>
-  <div class="details-container">
-    <div class="welcome-bar">
-      <div class="welcome-liner">
-        欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}
       </div>
-      <div v-if="store.token">
-        <q-badge color="orange" text-color="black" :label="store.vip" />
-        <span class="q-ml-sm">￥{{ store.balance }}</span>
+
+      <div class="swiper-container">
+        <!-- Thumbs Swiper -> store swiper instance -->
+
+        <div class="index-platform-container" style="overflow: hidden">
+          <!-- Main Swiper -> pass thumbs swiper instance -->
+          <!--        <swiper-->
+          <!--            :modules="[Thumbs, Controller]"-->
+          <!--            :thumbs="{ swiper: thumbsSwiper }"-->
+          <!--            :direction="'vertical'"-->
+          <!--            slides-per-view="auto"-->
+          <!--            :rewind="true"-->
+          <!--            :scrollbar="{ draggable: true }"-->
+          <!--            @slide-change-transition-end="onSlideChange"-->
+          <!--            @swiper="setFirstSwiper"-->
+          <!--            :controller="{ control: secondSwiper }"-->
+          <!--            class="secondSwiper"-->
+          <!--            id="btm-second-swiper"-->
+          <!--        >-->
+          <div class="secondSwiper"
+               id="btm-second-swiper">
+
+            <div id="id-hot-slide" class="hot-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2>热门游戏</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(hot, i) in hotgames"
+                       :key="i"
+                       class="game-item-div">
+
+                    <template v-if="hot.icon=='live'">
+                      <template v-if="hot.code === 'BBINDY' && hot.name === 'BBIN'">
+                        <div class="game-board"
+                             @click="playGame(hot.name, hot.code, 'bblive_lobby_app')"
+                        >
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ hot.name }}</h3>
+                            <span>真人娱乐</span>
+                          </div>
+                        </div>
+                      </template>
+                      <template
+                          v-else-if="hot.code === 'PMLIVE' && hot.name === 'PMLIVE'"
+                      >
+                        <div class="game-board"
+                             @click="playGame(hot.name, hot.code, hot.gameCode)"
+                        >
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ hot.title }}</h3>
+                            <span>真人娱乐</span>
+                          </div>
+                        </div>
+                      </template>
+                      <template v-else>
+                        <div class="game-board"
+                             @click="playGame(hot.name, hot.code, hot.gameCode)"
+                        >
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ hot.name }}</h3>
+                            <span>真人娱乐</span>
+                          </div>
+                        </div>
+                      </template>
+                    </template>
+                    <template v-else-if="hot.icon=='sport'">
+                      <div class="game-board"
+                           @click="playGame(hot.name, hot.code, hot.gameCode)"
+                      >
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ hot.name }}</h3>
+                          <span>体育赛事</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else-if="hot.icon=='slot'">
+                      <div class="game-list-div">
+                        <div
+                            class="game-item-div slot-item">
+                          <router-link :to="`slot?platform=${hot.code}`" class="game-board">
+                            <img class="game-bg"
+                                 :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                            <div class="game-title">
+                              <h3>{{ hot.title }}</h3>
+                              <span>电子游戏</span>
+                            </div>
+                          </router-link>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else-if="hot.icon=='poker'">
+                      <template v-if="hot.code === 'KYDY' && hot.name === 'KY'">
+                        <div class="game-board" @click="playGame(hot.name, hot.code, 'ky_lobby')">
+
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ hot.title }}</h3>
+                            <span>棋牌游戏</span>
+                          </div>
+                        </div>
+                      </template>
+                      <template v-else>
+                        <div class="game-board" @click="playGame(hot.name, hot.code, hot.gameCode)">
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ hot.title }}</h3>
+                            <span>棋牌游戏</span>
+                          </div>
+
+                        </div>
+                      </template>
+                    </template>
+                    <template v-else-if="hot.icon=='lottery'">
+                      <template v-if="hot.code === 'SGWin' && hot.name === 'SGWin'">
+                        <div class="game-board" @click="playGame(hot.name, hot.code, 'imlotto30000')">
+
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ hot.title }}</h3>
+                            <span>彩票游戏</span>
+                          </div>
+                        </div>
+
+                      </template>
+                      <template
+                          v-else-if="hot.code === 'BBINDY' && hot.name === 'BBIN'"
+                      >
+                        <div class="game-board" @click="playGame(hot.name, hot.code, 'bbkeno_lobby_app')">
+
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ hot.title }}</h3>
+                            <span>彩票游戏</span>
+                          </div>
+                        </div>
+
+                      </template>
+                      <template v-else>
+                        <div class="game-board" @click="playGame(hot.name, hot.code, hot.gameCode)">
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ hot.title }}</h3>
+                            <span>彩票游戏</span>
+                          </div>
+                        </div>
+
+                      </template>
+                    </template>
+                    <template v-else>
+                      <div class="game-board"
+                           @click="playGame(hot.name, hot.code, hot.gameCode)"
+                      >
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ hot.name }}</h3>
+                          <span>热门游戏</span>
+                        </div>
+                      </div>
+                    </template>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div id="id-live-slide" class="live-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2>真人娱乐</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(live, i) in livecasino"
+                       :key="i"
+                       class="game-item-div">
+
+                    <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
+                      <div class="game-board"
+                           @click="playGame(live.name, live.code, 'bblive_lobby_app')"
+                      >
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ live.name }}</h3>
+                          <span>真人娱乐</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template
+                        v-else-if="live.code === 'PMLIVE' && live.name === 'PMLIVE'"
+                    >
+                      <div class="game-board"
+                           @click="playGame(live.name, live.code, live.gameCode)"
+                      >
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ live.title }}</h3>
+                          <span>真人娱乐</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div class="game-board"
+                           @click="playGame(live.name, live.code, live.gameCode)"
+                      >
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ live.name }}</h3>
+                          <span>真人娱乐</span>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div id="id-sport-slide" class="sport-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2>体育赛事</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(sp, i) in sport" :key="i"
+                       class="game-item-div">
+                    <div class="game-board"
+                         @click="playGame(sp.name, sp.code, sp.gameCode)"
+                    >
+                      <img class="game-bg"
+                           :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>
+                      <div class="game-title">
+                        <h3>{{ sp.name }}</h3>
+                        <span>体育赛事</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--          <PlatformBlock-->
+              <!--              @click="playGame(sp.name, sp.code, sp.gameCode)"-->
+              <!--              dataType="sport"-->
+              <!--              :data="sp"-->
+              <!--          />-->
+            </div>
+            <div id="id-esport-slide" class="esport-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2>电竞赛事</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(es, i) in esport" :key="i"
+                       class="game-item-div">
+                    <div class="game-board" @click="playGame(es.name, 'platformType', es.code)">
+                      <img class="game-bg"
+                           :src="require(`../assets/index/${es.icon}/slide-${es.icon}-${es.name.toLowerCase()}.png`)"/>
+                      <div class="game-title">
+                        <h3>{{ es.title }}</h3>
+                        <span>电竞赛事</span>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--          <PlatformBlock-->
+              <!--              @click="playGame(es.name, 'platformType', es.code)"-->
+              <!--              dataType="esport"-->
+              <!--              :data="es"-->
+              <!--          />-->
+            </div>
+            <div id="id-slot-slide" class="slot-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2 class="row items-center justify-between">
+                  电子游戏
+
+                  <div class="row items-center justify-center">
+                    <q-btn
+                        flat
+                        size="xs"
+                        @click="changeSlotSlide(1)"
+                        :disable="isSlotSlideBegin"
+                        style="padding:4px 3px;"
+                    >
+                      <img src="../assets/index/slot/slot-arrow-left.png"/>
+                    </q-btn>
+                    <q-btn
+                        flat
+                        :disable="isSlotSlideEnd"
+                        size="xs"
+                        @click="changeSlotSlide(2)"
+                        style="padding:4px 3px;"
+                    >
+                      <img src="../assets/index/slot/slot-arrow-right.png"/>
+                    </q-btn>
+                  </div>
+                </h2>
+
+
+                <swiper
+                    :freeMode="true"
+                    :set-wrapper-size="true"
+                    watch-slides-progress
+                    :scrollbar="{ draggable: true }"
+                    :mousewheel="true"
+                    :space-between="16"
+                    :slidesPerView="3"
+                    :grid="{
+                        rows: 2,
+                      }"
+                    :modules="[Thumbs, Controller]"
+                    class="slot-swiper"
+                    @swiper="setSlotSwiper"
+                    :controller="{ control: slotSwiper2 }"
+                >
+                  <swiper-slide
+                      v-for="(slt, i) in slot_odds" :key="i"
+                  >
+                    <div class="game-list-div">
+                      <div
+                          class="game-item-div slot-item">
+                        <router-link :to="`slot?platform=${slt.code}`" class="game-board">
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${slt.icon}/slide-${slt.icon}-${slt.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ slt.title }}</h3>
+                            <span>电子游戏</span>
+                          </div>
+                        </router-link>
+                      </div>
+                    </div>
+                  </swiper-slide>
+                </swiper>
+                <swiper
+                    :freeMode="true"
+                    :set-wrapper-size="true"
+                    watch-slides-progress
+                    :scrollbar="{ draggable: true }"
+                    :mousewheel="true"
+                    :space-between="16"
+                    :slidesPerView="3"
+                    :grid="{
+                        rows: 2,
+                      }"
+                    :modules="[Thumbs, Controller]"
+                    class="slot-swiper"
+                    @swiper="setSlotSwiper2"
+                    :controller="{ control: slotSwiper }"
+                >
+                  <swiper-slide
+                      v-for="(slt, i) in slot_evens" :key="i"
+                  >
+                    <div class="game-list-div">
+                      <div
+                          class="game-item-div slot-item">
+                        <router-link :to="`slot?platform=${slt.code}`" class="game-board">
+                          <img class="game-bg"
+                               :src="require(`../assets/index/${slt.icon}/slide-${slt.icon}-${slt.name.toLowerCase()}.png`)"/>
+                          <div class="game-title">
+                            <h3>{{ slt.title }}</h3>
+                            <span>电子游戏</span>
+                          </div>
+                        </router-link>
+                      </div>
+                    </div>
+                  </swiper-slide>
+                </swiper>
+              </div>
+
+
+            </div>
+            <div id="id-fish-slide" class="fish-slides home-swiper-slide"
+            >
+
+              <div class="home-game-boards">
+                <h2>捕鱼游戏</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(fish, i) in fishing"
+                       :key="i"
+                       class="game-item-div">
+
+                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
+                      <div class="game-board" @click="playGame(fish.name, fish.code, '7202')">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ fish.name }}</h3>
+                          <span>捕鱼游戏</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else-if="fish.code === 'AG' && fish.name === 'AG'">
+                      <div class="game-board" @click="playGame(fish.name, fish.code, '6')">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ fish.name }}</h3>
+                          <span>捕鱼游戏</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div class="game-board" @click="playGame(fish.name, fish.code, fish.code)">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ fish.name }}</h3>
+                          <span>捕鱼游戏</span>
+                        </div>
+
+
+                      </div>
+                    </template>
+
+
+                  </div>
+                </div>
+              </div>
+
+              <!--                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">-->
+              <!--                      <PlatformBlock-->
+              <!--                          @click="playGame(fish.name, fish.code, '7202')"-->
+              <!--                          dataType="fish"-->
+              <!--                          :data="fish"-->
+              <!--                      />-->
+              <!--                    </template>-->
+
+              <!--                    <template v-if="fish.code === 'AG' && fish.name === 'AG'">-->
+              <!--                      <PlatformBlock-->
+              <!--                          @click="playGame(fish.name, fish.code, '6')"-->
+              <!--                          dataType="fish"-->
+              <!--                          :data="fish"-->
+              <!--                      />-->
+              <!--                    </template>-->
+              <!--                    <PlatformBlock-->
+              <!--                        @click="playGame(fish.name, fish.code, fish.code)"-->
+              <!--                        dataType="fish"-->
+              <!--                        :data="fish"-->
+              <!--                    />-->
+            </div>
+            <div id="id-poker-slide" class="poker-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2>棋牌游戏</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(poke, i) in poker" :key="i"
+                       class="game-item-div">
+
+                    <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
+                      <div class="game-board" @click="playGame(poke.name, poke.code, 'ky_lobby')">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${poke.icon}/slide-${poke.icon}-${poke.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ poke.title }}</h3>
+                          <span>棋牌游戏</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div class="game-board" @click="playGame(poke.name, poke.code, poke.gameCode)">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${poke.icon}/slide-${poke.icon}-${poke.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ poke.title }}</h3>
+                          <span>棋牌游戏</span>
+                        </div>
+
+
+                      </div>
+                    </template>
+
+                  </div>
+                </div>
+              </div>
+
+              <!--                    <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">-->
+              <!--                      <PlatformBlock-->
+              <!--                          @click="playGame(poke.name, poke.code, 'ky_lobby')"-->
+              <!--                          dataType="poker"-->
+              <!--                          :data="poke"-->
+              <!--                      />-->
+              <!--                    </template>-->
+              <!--                    <PlatformBlock-->
+              <!--                        @click="playGame(poke.name, poke.code, poke.gameCode)"-->
+              <!--                        dataType="poker"-->
+              <!--                        :data="poke"-->
+              <!--                    />-->
+            </div>
+            <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2>彩票游戏</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(lotter, i) in lottery"
+                       :key="i"
+                       class="game-item-div">
+
+                    <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
+                      <div class="game-board" @click="playGame(lotter.name, lotter.code, 'imlotto30000')">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ lotter.title }}</h3>
+                          <span>彩票游戏</span>
+                        </div>
+                      </div>
+
+                    </template>
+                    <template
+                        v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
+                    >
+                      <div class="game-board" @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ lotter.title }}</h3>
+                          <span>彩票游戏</span>
+                        </div>
+                      </div>
+
+                    </template>
+                    <template v-else>
+                      <div class="game-board" @click="playGame(lotter.name, lotter.code, lotter.gameCode)">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${lotter.icon}/slide-${lotter.icon}-${lotter.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ lotter.title }}</h3>
+                          <span>彩票游戏</span>
+                        </div>
+                      </div>
+
+                    </template>
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- <router-link v-if="!store.token" to="/register" class="login">
-        <span class="log">注册</span>
-      </router-link> -->
-      <router-link
-        v-if="!store.token"
-        to="/login?register"
-        class="login with-register"
-      >
-        <span class="log">注册</span>
-      </router-link>
-      <router-link v-if="!store.token" to="/login" class="login with-register">
-        <span class="log">登录</span>
-      </router-link>
-      <router-link v-else to="/account" class="login">
-        <span class="log">已登录</span>
-        <span class="user">
-          <q-icon name="double_arrow" style="color: #536ee0; font-size: 14px" />
-        </span>
-      </router-link>
+
     </div>
-    <div class="details-bar">
-      <!-- <div class="message">
-        {{ store.token ? "¥" + mainWallet.toFixed(2) : "早上好~" }}
-      </div> -->
-      <div class="menulist">
-        <router-link to="/finance/deposit" class="men deposit-menu">
-          <img src="../assets/images/index/deposit_icon.png" />
-          <div class="">存款</div>
-        </router-link>
-        <router-link to="/finance/withdraw" class="men withdraw-menu">
-          <img src="../assets/images/index/withdrawal_icon.png" />
-          <div class="">取款</div>
-        </router-link>
-        <router-link to="/account/transfer" class="men transfer-menu">
-          <img src="../assets/images/index/transfer_icon.png" />
-          <div class="">转账</div>
-        </router-link>
-        <router-link to="/account/vip" class="men transfer-menu">
-          <img src="../assets/images/index/vip_icon.png" />
-          <div class="">VIP 详情</div>
-        </router-link>
-      </div>
-    </div>
-  </div>
 
-  <div class="swiper-container">
-    <!-- Thumbs Swiper -> store swiper instance -->
-    <!-- It is also required to set watchSlidesProgress prop -->
-    <swiper
-      :modules="[Thumbs, Controller]"
-      slides-per-view="auto"
-      :freeMode="true"
-      :set-wrapper-size="true"
-      :scrollbar="{ draggable: true }"
-      :mousewheel="true"
-      watch-slides-progress
-      @swiper="setSecondSwiper"
-      :controller="{ control: firstSwiper }"
-      class="firstSwiper"
-    >
-      <swiper-slide
-        :class="tab.name && { tbact: selectedTab === tab.name }"
-        @click="setSelectedSwiper(tab)"
-        v-for="(tab, i) in tabs"
-        :key="i"
-        style="width: calc(100vw / 6)"
-      >
-        {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
-      </swiper-slide>
-    </swiper>
-    <div class="index-platform-container" style="overflow: hidden">
-      <!-- Main Swiper -> pass thumbs swiper instance -->
-      <swiper
-        :modules="[Thumbs, Controller]"
-        :thumbs="{ swiper: thumbsSwiper }"
-        :direction="'vertical'"
-        slides-per-view="auto"
-        :rewind="true"
-        :scrollbar="{ draggable: true }"
-        @slide-change-transition-end="onSlideChange"
-        @swiper="setFirstSwiper"
-        :controller="{ control: secondSwiper }"
-        class="secondSwiper"
-        id="btm-second-swiper"
-      >
-        <swiper-slide
-          v-for="(live, i) in livecasino"
-          :key="i"
-          :class="'live-' + i"
-        >
-          <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
-            <PlatformBlock
-              @click="playGame(live.name, live.code, 'bblive_lobby_app')"
-              dataType="live"
-              :data="live"
-            />
-          </template>
-          <template
-            v-else-if="live.code === 'PMLIVE' && live.name === 'PMLIVE'"
-          >
-            <PlatformBlock
-              @click="playGame(live.name, live.code, live.gameCode)"
-              dataType="live"
-              :data="live"
-            />
-          </template>
-          <template v-else>
-            <PlatformBlock
-              @click="playGame(live.name, live.code, live.gameCode)"
-              dataType="live"
-              :data="live"
-            />
-          </template>
-        </swiper-slide>
-        <swiper-slide v-for="(sp, i) in sport" :key="i" :class="'sport-' + i">
-          <PlatformBlock
-            @click="playGame(sp.name, sp.code, sp.gameCode)"
-            dataType="sport"
-            :data="sp"
-          />
-        </swiper-slide>
-        <swiper-slide v-for="(es, i) in esport" :key="i" :class="'esport-' + i">
-          <PlatformBlock
-            @click="playGame(es.name, 'platformType', es.code)"
-            dataType="esport"
-            :data="es"
-          />
-        </swiper-slide>
+  </q-page>
 
-        <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
-          <PlatformBlock dataType="slot" :data="slt" />
-        </swiper-slide>
 
-        <swiper-slide
-          v-for="(fish, i) in fishing"
-          :key="i"
-          :class="'fish-' + i"
-        >
-          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
-            <PlatformBlock
-              @click="playGame(fish.name, fish.code, '7202')"
-              dataType="fish"
-              :data="fish"
-            />
-          </template>
+  <q-page-sticky
+      v-if="isShowBackTop"
+      position="bottom-right"
+      :offset="[18, 76]"
+      style="transform: none; z-index:999;"
+  >
+    <q-btn
+        padding="sm"
+        color="blue-6"
+        @click="scrollToTop"
+        fab
+        icon="keyboard_arrow_up"
+    />
+  </q-page-sticky>
 
-          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
-            <PlatformBlock
-              @click="playGame(fish.name, fish.code, '6')"
-              dataType="fish"
-              :data="fish"
-            />
-          </template>
-          <PlatformBlock
-            @click="playGame(fish.name, fish.code, fish.code)"
-            dataType="fish"
-            :data="fish"
-          />
-        </swiper-slide>
 
-        <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
-          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
-            <PlatformBlock
-              @click="playGame(poke.name, poke.code, 'ky_lobby')"
-              dataType="poker"
-              :data="poke"
-            />
-          </template>
-          <PlatformBlock
-            @click="playGame(poke.name, poke.code, poke.gameCode)"
-            dataType="poker"
-            :data="poke"
-          />
-        </swiper-slide>
-        <swiper-slide
-          v-for="(lotter, i) in lottery"
-          :key="i"
-          :class="'lottery-' + i"
-        >
-          <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
-            <PlatformBlock
-              @click="playGame(lotter.name, lotter.code, 'imlotto30000')"
-              dataType="lottery"
-              :data="lotter"
-            />
-          </template>
-          <template
-            v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
-          >
-            <PlatformBlock
-              @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"
-              dataType="lottery"
-              :data="lotter"
-            />
-          </template>
-          <template v-else>
-            <PlatformBlock
-              @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
-              dataType="lottery"
-              :data="lotter"
-            />
-          </template>
-        </swiper-slide>
-        <swiper-slide style="opacity: 0"></swiper-slide>
-      </swiper>
-    </div>
-  </div>
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%" class="bg-bright text-black">
       <q-card-section
-        class="q-mb-md"
-        style="display: flex; flex-direction: column"
+          class="q-mb-md"
+          style="display: flex; flex-direction: column"
       >
         <q-tabs v-model="activeKey" dense align="justify">
           <q-tab
-            v-for="(tab, i) in announcementTypes"
-            :key="i"
-            :name="tab.id"
-            :label="tab.name"
+              v-for="(tab, i) in announcementTypes"
+              :key="i"
+              :name="tab.id"
+              :label="tab.name"
           />
         </q-tabs>
 
-        <q-separator />
+        <q-separator/>
 
         <q-tab-panels v-model="activeKey" animated>
           <q-tab-panel
-            v-for="(tab, i) in announcementTypes"
-            :key="i"
-            :name="tab.id"
+              v-for="(tab, i) in announcementTypes"
+              :key="i"
+              :name="tab.id"
           >
             <q-list style="min-height: 65vh">
               <div v-for="(ann, idx) in announcementList" :key="idx">
                 <span v-if="ann.typeId === tab.id">
                   <q-expansion-item
-                    style="max-height: 65vh; overflow: auto"
-                    group="somegroup"
-                    icon="volume_up"
-                    :label="ann.title"
+                      style="max-height: 65vh; overflow: auto"
+                      group="somegroup"
+                      icon="volume_up"
+                      :label="ann.title"
                   >
                     <q-card>
                       <q-card-section>
@@ -358,12 +848,12 @@
   </q-dialog>
 
   <q-dialog
-    width="100%"
-    class="modal-update-div"
-    v-model="isAppUpdateModal"
-    show-cancel-button
-    :showCancelButton="false"
-    :showConfirmButton="false"
+      width="100%"
+      class="modal-update-div"
+      v-model="isAppUpdateModal"
+      show-cancel-button
+      :showCancelButton="false"
+      :showConfirmButton="false"
   >
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
@@ -385,13 +875,13 @@
 
   <q-dialog width="100%" v-model="isFirstView">
     <q-card
-      style="width: 90%; max-width: 500px; margin: 0 auto"
-      class="bg-white text-black"
+        style="width: 90%; max-width: 500px; margin: 0 auto"
+        class="bg-white text-black"
     >
       <q-card-section class="q-mb-md">
-        <img :src="homePopupImg" alt="" class="alert-image" />
+        <img :src="homePopupImg" alt="" class="alert-image"/>
         <div class="close-alert" @click="closeAlert()">
-          <q-icon color="white" size="24px" name="close"></q-icon>
+          <!--          <q-icon color="white" size="24px" name="close"></q-icon>-->
         </div>
       </q-card-section>
     </q-card>
@@ -399,32 +889,35 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
-import { cached } from "boot/cache";
+/* eslint-disable */
+import {defineComponent, onMounted, ref, reactive, computed} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {api} from "boot/axios";
+import {cached} from "boot/cache";
 
-import { useQuasar, Platform } from "quasar";
-import { userStore } from "stores/index";
+import {useQuasar, Platform} from "quasar";
+import {userStore} from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
+import {RiVolumeUpLine} from "vue-remix-icons";
 
-import { useUI } from "stores/ui";
-import { Scrollbar } from "swiper";
+import {useUI} from "stores/ui";
+import {Scrollbar} from "swiper";
 // Import Swiper Vue.js components
-import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Thumbs, Controller } from "swiper";
+import SwiperCore, {Keyboard, Mousewheel, HashNavigation, A11y} from "swiper";
+import {Swiper, SwiperSlide} from "swiper/vue";
+import {Thumbs, Controller, Grid} from "swiper";
 // Import Swiper styles
 import "swiper/css";
+import "swiper/css/grid";
 import "swiper/css/scrollbar";
-import { App } from "@capacitor/app";
+import {App} from "@capacitor/app";
+import * as _ from "lodash"
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
-import { translateRecord } from "src/directives/translate";
+import {translateRecord} from "src/directives/translate"
 
 export default defineComponent({
   name: "IndexPage",
@@ -434,7 +927,6 @@ export default defineComponent({
     GameModal,
     MarqueeText,
     PlatformBlock
-    // RiVolumeUpLine,
   },
   setup() {
     const isFirstView = ref(false);
@@ -445,6 +937,8 @@ export default defineComponent({
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
+    const slotSwiper = ref(null);
+    const slotSwiper2 = ref(null);
 
     const setFirstSwiper = (swiper) => {
       firstSwiper.value = swiper;
@@ -452,61 +946,49 @@ export default defineComponent({
     const setSecondSwiper = (swiper) => {
       secondSwiper.value = swiper;
     };
+    const setSlotSwiper = (swiper) => {
+      slotSwiper.value = swiper;
+    };
+    const setSlotSwiper2 = (swiper) => {
+      slotSwiper2.value = swiper;
+    }
+
+
     const setSelectedSwiper = (tab) => {
       selectedTab.value = tab.name;
       // console.log(tab.name);
       var slideIndex = 0;
       if (tab.name === "live") {
-        slideIndex = 0;
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide('id-live-slide')
+        // firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
-        slideIndex = livecasino.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide('id-sport-slide')
+        // firstSwiper.value?.slideTo(1, 500);
       }
       if (tab.name === "esport") {
-        slideIndex = livecasino.value.length + sport.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide('id-esport-slide')
+        // firstSwiper.value?.slideTo(2, 500);
       }
       if (tab.name === "slot") {
-        slideIndex =
-          livecasino.value.length + sport.value.length + esport.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide('id-slot-slide')
+        // firstSwiper.value?.slideTo(3, 500);
       }
-      if (tab.name === "fishing") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
+      // if (tab.name === "fishing") {
+      //   firstSwiper.value?.slideTo(4, 500);
+      // }
       if (tab.name === "poker") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide('id-poker-slide')
+        // firstSwiper.value?.slideTo(5, 500);
       }
       if (tab.name === "lottery") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide('id-lottery-slide')
+        // window.scrollTo(0, 0);
+        // firstSwiper.value?.slideTo(6, 500);
       }
     };
+
+
     const onSlideChange = (swiper) => {
       // Get the active slide index
       const activeIndex = swiper.activeIndex;
@@ -537,51 +1019,66 @@ export default defineComponent({
       }
     };
     const selectedTab = ref("live");
+    const game_bg_color = ref([]);
     const tabs = ref([
       {
         name: "live",
-        icon: "live",
-        label: "真人",
+        icon: "slide-live-svg.svg",
+        label: "真人娱乐",
         labelact: "真人娱乐"
       },
       {
         name: "sport",
-        icon: "sport",
-        label: "体育",
+        icon: "slide-sport-svg.svg",
+        label: "体育赛事",
         labelact: "体育赛事"
       },
       {
         name: "esport",
-        icon: "esport",
-        label: "电竞",
+        icon: "slide-esport-svg.svg",
+        label: "电竞赛事",
         labelact: "电竞赛事"
       },
       {
         name: "slot",
-        icon: "slot",
-        label: "电子",
+        icon: "slide-fish-svg.svg",
+        label: "电子/捕鱼",
         labelact: "电子/捕鱼"
       },
       {
         name: "poker",
-        icon: "poker",
-        label: "棋牌",
+        icon: "slide-poker-svg.svg",
+        label: "棋牌游戏",
         labelact: "棋牌游戏"
       },
       {
         name: "lottery",
-        icon: "lottery",
-        label: "彩票",
+        icon: "slide-lottery-svg.svg",
+        label: "彩票游戏",
         labelact: "彩票游戏"
       }
     ]);
     const esport = ref([]);
     const sport = ref([]);
     const livecasino = ref([]);
+    const hotgames = ref([]);
     const poker = ref([]);
     const lottery = ref([]);
     const slot = ref([]);
     const fishing = ref([]);
+
+    const slot_odds = computed(() => {
+      var filtered = slot.value.filter(function (element, index, array) {
+        return (index % 2 === 0);
+      });
+      return filtered;
+    });
+    const slot_evens = computed(() => {
+      var filtered = slot.value.filter(function (element, index, array) {
+        return (index % 2 === 1);
+      });
+      return filtered;
+    })
 
     const ui = useUI();
     const scrollPageRef = ref(null);
@@ -589,10 +1086,10 @@ export default defineComponent({
     const checkPlatform = () => {
       //Is iOS Webclip App || Is Android Apk
       if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
+          (Platform.is.ios &&
+              "standalone" in window.navigator &&
+              window.navigator.standalone) ||
+          (Platform.is.android && Platform.is.capacitor)
       ) {
         isH5.value = false;
       } else {
@@ -600,7 +1097,109 @@ export default defineComponent({
       }
     };
 
-    ui.$onAction(({ name, args }) => {
+    const scrollPosition = ref(0);
+    const isZeroScrollPos = ref(true);
+    const scrollSlotRef = ref();
+    const scrollToTop = (el) => {
+      window.scrollTo(0, 0, 'smooth');
+    }
+
+    const isScrolling = ref(false);
+    const scrollToSlide = (slide_id) => {
+      isScrolling.value = true;
+      var slideItem = document.getElementById(slide_id);
+      if (slideItem) {
+        var positionY = slideItem.offsetTop;
+        console.log(positionY);
+        var y_axis = positionY + 215;
+
+        window.scroll({
+          top: y_axis,
+          left: 0,
+          behavior: 'smooth'
+        });
+        setTimeout(() => {
+          isScrolling.value = false;
+        }, 1500)
+      }
+    }
+
+    const store = userStore();
+    const isShowBackTop = ref(false);
+    const isShowDownload = ref(true);
+    // if (store.hasToken()) {
+    //   isShowDownload.value = false;
+    // }
+
+    const onHomeScroll = (position) => {
+      // console.log(position);
+      scrollPosition.value = position;
+      if (position === 0) {
+        isZeroScrollPos.value = true;
+      } else {
+        isZeroScrollPos.value = false;
+      }
+      // if (!store.hasToken()) {
+      if (position > 55) {
+        isShowDownload.value = false;
+      } else {
+        isShowDownload.value = true;
+      }
+      // }
+
+      if (position > 400) {
+        isShowBackTop.value = true;
+      } else {
+        isShowBackTop.value = false;
+      }
+
+      if (!isScrolling.value) {
+        var topHeight = document.getElementById("id-sticky-header").offsetHeight + 15;
+        var checkItem1 = document.getElementById("id-live-slide");
+        var checkItem2 = document.getElementById("id-sport-slide");
+        var checkItem3 = document.getElementById("id-esport-slide");
+        var checkItem4 = document.getElementById("id-slot-slide");
+        var checkItem5 = document.getElementById("id-poker-slide");
+        var checkItem6 = document.getElementById("id-lottery-slide");
+
+        var positionTop1 = checkItem1.getBoundingClientRect().top;
+        var positionTop2 = checkItem2.getBoundingClientRect().top;
+        var positionTop3 = checkItem3.getBoundingClientRect().top;
+        var positionTop4 = checkItem4.getBoundingClientRect().top;
+        var positionTop5 = checkItem5.getBoundingClientRect().top;
+        var positionTop6 = checkItem6.getBoundingClientRect().top;
+
+        // console.log(topHeight);
+        // console.log(positionTop6);
+        // console.log(positionTop6 - 40 <= topHeight);
+
+        if (positionTop6 - 100 <= topHeight) {
+          selectedTab.value = 'lottery';
+          secondSwiper.value?.slideTo(5, 500);
+
+        } else if (positionTop5 <= topHeight) {
+          selectedTab.value = 'poker';
+          secondSwiper.value?.slideTo(4, 500);
+
+        } else if (positionTop4 <= topHeight) {
+          selectedTab.value = 'slot';
+          secondSwiper.value?.slideTo(3, 500);
+        } else if (positionTop3 <= topHeight) {
+          selectedTab.value = 'esport';
+          secondSwiper.value?.slideTo(2, 500);
+        } else if (positionTop2 <= topHeight) {
+          selectedTab.value = 'sport';
+          secondSwiper.value?.slideTo(1, 500);
+        } else if (positionTop1 <= topHeight) {
+          selectedTab.value = 'live';
+          secondSwiper.value?.slideTo(0, 500);
+        }
+      }
+
+
+    }
+
+    ui.$onAction(({name, args}) => {
       switch (name) {
         case "setScrollPosition":
           scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
@@ -610,10 +1209,18 @@ export default defineComponent({
     const banners = ref(null);
     const route = useRoute();
     const router = useRouter();
-    const store = userStore();
+
     const mainWallet = computed(() => {
       return store.balance;
     });
+
+    const isLoadingBalance = ref(false);
+    const refreshBalance = () => {
+      isLoadingBalance.value = true;
+      store.getBalance().then((res) => {
+        isLoadingBalance.value = false;
+      });
+    }
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
@@ -621,28 +1228,28 @@ export default defineComponent({
 
     function loadData() {
       api
-        .get("/promo/banner?category=HOME")
-        .then((res) => {
-          if (res.code === 0) {
-            banners.value = res.data;
-          } else {
+          .get("/promo/banner?category=HOME")
+          .then((res) => {
+            if (res.code === 0) {
+              banners.value = res.data;
+            } else {
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: res.data.message,
+              //   icon: "report_problem"
+              // });
+            }
+            // banners.value = response.data;
+          })
+          .catch(() => {
             // $q.notify({
             //   color: "negative",
             //   position: "top",
-            //   message: res.data.message,
+            //   message: "Loading failed",
             //   icon: "report_problem"
             // });
-          }
-          // banners.value = response.data;
-        })
-        .catch(() => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
-        });
+          });
     }
 
     const platforms = ref([]);
@@ -659,25 +1266,36 @@ export default defineComponent({
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
 
+    const hotSlots = ref(['PG']);
+    const hotLives = ref(['AG', 'BBIN']);
+    const hotSports = ref(['IM']);
+    const hotPokers = ref(['KY']);
+    const hotLotterys = ref(['TCG']);
+
+    var platformApiUrl = (store.hasToken()) ? '/session/loggedInPlatform' : "/platform";
+    var platformApiKey = (store.hasToken()) ? 'LOGGEDPLATFORMS' : "PLATFORMS";
     const getPlatList = () => {
-      if (store.token && store.memberType === "TEST") {
-        cached
-          .get("PLATFORMS", () =>
-            api.get("/session/loggedInPlatform").then((res) => {
-              return res;
-            })
+      cached
+          .get(platformApiKey, () =>
+              api.get(platformApiUrl).then((res) => {
+                return res;
+              })
           )
           .then((data) => {
             var pf = data;
             ui.slotLists = [];
             pf.forEach((element) => {
+              var gameStatus = element.status;
+              if (gameStatus === "TEST" && store.memberType !== 'TEST') {
+                return;
+              }
+
               const platTypes = element.gameType.split(",");
+
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
-                // console.log(espObj);
-
                 if (espObj.code === "TFGaming") {
-                  espObj.title = "兴發电竞";
+                  espObj.title = "东赢电竞";
                 }
                 if (espObj.code === "IA") {
                   espObj.title = "小艾电竞";
@@ -712,50 +1330,62 @@ export default defineComponent({
                 spObj.icon = "sport";
                 spObj.subtitle = "体育赛事";
                 sport.value.push(spObj);
+
+                if (hotSports.value.indexOf(element.name) > -1) {
+                  spObj.order= 2;
+                  hotgames.value.push(spObj);
+                }
+
               }
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
-                if (liveObj.code === "PMLIVE") {
-                  liveObj.title = "PM 真人";
-                } else {
-                  liveObj.title = liveObj.name + " 真人";
-                }
-
+                liveObj.title = translateRecord(liveObj.name);
                 liveObj.icon = "live";
                 liveObj.subtitle = "真人娱乐";
                 livecasino.value.push(liveObj);
-              }
-              if (platTypes.indexOf("POKER") > -1) {
-                var pokerObj = Object.assign({}, element);
-                pokerObj.title = translateRecord(pokerObj.name);
-                pokerObj.icon = "poker";
-                pokerObj.subtitle = "棋牌娱乐";
-                poker.value.push(pokerObj);
-              }
-              if (platTypes.indexOf("LOTTERY") > -1) {
-                var lottObj = Object.assign({}, element);
-                lottObj.title = lottObj.name + " 彩票";
-                lottObj.icon = "lottery";
-                lottObj.subtitle = "彩票游戏";
-                lottery.value.push(lottObj);
+
+                if (hotLives.value.indexOf(element.name) > -1) {
+                  liveObj.order= 1;
+                  hotgames.value.push(liveObj);
+                }
               }
               if (platTypes.indexOf("SLOT") > -1) {
-                // console.log(element)
                 var slotObj = Object.assign({}, element);
-                slotObj.title = translateRecord(slotObj.name) + " 电子";
+                slotObj.title = translateRecord(slotObj.name, "SLOT");
                 slotObj.icon = "slot";
                 slotObj.subtitle = "电子游戏";
-                // console.log(slotObj);
-                if (slotObj.code === "AG" && slotObj === "AG") {
+
+                if (slotObj.name == 'PG') {
+                  slotObj.num = 1;
+                } else if (slotObj.name == 'PT') {
+                  slotObj.num = 3;
+                } else if (slotObj.name == 'MGP') {
+                  slotObj.num = 5;
+                } else if (slotObj.name == 'SW') {
+                  slotObj.num = 2;
+                } else if (slotObj.name == 'BBIN') {
+                  slotObj.num = 4;
+                } else if (slotObj.name == 'AG') {
+                  slotObj.num = 6;
+                } else if (slotObj.name == 'CQ') {
+                  slotObj.num = 7;
+                } else if (slotObj.name == 'JDB') {
+                  slotObj.num = 8;
                 } else {
-                  let slotItem = {
-                    id: slotObj.id,
-                    code: slotObj.code,
-                    icon: slotObj.name
-                  };
-                  // console.log(slotItem);
-                  ui.slotLists.push(slotItem);
-                  slot.value.push(slotObj);
+                  slotObj.num = 9;
+                }
+
+                let slotItem = {
+                  id: slotObj.id,
+                  code: slotObj.code,
+                  icon: slotObj.title
+                };
+                ui.slotLists.push(slotItem);
+                slot.value.push(slotObj);
+
+                if (hotSlots.value.indexOf(element.name) > -1) {
+                  slotObj.order= 4;
+                  hotgames.value.push(slotObj);
                 }
               }
               if (platTypes.indexOf("FISH") > -1) {
@@ -765,130 +1395,80 @@ export default defineComponent({
                 fishObj.subtitle = "捕鱼游戏";
                 fishing.value.push(fishObj);
               }
-            });
-          })
-          .catch((err) => {});
-      } else {
-        cached
-          .get("PLATFORMS", () =>
-            api.get("/platform").then((res) => {
-              return res;
-            })
-          )
-          .then((data) => {
-            var pf = data;
-            ui.slotLists = [];
-            pf.forEach((element) => {
-              const platTypes = element.gameType.split(",");
-              if (platTypes.indexOf("ESPORT") > -1) {
-                var espObj = Object.assign({}, element);
-                // console.log(espObj);
-
-                if (espObj.code === "TFGaming") {
-                  espObj.title = "兴發电竞";
-                }
-                if (espObj.code === "IA") {
-                  espObj.title = "小艾电竞";
-                }
-                if (espObj.code === "IMES") {
-                  espObj.title = "IM电竞";
-                }
-                if (!espObj.title) {
-                  espObj.title = espObj.code + "电竞";
-                }
-                espObj.icon = "esport";
-                espObj.subtitle = "电竞赛事";
-                esport.value.push(espObj);
-              }
-              if (platTypes.indexOf("SPORT") > -1) {
-                var spObj = Object.assign({}, element);
-                if (spObj.code === "IM") {
-                  spObj.title = "IM体育";
-                }
-                if (spObj.code === "PM") {
-                  spObj.title = "PM体育";
-                }
-                if (spObj.code === "IA") {
-                  spObj.title = "小艾体育";
-                }
-                if (spObj.code === "CR") {
-                  spObj.title = "CR体育";
-                }
-                if (spObj.code === "SABA") {
-                  spObj.title = spObj.code + "体育";
-                }
-                spObj.icon = "sport";
-                spObj.subtitle = "体育赛事";
-                sport.value.push(spObj);
-              }
-              if (platTypes.indexOf("LIVE") > -1) {
-                var liveObj = Object.assign({}, element);
-                if (liveObj.code === "PMLIVE") {
-                  liveObj.title = "PM 真人";
-                } else {
-                  liveObj.title = liveObj.name + " 真人";
-                }
-                liveObj.icon = "live";
-                liveObj.subtitle = "真人娱乐";
-                livecasino.value.push(liveObj);
-              }
               if (platTypes.indexOf("POKER") > -1) {
                 var pokerObj = Object.assign({}, element);
                 pokerObj.title = translateRecord(pokerObj.name);
                 pokerObj.icon = "poker";
                 pokerObj.subtitle = "棋牌娱乐";
                 poker.value.push(pokerObj);
+
+                if (hotPokers.value.indexOf(element.name) > -1) {
+                  pokerObj.order= 6;
+                  hotgames.value.push(pokerObj);
+                }
               }
               if (platTypes.indexOf("LOTTERY") > -1) {
                 var lottObj = Object.assign({}, element);
-                lottObj.title = lottObj.name + " 彩票";
+                lottObj.title = translateRecord(lottObj.name);
                 lottObj.icon = "lottery";
                 lottObj.subtitle = "彩票游戏";
                 lottery.value.push(lottObj);
-              }
-              if (platTypes.indexOf("SLOT") > -1) {
-                // console.log(element)
-                var slotObj = Object.assign({}, element);
-                slotObj.title = translateRecord(slotObj.name) + " 电子";
-                slotObj.icon = "slot";
-                slotObj.subtitle = "电子游戏";
-                // console.log(slotObj);
-                if (slotObj.code === "AG") {
-                } else {
-                  let slotItem = {
-                    id: slotObj.id,
-                    code: slotObj.code,
-                    icon: slotObj.name
-                  };
-                  // console.log(slotItem);
-                  ui.slotLists.push(slotItem);
-                  slot.value.push(slotObj);
+
+                if (hotLotterys.value.indexOf(element.name) > -1) {
+                  lottObj.order= 7;
+                  hotgames.value.push(lottObj);
                 }
               }
-              if (platTypes.indexOf("FISH") > -1) {
-                var fishObj = Object.assign({}, element);
-                fishObj.title = fishObj.name + " 捕鱼";
-                fishObj.icon = "fish";
-                fishObj.subtitle = "捕鱼游戏";
-                fishing.value.push(fishObj);
-              }
+
             });
+
+            slot.value = _.orderBy(slot.value, ['num'], ['asc']);
+            hotgames.value = _.orderBy(hotgames.value, ['order'], ['asc']);
+
+            console.log(hotgames.value);
           })
-          .catch((err) => {});
-      }
+          .catch((err) => {
+          });
     };
     const liveTabs = ref("");
     const searchList = () => {
       if (gamePage.searchKey) {
         gamePage.gameList = gameListData.value.filter((game) => {
           return game.name
-            .toLowerCase()
-            .includes(gamePage.searchKey.toLowerCase());
+              .toLowerCase()
+              .includes(gamePage.searchKey.toLowerCase());
         });
       } else {
         changePage(1, gamePage.pageSize);
       }
     };
+
+    const isSlotSlideEnd = computed(() => {
+      if (slotSwiper.value) {
+        return slotSwiper.value.isEnd;
+      }
+      return false;
+    })
+    const isSlotSlideBegin = computed(() => {
+      if (slotSwiper.value) {
+        return slotSwiper.value.isBeginning;
+      }
+      return false;
+    })
+    const changeSlotSlide = (type) => {
+      console.log(slotSwiper.value);
+      if (type === 1) {
+        slotSwiper.value?.slidePrev(500);
+        slotSwiper2.value?.slidePrev(500);
+
+        isSlotSlideEnd.value = false;
+      } else if (type === 2) {
+        slotSwiper.value?.slideNext(500);
+        slotSwiper2.value?.slideNext(500);
+
+        isSlotSlideBegin.value = false;
+      }
+    }
 
     const changePage = (page, pageSize) => {
       gamePage.gameList = gameListData.value;
@@ -930,9 +1510,8 @@ export default defineComponent({
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
     const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
+      // console.log(store.hasCheckedVersion);
+      if (Platform.is.android && Platform.is.capacitor && !store.hasCheckedVersion) {
         const info = await App.getInfo();
         // const info = {
         //   version: "1.0.1"
@@ -941,14 +1520,14 @@ export default defineComponent({
         console.log(info);
         // alert(info.version);
         var current_version = parseInt(
-          info.version.replaceAll(".", "") + info.build
+            info.version.replaceAll(".", "") + info.build
         );
         console.log(current_version);
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(
-          `/config/appVersionAndUrl?type=${appType}&device=${device}`
+            `/config/appVersionAndUrl?type=${appType}&device=${device}`
         );
         // console.log(res);
         if (res.code === 0) {
@@ -962,6 +1541,7 @@ export default defineComponent({
           if (latest_ver_no > current_version) {
             console.log("Need to Updat");
             isAppUpdateModal.value = true;
+            store.hasCheckedVersion = true;
           }
         }
       }
@@ -978,16 +1558,16 @@ export default defineComponent({
 
     const isiOS = () => {
       return (
-        [
-          "iPad Simulator",
-          "iPhone Simulator",
-          "iPod Simulator",
-          "iPad",
-          "iPhone",
-          "iPod"
-        ].includes(navigator.platform) ||
-        // iPad on iOS 13 detection
-        (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+          [
+            "iPad Simulator",
+            "iPhone Simulator",
+            "iPod Simulator",
+            "iPad",
+            "iPhone",
+            "iPod"
+          ].includes(navigator.platform) ||
+          // iPad on iOS 13 detection
+          (navigator.userAgent.includes("Mac") && "ontouchend" in document)
       );
     };
 
@@ -1002,27 +1582,45 @@ export default defineComponent({
         }
       } else {
         api
-          .get("/promo/banner?category=HOMEPOP")
-          .then((res) => {
-            if (res.code === 0) {
-              homePopupImg.value =
-                res.data.length > 0
-                  ? imgURL + res.data[0]["mobileImageUrl"]
-                  : "";
-              if (homePopupImg.value) {
-                isFirstView.value = true;
+            .get("/promo/banner?category=HOMEPOP")
+            .then((res) => {
+              if (res.code === 0) {
+                homePopupImg.value =
+                    res.data.length > 0
+                        ? imgURL + res.data[0]["mobileImageUrl"]
+                        : "";
+                if (homePopupImg.value) {
+                  isFirstView.value = true;
+                }
               }
-            }
-          })
-          .catch(() => {});
+            })
+            .catch(() => {
+            });
       }
+    };
+
+    const downloadUrl = ref("");
+
+    const getAppDownloadUrl = () => {
+      api
+          .get("/config/appDownloadUrl")
+          .then((res) => {
+            // console.log(res);
+            downloadUrl.value = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+            downloadUrl.value = "https://dy9367.app/";
+          });
     };
 
     const closeTopBox = () => {
       isH5.value = false;
+      store.hasClosedDL = true;
       var btmSwiper = document.getElementById("btm-second-swiper");
       btmSwiper.classList.add("longer-swiper");
     };
+
 
     // const checkShowImgTop = () => {
     //   const lastTime = localStorage.getItem("indexImgTop");
@@ -1033,20 +1631,6 @@ export default defineComponent({
     //     isFirstView.value = true;
     //   }
     // };
-
-    const downloadUrl = ref("");
-
-    const getAppDownloadUrl = () => {
-      api
-        .get("/config/appDownloadUrl")
-        .then((res) => {
-          // console.log(res);
-          downloadUrl.value = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
 
     onMounted(() => {
       checkShowImgTop();
@@ -1059,9 +1643,7 @@ export default defineComponent({
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
-    // const openGame = (gameName, gameCode) => {
-    //   casinoGame.value.open(gameName, selectedPlat.value.code, gameCode);
-    // };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1073,6 +1655,8 @@ export default defineComponent({
       store,
       platforms,
       mainWallet,
+      refreshBalance,
+      isLoadingBalance,
       playGame,
       allGames,
       // casinoGame,
@@ -1081,7 +1665,10 @@ export default defineComponent({
       searchList,
       liveTabs,
       selectedLiveTab,
-      // openGame,
+      onHomeScroll,
+      scrollToTop,
+      slot_evens,
+      slot_odds,
       scrollPageRef,
       announcementList,
       isStationNotice,
@@ -1095,15 +1682,23 @@ export default defineComponent({
       selectedTab,
       sport,
       esport,
-      // slots,
+      changeSlotSlide,
+      slotSwiper,
+      slotSwiper2,
+      setSlotSwiper,
+      setSlotSwiper2,
+      isSlotSlideEnd,
+      isSlotSlideBegin,
       slot,
       livecasino,
+      hotgames,
       poker,
       fishing,
       lottery,
       isH5,
       onSlideChange,
       Thumbs,
+      Grid,
       thumbsSwiper,
       modules: [Scrollbar],
       Controller,
@@ -1120,37 +1715,250 @@ export default defineComponent({
       homePopupImg,
       closeTopBox,
       getAppDownloadUrl,
-      downloadUrl
+      downloadUrl,
+      isZeroScrollPos,
+      scrollPosition,
+      scrollSlotRef,
+      isShowBackTop,
+      isShowDownload
     };
   }
 });
 </script>
 <style scoped lang="scss">
+
+.download-top-container {
+  .download-top-box {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    height: 55px;
+    background: #50AEF330;
+
+    .q-icon {
+      font-size: 24px;
+      color: #999;
+    }
+
+    .headicon {
+      width: 50px;
+    }
+
+    .download-txt-container {
+      flex: 4;
+      font-size: 0.7rem;
+      line-height: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      color: #333;
+
+      .download-title {
+        font-size: 0.8rem;
+        color: #000;
+        margin-bottom: 1px;
+      }
+
+      .download-content {
+        max-width: 11rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      gap: 5px;
+    }
+
+    .top-btn {
+      background-image: linear-gradient(180deg, #52ACFF 0, #3559DA 100%),
+      linear-gradient(#52ACFF, #3559DA);
+      text-align: center;
+      height: 32px;
+      color: #fff;
+      white-space: nowrap;
+      letter-spacing: 0px;
+      border-radius: 16px;
+    }
+  }
+}
+
+.sticky-header {
+  position: fixed;
+  top: 0px;
+  z-index: 999;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  background: #fff;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+.home-header-section {
+  padding: 1px 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .header-left {
+    height: 48px;
+  }
+
+  .top-logo {
+    width: auto;
+    height: 100%;
+    max-height: 48px;
+  }
+
+  .header-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+
+
+    .welcome-liner {
+      flex: 3;
+      color: #757575;
+      font-size: 18px;
+    }
+
+    .badge-div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .icon-div {
+        color: #fff;
+        position: relative;
+        z-index: 22;
+        font-size: 18px;
+        text-align: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #F67600;
+      }
+    }
+
+    .vip-badge {
+      padding-left: 20px;
+      margin-left: -15px;
+      border-radius: 18px;
+      height: 18px;
+      padding-right: 10px;
+    }
+
+    .refresh-btn {
+      padding: 0px;
+    }
+
+    .balance-text {
+      font-size: 22px;
+      line-height: 22px;
+      font-weight: 600;
+      min-width: 40px;
+    }
+  }
+
+  .home-select-slide {
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    align-items: center;
+    padding: 2px 5px;
+    min-height: 46px;
+    margin: 5px 0;
+
+    img {
+      width: 20px;
+    }
+
+    span {
+      color: #0089ED;
+      font-weight: 500;
+      font-size: 12px;
+    }
+
+    &.selected {
+      //background: linear-gradient(180deg, #52ACFF, #3559DA);
+      background: linear-gradient(180deg, #7dd4fd 0, #4c9dec 100%);
+
+      span {
+        color: #fff;
+      }
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+
+  .firstSwiper {
+    // height: 70px;
+    // padding-right: 10px;
+    // z-index: 999;
+    background: #fff;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+}
+
+.home-all-slider {
+  &.padding-big {
+    padding-top: 225px;
+  }
+
+  &.padding-normal {
+    padding-top: 136px;
+  }
+
+  &.padding-second {
+
+  }
+}
+
+.home-top-slider {
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+
 .secondSwiper {
-  height: calc(100vh - 380px);
-  // height: 50%;
-  padding-bottom: 0px;
-  padding-top: 25px;
+  //height: calc(100vh - 410px);
+  padding-bottom: 10px;
+  height: auto;
+  //padding-top: 10px;
+  //min-height: 380px;
 }
 
 .longer-swiper {
-  height: calc(100vh - 380px);
+  //height: calc(100vh - 380px);
 }
 
-:deep(.secondSwiper .swiper-wrapper) {
-  .swiper-slide {
-    // height: 120px;
-    // width: 95%;
-    // margin: 0 auto;
-    // overflow: hidden;
-    height: calc(45vh / 4);
+:deep(.secondSwiper) {
+  .home-swiper-slide {
+    //height: calc(45vh / 4);
     width: 95%;
     margin: 0 auto;
     overflow: hidden;
-    // min-height: 25vw;
-    min-height: 95px;
+    //height: 230px;
     padding-top: 0;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
+
+    &.slot-slides {
+      //height: 520px;
+
+      .slot-swiper {
+        margin-bottom: 10px;
+      }
+    }
+
+    &.lottery-slides {
+      //height: 400px;
+    }
 
     a {
       display: block;
@@ -1158,6 +1966,7 @@ export default defineComponent({
 
     img {
       width: 100%;
+      display: block;
     }
 
     &:first-child {
@@ -1170,18 +1979,101 @@ export default defineComponent({
       // padding-top: 30px;
     }
   }
+
+  .home-game-boards {
+    h2 {
+      //margin-top: 15px;
+      //margin-bottom: 15px;
+      font-weight: 500;
+      line-height: 18px;
+      letter-spacing: 1px;
+      font-size: 14px;
+    }
+
+    .game-list-div {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 16px;
+      row-gap: 10px;
+      justify-content: flex-start;
+
+      .game-item-div {
+        width: calc((100% - 35px) / 3);
+        flex-wrap: nowrap;
+
+        &.slot-item {
+          width: 100%;
+        }
+
+        .game-board {
+          position: relative;
+          // height: 170px;
+
+          .game-title {
+            position: absolute;
+            z-index: 2;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+          }
+
+          h3 {
+            line-height: 1rem;
+            font-size: 22px;
+            color: #fff;
+            margin-top: 0px;
+            margin-bottom: 7px;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+          }
+
+          span {
+            font-size: 12px;
+            font-weight: 300;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 5px;
+            width: 100%;
+            letter-spacing: 1px;
+          }
+
+          &:hover {
+            filter: brightness(1.05);
+          }
+
+          &:active {
+            filter: brightness(1.15);
+            transform: translate(1px, 1px);
+          }
+
+        }
+      }
+    }
+  }
 }
 
 :deep(.firstSwiper .swiper-wrapper) {
   background: #fff;
 }
 
+::-webkit-scrollbar-track {
+  box-shadow: none;
+}
+
 .swiper-container {
   position: relative;
-  background: #d2d2de;
+  background: transparent;
 
   .firstSwiper {
-    margin-bottom: -30px;
+    height: 60px;
+    margin-bottom: 10px;
+    padding-right: 40px;
     padding-bottom: 10px;
     z-index: 999;
     text-align: center;
@@ -1190,12 +2082,11 @@ export default defineComponent({
       // background: #23263c;
       background: #ffffff;
       padding: 8px 5px 2px;
-      max-width: 60px;
+      max-width: 110px;
       cursor: pointer;
 
       &.tbact {
-        background: url("../assets/images/index/game_tab_active.png") no-repeat
-          center center;
+        background: url("../assets/images/index/game_tab_active.png") no-repeat center center;
         background-size: cover;
         white-space: nowrap;
         padding: 8px 20px 2px;
@@ -1300,80 +2191,27 @@ export default defineComponent({
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
-.download-top-container {
-  .download-top-box {
-    display: flex;
-    padding: 10px;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    background: #ffffff;
 
-    .q-icon {
-      font-size: 24px;
-      color: #999;
-    }
-
-    .headicon {
-      // flex: 1;
-      // width: 5%;
-    }
-
-    .download-txt-container {
-      flex: 5;
-      font-size: 0.7rem;
-      line-height: 0.8rem;
-      display: flex;
-      flex-direction: column;
-      color: #999;
-
-      .download-title {
-        font-size: 0.8rem;
-        color: #666;
-        margin-bottom: 4px;
-      }
-    }
-
-    .buttons {
-      display: flex;
-      gap: 5px;
-    }
-
-    .top-btn {
-      background-image: linear-gradient(90deg, #3379f5 0, #77bbfc 100%),
-        linear-gradient(#5b80e7, #5b80e7);
-      // height: 0.864rem;
-      // width: 2.3rem;
-      text-align: center;
-      line-height: 0.864rem;
-      color: #fff;
-      border-radius: 0.1rem;
-    }
-  }
-}
 
 .midd {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // gap: 10px;
-  // margin: 10px;
-  margin-top: -30px;
+  margin: 4px auto;
+  width: calc(100% - 16px);
   height: 30px;
   position: relative;
   border-radius: 15px 15px 0 0;
   overflow: hidden;
 
+
   .station-notice-wrapper {
     display: flex;
-    background: rgba(44, 44, 44, 0.7);
-    // background: #2b2b4b;
-    // border-radius: 10px;
-    // margin: 10px;
     gap: 10px;
     padding: 5px 10px;
     justify-content: center;
     align-items: center;
+
+    .marquee-text-wrap {
+      color: #000;
+    }
 
     .volume {
       display: flex;
@@ -1389,69 +2227,51 @@ export default defineComponent({
 
     .notice {
       img {
-        width: 30px;
+        width: 19px;
       }
     }
   }
 
-  .share {
-    background-image: linear-gradient(to right, #de4545, #db7e42);
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-    flex: 1;
-  }
 }
 
-.details-container {
-  background: url("../assets/images/index/details_bg.png") no-repeat;
-  // height: 2.5rem;
-  width: 100%;
-  background-size: 100% 132px;
-}
 
-.welcome-bar {
-  display: flex;
-  padding: 10px;
-  gap: 20px;
-  // background-color: #212534;
-  height: 35px;
-  justify-content: space-evenly;
-  align-items: center;
-  color: #000;
-  font-size: 12px;
-
-  .logo {
-    flex: 1;
-    height: 25px;
-
-    img {
-      height: 100%;
-    }
-  }
-
-  .welcome-liner {
-    flex: 3;
-  }
-
-  .login {
-    flex: 2;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: #000;
-
-    .user {
-      background: #ffffff;
-      padding: 0px 2px;
-      border-radius: 50%;
-    }
-  }
-}
+//.welcome-bar {
+//  display: flex;
+//  padding: 10px;
+//  gap: 20px;
+//  // background-color: #212534;
+//  height: 35px;
+//  justify-content: space-evenly;
+//  align-items: center;
+//  color: #000;
+//  font-size: 12px;
+//
+//  .logo {
+//    flex: 1;
+//    height: 25px;
+//
+//    img {
+//      height: 100%;
+//    }
+//  }
+//
+//
+//  .login {
+//    flex: 2;
+//    display: flex;
+//    justify-content: flex-end;
+//    align-items: center;
+//    gap: 12px;
+//    text-decoration: none;
+//    color: #000;
+//
+//    .user {
+//      background: #ffffff;
+//      padding: 0px 2px;
+//      border-radius: 50%;
+//    }
+//  }
+//}
 
 .details-bar {
   gap: 10px;
@@ -1517,7 +2337,7 @@ export default defineComponent({
       border-radius: 10px;
       margin: 0 0 5px;
       background-image: linear-gradient(0deg, #1a1c28 0, #212534 100%),
-        linear-gradient(#2d879c, #2d879c);
+      linear-gradient(#2d879c, #2d879c);
       border-radius: 6px;
       color: #000;
       display: flex;
@@ -1526,7 +2346,7 @@ export default defineComponent({
 
       &--active {
         background-image: linear-gradient(0deg, #07404b 0, #058096 100%),
-          linear-gradient(#2d879c, #2d879c);
+        linear-gradient(#2d879c, #2d879c);
         color: #fff;
       }
     }
@@ -1548,7 +2368,7 @@ export default defineComponent({
       min-width: 60px;
       margin: 0 0 5px;
       background-image: linear-gradient(0deg, #1a1c28 0, #212534 100%),
-        linear-gradient(#2d879c, #2d879c);
+      linear-gradient(#2d879c, #2d879c);
       color: #000;
       display: flex;
       align-items: center;
@@ -1616,9 +2436,6 @@ export default defineComponent({
 }
 </style>
 <style>
-.marquee-text-wrap span {
-  color: #ffffff !important;
-}
 
 .alert-image {
   width: 100%;
