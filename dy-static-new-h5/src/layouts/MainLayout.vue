@@ -632,7 +632,7 @@ svg path {
 .page-wrapper {
   background: #4fb2ff;
   background: url(../assets/images/common/bgheader.png) no-repeat center center;
-  padding-top: 20px;
+  padding-top: 0px;
   background-size: cover;
 }
 
