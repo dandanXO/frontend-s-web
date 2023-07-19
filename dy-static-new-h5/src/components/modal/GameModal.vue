@@ -19,6 +19,7 @@
               round
               dense
               icon="close"
+              style="width:24px;height:24px;min-height:24px;min-width:24px;"
           />
           <!--                  <q-btn-->
           <!--                      v-if="!drawerVisible"-->
@@ -36,6 +37,13 @@
           <!--                      dense-->
           <!--                      icon="read_more"-->
           <!--                  />-->
+        </div>
+
+        <div v-if="!src" class="loading-div">
+          <q-spinner-hourglass
+              color="blue-6"
+              size="8em"
+          />
         </div>
 
         <iframe
@@ -738,9 +746,9 @@ defineExpose({
 
   .topActions {
     display: flex;
-
     justify-content: flex-end;
     width: 100%;
+    height:26px;
   }
 }
 
@@ -753,7 +761,8 @@ defineExpose({
   bottom: 0px;
 
   &.game-header-iframe {
-    top: 35px;
+    height: calc(100vh - 26px);
+    top: 26px;
   }
 }
 
