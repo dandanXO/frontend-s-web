@@ -343,6 +343,7 @@
                         size="xs"
                         @click="changeSlotSlide(1)"
                         :disable="isSlotSlideBegin"
+                        style="padding:4px 3px;"
                     >
                       <img src="../assets/index/slot/slot-arrow-left.png"/>
                     </q-btn>
@@ -351,6 +352,7 @@
                         :disable="isSlotSlideEnd"
                         size="xs"
                         @click="changeSlotSlide(2)"
+                        style="padding:4px 3px;"
                     >
                       <img src="../assets/index/slot/slot-arrow-right.png"/>
                     </q-btn>
@@ -1832,7 +1834,7 @@ export default defineComponent({
           }
 
           span {
-            font-size: 8px;
+            font-size: 12px;
             font-weight: 300;
             color: #fff;
             text-align: center;
