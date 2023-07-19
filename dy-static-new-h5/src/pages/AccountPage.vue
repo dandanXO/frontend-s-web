@@ -56,40 +56,6 @@
     </div>
     <div class="vipcard">
       <q-card-section class="top-section">
-        <!-- <div class="vip-badge">
-        <img
-          v-if="vip === 'VIP0'"
-          src="../assets/vip/badge/badge-0.png"
-        />
-        <img
-          v-if="vip === 'VIP1'"
-          src="../assets/vip/badge/badge-1.png"
-        />
-        <img
-          v-if="vip === 'VIP2'"
-          src="../assets/vip/badge/badge-2.png"
-        />
-        <img
-          v-if="vip === 'VIP3'"
-          src="../assets/vip/badge/badge-3.png"
-        />
-        <img
-          v-if="vip === 'VIP4'"
-          src="../assets/vip/badge/badge-4.png"
-        />
-        <img
-          v-if="vip === 'VIP5'"
-          src="../assets/vip/badge/badge-5.png"
-        />
-        <img
-          v-if="vip === 'VIP6'"
-          src="../assets/vip/badge/badge-6.png"
-        />
-        <img
-          v-if="vip === 'VIP7'"
-          src="../assets/vip/badge/badge-7.png"
-        />
-      </div> -->
         <!-- <div class="name">{{ header }}</div> -->
         <q-card-section class="acct-section">
           <div class="left-sect">
@@ -148,25 +114,25 @@
           <div class="vip-get-div row justify-between items-center q-mt-sm">
 
             <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
-              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png"/>
               <span>晋级礼包</span>
             </div>
             <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
 
-              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
               <span>生日礼金</span>
             </div>
             <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
 
-              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
               <span>每月活动</span>
             </div>
             <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
-              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
               <span>专属活动</span>
             </div>
           </div>

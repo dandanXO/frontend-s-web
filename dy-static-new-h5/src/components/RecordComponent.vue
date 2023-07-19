@@ -114,9 +114,9 @@
                         <q-btn
                             @click="openWithdrawConfirmDialog(det)"
                             round
-                            size="xs"
+                            size="md"
                             class="btn-deposit bg-greyblue"
-                            icon="request_quote"
+                            icon="check_circle"
                         />
                       </template>
                       <template
@@ -130,10 +130,10 @@
                             disable
                             outline
                             round
-                            size="xs"
+                            size="md"
                             class="btn-deposit"
                             color="positive"
-                            icon="request_quote"
+                            icon="check_circle"
                         />
                       </template>
                     </div>
@@ -286,7 +286,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isConfirmWithdraw">
-    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+    <q-card style="width: 100%; padding: 20px;text-align: center;" class="bg-white text-black">
       <q-card-section class="q-mb-md">
         系统提示
         <br/>
@@ -558,6 +558,6 @@ export default defineComponent({
 
 .btn-deposit {
   background: #0089ED10 !important;
-
+  width:24px;
 }
 </style>

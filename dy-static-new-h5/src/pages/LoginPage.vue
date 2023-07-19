@@ -164,7 +164,7 @@
             <q-btn
                 @click.prevent="onSubmit"
                 type="submit"
-                class="q-mt-lg"
+                class="q-mt-md"
                 label="登录"
                 width="100%"
                 color="primary"
@@ -183,7 +183,7 @@
     </div>
 
     <div class="login-bottom-section">
-      <div class="row justify-center items-center full-width q-mb-lg">
+      <div class="row justify-center items-center full-width q-mb-md">
         <router-link class="txt-tip" to="/">
           <div class="row items-center gap-8">
             <img src="../assets/login/home-icon.png"/>
@@ -579,6 +579,7 @@ export default defineComponent({
 
   .top-image-div {
     width: 100%;
+    max-height:220px;
 
     img {
       width: 100%;
@@ -587,15 +588,15 @@ export default defineComponent({
 
   .login-tab-div {
     background: #fff;
-    padding: 30px 20px 40px;
+    padding: 18px 20px 20px;
     border-radius: 20px;
     position: relative;
-    top: -35px;
+    top: -40px;
     box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.5);
   }
 
   .q-tab {
-    min-height: 46px;
+    min-height: 36px;
     background: #EEE;
     color: #333;
   }
@@ -609,7 +610,7 @@ export default defineComponent({
     border-radius: 30px;
     width: 90%;
     margin: 0 auto;
-    box-shadow: 5px 5px 5px 0 rgba(66, 91, 186, 0.2);
+    box-shadow: 3px 3px 3px 0 rgba(66, 91, 186, 0.2);
   }
 
   .form-container {
@@ -631,6 +632,7 @@ export default defineComponent({
   }
 
   .login-bottom-section {
+    margin-top:-15px;
     padding-bottom: 60px;
 
     > div {
@@ -686,8 +688,8 @@ export default defineComponent({
     flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 4px);
-    margin: 14px auto 0px;
+    width: calc(100% - 8px);
+    margin: 10px auto 0px;
     gap: 10px;
 
     .mui-row {
