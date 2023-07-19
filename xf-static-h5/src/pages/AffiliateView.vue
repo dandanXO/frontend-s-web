@@ -316,7 +316,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .wrapper {
-  // background: url("../../assets/images/common/bg.jpg") no-repeat center top;
     background: url("assets/images/affiliate/agent_index_top_bg_vg.jpg") no-repeat center 95%;
     background-attachment: fixed;
     background-color: #000000;

@@ -30,16 +30,16 @@
               <div class="items" @click="playGame(p.name, p.code, p.gameCode)">
                 <div class="bgimg">
                   <div class="theme">
-                    <img :src="p.bg" alt="" />
-                    <img
-                      class="logo"
-                      :style="
-                        p.name === 'Evolution'
-                          ? 'max-height:15px; bottom: 12%;'
-                          : ''
-                      "
-                      :src="p.logo"
-                    />
+<!--                    <img :src="p.bg" alt="" />-->
+<!--                    <img-->
+<!--                      class="logo"-->
+<!--                      :style="-->
+<!--                        p.name === 'Evolution'-->
+<!--                          ? 'max-height:15px; bottom: 12%;'-->
+<!--                          : ''-->
+<!--                      "-->
+<!--                      :src="p.logo"-->
+<!--                    />-->
                   </div>
                 </div>
               </div>
@@ -47,7 +47,7 @@
           </div>
           <GameModal ref="casinoGame"></GameModal>
         </div>
-        <img src="../../assets/images/games/liveCasino/live-bg.png" />
+<!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
       </q-intersection>
     </q-scroll-area>
   </div>
@@ -81,37 +81,37 @@ function playGame(gameName, platformCode, gameCode, gameStatus) {
 //     });
 // };
 const hotTrendingGames = [
-  {
-    code: "Evo",
-    name: "Evolution",
-    status: "NORMAL",
-    gameName: "EVO",
-    bg: require("../../assets/images/games/liveCasino/evo.png"),
-    main: require("../../assets/images/games/liveCasino/live1_1.png"),
-    logo: require("../../assets/images/common/logo/EVO.png"),
-    text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop.",
-  },
-  {
-    code: "AWC",
-    name: "AG Sexy",
-    status: "NORMAL",
-    gameName: "AE Sexy",
-    gameCode: "MX-LIVE-001",
-    bg: require("../../assets/images/games/liveCasino/sexy.png"),
-    main: require("../../assets/images/games/liveCasino/live2_01.png"),
-    logo: require("../../assets/images/common/logo/ae_2.png"),
-    text: "AE Casino, Asia's most potential live-action video. The interface is simple and easy to operate, cross-platform, download-free, and fun anytime, anywhere!",
-  },
-  {
-    code: "EZUGI",
-    name: "Ezugi",
-    status: "NORMAL",
-    gameName: "Ezugi",
-    bg: require("../../assets/images/games/liveCasino/ezugi.png"),
-    main: require("../../assets/images/games/liveCasino/live3_01.png"),
-    logo: require("../../assets/images/common/logo/ezugi.png"),
-    text: "The EZUGI entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience.",
-  },
+  // {
+  //   code: "Evo",
+  //   name: "Evolution",
+  //   status: "NORMAL",
+  //   gameName: "EVO",
+  //   bg: require("../../assets/images/games/liveCasino/evo.png"),
+  //   main: require("../../assets/images/games/liveCasino/live1_1.png"),
+  //   logo: require("../../assets/images/common/logo/EVO.png"),
+  //   text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop.",
+  // },
+  // {
+  //   code: "AWC",
+  //   name: "AG Sexy",
+  //   status: "NORMAL",
+  //   gameName: "AE Sexy",
+  //   gameCode: "MX-LIVE-001",
+  //   bg: require("../../assets/images/games/liveCasino/sexy.png"),
+  //   main: require("../../assets/images/games/liveCasino/live2_01.png"),
+  //   logo: require("../../assets/images/common/logo/ae_2.png"),
+  //   text: "AE Casino, Asia's most potential live-action video. The interface is simple and easy to operate, cross-platform, download-free, and fun anytime, anywhere!",
+  // },
+  // {
+  //   code: "EZUGI",
+  //   name: "Ezugi",
+  //   status: "NORMAL",
+  //   gameName: "Ezugi",
+  //   bg: require("../../assets/images/games/liveCasino/ezugi.png"),
+  //   main: require("../../assets/images/games/liveCasino/live3_01.png"),
+  //   logo: require("../../assets/images/common/logo/ezugi.png"),
+  //   text: "The EZUGI entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience.",
+  // },
   // {
   //   code: "Evo",
   //   name: "Evolution",

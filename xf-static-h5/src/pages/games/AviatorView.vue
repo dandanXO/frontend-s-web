@@ -351,7 +351,6 @@ export default defineComponent({
 
 .fishing-container {
   background: linear-gradient(to top, #23263c, #244764);
-  background-image: url("../../assets/images/games/aviator/aviator_bg.png");
   background-attachment: fixed;
   background-size: cover;
   position: relative;
