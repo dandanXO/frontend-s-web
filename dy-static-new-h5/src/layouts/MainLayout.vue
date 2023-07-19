@@ -142,11 +142,11 @@
         <q-route-tab to="/poker" name="poker">
           <img
               class="inactive"
-              src="../assets/images/index/menu/ft-livechat.svg"
+              src="../assets/images/index/menu/ft-poker.png"
           />
           <img
               class="hover"
-              src="../assets/images/index/menu/ft-livechat-active.svg"
+              src="../assets/images/index/menu/ft-poker-active.png"
           />
           棋牌
         </q-route-tab>
