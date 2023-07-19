@@ -7,6 +7,20 @@
         full-height
         full-width
     >
+
+<!--      <q-page-sticky id="sticky-item" position="bottom-right" style="z-index:999999;" :offset="fabPos"-->
+<!--                     v-touch-pan.prevent.mouse="moveFab"-->
+<!--      >-->
+<!--        <q-btn-->
+<!--            @click="closeDialog()"-->
+<!--            icon="close"-->
+<!--            direction="up"-->
+<!--            color="decent"-->
+<!--            class="bg-brightbtn close-btn"-->
+<!--            rounded-->
+<!--        >-->
+<!--        </q-btn>-->
+<!--      </q-page-sticky>-->
       <!-- <q-toolbar>
       <q-avatar>
         <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
@@ -20,33 +34,33 @@
     </q-toolbar> -->
       <q-toolbar
       >
-<!--        <div class="topActions">-->
-<!--          <q-toolbar-title></q-toolbar-title>-->
-<!--          <q-btn-->
-<!--              v-if="!drawerVisible"-->
-<!--              flat-->
-<!--              @click="closeDialog()"-->
-<!--              round-->
-<!--              dense-->
-<!--              icon="close"-->
-<!--          />-->
-<!--          <q-btn-->
-<!--              v-if="!drawerVisible"-->
-<!--              flat-->
-<!--              @click="drawerVisible = !drawerVisible"-->
-<!--              round-->
-<!--              dense-->
-<!--              icon="menu_open"-->
-<!--          />-->
-<!--          <q-btn-->
-<!--              v-if="drawerVisible"-->
-<!--              flat-->
-<!--              @click="drawerVisible = !drawerVisible"-->
-<!--              round-->
-<!--              dense-->
-<!--              icon="read_more"-->
-<!--          />-->
-<!--        </div>-->
+        <!--        <div class="topActions">-->
+        <!--          <q-toolbar-title></q-toolbar-title>-->
+        <!--          <q-btn-->
+        <!--              v-if="!drawerVisible"-->
+        <!--              flat-->
+        <!--              @click="closeDialog()"-->
+        <!--              round-->
+        <!--              dense-->
+        <!--              icon="close"-->
+        <!--          />-->
+        <!--          <q-btn-->
+        <!--              v-if="!drawerVisible"-->
+        <!--              flat-->
+        <!--              @click="drawerVisible = !drawerVisible"-->
+        <!--              round-->
+        <!--              dense-->
+        <!--              icon="menu_open"-->
+        <!--          />-->
+        <!--          <q-btn-->
+        <!--              v-if="drawerVisible"-->
+        <!--              flat-->
+        <!--              @click="drawerVisible = !drawerVisible"-->
+        <!--              round-->
+        <!--              dense-->
+        <!--              icon="read_more"-->
+        <!--          />-->
+        <!--        </div>-->
 
         <iframe
             @load="loadGame()"
@@ -57,64 +71,64 @@
             frameborder="0"
             class="game-iframe"
         ></iframe>
-<!--        <q-drawer-->
-<!--            v-model="drawerVisible"-->
-<!--            :breakpoint="500"-->
-<!--            overlay-->
-<!--            bordered-->
-<!--            class="bg-primary"-->
-<!--            side="right"-->
-<!--        >-->
-<!--          <div class="q-pa-sm q-pt-sm">-->
-<!--            <div>-->
-<!--              &lt;!&ndash; Uncomment for quick Transfer &ndash;&gt;-->
-<!--              &lt;!&ndash; <q-btn-group push>-->
-<!--                <q-btn-->
-<!--                  size="sm"-->
-<!--                  :color="quickTransferTab ? 'white' : 'primary'"-->
-<!--                  glossy-->
-<!--                  :text-color="quickTransferTab ? 'black' : 'white'"-->
-<!--                  push-->
-<!--                  label="Quick Transfer"-->
-<!--                  icon="multiple_stop"-->
-<!--                  @click="quickTransferTab = true"-->
-<!--                />-->
+        <!--        <q-drawer-->
+        <!--            v-model="drawerVisible"-->
+        <!--            :breakpoint="500"-->
+        <!--            overlay-->
+        <!--            bordered-->
+        <!--            class="bg-primary"-->
+        <!--            side="right"-->
+        <!--        >-->
+        <!--          <div class="q-pa-sm q-pt-sm">-->
+        <!--            <div>-->
+        <!--              &lt;!&ndash; Uncomment for quick Transfer &ndash;&gt;-->
+        <!--              &lt;!&ndash; <q-btn-group push>-->
+        <!--                <q-btn-->
+        <!--                  size="sm"-->
+        <!--                  :color="quickTransferTab ? 'white' : 'primary'"-->
+        <!--                  glossy-->
+        <!--                  :text-color="quickTransferTab ? 'black' : 'white'"-->
+        <!--                  push-->
+        <!--                  label="Quick Transfer"-->
+        <!--                  icon="multiple_stop"-->
+        <!--                  @click="quickTransferTab = true"-->
+        <!--                />-->
 
-<!--                <q-btn-->
-<!--                  size="sm"-->
-<!--                  :color="!quickTransferTab ? 'white' : 'primary'"-->
-<!--                  glossy-->
-<!--                  :text-color="!quickTransferTab ? 'black' : 'white'"-->
-<!--                  push-->
-<!--                  label="Bank Transfer"-->
-<!--                  icon="account_balance"-->
-<!--                  @click="quickTransferTab = false"-->
-<!--                />-->
-<!--              </q-btn-group> &ndash;&gt;-->
+        <!--                <q-btn-->
+        <!--                  size="sm"-->
+        <!--                  :color="!quickTransferTab ? 'white' : 'primary'"-->
+        <!--                  glossy-->
+        <!--                  :text-color="!quickTransferTab ? 'black' : 'white'"-->
+        <!--                  push-->
+        <!--                  label="Bank Transfer"-->
+        <!--                  icon="account_balance"-->
+        <!--                  @click="quickTransferTab = false"-->
+        <!--                />-->
+        <!--              </q-btn-group> &ndash;&gt;-->
 
-<!--              &lt;!&ndash; <template v-if="quickTransferTab">-->
-<!--                <div class="numbers">-->
-<!--                  <div class="instruction">Transfer amount to platform</div>-->
+        <!--              &lt;!&ndash; <template v-if="quickTransferTab">-->
+        <!--                <div class="numbers">-->
+        <!--                  <div class="instruction">Transfer amount to platform</div>-->
 
-<!--                  <q-btn-->
-<!--                    class="full-width"-->
-<!--                    push-->
-<!--                    glossy-->
-<!--                    color="brand"-->
-<!--                    v-for="(val, valIndex) in values"-->
-<!--                    :key="valIndex"-->
-<!--                    @click="submitTransfer(val)"-->
-<!--                  >-->
-<!--                    {{ val }}-->
-<!--                  </q-btn>-->
-<!--                </div>-->
-<!--              </template> &ndash;&gt;-->
-<!--              <template v-if="!quickTransferTab">-->
-<!--                <DepositComponent/>-->
-<!--              </template>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </q-drawer>-->
+        <!--                  <q-btn-->
+        <!--                    class="full-width"-->
+        <!--                    push-->
+        <!--                    glossy-->
+        <!--                    color="brand"-->
+        <!--                    v-for="(val, valIndex) in values"-->
+        <!--                    :key="valIndex"-->
+        <!--                    @click="submitTransfer(val)"-->
+        <!--                  >-->
+        <!--                    {{ val }}-->
+        <!--                  </q-btn>-->
+        <!--                </div>-->
+        <!--              </template> &ndash;&gt;-->
+        <!--              <template v-if="!quickTransferTab">-->
+        <!--                <DepositComponent/>-->
+        <!--              </template>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </q-drawer>-->
       </q-toolbar>
     </q-dialog>
     <q-dialog
@@ -122,20 +136,8 @@
         class="gameDialog"
         style="width: 100%; margin: 0 auto"
     >
-<!--      <img src="../../assets/logo-coming.png" style="width: 80%;"/>-->
+      <!--      <img src="../../assets/logo-coming.png" style="width: 80%;"/>-->
     </q-dialog>
-
-    <q-page-sticky position="bottom-right" :offset="fabPos">
-      <q-fab
-          @click="closeDialog()"
-          icon="replay"
-          direction="up"
-          color="bright"
-          style="z-index:999;"
-          v-touch-pan.prevent.mouse="moveFab"
-      >
-      </q-fab>
-    </q-page-sticky>
 
 
   </q-scroll-area>
@@ -170,15 +172,15 @@ const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
 
-const fabPos = ref([ 18, 18 ])
+const fabPos = ref([18, 18])
 const draggingFab = ref(false);
 
 const moveFab = (ev) => {
   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
 
   fabPos.value = [
-    fabPos.value[ 0 ] - ev.delta.x,
-    fabPos.value[ 1 ] - ev.delta.y
+    fabPos.value[0] - ev.delta.x,
+    fabPos.value[1] - ev.delta.y
   ]
 }
 
@@ -263,7 +265,7 @@ const submitTransfer = (amount) => {
       });
 };
 const closeDialog = () => {
-  visible.value = !visible.value
+  visible.value = false;
   src.value = ""
   // AppFullscreen.exit()
 }
@@ -493,6 +495,10 @@ defineExpose({
 <style lang="scss">
 .gameDialog {
   background: #23263cbc;
+}
+
+.close-btn {
+  height: 56px;
 }
 
 #iphone-tips-close-button {
