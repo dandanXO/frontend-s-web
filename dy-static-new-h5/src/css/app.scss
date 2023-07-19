@@ -168,6 +168,23 @@ svg {
   }
 }
 
+.q-carousel.account {
+  height: 30vw;
+  max-height: 130px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+
+  .q-panel > div {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+  }
+
+  .q-carousel__navigation--bottom {
+    bottom: 30px;
+  }
+}
+
 .q-card {
   margin: 10px;
   border-radius: 10px;
