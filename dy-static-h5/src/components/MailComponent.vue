@@ -6,10 +6,10 @@
       </q-inner-loading>
       <div v-if="!loading">
         <q-infinite-scroll @load="onLoad" :offset="150">
-            <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" :class="{active: isSelectedMail === det.title }" style="" @click="selectMail(det)">
+            <q-card  v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm mail-card" :class="{active: isSelectedMail === det.title }" style="" @click="selectMail(det)">
                     <div style="display:flex; justify-content: space-between; align-items: center">
-                    <div>
-                    <q-icon name="mail" />
+                    <div class="mail-title">
+<!--                    <q-icon color="blue" name="mail" />-->
                     {{ det.title }}
                     </div>
                     <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0" />
@@ -101,12 +101,16 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
+.q-infinite-scroll{
+  padding-top: 14px;
+
+}
 .table-data {
     font-size: 16px;
     display: flex;
     justify-content: flex-start;
     gap: 30px;
-    margin: 0 0 10px;
+    margin: 12px  0 10px;
     .label {
         flex: 1;
     }
@@ -118,9 +122,31 @@ export default defineComponent({
 .buttons {
     text-align: right;
 }
-.mailcontents {
+
+
+.mail-card{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-top: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+  box-shadow: none;
+  border-radius: 0px;
+
+  .mail-title{
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .mailcontents {
     height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    font-size: 16px;
+    color: #333;
+  }
 }
+
 </style>

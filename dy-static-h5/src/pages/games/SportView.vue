@@ -28,7 +28,7 @@
   position: relative;
   height: 800px;
   padding-top: 100px;
-  background-image: url("../../assets/images/games/sport/sport_bg.png");
+  //background-image: url("../../assets/images/games/sport/sport_bg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   .sport-txt-wrapper {

@@ -2,84 +2,88 @@
   <div class="change-pwd">
     <q-form @submit="submitUpdatePwd">
       <q-input
-        ref="oldPasswordRef"
-        standout
-        bg-color="white"
-        v-model="updatePwdInfo.oldPassword"
-        class="q-pb-xs"
-        hide-bottom-space
-        :type="isPwd ? 'password' : 'text'"
-        label="旧密码"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
+          ref="oldPasswordRef"
+          standout
+          bg-color="white"
+          v-model="updatePwdInfo.oldPassword"
+          class="q-pb-xs"
+          hide-bottom-space
+          :type="isPwd ? 'password' : 'text'"
+          placeholder="请输入旧密码"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
       >
         <template v-slot:append>
-          <q-icon
-            color="brand"
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
-          />
+<!--          <q-icon-->
+<!--              color="brand"-->
+<!--              :name="isPwd ? 'visibility_off' : 'visibility'"-->
+<!--              class="cursor-pointer"-->
+<!--              @click="isPwd = !isPwd"-->
+<!--          />-->
+          <img v-if="!isPwd" @click="isPwd = !isPwd" src="../../assets/login/eye-line.png" style="margin-right:3px;" width="20"/>
+          <img v-if="isPwd" @click="isPwd = !isPwd" src="../../assets/login/eye-close-line.png" style="margin-right:3px;" width="20"/>
+
         </template>
       </q-input>
       <q-input
-        ref="passwordRef"
-        standout
-        bg-color="white"
-        v-model="updatePwdInfo.password"
-        class="q-pb-xs"
-        hide-bottom-space
-        :type="isPwd ? 'password' : 'text'"
-        label="新密码"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
-        label-color="brand"
-        color="brand"
+          ref="passwordRef"
+          standout
+          bg-color="white"
+          v-model="updatePwdInfo.password"
+          class="q-pb-xs"
+          hide-bottom-space
+          :type="isPwd2 ? 'password' : 'text'"
+          placeholder="请输入新密码"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
+          label-color="brand"
+          color="brand"
       >
         <template v-slot:append>
-          <q-icon
-            color="brand"
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
-          />
+          <img v-if="!isPwd2" @click="isPwd2 = !isPwd2" src="../../assets/login/eye-line.png" style="margin-right:3px;" width="20"/>
+          <img v-if="isPwd2" @click="isPwd2 = !isPwd2" src="../../assets/login/eye-close-line.png" style="margin-right:3px;" width="20"/>
+
+          <!--          <q-icon-->
+<!--              color="brand"-->
+<!--              :name="isPwd ? 'visibility_off' : 'visibility'"-->
+<!--              class="cursor-pointer"-->
+<!--              @click="isPwd = !isPwd"-->
+<!--          />-->
         </template>
       </q-input>
       <q-input
-        ref="confirmPasswordRef"
-        standout
-        bg-color="white"
-        v-model="updatePwdInfo.confirmNewPwd"
-        class="q-pb-xs"
-        hide-bottom-space
-        :type="isPwd ? 'password' : 'text'"
-        label="确认新密码"
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || '请输入确认新密码',
+          ref="confirmPasswordRef"
+          standout
+          bg-color="white"
+          v-model="updatePwdInfo.confirmNewPwd"
+          class="q-pb-xs"
+          hide-bottom-space
+          :type="isPwd3 ? 'password' : 'text'"
+          placeholder="请再次输入新密码"
+          lazy-rules
+          :rules="[
+          (val) => (val && val.length > 0) || '请再次输入新密码',
           (val) =>
                   val === updatePwdInfo.password ||
                  '确认密码与新密码不符合' ,
           ]"
-        label-color="brand"
-        color="brand"
+          label-color="brand"
+          color="brand"
       >
         <template v-slot:append>
-          <q-icon
-            color="brand"
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
-          />
+          <img v-if="!isPwd3" @click="isPwd3 = !isPwd3" src="../../assets/login/eye-line.png" style="margin-right:3px;" width="20"/>
+          <img v-if="isPwd3" @click="isPwd3 = !isPwd3" src="../../assets/login/eye-close-line.png" style="margin-right:3px;" width="20"/>
+
+
         </template>
       </q-input>
       <q-btn
-        type="submit"
-        class="q-mt-md"
-        label="修改密码"
-        width="100%"
-        color="dyblue"
-        style="width: 100%"
+          type="submit"
+          class="q-mt-md submit-btn"
+          label="修改密码"
+          width="100%"
+          color="dyblue"
+          style="width: 100%"
       />
     </q-form>
   </div>
@@ -99,6 +103,8 @@ export default defineComponent({
   setup() {
     // const isCardActive = ref();
     const isPwd = ref(true);
+    const isPwd2= ref(true);
+    const isPwd3= ref(true);
     const $q = useQuasar();
     const router = useRouter();
     const qs = require("qs");
@@ -169,7 +175,9 @@ export default defineComponent({
       oldPasswordRef,
       passwordRef,
       confirmPasswordRef,
-      isPwd
+      isPwd,
+      isPwd2,
+      isPwd3
     };
   }
 });
@@ -180,6 +188,18 @@ export default defineComponent({
 
   input.q-placeholder {
     color: #333333 !important;
+  }
+
+  .q-input{
+    border: 1px solid #E4E7ED;
+    margin-bottom: 10px;
+  }
+
+  .submit-btn {
+    height: 45px;
+    font-size: 16px;
+    border-radius: 8px;
+    background: linear-gradient(180deg,#52ACFF ,#3559Da);
   }
 }
 </style>

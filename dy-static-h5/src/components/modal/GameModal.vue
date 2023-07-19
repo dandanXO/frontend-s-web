@@ -7,20 +7,10 @@
         full-height
         full-width
     >
-      <!-- <q-toolbar>
-      <q-avatar>
-        <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
-      </q-avatar>
 
-      <q-toolbar-title
-        ><span class="text-weight-bold">Quasar</span> Framework</q-toolbar-title
-      >
-
-      <q-btn flat round dense icon="close" v-close-popup />
-    </q-toolbar> -->
       <q-toolbar
       >
-        <div class="topActions">
+        <div v-if="showHeader" class="topActions">
           <q-toolbar-title></q-toolbar-title>
           <q-btn
               v-if="!drawerVisible"
@@ -29,22 +19,30 @@
               round
               dense
               icon="close"
+              style="width:24px;height:24px;min-height:24px;min-width:24px;"
           />
-          <q-btn
-              v-if="!drawerVisible"
-              flat
-              @click="drawerVisible = !drawerVisible"
-              round
-              dense
-              icon="menu_open"
-          />
-          <q-btn
-              v-if="drawerVisible"
-              flat
-              @click="drawerVisible = !drawerVisible"
-              round
-              dense
-              icon="read_more"
+          <!--                  <q-btn-->
+          <!--                      v-if="!drawerVisible"-->
+          <!--                      flat-->
+          <!--                      @click="drawerVisible = !drawerVisible"-->
+          <!--                      round-->
+          <!--                      dense-->
+          <!--                      icon="menu_open"-->
+          <!--                  />-->
+          <!--                  <q-btn-->
+          <!--                      v-if="drawerVisible"-->
+          <!--                      flat-->
+          <!--                      @click="drawerVisible = !drawerVisible"-->
+          <!--                      round-->
+          <!--                      dense-->
+          <!--                      icon="read_more"-->
+          <!--                  />-->
+        </div>
+
+        <div v-if="!src" class="loading-div">
+          <q-spinner-hourglass
+              color="blue-6"
+              size="8em"
           />
         </div>
 
@@ -56,65 +54,66 @@
             scrolling="no"
             frameborder="0"
             class="game-iframe"
+            :class="(showHeader) ?  'game-header-iframe' : ''"
         ></iframe>
-        <q-drawer
-            v-model="drawerVisible"
-            :breakpoint="500"
-            overlay
-            bordered
-            class="bg-white"
-            side="right"
-        >
-          <div class="q-pa-sm q-pt-sm">
-            <div>
-              <!-- Uncomment for quick Transfer -->
-              <!-- <q-btn-group push>
-                <q-btn
-                  size="sm"
-                  :color="quickTransferTab ? 'white' : 'primary'"
-                  glossy
-                  :text-color="quickTransferTab ? 'black' : 'white'"
-                  push
-                  label="Quick Transfer"
-                  icon="multiple_stop"
-                  @click="quickTransferTab = true"
-                />
+        <!--        <q-drawer-->
+        <!--            v-model="drawerVisible"-->
+        <!--            :breakpoint="500"-->
+        <!--            overlay-->
+        <!--            bordered-->
+        <!--            class="bg-white"-->
+        <!--            side="right"-->
+        <!--        >-->
+        <!--          <div class="q-pa-sm q-pt-sm">-->
+        <!--            <div>-->
+        <!--              &lt;!&ndash; Uncomment for quick Transfer &ndash;&gt;-->
+        <!--              &lt;!&ndash; <q-btn-group push>-->
+        <!--                <q-btn-->
+        <!--                  size="sm"-->
+        <!--                  :color="quickTransferTab ? 'white' : 'primary'"-->
+        <!--                  glossy-->
+        <!--                  :text-color="quickTransferTab ? 'black' : 'white'"-->
+        <!--                  push-->
+        <!--                  label="Quick Transfer"-->
+        <!--                  icon="multiple_stop"-->
+        <!--                  @click="quickTransferTab = true"-->
+        <!--                />-->
 
-                <q-btn
-                  size="sm"
-                  :color="!quickTransferTab ? 'white' : 'primary'"
-                  glossy
-                  :text-color="!quickTransferTab ? 'black' : 'white'"
-                  push
-                  label="Bank Transfer"
-                  icon="account_balance"
-                  @click="quickTransferTab = false"
-                />
-              </q-btn-group> -->
+        <!--                <q-btn-->
+        <!--                  size="sm"-->
+        <!--                  :color="!quickTransferTab ? 'white' : 'primary'"-->
+        <!--                  glossy-->
+        <!--                  :text-color="!quickTransferTab ? 'black' : 'white'"-->
+        <!--                  push-->
+        <!--                  label="Bank Transfer"-->
+        <!--                  icon="account_balance"-->
+        <!--                  @click="quickTransferTab = false"-->
+        <!--                />-->
+        <!--              </q-btn-group> &ndash;&gt;-->
 
-              <!-- <template v-if="quickTransferTab">
-                <div class="numbers">
-                  <div class="instruction">Transfer amount to platform</div>
+        <!--              &lt;!&ndash; <template v-if="quickTransferTab">-->
+        <!--                <div class="numbers">-->
+        <!--                  <div class="instruction">Transfer amount to platform</div>-->
 
-                  <q-btn
-                    class="full-width"
-                    push
-                    glossy
-                    color="brand"
-                    v-for="(val, valIndex) in values"
-                    :key="valIndex"
-                    @click="submitTransfer(val)"
-                  >
-                    {{ val }}
-                  </q-btn>
-                </div>
-              </template> -->
-              <template v-if="!quickTransferTab">
-                <DepositComponent/>
-              </template>
-            </div>
-          </div>
-        </q-drawer>
+        <!--                  <q-btn-->
+        <!--                    class="full-width"-->
+        <!--                    push-->
+        <!--                    glossy-->
+        <!--                    color="brand"-->
+        <!--                    v-for="(val, valIndex) in values"-->
+        <!--                    :key="valIndex"-->
+        <!--                    @click="submitTransfer(val)"-->
+        <!--                  >-->
+        <!--                    {{ val }}-->
+        <!--                  </q-btn>-->
+        <!--                </div>-->
+        <!--              </template> &ndash;&gt;-->
+        <!--              <template v-if="!quickTransferTab">-->
+        <!--                <DepositComponent/>-->
+        <!--              </template>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </q-drawer>-->
       </q-toolbar>
     </q-dialog>
     <q-dialog
@@ -122,9 +121,11 @@
         class="gameDialog"
         style="width: 100%; margin: 0 auto"
     >
-      <img src="../../assets/logo-coming.png" style="width: 80%;"/>
+      <!--      <img src="../../assets/logo-coming.png" style="width: 80%;"/>-->
     </q-dialog>
   </q-scroll-area>
+
+
 </template>
 <script setup id="GameModal">
 import {userStore} from "stores/index";
@@ -156,10 +157,27 @@ const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
 
+const fabPos = ref([0, 0])
+const draggingFab = ref(false);
+
+const moveFab = (ev) => {
+  console.log("Move Fab");
+  console.log(ev);
+
+  draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
+
+  fabPos.value = [
+    fabPos.value[0] - ev.delta.x,
+    fabPos.value[1] - ev.delta.y
+  ]
+}
+
+
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
 const hasPrivilege = ref(false);
 const quickTransferTab = ref(false);
+
 
 const checkAmount = reactive({
   flag: true,
@@ -200,6 +218,7 @@ const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
+const showHeader = ref(true);
 
 const transferInfo = ref({
   amount: null,
@@ -237,154 +256,253 @@ const submitTransfer = (amount) => {
       });
 };
 const closeDialog = () => {
-  visible.value = !visible.value
+  visible.value = false;
   src.value = ""
   AppFullscreen.exit()
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
-  //
-  // AppFullscreen.request()
+      //
+      AppFullscreen.request()
 
-  localStorage.removeItem("isOpenFromAccount");
-  localStorage.removeItem("isBacked");
-  // window.addEventListener(
-  //   "message",
-  //   (event) => {
-  //     console.log("Action");
-  //     console.log(event.data);
-  //     if (event.data?.msg) {
-  //       if (event.data.msg === "closemodal") {
-  //         drawerVisible.value= false;
-  //       }
-  //     }
-  //   });
+      localStorage.removeItem("isOpenFromAccount");
+      localStorage.removeItem("isBacked");
+      // window.addEventListener(
+      //   "message",
+      //   (event) => {
+      //     console.log("Action");
+      //     console.log(event.data);
+      //     if (event.data?.msg) {
+      //       if (event.data.msg === "closemodal") {
+      //         drawerVisible.value= false;
+      //       }
+      //     }
+      //   });
 
-  //     var gameIfrm = document.getElementById('game-iframe');
-  //     gameIfrm.requestFullscreen();
-  // // const iframeRef = ref(null);
-  // var myScreenOrientation = window.screen.orientation;
-  // console.log(myScreenOrientation)
-  // myScreenOrientation.unlock()
-  // myScreenOrientation.lock("portrait");
-  // console.log(myScreenOrientation)
-  // iframe.find('HTML-Element').touchwipe({
-  // wipeLeft: function() { alert("left"); },
-  // wipeRight: function() { alert("right"); },
-  // wipeUp: function() { alert("up"); },
-  // wipeDown: function() { alert("down"); },
-  // min_move_x: 20,
-  // min_move_y: 20,
-  // preventDefaultEvents: true });
-  // transferInfo.value = {
-  //   platform: platformCode
-  // };
+      //     var gameIfrm = document.getElementById('game-iframe');
+      //     gameIfrm.requestFullscreen();
+      // // const iframeRef = ref(null);
+      // var myScreenOrientation = window.screen.orientation;
+      // console.log(myScreenOrientation)
+      // myScreenOrientation.unlock()
+      // myScreenOrientation.lock("portrait");
+      // console.log(myScreenOrientation)
+      // iframe.find('HTML-Element').touchwipe({
+      // wipeLeft: function() { alert("left"); },
+      // wipeRight: function() { alert("right"); },
+      // wipeUp: function() { alert("up"); },
+      // wipeDown: function() { alert("down"); },
+      // min_move_x: 20,
+      // min_move_y: 20,
+      // preventDefaultEvents: true });
+      // transferInfo.value = {
+      //   platform: platformCode
+      // };
 
 // Get the iframe
-  const iFrame = document.getElementById('game-iframe');
+      const iFrame = document.getElementById('game-iframe');
 
-// Let's say that you want to access a button with the ID `'myButton'`,
-// you can access via the followi ng code:
-// const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-// buttonInIFrame.style.visible = visible;
-//   console.log(iframe)
-  title.value = gameName;
-  const store = userStore();
-  if (store.memberType !== "TEST" && gameType === "TEST") {
-    visibleComingSoon.value = true;
-  } else {
-    if (store.hasToken()) {
-      // visible.value = true;
-      var way = null
-      if ("standalone" in window.navigator && window.navigator.standalone) {
-        way = "IOS";
+
+      title.value = gameName;
+      const store = userStore();
+      if (store.memberType !== "TEST" && gameType === "TEST") {
+        visibleComingSoon.value = true;
       } else {
-        way = Platform.is.mobile ? "H5" : "WEB";
-        if (Platform.is.capacitor) {
-          if (Platform.is.android) {
-            way = "ANDROID";
+        if (store.hasToken()) {
+          // visible.value = true;
+          var way = null
+          if ("standalone" in window.navigator && window.navigator.standalone) {
+            way = "IOS";
+          } else {
+            way = Platform.is.mobile ? "H5" : "WEB";
+            if (Platform.is.capacitor) {
+              if (Platform.is.android) {
+                way = "ANDROID";
+              }
+            }
           }
-        }
-      }
 
-      if (store.isMobileSafari()) {
-        const newWin = window.open(`/`, `_blank`);
-        if (platformCode === 'platformType') {
-          api
-              .get(`/session/launch?_time=${new Date().getTime()}`, {
-                params: {
-                  platform: gameCode,
-                  isMobile: Platform.is.mobile ? true : false,
-                  way: way
-                }
-              })
-              .then((response) => {
-                newWin.location.href = response.data;
+          $q.loading.show({message: "加载中..."});
+
+          if (store.isMobileSafari()) {
+            // const newWin = window.open(`/loading`, `_blank`);
+            if (platformCode === 'platformType') {
+              api
+                  .get(`/session/launch?_time=${new Date().getTime()}`, {
+                    params: {
+                      platform: gameCode,
+                      isMobile: Platform.is.mobile ? true : false,
+                      way: way
+                    }
+                  })
+                  .then((response) => {
+                    $q.loading.hide();
+                    src.value = response.data;
+                    visible.value = true;
+                    // newWin.location.href = response.data;
+                  });
+              return;
+            }
+
+            api
+                .get(`/session/launch?_time=${new Date().getTime()}`, {
+                  params: {
+                    platform: platformCode,
+                    gameCode: gameCode,
+                    isMobile: Platform.is.mobile ? true : false,
+                    way: way
+                  }
+                })
+                .then((response) => {
+                  $q.loading.hide();
+                  src.value = response.data;
+                  visible.value = true;
+                  // newWin.location.href = response.data;
+                });
+            return;
+          } else if (way === "ANDROID") {
+            showHeader.value = false;
+            if (platformCode === 'platformType') {
+              api
+                  .get(`/session/launch?_time=${new Date().getTime()}`, {
+                    params: {
+                      platform: gameCode,
+                      isMobile: Platform.is.mobile ? true : false,
+                      way: way
+                    }
+                  })
+                  .then((response) => {
+                    $q.loading.hide();
+                    src.value = response.data;
+                    visible.value = true;
+                  }).catch((err) => {
+                $q.loading.hide();
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: err.message,
+                  icon: "report_problem"
+                });
               });
-          return;
+              return;
+            }
+            api
+                .get(`/session/launch?_time=${new Date().getTime()}`, {
+                  params: {
+                    platform: platformCode,
+                    gameCode: gameCode,
+                    isMobile: Platform.is.mobile ? true : false,
+                    way: way
+                  }
+                })
+                .then((response) => {
+                  $q.loading.hide();
+                  src.value = response.data;
+                  visible.value = true;
+                }).catch((err) => {
+              $q.loading.hide();
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: err.message,
+                icon: "report_problem"
+              });
+            })
+
+          } else {
+
+            if (platformCode === 'platformType') {
+              api
+                  .get(`/session/launch?_time=${new Date().getTime()}`, {
+                    params: {
+                      platform: gameCode,
+                      isMobile: Platform.is.mobile ? true : false,
+                      way: way
+                    }
+                  })
+                  .then((response) => {
+                    $q.loading.hide();
+                    src.value = response.data;
+                    visible.value = true;
+                  });
+              return
+            }
+            api
+                .get(`/session/launch?_time=${new Date().getTime()}`, {
+                  params: {
+                    platform: platformCode,
+                    gameCode: gameCode,
+                    isMobile: Platform.is.mobile ? true : false,
+                    way: way
+                  }
+                })
+                .then((response) => {
+                  $q.loading.hide();
+                  src.value = response.data;
+                  visible.value = true;
+                }).catch((err) => {
+              $q.loading.hide();
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: err.message,
+                icon: "report_problem"
+              });
+            });
+          }
+
+          // else {
+          //
+          //   if (platformCode === 'platformType') {
+          //     api
+          //         .get(`/session/launch?_time=${new Date().getTime()}`, {
+          //           params: {
+          //             platform: gameCode,
+          //             isMobile: Platform.is.mobile ? true : false,
+          //             way: way
+          //           }
+          //         })
+          //         .then((response) => {
+          //           $q.loading.hide();
+          //           if (way === 'IOS') {
+          //             const newWin = window.open(`/`, `_self`);
+          //             newWin.location.href = response.data
+          //           } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+          //             const newWin = window.open(`/`, `_blank`);
+          //             newWin.location.href = response.data
+          //           } else {
+          //             openURL(response.data)
+          //           }
+          //         });
+          //     return
+          //   }
+          //   api
+          //       .get(`/session/launch?_time=${new Date().getTime()}`, {
+          //         params: {
+          //           platform: platformCode,
+          //           gameCode: gameCode,
+          //           isMobile: Platform.is.mobile ? true : false,
+          //           way: way
+          //         }
+          //       })
+          //       .then((response) => {
+          //         $q.loading.hide();
+          //         if (way === 'IOS') {
+          //           const newWin = window.open(`/`, `_self`);
+          //           newWin.location.href = response.data
+          //         } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+          //           const newWin = window.open(`/`, `_blank`);
+          //           newWin.location.href = response.data
+          //         } else {
+          //           openURL(response.data)
+          //         }
+          //       });
+          // }
+        } else {
+          router.push({path: "/login", query: {redirect: route.path}});
         }
-
-        api
-            .get(`/session/launch?_time=${new Date().getTime()}`, {
-              params: {
-                platform: platformCode,
-                gameCode: gameCode,
-                isMobile: Platform.is.mobile ? true : false,
-                way: way
-              }
-            })
-            .then((response) => {
-              newWin.location.href = response.data;
-            });
-        return;
       }
-
-      if (platformCode === 'platformType') {
-        api
-            .get(`/session/launch?_time=${new Date().getTime()}`, {
-              params: {
-                platform: gameCode,
-                isMobile: Platform.is.mobile ? true : false,
-                way: way
-              }
-            })
-            .then((response) => {
-              if (way === 'IOS') {
-                const newWin = window.open(`/`, `_self`);
-                newWin.location.href = response.data
-              } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-                const newWin = window.open(`/`, `_blank`);
-                newWin.location.href = response.data
-              } else {
-                openURL(response.data)
-              }
-            });
-        return
-      }
-      api
-          .get(`/session/launch?_time=${new Date().getTime()}`, {
-            params: {
-              platform: platformCode,
-              gameCode: gameCode,
-              isMobile: Platform.is.mobile ? true : false,
-              way: way
-            }
-          })
-          .then((response) => {
-            if (way === 'IOS') {
-              const newWin = window.open(`/`, `_self`);
-              newWin.location.href = response.data
-            } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-              const newWin = window.open(`/`, `_blank`);
-              newWin.location.href = response.data
-            } else {
-              openURL(response.data)
-            }
-          });
-    } else {
-      router.push({path: "/login", query: {redirect: route.path}});
     }
-  }
-};
+;
 
 const loadGame = () => {
   if (src.value !== "") {
@@ -405,7 +523,12 @@ defineExpose({
 </script>
 <style lang="scss">
 .gameDialog {
-  background: #23263cbc;
+  background: #23263c;
+}
+
+.close-btn {
+  height: 40px;
+  width: 40px;
 }
 
 #iphone-tips-close-button {
@@ -627,28 +750,26 @@ defineExpose({
 
   .topActions {
     display: flex;
-
     justify-content: flex-end;
     width: 100%;
+    height: 26px;
   }
 }
 
 .game-iframe {
-  width: 100%;
-  height: calc(100% - 35px);
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 1;
+  top: 0px;
+  bottom: 0px;
+
+  &.game-header-iframe {
+    height: calc(100vh - 26px);
+    top: 26px;
+  }
 }
 
-// .game-iframe {
-//     width: 100%;
-//     height: 100%;
-//     width: 100%;
-//     // position: absolute;
-//     // top: 40px;
-//     left: 0;
-//     right: 0;
-//     margin: auto;
-//     z-index: 999;
-// }
 
 .mobileshow {
   display: none;
@@ -760,12 +881,6 @@ defineExpose({
   }
 }
 
-.game-iframe {
-  position: fixed;
-  width: 100vw;
-  z-index: 1;
-  top: 35px;
-}
 
 .q-toolbar .topActions {
   position: fixed;

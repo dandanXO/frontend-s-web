@@ -1,3 +1,4 @@
+<!-- NOT USING -->
 <template>
   <div class="table-record">
     <RecordComponent :loading="visible" :list="tableData" :headers="tableHeaders"/>

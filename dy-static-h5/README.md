@@ -1,4 +1,4 @@
-# 东瀛 H5 App (dy-static-h5)
+# 新东赢 H5 App (dy-static-h5-new)
 
 APP
 
@@ -39,44 +39,19 @@ quasar build
 
 
 
-### Build The App in Android.
+### Build Android APK App.
 ```bash
-1. build
 quasar build -m capacitor -T android
-
-2. go to folder: src-capacitor
 cd src-capacitor
+npx cap sync 
+npx cap update android
 
-3. sync Android
-npx cap sync
 
-4(a). Build and Run on Android device. (Plug your Android device, Enable Developer Option, Enable USB Debugging.)
-adb devices  ##(Optional.)
-npx cap run android -l
-
-4(b). Build on Android Studio/ Build .apk
-npx cap open android
-
+npx cap open android     (OR)
+npx cap run android -l   
 ```
 
-### Change Android Version Name
 
-1. open src-capacitor/android/app/build.gradle
-2. Edit Version No:
-  -     versionCode 7 >> '+ 1'
-        versionName "1.0"
-3. Rebuild Apk.
+### Customize the configuration
+See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
 
-
-### Build Release Version .apk
-1. Open Android Studio.
-2. Select Build -> Generate Signed Bundle/Apk -> Select APK.
-3. Select keystore file .jks
-4. Input Alias & Both Passwords
-5. Build release .apk.
-
-
-### Build iOS WebClip.
-1. goto https://ivi.cx/
-2. Insert all inputs. (Logo/Name/URL/Description/Install File Name)
-3. Submit & Download file .mobileconfig
