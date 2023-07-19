@@ -83,6 +83,19 @@
             <router-link to="/dy/login" class="signlog">已经有帐号?请登录</router-link>
           </div>
           <div v-if="step === 2">
+            <el-form-item prop="realName">
+              <el-input
+                ref="realNameRef"
+                v-model="loginForm.realName"
+                :placeholder="'真实姓名'"
+                name="Real Name"
+                type="text"
+                tabindex="4"
+                autocomplete="on"
+              >
+                <template #prepend><i><img src="../../../assets/images/dy/icon_name.png"></i></template>
+              </el-input>
+            </el-form-item>
             <el-form-item prop="telephone">
               <el-input
                 ref="telephoneRef"
@@ -109,7 +122,7 @@
                 <template #prepend><i><img src="../../../assets/images/dy/icon_mail.png"></i></template>
               </el-input>
             </el-form-item>
-            <el-form-item prop="birthday">
+            <!-- <el-form-item prop="birthday">
               <el-date-picker
                 v-model="loginForm.birthday"
                 type="date"
@@ -119,7 +132,7 @@
                 popper-class="custom-date-picker"
                 :disabled-date="disabledDate"
               />
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item prop="captchaCode">
               <el-input
                 ref="verificationRef"
@@ -136,8 +149,8 @@
                 <template #prepend><i style="padding: 0 10px" class="el-icon-s-check" /></template>
               </el-input>
             </el-form-item>
-            <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
-              <!-- <el-input v-if="hasAffiliate"
+            <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+              <el-input v-if="hasAffiliate"
                         ref="codeAffiliateRef"
                         v-model="loginForm.codeAffiliate"
                         :placeholder="'代理码'"
@@ -146,7 +159,7 @@
                         tabindex="8"
                         autocomplete="on"
                         :disabled="true"
-              /> -->
+              />
               <el-input
                 ref="codeAffiliateRef"
                 v-model="loginForm.codeAffiliate"
@@ -156,7 +169,7 @@
                 tabindex="8"
                 autocomplete="on"
               />
-            </el-form-item>
+            </el-form-item> -->
             <el-button
               class="common-btn"
               :loading="loading"
@@ -199,6 +212,20 @@ export default defineComponent({
       } else {
         return Promise.resolve();
       }
+    };
+    const validateRealName = async (r, v) => {
+      if (v === "") {
+        return Promise.reject(new Error("请输入姓名"));
+      } else if (!checkRealName(v)) {
+        return Promise.reject(new Error("请输入中文字符"));
+      } else {
+        return Promise.resolve();
+      }
+    };
+    const checkRealName = (v) => {
+      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
+      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+      return v.match(chineseCharOnly);
     };
     const getCode = () => {
       getVerificationCode()
@@ -272,6 +299,12 @@ export default defineComponent({
           // },
           {
             validator: validatePass2,
+            trigger: "blur",
+          },
+        ],
+        realName: [
+          {
+            validator: validateRealName,
             trigger: "blur",
           },
         ],
@@ -561,6 +594,9 @@ export default defineComponent({
       font-family: trending;
       font-size: 36px;
       text-transform: uppercase;
+      img {
+        width: 100%;
+      }
       &.sub {
         font-size: 30px;
         font-weight: normal;
@@ -585,12 +621,12 @@ export default defineComponent({
     }
     .affiliate-login {
       width: 95%;
-      max-width: 480px;
+      max-width: 430px;
       margin: 30px;
       // background-color: #15141b;
       // border-radius: 10px;
       // border: solid 1px #24222e;
-      padding: 10px 50px;
+      padding: 10px 10px;
       .el-form-item {
         margin-bottom: 30px;
       }

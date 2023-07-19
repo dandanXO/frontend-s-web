@@ -318,7 +318,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       $q.loading.show({message: "加载中..."});
 
       if (store.isMobileSafari()) {
-        const newWin = window.open(`/`, `_blank`);
+        const newWin = window.open(`/loading`, `_blank`);
         if (platformCode === 'platformType') {
           api
               .get(`/session/launch?_time=${new Date().getTime()}`, {
