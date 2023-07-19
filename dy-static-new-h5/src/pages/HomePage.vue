@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div id="id-sticky-header"
-         :class="(isShowDownload==false) ? 'sticky-header' : ''"
+         :class="(!isH5 || isShowDownload==false) ? 'sticky-header' : ''"
     >
       <div v-if="isH5 && isShowDownload" class="download-top-container">
         <div class="download-top-box">
@@ -138,7 +138,7 @@
     </div>
 
     <div class="home-all-slider"
-         :class="(isShowDownload) ? '' : 'padding-normal'"
+         :class="(isShowDownload && isH5) ? '' : 'padding-normal'"
          v-scroll="onHomeScroll">
 
       <div class="home-top-slider">

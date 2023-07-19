@@ -148,25 +148,25 @@
           <div class="vip-get-div row justify-between items-center q-mt-sm">
 
             <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
-              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png"/>
               <span>晋级礼包</span>
             </div>
             <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
 
-              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
               <span>生日礼金</span>
             </div>
             <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
 
-              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
               <span>每月活动</span>
             </div>
             <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel===0" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
-              <img v-if="vipLevel!==0" src="../assets/account/vip-tick-icon.png"/>
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
               <span>专属活动</span>
             </div>
           </div>

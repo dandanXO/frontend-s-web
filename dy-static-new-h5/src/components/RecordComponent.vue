@@ -114,9 +114,9 @@
                         <q-btn
                             @click="openWithdrawConfirmDialog(det)"
                             round
-                            size="xs"
+                            size="md"
                             class="btn-deposit bg-greyblue"
-                            icon="request_quote"
+                            icon="check_circle"
                         />
                       </template>
                       <template
@@ -130,10 +130,10 @@
                             disable
                             outline
                             round
-                            size="xs"
+                            size="md"
                             class="btn-deposit"
                             color="positive"
-                            icon="request_quote"
+                            icon="check_circle"
                         />
                       </template>
                     </div>
@@ -558,6 +558,6 @@ export default defineComponent({
 
 .btn-deposit {
   background: #0089ED10 !important;
-
+  width:24px;
 }
 </style>
