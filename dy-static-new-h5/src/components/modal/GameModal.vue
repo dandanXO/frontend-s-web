@@ -10,33 +10,33 @@
 
       <q-toolbar
       >
-        <!--        <div class="topActions">-->
-        <!--          <q-toolbar-title></q-toolbar-title>-->
-        <!--          <q-btn-->
-        <!--              v-if="!drawerVisible"-->
-        <!--              flat-->
-        <!--              @click="closeDialog()"-->
-        <!--              round-->
-        <!--              dense-->
-        <!--              icon="close"-->
-        <!--          />-->
-        <!--          <q-btn-->
-        <!--              v-if="!drawerVisible"-->
-        <!--              flat-->
-        <!--              @click="drawerVisible = !drawerVisible"-->
-        <!--              round-->
-        <!--              dense-->
-        <!--              icon="menu_open"-->
-        <!--          />-->
-        <!--          <q-btn-->
-        <!--              v-if="drawerVisible"-->
-        <!--              flat-->
-        <!--              @click="drawerVisible = !drawerVisible"-->
-        <!--              round-->
-        <!--              dense-->
-        <!--              icon="read_more"-->
-        <!--          />-->
-        <!--        </div>-->
+        <div v-if="showHeader" class="topActions">
+          <q-toolbar-title></q-toolbar-title>
+          <q-btn
+              v-if="!drawerVisible"
+              flat
+              @click="closeDialog()"
+              round
+              dense
+              icon="close"
+          />
+          <!--                  <q-btn-->
+          <!--                      v-if="!drawerVisible"-->
+          <!--                      flat-->
+          <!--                      @click="drawerVisible = !drawerVisible"-->
+          <!--                      round-->
+          <!--                      dense-->
+          <!--                      icon="menu_open"-->
+          <!--                  />-->
+          <!--                  <q-btn-->
+          <!--                      v-if="drawerVisible"-->
+          <!--                      flat-->
+          <!--                      @click="drawerVisible = !drawerVisible"-->
+          <!--                      round-->
+          <!--                      dense-->
+          <!--                      icon="read_more"-->
+          <!--                  />-->
+        </div>
 
         <iframe
             @load="loadGame()"
@@ -46,6 +46,7 @@
             scrolling="no"
             frameborder="0"
             class="game-iframe"
+            :class="(showHeader) ?  'game-header-iframe' : ''"
         ></iframe>
         <!--        <q-drawer-->
         <!--            v-model="drawerVisible"-->
@@ -209,6 +210,7 @@ const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
+const showHeader = ref(true);
 
 const transferInfo = ref({
   amount: null,
@@ -251,201 +253,244 @@ const closeDialog = () => {
   AppFullscreen.exit()
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
-  //
-  // AppFullscreen.request()
+      //
+      AppFullscreen.request()
 
-  localStorage.removeItem("isOpenFromAccount");
-  localStorage.removeItem("isBacked");
-  // window.addEventListener(
-  //   "message",
-  //   (event) => {
-  //     console.log("Action");
-  //     console.log(event.data);
-  //     if (event.data?.msg) {
-  //       if (event.data.msg === "closemodal") {
-  //         drawerVisible.value= false;
-  //       }
-  //     }
-  //   });
+      localStorage.removeItem("isOpenFromAccount");
+      localStorage.removeItem("isBacked");
+      // window.addEventListener(
+      //   "message",
+      //   (event) => {
+      //     console.log("Action");
+      //     console.log(event.data);
+      //     if (event.data?.msg) {
+      //       if (event.data.msg === "closemodal") {
+      //         drawerVisible.value= false;
+      //       }
+      //     }
+      //   });
 
-  //     var gameIfrm = document.getElementById('game-iframe');
-  //     gameIfrm.requestFullscreen();
-  // // const iframeRef = ref(null);
-  // var myScreenOrientation = window.screen.orientation;
-  // console.log(myScreenOrientation)
-  // myScreenOrientation.unlock()
-  // myScreenOrientation.lock("portrait");
-  // console.log(myScreenOrientation)
-  // iframe.find('HTML-Element').touchwipe({
-  // wipeLeft: function() { alert("left"); },
-  // wipeRight: function() { alert("right"); },
-  // wipeUp: function() { alert("up"); },
-  // wipeDown: function() { alert("down"); },
-  // min_move_x: 20,
-  // min_move_y: 20,
-  // preventDefaultEvents: true });
-  // transferInfo.value = {
-  //   platform: platformCode
-  // };
+      //     var gameIfrm = document.getElementById('game-iframe');
+      //     gameIfrm.requestFullscreen();
+      // // const iframeRef = ref(null);
+      // var myScreenOrientation = window.screen.orientation;
+      // console.log(myScreenOrientation)
+      // myScreenOrientation.unlock()
+      // myScreenOrientation.lock("portrait");
+      // console.log(myScreenOrientation)
+      // iframe.find('HTML-Element').touchwipe({
+      // wipeLeft: function() { alert("left"); },
+      // wipeRight: function() { alert("right"); },
+      // wipeUp: function() { alert("up"); },
+      // wipeDown: function() { alert("down"); },
+      // min_move_x: 20,
+      // min_move_y: 20,
+      // preventDefaultEvents: true });
+      // transferInfo.value = {
+      //   platform: platformCode
+      // };
 
 // Get the iframe
-  const iFrame = document.getElementById('game-iframe');
+      const iFrame = document.getElementById('game-iframe');
 
-// Let's say that you want to access a button with the ID `'myButton'`,
-// you can access via the followi ng code:
-// const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-// buttonInIFrame.style.visible = visible;
-//   console.log(iframe)
-  title.value = gameName;
-  const store = userStore();
-  if (store.memberType !== "TEST" && gameType === "TEST") {
-    visibleComingSoon.value = true;
-  } else {
-    if (store.hasToken()) {
-      // visible.value = true;
-      var way = null
-      if ("standalone" in window.navigator && window.navigator.standalone) {
-        way = "IOS";
+
+      title.value = gameName;
+      const store = userStore();
+      if (store.memberType !== "TEST" && gameType === "TEST") {
+        visibleComingSoon.value = true;
       } else {
-        way = Platform.is.mobile ? "H5" : "WEB";
-        if (Platform.is.capacitor) {
-          if (Platform.is.android) {
-            way = "ANDROID";
+        if (store.hasToken()) {
+          // visible.value = true;
+          var way = null
+          if ("standalone" in window.navigator && window.navigator.standalone) {
+            way = "IOS";
+          } else {
+            way = Platform.is.mobile ? "H5" : "WEB";
+            if (Platform.is.capacitor) {
+              if (Platform.is.android) {
+                way = "ANDROID";
+              }
+            }
           }
+
+          $q.loading.show({message: "加载中..."});
+
+          if (store.isMobileSafari()) {
+            const newWin = window.open(`/loading`, `_blank`);
+            if (platformCode === 'platformType') {
+              api
+                  .get(`/session/launch?_time=${new Date().getTime()}`, {
+                    params: {
+                      platform: gameCode,
+                      isMobile: Platform.is.mobile ? true : false,
+                      way: way
+                    }
+                  })
+                  .then((response) => {
+                    $q.loading.hide();
+                    newWin.location.href = response.data;
+                  });
+              return;
+            }
+
+            api
+                .get(`/session/launch?_time=${new Date().getTime()}`, {
+                  params: {
+                    platform: platformCode,
+                    gameCode: gameCode,
+                    isMobile: Platform.is.mobile ? true : false,
+                    way: way
+                  }
+                })
+                .then((response) => {
+                  $q.loading.hide();
+                  newWin.location.href = response.data;
+                });
+            return;
+          } else if (way === "ANDROID") {
+            showHeader.value = false;
+            if (platformCode === 'platformType') {
+              api
+                  .get(`/session/launch?_time=${new Date().getTime()}`, {
+                    params: {
+                      platform: gameCode,
+                      isMobile: Platform.is.mobile ? true : false,
+                      way: way
+                    }
+                  })
+                  .then((response) => {
+                    $q.loading.hide();
+                    src.value = response.data;
+                    visible.value = true;
+                  }).catch((err) => {
+                $q.loading.hide();
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: err.message,
+                  icon: "report_problem"
+                });
+              });
+              return;
+            }
+            api
+                .get(`/session/launch?_time=${new Date().getTime()}`, {
+                  params: {
+                    platform: platformCode,
+                    gameCode: gameCode,
+                    isMobile: Platform.is.mobile ? true : false,
+                    way: way
+                  }
+                })
+                .then((response) => {
+                  $q.loading.hide();
+                  src.value = response.data;
+                  visible.value = true;
+                }).catch((err) => {
+              $q.loading.hide();
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: err.message,
+                icon: "report_problem"
+              });
+            })
+
+          } else {
+
+            if (platformCode === 'platformType') {
+              api
+                  .get(`/session/launch?_time=${new Date().getTime()}`, {
+                    params: {
+                      platform: gameCode,
+                      isMobile: Platform.is.mobile ? true : false,
+                      way: way
+                    }
+                  })
+                  .then((response) => {
+                    $q.loading.hide();
+                    src.value = response.data;
+                    visible.value = true;
+                  });
+              return
+            }
+            api
+                .get(`/session/launch?_time=${new Date().getTime()}`, {
+                  params: {
+                    platform: platformCode,
+                    gameCode: gameCode,
+                    isMobile: Platform.is.mobile ? true : false,
+                    way: way
+                  }
+                })
+                .then((response) => {
+                  $q.loading.hide();
+                  src.value = response.data;
+                  visible.value = true;
+                }).catch((err) => {
+              $q.loading.hide();
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: err.message,
+                icon: "report_problem"
+              });
+            });
+          }
+
+          // else {
+          //
+          //   if (platformCode === 'platformType') {
+          //     api
+          //         .get(`/session/launch?_time=${new Date().getTime()}`, {
+          //           params: {
+          //             platform: gameCode,
+          //             isMobile: Platform.is.mobile ? true : false,
+          //             way: way
+          //           }
+          //         })
+          //         .then((response) => {
+          //           $q.loading.hide();
+          //           if (way === 'IOS') {
+          //             const newWin = window.open(`/`, `_self`);
+          //             newWin.location.href = response.data
+          //           } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+          //             const newWin = window.open(`/`, `_blank`);
+          //             newWin.location.href = response.data
+          //           } else {
+          //             openURL(response.data)
+          //           }
+          //         });
+          //     return
+          //   }
+          //   api
+          //       .get(`/session/launch?_time=${new Date().getTime()}`, {
+          //         params: {
+          //           platform: platformCode,
+          //           gameCode: gameCode,
+          //           isMobile: Platform.is.mobile ? true : false,
+          //           way: way
+          //         }
+          //       })
+          //       .then((response) => {
+          //         $q.loading.hide();
+          //         if (way === 'IOS') {
+          //           const newWin = window.open(`/`, `_self`);
+          //           newWin.location.href = response.data
+          //         } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
+          //           const newWin = window.open(`/`, `_blank`);
+          //           newWin.location.href = response.data
+          //         } else {
+          //           openURL(response.data)
+          //         }
+          //       });
+          // }
+        } else {
+          router.push({path: "/login", query: {redirect: route.path}});
         }
       }
-
-      $q.loading.show({message: "加载中..."});
-
-      if (store.isMobileSafari()) {
-        const newWin = window.open(`/loading`, `_blank`);
-        if (platformCode === 'platformType') {
-          api
-              .get(`/session/launch?_time=${new Date().getTime()}`, {
-                params: {
-                  platform: gameCode,
-                  isMobile: Platform.is.mobile ? true : false,
-                  way: way
-                }
-              })
-              .then((response) => {
-                $q.loading.hide();
-                newWin.location.href = response.data;
-              });
-          return;
-        }
-
-        api
-            .get(`/session/launch?_time=${new Date().getTime()}`, {
-              params: {
-                platform: platformCode,
-                gameCode: gameCode,
-                isMobile: Platform.is.mobile ? true : false,
-                way: way
-              }
-            })
-            .then((response) => {
-              $q.loading.hide();
-              newWin.location.href = response.data;
-            });
-        return;
-      } else if (way === "ANDROID") {
-
-        if (platformCode === 'platformType') {
-          api
-              .get(`/session/launch?_time=${new Date().getTime()}`, {
-                params: {
-                  platform: gameCode,
-                  isMobile: Platform.is.mobile ? true : false,
-                  way: way
-                }
-              })
-              .then((response) => {
-                src.value = response.data;
-                visible.value = true;
-              }).catch((err) => {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: err.message,
-              icon: "report_problem"
-            });
-          });
-          return;
-        }
-        api
-            .get(`/session/launch?_time=${new Date().getTime()}`, {
-              params: {
-                platform: platformCode,
-                gameCode: gameCode,
-                isMobile: Platform.is.mobile ? true : false,
-                way: way
-              }
-            })
-            .then((response) => {
-              src.value = response.data;
-              visible.value = true;
-            }).catch((err) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: err.message,
-            icon: "report_problem"
-          });
-        })
-
-      } else {
-
-        if (platformCode === 'platformType') {
-          api
-              .get(`/session/launch?_time=${new Date().getTime()}`, {
-                params: {
-                  platform: gameCode,
-                  isMobile: Platform.is.mobile ? true : false,
-                  way: way
-                }
-              })
-              .then((response) => {
-                $q.loading.hide();
-                if (way === 'IOS') {
-                  const newWin = window.open(`/`, `_self`);
-                  newWin.location.href = response.data
-                } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-                  const newWin = window.open(`/`, `_blank`);
-                  newWin.location.href = response.data
-                } else {
-                  openURL(response.data)
-                }
-              });
-          return
-        }
-        api
-            .get(`/session/launch?_time=${new Date().getTime()}`, {
-              params: {
-                platform: platformCode,
-                gameCode: gameCode,
-                isMobile: Platform.is.mobile ? true : false,
-                way: way
-              }
-            })
-            .then((response) => {
-              $q.loading.hide();
-              if (way === 'IOS') {
-                const newWin = window.open(`/`, `_self`);
-                newWin.location.href = response.data
-              } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-                const newWin = window.open(`/`, `_blank`);
-                newWin.location.href = response.data
-              } else {
-                openURL(response.data)
-              }
-            });
-      }
-    } else {
-      router.push({path: "/login", query: {redirect: route.path}});
     }
-  }
-};
+;
 
 const loadGame = () => {
   if (src.value !== "") {
@@ -466,7 +511,7 @@ defineExpose({
 </script>
 <style lang="scss">
 .gameDialog {
-  background: #23263cbc;
+  background: #23263c;
 }
 
 .close-btn {
@@ -700,21 +745,18 @@ defineExpose({
 }
 
 .game-iframe {
-  width: 100%;
   height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 1;
+  top: 0px;
+  bottom: 0px;
+
+  &.game-header-iframe {
+    top: 35px;
+  }
 }
 
-// .game-iframe {
-//     width: 100%;
-//     height: 100%;
-//     width: 100%;
-//     // position: absolute;
-//     // top: 40px;
-//     left: 0;
-//     right: 0;
-//     margin: auto;
-//     z-index: 999;
-// }
 
 .mobileshow {
   display: none;
@@ -826,13 +868,6 @@ defineExpose({
   }
 }
 
-.game-iframe {
-  position: fixed;
-  width: 100vw;
-  z-index: 1;
-  top: 0px;
-  bottom: 0px;
-}
 
 .q-toolbar .topActions {
   position: fixed;
