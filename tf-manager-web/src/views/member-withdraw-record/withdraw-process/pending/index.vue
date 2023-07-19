@@ -60,6 +60,7 @@
         type="primary"
         :disabled="uiControl.toApplyBtn"
         @click="toApply()"
+        @keydown.enter.prevent
       >
         {{ t('fields.toApplying') }}
       </el-button>
@@ -209,7 +210,7 @@
           fixed="right"
         >
           <template #default="scope">
-            <el-button size="mini" type="primary" @click="toApply(scope.row)">
+            <el-button size="mini" type="primary" @click="toApply(scope.row)" @keydown.enter.prevent>
               {{ t('fields.toApplying') }}
             </el-button>
           </template>

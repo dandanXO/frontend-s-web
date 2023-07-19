@@ -60,6 +60,7 @@
         type="primary"
         :disabled="uiControl.toApplyBtn"
         @click="toApply()"
+        @keydown.enter.prevent
       >
         {{ t('fields.toApplying') }}
       </el-button>
@@ -209,13 +210,13 @@
           fixed="right"
         >
           <template #default="scope">
-            <el-button size="mini" type="success" @click="success(scope.row)">
+            <el-button size="mini" type="success" @click="success(scope.row)" @keydown.enter.prevent>
               {{ t('fields.success') }}
             </el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="showDialog('FAIL', scope.row)"
+              @click="showDialog('FAIL', scope.row)" @keydown.enter.prevent
             >
               {{ t('fields.fail') }}
             </el-button>

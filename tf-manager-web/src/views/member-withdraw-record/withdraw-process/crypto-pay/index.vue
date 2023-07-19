@@ -60,6 +60,7 @@
         type="primary"
         :disabled="uiControl.toBeforePaidBtn"
         @click="toBeforePaid()"
+        @keydown.enter.prevent
       >
         {{ t('fields.toBePaid') }}
       </el-button>
@@ -213,6 +214,7 @@
               size="mini"
               type="primary"
               @click="showDialog('PAY', scope.row)"
+              @keydown.enter.prevent
             >
               {{ t('fields.pay') }}
             </el-button>
@@ -220,6 +222,7 @@
               size="mini"
               type="warning"
               @click="showDialog('AUTOPAY', scope.row)"
+              @keydown.enter.prevent
             >
               {{ t('fields.automaticPayment') }}
             </el-button>

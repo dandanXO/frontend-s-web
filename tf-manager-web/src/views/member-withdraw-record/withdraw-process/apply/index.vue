@@ -56,18 +56,22 @@
 
     <div class="btn-group">
       <el-button
+        ref="checkBtnRef"
         size="mini"
         type="primary"
         :disabled="uiControl.toCheckBtn"
         @click="toCheck()"
+        @keydown.enter.prevent
       >
         {{ t('fields.toUnderReview') }}
       </el-button>
       <el-button
+        ref="suspendBtnRef"
         size="mini"
         type="danger"
         :disabled="uiControl.toPendingBtn"
         @click="toPending()"
+        @keydown.enter.prevent
       >
         {{ t('fields.toSuspend') }}
       </el-button>
@@ -217,10 +221,10 @@
           fixed="right"
         >
           <template #default="scope">
-            <el-button size="mini" type="primary" @click="toCheck(scope.row)">
+            <el-button ref="checkBtnsRef" size="mini" type="primary" @click="toCheck(scope.row)" @keydown.enter.prevent>
               {{ t('fields.toUnderReview') }}
             </el-button>
-            <el-button size="mini" type="danger" @click="toPending(scope.row)">
+            <el-button ref="suspendBtnsRef" size="mini" type="danger" @click="toPending(scope.row)" @keydown.enter.prevent>
               {{ t('fields.toSuspend') }}
             </el-button>
           </template>
@@ -391,6 +395,10 @@ import { ElMessage } from 'element-plus'
 import { hasPermission } from '../../../../utils/util'
 import { useI18n } from "vue-i18n";
 
+const checkBtnRef = ref();
+const checkBtnsRef = ref();
+const suspendBtnRef = ref();
+const suspendBtnsRef = ref();
 const { t } = useI18n();
 const searchForm = ref(null)
 const vipList = reactive({
@@ -615,6 +623,8 @@ async function toCheck(memberWithdrawRecord) {
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToUnderReviewSuccess'), type: 'success' })
+  checkBtnRef.value.blur();
+  checkBtnsRef.value.blur();
 }
 
 async function toPending(memberWithdrawRecord) {
@@ -625,6 +635,8 @@ async function toPending(memberWithdrawRecord) {
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToSuspendSuccess'), type: 'success' })
+  suspendBtnRef.value.blur();
+  suspendBtnsRef.value.blur();
 }
 
 async function showDialog(type) {

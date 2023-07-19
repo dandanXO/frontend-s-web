@@ -60,6 +60,7 @@
         type="primary"
         :disabled="uiControl.toPayBtn"
         @click="toPay()"
+        @keydown.enter.prevent
       >
         {{ t('fields.toPaymentOnGoing') }}
       </el-button>
@@ -215,7 +216,7 @@
           fixed="right"
         >
           <template #default="scope">
-            <el-button size="mini" type="success" @click="toSuccess(scope.row)">
+            <el-button size="mini" type="success" @click="toSuccess(scope.row)" @keydown.enter.prevent>
               {{ t('fields.success') }}
             </el-button>
           </template>
