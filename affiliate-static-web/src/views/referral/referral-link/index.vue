@@ -74,11 +74,11 @@ async function loadAffiliateInfo() {
 
 async function loadReferralLink() {
   if (store.state.user.siteId === 1 || store.state.user.siteId === "1") {
-    link.value = "http://xf9866.com/agent/" + affInfo.affiliateCode;
-    appLink.value = "http://xf9866.com/app/agent/" + affInfo.affiliateCode;
+    link.value = "https://xf1869.com/agent/" + affInfo.affiliateCode;
+    appLink.value = "https://xf1869.com/app/agent/" + affInfo.affiliateCode;
   } else if (store.state.user.siteId === 2 || store.state.user.siteId === "2") {
-    link.value = "https://www.dy9367.com/agent/" + affInfo.affiliateCode;
-    appLink.value = "https://www.dy9367.com/app/agent/" + affInfo.affiliateCode;
+    link.value = "https://www.dy1698.com/agent/" + affInfo.affiliateCode;
+    appLink.value = "https://www.dy1698.com/app/agent/" + affInfo.affiliateCode;
   } else {
     link.value = "";
     appLink.value = "";
