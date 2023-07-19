@@ -121,7 +121,7 @@
                 <template #prepend><i><img src="../../../assets/images/xf/icon_mail.png"></i></template>
               </el-input>
             </el-form-item>
-            <el-form-item prop="birthday">
+            <!-- <el-form-item prop="birthday">
               <el-date-picker
                 v-model="loginForm.birthday"
                 type="date"
@@ -131,7 +131,7 @@
                 popper-class="custom-date-picker"
                 :disabled-date="disabledDate"
               />
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item prop="captchaCode">
               <el-input
                 ref="verificationRef"
@@ -148,8 +148,8 @@
                 <template #prepend><i style="padding: 0 10px" class="el-icon-s-check" /></template>
               </el-input>
             </el-form-item>
-            <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
-              <!-- <el-input v-if="hasAffiliate"
+            <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+              <el-input v-if="hasAffiliate"
                         ref="codeAffiliateRef"
                         v-model="loginForm.codeAffiliate"
                         :placeholder="'代理码'"
@@ -158,7 +158,7 @@
                         tabindex="8"
                         autocomplete="on"
                         :disabled="true"
-              /> -->
+              />
               <el-input
                 ref="codeAffiliateRef"
                 v-model="loginForm.codeAffiliate"
@@ -168,7 +168,7 @@
                 tabindex="8"
                 autocomplete="on"
               />
-            </el-form-item>
+            </el-form-item> -->
             <el-button
               class="common-btn"
               :loading="loading"
@@ -214,7 +214,7 @@ export default defineComponent({
     };
     const validateRealName = async (r, v) => {
       if (v === "") {
-        return Promise.reject(new Error("请输入登姓名"));
+        return Promise.reject(new Error("请输入姓名"));
       } else if (!checkRealName(v)) {
         return Promise.reject(new Error("请输入中文字符"));
       } else {
@@ -304,13 +304,6 @@ export default defineComponent({
           },
         ],
         realName: [
-          {
-            required: true,
-            min: 2,
-            max: 12,
-            message: "长度应为 2 至 12",
-            trigger: "blur",
-          },
           {
             validator: validateRealName,
             trigger: "blur",
