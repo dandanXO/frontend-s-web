@@ -102,15 +102,15 @@
             :mousewheel="true"
             :space-between="8"
             :breakpoints="{
-          200: {
+          350: {
             slidesPerView: 3,
             spaceBetween: 8
           },
-          300: {
+          380: {
             slidesPerView: 4,
             spaceBetween: 8
           },
-          360: {
+          400: {
             slidesPerView: 5,
             spaceBetween: 8
           },
