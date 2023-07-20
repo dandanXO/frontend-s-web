@@ -141,6 +141,11 @@
           <router-link class="forget-pwd-tip" to="/forgot-password">找回密码
           </router-link>
         </div>
+
+        <div class="text-center">
+          如需帮助，请
+          <router-link class="forget-pwd-tip q-ml-xs" id="cs-web-id" to="/liveChat">联系客服</router-link>
+        </div>
       </q-tab-panel>
 
       <q-tab-panel name="register">

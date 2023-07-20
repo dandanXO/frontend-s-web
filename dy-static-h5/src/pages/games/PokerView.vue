@@ -24,12 +24,13 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import { onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "stores/index";
 import {useQuasar, Platform, AppFullscreen} from "quasar";
 import {api} from "boot/axios";
 import {cached} from "boot/cache";
+import {isAndroid} from "boot/utils";
 
 const $q = useQuasar();
 const router = useRouter();
@@ -47,12 +48,15 @@ const closeDialog = () => {
   router.go(-1);
 }
 
+
 onMounted(() => {
 // && !store.isInitEsport
   if (store.hasToken()) {
     $q.loading.show({message: "正加载页面"});
 
-    window.screen.orientation.lock('portrait');
+    if(isAndroid()) {
+      window.screen.orientation.lock('portrait');
+    }
 
     const isMobile = Platform.is.mobile;
     var way = null;

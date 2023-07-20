@@ -918,6 +918,7 @@ SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
 import {translateRecord} from "src/directives/translate"
+import {isAndroid} from "boot/utils";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1640,7 +1641,10 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
-      window.screen.orientation.lock('portrait');
+      if(isAndroid()){
+        window.screen.orientation.lock('portrait');
+      }
+
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
