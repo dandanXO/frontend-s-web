@@ -1640,6 +1640,7 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
+      window.screen.orientation.lock('portrait');
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
