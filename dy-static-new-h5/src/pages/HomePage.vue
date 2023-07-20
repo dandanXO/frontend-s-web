@@ -875,7 +875,7 @@
 
   <q-dialog width="100%" v-model="isFirstView">
     <q-card
-        style="width: 70%; max-width: 340px; margin: 0 auto"
+        style="width: 70%; max-width: 290px; margin: 0 auto"
         class="bg-white text-black"
     >
       <q-card-section class="q-mb-md">
