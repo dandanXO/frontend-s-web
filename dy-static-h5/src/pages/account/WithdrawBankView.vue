@@ -480,7 +480,7 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
     const phoneVerificationRef = ref(null);
-    const refInnerCaptcha= ref();
+    const refInnerCaptcha = ref();
 
     const bankCardInfo = reactive({
       bankId: undefined,
@@ -734,7 +734,7 @@ export default defineComponent({
         });
         getInnerCode();
         return;
-      }else if (refInnerCaptcha.value?.hasError) {
+      } else if (refInnerCaptcha.value?.hasError) {
         $q.notify({
           color: "negative",
           position: "top",
@@ -876,7 +876,7 @@ export default defineComponent({
 }
 
 .withdrawBankView {
-  height: calc(100vh - 109px);
+  height: calc(100svh - 109px);
   display: flex;
   flex-direction: column;
 }
