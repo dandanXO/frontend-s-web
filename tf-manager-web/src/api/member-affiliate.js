@@ -57,8 +57,8 @@ export const updateAffiliatePassword = (id, password, site) => {
   return https().request(`/affiliate/${id}/password?_method=PUT`, Method.POST, { password: password, site: site }, ContentType.form);
 };
 
-export const updateAffiliateFinancial = (id, financialId) => {
-  return https().request(`/affiliate/${id}/financialId?_method=PUT`, Method.POST, { financialId: financialId }, ContentType.form);
+export const updateAffiliateFinancial = (id, financialId, site) => {
+  return https().request(`/affiliate/${id}/financialId?_method=PUT`, Method.POST, { financialId: financialId, site: site }, ContentType.form);
 };
 
 export const updateTimeType = (id, timeType) => {
