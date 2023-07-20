@@ -744,7 +744,7 @@ defineExpose({
 }
 
 .q-toolbar {
-  height: 100vh;
+  height: 100svh ;
   max-height: unset !important;
   max-width: unset !important;
   display: flex;
@@ -761,7 +761,7 @@ defineExpose({
 }
 
 .game-iframe {
-  height: 100vh;
+  height: 100svh ;
   position: fixed;
   width: 100vw;
   z-index: 1;
@@ -769,7 +769,7 @@ defineExpose({
   bottom: 0px;
 
   &.game-header-iframe {
-    height: calc(100vh - 26px);
+    height: calc(100svh - 26px);
     top: 26px;
   }
 }
@@ -894,20 +894,4 @@ defineExpose({
   z-index: 999;
 }
 
-// @media (orientation: portrait) {
-//   .game-iframe {
-//     top: 0;
-//       height: calc(100vh - 45px - env(safe-area-inset-top, 40px) - env(safe-area-inset-bottom, 59px) );
-//       // padding-bottom: env(safe-area-inset-bottom, 40px);
-//       padding-bottom: 45px;
-
-//   }
-// }
-// @media (orientation: landscape) {
-//   .game-iframe {
-//     top: 0;
-//       height: calc(100vh - env(safe-area-inset-left, 0) - env(safe-area-inset-right, 0) );
-//       // padding: env(safe-area-inset-top, 40px) env(safe-area-inset-right, 40px)  env(safe-area-inset-bottom, 40px)  env(safe-area-inset-left, 40px) ;
-//   }
-// }
 </style>
