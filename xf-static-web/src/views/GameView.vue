@@ -114,7 +114,7 @@
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
-import { getPlatformGames, getPlatformList, getLoggedInPlatformList, getLoggedInPlatformGames } from "@/api/platform/platform";
+import { getPlatformGames, getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
 import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
