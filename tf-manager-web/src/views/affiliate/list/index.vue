@@ -461,7 +461,8 @@ const freezeForm = reactive({
   id: null,
   freezeType: null,
   reason: null,
-  remark: null
+  remark: null,
+  site: null
 });
 
 const validatePassword = (rule, value, callback) => {
@@ -657,6 +658,7 @@ function showDialog(type, affiliate) {
       freezeMemberForm.value.resetFields();
     }
     freezeForm.id = affiliate.id;
+    freezeForm.site = request.siteId;
     freezeForm.freezeType = freezeType.list[0].value;
     freezeForm.reason = freezeReason.list[0].value;
     uiControl.dialogTitle = t('fields.disableAffiliate');

@@ -494,7 +494,7 @@
                     show-word-limit
           />
         </el-form-item>
-        <div class="dialog-footer">editRemark
+        <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="addRemark()">{{ t('fields.confirm') }}</el-button>
         </div>
@@ -678,7 +678,8 @@ const freezeForm = reactive({
   id: null,
   freezeType: null,
   reason: null,
-  remark: null
+  remark: null,
+  site: null
 });
 
 const financialForm = reactive({
@@ -768,12 +769,10 @@ async function loadFinancialLevels() {
 }
 
 async function loadReferralLink() {
-  if (memberDetail.siteId === 5) {
-    link.value = "https://www.funbet8.com/agent/" + affiliateDetails.affiliateCode;
-  } else if (memberDetail.siteId === 8) {
-    link.value = "https://ph.jolly88.com/agent/" + affiliateDetails.affiliateCode;
-  } else if (memberDetail.siteId === 9) {
-    link.value = "https://www.jolly8858.com/agent/" + affiliateDetails.affiliateCode;
+  if (memberDetail.siteId === '1') {
+    link.value = "http://xf9866.com/agent/" + affiliateDetails.affiliateCode;
+  } else if (memberDetail.siteId === '2') {
+    link.value = "https://www.dy9367.com/agent/" + affiliateDetails.affiliateCode;
   } else {
     link.value = "";
   }
@@ -790,6 +789,7 @@ function showDialog(type) {
     if (freezeMemberForm.value) {
       freezeMemberForm.value.resetFields();
     }
+    freezeForm.site = site.id;
     freezeForm.freezeType = freezeType.list[0].value;
     freezeForm.reason = freezeReason.list[0].value;
     uiControl.dialogTitle = t('fields.disableAffiliate');
@@ -853,7 +853,7 @@ function freeze() {
   freezeMemberForm.value.validate(async (valid) => {
     if (valid) {
       await disableAffiliate(props.affId, freezeForm);
-      const data = await getAffiliateDetails(props.affId);
+      const data = await getAffiliateDetails(props.affId, site.id);
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField];
       });
@@ -891,8 +891,8 @@ function updateField(type) {
   if (type === "FINANCIAL") {
     updateFinancialForm.value.validate(async (valid) => {
       if (valid) {
-        await updateAffiliateFinancial(props.affId, financialForm.financial);
-        const data = await getAffiliateDetails(props.affId);
+        await updateAffiliateFinancial(props.affId, financialForm.financial, site.id);
+        const data = await getAffiliateDetails(props.affId, site.id);
         Object.keys({ ...data.data }).forEach(detailField => {
           memberDetail[detailField] = data.data[detailField];
         });
@@ -1013,15 +1013,15 @@ function restrictCommissionDecimalInput(event) {
 
 async function unmaskDetail(type) {
   if (type === 'NAME') {
-    const { data: name } = await getMemberRealName(props.affId);
+    const { data: name } = await getMemberRealName(props.affId, site.id);
     unmaskedValue.value = name;
     uiControl.dialogTitle = t('fields.realName');
   } else if (type === 'EMAIL') {
-    const { data: email } = await getMemberEmail(props.affId);
+    const { data: email } = await getMemberEmail(props.affId, site.id);
     unmaskedValue.value = email;
     uiControl.dialogTitle = t('fields.email');
   } else if (type === 'TELEPHONE') {
-    const { data: telephone } = await getMemberTelephone(props.affId);
+    const { data: telephone } = await getMemberTelephone(props.affId, site.id);
     unmaskedValue.value = telephone;
     uiControl.dialogTitle = t('fields.telephone');
   }
