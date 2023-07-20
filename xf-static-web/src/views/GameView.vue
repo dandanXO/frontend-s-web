@@ -158,7 +158,11 @@ export default defineComponent({
 			getPlatformList().then((data) => {
 				platforms.value = data.filter(element => element.gameType.includes("SLOT"));
 				if (!route.query.plat) {
-				switchPlat(platforms.value[0]);
+          const firstPlatform = platforms.value.find((pl) => pl.code !== 'AG');
+
+          if (firstPlatform) {
+            switchPlat(firstPlatform);
+          }
 				} else {
 				platforms.value.forEach(element => {
 					if (route.query.plat === element.code) {
@@ -177,7 +181,11 @@ export default defineComponent({
 			getLoggedInPlatformList().then((data) => {
 				platforms.value = data.filter(element => element.gameType.includes("SLOT"));
 				if (!route.query.plat) {
-				switchPlat(platforms.value[0]);
+          const firstPlatform = platforms.value.find((pl) => pl.code !== 'AG');
+
+          if (firstPlatform) {
+            switchPlat(firstPlatform);
+          }
 				} else {
 				platforms.value.forEach(element => {
 					if (route.query.plat === element.code) {
