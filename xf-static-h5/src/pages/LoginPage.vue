@@ -144,7 +144,7 @@
 
         <div class="text-center">
           如需帮助，请
-          <router-link class="forget-pwd-tip q-ml-xs" id="cs-web-id" to="/liveChat">联系客服</router-link>
+          <router-link class="forget-pwd-tip q-ml-xs cs-web-id" id="cs-web-id" to="/liveChat">联系客服</router-link>
         </div>
       </q-tab-panel>
 
