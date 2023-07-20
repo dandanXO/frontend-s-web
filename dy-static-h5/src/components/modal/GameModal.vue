@@ -260,18 +260,23 @@ const closeDialog = () => {
   visible.value = false;
   src.value = ""
   AppFullscreen.exit()
-  if(isAndroid()) {
+  if (isAndroid()) {
     window.screen.orientation.lock('portrait');
   }
-  const query = { ...route.query }
+  const query = {...route.query}
   delete query.inGame
-  router.replace({ query })
+  router.replace({query})
+
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
-      //
-      router.push({query: { ...route.query, inGame: true}});
+
+      // setTimeout(()=>{
+      router.push({query: {...route.query, inGame: true}});
+      // },1500)
+
+
       AppFullscreen.request();
-      if(isAndroid()){
+      if (isAndroid()) {
         window.screen.orientation.unlock();
       }
 
@@ -335,12 +340,70 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           $q.loading.show({message: "加载中..."});
 
           if (store.isMobileSafari()) {
-            // const newWin = window.open(`/loading`, `_blank`);
-            if (platformCode === 'platformType') {
+            // alert(gameName + "-" + gameCode + "-" + gameType + "-" + platformCode);
+
+            if (gameName === 'SGWin' || (gameName === 'BBIN' && gameCode === 'bbkeno_lobby_app') || gameName === 'IM' || (gameName === 'AG') || (platformCode === 'PTDY')) {
+              const newWin = window.open(`/loading`, `_blank`);
+              if (platformCode === 'platformType') {
+                api
+                    .get(`/session/launch?_time=${new Date().getTime()}`, {
+                      params: {
+                        platform: gameCode,
+                        isMobile: Platform.is.mobile ? true : false,
+                        way: way
+                      }
+                    })
+                    .then((response) => {
+                      $q.loading.hide();
+                      // src.value = response.data;
+                      // visible.value = true;
+                      newWin.location.href = response.data;
+                    });
+                return;
+              }
+
               api
                   .get(`/session/launch?_time=${new Date().getTime()}`, {
                     params: {
-                      platform: gameCode,
+                      platform: platformCode,
+                      gameCode: gameCode,
+                      isMobile: Platform.is.mobile ? true : false,
+                      way: way
+                    }
+                  })
+                  .then((response) => {
+                    $q.loading.hide();
+                    // src.value = response.data;
+                    // visible.value = true;
+                    newWin.location.href = response.data;
+                  });
+              return;
+
+            } else {
+
+              if (platformCode === 'platformType') {
+                api
+                    .get(`/session/launch?_time=${new Date().getTime()}`, {
+                      params: {
+                        platform: gameCode,
+                        isMobile: Platform.is.mobile ? true : false,
+                        way: way
+                      }
+                    })
+                    .then((response) => {
+                      $q.loading.hide();
+                      src.value = response.data;
+                      visible.value = true;
+                      // newWin.location.href = response.data;
+                    });
+                return;
+              }
+
+              api
+                  .get(`/session/launch?_time=${new Date().getTime()}`, {
+                    params: {
+                      platform: platformCode,
+                      gameCode: gameCode,
                       isMobile: Platform.is.mobile ? true : false,
                       way: way
                     }
@@ -352,24 +415,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                     // newWin.location.href = response.data;
                   });
               return;
+
             }
 
-            api
-                .get(`/session/launch?_time=${new Date().getTime()}`, {
-                  params: {
-                    platform: platformCode,
-                    gameCode: gameCode,
-                    isMobile: Platform.is.mobile ? true : false,
-                    way: way
-                  }
-                })
-                .then((response) => {
-                  $q.loading.hide();
-                  src.value = response.data;
-                  visible.value = true;
-                  // newWin.location.href = response.data;
-                });
-            return;
           } else if (way === "ANDROID") {
             showHeader.value = false;
             if (platformCode === 'platformType') {
@@ -461,53 +509,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             });
           }
 
-          // else {
-          //
-          //   if (platformCode === 'platformType') {
-          //     api
-          //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-          //           params: {
-          //             platform: gameCode,
-          //             isMobile: Platform.is.mobile ? true : false,
-          //             way: way
-          //           }
-          //         })
-          //         .then((response) => {
-          //           $q.loading.hide();
-          //           if (way === 'IOS') {
-          //             const newWin = window.open(`/`, `_self`);
-          //             newWin.location.href = response.data
-          //           } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-          //             const newWin = window.open(`/`, `_blank`);
-          //             newWin.location.href = response.data
-          //           } else {
-          //             openURL(response.data)
-          //           }
-          //         });
-          //     return
-          //   }
-          //   api
-          //       .get(`/session/launch?_time=${new Date().getTime()}`, {
-          //         params: {
-          //           platform: platformCode,
-          //           gameCode: gameCode,
-          //           isMobile: Platform.is.mobile ? true : false,
-          //           way: way
-          //         }
-          //       })
-          //       .then((response) => {
-          //         $q.loading.hide();
-          //         if (way === 'IOS') {
-          //           const newWin = window.open(`/`, `_self`);
-          //           newWin.location.href = response.data
-          //         } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-          //           const newWin = window.open(`/`, `_blank`);
-          //           newWin.location.href = response.data
-          //         } else {
-          //           openURL(response.data)
-          //         }
-          //       });
-          // }
+
         } else {
           router.push({path: "/login", query: {redirect: route.path}});
         }
@@ -751,7 +753,7 @@ defineExpose({
 }
 
 .q-toolbar {
-  height: 100svh ;
+  height: 100svh;
   max-height: unset !important;
   max-width: unset !important;
   display: flex;
@@ -768,7 +770,7 @@ defineExpose({
 }
 
 .game-iframe {
-  height: 100svh ;
+  height: 100svh;
   position: fixed;
   width: 100vw;
   z-index: 1;
