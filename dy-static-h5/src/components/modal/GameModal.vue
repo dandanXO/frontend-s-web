@@ -342,7 +342,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           if (store.isMobileSafari()) {
             // alert(gameName + "-" + gameCode + "-" + gameType + "-" + platformCode);
 
-            if (gameName === 'SGWin' || (gameName === 'BBIN' && gameCode === 'bbkeno_lobby_app') || gameName === 'IM' || (gameName === 'AG') || (platformCode === 'PTDY')) {
+            if (gameName === 'SGWin' || (gameName === 'BBIN' && gameCode === 'bbkeno_lobby_app') || gameName === 'IM' ||
+                (platformCode === 'AG' && gameCode != undefined) || (platformCode === 'PTDY')) {
               const newWin = window.open(`/loading`, `_blank`);
               if (platformCode === 'platformType') {
                 api
