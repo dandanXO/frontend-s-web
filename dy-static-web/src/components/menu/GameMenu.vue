@@ -72,11 +72,15 @@ export default defineComponent({
       }
     };
     const filteredNavigations = computed(() => {
-      return navigations.filter((nav) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === nav.code
-        )
-      );
+      const sortedNavigations = navigations
+        .filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code))
+        .sort((a, b) => {
+          const indexA = platformsListDisplay.value.findIndex((platform) => platform.code === a.code);
+          const indexB = platformsListDisplay.value.findIndex((platform) => platform.code === b.code);
+          return indexA - indexB;
+        });
+
+      return sortedNavigations;
     });
 
     onMounted(() => {
