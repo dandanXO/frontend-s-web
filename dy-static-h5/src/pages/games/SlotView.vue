@@ -378,7 +378,7 @@ export default defineComponent({
 
 
     onBeforeUnmount(() => {
-      if(isAndroid()){
+      if(Platform.is.capacitor){
         window.screen.orientation.lock('portrait');
       }
 
@@ -388,7 +388,7 @@ export default defineComponent({
     onMounted(() => {
       // getCategoryList();
       getPlatList();
-      if(isAndroid()) {
+      if(Platform.is.capacitor) {
         window.screen.orientation.unlock();
       }
     });

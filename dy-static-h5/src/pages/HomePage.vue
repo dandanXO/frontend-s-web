@@ -1641,7 +1641,7 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
-      if(isAndroid()){
+      if(Platform.is.capacitor){
         window.screen.orientation.lock('portrait');
       }
 
