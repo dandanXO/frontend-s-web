@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,22 +8,24 @@
     <link rel="stylesheet" type="text/css" href="./style/css/ba.css?v=3">
     <link rel="stylesheet" type="text/css" href="./style/css/download.css?v=3">
 
-    <link rel="stylesheet" type="text/css" href="./style/css/swiper-3.4.1.min.css?v=3" />
-    <script type="text/javascript" src="./style/js/jquery-3.2.1.min.js?v=5" ></script>
+    <link rel="stylesheet" type="text/css" href="./style/css/swiper-3.4.1.min.css?v=3"/>
+    <script type="text/javascript" src="./style/js/jquery-3.2.1.min.js?v=5"></script>
     <script type="text/javascript" src="./style/js/swiper-3.4.1.min.js?v=5"></script>
-	<script type="text/javascript" src="./style/js/download.js?v=6"></script>
-	<script type="text/javascript" src="./style/js/clipboard.min.js?v=5"></script>
-	<script type="text/javascript" src="https://kcx3zdl.ycylbj.com/xw-website.txt"></script>
+    <script type="text/javascript" src="./style/js/download.js?v=6"></script>
+    <script type="text/javascript" src="./style/js/clipboard.min.js?v=5"></script>
+    <script type="text/javascript" src="https://kcx3zdl.ycylbj.com/xw-website.txt"></script>
     <style type="text/css">
-        html,body {
+        html, body {
             height: 100%;
-            width:100%
+            width: 100%
         }
-        .download{
-        	background: url(./style/images/web/bg.png) top center no-repeat;
-        	background-size: 7.5rem 13.34rem;
+
+        .download {
+            background: url(./style/images/web/bg.png) top center no-repeat;
+            background-size: 7.5rem 13.34rem;
         }
-        .weixin_tip{
+
+        .weixin_tip {
             /* background: linear-gradient( to right bottom,#077CCE,#01E9FF);
             padding: 30px 30px; */
             color: white;
@@ -33,22 +34,26 @@
             text-align: center;
             line-height: 20px;
         }
-        .under-line{
+
+        .under-line {
             margin: 10px 0 30px 0;
         }
-        .under-line:before{
+
+        .under-line:before {
             content: "";
             background: #53B9E8;
             height: 1px;
             display: block;
         }
-        .tip-list{
+
+        .tip-list {
             display: block;
             text-align: left;
             margin: 10px 0;
             padding-left: 40px;
         }
-        .tip-list i{
+
+        .tip-list i {
             border-radius: 50%;
             background: #02476C;
             color: white;
@@ -94,102 +99,105 @@
     </div> -->
 </div>
 <script>
-    var andList=[
-        {imgurl:'./style/images/web/android/01.png'},
-        {imgurl:'./style/images/web/android/02.png'},
-        {imgurl:'./style/images/web/android/03.png'},
-        {imgurl:'./style/images/web/android/04.png'},
-        {imgurl:'./style/images/web/android/05.png'}
+    var andList = [
+        {imgurl: './style/images/web/android/01.png'},
+        {imgurl: './style/images/web/android/02.png'},
+        {imgurl: './style/images/web/android/03.png'},
+        {imgurl: './style/images/web/android/04.png'},
+        {imgurl: './style/images/web/android/05.png'}
     ];
-    var iosList=[
-        {imgurl:'./style/images/web/ios/01.png'},
-        {imgurl:'./style/images/web/ios/02.png'},
-        {imgurl:'./style/images/web/ios/03.png'},
-        {imgurl:'./style/images/web/ios/04.png'},
-        {imgurl:'./style/images/web/ios/05.png'},
-        {imgurl:'./style/images/web/ios/06.png'}
+    var iosList = [
+        {imgurl: './style/images/web/ios/ios1.png'},
+        {imgurl: './style/images/web/ios/ios2.png'},
+        {imgurl: './style/images/web/ios/ios3.png'},
+        {imgurl: './style/images/web/ios/ios4.png'},
+        {imgurl: './style/images/web/ios/ios5.png'},
+        {imgurl: './style/images/web/ios/ios6.png'}
     ];
-    $(function(){
+    $(function () {
         function is_weixin() {
             var ua = navigator.userAgent.toLowerCase();
-            if (ua.match(/MicroMessenger/i) == "micromessenger"){
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
                 return true;
             } else {
                 return false;
             }
         }
+
         var isWeixin = is_weixin();
-        if(isWeixin){
+        if (isWeixin) {
             $(".weixin_tip").show();
-            if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-                $("#tips").attr("src","/style/images/wxtips_ios.png");
-            }else if (/(Android)/i.test(navigator.userAgent)){
-                $("#tips").attr("src","/style/images/wxtips_android.png");
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                $("#tips").attr("src", "/style/images/wxtips_ios.png");
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                $("#tips").attr("src", "/style/images/wxtips_android.png");
             }
-        }else{
+        } else {
             $(".download").show();
-            if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
                 // alert('若要安装，请先打开设置-通用-设备管理-东赢体育');
                 showIOS();
-            }else if (/(Android)/i.test(navigator.userAgent)){
+            } else if (/(Android)/i.test(navigator.userAgent)) {
                 showAndroid();
-            }else {
+            } else {
                 //window.location.href="downloadty_com.html";
                 showAndroid();
-            };
-			 var host = window.location.host;
-			var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
-			$('#download').attr('data-clipboard-text', "FGH"+JSON.stringify(vv));
-			new ClipboardJS('.install');
-			 $("#download").click(function() {
-            	var url = $(this).attr("href");
-            	var type = "ALL_AND";
-            	if(url.indexOf(".plist") != -1){
-            		type = "ALL_IOS";
-            	}
+            }
+            ;
+            var host = window.location.host;
+            var vv = {agentCode: getQueryString("agentCode"), regFrom: getQueryString("url"), downloadUrl: host};
+            $('#download').attr('data-clipboard-text', "FGH" + JSON.stringify(vv));
+            new ClipboardJS('.install');
+            $("#download").click(function () {
+                var url = $(this).attr("href");
+                var type = "ALL_AND";
+                if (url.indexOf(".plist") != -1) {
+                    type = "ALL_IOS";
+                }
 
-            	postDownloadExtra(type, host);
+                postDownloadExtra(type, host);
             });
-        };
+        }
+        ;
     });
-    function showAndroid(){
-        for(var i=0;i<andList.length;i++){
-            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="'+andList[i].imgurl+'" alt=""/></div>')
-        };
-        $('#download').attr('href','./dy_app.apk');
-    }
-	function showIOS(){
-    	for(var i=0;i<iosList.length;i++){
-				$(".swiper-wrapper").append('<div class="swiper-slide"><img src="'+iosList[i].imgurl+'" alt=""/></div>')
-			};
-			$('#download').attr('href','./dy.mobileconfig');
-    }
-    var mySwiper = new Swiper('.swiper-container',{
-        effect : 'slide',
-        pagination : '.swiper-pagination',
-        initialSlide :0,
-        observer:true,
-        observeParents:true
-    });
-	function getIosPath()
-		{
-		try
-		{
-			if(getIsPath())
-			{
-				var path=getTestFlightIosPath();
-				$('#download').attr('href',path);
-			}
-			else
-			{
-				showIOS();
-			}
-		}catch(err)
-		{
-			showIOS();
-		}
 
-	};
+    function showAndroid() {
+        for (var i = 0; i < andList.length; i++) {
+            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + andList[i].imgurl + '" alt=""/></div>')
+        }
+        ;
+        $('#download').attr('href', './dy_app.apk');
+    }
+
+    function showIOS() {
+        for (var i = 0; i < iosList.length; i++) {
+            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + iosList[i].imgurl + '" alt=""/></div>')
+        }
+        ;
+        $('#download').attr('href', './dy.mobileconfig');
+    }
+
+    var mySwiper = new Swiper('.swiper-container', {
+        effect: 'slide',
+        pagination: '.swiper-pagination',
+        initialSlide: 0,
+        observer: true,
+        observeParents: true
+    });
+
+    function getIosPath() {
+        try {
+            if (getIsPath()) {
+                var path = getTestFlightIosPath();
+                $('#download').attr('href', path);
+            } else {
+                showIOS();
+            }
+        } catch (err) {
+            showIOS();
+        }
+
+    };
 
 </script>
 
