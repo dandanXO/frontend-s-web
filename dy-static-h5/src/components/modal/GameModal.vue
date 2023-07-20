@@ -257,9 +257,10 @@ const submitTransfer = (amount) => {
       });
 };
 const closeDialog = () => {
+  console.log("Close Dialog");
   visible.value = false;
   src.value = ""
-  if (Platform.is.capacitor) {
+  if (isAndroid()) {
     AppFullscreen.exit()
     window.screen.orientation.lock('portrait');
   }
@@ -271,9 +272,7 @@ const closeDialog = () => {
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
 
-      setTimeout(() => {
-        router.push({query: {...route.query, inGame: true}});
-      }, 1000)
+      router.push({query: {...route.query, inGame: true}});
 
       localStorage.removeItem("isOpenFromAccount");
       localStorage.removeItem("isBacked");
@@ -287,7 +286,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         visibleComingSoon.value = true;
       } else {
         if (store.hasToken()) {
-          if (Platform.is.capacitor) {
+          if (isAndroid()) {
             AppFullscreen.request();
             window.screen.orientation.unlock();
           }

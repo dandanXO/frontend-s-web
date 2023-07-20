@@ -111,7 +111,7 @@ export default defineComponent({
       checkSID();
       // initCsWeb();
       getCSA();
-      if (Platform.is.capacitor) {
+      if (isAndroid()) {
         window.screen.orientation.lock('portrait');
       }
 
