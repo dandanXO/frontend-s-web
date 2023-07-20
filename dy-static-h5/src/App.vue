@@ -11,6 +11,7 @@ import CsClient from "csweb-client";
 import {userStore} from "src/stores";
 import {cached} from "boot/cache";
 import {useRouter} from "vue-router";
+import {isAndroid} from "boot/utils";
 
 export default defineComponent({
   name: "App",
@@ -110,7 +111,10 @@ export default defineComponent({
       checkSID();
       // initCsWeb();
       getCSA();
-      window.screen.orientation.lock('portrait');
+      if(isAndroid()){
+        window.screen.orientation.lock('portrait');
+      }
+
     });
   }
 });

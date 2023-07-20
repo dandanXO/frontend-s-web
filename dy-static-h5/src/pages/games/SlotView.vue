@@ -99,6 +99,7 @@ import {cached} from "boot/cache";
 import {useUI} from "stores/ui";
 import BacktoTop from "components/backtotop.vue"
 import {scroll, SessionStorage} from 'quasar'
+import {isAndroid} from "boot/utils";
 
 const qs = require("qs");
 export default defineComponent({
@@ -377,14 +378,19 @@ export default defineComponent({
 
 
     onBeforeUnmount(() => {
-      window.screen.orientation.lock('portrait');
+      if(isAndroid()){
+        window.screen.orientation.lock('portrait');
+      }
+
     })
 
 
     onMounted(() => {
       // getCategoryList();
       getPlatList();
-      window.screen.orientation.unlock();
+      if(isAndroid()) {
+        window.screen.orientation.unlock();
+      }
     });
     return {
       platforms,
