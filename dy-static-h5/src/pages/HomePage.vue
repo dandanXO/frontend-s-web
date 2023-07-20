@@ -102,15 +102,15 @@
             :mousewheel="true"
             :space-between="8"
             :breakpoints="{
-          200: {
+          0: {
             slidesPerView: 3,
             spaceBetween: 8
           },
-          300: {
+          380: {
             slidesPerView: 4,
             spaceBetween: 8
           },
-          360: {
+          440: {
             slidesPerView: 5,
             spaceBetween: 8
           },
@@ -875,7 +875,7 @@
 
   <q-dialog width="100%" v-model="isFirstView">
     <q-card
-        style="width: 90%; max-width: 500px; margin: 0 auto"
+        style="width: 70%; max-width: 290px; margin: 0 auto"
         class="bg-white text-black"
     >
       <q-card-section class="q-mb-md">
@@ -1332,7 +1332,7 @@ export default defineComponent({
                 sport.value.push(spObj);
 
                 if (hotSports.value.indexOf(element.name) > -1) {
-                  spObj.order= 2;
+                  spObj.order = 2;
                   hotgames.value.push(spObj);
                 }
 
@@ -1345,7 +1345,7 @@ export default defineComponent({
                 livecasino.value.push(liveObj);
 
                 if (hotLives.value.indexOf(element.name) > -1) {
-                  liveObj.order= 1;
+                  liveObj.order = 1;
                   hotgames.value.push(liveObj);
                 }
               }
@@ -1384,7 +1384,7 @@ export default defineComponent({
                 slot.value.push(slotObj);
 
                 if (hotSlots.value.indexOf(element.name) > -1) {
-                  slotObj.order= 4;
+                  slotObj.order = 4;
                   hotgames.value.push(slotObj);
                 }
               }
@@ -1403,7 +1403,7 @@ export default defineComponent({
                 poker.value.push(pokerObj);
 
                 if (hotPokers.value.indexOf(element.name) > -1) {
-                  pokerObj.order= 6;
+                  pokerObj.order = 6;
                   hotgames.value.push(pokerObj);
                 }
               }
@@ -1415,7 +1415,7 @@ export default defineComponent({
                 lottery.value.push(lottObj);
 
                 if (hotLotterys.value.indexOf(element.name) > -1) {
-                  lottObj.order= 7;
+                  lottObj.order = 7;
                   hotgames.value.push(lottObj);
                 }
               }
@@ -1456,7 +1456,7 @@ export default defineComponent({
       return false;
     })
     const changeSlotSlide = (type) => {
-      console.log(slotSwiper.value);
+      // console.log(slotSwiper.value);
       if (type === 1) {
         slotSwiper.value?.slidePrev(500);
         slotSwiper2.value?.slidePrev(500);
@@ -1548,7 +1548,7 @@ export default defineComponent({
     };
 
     const openDownloadPage = () => {
-      console.log("open Page");
+      // console.log("open Page");
       window.open(download_url.value, "_system");
       isAppUpdateModal.value = false;
     };
