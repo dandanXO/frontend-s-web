@@ -2,8 +2,7 @@ import { boot, store } from "quasar/wrappers";
 import { createPinia } from "pinia";
 import { Loading, Notify, SessionStorage, Dialog } from "quasar";
 import { ResponseCode } from "../api/response";
-import { stringify } from "qs";
-import i18n from "../i18n/index";
+import LocalStorage from "boot/local-storage"
 import axios from "axios";
 // import { useRoute, useRouter } from "vue-router";
 const crArray = process.env.CR_API;
@@ -71,10 +70,12 @@ export default boot(({ app, router }) => {
         }
         if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED) {
           SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
           window.location.href = "/"
         }
         if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
           SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
           window.location.href = "/";
         }
         Notify.create({
