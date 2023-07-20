@@ -259,9 +259,11 @@ const closeDialog = () => {
   visible.value = false;
   src.value = ""
   AppFullscreen.exit()
+  router.replace({query: {}});
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
       //
+      router.push({query: {inGame: true}});
       AppFullscreen.request()
 
       localStorage.removeItem("isOpenFromAccount");
