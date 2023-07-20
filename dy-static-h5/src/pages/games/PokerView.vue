@@ -52,6 +52,8 @@ onMounted(() => {
   if (store.hasToken()) {
     $q.loading.show({message: "正加载页面"});
 
+    window.screen.orientation.lock('portrait');
+
     const isMobile = Platform.is.mobile;
     var way = null;
     if ("standalone" in window.navigator && window.navigator.standalone) {

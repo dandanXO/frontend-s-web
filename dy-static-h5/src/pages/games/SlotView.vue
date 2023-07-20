@@ -90,7 +90,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, onMounted, reactive, ref, computed, toRefs, watch} from "vue";
+import {defineComponent, onMounted, onBeforeUnmount, reactive, ref, computed, toRefs, watch} from "vue";
 import GameModal from "components/modal/GameModal";
 import {useRoute} from 'vue-router';
 import {useQuasar, Platform} from "quasar";
@@ -375,20 +375,16 @@ export default defineComponent({
     //   })
     // }
 
-    // function remove (i) {
-    //   // let index
-    //   // while ((index = inView.value.indexOf(i)) > -1) {
-    //   //   splice(index, 1)
-    //   // }
-    //   // gamePage.gameList.findIndex(obj => {
-    //   //   if (obj.hello === i) {
-    //   //     gamePage.gameList.splice(obj, 1)
-    //   //   }
-    //   // })
-    // }
+
+    onBeforeUnmount(() => {
+      window.screen.orientation.lock('portrait');
+    })
+
+
     onMounted(() => {
       // getCategoryList();
       getPlatList();
+      window.screen.orientation.unlock();
     });
     return {
       platforms,

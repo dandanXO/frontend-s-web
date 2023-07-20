@@ -102,15 +102,15 @@
             :mousewheel="true"
             :space-between="8"
             :breakpoints="{
-          200: {
+          0: {
             slidesPerView: 3,
             spaceBetween: 8
           },
-          300: {
+          380: {
             slidesPerView: 4,
             spaceBetween: 8
           },
-          360: {
+          440: {
             slidesPerView: 5,
             spaceBetween: 8
           },
@@ -875,7 +875,7 @@
 
   <q-dialog width="100%" v-model="isFirstView">
     <q-card
-        style="width: 90%; max-width: 500px; margin: 0 auto"
+        style="width: 70%; max-width: 290px; margin: 0 auto"
         class="bg-white text-black"
     >
       <q-card-section class="q-mb-md">

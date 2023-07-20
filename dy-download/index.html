@@ -68,7 +68,7 @@
     <div class="remind">
         <div class="content">
             <a class="logo"><img src="./style/images/logo.png" width="73px" height="73px"/></a>
-            <h3>东赢</h3>
+            <h3>东赢 <span id="verNo"></span></h3>
             <div class="remind-txt">
                 全面支持电竞&nbsp;体育&nbsp;真人娱乐&nbsp;老虎机&nbsp;捕鱼APP<br>
                 投注最流畅，最快捷，最好用<br>
@@ -99,6 +99,9 @@
     </div> -->
 </div>
 <script>
+    var versionNo = "1.0.5";
+
+
     var andList = [
         {imgurl: './style/images/web/android/01.png'},
         {imgurl: './style/images/web/android/02.png'},
@@ -144,6 +147,7 @@
                 showAndroid();
             }
             ;
+            $("#verNo").html("(" + versionNo + ")");
             var host = window.location.host;
             var vv = {agentCode: getQueryString("agentCode"), regFrom: getQueryString("url"), downloadUrl: host};
             $('#download').attr('data-clipboard-text', "FGH" + JSON.stringify(vv));
@@ -166,7 +170,7 @@
             $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + andList[i].imgurl + '" alt=""/></div>')
         }
         ;
-        $('#download').attr('href', './dy_app.apk');
+        $('#download').attr('href', './dy_app_1.0.5.apk');
     }
 
     function showIOS() {

@@ -110,6 +110,7 @@ export default defineComponent({
       checkSID();
       // initCsWeb();
       getCSA();
+      window.screen.orientation.lock('portrait');
     });
   }
 });

@@ -259,10 +259,14 @@ const closeDialog = () => {
   visible.value = false;
   src.value = ""
   AppFullscreen.exit()
+  router.replace({query: {}});
+  window.screen.orientation.lock('portrait');
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
       //
-      AppFullscreen.request()
+      router.push({query: {inGame: true}});
+      AppFullscreen.request();
+      window.screen.orientation.unlock();
 
       localStorage.removeItem("isOpenFromAccount");
       localStorage.removeItem("isBacked");
