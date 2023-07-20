@@ -259,64 +259,27 @@ const submitTransfer = (amount) => {
 const closeDialog = () => {
   visible.value = false;
   src.value = ""
-  AppFullscreen.exit()
-  if (isAndroid()) {
+  if (Platform.is.capacitor) {
+    AppFullscreen.exit()
     window.screen.orientation.lock('portrait');
   }
   const query = {...route.query}
   delete query.inGame
+
   router.replace({query})
 
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
 
-      // setTimeout(()=>{
-      router.push({query: {...route.query, inGame: true}});
-      // },1500)
-
-
-      AppFullscreen.request();
-      if (isAndroid()) {
-        window.screen.orientation.unlock();
-      }
+      setTimeout(() => {
+        router.push({query: {...route.query, inGame: true}});
+      }, 1000)
 
       localStorage.removeItem("isOpenFromAccount");
       localStorage.removeItem("isBacked");
-      // window.addEventListener(
-      //   "message",
-      //   (event) => {
-      //     console.log("Action");
-      //     console.log(event.data);
-      //     if (event.data?.msg) {
-      //       if (event.data.msg === "closemodal") {
-      //         drawerVisible.value= false;
-      //       }
-      //     }
-      //   });
 
-      //     var gameIfrm = document.getElementById('game-iframe');
-      //     gameIfrm.requestFullscreen();
-      // // const iframeRef = ref(null);
-      // var myScreenOrientation = window.screen.orientation;
-      // console.log(myScreenOrientation)
-      // myScreenOrientation.unlock()
-      // myScreenOrientation.lock("portrait");
-      // console.log(myScreenOrientation)
-      // iframe.find('HTML-Element').touchwipe({
-      // wipeLeft: function() { alert("left"); },
-      // wipeRight: function() { alert("right"); },
-      // wipeUp: function() { alert("up"); },
-      // wipeDown: function() { alert("down"); },
-      // min_move_x: 20,
-      // min_move_y: 20,
-      // preventDefaultEvents: true });
-      // transferInfo.value = {
-      //   platform: platformCode
-      // };
-
-// Get the iframe
+      // Get the iframe
       const iFrame = document.getElementById('game-iframe');
-
 
       title.value = gameName;
       const store = userStore();
@@ -324,6 +287,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         visibleComingSoon.value = true;
       } else {
         if (store.hasToken()) {
+          if (Platform.is.capacitor) {
+            AppFullscreen.request();
+            window.screen.orientation.unlock();
+          }
           // visible.value = true;
           var way = null
           if ("standalone" in window.navigator && window.navigator.standalone) {

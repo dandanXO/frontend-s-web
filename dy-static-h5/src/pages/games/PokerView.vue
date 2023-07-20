@@ -54,7 +54,7 @@ onMounted(() => {
   if (store.hasToken()) {
     $q.loading.show({message: "正加载页面"});
 
-    if(isAndroid()) {
+    if(Platform.is.capacitor) {
       window.screen.orientation.lock('portrait');
     }
 

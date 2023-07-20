@@ -222,42 +222,75 @@ export default defineComponent({
       // Determine the tracking script URL based on the current domain
       let trackingScriptUrl = "";
       switch (currentDomain) {
-        case "m.dy6997.com":
-        case "m.dy8168.com":
-        case "m.dy8169.com":
-        case "m.dy8515.com":
-        case "m.dy9367.com":
-        case "m.dy6918.com":
-        case "m.dy6168.com":
-        case "m.dy5988.com":
-        case "m.dy1698.com":
+        case "m.dy86353.com":
+        case "m.dy80252.com":
+        case "www.dy86353.com":
+        case "www.dy80252.com":
+        case "dy86353.com":
+        case "dy80252.com":
           trackingScriptUrl =
-              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+              "https://s9.cnzz.com/z_stat.php?id=1281279658&web_id=1281279658";
           break;
         case "m.dy93113.com":
         case "m.dy96108.com":
+        case "www.dy93113.com":
+        case "www.dy96108.com":
+        case "dy93113.com":
+        case "dy96108.com":
           trackingScriptUrl =
               "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
           break;
-        case "m.dy18178.com:8765":
-        case "m.dy50122.com:8765":
-        case "m.dy52506.com:8765":
-        case "m.dy53976.com:8765":
-        case "m.dy70679.com:8765":
-        case "m.dy73953.com:8765":
+        case "m.dy18178.com":
+        case "m.dy50122.com":
+        case "m.dy52506.com":
+        case "m.dy53976.com":
+        case "m.dy70679.com":
+        case "m.dy73953.com":
+        case "www.dy18178.com":
+        case "www.dy50122.com":
+        case "www.dy52506.com":
+        case "www.dy53976.com":
+        case "www.dy70679.com":
+        case "www.dy73953.com":
+        case "dy18178.com":
+        case "dy50122.com":
+        case "dy52506.com":
+        case "dy53976.com":
+        case "dy70679.com":
+        case "dy73953.com":
           trackingScriptUrl =
               "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
-        case "m.dy52373.com:8765":
-        case "m.dy67892.com:8765":
-        case "m.dy93828.com:8765":
-        case "m.dy37378.com:8765":
-        case "m.dy35567.com:8765":
-        case "m.dy25952.com:8765":
-        case "m.dy87265.com:8765":
-        case "m.dy29892.com:8765":
-        case "m.dy38885.com:8765":
-        case "m.dy78299.com:8765":
+        case "m.dy52373.com":
+        case "m.dy67892.com":
+        case "m.dy93828.com":
+        case "m.dy37378.com":
+        case "m.dy35567.com":
+        case "m.dy25952.com":
+        case "m.dy87265.com":
+        case "m.dy29892.com":
+        case "m.dy38885.com":
+        case "m.dy78299.com":
+        case "www.dy52373.com":
+        case "www.dy67892.com":
+        case "www.dy93828.com":
+        case "www.dy37378.com":
+        case "www.dy35567.com":
+        case "www.dy25952.com":
+        case "www.dy87265.com":
+        case "www.dy29892.com":
+        case "www.dy38885.com":
+        case "www.dy78299.com":
+        case "dy52373.com":
+        case "dy67892.com":
+        case "dy93828.com":
+        case "dy37378.com":
+        case "dy35567.com":
+        case "dy25952.com":
+        case "dy87265.com":
+        case "dy29892.com":
+        case "dy38885.com":
+        case "dy78299.com":
           trackingScriptUrl =
               "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
