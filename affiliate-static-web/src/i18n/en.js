@@ -269,6 +269,7 @@ export default {
     1101: "Old password incorrect",
     1102: "Withdraw password is incorrect",
     1308: "Balance is not enough",
+    1311: "Do not submit same withdraw amount within 24 hours",
     13000: "Domain name does not exist",
     14000: "Duplicate login name : ",
     14001: "Duplicate phone number : ",

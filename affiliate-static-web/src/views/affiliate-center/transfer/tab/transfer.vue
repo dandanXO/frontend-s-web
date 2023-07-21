@@ -8,7 +8,7 @@
         </span>
         <span v-else>****</span>
         <el-icon v-if="!showBalance" class="pointer" @click="showBalance = true"><View /></el-icon>
-        <el-icon v-else class="pointer" @click.stop="showBalance = false"><Hide /></el-icon>
+        <el-icon v-else class="pointer" @click="showBalance = false"><Hide /></el-icon>
       </div>
     </el-card>
     <el-row>
