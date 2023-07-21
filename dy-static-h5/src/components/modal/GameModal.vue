@@ -762,8 +762,9 @@ defineExpose({
 }
 
 .q-toolbar {
-  height: 100svh;
   height: calc(100%);
+  height: 100svh;
+
   max-height: unset !important;
   max-width: unset !important;
   display: flex;
@@ -780,8 +781,9 @@ defineExpose({
 }
 
 .game-iframe {
-  height: 100svh;
   height: calc(100%);
+  height: 100svh;
+
   position: fixed;
   width: 100vw;
   z-index: 1;
@@ -789,8 +791,9 @@ defineExpose({
   bottom: 0px;
 
   &.game-header-iframe {
-    height: calc(100svh - 26px);
     height: calc(100% - 26px);
+    height: calc(100svh - 26px);
+
     top: 26px;
   }
 }
