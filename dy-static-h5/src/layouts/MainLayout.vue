@@ -291,6 +291,36 @@ export default defineComponent({
         case "dy29892.com":
         case "dy38885.com":
         case "dy78299.com":
+        case "www.dy9639.com":
+        case "www.dy8930.com":
+        case "www.dy7698.com":
+        case "www.dy7835.com":
+        case "www.dy8365.com":
+        case "www.dy9286.com":
+        case "www.dy8539.com":
+        case "www.dy8286.com":
+        case "www.dy7197.com":
+        case "www.dy7586.com":
+        case "dy9639.com":
+        case "dy8930.com":
+        case "dy7698.com":
+        case "dy7835.com":
+        case "dy8365.com":
+        case "dy9286.com":
+        case "dy8539.com":
+        case "dy8286.com":
+        case "dy7197.com":
+        case "dy7586.com":
+        case "m.dy9639.com":
+        case "m.dy8930.com":
+        case "m.dy7698.com":
+        case "m.dy7835.com":
+        case "m.dy8365.com":
+        case "m.dy9286.com":
+        case "m.dy8539.com":
+        case "m.dy8286.com":
+        case "m.dy7197.com":
+        case "m.dy7586.com":
           trackingScriptUrl =
               "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
