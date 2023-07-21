@@ -57,6 +57,10 @@ onMounted(() => {
     ).then((res) => {
       console.log(res);
 
+      if(way==="IOS"){
+        res= res.replaceAll("http","").replaceAll("https", "");
+      }
+
       $q.loading.hide();
       store.isInitEsport = true;
       src.value = res;

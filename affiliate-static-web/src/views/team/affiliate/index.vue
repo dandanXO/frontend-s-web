@@ -24,7 +24,7 @@
         />
         <el-input class="input-small" v-model="request.loginName" maxlength="50" :placeholder="t('fields.loginName')" />
         <div class="grp-btn">
-          <el-button icon="el-icon-search" type="primary" @click="loadDownlineAffiliates()" size="mini">
+          <el-button icon="el-icon-search" type="primary" @click="search()" size="mini">
             {{ $t('fields.search') }}
           </el-button>
           <el-button size="mini" type="warning" @click="resetQuery()">
@@ -42,6 +42,13 @@
           {{ $t('fields.add') }}
         </el-button>
       </div>
+      <el-breadcrumb separator=" > " class="breadcrumb">
+        <el-breadcrumb-item
+          v-for="item in breadcrumbNameList"
+          :key="item.id"
+          @click="breadcrumbSearch(item.id, item.name)"
+        >{{ item.name }}</el-breadcrumb-item>
+      </el-breadcrumb>
       <el-table :data="page.records" ref="table"
                 row-key="id"
                 size="small"
@@ -49,7 +56,11 @@
                 v-loading="page.loading"
                 :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="150" />
+        <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="150">
+          <template #default="scope">
+            <el-link type="primary" @click="searchDownline(scope.row.id, scope.row.loginName)">{{ scope.row.loginName }}</el-link>
+          </template>
+        </el-table-column>
         <el-table-column prop="affiliateCode" :label="t('fields.affiliateCode')" align="center" min-width="150">
           <template #default="scope">
             <span v-if="scope.row.affiliateCode === null">-</span>
@@ -121,7 +132,7 @@
         </el-table-column>
         <el-table-column :label="t('fields.operate')" min-width="150" align="center" fixed="right">
           <template #default="scope">
-            <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
+            <el-button icon="el-icon-edit" size="mini" type="success" :disabled="breadcrumbNameList.length > 1" @click="showEdit(scope.row)" />
           </template>
         </el-table-column>
       </el-table>
@@ -253,6 +264,8 @@ const uiControl = reactive({
 const site = ref(null);
 const affInfo = ref(null);
 const defaultDate = convertDate(new Date());
+const checkId = ref(null);
+const breadcrumbNameList = ref([]);
 
 const shortcuts = [
   {
@@ -463,11 +476,13 @@ async function loadDownlineAffiliates() {
   page.loading = true;
   const requestCopy = { ...request };
   const query = {};
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value;
-    }
-  });
+  if (checkId.value === store.state.user.id) {
+    Object.entries(requestCopy).forEach(([key, value]) => {
+      if (value) {
+        query[key] = value;
+      }
+    });
+  }
   if (request.regTime !== null) {
     if (request.regTime.length === 2) {
       query.regTime = request.regTime.join(",");
@@ -475,7 +490,7 @@ async function loadDownlineAffiliates() {
   }
   query.siteId = site.value.id;
   query.memberTypes = "AFFILIATE";
-  const { data: ret } = await getAffiliateDownline(store.state.user.id, query);
+  const { data: ret } = await getAffiliateDownline(checkId.value, query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.loading = false;
@@ -523,7 +538,7 @@ async function addAffiliate() {
       await regsterAffiliate(cForm);
       uiControl.dialogVisible = false;
       ElMessage({ message: t('message.addSuccess'), type: 'success' });
-      await loadDownlineAffiliates();
+      await search();
     }
   });
 }
@@ -533,11 +548,12 @@ async function editAffiliate() {
     if (valid) {
       const form = {};
       form.commission = eForm.commission;
+      form.siteId = store.state.user.siteId;
       // form.revenueShare = eForm.revenueShare;
       await editAffiliateCommission(eForm.id, form);
       uiControl.dialogVisible = false;
       ElMessage({ message: t('message.editSuccess'), type: 'success' });
-      await loadDownlineAffiliates();
+      await search();
     }
   });
 }
@@ -552,7 +568,35 @@ async function loadAffiliateInfo() {
   affInfo.value = a;
 }
 
+async function search() {
+  checkId.value = store.state.user.id;
+  breadcrumbNameList.value = [];
+  const item = { id: checkId.value, name: store.state.user.name };
+  breadcrumbNameList.value.push(item);
+  await loadDownlineAffiliates();
+}
+
+async function searchDownline(id, name) {
+  checkId.value = id;
+  const item = { id: id, name: name };
+  breadcrumbNameList.value.push(item);
+  await loadDownlineAffiliates();
+}
+
+function breadcrumbSearch(id, name) {
+  const index = breadcrumbNameList.value.findIndex(b => b.id === id);
+  breadcrumbNameList.value.splice(index);
+  if (id === store.state.user.id) {
+    search()
+  } else {
+    searchDownline(id, name)
+  }
+}
+
 onMounted(async() => {
+  checkId.value = store.state.user.id
+  const item = { id: checkId.value, name: store.state.user.name };
+  breadcrumbNameList.value.push(item);
   await loadSite();
   await loadAffiliateInfo();
   await loadDownlineAffiliates();
@@ -585,6 +629,17 @@ onMounted(async() => {
   ::v-deep(.el-card__body) {
     padding: 0;
   }
+}
+
+.breadcrumb {
+  margin-left: 20px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+:deep(.el-breadcrumb__inner) {
+  cursor: pointer !important;
+  color: var(--el-color-primary) !important;
 }
 </style>
 
