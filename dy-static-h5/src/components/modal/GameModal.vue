@@ -51,7 +51,7 @@
             v-show="!logoShow"
             :src="src"
             id="game-iframe"
-            scrolling="no"
+            scrolling="auto"
             frameborder="0"
             class="game-iframe"
             :class="(showHeader) ?  'game-header-iframe' : ''"

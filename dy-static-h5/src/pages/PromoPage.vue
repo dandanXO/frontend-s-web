@@ -261,12 +261,15 @@ export default defineComponent({
     const loadAll = () => {
       api.get("/promo/page").then((res) => {
         if (res.code === 0) {
-          promoState.promoList.push(...res.data);
+          promoState.promoList = [];
+          var promoItems = res.data;
 
-          promoState.promoList.forEach(element => {
+          promoItems.forEach((element) => {
             if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST") || element.privilegeStatus === "CLOSE" || element.privilegeStatus === null) {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             } else {
+              promoState.promoList.push(element);
+              // console.log(promoState.promoList);
+
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element);
               }
@@ -274,12 +277,12 @@ export default defineComponent({
           });
           // console.log("Final Promos");
           // console.log(promoState.promoList);
-
+          switchPromoType(promoState.active);
         }
       }).catch((e) => {
         console.log("error", e);
       });
-      switchPromoType(promoState.active);
+
     };
     onMounted(() => {
       loadBanner();

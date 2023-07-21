@@ -1233,6 +1233,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               banners.value = res.data;
+              // console.log(banners.value)
             } else {
               // $q.notify({
               //   color: "negative",
