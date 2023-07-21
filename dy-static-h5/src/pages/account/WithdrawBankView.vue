@@ -877,6 +877,7 @@ export default defineComponent({
 
 .withdrawBankView {
   height: calc(100svh - 109px);
+  height: calc(100% - 109px);
   display: flex;
   flex-direction: column;
 }

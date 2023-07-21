@@ -50,7 +50,7 @@
           <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
         </div>
       </div>
-      <router-link to="/liveChat" id="cs-web-id" class="livechat">
+      <router-link to="/liveChat" class="livechat cs-web-id">
         在线客服
       </router-link>
     </div>

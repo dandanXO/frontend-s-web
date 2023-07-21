@@ -918,7 +918,7 @@ SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
 import {translateRecord} from "src/directives/translate"
-import {isAndroid} from "boot/utils";
+import {isAndroid, isHuaweiPhone} from "boot/utils";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1111,7 +1111,7 @@ export default defineComponent({
       var slideItem = document.getElementById(slide_id);
       if (slideItem) {
         var positionY = slideItem.offsetTop;
-        console.log(positionY);
+        // console.log(positionY);
         var y_axis = positionY + 215;
 
         window.scroll({
@@ -1426,7 +1426,7 @@ export default defineComponent({
             slot.value = _.orderBy(slot.value, ['num'], ['asc']);
             hotgames.value = _.orderBy(hotgames.value, ['order'], ['asc']);
 
-            console.log(hotgames.value);
+            // console.log(hotgames.value);
           })
           .catch((err) => {
           });
@@ -1641,7 +1641,7 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
-      if(isAndroid()){
+      if(isAndroid()  && !isHuaweiPhone()){
         window.screen.orientation.lock('portrait');
       }
 

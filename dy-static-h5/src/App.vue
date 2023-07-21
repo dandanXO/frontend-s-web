@@ -11,7 +11,7 @@ import CsClient from "csweb-client";
 import {userStore} from "src/stores";
 import {cached} from "boot/cache";
 import {useRouter} from "vue-router";
-import {isAndroid} from "boot/utils";
+import {isAndroid, isHuaweiPhone} from "boot/utils";
 
 export default defineComponent({
   name: "App",
@@ -101,9 +101,9 @@ export default defineComponent({
       window.addEventListener('message', function (event) {
         // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
         if (_.isString(event.data)) {
-          if (event.data == 'sess_timeout') {
-            router.push({path: "/"});
-          }
+          // if (event.data == 'sess_timeout') {
+          //   router.push({path: "/liveChat"});
+          // }
         }
       });
     };
@@ -111,7 +111,7 @@ export default defineComponent({
       checkSID();
       // initCsWeb();
       getCSA();
-      if (isAndroid()) {
+      if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock('portrait');
       }
 

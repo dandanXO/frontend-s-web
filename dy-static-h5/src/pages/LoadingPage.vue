@@ -2,7 +2,7 @@
   <div class="loading-container">
     <q-scroll-area
         ref="scrollPageRef"
-        style="height: calc(100svh)"
+        style="height: calc(100svh); height:calc(100%);"
         :thumb-style="{ width: 0 }"
     >
       <div class="loading-div">
@@ -47,6 +47,7 @@ export default defineComponent({
   margin: 0 auto;
   width: 100%;
   height: 100svh;
+  height: calc(100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,5 +61,6 @@ export default defineComponent({
 
 .loading-container {
   height: 100svh;
+  height: calc(100%);
 }
 </style>
