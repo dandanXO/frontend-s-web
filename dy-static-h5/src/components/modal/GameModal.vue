@@ -307,7 +307,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
       // alert("HUawei check:" + isHuaweiPhone())
 
-      if (store.isMobileSafari() || (platformCode === 'PTDY')) {
+      if (store.isMobileSafari()) {
         // alert(gameName + "-" + gameCode + "-" + gameType + "-" + platformCode);
 
         if (gameName === 'SGWin' || (gameName === 'BBIN' && gameCode === 'bbkeno_lobby_app') || gameName === 'IM' ||
@@ -386,6 +386,47 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           return;
 
         }
+
+      } else if ((platformCode === 'PTDY')) {
+        // const newWin = window.open(`/loading`, `_blank`);
+        if (platformCode === 'platformType') {
+          api
+              .get(`/session/launch?_time=${new Date().getTime()}`, {
+                params: {
+                  platform: gameCode,
+                  isMobile: Platform.is.mobile ? true : false,
+                  way: way
+                }
+              })
+              .then((response) => {
+                $q.loading.hide();
+                // newWin.location.href = response.data;
+                window.open(response.data, `_blank`);
+              });
+          return
+        }
+        api
+            .get(`/session/launch?_time=${new Date().getTime()}`, {
+              params: {
+                platform: platformCode,
+                gameCode: gameCode,
+                isMobile: Platform.is.mobile ? true : false,
+                way: way
+              }
+            })
+            .then((response) => {
+              $q.loading.hide();
+              // newWin.location.href = response.data;
+              window.open(response.data, `_blank`);
+            }).catch((err) => {
+          $q.loading.hide();
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: err.message,
+            icon: "report_problem"
+          });
+        });
 
       } else if (isHuaweiPhone()) {
         // alert("1");
@@ -763,7 +804,6 @@ defineExpose({
 
 .q-toolbar {
   height: calc(100%);
-  height: 100svh;
 
   max-height: unset !important;
   max-width: unset !important;
@@ -782,7 +822,6 @@ defineExpose({
 
 .game-iframe {
   height: calc(100%);
-  height: 100svh;
 
   position: fixed;
   width: 100vw;
@@ -792,7 +831,6 @@ defineExpose({
 
   &.game-header-iframe {
     height: calc(100% - 26px);
-    height: calc(100svh - 26px);
 
     top: 26px;
   }

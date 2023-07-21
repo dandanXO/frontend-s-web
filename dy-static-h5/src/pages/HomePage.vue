@@ -419,6 +419,20 @@
                         </div>
                       </div>
                     </template>
+                    <template
+                        v-else-if="live.code === 'AWC' && live.name === 'Awc'"
+                    >
+                      <div class="game-board"
+                           @click="playGame(live.name, live.code, live.gameCode)"
+                      >
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>Sexy</h3>
+                          <span>真人娱乐</span>
+                        </div>
+                      </div>
+                    </template>
                     <template v-else>
                       <div class="game-board"
                            @click="playGame(live.name, live.code, live.gameCode)"

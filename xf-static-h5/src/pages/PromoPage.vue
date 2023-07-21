@@ -275,22 +275,28 @@ export default defineComponent({
     const loadAll = () => {
       api.get("/promo/page").then((res) => {
         if (res.code === 0) {
-          promoState.promoList.push(...res.data);
+          promoState.promoList = [];
+          var promoItems = res.data;
+          // promoState.promoList.push(...res.data);
 
-          promoState.promoList.forEach(element => {
+          promoItems.forEach(element => {
             if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             } else {
+              promoState.promoList.push(element);
+
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
             }
           });
+
+          switchPromoType(promoState.active)
         }
       }).catch((e) => {
         console.log("error", e);
       });
-      switchPromoType(promoState.active)
+
     }
     onMounted(() => {
       loadBanner();
