@@ -171,7 +171,7 @@
         <div class="flip-container">
           <div class="flipper platform-esports">
             <div class="front">
-              <div>电子竞技</div>
+              <div>电竞</div>
               <div class="platform-title-sub">ESPORTS</div>
             </div>
             <div class="back">
@@ -317,7 +317,7 @@
                 style="margin-left: 21px"
               >
                 <img src="../assets/home/index_slot.png" />
-                <div>老虎机</div>
+                <div>电子</div>
               </router-link>
             </div>
           </div>
