@@ -66,9 +66,15 @@ export default defineComponent({
         label: "PM",
         slogan: "全球顶尖, 尊享娱乐",
         gameCode: ""
-      }
+      },
       // { code:"BG", icon: "bg", label: "BG", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
-      // { code:"Sexy", icon: "sexy", label: "Sexy", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
+      {
+        code: "AWC",
+        icon: "sexy",
+        label: "Sexy",
+        slogan: "全球顶尖, 尊享娱乐",
+        gameCode: ""
+      }
     ];
 
     const store = userStore();

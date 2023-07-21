@@ -1,97 +1,143 @@
 <template>
   <q-page>
+    <div class="acc-head"></div>
     <div class="profile">
-      <div class="avatar">
-        <img src="../assets/images/account/avatar.png" />
-      </div>
-      <div class="pro-details">
-        <span class="nickname-span">{{ store.nickName }}</span>
-        <span v-if="vipLevel === 1">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_1.png" />
-        </span>
-        <span v-else-if="vipLevel === 2">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_2.png" />
-        </span>
-        <span v-else-if="vipLevel === 3">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_3.png" />
-        </span>
-        <span v-else-if="vipLevel === 4">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_4.png" />
-        </span>
-        <span v-else-if="vipLevel === 5">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_5.png" />
-        </span>
-        <span v-else-if="vipLevel === 6">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_6.png" />
-        </span>
-        <span v-else-if="vipLevel === 7">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_7.png" />
-        </span>
-        <span v-else-if="vipLevel === 8">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_8.png" />
-        </span>
-        <span v-else-if="vipLevel === 9">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_9.png" />
-        </span>
-        <span v-else-if="vipLevel === 10">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_10.png" />
-        </span>
-        <span v-else-if="vipLevel === 11">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_11.png" />
-        </span>
-        <span v-else-if="vipLevel === 12">
-          <img id="personal_vip_img" src="../assets/vip/vip_text_12.png" />
-        </span>
+      <div class="left">
+        <div class="avatar">
+          <img src="../assets/images/account/avatar.png"/>
+        </div>
+        <div class="pro-details">
+          <span class="nickname-span">{{ store.nickName }}</span>
+          <!-- <span v-if="vipLevel === 1">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_1.png" />
+          </span>
+          <span v-else-if="vipLevel === 2">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_2.png" />
+          </span>
+          <span v-else-if="vipLevel === 3">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_3.png" />
+          </span>
+          <span v-else-if="vipLevel === 4">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_4.png" />
+          </span>
+          <span v-else-if="vipLevel === 5">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_5.png" />
+          </span>
+          <span v-else-if="vipLevel === 6">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_6.png" />
+          </span>
+          <span v-else-if="vipLevel === 7">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_7.png" />
+          </span>
+          <span v-else-if="vipLevel === 8">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_8.png" />
+          </span>
+          <span v-else-if="vipLevel === 9">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_9.png" />
+          </span>
+          <span v-else-if="vipLevel === 10">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_10.png" />
+          </span>
+          <span v-else-if="vipLevel === 11">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_11.png" />
+          </span>
+          <span v-else-if="vipLevel === 12">
+            <img id="personal_vip_img" src="../assets/vip/vip_text_12.png" />
+          </span> -->
 
-        <br />
-        <span v-if="store.evip">专属网址: {{ store.evip }}</span>
-        <br />
-        <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+          <span v-if="store.evip">专属网址: <a style="text-decoration: none; color: #000000; font-size: 17px;"
+                                               :href="selfTgurl" target="_blank">{{ store.evip }}</a></span>
+          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+        </div>
       </div>
+      <router-link to="/liveChat" class="livechat cs-web-id">
+        在线客服
+      </router-link>
     </div>
     <div class="vipcard">
       <q-card-section class="top-section">
-        <!-- <div class="vip-badge">
-        <img
-          v-if="vip === 'VIP0'"
-          src="../assets/vip/badge/badge-0.png"
-        />
-        <img
-          v-if="vip === 'VIP1'"
-          src="../assets/vip/badge/badge-1.png"
-        />
-        <img
-          v-if="vip === 'VIP2'"
-          src="../assets/vip/badge/badge-2.png"
-        />
-        <img
-          v-if="vip === 'VIP3'"
-          src="../assets/vip/badge/badge-3.png"
-        />
-        <img
-          v-if="vip === 'VIP4'"
-          src="../assets/vip/badge/badge-4.png"
-        />
-        <img
-          v-if="vip === 'VIP5'"
-          src="../assets/vip/badge/badge-5.png"
-        />
-        <img
-          v-if="vip === 'VIP6'"
-          src="../assets/vip/badge/badge-6.png"
-        />
-        <img
-          v-if="vip === 'VIP7'"
-          src="../assets/vip/badge/badge-7.png"
-        />
-      </div> -->
         <!-- <div class="name">{{ header }}</div> -->
         <q-card-section class="acct-section">
-          <div class="label">中心钱包:</div>
-          <div class="amt">{{ mainWallet }}</div>
+          <div class="left-sect">
+            <div class="label"><img src="../assets/images/account/wallet.svg">中心钱包:</div>
+            <div class="amt" @click="getBalance">{{ !isLoadingBalance ? mainWallet : '加载中...' }}
+              <RiRefreshLine/>
+            </div>
+          </div>
+          <div class="right-sect">
+
+            <q-btn
+                label="存款"
+                rounded
+                color="primary"
+                style="width:80px;font-size:16px;height:36px;min-height:36px;"
+                @click="openDeposit"
+            />
+
+            <q-btn
+                label="提款"
+                rounded
+                color="secondary"
+                style="width:80px;font-size:16px;height:36px;min-height:36px;"
+                to="finance/withdraw"
+            />
+
+            <q-btn
+                label="转账"
+                rounded
+                color="accent"
+                style="width:80px;font-size:16px;height:36px;min-height:36px;"
+                to="account/transfer"
+            />
+
+          </div>
         </q-card-section>
+
         <!-- <q-separator /> -->
-        <q-card-section class="bot-section">
+
+        <q-card class="bluecard vip-info-board" @click="goToVip">
+
+          <div class="vipline q-mt-sm">
+            <div class="circle"><span class="bigV">v</span><span class="small">{{ vipLevel }}</span></div>
+            <div class="middle">
+              <div class="row items-center justify-between">
+                <div class="left">成长值</div>
+                <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div>
+              </div>
+
+              <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white"/>
+
+            </div>
+            <div class="circle"><span class="bigV">v</span><span class="small">{{ vipLevel + 1 }}</span></div>
+          </div>
+
+          <div class="vip-get-div row justify-between items-center q-mt-sm">
+
+            <div class="vip-getpromo-div">
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png"/>
+              <span>晋级礼包</span>
+            </div>
+            <div class="vip-getpromo-div">
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
+              <span>生日礼金</span>
+            </div>
+            <div class="vip-getpromo-div">
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
+              <span>每月活动</span>
+            </div>
+            <div class="vip-getpromo-div">
+              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
+              <span>专属活动</span>
+            </div>
+          </div>
+        </q-card>
+        <!-- <q-card-section class="bot-section">
           <router-link to="/" @click="openDeposit" class="button">
             <img src="../assets/images/index/deposit_icon.png" />
             存款
@@ -108,9 +154,16 @@
             <img src="../assets/images/account/vip_icon.png" />
             VIP详情
           </router-link>
-        </q-card-section>
+        </q-card-section> -->
       </q-card-section>
     </div>
+
+    <div class="privilege-vip-div">
+      <router-link to="/account/vip?redirect=account">
+        <img src="../assets/account/vip_button_icon.png" alt="">
+      </router-link>
+    </div>
+
     <q-item-section class="acct-nav">
       <!-- <div class="acct-header-icon">
         <img
@@ -120,74 +173,127 @@
       </div> -->
       <div class="acct-title">
         <div class="acct-title-1">我的功能</div>
-        <div id="vipDomain" class="vipurl">专属网址：{{ store.evip }}</div>
+        <!-- <div id="vipDomain" class="vipurl">专属网址：{{ store.evip }}</div> -->
       </div>
-      <div class="acct-menu">
+      <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_record.png" />
+            <img src="../assets/images/account/menu_record.svg"/>
             <div class="acct-nav-label">交易记录</div>
           </div>
         </router-link>
         <router-link to="/account/invite">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.png" />
-            <div class="acct-nav-label">分享好友</div>
+            <img src="../assets/images/account/menu_share.svg"/>
+            <div class="acct-nav-label">呼朋唤友</div>
           </div>
         </router-link>
-        <router-link to="/promo">
+        <router-link to="/promo?redirect=account">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_promo.png" />
+            <img src="../assets/images/account/menu_promo.svg"/>
             <div class="acct-nav-label">优惠领取</div>
           </div>
         </router-link>
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_personal.png" />
+            <img src="../assets/images/account/menu_personal.svg"/>
             <div class="acct-nav-label">个人信息</div>
           </div>
         </router-link>
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_changePwd.png" />
+            <img src="../assets/images/account/menu_changePwd.svg"/>
             <div class="acct-nav-label">密码</div>
           </div>
         </router-link>
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_bank.png" />
+            <img src="../assets/images/account/menu_bank.svg"/>
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
-        <router-link to="/account/download" v-if="isH5">
+        <router-link v-if="!store.isApp()" to="/account/download">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_download.png" />
+            <img src="../assets/images/account/menu_download.svg"/>
             <div class="acct-nav-label">下载中心</div>
           </div>
         </router-link>
         <router-link to="/account/announcement">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_announcement.png" />
+            <img src="../assets/images/account/menu_announcement.svg"/>
             <div class="acct-nav-label">系统公告</div>
           </div>
         </router-link>
         <router-link to="/account/mail">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.png" />
+            <img src="../assets/images/account/menu_mailbox.svg"/>
             <div class="acct-nav-label">站内信</div>
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <!-- <a href="https://partner.dyvip90.com" target="_blank">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_agent.png" />
-            <div class="acct-nav-label">加盟</div>
-          </div>
-        </a> -->
+<!--        <router-link to="/affiliate">-->
+<!--          <div class="acct-nav-item">-->
+<!--            <img src="../assets/images/account/menu_affiliate.svg"/>-->
+<!--            <div class="acct-nav-label">加盟</div>-->
+<!--          </div>-->
+<!--        </router-link>-->
+        <!--        <a @click="logout">-->
+        <!--          <div class="acct-nav-item">-->
+        <!--            <img src="../assets/account/btn-logout.png"/>-->
+        <!--            <div class="acct-nav-label">退出</div>-->
+        <!--          </div>-->
+        <!--        </a>-->
+
       </div>
     </q-item-section>
+
+    <q-card class="card-account-banner">
+      <q-card-section>
+        <q-carousel
+            class="account"
+            autoplay
+            navigation
+            v-model="slide"
+            swipeable
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            animated
+            infinite
+        >
+          <template v-slot:navigation-icon="{ active, onClick }">
+            <q-btn
+                padding="3px"
+                v-if="active"
+                size="xs"
+                color="white"
+                @click="onClick"
+                style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+            />
+            <q-btn
+                padding="3px"
+                v-else
+                size="xs"
+                color="transparent"
+                @click="onClick"
+                style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+            />
+          </template>
+
+          <q-carousel-slide
+              v-for="(banner, i) in btm_banners"
+              :key="i"
+              :name="i"
+              class="column no-wrap flex-center"
+              :img-src="imgURL + banner.mobileImageUrl"
+              @click="gotoPromo(banner)"
+          ></q-carousel-slide>
+        </q-carousel>
+
+      </q-card-section>
+    </q-card>
     <a @click="logout">
       <div class="acct-logout">
+        <img src="../assets/images/account/menu_logout.svg"/>
         <div class="acct-nav-label">退出登录</div>
       </div>
     </a>
@@ -202,13 +308,15 @@ import {
   onMounted,
   onBeforeUnmount
 } from "vue";
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
-import { Platform } from "quasar";
+import {userStore} from "stores/index";
+import {useRouter} from "vue-router";
+import {App} from "@capacitor/app";
+import {RiRefreshLine} from "vue-remix-icons";
+import {api} from "boot/axios";
 
 export default defineComponent({
   name: "AccountPage",
+  components: {RiRefreshLine},
   setup() {
     const router = useRouter();
     const store = userStore();
@@ -217,9 +325,7 @@ export default defineComponent({
         router.push("/");
       });
     };
-
     const appVersionNo = ref(null);
-
     const vipLevel = computed(() => {
       if (store.vip == "VIP0") {
         return 0;
@@ -250,64 +356,83 @@ export default defineComponent({
       }
       return store.vip;
     });
+    const vip_progress = ref(store.currentDeposit / store.levelUpDeposit);
+    const goToVip = () => {
+      router.push("/account/vip?redirect=account");
+    }
 
     const timerBalance = ref();
-
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
-
     const getVersionNo = async () => {
       if (store.getDeviceType() == "ANDROID") {
         const info = await App.getInfo();
         var current_version = info.version + "." + info.build;
         appVersionNo.value = current_version;
       } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.2";
+        appVersionNo.value = "iOS v0.3";
       } else {
       }
     };
+    const isLoadingBalance = ref(false)
+
+    const selfTgurl = ref('https://' + store.evip);
+
 
     onMounted(() => {
       getBalance();
       store.getBalance();
       // store.getUnreadTotal();
       getVersionNo();
-      checkPlatform();
+      getPromoImage();
+      if(store.isApp()){
+        var btmSwiper = document.getElementById("id-acct-menu");
+        btmSwiper.classList.add("shorter-menu");
+      }
     });
+
+    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const btm_banners = ref([]);
+    const getPromoImage = () => {
+      api
+          .get("/promo/banner?category=CENTERPROMO")
+          .then((res) => {
+            if (res.code === 0) {
+              btm_banners.value = res.data;
+              if (btm_banners.value.length === 1) {
+                btm_banners.value.push(res.data[0]);
+              }
+
+            }
+          })
+          .catch(() => {
+          });
+    }
+    const gotoPromo = (banner) => {
+      const redirectU = "/promo?name=" + banner.redirectUrl;
+      router.push(`${redirectU}`);
+    };
+
     onBeforeUnmount(() => {
       clearInterval(timerBalance.value);
     });
-
     const openDeposit = () => {
       // to="finance/deposit"
       localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
       router.push("finance/deposit");
     };
-
     const getBalance = () => {
+      isLoadingBalance.value = true;
+      store.getBalance().then(() => {
+        isLoadingBalance.value = false
+      });
       timerBalance.value = setInterval(function () {
         if (store.hasToken()) {
           store.getBalance();
         }
       }, 20000);
     };
-
-    const isH5 = ref(false);
-    const checkPlatform = () => {
-      //Is iOS Webclip App || Is Android Apk
-      if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
-      ) {
-        isH5.value = false;
-      } else {
-        isH5.value = true;
-      }
-    };
-
     return {
       header: "Account",
       logout,
@@ -317,50 +442,94 @@ export default defineComponent({
       store,
       openDeposit,
       appVersionNo,
-      isH5,
-      checkPlatform
+      isLoadingBalance,
+      selfTgurl,
+      vip_progress,
+      goToVip,
+      btm_banners,
+      imgURL,
+      gotoPromo,
+      slide: ref(0)
     };
   }
 });
 </script>
 <style scoped lang="scss">
+.acc-head {
+  background: url(../assets/images/common/bgheader.png) no-repeat center center;
+  background-size: cover;
+  height: 0px;
+}
+
 .profile {
-  background: url(../assets/images/account/personal_bg.png) no-repeat center
-    center;
+  background: #fff;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
-  padding: 30px 15px;
+  padding: 15px;
   gap: 10px;
+  width: 100%;
+
+  .left {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    width: 100%;
+  }
 
   .avatar {
     width: 60px;
+    max-width: 60px;
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     img {
       width: 100%;
     }
+
+    flex: 1;
   }
 
   .pro-details {
-    font-size: 12px;
-    line-height: 15px;
-    margin-top: 10px;
+    flex: 3;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
     .nickname-span {
-      font-size: 14px;
+      font-size: 18px;
+      line-height: 21px;
       font-weight: 700;
-      margin-right: 6px;
+      word-break: break-all;
     }
+  }
+
+  .livechat {
+    background: #0089ED;
+    color: #ffffff;
+    border-radius: 50px;
+    cursor: pointer;
+    padding: 5px 15px;
+    font-size: 16px;
+    width: auto;
+    white-space: nowrap;
+    margin-top: 6px;
+    text-decoration: none;
   }
 }
 
 .vipcard {
-  margin: -20px auto 0;
+  margin: 15px auto;
   border-radius: 15px;
   width: 95%;
-  background: url(../assets/images/account/personal_details_bg.png) no-repeat
-    center center;
-  background-size: cover;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  background: #f5f5f5;
 
   .q-card__section--vert {
     padding: 0;
@@ -377,29 +546,126 @@ export default defineComponent({
   .top-section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 15px;
+
   }
 
   .acct-section {
     display: flex;
-    flex-direction: column;
     text-align: left;
     justify-content: space-evenly;
-    padding: 10px 20px;
+    align-items: flex-start;
     // border-bottom: 1px solid #2e3445;
     width: 100%;
     color: #000000;
+    margin-bottom: 12px;
 
-    .label {
-      font-size: 11px;
-      line-height: 12px;
+    .left-sect {
+      flex-wrap: nowrap;
+
+      .label {
+        font-size: 14px;
+        line-height: 17px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 5px;
+        gap: 5px;
+
+        svg {
+          fill: #0089ED;
+        }
+
+        img {
+          display: block;
+          margin-bottom: 3px;
+        }
+      }
+
     }
 
-    .amt {
-      font-size: 26px;
+    .right-sect {
+      //border: 1px solid #0089ED;
+      //background-image: linear-gradient(180deg, #52ACFF 0, #3559DA 100%),
+      //linear-gradient(#52ACFF, #3559DA);
+      //padding: 5px 15px;
+      display: flex;
+      justify-content: space-between;
+      //border-radius: 20px;
+      max-width: 260px;
+      gap: 6px;
+
+
+      a {
+        font-size: 16px;
+        display: block;
+        //color: #0089ed;
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+
+  }
+
+  .amt {
+    font-size: 24px;
+    width: calc(100% - 25px);
+    margin-left: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    svg {
+      height: 20px;
+      fill: #434343;
+    }
+  }
+
+  .bluecard {
+    width: 98%;
+    margin: 0 0px !important;
+    background: url(../assets/images/common/bgheader.png) no-repeat top right;
+    padding: 20px 15px;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .vipline {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 5px;
+
+      .middle {
+        color: #fff;
+        flex: 6;
+      }
+
+      .circle {
+        border: 1px solid #ffffff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        background: linear-gradient(180deg, #AAD6FF, #0075E1);
+
+        .bigV {
+          font-weight: 700;
+          font-size: 25px;
+          line-height: 13px;
+        }
+
+        .small {
+          font-size: 13px;
+          line-height: 13px;
+        }
+      }
     }
   }
 
@@ -441,12 +707,25 @@ export default defineComponent({
   }
 }
 
+.privilege-vip-div {
+  width: 95%;
+  margin: 10px auto 16px;
+
+  img {
+    width: 100%;
+  }
+}
+
 .acct-nav {
-  background: #f2f5f6;
   width: 95%;
   margin: 10px auto;
   padding: 5px;
   gap: 10px;
+
+  a {
+    padding: 5px;
+    display: block;
+  }
 
   .acct-title {
     display: flex;
@@ -461,38 +740,49 @@ export default defineComponent({
       display: flex;
       align-items: center;
       gap: 6px;
+      font-weight: bold;
+      font-size: 16px;
 
-      &:before {
-        content: "";
-        // background: #33bcd4;
-        height: 19px;
-        width: 10px;
-        background: url(../assets/images/account/personal_menu_title_icon.png)
-          no-repeat center;
-        background-size: 100%;
-        display: inline-block;
-        margin-left: -5px;
-      }
+      // &:before {
+      //   content: "";
+      //   // background: #33bcd4;
+      //   height: 19px;
+      //   width: 10px;
+      //   background: url(../assets/images/account/personal_menu_title_icon.png)
+      //     no-repeat center;
+      //   background-size: 100%;
+      //   display: inline-block;
+      //   margin-left: -5px;
+      // }
     }
   }
 
   .acct-menu {
-    // display: grid;
-    // grid-template-columns: repeat(3, 1fr);
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3,1fr);
+    grid-gap: 30px;
+    gap: 20px;
+    row-gap: 20px;
+    height: auto;
+    margin-bottom: 10px;
+    // display: flex;
+    // justify-content: space-between;
+    // flex-wrap: wrap;
+    // gap: 6%;
+
+    &.shorter-menu{
+      grid-template-rows: repeat(2,1fr);
+    }
 
     a {
-      width: 33.33%;
       text-decoration: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 10px;
+      font-size: 14px;
       height: 80px;
+      display: block;
 
       .acct-nav-item {
+        font-size: 14px;
         gap: 5px;
         cursor: pointer;
         display: flex;
@@ -501,10 +791,9 @@ export default defineComponent({
         text-align: center;
         color: #000;
         text-decoration: none;
-        padding: 10px;
 
         img {
-          height: 40px;
+          height: 50px;
           fill: white;
           padding: 0;
         }
@@ -514,11 +803,21 @@ export default defineComponent({
 }
 
 .acct-logout {
-  padding: 10px;
-  margin: 5px 10px;
-  background-color: #5b80e7;
+  padding: 12px;
+  border: 1px solid #0089ED;
   text-align: center;
-  color: #ffffff;
+  font-size: 20px;
+  color: #0089ED;
+  border-radius: 30px;
+  line-height: 15px;
+  width: 90%;
+  letter-spacing: 1px;
+  margin: 20px auto 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
 .vip-badge {
@@ -527,7 +826,81 @@ export default defineComponent({
   top: -40px;
 }
 
+.vip-info-board {
+  margin-top: 10px !important;
+
+  .vip-getpromo-div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+
+    .getpromo-icon {
+      width: 16px;
+      background: #fff;
+      border-radius: 50%;
+      height: 16px;
+      line-height: 16px;
+
+
+    }
+
+    img {
+      width: 16px;
+    }
+
+    span {
+      color: #fff;
+      font-size: 15px;
+      text-decoration: none;
+    }
+  }
+}
+
+.card-account-banner {
+  margin: 10px 10px 0px;
+  border-radius: 10px 10px 0px 0px;
+
+  .account-banner-img {
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+
+  }
+}
+
+
 #personal_vip_img {
   height: 14px;
+}
+
+@media (max-width: 430px) {
+  .acct-nav {
+    .acct-menu {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .vipcard .acct-section {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .vipcard .acct-section .right-sect {
+    width: 100%;
+    text-align: center;
+  }
+
+  .q-carousel.home {
+
+  }
+}
+
+@media (max-width: 350px) {
+  .acct-nav {
+    .acct-menu {
+
+      grid-template-columns: repeat(3, 1fr);
+      height: 380px;
+    }
+  }
 }
 </style>

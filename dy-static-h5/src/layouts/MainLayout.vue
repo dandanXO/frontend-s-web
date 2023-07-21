@@ -2,13 +2,13 @@
   <q-layout view="hHh Lpr fFf">
     <q-header v-if="hasPage" class="page-wrapper">
       <q-card-section
-        v-if="!hasPage"
-        class="top-section justify-between items-center"
-        horizontal
+          v-if="!hasPage"
+          class="top-section justify-between items-center"
+          horizontal
       >
         <div class="logo">
           <router-link to="/">
-            <img src="../assets/home/logo.png" />
+            <img src="../assets/index/logo.png"/>
           </router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
@@ -19,11 +19,11 @@
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
         </q-card-actions> -->
         <q-btn
-          v-if="store.hasToken()"
-          class="flex"
-          to="/finance/deposit"
-          no-caps
-          flat
+            v-if="store.hasToken()"
+            class="flex"
+            to="/finance/deposit"
+            no-caps
+            flat
         >
           <span style="font-size: 10px; margin-left: 5px; display: block">
             Deposit
@@ -32,7 +32,7 @@
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage ? '/' + prevPage : '/'">
-          <RiArrowDropLeftLine />
+          <RiArrowLeftLine/>
         </router-link>
         {{ pageName }}
         <q-btn v-if="hasDrawer" style="position:absolute; right: 10px;" flat @click="ui.drawerRight = !ui.drawerRight"
@@ -74,12 +74,13 @@
     </q-drawer> -->
 
     <q-drawer
-      side="right"
-      elevated
-      v-model="ui.drawerRight"
-      :width="200"
-      :breakpoint="500"
-      v-if="hasDrawer"
+        side="right"
+        elevated
+        overlay
+        v-model="ui.drawerRight"
+        :width="250"
+        :breakpoint="500"
+        v-if="hasDrawer"
     >
       <div class="q-pa-md bg-brightbtn">老虎机大厅</div>
       <div class="platforms">
@@ -88,12 +89,12 @@
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
           <q-btn
-            @click="changePlatform(plat)"
-            size="xs"
-            color="dyblue"
-            v-for="(plat, n) in platformsList"
-            :key="n"
-            :label="plat.icon"
+              @click="changePlatform(plat)"
+              size="md"
+              color="dyblue"
+              v-for="(plat, n) in platformsList"
+              :key="n"
+              :label="plat.icon"
           />
         </div>
       </q-scroll-area>
@@ -108,51 +109,63 @@
     </q-scroll-area> -->
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs
-        v-model="tab"
-        no-caps
-        class="bg-primary text-white shadow-2"
-        :breakpoint="0"
-        align="justify"
+          v-model="tab"
+          no-caps
+          class="bg-primary text-white "
+          :breakpoint="0"
+          align="justify"
       >
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/homeBar.png" />
+          <img class="inactive" src="../assets/images/index/menu/ft-home.svg"/>
           <img
-            class="hover"
-            src="../assets/images/index/menu/homeBar_active.png"
+              class="hover"
+              src="../assets/images/index/menu/ft-home-active.svg"
           />
           首页
         </q-route-tab>
-        <q-route-tab to="/promo" name="promo">
+        <q-route-tab to="/sport" name="sport">
           <img
-            class="inactive"
-            src="../assets/images/index/menu/promotionBar.png"
+              class="inactive"
+              src="../assets/images/index/menu/ft-sport.svg"
           />
           <img
-            class="hover"
-            src="../assets/images/index/menu/promotionBar_active.png"
+              class="hover"
+              src="../assets/images/index/menu/ft-sport-active.svg"
+          />
+          体育
+        </q-route-tab>
+
+        <q-route-tab to="/poker" name="poker">
+          <img
+              class="inactive"
+              src="../assets/images/index/menu/ft-poker.png"
+          />
+          <img
+              class="hover"
+              src="../assets/images/index/menu/ft-poker-active.png"
+          />
+          棋牌
+        </q-route-tab>
+        <q-route-tab to="/promo" name="promo">
+          <img
+              class="inactive"
+              src="../assets/images/index/menu/ft-promo.svg"
+          />
+          <img
+              class="hover"
+              src="../assets/images/index/menu/ft-promo-active.svg"
           />
           优惠
         </q-route-tab>
-        <q-route-tab to="/liveChat" id="cs-web-id" name="live">
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/customerBar.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/customerBar_active.png"
-          />
-          客服
-        </q-route-tab>
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/meBar.png" />
+          <img class="inactive" src="../assets/images/index/menu/ft-me.svg"/>
           <img
-            class="hover"
-            src="../assets/images/index/menu/meBar_active.png"
+              class="hover"
+              src="../assets/images/index/menu/ft-me-active.svg"
           />
           我的
         </q-route-tab>
@@ -162,20 +175,20 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, watch, computed } from "vue";
-import { userStore } from "stores/index";
-import { Platform } from "quasar";
-import { useUI } from "stores/ui";
-import { useRoute, useRouter } from "vue-router";
+import {defineComponent, onMounted, ref, watch, computed} from "vue";
+import {userStore} from "stores/index";
+import {Platform} from "quasar";
+import {useUI} from "stores/ui";
+import {useRoute, useRouter} from "vue-router";
 import {translateRecord} from "src/directives/translate";
 
-import { RiArrowDropLeftLine } from "vue-remix-icons";
+import {RiArrowLeftLine} from "vue-remix-icons";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    RiArrowDropLeftLine
+    RiArrowLeftLine
   },
 
   setup() {
@@ -190,10 +203,10 @@ export default defineComponent({
     const checkPlatform = () => {
       //Is iOS Webclip App || Is Android Apk
       if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
+          (Platform.is.ios &&
+              "standalone" in window.navigator &&
+              window.navigator.standalone) ||
+          (Platform.is.android && Platform.is.capacitor)
       ) {
         isH5.value = false;
       } else {
@@ -209,44 +222,107 @@ export default defineComponent({
       // Determine the tracking script URL based on the current domain
       let trackingScriptUrl = "";
       switch (currentDomain) {
-        case "m.dy6997.com":
-        case "m.dy8168.com":
-        case "m.dy8169.com":
-        case "m.dy8515.com":
-        case "m.dy9367.com":
-        case "m.dy6918.com":
-        case "m.dy6168.com":
-        case "m.dy5988.com":
-        case "m.dy1698.com":
+        case "m.dy86353.com":
+        case "m.dy80252.com":
+        case "www.dy86353.com":
+        case "www.dy80252.com":
+        case "dy86353.com":
+        case "dy80252.com":
           trackingScriptUrl =
-            "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+              "https://s9.cnzz.com/z_stat.php?id=1281279658&web_id=1281279658";
           break;
         case "m.dy93113.com":
         case "m.dy96108.com":
+        case "www.dy93113.com":
+        case "www.dy96108.com":
+        case "dy93113.com":
+        case "dy96108.com":
           trackingScriptUrl =
-            "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
+              "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
           break;
-        case "m.dy18178.com:8765":
-        case "m.dy50122.com:8765":
-        case "m.dy52506.com:8765":
-        case "m.dy53976.com:8765":
-        case "m.dy70679.com:8765":
-        case "m.dy73953.com:8765":
+        case "m.dy18178.com":
+        case "m.dy50122.com":
+        case "m.dy52506.com":
+        case "m.dy53976.com":
+        case "m.dy70679.com":
+        case "m.dy73953.com":
+        case "www.dy18178.com":
+        case "www.dy50122.com":
+        case "www.dy52506.com":
+        case "www.dy53976.com":
+        case "www.dy70679.com":
+        case "www.dy73953.com":
+        case "dy18178.com":
+        case "dy50122.com":
+        case "dy52506.com":
+        case "dy53976.com":
+        case "dy70679.com":
+        case "dy73953.com":
           trackingScriptUrl =
-            "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
-        case "m.dy52373.com:8765":
-        case "m.dy67892.com:8765":
-        case "m.dy93828.com:8765":
-        case "m.dy37378.com:8765":
-        case "m.dy35567.com:8765":
-        case "m.dy25952.com:8765":
-        case "m.dy87265.com:8765":
-        case "m.dy29892.com:8765":
-        case "m.dy38885.com:8765":
-        case "m.dy78299.com:8765":
+        case "m.dy52373.com":
+        case "m.dy67892.com":
+        case "m.dy93828.com":
+        case "m.dy37378.com":
+        case "m.dy35567.com":
+        case "m.dy25952.com":
+        case "m.dy87265.com":
+        case "m.dy29892.com":
+        case "m.dy38885.com":
+        case "m.dy78299.com":
+        case "www.dy52373.com":
+        case "www.dy67892.com":
+        case "www.dy93828.com":
+        case "www.dy37378.com":
+        case "www.dy35567.com":
+        case "www.dy25952.com":
+        case "www.dy87265.com":
+        case "www.dy29892.com":
+        case "www.dy38885.com":
+        case "www.dy78299.com":
+        case "dy52373.com":
+        case "dy67892.com":
+        case "dy93828.com":
+        case "dy37378.com":
+        case "dy35567.com":
+        case "dy25952.com":
+        case "dy87265.com":
+        case "dy29892.com":
+        case "dy38885.com":
+        case "dy78299.com":
+        case "www.dy9639.com":
+        case "www.dy8930.com":
+        case "www.dy7698.com":
+        case "www.dy7835.com":
+        case "www.dy8365.com":
+        case "www.dy9286.com":
+        case "www.dy8539.com":
+        case "www.dy8286.com":
+        case "www.dy7197.com":
+        case "www.dy7586.com":
+        case "dy9639.com":
+        case "dy8930.com":
+        case "dy7698.com":
+        case "dy7835.com":
+        case "dy8365.com":
+        case "dy9286.com":
+        case "dy8539.com":
+        case "dy8286.com":
+        case "dy7197.com":
+        case "dy7586.com":
+        case "m.dy9639.com":
+        case "m.dy8930.com":
+        case "m.dy7698.com":
+        case "m.dy7835.com":
+        case "m.dy8365.com":
+        case "m.dy9286.com":
+        case "m.dy8539.com":
+        case "m.dy8286.com":
+        case "m.dy7197.com":
+        case "m.dy7586.com":
           trackingScriptUrl =
-            "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
         default:
           return; // Don't load the tracking script for other domains
@@ -273,21 +349,21 @@ export default defineComponent({
       });
     };
     watch(
-      () => route.path,
-      async () => {
-        checkRoute();
-      }
+        () => route.path,
+        async () => {
+          checkRoute();
+        }
     );
 
     watch(
-      () => route.query,
-      async () => {
-        checkRoute();
-      }
+        () => route.query,
+        async () => {
+          checkRoute();
+        }
     );
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
-      ui.drawerRight = true;
+      ui.drawerRight = false;
     };
     const checkRoute = () => {
       if (route) {
@@ -300,7 +376,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform);
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform, "SLOT");
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
@@ -310,15 +386,17 @@ export default defineComponent({
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
-        } else if (route.path === "/poker") {
-          hasPage.value = true;
-          pageName.value = "Poker";
         } else if (route.path === "/e-sport") {
           hasPage.value = true;
           pageName.value = "电子竞技";
         } else if (route.path === "/sport") {
           hasPage.value = true;
           pageName.value = "体育";
+          ui.hiddenFooter();
+        } else if (route.path === "/poker") {
+          hasPage.value = false;
+          pageName.value = "棋牌";
+          ui.hiddenFooter();
         } else if (route.path === "/fish") {
           hasPage.value = true;
           pageName.value = "捕鱼达人";
@@ -336,6 +414,9 @@ export default defineComponent({
             } else {
               prevPage.value = "promo";
             }
+          } else if (route.query.redirect) {
+            var redirectPage = route.query.redirect;
+            prevPage.value = redirectPage;
           }
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";
@@ -356,7 +437,7 @@ export default defineComponent({
         } else if (route.path === "/account/personal") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "账户信息";
+          pageName.value = "个人信息";
         } else if (route.path === "/account/verifyTelephone") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -460,6 +541,14 @@ export default defineComponent({
           prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "催单记录";
+        } else if (route.path === "/account/vip") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = "VIP优惠";
+          if (route.query.redirect) {
+            var redirectPage = route.query.redirect;
+            prevPage.value = redirectPage;
+          }
         }
       }
     };
@@ -605,6 +694,9 @@ svg path {
 
 .page-wrapper {
   background: #4fb2ff;
+  background: url(../assets/images/common/bgheader.png) no-repeat center center;
+  padding-top: 0px;
+  background-size: cover;
 }
 
 .page-title {
@@ -612,5 +704,6 @@ svg path {
   display: flex;
   padding: 8px;
   font-weight: 500;
+  letter-spacing: 1px;
 }
 </style>

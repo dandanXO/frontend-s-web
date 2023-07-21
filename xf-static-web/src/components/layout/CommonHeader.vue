@@ -135,7 +135,7 @@
             class="sub-menu"
             :style="'height:' + height + 'px;'"
           >
-            <GameMenu ref="el" v-if="selectedMenu === 'Game'" />
+            <GameMenu :list="slotPlatform" ref="el" v-if="selectedMenu === 'Game'" />
             <SportsMenu
               ref="el"
               v-if="selectedMenu === 'Sports'"
@@ -800,6 +800,7 @@ import 'vue3-marquee/dist/style.css'
 import {useElementSize} from '@vueuse/core'
 import {InfoFilled, ArrowDown, Refresh} from '@element-plus/icons-vue'
 import {storeToRefs} from "pinia";
+import { getPlatformList } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {getSiteParamFromServer} from "@/api/index/site";
@@ -1589,8 +1590,14 @@ export default defineComponent({
     }
 
     let headTimer = null;
-
+    const slotPlatform = ref(null)
+    const sortMenu = () => {
+      getPlatformList().then((data) => {
+				slotPlatform.value = data.filter(element => element.gameType.includes("SLOT"));
+      })
+    }
     onMounted(() => {
+      sortMenu();
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
 
@@ -1958,7 +1965,9 @@ export default defineComponent({
       openMobileLogin,
       checkMaintenance,
       countdown,
-      startCountdown
+      startCountdown,
+      slotPlatform,
+      sortMenu
     }
   }
 });

@@ -40,7 +40,7 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
-    if (to.path === "/login" || to.path === "/register") {
+    if (to.path === "/login" || to.path === "/register" || to.path === '/forgot-account' || to.path === '/poker' || to.path === '/sport') {
       ui.hiddenFooter()
     } else {
       ui.showFooter()

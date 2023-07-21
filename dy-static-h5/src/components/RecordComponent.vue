@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-inner-loading :showing="loading">
-      <q-spinner-gears size="50px" color="brand" />
+      <q-spinner-gears size="50px" color="brand"/>
       <div class="label">加载中</div>
     </q-inner-loading>
     <div v-if="!loading">
@@ -14,22 +14,164 @@
             <template v-for="obj in Object.keys(det)" :key="obj">
               <div v-if="obj === head.key" class="desc">
                 <div v-if="obj === 'type'">
-                  {{ checkRecord(det[obj]) }}
+                  {{ translateRecord(det[obj], '') }}
+                </div>
+                <div v-else-if="obj === 'depositAmount'">
+
+                  <div class="row items-center justify-between">
+                    <div>{{ det[obj] }}</div>
+                    <div
+                        v-if="
+            (recordType === 'deposit') || (recordType === 'withdraw')"
+                        class="buttons"
+                    >
+                      <q-btn
+                          @click="copyText(det.serialNumber)"
+                          round
+                          size="xs"
+                          class="btn-deposit"
+                          color="bright"
+                      >
+                        <img src="../assets/records/copy-icon.png"/>
+                      </q-btn>
+                    </div>
+                  </div>
+
+                </div>
+                <div v-else-if="obj === 'withdrawAmount'">
+                  <div class="row items-center justify-between">
+                    <div>{{ det[obj] }}</div>
+
+                    <div
+                        v-if="
+             (recordType === 'withdraw' && det.status === 'STEP_1')"
+                        class="buttons"
+                    >
+                      <q-btn
+                          round
+                          size="xs"
+                          color="bright"
+                          class="btn-deposit"
+                          @click="feedbackTrans(det)"
+                      >
+                        <img src="../assets/records/quote-request-icon.png"/>
+                      </q-btn>
+                    </div>
+
+                  </div>
                 </div>
                 <div v-else-if="obj === 'status'">
-                  {{ checkRecord(det[obj]) }}
+                  <div class="row items-center justify-between">
+                    <div
+                        v-if="det[obj]=='PENDING' || det[obj]=='STEP_1'"
+                        class="row items-center justify-start gap-3">
+                      <!--                    <img src="../assets/records/info-icon.png"/>-->
+                      <span class="text-black text-bold">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+                    <div
+                        v-else-if="det[obj]=='SUCCESS' || det[obj]===2 || det[obj]=='SUPPLEMENT_SUCCESS'"
+                        class="row items-center justify-start gap-3">
+                      <img src="../assets/records/success-icon.png"/>
+                      <span class="text-positive">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+                    <div
+                        v-else-if="det[obj]=='FAIL'"
+                        class="row items-center justify-start gap-3">
+                      <img src="../assets/records/error-icon.png"/>
+                      <span class="text-negative">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+                    <div
+                        v-else-if="det[obj]=='CANCEL' "
+                        class="row items-center justify-start gap-3">
+                      <img src="../assets/records/warning-icon.png"/>
+                      <span class="text-warning">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+                    <div
+                        v-else
+                        class="row items-center justify-start gap-3">
+                      <!--                    <img src="../assets/records/info-icon.png"/>-->
+                      <span class="text-black text-bold">
+                      {{ checkRecord(det[obj], recordType) }}
+                    </span>
+                    </div>
+
+                    <div v-if="recordType === 'withdraw'" class="buttons">
+                      <template
+                          v-if="
+               det.status === 'SUCCESS' &&
+                det.currencyName === 'CNY' &&
+                det.confirmStatus === 0
+              "
+                      >
+                        <q-btn
+                            @click="openWithdrawConfirmDialog(det)"
+                            round
+                            size="md"
+                            class="btn-deposit bg-greyblue"
+                            icon="check_circle"
+                        />
+                      </template>
+                      <template
+                          v-if="
+                det.status === 'SUCCESS' &&
+                det.currencyName === 'CNY' &&
+                det.confirmStatus === 1
+              "
+                      >
+                        <q-btn
+                            disable
+                            outline
+                            round
+                            size="md"
+                            class="btn-deposit"
+                            color="positive"
+                            icon="check_circle"
+                        />
+                      </template>
+                    </div>
+                  </div>
+
+
                 </div>
                 <div v-else-if="obj === 'betStatus'">
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div v-else-if="obj === 'paymentType'">
-                  {{ checkRecord(det[obj]) }}
+
+                  <div class="row items-center justify-between">
+                    <div>{{ checkRecord(det[obj]) }}</div>
+                    <div
+                        v-if="
+            (recordType === 'deposit' && det.status === 'PENDING') "
+                        class="buttons"
+                    >
+                      <q-btn
+                          round
+                          size="xs"
+                          color="bright"
+                          class="btn-deposit"
+                          @click="feedbackTrans(det)"
+                      >
+                        <img src="../assets/records/quote-request-icon.png"/>
+                      </q-btn>
+                    </div>
+
+                  </div>
+
                 </div>
                 <div v-else-if="obj === 'gameType' || obj === 'platform'">
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div
-                  v-else-if="
+                    v-else-if="
                     obj === 'commitDate' ||
                     obj === 'feedbackTime' ||
                     obj === 'recordTime' ||
@@ -39,7 +181,7 @@
                   {{ humanDatetime(det[obj]) }}
                 </div>
                 <div
-                  v-else-if="
+                    v-else-if="
                     obj === 'platformCode' ||
                     obj === 'financeRemark' ||
                     obj === 'subType'
@@ -52,75 +194,19 @@
                 </div>
               </div>
             </template>
-            <!-- <div v-if="Object.keys(head.key)" class="desc">
-                            {{ det.value }}
 
-                        </div> -->
-          </div>
-          <div
-            v-if="
-            (recordType === 'deposit' && det.status === 'PENDING') || (recordType === 'withdraw' && det.status === 'STEP_1')"
-            class="buttons"
-          >
-            <q-btn
-              outline
-              label="催单"
-              size="sm"
-              color="bright"
-              class="q-mr-sm"
-              @click="feedbackTrans(det)"
-            />
-            <q-btn
-              @click="copyText(det.serialNumber)"
-              outline
-              label="复制"
-              size="sm"
-              color="bright"
-            />
-          </div>
-          <div v-if="recordType === 'withdraw'" class="buttons">
-            <template
-              v-if="
-                det.status === 'SUCCESS' &&
-                det.currencyName === 'CNY' &&
-                det.confirmStatus === 0
-              "
-            >
-              <q-btn
-                @click="openWithdrawConfirmDialog(det)"
-                outline
-                label="确认到账"
-                size="sm"
-                color="bright"
-              />
-            </template>
-            <template
-              v-if="
-                det.status === 'SUCCESS' &&
-                det.currencyName === 'CNY' &&
-                det.confirmStatus === 1
-              "
-            >
-              <q-btn
-                disable
-                outline
-                label="已确认"
-                size="sm"
-                color="bright"
-              />
-            </template>
           </div>
         </q-card>
 
         <template v-slot:loading>
           <div v-if="comList.length > 0">
             <div class="row justify-center q-my-md">
-              <q-spinner-dots color="primary" size="40px" />
+              <q-spinner-dots color="primary" size="40px"/>
             </div>
           </div>
           <div v-else class="q-pa-md" style="text-align: center">
             <div class="row justify-center q-my-md" v-if="!isEnded">
-              <q-spinner-dots color="primary" size="40px" />
+              <q-spinner-dots color="primary" size="40px"/>
             </div>
             <span style="padding: 4px 0px; line-height: 36px" v-if="isEnded">
               没有更多数据了
@@ -132,67 +218,67 @@
   </div>
 
   <q-input
-    style="width: 100%; opacity: 0"
-    filled
-    color="white"
-    ref="copyinput"
-    v-model="text_copied"
+      style="width: 100%; opacity: 0"
+      filled
+      color="white"
+      ref="copyinput"
+      v-model="text_copied"
   />
 
   <q-dialog
-    v-model="reminderDialog"
-    width="100%"
-    no-backdrop-dismiss
-    no-esc-dismis
+      v-model="reminderDialog"
+      width="100%"
+      no-backdrop-dismiss
+      no-esc-dismis
   >
     <q-card
-      class="reminder-dialog-card bg-white text-black"
-      style="width: 100%; padding: 0px 0px 20px"
+        class="reminder-dialog-card bg-white text-black"
+        style="width: 100%; padding: 0px 0px 20px"
     >
       <q-card-section>
         <q-toolbar>
           <q-toolbar-title>催单</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
+          <q-btn flat v-close-popup round dense icon="close"/>
         </q-toolbar>
       </q-card-section>
       <q-card-section>
         <q-form
-          ref="formRef"
-          v-model="reminderForm"
-          hide-required-mark
-          name="basic"
-          colon
-          autocomplete="off"
-          label-align="left"
-          label-cols="5"
-          class="reminder-dialog-form"
+            ref="formRef"
+            v-model="reminderForm"
+            hide-required-mark
+            name="basic"
+            colon
+            autocomplete="off"
+            label-align="left"
+            label-cols="5"
+            class="reminder-dialog-form"
         >
           <q-input
-            label="存款编码"
-            filled
-            v-model="reminderForm.orderNo"
-            color="white"
-            padding="none"
-            readonly
-            disable
+              label="存款编码"
+              filled
+              v-model="reminderForm.orderNo"
+              color="primary"
+              padding="none"
+              readonly
+              disable
           />
-          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef"/>
           <q-input
-            type="textarea"
-            v-model="reminderForm.memberRemark"
-            label="备注"
-            filled
-            autogrow
-            color="white"
-            class="q-mt-md"
-            :rows="2"
-            :max-rows="5"
+              type="textarea"
+              v-model="reminderForm.memberRemark"
+              label="备注"
+              filled
+              autogrow
+              color="primary"
+              class="q-mt-md"
+              :rows="2"
+              :max-rows="5"
           />
           <q-btn
-            class="common-btn q-mt-md"
-            color="brand"
-            label="提交"
-            @click="submitReminder"
+              class="common-btn q-mt-md"
+              color="dyblue"
+              label="提交"
+              @click="submitReminder"
           />
         </q-form>
       </q-card-section>
@@ -200,24 +286,24 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isConfirmWithdraw">
-    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+    <q-card style="width: 100%; padding: 20px;text-align: center;" class="bg-white text-black">
       <q-card-section class="q-mb-md">
         系统提示
-        <br />
-        <br />
+        <br/>
+        <br/>
         确认到账
       </q-card-section>
-      <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue" />
+      <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue"/>
     </q-card>
   </q-dialog>
 </template>
 <script>
-import { defineComponent, onMounted, ref, reactive } from "vue";
+import {defineComponent, onMounted, ref, reactive} from "vue";
 import moment from "moment";
 import FileUpload from "components/FileUpload.vue";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
-import { translateRecord } from "../directives/translate.js";
+import {api} from "boot/axios";
+import {useQuasar} from "quasar";
+import {translateRecord} from "../directives/translate.js";
 
 export default defineComponent({
   components: {
@@ -256,7 +342,7 @@ export default defineComponent({
     }
   },
   emits: ["loadnewdata"],
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     const truncatedList = ref([]);
     const comList = ref({});
     const $q = useQuasar();
@@ -296,30 +382,30 @@ export default defineComponent({
       };
 
       api
-        .post("/session/withdraw/confirm", qs.stringify(obj))
-        .then((response) => {
-          // Handle the response
-          if (response.code === 0) {
-            isConfirmWithdraw.value = false;
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: "已经确认到账",
-              icon: "check_circle_outline"
-            });
-          }
+          .post("/session/withdraw/confirm", qs.stringify(obj))
+          .then((response) => {
+            // Handle the response
+            if (response.code === 0) {
+              isConfirmWithdraw.value = false;
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "已经确认到账",
+                icon: "check_circle_outline"
+              });
+            }
 
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
 
-          // console.log(response);
-        })
+            // console.log(response);
+          })
 
-        .catch((error) => {
-          // Handle the error
-          console.error(error);
-        });
+          .catch((error) => {
+            // Handle the error
+            console.error(error);
+          });
     };
 
     const copyinput = ref(null);
@@ -394,22 +480,22 @@ export default defineComponent({
       }
 
       api
-        .post("/session/saveFinanceFeedback", qs.stringify(reminderForm))
-        .then((res) => {
-          // console.log(reminderForm)
-          const ret = res.data;
-          if (res.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: "催单提交成功！",
-              icon: "check_circle_outline"
-            });
-            reminderDialog.value = false;
-            reminderForm.value = {};
-            uploadFileRef.value.clear();
-          }
-        });
+          .post("/session/saveFinanceFeedback", qs.stringify(reminderForm))
+          .then((res) => {
+            // console.log(reminderForm)
+            const ret = res.data;
+            if (res.code === 0) {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "催单提交成功！",
+                icon: "check_circle_outline"
+              });
+              reminderDialog.value = false;
+              reminderForm.value = {};
+              uploadFileRef.value.clear();
+            }
+          });
     };
 
     return {
@@ -419,6 +505,7 @@ export default defineComponent({
       checkRecord(status) {
         return translateRecord(status, props.recordType);
       },
+      translateRecord,
       onLoad,
       truncatedList,
       comList,
@@ -443,16 +530,21 @@ export default defineComponent({
   font-size: 16px;
   display: flex;
   justify-content: flex-start;
-  gap: 30px;
+  gap: 10px;
   margin: 0 0 10px;
 
   .label {
+    color: #0089ED;
     flex: 1;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
   }
 
   .desc {
-    flex: 3;
+    flex: 4;
     word-break: break-all;
+    letter-spacing: 1px;
   }
 }
 
@@ -462,5 +554,10 @@ export default defineComponent({
 
 .buttons {
   text-align: right;
+}
+
+.btn-deposit {
+  background: #0089ED10 !important;
+  width:24px;
 }
 </style>

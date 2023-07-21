@@ -1,12 +1,22 @@
 import {defineStore} from "pinia";
 import {api, cashier, eventapi} from "boot/axios";
+import {isAndroid} from "boot/utils";
 import {SessionStorage, Notify, Platform} from "quasar";
+import LocalStorage from "boot/local-storage";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
 
 export const userStore = defineStore("userStore", {
     state: () => {
+        const getStoreToken = () => {
+            if (isAndroid()) {
+                return LocalStorage.getItem("TOKEN", "");
+            } else {
+                return SessionStorage.getItem("TOKEN") || "";
+            }
+        };
+
         return {
             id: 0,
             profilePicture: "",
@@ -18,19 +28,32 @@ export const userStore = defineStore("userStore", {
             email: "",
             memberType: "",
             balance: 0,
-            token: SessionStorage.getItem("TOKEN") || "",
+            token: getStoreToken(),
             vip: "",
             evip: "",
             currency: {value: "￥", label: "RMB"},
-            personalAddress: '',
+            personalAddress: "",
+            levelUpDeposit: 0,
+            currentDeposit: 0,
             unreadInboxMail: 0,
             phoneVerified: false,
-            emailVerified: false
+            emailVerified: false,
+            hasCheckedVersion: false,
+            hasClosedDL: false
         };
     },
     actions: {
         hasToken() {
-            return !!SessionStorage.getItem("TOKEN");
+            if (isAndroid()) {
+                // console.log("android");
+                if (LocalStorage.getItem("TOKEN", "") !== "") {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return !!SessionStorage.getItem("TOKEN");
+            }
         },
         getDeviceType() {
             var regDevice = Platform.is.mobile ? "H5" : "WEB";
@@ -79,7 +102,11 @@ export const userStore = defineStore("userStore", {
             var string = qs.stringify(loginInfo);
             return api.post("/member/login", string).then((ret) => {
                 if (ret.code === 0) {
-                    SessionStorage.set("TOKEN", ret.data);
+                    if (isAndroid()) {
+                        LocalStorage.set("TOKEN", ret.data, 86400);
+                    } else {
+                        SessionStorage.set("TOKEN", ret.data);
+                    }
                 } else {
                     Notify.create({
                         color: "negative",
@@ -104,7 +131,11 @@ export const userStore = defineStore("userStore", {
             var string = qs.stringify(loginInfo);
             return api.post("/member/mobileLogin", string).then((ret) => {
                 if (ret.code === 0) {
-                    SessionStorage.set("TOKEN", ret.data);
+                    if (isAndroid()) {
+                        LocalStorage.set("TOKEN", ret.data, 86400);
+                    } else {
+                        SessionStorage.set("TOKEN", ret.data);
+                    }
                 } else {
                     Notify.create({
                         color: "negative",
@@ -117,17 +148,32 @@ export const userStore = defineStore("userStore", {
         },
         getMemberInfo() {
             api.interceptors.request.use(async (req) => {
-                const token = SessionStorage.getItem("TOKEN");
+                var token;
+                if (isAndroid()) {
+                    token = LocalStorage.getItem("TOKEN");
+                } else {
+                    token = SessionStorage.getItem("TOKEN");
+                }
                 req.headers.token = token;
                 return req;
             });
             cashier.interceptors.request.use(async (req) => {
-                const token = SessionStorage.getItem("TOKEN");
+                var token;
+                if (isAndroid()) {
+                    token = LocalStorage.getItem("TOKEN");
+                } else {
+                    token = SessionStorage.getItem("TOKEN");
+                }
                 req.headers.TOKEN = token;
                 return req;
             });
             eventapi.interceptors.request.use(async (req) => {
-                const token = SessionStorage.getItem("TOKEN");
+                var token;
+                if (isAndroid()) {
+                    token = LocalStorage.getItem("TOKEN");
+                } else {
+                    token = SessionStorage.getItem("TOKEN");
+                }
                 req.headers.TOKEN = token;
                 return req;
             });
@@ -142,10 +188,16 @@ export const userStore = defineStore("userStore", {
                     this.memberType = response.data.memberType;
                     this.vip = response.data.vip;
                     this.profilePicture = response.data.pictureUrl;
-                    this.displayName = response.data.displayName
+                    this.displayName = response.data.displayName;
                     // this.personalAddress = response.data.personalAddress
                     this.phoneVerified = response.data.phoneVerified;
                     this.emailVerified = response.data.emailVerified;
+                    this.levelUpDeposit = response.data.levelUpDeposit
+                        ? parseInt(response.data.levelUpDeposit)
+                        : 0;
+                    this.currentDeposit = response.data.currentDeposit
+                        ? parseInt(response.data.currentDeposit)
+                        : 0;
                     if (response.data.evip) {
                         var exclusive = JSON.parse(response.data.evip);
                         this.evip = exclusive.wap;
@@ -178,24 +230,28 @@ export const userStore = defineStore("userStore", {
         },
         getUnreadTotal() {
             if (this.token) {
-                return api.get('/session/inbox/getUnreadTotal').then((total) => {
+                return api.get("/session/inbox/getUnreadTotal").then((total) => {
                     console.log(total);
                     if (total.code === 0) {
                         this.unreadInboxMail = total.data;
                     }
-                })
+                });
             }
         },
         autoLogin(token) {
-            SessionStorage.set("TOKEN", token);
+            if (isAndroid()) {
+                LocalStorage.set("TOKEN", token, 86400);
+            } else {
+                SessionStorage.set("TOKEN", token);
+            }
         },
         memberLogout() {
-            return api
-                .post("/session/logout")
-                .then(() => {
-                    SessionStorage.remove("TOKEN");
-                    location.reload();
-                });
+            return api.post("/session/logout").then(() => {
+                LocalStorage.remove("TOKEN");
+                SessionStorage.remove("TOKEN");
+
+                location.reload();
+            });
         }
     }
 });

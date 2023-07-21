@@ -208,7 +208,7 @@
         为保证资金安全，存款前需先验证手机号
       </q-card-section>
       <q-card-actions align="right">
-        <router-link to="/account/personal">
+        <router-link to="/account/verifyTelephone">
           <q-btn label="前往验证" color="dyblue"/>
         </router-link>
       </q-card-actions>

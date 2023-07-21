@@ -95,14 +95,14 @@ export default defineComponent({
       });
 
       //CsClient Event Listener.
-      // window.addEventListener('message', function (event) {
-      //   console.log("Message received from the iframe: " + event.data); // Message received from child
-      //   if (_.isString(event.data)) {
-      //     if (event.data == 'closenotice') {
-      //       router.go(-1);
-      //     }
-      //   }
-      // });
+      window.addEventListener('message', function (event) {
+        // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
+        if (_.isString(event.data)) {
+          // if (event.data == 'sess_timeout') {
+          //   router.push({ path: "/" });
+          // }
+        }
+      });
     };
     onMounted(() => {
       checkSID();

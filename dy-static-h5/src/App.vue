@@ -1,19 +1,23 @@
 <template>
-  <router-view />
+  <router-view/>
 </template>
 
 <script>
-import { defineComponent, onMounted } from "vue";
-import { Platform, useQuasar } from "quasar";
+import {defineComponent, onMounted} from "vue";
+import {Platform, useQuasar} from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { api } from "boot/axios";
+import {api} from "boot/axios";
 import CsClient from "csweb-client";
-import { userStore } from "src/stores";
+import {userStore} from "src/stores";
+import {cached} from "boot/cache";
+import {useRouter} from "vue-router";
+import {isAndroid, isHuaweiPhone} from "boot/utils";
 
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
+    var router = useRouter();
     const store = userStore();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
@@ -23,8 +27,8 @@ export default defineComponent({
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
+        const excludes = {value: ["timezone", "timeZoneOffset"]};
+        const allComponents = {...result.components};
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
@@ -43,21 +47,19 @@ export default defineComponent({
     let CSAUrl;
 
     const getCSA = () => {
-      api
-        .get("/config/customerAddress")
-        .then((res) => {
-          // console.log(res);
-          // res.data = https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=
-          // CSAUrl = res.data;
-          const url = new URL(res.data);
-          CSAUrl = url.hostname;
-          initCsWeb();
-          console.log(CSAUrl)
-        })
-        .catch((err) => {
-          console.log(err);
-          CSAUrl = "csweb01.c8nhwrqx4.com";
-        });
+      cached.get("customerAddress", () => api.get("/config/customerAddress").then((res) => {
+        return res
+      })).then((data) => {
+        // console.log("here");
+        // console.log(data);
+        const url = new URL(data);
+        CSAUrl = url.hostname;
+        initCsWeb();
+        console.log(CSAUrl)
+      }).catch((err) => {
+        console.log(err);
+        CSAUrl = "csweb01.c8nhwrqx4.com";
+      });
     };
 
     const initCsWeb = () => {
@@ -66,12 +68,12 @@ export default defineComponent({
 
       // 'DYCS' / 4
       csclient = new CsClient(
-        "DYCS",
-        regDevice,
-        "zh-CN",
-        "2",
-        "prod",
-        `https://${CSAUrl}`
+          "DYCS",
+          regDevice,
+          "zh-CN",
+          "2",
+          "prod",
+          `https://${CSAUrl}`
       );
       // csclient = new CsClient('DYCS', regDevice, 'zh-CN', '2','local', '');
 
@@ -96,19 +98,23 @@ export default defineComponent({
       });
 
       //CsClient Event Listener.
-      // window.addEventListener('message', function (event) {
-      //   console.log("Message received from the iframe: " + event.data); // Message received from child
-      //   if (_.isString(event.data)) {
-      //     if (event.data == 'closenotice') {
-      //       router.go(-1);
-      //     }
-      //   }
-      // });
+      window.addEventListener('message', function (event) {
+        // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
+        if (_.isString(event.data)) {
+          // if (event.data == 'sess_timeout') {
+          //   router.push({path: "/liveChat"});
+          // }
+        }
+      });
     };
     onMounted(() => {
       checkSID();
       // initCsWeb();
       getCSA();
+      if (isAndroid() && !isHuaweiPhone()) {
+        window.screen.orientation.lock('portrait');
+      }
+
     });
   }
 });

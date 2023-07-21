@@ -5,6 +5,17 @@
         <span class="role-span">{{ $t('menu.Bank Withdrawal') }}</span>
       </div>
     </template>
+    <el-card style="width: fit-content; padding-right: 200px; margin-bottom: 20px;">
+      <div class="card-panel-description">
+        <div class="card-panel-text">{{ $t('fields.balance') }}<el-icon class="pointer" @click="loadAffiliateBalance"><Refresh /></el-icon></div>
+        <span v-if="showBalance" class="card-panel-num">
+          $ <span v-formatter="{data: balance,type: 'money'}" />
+        </span>
+        <span v-else>****</span>
+        <el-icon v-if="!showBalance" class="pointer" @click="showBalance = true"><View /></el-icon>
+        <el-icon v-else class="pointer" @click="showBalance = false"><Hide /></el-icon>
+      </div>
+    </el-card>
     <el-row>
       <el-form ref="formRef" :model="withdrawInfo" label-position="left" :rules="withdrawRules">
         <el-form-item :label="t('fields.selectACard')">
@@ -64,229 +75,217 @@
   </el-card>
 </template>
 
-<script>
-import { defineComponent, reactive, ref, onMounted } from "vue";
-// import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/affiliate";
+<script setup>
+import { View, Hide, Refresh } from "@element-plus/icons-vue";
+import { reactive, ref, onMounted } from "vue";
 import { ElMessageBox, ElNotification } from 'element-plus';
-import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/affiliate";
+import { loadBankCards, confirmWithdraw, withdrawEntrance, getAffiliateBalance } from "@/api/affiliate";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-// import { useStore } from "@/store"
+import { useStore } from "@/store";
 
-export default defineComponent({
-  setup() {
-    const router = useRouter();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
-    const formRef = ref();
-    const activeItem = ref(0);
-    const { t } = useI18n();
-    const isUSDT = ref(false);
-    const withdrawState = reactive({
-      bankCardList: [],
-    });
-    const withdrawInfo = reactive({
-      cardId: undefined,
-      amount: "",
-    });
-    // const store = useStore();
-    const withdrawalMethods = ref([])
-    onMounted(() => {
-      getWithdrawalMethods()
-    });
-    const submitWithdraw = () => {
-      formRef.value
-        .validate((valid) => {
-          if (valid) {
-            confirmWithdraw(withdrawInfo).then((response) => {
-              if (response.code === 0) {
-                ElMessageBox.confirm(
-                  t('message.redirectBankDeposit'),
-                  '',
-                  {
-                    confirmButtonText: t('fields.confirm'),
-                    cancelButtonText: t('fields.cancel'),
-                    type: 'info'
-                  })
-              } else {
-                ElNotification({
-                  title: 'Error',
-                  message: response.message,
-                  showClose: false,
-                  type: 'error'
-                })
-              }
-            }).catch((error) => {
-              console.log("error", error);
-            });
-          }
-        })
-    };
-    var checkAmt = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error(t('message.requiredAmount')));
+const withdrawalMethods = ref([])
+const store = useStore();
+const router = useRouter();
+const formRef = ref();
+const activeItem = ref(0);
+const { t } = useI18n();
+const isUSDT = ref(false);
+const balance = ref(0);
+const showBalance = ref(false);
+const withdrawState = reactive({
+  bankCardList: [],
+});
+const withdrawInfo = reactive({
+  cardId: undefined,
+  amount: "",
+});
+
+const checkAmt = (rule, value, callback) => {
+  if (!value) {
+    return callback(new Error(t('message.requiredAmount')));
+  }
+  setTimeout(() => {
+    if (!Number.isInteger(value)) {
+      callback(new Error(t('message.inputDigits')));
+    } else {
+      if (value < selectedWithdrawalMethod.value.withdrawMin - 1 || value > selectedWithdrawalMethod.value.withdrawMax + 1) {
+        callback(new Error(`Amount should be between ${selectedWithdrawalMethod.value.withdrawMin} & ${selectedWithdrawalMethod.value.withdrawMax}`));
+      } else {
+        callback();
       }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error(t('message.inputDigits')));
-        } else {
-          if (value < selectedWithdrawalMethod.value.withdrawMin - 1 || value > selectedWithdrawalMethod.value.withdrawMax + 1) {
-            callback(new Error(`Amount should be between ${selectedWithdrawalMethod.value.withdrawMin} & ${selectedWithdrawalMethod.value.withdrawMax}`));
+    }
+  }, 1000);
+};
+
+function submitWithdraw() {
+  formRef.value
+    .validate((valid) => {
+      if (valid) {
+        confirmWithdraw(withdrawInfo).then((response) => {
+          if (response.code === 0) {
+            ElMessageBox.confirm(
+              t('message.redirectBankDeposit'),
+              '',
+              {
+                confirmButtonText: t('fields.confirm'),
+                cancelButtonText: t('fields.cancel'),
+                type: 'info'
+              })
+            loadAffiliateBalance();
+            formRef.value.resetFields();
           } else {
-            callback();
+            ElNotification({
+              title: 'Error',
+              message: response.message,
+              showClose: false,
+              type: 'error'
+            })
           }
-        }
-      }, 1000);
-    };
-    const validateSelection = async (r, v) => {
-      if (!isUSDT.value) {
-        if (v === null) {
-          return Promise.reject(new Error(t('message.selectBankCard')));
-        } else {
-          return Promise.resolve();
-        }
-      } else if (isUSDT.value) {
-        if (v === null) {
-          return Promise.reject(new Error(t('message.selectUsdtWallet')));
-        } else {
-          return Promise.resolve();
-        }
+        }).catch((error) => {
+          console.log("error", error);
+        });
       }
+    })
+};
+
+const validateSelection = async (r, v) => {
+  if (!isUSDT.value) {
+    if (v === null) {
+      return Promise.reject(new Error(t('message.selectBankCard')));
+    } else {
       return Promise.resolve();
-    };
-    const withdrawRules = {
-      amount: [
-        {
-          required: true,
-          message: t('message.requiredAmount'),
-          trigger: "blur",
-        },
-        { validator: checkAmt, trigger: 'blur' }
-        // {
-        //   pattern: '^([1-9][0-9]*)$',
-        //   message: "amount should be a positive number",
-        //   trigger: "change",
-        // },
-      ],
-      cardId: [
-        {
-          required: true,
-          validator: validateSelection,
-          trigger: "blur"
-        }
-      ]
-    };
-    const selectedCard = ref([])
-    const selectedWithdrawalMethod = ref([])
-    const selectMethod = (method, index) => {
-      selectedCard.value = []
-      withdrawInfo.withdrawCode = null;
-      withdrawInfo.cardId = null;
-      selectedWithdrawalMethod.value = method
-      withdrawInfo.withdrawCode = method.code;
-      activeItem.value = index;
-      if (withdrawInfo.withdrawCode.includes('USDT')) {
-        isUSDT.value = true
-      } else {
-        isUSDT.value = false
-      }
-      loadCards()
     }
-    const checkBankCards = () => {
-      if (isUSDT.value === true) {
-        ElMessageBox.alert(
-          t('message.bindUsdtWallet'), t('fields.systemAlert'),
-          {
-            showClose: false,
-            showCancelButton: false,
-            confirmButtonText: t('fields.confirm'),
-            draggable: false,
-            buttonSize: 'small',
-            closeOnClickModal: false,
-            center: true,
-          }
-        )
-          .then(() => {
-            router.push('/affiliate/bankCard')
-          })
-          .catch(() => {
-          })
-      } else {
-        ElMessageBox.alert(
-          t('message.bindBankCard'), t('fields.systemAlert'),
-          {
-            showClose: false,
-            showCancelButton: false,
-            confirmButtonText: t('fields.confirm'),
-            draggable: false,
-            buttonSize: 'small',
-            closeOnClickModal: false,
-            center: true,
-          }
-        )
-          .then(() => {
-            router.push('/affiliate/bankCard')
-          })
-          .catch(() => {
-          })
-      }
+  } else if (isUSDT.value) {
+    if (v === null) {
+      return Promise.reject(new Error(t('message.selectUsdtWallet')));
+    } else {
+      return Promise.resolve();
     }
-    const loadCards = () => {
-      withdrawState.bankCardList = []
-      loadBankCards().then((response) => {
-        if (response.code === 0) {
-          response.data.forEach(element => {
-            if (element.bankType === 'BANK') {
-              if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element)
-              }
-            } else {
-              if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element)
-              }
-            }
-          });
+  }
+  return Promise.resolve();
+};
+
+const withdrawRules = {
+  amount: [
+    {
+      required: true,
+      message: t('message.requiredAmount'),
+      trigger: "blur",
+    },
+    { validator: checkAmt, trigger: 'blur' }
+  ],
+  cardId: [
+    {
+      required: true,
+      validator: validateSelection,
+      trigger: "blur"
+    }
+  ]
+};
+
+const selectedCard = ref([])
+const selectedWithdrawalMethod = ref([])
+
+const selectMethod = (method, index) => {
+  selectedCard.value = []
+  withdrawInfo.withdrawCode = null;
+  withdrawInfo.cardId = null;
+  selectedWithdrawalMethod.value = method
+  withdrawInfo.withdrawCode = method.code;
+  activeItem.value = index;
+  if (withdrawInfo.withdrawCode.includes('USDT')) {
+    isUSDT.value = true
+  } else {
+    isUSDT.value = false
+  }
+  loadCards()
+}
+
+function checkBankCards() {
+  if (isUSDT.value === true) {
+    ElMessageBox.alert(
+      t('message.bindUsdtWallet'), t('fields.systemAlert'),
+      {
+        showClose: false,
+        showCancelButton: false,
+        confirmButtonText: t('fields.confirm'),
+        draggable: false,
+        buttonSize: 'small',
+        closeOnClickModal: false,
+        center: true,
+      }
+    )
+      .then(() => {
+        router.push('/affiliate/bankCard')
+      })
+      .catch(() => {
+      })
+  } else {
+    ElMessageBox.alert(
+      t('message.bindBankCard'), t('fields.systemAlert'),
+      {
+        showClose: false,
+        showCancelButton: false,
+        confirmButtonText: t('fields.confirm'),
+        draggable: false,
+        buttonSize: 'small',
+        closeOnClickModal: false,
+        center: true,
+      }
+    )
+      .then(() => {
+        router.push('/affiliate/bankCard')
+      })
+      .catch(() => {
+      })
+  }
+}
+
+function loadCards() {
+  withdrawState.bankCardList = []
+  loadBankCards().then((response) => {
+    if (response.code === 0) {
+      response.data.forEach(element => {
+        if (element.bankType === 'BANK') {
+          if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+            withdrawState.bankCardList.push(element)
+          }
+        } else {
+          if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+            withdrawState.bankCardList.push(element)
+          }
         }
-      }).catch((error) => {
-        console.log("error", error);
       });
     }
-    const getWithdrawalMethods = () => {
-      // withdrawalMethods.value = [
-      //   { currencyId: 6, name: "withdraw_bank", code: "BANK", icon: "71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png", withdrawMin: 1000.00, withdrawMax: 10000.00, withdrawMaxAmount: 30000.00, withdrawMaxTimes: 3 },
-      //   { currencyId: 6, name: "withdraw_gcash", code: "GCASH", icon: "c9d92237-4e44-4ee7-92c7-ceb5214f225f.png", withdrawMin: 1000.00, withdrawMax: 10000.00, withdrawMaxAmount: 30000.00, withdrawMaxTimes: 3 }
-      // ]
-      // selectMethod(withdrawalMethods.value[0], 0)
-      withdrawEntrance().then((response) => {
-        if (response.code === 0) {
-          withdrawalMethods.value = response.data
-          selectMethod(withdrawalMethods.value[0], 0)
-        } else {
-          ElNotification({
-            title: 'Error',
-            showClose: false,
-            type: 'response.message'
-          })
-        }
+  }).catch((error) => {
+    console.log("error", error);
+  });
+}
+
+function getWithdrawalMethods() {
+  withdrawEntrance().then((response) => {
+    if (response.code === 0) {
+      withdrawalMethods.value = response.data
+      selectMethod(withdrawalMethods.value[0], 0)
+    } else {
+      ElNotification({
+        title: 'Error',
+        showClose: false,
+        type: 'response.message'
       })
     }
-    return {
-      formRef,
-      withdrawInfo,
-      submitWithdraw,
-      withdrawRules,
-      withdrawState,
-      withdrawalMethods,
-      activeItem,
-      selectMethod,
-      imgURL,
-      selectedWithdrawalMethod,
-      loadCards,
-      selectedCard,
-      checkBankCards,
-      isUSDT,
-      t
-    };
-  }
+  })
+}
+
+async function loadAffiliateBalance() {
+  const { data: bal } = await getAffiliateBalance(store.state.user.id);
+  balance.value = bal;
+}
+
+onMounted(() => {
+  getWithdrawalMethods()
+  loadAffiliateBalance();
 });
 </script>
 <style>
@@ -315,6 +314,34 @@ export default defineComponent({
   flex-direction: column;
     line-height: 20px;
     padding: 10px 0;
+}
+
+.card-panel-description {
+  font-weight: 700;
+  margin-left: 0;
+}
+
+.card-panel-description .card-panel-text {
+  line-height: 18px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.card-panel-description .card-panel-link-text {
+  line-height: 18px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.card-panel-description .card-panel-num {
+  font-size: 20px;
+}
+
+.pointer {
+  cursor: pointer;
+  padding: 10px;
 }
   .account-tip.remain-box {
     margin-left: 200px;

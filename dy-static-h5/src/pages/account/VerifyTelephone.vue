@@ -1,6 +1,6 @@
 <template>
-  <div class="personal-account">
-    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
+  <div class="verify-section">
+<!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -11,10 +11,9 @@
           v-model="formDetail.phone"
           type="tel"
           label="手机号码"
+          clearable
           lazy-rules
           :rules="[(_) => isValidPhone()]"
-          label-color=""
-          color=""
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
         ></q-input>
@@ -74,7 +73,10 @@
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" label="验证码">
+          <q-input v-model="innerCaptchaRef"
+                   ref="refInnerCaptchaCode"
+                   :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+                   label="验证码">
             <template v-slot:append>
               <img
                 :src="verificationImg"
@@ -283,7 +285,7 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
-
+    const refInnerCaptchaCode= ref();
 
 
     const isValidName = () => {
@@ -293,6 +295,7 @@ export default defineComponent({
     };
 
     const isValidPhone = () => {
+
       const phonePattern =
           /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
       return phonePattern.test(formDetail.phone) || "请输入有效的电话号码";
@@ -310,6 +313,16 @@ export default defineComponent({
           color: "negative",
           position: "top",
           message: "手机号码不能为空",
+          icon: "report_problem"
+        });
+        getCode();
+        return;
+      }
+      if(refInnerCaptchaCode.value.hasError){
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "验证码必须为4个字符串",
           icon: "report_problem"
         });
         getCode();
@@ -377,7 +390,7 @@ export default defineComponent({
       moment,
       canEdit,
       isValidName,
-
+      refInnerCaptchaCode,
       showVerificationTokenInput,
       isValidPhone,
       captchaRef,
@@ -392,7 +405,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.personal-account {
+.verify-section {
   padding: 10px;
 
   .web {
@@ -406,9 +419,29 @@ export default defineComponent({
   input.q-placeholder {
     color: #333333 !important;
   }
+  .q-field{
+    //border: 1px solid #d7d7d7;
+
+    margin-bottom: 10px;
+
+    .q-field__control{
+      border: 1px solid #d7d7d7;
+    }
+    .q-field__inner{
+      border: 0px;
+      border-radius:10px;
+    }
+  }
+  .q-field__native{
+
+  }
+
+  .q-field--standout.q-field--readonly .q-field__control:before{
+    border: 0px;
+  }
 }
 
 .q-toolbar{
-  background: #5b80e8;
+  background: #0089ED;
 }
 </style>

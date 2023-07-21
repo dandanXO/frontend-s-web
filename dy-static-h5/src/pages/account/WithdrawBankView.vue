@@ -1,53 +1,64 @@
 <template>
   <div class="withdrawBankView">
-    <div class="q-pa-md text-bold text-center" style="color: #33bcd4">
-      专属网址：{{ store.evip }}
-    </div>
+    <!--    <div class="q-pa-md text-bold text-center" style="color: #33bcd4">-->
+    <!--      专属网址：{{ store.evip }}-->
+    <!--    </div>-->
     <div class="widthdrawBankView--content">
       <div class="account-content text-center">
         <div class="flex-box flex-wrap bank-card-list">
           <template
-            v-for="(bc, index) in personalState.bankCardList"
-            :key="bc.id"
+              v-for="(bc, index) in personalState.bankCardList"
+              :key="bc.id"
           >
             <q-card
-              v-if="bc.bankName"
-              @click="showCard(bc, index)"
-              class="q-pa-sm text-left"
-              style="color: #000; border-radius: 0"
+                v-if="bc.bankName"
+                @click="showCard(bc, index)"
+                class="q-pa-sm text-left row items-center"
             >
-              <div class="cardname q-pa-xs">
-                <div class="txt-center">
-                  {{ bc.bankName }}
-                  <!-- <div>Bank Account Number</div> -->
-                </div>
+              <div class="bank-icon-div">
+                <img src="../../assets/account/bank-icon.png"/>
               </div>
-              <q-separator class="q-my-xs" style="background: #666" />
-              <div class="bottom q-pa-xs">
-                <div class="flex-box cards">
-                  <div
-                    v-for="b in bc.cardNumber.split()"
-                    :key="b"
-                    class="card-num-box"
-                  >
-                    ****{{ b.slice(b.length - 4, b.length) }}
+              <div class="bank-card-info">
+                <div class="cardname q-pa-xs">
+                  <div class="txt-center">
+                    {{ bc.bankName }}
+                    <!-- <div>Bank Account Number</div> -->
                   </div>
                 </div>
-                <q-btn
-                  @click="unbindBankCard(bc)"
-                  color="dyblue"
-                  label="解绑"
-                  style="background-color: rgb(46, 66, 148)"
-                />
+                <div class="bottom q-pa-xs">
+                  <div class="flex-box cards">
+                    <div
+                        v-for="b in bc.cardNumber.split()"
+                        :key="b"
+                        class="card-num-box"
+                    >
+                      ****{{ b.slice(b.length - 4, b.length) }}
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div class="unbind-card-div">
+                <q-btn
+                    @click="unbindBankCard(bc)"
+                    class="unbind-btn"
+                    rounded
+                    color="secondary"
+                >
+                  解绑
+                  <!--                  <img src="../../assets/account/unbind-icon.png"/>-->
+                </q-btn>
+              </div>
+
             </q-card>
           </template>
           <div class="q-pa-sm widthdrawBankView--content-cta">
             <q-btn
-              color="dyblue"
-              style="width: 100%"
-              label="绑定银行卡"
-              @click="bankCardModal('bank')"
+                color="dyblue"
+                style="width: 100%"
+                label="添加银行卡/虚拟币账户"
+                icon="add_circle_outline"
+                @click="bankCardModal('bank')"
+                class="add-card-btn"
             />
           </div>
         </div>
@@ -67,51 +78,51 @@
             <div class="row q-col-gutter-xs">
               <div class="col-12">
                 <q-select
-                  v-model="selectedBankType"
-                  filled
-                  :options="[{ name: '银行卡' }, { name: '数字货币' }]"
-                  label="银行 / 数字货币"
-                  color="blue"
-                  label-color="black"
-                  option-label="name"
-                  option-value="name"
-                  @update:model-value="selectBankType(opt)"
-                  emit-value
-                  map-options
+                    v-model="selectedBankType"
+                    filled
+                    :options="[{ name: '银行卡' }, { name: '数字货币' }]"
+                    label="银行 / 数字货币"
+                    color="blue"
+                    label-color="black"
+                    option-label="name"
+                    option-value="name"
+                    @update:model-value="selectBankType(opt)"
+                    emit-value
+                    map-options
                 />
               </div>
               <div class="col-12">
                 <q-select
-                  ref="bankCardRef"
-                  class="q-mb-md"
-                  color="blue"
-                  filled
-                  label-color="grey"
-                  v-model="bankCardInfo.bankId"
-                  :options="banksList"
-                  option-value="id"
-                  option-label="name"
-                  :label="isCrypto ? '选择数字货币' : '选择银行卡'"
-                  :rules="[(val) => !!val || '请选择']"
-                  lazy-rules
-                  emit-value
-                  map-options
+                    ref="bankCardRef"
+                    class=""
+                    color="blue"
+                    filled
+                    label-color="grey"
+                    v-model="bankCardInfo.bankId"
+                    :options="banksList"
+                    option-value="id"
+                    option-label="name"
+                    :label="isCrypto ? '选择数字货币' : '选择银行卡'"
+                    :rules="[(val) => !!val || '请选择']"
+                    lazy-rules
+                    emit-value
+                    map-options
                 >
                   <template v-slot:selected-item="scope">
                     <q-item-section avatar>
                       <img
-                        v-if="scope.opt.bankIcon"
-                        style="
+                          v-if="scope.opt.bankIcon"
+                          style="
                           width: 30px;
                           margin-top: 10px;
                           margin-bottom: 10px;
                         "
-                        :src="imgURL + scope.opt.bankIcon"
+                          :src="imgURL + scope.opt.bankIcon"
                       />
                     </q-item-section>
                     <q-item-section>
                       <q-item-label
-                        style="
+                          style="
                           text-overflow: ellipsis;
                           overflow: hidden;
                           white-space: nowrap;
@@ -125,13 +136,13 @@
                     <q-item v-bind="scope.itemProps">
                       <q-item-section avatar>
                         <img
-                          v-if="scope.opt.bankIcon"
-                          style="
+                            v-if="scope.opt.bankIcon"
+                            style="
                             width: 30px;
                             margin-top: 10px;
                             margin-bottom: 10px;
                           "
-                          :src="imgURL + scope.opt.bankIcon"
+                            :src="imgURL + scope.opt.bankIcon"
                         />
                       </q-item-section>
                       <q-item-section>
@@ -146,54 +157,149 @@
 
           <div v-if="isVirtual">
             <q-input
-              filled
-              ref="bankCardRef"
-              class="q-mb-md"
-              v-model="bankName"
-              disable
-              readonly
-              label="银行名城"
-              color="blue"
+                filled
+                ref="bankCardRef"
+                class=""
+                v-model="bankName"
+                disable
+                readonly
+                label="银行名城"
+                color="blue"
             />
           </div>
           <q-input
-            class="q-mb-md"
-            filled
-            v-model="bankCardInfo.cardAccount"
-            label="特卡人姓名"
-            :rules="cardAccountRules"
-            lazy-rules
-            :readonly="true"
-            ref="cardAccountRef"
-            color="blue"
+              class=""
+              filled
+              v-model="bankCardInfo.cardAccount"
+              label="特卡人姓名"
+              :rules="cardAccountRules"
+              lazy-rules
+              :readonly="true"
+              ref="cardAccountRef"
+              color="dark"
           />
           <q-input
-            filled
-            class="q-mb-md"
-            v-model="bankCardInfo.cardNumber"
-            :label="isCrypto ? '钱包地址' : '银行卡号'"
-            :rules="isCrypto ? cardCryptoRules : cardNumberRules"
-            ref="cardNumberRef"
-            color="blue"
+              filled
+              class=""
+              v-model="bankCardInfo.cardNumber"
+              :label="isCrypto ? '钱包地址' : '银行卡号'"
+              :rules="isCrypto ? cardCryptoRules : cardNumberRules"
+              ref="cardNumberRef"
+              color="blue"
           />
-<!--          <q-input-->
-<!--            class="q-mb-md"-->
-<!--            filled-->
-<!--            v-model="bankCardInfo.cardAddress"-->
-<!--            label="开户行地址"-->
-<!--            :rules="cardAddressRules"-->
-<!--            ref="cardAddressRef"-->
-<!--            color="blue"-->
-<!--          />-->
+
+          <q-input
+              v-show="!isCrypto"
+              class="q-mb-md"
+              filled
+              v-model="bankCardInfo.cardAddress"
+              label="开户行地址"
+              :rules="cardAddressRules"
+              ref="cardAddressRef"
+              color="white"
+          />
+
+          <q-input
+              filled
+              ref="telRef"
+              v-model="bankCardInfo.telephone"
+              label="电话号码"
+              lazy-rules
+              readonly
+              clearable
+              :rules="[
+            (val) => (val && val.length > 7) || '请输入有效的电话号码',
+            isValidCnPhone
+          ]"
+              color="white"
+          >
+            <template v-slot:prepend>
+              <q-icon color="dark" name="smartphone"/>
+            </template>
+            <template v-slot:append>
+              <q-btn label="获取验证码" color="brightbtn" @click="openPhoneVeriDialog()"/>
+            </template>
+          </q-input>
+
+          <q-input
+              filled
+              class="q-mb-md"
+              v-show="bankCardInfo.smsCodeId"
+              ref="phoneVerificationRef"
+              type="text"
+              v-model="bankCardInfo.smsCode"
+              label="手机验证码"
+              lazy-rules
+              color="white"
+              maxlength="6"
+              :rules="[
+        (val) => (val && val.length > 3) || '请输入手机验证码'
+      ]"
+          >
+            <template v-slot:prepend>
+              <q-icon color="dark" name="shield"/>
+            </template>
+          </q-input>
+
+
           <div class="flex flex-center">
             <q-btn
-              class="q-mr-md"
-              label="取消"
-              @click="bankCardModalState.visible = false"
+                class="q-mr-md"
+                label="取消"
+                color="warning"
+                @click="bankCardModalState.visible = false"
             />
-            <q-btn color="dyblue" label="提交" @click="submitBankCard" />
+            <q-btn color="dyblue" label="提交" @click="submitBankCard"/>
           </div>
         </q-form>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
+      <q-card width="100%">
+        <q-card-section
+            style="padding: 10px 5px"
+            class="q-pa-md bg-dyblue text-white"
+        >
+          <q-toolbar>
+            <q-toolbar-title>验证码</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close"/>
+          </q-toolbar>
+
+        </q-card-section>
+        <div style="padding: 20px">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input
+                ref="refInnerCaptcha"
+                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+                v-model="innerCaptchaRef" placeholder="验证码">
+              <template v-slot:append>
+                <img
+                    :src="phoneVerificationImg"
+                    title="点击刷新验证码"
+                    style="margin-top: 6px; cursor: pointer"
+                    @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue"/>
+        </div>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; padding: 20px;" class="text-black">
+        <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
+          <strong>温馨提示</strong>
+          <br/><br/>
+          为保证资金安全，绑卡前需先验证手机号
+        </q-card-section>
+        <q-card-actions align="right">
+          <router-link to="/account/verifyTelephone">
+            <q-btn label="前往验证" color="dyblue"/>
+          </router-link>
+        </q-card-actions>
       </q-card>
     </q-dialog>
 
@@ -243,17 +349,18 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted, createVNode } from "vue";
+import {defineComponent, reactive, ref, onMounted, createVNode} from "vue";
 // import { Modal, message } from "ant-design-vue";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import { RiSpamLine, RiLink } from "vue-remix-icons";
+import {RiSpamLine, RiLink} from "vue-remix-icons";
 // import { loadMemberInfo, loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/personal/personal";
 import moment from "moment";
-import { api } from "boot/axios"
-import { useQuasar } from "quasar";
-import { userStore } from "stores/index";
+import {api} from "boot/axios"
+import {useQuasar} from "quasar";
+import {userStore} from "stores/index";
 
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
+
 var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
@@ -277,7 +384,7 @@ export default defineComponent({
         title: "Bank Name",
         dataIndex: "name",
         key: "name",
-        slots: { title: "customTitle", customRender: "name" }
+        slots: {title: "customTitle", customRender: "name"}
       },
       {
         title: "Account Number",
@@ -293,14 +400,21 @@ export default defineComponent({
         title: "Bind Time",
         key: "tags",
         dataIndex: "tags",
-        slots: { customRender: "tags" }
+        slots: {customRender: "tags"}
       },
       {
         title: "Unbind Time",
         key: "action",
-        slots: { customRender: "action" }
+        slots: {customRender: "action"}
       }
     ];
+
+    const isNewUser = ref(false);
+    const checkNewUser = () => {
+      if (store.phone === "" || store.phone === null) {
+        isNewUser.value = true;
+      }
+    };
 
     const personalState = reactive({
       memberInfo: {},
@@ -319,6 +433,7 @@ export default defineComponent({
         console.log("error", error);
       });
       loadCards();
+      checkNewUser();
     });
     const showCard = (item, index) => {
       // if (index === isCardActive.value) {
@@ -335,7 +450,7 @@ export default defineComponent({
         if (res.code === 0) {
           personalState.bankCardList.push(...res.data);
 
-          if (res.data.length === 0){
+          if (res.data.length === 0) {
             isNoCard.value = true;
           }
         }
@@ -353,12 +468,28 @@ export default defineComponent({
     const cardNumberRef = ref();
     const cardAccountRef = ref();
     const cardAddressRef = ref();
+    const telRef = ref();
+
+    const unbindCardNoRef = ref(null);
+    const isUnbindCardModal = ref(false);
+    const unbindCardNo = ref("");
+    const unbindcarddetail = ref({});
+    const captchaRef = ref();
+    const innerCodeId = ref("");
+    const innerCaptchaRef = ref("");
+    const showCaptchaDialog = ref(false);
+    const phoneVerificationImg = ref("");
+    const phoneVerificationRef = ref(null);
+    const refInnerCaptcha = ref();
 
     const bankCardInfo = reactive({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      cardAddress: ""
+      cardAddress: "",
+      telephone: "",
+      smsCode: "",
+      smsCodeId: ""
     });
     const router = useRouter();
     const bankName = ref();
@@ -380,18 +511,22 @@ export default defineComponent({
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
+          bankCardInfo.telephone = store.phone;
+          bankCardInfo.smsCodeId = "";
+          bankCardInfo.smsCode = "";
+
           bankCardModalState.visible = true;
-        if (bankCardModalState.banks.length === 0) {
-          api.get("/session/withdraw/card").then((res) => {
-            if (res.code === 0) {
-              bankCardModalState.banks.push(...res.data);
-              selectBankType()
-            }
-          }).catch((e) => {
-            console.log("error", e);
-          });
+          if (bankCardModalState.banks.length === 0) {
+            api.get("/session/withdraw/card").then((res) => {
+              if (res.code === 0) {
+                bankCardModalState.banks.push(...res.data);
+                selectBankType()
+              }
+            }).catch((e) => {
+              console.log("error", e);
+            });
+          }
         }
-      }
       })
     };
 
@@ -411,37 +546,40 @@ export default defineComponent({
       })
     }
     const submitBankCard = () => {
-
       bankCardRef.value.validate();
       cardAccountRef.value.validate();
       // cardAddressRef.value.validate();
       cardNumberRef.value.validate();
+      phoneVerificationRef.value.validate();
+      // telRef.value.validate();
+
       if (bankCardRef.value.hasError || cardAccountRef.value.hasError
-        // || cardAddressRef.value.hasError
-        || cardNumberRef.value.hasError) {
-      }
-      else {
-          api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((response) => {
-            if (response.code === 0) {
-              bankCardModalState.visible = false;
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "已添加银行卡",
-                icon: "check_circle_outline"
-              });
-              loadCards();
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: response.message,
-              //   icon: "report_problem"
-              // });
-            }
-          }).catch((error) => {
-            console.log("error", error);
-          });
+          // || cardAddressRef.value.hasError
+          || phoneVerificationRef.value.hasError
+          // || telRef.value.hasError
+          || cardNumberRef.value.hasError) {
+      } else {
+        api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((response) => {
+          if (response.code === 0) {
+            bankCardModalState.visible = false;
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "已添加银行卡",
+              icon: "check_circle_outline"
+            });
+            loadCards();
+          } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: response.message,
+            //   icon: "report_problem"
+            // });
+          }
+        }).catch((error) => {
+          console.log("error", error);
+        });
 
 
       }
@@ -466,26 +604,26 @@ export default defineComponent({
         },
         persistent: true,
       }).onOk(() => {
-          api.post(`/session/bankCard/${card.id}?_method=delete`).then((response) => {
-            if (response.code === 0) {
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "操作成功",
-                icon: "check_circle_outline"
-              });
-              loadCards();
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: response.message,
-              //   icon: "report_problem"
-              // });
-            }
+        api.post(`/session/bankCard/${card.id}?_method=delete`).then((response) => {
+          if (response.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "操作成功",
+              icon: "check_circle_outline"
+            });
+            loadCards();
+          } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: response.message,
+            //   icon: "report_problem"
+            // });
+          }
 
-          })
         })
+      })
     };
 
     //add virtual card
@@ -548,12 +686,94 @@ export default defineComponent({
     //   ]
     // };
     let validateBankLength = (val) => {
-        if (isCrypto.value == true) {
-         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
-        } else if (isCrypto.value == false) {
-          return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
-        }
+      if (isCrypto.value == true) {
+        return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
+      } else if (isCrypto.value == false) {
+        return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
+      }
     }
+    const isValidCnPhone = () => {
+      const phonePattern =
+          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      return phonePattern.test(bankCardInfo.telephone) || "请输入有效的电话号码";
+
+    }
+
+    const openPhoneVeriDialog = () => {
+      // telRef.value.validate();
+      // if (!telRef.value.hasError) {
+      showCaptchaDialog.value = true;
+      getInnerCode();
+      // }
+
+    }
+
+    const getInnerCode = () => {
+      api
+          .get("/member/verificationCode")
+          .then((response) => {
+            if (response.code === 0) {
+              phoneVerificationImg.value =
+                  "data:image/png;base64," + response.data.img;
+              innerCodeId.value = response.data.id;
+              innerCaptchaRef.value = "";
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+          });
+    }
+
+    const onCaptchaSubmit = () => {
+      if (!bankCardInfo.telephone) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "手机号码不能为空",
+          icon: "report_problem"
+        });
+        getInnerCode();
+        return;
+      } else if (refInnerCaptcha.value?.hasError) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "验证码必须为4个字符串",
+          icon: "report_problem"
+        });
+        getInnerCode();
+        return;
+      }
+
+      api.post(`/session/sendSms`, qs.stringify({
+        captchaCode: innerCaptchaRef.value,
+        codeId: innerCodeId.value
+      }))
+          .then(res => {
+            let message = res.message || '发送手机验证码成功',
+                color = 'positive'
+
+            if (res.code === 0) {
+              showCaptchaDialog.value = false;
+              bankCardInfo.smsCode = "";
+              bankCardInfo.smsCodeId = res.data.codeId;
+              console.log(res.data.codeId)
+            } else {
+              color = 'negative';
+              getInnerCode();
+            }
+
+            if (message) {
+              $q.notify({message, color});
+            }
+
+            console.log('onCaptchaSubmit', res)
+          }).catch(() => {
+        getInnerCode();
+      })
+    }
+
+
     return {
       searchForm,
       columns,
@@ -563,6 +783,16 @@ export default defineComponent({
       submitBankCard,
       bankCardModal,
       unbindBankCard,
+      telRef,
+      openPhoneVeriDialog,
+      showCaptchaDialog,
+      phoneVerificationImg,
+      innerCaptchaRef,
+      refInnerCaptcha,
+      getInnerCode,
+      onCaptchaSubmit,
+      phoneVerificationRef,
+      isNewUser,
       // virtualCurrencyModalState,
       // virtualCurrencyFormRef,
       // virtualCurrencyInfo,
@@ -588,10 +818,9 @@ export default defineComponent({
         val => validateBankLength(val)
       ],
       cardAccountRules: [
-         val => (val && val.length > 0) || '情书入银行卡号',
+        val => (val && val.length > 0) || '请输入银行卡号',
       ],
-      cardAddressRules: [
-      ],
+      cardAddressRules: [],
       selectedBankType,
       selectBankType,
       banksList,
@@ -610,10 +839,52 @@ export default defineComponent({
   }
 }
 
-.withdrawBankView {
-  height: calc(100vh - 109px);
+.add-card-btn {
+  border-radius: 8px;
+  height: 45px;
+  font-size: 16px;
+}
+
+.bank-card-info {
+  width: calc(100% - 142px);
+  padding: 0px 5px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  .cardname {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .cards {
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+}
+
+.unbind-card-div {
+  margin-bottom: auto;
+}
+
+.unbind-btn {
+  width: 70px;
+  height: 32px;
+  white-space: normal;
+  background: #d9d9d9;
+}
+
+.withdrawBankView {
+  height: calc(100% - 109px);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.bank-icon-div {
+  width: 64px;
+  height: 64px;
 }
 
 .widthdrawBankView--content > div > div,
@@ -627,5 +898,9 @@ export default defineComponent({
 .widthdrawBankView--content-cta {
   margin-bottom: auto;
   padding-block: 1.2em;
+}
+
+.q-toolbar {
+  background: transparent;
 }
 </style>

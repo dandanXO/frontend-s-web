@@ -114,7 +114,7 @@
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
-import { getPlatformGames, getPlatformList, getLoggedInPlatformList, getLoggedInPlatformGames } from "@/api/platform/platform";
+import { getPlatformGames, getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
 import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
@@ -158,7 +158,11 @@ export default defineComponent({
 			getPlatformList().then((data) => {
 				platforms.value = data.filter(element => element.gameType.includes("SLOT"));
 				if (!route.query.plat) {
-				switchPlat(platforms.value[0]);
+          const firstPlatform = platforms.value.find((pl) => pl.code !== 'AG');
+
+          if (firstPlatform) {
+            switchPlat(firstPlatform);
+          }
 				} else {
 				platforms.value.forEach(element => {
 					if (route.query.plat === element.code) {
@@ -177,7 +181,11 @@ export default defineComponent({
 			getLoggedInPlatformList().then((data) => {
 				platforms.value = data.filter(element => element.gameType.includes("SLOT"));
 				if (!route.query.plat) {
-				switchPlat(platforms.value[0]);
+          const firstPlatform = platforms.value.find((pl) => pl.code !== 'AG');
+
+          if (firstPlatform) {
+            switchPlat(firstPlatform);
+          }
 				} else {
 				platforms.value.forEach(element => {
 					if (route.query.plat === element.code) {

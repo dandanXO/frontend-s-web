@@ -1,41 +1,41 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div v-if="level === 1" />
+    <div v-if="level === 1"/>
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
     <div class="node-content payment-method-wrapper">
       <div
-        class="node-item payment-method-item"
-        :id="level + '_' + i"
-        @click="clickItem(item)"
-        :class="[
+          class="node-item payment-method-item"
+          :id="level + '_' + i"
+          @click="clickItem(item)"
+          :class="[
           item.children ? 'node-group' : '',
           selectItem === item ? 'active' : ''
         ]"
-        :style="item.group && item.children.length === 0 ? 'display:none': ''"
-        :key="i"
-        v-for="(item, i) in list"
+          :style="item.group && item.children.length === 0 ? 'display:none': ''"
+          :key="i"
+          v-for="(item, i) in list"
       >
         <div class="node-text">
-          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
+          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon"/></div>
           <div class="overflow">{{ item.nodeName }}</div>
           <div class="promo">
             <img
-              v-if="item.promotionIcon"
-              :src="`${imgURL}label/${item.promotionIcon}`"
+                v-if="item.promotionIcon"
+                :src="`${imgURL}label/${item.promotionIcon}`"
             />
           </div>
 
           <div class="payment-method-wrapper">
             <div
-              class="payment-method-item"
-              v-for="pm in payMethods"
-              :key="pm.id"
-              :class="{ active: pm.nodeName === activeMethod }"
+                class="payment-method-item"
+                v-for="pm in payMethods"
+                :key="pm.id"
+                :class="{ active: pm.nodeName === activeMethod }"
             >
-              <img :src="imgURL + pm.nodeIcon" />
+              <img :src="imgURL + pm.nodeIcon"/>
               <div>{{ pm.nodeName }}</div>
             </div>
           </div>
@@ -44,23 +44,23 @@
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
-        @click="clickChildItem(item)"
-        :name="item.nodeName"
-        :class="[
+          @click="clickChildItem(item)"
+          :name="item.nodeName"
+          :class="[
           item.children ? 'node-group' : '',
           selectItem === item ? 'active' : ''
         ]"
-        v-if="selectItem === item"
-        :level="parseInt(level) + 1"
-        :list="item.children"
-        v-bind="$attrs"
+          v-if="selectItem === item"
+          :level="parseInt(level) + 1"
+          :list="item.children"
+          v-bind="$attrs"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import {defineComponent, reactive} from "vue";
 
 const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
@@ -136,7 +136,7 @@ export default defineComponent({
         this.selectItem = item;
         if (item.group) {
           let activeChild = item.children.find(
-            (child) => child.hasActive === true
+              (child) => child.hasActive === true
           );
           if (activeChild) {
             this.$emit("clicked", activeChild);
@@ -185,7 +185,7 @@ $node-color: #4ab6fd;
   width: 6px;
   height: 6px;
   background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  linear-gradient(#ffffff, #ffffff);
 }
 
 .title::before {
@@ -212,6 +212,7 @@ $node-color: #4ab6fd;
     border-radius: 6px;
     color: #ffffff;
     cursor: pointer;
+
     img {
       max-width: 75px;
       margin-bottom: 10px;
@@ -219,23 +220,20 @@ $node-color: #4ab6fd;
       height: auto;
     }
 
-    &:hover {
-      // border-bottom: 3px solid rgba(255, 255, 255, .4);
-    }
 
     &.active {
       // background: rgba(255,255,255, .2);
 
       .node-txt-img {
-        border-color: #4873f1 !important;
+        border-color: #0089ED !important;
 
         &:before {
           display: block;
           content: "";
           position: absolute;
-          bottom: 23px;
-          right: 3px;
-          background-color: #4873f1;
+          top: 0px;
+          left: 0px;
+          background-color: #0089ED;
           height: 15px;
           width: 15px;
           z-index: 3;
@@ -248,6 +246,11 @@ $node-color: #4ab6fd;
         img {
           // border-color: $node-color;
         }
+      }
+
+      .overflow {
+        color: #0089ED;
+        font-weight: 600;
       }
     }
   }
@@ -277,80 +280,20 @@ $node-color: #4ab6fd;
     .account-title-container {
       // margin: 0 -30px;
       background: none;
+
+      .account-title {
+        font-size: 14px;
+        display: block;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
     }
 
-    // &.node-group {
-    //   align-items: center;
-    //   gap: 10px;
-    //   margin: 10px 0px;
-    //   padding: 0 0px;
-    //   flex-wrap: wrap;
-
-    //   .promo {
-    //     right: -12px;
-    //     top: -12px;
-    //     img {
-    //       padding: 0;
-    //       border: 0;
-    //       height: 22px;
-    //       width: auto;
-    //       background-color: transparent;
-    //     }
-    //   }
-
-    //   .account-title-container {
-    //     margin: 0;
-    //   }
-
-    //   .payment-method-item {
-    //     padding: 5px 20px 5px 5px;
-    //     border: 2px solid #ddd;
-    //     width: auto;
-
-    //     &.active {
-    //       border: 2px solid #4873f1;
-
-    //       .node-txt-img {
-    //         &:before {
-    //           bottom: -1px !important;
-    //           right: -1px !important;
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   .node-text {
-    //     display: flex;
-    //     gap: 5px;
-    //     flex-direction: row;
-    //     justify-content: center;
-    //     align-items: center;
-
-    //     & > div {
-    //       font-size: 12px;
-    //       color: #000000;
-    //     }
-
-    //     .node-txt-img {
-    //       width: auto;
-    //       height: auto;
-    //       margin-bottom: 0;
-    //       border: 0;
-    //       img {
-    //         width: 15px;
-    //         height: auto;
-    //         border: 0;
-    //         background-color: #2a313e;
-    //         padding: 0px;
-    //         margin-bottom: 0;
-    //       }
-    //     }
-    //   }
-    // }
   }
 
   .node-content {
-    gap: 10px;
+    column-gap: 10px;
+    row-gap: 15px;
 
     .payment-method-item {
       text-align: center;
@@ -361,7 +304,7 @@ $node-color: #4ab6fd;
       display: flex;
       justify-content: center;
       width: 100%;
-      max-width: 4.5rem;
+      max-width: 5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -386,11 +329,11 @@ $node-color: #4ab6fd;
         align-items: center;
         justify-content: center;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 4rem;
-        height: 4rem;
+        width: 5rem;
+        height: 5rem;
         margin-bottom: 5px;
-        border: 2px solid #ddd;
-        border-radius: 3px;
+        border: 2px solid #C2C2C2;
+        border-radius: 4px;
 
         img {
           background-color: #fff;
@@ -399,6 +342,10 @@ $node-color: #4ab6fd;
           width: 100%;
           height: auto;
         }
+      }
+
+      .overflow {
+        font-size: .9em;
       }
     }
   }
@@ -432,11 +379,13 @@ $node-color: #4ab6fd;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+
       img {
         padding: 0;
         border: 0;
         background-color: transparent;
       }
+
       ::after {
         position: relative;
       }
@@ -444,13 +393,9 @@ $node-color: #4ab6fd;
   }
 }
 
-@media (max-width: 768px) {
-  .node {
-    .node {
-      .account-title-container {
-        // margin: 0 -10px;
-      }
-    }
+@media (max-width: 380px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 </style>

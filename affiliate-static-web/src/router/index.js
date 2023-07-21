@@ -214,6 +214,19 @@ export const constantRoutes = [
         },
         alwaysShow: true,
         redirect: null,
+      },
+      {
+        name: "Transfer",
+        path: "transfer",
+        component: () => import('@/views/affiliate-center/transfer/index.vue'),
+        meta:
+        {
+          title: "Transfer",
+          icon: "backup",
+          hidden: false
+        },
+        alwaysShow: true,
+        redirect: null,
       }
     ]
   },

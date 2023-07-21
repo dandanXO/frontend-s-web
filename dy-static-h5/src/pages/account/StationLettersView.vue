@@ -9,7 +9,7 @@
       >
         <img
           :src="
-            require(`../../assets/images/account/${trans.icon}_letters.png`)
+            require(`../../assets/account/mail/${trans.icon}-icon.png`)
           "
         />
         {{ trans.name }}
@@ -88,10 +88,13 @@ export default defineComponent({
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #00000020;
 
     img {
-      width: 25px;
+      width: 18px;
     }
 
     .right {

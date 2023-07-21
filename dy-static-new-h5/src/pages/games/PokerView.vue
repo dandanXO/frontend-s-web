@@ -1,9 +1,24 @@
 <template>
   <q-page>
+
+    <div  class="topActions">
+      <q-toolbar-title></q-toolbar-title>
+      <q-btn
+          flat
+          @click="closeDialog()"
+          round
+          dense
+          icon="close"
+          style="width:26px;height:26px;min-height: 26px; min-width: 26px;"
+      />
+    </div>
+
+
     <iframe
         @load="loadGame()"
         :src="src"
         frameborder="0"
+        class="poker-iframe"
     ></iframe>
   </q-page>
 </template>
@@ -12,7 +27,7 @@
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "stores/index";
-import {useQuasar, Platform} from "quasar";
+import {useQuasar, Platform, AppFullscreen} from "quasar";
 import {api} from "boot/axios";
 import {cached} from "boot/cache";
 
@@ -26,6 +41,12 @@ const loadGame = () => {
     $q.loading.hide();
   }
 };
+
+const closeDialog = () => {
+  src.value = ""
+  router.go(-1);
+}
+
 onMounted(() => {
 // && !store.isInitEsport
   if (store.hasToken()) {
@@ -71,12 +92,20 @@ onMounted(() => {
 <style scoped>
 iframe {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 26px);
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
+  top: 26px;
   bottom: 0;
   margin: auto;
+}
+
+.topActions {
+  display: flex;
+  background: #d7d7d7;
+  justify-content: flex-end;
+  width: 100%;
+  height:26px;
 }
 </style>

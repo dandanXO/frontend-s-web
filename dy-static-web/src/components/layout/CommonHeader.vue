@@ -14,7 +14,7 @@
               />
             </div>
             <div class="station-notice">
-              <Vue3Marquee :clone="false" :duration="30" style="width: 780px">
+              <Vue3Marquee :clone="false" :duration="30" style="width: 720px">
                 <div
                   v-for="(word, index) in announcementList"
                   :key="index"
@@ -24,6 +24,14 @@
                 ></div>
               </Vue3Marquee>
             </div>
+            <template v-if="store.token">
+              <div class="mailbox-notify">
+                <router-link to="/center/mailbox">
+                  <RiMailFill style="fill: #2db9e2; width: 20px" />
+                  <div v-if="isMailboxUnread" class="notify-red"></div>
+                </router-link>
+              </div>
+            </template>
           </div>
         </div>
         <div v-if="!store.token" class="right-contents">
@@ -735,7 +743,8 @@ import {
   RiVipDiamondLine,
   RiStarLine,
   RiVipCrownLine,
-  RiSmartphoneLine
+  RiSmartphoneLine,
+  RiMailFill
 } from 'vue-remix-icons';
 import GameMenu from '@/components/menu/GameMenu.vue'
 import EsportsMenu from '@/components/menu/EsportsMenu.vue'
@@ -782,21 +791,22 @@ export default defineComponent({
     RiVipDiamondLine,
     RiStarLine,
     RiVipCrownLine,
-    RiSmartphoneLine
+    RiSmartphoneLine,
+    RiMailFill
 },
   data: () => ({
     // carousel settings
     navigations: [
       {code: "Home", name: "首页", enName: "Home", path: "/home"},
-      {code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports", submenu: true},
-      {code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
       {code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
+      {code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
+      {code: "Esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true},
+      {code: "Slots", name: "电子", enName: "Slots", path: "/game", submenu: true},
       {code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
-      {code: "Slots", name: "老虎机", enName: "Slots", path: "/game", submenu: true},
       {code: "Lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
       {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true},
-      {code: "Agent", name: "加盟", enName: "Agent", path: "/agent", hasicon: true},
+      // {code: "Agent", name: "加盟", enName: "Agent", path: "/agent", hasicon: true},
       {code: "Sponsor", name: "赞助", enName: "Sponsor", path: "/sponsor", hasicon: true},
       {code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
@@ -2553,5 +2563,10 @@ body {
       }
     }
   }
+}
+
+.mailbox-notify {
+  position: relative;
+  margin-right: 20px;
 }
 </style>
