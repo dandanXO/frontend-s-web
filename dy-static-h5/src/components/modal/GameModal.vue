@@ -307,7 +307,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
       // alert("HUawei check:" + isHuaweiPhone())
 
-      if (store.isMobileSafari()) {
+      if (store.isMobileSafari() || (platformCode === 'PTDY')) {
         // alert(gameName + "-" + gameCode + "-" + gameType + "-" + platformCode);
 
         if (gameName === 'SGWin' || (gameName === 'BBIN' && gameCode === 'bbkeno_lobby_app') || gameName === 'IM' ||
