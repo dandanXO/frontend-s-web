@@ -98,7 +98,9 @@ onMounted(() => {
 <style scoped>
 iframe {
   width: 100%;
+  height: calc(100% - 26px);
   height: calc(100svh - 26px);
+
   position: absolute;
   left: 0;
   right: 0;

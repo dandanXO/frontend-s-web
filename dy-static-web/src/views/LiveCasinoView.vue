@@ -119,7 +119,7 @@
                 src="../assets/live/left_float_allbet_2.webp"
               />
             </template>
-            <template v-if="det.code === 'Sexy'">
+            <template v-if="det.code === 'AWC'">
               <img
                 class="imgabs bbin1"
                 src="../assets/live/left_bg_bbin_1.webp"
@@ -252,7 +252,7 @@ export default defineComponent({
         image: "pm",
         gameCode: "",
         message: ""
-      }
+      },
       // {
       //   code: 'BG',
       //   name: 'BG',
@@ -260,13 +260,13 @@ export default defineComponent({
       //   gameCode: '',
       //   message: ''
       // },
-      // {
-      //   code: 'Sexy',
-      //   name: 'Sexy',
-      //   image: 'sexy',
-      //   gameCode: '',
-      //   message: ''
-      // },
+      {
+        code: 'AWC',
+        name: 'Sexy',
+        image: 'sexy',
+        gameCode: '',
+        message: ''
+      },
     ]);
 
     const filteredPlatforms = ref([]);

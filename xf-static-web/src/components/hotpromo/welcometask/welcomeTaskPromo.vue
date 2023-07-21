@@ -379,9 +379,9 @@ const gotoMainPage = () => {
   text-align: center;
 }
 
-body,
-html,
-p {
+body .noob-container,
+html .noob-container,
+.noob-container p {
   margin: 0;
   padding: 0;
   font-family: MicrosoftYaHei;

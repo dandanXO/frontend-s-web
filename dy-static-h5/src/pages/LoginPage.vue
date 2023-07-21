@@ -203,7 +203,7 @@
 
       <div class="text-center">
         如需帮助，请
-        <router-link class="txt-link q-ml-xs" id="cs-web-id" to="/liveChat">联系客服</router-link>
+        <router-link class="txt-link q-ml-xs cs-web-id" to="/liveChat">联系客服</router-link>
       </div>
 
 

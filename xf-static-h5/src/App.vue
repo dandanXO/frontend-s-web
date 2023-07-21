@@ -98,9 +98,9 @@ export default defineComponent({
       window.addEventListener('message', function (event) {
         // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
         if (_.isString(event.data)) {
-          if (event.data == 'sess_timeout') {
-            router.push({ path: "/" });
-          }
+          // if (event.data == 'sess_timeout') {
+          //   router.push({ path: "/" });
+          // }
         }
       });
     };

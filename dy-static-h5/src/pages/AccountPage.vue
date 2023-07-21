@@ -50,7 +50,7 @@
           <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
         </div>
       </div>
-      <router-link to="/liveChat" id="cs-web-id" class="livechat">
+      <router-link to="/liveChat" class="livechat cs-web-id">
         在线客服
       </router-link>
     </div>
@@ -175,7 +175,7 @@
         <div class="acct-title-1">我的功能</div>
         <!-- <div id="vipDomain" class="vipurl">专属网址：{{ store.evip }}</div> -->
       </div>
-      <div class="acct-menu">
+      <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/records">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_record.svg"/>
@@ -386,6 +386,10 @@ export default defineComponent({
       // store.getUnreadTotal();
       getVersionNo();
       getPromoImage();
+      if(store.isApp()){
+        var btmSwiper = document.getElementById("id-acct-menu");
+        btmSwiper.classList.add("shorter-menu");
+      }
     });
 
     const imgURL = process.env.IMAGE_CDN + "/promo/";
@@ -756,14 +760,20 @@ export default defineComponent({
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3,1fr);
     grid-gap: 30px;
     gap: 20px;
     row-gap: 20px;
-    height: 300px;
+    height: auto;
+    margin-bottom: 10px;
     // display: flex;
     // justify-content: space-between;
     // flex-wrap: wrap;
     // gap: 6%;
+
+    &.shorter-menu{
+      grid-template-rows: repeat(2,1fr);
+    }
 
     a {
       text-decoration: none;
