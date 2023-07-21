@@ -161,11 +161,6 @@ export default defineComponent({
           trigger: "blur",
         },
         { validator: checkAmt, trigger: 'blur' }
-        // {
-        //   pattern: '^([1-9][0-9]*)$',
-        //   message: "amount should be a positive number",
-        //   trigger: "change",
-        // },
       ],
       cardId: [
         {
@@ -251,11 +246,6 @@ export default defineComponent({
       });
     }
     const getWithdrawalMethods = () => {
-      // withdrawalMethods.value = [
-      //   { currencyId: 6, name: "withdraw_bank", code: "BANK", icon: "71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png", withdrawMin: 1000.00, withdrawMax: 10000.00, withdrawMaxAmount: 30000.00, withdrawMaxTimes: 3 },
-      //   { currencyId: 6, name: "withdraw_gcash", code: "GCASH", icon: "c9d92237-4e44-4ee7-92c7-ceb5214f225f.png", withdrawMin: 1000.00, withdrawMax: 10000.00, withdrawMaxAmount: 30000.00, withdrawMaxTimes: 3 }
-      // ]
-      // selectMethod(withdrawalMethods.value[0], 0)
       withdrawEntrance().then((response) => {
         if (response.code === 0) {
           withdrawalMethods.value = response.data

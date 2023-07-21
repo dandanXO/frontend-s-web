@@ -3,10 +3,10 @@
     <el-card>
       <template #header>
         <div class="clearfix">
-          <span class="role-span">{{ $t('fields.accountInfo') }}</span>
+          <span class="role-span">{{ $t('fields.personal') }}</span>
         </div>
       </template>
-      <el-row v-if="uiControl.dialogType === 'ACCOUNT'" class="affiliate-info">
+      <el-row class="affiliate-info">
         <el-card
           body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
           :xs="12"
@@ -14,16 +14,51 @@
           :lg="6"
           class="box-card"
         >
-          <el-icon color="#db1f55">
-            <Icon :icon="person20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ $t('fields.account') }}</div>
-            <span class="card-panel-num">
-              {{ store.state.user.name }}
-            </span>
-          </div>
+          <template #header>
+            <div class="clearfix">
+              <span class="role-span">{{ $t('fields.personalInfo') }}</span>
+            </div>
+          </template>
+          <el-form label-suffix=" : " label-width="150px" label-position="left">
+            <el-row class="info">
+              <el-icon color="#db1f55">
+                <Icon :icon="person20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.affiliateAccount')">
+                {{ store.state.user.name }}
+              </el-form-item>
+            </el-row>
+            <el-row class="info">
+              <el-icon color="#db1f55">
+                <Icon :icon="personInfo20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.realName')">
+                <span v-if="store.state.user.realName !== 'null' && store.state.user.realName !== 'undefined' && store.state.user.realName" class="card-panel-num">
+                  {{ store.state.user.realName }}
+                </span>
+                <span v-if="store.state.user.realName === 'null' || store.state.user.realName === 'undefined' || !store.state.user.realName" class="card-panel-num">
+                  <el-form ref="editForm" :model="eForm" :rules="eFormRules" :inline="true" size="mini">
+                    <el-form-item prop="realName">
+                      <el-row>
+                        <el-input v-model="eForm.realName" maxlength="50" size="mini" />
+                        <el-button type="primary" @click="editRealName()" size="mini" style="margin-left: 10px">{{ $t('fields.confirm') }}</el-button>
+                      </el-row>
+                    </el-form-item>
+                  </el-form>
+                </span>
+              </el-form-item>
+            </el-row>
+            <el-row class="info">
+              <el-icon color="#1fdbb0">
+                <Icon :icon="bookCoins20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.balance')">
+                {{ balance }}
+              </el-form-item>
+            </el-row>
+          </el-form>
         </el-card>
+
         <el-card
           body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
           :xs="12"
@@ -31,46 +66,41 @@
           :lg="6"
           class="box-card"
         >
-          <el-icon color="#db1f55">
-            <Icon :icon="personInfo20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ $t('fields.realName') }}</div>
-            <span v-if="store.state.user.realName !== 'null' && store.state.user.realName !== 'undefined' && store.state.user.realName" class="card-panel-num">
-              {{ store.state.user.realName }}
-            </span>
-            <span v-if="store.state.user.realName === 'null' || store.state.user.realName === 'undefined' || !store.state.user.realName" class="card-panel-num">
-              <!-- <el-form style="display: flex; gap: 10px;">
-                <el-input v-model="updateInfo.realName" />
-                <el-button type="primary" @click="editRealName()">Update</el-button>
-              </el-form> -->
-              <el-form ref="editForm" :model="eForm" :rules="eFormRules" :inline="true" size="small">
-                <el-form-item style="margin-right: 0; text-align: right;" prop="realName">
-                  <el-input v-model="eForm.realName" maxlength="50" />
-                  <el-button type="primary" @click="editRealName()">{{ $t('fields.confirm') }}</el-button>
-                </el-form-item>
-              </el-form>
-            </span>
-          </div>
+          <template #header>
+            <div class="clearfix">
+              <span class="role-span">{{ $t('fields.securityInfo') }}</span>
+            </div>
+          </template>
+          <el-form label-suffix=" : " label-width="150px" label-position="left">
+            <el-row class="info">
+              <el-icon color="#db1f55">
+                <Icon :icon="lockClosed20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.withdrawPassword')">
+                <el-button v-if="hasWithdrawPw" type="text" @click="showDialog('WITHDRAW_PASSWORD')">{{ t('fields.edit') }}</el-button>
+                <el-button v-else type="text" @click="showDialog('WITHDRAW_PASSWORD')">{{ t('fields.bind') }}</el-button>
+              </el-form-item>
+            </el-row>
+            <el-row class="info">
+              <el-icon color="#6639b5">
+                <Icon :icon="lockClosed20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.loginPassword')">
+                <el-button type="text" @click="showDialog('PASSWORD')">{{ t('fields.edit') }}</el-button>
+              </el-form-item>
+            </el-row>
+            <el-row class="info">
+              <el-icon color="#1fdbb0">
+                <Icon :icon="lockShield20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.securityQuestion')">
+                <el-button v-if="hasSecurityQn" type="text" disabled>{{ t('fields.binded') }}</el-button>
+                <el-button v-else type="text" @click="showDialog('SECURITY_QUESTION')">{{ t('fields.bind') }}</el-button>
+              </el-form-item>
+            </el-row>
+          </el-form>
         </el-card>
-        <!-- <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#1fa8db">
-            <Icon :icon="personBoard20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ $t('fields.realName') }}</div>
-            <span v-if="realName" class="card-panel-num">
-              {{ realName }}
-            </span>
-            <el-button v-else icon="el-icon-edit" size="mini" type="success" @click="showDialog('EDIT')" />
-          </div>
-        </el-card> -->
+
         <el-card
           body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
           :xs="12"
@@ -78,69 +108,274 @@
           :lg="6"
           class="box-card"
         >
-          <el-icon color="#1fdbb0">
-            <Icon :icon="bookCoins24Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ $t('fields.balance') }}</div>
-            <span class="card-panel-num">
-              {{ balance }}
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#6639b5">
-            <Icon :icon="documentPercent20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ $t('fields.commission') }}</div>
-            <span class="card-panel-num">
-              {{ affInfo.commission * 100 }} %
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#db1f55">
-            <Icon :icon="peopleTeam20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ $t('fields.downlineAffiliate') }}</div>
-            <span class="card-panel-num">
-              {{ affInfo.downlineAffiliate }}
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#1fa8db">
-            <Icon :icon="peopleList20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ $t('fields.downlineMember') }}</div>
-            <span class="card-panel-num">
-              {{ affInfo.downlineMember }}
-            </span>
-          </div>
+          <template #header>
+            <div class="clearfix">
+              <span class="role-span">{{ $t('fields.affiliateInfo') }}</span>
+            </div>
+          </template>
+          <el-form label-suffix=" : " label-width="150px" label-position="left">
+            <el-row class="info">
+              <el-icon color="#6639b5">
+                <Icon :icon="documentPercent20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.commission')">
+                {{ affInfo.commission * 100 }} %
+              </el-form-item>
+            </el-row>
+            <el-row class="info">
+              <el-icon color="#db1f55">
+                <Icon :icon="peopleTeam20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.downlineAffiliate')">
+                {{ affInfo.downlineAffiliate }}
+              </el-form-item>
+            </el-row>
+            <el-row class="info">
+              <el-icon color="#1fa8db">
+                <Icon :icon="peopleList20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.downlineMember')">
+                {{ affInfo.downlineMember }}
+              </el-form-item>
+            </el-row>
+            <el-row class="info">
+              <el-icon color="#1fdbb0">
+                <Icon :icon="barCodeScanner20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.affiliateCode')">
+                {{ affInfo.affiliateCode }}
+              </el-form-item>
+            </el-row>
+          </el-form>
         </el-card>
       </el-row>
     </el-card>
+
+    <el-dialog
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      width="580px"
+      append-to-body
+      :close-on-click-modal="false"
+    >
+      <el-form
+        v-if="uiControl.dialogType === 'PASSWORD'"
+        :model="pwForm"
+        :rules="pwRules"
+        ref="pwRef"
+        size="small"
+        label-width="162px"
+      >
+        <el-form-item
+          :label="t('fields.currentPassword')"
+          prop="oldPassword"
+        >
+          <el-input
+            type="password"
+            v-model="pwForm.oldPassword"
+            autocomplete="off"
+            style="width: 350px;"
+            show-password
+          />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.newPassword')"
+          prop="password"
+        >
+          <el-input
+            type="password"
+            v-model="pwForm.password"
+            autocomplete="off"
+            style="width: 350px;"
+            show-password
+          />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.confirmNewPassword')"
+          prop="cfmPW"
+        >
+          <el-input
+            type="password"
+            v-model="pwForm.cfmPW"
+            autocomplete="off"
+            style="width: 350px;"
+            show-password
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button
+            size="small"
+            @click="uiControl.dialogVisible = false"
+          >
+            {{ $t('fields.cancel') }}
+          </el-button>
+          <el-button size="small" type="primary" @click="updatePassword">{{ $t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
+
+      <el-form
+        v-if="uiControl.dialogType === 'WITHDRAW_PASSWORD'"
+        :model="withdrawPwForm"
+        :rules="withdrawPwRules"
+        ref="withdrawPwRef"
+        size="small"
+        label-width="162px"
+      >
+        <el-form-item
+          v-if="hasWithdrawPw"
+          :label="t('fields.currentPassword')"
+          prop="oldPassword"
+          :rules="[{validator: validateCurrentPassword, trigger: 'blur'}]"
+        >
+          <el-input
+            type="password"
+            v-model="withdrawPwForm.oldPassword"
+            autocomplete="off"
+            style="width: 350px;"
+            show-password
+          />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.newPassword')"
+          prop="password"
+        >
+          <el-input
+            type="password"
+            v-model="withdrawPwForm.password"
+            autocomplete="off"
+            style="width: 350px;"
+            show-password
+          />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.confirmNewPassword')"
+          prop="cfmPW"
+        >
+          <el-input
+            type="password"
+            v-model="withdrawPwForm.cfmPW"
+            autocomplete="off"
+            style="width: 350px;"
+            show-password
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button
+            size="small"
+            @click="uiControl.dialogVisible = false"
+          >
+            {{ $t('fields.cancel') }}
+          </el-button>
+          <el-button size="small" type="primary" @click="updateWithdrawPassword">{{ $t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
+
+      <el-form
+        v-if="uiControl.dialogType === 'SECURITY_QUESTION'"
+        :model="securityQnForm"
+        :rules="securityQnRules"
+        ref="securityQnRef"
+        size="small"
+        label-width="162px"
+      >
+        <el-form-item
+          :label="t('fields.questionOne')"
+          prop="questionOne"
+        >
+          <el-select
+            v-model="securityQnForm.questionOne"
+            size="small"
+            :placeholder="t('fields.questionOne')"
+            class="filter-item"
+            style="width: 350px;"
+            @focus="populateQuestionOne"
+          >
+            <el-option
+              v-for="item in questions.one"
+              :key="item.key"
+              :label="item.value"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.answerOne')"
+          prop="answerOne"
+        >
+          <el-input
+            v-model="securityQnForm.answerOne"
+            style="width: 350px;"
+          />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.questionTwo')"
+          prop="questionTwo"
+        >
+          <el-select
+            v-model="securityQnForm.questionTwo"
+            size="small"
+            :placeholder="t('fields.questionTwo')"
+            class="filter-item"
+            style="width: 350px;"
+            @focus="populateQuestionTwo"
+          >
+            <el-option
+              v-for="item in questions.two"
+              :key="item.key"
+              :label="item.value"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.answerTwo')"
+          prop="answerTwo"
+        >
+          <el-input
+            v-model="securityQnForm.answerTwo"
+            style="width: 350px;"
+          />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.questionThree')"
+          prop="questionThree"
+        >
+          <el-select
+            v-model="securityQnForm.questionThree"
+            size="small"
+            :placeholder="t('fields.questionThree')"
+            class="filter-item"
+            style="width: 350px;"
+            @focus="populateQuestionThree"
+          >
+            <el-option
+              v-for="item in questions.three"
+              :key="item.key"
+              :label="item.value"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.answerThree')"
+          prop="answerThree"
+        >
+          <el-input
+            v-model="securityQnForm.answerThree"
+            style="width: 350px;"
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button
+            size="small"
+            @click="uiControl.dialogVisible = false"
+          >
+            {{ $t('fields.cancel') }}
+          </el-button>
+          <el-button size="small" type="primary" @click="addSecurityQuestion">{{ $t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -149,34 +384,56 @@ import { useStore } from "@/store";
 import { Icon } from '@iconify/vue'
 import person20Filled from '@iconify-icons/fluent/person-20-filled'
 import personInfo20Filled from '@iconify-icons/fluent/person-info-20-filled'
-import bookCoins24Filled from '@iconify-icons/fluent/book-coins-24-filled'
+import bookCoins20Filled from '@iconify-icons/fluent/book-coins-20-filled'
 import documentPercent20Filled from '@iconify-icons/fluent/document-percent-20-filled'
 import peopleTeam20Filled from '@iconify-icons/fluent/people-team-20-filled'
 import peopleList20Filled from '@iconify-icons/fluent/people-list-20-filled'
+import barCodeScanner20Filled from '@iconify-icons/fluent/barcode-scanner-20-filled'
+import lockClosed20Filled from '@iconify-icons/fluent/lock-closed-20-filled'
+import lockShield20Filled from '@iconify-icons/fluent/lock-shield-20-filled'
 import { onMounted, reactive, ref } from '@vue/runtime-core'
-import { getAffiliateBalance, getAffiliateInfo } from "../../api/affiliate";
+import { checkHasWithdrawPw, createSecurityQuestion, getAffiliateBalance, getAffiliateInfo, getSecurityQuestions } from "../../api/affiliate";
 import { required } from "../../utils/validate";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { UserActionTypes } from "@/store/modules/user/action-types";
-// import { UserMutationTypes } from "@/store/modules/user/mutation-types";
-// import { UserMutationTypes } from "../../store/modules/user/mutation-types";
-// import { UserMutationTypes } from "../../store/modules/user/mutation-types";
+import { updatePasswordRequest, updateWithdrawPasswordRequest } from "../../api/user";
+
 const store = useStore();
-// eslint-disable-next-line
 const { t } = useI18n();
-const editForm = ref(null);
+const router = useRouter();
+const editForm = ref();
+const pwRef = ref();
+const withdrawPwRef = ref();
+const securityQnRef = ref();
+const questions = reactive({
+  one: [],
+  two: [],
+  three: []
+})
 const route = useRoute();
 const uiControl = reactive({
-  dialogTitle: 'My Account',
-  dialogType: 'ACCOUNT',
+  dialogTitle: '',
+  dialogType: null,
   dialogVisible: false,
-  editDialogTitle: 'Update Real Name',
-  editDialogVisible: false,
   loading: false,
+  securityQn: [
+    { key: 1, value: t('questions.mothersName') },
+    { key: 2, value: t('questions.mothersBirthday') },
+    { key: 3, value: t('questions.dadsName') },
+    { key: 4, value: t('questions.dadsBirthday') },
+    { key: 5, value: t('questions.spouseBirthday') },
+    { key: 6, value: t('questions.cityBorn') },
+    { key: 7, value: t('questions.highSchool') },
+    { key: 8, value: t('questions.elementarySchool') },
+    { key: 9, value: t('questions.firstPetName') },
+    { key: 10, value: t('questions.firstCar') }
+  ]
 });
 const balance = ref(0);
+const hasWithdrawPw = ref(false);
+const hasSecurityQn = ref(false);
 const affInfo = reactive({
   affiliateCode: null,
   affiliateLevel: null,
@@ -191,8 +448,137 @@ const eForm = reactive({
 });
 
 const eFormRules = reactive({
-  realName: [required(t('message.requiredRealName')), { pattern: '^([\u4e00-\u9fa5]*)$', message: '请输入中文字符', trigger: 'change' }]
+  realName: [required(t('message.requiredRealName')), { pattern: '^([\u4e00-\u9fa5]*)$', message: t('message.inputChineseCharacters'), trigger: 'change' }]
 });
+
+const pwForm = reactive({
+  oldPassword: "",
+  password: "",
+  cfmPW: "",
+  siteId: ""
+});
+
+const withdrawPwForm = reactive({
+  oldPassword: "",
+  password: "",
+  cfmPW: "",
+  siteId: ""
+});
+
+const securityQnForm = reactive({
+  questionOne: null,
+  answerOne: null,
+  questionTwo: null,
+  answerTwo: null,
+  questionThree: null,
+  answerThree: null,
+  siteId: null
+})
+
+const validatePass = (rule, value, callback) => {
+  if (value === "") {
+    callback(new Error(t('message.inputPassword')));
+  } else {
+    if (pwForm.cfmPW !== "") {
+      pwRef.value.validateField("cfmPW");
+    }
+    callback();
+  }
+};
+
+const validatePass2 = (rule, value, callback) => {
+  if (value === "") {
+    callback(new Error(t('message.inputPasswordAgain')));
+  } else if (value !== pwForm.password) {
+    callback(new Error(t('message.twoPasswordNotMatch')));
+  } else {
+    callback();
+  }
+}
+
+const validateWithdrawPass = (rule, value, callback) => {
+  if (value === "") {
+    callback(new Error(t('message.inputPassword')));
+  } else {
+    if (withdrawPwForm.cfmPW !== "") {
+      withdrawPwRef.value.validateField("cfmPW");
+    }
+    callback();
+  }
+};
+
+const validateWithdrawPass2 = (rule, value, callback) => {
+  if (value === "") {
+    callback(new Error(t('message.inputPasswordAgain')));
+  } else if (value !== withdrawPwForm.password) {
+    callback(new Error(t('message.twoPasswordNotMatch')));
+  } else {
+    callback();
+  }
+}
+
+const validatePasswordLength = (rule, value, callback) => {
+  if (value.length < 6 || value.length > 12) {
+    callback(new Error(t('message.passwordLength')));
+  } else {
+    callback();
+  }
+}
+
+const validateCurrentPassword = (rule, value, callback) => {
+  if (!value) {
+    callback(new Error(t('message.requiredOldPassword')));
+  } else {
+    callback();
+  }
+}
+
+const pwRules = reactive({
+  oldPassword: [{ validator: validateCurrentPassword, trigger: "blur" }],
+  password: [{ validator: validatePass, trigger: "blur" }, { validator: validatePasswordLength, trigger: "blur" }],
+  cfmPW: [{ validator: validatePass2, trigger: "blur" }, { validator: validatePasswordLength, trigger: "blur" }]
+});
+
+const withdrawPwRules = reactive({
+  password: [{ validator: validateWithdrawPass, trigger: "blur" }, { validator: validatePasswordLength, trigger: "blur" }],
+  cfmPW: [{ validator: validateWithdrawPass2, trigger: "blur" }, { validator: validatePasswordLength, trigger: "blur" }]
+});
+
+const securityQnRules = reactive({
+  questionOne: [required(t('message.selectAQuestion'))],
+  answerOne: [required(t('message.requiredAnswer'))],
+  questionTwo: [required(t('message.selectAQuestion'))],
+  answerTwo: [required(t('message.requiredAnswer'))],
+  questionThree: [required(t('message.selectAQuestion'))],
+  answerThree: [required(t('message.requiredAnswer'))],
+})
+
+function showDialog(type) {
+  if (type === 'PASSWORD') {
+    pwForm.oldPassword = null;
+    if (pwRef.value) {
+      pwRef.value.resetFields();
+    }
+    uiControl.dialogTitle = t('common.changePassword');
+  } else if (type === 'WITHDRAW_PASSWORD') {
+    withdrawPwForm.oldPassword = null;
+    if (withdrawPwRef.value) {
+      withdrawPwRef.value.resetFields();
+    }
+    if (!hasWithdrawPw) {
+      uiControl.dialogTitle = t('fields.bindWithdrawPw');
+    } else {
+      uiControl.dialogTitle = t('fields.changeWithdrawPw');
+    }
+  } else if (type === 'SECURITY_QUESTION') {
+    if (securityQnRef.value) {
+      securityQnRef.value.resetFields();
+    }
+    uiControl.dialogTitle = t('fields.bindSecurityQn');
+  }
+  uiControl.dialogType = type;
+  uiControl.dialogVisible = true;
+};
 
 async function loadAffiliateInfo() {
   const { data: aff } = await getAffiliateInfo(store.state.user.id);
@@ -210,25 +596,110 @@ async function loadAffiliateBalance() {
 async function editRealName() {
   editForm.value.validate(async valid => {
     if (valid) {
-      // await updateRealName(eForm.realName);
-      // uiControl.editDialogVisible = false;
-      // ElMessage({ message: t('message.editSuccess'), type: 'success' });
-      // commit(UserMutationTypes.SET_REAL_NAME, eForm.realName);
-      // loadAffiliateInfo();
       try {
         await store.dispatch(UserActionTypes.ACTION_UPDATE_REAL_NAME, eForm);
-      } catch (e) {
-        // console.error(e);
-        // return;
-      }
+      } catch (e) {}
     }
   });
+}
+
+async function checkWithdrawPw() {
+  const { data: exists } = await checkHasWithdrawPw(store.state.user.id, store.state.user.siteId);
+  if (!exists) {
+    hasWithdrawPw.value = false;
+  } else {
+    hasWithdrawPw.value = true;
+  }
+}
+
+async function updatePassword() {
+  pwRef.value.validate(async(valid) => {
+    if (valid) {
+      pwForm.siteId = store.state.user.siteId;
+      await updatePasswordRequest(store.state.user.id, pwForm);
+      uiControl.dialogVisible = false;
+      ElMessage({ message: t('message.success'), type: 'success' });
+    }
+  });
+}
+
+async function updateWithdrawPassword() {
+  withdrawPwRef.value.validate(async(valid) => {
+    if (valid) {
+      withdrawPwForm.siteId = store.state.user.siteId;
+      await updateWithdrawPasswordRequest(store.state.user.id, withdrawPwForm);
+      if (route.query && route.query.name === 'withdrawpw') {
+        router.push("/personal");
+      }
+      await checkWithdrawPw();
+      uiControl.dialogVisible = false;
+      ElMessage({ message: t('message.success'), type: 'success' });
+    }
+  });
+}
+
+function populateQuestionOne() {
+  let copy = uiControl.securityQn;
+  if (securityQnForm.questionTwo) {
+    copy = copy.filter(c => c.value !== securityQnForm.questionTwo);
+  }
+  if (securityQnForm.questionThree) {
+    copy = copy.filter(c => c.value !== securityQnForm.questionThree);
+  }
+  questions.one = copy;
+}
+
+function populateQuestionTwo() {
+  let copy = uiControl.securityQn;
+  if (securityQnForm.questionOne) {
+    copy = copy.filter(c => c.value !== securityQnForm.questionOne);
+  }
+  if (securityQnForm.questionThree) {
+    copy = copy.filter(c => c.value !== securityQnForm.questionThree);
+  }
+  questions.two = copy;
+}
+
+function populateQuestionThree() {
+  let copy = uiControl.securityQn;
+  if (securityQnForm.questionOne) {
+    copy = copy.filter(c => c.value !== securityQnForm.questionOne);
+  }
+  if (securityQnForm.questionTwo) {
+    copy = copy.filter(c => c.value !== securityQnForm.questionTwo);
+  }
+  questions.three = copy;
+}
+
+async function checkSecurityQuestion() {
+  const { data: qn } = await getSecurityQuestions(store.state.user.id);
+  if (qn) {
+    hasSecurityQn.value = true;
+  } else {
+    hasSecurityQn.value = false;
+  }
+}
+
+async function addSecurityQuestion() {
+  securityQnRef.value.validate(async (valid) => {
+    if (valid) {
+      securityQnForm.siteId = store.state.user.siteId;
+      await createSecurityQuestion(store.state.user.id, securityQnForm);
+      await checkSecurityQuestion();
+      uiControl.dialogVisible = false;
+      ElMessage({ message: t('message.success'), type: 'success' });
+    }
+  })
 }
 
 onMounted(async() => {
   if (route.query && route.query.name === 'realname') {
     ElMessage({ message: t('message.inputRealName'), type: "error", customClass: "toTop" });
+  } else if (route.query && route.query.name === 'withdrawpw') {
+    ElMessage({ message: t('message.setWithdrawPassword'), type: "error", customClass: "toTop" });
   }
+  await checkWithdrawPw();
+  await checkSecurityQuestion();
   await loadAffiliateInfo();
 })
 </script>
@@ -237,7 +708,7 @@ onMounted(async() => {
 .affiliate-info {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 10px;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -257,14 +728,12 @@ onMounted(async() => {
 }
 
 .box-card i {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 50px;
-  border-radius: 5px;
-  padding: 10px;
-  width: 80px;
-  height: 80px;
+  font-size: 20px;
+  width: 30px;
+}
+
+.box-card .el-form .el-form-item {
+  margin-bottom: 0;
 }
 
 .card-panel-description {
@@ -295,6 +764,24 @@ onMounted(async() => {
 .btn-group {
   margin-top: 15px;
   display: flex;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.info {
+  align-items: center;
+  padding-left: 50px;
+}
+
+.el-row {
+  flex-wrap: nowrap;
+}
+
+::v-deep(.el-form-item__content) {
+  align-self: center;
 }
 
 .dialog-footer {

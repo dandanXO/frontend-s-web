@@ -56,3 +56,15 @@ export const updateRealName = (updateInfo) => {
 export const getAffiliateDomain = (id) => {
   return https().request(`/affiliate/${id}/domain`, Method.GET);
 };
+
+export const checkHasWithdrawPw = (id, siteId) => {
+  return https().request(`/affiliate/${id}/hasWithdrawPw`, Method.GET, { siteId: siteId }, ContentType.form);
+};
+
+export const getSecurityQuestions = (id) => {
+  return https().request(`/affiliate/${id}/securityQuestion`, Method.GET);
+};
+
+export const createSecurityQuestion = (id, securityQuestion) => {
+  return https().request(`/affiliate/${id}/securityQuestion`, Method.POST, securityQuestion, ContentType.form);
+};

@@ -27,6 +27,10 @@ export const updatePasswordRequest = (id, updateInfo) => {
   return https().request(`/auth/${id}/password?_method=PUT`, Method.POST, updateInfo, ContentType.form);
 };
 
+export const updateWithdrawPasswordRequest = (id, updateInfo) => {
+  return https().request(`/auth/${id}/withdrawPassword?_method=PUT`, Method.POST, updateInfo, ContentType.form);
+};
+
 export const getUsers = (user) => {
   for (const key in user) {
     if (user[key] === null || user[key] === undefined || user[key] === "") {
