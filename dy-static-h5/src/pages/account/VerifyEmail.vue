@@ -339,12 +339,12 @@ export default defineComponent({
               showVerificationTokenInput.value = true;
 
               emailCodeId.value = res.data.codeId;
-            } else{
+            } else {
               color = "negative";
               getCode();
             }
 
-            if (message){
+            if (message) {
               $q.notify({message, color});
             }
 
@@ -420,9 +420,19 @@ export default defineComponent({
   }
 
   .q-field {
-    border: 1px solid #d7d7d7;
-    border-radius: 10px;
+    //border: 1px solid #d7d7d7;
+
     margin-bottom: 10px;
+
+    .q-field__control {
+      border: 1px solid #d7d7d7;
+      border-radius: 10px;
+    }
+
+    .q-field__inner {
+      border: 0px;
+      border-radius: 10px;
+    }
   }
 }
 

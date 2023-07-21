@@ -420,9 +420,24 @@ export default defineComponent({
     color: #333333 !important;
   }
   .q-field{
-    border: 1px solid #d7d7d7;
-    border-radius:10px;
+    //border: 1px solid #d7d7d7;
+
     margin-bottom: 10px;
+
+    .q-field__control{
+      border: 1px solid #d7d7d7;
+    }
+    .q-field__inner{
+      border: 0px;
+      border-radius:10px;
+    }
+  }
+  .q-field__native{
+
+  }
+
+  .q-field--standout.q-field--readonly .q-field__control:before{
+    border: 0px;
   }
 }
 
