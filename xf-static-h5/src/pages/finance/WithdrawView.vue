@@ -83,6 +83,14 @@
               </q-item-section>
             </template>
           </q-select>
+
+          <!-- {
+          pattern: '^([1-9][0-9]*)$',
+          message: "金额应为正数",
+          trigger: "change",
+        }, -->
+
+
           <q-input
               hide-bottom-space
               ref="amountRef"
@@ -96,7 +104,8 @@
                 '请输入正确的提款金额',
               (val) =>
                 val <= selectedWithdrawalMethod.withdrawMax ||
-                '请输入正确的提款金额'
+                '请输入正确的提款金额',
+                noDecimalRule
             ]"
               clearable
           >
@@ -432,6 +441,7 @@ export default defineComponent({
     };
 
     return {
+      noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
       cardRef,
       withdrawInfo,
