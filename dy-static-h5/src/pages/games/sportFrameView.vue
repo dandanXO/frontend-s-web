@@ -3,6 +3,7 @@
     <iframe
         @load="loadGame()"
         :src="src"
+        scrolling="auto"
         frameborder="0"
         class="sport-iframe"
     ></iframe>
