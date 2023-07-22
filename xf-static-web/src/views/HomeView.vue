@@ -122,7 +122,7 @@
           <div class="avg-container-en">
             XF
             <br />
-            ASFSDAFA
+            ADVANTAGE
           </div>
           <div>
             <span class="date_color sky_blue"></span>
