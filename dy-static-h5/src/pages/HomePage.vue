@@ -1284,7 +1284,7 @@ export default defineComponent({
 
     const hotSlots = ref(['PG']);
     const hotLives = ref(['AG', 'BBIN']);
-    const hotSports = ref(['IM']);
+    const hotSports = ref(['PM']);
     const hotPokers = ref(['KY']);
     const hotLotterys = ref(['TCG']);
 
