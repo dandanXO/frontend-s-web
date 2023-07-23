@@ -103,11 +103,11 @@
             :space-between="8"
             :breakpoints="{
           0: {
-            slidesPerView: 3,
+            slidesPerView: 5,
             spaceBetween: 8
           },
           380: {
-            slidesPerView: 4,
+            slidesPerView: 5,
             spaceBetween: 8
           },
           440: {
