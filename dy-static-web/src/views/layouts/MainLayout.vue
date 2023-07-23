@@ -225,6 +225,15 @@ export default defineComponent({
         case "www.dy15789.cc":
         case "www.dy87951.cc":
         case "www.dy59267.cc":
+        case "www.dy19637.com":
+        case "www.dy59386.com":
+        case "www.dy91628.com":
+        case "dy19637.com":
+        case "dy59386.com":
+        case "dy91628.com":
+        case "m.dy19637.com":
+        case "m.dy59386.com":
+        case "m.dy91628.com":
           trackingScriptUrl = "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
         default:
