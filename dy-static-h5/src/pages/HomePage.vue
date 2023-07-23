@@ -188,7 +188,7 @@
           <div class="notice">
             <img src="../assets/index/home-announce-icon.png" width="18px"/>
           </div>
-          <marquee-text :repeat="5" :duration="announcementList.length * 30">
+          <marquee-text :repeat="5" :duration="announcementList.length * 150">
             <div v-if="announcementList">
           <span
               v-for="(a, i) in announcementList"

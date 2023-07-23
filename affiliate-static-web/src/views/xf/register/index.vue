@@ -402,14 +402,14 @@ export default defineComponent({
             try {
               await store.dispatch(UserActionTypes.ACTION_REGISTER, state.loginForm);
               ElNotification({
-                title: 'Success',
-                message: "Success",
+                title: '系统提示',
+                message: "尊敬的合作伙伴，您的资料提交成功，我们的代理专员会在24小时内告知您审核结果，如有疑问请联系我们代理专员或在线客服，谢谢。",
                 showClose: false,
                 type: 'success'
               })
             } catch (e) {
               ElNotification({
-                title: 'Error',
+                title: '系统提示',
                 message: e.message,
                 showClose: false,
                 type: 'error'
