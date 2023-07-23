@@ -48,7 +48,7 @@ onMounted(() => {
 
     cached.get("SPORT_IFRAME_URL", () => api.get(`/session/launch?_time=${new Date().getTime()}`, {
           params: {
-            platform: "IM",
+            platform: "PM",
             isMobile: Platform.is.mobile ? true : false,
             way: way
           }
