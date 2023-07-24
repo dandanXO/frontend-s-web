@@ -149,9 +149,6 @@
             ;
             $("#verNo").html("(" + versionNo + ")");
             var host = window.location.host;
-            var vv = {agentCode: getQueryString("agentCode"), regFrom: getQueryString("url"), downloadUrl: host};
-            $('#download').attr('data-clipboard-text', "FGH" + JSON.stringify(vv));
-            new ClipboardJS('.install');
             $("#download").click(function () {
                 var url = $(this).attr("href");
                 var type = "ALL_AND";
