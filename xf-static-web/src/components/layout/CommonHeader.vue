@@ -135,7 +135,11 @@
             class="sub-menu"
             :style="'height:' + height + 'px;'"
           >
-            <GameMenu :list="slotPlatform" ref="el" v-if="selectedMenu === 'Game'" />
+            <GameMenu
+              :list="slotPlatform"
+              ref="el"
+              v-if="selectedMenu === 'Game'"
+            />
             <SportsMenu
               ref="el"
               v-if="selectedMenu === 'Sports'"
@@ -145,6 +149,11 @@
             <LiveCasinoMenu
               ref="el"
               v-if="selectedMenu === 'Live Casino'"
+              @load-modal="openGame"
+            />
+            <LotteryMenu
+              ref="el"
+              v-if="selectedMenu === 'Lottery'"
               @load-modal="openGame"
             />
             <PokerMenu
@@ -792,6 +801,7 @@ import {
 import GameMenu from '@/components/menu/GameMenu.vue'
 import SportsMenu from '@/components/menu/SportsMenu.vue'
 import LiveCasinoMenu from '@/components/menu/LiveCasinoMenu.vue'
+import LotteryMenu from '@/components/menu/LotteryMenu.vue'
 import PokerMenu from '@/components/menu/PokerMenu.vue'
 import FishingMenu from '@/components/menu/FishingMenu.vue'
 import PromotionMenu from '@/components/menu/PromotionMenu.vue'
@@ -813,6 +823,7 @@ export default defineComponent({
     GameMenu,
     SportsMenu,
     LiveCasinoMenu,
+    LotteryMenu,
     PokerMenu,
     FishingMenu,
     PromotionMenu,
@@ -846,6 +857,8 @@ export default defineComponent({
 					this.navigations.push({code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true});
 				} else if (data[i] === "Live Casino"){
 					this.navigations.push({code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true});
+        } else if (data[i] === "Lottery"){
+					this.navigations.push({code: "Lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true});
 				} else if (data[i] === "Sports"){
 					this.navigations.push({code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true});
 				} else if (data[i] === "Slots"){
@@ -2458,6 +2471,7 @@ body {
   &.live,
   &.sports,
   &.poker,
+  &.lottery,
   &.promo {
     .platform-title {
       font-size: 2.5em;

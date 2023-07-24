@@ -7,9 +7,13 @@ export function getPlatformList() {
 }
 
 export function getLoggedInPlatformList() {
-  return cached.get("PLATFORMS", () =>
+  return cached.get("LOGGEDINPLATFORMS", () =>
     server.REST.get("/session/loggedInPlatform")
   );
+}
+
+export function getPlatformListDisplay() {
+  return cached.get("PLATFORMS", () => server.REST.get("/platform"));
 }
 
 export function getPlatformGames(code, gameType) {
