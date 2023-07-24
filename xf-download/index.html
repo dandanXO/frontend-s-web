@@ -70,7 +70,6 @@
             </div>
             <div class="load">
                 <a class="install" id="download"
-                   data-clipboard-text="ABC{&quot;agentCode&quot;:null,&quot;regFrom&quot;:null,&quot;downloadUrl&quot;:&quot;www.xfapp111.com&quot;}"
                    href="https://kcx3zdl.ycylbj.com/xf-website.apk">下载安装</a>
             </div>
             <p class="tuto">下滑查看教程</p>
@@ -98,7 +97,7 @@
     </div> -->
 </div>
 <script>
-    var versionNo = "1.0.12";
+    var versionNo = "1.0.14";
 
     var andList = [
         {imgurl: '/styles/images/android/1.png'},
@@ -148,16 +147,12 @@
 
         $("#verNo").html("(" + versionNo + ")");
         var host = window.location.host;
-        var vv = {agentCode: getQueryString("agentCode"), regFrom: getQueryString("url"), downloadUrl: host};
-        $('#download').attr('data-clipboard-text', "ABC" + JSON.stringify(vv));
         $("#download").click(function () {
             var url = $(this).attr("href");
             var type = "ALL_AND";
             if (url.indexOf(".plist") != -1) {
                 type = "ALL_IOS";
             }
-
-            postDownloadExtra(type, host);
         });
         new ClipboardJS('.install');
     });
