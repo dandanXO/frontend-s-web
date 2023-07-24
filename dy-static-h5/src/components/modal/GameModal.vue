@@ -468,7 +468,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               .then((response) => {
                 $q.loading.hide();
                 // newWin.location.href = response.data;
-                window.open(response.data, `_blank`);
+                window.location.href= response.data;
               });
           return;
         }
@@ -484,7 +484,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             .then((response) => {
               $q.loading.hide();
               // newWin.location.href = response.data;
-              window.open(response.data, `_blank`);
+              window.location.href= response.data;
             }).catch((err) => {
               $q.loading.hide();
               $q.notify({

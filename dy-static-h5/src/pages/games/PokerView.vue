@@ -114,8 +114,11 @@ onMounted(() => {
         }
 
       }else{
-        window.open(res, `_blank`);
-        router.go(-1);
+        window.location.href= res;
+        setTimeout(()=>{
+          router.push("/")
+        },1000)
+
       }
 
       // store.isInitEsport = true;
