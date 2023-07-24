@@ -87,7 +87,7 @@ export const constantRoutes = [
         component: () => import('@/views/team/affiliate/index.vue'),
         meta:
         {
-          title: "Affiliate",
+          title: "代理后台",
           icon: "peoples",
           hidden: false
         },

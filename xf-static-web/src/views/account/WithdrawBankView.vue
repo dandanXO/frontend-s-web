@@ -30,7 +30,7 @@
         >
           <div class="cardname">
             <div class="txt-center">
-              <strong>{{ bc.bankName }}</strong>
+              <strong>{{ bc.bankName === 'USDTTRC' ? 'USDTTRC20' : bc.bankName }}</strong>
               <!-- <div>Bank Account Number</div> -->
             </div>
           </div>
@@ -130,14 +130,14 @@
             :prop="tbl.dataIndex"
             :label="tbl.title"
           >
-            <template v-if="tbl.dataIndex === 'bankName'" #default="scope">
-              {{ getOptionLabel(scope.row.bankName) }}
+            <template #default="scope">
+              <template v-if="tbl.dataIndex === 'bankName'">
+                {{ getOptionLabel(scope.row.bankName) }}
+              </template>
+              <template v-if="tbl.dataIndex === 'cardNumber'">
+                {{ maskCardNumber(scope.row.cardNumber) }}
+              </template>
             </template>
-
-            <template v-if="tbl.dataIndex === 'cardNumber'" #default="scope">
-              {{ maskCardNumber(scope.row.cardNumber) }}
-            </template>
-
             <!-- <template
                   v-if="tbl.dataIndex === 'recordTime'"
                   #default="scope"
@@ -178,7 +178,7 @@
           <el-row :gutter="20">
             <el-col :span="6">
               <el-select
-                placeholder="Bank type"
+                placeholder="类型"
                 v-model="selectedBankType"
                 style="width: 100%"
                 @change="selectBankType"
@@ -197,7 +197,7 @@
               <el-select
                 class="select"
                 v-model="bankCardInfo.bankId"
-                :placeholder="isUSDT ? '选择虚拟币' : '选择银行'"
+                :placeholder="'选择' + chooseCard"
                 style="width: 100%"
               >
                 <el-option
@@ -232,10 +232,10 @@
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            :placeholder="isUSDT ? '钱包地址' : '银行卡号'"
+            :placeholder="numAddress"
           />
         </el-form-item>
-        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT">
+        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isKDOU">
           <el-input
             v-model="bankCardInfo.cardAddress"
             placeholder="开户行地址"
@@ -356,7 +356,7 @@ import {userStore} from "@/store";
 import {useRouter} from "vue-router";
 import {sendSessionSms} from "@/api/personal/personal";
 import {InfoFilled} from "@element-plus/icons-vue";
-import moment from "moment";
+// import moment from "moment";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -391,14 +391,24 @@ export default defineComponent({
       if (selectedBankType.value === 'Bank') {
         min = 16;
         max = 19;
+        if (!/^\d+$/.test(v)) {
+          return Promise.reject('请输入数字');
+        }
       } else if (selectedBankType.value === 'Crypto') {
         min = 34;
         max = 36;
+      } else if (selectedBankType.value === 'e-Wallet') {
+        min = 34;
+        max = 34;
       }
       if (v === '') {
         return Promise.reject('请输入卡号');
       } else if (v.length < min || v.length > max) {
-        return Promise.reject('长度应为 ' + min + '-' + max);
+        if (min === max) {
+          return Promise.reject('长度应为 ' + min);
+        } else {
+          return Promise.reject('长度应为 ' + min + '-' + max);
+        }
       } else {
         return Promise.resolve();
       }
@@ -407,6 +417,7 @@ export default defineComponent({
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
     const isUSDT = ref(false);
+    const isKDOU = ref(false);
     const store = userStore();
     const searchForm = reactive({
       startDate: "",
@@ -452,7 +463,7 @@ export default defineComponent({
       pageSize: 5,
       pageCount: 1
     }])
-    const bankTypes = [{value: 'Bank', text: '银行卡'}, {value: 'Crypto', text: '数字货币'}]
+    const bankTypes = [{value: 'Bank', text: '银行卡'}, {value: 'Crypto', text: '数字货币'}, {value: 'e-Wallet', text: '电子钱包'}]
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -624,13 +635,17 @@ export default defineComponent({
         if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
           banksList.value.push(element);
           isUSDT.value = false;
+          isKDOU.value = false;
         }
         if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
           banksList.value.push(element);
           isUSDT.value = true;
+          isKDOU.value = false;
         }
         if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
           banksList.value.push(element);
+          isKDOU.value = true;
+          isUSDT.value = false;
         }
       });
       if(bankCardInfo.cardNumber != ''){
@@ -777,10 +792,20 @@ export default defineComponent({
         }
       ]
     };
+    
+    const captchaRules = {
+      captchaCode: [
+        {
+          required: true,
+          validator: '请输入验证码',
+          trigger: "blur",
+        },
+      ]
+    };
     const unbindBankCard = (card) => {
 
       ElMessageBox.prompt(
-          `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === 'CRYPTO' ? '钱包地址' : '卡号'}`,
+          `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === 'CRYPTO' || card.bankType === 'EWALLET' ? '钱包地址' : '卡号'}`,
           '警告',
           {
             confirmButtonText: '确定',
@@ -831,6 +856,25 @@ export default defineComponent({
       }
     }
 
+    const chooseCard = () => {
+      if (isUSDT.value) {
+        return '虚拟币'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行'
+      }
+    }
+    
+    const numAddress = () => {
+      if (isUSDT.value) {
+        return '钱包地址'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行卡号'
+      }
+    }
     return {
       searchForm,
       columns,
@@ -843,6 +887,7 @@ export default defineComponent({
       // sendSmsForSubmitBankCard,
       openCaptchaForm,
       captchaForm,
+      captchaRules,
       getCode,
       verificationImg,
       captchaDialogVisible,
@@ -851,6 +896,7 @@ export default defineComponent({
       showCard,
       isCardActive,
       isUSDT,
+      isKDOU,
       bankName,
       bankTypes,
       selectBankType,
@@ -869,6 +915,8 @@ export default defineComponent({
       getOptionLabel,
       withdrawState,
       checkBankCards,
+      chooseCard,
+      numAddress
     };
   }
 });

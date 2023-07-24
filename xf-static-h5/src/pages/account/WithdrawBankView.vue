@@ -57,8 +57,7 @@
     <q-dialog v-model="isUnbindCardModal" persistent no-backdrop-dismiss no-esc-dismiss>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center" v-if="unbindcarddetail.bankType!='CRYPTO'">请输入解绑银行卡号</div>
-          <div class="text-h6 text-center" v-if="unbindcarddetail.bankType=='CRYPTO'">请输入解绑钱包地址</div>
+          <div class="text-h6 text-center">{{ unbindCardEnter() }}</div>
         </q-card-section>
         <q-form>
           <div>
@@ -68,7 +67,7 @@
                 ref="unbindCardNoRef"
                 class="q-mb-md"
                 v-model="unbindCardNo"
-                :label="(unbindcarddetail.bankType=='CRYPTO') ? '钱包地址' : '银行卡号'"
+                :label="unbindCardLabel()"
                 color="white"
                 :rules="[
                         (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || ((unbindcarddetail.bankType=='CRYPTO') ? '钱包地址不正确' : '银行卡号不正确')
@@ -103,8 +102,8 @@
                 <q-select
                     v-model="selectedBankType"
                     filled
-                    :options="[{ name: '银行卡' }, { name: '数字货币' }]"
-                    label="银行 / 数字货币"
+                    :options="[{ name: '银行卡' }, { name: '数字货币' }, { name: '电子钱包' }]"
+                    label="类型"
                     color="blue"
                     label-color="grey"
                     option-label="name"
@@ -125,8 +124,8 @@
                     :options="banksList"
                     option-value="id"
                     option-label="name"
-                    :label="isCrypto ? '选择数字货币' : '选择银行卡'"
-                    :rules="[(val) => !!val || '请选择']"
+                    :label="'选择' + chooseCard()"
+                    :rules="[(val) => !!val || '请选择' + chooseCard()]"
                     lazy-rules
                     emit-value
                     map-options
@@ -205,15 +204,15 @@
               filled
               class=""
               v-model="bankCardInfo.cardNumber"
-              :label="isCrypto ? '钱包地址' : '银行卡号'"
-              :rules="isCrypto ? cardCryptoRules : cardNumberRules"
+              :label="cardLabel()"
+              :rules="isCrypto || isKDOU ? cardCryptoRules : cardNumberRules"
               ref="cardNumberRef"
               color="white"
           >
           </q-input>
 
           <q-input
-              v-show="!isCrypto"
+              v-show="!isCrypto && !isKDOU"
               class="q-mb-md"
               filled
               v-model="bankCardInfo.cardAddress"
@@ -382,6 +381,7 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar();
     const isCrypto = ref(false);
+    const isKDOU = ref(false);
     const isCardActive = ref();
     const isNoCard = ref(false);
     const searchForm = reactive({
@@ -539,9 +539,15 @@ export default defineComponent({
         if (selectedBankType.value === "银行卡" && element.bankType === 'BANK') {
           banksList.value.push(element);
           isCrypto.value = false
+          isKDOU.value = false
         }
         if (selectedBankType.value === "数字货币" && element.bankType === 'CRYPTO') {
           isCrypto.value = true
+          isKDOU.value = false
+          banksList.value.push(element);
+        }
+        if (selectedBankType.value === "电子钱包" && element.bankType === 'EWALLET') {
+          isKDOU.value = true
           banksList.value.push(element);
         }
       })
@@ -593,7 +599,45 @@ export default defineComponent({
       unbindcarddetail.value = card;
       console.log(unbindcarddetail.value);
     }
-
+    const unbindCardEnter = () => {
+      if (unbindcarddetail.value.bankType === 'CRYPTO') {
+        return '请输入解绑钱包地址'
+      } else if (unbindcarddetail.value.bankType === 'EWALLET') {
+        return '请输入解绑电子钱包'
+      } else {
+        return '请输入解绑银行卡号'
+      }
+    }
+  
+    const chooseCard = () => {
+      if (isCrypto.value) {
+        return '虚拟币'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行'
+      }
+    }
+    const cardLabel = () => {
+      if (isCrypto.value) {
+        return '钱包地址'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行卡号'
+      }
+    }
+    
+    
+    const unbindCardLabel = () => {
+      if (unbindcarddetail.value.bankType === 'CRYPTO') {
+        return '钱包地址'
+      } else if (unbindcarddetail.value.bankType === 'EWALLET') {
+        return '电子钱包'
+      } else {
+        return '银行卡号'
+      }
+    }
     const unbindBankCard = (card) => {
       unbindCardNoRef.value.validate();
 
@@ -707,7 +751,9 @@ export default defineComponent({
     let validateBankLength = (val) => {
       if (isCrypto.value == true) {
         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
-      } else if (isCrypto.value == false) {
+      } else if (isKDOU.value == true) {
+        return (val.length > 33 && val.length < 35) || '长度应为34个字符'
+      } else {
         return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
       }
     }
@@ -816,6 +862,7 @@ export default defineComponent({
       isCardActive,
       isNoCard,
       isCrypto,
+      isKDOU,
       bankName,
       isVirtual,
       bankCardRef,
@@ -838,7 +885,11 @@ export default defineComponent({
       selectBankType,
       banksList,
       imgURL,
-      store
+      store,
+      chooseCard,
+      cardLabel,
+      unbindCardEnter,
+      unbindCardLabel
     };
   }
 });
