@@ -102,10 +102,17 @@ onMounted(() => {
       $q.loading.hide();
       visible.value = true;
 
-      var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
-      ref.addEventListener('loadstop', function (e) {
+      if(way !== "H5"){
+
+        var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
+        ref.addEventListener('loadstop', function(e){
+          router.go(-1);
+        });
+
+      }else{
+        window.open(res, `_blank`);
         router.go(-1);
-      });
+      }
 
       // store.isInitEsport = true;
       // src.value = res;

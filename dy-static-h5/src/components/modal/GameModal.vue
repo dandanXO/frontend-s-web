@@ -138,7 +138,6 @@ import DepositComponent from "components/depositComponent.vue";
 import {Browser} from "@capacitor/browser";
 
 
-
 import {storeToRefs} from "pinia";
 import {api} from "boot/axios";
 import {useQuasar, Platform, AppFullscreen, openURL} from "quasar";
@@ -390,7 +389,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       //   }
       //
       // }
-      if(way) {
+
+      // if ((platformCode === 'PTDY'))
+
+      if (way !== "H5") {
         //Change to open at same page.
         showHeader.value = false;
         if (platformCode === 'platformType') {
@@ -459,50 +461,47 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           });
         })
 
+      } else {
+        if (platformCode === 'platformType') {
+          api
+              .get(`/session/launch?_time=${new Date().getTime()}`, {
+                params: {
+                  platform: gameCode,
+                  isMobile: Platform.is.mobile ? true : false,
+                  way: way
+                }
+              })
+              .then((response) => {
+                $q.loading.hide();
+                // newWin.location.href = response.data;
+                window.open(response.data, `_blank`);
+              });
+          return;
+        }
+        api
+            .get(`/session/launch?_time=${new Date().getTime()}`, {
+              params: {
+                platform: platformCode,
+                gameCode: gameCode,
+                isMobile: Platform.is.mobile ? true : false,
+                way: way
+              }
+            })
+            .then((response) => {
+              $q.loading.hide();
+              // newWin.location.href = response.data;
+              window.open(response.data, `_blank`);
+            }).catch((err) => {
+              $q.loading.hide();
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: err.message,
+                icon: "report_problem"
+              });
+            });
       }
-
-      // else if ((platformCode === 'PTDY')) {
-      //   // const newWin = window.open(`/loading`, `_blank`);
-      //   if (platformCode === 'platformType') {
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           // newWin.location.href = response.data;
-      //           window.open(response.data, `_blank`);
-      //         });
-      //     return
-      //   }
-      //   api
-      //       .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //         params: {
-      //           platform: platformCode,
-      //           gameCode: gameCode,
-      //           isMobile: Platform.is.mobile ? true : false,
-      //           way: way
-      //         }
-      //       })
-      //       .then((response) => {
-      //         $q.loading.hide();
-      //         // newWin.location.href = response.data;
-      //         window.open(response.data, `_blank`);
-      //       }).catch((err) => {
-      //     $q.loading.hide();
-      //     $q.notify({
-      //       color: "negative",
-      //       position: "top",
-      //       message: err.message,
-      //       icon: "report_problem"
-      //     });
-      //   });
-      //
-      // } else if (isHuaweiPhone()) {
+      // else if (isHuaweiPhone()) {
       //   // alert("1");
       //   if (platformCode === 'platformType') {
       //     api

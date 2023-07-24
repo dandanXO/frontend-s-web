@@ -66,11 +66,18 @@ onMounted(() => {
       $q.loading.hide();
       visible.value= true;
 
-      var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
+      if(way !== "H5"){
 
-      ref.addEventListener('loadstop', function(e){
+        var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
+        ref.addEventListener('loadstop', function(e){
+          router.go(-1);
+        });
+
+      }else{
+        window.open(res, `_blank`);
         router.go(-1);
-      });
+      }
+
 
       // $q.loading.hide();
       // store.isInitEsport = true;
