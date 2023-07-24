@@ -27,18 +27,18 @@
               v-model="withdrawInfo.cardId"
               option-value="id"
               emit-value
-              :label="isUSDT ? '钱包地址' : '提款银行'"
+              :label="'选择' + chooseLabel()"
               color="white"
               :options="withdrawState.bankCardList"
               map-options
-              :rules="[(val) => !!val || '请选择银行/钱包地址']"
+              :rules="[(val) => !!val || '请选择' + chooseLabel()]"
           >
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey">
-                  {{ isUSDT ? "没有可用的钱包地址" : "没有可用的卡片" }}
+                  {{ "没有可用的" + chooseCard() }}
                   <router-link class="text-bright" to="/account/withdraw">
-                    {{ isUSDT ? "加虚拟钱包" : "绑定银行卡" }}
+                    {{ isUSDT || isKDOU ? "加" + chooseCard() : "绑定" + chooseCard() }}
                   </router-link>
                 </q-item-section>
               </q-item>
@@ -105,8 +105,8 @@
               (val) =>
                 val <= selectedWithdrawalMethod.withdrawMax ||
                 '请输入正确的提款金额',
-                noDecimalRule
-            ]"
+                !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true,              
+              ]"
               clearable
           >
             <template v-slot:prepend>
@@ -224,7 +224,7 @@
           </div>
           <div class="q-py-md text-orange">
             <div
-                v-if="!isUSDT && selectedWithdrawalMethod.tips"
+                v-if="!isKDOU && !isUSDT && selectedWithdrawalMethod.tips"
                 class="selected-tip"
                 v-html="selectedWithdrawalMethod.tips"
             ></div>
@@ -364,6 +364,7 @@ export default defineComponent({
       }
     };
     const isUSDT = ref(false);
+    const isKDOU = ref(false);
     const selectMethod = (method, index) => {
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
@@ -371,8 +372,15 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       if (withdrawInfo.withdrawCode.includes("USDT")) {
         isUSDT.value = true;
+        isKDOU.value = false;
       } else {
         isUSDT.value = false;
+      }
+      if (withdrawInfo.withdrawCode.includes("KDPAY")) {
+        isKDOU.value = true;
+        isUSDT.value = false;
+      } else {
+        isKDOU.value = false;
       }
       activeItem.value = index;
       loadCards();
@@ -440,6 +448,26 @@ export default defineComponent({
       withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
     };
 
+    const chooseLabel = () => {
+      if (isUSDT.value) {
+        return '虚拟币'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行卡'
+      }
+    }
+
+    const chooseCard = () => {
+      if (isUSDT.value) {
+        return '虚拟钱包'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行卡片'
+      }
+    }
+
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
@@ -455,12 +483,15 @@ export default defineComponent({
       selectedWithdrawalMethod,
       loadCards,
       isUSDT,
+      isKDOU,
       store,
       updateWithdrawAmt,
       platforms,
       hasWithdrawCard,
       withdrawFormRef,
-      isLoaded
+      isLoaded,
+      chooseLabel,
+      chooseCard
     };
   }
 });

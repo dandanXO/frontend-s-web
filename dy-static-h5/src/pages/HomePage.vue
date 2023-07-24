@@ -601,6 +601,17 @@
                       </div>
                     </div>
                   </swiper-slide>
+
+                  <swiper-slide v-if="slot_evens.length !== slot_odds.length">
+                    <div class="game-list-div">
+                      <div
+                          class="game-item-div slot-item">
+                        <div class="game-board">
+                          &nbsp;
+                        </div>
+                      </div>
+                    </div>
+                  </swiper-slide>
                 </swiper>
               </div>
 
@@ -989,9 +1000,9 @@ export default defineComponent({
         scrollToSlide('id-slot-slide')
         // firstSwiper.value?.slideTo(3, 500);
       }
-      // if (tab.name === "fishing") {
-      //   firstSwiper.value?.slideTo(4, 500);
-      // }
+      if (tab.name === "fish") {
+        scrollToSlide('id-fish-slide')
+      }
       if (tab.name === "poker") {
         scrollToSlide('id-poker-slide')
         // firstSwiper.value?.slideTo(5, 500);
@@ -1056,9 +1067,15 @@ export default defineComponent({
       },
       {
         name: "slot",
+        icon: "slide-slot-svg.svg",
+        label: "电子",
+        labelact: "电子"
+      },
+      {
+        name: "fish",
         icon: "slide-fish-svg.svg",
-        label: "电子/捕鱼",
-        labelact: "电子/捕鱼"
+        label: "捕鱼",
+        labelact: "捕鱼"
       },
       {
         name: "poker",
@@ -1174,6 +1191,7 @@ export default defineComponent({
         var checkItem2 = document.getElementById("id-sport-slide");
         var checkItem3 = document.getElementById("id-esport-slide");
         var checkItem4 = document.getElementById("id-slot-slide");
+        var checkItem42 = document.getElementById("id-fish-slide");
         var checkItem5 = document.getElementById("id-poker-slide");
         var checkItem6 = document.getElementById("id-lottery-slide");
 
@@ -1181,6 +1199,8 @@ export default defineComponent({
         var positionTop2 = checkItem2.getBoundingClientRect().top;
         var positionTop3 = checkItem3.getBoundingClientRect().top;
         var positionTop4 = checkItem4.getBoundingClientRect().top;
+        var positionTop42 = checkItem42.getBoundingClientRect().top;
+
         var positionTop5 = checkItem5.getBoundingClientRect().top;
         var positionTop6 = checkItem6.getBoundingClientRect().top;
 
@@ -1190,13 +1210,14 @@ export default defineComponent({
 
         if (positionTop6 - 100 <= topHeight) {
           selectedTab.value = 'lottery';
-          secondSwiper.value?.slideTo(5, 500);
-
+          secondSwiper.value?.slideTo(6, 500);
         } else if (positionTop5 <= topHeight) {
           selectedTab.value = 'poker';
+          secondSwiper.value?.slideTo(5, 500);
+        } else if (positionTop42 <= topHeight) {
+          selectedTab.value = 'fish';
           secondSwiper.value?.slideTo(4, 500);
-
-        } else if (positionTop4 <= topHeight) {
+        }else if (positionTop4 <= topHeight) {
           selectedTab.value = 'slot';
           secondSwiper.value?.slideTo(3, 500);
         } else if (positionTop3 <= topHeight) {
@@ -1656,7 +1677,7 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
-      if(isAndroid()  && !isHuaweiPhone()){
+      if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock('portrait');
       }
 
