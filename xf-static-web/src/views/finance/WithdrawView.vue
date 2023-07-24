@@ -85,7 +85,7 @@
         <el-row>
           <el-col>
             <div
-              v-if="!isUSDT && selectedWithdrawalMethod.tips"
+              v-if="!isKDOU && !isUSDT && selectedWithdrawalMethod.tips"
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
@@ -105,11 +105,11 @@
           class="select"
           style="margin-top: 20px"
           prop="cardId"
-          :label="isUSDT ? '选择钱包地址' : '选择银行卡'"
+          :label="`选择${cardLabel()}`"
           :rules="[
             {
               required: true,
-              message: isUSDT ? '请选择钱包地址' : '请选择银行卡',
+              message: `请选择${cardLabel()}`,
               trigger: 'blur'
             }
           ]"
@@ -119,7 +119,7 @@
               withdrawState.bankCardList.length === 0 ? checkBankCards() : ''
             "
             v-model="withdrawInfo.cardId"
-            :placeholder="isUSDT ? '选择钱包地址' : '选择银行卡'"
+            :placeholder="`请选择${cardLabel()}`"
             style="width: 300px"
           >
             <el-option
@@ -190,6 +190,7 @@ export default defineComponent({
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
+    const isKDOU = ref(false);
     const withdrawState = reactive({
       bankCardList: [],
     });
@@ -341,6 +342,7 @@ export default defineComponent({
     }
     const selectedWithdrawalMethod = ref({})
     const selectMethod = (method, index) => {
+      formRef.value.resetFields();
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
       selectedWithdrawalMethod.value = method
@@ -350,6 +352,11 @@ export default defineComponent({
         isUSDT.value = true
       } else {
         isUSDT.value = false
+      }
+      if (withdrawInfo.withdrawCode.includes('KDPAY')) {
+        isKDOU.value = true
+      } else {
+        isKDOU.value = false
       }
       loadCards()
     }
@@ -365,6 +372,15 @@ export default defineComponent({
         }
       })
     }
+    const cardLabel = () => {
+      if (isUSDT.value) {
+        return '钱包地址'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行卡'
+      }
+    }
     return {
       formRef,
       withdrawInfo,
@@ -378,10 +394,12 @@ export default defineComponent({
       selectMethod,
       imgURL,
       isUSDT,
+      isKDOU,
       verifyWithdrawAmount,
       store,
       loadingBtn,
-      checkBankCards
+      checkBankCards,
+      cardLabel
     };
   },
 });
