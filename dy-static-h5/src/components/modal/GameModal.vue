@@ -268,12 +268,12 @@ const closeDialog = () => {
   const query = {...route.query}
   delete query.inGame
 
-  router.replace({query})
+  // router.replace({query})
 
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
 
-  router.push({query: {...route.query, inGame: true}});
+  // router.push({query: {...route.query, inGame: true}});
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
