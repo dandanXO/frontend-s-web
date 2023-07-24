@@ -1,12 +1,18 @@
 <template>
   <q-page>
-    <iframe
-        @load="loadGame()"
-        :src="src"
-        scrolling="auto"
-        frameborder="0"
-        class="sport-iframe"
-    ></iframe>
+    <div class="loading-div" v-if="!visible">
+      <q-spinner-hourglass
+          color="blue-6"
+          size="8em"
+      />
+    </div>
+<!--    <iframe-->
+<!--        @load="loadGame()"-->
+<!--        :src="src"-->
+<!--        scrolling="auto"-->
+<!--        frameborder="0"-->
+<!--        class="sport-iframe"-->
+<!--    ></iframe>-->
   </q-page>
 </template>
 
@@ -23,6 +29,7 @@ const router = useRouter();
 const route = useRoute();
 let src = ref("");
 const store = userStore();
+const visible= ref(false);
 const loadGame = () => {
   if (src.value !== "") {
     $q.loading.hide();
@@ -56,13 +63,29 @@ onMounted(() => {
         {expired_value: 30}
     ).then((res) => {
       console.log(res);
-
       $q.loading.hide();
-      store.isInitEsport = true;
-      src.value = res;
+      visible.value= true;
+
+      if(way !== "H5"){
+
+        var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
+        ref.addEventListener('loadstop', function(e){
+          router.go(-1);
+        });
+
+      }else{
+        window.open(res, `_blank`);
+        router.go(-1);
+      }
+
+
+      // $q.loading.hide();
+      // store.isInitEsport = true;
+      // src.value = res;
 
     }).catch((err) => {
       $q.loading.hide();
+      visible.value= true;
     });
 
 
@@ -70,7 +93,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 iframe {
   width: 100%;
   height: calc(100%);
@@ -82,7 +105,24 @@ iframe {
   bottom: 0;
   margin: auto;
 }
-.sport-iframe{
 
+.loading-div {
+  z-index: 99;
+  position: fixed;
+  background: rgba(35, 38, 60, 0.4);
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+
+svg {
+  color: var(--q-primary);
+  width: 48px;
+}
 }
 </style>

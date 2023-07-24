@@ -1,30 +1,45 @@
 <template>
   <q-page>
-
-    <div  class="topActions">
-      <q-toolbar-title></q-toolbar-title>
-      <q-btn
-          flat
-          @click="closeDialog()"
-          round
-          dense
-          icon="close"
-          style="width:26px;height:26px;min-height: 26px; min-width: 26px;"
+    <div class="loading-div" v-if="!visible">
+      <q-spinner-hourglass
+          color="blue-6"
+          size="8em"
       />
     </div>
-
-
-    <iframe
-        @load="loadGame()"
-        :src="src"
-        frameborder="0"
-        class="poker-iframe"
-    ></iframe>
+    <!--    <iframe-->
+    <!--        @load="loadGame()"-->
+    <!--        :src="src"-->
+    <!--        scrolling="auto"-->
+    <!--        frameborder="0"-->
+    <!--        class="sport-iframe"-->
+    <!--    ></iframe>-->
   </q-page>
+  <!--  <q-page>-->
+
+  <!--    <div  class="topActions">-->
+  <!--      <q-toolbar-title></q-toolbar-title>-->
+  <!--      <q-btn-->
+  <!--          flat-->
+  <!--          @click="closeDialog()"-->
+  <!--          round-->
+  <!--          dense-->
+  <!--          icon="close"-->
+  <!--          style="width:26px;height:26px;min-height: 26px; min-width: 26px;"-->
+  <!--      />-->
+  <!--    </div>-->
+
+
+  <!--    <iframe-->
+  <!--        @load="loadGame()"-->
+  <!--        :src="src"-->
+  <!--        frameborder="0"-->
+  <!--        class="poker-iframe"-->
+  <!--    ></iframe>-->
+  <!--  </q-page>-->
 </template>
 
 <script setup>
-import { onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "stores/index";
 import {useQuasar, Platform, AppFullscreen} from "quasar";
@@ -37,6 +52,7 @@ const router = useRouter();
 const route = useRoute();
 let src = ref("");
 const store = userStore();
+const visible = ref(false);
 const loadGame = () => {
   if (src.value !== "") {
     $q.loading.hide();
@@ -54,7 +70,7 @@ onMounted(() => {
   if (store.hasToken()) {
     $q.loading.show({message: "正加载页面"});
 
-    if(Platform.is.capacitor) {
+    if (Platform.is.capacitor) {
       window.screen.orientation.lock('portrait');
     }
 
@@ -84,18 +100,33 @@ onMounted(() => {
       console.log(res);
 
       $q.loading.hide();
-      store.isInitEsport = true;
-      src.value = res;
+      visible.value = true;
+
+      if(way !== "H5"){
+
+        var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
+        ref.addEventListener('loadstop', function(e){
+          router.go(-1);
+        });
+
+      }else{
+        window.open(res, `_blank`);
+        router.go(-1);
+      }
+
+      // store.isInitEsport = true;
+      // src.value = res;
 
     }).catch((err) => {
       $q.loading.hide();
+      visible.value = true;
     });
 
   }
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 iframe {
   width: 100%;
   height: calc(100% - 26px);
@@ -113,6 +144,26 @@ iframe {
   background: #d7d7d7;
   justify-content: flex-end;
   width: 100%;
-  height:26px;
+  height: 26px;
+}
+
+.loading-div {
+  z-index: 99;
+  position: fixed;
+  background: rgba(35, 38, 60, 0.4);
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+
+  svg {
+    color: var(--q-primary);
+    width: 48px;
+  }
 }
 </style>

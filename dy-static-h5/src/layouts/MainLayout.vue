@@ -493,7 +493,7 @@ export default defineComponent({
           pageName.value = "体育";
           ui.hiddenFooter();
         } else if (route.path === "/poker") {
-          hasPage.value = false;
+          hasPage.value = true;
           pageName.value = "棋牌";
           ui.hiddenFooter();
         } else if (route.path === "/fish") {
