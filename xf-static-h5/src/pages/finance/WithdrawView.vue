@@ -27,18 +27,18 @@
               v-model="withdrawInfo.cardId"
               option-value="id"
               emit-value
-              :label="'选择' + chooseLabel"
+              :label="'选择' + chooseLabel()"
               color="white"
               :options="withdrawState.bankCardList"
               map-options
-              :rules="[(val) => !!val || '请选择' + chooseLabel]"
+              :rules="[(val) => !!val || '请选择' + chooseLabel()]"
           >
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey">
-                  {{ "没有可用的" + chooseCard }}
+                  {{ "没有可用的" + chooseCard() }}
                   <router-link class="text-bright" to="/account/withdraw">
-                    {{ isUSDT || isKDOU ? "加" + chooseCard : "绑定" + chooseCard }}
+                    {{ isUSDT || isKDOU ? "加" + chooseCard() : "绑定" + chooseCard() }}
                   </router-link>
                 </q-item-section>
               </q-item>
