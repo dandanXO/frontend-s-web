@@ -601,6 +601,17 @@
                       </div>
                     </div>
                   </swiper-slide>
+
+                  <swiper-slide v-if="slot_evens.length !== slot_odds.length">
+                    <div class="game-list-div">
+                      <div
+                          class="game-item-div slot-item">
+                        <div class="game-board">
+                          &nbsp;
+                        </div>
+                      </div>
+                    </div>
+                  </swiper-slide>
                 </swiper>
               </div>
 
@@ -1656,7 +1667,7 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
-      if(isAndroid()  && !isHuaweiPhone()){
+      if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock('portrait');
       }
 
