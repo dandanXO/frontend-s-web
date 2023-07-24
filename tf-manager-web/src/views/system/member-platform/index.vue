@@ -9,6 +9,21 @@
           :placeholder="t('fields.name')"
         />
         <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="onChange"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
           clearable
           v-model="request.platform"
           size="small"
@@ -21,20 +36,6 @@
             :key="item.key"
             :label="item.platform"
             :value="item.platform"
-          />
-        </el-select>
-        <el-select
-          v-model="request.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
           />
         </el-select>
         <el-button
@@ -213,9 +214,14 @@ async function loadPlatform() {
   platform.list = p
 }
 
+async function onChange() {
+  loadPlatform();
+}
+
 async function manual(row) {
   const { data: p } = await manualRegister(row)
   if (p === '注册成功') {
+    loadMemberPlatform()
     ElMessage({ message: p, type: "success" });
   } else {
     ElMessage({ message: p, type: "error" });
