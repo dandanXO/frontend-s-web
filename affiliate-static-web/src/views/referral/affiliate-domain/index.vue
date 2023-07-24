@@ -8,32 +8,40 @@
       </template>
       <div class="card-panel-description">
         <div class="card-panel-link-text">{{ $t('fields.domainWeb') }}</div>
-        <el-input v-model="webDomain" size="mini" style="width: 400px;" disabled />
-        <el-button
-          class="copy-btn"
-          icon="el-icon-copy-document"
-          size="mini"
-          type="primary"
-          @click="copy(webDomain, 'WEB')"
-          :disabled="webDomain"
-        >
-          {{ $t('fields.copy') }}
-        </el-button>
+        <span v-for="item in webDomain" :key="item">
+          <el-row>
+            <span class="domain">{{ item }}</span>
+            <el-button
+              class="copy-btn"
+              icon="el-icon-copy-document"
+              size="mini"
+              type="primary"
+              @click="copy(item, 'PC')"
+              :disabled="webDomain.length < 1"
+            >
+              {{ $t('fields.copy') }}
+            </el-button>
+          </el-row>
+        </span>
       </div>
 
       <div class="card-panel-description">
         <div class="card-panel-link-text">{{ $t('fields.domainApp') }}</div>
-        <el-input v-model="appDomain" size="mini" style="width: 400px;" disabled />
-        <el-button
-          class="copy-btn"
-          icon="el-icon-copy-document"
-          size="mini"
-          type="primary"
-          @click="copy(appDomain, 'APP')"
-          :disabled="appDomain"
-        >
-          {{ $t('fields.copy') }}
-        </el-button>
+        <span v-for="item in appDomain" :key="item">
+          <el-row>
+            <span class="domain">{{ item }}</span>
+            <el-button
+              class="copy-btn"
+              icon="el-icon-copy-document"
+              size="mini"
+              type="primary"
+              @click="copy(item, 'MOBILE')"
+              :disabled="appDomain.length < 1"
+            >
+              {{ $t('fields.copy') }}
+            </el-button>
+          </el-row>
+        </span>
       </div>
     </el-card>
   </div>
@@ -48,25 +56,25 @@ import { ElMessage } from "element-plus";
 const store = useStore();
 // eslint-disable-next-line
 const { t } = useI18n();
-const webDomain = ref("");
-const appDomain = ref("");
+const webDomain = ref([]);
+const appDomain = ref([]);
 
 async function loadAffiliateDomain() {
   const { data: aff } = await getAffiliateDomain(store.state.user.id);
   aff.forEach(a => {
-    if (a.way === 'WEB') {
-      webDomain.value = a.domain;
-    } else if (a.way === 'APP') {
-      appDomain.value = a.domain;
+    if (a.way === 'PC') {
+      webDomain.value.push(a.domain);
+    } else if (a.way === 'MOBILE') {
+      appDomain.value.push(a.domain);
     }
   })
 }
 
 function copy(text, type) {
   navigator.clipboard.writeText(text);
-  if (type === 'WEB') {
+  if (type === 'PC') {
     ElMessage({ message: t('message.domainWebCopied'), type: "success" });
-  } else if (type === 'APP') {
+  } else if (type === 'MOBILE') {
     ElMessage({ message: t('message.domainAppCopied'), type: "success" });
   }
 };
@@ -87,6 +95,17 @@ onMounted(() => {
   padding: 10px;
   width: 80px;
   height: 80px;
+}
+
+.domain {
+  border: solid;
+  width: 400px;
+  font-size: 16px;
+  height: 28px;
+  border-radius: 5px;
+  color: var(--el-text-color-regular);
+  border-width: 1px;
+  padding: 5px;
 }
 
 .card-panel-description {

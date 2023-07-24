@@ -44,6 +44,11 @@ const routes = [
                 component: () => import(/* webpackChunkName: "Game" */ '../views/LiveCasinoView.vue')
             },
             {
+                path: "/lottery",
+                name: "lottery",
+                component: () => import(/* webpackChunkName: "Game" */ '../views/LotteryView.vue')
+            },
+            {
                 path: "/poker",
                 name: "poker",
                 component: () => import(/* webpackChunkName: "Game" */ '../views/PokerView.vue')
