@@ -68,10 +68,14 @@ onMounted(() => {
 
       if(way !== "H5"){
 
-        var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
-        ref.addEventListener('loadstop', function(e){
-          router.go(-1);
-        });
+        if(cordova !== undefined){
+          var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
+          ref.addEventListener('loadstop', function(e){
+            router.go(-1);
+          });
+        }else{
+          window.location.href= res;
+        }
 
       }else{
         window.open(res, `_blank`);
