@@ -39,8 +39,41 @@
 
       <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
         <el-form v-if="uiControl.dialogType === 'CREATE'" ref="memberForm" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
+          <el-form-item :label="t('fields.site')" prop="siteId">
+            <el-select
+              v-model="form.siteId"
+              size="small"
+              :placeholder="t('fields.site')"
+              class="filter-item"
+              style="width: 350px"
+              @focus="loadSites"
+            >
+              <el-option
+                v-for="item in siteList.list"
+                :key="item.id"
+                :label="item.siteName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
           <el-form-item :label="t('fields.affiliateName')" prop="affiliateName">
             <el-input v-model="form.affiliateName" style="width: 350px;" maxlength="11" />
+          </el-form-item>
+          <el-form-item :label="t('fields.way')" prop="way">
+            <el-select
+              v-model="form.way"
+              size="small"
+              :placeholder="t('fields.way')"
+              class="filter-item"
+              style="width: 350px"
+            >
+              <el-option
+                v-for="item in uiControl.way"
+                :key="item.key"
+                :label="item.displayName"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
           <el-form-item :label="t('fields.domain')" prop="domain">
             <el-input v-model="form.domain" style="width: 350px;" maxlength="100" />
@@ -51,8 +84,41 @@
           </div>
         </el-form>
         <el-form v-if="uiControl.dialogType === 'EDIT'" ref="memberForm" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
+          <el-form-item :label="t('fields.site')" prop="siteId">
+            <el-select
+              v-model="form.siteId"
+              size="small"
+              :placeholder="t('fields.site')"
+              class="filter-item"
+              style="width: 350px"
+              disabled
+            >
+              <el-option
+                v-for="item in siteList.list"
+                :key="item.id"
+                :label="item.siteName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
           <el-form-item :label="t('fields.affiliateName')" prop="affiliateName">
             <el-input v-model="form.affiliateName" style="width: 350px;" maxlength="11" disabled />
+          </el-form-item>
+          <el-form-item :label="t('fields.way')" prop="way">
+            <el-select
+              v-model="form.way"
+              size="small"
+              :placeholder="t('fields.way')"
+              class="filter-item"
+              style="width: 350px"
+            >
+              <el-option
+                v-for="item in uiControl.way"
+                :key="item.key"
+                :label="item.displayName"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
           <el-form-item :label="t('fields.domain')" prop="domain">
             <el-input v-model="form.domain" style="width: 350px;" maxlength="100" />
@@ -80,6 +146,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="domain" :label="t('fields.domain')" width="200" />
+        <el-table-column prop="way" :label="t('fields.way')" width="200">
+          <template #default="scope">
+            <span v-if="scope.row.way === 'PC'">{{ t('fields.pcWay') }}</span>
+            <span v-else>{{ t('fields.mobileWay') }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="createBy" :label="t('fields.createBy')" width="200" />
         <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
         <el-table-column
@@ -121,7 +193,6 @@ import { hasPermission, hasRole } from '../../../utils/util'
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const site = ref(null);
 const memberForm = ref(null);
 const table = ref(null);
 const siteList = reactive({
@@ -132,6 +203,10 @@ const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",
   dialogType: "CREATE",
+  way: [
+    { key: 1, displayName: t('fields.pcWay'), value: "PC" },
+    { key: 2, displayName: t('fields.mobileWay'), value: "MOBILE" }
+  ]
 });
 
 const page = reactive({
@@ -150,18 +225,22 @@ const request = reactive({
 
 const form = reactive({
   id: null,
+  siteId: null,
   affiliateName: null,
-  domain: null
+  domain: null,
+  way: null
 });
 
 const formRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
   affiliateName: [required(t('message.validateAffiliateNameRequired'))],
+  way: [required(t('message.validateWayRequired'))],
   domain: [required(t('message.validateDomainRequired'))],
 });
 
 function resetQuery() {
   request.affiliateName = null;
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = siteList.list[0].id;
 }
 
 function checkQuery() {
@@ -208,7 +287,9 @@ function showEdit(affiliateDomain) {
 function showDialog(type) {
   if (type === "CREATE") {
     form.id = null;
+    form.siteId = siteList.list[0].id;
     form.affiliateName = null;
+    form.way = null;
     form.domain = null;
     uiControl.dialogTitle = t('fields.addAffiliateDomain');
   } else if (type === "EDIT") {
@@ -264,6 +345,7 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites();
+  request.siteId = siteList.list[0].id;
 });
 </script>
 
