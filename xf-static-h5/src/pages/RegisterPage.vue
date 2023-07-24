@@ -6,7 +6,13 @@
       v-model="regForm.realName"
       label="姓名"
       lazy-rules
-      :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
+      :rules="[
+        (val) => (val && val.length > 0) || '请输入姓名',
+        (val) =>
+          (val && val.length >= 2) ||
+          '姓名至少两个字符',
+        isValidName
+      ]"
       color="white"
     >
       <template v-slot:prepend>
@@ -112,6 +118,7 @@
       v-model="regForm.telephone"
       label="电话号码"
       lazy-rules
+      maxlength="11"
       clearable
       :rules="[
         (val) => (val && val.length > 7) || '请输入有效的电话号码',
