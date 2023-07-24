@@ -41,8 +41,16 @@ export const getMemberWithdrawRecordCryptoPay = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getCryptoPay", Method.GET, memberWithdrawRecord, ContentType.form);
 };
 
+export const getMemberWithdrawRecordEwalltPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getEwalltPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
 export const getAffiliateWithdrawRecordCryptoPay = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getAffiliateCryptoPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAffiliateWithdrawRecordEwalltPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAffiliateEwalltPay", Method.GET, memberWithdrawRecord, ContentType.form);
 };
 
 export const getAffiliateWithdrawRecordPay = (memberWithdrawRecord) => {
