@@ -57,7 +57,7 @@
     <q-dialog v-model="isUnbindCardModal" persistent no-backdrop-dismiss no-esc-dismiss>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center">{{ unbindCardEnter }}</div>
+          <div class="text-h6 text-center">{{ unbindCardEnter() }}</div>
         </q-card-section>
         <q-form>
           <div>
@@ -67,10 +67,10 @@
                 ref="unbindCardNoRef"
                 class="q-mb-md"
                 v-model="unbindCardNo"
-                :label="unbindCardLabel"
+                :label="unbindCardLabel()"
                 color="white"
                 :rules="[
-                        (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || ((unbindcarddetail.bankType=='CRYPTO') ? '钱包地址不正确' : '银行卡号不正确')
+                        (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || unbindCardLabel() + '不正确'
                       ]"
             />
           </div>
@@ -124,8 +124,8 @@
                     :options="banksList"
                     option-value="id"
                     option-label="name"
-                    :label="'选择' + chooseCard"
-                    :rules="[(val) => !!val || '请选择' + chooseCard]"
+                    :label="'选择' + chooseCard()"
+                    :rules="[(val) => !!val || '请选择' + chooseCard()]"
                     lazy-rules
                     emit-value
                     map-options
@@ -204,7 +204,7 @@
               filled
               class=""
               v-model="bankCardInfo.cardNumber"
-              :label="cardLabel"
+              :label="cardLabel()"
               :rules="isCrypto || isKDOU ? cardCryptoRules : cardNumberRules"
               ref="cardNumberRef"
               color="white"

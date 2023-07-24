@@ -323,7 +323,8 @@ const summary = reactive([{
   registerMemberCount: 0,
   ftdAmount: 0,
   profit: 0,
-  visitsNo: 0
+  visitsNo: 0,
+  bonus: 0
 }]);
 
 async function resetSummary() {
@@ -338,6 +339,7 @@ async function resetSummary() {
   summary[0].ftdAmount = 0;
   summary[0].profit = 0;
   summary[0].visitsNo = 0;
+  summary[0].bonus = 0;
 }
 
 async function loadSummary() {
