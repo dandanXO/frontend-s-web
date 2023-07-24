@@ -406,8 +406,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               })
               .then((response) => {
                 $q.loading.hide();
-                var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
 
+                if(cordova !== undefined){
+                  var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
+                }else{
+                  window.location.href= response.data;
+                }
                 // src.value = response.data;
                 // visible.value = true;
               }).catch((err) => {
@@ -433,8 +437,11 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             .then((response) => {
               $q.loading.hide();
 
-              var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
-
+              if(cordova !== undefined){
+                var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
+              }else{
+                window.location.href= response.data;
+              }
 
               // src.value = response.data;
               // visible.value = true;
