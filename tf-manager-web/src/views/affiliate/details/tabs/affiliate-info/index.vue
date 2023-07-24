@@ -295,6 +295,57 @@
     <el-card class="info-card">
       <template #header>
         <div class="clearfix">
+          <span class="role-span">{{ t('fields.superiorAffiliateInfo') }}</span>
+          <el-button type="info" size="mini" style="float: right;" v-permission="['sys:affiliate:change-affiliate']"
+                     @click="showDialog('CHANGE_AFF')"
+          >
+            {{ t('fields.changeAffiliate') }}
+          </el-button>
+        </div>
+      </template>
+      <el-descriptions
+        size="small"
+        class="margin-top"
+        :column="3"
+        border
+        v-loading="loading.superiorAffiliateInfo"
+      >
+        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.superiorAffiliateName') }}
+            </div>
+          </template>
+          <span v-if="superiorAffiliateDetail.loginName !== null">{{ superiorAffiliateDetail.loginName }}</span>
+          <span v-if="superiorAffiliateDetail.loginName === null">-</span>
+        </el-descriptions-item>
+        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
+          <template #label>
+            <div>
+              <svg-icon icon-class="example" style="height: 16px;width: 16px;" />
+              {{ t('fields.superiorAffiliateCode') }}
+            </div>
+          </template>
+          <span v-if="superiorAffiliateDetail.affiliateCode !== null">{{ superiorAffiliateDetail.affiliateCode }}</span>
+          <span v-if="superiorAffiliateDetail.affiliateCode === null">-</span>
+        </el-descriptions-item>
+        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
+          <template #label>
+            <div>
+              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
+              {{ t('fields.superiorAffiliateLevel') }}
+            </div>
+          </template>
+          <span v-if="superiorAffiliateDetail.affiliateLevel !== null">{{ superiorAffiliateDetail.affiliateLevel }}</span>
+          <span v-if="superiorAffiliateDetail.affiliateLevel === null">-</span>
+        </el-descriptions-item>
+      </el-descriptions>
+    </el-card>
+
+    <el-card class="info-card">
+      <template #header>
+        <div class="clearfix">
           <span class="role-span">{{ t('fields.remark') }}</span>
         </div>
       </template>
@@ -538,6 +589,22 @@
       <div v-if="uiControl.dialogType === 'UNMASK'">
         {{ unmaskedValue }}
       </div>
+      <el-form
+        v-if="uiControl.dialogType === 'CHANGE_AFF'"
+        ref="changeAffForm"
+        :model="affForm"
+        :rules="affFormRules"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
+          <el-input v-model="affForm.affiliateCode" style="width: 350px;" />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="changeAffiliate">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -548,11 +615,11 @@ import { useRoute } from 'vue-router'
 import { hasPermission } from "../../../../../utils/util";
 import { ElMessage } from "element-plus";
 import { required, size } from "../../../../../utils/validate";
-import { getMemberBalance, getMemberEmail, getMemberRealName, getMemberTelephone } from "../../../../../api/member";
+import { getAffiliateInfo, getMemberBalance, getMemberEmail, getMemberRealName, getMemberTelephone } from "../../../../../api/member";
 import { getFinancialLevels } from "../../../../../api/financial-level";
 import { getAffiliateRecord } from "../../../../../api/affiliate-record";
 import {
-  addAffiliateRemark, approveAffiliate, deleteAffiliateRemark, disableAffiliate,
+  addAffiliateRemark, approveAffiliate, changeNewAffilaite, deleteAffiliateRemark, disableAffiliate,
   editAffiliateRemark, getAffiliateDetails, getAffiliateRemark, updateAffiliateFinancial,
   updateAffiliatePassword, updateCommissionModel, updateCommissionRate, updateTimeType
 } from "../../../../../api/member-affiliate";
@@ -595,7 +662,8 @@ const loading = reactive({
   loginInfo: false,
   remark: false,
   total: false,
-  affiliateInfo: false
+  affiliateInfo: false,
+  superiorAffiliateInfo: false
 });
 
 const updatePasswordForm = ref(null);
@@ -606,6 +674,7 @@ const addRemarkForm = ref(null);
 const editRemarkForm = ref(null);
 const commissionForm = ref(null);
 const updateTimeTypeModel = ref(null);
+const changeAffForm = ref(null);
 const freezeType = reactive({
   list: [
     { key: 1, name: t('types.normal'), value: "NORMAL" },
@@ -659,6 +728,13 @@ const affiliateDetails = reactive({
   commission: 0
 });
 
+const superiorAffiliateDetail = reactive({
+  id: 0,
+  loginName: null,
+  affiliateCode: null,
+  affiliateLevel: null
+});
+
 const page = reactive({
   pages: 0,
   records: []
@@ -704,6 +780,10 @@ const timeTypeForm = reactive({
   timeType: null
 });
 
+const affForm = reactive({
+  affiliateCode: null
+});
+
 const validatePassword = (rule, value, callback) => {
   if (value !== "" && passwordForm.reEnterPassword !== "") {
     updatePasswordForm.value.validateField(t('message.reenterPassword'));
@@ -746,6 +826,10 @@ const commFormRules = reactive({
 
 const remarkFormRules = reactive({
   remark: [required(t('message.validateRemarkRequired'))]
+});
+
+const affFormRules = reactive({
+  affiliateCode: [required(t('message.validateAffiliateCodeRequired'))]
 });
 
 const loadAffiliateRemark = async () => {
@@ -835,6 +919,12 @@ function showDialog(type) {
       timeTypeForm.timeType = uiControl.timeType[0].value;
     }
     uiControl.dialogTitle = t('fields.editTimeType');
+  } else if (type === 'CHANGE_AFF') {
+    if (changeAffForm.value) {
+      changeAffForm.value.resetFields();
+    }
+    affForm.affiliateCode = null;
+    uiControl.dialogTitle = t('fields.changeAffiliate');
   }
   uiControl.dialogVisible = true;
 }
@@ -1028,14 +1118,31 @@ async function unmaskDetail(type) {
   showDialog("UNMASK");
 }
 
+async function changeAffiliate() {
+  await changeNewAffilaite(props.affId, affForm.affiliateCode, memberDetail.memberType);
+  ElMessage({ message: t('message.changeAffiliateSuccess'), type: "success" });
+  uiControl.dialogVisible = false;
+  loading.superiorAffiliateInfo = true;
+  const { data: aff } = await getAffiliateInfo(props.affId, site.id);
+  Object.keys({ ...aff }).forEach(detailField => {
+    superiorAffiliateDetail[detailField] = aff[detailField];
+  });
+  loading.superiorAffiliateInfo = false;
+}
+
 onMounted(async () => {
   loading.accountInfo = true;
   loading.loginInfo = true;
   loading.affiliateInfo = true;
+  loading.superiorAffiliateInfo = true;
   await loadFinancialLevels();
   const data = await getAffiliateDetails(props.affId, site.id);
   Object.keys({ ...data.data }).forEach(detailField => {
     memberDetail[detailField] = data.data[detailField];
+  });
+  const { data: aff } = await getAffiliateInfo(props.affId, site.id);
+  Object.keys({ ...aff }).forEach(detailField => {
+    superiorAffiliateDetail[detailField] = aff[detailField];
   });
   await loadAffiliateRemark();
   await loadBalance();
@@ -1044,6 +1151,7 @@ onMounted(async () => {
   loading.accountInfo = false;
   loading.loginInfo = false;
   loading.affiliateInfo = false;
+  loading.superiorAffiliateInfo = false;
 });
 
 </script>

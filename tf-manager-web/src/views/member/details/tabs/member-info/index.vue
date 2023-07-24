@@ -271,6 +271,11 @@
       <template #header>
         <div class="clearfix">
           <span class="role-span">{{ t('fields.affiliateInfo') }}</span>
+          <el-button type="info" size="mini" style="float: right;" v-permission="['sys:affiliate:change-affiliate']"
+                     @click="showDialog('CHANGE_AFF')"
+          >
+            {{ t('fields.changeAffiliate') }}
+          </el-button>
         </div>
       </template>
       <el-descriptions
@@ -738,6 +743,22 @@
       <div v-if="uiControl.dialogType === 'UNMASK'">
         {{ unmaskedValue }}
       </div>
+      <el-form
+        v-if="uiControl.dialogType === 'CHANGE_AFF'"
+        ref="changeAffForm"
+        :model="affForm"
+        :rules="affFormRules"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
+          <el-input v-model="affForm.affiliateCode" style="width: 350px;" />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="changeAffiliate">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -776,6 +797,7 @@ import { getFinancialLevels } from "../../../../../api/financial-level";
 import { useStore } from "../../../../../store";
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from "vue-i18n";
+import { changeNewAffilaite } from "../../../../../api/member-affiliate";
 
 const store = useStore()
 export default defineComponent({
@@ -818,6 +840,7 @@ export default defineComponent({
     const platformTransferForm = ref(null);
     const unmaskedValue = ref(null);
     const updateUserTypeForm = ref(null);
+    const changeAffForm = ref(null);
 
     const freezeType = reactive({
       list: [
@@ -956,6 +979,10 @@ export default defineComponent({
       memberType: null
     });
 
+    const affForm = reactive({
+      affiliateCode: null
+    });
+
     const validatePassword = (rule, value, callback) => {
       if (value !== "" && passwordForm.reEnterPassword !== "") {
         updatePasswordForm.value.validateField("reEnterPassword");
@@ -1007,6 +1034,10 @@ export default defineComponent({
 
     const userTypeFormRules = reactive({
       memberType: [required(t('message.validateUserTypeRequired'))]
+    });
+
+    const affFormRules = reactive({
+      affiliateCode: [required(t('message.validateAffiliateCodeRequired'))]
     });
 
     const loadMemberRemark = async () => {
@@ -1132,6 +1163,12 @@ export default defineComponent({
         }
         userTypeForm.memberType = userType.list[0].value;
         uiControl.dialogTitle = t('fields.userType');
+      } else if (type === 'CHANGE_AFF') {
+        if (changeAffForm.value) {
+          changeAffForm.value.resetFields();
+        }
+        affForm.affiliateCode = null;
+        uiControl.dialogTitle = t('fields.changeAffiliate');
       }
       uiControl.dialogVisible = true;
     };
@@ -1367,6 +1404,18 @@ export default defineComponent({
       ElMessage({ message: t('message.logoutPlayerSuccess'), type: "success" });
     }
 
+    async function changeAffiliate() {
+      await changeNewAffilaite(props.mbrId, affForm.affiliateCode, memberDetail.memberType);
+      ElMessage({ message: t('message.changeAffiliateSuccess'), type: "success" });
+      uiControl.dialogVisible = false;
+      loading.affiliateInfo = true;
+      const { data: aff } = await getAffiliateInfo(props.mbrId, site.id);
+      Object.keys({ ...aff }).forEach(detailField => {
+        affiliateDetail[detailField] = aff[detailField];
+      });
+      loading.affiliateInfo = false;
+    }
+
     onMounted(async () => {
       loading.accountInfo = true;
       loading.affiliateInfo = true;
@@ -1466,7 +1515,10 @@ export default defineComponent({
       editUserType,
       unlock,
       t,
-      logoutPlayer
+      logoutPlayer,
+      affForm,
+      affFormRules,
+      changeAffiliate
     };
   }
 });

@@ -80,3 +80,7 @@ export const editAffiliateRemark = (id, remark) => {
 export const deleteAffiliateRemark = (id) => {
   return https().request(`/affiliate/remark/${id}`, Method.DELETE, ContentType.form);
 };
+
+export const changeNewAffilaite = (id, code, memberType) => {
+  return https().request(`/affiliate/${id}/changeAffiliate?_method=PUT`, Method.POST, { affiliateCode: code, memberType: memberType }, ContentType.form);
+};
