@@ -407,7 +407,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               .then((response) => {
                 $q.loading.hide();
 
-                if(cordova !== undefined){
+                if(way=="ANDROID"){
                   var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
                 }else{
                   window.location.href= response.data;
@@ -437,7 +437,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             .then((response) => {
               $q.loading.hide();
 
-              if(cordova !== undefined){
+              if(way=="ANDROID"){
                 var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
               }else{
                 window.location.href= response.data;

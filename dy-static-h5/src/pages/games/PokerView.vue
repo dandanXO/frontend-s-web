@@ -104,7 +104,7 @@ onMounted(() => {
 
       if(way !== "H5"){
 
-        if(cordova !== undefined){
+        if(way=="ANDROID"){
           var ref = cordova.InAppBrowser.open(res, '_blank', 'location=no,zoom=no');
           ref.addEventListener('loadstop', function(e){
             router.go(-1);
