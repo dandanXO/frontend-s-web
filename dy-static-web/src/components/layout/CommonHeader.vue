@@ -14,7 +14,7 @@
               />
             </div>
             <div class="station-notice">
-              <Vue3Marquee :clone="false" :duration="30" style="width: 720px">
+              <Vue3Marquee :clone="false" :duration="130" style="width: 720px">
                 <div
                   v-for="(word, index) in announcementList"
                   :key="index"
