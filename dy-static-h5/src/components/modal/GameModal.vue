@@ -406,12 +406,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               })
               .then((response) => {
                 $q.loading.hide();
-
-                // let link= document.createElement("a");
-                // link.href= response.data;
-                // link.click();
-                // window.open(response.data, '_self');
-                // router.replace(response.data);
                 var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
 
                 // src.value = response.data;
@@ -439,13 +433,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             .then((response) => {
               $q.loading.hide();
 
-              // window.location.href = response.data;
-              // let link= document.createElement("a");
-              // link.href= response.data;
-              // link.click();
-
-              // Browser.open({ url: response.data ,
-              //   windowName: '_parent', });
               var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
 
 
