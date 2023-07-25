@@ -1,7 +1,15 @@
 <template>
   <div class="login-container">
+
+    <div class="back-left">
+      <router-link :to="'/'">
+        <RiArrowDropLeftLine />
+      </router-link>
+    </div>
+
+
     <div class="logo">
-      <img src="../assets/logo.png">
+      <img @click="backHome" src="../assets/logo.png">
     </div>
     <q-tabs
         v-model="tab"
@@ -28,7 +36,7 @@
                 autocomplete="username"
             >
               <template v-slot:prepend>
-                <q-icon color="bright" name="person_outline"/>
+                <q-icon style="padding-left:6px;" color="bright" name="person_outline"/>
               </template>
             </q-input>
 
@@ -44,7 +52,7 @@
                 autocomplete="current-password"
             >
               <template v-slot:prepend>
-                <q-icon color="bright" name="lock_open"/>
+                <q-icon style="padding-left:6px;" color="bright" name="lock_open"/>
               </template>
               <template v-slot:append>
                 <q-icon color="bright"
@@ -73,7 +81,7 @@
                 <img :src="verificationImg" @click="getCode"/>
               </template>
               <template v-slot:prepend>
-                <q-icon color="bright" name="security"/>
+                <q-icon style="padding-left:6px;" color="bright" name="security"/>
               </template>
             </q-input>
           </div>
@@ -125,16 +133,32 @@
               </template>
             </q-input>
           </div>
-          <div class="align-right">
-          <span @click="loginType = !loginType">
-          {{ loginType ? '用户名登录' : '手机号登录' }}
-          </span>
+
+          <div class="row items-center justify-between q-mt-sm">
+            <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
+              <q-checkbox
+                  rounded
+                  v-model="isCheckRmb"
+                  label="记住密码"
+                  size="md"
+                  style="font-size: 14px;color:#dcdcdc;"
+                  checked-icon="task_alt"
+                  unchecked-icon="highlight_off"
+                  color="light-blue-4"
+              />
+            </div>
+            <div class="align-right">
+              <span @click="loginType = !loginType">
+              {{ loginType ? '用户名登录' : '手机号登录' }}
+              </span>
+            </div>
           </div>
 
           <q-btn @click.prevent="onSubmit" type="submit" class="q-mt-lg" label="登录" width="100%" color="brightbtn"
                  style="width: 100%;" rounded/>
 
         </q-form>
+
 
         <div class="q-pa-md text-center">
           忘记密码？
@@ -196,11 +220,15 @@ import {useRoute, useRouter} from "vue-router";
 import RegisterPage from "../pages/RegisterPage.vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
+import {
+  RiArrowDropLeftLine
+} from "vue-remix-icons";
 
 export default defineComponent({
   name: "LoginPage",
   components: {
-    RegisterPage
+    RegisterPage,
+    RiArrowDropLeftLine
   },
   setup() {
     const tab = ref('login');
@@ -367,17 +395,19 @@ export default defineComponent({
                   getCode();
                   sessionStorage.removeItem("REFERRAL_CODE");
 
-                  // if (isCheckRmb.value) {
-                  //   localStorage.setItem(
-                  //       "userpass",
-                  //       JSON.stringify({
-                  //         loginName: loginForm.loginName,
-                  //         password: loginForm.password
-                  //       })
-                  //   );
-                  // } else {
-                  //   localStorage.removeItem("userpass");
-                  // }
+
+                  if (isCheckRmb.value) {
+                    localStorage.setItem(
+                        "userpass",
+                        JSON.stringify({
+                          loginName: loginForm.loginName,
+                          password: loginForm.password
+                        })
+                    );
+                  } else {
+                    localStorage.removeItem("userpass");
+                  }
+
 
                   loginFormRef.value.reset();
 
@@ -449,13 +479,17 @@ export default defineComponent({
       }
     };
 
+    const backHome = () => {
+      router.push("/")
+    }
+
     onMounted(() => {
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
         tab.value = "register";
       }
-      // checkRememberPwd();
+      checkRememberPwd();
     });
     return {
       header: "Login",
@@ -470,6 +504,8 @@ export default defineComponent({
       isPwd: ref(true),
       tab,
       loginType,
+      backHome,
+      isCheckRmb,
       getCode,
       phoneLoginForm,
       sendOtpSms,
@@ -488,9 +524,22 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .login-container {
+  position:relative;
   background: url(../assets/images/index/login-bg.png) no-repeat center center;
   background-size: cover;
   height: 100vh;
+
+  .back-left{
+    position:absolute;
+    left:6px;
+    top:6px;
+    height:40px;
+    width:40px;
+
+    svg{
+      width:40px;
+    }
+  }
 
   .logo {
     margin: 0 auto;
@@ -536,7 +585,7 @@ export default defineComponent({
   .align-right {
     text-align: right;
     color: #acacac;
-    margin-top: 20px;
+    margin-top: 0px;
   }
 
   .forget-pwd-tip {

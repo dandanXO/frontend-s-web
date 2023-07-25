@@ -111,7 +111,7 @@
       </span>
     </router-link>
     <router-link v-else to="/account" class="login">
-      <span class="log" style="white-space: nowrap">已登录</span>
+<!--      <span class="log" style="white-space: nowrap">已登录</span>-->
       <span class="user">
         <q-icon name="person" style="color: #2dbfd4; font-size: 14px"/>
       </span>
@@ -975,13 +975,11 @@ export default defineComponent({
       mainWallet,
       playGame,
       allGames,
-      // casinoGame,
       gamePage,
       selectedPlatId,
       searchList,
       liveTabs,
       selectedLiveTab,
-      // openGame,
       scrollPageRef,
       announcementList,
       isStationNotice,
@@ -1310,13 +1308,18 @@ export default defineComponent({
   }
 
   .login {
-    flex: 2;
+    flex: 1;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 30px;
     text-decoration: none;
     color: #bacef1;
+
+    .log{
+      white-space: normal;
+      word-break: keep-all;
+    }
 
     .user {
       background: #43465e;
