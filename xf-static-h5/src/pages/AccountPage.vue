@@ -50,7 +50,8 @@
         <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_12.png"-->
         <!--        /></span>-->
         <br />
-        专属网址: {{ store.evip }}
+        专属网址: <a style="text-decoration: none; color: #fff; font-size: 15px;"
+                     :href="selfTgurl" target="_blank">{{ store.evip }}</a>
         <br />
         <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
       </div>
@@ -120,7 +121,8 @@
     <q-item-section class="acct-nav">
       <div class="acct-title">
         <div class="acct-title-1">我的功能</div>
-        <div id="vipDomain" class="vipurl">专属网址：{{ store.evip }}</div>
+        <div id="vipDomain" class="vipurl">专属网址：<a style="text-decoration: none; color: #fff; font-size: 16px;"
+                                                       :href="selfTgurl" target="_blank">{{ store.evip }}</a></div>
       </div>
       <div class="acct-menu">
         <router-link to="/account/records">
@@ -248,6 +250,7 @@ export default defineComponent({
     const vip = computed(() => {
       return store.vip;
     });
+    const selfTgurl = ref('https://' + store.evip);
 
     const getVersionNo = async () => {
       if (store.getDeviceType() == "ANDROID") {
@@ -316,7 +319,8 @@ export default defineComponent({
       vipLevel,
       appVersionNo,
       isH5,
-      checkPlatform
+      checkPlatform,
+      selfTgurl
     };
   }
 });
