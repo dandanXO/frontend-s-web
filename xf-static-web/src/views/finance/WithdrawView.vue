@@ -147,6 +147,13 @@
           </span>
         </el-form-item>
 
+        <!-- K豆教程视频 -->
+        <div style="margin-left: 150px" v-else-if="isKDOU">
+          <el-button class="common-btn" @click="openKdouTutorial">
+            K豆教程视频
+          </el-button>
+        </div>
+
         <!-- <div
           v-if="isUSDT && selectedWithdrawalMethod.tips"
           class="selected-tip"
@@ -381,6 +388,9 @@ export default defineComponent({
         return '银行卡'
       }
     }
+    const openKdouTutorial = () => {
+      window.open('http://jiaocheng.kdpay123.com')
+    }
     return {
       formRef,
       withdrawInfo,
@@ -399,7 +409,8 @@ export default defineComponent({
       store,
       loadingBtn,
       checkBankCards,
-      cardLabel
+      cardLabel,
+      openKdouTutorial
     };
   },
 });

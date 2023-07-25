@@ -5,40 +5,44 @@
       <div class="account-content last">
         <div class="withdrawalmethod">
           <div
-              v-for="(method, i) in withdrawalMethods"
-              :key="i"
-              class="txt-center withdraw-type-item"
-              @click="selectMethod(method, i)"
-              :class="{ active: i === activeItem }"
+            v-for="(method, i) in withdrawalMethods"
+            :key="i"
+            class="txt-center withdraw-type-item"
+            @click="selectMethod(method, i)"
+            :class="{ active: i === activeItem }"
           >
             <span class="promo" v-if="method.recommended">Recommended</span>
             <div class="withdraw-img">
-              <img :src="imgURL + '/withdraw/' + method.icon"/>
+              <img :src="imgURL + '/withdraw/' + method.icon" />
             </div>
             <div class="type-name">{{ method.name }}</div>
           </div>
         </div>
         <q-form ref="withdrawFormRef">
           <q-select
-              v-show="isLoaded"
-              hide-bottom-space
-              filled
-              ref="cardRef"
-              v-model="withdrawInfo.cardId"
-              option-value="id"
-              emit-value
-              :label="'选择' + chooseLabel()"
-              color="white"
-              :options="withdrawState.bankCardList"
-              map-options
-              :rules="[(val) => !!val || '请选择' + chooseLabel()]"
+            v-show="isLoaded"
+            hide-bottom-space
+            filled
+            ref="cardRef"
+            v-model="withdrawInfo.cardId"
+            option-value="id"
+            emit-value
+            :label="'选择' + chooseLabel()"
+            color="white"
+            :options="withdrawState.bankCardList"
+            map-options
+            :rules="[(val) => !!val || '请选择' + chooseLabel()]"
           >
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey">
                   {{ "没有可用的" + chooseCard() }}
                   <router-link class="text-bright" to="/account/withdraw">
-                    {{ isUSDT || isKDOU ? "加" + chooseCard() : "绑定" + chooseCard() }}
+                    {{
+                      isUSDT || isKDOU
+                        ? "加" + chooseCard()
+                        : "绑定" + chooseCard()
+                    }}
                   </router-link>
                 </q-item-section>
               </q-item>
@@ -47,16 +51,16 @@
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
                   <img
-                      style="width: 30px"
-                      :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                    style="width: 30px"
+                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
                   />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>
                     {{ scope.opt.bankName }} - ****{{
                       scope.opt.cardNumber.slice(
-                          scope.opt.cardNumber.length - 4,
-                          scope.opt.cardNumber.length
+                        scope.opt.cardNumber.length - 4,
+                        scope.opt.cardNumber.length
                       )
                     }}
                   </q-item-label>
@@ -66,13 +70,13 @@
             <template v-slot:selected-item="scope">
               <q-item-section avatar v-if="scope.opt.bankIcon">
                 <img
-                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                  style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
                 />
               </q-item-section>
               <q-item-section>
                 <q-item-label
-                    style="
+                  style="
                     text-overflow: ellipsis;
                     overflow: hidden;
                     white-space: nowrap;
@@ -90,14 +94,13 @@
           trigger: "change",
         }, -->
 
-
           <q-input
-              hide-bottom-space
-              ref="amountRef"
-              v-model="withdrawInfo.amount"
-              label="金额"
-              color="white"
-              :rules="[
+            hide-bottom-space
+            ref="amountRef"
+            v-model="withdrawInfo.amount"
+            label="金额"
+            color="white"
+            :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) =>
                 val >= selectedWithdrawalMethod.withdrawMin ||
@@ -105,9 +108,12 @@
               (val) =>
                 val <= selectedWithdrawalMethod.withdrawMax ||
                 '请输入正确的提款金额',
-                !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true,              
-              ]"
-              clearable
+              !isUSDT
+                ? (val) =>
+                    (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数'
+                : true
+            ]"
+            clearable
           >
             <template v-slot:prepend>
               <span style="font-size: 26px" class="text-bright">
@@ -117,20 +123,20 @@
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
                 <q-btn
-                    @click="updateWithdrawAmt"
-                    label="全额提款"
-                    color="brightbtn"
+                  @click="updateWithdrawAmt"
+                  label="全额提款"
+                  color="brightbtn"
                 />
               </span>
             </template>
           </q-input>
           <div
-              class="q-mt-md q-mb-md text-grey text-bold q-pb-md"
-              style="border-bottom: 1px solid #434343"
-              v-show="selectedWithdrawalMethod"
+            class="q-mt-md q-mb-md text-grey text-bold q-pb-md"
+            style="border-bottom: 1px solid #434343"
+            v-show="selectedWithdrawalMethod"
           >
             <template
-                v-if="
+              v-if="
                 selectedWithdrawalMethod.withdrawMin &&
                 selectedWithdrawalMethod.withdrawMin
               "
@@ -142,7 +148,7 @@
                 selectedWithdrawalMethod.withdrawMax +
                 "RMB"
               }}
-              <br/>
+              <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
               {{
@@ -159,8 +165,8 @@
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div
-                class="q-my-md"
-                style="
+              class="q-my-md"
+              style="
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -173,8 +179,8 @@
               </span>
             </div>
             <div
-                class="q-mt-md"
-                style="
+              class="q-mt-md"
+              style="
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -184,7 +190,7 @@
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{
                   (
-                      withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
                   ).toFixed(2)
                 }}
                 USDT
@@ -192,6 +198,15 @@
             </div>
             <div class="q-mt-md text-neontb">
               *特别说明：三方自动收取提币 1.00 USDT 手续费！
+            </div>
+          </div>
+          <div v-else-if="isKDOU">
+            <div class="q-mt-md q-mb-md text-center">
+              <q-btn
+                style="border: 1px solid #33bcd4; color: #33bcd4"
+                @click="openKdouTutorial"
+                label="K豆教程视频"
+              />
             </div>
           </div>
           <!-- <a-form-item
@@ -215,18 +230,18 @@
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
             <q-btn
-                style="width: 100%"
-                class="q-mt-md fit"
-                color="brightbtn"
-                @click="submitWithdraw"
-                label="立即提款"
+              style="width: 100%"
+              class="q-mt-md fit"
+              color="brightbtn"
+              @click="submitWithdraw"
+              label="立即提款"
             />
           </div>
           <div class="q-py-md text-orange">
             <div
-                v-if="!isKDOU && !isUSDT && selectedWithdrawalMethod.tips"
-                class="selected-tip"
-                v-html="selectedWithdrawalMethod.tips"
+              v-if="!isKDOU && !isUSDT && selectedWithdrawalMethod.tips"
+              class="selected-tip"
+              v-html="selectedWithdrawalMethod.tips"
             ></div>
           </div>
         </q-form>
@@ -241,10 +256,10 @@
 
         <div class="flex flex-center">
           <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消"/>
+            <q-btn class="q-mr-md" label="取消" />
           </router-link>
           <router-link to="/account/withdraw">
-            <q-btn color="brightbtn" label="绑定"/>
+            <q-btn color="brightbtn" label="绑定" />
           </router-link>
         </div>
       </q-card>
@@ -468,6 +483,10 @@ export default defineComponent({
       }
     }
 
+    const openKdouTutorial = () => {
+      window.open('http://jiaocheng.kdpay123.com')
+    }
+
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
@@ -491,14 +510,14 @@ export default defineComponent({
       withdrawFormRef,
       isLoaded,
       chooseLabel,
-      chooseCard
+      chooseCard,
+      openKdouTutorial
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
-
 .withdrawalmethod {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
