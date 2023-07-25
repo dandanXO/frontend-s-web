@@ -193,12 +193,7 @@ module.exports = configure(function (ctx) {
             hideSplashscreen: true,
             // (Optional) If not present, will look for package.json > name
             appName: '兴發', // string
-            // (Optional) If not present, will look for package.json > version
-            version: '1.0.11', // string
-            // (Optional) If not present, will look for package.json > description
-            description: '兴發官网 - 最专业的竞猜网站', // string
             backButtonExit: '*',
-            orientation: 'portrait'
         },
 
         // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/configuring-electron

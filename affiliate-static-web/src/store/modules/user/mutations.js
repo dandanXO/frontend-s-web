@@ -1,5 +1,5 @@
 import { UserMutationTypes } from "./mutation-types";
-import { setToken, setId, setSiteId, setLoginName, setRealName } from "@/utils/cookies";
+import { setToken, setId, setSiteId, setSiteCode, setLoginName, setRealName } from "@/utils/cookies";
 
 export const mutations = {
   [UserMutationTypes.SET_TOKEN](state, token) {
@@ -25,6 +25,11 @@ export const mutations = {
   [UserMutationTypes.SET_SITE_ID](state, siteId) {
     setSiteId(siteId);
     state.siteId = siteId;
+  },
+
+  [UserMutationTypes.SET_SITE_CODE](state, siteCode) {
+    setSiteCode(siteCode);
+    state.siteCode = siteCode;
   },
 
   [UserMutationTypes.SET_LOGIN_USER](state, loginInfo) {

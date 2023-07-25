@@ -1,7 +1,7 @@
 import { state } from "./state";
 import { UserMutationTypes } from "./mutation-types";
 import { UserActionTypes } from "./action-types";
-import { removeToken, removeId, removeSiteId, removeLoginName, removeRealName } from "@/utils/cookies";
+import { removeToken, removeId, removeSiteId, removeSiteCode, removeLoginName, removeRealName } from "@/utils/cookies";
 import { getDevice } from "@/utils/util";
 import { resetRouter } from "@/router";
 import { loginRequest, updatePasswordRequest, userInfoRequest, registerRequest } from "../../../api/user";
@@ -23,6 +23,7 @@ export const actions = {
     commit(UserMutationTypes.SET_LOGIN_NAME, loginInfo.loginName);
     commit(UserMutationTypes.SET_REAL_NAME, loginInfo.realName);
     commit(UserMutationTypes.SET_SITE_ID, loginInfo.siteId);
+    commit(UserMutationTypes.SET_SITE_CODE, loginInfo.siteCode);
   },
   async [UserActionTypes.ACTION_REGISTER](
     { commit },
@@ -63,6 +64,12 @@ export const actions = {
     commit(UserMutationTypes.SET_SITE_ID, "");
   },
 
+  [UserActionTypes.ACTION_RESET_SITE_CODE](
+    { commit }) {
+    removeSiteCode();
+    commit(UserMutationTypes.SET_SITE_CODE, "");
+  },
+
   async [UserActionTypes.ACTION_GET_USER_INFO](
     { commit }
   ) {
@@ -82,6 +89,7 @@ export const actions = {
     await dispatch(UserActionTypes.ACTION_RESET_LOGIN_NAME, undefined);
     await dispatch(UserActionTypes.ACTION_RESET_REAL_NAME, undefined);
     await dispatch(UserActionTypes.ACTION_RESET_SITE_ID, undefined);
+    await dispatch(UserActionTypes.ACTION_RESET_SITE_CODE, undefined);
     resetRouter();
   },
 

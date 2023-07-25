@@ -18,10 +18,10 @@
         <a :href="link" target="_blank" style="color: #1fa8db">{{ link }}</a>
       </div>
 
-      <div class="card-panel-description">
+      <!-- <div class="card-panel-description">
         <div class="card-panel-link-text">{{ $t('fields.appLink') }}</div>
         <a :href="link" target="_blank" style="color: #1fa8db">{{ appLink }}</a>
-      </div>
+      </div> -->
 
       <div class="card-panel-description">
         <div class="card-panel-link-text"><qrcode-vue id="qrcode" :value="link" margin="2" /></div>

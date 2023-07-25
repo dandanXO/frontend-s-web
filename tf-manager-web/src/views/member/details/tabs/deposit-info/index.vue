@@ -29,7 +29,7 @@
           <el-option
             v-for="item in statusList.list"
             :key="item.key"
-            :label="item.name"
+            :label="t('depositStatus.'+item.value)"
             :value="item.value"
           />
         </el-select>

@@ -1,4 +1,4 @@
-package com.xf.client.website;
+package com.xf.client;
 
 import com.getcapacitor.BridgeActivity;
 
