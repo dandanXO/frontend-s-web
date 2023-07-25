@@ -160,7 +160,7 @@
           >
             <el-option
               :key="site.id"
-              :label="site.siteName"
+              :label="site.siteCode"
               :value="site.id"
             />
           </el-select>

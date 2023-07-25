@@ -7,6 +7,7 @@ const Keys = {
   aseKey: 'ase-key',
   id: 'member',
   siteId: 'site',
+  siteCode: 'siteCode',
   name: 'name',
   realName: 'realName'
 }
@@ -32,3 +33,7 @@ export const removeRealName = () => Cookies.remove(Keys.realName)
 export const getSiteId = () => Cookies.get(Keys.siteId)
 export const setSiteId = (siteId) => Cookies.set(Keys.siteId, siteId, { secure: true })
 export const removeSiteId = () => Cookies.remove(Keys.siteId)
+
+export const getSiteCode = () => Cookies.get(Keys.siteCode)
+export const setSiteCode = (siteCode) => Cookies.set(Keys.siteCode, siteCode, { secure: true })
+export const removeSiteCode = () => Cookies.remove(Keys.siteCode)

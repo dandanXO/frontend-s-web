@@ -92,7 +92,8 @@ const https = (api) => {
   const config = {
     baseURL: isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_BASE_API),
     headers: {
-      TOKEN: token
+      TOKEN: token,
+      Authorization: store.state.user.siteCode
     },
     timeout: process.env.TIMEOUT,
   };

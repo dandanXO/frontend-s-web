@@ -697,6 +697,10 @@ onMounted(async() => {
     ElMessage({ message: t('message.inputRealName'), type: "error", customClass: "toTop" });
   } else if (route.query && route.query.name === 'withdrawpw') {
     ElMessage({ message: t('message.setWithdrawPassword'), type: "error", customClass: "toTop" });
+  } else if (route.query && route.query.name === 'securityQn') {
+    ElMessage({ message: t('message.setSecurityQn'), type: "error", customClass: "toTop" });
+  } else if (route.query && route.query.name === 'secAndPw') {
+    ElMessage({ message: t('message.setSecAndPw'), type: "error", customClass: "toTop" });
   }
   await checkWithdrawPw();
   await checkSecurityQuestion();
