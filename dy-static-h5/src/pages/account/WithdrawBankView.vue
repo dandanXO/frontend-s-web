@@ -39,13 +39,12 @@
               </div>
               <div class="unbind-card-div">
                 <q-btn
-                    @click="unbindBankCard(bc)"
+                    @click="confirmUnbindCard(bc)"
                     class="unbind-btn"
                     rounded
                     color="secondary"
                 >
                   解绑
-                  <!--                  <img src="../../assets/account/unbind-icon.png"/>-->
                 </q-btn>
               </div>
 
@@ -64,6 +63,41 @@
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="isUnbindCardModal" persistent no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; padding: 10px">
+        <q-card-section class="q-mb-md">
+          <div class="text-h6 text-center">{{ unbindCardEnter() }}</div>
+        </q-card-section>
+        <q-form>
+          <div>
+            <q-input
+                filled
+                clearable
+                ref="unbindCardNoRef"
+                class="q-mb-md"
+                v-model="unbindCardNo"
+                :label="unbindCardLabel()"
+                color="white"
+                :rules="[
+                        (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || unbindCardLabel() + '不正确'
+                      ]"
+            />
+          </div>
+
+          <div class="flex flex-center">
+            <q-btn
+                class="q-mr-md"
+                label="取消"
+                @click="isUnbindCardModal = false"
+            />
+            <q-btn color="dyblue"
+                   label="提交" @click="unbindBankCard(unbindcarddetail)"/>
+          </div>
+        </q-form>
+      </q-card>
+    </q-dialog>
+
 
     <q-dialog v-model="bankCardModalState.visible" persistent>
       <q-card style="width: 100%; padding: 10px">
@@ -303,48 +337,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- <q-dialog
-      wrap-class-name="bankModal"
-      width="100%"
-      v-model:visible="virtualCurrencyModalState.visible"
-      :footer="null"
-    >
-      <div class="modal-head-title">Add a virtual currency</div>
-      <q-form
-        ref="virtualCurrencyFormRef"
-        :hideRequiredMark="true"
-        :model="bankCardInfo"
-        :colon="false"
-        :label-col="{ span: 8 }"
-      >
-        <q-input
-          v-model:value="virtualCurrencyInfo.wallet"
-          label="Card Account"
-          placeholder="Enter card account"
-        />
-        <q-input
-          v-model:value="virtualCurrencyInfo.digitalCurrency"
-          label="Digital Currency"
-          placeholder="Enter digital currency"
-        />
-        <q-input
-          v-model="virtualCurrencyInfo.digitalCurrency"
-          label="Digital Currency"
-          placeholder="Enter digital currency"
-          disable
-        />
-
-        <q-input
-          v-model="virtualCurrencyInfo.protocol"
-          label="Protocol"
-          placeholder="Enter protocol"
-          disable
-        />
-        <q-btn color="brand" type="submit" @click="submitVirtualCurrency">
-          Confirm
-        </q-btn>
-      </q-form>
-    </q-dialog> -->
   </div>
 </template>
 
@@ -474,6 +466,7 @@ export default defineComponent({
     const isUnbindCardModal = ref(false);
     const unbindCardNo = ref("");
     const unbindcarddetail = ref({});
+
     const captchaRef = ref();
     const innerCodeId = ref("");
     const innerCaptchaRef = ref("");
@@ -584,15 +577,52 @@ export default defineComponent({
 
       }
     };
+
+    const confirmUnbindCard = (card) => {
+      unbindCardNo.value = "";
+      isUnbindCardModal.value = true;
+      unbindcarddetail.value = card;
+      // console.log(unbindcarddetail.value);
+    }
+    const unbindCardEnter = () => {
+      if (unbindcarddetail.value.bankType === 'CRYPTO') {
+        return '请输入解绑钱包地址'
+      } else if (unbindcarddetail.value.bankType === 'EWALLET') {
+        return '请输入解绑电子钱包'
+      } else {
+        return '请输入解绑银行卡号'
+      }
+    }
+
+    const unbindCardLabel = () => {
+      if (unbindcarddetail.value.bankType === 'CRYPTO') {
+        return '钱包地址'
+      } else if (unbindcarddetail.value.bankType === 'EWALLET') {
+        return '电子钱包'
+      } else {
+        return '银行卡号'
+      }
+    }
+
     const unbindBankCard = (card) => {
-      console.log(card)
+      unbindCardNoRef.value.validate();
+
+      if (unbindCardNoRef.value.hasError) {
+        return;
+      }
+
+      // console.log(card);
+      isUnbindCardModal.value = false;
+      unbindcarddetail.value = _.clone({});
+
+      // console.log(card)
       const dialog = $q.dialog({
         class: "q-px-md q-pt-md",
         title: "解绑 " + card.bankName + "?",
         message: "你确定要解绑： " + card.bankName + "?",
         ok: {
           push: true,
-          color: 'brightbtn',
+          color: 'dyblue',
           label: "确认",
           tabindex: 1
         },
@@ -785,6 +815,13 @@ export default defineComponent({
       unbindBankCard,
       telRef,
       openPhoneVeriDialog,
+      confirmUnbindCard,
+      isUnbindCardModal,
+      unbindCardNo,
+      unbindcarddetail,
+      unbindCardNoRef,
+      unbindCardEnter,
+      unbindCardLabel,
       showCaptchaDialog,
       phoneVerificationImg,
       innerCaptchaRef,

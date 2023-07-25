@@ -153,6 +153,8 @@ export default {
     affiliateList: 'Affiliate List',
     affiliateName: 'Affiliate Name',
     affiliateStatus: 'AffiliateStatus',
+    affiliateTransferAmount: 'Transfer Amount',
+    affiliateTransferRecord: 'Transfer Record',
     advancedSearch: 'Advanced Search',
     afterAmount: 'After Amount',
     afterBalance: 'After Balance',

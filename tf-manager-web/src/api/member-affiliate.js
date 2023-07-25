@@ -84,3 +84,7 @@ export const deleteAffiliateRemark = (id) => {
 export const changeNewAffilaite = (id, code, memberType) => {
   return https().request(`/affiliate/${id}/changeAffiliate?_method=PUT`, Method.POST, { affiliateCode: code, memberType: memberType }, ContentType.form);
 };
+
+export const getTransferRecords = (id, query) => {
+  return https().request(`/affiliate/${id}/member/transfer`, Method.GET, query, ContentType.form);
+};
