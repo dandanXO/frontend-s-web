@@ -230,10 +230,10 @@ const props = defineProps({
 const { t } = useI18n();
 const statusList = reactive({
   list: [
-    { key: 1, name: 'PENDING', value: 'PENDING' },
-    { key: 2, name: 'SUCCESS', value: 'SUCCESS' },
-    { key: 3, name: 'CLOSED', value: 'CLOSED' },
-    { key: 4, name: 'SUPPLEMENT_SUCCESS', value: 'SUPPLEMENT_SUCCESS' }
+    { key: 1, name: t('depositStatus.PENDING'), value: 'PENDING' },
+    { key: 2, name: t('depositStatus.SUCCESS'), value: 'SUCCESS' },
+    { key: 3, name: t('depositStatus.CLOSED'), value: 'CLOSED' },
+    { key: 4, name: t('depositStatus.SUPPLEMENT_SUCCESS'), value: 'SUPPLEMENT_SUCCESS' }
   ]
 })
 
