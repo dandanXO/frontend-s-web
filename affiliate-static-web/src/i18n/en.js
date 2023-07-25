@@ -22,6 +22,20 @@ export default {
     firstPetName: "What was the name of your first pet?",
     firstCar: "What is the make of your first car?"
   },
+  gameType: {
+    SLOT: "SLOT",
+    LIVE: "LIVE",
+    FISH: "FISH",
+    SPORT: "SPORT",
+    ESPORT: "ESPORT",
+    POKER: "POKER",
+    LOTTERY: "LOTTERY"
+  },
+  result: {
+    WIN: "WIN",
+    LOSS: "LOSS",
+    DRAW: "DRAW"
+  },
   fields: {
     account: "Account",
     accountInfo: "Account Information",
