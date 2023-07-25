@@ -140,9 +140,9 @@
         </el-table-column>
         <el-table-column prop="result" :label="t('fields.result')" align="center" min-width="100">
           <template #default="scope">
-            <el-tag v-if="scope.row.result === 'WIN'" type="success" size="mini">{{ scope.row.result }}</el-tag>
-            <el-tag v-else-if="scope.row.result === 'LOSS'" type="danger" size="mini">{{ scope.row.result }}</el-tag>
-            <el-tag v-else-if="scope.row.result === 'DRAW'" type="warning" size="mini">{{ scope.row.result }}</el-tag>
+            <el-tag v-if="scope.row.result === 'WIN'" type="success" size="mini">{{ t('result.' + scope.row.result) }}</el-tag>
+            <el-tag v-else-if="scope.row.result === 'LOSS'" type="danger" size="mini">{{ t('result.' + scope.row.result) }}</el-tag>
+            <el-tag v-else-if="scope.row.result === 'DRAW'" type="warning" size="mini">{{ t('result.' + scope.row.result) }}</el-tag>
             <el-tag v-else type="info" size="mini">-</el-tag>
           </template>
         </el-table-column>
@@ -198,7 +198,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item :label="t('fields.gameType')" prop="gameType">
-              <span>{{ details.gameType }}</span>
+              <span>{{ t('gameType.' + details.gameType) }}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -221,9 +221,9 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.result')" prop="result">
-            <el-tag v-if="details.result === 'WIN'" type="success" size="mini">{{ details.result }}</el-tag>
-            <el-tag v-else-if="details.result === 'LOSS'" type="danger" size="mini">{{ details.result }}</el-tag>
-            <el-tag v-else-if="details.result === 'DRAW'" type="warning" size="mini">{{ details.result }}</el-tag>
+            <el-tag v-if="details.result === 'WIN'" type="success" size="mini">{{ t('result.' + details.result) }}</el-tag>
+            <el-tag v-else-if="details.result === 'LOSS'" type="danger" size="mini">{{ t('result.' + details.result) }}</el-tag>
+            <el-tag v-else-if="details.result === 'DRAW'" type="warning" size="mini">{{ t('result.' + details.result) }}</el-tag>
             <el-tag v-else type="info" size="mini">-</el-tag>
           </el-form-item>
         </el-row>
@@ -268,18 +268,18 @@ const details = reactive({
 const uiControl = reactive({
   dialogVisible: false,
   gameType: [
-    { key: 1, displayName: "SLOT", value: "SLOT" },
-    { key: 2, displayName: "LIVE", value: "LIVE" },
-    { key: 3, displayName: "FISH", value: "FISH" },
-    { key: 4, displayName: "SPORT", value: "SPORT" },
-    { key: 5, displayName: "ESPORT", value: "ESPORT" },
-    { key: 6, displayName: "POKER", value: "POKER" },
-    { key: 7, displayName: "LOTTERY", value: "LOTTERY" }
+    { key: 1, displayName: t('gameType.SLOT'), value: "SLOT" },
+    { key: 2, displayName: t('gameType.LIVE'), value: "LIVE" },
+    { key: 3, displayName: t('gameType.FISH'), value: "FISH" },
+    { key: 4, displayName: t('gameType.SPORT'), value: "SPORT" },
+    { key: 5, displayName: t('gameType.ESPORT'), value: "ESPORT" },
+    { key: 6, displayName: t('gameType.POKER'), value: "POKER" },
+    { key: 7, displayName: t('gameType.LOTTERY'), value: "LOTTERY" }
   ],
   result: [
-    { key: 1, displayName: "WIN", value: "WIN" },
-    { key: 2, displayName: "LOSS", value: "LOSS" },
-    { key: 3, displayName: "DRAW", value: "DRAW" }
+    { key: 1, displayName: t('result.WIN'), value: "WIN" },
+    { key: 2, displayName: t('result.LOSS'), value: "LOSS" },
+    { key: 3, displayName: t('result.DRAW'), value: "DRAW" }
   ]
 });
 

@@ -22,6 +22,20 @@ export default {
     firstPetName: "您第一只宠物的名是？",
     firstCar: "您拥有第一部车的品牌是？"
   },
+  gameType: {
+    SLOT: "电子",
+    LIVE: "真人",
+    FISH: "捕鱼",
+    SPORT: "体育",
+    ESPORT: "电竞",
+    POKER: "棋牌",
+    LOTTERY: "彩票"
+  },
+  result: {
+    WIN: "赢",
+    LOSS: "输",
+    DRAW: "和"
+  },
   fields: {
     account: "账号",
     accountInfo: "账号信息",
