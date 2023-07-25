@@ -223,7 +223,7 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "存款";
         } else if (route.path === "/promo") {
-          hasPage.value = true;
+          hasPage.value = false;
           pageName.value = "优惠活动";
           prevPage.value = "";
           if (route.query.name) {

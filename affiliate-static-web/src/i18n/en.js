@@ -22,6 +22,20 @@ export default {
     firstPetName: "What was the name of your first pet?",
     firstCar: "What is the make of your first car?"
   },
+  gameType: {
+    SLOT: "SLOT",
+    LIVE: "LIVE",
+    FISH: "FISH",
+    SPORT: "SPORT",
+    ESPORT: "ESPORT",
+    POKER: "POKER",
+    LOTTERY: "LOTTERY"
+  },
+  result: {
+    WIN: "WIN",
+    LOSS: "LOSS",
+    DRAW: "DRAW"
+  },
   fields: {
     account: "Account",
     accountInfo: "Account Information",
@@ -42,6 +56,7 @@ export default {
     answerOne: "Answer One",
     answerTwo: "Answer Two",
     answerThree: "Answer Three",
+    answerSecurityQuestion: "Answer All the Security Question",
     appLink: "Application Download Link",
     balance: "Balance",
     bank: "Bank",
@@ -210,6 +225,8 @@ export default {
     selectAQuestion: "Please select a question",
     selectBankCard: "Please select a bank card",
     selectUsdtWallet: "Please select a USDT wallet",
+    setSecurityQn: "Please setup security question",
+    setSecAndPw: "Please setup security question and withdraw password",
     setWithdrawPassword: "Please setup withdraw password",
     singleLimit: "Single Limit",
     success: "Success",
@@ -268,6 +285,7 @@ export default {
     1100: "New password cannot be the same as your old password",
     1101: "Old password incorrect",
     1102: "Withdraw password is incorrect",
+    1201: "Answer is incorrect",
     1308: "Balance is not enough",
     1311: "Do not submit same withdraw amount within 24 hours",
     13000: "Domain name does not exist",

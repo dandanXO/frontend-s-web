@@ -258,16 +258,15 @@ const submitTransfer = (amount) => {
       });
 };
 const closeDialog = () => {
-  console.log("Close Dialog");
+  // console.log("Close Dialog");
   visible.value = false;
   src.value = ""
   if (isAndroid() && !isHuaweiPhone()) {
     AppFullscreen.exit()
     window.screen.orientation.lock('portrait');
   }
-  const query = {...route.query}
-  delete query.inGame
-
+  // const query = {...route.query}
+  // delete query.inGame
   // router.replace({query})
 
 }

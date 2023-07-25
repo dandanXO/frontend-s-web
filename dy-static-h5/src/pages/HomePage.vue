@@ -127,8 +127,8 @@
               :key="i"
           >
             <div class="home-select-slide column items-center justify-center gap-3"
-                 :class="( selectedTab == tab.name) ? 'selected' : ''">
-              <img :src="require('../assets/index/' + tab.icon)"/>
+                 :class="( selectedTab == tab.name) ? 'selected' : ''" :style="`gap:${tab.gap}px`">
+              <img :style="`margin-top:${tab.mb}px;`" :src="require('../assets/index/' + tab.icon)"/>
               <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
             </div>
 
@@ -1051,43 +1051,57 @@ export default defineComponent({
         name: "live",
         icon: "slide-live-svg.svg",
         label: "真人娱乐",
-        labelact: "真人娱乐"
+        labelact: "真人娱乐",
+        mb: 0,
+        gap: 3
       },
       {
         name: "sport",
         icon: "slide-sport-svg.svg",
         label: "体育赛事",
-        labelact: "体育赛事"
+        labelact: "体育赛事",
+        mb: 0,
+        gap: 3
       },
       {
         name: "esport",
         icon: "slide-esport-svg.svg",
         label: "电竞赛事",
-        labelact: "电竞赛事"
+        labelact: "电竞赛事",
+        mb: 0,
+        gap: 3
       },
       {
         name: "slot",
         icon: "slide-slot-svg.svg",
         label: "电子",
-        labelact: "电子"
+        labelact: "电子",
+        mb: 0,
+        gap: 3
       },
       {
         name: "fish",
         icon: "slide-fish-svg.svg",
         label: "捕鱼",
-        labelact: "捕鱼"
+        labelact: "捕鱼",
+        mb: 2,
+        gap: 1
       },
       {
         name: "poker",
         icon: "slide-poker-svg.svg",
         label: "棋牌游戏",
-        labelact: "棋牌游戏"
+        labelact: "棋牌游戏",
+        mb: 0,
+        gap: 3
       },
       {
         name: "lottery",
         icon: "slide-lottery-svg.svg",
         label: "彩票游戏",
-        labelact: "彩票游戏"
+        labelact: "彩票游戏",
+        mb: 0,
+        gap: 3
       }
     ]);
     const esport = ref([]);
@@ -1915,7 +1929,7 @@ export default defineComponent({
     margin: 5px 0;
 
     img {
-      width: 20px;
+      width: auto;
     }
 
     span {

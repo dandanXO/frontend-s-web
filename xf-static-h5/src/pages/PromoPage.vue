@@ -1,4 +1,9 @@
 <template>
+
+  <q-card-section class="page-title" style="height:28px;">
+    优惠活动
+  </q-card-section>
+
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">

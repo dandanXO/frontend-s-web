@@ -8,19 +8,19 @@
         full-width
     >
 
-<!--      <q-page-sticky id="sticky-item" position="bottom-right" style="z-index:999999;" :offset="fabPos"-->
-<!--                     v-touch-pan.prevent.mouse="moveFab"-->
-<!--      >-->
-<!--        <q-btn-->
-<!--            @click="closeDialog()"-->
-<!--            icon="close"-->
-<!--            direction="up"-->
-<!--            color="decent"-->
-<!--            class="bg-brightbtn close-btn"-->
-<!--            rounded-->
-<!--        >-->
-<!--        </q-btn>-->
-<!--      </q-page-sticky>-->
+      <!--      <q-page-sticky id="sticky-item" position="bottom-right" style="z-index:999999;" :offset="fabPos"-->
+      <!--                     v-touch-pan.prevent.mouse="moveFab"-->
+      <!--      >-->
+      <!--        <q-btn-->
+      <!--            @click="closeDialog()"-->
+      <!--            icon="close"-->
+      <!--            direction="up"-->
+      <!--            color="decent"-->
+      <!--            class="bg-brightbtn close-btn"-->
+      <!--            rounded-->
+      <!--        >-->
+      <!--        </q-btn>-->
+      <!--      </q-page-sticky>-->
       <!-- <q-toolbar>
       <q-avatar>
         <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
@@ -148,10 +148,8 @@ import {userStore} from "stores/index";
 // import { isMobile } from "utils/utils";
 import {useRoute, useRouter} from "vue-router";
 import {ref, defineExpose, reactive, shallowRef} from "vue";
-import DepositComponent from "components/depositComponent.vue";
+import {isAndroid, isHuaweiPhone} from "boot/utils";
 
-// import { transfer } from "api/personal/transfer";
-// import { message } from "ant-design-vue";
 import {storeToRefs} from "pinia";
 import {api} from "boot/axios";
 import {useQuasar, Platform, AppFullscreen, openURL} from "quasar";
@@ -267,7 +265,10 @@ const submitTransfer = (amount) => {
 const closeDialog = () => {
   visible.value = false;
   src.value = ""
-  // AppFullscreen.exit()
+  if (isAndroid() && !isHuaweiPhone()) {
+    AppFullscreen.exit()
+    window.screen.orientation.lock('portrait');
+  }
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
   //
@@ -275,37 +276,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
-  // window.addEventListener(
-  //   "message",
-  //   (event) => {
-  //     console.log("Action");
-  //     console.log(event.data);
-  //     if (event.data?.msg) {
-  //       if (event.data.msg === "closemodal") {
-  //         drawerVisible.value= false;
-  //       }
-  //     }
-  //   });
-
-  //     var gameIfrm = document.getElementById('game-iframe');
-  //     gameIfrm.requestFullscreen();
-  // // const iframeRef = ref(null);
-  // var myScreenOrientation = window.screen.orientation;
-  // console.log(myScreenOrientation)
-  // myScreenOrientation.unlock()
-  // myScreenOrientation.lock("portrait");
-  // console.log(myScreenOrientation)
-  // iframe.find('HTML-Element').touchwipe({
-  // wipeLeft: function() { alert("left"); },
-  // wipeRight: function() { alert("right"); },
-  // wipeUp: function() { alert("up"); },
-  // wipeDown: function() { alert("down"); },
-  // min_move_x: 20,
-  // min_move_y: 20,
-  // preventDefaultEvents: true });
-  // transferInfo.value = {
-  //   platform: platformCode
-  // };
 
 // Get the iframe
   const iFrame = document.getElementById('game-iframe');
@@ -321,6 +291,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
+      if (isAndroid() && !isHuaweiPhone()) {
+        AppFullscreen.request();
+        window.screen.orientation.unlock();
+      }
       // visible.value = true;
       var way = null
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -334,8 +308,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         }
       }
 
-      if (store.isMobileSafari()) {
-        const newWin = window.open(`/`, `_blank`);
+      $q.loading.show({message: "加载中..."});
+
+      if (way !== "H5") {
+        //Change to open at same page.
         if (platformCode === 'platformType') {
           api
               .get(`/session/launch?_time=${new Date().getTime()}`, {
@@ -346,39 +322,17 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 }
               })
               .then((response) => {
-                newWin.location.href = response.data;
-              });
-          return;
-        }
+                $q.loading.hide();
 
-        api
-            .get(`/session/launch?_time=${new Date().getTime()}`, {
-              params: {
-                platform: platformCode,
-                gameCode: gameCode,
-                isMobile: Platform.is.mobile ? true : false,
-                way: way
-              }
-            })
-            .then((response) => {
-              newWin.location.href = response.data;
-            });
-        return;
-      } else if (way === "ANDROID") {
-
-        if (platformCode === 'platformType') {
-          api
-              .get(`/session/launch?_time=${new Date().getTime()}`, {
-                params: {
-                  platform: gameCode,
-                  isMobile: Platform.is.mobile ? true : false,
-                  way: way
+                if (way == "ANDROID") {
+                  var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
+                } else {
+                  window.location.href = response.data;
                 }
-              })
-              .then((response) => {
-                src.value = response.data;
-                visible.value = true;
+                // src.value = response.data;
+                // visible.value = true;
               }).catch((err) => {
+            $q.loading.hide();
             $q.notify({
               color: "negative",
               position: "top",
@@ -398,9 +352,18 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               }
             })
             .then((response) => {
-              src.value = response.data;
-              visible.value = true;
+              $q.loading.hide();
+
+              if (way === "ANDROID") {
+                var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
+              } else {
+                window.location.href = response.data;
+              }
+
+              // src.value = response.data;
+              // visible.value = true;
             }).catch((err) => {
+          $q.loading.hide();
           $q.notify({
             color: "negative",
             position: "top",
@@ -410,7 +373,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         })
 
       } else {
-
         if (platformCode === 'platformType') {
           api
               .get(`/session/launch?_time=${new Date().getTime()}`, {
@@ -421,23 +383,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 }
               })
               .then((response) => {
-                if (way === 'IOS') {
-                  const newWin = window.open(`/`, `_self`);
-                  newWin.location.href = response.data
-                } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-                  const newWin = window.open(`/`, `_blank`);
-                  newWin.location.href = response.data
-                } else {
-                  openURL(response.data)
-                }
-              }).catch((err) => {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: err.message,
-              icon: "report_problem"
-            });
-          });
+                $q.loading.hide();
+                // newWin.location.href = response.data;
+                window.location.href = response.data;
+              });
           return;
         }
         api
@@ -450,23 +399,18 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               }
             })
             .then((response) => {
-              if (way === 'IOS') {
-                const newWin = window.open(`/`, `_self`);
-                newWin.location.href = response.data
-              } else if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient()) {
-                const newWin = window.open(`/`, `_blank`);
-                newWin.location.href = response.data
-              } else {
-                openURL(response.data)
-              }
+              $q.loading.hide();
+              // newWin.location.href = response.data;
+              window.location.href = response.data;
             }).catch((err) => {
+          $q.loading.hide();
           $q.notify({
             color: "negative",
             position: "top",
             message: err.message,
             icon: "report_problem"
           });
-        })
+        });
       }
 
     } else {

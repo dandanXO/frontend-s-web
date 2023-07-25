@@ -68,3 +68,11 @@ export const getSecurityQuestions = (id) => {
 export const createSecurityQuestion = (id, securityQuestion) => {
   return https().request(`/affiliate/${id}/securityQuestion`, Method.POST, securityQuestion, ContentType.form);
 };
+
+export const checkAnswer = (id, answer) => {
+  return https().request(`/affiliate/${id}/checkAnswer`, Method.GET, answer, ContentType.form);
+};
+
+export const checkWithdrawPassword = (id, siteId, withdrawPassword) => {
+  return https().request(`/affiliate/${id}/checkWithdrawPassword`, Method.GET, { siteId: siteId, withdrawPassword: withdrawPassword }, ContentType.form);
+};

@@ -22,6 +22,20 @@ export default {
     firstPetName: "您第一只宠物的名是？",
     firstCar: "您拥有第一部车的品牌是？"
   },
+  gameType: {
+    SLOT: "电子",
+    LIVE: "真人",
+    FISH: "捕鱼",
+    SPORT: "体育",
+    ESPORT: "电竞",
+    POKER: "棋牌",
+    LOTTERY: "彩票"
+  },
+  result: {
+    WIN: "赢",
+    LOSS: "输",
+    DRAW: "和"
+  },
   fields: {
     account: "账号",
     accountInfo: "账号信息",
@@ -42,6 +56,7 @@ export default {
     answerOne: "答案一",
     answerTwo: "答案二",
     answerThree: "答案三",
+    answerSecurityQuestion: "请回答全部安全密保问题",
     appLink: "代理后台app下载链接",
     balance: "余额",
     bank: "银行卡",
@@ -210,6 +225,8 @@ export default {
     selectAQuestion: "请选择问题",
     selectBankCard: "请选择银行卡",
     selectUsdtWallet: "请选择虚拟钱包账号",
+    setSecurityQn: "请先设置安全密保",
+    setSecAndPw: "请先设置安全密保与支付密码",
     setWithdrawPassword: "请先设置支付密码",
     singleLimit: "单笔限额",
     success: "成功",
@@ -268,6 +285,7 @@ export default {
     1100: "新密码不能与旧密码相同",
     1101: "旧密码不正确",
     1102: "支付密码不正确",
+    1201: "答案不正确",
     1308: "余额不足",
     1311: "24小时内勿提交相同提款金额",
     13000: "域名不存在",
