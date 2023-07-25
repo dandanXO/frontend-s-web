@@ -1118,6 +1118,9 @@ program at any time without prior notice.`
 
     onMounted(() => {
       vipLevel.value = store.vip.replace("VIP", "");
+      if (vipLevel.value >= 1) {
+        slide.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
+      }
     });
 
     const claimRebate = (type, vipType) => {
