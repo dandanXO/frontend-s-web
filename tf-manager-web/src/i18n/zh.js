@@ -153,6 +153,8 @@ export default {
     affiliateList: '代理列表',
     affiliateName: '代理名',
     affiliateStatus: '代理状态',
+    affiliateTransferAmount: '代存金额',
+    affiliateTransferRecord: '代理代存记录',
     advancedSearch: '高级搜索',
     afterAmount: '之后金额',
     afterBalance: '之后余额',
