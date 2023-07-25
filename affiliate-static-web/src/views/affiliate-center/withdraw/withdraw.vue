@@ -96,9 +96,15 @@
         <el-button type="primary" @click="submitAnswer">{{ $t('fields.confirm') }}</el-button>
       </div>
     </el-form>
-    <el-form v-if="uiControl.dialogType === 'WITHDRAW_PASS'" ref="withdrawPwRef" :model="withdrawPwForm" :rules="withdrawPwFormRules" :inline="true" size="small" label-width="150px">
+    <el-form v-if="uiControl.dialogType === 'WITHDRAW_PASS'" ref="withdrawPwRef" :model="withdrawPwForm" :rules="withdrawPwFormRules" :inline="true" size="small" label-width="150px" @submit.prevent>
       <el-form-item :label="t('fields.withdrawPassword')" prop="withdrawPassword">
-        <el-input type="password" v-model="withdrawPwForm.withdrawPassword" autocomplete="off" style="width: 200px;" :placeholder="t('fields.withdrawPassword')" />
+        <el-input
+          type="password"
+          v-model="withdrawPwForm.withdrawPassword"
+          autocomplete="off"
+          style="width: 200px;"
+          :placeholder="t('fields.withdrawPassword')"
+        />
       </el-form-item>
       <div class="dialog-footer">
         <el-button @click="uiControl.dialogVisible = false">{{ $t('fields.cancel') }}</el-button>

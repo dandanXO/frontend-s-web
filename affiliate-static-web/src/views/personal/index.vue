@@ -53,7 +53,7 @@
                 <Icon :icon="bookCoins20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.balance')">
-                {{ balance }}
+                $ <span v-formatter="{data: balance,type: 'money'}" />
               </el-form-item>
             </el-row>
           </el-form>
