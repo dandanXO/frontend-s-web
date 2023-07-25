@@ -119,7 +119,7 @@
                 src="../assets/live/left_float_allbet_2.webp"
               />
             </template>
-            <template v-if="det.code === 'AWC'">
+            <template v-if="det.code === 'SEXY'">
               <img
                 class="imgabs bbin1"
                 src="../assets/live/left_bg_bbin_1.webp"
@@ -261,7 +261,7 @@ export default defineComponent({
       //   message: ''
       // },
       {
-        code: 'AWC',
+        code: 'SEXY',
         name: 'Sexy',
         image: 'sexy',
         gameCode: '',
