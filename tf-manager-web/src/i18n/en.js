@@ -69,11 +69,14 @@ export default {
       PAYOUT: 'PAYOUT',
       ROLLBACK: 'ROLLBACK',
       PATCH: 'PATCH',
-      BET_N_PAYOUT: 'BET AND PAYOUT'
+      BET_N_PAYOUT: 'BET AND PAYOUT',
+      AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER'
     },
     subType: {
       DEPOSIT: 'Wallet to Game',
-      WITHDRAW: 'Game to Wallet'
+      WITHDRAW: 'Game to Wallet',
+      TRASNFER_IN: 'Transfer In',
+      TRANSFER_OUT: 'Transfer Out'
     }
   },
   fields: {
