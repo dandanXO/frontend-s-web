@@ -21,6 +21,9 @@
     <el-tab-pane :label="t('fields.withdraw')" name="withdraw-info">
       <WithdrawInfoTab :aff-id="id" />
     </el-tab-pane>
+    <el-tab-pane :label="t('fields.affiliateTransferRecord')" name="affiliate-transfer">
+      <AffiliateTransferTab :aff-id="id" />
+    </el-tab-pane>
   </el-tabs>
 </template>
 
@@ -33,6 +36,7 @@ import LoginInfoTab from "./tabs/login-info/index.vue";
 import WithdrawInfoTab from "./tabs/withdraw-info/index.vue";
 import MemberMoneyChange from "./tabs/member-money-change/index.vue";
 import MemberBankTab from "./tabs/member-bank/index.vue";
+import AffiliateTransferTab from "./tabs/affiliate-transfer/index.vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -44,7 +48,8 @@ export default defineComponent({
     LoginInfoTab,
     WithdrawInfoTab,
     MemberMoneyChange,
-    MemberBankTab
+    MemberBankTab,
+    AffiliateTransferTab
   },
   setup() {
     const { t } = useI18n();
