@@ -69,11 +69,14 @@ export default {
       PAYOUT: '派彩',
       ROLLBACK: '回滚',
       PATCH: '修补',
-      BET_N_PAYOUT: '投注并派彩'
+      BET_N_PAYOUT: '投注并派彩',
+      AFFILIATE_TRANSFER: '代理代存'
     },
     subType: {
       DEPOSIT: '主账号转入平台',
-      WITHDRAW: '平台转出主账号'
+      WITHDRAW: '平台转出主账号',
+      TRASNFER_IN: '转入',
+      TRANSFER_OUT: '转出'
     }
   },
   fields: {
@@ -543,8 +546,8 @@ export default {
     payout: '派彩',
     pcWay: 'PC端',
     pending: '中止',
-    permission: '许可',
-    permissionAssignment: '分配许可',
+    permission: '权限',
+    permissionAssignment: '分配权限',
     platform: '平台',
     platformAccount: '平台账号',
     platformId: '平台 ID',
@@ -1187,7 +1190,7 @@ export default {
     'Risk Level': '风险等级',
     'Ip Label': 'IP 标签',
     'Site Platform Management': '平台站点管理',
-    Permission: '许可',
+    Permission: '权限',
     Menu: '菜单',
     Roles: '角色',
     User: '用户',

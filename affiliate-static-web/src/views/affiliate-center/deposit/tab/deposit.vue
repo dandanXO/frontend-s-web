@@ -143,20 +143,20 @@
               USDT</span
             >
           </el-form-item> -->
-          <el-form-item v-if="selectedPayType" class="tip">
-            <!-- <template #label></template> -->
+          <!-- <el-form-item v-if="selectedPayType" class="tip">
+            <template #label></template>
             <span
               class="account-tip-text"
               style="margin-bottom: 10px; display: block; width: 100%"
             >
               <div v-html="activeMethod.msg" />
-              <!-- {{ activeMethod.msg }} -->
+              {{ activeMethod.msg }}
             </span>
-            <!-- <div class="account-tip-text">
+            <div class="account-tip-text">
               <el-icon><InfoFilled /> </el-icon>
                 更新个人信息的新帐户可以参与促销活动。
-            </div> -->
-          </el-form-item>
+            </div>
+          </el-form-item> -->
           <div class="txt-center">
             <el-button
               :loading="loadingBtn"
@@ -330,6 +330,28 @@ function initPay() {
   });
 }
 
+function selectPayType(value) {
+  if (value) {
+    if (value.extra && value.extra.amountArr) {
+      amountList.value = value.extra.amountArr;
+    } else {
+      amountList.value = [];
+    }
+    if (value.extra && value.extra.banks) {
+      bankCardList.value = value.extra.banks;
+    } else {
+      bankCardList.value = [];
+      form.bankId = null;
+    }
+    selectedPayType.value = value.payType;
+    if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
+      isUSDT.value = true;
+    } else {
+      isUSDT.value = false;
+    }
+  }
+}
+
 async function onSelect(value) {
   isDisplay.value = false;
   clearInfo();
@@ -342,6 +364,7 @@ async function onSelect(value) {
       });
     } else {
       activeMethod.value = value;
+      selectPayType(value);
       if (formRef.value) {
         formRef.value.resetFields();
       }
