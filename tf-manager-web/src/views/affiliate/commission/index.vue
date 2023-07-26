@@ -100,7 +100,7 @@
       <el-table-column prop="commission" :label="t('fields.commission')" width="150">
         <template #default="scope">
           <span v-if="scope.row.commission === null">0 %</span>
-          <span v-if="scope.row.commission !== null">{{ scope.row.commission * 100 }} %</span>
+          <span v-if="scope.row.commission !== null">{{ (scope.row.commission * 100).toFixed(2) }} %</span>
         </template>
       </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
