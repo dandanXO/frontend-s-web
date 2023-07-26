@@ -28,7 +28,7 @@ const { t } = useI18n();
 const activeName = ref('deposit');
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .box-card {
   ::v-deep(.el-card__body) {
     padding: 0;

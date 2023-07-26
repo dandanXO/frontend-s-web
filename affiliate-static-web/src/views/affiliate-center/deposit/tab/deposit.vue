@@ -550,7 +550,7 @@ onMounted(() => {
   loadCards();
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .sm .ant-modal {
   width: 100%;
   max-width: 400px;
@@ -571,7 +571,7 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
@@ -716,7 +716,7 @@ onMounted(() => {
   line-height: 30px;
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 .inner-cont {
   height: 100%;
   display: flex;

@@ -192,16 +192,10 @@ onMounted(() => {
 });
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .header-container {
   margin: 40px 0 20px;
   display: flex;
-}
-
-.box-card {
-  ::v-deep(.el-card__body) {
-    padding: 0;
-  }
 }
 
 .inputs-wrap {
