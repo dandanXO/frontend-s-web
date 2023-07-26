@@ -50,7 +50,7 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     background-size: cover;
-    min-height: 100vh;
+    min-height: 100%;
     width: 100%;
     padding: 50px 0;
     .promotionlist {

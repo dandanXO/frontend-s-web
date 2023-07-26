@@ -77,7 +77,7 @@
         </div> -->
         <q-scroll-area
             ref="scrollPageRef"
-            style="height: calc(100vh - 265px)"
+            style="height: calc(100% - 265px)"
             :thumb-style="{ width: 0 }"
         >
           <div class="loading-div" v-if="isLoading">

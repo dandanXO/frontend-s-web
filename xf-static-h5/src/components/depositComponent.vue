@@ -607,7 +607,6 @@ async function pDepo(deposit) {
                 if (response.payResultType === "GET_SUBMIT") {
                   newWin.location.href = response.requestUrl;
                   btnLoading.value = false;
-                  // isDeposited.value = true;
                 }
                 if (response.payResultType === "POST_SUBMIT") {
                   if (response.paramKey === null || response.paramKey === "") {

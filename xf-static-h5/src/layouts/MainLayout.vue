@@ -218,11 +218,7 @@ export default defineComponent({
         } else if (route.path === "/fish") {
           hasPage.value = true;
           pageName.value = "捕鱼达人";
-        } else if (route.path === "/finance/deposit") {
-          prevPage.value = "account";
-          hasPage.value = true;
-          pageName.value = "存款";
-        } else if (route.path === "/promo") {
+        }  else if (route.path === "/promo") {
           hasPage.value = false;
           pageName.value = "优惠活动";
           prevPage.value = "";
@@ -230,17 +226,31 @@ export default defineComponent({
             if (route.query.fromAccount) {
               prevPage.value = "account/promotion";
             } else {
+              hasPage.value = true;
               prevPage.value = "promo";
             }
+          }
+        }else if (route.path === "/finance/deposit") {
+          prevPage.value = "account";
+          hasPage.value = true;
+          pageName.value = "存款";
+          if (route.query.redirect) {
+            prevPage.value = route.query.name;
           }
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "提款";
+          if (route.query.redirect) {
+            prevPage.value = route.query.name;
+          }
         } else if (route.path === "/account/transfer") {
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "转账";
+          if (route.query.redirect) {
+            prevPage.value = route.query.name;
+          }
         } else if (route.path === "/account/records") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -467,7 +477,7 @@ export default defineComponent({
 
 .scrollArea {
   // height: calc(100vh - 70px);
-  height: 100vh;
+  height: 100%;
   max-width: 500px;
   margin: 0 auto;
 }

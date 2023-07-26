@@ -2,7 +2,7 @@
 
 <q-scroll-area
   ref="scrollPageRef"
-  style="height: calc(100vh - 60px); margin-bottom: env(safe-area-inset-bottom, 40px); padding-bottom: env(safe-area-inset-top, 40px);"
+  style="height: calc(100% - 60px); margin-bottom: env(safe-area-inset-bottom, 40px); padding-bottom: env(safe-area-inset-top, 40px);"
 >
   <div class="c" style="position: relative; height: 100%;">
     <iframe

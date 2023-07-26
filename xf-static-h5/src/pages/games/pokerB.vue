@@ -263,7 +263,7 @@ $max-width: 1400px;
 <template>
   <div class="live-container">
     <q-scroll-area
-      style="height: 100vh; padding-bottom: 10px"
+      style="height: 100%; padding-bottom: 10px"
       :thumb-style="{ width: 0 }"
     >
       <q-intersection transition="scale">

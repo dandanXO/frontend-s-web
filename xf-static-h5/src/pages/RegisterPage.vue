@@ -447,9 +447,6 @@ export default defineComponent({
                     ? route.query.redirect
                     : "/";
                   router.go(jumpUrl);
-                  if (Platform.is.capacitor && Platform.is.ios) {
-                    location.reload();
-                  }
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");

@@ -608,7 +608,7 @@ export default defineComponent({
         return '请输入解绑银行卡号'
       }
     }
-  
+
     const chooseCard = () => {
       if (isCrypto.value) {
         return '虚拟币'
@@ -627,8 +627,8 @@ export default defineComponent({
         return '银行卡号'
       }
     }
-    
-    
+
+
     const unbindCardLabel = () => {
       if (unbindcarddetail.value.bankType === 'CRYPTO') {
         return '钱包地址'
@@ -904,7 +904,7 @@ export default defineComponent({
 }
 
 .withdrawBankView {
-  height: calc(100vh - 109px);
+  height: calc(100% - 109px);
   display: flex;
   flex-direction: column;
 }
