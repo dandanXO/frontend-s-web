@@ -4,7 +4,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 100%;
     "
   >
     <a-spin />
@@ -21,7 +21,7 @@ onMounted(() => {
   $q.loading.show({ message: "正加载页面" });
   const params = localStorage.getItem("sportsSession");
   var sport = params ? JSON.parse(params) : "";
-  
+
   const isMobile = Platform.is.mobile;
   if (isMobile) {
     var way = null

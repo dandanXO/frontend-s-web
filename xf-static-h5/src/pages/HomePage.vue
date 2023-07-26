@@ -128,15 +128,15 @@
       }}
     </div>
     <div class="menulist">
-      <router-link to="/finance/deposit" class="men deposit-menu">
+      <router-link to="/finance/deposit?redirect=/" class="men deposit-menu">
         <img src="../assets/images/index/deposit_icon.png"/>
         <div class="">存款</div>
       </router-link>
-      <router-link to="/finance/withdraw" class="men withdraw-menu">
+      <router-link to="/finance/withdraw?redirect=/" class="men withdraw-menu">
         <img src="../assets/images/index/withdrawal_icon.png"/>
         <div class="">取款</div>
       </router-link>
-      <router-link to="/account/transfer" class="men transfer-menu">
+      <router-link to="/account/transfer?redirect=/" class="men transfer-menu">
         <img src="../assets/images/index/transfer_icon.png"/>
         <div class="">转账</div>
       </router-link>

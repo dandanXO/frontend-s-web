@@ -44,14 +44,14 @@ export default defineComponent({
         label: "BBIN彩票",
         slogan: "BBIN",
         gameCode: "bbkeno_lobby_pc"
+      },
+      {
+        code: "SGWin",
+        icon: "sgwin",
+        label: "SG-WIN彩票",
+        slogan: "SGWin ",
+        gameCode: "imlotto30000"
       }
-      // {
-      //     code: "SGWin",
-      //     icon: "sgwin",
-      //     label: "SG-WIN彩票",
-      //     slogan: "SGWin ",
-      //   gameCode: "imlotto30000"
-      // },
     ];
 
     const store = userStore();
@@ -62,14 +62,14 @@ export default defineComponent({
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
           platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("SLOT")
+            element.gameType.includes("LOTTERY")
           );
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
           platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("SLOT")
+            element.gameType.includes("LOTTERY")
           );
         });
       }
