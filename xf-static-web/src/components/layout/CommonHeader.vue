@@ -145,7 +145,11 @@
               v-if="selectedMenu === 'Sports'"
               @load-modal="openGame"
             />
-
+            <EsportsMenu
+              ref="el"
+              v-if="selectedMenu === 'Esports'"
+              @load-modal="openGame"
+            />
             <LiveCasinoMenu
               ref="el"
               v-if="selectedMenu === 'Live Casino'"
@@ -800,6 +804,7 @@ import {
 } from 'vue-remix-icons';
 import GameMenu from '@/components/menu/GameMenu.vue'
 import SportsMenu from '@/components/menu/SportsMenu.vue'
+import EsportsMenu from '@/components/menu/EsportsMenu.vue'
 import LiveCasinoMenu from '@/components/menu/LiveCasinoMenu.vue'
 import LotteryMenu from '@/components/menu/LotteryMenu.vue'
 import PokerMenu from '@/components/menu/PokerMenu.vue'
@@ -822,6 +827,7 @@ export default defineComponent({
     Vue3Marquee,
     GameMenu,
     SportsMenu,
+    EsportsMenu,
     LiveCasinoMenu,
     LotteryMenu,
     PokerMenu,
@@ -852,7 +858,7 @@ export default defineComponent({
 			for ( var i = 0; i < data.length; i++ ) {
 				// console.log(data[i]);
 				if(data[i] === "E-sports"){
-					this.navigations.push({code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports"});
+					this.navigations.push({code: "Esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true});
 				} else if (data[i] === "Fishing"){
 					this.navigations.push({code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true});
 				} else if (data[i] === "Live Casino"){
@@ -2470,6 +2476,7 @@ body {
 
   &.live,
   &.sports,
+  &.esports,
   &.poker,
   &.lottery,
   &.promo {
@@ -2488,6 +2495,7 @@ body {
   }
 
   &.sports,
+  &.esports,
   &.poker {
     .platform-box {
       display: flex;
