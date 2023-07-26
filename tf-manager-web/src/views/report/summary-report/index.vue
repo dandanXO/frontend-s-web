@@ -337,18 +337,18 @@ const request = reactive({
 const exportPercentage = ref(0)
 
 const EXPORT_HEADER = [
-  'Date',
-  'Register Count',
+  t('fields.date'),
+  t('fields.registerCount'),
   'FDP',
-  'Deposit',
-  'Withdraw',
-  'Active User',
-  'Total Bet',
-  'Total Payout',
-  'Transfer In',
-  'Transfer Out',
-  'Promo',
-  'Adjustment',
+  t('fields.deposit'),
+  t('fields.withdraw'),
+  t('fields.activeUser'),
+  t('fields.totalBet'),
+  t('fields.totalPayout'),
+  t('fields.transferIn'),
+  t('fields.transferOut'),
+  t('fields.promo'),
+  t('fields.adjustment'),
   'NGR',
 ]
 
@@ -585,9 +585,9 @@ async function exportExcel() {
   })
   ws['!cols'] = wsCols
   const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Deposit_Record')
-  wb.Sheets.Deposit_Record = ws
-  XLSX.writeFile(wb, 'deposit_record.xlsx')
+  wb.SheetNames.push('Record')
+  wb.Sheets.Record = ws
+  XLSX.writeFile(wb, t('reportName.Summary_Record') + '.xlsx')
   exportPercentage.value = 100
 
   page.loading = false
@@ -610,7 +610,7 @@ function getSummaries(param) {
     var sums = []
     columns.forEach((column, index) => {
       if (index === 0) {
-        sums[index] = 'Total'
+        sums[index] = t('fields.total')
         return
       }
       const values = data.map(item => Number(item[column.property]))

@@ -115,15 +115,15 @@ const request = reactive({
 const exportPercentage = ref(0)
 
 const EXPORT_HEADER = [
-  'Member',
-  'Source Type',
-  'Txn ID',
-  'Txn Time',
-  'Audit Time',
-  'Amount',
-  'Payment Method',
-  'Bank Number',
-  'Bank Account',
+  t('fields.member'),
+  t('fields.sourceType'),
+  t('fields.txnId'),
+  t('fields.txnTime'),
+  t('fields.auditTime'),
+  t('fields.amount'),
+  t('fields.paymentMethod'),
+  t('fields.bankNumber'),
+  t('fields.bankAccount'),
 ]
 
 async function loadSummaryWithdrawRecord() {
@@ -230,9 +230,9 @@ async function exportExcel() {
   })
   ws['!cols'] = wsCols
   const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Deposit_Record')
-  wb.Sheets.Deposit_Record = ws
-  XLSX.writeFile(wb, 'deposit_record.xlsx')
+  wb.SheetNames.push('Record')
+  wb.Sheets.Record = ws
+  XLSX.writeFile(wb, t('reportName.Summary_Withdraw_Record') + '.xlsx')
   exportPercentage.value = 100
 
   page.loading = false

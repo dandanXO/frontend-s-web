@@ -107,12 +107,12 @@ const request = reactive({
 const exportPercentage = ref(0)
 
 const EXPORT_HEADER = [
-  'Member',
-  'Source Type',
-  'Register Time',
-  'FTD Time',
-  'FTD Amount',
-  'FTD Txn',
+  t('fields.member'),
+  t('fields.sourceType'),
+  t('fields.registerTime'),
+  t('fields.ftdTime'),
+  t('fields.ftdAmount'),
+  t('fields.ftdTxn'),
 ]
 
 async function loadSummaryRegisterRecord() {
@@ -219,9 +219,9 @@ async function exportExcel() {
   })
   ws['!cols'] = wsCols
   const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Deposit_Record')
-  wb.Sheets.Deposit_Record = ws
-  XLSX.writeFile(wb, 'deposit_record.xlsx')
+  wb.SheetNames.push('Record')
+  wb.Sheets.Record = ws
+  XLSX.writeFile(wb, t('reportName.Summary_Register_Record') + '.xlsx')
   exportPercentage.value = 100
 
   page.loading = false
