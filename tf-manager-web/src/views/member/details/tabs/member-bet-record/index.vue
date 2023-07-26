@@ -408,7 +408,7 @@ function resetQuery() {
   request.platform = null;
   request.result = ["WIN", "LOSS", "DRAW"];
   request.bet = null;
-  request.gameType = null;
+  request.gameType = [];
 }
 
 const page = reactive({
