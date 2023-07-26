@@ -241,7 +241,7 @@ onMounted(async() => {
 });
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .box-card {
   ::v-deep(.el-card__body) {
     padding: 0;
