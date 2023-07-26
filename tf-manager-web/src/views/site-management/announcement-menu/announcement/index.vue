@@ -118,6 +118,16 @@
             show-word-limit
           />
         </el-form-item>
+        <el-form-item :label="t('fields.sequence')" prop="sequence">
+          <el-input-number
+            type="number"
+            v-model.number="form.sequence"
+            :min="0"
+            style="width: 350px"
+            @keypress="restrictInput($event)"
+            controls-position="right"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -137,6 +147,7 @@
       <el-table-column type="selection" width="55" v-if="!hasRole(['SUB_TENANT'])" />
       <el-table-column prop="title" :label="t('fields.title')" width="200" />
       <el-table-column prop="announcementType" :label="t('fields.announcementType')" width="200" />
+      <el-table-column prop="sequence" :label="t('fields.sequence')" width="200" />
       <el-table-column prop="status" :label="t('fields.state')" width="150" v-if="hasPermission(['sys:annou:update:state'])">
         <template #default="scope">
           <el-switch
@@ -216,14 +227,16 @@ const form = reactive({
   type: null,
   status: "true",
   dueDate: null,
-  content: null
+  content: null,
+  sequence: null
 });
 
 const formRules = reactive({
   title: [required(t('message.validateTitleRequired'))],
   type: [required(t('message.validateAnnouncementTypeRequired'))],
   dueDate: [required(t('message.validateEndDateRequired'))],
-  content: [required(t('message.validateContentRequired'))]
+  content: [required(t('message.validateContentRequired'))],
+  sequence: [required(t('message.validateSequenceRequired'))],
 });
 
 let chooseAnnouncement = [];
@@ -360,6 +373,13 @@ function submit() {
     create();
   } else if (uiControl.dialogType === "EDIT") {
     edit();
+  }
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
   }
 }
 

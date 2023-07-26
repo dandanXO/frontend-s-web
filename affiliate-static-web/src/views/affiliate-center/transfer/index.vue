@@ -27,11 +27,3 @@ import TransferRecordTab from "./tab/transfer-record.vue";
 const { t } = useI18n();
 const activeName = ref('transfer');
 </script>
-
-<style rel="stylesheet/scss" lang="scss">
-.box-card {
-  ::v-deep(.el-card__body) {
-    padding: 0;
-  }
-}
-</style>

@@ -643,7 +643,7 @@ onMounted(async() => {
 }
 </style>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .header-container {
   margin: 40px 0 20px;
   display: flex;
