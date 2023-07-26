@@ -446,7 +446,7 @@ export default defineComponent({
                   const jumpUrl = route.query.redirect
                     ? route.query.redirect
                     : "/";
-                  location.reload();
+                  router.go(jumpUrl);
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");

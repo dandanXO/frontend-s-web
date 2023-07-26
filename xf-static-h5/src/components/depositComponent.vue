@@ -593,10 +593,10 @@ async function pDepo(deposit) {
                 }
                 if (response.payResultType === "POST_SUBMIT") {
                   if (response.paramKey === null || response.paramKey === "") {
-                    newWin.location.href = `/#/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                     btnLoading.value = false;
                   } else {
-                    newWin.location.href = `/#/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                     btnLoading.value = false;
                   }
                 }
@@ -610,10 +610,10 @@ async function pDepo(deposit) {
                 }
                 if (response.payResultType === "POST_SUBMIT") {
                   if (response.paramKey === null || response.paramKey === "") {
-                    newWin.location.href = `/#/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                     btnLoading.value = false;
                   } else {
-                    newWin.location.href = `/#/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                     btnLoading.value = false;
                   }
                 }
@@ -642,13 +642,13 @@ async function pDepo(deposit) {
 
                   if (store.getDeviceType() == 'ANDROID') {
                     // alert("Adnroid");
-                    var preUrl = 'https://' + store.evip + `/#/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                    var preUrl = 'https://' + store.evip + `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
 
                     // alert(preUrl);
                     const newWin = window.open(preUrl, `_blank`);
                   } else {
                     router.push(
-                        `/#/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                        `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
                     );
                     btnLoading.value = false;
 
@@ -657,7 +657,7 @@ async function pDepo(deposit) {
 
                 } else {
                   router.push(
-                      `/#/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                      `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
                   );
                   btnLoading.value = false;
                 }

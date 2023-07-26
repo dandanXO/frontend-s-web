@@ -413,8 +413,7 @@ export default defineComponent({
 
                   if (store.hasToken()) {
                     const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                    // router.go(jumpUrl);
-                    location.reload();
+                    router.go(jumpUrl);
                   }
                 })
                 .catch((error) => {
@@ -449,7 +448,7 @@ export default defineComponent({
                   loginFormRef.value.reset();
                   if (store.hasToken()) {
                     const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                    location.reload();
+                    router.go(jumpUrl);
                   }
                 })
                 .catch((error) => {
@@ -522,7 +521,7 @@ export default defineComponent({
   position:relative;
   background: url(../assets/images/index/login-bg.png) no-repeat center center;
   background-size: cover;
-  height: 100%;
+  height: 100vh;
 
   .back-left{
     position:absolute;
