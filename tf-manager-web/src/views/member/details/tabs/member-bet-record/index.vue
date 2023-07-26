@@ -310,7 +310,12 @@ const shortcuts = [
         moment(start)
           .startOf('day')
           .format('x')
-      )
+      );
+      end.setTime(
+        moment(end)
+          .endOf('day')
+          .format('x')
+      );
       return [start, end];
     }
   },
@@ -419,7 +424,7 @@ const page = reactive({
 });
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD HH:mm:ss');
+  return moment(date).format('YYYY-MM-DD') + ' 23:59:59';
 }
 
 function convertStartDate(date) {
