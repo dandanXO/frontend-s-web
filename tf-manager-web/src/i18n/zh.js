@@ -21,6 +21,18 @@ export default {
     withdrawDate: '提款日期',
     paymentDate: '支付日期'
   },
+  reportName: {
+    Deposit_Record: '存款记录',
+    Withdraw_Record: '提款记录',
+    Privilege_Record: '优惠记录',
+    Summary_Record: '总结记录',
+    Summary_Active_Record: '总结活跃记录',
+    Summary_Register_Record: '总结注册记录',
+    Summary_Fdp_Record: '总结Fdp记录',
+    Summary_Withdraw_Record: '总结提款记录',
+    Summary_Deposit_Record: '总结存款记录',
+    Summary_Member_Record: '总结会员记录',
+  },
   depositStatus: {
     SUCCESS: '存款成功',
     SUPPLEMENT_SUCCESS: '存款补单成功',
@@ -715,6 +727,7 @@ export default {
     toPaymentOnGoing: '至支付中',
     toreview: '正在复查',
     toSuspend: '至中止',
+    total: '总计',
     totalAdjustment: '总调整金额',
     totalBalance: '总余额',
     totalBet: '总投注',
