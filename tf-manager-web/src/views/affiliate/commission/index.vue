@@ -71,12 +71,12 @@
         </el-form-item>
         <el-form-item :label="t('fields.netProfit')" prop="netProfit">
           <el-input-number type="number" v-model.number="form.netProfit" :min="0"
-                           style="width: 350px;" @keypress="restrictInput($event)" controls-position="right"
+                           style="width: 350px;" @keypress="restrictNetProfitDecimalInput($event)" controls-position="right"
           />
         </el-form-item>
         <el-form-item :label="t('fields.commission')" prop="commission">
           <el-input-number type="number" v-model.number="form.commission" :precision="2" :step="0.01" :min="0" :max="1"
-                           style="width: 350px;" @keypress="restrictInput($event)" controls-position="right"
+                           style="width: 350px;" @keypress="restrictCommissionDecimalInput($event)" controls-position="right"
           />
         </el-form-item>
         <div class="dialog-footer">
@@ -307,6 +307,42 @@ function restrictInput(event) {
   var charCode = (event.which) ? event.which : event.keyCode;
   if (charCode < 48 || charCode > 57) {
     event.preventDefault();
+  }
+}
+
+function restrictNetProfitDecimalInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (
+    (charCode < 48 || charCode > 57) && charCode !== 46
+  ) {
+    event.preventDefault();
+  }
+
+  if (
+    form.netProfit !== null &&
+    form.netProfit.toString().indexOf('.') > -1
+  ) {
+    if (charCode === 46) {
+      event.preventDefault();
+    }
+  }
+}
+
+function restrictCommissionDecimalInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (
+    (charCode < 48 || charCode > 57) && charCode !== 46
+  ) {
+    event.preventDefault();
+  }
+
+  if (
+    form.commission !== null &&
+    form.commission.toString().indexOf('.') > -1
+  ) {
+    if (charCode === 46) {
+      event.preventDefault();
+    }
   }
 }
 
