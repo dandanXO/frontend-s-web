@@ -6,3 +6,4 @@ USER root
 
 ADD . ./
 ADD nginx.conf /etc/nginx/nginx.conf
+RUN rm nginx.conf
