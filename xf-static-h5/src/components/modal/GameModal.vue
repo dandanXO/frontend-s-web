@@ -654,7 +654,7 @@ defineExpose({
 }
 
 .q-toolbar {
-  height: 100vh;
+  height: 100%;
   max-height: unset !important;
   max-width: unset !important;
   display: flex;

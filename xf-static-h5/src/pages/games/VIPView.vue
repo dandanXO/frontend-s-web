@@ -1204,7 +1204,7 @@ program at any time without prior notice.`
 </script>
 <style scoped lang="scss">
 .vip-container {
-  min-height: 100vh;
+  min-height: 100%;
 
   .banner-container {
     background-size: cover;

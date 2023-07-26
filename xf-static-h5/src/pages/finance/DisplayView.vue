@@ -110,7 +110,7 @@ function getRequest(url) {
       }
     } else {
       // url = route.fullPath;
-      url = decodeURIComponent(window.location.search);
+      url = decodeURIComponent(window.location.href);
     }
   }
   let theRequest = {};
@@ -168,6 +168,8 @@ function postSubmit() {
 
 onMounted(async () => {
   request.value = getRequest();
+  // console.log("ONmounted");
+  // console.log(request.value);
   if (!isEmpty(request.value.paramKey)) {
     const d = await getParamKey(request.value.paramKey);
     if (request.value.payResultType == "POST_SUBMIT") {

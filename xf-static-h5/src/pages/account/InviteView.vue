@@ -161,7 +161,7 @@ export default defineComponent({
         // console.log(reminderForm)
         if (res.code === 0) {
           refCode.value = res.data;
-          selfTgurl.value = tgDomain + "/refer/" + refCode.value;
+          selfTgurl.value = tgDomain + "/#/refer/" + refCode.value;
         }
       });
 

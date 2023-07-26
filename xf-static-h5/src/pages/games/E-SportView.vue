@@ -85,7 +85,7 @@ onMounted(() => {
   justify-content: center;
   .esports-iframe {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     overflow: auto !important;
   }
 }

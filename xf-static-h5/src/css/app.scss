@@ -72,8 +72,9 @@ body.body--dark .q-header {
 // body.platform-ios .q-dialog__inner--minimized > div, body.platform-android:not(.native-mobile) .q-dialog__inner--minimized > div {
 //   max-height: unset;
 // }
+
 body.platform-ios .q-dialog__inner--minimized > div{
-  max-height: calc(100vh - 108px);
+  max-height: calc(100% - 108px);
 }
 .game-title {
   font-family: 'Wave';
@@ -125,7 +126,7 @@ body.body--dark .q-header {
   padding-top: calc(3px + env(safe-area-inset-top,0));
 }
 body.body--dark .q-footer{
-  padding-bottom: calc(1px + env(safe-area-inset-top,0));
+  padding-bottom: calc(1px + env(safe-area-inset-bottom,0));
   border-radius: 15px 15px 0 0;
   overflow: hidden;
 }
