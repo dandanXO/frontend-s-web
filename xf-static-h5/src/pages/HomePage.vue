@@ -712,7 +712,6 @@ export default defineComponent({
                       homePopupFrequencyNum.value = 10000;
                       break;
                   }
-
                   isImportantAnnoucementModal.value = true;
                   homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
                   homePopupContent.value = res.data["content"];
@@ -983,13 +982,10 @@ export default defineComponent({
         // const info = {
         //   version: "1.0.1"
         // };
-        console.log("App Info");
-        console.log(info);
         // alert(info.version);
         var current_version = parseInt(
           info.version.replaceAll(".", "") + info.build
         );
-        console.log(current_version);
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
@@ -1002,11 +998,9 @@ export default defineComponent({
           var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
           download_url.value = res.data.url;
 
-          console.log(latest_ver_no);
           // alert(latest_ver_no);
           // console.log(download_url.value);
           if (latest_ver_no > current_version) {
-            console.log("Need to Updat");
             isAppUpdateModal.value = true;
           }
         }
@@ -1014,7 +1008,6 @@ export default defineComponent({
     };
 
     const openDownloadPage = () => {
-      console.log("open Page");
       window.open(download_url.value, "_system");
       isAppUpdateModal.value = false;
     };
@@ -1156,6 +1149,10 @@ export default defineComponent({
 
 .longer-swiper {
   height: calc(100vh - 380px);
+}
+
+:deep(.q-mb-md) {
+  margin-bottom: 0;
 }
 
 :deep(.secondSwiper .swiper-wrapper) {
@@ -1607,7 +1604,7 @@ export default defineComponent({
 .close-alert {
   display: block;
   position: absolute;
-  top: 10px;
+  top: 6px;
   right: 10px;
   width: 28px;
   padding: 2px;
@@ -1658,7 +1655,6 @@ export default defineComponent({
     }
   }
   .promo-banner-img {
-    padding-top: 30px;
     img {
       width: 100%;
       display: block;
