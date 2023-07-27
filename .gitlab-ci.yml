@@ -82,30 +82,12 @@ build-image-pt-launch:
 
 #===============================================================================================
 
-build-image-xf-landing:
-  extends:
-    - .docker-build
-    - .p8s1-rules
-  variables:
-    PROJECT: xf-landing
-
-#===============================================================================================
-
 build-image-dy-download:
   extends:
     - .docker-build
     - .p8s0-rules
   variables:
     PROJECT: dy-download
-
-#===============================================================================================
-
-build-image-xf-download:
-  extends:
-    - .docker-build
-    - .p8s1-rules
-  variables:
-    PROJECT: xf-download
 
 #===============================================================================================
 
@@ -217,6 +199,26 @@ build-image-dy-static-web:
     PROJECT: dy-static-web
   needs:
     - build-dy-static-web
+
+
+#===============================================================================================
+
+build-dy-static-new-h5:
+  extends:
+    - .build-projects
+    - .build-h5
+    - .p8s0-rules
+  variables:
+    PROJECT: dy-static-new-h5
+
+build-image-dy-static-new-h5:
+  extends:
+    - .docker-build
+    - .p8s0-rules
+  variables:
+    PROJECT: dy-static-new-h5
+  needs:
+    - build-dy-static-new-h5
 
 #===============================================================================================
 
