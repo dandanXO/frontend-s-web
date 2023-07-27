@@ -106,22 +106,23 @@
                     <div v-if="recordType === 'withdraw'" class="buttons">
                       <template
                           v-if="
-               det.status === 'SUCCESS' &&
+                det.status === 'SUCCESS' &&
                 det.currencyName === 'CNY' &&
                 det.confirmStatus === 0
               "
                       >
                         <q-btn
                             @click="openWithdrawConfirmDialog(det)"
-                            round
+                            outline
                             size="md"
-                            class="btn-deposit bg-greyblue"
+                            class="btn-cfm-deposit bg-greyblue row justify-between items-center"
                             icon="check_circle"
+                            label="确认到账"
                         />
                       </template>
                       <template
                           v-if="
-                det.status === 'SUCCESS' &&
+               det.status === 'SUCCESS' &&
                 det.currencyName === 'CNY' &&
                 det.confirmStatus === 1
               "
@@ -293,7 +294,8 @@
         <br/>
         确认到账
       </q-card-section>
-      <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue"/>
+      <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue" style="margin-right: 8px;"/>
+      <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning"/>
     </q-card>
   </q-dialog>
 </template>
@@ -560,4 +562,5 @@ export default defineComponent({
   background: #0089ED10 !important;
   width:24px;
 }
+
 </style>

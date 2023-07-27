@@ -245,3 +245,12 @@ build-image-affiliate-static-web:
   rules:
     - <<: *p8s0-rules
     - <<: *p8s1-rules
+
+#===============================================================================================
+
+build-image-xf-tutorials:
+  extends: .docker-build
+  variables:
+    PROJECT: xf-tutorials
+  rules:
+    - <<: *p8s1-rules

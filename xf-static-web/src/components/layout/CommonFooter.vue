@@ -2,19 +2,33 @@
   <footer class="footer">
     <div class="top-footer">
       <div class="top-footer-inner">
-      <div class="top-ft-left">
-        <div class="icon firefox" @mouseover="isFireFox = true" @mouseout="isFireFox = false" :class="{hovering: isFireFox}"></div>
-        <div class="icon chrome" @mouseover="isChrome = true" @mouseout="isChrome = false" :class="{hovering: isChrome}"></div>
-        <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
-      </div>
-      <div class="top-ft-rgt">
-        <span class="s1">支付方式：</span>
-        <span class="footPayIcon visa" title="VISA"></span>
-        <span class="footPayIcon masterCard" title="MasterCard"></span>
-        <span class="footPayIcon chineseBank" title="中国银联"></span>
-        <span class="footPayIcon fastBank" title="本地银行转账"></span>
-        <span class="footPayIcon alipayf" title="支付宝"></span>
-      </div>
+        <div class="top-ft-left">
+          <div
+            class="icon firefox"
+            @mouseover="isFireFox = true"
+            @mouseout="isFireFox = false"
+            :class="{ hovering: isFireFox }"
+          ></div>
+          <div
+            class="icon chrome"
+            @mouseover="isChrome = true"
+            @mouseout="isChrome = false"
+            :class="{ hovering: isChrome }"
+          ></div>
+          <div class="brush" @click="bookmarkPopout">
+            <RiStarFill />
+            <i class="remixicon-star-s-fill" style="font-size: 22px"></i>
+            一键收藏网站
+          </div>
+        </div>
+        <div class="top-ft-rgt">
+          <span class="s1">支付方式：</span>
+          <span class="footPayIcon visa" title="VISA"></span>
+          <span class="footPayIcon masterCard" title="MasterCard"></span>
+          <span class="footPayIcon chineseBank" title="中国银联"></span>
+          <span class="footPayIcon fastBank" title="本地银行转账"></span>
+          <span class="footPayIcon alipayf" title="支付宝"></span>
+        </div>
       </div>
     </div>
     <div class="bottom-footer">
@@ -27,7 +41,9 @@
           <li><router-link to="/about?id=service">服务条款</router-link></li>
           <li><router-link to="/agent">代理加盟</router-link></li>
         </ul>
-        <div class="tagline">兴發娱乐是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR所颁发的离岸博彩许可证，并受其监管</div>
+        <div class="tagline">
+          兴發娱乐是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR所颁发的离岸博彩许可证，并受其监管
+        </div>
       </div>
     </div>
   </footer>
@@ -35,8 +51,9 @@
   <RegisterModal ref="regModal" /> -->
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from "vue";
 import { RiStarFill } from "vue-remix-icons";
+import { ElMessageBox } from "element-plus";
 
 export default defineComponent({
   components: {
@@ -45,17 +62,41 @@ export default defineComponent({
   setup() {
     const isFireFox = ref(false);
     const isChrome = ref(false);
+
+    const alertBookmark = () => {
+      ElMessageBox.alert("请使用 Ctrl + D 收藏该网站", {
+        showClose: false,
+        confirmButtonText: "确认",
+        type: "info",
+        draggable: false,
+        buttonSize: "small"
+      });
+    };
+
+    const bookmarkPopout = () => {
+      const isWindows = /win/i.test(navigator.platform);
+      const isMacOS = /mac/i.test(navigator.platform);
+
+      if (isWindows) {
+        alertBookmark("请使用 Ctrl + D 收藏该网站");
+      } else if (isMacOS) {
+        alertBookmark("请使用 Command + D 收藏该网站");
+      }
+    };
+
     return {
       isFireFox,
-      isChrome
-    }
-  },
-})
+      isChrome,
+      alertBookmark,
+      bookmarkPopout,
+    };
+  }
+});
 </script>
 
 <style scoped lang="scss">
 .footer {
-  font-size: .8rem;
+  font-size: 0.8rem;
   .top-footer {
     background: $footer-top;
     .top-footer-inner {
@@ -67,30 +108,30 @@ export default defineComponent({
       .top-ft-left {
         display: flex;
         justify-content: center;
-        align-items: center; 
+        align-items: center;
         padding: 10px;
         .icon {
           width: 40px;
           height: 40px;
           background-repeat: no-repeat;
-          background-image: url('../../assets/footer/download.png');
+          background-image: url("../../assets/footer/download.png");
           cursor: pointer;
           &.firefox {
             background-position: -40px -160px;
-          &.hovering {
-            background-position-x: -137px;
-          }
+            &.hovering {
+              background-position-x: -137px;
+            }
           }
           &.chrome {
             background-position: -40px -110px;
-          &.hovering {
-            background-position-x: -137px;
-          }
+            &.hovering {
+              background-position-x: -137px;
+            }
           }
         }
       }
       .top-ft-rgt {
-        .s1 { 
+        .s1 {
           color: #ffffff;
         }
         display: flex;
@@ -104,25 +145,25 @@ export default defineComponent({
           background-position-y: -2px;
           cursor: pointer;
           &.visa {
-              width: 55px;
-              background-position: -266px -2px;
-              &:hover {
-                background-position-y: -48px;
-              }
+            width: 55px;
+            background-position: -266px -2px;
+            &:hover {
+              background-position-y: -48px;
+            }
           }
           &.masterCard {
-              width: 55px;
-              background-position: -348px -2px;
-              &:hover {
-                background-position-y: -48px;
-              }
+            width: 55px;
+            background-position: -348px -2px;
+            &:hover {
+              background-position-y: -48px;
+            }
           }
           &.chineseBank {
-              width: 77px;
-              background-position: -422px -2px;
-              &:hover {
-                background-position-y: -48px;
-              }
+            width: 77px;
+            background-position: -422px -2px;
+            &:hover {
+              background-position-y: -48px;
+            }
           }
           &.fastBank {
             width: 67px;
@@ -132,26 +173,26 @@ export default defineComponent({
             }
           }
           &.alipayf {
-              width: 67px;
-              background-position: -770px -2px;
-              &:hover {
-                background-position-y: -48px;
-              }
+            width: 67px;
+            background-position: -770px -2px;
+            &:hover {
+              background-position-y: -48px;
+            }
           }
         }
       }
       .brush {
         width: 130px;
         height: 40px;
-        background-color: #1D212D;
+        background-color: #1d212d;
         border-radius: 5px;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
         cursor: pointer;
-        font-size: .8rem;
+        font-size: 0.8rem;
         color: #c2c2c2;
-        svg { 
+        svg {
           width: 20px;
           fill: #c2c2c2;
         }
@@ -183,10 +224,9 @@ export default defineComponent({
     }
     .tagline {
       padding: 10px;
-            color: $footer-link;
-            font-size: .8rem;
+      color: $footer-link;
+      font-size: 0.8rem;
     }
   }
 }
-
 </style>
