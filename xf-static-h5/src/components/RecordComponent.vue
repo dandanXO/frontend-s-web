@@ -179,7 +179,8 @@
         <br/>
         确认到账
       </q-card-section>
-      <q-btn @click="openWithdrawConfirm()" label="确认" color="brightbtn"/>
+      <q-btn @click="openWithdrawConfirm()" label="确认" color="brightbtn" style="margin-right: 8px;"/>
+      <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning"/>
     </q-card>
   </q-dialog>
 </template>

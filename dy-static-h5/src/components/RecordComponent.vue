@@ -113,15 +113,16 @@
                       >
                         <q-btn
                             @click="openWithdrawConfirmDialog(det)"
-                            round
+                            outline
                             size="md"
-                            class="btn-deposit bg-greyblue"
+                            class="btn-cfm-deposit bg-greyblue row justify-between items-center"
                             icon="check_circle"
+                            label="确认到账"
                         />
                       </template>
                       <template
                           v-if="
-                det.status === 'SUCCESS' &&
+               det.status === 'SUCCESS' &&
                 det.currencyName === 'CNY' &&
                 det.confirmStatus === 1
               "
@@ -293,7 +294,8 @@
         <br/>
         确认到账
       </q-card-section>
-      <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue"/>
+      <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue" style="margin-right: 8px;"/>
+      <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning"/>
     </q-card>
   </q-dialog>
 </template>
@@ -559,5 +561,17 @@ export default defineComponent({
 .btn-deposit {
   background: #0089ED10 !important;
   width:24px;
+}
+.btn-cfm-deposit {
+  background: #0089ED10 !important;
+  border-radius: 4px;
+  padding: 4px 4px;
+
+  .on-left{
+    margin-right:3px;
+  }
+  .q-icon{
+    margin-right:3px !important;
+  }
 }
 </style>
