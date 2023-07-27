@@ -183,7 +183,7 @@ export default defineComponent({
       amount: ""
     });
 
-    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN"};
+    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "EBET": "WE"};
 
     const transferOutAllModal = () => {
       transferAllModalVisible.value = true

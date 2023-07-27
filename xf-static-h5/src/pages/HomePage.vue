@@ -749,6 +749,8 @@ export default defineComponent({
                 var liveObj = Object.assign({}, element);
                 if (liveObj.code === "PMLIVE") {
                   liveObj.title = "PM 真人";
+                } else if (liveObj.code === "EBET") {
+                  liveObj.title = "WE 真人";
                 } else {
                   liveObj.title = liveObj.name + " 真人";
                 }

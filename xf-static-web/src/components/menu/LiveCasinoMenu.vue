@@ -48,8 +48,8 @@ export default defineComponent({
       },
       {
         code: "EBET",
-        icon: "ebet",
-        label: "EBET",
+        icon: "we",
+        label: "WE",
         gameCode: "",
         slogan: "全球顶尖, 尊享娱乐"
       },
