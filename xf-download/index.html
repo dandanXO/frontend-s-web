@@ -20,6 +20,8 @@
         }
 
         .weixin_tip {
+            /* background: linear-gradient( to right bottom,#077CCE,#01E9FF);
+            padding: 30px 30px; */
             color: white;
             font-size: 14px;
             height: 100%;
@@ -59,7 +61,7 @@
 <div class="download" style="display: block;">
     <div class="remind">
         <div class="content">
-            <a class="logo"><img src="styles/images/logo.png?v=6" width="88px" height="88px"></a>
+            <a class="logo"><img src="styles/images/logo.png?v=1" width="88px" height="88px"></a>
             <h3>兴發 <span id="verNo"></span></h3>
             <div class="remind-txt">
                 全面真人娱乐&nbsp;老虎机&nbsp;捕鱼APP<br>
@@ -137,11 +139,11 @@
             } else if (/(Android)/i.test(navigator.userAgent)) {
                 showAndroid();
             } else {
-                // window.location.href="downloadty_com.html";
+                //window.location.href="downloadty_com.html";
                 showAndroid();
             }
         }
-        
+        ;
 
         $("#verNo").html("(" + versionNo + ")");
         var host = window.location.host;
@@ -191,7 +193,11 @@
         } catch (err) {
             showIOS();
         }
+
     };
+
+
 </script>
+
 </body>
 </html>
