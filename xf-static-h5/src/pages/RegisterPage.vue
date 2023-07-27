@@ -296,7 +296,7 @@ export default defineComponent({
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
-      affiliateCode: "",
+      codeAffiliate: "",
       referrer: "",
       smsCodeId: "",
       smsCode: ""
@@ -340,7 +340,7 @@ export default defineComponent({
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
       if (affCode) {
         hasAffiliate.value = true;
-        regForm.affiliateCode = affCode;
+        regForm.codeAffiliate = affCode;
       }
     };
     const getReferralCode = () => {
