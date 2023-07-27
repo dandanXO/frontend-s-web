@@ -480,9 +480,6 @@ export default defineComponent({
           animation-name: scalein;
           animation-duration: 1s;
           transition: 0.4s ease-in;
-          margin-bottom: 20px;
-          overflow: hidden;
-          padding-top: 25px;
 
           img {
           }
@@ -545,39 +542,42 @@ export default defineComponent({
             align-items: center;
 
             .viewdetail {
-              background: #002a35;
-              color: #ffffff;
-              font-size: 12px;
+              // color: #000;
+              // padding: 0 4px;
               position: absolute;
-              width: 100%;
+              top: -5px;
+              left: -2px;
+              font-size: 12px;
+              color: #3a3a3a;
               z-index: 2;
-              padding: 6px;
-              top: 0;
+              width: 100%;
+              // padding: 4px;
+              background: #d2d2de;
 
               &:before {
-                background: #043d4f;
-                content: "";
                 display: block;
+                content: "";
+                background: #ffffff;
                 height: 100%;
-                position: absolute;
-                right: 0;
-                top: 0;
                 width: 70px;
+                position: absolute;
+                top: -2px;
+                right: -2px;
               }
 
               &:after {
-                border-left: 20px solid transparent;
-                border-right: 30px solid transparent;
-                border-top: 30px solid #043d4f;
-                clear: both;
-                content: "";
                 display: block;
-                height: 0;
+                content: "";
+                top: -2px;
+                right: 48px;
                 position: absolute;
-                right: 50px;
-                top: 0;
-                transform: rotate(180deg);
                 width: 0;
+                height: 0;
+                border-left: 20px solid transparent;
+                border-right: 20px solid transparent;
+                border-top: 20px solid #ffffff;
+                transform: rotate(180deg);
+                clear: both;
               }
             }
 
@@ -705,16 +705,11 @@ export default defineComponent({
 
 .pad-title {
   position: absolute;
-  // top: -7px;
-  // right: 5px;
-  // z-index: 3;
-  font-size: 12px;
-  // color: #3e5cc0;
-  color: #ffffff;
+  top: -7px;
   right: 5px;
-  top: 5px;
   z-index: 3;
-  
+  font-size: 12px;
+  color: #3e5cc0;
 }
 
 .pad-label.label-new {
