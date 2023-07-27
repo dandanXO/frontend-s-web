@@ -54,6 +54,9 @@ const onResponse = (response) => {
     if (SkipErrorCode(res.code)) {
       return response.data;
     }
+    if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
+      return response.data;
+    }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       store.token = null;
       location.reload();
