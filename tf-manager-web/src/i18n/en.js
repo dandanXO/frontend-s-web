@@ -16,6 +16,7 @@ export default {
     outside: 'OUTSIDE',
   },
   reportName: {
+    Aff_Month_Report: 'Aff_Month_Report',
     Deposit_Record: 'Deposit_Record',
     Withdraw_Record: 'Withdraw_Record',
     Privilege_Record: 'Privilege_Record',
@@ -89,6 +90,18 @@ export default {
       WITHDRAW: 'Game to Wallet',
       TRASNFER_IN: 'Transfer In',
       TRANSFER_OUT: 'Transfer Out'
+    }
+  },
+  status: {
+    monthSummary: {
+      UNCLEAR: 'Unclear',
+      CLEARING: 'Clearing',
+      CLEARED: 'Cleared'
+    },
+    settlement: {
+      CHECKING: 'Checking',
+      PAY: 'Pay',
+      CLEARED: 'Cleared'
     }
   },
   fields: {
