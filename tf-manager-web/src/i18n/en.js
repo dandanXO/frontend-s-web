@@ -89,7 +89,8 @@ export default {
       DEPOSIT: 'Wallet to Game',
       WITHDRAW: 'Game to Wallet',
       TRASNFER_IN: 'Transfer In',
-      TRANSFER_OUT: 'Transfer Out'
+      TRANSFER_OUT: 'Transfer Out',
+      AFFILIATE_SETTLEMENT: 'Affiliate Settlement'
     }
   },
   status: {

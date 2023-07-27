@@ -89,7 +89,8 @@ export default {
       DEPOSIT: '主账号转入平台',
       WITHDRAW: '平台转出主账号',
       TRASNFER_IN: '转入',
-      TRANSFER_OUT: '转出'
+      TRANSFER_OUT: '转出',
+      AFFILIATE_SETTLEMENT: '代理结算'
     }
   },
   status: {
