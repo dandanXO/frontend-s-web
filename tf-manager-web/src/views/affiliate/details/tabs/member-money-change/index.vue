@@ -63,17 +63,19 @@
             <span v-if="scope.row.platformName !== null">{{ scope.row.platformName }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="180" sortable />
+        <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="180" sortable>
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="beforeBalance" :label="t('fields.beforeBalance')" align="center" min-width="180">
           <template #default="scope">
-            <span v-if="scope.row.beforeBalance === 0">-</span>
-            <span v-if="scope.row.beforeBalance !== 0">{{ scope.row.beforeBalance }}</span>
+            $ <span v-formatter="{data: scope.row.beforeBalance, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="afterBalance" :label="t('fields.afterBalance')" align="center" min-width="180">
           <template #default="scope">
-            <span v-if="scope.row.afterBalance === 0">-</span>
-            <span v-if="scope.row.afterBalance !== 0">{{ scope.row.afterBalance }}</span>
+            $ <span v-formatter="{data: scope.row.afterBalance, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -83,8 +85,7 @@
           min-width="180"
         >
           <template #default="scope">
-            <span v-if="scope.row.platformBalance === 0">-</span>
-            <span v-if="scope.row.platformBalance !== 0">{{ scope.row.platformBalance }}</span>
+            $ <span v-formatter="{data: scope.row.platformBalance, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
