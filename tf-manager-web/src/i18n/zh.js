@@ -22,6 +22,7 @@ export default {
     paymentDate: '支付日期'
   },
   reportName: {
+    Aff_Month_Report: '代理月报表',
     Deposit_Record: '存款记录',
     Withdraw_Record: '提款记录',
     Privilege_Record: '优惠记录',
@@ -89,6 +90,18 @@ export default {
       WITHDRAW: '平台转出主账号',
       TRASNFER_IN: '转入',
       TRANSFER_OUT: '转出'
+    }
+  },
+  status: {
+    monthSummary: {
+      UNCLEAR: '未结算',
+      CLEARING: '结算中',
+      CLEARED: '已结算'
+    },
+    settlement: {
+      CHECKING: '审核中',
+      PAY: '结算中',
+      CLEARED: '已结算'
     }
   },
   fields: {

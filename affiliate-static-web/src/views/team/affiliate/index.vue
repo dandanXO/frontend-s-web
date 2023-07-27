@@ -79,12 +79,6 @@
             <span v-if="scope.row.commission !== null">{{ scope.row.commission * 100 }} %</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column prop="revenueShare" :label="t('fields.revenueShare')" align="center" min-width="120">
-          <template #default="scope">
-            <span v-if="scope.row.revenueShare === null">0 %</span>
-            <span v-if="scope.row.revenueShare !== null">{{ scope.row.revenueShare * 100 }} %</span>
-          </template>
-        </el-table-column> -->
         <el-table-column prop="downlineMember" :label="t('fields.totalDownlineMember')" align="center" min-width="160">
           <template #default="scope">
             <span v-if="scope.row.downlineMember === null">-</span>
@@ -196,15 +190,9 @@
         <el-form-item :label="t('fields.telephone')" prop="telephone">
           <el-input v-model="cForm.telephone" style="width: 350px;" maxlength="20" />
         </el-form-item>
-        <el-form-item :label="t('fields.email')" prop="email">
-          <el-input v-model="cForm.email" style="width: 350px;" maxlength="50" />
-        </el-form-item>
         <el-form-item :label="t('fields.commission')" prop="commission">
           <el-input v-model="cForm.commission" style="width: 350px;" :maxlength="uiControl.commissionMax" @keypress="restrictCommissionDecimalInput($event)" />
         </el-form-item>
-        <!-- <el-form-item :label="t('fields.revenueShare')" prop="revenueShare">
-          <el-input v-model="cForm.revenueShare" style="width: 350px;" :maxlength="uiControl.revenueMax" @keypress="restrictRevenueDecimalInput($event)" />
-        </el-form-item> -->
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ $t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="addAffiliate">{{ $t('fields.confirm') }}</el-button>
@@ -221,9 +209,6 @@
         <el-form-item :label="t('fields.commissionRate')" prop="commission">
           <el-input v-model="eForm.commission" style="width: 250px" :maxlength="uiControl.commissionMax" @keypress="restrictCommissionDecimalInput($event)" />
         </el-form-item>
-        <!-- <el-form-item :label="t('fields.revenueShareRate')" prop="revenueShare">
-          <el-input v-model="eForm.revenueShare" style="width: 250px" :maxlength="uiControl.revenueMax" @keypress="restrictRevenueDecimalInput($event)" />
-        </el-form-item> -->
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible=false">{{ $t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="editAffiliate()">{{ $t('fields.confirm') }}</el-button>
@@ -239,7 +224,7 @@ import { useStore } from "@/store";
 import moment from 'moment';
 import { getAffiliateDownline, regsterAffiliate, editAffiliateCommission, getAffiliateInfo } from '../../../api/affiliate';
 import { getSite } from '../../../api/site';
-import { email, required, size } from "../../../utils/validate";
+import { required, size } from "../../../utils/validate";
 import { ElMessage } from 'element-plus';
 import { useI18n } from "vue-i18n";
 
@@ -345,20 +330,17 @@ const cForm = reactive({
   password: null,
   reEnterPassword: null,
   telephone: null,
-  email: null,
   siteId: null,
   affiliateLevel: null,
   affiliateCode: null,
-  commission: 0,
-  // revenueShare: 0
+  commission: 0
 });
 
 const eForm = reactive({
   id: null,
   loginName: null,
   affiliateCode: null,
-  commission: null,
-  // revenueShare: null
+  commission: null
 });
 
 function convertDate(date) {
@@ -392,29 +374,17 @@ const validateCommission = (rule, value, callback) => {
   callback();
 };
 
-// const validateRevenue = (rule, value, callback) => {
-//   if (value !== "" &&
-//     ((cForm.revenueShare < 0 || cForm.revenueShare > 1) ||
-//     (eForm.revenueShare < 0 || eForm.revenueShare > 1))) {
-//     callback(new Error(t('message.validateRevenueShare')))
-//   }
-//   callback();
-// };
-
 const cFormRules = reactive({
   affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
   loginName: [required(t('message.requiredLoginName')), size(6, 12, t('message.length6To12'))],
   password: [required(t('message.requiredPassword')), size(6, 12, t('message.length6To12')), { validator: validatePassword, trigger: "blur" }],
   reEnterPassword: [required(t('message.reenterPassword')), { validator: validateReEnterPassword, trigger: "blur" }],
   telephone: [required(t('message.requiredTelephone'))],
-  email: [required(t('message.requiredEmail')), email(t('message.emailFormat'))],
-  commission: [required(t('message.requiredCommission')), { validator: validateCommission, trigger: "blur" }],
-  // revenueShare: [{ validator: validateRevenue, trigger: "blur" }]
+  commission: [required(t('message.requiredCommission')), { validator: validateCommission, trigger: "blur" }]
 });
 
 const eFormRules = reactive({
-  commission: [required(t('message.requiredCommission')), { validator: validateCommission, trigger: "blur" }],
-  // revenueShare: [{ validator: validateRevenue, trigger: "blur" }]
+  commission: [required(t('message.requiredCommission')), { validator: validateCommission, trigger: "blur" }]
 });
 
 function restrictCommissionDecimalInput(event) {
@@ -441,31 +411,6 @@ function restrictCommissionDecimalInput(event) {
     uiControl.commissionMax = 2;
   }
 }
-
-// function restrictRevenueDecimalInput(event) {
-//   var charCode = event.which ? event.which : event.keyCode
-//   if (
-//     (charCode < 48 || charCode > 57) && charCode !== 46
-//   ) {
-//     event.preventDefault();
-//   }
-
-//   if (
-//     (eForm.revenueShare !== null &&
-//     eForm.revenueShare.toString().indexOf('.') > -1) ||
-//     (cForm.revenueShare !== null &&
-//     cForm.revenueShare.toString().indexOf('.') > -1)
-//   ) {
-//     if (charCode === 46) {
-//       event.preventDefault();
-//     }
-//     uiControl.revenueMax = 4;
-//   } else if (eForm.revenueShare === "1" || cForm.revenueShare === "1") {
-//     uiControl.revenueMax = 1;
-//   } else {
-//     uiControl.revenueMax = 2;
-//   }
-// }
 
 function resetQuery() {
   request.regTime = [defaultDate, defaultDate];
@@ -549,7 +494,6 @@ async function editAffiliate() {
       const form = {};
       form.commission = eForm.commission;
       form.siteId = store.state.user.siteId;
-      // form.revenueShare = eForm.revenueShare;
       await editAffiliateCommission(eForm.id, form);
       uiControl.dialogVisible = false;
       ElMessage({ message: t('message.editSuccess'), type: 'success' });

@@ -140,7 +140,7 @@
       >
         <el-table-column prop="affiliateName" :label="t('fields.affiliateName')" width="180">
           <template #default="scope" v-if="hasPermission(['sys:affiliate:detail'])">
-            <router-link :to="`details/${scope.row.id}`">
+            <router-link :to="`details/${scope.row.affiliateId}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.affiliateName }}</el-link>
             </router-link>
           </template>

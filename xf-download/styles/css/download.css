@@ -30,10 +30,10 @@ a.logo {
     text-align: center;
     margin-top: 0.2rem;
 }
-.remind-txt{
+.remind-txt {
     font-size: 0.28rem;
     text-align: center;
-    color: #7E7E7E;
+    color: #7e7e7e;
 }
 .load {
     width: 100%;
@@ -41,15 +41,19 @@ a.logo {
 }
 .load a {
     display: block;
-    width: 180px;
+    width: 220px;
+    padding: 0 10px;
     height: 40px;
-    background: #2EC2F5;
+    background: #2ec2f5;
     color: white;
     text-align: center;
     font-size: 0.38rem;
     margin: auto;
     border-radius: 20px;
     line-height: 40px;
+}
+.load--2 {
+    margin-top: 10px;
 }
 .tuto {
     width: 100%;
@@ -72,7 +76,7 @@ a.logo {
 .torial {
     width: 100%;
     padding-bottom: 0;
-    background: linear-gradient(#33b9ff,#33a7ff);
+    background: linear-gradient(#33b9ff, #33a7ff);
 }
 .swiper-slide img {
     display: block;
