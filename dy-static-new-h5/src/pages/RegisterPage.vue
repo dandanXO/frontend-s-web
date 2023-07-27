@@ -268,7 +268,7 @@ export default defineComponent({
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
-      affiliateCode: ""
+      codeAffiliate: ""
     });
     const getCode = () => {
       api
