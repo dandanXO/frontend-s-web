@@ -714,7 +714,7 @@ export default defineComponent({
                   }
 
                   isImportantAnnoucementModal.value = true;
-                  homePopupImg.value = imgURL + res.data["desktopImgUrl"];
+                  homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
                   homePopupContent.value = res.data["content"];
                   homePopupType.value = res.data["type"];
                   homePopupId.value = res.data["id"];
