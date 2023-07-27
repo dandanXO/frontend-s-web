@@ -939,7 +939,6 @@ export default defineComponent({
   flex-direction: column;
 
   .promo-banner-img {
-    margin-top: 20px;
     width: 100%;
     img {
       display: block;
