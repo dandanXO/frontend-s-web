@@ -1260,6 +1260,7 @@ export default {
     'Platform Account': 'Platform Account',
     'Data Dictionary': 'Data Dictionary',
     'Manual Summary': 'Manual Summary',
+    'Affiliate Manual Summary': 'Affiliate Manual Summary',
     'Payment Management': 'Payment Management',
     'Payment Display List': 'Payment Display List',
     'Bank Info': 'Bank Info',

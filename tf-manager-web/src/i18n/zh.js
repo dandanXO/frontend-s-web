@@ -1241,6 +1241,7 @@ export default {
     'Platform Account': '平台账号',
     'Data Dictionary': '数据字典',
     'Manual Summary': '手动汇总',
+    'Affiliate Manual Summary': '手动代理汇总',
     'Payment Management': '支付管理',
     'Bank Info': '银行信息',
     'Bank Card': '银行卡',
