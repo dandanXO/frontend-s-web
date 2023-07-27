@@ -1,5 +1,6 @@
 export const ResponseCode = {
   SUCCESS: 0,
+  EMPTY_PROMO_POPOUT: 908,
   ERROR_SYSTEM: 500,
   TOO_OFTEN_REQUEST: 504,
   ERROR_BAD_REQUEST: 400,

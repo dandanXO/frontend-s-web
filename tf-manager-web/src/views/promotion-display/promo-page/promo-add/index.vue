@@ -467,6 +467,7 @@ async function attachMobileBanner(event) {
 }
 
 onMounted(() => {
+  console.log("new page ")
   loadSites()
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
