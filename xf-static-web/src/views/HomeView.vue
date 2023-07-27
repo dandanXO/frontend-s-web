@@ -920,6 +920,7 @@ export default defineComponent({
   }
 }
 .imptann-modal {
+  max-width: 700px;
   .alert-img {
     display: block;
     width: 100%;
@@ -936,6 +937,14 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  .promo-banner-img {
+    width: 100%;
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
 
   .promo-banner-title {
     font-weight: bold;
