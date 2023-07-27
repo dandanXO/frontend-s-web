@@ -3,74 +3,97 @@
     <div class="menu-title-container">
       <span class="menu-title">快速提款</span>
     </div>
-    
+
     <div class="menu-title-container">
-      <span class="menu-title"> 提款流程：</span>
-    <div class="account-content withdrawal">
-      <div class="flex-box">
-        <div class="step-item active">申请中</div>
-        <RiArrowRightSLine />
-        <div class="step-item">审核中</div>
-        <RiArrowRightSLine />
-        <div class="step-item">支付中</div>
-        <RiArrowRightSLine />
-        <div class="step-item">出款成功</div>
+      <span class="menu-title">提款流程：</span>
+      <div class="account-content withdrawal">
+        <div class="flex-box">
+          <div class="step-item active">申请中</div>
+          <RiArrowRightSLine />
+          <div class="step-item">审核中</div>
+          <RiArrowRightSLine />
+          <div class="step-item">支付中</div>
+          <RiArrowRightSLine />
+          <div class="step-item">出款成功</div>
+        </div>
+        <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
       </div>
-      <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
-    </div>
     </div>
     <div class="withdraw-form">
-        <el-form ref="formRef" label-width="150px" label-position="left" label-suffix=":" :model="withdrawInfo"
-        :rules="withdrawRules">
-          <el-form-item label="提款方式">
-            <div
-              v-for="(method, i) in withdrawalMethods"
-              :key="i"
-              class="txt-center withdraw-type-item"
-              @click="selectMethod(method, i)"
-              :class="{ active: i === activeItem }"
-            >
-              <span class="promo" v-if="method.recommended">{{
-                ("finance.withdraw.recommended")
-              }}</span>
-              <img :src="imgURL + method.icon" />
-              <div class="type-name">{{ method.name }}</div>
-            </div>
-          </el-form-item>
-          
+      <el-form
+        ref="formRef"
+        label-width="150px"
+        label-position="left"
+        label-suffix=":"
+        :model="withdrawInfo"
+        :rules="withdrawRules"
+      >
+        <el-form-item label="提款方式">
+          <div
+            v-for="(method, i) in withdrawalMethods"
+            :key="i"
+            class="txt-center withdraw-type-item"
+            @click="selectMethod(method, i)"
+            :class="{ active: i === activeItem }"
+          >
+            <span class="promo" v-if="method.recommended">
+              {{ "finance.withdraw.recommended" }}
+            </span>
+            <img :src="imgURL + method.icon" />
+            <div class="type-name">{{ method.name }}</div>
+          </div>
+        </el-form-item>
+
         <el-form-item
           class="helptxt"
           prop="amount"
           label="提款金额"
           name="amount"
         >
-        <el-row :gutter="10">
-          <el-col :span="12">
-            <el-input
-              class="form-input"
-              v-model="withdrawInfo.amount"
-              placeholder="提款金额"
-            ><template #append>{{ store.currency.label }}</template>
-            </el-input>
-          </el-col>
-          <el-col :span="12">
-            <span v-if="selectedWithdrawalMethod">
-              {{ `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${ store.currency.label } - ${selectedWithdrawalMethod.withdrawMax} ${ store.currency.label }`  }} <br>
-              {{ `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${ store.currency.label }, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次` }}
-            </span>
-          </el-col>
-        </el-row> 
+          <el-row :gutter="10" style="align-items: center;">
+            <el-col :span="12">
+              <el-input
+                class="form-input"
+                v-model="withdrawInfo.amount"
+                placeholder="提款金额"
+              >
+                <template #append>{{ store.currency.label }}</template>
+              </el-input>
+            </el-col>
+            <el-col :span="12">
+              <span v-if="selectedWithdrawalMethod">
+                {{
+                  `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                }}
+                <br />
+                {{
+                  `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                }}
+              </span>
+            </el-col>
+          </el-row>
+          <!-- <div
+            v-if="selectedWithdrawalMethod"
+            class="account-tip remain-box"
+            v-html="
+              ('finance.withdraw.limitTip', {
+                min: selectedWithdrawalMethod.withdrawMin,
+                max: selectedWithdrawalMethod.withdrawMax,
+                got: selectedWithdrawalMethod.withdrawMaxAmount,
+                last: selectedWithdrawalMethod.withdrawMaxTimes,
+              })
+            "
+          ></div> -->
         </el-form-item>
         <el-row>
           <el-col>
-          <div
-            v-if="!isUSDT && selectedWithdrawalMethod.tips"
-            class="selected-tip"
-            v-html="selectedWithdrawalMethod.tips"
-          ></div>
-        </el-col>
+            <div
+              v-if="!isKDOU && !isUSDT && selectedWithdrawalMethod.tips"
+              class="selected-tip"
+              v-html="selectedWithdrawalMethod.tips"
+            ></div>
+          </el-col>
         </el-row>
-          <!-- -->
         <el-form-item
           v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
           class="helptxt"
@@ -83,14 +106,22 @@
         <el-form-item
           class="select"
           prop="cardId"
-          :label="isUSDT ? '选择钱包地址' : '选择银行卡'"
-          :rules="[{ required: true, message: isUSDT ? '请选择钱包地址' : '请选择银行卡', trigger: 'blur' }]"
+          :label="`选择${cardLabel()}`"
+          :rules="[
+            {
+              required: true,
+              message: `请选择${cardLabel()}`,
+              trigger: 'blur'
+            }
+          ]"
         >
           <el-select
-            @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''" 
+            @click="
+              withdrawState.bankCardList.length === 0 ? checkBankCards() : ''
+            "
             v-model="withdrawInfo.cardId"
-            :placeholder="isUSDT ? '选择钱包地址' : '选择银行卡'"
-            style="width: 300px;"
+            :placeholder="`选择${cardLabel()}`"
+            style="width: 300px"
           >
             <el-option
               v-for="b in withdrawState.bankCardList"
@@ -113,15 +144,34 @@
                 withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
               ).toFixed(2)
             }}
-            USDT</span
-          >
+            USDT
+          </span>
         </el-form-item>
-        <el-row>
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+
+        <!-- K豆教程视频 -->
+        <div style="margin-left: 150px" v-else-if="isKDOU">
+          <el-button class="common-btn" @click="openKdouTutorial">
+            K豆教程视频
+          </el-button>
+        </div>
+
+        <!-- <div
+          v-if="isUSDT && selectedWithdrawalMethod.tips"
+          class="selected-tip"
+          v-html="selectedWithdrawalMethod.tips"
+        ></div> -->
+
+        <div class="flex-box flex-justify-center">
+          <el-button
+            :loading="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
             确定
           </el-button>
-        </el-row>
-        </el-form>
+        </div>
+      </el-form>
     </div>
   </div>
 </template>
@@ -148,6 +198,7 @@ export default defineComponent({
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
+    const isKDOU = ref(false);
     const withdrawState = reactive({
       bankCardList: [],
     });
@@ -188,6 +239,7 @@ export default defineComponent({
                 type: 'success',
               })
               getWithdrawalMethods();
+              loadCards();
             } else {
               // message.error(response.message);
             }
@@ -219,23 +271,45 @@ export default defineComponent({
       ],
     };
     const checkBankCards = () => {
-      ElMessageBox.confirm(
-      '请先绑定银行卡', "系统提示",
-      {
-        showClose: 'false',
-        cancelButtonClass: 'cancel-btn',
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        type: 'warning',
-        draggable: true,
-        buttonSize: "small"
+
+      if(isUSDT.value == true){
+        ElMessageBox.alert(
+          '请先绑定虚拟币钱包', "系统提示",
+          {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: '确认',
+            draggable: false,
+            buttonSize: 'small',
+            closeOnClickModal: false,
+            center: true,
+          }
+        )
+          .then(() => {
+            router.push('/center/withdrawbank')
+          })
+          .catch(() => {
+          })
+      } else{
+        ElMessageBox.alert(
+          '请先绑定银行卡', "系统提示",
+          {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: '确认',
+            draggable: false,
+            buttonSize: 'small',
+            closeOnClickModal: false,
+            center: true,
+          }
+        )
+          .then(() => {
+            router.push('/center/withdrawbank')
+          })
+          .catch(() => {
+          })
       }
-    )
-      .then(() => {
-        router.push('/center/withdrawbank')
-      })
-      .catch(() => {
-      })
+
     }
     const loadCards = () => {
         withdrawState.bankCardList = []
@@ -247,8 +321,8 @@ export default defineComponent({
                     withdrawState.bankCardList.push(element)
                   }
                 } else {
-                  console.log(selectedWithdrawalMethod.value.code)
-                  if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+                  // console.log(selectedWithdrawalMethod.value.code)
+                  if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
                     withdrawState.bankCardList.push(element)
                   }
                 }
@@ -259,7 +333,7 @@ export default defineComponent({
           // message.error(error.message, 4)
            })
     }
-    
+
     async function verifyWithdrawAmount(r, v) {
       if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {
@@ -276,9 +350,9 @@ export default defineComponent({
     }
     const selectedWithdrawalMethod = ref({})
     const selectMethod = (method, index) => {
+      formRef.value.resetFields();
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
-      withdrawInfo.amount = ""
       selectedWithdrawalMethod.value = method
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
@@ -286,6 +360,11 @@ export default defineComponent({
         isUSDT.value = true
       } else {
         isUSDT.value = false
+      }
+      if (withdrawInfo.withdrawCode.includes('KDPAY')) {
+        isKDOU.value = true
+      } else {
+        isKDOU.value = false
       }
       loadCards()
     }
@@ -301,6 +380,18 @@ export default defineComponent({
         }
       })
     }
+    const cardLabel = () => {
+      if (isUSDT.value) {
+        return '钱包地址'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行卡'
+      }
+    }
+    const openKdouTutorial = () => {
+      window.open('http://jiaocheng.kdpay123.com')
+    }
     return {
       formRef,
       withdrawInfo,
@@ -314,10 +405,13 @@ export default defineComponent({
       selectMethod,
       imgURL,
       isUSDT,
+      isKDOU,
       verifyWithdrawAmount,
       store,
       loadingBtn,
-      checkBankCards
+      checkBankCards,
+      cardLabel,
+      openKdouTutorial
     };
   },
 });
