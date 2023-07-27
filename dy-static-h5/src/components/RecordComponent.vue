@@ -106,7 +106,7 @@
                     <div v-if="recordType === 'withdraw'" class="buttons">
                       <template
                           v-if="
-               det.status === 'SUCCESS' &&
+                det.status === 'SUCCESS' &&
                 det.currencyName === 'CNY' &&
                 det.confirmStatus === 0
               "
@@ -562,16 +562,5 @@ export default defineComponent({
   background: #0089ED10 !important;
   width:24px;
 }
-.btn-cfm-deposit {
-  background: #0089ED10 !important;
-  border-radius: 4px;
-  padding: 4px 4px;
 
-  .on-left{
-    margin-right:3px;
-  }
-  .q-icon{
-    margin-right:3px !important;
-  }
-}
 </style>
