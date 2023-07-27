@@ -16,9 +16,11 @@ export default {
     outside: 'OUTSIDE',
   },
   reportName: {
+    Aff_Month_Report: 'Aff_Month_Report',
     Deposit_Record: 'Deposit_Record',
     Withdraw_Record: 'Withdraw_Record',
     Privilege_Record: 'Privilege_Record',
+    Finance_Report: 'Finance_Report',
     Summary_Record: 'Summary_Record',
     Summary_Active_Record: 'Summary_Active_Record',
     Summary_Register_Record: 'Summary_Register_Record',
@@ -88,7 +90,20 @@ export default {
       DEPOSIT: 'Wallet to Game',
       WITHDRAW: 'Game to Wallet',
       TRASNFER_IN: 'Transfer In',
-      TRANSFER_OUT: 'Transfer Out'
+      TRANSFER_OUT: 'Transfer Out',
+      AFFILIATE_SETTLEMENT: 'Affiliate Settlement'
+    }
+  },
+  status: {
+    monthSummary: {
+      UNCLEAR: 'Unclear',
+      CLEARING: 'Clearing',
+      CLEARED: 'Cleared'
+    },
+    settlement: {
+      CHECKING: 'Checking',
+      PAY: 'Pay',
+      CLEARED: 'Cleared'
     }
   },
   fields: {
@@ -1239,6 +1254,7 @@ export default {
     'Privilege Report': 'Privilege Report',
     'Deposit Report': 'Deposit Report',
     'Withdraw Report': 'Withdraw Report',
+    'Finance Report': 'Finance Report',
     System: 'System',
     'Operator Log': 'Operator Log',
     'Member Platform': 'Member Platform',
@@ -1251,6 +1267,7 @@ export default {
     'Platform Account': 'Platform Account',
     'Data Dictionary': 'Data Dictionary',
     'Manual Summary': 'Manual Summary',
+    'Affiliate Manual Summary': 'Affiliate Manual Summary',
     'Payment Management': 'Payment Management',
     'Payment Display List': 'Payment Display List',
     'Bank Info': 'Bank Info',

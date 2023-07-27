@@ -121,32 +121,32 @@
         <el-table-column prop="loginName" :label="t('fields.affiliateInfo')" align="left" min-width="200">
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
             <span style="display: inline-block">
-              Account:
-              <router-link :to="`/affiliate/details/${scope.row.affiliateId}`">
+              {{ t('fields.account') }}:
+              <router-link :to="`/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`">
                 <el-link type="primary">{{ scope.row.loginName }}</el-link>
               </router-link>
               <div />
-              Month: {{ convertDateMinusOneMonth(scope.row.recordTime) }}
+              {{ t('fields.month') }}: {{ convertDate(scope.row.recordTime) }}
             </span>
           </template>
         </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" align="left" min-width="120">
           <template #default="scope">
-            <el-tag v-if="scope.row.status === 'UNCLEAR' && scope.row.totalCommissionProfit > 0" type="danger">{{ scope.row.status }}</el-tag>
-            <el-tag v-else-if="scope.row.status === 'CLEARING' && scope.row.totalCommissionProfit > 0" type="warning">{{ scope.row.status }}</el-tag>
-            <el-tag v-else-if="scope.row.status === 'CLEARED' && scope.row.totalCommissionProfit > 0" type="success">{{ scope.row.status }}</el-tag>
+            <el-tag v-if="scope.row.status === 'UNCLEAR' && scope.row.totalCommissionProfit > 0" type="danger">{{ t('status.monthSummary.' + scope.row.status) }}</el-tag>
+            <el-tag v-else-if="scope.row.status === 'CLEARING' && scope.row.totalCommissionProfit > 0" type="warning">{{ t('status.monthSummary.' + scope.row.status) }}</el-tag>
+            <el-tag v-else-if="scope.row.status === 'CLEARED' && scope.row.totalCommissionProfit > 0" type="success">{{ t('status.monthSummary.' + scope.row.status) }}</el-tag>
             <span v-else>-</span>
           </template>
         </el-table-column>
         <el-table-column :label="t('fields.depositBettingAmount')" align="left" min-width="160">
           <template #default="scope">
-            <div>Deposit: $
+            <div>{{ t('fields.deposit') }}: $
               <span
                 v-formatter="{data: scope.row.depositAmount, type: 'money'}"
               />
             </div>
             <div>
-              Bet: $
+              {{ t('fields.bet') }}: $
               <span
                 v-formatter="{data: scope.row.bet, type: 'money'}"
               />
@@ -156,19 +156,19 @@
         <el-table-column :label="t('fields.withdrawPayoutBonus')" align="left" min-width="170">
           <template #default="scope">
             <div>
-              Withdraw: $
+              {{ t('fields.withdraw') }}: $
               <span
                 v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
               />
             </div>
             <div>
-              Payout: $
+              {{ t('fields.payout') }}: $
               <span
                 v-formatter="{data: scope.row.payout, type: 'money'}"
               />
             </div>
             <div>
-              Bonus: $
+              {{ t('fields.bonus') }}: $
               <span
                 v-formatter="{data: scope.row.bonus, type: 'money'}"
               />
@@ -237,13 +237,13 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="loginName" :label="t('fields.details')" align="left" min-width="120">
+        <!-- <el-table-column prop="loginName" :label="t('fields.details')" align="left" min-width="120">
           <template #default="scope" v-if="hasPermission(['sys:affiliate:month-summary'])">
             <router-link :to="`/affiliate/month-summary-details/${scope.row.affiliateId}`">
               <el-link type="primary">{{ t('fields.details') }}</el-link>
             </router-link>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <el-pagination
         :total="page.total"
@@ -261,7 +261,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { hasRole, hasPermission } from "../../../utils/util";
 import moment from 'moment';
 import { getAffiliateMonthSummary, getSummariesForExport, updateSettlementState } from '../../../api/affiliate-record';
@@ -269,8 +269,12 @@ import { getSiteListSimple } from "../../../api/site";
 import * as XLSX from "xlsx-js-style";
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { useI18n } from "vue-i18n";
+import { TENANT } from '../../../store/modules/user/action-types';
+import { useStore } from '../../../store';
 
 const { t } = useI18n();
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const siteList = reactive({
   list: []
 });
@@ -282,12 +286,13 @@ const uiControl = reactive({
   dialogType: "SEARCH",
   settlementBtn: true,
   commissionStatus: [
-    { key: 1, displayName: "Unclear", value: "UNCLEAR" },
-    { key: 2, displayName: "Clearing", value: "CLEARING" },
-    { key: 3, displayName: "Cleared", value: "CLEARED" }
+    { key: 1, displayName: t('status.monthSummary.UNCLEAR'), value: "UNCLEAR" },
+    { key: 2, displayName: t('status.monthSummary.CLEARING'), value: "CLEARING" },
+    { key: 3, displayName: t('status.monthSummary.CLEARED'), value: "CLEARED" }
   ]
 });
 const site = ref(null);
+const exportPercentage = ref(0);
 const defaultQueryMonth = convertDate(moment(new Date()).subtract(1, 'months'));
 
 const request = reactive({
@@ -301,7 +306,8 @@ const request = reactive({
   totalCommissionProfit: 0,
 });
 
-const EXPORT_HEADER = ['Aff Info', 'Inflow Related', 'Outflow Related', 'Member Related', 'Subtotal', 'Share Ratio', 'Commission'];
+const EXPORT_HEADER = [t('fields.affiliateInfo'), t('fields.depositBettingAmount'), t('fields.withdrawPayoutBonus'),
+  t('fields.memberInfo'), t('fields.subtotal'), t('fields.commissionPercent'), t('fields.commission')];
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
@@ -310,10 +316,6 @@ async function loadSites() {
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM');
-}
-
-function convertDateMinusOneMonth(date) {
-  return moment(date).subtract(1, 'months').format('YYYY-MM');
 }
 
 function disabledDate(time) {
@@ -326,7 +328,7 @@ function resetQuery() {
   request.activePlayer = 0;
   request.totalCommissionProfit = 0;
   request.commissionStatus = null;
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
 };
 
 function handleSelectionChange(val) {
@@ -372,9 +374,8 @@ async function exportExcel() {
   const query = checkQuery();
   query.current = 1;
   const { data: ret } = await getSummariesForExport(query);
-  const exportData = [["Aff_Month_Report(" + request.month + ")"], EXPORT_HEADER];
+  const exportData = [[t('reportName.Aff_Month_Report') + '(' + request.month + ')'], EXPORT_HEADER];
   const maxLength = [];
-  const exportPercentage = ref(0);
 
   pushRecordToData(ret.records, exportData);
   exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
@@ -408,7 +409,7 @@ async function exportExcel() {
   const wb = XLSX.utils.book_new();
   wb.SheetNames.push('Affiliate_List');
   wb.Sheets.Affiliate_List = ws;
-  const filename = "Aff_Month_Report(" + request.month + ").xlsx"
+  const filename = t('reportName.Aff_Month_Report') + "(" + request.month + ").xlsx"
   XLSX.writeFile(wb, filename);
   exportPercentage.value = 100;
 }
@@ -424,13 +425,13 @@ function mapRecord(record) {
     commission: null
   });
 
-  exportRowFormat.affInfo = "Account: " + record.loginName + "  \nMonth:" + request.month;
-  exportRowFormat.inflowRelated = "Deposit: " + record.depositAmount + "  \nBet: " + record.bet;
-  exportRowFormat.outflowRelated = "Withdraw: " + record.withdrawAmount + "  \nPayout: " + record.payout + "  \nPromo: " + record.bonus;
-  exportRowFormat.memberRelated = "Active Member: " + record.activePlayer + "  \nFTD: " + record.ftdMember;
-  exportRowFormat.subtotal = "Profit: " + record.memberProfit + "  \nDownline Profit: " + record.downlineProfit;
-  exportRowFormat.shareRatio = "Commission Rate: " + record.memberCommissionRate * 100 + "%" + "  \nDownline Commission Rate: " + record.downlineCommissionRate * 100 + "%";
-  exportRowFormat.commission = "Member Commission: " + record.memberCommissionProfit + "  \nDownline Commission: " + record.downlineCommissionProfit + "  \nUnsettlement: " + record.clearingSum + "  \nTotal:" + record.totalCommissionProfit;
+  exportRowFormat.affInfo = t('fields.account') + ": " + record.loginName + "  \n" + t('fields.month') + ":" + request.month;
+  exportRowFormat.inflowRelated = t('fields.deposit') + ": " + record.depositAmount + "  \n" + t('fields.bet') + ": " + record.bet;
+  exportRowFormat.outflowRelated = t('fields.withdraw') + ": " + record.withdrawAmount + "  \n" + t('fields.payout') + ": " + record.payout + "  \n" + t('fields.promo') + ": " + record.bonus;
+  exportRowFormat.memberRelated = t('fields.activeMember') + ": " + record.activePlayer + "  \n" + t('fields.ftd') + ": " + record.ftdMember;
+  exportRowFormat.subtotal = t('fields.profit') + ": " + record.memberProfit + "  \n" + t('fields.downlineProfit') + ": " + record.downlineProfit;
+  exportRowFormat.shareRatio = t('fields.commissionRate') + ": " + record.memberCommissionRate * 100 + "%" + "  \n" + t('fields.downlineCommissionRate') + ": " + record.downlineCommissionRate * 100 + "%";
+  exportRowFormat.commission = t('fields.memberCommission') + ": " + record.memberCommissionProfit + "  \n" + t('fields.downlineCommission') + ": " + record.downlineCommissionProfit + "  \n" + t('fields.clearingSum') + ": " + record.clearingSum + "  \n" + t('fields.totalCommission') + ":" + record.totalCommissionProfit;
   return exportRowFormat;
 }
 
@@ -464,6 +465,11 @@ async function settlement(affiliate) {
 
 onMounted(async() => {
   await loadSites();
+  request.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
 });
 
 </script>

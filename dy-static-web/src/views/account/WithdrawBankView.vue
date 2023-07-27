@@ -18,15 +18,15 @@
       </div> -->
       <div class="flex-box flex-wrap bank-card-list">
         <div
-          class="bank-card-item"
-          :class="{
+            class="bank-card-item"
+            :class="{
             active: index === isCardActive,
             inactive: index > isCardActive,
             USDT: bc.bankName === 'GCASH'
           }"
-          @click="showCard(bc, index)"
-          v-for="(bc, index) in personalState.bankCardList"
-          :key="bc.id"
+            @click="showCard(bc, index)"
+            v-for="(bc, index) in personalState.bankCardList"
+            :key="bc.id"
         >
           <div class="cardname">
             <div class="txt-center">
@@ -36,42 +36,42 @@
           </div>
           <div class="unlink-btn" @click="unbindBankCard(bc)">
             <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
-            <RiLinkUnlink />
+            <RiLinkUnlink/>
           </div>
 
           <div class="flex-box cards">
             <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
             >
               {{ b.slice(0, 4) }}
             </div>
             <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
             >
               ****
             </div>
             <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
             >
               ****
             </div>
             <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
+                v-for="b in bc.cardNumber.split()"
+                :key="b"
+                class="card-num-box"
             >
               {{ b.slice(b.length - 4, b.length) }}
             </div>
           </div>
         </div>
         <div class="bank-card-item" @click="bankCardModal('bank')">
-          <RiLink />
+          <RiLink/>
           绑卡
         </div>
       </div>
@@ -85,22 +85,22 @@
           <div class="left">
             <el-form-item label="开始日期">
               <el-date-picker
-                v-model="searchForm.startDate"
-                show-time
-                type="date"
-                placeholder="开始日期"
-                valueFormat="YYYY-MM-DD"
-                format="YYYY-MM-DD"
+                  v-model="searchForm.startDate"
+                  show-time
+                  type="date"
+                  placeholder="开始日期"
+                  valueFormat="YYYY-MM-DD"
+                  format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item label="结束日期">
               <el-date-picker
-                v-model="searchForm.endDate"
-                show-time
-                type="date"
-                placeholder="结束日期"
-                valueFormat="YYYY-MM-DD"
-                format="YYYY-MM-DD"
+                  v-model="searchForm.endDate"
+                  show-time
+                  type="date"
+                  placeholder="结束日期"
+                  valueFormat="YYYY-MM-DD"
+                  format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item>
@@ -119,57 +119,75 @@
         ></el-table> -->
 
         <el-table
-          :data="dataSource"
-          style="width: 100%"
-          empty-text="暂无数据"
-          v-loading="tblLoading"
+            :data="dataSource"
+            style="width: 100%"
+            empty-text="暂无数据"
+            v-loading="tblLoading"
         >
           <el-table-column
-            v-for="tbl in columns"
-            :key="tbl.key"
-            :prop="tbl.dataIndex"
-            :label="tbl.title"
-          />
+              v-for="tbl in columns"
+              :key="tbl.key"
+              :prop="tbl.dataIndex"
+              :label="tbl.title"
+          >
+            <template #default="scope">
+              <template v-if="tbl.dataIndex === 'bankName'">
+                {{ getOptionLabel(scope.row.bankName) }}
+              </template>
+              <template v-if="tbl.dataIndex === 'cardNumber'">
+                {{ maskCardNumber(scope.row.cardNumber) }}
+              </template>
+            </template>
+            <!-- <template
+                  v-if="tbl.dataIndex === 'recordTime'"
+                  #default="scope"
+                >
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.recordTime }}</span>
+                  </div>
+                </template>
+ -->
+          </el-table-column>
         </el-table>
-        <el-divider />
+        <el-divider/>
         <el-pagination
-          @current-change="handleCurrentChange"
-          :total="pagination.totalPage"
-          :current-page="pagination.currentPage"
-          :page-size="pagination.pageSize"
-          :page-count="pagination.pageCount"
+            @current-change="handleCurrentChange"
+            :total="pagination.totalPage"
+            :current-page="pagination.currentPage"
+            :page-size="pagination.pageSize"
+            :page-count="pagination.pageCount"
         />
       </div>
     </div>
     <el-dialog
-      class="bankModal"
-      width="500"
-      v-model="bankCardModalState.visible"
-      :footer="null"
-      title="绑定银行卡"
+        class="bankModal"
+        width="500"
+        v-model="bankCardModalState.visible"
+        :footer="null"
+        title="绑定银行卡"
     >
       <el-form
-        ref="bankCardFormRef"
-        :model="bankCardInfo"
-        :rules="bankCardRules"
+          ref="bankCardFormRef"
+          :model="bankCardInfo"
+          :rules="bankCardRules"
       >
         <el-form-item
-          prop="bankId"
-          :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
+            prop="bankId"
+            :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
         >
           <el-row :gutter="20">
             <el-col :span="6">
               <el-select
-                placeholder="Bank type"
-                v-model="selectedBankType"
-                style="width: 100%"
-                @change="selectBankType"
+                  placeholder="类型"
+                  v-model="selectedBankType"
+                  style="width: 100%"
+                  @change="selectBankType"
               >
                 <el-option
-                  v-for="bank in bankTypes"
-                  :key="bank.value"
-                  :value="bank.value"
-                  :label="bank.text"
+                    v-for="bank in bankTypes"
+                    :key="bank.value"
+                    :value="bank.value"
+                    :label="bank.text"
                 >
                   {{ bank.text }}
                 </el-option>
@@ -177,30 +195,30 @@
             </el-col>
             <el-col :span="18">
               <el-select
-                class="select"
-                v-model="bankCardInfo.bankId"
-                placeholder="选择银行"
-                style="width: 100%"
+                  class="select"
+                  v-model="bankCardInfo.bankId"
+                  :placeholder="'选择' + chooseCard()"
+                  style="width: 100%"
               >
                 <el-option
-                  v-for="b in banksList"
-                  :key="b.id"
-                  :label="b.name"
-                  :value="b.id"
+                    v-for="b in banksList"
+                    :key="b.id"
+                    :label="getOptionLabel(b.name)"
+                    :value="b.id"
                 >
                   <el-row
-                    style="align-items: center"
-                    v-if="b.bankIcon"
-                    :gutter="10"
+                      style="align-items: center"
+                      v-if="b.bankIcon"
+                      :gutter="10"
                   >
                     <el-col :span="3">
                       <img
-                        style="max-height: 25px; display: block; margin: 5px"
-                        :src="imgURL + b.bankIcon"
+                          style="max-height: 25px; display: block; margin: 5px"
+                          :src="imgURL + b.bankIcon"
                       />
                     </el-col>
                     <el-col :span="21">
-                      {{ b.name }}
+                      {{ getOptionLabel(b.name) }}
                     </el-col>
                   </el-row>
                 </el-option>
@@ -208,51 +226,144 @@
             </el-col>
           </el-row>
         </el-form-item>
-
-        <!-- <el-form-item v-if="isVirtual" name="bankId" label="ชื่อธนาคาร">
-          {{ bankName }}
-        </el-form-item> -->
         <el-form-item>
-          <el-input disabled v-model="bankCardInfo.cardAccount" />
+          <el-input disabled v-model="bankCardInfo.cardAccount"/>
         </el-form-item>
-        <!-- <el-form-item prop="cardAccount" name="cardAccount">
-          <el-input
-            v-model="bankCardInfo.cardAccount"
-            placeholder="ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)"
-          />
-        </el-form-item> -->
         <el-form-item prop="cardNumber" name="cardNumber">
           <el-input
-            v-model="bankCardInfo.cardNumber"
-            :placeholder="isUSDT ? '钱包地址' : '银行卡号'"
+              v-model="bankCardInfo.cardNumber"
+              :placeholder="numAddress()"
           />
         </el-form-item>
-        <el-form-item prop="cardAddress" name="cardAddress">
+        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isKDOU">
           <el-input
-            v-model="bankCardInfo.cardAddress"
-            placeholder="开户行地址"
+              v-model="bankCardInfo.cardAddress"
+              placeholder="开户行地址"
+              :rules="[
+              { required: true, message: '请输入开户行地址', trigger: 'blur' }
+            ]"
           />
         </el-form-item>
-        <el-form-item class="txt-center">
-          <el-button class="txt-center common-btn" @click="submitBankCard">
-            提交
+        <!-- <el-form-item>
+          <el-input
+              class="half"
+              v-model="bankCardInfo.telephone"
+              placeholder="输入电话号码"
+              readonly
+              :value="personalState.memberInfo.telephone"
+          />
+          <el-button class="common-btn" @click="openCaptchaForm()">
+            获取验证码
           </el-button>
         </el-form-item>
+
+        <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
+          <el-input
+              class="half"
+              v-model="bankCardInfo.smsCode"
+              placeholder="输入电话验证码"
+              @keyup.enter="submitBankCard"
+          />
+        </el-form-item>
+
+        <el-form-item class="txt-center" v-if="isSendOtp">
+        </el-form-item> -->
+        <el-button class="txt-center common-btn" @click="submitBankCard">
+          提交
+        </el-button>
       </el-form>
     </el-dialog>
+    <!-- <el-dialog
+        v-model="phoneCaptchaDialogVisible"
+        title="验证码"
+        width="50%"
+        align-center
+        style="max-width: 500px"
+    >
+      <el-button
+          size="large"
+          color="#3bafda"
+          class="common-btn"
+          style="margin-left: 100px"
+          @click="sendOtp"
+      >
+        提交
+      </el-button>
+    </el-dialog>
+
+    <el-dialog
+        v-model="captchaDialogVisible"
+        title="验证码"
+        width="50%"
+        align-center
+        style="max-width: 500px"
+        :close-on-click-modal="false"
+        @keydown.enter.prevent
+    >
+      <el-form
+          ref="captchaRef"
+          :rules="captchaRules"
+          :model="captchaForm"
+          label-width="100"
+          label-suffix=":"
+      >
+        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+          <el-row
+              :gutter="10"
+              style="justify-content: center; align-items: center"
+          >
+            <el-col :span="12">
+              <el-input
+                  v-model="captchaForm.captchaCode"
+                  label="验证码"
+                  placeholder="验证码"
+                  @keyup.enter="sendOtp"
+              />
+            </el-col>
+            <el-col :span="12">
+              <img
+                  style="width: 50%; margin-top: 6px"
+                  :src="verificationImg"
+                  @click="getCode"
+              />
+            </el-col>
+          </el-row>
+        </el-form-item>
+        <el-button
+            size="large"
+            color="#3bafda"
+            class="common-btn"
+            style="margin-left: 100px"
+            @click="sendOtp"
+        >
+          发送
+        </el-button>
+      </el-form>
+    </el-dialog> -->
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import {defineComponent, reactive, ref, onMounted} from "vue";
+import {getVerificationCode} from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import { RiLink, RiLinkUnlink } from "vue-remix-icons";
-import { loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard } from "@/api/personal/personal";
-import { userStore } from "@/store";
-import { useRouter } from "vue-router";
-import { InfoFilled } from "@element-plus/icons-vue";
+import {RiLink, RiLinkUnlink} from "vue-remix-icons";
+import {
+  loadBanks,
+  loadBankCards,
+  loadUnbindRecord,
+  addBankCard,
+  deleteBankCard,
+  loadMemberInfo
+} from "@/api/personal/personal";
+import {userStore} from "@/store";
+import {useRouter} from "vue-router";
+// import {sendSessionSms} from "@/api/personal/personal";
+import {InfoFilled} from "@element-plus/icons-vue";
+// import moment from "moment";
+
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
@@ -260,24 +371,50 @@ export default defineComponent({
     InfoFilled, RiLink, RiLinkUnlink
   },
   setup() {
+    let validateEmptyCardNo = async (r, v) => {
+      if (selectedBankType.value === 'Bank') {
+        if (v === '') {
+          return Promise.reject('请输入银卡号');
+        } else if (/^\d+$/.test(v) === false) {
+          return Promise.reject('银行卡号只能包含数字');
+        } else {
+          return Promise.resolve();
+        }
+      } else if (selectedBankType.value === 'Crypto') {
+        if (v === '') {
+          return Promise.reject('请输入虚拟钱包账号');
+        } else if (/^[A-Za-z0-9]*$/.test(v) === false) {
+          return Promise.reject('虚拟钱包账号只能包含数字及英文字母');
+        } else {
+          return Promise.resolve();
+        }
+      }
+      return Promise.resolve();
+    };
     let validateBankLength = async (r, v) => {
-      var min = 6
-      var max = 12
+      var min = 6;
+      var max = 12;
       if (selectedBankType.value === 'Bank') {
         min = 16;
         max = 19;
         if (!/^\d+$/.test(v)) {
           return Promise.reject('请输入数字');
         }
-
       } else if (selectedBankType.value === 'Crypto') {
         min = 34;
         max = 36;
+      } else if (selectedBankType.value === 'e-Wallet') {
+        min = 34;
+        max = 34;
       }
       if (v === '') {
-          return Promise.reject('请输入卡号')
+        return Promise.reject('请输入卡号');
       } else if (v.length < min || v.length > max) {
-        return Promise.reject('长度应为 ' + min + '-' + max);
+        if (min === max) {
+          return Promise.reject('长度应为 ' + min);
+        } else {
+          return Promise.reject('长度应为 ' + min + '-' + max);
+        }
       } else {
         return Promise.resolve();
       }
@@ -286,6 +423,7 @@ export default defineComponent({
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
     const isUSDT = ref(false);
+    const isKDOU = ref(false);
     const store = userStore();
     const searchForm = reactive({
       startDate: "",
@@ -300,9 +438,9 @@ export default defineComponent({
         key: "bankName",
       },
       {
-        title: "账号",
-        dataIndex: "cardAccount",
-        key: "cardAccount"
+        title: "银行卡号",
+        dataIndex: "cardNumber",
+        key: "cardNumber"
       },
       {
         title: "开户行",
@@ -320,20 +458,28 @@ export default defineComponent({
         dataIndex: "unbindTime"
       }
     ];
+    const maskCardNumber = (cardNumber) => {
+      const maskedDigits = cardNumber.slice(0, -4).replace(/[a-zA-Z0-9]/g, '*');
+      const lastFourDigits = cardNumber.slice(-4);
+      return maskedDigits + lastFourDigits;
+    };
     const pagination = ref([{
       currentPage: 1,
       totalPage: 1,
       pageSize: 5,
       pageCount: 1
     }])
-    const bankTypes = [{ value: 'Bank', text: '银行卡' }, { value: 'Crypto', text: '数字货币' }]
+    const bankTypes = [{value: 'Bank', text: '银行卡'}, {value: 'Crypto', text: '数字货币'}, {
+      value: 'e-Wallet',
+      text: '电子钱包'
+    }]
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
     });
     const dataSource = ref();
     const searchRecord = () => {
-      tblLoading.value = true
+      tblLoading.value = true;
       loadUnbindRecord(searchForm).then((response) => {
         if (response.code === 0) {
           dataSource.value = response.data.records
@@ -347,7 +493,7 @@ export default defineComponent({
         console.log(e.message);
         // message.error(e.message, 4);
       });
-      tblLoading.value = false
+      tblLoading.value = false;
     };
 
 
@@ -364,13 +510,61 @@ export default defineComponent({
     };
 
     const getTime = () => {
-      searchForm.startDate = chgDate(7);
+      searchForm.startDate = chgDate(30);
       searchForm.endDate = chgDate(0);
       searchRecord();
     };
+
+    const withdrawState = reactive({
+      bankCardList: [],
+    });
+
+    // const loadInfo = () => {
+    //   loadMemberInfo().then((response) => {
+    //     if (response.code === 0) {
+    //       personalState.memberInfo = response.data;
+    //       // bankCardInfo.telephone = personalState.memberInfo.telephone;
+    //       // console.log(bankCardInfo.telephone)
+    //       // if (personalState.memberInfo.birthday) {
+    //       //   personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+    //       // }
+    //     }
+    //   }).catch((error) => {
+    //     console.log("error", error);
+    //   });
+    //   loadMemberTelephone().then((response) => {
+    //     if (response.code === 0) {
+    //       bankCardInfo.telephone = response.data;
+    //     }
+    //   }).catch((error) => {
+    //     console.log("error", error);
+    //   })
+    // }
+
+    // const checkBankCards = () => {
+    //   ElMessageBox.alert(
+    //       '请先绑定银行卡', "系统提示",
+    //       {
+    //         showClose: false,
+    //         showCancelButton: false,
+    //         confirmButtonText: '确认',
+    //         draggable: false,
+    //         buttonSize: 'small',
+    //         closeOnClickModal: false,
+    //         center: true,
+    //       }
+    //   )
+    //       .then(() => {
+    //         router.push('/center/withdrawbank')
+    //       })
+    //       .catch(() => {
+    //       })
+    // }
+
     onMounted(() => {
       getTime();
       loadCards();
+      // loadInfo();
     });
 
     const handleCurrentChange = (val) => {
@@ -409,7 +603,10 @@ export default defineComponent({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      cardAddress: ""
+      cardAddress: "",
+      // telephone: "",
+      // smsCode: "",
+      // smsCodeId: ""
     });
     const bankName = ref()
     const banksList = ref([])
@@ -423,6 +620,8 @@ export default defineComponent({
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
+          // bankCardInfo.telephone = "";
+          // bankCardInfo.smsCode = "";
           bankCardModalState.visible = true;
           if (bankCardModalState.banks.length === 0) {
             loadBanks().then((res) => {
@@ -442,116 +641,256 @@ export default defineComponent({
       banksList.value = []
       bankCardInfo.bankId = null
       bankCardModalState.banks.forEach(element => {
-        if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
-          banksList.value.push(element);
+        if (selectedBankType.value === "Bank") {
           isUSDT.value = false;
+          isKDOU.value = false;
+          if (element.bankType === 'BANK') {
+            banksList.value.push(element);
+          }
         }
-        if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
-          banksList.value.push(element);
+        if (selectedBankType.value === "Crypto") {
           isUSDT.value = true;
+          isKDOU.value = false;
+          if (element.bankType === 'CRYPTO') {
+            banksList.value.push(element);
+          }
         }
-        if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
-          banksList.value.push(element);
+        if (selectedBankType.value === "e-Wallet") {
+          isKDOU.value = true;
+          isUSDT.value = false;
+          if (element.bankType === 'EWALLET') {
+            banksList.value.push(element);
+          }
+        }
+      });
+      if (bankCardInfo.cardNumber != '') {
+        bankCardFormRef.value.validateField('cardNumber');
+      }
+    }
+
+    // const phoneCaptchaDialogVisible = ref(false)
+    // const isSendOtp = ref(false)
+
+    // const sendOtp = async () => {
+    //   const smsDetail = {
+    //     // telephone: bankCardInfo.telephone,
+    //     captchaCode: captchaForm.captchaCode,
+    //     codeId: captchaForm.codeId
+    //   }
+    //   sendSessionSms(smsDetail)
+    //       .then((response) => {
+    //         if (response.code == 0) {
+    //           isSendOtp.value = true;
+    //           captchaForm.smsCodeId = response.data.codeId;
+    //           bankCardInfo.smsCodeId = response.data.codeId;
+
+    //           ElMessage({
+    //             type: 'success',
+    //             message: `发送手机验证码成功`
+    //           });
+    //           captchaDialogVisible.value = false;
+    //         } else {
+    //           getCode();
+    //         }
+    //       })
+    // };
+
+    const verificationImg = ref("");
+
+    // const sendSmsForSubmitBankCard = () => {
+    //   bankCardFormRef.value
+    //     .validate()
+    //     .then(() => {
+    //       // console.log(bankCardFormRef.value)
+    //       // bankCardModalState.visible = false;
+    //       // openCaptchaForm();
+    //       phoneCaptchaDialogVisible.value = true;
+    //     }).catch((error) => {
+    //       console.log("error", error)
+    //     })
+    // }
+
+    const getCode = () => {
+      getVerificationCode().then((res) => {
+        if (res.code === 0) {
+          verificationImg.value = "data:image/png;base64," + res.data.img;
+          captchaForm.codeId = res.data.id;
         }
       })
-    }
+    };
+
+    const captchaForm = reactive({
+      captchaCode: "",
+      codeId: "",
+      smsCodeId: "",
+    });
+
+    const captchaDialogVisible = ref(false)
+
+    const openCaptchaForm = () => {
+      // bankCardFormRef.value.validateField('telephone').then((resp) => {
+      // bankCardFormRef.telephone = "";
+      captchaForm.captchaCode = "";
+      captchaDialogVisible.value = true;
+      getCode();
+      // }).catch((err) => {
+      // ElMessage({
+      // message: '请输入有效的中国手机号码',
+      // type: 'error',
+      // })
+      // })
+    };
+
     const submitBankCard = () => {
+      console.log(bankCardInfo)
       bankCardFormRef.value
-        .validate()
-        .then(() => {
-          addBankCard(bankCardInfo).then((response) => {
-            if (response.code === 0) {
-              ElMessage({
-                message: '成功',
-                type: 'success',
-              })
-              bankCardModalState.visible = false;
-              loadCards();
-            } else {
-              // message.error(response.message);
-            }
-          }).catch((error) => {
+          .validate()
+          .then(() => {
+            addBankCard(bankCardInfo).then((response) => {
+              if (response.code === 0) {
+                ElMessage({
+                  message: '成功',
+                  type: 'success',
+                })
+                bankCardModalState.visible = false;
+                loadCards();
+              } else {
+                // message.error(response.message);
+              }
+            }).catch((error) => {
               console.log(error.message);
               // message.error(error.message, 4);
-          });
-        }).catch((error) => {
+            });
+          }).catch((error) => {
         console.log("error", error);
       });
     };
+
     const bankCardRules = {
       cardNumber: [
-        // {
-        //   required: true,
-        //   message: "Card number is required",
-        //   trigger: "blur",
-        // },
-        {
-          validator: validateBankLength,
-          trigger: "blur",
-        }
-      ],
-      cardAccount: [
         {
           required: true,
-          message: "请输入银行卡号",
+          validator: validateEmptyCardNo,
+          trigger: "blur",
+        },
+        {
+          required: true,
+          validator: validateBankLength,
+          trigger: "blur",
+        },
+
+      ],
+      cardAddress: [
+        {
+          required: true,
+          message: "请输入开户行地址",
           trigger: "blur"
         }
+      ],
+      // telephone: [
+      //   {
+      //     required: true,
+      //     message: "请输入电话号码",
+      //     trigger: "blur"
+      //   },
+      //   {
+      //     pattern: /^1[3-9]\d{9}$/,
+      //     message: "请输入有效的中国手机号码",
+      //     trigger: "blur",
+      //   },
+      // ],
+      // smsCode: [
+      //   {
+      //     required: true,
+      //     message: "请输入验证码",
+      //     trigger: "blur"
+      //   }
+      // ]
+    };
+
+    const captchaRules = {
+      captchaCode: [
+        {
+          required: true,
+          validator: '请输入验证码',
+          trigger: "blur",
+        },
       ]
     };
     const unbindBankCard = (card) => {
-      ElMessageBox.confirm(
-        `解绑 ${card.bankName} ?`,
-        '警告',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-        }
+
+      ElMessageBox.prompt(
+          `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === 'CRYPTO' || card.bankType === 'EWALLET' ? '钱包地址' : '卡号'}`,
+          '确认解绑',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            cancelButtonClass: 'cancel-btn',
+            type: 'warning',
+            inputErrorMessage: '请输入正确的卡号', // Error message to display if input is invalid
+          }
       )
-        .then(() => {
-          deleteBankCard(card.id).then((res) => {
-            if (res.code === 0) {
-              ElMessage({
-                type: 'success',
-                message: 'Remove completed',
-              })
-              for (let i = 0; i < personalState.bankCardList.length; i++) {
-                if (personalState.bankCardList[i].id === card.id) {
-                  personalState.bankCardList.splice(i, 1);
+          .then((inputValue) => {
+            if (inputValue.value === card.cardNumber) {
+              deleteBankCard(card.id).then((res) => {
+                if (res.code === 0) {
+                  ElMessage({
+                    type: 'success',
+                    message: '解绑完成',
+                  });
+                  // loadCards();
+                  searchRecord();
+                  for (let i = 0; i < personalState.bankCardList.length; i++) {
+                    if (personalState.bankCardList[i].id === card.id) {
+                      personalState.bankCardList.splice(i, 1);
+                    }
+                  }
                 }
-              }
+              }).catch((e) => {
+                console.log('error', e);
+              });
+            } else {
+              ElMessage({
+                type: 'error',
+                message: '卡号不匹配，请重新输入',
+              });
             }
-          }).catch((e) => {
-            console.log("error", e);
-          });
-        })
-        .catch(() => {
-          ElMessage({
-            type: 'info',
-            message: 'Remove canceled',
           })
-        })
-//       Modal.confirm({
-//         title: "Remove " + card.bankName + "?",
-//         content: "Are you sure you want to remove " + card.bankName + "?",
-//         icon: createVNode(ExclamationCircleOutlined),
-//         width: "100%",
-//         onOk() {
-//           deleteBankCard(card.id
-// ).then((res) => {
-//             if (res.code === 0) {
-//               for (let i = 0; i < personalState.bankCardList.length; i++) {
-//                 if (personalState.bankCardList[i].id === card.id) {
-//                   personalState.bankCardList.splice(i, 1);
-//                 }
-//               }
-//             }
-//           }).catch((e) => {
-//             console.log("error", e);
-//           });
-//         }
-//       });
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '删除取消',
+            });
+          });
     };
+
+    const getOptionLabel = (bankOption) => {
+      if (bankOption === 'USDTTRC') {
+        return 'USDTTRC20'
+      } else {
+        return bankOption
+      }
+    }
+
+    const chooseCard = () => {
+      if (isUSDT.value) {
+        return '虚拟币'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行'
+      }
+    }
+
+    const numAddress = () => {
+      if (isUSDT.value) {
+        return '钱包地址'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行卡号'
+      }
+    }
     return {
       searchForm,
       columns,
@@ -561,11 +900,19 @@ export default defineComponent({
       bankCardInfo,
       bankCardRules,
       submitBankCard,
+      // sendSmsForSubmitBankCard,
+      openCaptchaForm,
+      captchaForm,
+      captchaRules,
+      getCode,
+      verificationImg,
+      captchaDialogVisible,
       bankCardModal,
       unbindBankCard,
       showCard,
       isCardActive,
       isUSDT,
+      isKDOU,
       bankName,
       bankTypes,
       selectBankType,
@@ -576,7 +923,16 @@ export default defineComponent({
       imgURL,
       pagination,
       handleCurrentChange,
-      tblLoading
+      tblLoading,
+      maskCardNumber,
+      // sendOtp,
+      // phoneCaptchaDialogVisible,
+      // isSendOtp,
+      getOptionLabel,
+      withdrawState,
+      // checkBankCards,
+      chooseCard,
+      numAddress
     };
   }
 });

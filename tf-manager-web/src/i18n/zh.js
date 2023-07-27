@@ -22,9 +22,11 @@ export default {
     paymentDate: '支付日期'
   },
   reportName: {
+    Aff_Month_Report: '代理月报表',
     Deposit_Record: '存款记录',
     Withdraw_Record: '提款记录',
     Privilege_Record: '优惠记录',
+    Finance_Report: '财务记录',
     Summary_Record: '总结记录',
     Summary_Active_Record: '总结活跃记录',
     Summary_Register_Record: '总结注册记录',
@@ -88,7 +90,20 @@ export default {
       DEPOSIT: '主账号转入平台',
       WITHDRAW: '平台转出主账号',
       TRASNFER_IN: '转入',
-      TRANSFER_OUT: '转出'
+      TRANSFER_OUT: '转出',
+      AFFILIATE_SETTLEMENT: '代理结算'
+    }
+  },
+  status: {
+    monthSummary: {
+      UNCLEAR: '未结算',
+      CLEARING: '结算中',
+      CLEARED: '已结算'
+    },
+    settlement: {
+      CHECKING: '审核中',
+      PAY: '结算中',
+      CLEARED: '已结算'
     }
   },
   fields: {
@@ -1221,6 +1236,7 @@ export default {
     'Privilege Report': '优惠报表',
     'Deposit Report': '存款报表',
     'Withdraw Report': '提款报表',
+    'Finance Report': '财务报表',
     System: '系统',
     'Operator Log': '后台日志',
     'Member Platform': '用户平台设置',
@@ -1233,6 +1249,7 @@ export default {
     'Platform Account': '平台账号',
     'Data Dictionary': '数据字典',
     'Manual Summary': '手动汇总',
+    'Affiliate Manual Summary': '手动代理汇总',
     'Payment Management': '支付管理',
     'Bank Info': '银行信息',
     'Bank Card': '银行卡',

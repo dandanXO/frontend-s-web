@@ -78,8 +78,8 @@ export default defineComponent({
       },
       {
         code: "EBET",
-        name: "EBET",
-        image: "ebet",
+        name: "WE",
+        image: "we",
         message:
           "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
         gameCode: ""
@@ -221,6 +221,8 @@ export default defineComponent({
     .live-right {
       position: relative;
       margin-right: -100px;
+      display: flex;
+      justify-content: center;
       .absolute {
         position: absolute;
         top: 0;

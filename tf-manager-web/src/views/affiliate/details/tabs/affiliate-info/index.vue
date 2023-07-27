@@ -854,9 +854,9 @@ async function loadFinancialLevels() {
 
 async function loadReferralLink() {
   if (memberDetail.siteId === '1') {
-    link.value = "http://xf9866.com/agent/" + affiliateDetails.affiliateCode;
+    link.value = "https://xf1869.com/agent/" + affiliateDetails.affiliateCode;
   } else if (memberDetail.siteId === '2') {
-    link.value = "https://www.dy9367.com/agent/" + affiliateDetails.affiliateCode;
+    link.value = "https://www.dy1698.com/agent/" + affiliateDetails.affiliateCode;
   } else {
     link.value = "";
   }

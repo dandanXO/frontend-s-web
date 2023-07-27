@@ -70,8 +70,14 @@
             </div>
             <div class="load">
                 <a class="install" id="download"
-                   href="https://kcx3zdl.ycylbj.com/xf-website.apk">下载安装</a>
+                   href="https://kcx3zdl.ycylbj.com/xf-website.apk">下载安装 (线路一)</a>
             </div>
+
+            <div class="load load--2">
+                <a class="install--2" id="download2"
+                   href="#">下载安装 (线路二)</a>
+            </div>
+
             <p class="tuto">下滑查看教程</p>
             <span id="consult"></span>
         </div>
@@ -154,7 +160,15 @@
                 type = "ALL_IOS";
             }
         });
+        $("#download2").click(function () {
+            var url = $(this).attr("href");
+            var type = "ALL_AND";
+            if (url.indexOf(".plist") != -1) {
+                type = "ALL_IOS";
+            }
+        });
         new ClipboardJS('.install');
+        new ClipboardJS('.install--2');
     });
 
     function showIOS() {
@@ -163,6 +177,7 @@
         }
         ;
         $('#download').attr('href', './xf.mobileconfig');
+        $('#download2').css('display', 'none');
     }
 
     function showAndroid() {
@@ -171,7 +186,8 @@
         }
         ;
         //$('#download').attr('href', 'http://sfxxfq.qcdmhii.com/xf?v=' + Date.now());
-          $('#download').attr('href', './xf_app_1.0.16.apk');
+          $('#download').attr('href', './xf_app_1.0.16.signed.apk');
+          $('#download2').attr('href', './xf_app_1.0.16.apk');
     }
 
     var mySwiper = new Swiper('.swiper-container', {
@@ -187,6 +203,7 @@
             if (getIsPath()) {
                 var path = getTestFlightIosPath();
                 $('#download').attr('href', path);
+                $('#download2').attr('href', path);
             } else {
                 showIOS();
             }

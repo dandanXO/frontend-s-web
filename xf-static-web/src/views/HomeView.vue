@@ -347,11 +347,20 @@
   <GameModal ref="gameMenu"></GameModal>
 
   <el-dialog
-    @close="setWithExpiry('isImpt', true, 43200000)"
+    @close="setExpiryBanner"
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
   >
-    <img :src="homePopupImg" class="alert-img" />
+    <div class="promo-banner-container">
+      <div
+        class="promo-banner-content"
+        v-if="homePopupType === 'TEXT'"
+        v-html="homePopupContent"
+      ></div>
+      <div class="promo-banner-img" v-else>
+        <img :src="homePopupImg" class="alert-img" />
+      </div>
+    </div>
   </el-dialog>
 </template>
 
@@ -359,7 +368,7 @@
 /* eslint-disable */
 import GameModal from "@/components/modal/GameModal";
 import { defineComponent, ref, onMounted } from "vue";
-import { loadPromoBanner } from "@/api/index/promo";
+import { loadPromoBanner, loadHomePromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
 import { ElMessageBox } from "element-plus";
@@ -387,27 +396,7 @@ export default defineComponent({
     const openGame = (gameName, platType, gameCode) => {
       gameMenu.value.open(gameName, platType, gameCode);
     };
-    const setWithExpiry = (key, value, interval) => {
-      const now = new Date();
-      const item = {
-        value: value,
-        expiry: now.getTime() + interval
-      };
-      localStorage.setItem(key, JSON.stringify(item));
-    };
-    const getWithExpiry = (key) => {
-      const itemStr = localStorage.getItem(key);
-      if (!itemStr) {
-        return null;
-      }
-      const item = JSON.parse(itemStr);
-      const now = new Date();
-      if (now.getTime() > item.expiry) {
-        localStorage.removeItem(key);
-        return null;
-      }
-      return item.value;
-    };
+
     const loadBanners = () => {
       loadPromoBanner("HOME").then((res) => {
         if (res.code === 0) {
@@ -416,35 +405,102 @@ export default defineComponent({
       });
     };
 
+    // Pop out ads banner
+    const homePopupImg = ref("");
+    const homePopupContent = ref("");
+    const homePopupType = ref("");
+    const homePopupId = ref(0);
+    const homePopupFrequency = ref("");
+    const homePopupFrequencyNum = ref(0);
+
+    const setExpiryBanner = () => {
+      if (homePopupFrequencyNum.value !== 0) {
+        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+      }
+    };
+
+    const setWithExpiry = (key, value, interval) => {
+      const now = new Date();
+      const item = {
+        value: value,
+        expiry: now.getTime() + interval,
+        id: homePopupId.value,
+        frequency: homePopupFrequency.value
+      };
+      sessionStorage.setItem(key, JSON.stringify(item));
+    };
+
+    const getWithExpiry = (key) => {
+      const itemStr = sessionStorage.getItem(key);
+      if (!itemStr) {
+        return null;
+      }
+      const item = JSON.parse(itemStr);
+      const now = new Date();
+      loadHomePromoBanner()
+        .then((res) => {
+          if (
+            now.getTime() > item.expiry ||
+            item.id !== res.data["id"] ||
+            item.frequency !== res.data["frequency"]
+          ) {
+            sessionStorage.removeItem(key);
+            isImportantAnnoucementModal.value = true;
+            homePopupImg.value = imgURL + res.data["desktopImgUrl"];
+            homePopupContent.value = res.data["content"];
+            homePopupType.value = res.data["type"];
+            homePopupId.value = res.data["id"];
+            homePopupFrequency.value = res.data["frequency"];
+            return null;
+          }
+        })
+        .catch(() => {});
+      return item.value;
+    };
+
     const isImpt = getWithExpiry("isImpt");
 
-    const homePopupImg = ref("");
     const checkShowImgTop = () => {
-      const lastTime = localStorage.getItem("indexImgTop");
+      const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
         const diff = new Date().getTime() - Number(lastTime);
         if (diff > 1000 * 60 * 60 * 12) {
           isFirstView.value = true;
         }
       } else {
-        loadPromoBanner("HOMEPOP")
+        loadHomePromoBanner()
           .then((res) => {
             if (res.code === 0) {
-              if (res.data.length > 0) {
-                if (isImpt === null) {
-                  isImportantAnnoucementModal.value = true;
-
-                  homePopupImg.value =
-                    res.data.length > 0
-                      ? imgURL + res.data[0]["desktopImageUrl"]
-                      : "";
-                  if (homePopupImg.value) {
-                    isFirstView.value = true;
-                  }
+              // if (res.data[siteId] !== null) {
+              if (isImpt === null) {
+                switch (res.data["frequency"]) {
+                  case "EVERYTIME":
+                    homePopupFrequencyNum.value = 0;
+                    break;
+                  case "EVERYDAY":
+                    homePopupFrequencyNum.value = 86400000; // 24hrs
+                    break;
+                  case "SESSION":
+                    homePopupFrequencyNum.value = 7866432000; // 3months
+                    break;
+                  default:
+                    homePopupFrequencyNum.value = 10000;
+                    break;
                 }
-              } else {
-                isImportantAnnoucementModal.value = false;
+
+                isImportantAnnoucementModal.value = true;
+                homePopupImg.value = imgURL + res.data["desktopImgUrl"];
+                homePopupContent.value = res.data["content"];
+                homePopupType.value = res.data["type"];
+                homePopupId.value = res.data["id"];
+                homePopupFrequency.value = res.data["frequency"];
+                // if (homePopupImg.value) {
+                isFirstView.value = true;
+                // }
               }
+              // } else {
+              //   isImportantAnnoucementModal.value = false;
+              // }
             }
           })
           .catch(() => {});
@@ -477,7 +533,13 @@ export default defineComponent({
       imgURL,
       getWithExpiry,
       setWithExpiry,
+      setExpiryBanner,
       homePopupImg,
+      homePopupContent,
+      homePopupType,
+      homePopupId,
+      homePopupFrequency,
+      homePopupFrequencyNum,
       checkMaintenance,
       isImpt
     };
@@ -864,7 +926,28 @@ export default defineComponent({
   }
 
   .el-dialog__body {
-    padding: 40px 2px 0;
+    // padding: 40px 2px 0;
+    padding: 20px 2px 0;
+  }
+}
+
+.promo-banner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .promo-banner-img {
+    margin-top: 20px;
+  }
+
+  .promo-banner-title {
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .promo-banner-content {
+    padding: 0 20px 20px;
   }
 }
 </style>

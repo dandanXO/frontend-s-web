@@ -11,6 +11,10 @@ export function loadPromoBanner(category) {
     },
   });
 }
+export function loadHomePromoBanner() {
+  return server.REST.get("/member/ads-popout");
+}
+
 export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }

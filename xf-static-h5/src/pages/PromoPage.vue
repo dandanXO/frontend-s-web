@@ -1,6 +1,6 @@
 <template>
 
-  <q-card-section class="page-title" style="height:28px;">
+  <q-card-section class="page-title">
     优惠活动
   </q-card-section>
 
@@ -22,14 +22,14 @@
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
                 <div
-                  class="promo-item"
                   v-for="(promo, i) in filteredArray"
                   :key="i"
                   data-aos="zoom-in"
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <template
+                  <div 
+                  class="promo-item"
                     v-if="
                       promo.promoType
                         .toLowerCase()
@@ -54,9 +54,9 @@
                       </div>
                       <div class="pad-label label-new">最新活动</div>
                     </a>
-                  </template>
+                  </div>
 
-                  <template v-if="tab.name === 'all'">
+                  <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
                       <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
@@ -74,7 +74,7 @@
                       </div>
                       <div class="pad-label label-new">最新活动</div>
                     </a>
-                  </template>
+                  </div>
                 </div>
               </div>
             </div>
@@ -329,6 +329,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
+  min-height: 100vh;
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -467,10 +468,14 @@ export default defineComponent({
       }
 
       .promo-list-wrapper {
-        margin-top: 30px;
-        display: grid;
+        // margin-top: 30px;
+        // display: grid;
+        // margin-top: 20px;
+        // grid-template-columns: 1fr;
+        
+        display: flex;
         margin-top: 20px;
-        grid-template-columns: 1fr;
+        flex-direction: column;
 
         .promo-item {
           position: relative;
@@ -508,7 +513,9 @@ export default defineComponent({
               gap: 30px;
 
               .promo-content {
-                width: 100%;
+                // width: 100%;
+                width: unset;
+                height: 100%;
 
                 &.isDesktop {
                   display: block;
@@ -550,9 +557,11 @@ export default defineComponent({
               font-size: 12px;
               color: #3a3a3a;
               z-index: 2;
-              width: 100%;
-              // padding: 4px;
-              background: #d2d2de;
+              top: 0;
+              height: 30px;
+              overflow: hidden;
+              line-height: 27px;
+              padding: 0 100px 0 10px;
 
               &:before {
                 display: block;
@@ -756,6 +765,7 @@ export default defineComponent({
     width: 100%;
     height: 10px;
     // background: salmon !important;
+    filter: hue-rotate(311deg);
   }
 
   .q-tab__label {

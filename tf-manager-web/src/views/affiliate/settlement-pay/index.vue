@@ -53,14 +53,14 @@
       >
         <el-table-column prop="month" :label="t('fields.month')" align="left" min-width="120">
           <template #default="scope">
-            {{ convertDateMinusOneMonth(scope.row.recordTime) }}
+            {{ convertDate(scope.row.recordTime) }}
           </template>
         </el-table-column>
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="left" min-width="120" />
         <el-table-column prop="status" :label="t('fields.status')" align="left" min-width="120">
           <template #default="scope">
-            <el-tag v-if="scope.row.status === 'PAY'" type="warning" size="mini">{{ scope.row.status }}</el-tag>
-            <el-tag v-else type="success" size="mini">{{ scope.row.status }}</el-tag>
+            <el-tag v-if="scope.row.status === 'PAY'" type="warning" size="mini">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
+            <el-tag v-else type="success" size="mini">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column :label="t('fields.checkBy')" align="left" min-width="120">
@@ -143,15 +143,19 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { hasRole, hasPermission } from "../../../utils/util";
 import moment from 'moment';
 import { confirmPay, getAffiliateSettlementPay, updatetoChecking } from '../../../api/affiliate-settlement';
 import { getSiteListSimple } from "../../../api/site";
 import { useI18n } from "vue-i18n";
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { useStore } from '../../../store';
+import { TENANT } from '../../../store/modules/user/action-types';
 
 const { t } = useI18n();
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const siteList = reactive({
   list: []
 });
@@ -175,18 +179,14 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM');
 }
 
-function convertDateMinusOneMonth(date) {
-  return moment(date).subtract(1, 'months').format('YYYY-MM');
-}
-
 function disabledDate(time) {
   return time.getTime() >= moment(new Date()).startOf('month').format('x');
 }
 
 function resetQuery() {
-  request.month = null;
+  request.month = defaultQueryMonth;
   request.loginName = null;
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
 };
 
 const page = reactive({
@@ -247,9 +247,14 @@ async function confirmPayment(pay) {
   });
 }
 
-onMounted(() => {
-  loadSites();
-  loadSettlement();
+onMounted(async() => {
+  await loadSites();
+  request.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
+  await loadSettlement();
 });
 
 </script>

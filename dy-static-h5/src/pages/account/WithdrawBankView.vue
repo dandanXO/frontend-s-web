@@ -47,17 +47,15 @@
                   解绑
                 </q-btn>
               </div>
-
             </q-card>
           </template>
           <div class="q-pa-sm widthdrawBankView--content-cta">
             <q-btn
                 color="dyblue"
                 style="width: 100%"
-                label="添加银行卡/虚拟币账户"
+                label="绑定银行卡"
                 icon="add_circle_outline"
                 @click="bankCardModal('bank')"
-                class="add-card-btn"
             />
           </div>
         </div>
@@ -78,7 +76,7 @@
                 class="q-mb-md"
                 v-model="unbindCardNo"
                 :label="unbindCardLabel()"
-                color="white"
+                color="dyblue"
                 :rules="[
                         (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || unbindCardLabel() + '不正确'
                       ]"
@@ -98,8 +96,7 @@
       </q-card>
     </q-dialog>
 
-
-    <q-dialog v-model="bankCardModalState.visible" persistent>
+    <q-dialog v-model="bankCardModalState.visible" persistent no-backdrop-dismiss no-esc-dismiss>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section v-if="!isVirtual" class="q-mb-md">
           <div class="text-h6">绑定银行卡</div>
@@ -114,10 +111,10 @@
                 <q-select
                     v-model="selectedBankType"
                     filled
-                    :options="[{ name: '银行卡' }, { name: '数字货币' }]"
-                    label="银行 / 数字货币"
+                    :options="[{ name: '银行卡' }, { name: '数字货币' }, { name: '电子钱包' }]"
+                    label="类型"
                     color="blue"
-                    label-color="black"
+                    label-color="dyblue"
                     option-label="name"
                     option-value="name"
                     @update:model-value="selectBankType(opt)"
@@ -131,13 +128,13 @@
                     class=""
                     color="blue"
                     filled
-                    label-color="grey"
+                    label-color="dyblue"
                     v-model="bankCardInfo.bankId"
                     :options="banksList"
                     option-value="id"
                     option-label="name"
-                    :label="isCrypto ? '选择数字货币' : '选择银行卡'"
-                    :rules="[(val) => !!val || '请选择']"
+                    :label="'选择' + chooseCard()"
+                    :rules="[(val) => !!val || '请选择' + chooseCard()]"
                     lazy-rules
                     emit-value
                     map-options
@@ -162,7 +159,7 @@
                           white-space: nowrap;
                         "
                       >
-                        {{ scope.opt.name }}
+                        {{ scope.opt.name === 'USDTTRC' ? 'USDTTRC20' : scope.opt.name }}
                       </q-item-label>
                     </q-item-section>
                   </template>
@@ -198,7 +195,7 @@
                 disable
                 readonly
                 label="银行名城"
-                color="blue"
+                color="dyblue"
             />
           </div>
           <q-input
@@ -210,28 +207,29 @@
               lazy-rules
               :readonly="true"
               ref="cardAccountRef"
-              color="dark"
+              color="dyblue"
           />
           <q-input
               filled
               class=""
               v-model="bankCardInfo.cardNumber"
-              :label="isCrypto ? '钱包地址' : '银行卡号'"
-              :rules="isCrypto ? cardCryptoRules : cardNumberRules"
+              :label="cardLabel()"
+              :rules="isCrypto || isKDOU ? cardCryptoRules : cardNumberRules"
               ref="cardNumberRef"
-              color="blue"
+              color="dyblue"
           />
 
           <q-input
-              v-show="!isCrypto"
+              v-show="!isCrypto && !isKDOU"
               class="q-mb-md"
               filled
               v-model="bankCardInfo.cardAddress"
               label="开户行地址"
               :rules="cardAddressRules"
               ref="cardAddressRef"
-              color="white"
+              color="dyblue"
           />
+
 
           <q-input
               filled
@@ -245,7 +243,7 @@
             (val) => (val && val.length > 7) || '请输入有效的电话号码',
             isValidCnPhone
           ]"
-              color="white"
+              color="dyblue"
           >
             <template v-slot:prepend>
               <q-icon color="dark" name="smartphone"/>
@@ -264,7 +262,7 @@
               v-model="bankCardInfo.smsCode"
               label="手机验证码"
               lazy-rules
-              color="white"
+              color="dyblue"
               maxlength="6"
               :rules="[
         (val) => (val && val.length > 3) || '请输入手机验证码'
@@ -288,6 +286,7 @@
         </q-form>
       </q-card>
     </q-dialog>
+
 
     <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
       <q-card width="100%">
@@ -337,6 +336,48 @@
       </q-card>
     </q-dialog>
 
+    <!-- <q-dialog
+      wrap-class-name="bankModal"
+      width="100%"
+      v-model:visible="virtualCurrencyModalState.visible"
+      :footer="null"
+    >
+      <div class="modal-head-title">Add a virtual currency</div>
+      <q-form
+        ref="virtualCurrencyFormRef"
+        :hideRequiredMark="true"
+        :model="bankCardInfo"
+        :colon="false"
+        :label-col="{ span: 8 }"
+      >
+        <q-input
+          v-model:value="virtualCurrencyInfo.wallet"
+          label="Card Account"
+          placeholder="Enter card account"
+        />
+        <q-input
+          v-model:value="virtualCurrencyInfo.digitalCurrency"
+          label="Digital Currency"
+          placeholder="Enter digital currency"
+        />
+        <q-input
+          v-model="virtualCurrencyInfo.digitalCurrency"
+          label="Digital Currency"
+          placeholder="Enter digital currency"
+          disable
+        />
+
+        <q-input
+          v-model="virtualCurrencyInfo.protocol"
+          label="Protocol"
+          placeholder="Enter protocol"
+          disable
+        />
+        <q-btn color="brand" type="submit" @click="submitVirtualCurrency">
+          Confirm
+        </q-btn>
+      </q-form>
+    </q-dialog> -->
   </div>
 </template>
 
@@ -364,6 +405,7 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar();
     const isCrypto = ref(false);
+    const isKDOU = ref(false);
     const isCardActive = ref();
     const isNoCard = ref(false);
     const searchForm = reactive({
@@ -528,13 +570,26 @@ export default defineComponent({
       bankCardInfo.bankId = "";
       banksList.value = []
       bankCardModalState.banks.forEach(element => {
-        if (selectedBankType.value === "银行卡" && element.bankType === 'BANK') {
-          banksList.value.push(element);
+        if (selectedBankType.value === "银行卡") {
           isCrypto.value = false
+          isKDOU.value = false
+          if (element.bankType === 'BANK') {
+            banksList.value.push(element);
+          }
         }
-        if (selectedBankType.value === "数字货币" && element.bankType === 'CRYPTO') {
+        if (selectedBankType.value === "数字货币") {
           isCrypto.value = true
-          banksList.value.push(element);
+          isKDOU.value = false
+          if (element.bankType === 'CRYPTO') {
+            banksList.value.push(element);
+          }
+        }
+        if (selectedBankType.value === "电子钱包") {
+          isKDOU.value = true
+          isCrypto.value = false
+          if (element.bankType === 'EWALLET') {
+            banksList.value.push(element);
+          }
         }
       })
     }
@@ -594,6 +649,26 @@ export default defineComponent({
       }
     }
 
+    const chooseCard = () => {
+      if (isCrypto.value) {
+        return '虚拟币'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行'
+      }
+    }
+    const cardLabel = () => {
+      if (isCrypto.value) {
+        return '钱包地址'
+      } else if (isKDOU.value) {
+        return '电子钱包'
+      } else {
+        return '银行卡号'
+      }
+    }
+
+
     const unbindCardLabel = () => {
       if (unbindcarddetail.value.bankType === 'CRYPTO') {
         return '钱包地址'
@@ -603,7 +678,6 @@ export default defineComponent({
         return '银行卡号'
       }
     }
-
     const unbindBankCard = (card) => {
       unbindCardNoRef.value.validate();
 
@@ -614,8 +688,6 @@ export default defineComponent({
       // console.log(card);
       isUnbindCardModal.value = false;
       unbindcarddetail.value = _.clone({});
-
-      // console.log(card)
       const dialog = $q.dialog({
         class: "q-px-md q-pt-md",
         title: "解绑 " + card.bankName + "?",
@@ -718,7 +790,9 @@ export default defineComponent({
     let validateBankLength = (val) => {
       if (isCrypto.value == true) {
         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
-      } else if (isCrypto.value == false) {
+      } else if (isKDOU.value == true) {
+        return (val.length > 33 && val.length < 35) || '长度应为34个字符'
+      } else {
         return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
       }
     }
@@ -774,7 +848,6 @@ export default defineComponent({
         getInnerCode();
         return;
       }
-
       api.post(`/session/sendSms`, qs.stringify({
         captchaCode: innerCaptchaRef.value,
         codeId: innerCodeId.value
@@ -820,8 +893,6 @@ export default defineComponent({
       unbindCardNo,
       unbindcarddetail,
       unbindCardNoRef,
-      unbindCardEnter,
-      unbindCardLabel,
       showCaptchaDialog,
       phoneVerificationImg,
       innerCaptchaRef,
@@ -840,6 +911,7 @@ export default defineComponent({
       isCardActive,
       isNoCard,
       isCrypto,
+      isKDOU,
       bankName,
       isVirtual,
       bankCardRef,
@@ -862,7 +934,11 @@ export default defineComponent({
       selectBankType,
       banksList,
       imgURL,
-      store
+      store,
+      chooseCard,
+      cardLabel,
+      unbindCardEnter,
+      unbindCardLabel
     };
   }
 });

@@ -67,7 +67,13 @@ export default defineComponent({
         slogan: "全球顶尖, 尊享娱乐",
         gameCode: ""
       },
-      // { code:"BG", icon: "bg", label: "BG", slogan: "全球顶尖, 尊享娱乐" ,gameCode : ""},
+      {
+        code: "BG",
+        icon: "bg",
+        label: "BG",
+        slogan: "全球顶尖, 尊享娱乐",
+        gameCode: ""
+      },
       {
         code: "SEXY",
         icon: "sexy",

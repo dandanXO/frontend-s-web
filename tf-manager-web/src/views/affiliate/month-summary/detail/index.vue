@@ -16,7 +16,7 @@
                 <el-link type="primary">{{ scope.row.loginName }}</el-link>
               </router-link>
             </div>
-            <div>{{ t('fields.month') }}: {{ convertDateMinusOneMonth(scope.row.recordTime) }}</div>
+            <div>{{ t('fields.month') }}: {{ convertDate(scope.row.recordTime) }}</div>
           </template>
         </el-table-column>
         <el-table-column :label="t('fields.depositBettingAmount')" align="left" min-width="150">
@@ -144,8 +144,8 @@ import { useI18n } from "vue-i18n";
 
 // eslint-disable-next-line
 const { t } = useI18n();
-function convertDateMinusOneMonth(date) {
-  return moment(date).subtract(1, 'months').format('YYYY-MM');
+function convertDate(date) {
+  return moment(date).format('YYYY-MM');
 }
 const request = reactive({
   size: 20,
