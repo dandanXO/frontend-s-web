@@ -489,7 +489,7 @@ export default defineComponent({
                 }
 
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = imgURL + res.data["desktopImgUrl"];
+                homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + '/adspopout/' + res.data["desktopImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
@@ -927,7 +927,7 @@ export default defineComponent({
 
   .el-dialog__body {
     // padding: 40px 2px 0;
-    padding: 20px 2px 0;
+    padding: 0px 2px 0;
   }
 }
 
@@ -936,10 +936,6 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  .promo-banner-img {
-    margin-top: 20px;
-  }
 
   .promo-banner-title {
     font-weight: bold;
