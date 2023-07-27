@@ -446,7 +446,7 @@ export default defineComponent({
           ) {
             sessionStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
-            homePopupImg.value = imgURL + res.data["desktopImgUrl"];
+            homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + '/adspopout/' + res.data["desktopImgUrl"];
             homePopupContent.value = res.data["content"];
             homePopupType.value = res.data["type"];
             homePopupId.value = res.data["id"];
