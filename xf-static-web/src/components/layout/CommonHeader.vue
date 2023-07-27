@@ -1379,7 +1379,9 @@ export default defineComponent({
       if (affCode) {
         hasAffiliate.value = true
         regForm.codeAffiliate = affCode;
-        registerDialogVisible.value = true;
+        if (!store.token) {
+          registerDialogVisible.value = true;
+        }
       }
     }
 
@@ -2318,8 +2320,8 @@ body {
     background: #434343;
     width: 33%;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
-      sans-serif;
+    // font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
+    //   sans-serif;
   }
 
   span.weak-pwd {
