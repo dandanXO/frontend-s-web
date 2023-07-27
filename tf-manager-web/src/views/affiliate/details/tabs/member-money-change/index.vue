@@ -45,11 +45,16 @@
           min-width="280"
           sortable
         />
-        <el-table-column prop="type" :label="t('fields.type')" align="center" min-width="180" />
+        <el-table-column prop="type" :label="t('fields.type')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.type === null">-</span>
+            <span v-if="scope.row.type !== null">{{ t('moneyChange.type.' + scope.row.type) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="subType" :label="t('fields.privilege')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.subType === null">-</span>
-            <span v-if="scope.row.subType !== null">{{ scope.row.subType }}</span>
+            <span v-if="scope.row.subType !== null">{{ t('moneyChange.subType.' + scope.row.subType) }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="platformName" :label="t('fields.platformName')" align="center" min-width="180">
