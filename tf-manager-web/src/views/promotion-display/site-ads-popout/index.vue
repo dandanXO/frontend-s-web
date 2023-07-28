@@ -1,13 +1,12 @@
 <template>
-  <SiteAdsPopoutAddEdit v-show="!listOnly" :is-edit="isEditPage" />
-  <SiteAdsPopoutList v-show="listOnly" />
+  <SiteAdsPopoutAddEdit v-if="name === 'Add Ads Popout' || name === 'Edit Ads Popout'" />
+  <SiteAdsPopoutList v-if="name === 'Ads Popout'" />
 </template>
 
 <script>
-import { defineComponent, ref, watch } from '@vue/runtime-core'
-import { useRoute } from 'vue-router'
+import { computed, defineComponent } from '@vue/runtime-core'
+import { useRouter } from 'vue-router'
 import SiteAdsPopoutAddEdit from './site-ads-popout-add-edit'
-import { onMounted } from 'vue'
 import SiteAdsPopoutList from './site-ads-popout-list'
 
 export default defineComponent({
@@ -16,45 +15,17 @@ export default defineComponent({
     SiteAdsPopoutList,
   },
   setup() {
-    const route = useRoute()
-    const isEditPage = ref(false);
-    const listOnly = ref(true);
-    onMounted(() => {
-      if (route.name === 'Add Ads Popout') {
-        isEditPage.value = false
-        listOnly.value = false
-      }
-      if (route.name === 'Edit Ads Popout') {
-        isEditPage.value = true
-        listOnly.value = false
-      }
-      if (route.name === 'Ads Popout') {
-        isEditPage.value = false
-        listOnly.value = true
-      }
-    });
-    watch(() => route.name, () => {
-      if (route.name === 'Add Ads Popout') {
-        isEditPage.value = false
-        listOnly.value = false
-      }
-      if (route.name === 'Edit Ads Popout') {
-        isEditPage.value = true
-        listOnly.value = false
-      }
-      if (route.name === 'Ads Popout') {
-        isEditPage.value = false
-        listOnly.value = true
-      }
-    });
-    // const {
-    //   params: { id },
-    // } = route
+    const router = useRouter()
+    const name = computed(() => {
+      return router.currentRoute.value.name;
+    })
+    const {
+      params: { id },
+    } = router.currentRoute.value
 
     return {
-      // id,
-      isEditPage,
-      listOnly
+      id,
+      name
     }
   },
 })
