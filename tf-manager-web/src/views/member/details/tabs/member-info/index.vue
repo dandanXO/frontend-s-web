@@ -73,10 +73,10 @@
             </div>
           </template>
           <el-tag v-if="memberDetail.status === 'NORMAL'" size="mini" type="success">
-            {{ memberDetail.status }}
+            {{ t('status.member.' + memberDetail.status) }}
           </el-tag>
           <el-tag v-if="memberDetail.status === 'FROZEN'" size="mini" type="danger">
-            {{ memberDetail.status }}
+            {{ t('status.member.' + memberDetail.status) }}
           </el-tag>
           <el-tag v-if="memberDetail.status === null" size="mini" type="info">
             -
@@ -246,7 +246,7 @@
               {{ t('fields.userType') }}
             </div>
           </template>
-          <span v-if="memberDetail.memberType !== null">{{ memberDetail.memberType }}</span>
+          <span v-if="memberDetail.memberType !== null">{{ t('types.' + memberDetail.memberType) }}</span>
           <span v-if="memberDetail.memberType === null">-</span>
           <el-button type="info" size="mini" style="float: right;" v-permission="['sys:member:update:memberType']"
                      @click="showDialog('UPDATE_USERTYPE')"
@@ -844,9 +844,9 @@ export default defineComponent({
 
     const freezeType = reactive({
       list: [
-        { key: 1, name: t('types.normal'), value: "NORMAL" },
-        { key: 2, name: t('types.temporary'), value: "TEMPORARY" },
-        { key: 3, name: t('types.permanent'), value: "PERMANENT" }
+        { key: 1, name: t('types.NORMAL'), value: "NORMAL" },
+        { key: 2, name: t('types.TEMPORARY'), value: "TEMPORARY" },
+        { key: 3, name: t('types.PERMANENT'), value: "PERMANENT" }
       ]
     });
 
@@ -860,10 +860,10 @@ export default defineComponent({
 
     const userType = reactive({
       list: [
-        { key: 1, name: t('types.normal'), value: "NORMAL" },
-        { key: 2, name: t('types.test'), value: "TEST" },
-        { key: 3, name: t('types.affiliate'), value: "AFFILIATE" },
-        { key: 4, name: t('types.outside'), value: "OUTSIDE" }
+        { key: 1, name: t('types.NORMAL'), value: "NORMAL" },
+        { key: 2, name: t('types.TEST'), value: "TEST" },
+        { key: 3, name: t('types.AFFILIATE'), value: "AFFILIATE" },
+        { key: 4, name: t('types.OUTSIDE'), value: "OUTSIDE" }
       ]
     });
 
