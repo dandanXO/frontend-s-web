@@ -99,8 +99,8 @@ const qs = require("qs");
 const transferFromOpt = ref([])
 const transferToOpt = ref([])
 const platformNames = {
-  "AG": "AG真人",
-  "BBINDY": "BBIN真人",
+  "AG": "AG",
+  "BBINDY": "BBIN",
   "KYDY": "开元棋牌",
   "DT": "大唐棋牌",
   "TCG": "TCG彩票",
@@ -108,6 +108,7 @@ const platformNames = {
   "PTDY": "PT电子",
   "PGDY": "PG电子",
 };
+
 const updateTransferDropdown = () => {
   if (transferFrom.value !== 'main') {
     transferToOpt.value = [{

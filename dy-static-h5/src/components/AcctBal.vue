@@ -177,8 +177,8 @@ const showPlatform = () => {
 //     })
 // };
 const platformNames = {
-  "AG": "AG真人",
-  "BBINDY": "BBIN真人",
+  "AG": "AG",
+  "BBINDY": "BBIN",
   "KYDY": "开元棋牌",
   "DT": "大唐棋牌",
   "TCG": "TCG彩票",
