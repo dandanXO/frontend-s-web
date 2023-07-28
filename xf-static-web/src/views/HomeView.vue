@@ -351,7 +351,10 @@
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
   >
-    <div class="promo-banner-container">
+    <div
+      class="promo-banner-container"
+      :class="homePopupType === 'TEXT' ? 'promo-text' : 'promo-img'"
+    >
       <div
         class="promo-banner-content"
         v-if="homePopupType === 'TEXT'"
@@ -446,7 +449,10 @@ export default defineComponent({
           ) {
             sessionStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
-            homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + '/adspopout/' + res.data["desktopImgUrl"];
+            homePopupImg.value =
+              process.env.VUE_APP_IMAGE_CDN +
+              "/adspopout/" +
+              res.data["desktopImgUrl"];
             homePopupContent.value = res.data["content"];
             homePopupType.value = res.data["type"];
             homePopupId.value = res.data["id"];
@@ -489,7 +495,10 @@ export default defineComponent({
                 }
 
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = imgURL + res.data["desktopImgUrl"];
+                homePopupImg.value =
+                  process.env.VUE_APP_IMAGE_CDN +
+                  "/adspopout/" +
+                  res.data["desktopImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
@@ -920,14 +929,23 @@ export default defineComponent({
   }
 }
 .imptann-modal {
+  max-width: 700px;
+  background: transparent !important;
+  box-shadow: none !important;
   .alert-img {
     display: block;
     width: 100%;
   }
 
+  .el-dialog__header {
+    border-bottom: 0;
+  }
+
   .el-dialog__body {
     // padding: 40px 2px 0;
-    padding: 20px 2px 0;
+    box-shadow: none;
+    padding: 0px 2px 0;
+    background: transparent;
   }
 }
 
@@ -937,8 +955,21 @@ export default defineComponent({
   justify-content: center;
   flex-direction: column;
 
+  &.promo-img {
+    background: transparent;
+  }
+
+  &.promo-text {
+    background: #222a34;
+  }
+
   .promo-banner-img {
-    margin-top: 20px;
+    margin-top: 40px;
+    width: 100%;
+    img {
+      display: block;
+      width: 100%;
+    }
   }
 
   .promo-banner-title {
@@ -947,7 +978,7 @@ export default defineComponent({
   }
 
   .promo-banner-content {
-    padding: 0 20px 20px;
+    padding: 40px 20px 20px;
   }
 }
 </style>
