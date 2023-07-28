@@ -15,6 +15,10 @@ export function loadMemberInfo() {
   return server.REST.get("/session/member");
 }
 
+export function loadMemberTelephone() {
+  return server.REST.get("/session/member/telephone");
+}
+
 export function changePwd(oldPassword, password) {
   return server.REST.post("/session/password", { oldPassword, password });
 }
@@ -96,9 +100,11 @@ export function saveFinanceFeedback(reminderInfo) {
 export function getVerifyingFeedbackCount(data) {
   return server.REST.get("session/getVerifyingFeedbackCount", data);
 }
-
 export function sendSms(telephoneInfo) {
   return server.REST.post("/otp/sendSms", telephoneInfo);
+}
+export function sendSessionSms(telephoneInfo) {
+  return server.REST.post("/session/sendSms", telephoneInfo);
 }
 export function verifySms(telephoneInfo) {
   return server.REST.post("/session/verifyAndUpdatePhone", telephoneInfo);

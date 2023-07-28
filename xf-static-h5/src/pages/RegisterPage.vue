@@ -229,7 +229,6 @@
   >
     <q-card width="100%">
       <q-card-section
-        style="padding: 10px 5px"
         class="q-pa-md bg-brightbtn text-white"
       >
         <q-toolbar>
@@ -237,7 +236,7 @@
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-card-section>
-      <div style="padding: 20px">
+      <div class="q-px-lg q-pt-sm q-pb-lg">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
             <template v-slot:append>

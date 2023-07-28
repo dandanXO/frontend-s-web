@@ -53,7 +53,7 @@
             <q-btn
                 color="dyblue"
                 style="width: 100%"
-                label="绑定银行卡"
+                label="绑定"
                 icon="add_circle_outline"
                 @click="bankCardModal('bank')"
             />
@@ -99,7 +99,7 @@
     <q-dialog v-model="bankCardModalState.visible" persistent no-backdrop-dismiss no-esc-dismiss>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section v-if="!isVirtual" class="q-mb-md">
-          <div class="text-h6">绑定银行卡</div>
+          <div class="text-h6">绑定</div>
         </q-card-section>
         <q-card-section v-if="isVirtual" class="q-mb-md">
           <div class="text-h6">Add a virtual currency</div>
@@ -126,7 +126,7 @@
                 <q-select
                     ref="bankCardRef"
                     class=""
-                    color="blue"
+                    color="dyblue"
                     filled
                     label-color="dyblue"
                     v-model="bankCardInfo.bankId"
@@ -214,13 +214,13 @@
               class=""
               v-model="bankCardInfo.cardNumber"
               :label="cardLabel()"
-              :rules="isCrypto || isKDOU ? cardCryptoRules : cardNumberRules"
+              :rules="isCrypto || isEWALLET ? cardCryptoRules : cardNumberRules"
               ref="cardNumberRef"
               color="dyblue"
           />
 
           <q-input
-              v-show="!isCrypto && !isKDOU"
+              v-show="!isCrypto && !isEWALLET"
               class="q-mb-md"
               filled
               v-model="bankCardInfo.cardAddress"
@@ -253,7 +253,7 @@
             </template>
           </q-input>
 
-          <q-input
+          <q-input v-if="isSendOtp"
               filled
               class="q-mb-md"
               v-show="bankCardInfo.smsCodeId"
@@ -281,7 +281,7 @@
                 color="warning"
                 @click="bankCardModalState.visible = false"
             />
-            <q-btn color="dyblue" label="提交" @click="submitBankCard"/>
+            <q-btn v-if="isSendOtp" color="dyblue" label="提交" @click="submitBankCard"/>
           </div>
         </q-form>
       </q-card>
@@ -405,7 +405,7 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar();
     const isCrypto = ref(false);
-    const isKDOU = ref(false);
+    const isEWALLET = ref(false);
     const isCardActive = ref();
     const isNoCard = ref(false);
     const searchForm = reactive({
@@ -531,6 +531,7 @@ export default defineComponent({
     const banksList = ref([]);
     const isVirtual = ref(false)
     const bankCardModal = (type) => {
+      isSendOtp.value = false;
       isNoCard.value = false;
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "" || store.realName == null) {
@@ -572,20 +573,20 @@ export default defineComponent({
       bankCardModalState.banks.forEach(element => {
         if (selectedBankType.value === "银行卡") {
           isCrypto.value = false
-          isKDOU.value = false
+          isEWALLET.value = false
           if (element.bankType === 'BANK') {
             banksList.value.push(element);
           }
         }
         if (selectedBankType.value === "数字货币") {
           isCrypto.value = true
-          isKDOU.value = false
+          isEWALLET.value = false
           if (element.bankType === 'CRYPTO') {
             banksList.value.push(element);
           }
         }
         if (selectedBankType.value === "电子钱包") {
-          isKDOU.value = true
+          isEWALLET.value = true
           isCrypto.value = false
           if (element.bankType === 'EWALLET') {
             banksList.value.push(element);
@@ -652,7 +653,7 @@ export default defineComponent({
     const chooseCard = () => {
       if (isCrypto.value) {
         return '虚拟币'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行'
@@ -661,7 +662,7 @@ export default defineComponent({
     const cardLabel = () => {
       if (isCrypto.value) {
         return '钱包地址'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行卡号'
@@ -790,8 +791,20 @@ export default defineComponent({
     let validateBankLength = (val) => {
       if (isCrypto.value == true) {
         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
-      } else if (isKDOU.value == true) {
-        return (val.length > 33 && val.length < 35) || '长度应为34个字符'
+      } else if (isEWALLET.value == true) {
+        var selectedCode = null
+        banksList.value.forEach(bank => {
+          if (bank.id === bankCardInfo.bankId) {
+            selectedCode = bank.code
+          }
+        });
+        if (selectedCode === 'KDPAY') {
+          return (val.length > 33 && val.length < 35) || '长度应为34个字符'
+        } else if(selectedCode === 'EBPAY') {
+          return (val.length > 33 && val.length < 35) || '长度应为34个字符'
+        } else if(selectedCode === 'OKPAY') {
+          return (val.length > 15 && val.length < 17) || '长度应为16个字符'
+        }
       } else {
         return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
       }
@@ -827,6 +840,7 @@ export default defineComponent({
             console.log(e)
           });
     }
+    const isSendOtp = ref(false)
 
     const onCaptchaSubmit = () => {
       if (!bankCardInfo.telephone) {
@@ -857,6 +871,7 @@ export default defineComponent({
                 color = 'positive'
 
             if (res.code === 0) {
+              isSendOtp.value = true;
               showCaptchaDialog.value = false;
               bankCardInfo.smsCode = "";
               bankCardInfo.smsCodeId = res.data.codeId;
@@ -901,6 +916,7 @@ export default defineComponent({
       onCaptchaSubmit,
       phoneVerificationRef,
       isNewUser,
+      isValidCnPhone,
       // virtualCurrencyModalState,
       // virtualCurrencyFormRef,
       // virtualCurrencyInfo,
@@ -911,7 +927,7 @@ export default defineComponent({
       isCardActive,
       isNoCard,
       isCrypto,
-      isKDOU,
+      isEWALLET,
       bankName,
       isVirtual,
       bankCardRef,
@@ -938,7 +954,8 @@ export default defineComponent({
       chooseCard,
       cardLabel,
       unbindCardEnter,
-      unbindCardLabel
+      unbindCardLabel,
+      isSendOtp
     };
   }
 });

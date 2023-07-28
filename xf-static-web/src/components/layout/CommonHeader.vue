@@ -1379,9 +1379,9 @@ export default defineComponent({
       if (affCode) {
         hasAffiliate.value = true
         regForm.codeAffiliate = affCode;
-        if (!store.token) {
-          registerDialogVisible.value = true;
-        }
+        // if (!store.token) {
+        //   registerDialogVisible.value = true;
+        // }
       }
     }
 

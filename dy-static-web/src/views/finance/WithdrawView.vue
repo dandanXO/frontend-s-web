@@ -88,7 +88,7 @@
         <el-row>
           <el-col>
             <div
-              v-if="!isKDOU && !isUSDT && selectedWithdrawalMethod.tips"
+              v-if="!isEWALLET && !isUSDT && selectedWithdrawalMethod.tips"
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
@@ -149,9 +149,12 @@
         </el-form-item>
 
         <!-- K豆教程视频 -->
-        <div style="margin-left: 150px" v-else-if="isKDOU">
-          <el-button class="common-btn" @click="openKdouTutorial">
-            K豆教程视频
+        <div style="margin-left: 150px" v-else-if="isEWALLET">
+          <el-button class="common-btn" @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
+            <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
+            <span v-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
+            <span v-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
+            
           </el-button>
         </div>
 
@@ -198,7 +201,7 @@ export default defineComponent({
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
-    const isKDOU = ref(false);
+    const isEWALLET = ref(false);
     const withdrawState = reactive({
       bankCardList: [],
     });
@@ -272,9 +275,27 @@ export default defineComponent({
     };
     const checkBankCards = () => {
 
-      if(isUSDT.value == true){
+      if(isUSDT.value){
         ElMessageBox.alert(
           '请先绑定虚拟币钱包', "系统提示",
+          {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: '确认',
+            draggable: false,
+            buttonSize: 'small',
+            closeOnClickModal: false,
+            center: true,
+          }
+        )
+          .then(() => {
+            router.push('/center/withdrawbank')
+          })
+          .catch(() => {
+          })
+      } else if(isEWALLET.value){
+        ElMessageBox.alert(
+          '请先绑定电子钱包', "系统提示",
           {
             showClose: false,
             showCancelButton: false,
@@ -356,16 +377,8 @@ export default defineComponent({
       selectedWithdrawalMethod.value = method
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
-      if (withdrawInfo.withdrawCode.includes('USDT')) {
-        isUSDT.value = true
-      } else {
-        isUSDT.value = false
-      }
-      if (withdrawInfo.withdrawCode.includes('KDPAY')) {
-        isKDOU.value = true
-      } else {
-        isKDOU.value = false
-      }
+      isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
       loadCards()
     }
     const getWithdrawalMethods = () => {
@@ -383,15 +396,24 @@ export default defineComponent({
     const cardLabel = () => {
       if (isUSDT.value) {
         return '钱包地址'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行卡'
       }
     }
-    const openKdouTutorial = () => {
-      window.open('http://jiaocheng.kdpay123.com')
-    }
+    const openEWalletTutorial = (code) => {
+      const urlMap = {
+        'KDPAY': 'http://jiaocheng.kdpay123.com',
+        'EBPAY': 'https://www.ebpay009.com/xszn',
+        'OKPAY': 'https://me-qr.com/l/okpay'
+      };
+
+      const url = urlMap[code];
+      if (url) {
+        window.open(url);
+      }
+    };
     return {
       formRef,
       withdrawInfo,
@@ -405,13 +427,13 @@ export default defineComponent({
       selectMethod,
       imgURL,
       isUSDT,
-      isKDOU,
+      isEWALLET,
       verifyWithdrawAmount,
       store,
       loadingBtn,
       checkBankCards,
       cardLabel,
-      openKdouTutorial
+      openEWalletTutorial
     };
   },
 });
