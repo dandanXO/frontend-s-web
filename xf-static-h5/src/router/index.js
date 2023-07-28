@@ -52,7 +52,7 @@ export default route(function (/* { store, ssrContext } */) {
     // }
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-      next(`/login?register`);
+      next(`/`);
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);

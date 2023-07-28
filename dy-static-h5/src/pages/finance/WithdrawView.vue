@@ -24,7 +24,7 @@
 
         <q-separator style="margin-top:12px;margin-bottom: 15px;" />
 
-        <label class="label">{{ (isUSDT ) ? '钱包地址' : '银行卡' }}</label>
+        <label class="label">{{ chooseLabel() }}</label>
         <q-form>
           <q-select
             v-show="isLoaded"
@@ -46,7 +46,7 @@
                   {{ "没有可用的" + chooseCard() }}
                   <router-link class="text-bright" to="/account/withdraw">
                     {{
-                      isUSDT || isKDOU
+                      isUSDT || isEWALLET
                         ? "加" + chooseCard()
                         : "绑定" + chooseCard()
                     }}
@@ -103,7 +103,7 @@
             ref="amountRef"
             v-model="withdrawInfo.amount"
             label="金额"
-            color="white"
+            color="black"
             :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) =>
@@ -205,12 +205,12 @@
               *特别说明：三方自动收取提币 1.00 USDT 手续费！
             </div>
           </div>
-          <div v-else-if="isKDOU">
+          <div v-else-if="isEWALLET">
             <div class="q-mt-md q-mb-md text-center">
               <q-btn
                 style="border: 1px solid #000000; color: #000000"
-                @click="openKdouTutorial"
-                label="K豆教程视频"
+                @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
+                :label="tutorialLabel()"
               />
             </div>
           </div>
@@ -243,7 +243,7 @@
           </div>
           <div class="q-py-md text-orange">
             <div
-              v-if="!isKDOU && !isUSDT && selectedWithdrawalMethod.tips"
+              v-if="!isEWALLET && !isUSDT && selectedWithdrawalMethod.tips"
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
@@ -383,24 +383,14 @@ export default defineComponent({
       }
     };
     const isUSDT = ref(false);
-    const isKDOU = ref(false);
+    const isEWALLET = ref(false);
     const selectMethod = (method, index) => {
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
       selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
-      if (withdrawInfo.withdrawCode.includes("USDT")) {
-        isUSDT.value = true;
-        isKDOU.value = false;
-      } else {
-        isUSDT.value = false;
-      }
-      if (withdrawInfo.withdrawCode.includes("KDPAY")) {
-        isKDOU.value = true;
-        isUSDT.value = false;
-      } else {
-        isKDOU.value = false;
-      }
+      isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
       activeItem.value = index;
       loadCards();
     };
@@ -470,7 +460,7 @@ export default defineComponent({
     const chooseLabel = () => {
       if (isUSDT.value) {
         return '虚拟币'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行卡'
@@ -480,17 +470,33 @@ export default defineComponent({
     const chooseCard = () => {
       if (isUSDT.value) {
         return '虚拟钱包'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行卡片'
       }
     }
-
-    const openKdouTutorial = () => {
-      window.open('http://jiaocheng.kdpay123.com')
+    const tutorialLabel = () => {
+      if (selectedWithdrawalMethod.value.code === 'KDPAY') {
+        return 'K豆教程视频'
+      } else if (selectedWithdrawalMethod.value.code === 'EBPAY') {
+        return 'EB教程视频'
+      } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
+        return 'OK教程视频'
+      }
     }
+    const openEWalletTutorial = (code) => {
+      const urlMap = {
+        'KDPAY': 'http://jiaocheng.kdpay123.com',
+        'EBPAY': 'https://www.ebpay009.com/xszn',
+        'OKPAY': 'https://me-qr.com/l/okpay'
+      };
 
+      const url = urlMap[code];
+      if (url) {
+        window.open(url);
+      }
+    };
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
@@ -506,7 +512,7 @@ export default defineComponent({
       selectedWithdrawalMethod,
       loadCards,
       isUSDT,
-      isKDOU,
+      isEWALLET,
       store,
       updateWithdrawAmt,
       platforms,
@@ -515,7 +521,8 @@ export default defineComponent({
       isLoaded,
       chooseLabel,
       chooseCard,
-      openKdouTutorial
+      openEWalletTutorial,
+      tutorialLabel
     };
   }
 });

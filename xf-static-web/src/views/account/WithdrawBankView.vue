@@ -235,7 +235,7 @@
               :placeholder="numAddress()"
           />
         </el-form-item>
-        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isKDOU">
+        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET">
           <el-input
               v-model="bankCardInfo.cardAddress"
               placeholder="开户行地址"
@@ -246,6 +246,7 @@
         </el-form-item>
 
         <el-form-item>
+          <el-space>
           <el-input
               class="half"
               v-model="bankCardInfo.telephone"
@@ -256,6 +257,7 @@
           <el-button class="common-btn" @click="openCaptchaForm()">
             获取验证码
           </el-button>
+        </el-space>
         </el-form-item>
 
         <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
@@ -408,6 +410,22 @@ export default defineComponent({
       } else if (selectedBankType.value === 'e-Wallet') {
         min = 34;
         max = 34;
+        var selectedCode = null
+        banksList.value.forEach(bank => {
+          if (bank.id === bankCardInfo.bankId) {
+            selectedCode = bank.code
+          }
+        });
+        if (selectedCode === 'KDPAY') {
+          min = 34;
+          max = 34;
+        } else if(selectedCode === 'EBPAY') {
+          min = 34;
+          max = 34;
+        } else if(selectedCode === 'OKPAY') {
+          min = 16;
+          max = 16;
+        }
       }
       if (v === '') {
         return Promise.reject('请输入卡号');
@@ -425,7 +443,7 @@ export default defineComponent({
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
     const isUSDT = ref(false);
-    const isKDOU = ref(false);
+    const isEWALLET = ref(false);
     const store = userStore();
     const searchForm = reactive({
       startDate: "",
@@ -643,20 +661,26 @@ export default defineComponent({
       banksList.value = []
       bankCardInfo.bankId = null
       bankCardModalState.banks.forEach(element => {
-        if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
-          banksList.value.push(element);
+        if (selectedBankType.value === "Bank") {
           isUSDT.value = false;
-          isKDOU.value = false;
+          isEWALLET.value = false;
+          if (element.bankType === 'BANK') {
+            banksList.value.push(element);
+          }
         }
-        if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
-          banksList.value.push(element);
+        if (selectedBankType.value === "Crypto") {
           isUSDT.value = true;
-          isKDOU.value = false;
+          isEWALLET.value = false;
+          if (element.bankType === 'CRYPTO') {
+            banksList.value.push(element);
+          }
         }
-        if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
-          banksList.value.push(element);
-          isKDOU.value = true;
+        if (selectedBankType.value === "e-Wallet") {
+          isEWALLET.value = true;
           isUSDT.value = false;
+          if (element.bankType === 'EWALLET') {
+            banksList.value.push(element);
+          }
         }
       });
       if (bankCardInfo.cardNumber != '') {
@@ -738,7 +762,6 @@ export default defineComponent({
     };
 
     const submitBankCard = () => {
-      console.log(bankCardInfo)
       bankCardFormRef.value
           .validate()
           .then(() => {
@@ -870,7 +893,7 @@ export default defineComponent({
     const chooseCard = () => {
       if (isUSDT.value) {
         return '虚拟币'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行'
@@ -880,7 +903,7 @@ export default defineComponent({
     const numAddress = () => {
       if (isUSDT.value) {
         return '钱包地址'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行卡号'
@@ -907,7 +930,7 @@ export default defineComponent({
       showCard,
       isCardActive,
       isUSDT,
-      isKDOU,
+      isEWALLET,
       bankName,
       bankTypes,
       selectBankType,

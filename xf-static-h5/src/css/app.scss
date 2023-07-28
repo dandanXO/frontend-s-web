@@ -43,6 +43,9 @@ body {
 .q-toolbar {
   padding-top: env(safe-area-inset-top, 0);
   background: #2b2b4b;
+  &__title {
+    font-size: 16px;
+  }
 }
 .q-page-container {
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
@@ -266,6 +269,9 @@ svg {
 //   margin: 0 auto;
 //   right: 0;
 // }
+.q-field__marginal {
+  font-size: 16px;
+}
 .q-field--filled.q-field--readonly .q-field__control:before {
   border-bottom: 0;
 }

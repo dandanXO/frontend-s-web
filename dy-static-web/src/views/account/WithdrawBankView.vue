@@ -235,7 +235,7 @@
               :placeholder="numAddress()"
           />
         </el-form-item>
-        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isKDOU">
+        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET">
           <el-input
               v-model="bankCardInfo.cardAddress"
               placeholder="开户行地址"
@@ -244,7 +244,8 @@
             ]"
           />
         </el-form-item>
-        <!-- <el-form-item>
+        <el-form-item>
+          <el-space>
           <el-input
               class="half"
               v-model="bankCardInfo.telephone"
@@ -254,7 +255,7 @@
           />
           <el-button class="common-btn" @click="openCaptchaForm()">
             获取验证码
-          </el-button>
+          </el-button></el-space>
         </el-form-item>
 
         <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
@@ -267,13 +268,13 @@
         </el-form-item>
 
         <el-form-item class="txt-center" v-if="isSendOtp">
-        </el-form-item> -->
-        <el-button class="txt-center common-btn" @click="submitBankCard">
-          提交
-        </el-button>
+          <el-button class="txt-center common-btn" @click="submitBankCard">
+            提交
+          </el-button>
+        </el-form-item>
       </el-form>
     </el-dialog>
-    <!-- <el-dialog
+    <el-dialog
         v-model="phoneCaptchaDialogVisible"
         title="验证码"
         width="50%"
@@ -339,7 +340,7 @@
           发送
         </el-button>
       </el-form>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
@@ -356,11 +357,12 @@ import {
   loadUnbindRecord,
   addBankCard,
   deleteBankCard,
-  loadMemberInfo
+  loadMemberInfo,
+  loadMemberTelephone
 } from "@/api/personal/personal";
 import {userStore} from "@/store";
 import {useRouter} from "vue-router";
-// import {sendSessionSms} from "@/api/personal/personal";
+import {sendSessionSms} from "@/api/personal/personal";
 import {InfoFilled} from "@element-plus/icons-vue";
 // import moment from "moment";
 
@@ -406,6 +408,22 @@ export default defineComponent({
       } else if (selectedBankType.value === 'e-Wallet') {
         min = 34;
         max = 34;
+        var selectedCode = null
+        banksList.value.forEach(bank => {
+          if (bank.id === bankCardInfo.bankId) {
+            selectedCode = bank.code
+          }
+        });
+        if (selectedCode === 'KDPAY') {
+          min = 34;
+          max = 34;
+        } else if(selectedCode === 'EBPAY') {
+          min = 34;
+          max = 34;
+        } else if(selectedCode === 'OKPAY') {
+          min = 16;
+          max = 16;
+        }
       }
       if (v === '') {
         return Promise.reject('请输入卡号');
@@ -423,7 +441,7 @@ export default defineComponent({
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
     const isUSDT = ref(false);
-    const isKDOU = ref(false);
+    const isEWALLET = ref(false);
     const store = userStore();
     const searchForm = reactive({
       startDate: "",
@@ -519,52 +537,52 @@ export default defineComponent({
       bankCardList: [],
     });
 
-    // const loadInfo = () => {
-    //   loadMemberInfo().then((response) => {
-    //     if (response.code === 0) {
-    //       personalState.memberInfo = response.data;
-    //       // bankCardInfo.telephone = personalState.memberInfo.telephone;
-    //       // console.log(bankCardInfo.telephone)
-    //       // if (personalState.memberInfo.birthday) {
-    //       //   personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
-    //       // }
-    //     }
-    //   }).catch((error) => {
-    //     console.log("error", error);
-    //   });
-    //   loadMemberTelephone().then((response) => {
-    //     if (response.code === 0) {
-    //       bankCardInfo.telephone = response.data;
-    //     }
-    //   }).catch((error) => {
-    //     console.log("error", error);
-    //   })
-    // }
+    const loadInfo = () => {
+      loadMemberInfo().then((response) => {
+        if (response.code === 0) {
+          personalState.memberInfo = response.data;
+          bankCardInfo.telephone = personalState.memberInfo.telephone;
+          console.log(bankCardInfo.telephone)
+          if (personalState.memberInfo.birthday) {
+            personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+          }
+        }
+      }).catch((error) => {
+        console.log("error", error);
+      });
+      loadMemberTelephone().then((response) => {
+        if (response.code === 0) {
+          bankCardInfo.telephone = response.data;
+        }
+      }).catch((error) => {
+        console.log("error", error);
+      })
+    }
 
-    // const checkBankCards = () => {
-    //   ElMessageBox.alert(
-    //       '请先绑定银行卡', "系统提示",
-    //       {
-    //         showClose: false,
-    //         showCancelButton: false,
-    //         confirmButtonText: '确认',
-    //         draggable: false,
-    //         buttonSize: 'small',
-    //         closeOnClickModal: false,
-    //         center: true,
-    //       }
-    //   )
-    //       .then(() => {
-    //         router.push('/center/withdrawbank')
-    //       })
-    //       .catch(() => {
-    //       })
-    // }
+    const checkBankCards = () => {
+      ElMessageBox.alert(
+          '请先绑定银行卡', "系统提示",
+          {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: '确认',
+            draggable: false,
+            buttonSize: 'small',
+            closeOnClickModal: false,
+            center: true,
+          }
+      )
+          .then(() => {
+            router.push('/center/withdrawbank')
+          })
+          .catch(() => {
+          })
+    }
 
     onMounted(() => {
       getTime();
       loadCards();
-      // loadInfo();
+      loadInfo();
     });
 
     const handleCurrentChange = (val) => {
@@ -643,20 +661,20 @@ export default defineComponent({
       bankCardModalState.banks.forEach(element => {
         if (selectedBankType.value === "Bank") {
           isUSDT.value = false;
-          isKDOU.value = false;
+          isEWALLET.value = false;
           if (element.bankType === 'BANK') {
             banksList.value.push(element);
           }
         }
         if (selectedBankType.value === "Crypto") {
           isUSDT.value = true;
-          isKDOU.value = false;
+          isEWALLET.value = false;
           if (element.bankType === 'CRYPTO') {
             banksList.value.push(element);
           }
         }
         if (selectedBankType.value === "e-Wallet") {
-          isKDOU.value = true;
+          isEWALLET.value = true;
           isUSDT.value = false;
           if (element.bankType === 'EWALLET') {
             banksList.value.push(element);
@@ -668,47 +686,47 @@ export default defineComponent({
       }
     }
 
-    // const phoneCaptchaDialogVisible = ref(false)
-    // const isSendOtp = ref(false)
+    const phoneCaptchaDialogVisible = ref(false)
+    const isSendOtp = ref(false)
 
-    // const sendOtp = async () => {
-    //   const smsDetail = {
-    //     // telephone: bankCardInfo.telephone,
-    //     captchaCode: captchaForm.captchaCode,
-    //     codeId: captchaForm.codeId
-    //   }
-    //   sendSessionSms(smsDetail)
-    //       .then((response) => {
-    //         if (response.code == 0) {
-    //           isSendOtp.value = true;
-    //           captchaForm.smsCodeId = response.data.codeId;
-    //           bankCardInfo.smsCodeId = response.data.codeId;
+    const sendOtp = async () => {
+      const smsDetail = {
+        // telephone: bankCardInfo.telephone,
+        captchaCode: captchaForm.captchaCode,
+        codeId: captchaForm.codeId
+      }
+      sendSessionSms(smsDetail)
+          .then((response) => {
+            if (response.code == 0) {
+              isSendOtp.value = true;
+              captchaForm.smsCodeId = response.data.codeId;
+              bankCardInfo.smsCodeId = response.data.codeId;
 
-    //           ElMessage({
-    //             type: 'success',
-    //             message: `发送手机验证码成功`
-    //           });
-    //           captchaDialogVisible.value = false;
-    //         } else {
-    //           getCode();
-    //         }
-    //       })
-    // };
+              ElMessage({
+                type: 'success',
+                message: `发送手机验证码成功`
+              });
+              captchaDialogVisible.value = false;
+            } else {
+              getCode();
+            }
+          })
+    };
 
     const verificationImg = ref("");
 
-    // const sendSmsForSubmitBankCard = () => {
-    //   bankCardFormRef.value
-    //     .validate()
-    //     .then(() => {
-    //       // console.log(bankCardFormRef.value)
-    //       // bankCardModalState.visible = false;
-    //       // openCaptchaForm();
-    //       phoneCaptchaDialogVisible.value = true;
-    //     }).catch((error) => {
-    //       console.log("error", error)
-    //     })
-    // }
+    const sendSmsForSubmitBankCard = () => {
+      bankCardFormRef.value
+        .validate()
+        .then(() => {
+          // console.log(bankCardFormRef.value)
+          // bankCardModalState.visible = false;
+          // openCaptchaForm();
+          phoneCaptchaDialogVisible.value = true;
+        }).catch((error) => {
+          console.log("error", error)
+        })
+    }
 
     const getCode = () => {
       getVerificationCode().then((res) => {
@@ -875,7 +893,7 @@ export default defineComponent({
     const chooseCard = () => {
       if (isUSDT.value) {
         return '虚拟币'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行'
@@ -885,7 +903,7 @@ export default defineComponent({
     const numAddress = () => {
       if (isUSDT.value) {
         return '钱包地址'
-      } else if (isKDOU.value) {
+      } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
         return '银行卡号'
@@ -900,7 +918,7 @@ export default defineComponent({
       bankCardInfo,
       bankCardRules,
       submitBankCard,
-      // sendSmsForSubmitBankCard,
+      sendSmsForSubmitBankCard,
       openCaptchaForm,
       captchaForm,
       captchaRules,
@@ -912,7 +930,7 @@ export default defineComponent({
       showCard,
       isCardActive,
       isUSDT,
-      isKDOU,
+      isEWALLET,
       bankName,
       bankTypes,
       selectBankType,
@@ -925,12 +943,12 @@ export default defineComponent({
       handleCurrentChange,
       tblLoading,
       maskCardNumber,
-      // sendOtp,
-      // phoneCaptchaDialogVisible,
-      // isSendOtp,
+      sendOtp,
+      phoneCaptchaDialogVisible,
+      isSendOtp,
       getOptionLabel,
       withdrawState,
-      // checkBankCards,
+      checkBankCards,
       chooseCard,
       numAddress
     };
