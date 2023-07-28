@@ -243,7 +243,7 @@
             v-model="scope.row.status"
             active-color="#409EFF"
             inactive-color="#F56C6C"
-            @change="changeAdsStatus(scope.row.id, scope.row.status)"
+            @change="changeAdsStatus(scope.row)"
           />
         </template>
       </el-table-column>
@@ -509,8 +509,10 @@ async function removeAdsPopout(adspopout) {
   })
 }
 
-async function changeAdsStatus(id, status) {
-  await updateAdsPopoupStatus(id, status)
+async function changeAdsStatus(row) {
+  await updateAdsPopoupStatus(row.id, row.status).catch(function() {
+    row.status = row.status === '0' ? '1' : '0'
+  })
 }
 
 onMounted(() => {
