@@ -546,6 +546,7 @@ function showEdit(user) {
         form[key] = user[key]
       }
     }
+    form.id = user.id
   })
 }
 
