@@ -382,9 +382,9 @@
       style="width: 90%; max-width: 500px; margin: 0 auto"
       class="text-white"
     >
-      <q-card-section class="q-mb-md">
+      <q-card-section>
         <div class="close-alert" @click="setExpiryBanner()">
-          <q-icon color="white" size="24px" name="close"></q-icon>
+          <q-icon size="24px" name="close"></q-icon>
         </div>
         <div class="promo-banner-container">
           <div
@@ -697,33 +697,36 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               // if (res.data[id] !== null) {
-                if (isImpt === null) {
-                  switch (res.data["frequency"]) {
-                    case "EVERYTIME":
-                      homePopupFrequencyNum.value = 0;
-                      break;
-                    case "EVERYDAY":
-                      homePopupFrequencyNum.value = 86400000; // 24hrs
-                      break;
-                    case "SESSION":
-                      homePopupFrequencyNum.value = 7866432000; // 3months
-                      break;
-                    default:
-                      homePopupFrequencyNum.value = 10000;
-                      break;
-                  }
-                  isImportantAnnoucementModal.value = true;
-                  homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
-                  homePopupContent.value = res.data["content"];
-                  homePopupType.value = res.data["type"];
-                  homePopupId.value = res.data["id"];
-                  homePopupFrequency.value = res.data["frequency"];
-                  // if (homePopupImg.value) {
-                  isFirstView.value = true;
-                  // }
+              if (isImpt === null) {
+                switch (res.data["frequency"]) {
+                  case "EVERYTIME":
+                    homePopupFrequencyNum.value = 0;
+                    break;
+                  case "EVERYDAY":
+                    homePopupFrequencyNum.value = 86400000; // 24hrs
+                    break;
+                  case "SESSION":
+                    homePopupFrequencyNum.value = 7866432000; // 3months
+                    break;
+                  default:
+                    homePopupFrequencyNum.value = 10000;
+                    break;
                 }
+                isImportantAnnoucementModal.value = true;
+                homePopupImg.value =
+                  process.env.IMAGE_CDN +
+                  "/adspopout/" +
+                  res.data["mobileImgUrl"];
+                homePopupContent.value = res.data["content"];
+                homePopupType.value = res.data["type"];
+                homePopupId.value = res.data["id"];
+                homePopupFrequency.value = res.data["frequency"];
+                // if (homePopupImg.value) {
+                isFirstView.value = true;
+                // }
+              }
               // } else {
-                // isImportantAnnoucementModal.value = false;
+              // isImportantAnnoucementModal.value = false;
               // }
             }
           })
@@ -1604,13 +1607,16 @@ export default defineComponent({
 .close-alert {
   display: block;
   position: absolute;
-  top: 6px;
-  right: 10px;
+  top: 7px;
+  right: 7px;
   width: 28px;
   padding: 2px;
   height: 28px;
   z-index: 2;
-  background: transparent;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  color: #222a34 !important;
+  // background: transparent;
 }
 
 @media (max-width: 480px) {
@@ -1645,9 +1651,7 @@ export default defineComponent({
 }
 .promo-banner-container {
   color: #ffffff;
-  // background: salmon;
   .promo-banner-content {
-    padding: 15px 15px;
     h3 {
       font-size: 20px;
       line-height: 0;
