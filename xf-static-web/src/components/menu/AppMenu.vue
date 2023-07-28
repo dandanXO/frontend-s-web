@@ -10,12 +10,12 @@
       <div>
         <h3 class="header-menu-title">全站APP</h3>
         <!-- <div id="headerAllQrcode" class="download-img-container"><img src="../../assets/app/download.png" /></div> -->
-        <vue-qrious :value="`https://${downloadUrl}`" />
+        <vue-qrious :value="`${downloadUrl}`" />
         <p class="qrcode-scan-txt">扫一扫下载全站APP</p>
         <p class="qrcode-scan-support">支持IOS &amp; Android等全部移动设备</p>
         <a
           id="headerAllHref"
-          :href="`https://${downloadUrl}?url=${downloadUrl}&amp;agentCode=`"
+          :href="`${downloadUrl}?url=${downloadUrl}&amp;agentCode=`"
           class="download-url"
         >
           <!-- xf9866.app -->
@@ -82,7 +82,7 @@ export default defineComponent({
       getAppDownloadUrlFromServer()
         .then((res) => {
           //   console.log(res);
-          downloadUrl.value = res.data;
+          downloadUrl.value = res;
         })
         .catch((err) => {
           console.log(err);
