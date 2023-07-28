@@ -99,9 +99,13 @@ import { uploadImage } from '../../../../api/image'
 import { useRoute, useRouter } from 'vue-router'
 import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from 'vue-i18n'
+// import { useStore } from '../../../../store';
+// import { TENANT } from "../../../../store/modules/user/action-types";
 
 const { t } = useI18n()
 const route = useRoute()
+// const store = useStore();
+// const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 
 const adsPopoutForm = ref(null)
 
@@ -126,7 +130,7 @@ const uiControl = reactive({
     { key: 2, displayName: '关', value: false },
   ],
   type: [
-    { key: 1, displayName: '文字', value: 'TEXT' },
+    // { key: 1, displayName: '文字', value: 'TEXT' },
     { key: 2, displayName: '图片', value: 'IMG' },
   ],
   frequency: [
@@ -260,20 +264,19 @@ watch(() => route.name, () => {
     form.type = uiControl.type[0].value;
   }
 });
-onMounted(() => {
+onMounted(async () => {
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
     loadForm(route.params.id, route.params.siteId)
   } else {
+    await loadSites();
+    // if (LOGIN_USER_TYPE.value === TENANT.value) {
+    //   console.log(siteList.list)
+    //   // siteList.list.find(s => s.siteName === store.state.user.siteName).value;
+    //   // form.siteId = site.value.id;
+    // }
     form.type = uiControl.type[0].value;
   }
-  // loadSites()
-  // if (route.name.includes('Edit')) {
-  //   uiControl.titleDisable = true
-  //   loadForm(route.params.id, route.params.siteId)
-  // } else {
-  //   form.type = uiControl.type[0].value;
-  // }
 })
 </script>
 

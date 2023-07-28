@@ -237,7 +237,7 @@
       <el-table-column prop="title" :label="t('fields.title')" />
       <el-table-column prop="frequency" :label="t('fields.frequency')" />
       <el-table-column prop="siteName" :label="t('fields.site')" />
-      <el-table-column prop="status" :label="t('fields.status')">
+      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:ads-popout:update:state'])">
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"
@@ -515,16 +515,16 @@ async function changeAdsStatus(row) {
   })
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (route.query.current != null) {
     request.current = Number(route.query.current)
   }
-  loadSites();
+  await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
-  loadAdsPopoutList();
+  await loadAdsPopoutList();
 })
 </script>
 
