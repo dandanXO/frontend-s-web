@@ -4,16 +4,37 @@ export default {
     logout: 'Logout',
     changePassword: 'Change Password',
   },
+  affiliate: {
+    commissionModel: {
+      NORMAL: 'Nomal',
+      SIMPLE: 'Simple'
+    },
+    level: {
+      AFFILIATE: 'Affiliate',
+      SUPER_AFFILIATE: 'Super Affiliate',
+      MASTER_AFFILIATE: 'Master Affiliate',
+      CHIEF_AFFILIATE: 'Chief Affiliate'
+    },
+    timeType: {
+      MONTHLY: 'Monthly',
+      WEEKLY: 'Weekly'
+    },
+    status: {
+      APPLY: 'Apply',
+      NORMAL: 'Normal',
+      DISABLE: 'Disable'
+    }
+  },
   types: {
-    normal: 'NORMAL',
-    temporary: 'TEMPORARY',
-    permanent: 'PERMANENT',
+    NORMAL: 'NORMAL',
+    TEMPORARY: 'TEMPORARY',
+    PERMANENT: 'PERMANENT',
     gameViolation: 'Game Violation',
     memberRequest: 'Member Request',
     others: 'Others',
-    test: 'TEST',
-    affiliate: 'AFFILIATE',
-    outside: 'OUTSIDE',
+    TEST: 'TEST',
+    AFFILIATE: 'AFFILIATE',
+    OUTSIDE: 'OUTSIDE',
   },
   reportName: {
     Aff_Month_Report: 'Aff_Month_Report',
@@ -104,6 +125,10 @@ export default {
       CHECKING: 'Checking',
       PAY: 'Pay',
       CLEARED: 'Cleared'
+    },
+    member: {
+      NORMAL: 'Normal',
+      FROZEN: 'Frozen'
     }
   },
   fields: {
@@ -331,6 +356,7 @@ export default {
     depositCount: 'Deposit Count',
     depositDate: 'Deposit Date',
     depositExchangeRate: 'Deposit Exchange Rate',
+    depositMemberCount: 'Deposit Member Count',
     depositSerialNo: 'Deposit Serial Number',
     depositStatus: 'Deposit Status',
     describe: 'Describe',
@@ -432,6 +458,7 @@ export default {
     frequency: 'Frequency',
     ftd: 'FTD',
     ftdAmount: 'FTD Amount',
+    ftdCount: 'FTD Count',
     ftdTime: 'FTD Time',
     ftdTxn: 'FTD Txn',
     fundingInfo: 'Funding Information',
@@ -839,6 +866,7 @@ export default {
     withdrawCode: 'Withdraw Code',
     withdrawCount: 'Withdraw Count',
     withdrawDate: 'Withdraw Date',
+    withdrawMemberCount: 'Withdraw Member Count',
     withdrawName: 'Withdraw Name',
     withdrawPayoutBonus: 'Withdrawal/Payout/Bonus',
     withdrawPlatform: 'Withdraw Platform',
@@ -1255,6 +1283,7 @@ export default {
     'Deposit Report': 'Deposit Report',
     'Withdraw Report': 'Withdraw Report',
     'Finance Report': 'Finance Report',
+    'Affiliate Report': 'Affiliate Report',
     System: 'System',
     'Operator Log': 'Operator Log',
     'Member Platform': 'Member Platform',

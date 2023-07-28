@@ -62,13 +62,13 @@
             </div>
           </template>
           <el-tag v-if="memberDetail.affiliateStatus === 'APPLY'" size="mini">
-            {{ memberDetail.affiliateStatus }}
+            {{ t('affiliate.status.' + memberDetail.affiliateStatus) }}
           </el-tag>
           <el-tag v-if="memberDetail.affiliateStatus === 'NORMAL'" size="mini" type="success">
-            {{ memberDetail.affiliateStatus }}
+            {{ t('affiliate.status.' + memberDetail.affiliateStatus) }}
           </el-tag>
           <el-tag v-if="memberDetail.affiliateStatus === 'DISABLE'" size="mini" type="danger">
-            {{ memberDetail.affiliateStatus }}
+            {{ t('affiliate.status.' + memberDetail.affiliateStatus) }}
           </el-tag>
           <el-tag v-if="memberDetail.affiliateStatus === null" size="mini" type="info">
             -
@@ -161,10 +161,10 @@
             </div>
           </template>
           <el-tag v-if="memberDetail.commissionModel === 'SIMPLE'" size="mini">
-            {{ memberDetail.commissionModel }}
+            {{ t('affiliate.commissionModel.' + memberDetail.commissionModel) }}
           </el-tag>
           <el-tag v-if="memberDetail.commissionModel === 'NORMAL'" size="mini" type="success">
-            {{ memberDetail.commissionModel }}
+            {{ t('affiliate.commissionModel.' + memberDetail.commissionModel) }}
           </el-tag>
           <el-tag v-if="memberDetail.commissionModel === null" size="mini" type="info">
             -
@@ -205,10 +205,10 @@
             </div>
           </template>
           <el-tag v-if="memberDetail.timeType === 'MONTHLY'" size="mini">
-            {{ memberDetail.timeType }}
+            {{ t('affiliate.timeType.' + memberDetail.timeType) }}
           </el-tag>
           <el-tag v-if="memberDetail.timeType === 'WEEKLY'" size="mini" type="success">
-            {{ memberDetail.timeType }}
+            {{ t('affiliate.timeType.' + memberDetail.timeType) }}
           </el-tag>
           <el-tag v-if="memberDetail.timeType === null" size="mini" type="info">
             -
@@ -647,12 +647,12 @@ const uiControl = reactive({
   dialogTitle: "",
   dialogType: "",
   commissionModelType: [
-    { key: 1, displayName: "NORMAL", value: "NORMAL" },
-    { key: 2, displayName: "SIMPLE", value: "SIMPLE" },
+    { key: 1, displayName: t('affiliate.commissionModel.NORMAL'), value: "NORMAL" },
+    { key: 2, displayName: t('affiliate.commissionModel.SIMPLE'), value: "SIMPLE" },
   ],
   timeType: [
-    { key: 1, displayName: "MONTHLY", value: "MONTHLY" },
-    { key: 2, displayName: "WEEKLY", value: "WEEKLY" },
+    { key: 1, displayName: t('affiliate.timeType.MONTHLY'), value: "MONTHLY" },
+    { key: 2, displayName: t('affiliate.timeType.WEEKLY'), value: "WEEKLY" },
   ],
   commissionMax: 2
 });
@@ -677,9 +677,9 @@ const updateTimeTypeModel = ref(null);
 const changeAffForm = ref(null);
 const freezeType = reactive({
   list: [
-    { key: 1, name: t('types.normal'), value: "NORMAL" },
-    { key: 2, name: t('types.temporary'), value: "TEMPORARY" },
-    { key: 3, name: t('types.permanent'), value: "PERMANENT" }
+    { key: 1, name: t('types.NORMAL'), value: "NORMAL" },
+    { key: 2, name: t('types.TEMPORARY'), value: "TEMPORARY" },
+    { key: 3, name: t('types.PERMANENT'), value: "PERMANENT" }
   ]
 });
 

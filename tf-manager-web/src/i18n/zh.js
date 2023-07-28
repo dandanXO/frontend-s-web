@@ -4,16 +4,37 @@ export default {
     logout: '登出',
     changePassword: '更换密码',
   },
+  affiliate: {
+    commissionModel: {
+      NORMAL: '正常',
+      SIMPLE: '普通'
+    },
+    level: {
+      AFFILIATE: 'Affiliate',
+      SUPER_AFFILIATE: 'Super Affiliate',
+      MASTER_AFFILIATE: 'Master Affiliate',
+      CHIEF_AFFILIATE: 'Chief Affiliate'
+    },
+    timeType: {
+      MONTHLY: '每月',
+      WEEKLY: '每周'
+    },
+    status: {
+      APPLY: '申请',
+      NORMAL: '正常',
+      DISABLE: '禁用'
+    }
+  },
   types: {
-    normal: '正常',
-    temporary: '临时冻结',
-    permanent: '永久冻结',
+    NORMAL: '正常',
+    TEMPORARY: '临时冻结',
+    PERMANENT: '永久冻结',
     gameViolation: '违规游戏',
     memberRequest: '会员要求',
     others: '其他',
-    test: '测试',
-    affiliate: '代理',
-    outside: '三方',
+    TEST: '测试',
+    AFFILIATE: '代理',
+    OUTSIDE: '三方',
   },
   dateType: {
     depositDate: '存款日期',
@@ -104,6 +125,10 @@ export default {
       CHECKING: '审核中',
       PAY: '结算中',
       CLEARED: '已结算'
+    },
+    member: {
+      NORMAL: '正常',
+      FROZEN: '冻结'
     }
   },
   fields: {
@@ -331,6 +356,7 @@ export default {
     depositCount: '存款次数',
     depositDate: '存款日期',
     depositExchangeRate: '存款兑换率',
+    depositMemberCount: '存款人数',
     depositSerialNo: '存款流水号',
     depositStatus: '存款状态',
     describe: '描述',
@@ -432,6 +458,7 @@ export default {
     frequency: '频率',
     ftd: '首存',
     ftdAmount: '首存金额',
+    ftdCount: '首存人数',
     ftdTime: '首存时间',
     ftdTxn: '首存交易',
     fundingInfo: '资金信息',
@@ -839,6 +866,7 @@ export default {
     withdrawCode: '提款平台代码',
     withdrawCount: '提款次数',
     withdrawDate: '提款日期',
+    withdrawMemberCount: '提款人数',
     withdrawName: '提款平台名称',
     withdrawPayoutBonus: '提款/派彩/奖金',
     withdrawPlatform: '提款平台',
@@ -1237,6 +1265,7 @@ export default {
     'Deposit Report': '存款报表',
     'Withdraw Report': '提款报表',
     'Finance Report': '财务报表',
+    'Affiliate Report': '代理报表',
     System: '系统',
     'Operator Log': '后台日志',
     'Member Platform': '用户平台设置',
