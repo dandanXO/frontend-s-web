@@ -416,13 +416,17 @@ export default defineComponent({
           const sidParam = FingerprintJS.hashComponents(allComponents);
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
-          if ($q.platform.is.capacitor) {
-            if ($q.platform.is.android) {
-              regForm.regDevice = "ANDROID";
-            } else if ($q.platform.is.ios) {
-              regForm.regDevice = "IOS";
+          if ("standalone" in window.navigator && window.navigator.standalone) {
+            regForm.regDevice = "IOS";
+          } else {
+            regForm.regDevice = Platform.is.mobile ? "H5" : "WEB";
+            if (Platform.is.capacitor) {
+              if (Platform.is.android) {
+                regForm.regDevice = "ANDROID";
+              }
             }
           }
+          
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";
           }
