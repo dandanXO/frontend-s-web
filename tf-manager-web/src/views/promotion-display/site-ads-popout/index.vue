@@ -1,17 +1,18 @@
 <template>
-  <SiteAdsPopoutAddEdit v-if="name === 'Add Ads Popout' || name === 'Edit Ads Popout'" />
+  <router-view />
+  <!-- <SiteAdsPopoutAddEdit v-if="name === 'Add Ads Popout' || name === 'Edit Ads Popout'" /> -->
   <SiteAdsPopoutList v-if="name === 'Ads Popout'" />
 </template>
 
 <script>
 import { computed, defineComponent } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
-import SiteAdsPopoutAddEdit from './site-ads-popout-add-edit'
+// import SiteAdsPopoutAddEdit from './site-ads-popout-add-edit'
 import SiteAdsPopoutList from './site-ads-popout-list'
 
 export default defineComponent({
   components: {
-    SiteAdsPopoutAddEdit,
+    // SiteAdsPopoutAddEdit,
     SiteAdsPopoutList,
   },
   setup() {
