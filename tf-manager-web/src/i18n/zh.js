@@ -339,7 +339,7 @@ export default {
     dailyMemberSuccessWithdraw: '每日用户成功提款数量',
     dailySuccessPercentage: '每日成功存款比率',
     dailyTotalAmount: '每日总金额',
-    dailyTotalRedeem: '每日总领取金额',
+    dailyTotalRedeem: '每日总领取次数',
     dayWithdrawCount: '每日提款次数',
     date: '日期',
     dateReceived: '领取日期',
