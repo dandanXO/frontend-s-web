@@ -353,7 +353,7 @@
   >
     <div
       class="promo-banner-container"
-      :class="homePopupType === 'TEXT' ? 'promo-text' : 'promo-img'"
+      :class="homePopupType === 'TEXT ' ? 'promo-text' : 'promo-img'"
     >
       <div
         class="promo-banner-content"
@@ -941,11 +941,27 @@ export default defineComponent({
     border-bottom: 0;
   }
 
+  .el-dialog__close {
+    background-color: rgba(255, 255, 255, 0.6);
+    width: 32px;
+    height: 32px;
+    color: #222a34 !important;
+    font-size: 24px !important;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
+  }
+
   .el-dialog__body {
     // padding: 40px 2px 0;
     box-shadow: none;
     padding: 0px 2px 0;
     background: transparent;
+  }
+
+  .el-dialog__headerbtn {
+    top: 5px !important;
+    right: 5px !important;
   }
 }
 
@@ -954,6 +970,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  border-radius: 20px;
 
   &.promo-img {
     background: transparent;
@@ -964,7 +981,7 @@ export default defineComponent({
   }
 
   .promo-banner-img {
-    margin-top: 40px;
+    // margin-top: 55px;
     width: 100%;
     img {
       display: block;

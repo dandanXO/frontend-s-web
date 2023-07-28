@@ -24,12 +24,16 @@
             :clearable="false"
           />
         </el-form-item>
+        <el-form-item label="只跑日月汇总" prop="onlyMonth" v-if="hasRole(['ADMIN'])">
+          <el-checkbox v-model="form.onlyMonth" />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button
             v-if="hasRole(['ADMIN'])"
             type="success"
             @click="summary"
             style="margin-left: 10px"
+            :disabled="form.date.length === 0"
           >
             {{ t('fields.generateSummary') }}
           </el-button>
@@ -50,7 +54,8 @@ import moment from "moment";
 const { t } = useI18n();
 const summaryForm = ref(null);
 const form = reactive({
-  date: []
+  date: [],
+  onlyMonth: false
 });
 
 function disabledDate(time) {
