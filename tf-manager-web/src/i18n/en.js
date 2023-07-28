@@ -294,6 +294,7 @@ export default {
     commissionPercent: 'Commission %',
     commissionRate: 'Commission Rate',
     commitTime: 'Commit Time',
+    companyProfit: 'Company Profit',
     componentName: 'Component Name',
     componentPath: 'Component Path',
     composeMessage: 'Compose Message',

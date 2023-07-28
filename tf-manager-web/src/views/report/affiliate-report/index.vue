@@ -105,8 +105,8 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="recordTime" :label="t('fields.recordTime')" align="center" min-width="110" />
-      <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="110">
+      <el-table-column prop="recordTime" :label="t('fields.recordTime')" align="center" min-width="110" fixed="left" />
+      <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="110" fixed="left">
         <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
           <router-link :to="`/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`">
             <el-link type="primary">{{ scope.row.loginName }}</el-link>
@@ -152,6 +152,11 @@
       <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" min-width="120">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="companyProfit" :label="t('fields.companyProfit')" align="center" min-width="120">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.bet - scope.row.payout, type: 'money'}" />
         </template>
       </el-table-column>
     </el-table>

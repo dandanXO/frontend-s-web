@@ -298,6 +298,7 @@ export default {
     composeMessage: '撰写邮件',
     consumingTime: '耗费时间',
     commitTime: '订单日期',
+    companyProfit: '公司盈利',
     confirm: '确认',
     confirmAndImport: '确认并导入',
     confirmNewPassword: '确认新密码',
