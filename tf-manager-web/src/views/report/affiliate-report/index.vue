@@ -192,10 +192,10 @@ const siteList = reactive({
 const uiControl = reactive({
   progressBarVisible: false,
   affiliateLevel: [
-    { key: 1, displayName: t('affiliate.AFFILIATE'), value: "AFFILIATE" },
-    { key: 2, displayName: t('affiliate.SUPER_AFFILIATE'), value: "SUPER_AFFILIATE" },
-    { key: 3, displayName: t('affiliate.MASTER_AFFILIATE'), value: "MASTER_AFFILIATE" },
-    { key: 4, displayName: t('affiliate.CHIEF_AFFILIATE'), value: "CHIEF_AFFILIATE" }
+    { key: 1, displayName: t('affiliate.level.AFFILIATE'), value: "AFFILIATE" },
+    { key: 2, displayName: t('affiliate.level.SUPER_AFFILIATE'), value: "SUPER_AFFILIATE" },
+    { key: 3, displayName: t('affiliate.level.MASTER_AFFILIATE'), value: "MASTER_AFFILIATE" },
+    { key: 4, displayName: t('affiliate.level.CHIEF_AFFILIATE'), value: "CHIEF_AFFILIATE" }
   ],
   colors: [
     { color: '#f56c6c', percentage: 30 },
