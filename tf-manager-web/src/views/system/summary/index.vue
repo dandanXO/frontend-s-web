@@ -68,6 +68,7 @@ function summary() {
     if (valid) {
       const formCopy = { ...form };
       formCopy.date = form.date.join(",");
+      formCopy.isAff = false;
       await generateSummary(formCopy);
       ElMessage({ message: t('message.summarySuccess'), type: "success" });
     }
