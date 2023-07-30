@@ -465,7 +465,7 @@ export default defineComponent({
     };
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`;
+      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`;
     };
 
     const submitReminder = () => {
