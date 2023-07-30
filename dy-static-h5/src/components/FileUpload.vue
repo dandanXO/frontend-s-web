@@ -36,17 +36,20 @@ export default defineComponent({
     const uploadFile = async (uploadedItem) => {
       if (uploadedItem) {
         const formData = new FormData();
-        formData.append("file", file.value);
+        formData.append("files", file.value);
         try {
           const response = await fetch(
-            `https://fxlmnp.wallykrooger.com/upload?token=${store.token}`,
+            `${process.env.RST_API}/session/image/uploadOrder`,
             {
               method: "POST",
               body: formData,
+              headers: {
+                token: `${store.token}`
+              }
             }
           );
           const data = await response.json();
-          if (data.status === "success") {
+          if (data.status === 0) {
             emit("photoResponse", data.data);
             $q.notify({
               type: "positive",
