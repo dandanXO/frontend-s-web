@@ -1,7 +1,7 @@
 <template>
   <div class="inputs-wrap">
     <el-date-picker
-      v-model="transferDate"
+      v-model="times"
       format="DD/MM/YYYY"
       value-format="YYYY-MM-DD"
       size="small"
@@ -36,7 +36,7 @@
                        align="center" min-width="180"
       >
         <template #default="scope">
-          <span v-if="scope.row.type !== null">{{ scope.row.type }}</span>
+          <span v-if="scope.row.type !== null">{{ t(transferTypeTrans[scope.row.type]) }}</span>
           <span v-if="scope.row.type === null">-</span>
         </template>
       </el-table-column>
@@ -100,6 +100,10 @@ export default defineComponent({
     const site = reactive({
       id: route.query.site
     });
+    const transferTypeTrans = {
+      DEPOSIT: 'fields.transferIn',
+      WITHDRAW: 'fields.transferOut'
+    };
     const shortcuts = [
       {
         text: t('fields.today'),
@@ -191,7 +195,7 @@ export default defineComponent({
       loading: false
     });
     const formData = reactive({
-      transferDate: [defaultStartDate, defaultEndDate],
+      times: [defaultStartDate, defaultEndDate],
       siteId: request.siteId,
       size: 20,
       current: 1,
@@ -208,8 +212,8 @@ export default defineComponent({
           query[key] = value;
         }
       });
-      if (formData.transferDate && formData.transferDate.length === 2) {
-        query.transferDate = formData.transferDate.join(",");
+      if (formData.times && formData.times.length === 2) {
+        query.times = formData.times.join(",");
       }
       query.siteId = site.id;
       query.memberId = props.mbrId;
@@ -242,7 +246,8 @@ export default defineComponent({
       ...toRefs(memberData),
       ...toRefs(formData),
       sort,
-      loadData
+      loadData,
+      transferTypeTrans
     };
   }
 });
