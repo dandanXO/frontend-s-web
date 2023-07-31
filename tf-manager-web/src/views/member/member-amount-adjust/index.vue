@@ -326,6 +326,7 @@
             </router-link>
           </template>
         </el-table-column>
+      <el-table-column prop="type" :label="t('fields.type')" min-width="180" />
       <el-table-column prop="cause" :label="t('fields.cause')" min-width="180" />
       <el-table-column prop="amount" :label="t('fields.amount')" min-width="120">
         <template #default="scope">
