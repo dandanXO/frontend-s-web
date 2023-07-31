@@ -326,7 +326,12 @@
             </router-link>
           </template>
         </el-table-column>
-      <el-table-column prop="type" :label="t('fields.type')" min-width="180" />
+      <el-table-column prop="type" :label="t('fields.type')" min-width="180">
+		<template #default="scope">
+            <span v-if="scope.row.amount < 0">{{ t('fields.deduct') }}</span>
+			<span v-else>{{ t('fields.add') }}</span>
+          </template>
+      </el-table-column>
       <el-table-column prop="cause" :label="t('fields.cause')" min-width="180" />
       <el-table-column prop="amount" :label="t('fields.amount')" min-width="120">
         <template #default="scope">
