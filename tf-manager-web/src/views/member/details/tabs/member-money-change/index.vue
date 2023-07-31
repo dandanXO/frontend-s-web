@@ -117,6 +117,10 @@
               $
               <span v-formatter="{data: scope.row.amount, type: 'money'}" />
             </span>
+            <span v-else-if="scope.row.type === 'WITHDRAW_FAIL'" style="color: red">
+              $
+              <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+            </span>
             <span v-else>
               $
               <span v-formatter="{data: scope.row.amount, type: 'money'}" />
