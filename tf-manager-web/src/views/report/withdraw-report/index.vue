@@ -356,7 +356,7 @@ function disabledDate(time) {
   return (
     time.getTime() <=
       moment(new Date())
-        .subtract(1, 'weeks')
+        .subtract(2, 'months')
         .format('x') || time.getTime() > new Date().getTime()
   )
 }

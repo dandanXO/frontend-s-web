@@ -467,7 +467,7 @@ const uiControl = reactive({
 let chooseRecord = []
 
 const startDate = new Date()
-startDate.setDate(startDate.getDate())
+startDate.setDate(startDate.getDate() - 7)
 const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
 function convertDateToStart(date) {
