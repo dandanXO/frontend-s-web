@@ -333,6 +333,7 @@ import {
   getMemberWithdrawRecordTotalAmount,
 } from '../../../../../api/member'
 import { useI18n } from "vue-i18n";
+import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -342,122 +343,7 @@ const props = defineProps({
   },
 })
 
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('day')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'days')
-          .startOf('day')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'days')
-          .endOf('day')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('isoWeek')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'weeks')
-          .startOf('isoWeek')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'weeks')
-          .endOf('isoWeek')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('month')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'months')
-          .startOf('month')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'months')
-          .endOf('month')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.last3Months'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(2, 'months')
-          .startOf('month')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-]
-
+const shortcuts = getShortcuts(t);
 const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDateToStart(startDate)
@@ -496,17 +382,6 @@ const statusList = reactive({
 const sort = column => {
   request.orderBy = column.prop
   loadWithdrwalInfo()
-}
-function convertDateToStart(date) {
-  var m = moment(date)
-  m.set({ hour: 0, minute: 0, second: 0 })
-  return m.format('YYYY-MM-DD HH:mm:ss');
-}
-
-function convertDateToEnd(date) {
-  var m = moment(date)
-  m.set({ hour: 23, minute: 59, second: 59 })
-  return m.format('YYYY-MM-DD HH:mm:ss');
 }
 
 function disabledDate(time) {
