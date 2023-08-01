@@ -1425,7 +1425,7 @@ export default defineComponent({
     const noticeTitle = ref('')
     const openPopup = (noticeType) => {
       if (noticeType) {
-        announcementActive.value = '0'
+        announcementActive.value = '3'
         noticeTitle.value = noticeType.title
         isStationNotice.value = true
       }

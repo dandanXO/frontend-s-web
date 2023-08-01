@@ -13,7 +13,7 @@
       v-show="!logoShow"
       :src="src"
       id="game-iframe"
-      scrolling="no"
+      :scrolling="iframeScroll ? 'yes' : 'no'"
       frameborder="0"
       class="game-iframe"
     ></iframe>
@@ -160,6 +160,7 @@ const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
+const iframeScroll = ref(false)
 
 const transferInfo = ref({
   amount: null,
@@ -198,6 +199,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     if (store.token) {
       console.log(gameCode);
       console.log(platformCode);
+      if(gameCode === 'bbkeno_lobby_pc') {
+        iframeScroll.value = true;
+      }
 
       if (platformCode === "onlyPlatform") {
         launchSessionGame(gameCode, {

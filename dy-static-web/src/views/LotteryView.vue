@@ -101,7 +101,7 @@ export default defineComponent({
     const store = userStore();
 
     const platforms = ref([
-    {
+      {
         code: "TCG",
         name: "TCG",
         image: "tcg",
@@ -119,7 +119,7 @@ export default defineComponent({
       },
       {
         code: "SGWin",
-        name: "SG-WIN",
+        name: "双赢",
         image: "sgwin",
         gameCode: "imlotto30000",
         message:
@@ -228,9 +228,11 @@ export default defineComponent({
     };
 
     const openGame = (gameName, code, gameCode) => {
-      // console.log(gameName);
-      // console.log(gameCode);
-      liveGame.value.open(gameName, code, gameCode);
+      // if (code === "SGWin") {
+        // router.push("/lottery/SGWin");
+      // } else {
+        liveGame.value.open(gameName, code, gameCode);
+      // }
     };
 
     onMounted(() => {
@@ -265,7 +267,6 @@ export default defineComponent({
   }
 });
 </script>
-
 
 <style scoped lang="scss">
 .game-container {
@@ -537,7 +538,6 @@ export default defineComponent({
   height: 760px;
   z-index: 0;
 }
-
 
 .linear-blue {
   background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
