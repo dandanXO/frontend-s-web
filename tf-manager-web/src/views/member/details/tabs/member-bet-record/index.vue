@@ -259,6 +259,7 @@ import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
+import { getShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -300,84 +301,7 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(
-        moment(start)
-          .startOf('day')
-          .format('x')
-      );
-      end.setTime(
-        moment(end)
-          .endOf('day')
-          .format('x')
-      );
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').startOf('day').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').endOf('day').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('month').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.last3Months'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(2, 'months').startOf('month').format('x'));
-      return [start, end];
-    }
-  }
-];
-
+const shortcuts = getShortcuts(t);
 const exportPercentage = ref(0);
 
 const EXPORT_HEADER = ['Bet ID', 'Transaction ID', 'Login Name', 'Platform', 'Bet', 'Payout', 'Before Balance', 'After Balance',

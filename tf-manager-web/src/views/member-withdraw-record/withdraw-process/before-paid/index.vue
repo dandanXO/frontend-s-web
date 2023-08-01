@@ -391,7 +391,7 @@ import {
 import { ElMessage } from 'element-plus'
 import { hasPermission } from '../../../../utils/util'
 import { useI18n } from "vue-i18n";
-
+import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 const { t } = useI18n();
 const searchForm = ref(null)
 const vipList = reactive({
@@ -408,55 +408,7 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('day')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'days')
-          .startOf('day')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'days')
-          .endOf('day')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('isoWeek')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-]
-
+const shortcuts = getShortcuts(t);
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -470,18 +422,6 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate() - 7)
 const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
-function convertDateToStart(date) {
-  var m = moment(date)
-  m.set({ hour: 0, minute: 0, second: 0 })
-  return m.format('YYYY-MM-DD HH:mm:ss');
-}
-
-function convertDateToEnd(date) {
-  var m = moment(date)
-  m.set({ hour: 23, minute: 59, second: 59 })
-  return m.format('YYYY-MM-DD HH:mm:ss');
-}
-
 const request = reactive({
   size: 20,
   current: 1,

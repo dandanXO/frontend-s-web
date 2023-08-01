@@ -209,23 +209,23 @@
               <div class="platform-title-sub">SPORTS</div>
             </div>
             <div class="back">
-              <a
+              <!-- <a
                 class="game-platform"
                 @click="openGame('东赢体育', 'DY', '')"
                 style="margin-top: 170px; margin-left: 30px;"
               >
                 <img src="../assets/home/dy.png" />
                 <div>东赢体育</div>
-              </a>
-              <!-- <div
+              </a> -->
+              <div
                 class="game-platform"
                 @click="openGame('IM体育', 'IM', '')"
-                style="margin-left: 22px"
+                style="margin-top: 170px; margin-left: 30px;"
               >
                 <img src="../assets/home/dy.png" />
                 <div>IM体育</div>
               </div>
-              <div
+              <!-- <div
                 class="game-platform"
                 @click="openGame('CR体育', 'CR', '')"
                 style="margin-left: 6px"
@@ -253,7 +253,7 @@
               </div>
               <div
                 class="game-platform"
-                @click="openGame('BBIN彩票', 'BBINDY', 'bbkeno_lobby_pc')"
+                @click="openGame('BBIN彩票', 'BBINDY', 'bbkeno_lobby_pc', 'scroll')"
                 style="margin-left: 19px"
               >
                 <img src="../assets/home/bbin.png" />
@@ -313,7 +313,7 @@
               </router-link>
               <router-link
                 class="game-platform"
-                to="/slot"
+                to="/game"
                 style="margin-left: 21px"
               >
                 <img src="../assets/home/index_slot.png" />
@@ -760,8 +760,8 @@ export default defineComponent({
       }
     ]);
     const isImportantAnnoucementModal = ref(false);
-    const openGame = (gameName, platType, gameCode) => {
-      gameMenu.value.open(gameName, platType, gameCode);
+    const openGame = (gameName, platType, gameCode, scrollingState) => {
+      gameMenu.value.open(gameName, platType, gameCode, scrollingState);
     };
     const setWithExpiry = (key, value, interval) => {
       const now = new Date();

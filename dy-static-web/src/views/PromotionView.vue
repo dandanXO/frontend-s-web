@@ -116,9 +116,9 @@ export default defineComponent({
     });
     const promoTypes = ref([
       { code:"ALL", img: 'all', label: '所有优惠' },
-      { code: "ESPORTS", img: 'esport', label: '电竞'},
-      { code: "SPORTS", img: 'sport', label: '体育'},
-      { code: "POKER", img: 'poker', label: '棋牌'},
+      { code: "ESPORT", img: 'esport', label: '电竞'},
+      { code: "SPORT", img: 'sport', label: '体育'},
+      // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
       { code: "FISH", img: 'game', label: '老虎机/捕鱼'},
     ]);

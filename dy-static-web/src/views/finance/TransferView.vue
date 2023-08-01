@@ -224,15 +224,18 @@ export default defineComponent({
             if (res.code === 0) {
               p.status = '已转出'
               cancelTransfer();
+              store.getBalance();
+              refreshBalance(p.code);
             } else {
               p.status = '转出失败'
+              store.getBalance();
+              refreshBalance(p.code);
             }
           })
         } else {
           p.status = '0.00'
         }
-        store.getBalance();
-        refreshBalance(p.code);
+
       });
     }
 
@@ -265,7 +268,7 @@ export default defineComponent({
           store.getBalance();
         } else {
             loadBalance(plat).then((response) => {
-              console.log(plat)
+              console.log(plat, response.data)
               if (plaform) {
                 plaform.amount = response.data;
               }
@@ -276,8 +279,7 @@ export default defineComponent({
               console.log(e)
             });
         }
-      }
-      , 1000);
+      }, 1000);
     };
     const loadPlatform = () => {
       if(store.memberType === 'TEST') {

@@ -392,7 +392,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { claimBonusItem } from "@/api/index/promo";
@@ -408,6 +408,7 @@ export default defineComponent({
     const store = userStore();
     const selectedVIP = ref(0);
     const btnIsDisabled = ref(false);
+    const vipLevel = ref("");
 
     const claimBirthdayBonus = (vip) => {
       alert(vip.level);
@@ -737,11 +738,20 @@ export default defineComponent({
         selectedVIP.value++;
       }
     };
+
+    onMounted(() => {
+      vipLevel.value = store.vip.replace("VIP", "");
+      if (vipLevel.value >= 1) {
+        selectedVIP.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
+      }
+    });
+
     return {
       vipList,
       claimBirthdayBonus,
       store,
       selectedVIP,
+      vipLevel,
       reduce,
       plus,
       onVIPButtonClick,

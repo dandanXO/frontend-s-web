@@ -48,7 +48,7 @@ export default defineComponent({
       {
         code: "SGWin",
         icon: "sgwin",
-        label: "SG-WIN彩票",
+        label: "双赢彩票",
         slogan: "SGWin ",
         gameCode: "imlotto30000"
       }

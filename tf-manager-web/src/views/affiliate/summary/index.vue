@@ -243,6 +243,7 @@ import moment from 'moment';
 import { getAffiliateSummary, getAffiliateSummaryNewMember } from '../../../api/affiliate-record';
 import { getSiteListSimple } from "../../../api/site";
 import { useI18n } from "vue-i18n";
+import { getShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n();
 const siteList = reactive({
@@ -253,79 +254,7 @@ const newMembers = reactive({
   list: []
 });
 
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(
-        moment(start)
-          .startOf('day')
-          .format('x')
-      )
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').startOf('day').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').endOf('day').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('month').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.last3Months'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(2, 'months').startOf('month').format('x'));
-      return [start, end];
-    }
-  }
-];
-
+const shortcuts = getShortcuts(t);
 const uiControl = reactive({
   dialogVisible: false,
   progressBarVisible: false,
