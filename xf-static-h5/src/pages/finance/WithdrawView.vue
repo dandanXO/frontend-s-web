@@ -403,7 +403,7 @@ export default defineComponent({
                 withdrawState.bankCardList.push(element);
               }
             } else {
-              if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+              if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
                 withdrawState.bankCardList.push(element);
               }
             }
