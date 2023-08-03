@@ -12,3 +12,7 @@ export const preCheckForCreate = (memberMainInfo) => {
 export const createMemberEditLog = (memberEditLog) => {
   return https().request("/member-edit-log/create", Method.POST, memberEditLog, ContentType.json);
 };
+
+export const check = (id, site) => {
+  return https().request("/member-edit-log/checked/" + id + "/" + site, Method.POST);
+};
