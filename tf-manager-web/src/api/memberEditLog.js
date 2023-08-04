@@ -16,3 +16,7 @@ export const createMemberEditLog = (memberEditLog) => {
 export const check = (id, site) => {
   return https().request("/member-edit-log/checked/" + id + "/" + site, Method.POST);
 };
+
+export const fail = (id, site) => {
+  return https().request("/member-edit-log/failed/" + id + "/" + site, Method.POST);
+};
