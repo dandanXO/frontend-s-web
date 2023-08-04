@@ -99,7 +99,7 @@
         <el-form-item ref="cardNumber" prop="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            :placeholder="selectedBankType === 'Bank' ? t('fields.cardNumber') : t('fields.usdtWalletAddress')"
+            :placeholder="selectedBankType === 'Bank' ? t('fields.cardNumber') : (selectedBankType === 'Crypto' ? t('fields.usdtWalletAddress') : t('fields.ewallet'))"
           />
         </el-form-item>
         <el-form-item ref="cardNumber" prop="cardAddress" v-if="selectedBankType === 'Bank'">
@@ -136,7 +136,8 @@ const selectedBankType = ref("Bank")
 
 const bankTypes = [
   { key: 1, displayName: t('fields.bank'), value: 'Bank' },
-  { key: 2, displayName: t('fields.crypto'), value: 'Crypto' }
+  { key: 2, displayName: t('fields.crypto'), value: 'Crypto' },
+  { key: 3, displayName: t('fields.ewallet'), value: 'e-Wallet' }
 ]
 const personalState = reactive({
   bankCardList: []
@@ -190,11 +191,34 @@ const validateBankLength = async (r, v) => {
   } else if (selectedBankType.value === 'Crypto') {
     min = 34;
     max = 36;
+  } else if (selectedBankType.value === 'e-Wallet') {
+    min = 34;
+    max = 34;
+    var selectedCode = null
+    banksList.value.forEach(bank => {
+      if (bank.id === bankCardInfo.bankId) {
+        selectedCode = bank.code
+      }
+    });
+    if (selectedCode === 'KDPAY') {
+      min = 34;
+      max = 34;
+    } else if (selectedCode === 'EBPAY') {
+      min = 34;
+      max = 34;
+    } else if (selectedCode === 'OKPAY') {
+      min = 16;
+      max = 16;
+    }
   }
   if (v === '') {
     return Promise.reject(new Error(t('message.requiredCardNumber')));
   } else if (v.length < min || v.length > max) {
-    return Promise.reject(new Error(t('message.lengthShouldBe') + min + '-' + max));
+    if (min === max) {
+      return Promise.reject(new Error(t('message.lengthShouldBe') + min));
+    } else {
+      return Promise.reject(new Error(t('message.lengthShouldBe') + min + '-' + max));
+    }
   } else {
     return Promise.resolve();
   }
@@ -332,9 +356,9 @@ const selectBankType = () => {
     if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
       banksList.value.push(element);
     }
-    // if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
-    //   banksList.value.push(element);
-    // }
+    if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
+      banksList.value.push(element);
+    }
   })
 }
 const bankCardModalState = reactive({

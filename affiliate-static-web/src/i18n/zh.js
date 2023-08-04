@@ -102,6 +102,7 @@ export default {
     email: "邮箱",
     endDate: "结束日期",
     enterTheWithdrawalAmount: "请输入提款金额",
+    ewallet: "电子钱包",
     finishDate: "订单处理时间",
     firstDepositUsers: "首充人数",
     gameName: "游戏名称",
