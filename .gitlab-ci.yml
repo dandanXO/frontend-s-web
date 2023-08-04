@@ -25,20 +25,6 @@ default:
     - npm install
     - npm run build
 
-.p8s0-rules:
-  rules:
-    - &p8s0-rules
-      if: '$CI_COMMIT_BRANCH == "prod/p8s0"'
-      changes:
-        - $PROJECT/**/*
-
-.p8s1-rules:
-  rules:
-    - &p8s1-rules
-      if: '$CI_COMMIT_BRANCH == "prod/p8s1"'
-      changes:
-        - $PROJECT/**/*
-
 .build-projects:
   stage: build
   cache:
@@ -50,10 +36,10 @@ default:
    expire_in: 24 hrs
    exclude:
      - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "prod/p8s0" || $CI_COMMIT_BRANCH == "prod/p8s1"'
-#      changes:
-#        - $PROJECT/**/*
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+      changes:
+        - $PROJECT/**/*
 
 .docker-build:
   stage: build-image
@@ -63,10 +49,10 @@ default:
     - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $CI_REGISTRY_IMAGE:$PROJECT-${CI_COMMIT_REF_NAME/\//-}-$(date +%s) . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "prod/p8s0" || $CI_COMMIT_BRANCH == "prod/p8s1"'
-#      changes:
-#        - $PROJECT/**/*
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+      changes:
+        - $PROJECT/**/*
 
 stages:
   - build
@@ -76,9 +62,6 @@ build-image-pt-launch:
   extends: .docker-build
   variables:
     PROJECT: pt-launch
-  rules:
-    - <<: *p8s0-rules
-    - <<: *p8s1-rules
 
 #===============================================================================================
 
@@ -88,15 +71,6 @@ build-image-xf-landing:
     - .p8s1-rules
   variables:
     PROJECT: xf-landing
-
-#===============================================================================================
-
-build-image-dy-download:
-  extends:
-    - .docker-build
-    - .p8s0-rules
-  variables:
-    PROJECT: dy-download
 
 #===============================================================================================
 
@@ -128,9 +102,6 @@ build-tf-manager-web:
     - npm run build:prod
   variables:
     PROJECT: tf-manager-web
-  rules:
-    - <<: *p8s0-rules
-    - <<: *p8s1-rules
 
 build-image-tf-manager-web:
   extends: .docker-build
@@ -138,9 +109,6 @@ build-image-tf-manager-web:
     PROJECT: tf-manager-web
   needs:
     - build-tf-manager-web
-  rules:
-    - <<: *p8s0-rules
-    - <<: *p8s1-rules
 
 #===============================================================================================
 
@@ -182,64 +150,6 @@ build-image-xf-static-web:
 
 #===============================================================================================
 
-build-dy-static-h5:
-  extends:
-    - .build-projects
-    - .build-h5
-    - .p8s0-rules
-  variables:
-    PROJECT: dy-static-h5
-
-build-image-dy-static-h5:
-  extends:
-    - .docker-build
-    - .p8s0-rules
-  variables:
-    PROJECT: dy-static-h5
-  needs:
-    - build-dy-static-h5
-
-#===============================================================================================
-
-build-dy-static-web:
-  extends:
-    - .build-projects
-    - .build-web
-    - .p8s0-rules
-  variables:
-    PROJECT: dy-static-web
-
-build-image-dy-static-web:
-  extends:
-    - .docker-build
-    - .p8s0-rules
-  variables:
-    PROJECT: dy-static-web
-  needs:
-    - build-dy-static-web
-
-
-#===============================================================================================
-
-build-dy-static-new-h5:
-  extends:
-    - .build-projects
-    - .build-h5
-    - .p8s0-rules
-  variables:
-    PROJECT: dy-static-new-h5
-
-build-image-dy-static-new-h5:
-  extends:
-    - .docker-build
-    - .p8s0-rules
-  variables:
-    PROJECT: dy-static-new-h5
-  needs:
-    - build-dy-static-new-h5
-
-#===============================================================================================
-
 build-affiliate-static-web:
   extends:
     - .build-projects
@@ -250,9 +160,6 @@ build-affiliate-static-web:
     - npm run build:prod
   variables:
     PROJECT: affiliate-static-web
-  rules:
-    - <<: *p8s0-rules
-    - <<: *p8s1-rules
 
 build-image-affiliate-static-web:
   extends: .docker-build
@@ -260,9 +167,6 @@ build-image-affiliate-static-web:
     PROJECT: affiliate-static-web
   needs:
     - build-affiliate-static-web
-  rules:
-    - <<: *p8s0-rules
-    - <<: *p8s1-rules
 
 #===============================================================================================
 
@@ -270,5 +174,3 @@ build-image-xf-tutorials:
   extends: .docker-build
   variables:
     PROJECT: xf-tutorials
-  rules:
-    - <<: *p8s1-rules
