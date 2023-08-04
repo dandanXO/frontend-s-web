@@ -37,7 +37,7 @@ default:
    exclude:
      - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+    - if: '$CI_COMMIT_BRANCH == "staging/p8s1" || $CI_COMMIT_BRANCH == "prod/p8s1"'
       changes:
         - $PROJECT/**/*
 
@@ -50,7 +50,7 @@ default:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+    - if: '$CI_COMMIT_BRANCH == "staging/p8s1" || $CI_COMMIT_BRANCH == "prod/p8s1"'
       changes:
         - $PROJECT/**/*
 
@@ -94,7 +94,7 @@ build-tf-manager-web:
     - cd $PROJECT
     - npm install
     - npm run build:prod
-    - if [ "$CI_COMMIT_BRANCH" == "dev" ]; then npm run build:dev; else npm run build:prod; fi
+    - if [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then npm run build:dev; else npm run build:prod; fi
   variables:
     PROJECT: tf-manager-web
 
