@@ -102,6 +102,7 @@ export default {
     email: "Email",
     endDate: "End Date",
     enterTheWithdrawalAmount: "Enter the withdrawal amount",
+    ewallet: "e-Wallet",
     finishDate: "Finish Date",
     firstDepositUsers: "First Deposit Users",
     gameName: "Game Name",

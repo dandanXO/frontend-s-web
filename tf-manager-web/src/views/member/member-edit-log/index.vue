@@ -209,12 +209,32 @@
       size="small"
       highlight-current-row
     >
-      <el-table-column prop="loginName" :label="t('fields.loginName')" />
-      <el-table-column prop="type" :label="t('fields.editType')" />
-      <el-table-column prop="beforeInfo" :label="t('fields.beforeEdit')" />
-      <el-table-column prop="afterInfo" :label="t('fields.afterEdit')" />
+      <el-table-column
+        prop="loginName"
+        :label="t('fields.loginName')"
+        min-width="100"
+      />
+      <el-table-column
+        prop="type"
+        :label="t('fields.editType')"
+        min-width="140"
+      />
+      <el-table-column
+        prop="beforeInfo"
+        :label="t('fields.beforeEdit')"
+        min-width="120"
+      />
+      <el-table-column
+        prop="afterInfo"
+        :label="t('fields.afterEdit')"
+        min-width="120"
+      />
       <el-table-column prop="siteName" :label="t('fields.site')" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')">
+      <el-table-column
+        prop="createTime"
+        :label="t('fields.createTime')"
+        min-width="140"
+      >
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
           <!-- eslint-disable -->
@@ -229,6 +249,74 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
+      <el-table-column
+        prop="checkedTime"
+        :label="t('fields.checkDate')"
+        min-width="140"
+      >
+        <template #default="scope">
+          <span v-if="scope.row.checkedTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.checkedTime !== null"
+            v-formatter="{
+              data: scope.row.checkedTime,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="checkedBy"
+        :label="t('fields.checkBy')"
+        align="center"
+        min-width="100"
+      >
+        <template #default="scope">
+          <span v-if="scope.row.checkedBy !== null && scope.row.status === '1'">
+            {{ scope.row.checkedBy }}
+          </span>
+          <span v-else>-</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="status"
+        :label="t('fields.status')"
+        align="center"
+        width="160"
+      >
+        <template #default="scope">
+          <el-tag v-if="scope.row.status === '0'" type="danger">
+            {{ t('editCheckedStatus.' + scope.row.status) }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === '1'" type="success">
+            {{ t('editCheckedStatus.' + scope.row.status) }}
+          </el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        :label="t('fields.operate')"
+        align="center"
+        min-width="100"
+        fixed="right"
+      >
+        <template #default="scope">
+          <el-button
+            v-if="
+              scope.row.status === '0' &&
+                hasPermission(['sys:member:editlog:check'])
+            "
+            size="mini"
+            type="primary"
+            @click="toCheck(scope.row)"
+          >
+            {{ t('fields.editCheck') }}
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
   <el-pagination
@@ -242,20 +330,22 @@
 </template>
 
 <script setup>
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
 import {
   createMemberEditLog,
   getMemberEditLogList,
   preCheckForCreate,
+  check,
 } from '../../../api/memberEditLog'
 import { required } from '../../../utils/validate'
 import { useI18n } from 'vue-i18n'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
-import { getShortcuts } from "@/utils/datetime";
+import { getShortcuts } from '@/utils/datetime'
+import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
 const memberMainInfoForm = ref(null)
@@ -267,7 +357,7 @@ const siteList = reactive({
   list: [],
 })
 
-const shortcuts = getShortcuts(t);
+const shortcuts = getShortcuts(t)
 const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDate(startDate)
@@ -325,7 +415,7 @@ function resetQuery() {
   request.loginName = null
   request.type = null
   request.createBy = null
-  request.siteId = siteList.list[0].id;
+  request.siteId = siteList.list[0].id
   request.createTime = [defaultStartDate, defaultEndDate]
 }
 
@@ -418,6 +508,18 @@ async function loadMemberEditLog() {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+}
+
+async function toCheck(val) {
+  ElMessageBox.confirm(t('message.confirmToCheck'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await check(val.id, request.siteId)
+    await loadMemberEditLog()
+    ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  })
 }
 
 onMounted(async () => {

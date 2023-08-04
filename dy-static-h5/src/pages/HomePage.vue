@@ -1551,6 +1551,7 @@ export default defineComponent({
       if (noticeType) {
         noticeTitle.value = "Announcement";
         isStationNotice.value = true;
+        activeKey.value = announcementList.value ? announcementList.value[0].typeId : null;
       }
     };
     const gotoPromo = (banner) => {

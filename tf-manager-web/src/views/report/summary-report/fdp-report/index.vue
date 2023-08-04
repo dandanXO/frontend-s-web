@@ -24,7 +24,7 @@
           icon="el-icon-download"
           size="mini"
           type="primary"
-          v-permission="['sys:report:summary:active:export']"
+          v-permission="['sys:report:summary:fdp:export']"
           @click="exportExcel"
         >
           {{ t('fields.exportToExcel') }}
