@@ -84,6 +84,7 @@ export default {
   editCheckedStatus: {
     0: '未审核',
     1: '已更改',
+    2: '审核失败',
   },
   transfer: {
     status: {
