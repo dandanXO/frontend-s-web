@@ -94,7 +94,7 @@ build-tf-manager-web:
     - cd $PROJECT
     - npm install
     - npm run build:prod
-    - if [ "$CI_COMMIT_BRANCH" == "dev" ]; then npm run build:dev; npm run build:prod; fi
+    - if [ "$CI_COMMIT_BRANCH" == "dev" ]; then npm run build:dev; else npm run build:prod; fi
   variables:
     PROJECT: tf-manager-web
 
