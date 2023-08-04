@@ -66,27 +66,21 @@ build-image-pt-launch:
 #===============================================================================================
 
 build-image-xf-landing:
-  extends:
-    - .docker-build
-    - .p8s1-rules
+  extends: .docker-build
   variables:
     PROJECT: xf-landing
 
 #===============================================================================================
 
 build-image-xf-download:
-  extends:
-    - .docker-build
-    - .p8s1-rules
+  extends: .docker-build
   variables:
     PROJECT: xf-download
 
 #===============================================================================================
 
 build-image-xf-maintenance:
-  extends:
-    - .docker-build
-    - .p8s1-rules
+  extends: .docker-build
   variables:
     PROJECT: xf-maintenance
 
@@ -116,14 +110,11 @@ build-xf-static-h5:
   extends:
     - .build-projects
     - .build-h5
-    - .p8s1-rules
   variables:
     PROJECT: xf-static-h5
 
 build-image-xf-static-h5:
-  extends:
-    - .docker-build
-    - .p8s1-rules
+  extends: .docker-build
   variables:
     PROJECT: xf-static-h5
   needs:
@@ -135,14 +126,11 @@ build-xf-static-web:
   extends:
     - .build-projects
     - .build-web
-    - .p8s1-rules
   variables:
     PROJECT: xf-static-web
 
 build-image-xf-static-web:
-  extends:
-    - .docker-build
-    - .p8s1-rules
+  extends: .docker-build
   variables:
     PROJECT: xf-static-web
   needs:
