@@ -131,12 +131,12 @@
             <div class="acct-nav-label">交易记录</div>
           </div>
         </router-link>
-        <router-link to="/account/invite">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.png" />
-            <div class="acct-nav-label">分享好友</div>
-          </div>
-        </router-link>
+<!--        <router-link to="/account/invite">-->
+<!--          <div class="acct-nav-item">-->
+<!--            <img src="../assets/images/account/menu_share.png" />-->
+<!--            <div class="acct-nav-label">分享好友</div>-->
+<!--          </div>-->
+<!--        </router-link>-->
         <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_promo.png" />
