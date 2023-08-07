@@ -277,6 +277,9 @@
           <span v-if="scope.row.checkedBy !== null && scope.row.status === '1'">
             {{ scope.row.checkedBy }}
           </span>
+          <span v-else-if="scope.row.checkedBy !== null && scope.row.status === '2'">
+            {{ scope.row.checkedBy }}
+          </span>
           <span v-else>-</span>
         </template>
       </el-table-column>
