@@ -6,7 +6,7 @@
           :src="require(`../../assets/images/vip/badge/v${(store.vip.split('VIP')[1])}.png`)"
           alt=""
         />
-        
+
       <div class="account-name">欢迎您 {{ loginName }}</div>
       <div class="account-vip">{{ vip }}</div>
     </div>
@@ -72,13 +72,13 @@
 <!--          <RiCoupon3Line />-->
 <!--          分享好友-->
 <!--        </router-link>-->
-        <router-link
-          to="/center/share"
-          class="account-menu-item"
-        >
-          <RiShareBoxLine />
-          邀请好友
-        </router-link>
+<!--        <router-link-->
+<!--          to="/center/share"-->
+<!--          class="account-menu-item"-->
+<!--        >-->
+<!--          <RiShareBoxLine />-->
+<!--          邀请好友-->
+<!--        </router-link>-->
       </div>
     </div>
   </div>
