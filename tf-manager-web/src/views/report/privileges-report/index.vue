@@ -137,6 +137,17 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
+    <div
+      class="table-footer"
+      v-permission="['sys:report:privilege:report:summary']"
+    >
+      <span>
+        {{ t('fields.totalPrivilegeClaimAmount') }}
+      </span>
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{data: page.totalAmount, type: 'money'}" />
+    </div>
+
   </div>
 </template>
 
@@ -146,6 +157,7 @@ import moment from 'moment'
 import {
   getPrivilegeReport,
   getDailyReport,
+  getTotalPrivilegeAmount,
 } from '../../../api/report-privilege'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -172,6 +184,7 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+  totalAmount: 0,
 })
 
 const request = reactive({
@@ -261,6 +274,12 @@ async function loadPrivilegeReport(first) {
   expandrowkey = [] // 收起所有展开项
   page.pages = ret.pages
   page.records = ret.records
+  if (page.records.length !== 0) {
+    const { data: amount } = await getTotalPrivilegeAmount(query)
+    page.totalAmount = amount
+  } else {
+    page.totalAmount = 0
+  }
   page.loading = false
 }
 
