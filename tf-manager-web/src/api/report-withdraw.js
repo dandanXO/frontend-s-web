@@ -8,3 +8,7 @@ export const getWithdrawReport = (data) => {
 export const getDailyReport = (data) => {
   return https().request("/report/dailyWithdrawReport", Method.GET, data, ContentType.form);
 };
+
+export const getTotalWithdrawReport = (data) => {
+  return https().request("/report/totalWithdrawReportList", Method.GET, data, ContentType.form);
+};

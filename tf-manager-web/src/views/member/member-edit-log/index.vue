@@ -277,6 +277,11 @@
           <span v-if="scope.row.checkedBy !== null && scope.row.status === '1'">
             {{ scope.row.checkedBy }}
           </span>
+          <span
+            v-else-if="scope.row.checkedBy !== null && scope.row.status === '2'"
+          >
+            {{ scope.row.checkedBy }}
+          </span>
           <span v-else>-</span>
         </template>
       </el-table-column>
@@ -292,6 +297,9 @@
             {{ t('editCheckedStatus.' + scope.row.status) }}
           </el-tag>
           <el-tag v-else-if="scope.row.status === '1'" type="success">
+            {{ t('editCheckedStatus.' + scope.row.status) }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === '2'" type="danger">
             {{ t('editCheckedStatus.' + scope.row.status) }}
           </el-tag>
         </template>
@@ -338,6 +346,7 @@ import {
   getMemberEditLogList,
   preCheckForCreate,
   check,
+  fail,
 } from '../../../api/memberEditLog'
 import { required } from '../../../utils/validate'
 import { useI18n } from 'vue-i18n'
@@ -513,12 +522,26 @@ async function loadSites() {
 async function toCheck(val) {
   ElMessageBox.confirm(t('message.confirmToCheck'), {
     confirmButtonText: t('fields.confirm'),
-    cancelButtonText: t('fields.cancel'),
+    cancelButtonText: t('editCheckedStatus.2'),
+    distinguishCancelAndClose: true,
     type: 'warning',
+    beforeClose: async (action, instance, done) => {
+      if (action === 'cancel') {
+        await fail(val.id, request.siteId)
+        await loadMemberEditLog()
+        ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
+        done()
+      } else if (action === 'close') {
+        done()
+      } else {
+        await check(val.id, request.siteId)
+        await loadMemberEditLog()
+        ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+        done()
+      }
+    },
   }).then(async () => {
-    await check(val.id, request.siteId)
-    await loadMemberEditLog()
-    ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+
   })
 }
 

@@ -93,7 +93,6 @@ build-tf-manager-web:
   script:
     - cd $PROJECT
     - npm install
-    - npm run build:prod
     - if [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then npm run build:dev; else npm run build:prod; fi
   variables:
     PROJECT: tf-manager-web
@@ -146,7 +145,7 @@ build-affiliate-static-web:
   script:
     - cd $PROJECT
     - npm install
-    - npm run build:prod
+    - if [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then npm run build:dev; else npm run build:prod; fi
   variables:
     PROJECT: affiliate-static-web
 

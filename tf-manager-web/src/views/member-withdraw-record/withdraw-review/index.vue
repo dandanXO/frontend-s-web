@@ -381,6 +381,21 @@
         width="130"
       />
       <el-table-column
+        prop="companyProfit"
+        :label="t('fields.companyProfit')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.companyProfit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="totalBet"
         :label="t('fields.totalBet')"
         width="120"
