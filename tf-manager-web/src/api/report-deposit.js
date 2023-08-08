@@ -8,3 +8,7 @@ export const getDepositReport = (data) => {
 export const getDailyReport = (data) => {
   return https().request("/report/dailyDepositReport", Method.GET, data, ContentType.form);
 };
+
+export const getTotalDeposit = (data) => {
+  return https().request("/report/totalDepositReport", Method.GET, data, ContentType.form);
+};
