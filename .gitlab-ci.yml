@@ -23,7 +23,7 @@ default:
   script:
     - cd $PROJECT
     - npm install
-    - npm run build
+    - if [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then npm run build:staging; else npm run build:prod; fi
 
 .build-projects:
   stage: build
@@ -90,10 +90,6 @@ build-tf-manager-web:
   extends:
     - .build-projects
     - .build-web
-  script:
-    - cd $PROJECT
-    - npm install
-    - if [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then npm run build:dev; else npm run build:prod; fi
   variables:
     PROJECT: tf-manager-web
 
@@ -142,10 +138,6 @@ build-affiliate-static-web:
   extends:
     - .build-projects
     - .build-web
-  script:
-    - cd $PROJECT
-    - npm install
-    - if [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then npm run build:dev; else npm run build:prod; fi
   variables:
     PROJECT: affiliate-static-web
 
