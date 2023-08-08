@@ -277,7 +277,9 @@
           <span v-if="scope.row.checkedBy !== null && scope.row.status === '1'">
             {{ scope.row.checkedBy }}
           </span>
-          <span v-else-if="scope.row.checkedBy !== null && scope.row.status === '2'">
+          <span
+            v-else-if="scope.row.checkedBy !== null && scope.row.status === '2'"
+          >
             {{ scope.row.checkedBy }}
           </span>
           <span v-else>-</span>
@@ -521,12 +523,15 @@ async function toCheck(val) {
   ElMessageBox.confirm(t('message.confirmToCheck'), {
     confirmButtonText: t('fields.confirm'),
     cancelButtonText: t('editCheckedStatus.2'),
+    distinguishCancelAndClose: true,
     type: 'warning',
     beforeClose: async (action, instance, done) => {
       if (action === 'cancel') {
         await fail(val.id, request.siteId)
         await loadMemberEditLog()
         ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
+        done()
+      } else if (action === 'close') {
         done()
       } else {
         await check(val.id, request.siteId)
