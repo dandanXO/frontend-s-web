@@ -7,6 +7,7 @@
     "serve:dev": "cross-env NODE_ENV=development dotenv -e .env.dev.serve vue-cli-service serve",
     "build:dev": "cross-env NODE_ENV=production  dotenv -e .env.dev.build vue-cli-service build",
     "serve:prod": "cross-env NODE_ENV=development dotenv -e .env.prod.serve vue-cli-service serve",
+    "build:staging": "cross-env NODE_ENV=staging  dotenv -e .env.staging.build vue-cli-service build",
     "build:prod": "cross-env NODE_ENV=production  dotenv -e .env.prod.build vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",

@@ -1,6 +1,7 @@
 {
   "@quasar/dotenv": {
     "env_development": ".dev.env",
+    "env_staging": ".staging.env",
     "env_production": ".prod.env",
     "common_root_object": "none",
     "create_env_files": true,
