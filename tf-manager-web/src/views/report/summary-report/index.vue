@@ -171,7 +171,7 @@
               $
               <span
                 v-formatter="{
-                  data: scope.row.depositAmount,
+                  data: scope.row.deposit,
                   type: 'money',
                 }"
               />
@@ -199,7 +199,7 @@
               $
               <span
                 v-formatter="{
-                  data: scope.row.withdrawAmount,
+                  data: scope.row.withdraw,
                   type: 'money',
                 }"
               />
@@ -263,7 +263,7 @@
           $
           <span
             v-formatter="{
-              data: scope1.row.bonus,
+              data: scope1.row.promo,
               type: 'money',
             }"
           />
@@ -363,10 +363,10 @@ function convertDate(date) {
 function disabledDate(time) {
   return (
     time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
+    moment(new Date())
+      .subtract(2, 'months')
+      .startOf('month')
+      .format('x') || time.getTime() > new Date().getTime()
   )
 }
 
