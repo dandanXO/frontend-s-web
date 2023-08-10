@@ -60,6 +60,76 @@
     </div>
 
     <el-table
+      :data="totalPage.records"
+      ref="table"
+      row-key="id"
+      border
+      small
+      v-loading="page.loading"
+      @expand-change="loadDaily"
+      :empty-text="t('fields.noData')"
+      :header-cell-style="{background: 'lightgray'}"
+      height="130"
+    >
+
+      <el-table-column
+        prop="totalWithdrawAmount"
+        :label="t('fields.totalWithdrawAmount')"
+      >
+        <template #default="scope">
+          $
+          <span
+            v-formatter="{
+              data: scope.row.totalWithdrawAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalSuccessWithdrawAmount"
+        :label="t('fields.totalSuccessWithdrawAmount')"
+      >
+        <template #default="scope">
+          $
+          <span
+            v-formatter="{
+              data: scope.row.totalSuccessWithdrawAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalFailWithdrawAmount"
+        :label="t('fields.totalFailWithdrawAmount')"
+      >
+        <template #default="scope">
+          $
+          <span
+            v-formatter="{
+              data: scope.row.totalFailWithdrawAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalWithdraw"
+        :label="t('fields.totalWithdraw')"
+        width="110"
+      />
+      <el-table-column
+        prop="totalSuccessWithdraw"
+        :label="t('fields.totalSuccessWithdraw')"
+      />
+      <el-table-column
+        prop="totalFailWithdraw"
+        :label="t('fields.totalFailWithdraw')"
+      />
+    </el-table>
+
+    <el-table
       :data="page.records"
       ref="table"
       row-key="id"
@@ -232,7 +302,7 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getWithdrawReport, getDailyReport } from '../../../api/report-withdraw'
+import { getWithdrawReport, getDailyReport, getTotalWithdrawReport } from '../../../api/report-withdraw'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -258,6 +328,11 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+})
+
+const totalPage = reactive({
+  pages: 0,
+  records: [],
 })
 
 const request = reactive({
@@ -345,6 +420,9 @@ async function loadWithdrawReport(first) {
     })
   }
   expandrowkey = [] // 收起所有展开项
+
+  const { data: ret1 } = await getTotalWithdrawReport(query)
+  totalPage.records = ret1.records
   page.pages = ret.pages
   page.records = ret.records
   page.loading = false

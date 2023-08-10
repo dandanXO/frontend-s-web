@@ -60,6 +60,88 @@
     </div>
 
     <el-table
+      :data="totalDeposit.records"
+      ref="table"
+      v-loading="page.loading"
+      height="100"
+      border
+      :header-cell-style="{background: 'lightgray'}"
+      :empty-text="t('fields.noData')"
+    >
+      <el-table-column
+        prop="totalDepositAmount"
+        :label="t('fields.totalDepositAmount')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.totalDepositAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalSuccessDepositAmount"
+        :label="t('fields.totalSuccessDepositAmount')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.totalSuccessDepositAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalFailDepositAmount"
+        :label="t('fields.totalFailDepositAmount')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.totalFailDepositAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalDeposit"
+        :label="t('fields.totalDeposit')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.totalDeposit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalSuccessDeposit"
+        :label="t('fields.totalSuccessDeposit')"
+        width="170"
+      />
+      <el-table-column
+        prop="totalFailDeposit"
+        :label="t('fields.totalFailDeposit')"
+        width="170"
+      />
+
+    </el-table>
+
+    <el-table
       :data="page.records"
       ref="table"
       row-key="id"
@@ -69,6 +151,7 @@
       v-loading="page.loading"
       @expand-change="loadDaily"
       :empty-text="t('fields.noData')"
+      @sort-change="changeSort"
     >
       <el-table-column type="expand">
         <template #default="scope">
@@ -159,12 +242,14 @@
         prop="name"
         :label="t('fields.paymentName')"
         width="110"
+        sortable
       />
       <el-table-column prop="site" :label="t('fields.siteName')" width="100" />
 
       <el-table-column
         prop="totalDepositAmount"
         :label="t('fields.totalDepositAmount')"
+        sortable
       >
         <template #default="scope">
           $
@@ -208,6 +293,7 @@
         prop="totalDeposit"
         :label="t('fields.totalDeposit')"
         width="110"
+        sortable
       />
       <el-table-column
         prop="totalSuccessDeposit"
@@ -232,7 +318,7 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getDepositReport, getDailyReport } from '../../../api/report-deposit'
+import { getDepositReport, getDailyReport, getTotalDeposit } from '../../../api/report-deposit'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -260,12 +346,19 @@ const page = reactive({
   loading: false,
 })
 
+const totalDeposit = reactive({
+  pages: 0,
+  records: [],
+})
+
 const request = reactive({
   size: 30,
   current: 1,
   name: null,
   recordTime: [defaultStartDate, defaultEndDate],
   siteId: null,
+  prop: null,
+  order: null,
 })
 
 const shortcuts = getShortcuts(t);
@@ -299,6 +392,13 @@ async function loadDaily(row, expandedRows) {
       }
     })
   }
+}
+
+function changeSort (aval) {
+  console.log(aval)
+  request.prop = aval.prop;
+  request.order = aval.order;
+  loadDepositReport(false);
 }
 
 function convertDate(date) {
@@ -337,6 +437,8 @@ async function loadDepositReport(first) {
   }
 
   const { data: ret } = await getDepositReport(query)
+  const { data: ret1 } = await getTotalDeposit(query)
+  totalDeposit.records = ret1.records
 
   if (first === true) {
     // 给每行数据强制追加一个数据项, 以便注入每日数据

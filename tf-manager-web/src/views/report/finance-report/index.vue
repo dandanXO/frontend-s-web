@@ -82,13 +82,33 @@
         :label="column.label"
       />
     </el-table>
+
+    <el-table
+      :data="totalPage.records"
+      ref="table"
+      row-key="id"
+      v-loading="page.loading"
+      :empty-text="t('fields.noData')"
+      border
+      small
+      :header-cell-style="{background: 'lightgray'}"
+      height="130"
+    >
+      <el-table-column
+        v-for="column in totalPage.columns"
+        :key="column.label"
+        :prop="column.prop"
+        :label="column.label"
+        :min-width="210"
+      />
+    </el-table>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getFinanceReport } from '../../../api/report-centre'
+import { getFinanceReport, getTotalFinanceReport } from '../../../api/report-centre'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -110,6 +130,12 @@ const siteList = reactive({
 })
 
 const page = reactive({
+  records: [],
+  columns: [],
+  loading: false,
+})
+
+const totalPage = reactive({
   records: [],
   columns: [],
   loading: false,
@@ -145,6 +171,10 @@ async function loadFinanceReport() {
   console.log(ret)
   page.records = ret.financeReportItemVOS
   page.columns = ret.financeReportColumnVOS
+
+  const { data: ret1 } = await getTotalFinanceReport(query)
+  totalPage.records = ret1.financeReportItemVOS
+  totalPage.columns = ret1.financeReportColumnVOS
 
   console.log(page.columns)
 
