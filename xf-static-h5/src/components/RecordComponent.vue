@@ -294,7 +294,7 @@ export default defineComponent({
 
             setTimeout(() => {
               window.location.reload();
-            }, 2000);
+            }, 1000);
 
             // console.log(response);
           })

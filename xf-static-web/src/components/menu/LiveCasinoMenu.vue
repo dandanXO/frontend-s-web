@@ -9,7 +9,7 @@
       >
         <img
           :src="require('../../assets/live/live_logo_' + nav.icon + '.png')"
-          style="width: 200px"
+          style="width: 150px"
         />
         <p class="platform-title">{{ nav.label }} 真人</p>
         <p class="platform-slogan">{{ nav.slogan }}</p>
@@ -65,6 +65,13 @@ export default defineComponent({
         icon: "bbin",
         label: "BBIN",
         gameCode: "bblive_lobby_pc",
+        slogan: "全球顶尖, 尊享娱乐"
+      },
+      {
+        code: "PMLIVE",
+        icon: "pm",
+        label: "PM",
+        gameCode: "",
         slogan: "全球顶尖, 尊享娱乐"
       }
     ];
