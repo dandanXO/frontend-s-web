@@ -189,8 +189,9 @@ import {defineComponent, onMounted, reactive, ref} from "vue";
 import moment from "moment";
 import FileUpload from "components/FileUpload.vue";
 import {api} from "boot/axios";
-import {useQuasar} from "quasar";
+import {SessionStorage, useQuasar} from "quasar";
 import {translateRecord} from "../directives/translate.js";
+import * as _ from "lodash";
 
 export default defineComponent({
   props: {
@@ -287,6 +288,8 @@ export default defineComponent({
                 message: "已经确认到账",
                 icon: "check_circle_outline"
               });
+              removeSessionKeys("/session/member/withdraw");
+
             }
 
             setTimeout(() => {
@@ -391,11 +394,21 @@ export default defineComponent({
               });
               reminderDialog.value = false;
               reminderForm.value = {};
-              uploadFileRef.value.clear();
+              // uploadFileRef.value.clear();
+              removeSessionKeys("/session/member/deposit");
             }
           });
     };
 
+    const removeSessionKeys = (prefix) => {
+      var keys= SessionStorage.getAllKeys();
+      _.each(keys, function(key, item){
+        // console.log(key);
+        if(key.indexOf(prefix) > -1){
+         SessionStorage.remove(key);
+        }
+      })
+    }
 
     return {
       humanDatetime(ts) {
