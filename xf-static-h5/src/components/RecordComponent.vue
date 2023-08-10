@@ -458,4 +458,8 @@ export default defineComponent({
 .buttons {
   text-align: right;
 }
+
+:deep(.q-card__section) {
+  background:none;
+}
 </style>
