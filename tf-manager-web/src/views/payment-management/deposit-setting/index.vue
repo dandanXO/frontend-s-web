@@ -282,15 +282,16 @@ async function submit() {
   const depositSetting = [];
   if (webDepositSettingForm.value) {
     webDepositSettingForm.value.validate((valid) => {
-      if (valid && form.web.depositMin && form.web.depositMax) {
+      if (valid) {
         form.web.financialLevels.forEach(f => {
           const record = {};
+          const current = page.records.find((item) => item.financialLevel === f.level && item.way === 'WEB');
           record.financialLevel = f.level;
           record.siteId = form.siteId;
           record.payType = form.payType;
           record.way = 'WEB';
-          record.depositMin = form.web.depositMin;
-          record.depositMax = form.web.depositMax;
+          record.depositMin = form.web.depositMin ? form.web.depositMin : current.depositMin;
+          record.depositMax = form.web.depositMax ? form.web.depositMax : current.depositMax;
           depositSetting.push(record);
         })
       }
@@ -298,15 +299,16 @@ async function submit() {
   }
   if (mobileDepositSettingForm.value) {
     mobileDepositSettingForm.value.validate((valid) => {
-      if (valid && form.mobile.depositMin && form.mobile.depositMax) {
+      if (valid) {
         form.mobile.financialLevels.forEach(f => {
           const record = {};
+          const current = page.records.find((item) => item.financialLevel === f.level && item.way === 'MOBILE');
           record.financialLevel = f.level;
           record.siteId = form.siteId;
           record.payType = form.payType;
           record.way = 'MOBILE';
-          record.depositMin = form.mobile.depositMin;
-          record.depositMax = form.mobile.depositMax;
+          record.depositMin = form.mobile.depositMin ? form.mobile.depositMin : current.depositMin;
+          record.depositMax = form.mobile.depositMax ? form.mobile.depositMax : current.depositMax;
           depositSetting.push(record);
         })
       }
