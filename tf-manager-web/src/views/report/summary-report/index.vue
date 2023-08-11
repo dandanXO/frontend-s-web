@@ -70,10 +70,17 @@
       size="small"
       highlight-current-row
       v-loading="page.loading"
+      :summary-method="getSummaries"
+      show-summary
       height="500"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="date" :label="t('fields.date')" width="120" fixed>
+      <el-table-column
+        prop="date"
+        :label="t('fields.date')"
+        width="120"
+        fixed
+      >
         <template #default="scope">
           <router-link
             :to="
@@ -104,7 +111,7 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column prop="fdp" :label="t('fields.ftdCount')" width="80">
+      <el-table-column prop="fdp" label="FDP" width="80">
         <template #default="scope">
           <router-link
             :to="
@@ -117,50 +124,7 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="convertRate"
-        :label="t('fields.convertRate')"
-        width="80"
-      >
-        <template #default="scope">
-          {{ scope.row.convertRate }}%
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="fdAmount"
-        :label="t('fields.ftdAmount')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.fdAmount,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="fdAverage"
-        :label="t('fields.ftdAverage')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.fdAverage,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="depositAmount"
-        :label="t('fields.depositAmount')"
-        width="120"
-      >
+      <el-table-column prop="deposit" :label="t('fields.deposit')" width="120">
         <template #default="scope">
           <router-link
             :to="
@@ -171,7 +135,7 @@
               $
               <span
                 v-formatter="{
-                  data: scope.row.depositAmount,
+                  data: scope.row.deposit,
                   type: 'money',
                 }"
               />
@@ -180,13 +144,8 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="depositCount"
-        :label="t('fields.depositCount')"
-        width="120"
-      />
-      <el-table-column
-        prop="withdrawAmount"
-        :label="t('fields.withdrawAmount')"
+        prop="withdraw"
+        :label="t('fields.withdraw')"
         width="120"
       >
         <template #default="scope">
@@ -199,7 +158,7 @@
               $
               <span
                 v-formatter="{
-                  data: scope.row.withdrawAmount,
+                  data: scope.row.withdraw,
                   type: 'money',
                 }"
               />
@@ -208,36 +167,88 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="withdrawCount"
-        :label="t('fields.withdrawCount')"
-        width="120"
-      />
-      <el-table-column prop="dif" :label="t('fields.dif')" width="100">
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.dif,
-              type: 'money',
-            }"
-          />
+        prop="active"
+        :label="t('fields.activeUser')"
+        width="100"
+      >
+        <template #default="scope">
+          <router-link
+            :to="
+              `/report/summary/activeuser?date=${scope.row.date}&site=${request.siteId}`
+            "
+          >
+            <el-link type="primary">
+              {{ scope.row.active }}
+            </el-link>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column
-        prop="betCount"
-        :label="t('fields.summaryTotalBet')"
-        width="120"
-      />
-      <el-table-column
-        prop="validBet"
-        :label="t('fields.validBet')"
+        prop="totalBet"
+        :label="t('fields.totalBet')"
         width="120"
       >
         <template #default="scope1">
           $
           <span
             v-formatter="{
-              data: scope1.row.validBet,
+              data: scope1.row.totalBet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalPayout"
+        :label="t('fields.totalPayout')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.totalPayout,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="transferIn"
+        :label="t('fields.transferIn')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.transferIn,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="transferOut"
+        :label="t('fields.transferOut')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.transferOut,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="promo" :label="t('fields.promo')" width="120">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.promo,
               type: 'money',
             }"
           />
@@ -245,7 +256,7 @@
       </el-table-column>
       <el-table-column
         prop="adjustment"
-        :label="t('fields.summaryAdjustment')"
+        :label="t('fields.adjustment')"
         width="120"
       >
         <template #default="scope1">
@@ -258,24 +269,12 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="bonus" :label="t('fields.summaryBonus')" width="120">
+      <el-table-column prop="ngr" label="NGR" width="120">
         <template #default="scope1">
           $
           <span
             v-formatter="{
-              data: scope1.row.bonus,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="profit" :label="t('fields.summaryProfit')" width="120">
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.profit,
+              data: scope1.row.ngr,
               type: 'money',
             }"
           />
@@ -303,7 +302,9 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import * as XLSX from 'xlsx'
 import { useI18n } from 'vue-i18n'
+import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from "@/utils/datetime";
+
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
@@ -339,20 +340,17 @@ const exportPercentage = ref(0)
 const EXPORT_HEADER = [
   t('fields.date'),
   t('fields.registerCount'),
-  t('fields.ftdCount'),
-  t('fields.convertRate'),
-  t('fields.ftdAmount'),
-  t('fields.ftdAverage'),
-  t('fields.depositCount'),
-  t('fields.withdrawCount'),
-  t('fields.depositAmount'),
-  t('fields.withdrawAmount'),
-  t('fields.dif'),
-  t('fields.summaryTotalBet'),
-  t('fields.validBet'),
-  t('fields.summaryAdjustment'),
-  t('fields.summaryBonus'),
-  t('fields.summaryProfit'),
+  'FDP',
+  t('fields.deposit'),
+  t('fields.withdraw'),
+  t('fields.activeUser'),
+  t('fields.totalBet'),
+  t('fields.totalPayout'),
+  t('fields.transferIn'),
+  t('fields.transferOut'),
+  t('fields.promo'),
+  t('fields.adjustment'),
+  'NGR',
 ]
 
 const shortcuts = getShortcuts(t);
@@ -363,10 +361,10 @@ function convertDate(date) {
 function disabledDate(time) {
   return (
     time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
+    moment(new Date())
+      .subtract(2, 'months')
+      .startOf('month')
+      .format('x') || time.getTime() > new Date().getTime()
   )
 }
 
@@ -490,6 +488,54 @@ function pushRecordToData(records, exportData) {
     Object.values(record).map(item => (!item || item === '' ? '-' : item))
   )
   exportData.push(...data)
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:summary:total'])) {
+    const { columns, data } = param
+    var sums = []
+    columns.forEach((column, index) => {
+      if (index === 0) {
+        sums[index] = t('fields.total')
+        return
+      }
+      const values = data.map(item => Number(item[column.property]))
+
+      if (
+        !values.every(value => Number.isNaN(value)) &&
+        index !== 1 &&
+        index !== 5 &&
+        index !== 2
+      ) {
+        sums[index] = `$ ${values
+          .reduce((prev, curr) => {
+            const value = Number(curr)
+            if (!Number.isNaN(value)) {
+              return prev + curr
+            } else {
+              return prev
+            }
+          }, 0)
+          .toFixed(2)}`
+      } else if (
+        !values.every(value => Number.isNaN(value)) &&
+        (index === 1 || index === 5 || index === 2)
+      ) {
+        sums[index] = `${values.reduce((prev, curr) => {
+          const value = Number(curr)
+          if (!Number.isNaN(value)) {
+            return prev + curr
+          } else {
+            return prev
+          }
+        }, 0)}`
+      }
+    })
+
+    return sums
+  } else {
+    return '-'
+  }
 }
 </script>
 
