@@ -1,11 +1,11 @@
 import axios from "axios";
 import { getRndInteger } from "@/utils/utils";
-import { ElMessage } from 'element-plus'
+import { ElMessage } from "element-plus";
 import { stringify } from "qs";
 import { userStore } from "@/store";
 // import i18n from "../i18n/index";
-import { ResponseCode,SkipErrorCode } from "@/api/response";
-import { ElLoading } from 'element-plus';
+import { ResponseCode, SkipErrorCode } from "@/api/response";
+import { ElLoading } from "element-plus";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
@@ -70,7 +70,7 @@ const onResponse = (response) => {
         location.reload();
       }
       // message.error(res.message, 4);
-    // loading.close();
+      // loading.close();
       ElMessage.error(res.message);
     }
     throw new Error(res.message || "Error");
@@ -85,8 +85,8 @@ const onResponseError = (error) => {
 
   ElMessage({
     message: error.message,
-    type: 'warning',
-  })
+    type: "warning"
+  });
   return Promise.reject(error);
 };
 
@@ -94,14 +94,76 @@ function initHttp() {
   const host = document.location.host;
   const instance = axios.create({
     headers: {
-      domain: host,
+      domain: host
     },
     timeout: process.env.VUE_APP_TIMEOUT
   });
   instance.interceptors.request.use(onRequest);
   instance.interceptors.response.use(onResponse, onResponseError);
+
+  checkSuccessUrl();
   return instance;
 }
+
+var successfulUrls = [];
+let urls = rstArray;
+let urlsWithPing = [];
+let restInitialized = false;
+
+function placePing(urls) {
+  for (const url of urls) {
+    urlsWithPing.push(url + "/ping");
+  }
+}
+
+const checkSuccessUrl = () => {
+  var successRstUrl = localStorage.getItem("successfulApiUrl");
+  if (successRstUrl) {
+    axios
+      .get(successRstUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem("successfulApiUrl");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem("successfulApiUrl");
+      });
+  }
+};
+
+const testURLs = async (urlsToTest) => {
+  for (const url of urlsToTest) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const responseData = await response.json();
+        if (responseData.code === 0) {
+          console.log(`Successful URL: ${url}`);
+          successfulUrls.push(url.replace("/ping", ""));
+        }
+      }
+    } catch (error) {
+      console.log(`Failed URL (error): ${url}`);
+    }
+  }
+
+  if (successfulUrls.length > 0) {
+    const randomIndex = Math.floor(Math.random() * successfulUrls.length);
+    const successfulApiUrl = successfulUrls[randomIndex];
+    localStorage.setItem("successfulApiUrl", successfulApiUrl);
+    console.log(`Random URL stored in local storage: ${successfulApiUrl}`);
+  } else {
+    console.log("No successful URLs to store.");
+  }
+};
+
+const apiUrlFunction = () => {
+  placePing(urls);
+  testURLs(urlsWithPing);
+};
 
 let instance = null;
 
@@ -109,7 +171,7 @@ export const server = new Proxy(
   {
     REST: null,
     EVENT: null,
-    CASHIER: null,
+    CASHIER: null
   },
   {
     get: (target, propKey) => {
@@ -117,13 +179,23 @@ export const server = new Proxy(
         instance = initHttp();
       }
       if (propKey === "REST") {
-        instance.defaults.baseURL = rstArray[getRndInteger(0, rstArray.length)];
+        if (localStorage.getItem("successfulApiUrl")) {
+          instance.defaults.baseURL = localStorage.getItem("successfulApiUrl");
+        } else {
+          if (!restInitialized) {
+            apiUrlFunction();
+            window.location.reload;
+          }
+          restInitialized = true;
+          instance.defaults.baseURL =
+            rstArray[getRndInteger(0, rstArray.length)];
+        }
       } else if (propKey === "EVENT") {
         instance.defaults.baseURL = evtArray[getRndInteger(0, evtArray.length)];
       } else if (propKey === "CASHIER") {
         instance.defaults.baseURL = crArray[getRndInteger(0, crArray.length)];
       }
       return instance;
-    },
+    }
   }
 );

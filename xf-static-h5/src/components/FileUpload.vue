@@ -1,14 +1,14 @@
 <template>
   <q-file
-    name="upload_img"
-    v-model="file"
-    class="q-pt-md"
-    filled
-    label="上传图片"
-    color="white"
+      name="upload_img"
+      v-model="file"
+      class="q-pt-md"
+      filled
+      label="上传图片"
+      color="white"
   >
     <template v-slot:prepend>
-      <q-icon name="cloud_upload" />
+      <q-icon name="cloud_upload"/>
     </template>
     <!-- Display error message -->
     <!-- <template v-slot:error="{ error }">
@@ -18,16 +18,21 @@
 </template>
 
 <script>
-import { ref, defineComponent, watch } from "vue";
-import { userStore } from "src/stores";
-import { useQuasar } from "quasar";
+import {ref, defineComponent, watch} from "vue";
+import {userStore} from "src/stores";
+import {useQuasar} from "quasar";
+import {getRndInteger} from "boot/utils";
 
 export default defineComponent({
   emits: ["photoResponse"],
   name: "UploadExample",
-  setup: (props, { emit }) => {
+  setup: (props, {emit}) => {
     const store = userStore();
-    const action = process.env.RST_API + '/session/image/uploadOrder?token=' + store.token;
+
+    var rstArray = Object.values(process.env.RST_API);
+    var rstApi = rstArray[getRndInteger(0, rstArray.length)];
+
+    const action = rstApi + '/session/image/uploadOrder?token=' + store.token;
     const $q = useQuasar();
     const file = ref();
     watch(file, (newValue, oldValue) => {
@@ -39,14 +44,14 @@ export default defineComponent({
         formData.append("files", file.value);
         try {
           const response = await fetch(
-            `${process.env.RST_API}/session/image/uploadOrder`,
-            {
-              method: "POST",
-              body: formData,
-              headers: {
-                token: `${store.token}`
+              `${rstApi}/session/image/uploadOrder`,
+              {
+                method: "POST",
+                body: formData,
+                headers: {
+                  token: `${store.token}`
+                }
               }
-            }
           );
           const data = await response.json();
           if (data.code === 0) {

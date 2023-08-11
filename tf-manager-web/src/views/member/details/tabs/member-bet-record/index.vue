@@ -33,7 +33,6 @@
           />
         </el-select>
         <el-select
-          v-if="request.platform !== null"
           v-model="request.gameType"
           size="small"
           :placeholder="t('fields.gameType')"
@@ -48,23 +47,21 @@
           />
         </el-select>
         <el-select
-          v-if="request.gameType.length !== 0"
           multiple
-          v-model="request.result"
+          v-model="request.status"
           size="small"
-          :placeholder="t('fields.result')"
+          :placeholder="t('fields.status')"
           class="filter-item"
-          style="margin-left: 5px; width: 250px;"
+          style="margin-left: 5px; width: 300px;"
         >
           <el-option
-            v-for="item in uiControl.result"
+            v-for="item in uiControl.status"
             :key="item.key"
             :label="item.displayName"
             :value="item.value"
           />
         </el-select>
         <el-input
-          v-if="request.gameType.length !== 0 && request.result.length !== 0"
           v-model="request.bet"
           style="margin-left: 5px; width: 200px;"
           size="small"
@@ -106,47 +103,28 @@
                 v-loading="page.loading"
                 :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="250" />
-        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="250" />
+        <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="280" />
+        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="280" />
         <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120" />
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">
-            $
-            <span v-if="scope.row.bet === null">0</span>
-            <span v-if="scope.row.bet !== null">{{ scope.row.bet.toFixed(2) }}</span>
+            $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="payout" :label="t('fields.payout')" align="center" min-width="100">
           <template #default="scope">
-            $
-            <span v-if="scope.row.payout === null">0</span>
-            <span v-if="scope.row.payout !== null">{{ scope.row.payout.toFixed(2) }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="beforeBalance" :label="t('fields.beforeBalance')" align="center" min-width="140">
-          <template #default="scope">
-            $
-            <span v-if="scope.row.beforeBalance === null">0</span>
-            <span v-if="scope.row.beforeBalance !== null">{{ scope.row.beforeBalance.toFixed(2) }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="afterBalance" :label="t('fields.afterBalance')" align="center" min-width="140">
-          <template #default="scope">
-            $
-            <span v-if="scope.row.afterBalance === null">0</span>
-            <span v-if="scope.row.afterBalance !== null">{{ scope.row.afterBalance.toFixed(2) }}</span>
+            $ <span v-formatter="{data: scope.row.payout,type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="betStatus" :label="t('fields.betStatus')" align="center" min-width="140">
           <template #default="scope">
-            <el-tag v-if="scope.row.betStatus === 'BET'" size="mini">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'SETTLE' || scope.row.betStatus === 'BET_N_SETTLE'" size="mini" type="success">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'PATCH'" size="mini" type="warning">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else size="mini" type="danger">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-if="scope.row.betStatus === 'SETTLED'" size="mini" type="success">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-else size="mini" type="warning">{{ scope.row.betStatus }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140" />
-        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="140" />
+        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="200" />
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.betTime === null">-</span>
@@ -158,64 +136,14 @@
         </el-table-column>
         <el-table-column prop="settleTime" :label="t('fields.settleTime')" align="center" min-width="180">
           <template #default="scope">
-            <span v-if="scope.row.settleTime === null">-</span>
+            <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
             <span
-              v-if="scope.row.settleTime !== null"
+              v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
               v-formatter="{data: scope.row.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
             />
           </template>
         </el-table-column>
-        <el-table-column prop="result" :label="t('fields.result')" align="center" min-width="120">
-          <template #default="scope">
-            <el-tag v-if="scope.row.result === null" size="mini" type="info">-</el-tag>
-            <el-tag v-else-if="scope.row.result === 'WIN'" size="mini" type="success">{{ scope.row.result }}</el-tag>
-            <el-tag v-else-if="scope.row.result === 'LOSS'" size="mini" type="danger">{{ scope.row.result }}</el-tag>
-            <el-tag v-else size="mini" type="warning">{{ scope.row.result }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="sportBetResult" :label="t('fields.sportBetResult')" align="center" min-width="120">
-          <template #default="scope">
-            <el-tag
-              v-if="scope.row.sportBetResult === null"
-              size="mini"
-              type="info"
-            >
-              -
-            </el-tag>
-            <el-tag
-              v-else-if="scope.row.sportBetResult === 'WIN_HALF' || scope.row.sportBetResult === 'WIN_ALL'"
-              size="mini"
-              type="success"
-            >
-              {{ scope.row.sportBetResult }}
-            </el-tag>
-            <el-tag
-              v-else-if="scope.row.sportBetResult === 'LOSS_HALF' || scope.row.sportBetResult === 'LOSS_ALL'"
-              size="mini"
-              type="danger"
-            >
-              {{ scope.row.sportBetResult }}
-            </el-tag>
-            <el-tag
-              v-else
-              size="mini"
-              type="warning"
-            >
-              {{ scope.row.sportBetResult }}
-            </el-tag>
-          </template>
-        </el-table-column>
       </el-table>
-      <!-- <div class="table-footer">
-        <span>{{ t('fields.totalBetRecords') }}</span>
-        <span style="margin-left: 10px">{{ total.totalRecord }}</span>
-        <span style="margin-left: 30px"> {{ t('fields.totalBet') }}</span>
-        <span style="margin-left: 10px">$ </span>
-        <span v-formatter="{data: total.totalBet, type: 'money'}" />
-        <span style="margin-left: 30px"> {{ t('fields.totalPayout') }}</span>
-        <span style="margin-left: 10px">$ </span>
-        <span v-formatter="{data: total.totalPayout, type: 'money'}" />
-      </div> -->
       <el-pagination
         class="pagination"
         :total="page.total"
@@ -290,10 +218,10 @@ const uiControl = reactive({
     { key: 6, displayName: "POKER", value: "POKER" },
     { key: 7, displayName: "LOTTERY", value: "LOTTERY" }
   ],
-  result: [
-    { key: 1, displayName: "WIN", value: "WIN" },
-    { key: 2, displayName: "LOSS", value: "LOSS" },
-    { key: 3, displayName: "DRAW", value: "DRAW" }
+  status: [
+    { key: 1, displayName: "UNSETTLED", value: "UNSETTLED" },
+    { key: 2, displayName: "SETTLED", value: "SETTLED" },
+    { key: 3, displayName: "CANCEL", value: "CANCEL" }
   ]
 });
 
@@ -323,7 +251,7 @@ const request = reactive({
   platform: null,
   bet: null,
   gameType: [],
-  result: ["WIN", "LOSS", "DRAW"]
+  status: ["UNSETTLED", "SETTLED", "CANCEL"]
 });
 
 // const total = reactive({
@@ -335,7 +263,7 @@ const request = reactive({
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
   request.platform = null;
-  request.result = ["WIN", "LOSS", "DRAW"];
+  request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
   request.bet = null;
   request.gameType = [];
 }
@@ -372,14 +300,15 @@ function checkQuery() {
       query.betTime = request.betTime.join(",");
     }
   }
-  if (request.result !== null) {
-    if (request.result.length === 1) {
-      query.result = request.result[0];
+  if (request.status !== null) {
+    if (request.status.length === 1) {
+      query.status = request.status[0];
     } else {
-      query.result = request.result.join(",");
+      query.status = request.status.join(",");
     }
   }
   query.memberId = props.mbrId;
+  query.siteId = site.id;
   return query;
 }
 
