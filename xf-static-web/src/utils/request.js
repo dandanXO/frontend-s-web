@@ -100,6 +100,8 @@ function initHttp() {
   });
   instance.interceptors.request.use(onRequest);
   instance.interceptors.response.use(onResponse, onResponseError);
+
+  checkSuccessUrl();
   return instance;
 }
 
@@ -113,6 +115,24 @@ function placePing(urls) {
     urlsWithPing.push(url + "/ping");
   }
 }
+
+const checkSuccessUrl = () => {
+  var successRstUrl = localStorage.getItem("successfulApiUrl");
+  if (successRstUrl) {
+    axios
+      .get(successRstUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem("successfulApiUrl");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem("successfulApiUrl");
+      });
+  }
+};
 
 const testURLs = async (urlsToTest) => {
   for (const url of urlsToTest) {
