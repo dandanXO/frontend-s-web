@@ -56,14 +56,14 @@
         </el-select>
         <el-select
           multiple
-          v-model="request.result"
+          v-model="request.status"
           size="small"
-          :placeholder="t('fields.result')"
+          :placeholder="t('fields.status')"
           class="filter-item"
           style="margin-left: 5px; width: 250px;"
         >
           <el-option
-            v-for="item in uiControl.result"
+            v-for="item in uiControl.status"
             :key="item.key"
             :label="item.displayName"
             :value="item.value"
@@ -98,9 +98,9 @@
         </el-table-column>
         <el-table-column prop="settleTime" :label="t('fields.settleTime')" align="center" min-width="150">
           <template #default="scope">
-            <span v-if="scope.row.settleTime === null">-</span>
+            <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
             <span
-              v-if="scope.row.settleTime !== null"
+              v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
               v-formatter="{data: scope.row.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
             />
           </template>
@@ -111,13 +111,13 @@
             <span v-if="scope.row.platform !== null">{{ scope.row.platform }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="100">
+        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.gameName === null">-</span>
             <span v-if="scope.row.gameName !== null">{{ scope.row.gameName }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="350">
+        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="320">
           <template #default="scope">
             <span v-if="scope.row.transactionId === null">-</span>
             <span v-if="scope.row.transactionId !== null">{{ scope.row.transactionId }}</span>
@@ -133,16 +133,16 @@
             $ <span v-formatter="{data: scope.row.payout,type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="win" :label="t('fields.winLoss')" align="center" min-width="100">
+        <el-table-column prop="companyProfit" :label="t('fields.companyProfit')" align="center" min-width="100">
           <template #default="scope">
-            $ <span v-formatter="{data: scope.row.win,type: 'money'}" />
+            $ <span v-formatter="{data: scope.row.companyProfit,type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="result" :label="t('fields.result')" align="center" min-width="100">
+        <el-table-column prop="betStatus" :label="t('fields.status')" align="center" min-width="100">
           <template #default="scope">
-            <el-tag v-if="scope.row.result === 'WIN'" type="success" size="mini">{{ t('result.' + scope.row.result) }}</el-tag>
-            <el-tag v-else-if="scope.row.result === 'LOSS'" type="danger" size="mini">{{ t('result.' + scope.row.result) }}</el-tag>
-            <el-tag v-else-if="scope.row.result === 'DRAW'" type="warning" size="mini">{{ t('result.' + scope.row.result) }}</el-tag>
+            <el-tag v-if="scope.row.betStatus === 'SETTLED'" type="success" size="mini">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" type="danger" size="mini">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'UNSETTLED'" type="warning" size="mini">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
             <el-tag v-else type="info" size="mini">-</el-tag>
           </template>
         </el-table-column>
@@ -220,16 +220,27 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item :label="t('fields.result')" prop="result">
-            <el-tag v-if="details.result === 'WIN'" type="success" size="mini">{{ t('result.' + details.result) }}</el-tag>
-            <el-tag v-else-if="details.result === 'LOSS'" type="danger" size="mini">{{ t('result.' + details.result) }}</el-tag>
-            <el-tag v-else-if="details.result === 'DRAW'" type="warning" size="mini">{{ t('result.' + details.result) }}</el-tag>
-            <el-tag v-else type="info" size="mini">-</el-tag>
-          </el-form-item>
+          <el-col :span="12">
+            <el-form-item :label="t('fields.companyProfit')" prop="companyProfit">
+              $ <span v-formatter="{data: details.companyProfit,type: 'money'}" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="t('fields.status')" prop="betStatus">
+              <el-tag v-if="details.betStatus === 'SETTLED'" type="success" size="mini">{{ t('betStatus.' + details.betStatus) }}</el-tag>
+              <el-tag v-else-if="details.betStatus === 'CANCEL'" type="danger" size="mini">{{ t('betStatus.' + details.betStatus) }}</el-tag>
+              <el-tag v-else-if="details.betStatus === 'UNSETTLED'" type="warning" size="mini">{{ t('betStatus.' + details.betStatus) }}</el-tag>
+              <el-tag v-else type="info" size="mini">-</el-tag>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.settleTime')" prop="settleTime">
-            <span v-formatter="{data: details.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}" />
+            <span v-if="details.settleTime === null || details.betStatus === 'UNSETTLED'">-</span>
+            <span
+              v-if="details.settleTime !== null && details.betStatus !== 'UNSETTLED'"
+              v-formatter="{data: details.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+            />
           </el-form-item>
         </el-row>
       </el-form>
@@ -238,7 +249,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
 import { getMemberBetRecords, getPlatformsBySite, getVipName } from '../../../api/affiliate-bet-record';
@@ -246,7 +257,6 @@ import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const { t } = useI18n();
-const betRecords = ref([]);
 const list = reactive({
   platform: [],
   gameType: []
@@ -261,7 +271,8 @@ const details = reactive({
   gameName: null,
   bet: 0,
   payout: 0,
-  result: null,
+  companyProfit: 0,
+  betStatus: null,
   settleTime: null
 })
 
@@ -276,10 +287,10 @@ const uiControl = reactive({
     { key: 6, displayName: t('gameType.POKER'), value: "POKER" },
     { key: 7, displayName: t('gameType.LOTTERY'), value: "LOTTERY" }
   ],
-  result: [
-    { key: 1, displayName: t('result.WIN'), value: "WIN" },
-    { key: 2, displayName: t('result.LOSS'), value: "LOSS" },
-    { key: 3, displayName: t('result.DRAW'), value: "DRAW" }
+  status: [
+    { key: 1, displayName: t('betStatus.UNSETTLED'), value: "UNSETTLED" },
+    { key: 2, displayName: t('betStatus.SETTLED'), value: "SETTLED" },
+    { key: 3, displayName: t('betStatus.CANCEL'), value: "CANCEL" }
   ]
 });
 
@@ -358,7 +369,7 @@ const request = reactive({
   loginName: null,
   platform: null,
   gameType: [],
-  result: ["WIN", "LOSS", "DRAW"]
+  status: ["UNSETTLED", "SETTLED", "CANCEL"]
 });
 
 const page = reactive({
@@ -384,7 +395,7 @@ function resetQuery() {
   request.loginName = null;
   request.platform = null;
   request.gameType = null;
-  request.result = ["WIN", "LOSS", "DRAW"];
+  request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
   populateGameType();
 }
 
@@ -423,36 +434,24 @@ async function loadBetRecords() {
       query.betTime = request.betTime.join(",");
     }
   }
-  if (request.result !== null) {
-    if (request.result.length === 1) {
-      query.result = request.result[0];
+  if (request.status !== null) {
+    if (request.status.length === 1) {
+      query.status = request.status[0];
     } else {
-      query.result = request.result.join(",");
+      query.status = request.status.join(",");
     }
   }
   query.siteId = store.state.user.siteId;
   const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
-  page.pages = Math.ceil(ret.length / request.size);
-  betRecords.value = ret;
-  getRecords(request.current)
+  page.pages = ret.pages;
+  page.records = ret.records;
   page.loading = false;
 }
 
 function changePage(page) {
   if (request.current >= 1) {
     request.current = page;
-    getRecords(request.current)
-  }
-}
-
-function getRecords(currentPage) {
-  page.records = [];
-  if (betRecords.value.length > 0) {
-    const firstRecordIndex = currentPage === 1 ? 0 : request.size * (currentPage - 1);
-    const lastRecordIndex = betRecords.value.length - 1 > (request.size * currentPage) - 1 ? (request.size * currentPage) - 1 : betRecords.value.length - 1;
-    for (let i = firstRecordIndex; i <= lastRecordIndex; i++) {
-      page.records.push(betRecords.value[i]);
-    }
+    loadBetRecords()
   }
 }
 
@@ -466,9 +465,10 @@ function viewDetails(betRecord) {
   details.gameName = betRecord.gameName;
   details.bet = betRecord.bet;
   details.payout = betRecord.payout;
-  details.result = betRecord.result;
+  details.companyProfit = betRecord.companyProfit;
+  details.betStatus = betRecord.betStatus;
   details.settleTime = betRecord.settleTime;
-  getVip(betRecord.id)
+  getVip(betRecord.memberId)
 }
 
 async function getVip(memberId) {

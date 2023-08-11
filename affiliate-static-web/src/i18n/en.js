@@ -36,6 +36,11 @@ export default {
     LOSS: "LOSS",
     DRAW: "DRAW"
   },
+  betStatus: {
+    UNSETTLED: "UNSETTLED",
+    SETTLED: "SETTLED",
+    CANCEL: "CANCEL"
+  },
   fields: {
     account: "Account",
     accountInfo: "Account Information",
@@ -78,6 +83,7 @@ export default {
     changeWithdrawPw: "Change Withdraw Password",
     commission: "Commission",
     commissionRate: "Commission Rate",
+    companyProfit: "Company Profit",
     confirm: "Confirm",
     confirmNewPassword: "Confirm New Password",
     confirmWithdraw: "Confirm Withdraw",
