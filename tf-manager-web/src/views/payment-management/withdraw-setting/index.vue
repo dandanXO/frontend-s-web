@@ -392,17 +392,18 @@ async function submit() {
   const withdrawSetting = [];
   if (webWithdrawSettingForm.value) {
     webWithdrawSettingForm.value.validate((valid) => {
-      if (valid && form.web.withdrawMin && form.web.withdrawMax && form.web.withdrawMaxTimes && form.web.withdrawMaxAmount) {
+      if (valid) {
         form.web.financialLevels.forEach(f => {
           const record = {};
+          const current = page.records.find((item) => item.financialLevel === f.level && item.way === 'WEB');
           record.financialLevel = f.level;
           record.siteId = form.siteId;
           record.currencyId = form.currencyId;
           record.way = 'WEB';
-          record.withdrawMin = form.web.withdrawMin;
-          record.withdrawMax = form.web.withdrawMax;
-          record.withdrawMaxTimes = form.web.withdrawMaxTimes;
-          record.withdrawMaxAmount = form.web.withdrawMaxAmount;
+          record.withdrawMin = form.web.withdrawMin ? form.web.withdrawMin : current.withdrawMin;
+          record.withdrawMax = form.web.withdrawMax ? form.web.withdrawMax : current.withdrawMax;
+          record.withdrawMaxTimes = form.web.withdrawMaxTimes ? form.web.withdrawMaxTimes : current.withdrawMaxTimes;
+          record.withdrawMaxAmount = form.web.withdrawMaxAmount ? form.web.withdrawMaxAmount : current.withdrawMaxAmount;
           withdrawSetting.push(record);
         })
       }
@@ -410,17 +411,18 @@ async function submit() {
   }
   if (mobileWithdrawSettingForm.value) {
     mobileWithdrawSettingForm.value.validate((valid) => {
-      if (valid && form.mobile.withdrawMin && form.mobile.withdrawMax && form.mobile.withdrawMaxTimes && form.mobile.withdrawMaxAmount) {
+      if (valid) {
         form.mobile.financialLevels.forEach(f => {
           const record = {};
+          const current = page.records.find((item) => item.financialLevel === f.level && item.way === 'MOBILE');
           record.financialLevel = f.level;
           record.siteId = form.siteId;
           record.currencyId = form.currencyId;
           record.way = 'MOBILE';
-          record.withdrawMin = form.mobile.withdrawMin;
-          record.withdrawMax = form.mobile.withdrawMax;
-          record.withdrawMaxTimes = form.mobile.withdrawMaxTimes;
-          record.withdrawMaxAmount = form.mobile.withdrawMaxAmount;
+          record.withdrawMin = form.mobile.withdrawMin ? form.mobile.withdrawMin : current.withdrawMin;
+          record.withdrawMax = form.mobile.withdrawMax ? form.mobile.withdrawMax : current.withdrawMax;
+          record.withdrawMaxTimes = form.mobile.withdrawMaxTimes ? form.mobile.withdrawMaxTimes : current.withdrawMaxTimes;
+          record.withdrawMaxAmount = form.mobile.withdrawMaxAmount ? form.mobile.withdrawMaxAmount : current.withdrawMaxAmount;
           withdrawSetting.push(record);
         })
       }

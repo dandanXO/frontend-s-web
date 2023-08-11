@@ -2496,6 +2496,12 @@ body {
     }
   }
 
+  &.live {
+    .platform-title {
+      font-size: 2.0em;
+    }
+  }
+
   &.sports,
   &.esports,
   &.poker {

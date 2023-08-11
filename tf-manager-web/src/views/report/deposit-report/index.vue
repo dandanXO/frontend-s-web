@@ -394,15 +394,12 @@ async function loadDaily(row, expandedRows) {
   }
 }
 
-
-  function changeSort (aval) {
-	console.log(aval)
-    request.prop = aval.prop;
-	request.order = aval.order;
-	loadDepositReport(false);
-  }
-
-
+function changeSort (aval) {
+  console.log(aval)
+  request.prop = aval.prop;
+  request.order = aval.order;
+  loadDepositReport(false);
+}
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')

@@ -36,6 +36,11 @@ export default {
     LOSS: "输",
     DRAW: "和"
   },
+  betStatus: {
+    UNSETTLED: "未结算",
+    SETTLED: "已结算",
+    CANCEL: "已取消"
+  },
   fields: {
     account: "账号",
     accountInfo: "账号信息",
@@ -78,6 +83,7 @@ export default {
     changeWithdrawPw: "更改支付密码",
     commission: "佣金",
     commissionRate: "佣金比率",
+    companyProfit: "公司利润",
     confirm: "确认",
     confirmNewPassword: "确认新密码",
     confirmWithdraw: "确认提款",

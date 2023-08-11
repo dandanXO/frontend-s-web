@@ -99,7 +99,15 @@ export default defineComponent({
         message:
           "20余年来倾力于技术及系统研发，屡获业界国际大奖入围或得奖殊荣予肯定。 近年来，BBIN积极参与国际活动，并赞助多项全球知名赛事，包含方程式赛车、球类赛事等，也主动号召大力支持慈善团体，不遗余力投入各项国际事务，提供业界更开阔多元的视野。",
         gameCode: "bblive_lobby_pc"
-      }
+      },
+      {
+        code: "PMLIVE",
+        name: "PM",
+        image: "pm",
+        message:
+          "高清性感真人荷官直播娱乐场，独创真人融合棋牌电游风格。设有百家乐、牛牛、龙虎、炸金花、色碟、番摊等上百真人荷官桌台，专为亚洲人研发设计的投注界面，细致版面、极致操作让您拥有身临其境的体验！",
+        gameCode: ""
+      },
     ]);
     // const selectedPlat = ref(platforms.value[0].code);
 
