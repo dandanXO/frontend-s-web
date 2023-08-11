@@ -432,6 +432,7 @@ const uiControl = reactive({
     { key: 3, displayName: 'Free', value: 'FREE' },
     { key: 4, displayName: 'Other', value: 'OTHER' },
     { key: 5, displayName: 'Time', value: 'TIME' },
+    { key: 6, displayName: 'Multiple', value: 'MULTIPLE' },
   ],
   status: [
     { key: 1, displayName: 'Open', value: 'OPEN' },
