@@ -7,14 +7,78 @@ import axios from "axios";
 import {getRndInteger} from "boot/utils";
 
 const rstArray = Object.values(process.env.RST_API);
-const evtArray = process.env.EVT_API.split(",");
-const crArray = process.env.CR_API.split(",");
+const evtArray = Object.values(process.env.EVT_API);
+const crtArray = Object.values(process.env.CR_API);
 
 var rstApi = getRstApi();
+var crtApi = getCrtApi();
+var evtApi = getEvtApi();
 
 const api = axios.create({baseURL: rstApi});
-const cashier = axios.create({baseURL: crArray[getRndInteger(0, crArray.length)]});
-const eventapi = axios.create({baseURL: evtArray[getRndInteger(0, evtArray.length)]});
+const cashier = axios.create({baseURL: crtApi});
+const eventapi = axios.create({baseURL: evtApi});
+
+function getCrtApi() {
+    var successCrtUrl = localStorage.getItem("successCrtUrl");
+    if (successCrtUrl) {
+
+        axios.get(successCrtUrl+ "/ping").then((res) => {
+            console.log(res);
+            if (res.status !== 200) {
+                localStorage.removeItem("successCrtUrl");
+            }
+        }).catch((err) => {
+            console.log(err);
+            localStorage.removeItem("successCrtUrl");
+        })
+
+        return successCrtUrl;
+    } else {
+        var crtTestApi = crtArray[getRndInteger(0, crtArray.length)];
+
+        axios.get(crtTestApi+ "/ping").then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+                localStorage.setItem("successCrtUrl", crtTestApi);
+            } else {
+                localStorage.removeItem("successCrtUrl");
+            }
+        })
+
+        return crtTestApi;
+    }
+}
+
+function getEvtApi() {
+    var successEvtUrl = localStorage.getItem("successEvtUrl");
+    if (successEvtUrl) {
+
+        axios.get(successEvtUrl + "/ping").then((res) => {
+            console.log(res);
+            if (res.status !== 200) {
+                localStorage.removeItem("successEvtUrl");
+            }
+        }).catch((err) => {
+            console.log(err);
+            localStorage.removeItem("successEvtUrl");
+        })
+
+        return successEvtUrl;
+    } else {
+        var testEvtApi = evtArray[getRndInteger(0, evtArray.length)];
+
+        axios.get(testEvtApi + "/ping").then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+                localStorage.setItem("successEvtUrl", testEvtApi);
+            } else {
+                localStorage.removeItem("successEvtUrl");
+            }
+        })
+
+        return testEvtApi;
+    }
+}
 
 function getRstApi() {
     var successRstUrl = localStorage.getItem("successRstUrl");

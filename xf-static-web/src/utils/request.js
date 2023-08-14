@@ -9,7 +9,10 @@ import { ElLoading } from "element-plus";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
-const crArray = process.env.VUE_APP_CR_API.split(",");
+const crtArray = process.env.VUE_APP_CR_API.split(",");
+
+const baseEvtUrl= getEvtUrl();
+const baseCrtUrl= getCrtUrl();
 
 const onRequest = (config) => {
   const store = userStore();
@@ -132,6 +135,38 @@ const checkSuccessUrl = () => {
         localStorage.removeItem("successfulApiUrl");
       });
   }
+
+  var successEvtUrl = localStorage.getItem("successfulEvtUrl");
+  if (successEvtUrl) {
+    axios
+      .get(successEvtUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem("successfulEvtUrl");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem("successfulEvtUrl");
+      });
+  }
+
+  var successCrtUrl = localStorage.getItem("successfulCrtUrl");
+  if (successCrtUrl) {
+    axios
+      .get(successCrtUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem("successfulCrtUrl");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem("successfulCrtUrl");
+      });
+  }
 };
 
 const testURLs = async (urlsToTest) => {
@@ -159,6 +194,72 @@ const testURLs = async (urlsToTest) => {
     console.log("No successful URLs to store.");
   }
 };
+
+function getEvtUrl() {
+  var successEvtUrl = localStorage.getItem("successfulEvtUrl");
+  if (successEvtUrl) {
+    axios
+      .get(successEvtUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem("successfulEvtUrl");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem("successfulEvtUrl");
+      });
+
+    return successEvtUrl;
+  } else {
+    var testEvtApi = evtArray[getRndInteger(0, evtArray.length)];
+
+    axios.get(testEvtApi + "/ping").then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem("successfulEvtUrl", testEvtApi);
+      } else {
+        localStorage.removeItem("successfulEvtUrl");
+      }
+    });
+
+    return testEvtApi;
+  }
+}
+
+function getCrtUrl() {
+  var successCrtUrl = localStorage.getItem("successfulCrtUrl");
+  if (successCrtUrl) {
+    axios
+      .get(successCrtUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem("successfulCrtUrl");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem("successfulCrtUrl");
+      });
+
+    return successCrtUrl;
+  } else {
+    var crtTestApi = crtArray[getRndInteger(0, crtArray.length)];
+
+    axios.get(crtTestApi + "/ping").then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem("successfulCrtUrl", crtTestApi);
+      } else {
+        localStorage.removeItem("successfulCrtUrl");
+      }
+    });
+
+    return crtTestApi;
+  }
+}
 
 const apiUrlFunction = () => {
   placePing(urls);
@@ -191,9 +292,9 @@ export const server = new Proxy(
             rstArray[getRndInteger(0, rstArray.length)];
         }
       } else if (propKey === "EVENT") {
-        instance.defaults.baseURL = evtArray[getRndInteger(0, evtArray.length)];
+        instance.defaults.baseURL = baseEvtUrl;
       } else if (propKey === "CASHIER") {
-        instance.defaults.baseURL = crArray[getRndInteger(0, crArray.length)];
+        instance.defaults.baseURL = baseCrtUrl;
       }
       return instance;
     }
