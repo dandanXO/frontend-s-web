@@ -290,6 +290,7 @@ export default {
     beforeEdit: '编辑前',
     bet: '下注金额',
     betId: '投注单号',
+    betMoneyChange: '投注账变',
     betMoreThan: '投注金额大于',
     betRecords: '投注记录',
     betStatus: '投注状态',

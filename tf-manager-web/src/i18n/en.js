@@ -290,6 +290,7 @@ export default {
     beforeEdit: 'Before Edit',
     bet: 'Bet',
     betId: 'Bet ID',
+    betMoneyChange: 'Member Bet Money Change',
     betMoreThan: 'Bet More Than',
     betRecords: 'Bet Records',
     betStatus: 'Bet Status',

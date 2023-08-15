@@ -5,6 +5,10 @@ export const getMemberBetRecords = (query) => {
   return https().request("/memberBetRecord", Method.GET, query, ContentType.form);
 };
 
+export const getBetMoneyChange = (query) => {
+  return https().request("/memberBetRecord/money-change", Method.GET, query, ContentType.form);
+};
+
 // export const getMemberBetRecordsTotal = (query) => {
 //   return https().request("/memberBetRecord/total", Method.GET, query, ContentType.form);
 // };

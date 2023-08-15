@@ -9,6 +9,9 @@
     <el-tab-pane :label="t('fields.bankCard')" name="member-bank">
       <MemberBankTab :mbr-id="id" />
     </el-tab-pane>
+    <el-tab-pane :label="t('fields.betMoneyChange')" name="bet-money-change">
+      <BetMoneyChange :mbr-id="id" />
+    </el-tab-pane>
     <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change">
       <MemberMoneyChange :mbr-id="id" />
     </el-tab-pane>
@@ -45,6 +48,7 @@ import DepositInfoTab from "./tabs/deposit-info/index.vue";
 import WithdrawInfoTab from "./tabs/withdraw-info/index.vue";
 import { useRouter } from "vue-router";
 import MemberPrivilegeRecord from "./tabs/member-privilege-record/index.vue";
+import BetMoneyChange from "./tabs/bet-money-change/index.vue";
 import MemberMoneyChange from "./tabs/member-money-change/index.vue";
 import MemberBankTab from "./tabs/member-bank/index.vue";
 import RiskInfoTab from "./tabs/risk-info/index.vue";
@@ -58,6 +62,7 @@ export default defineComponent({
     MemberInfoTab,
     TransactionInfoTab,
     MemberPrivilegeRecord,
+    BetMoneyChange,
     MemberMoneyChange,
     DepositInfoTab,
     WithdrawInfoTab,
