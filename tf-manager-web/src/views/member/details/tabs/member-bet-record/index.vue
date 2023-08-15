@@ -12,11 +12,12 @@
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
           style="width: 380px"
-          :shortcuts="shortcuts"
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
+          @blur="calendarBlur"
+          @calendar-change="calendarChange"
         />
         <el-select
           v-model="request.platform"
@@ -42,7 +43,7 @@
           <el-option
             v-for="item in uiControl.gameType"
             :key="item.key"
-            :label="item.displayName"
+            :label="t('gameType.' + item.displayName)"
             :value="item.value"
           />
         </el-select>
@@ -118,12 +119,16 @@
         </el-table-column>
         <el-table-column prop="betStatus" :label="t('fields.betStatus')" align="center" min-width="140">
           <template #default="scope">
-            <el-tag v-if="scope.row.betStatus === 'SETTLED'" size="mini" type="success">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else size="mini" type="warning">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-if="scope.row.betStatus === 'SETTLED'" size="mini" type="success">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else size="mini" type="warning">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140" />
+        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140">
+          <template #default="scope">
+            {{ t('gameType.' + scope.row.gameType) }}
+          </template>
+        </el-table-column>
         <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="200" />
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
@@ -144,12 +149,22 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="table-footer">
+        <!-- <span>{{ t('fields.totalBetRecords') }}</span>
+        <span style="margin-left: 10px">{{ total.totalRecord }}</span> -->
+        <span> {{ t('fields.totalBet') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalBet, type: 'money'}" />
+        <span style="margin-left: 30px"> {{ t('fields.totalPayout') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalPayout, type: 'money'}" />
+      </div>
       <el-pagination
         class="pagination"
         :total="page.total"
         :page-sizes="[20, 50, 100, 150, 200]"
         @current-change="changepage"
-        layout="total,sizes,prev, next"
+        layout="total,sizes,prev, pager, next"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
@@ -182,12 +197,11 @@
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import * as XLSX from 'xlsx';
-import { getExport, getMemberBetRecords } from '../../../../../api/member-bet-record';
+import { getMemberBetRecords, getMemberBetRecordsTotal } from '../../../../../api/member-bet-record';
 import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
-import { getShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -197,6 +211,7 @@ const props = defineProps({
   }
 })
 
+let selectedDate = "";
 const route = useRoute()
 const site = reactive({
   id: route.query.site
@@ -219,9 +234,9 @@ const uiControl = reactive({
     { key: 7, displayName: "LOTTERY", value: "LOTTERY" }
   ],
   status: [
-    { key: 1, displayName: "UNSETTLED", value: "UNSETTLED" },
-    { key: 2, displayName: "SETTLED", value: "SETTLED" },
-    { key: 3, displayName: "CANCEL", value: "CANCEL" }
+    { key: 1, displayName: t('betStatus.UNSETTLED'), value: "UNSETTLED" },
+    { key: 2, displayName: t('betStatus.SETTLED'), value: "SETTLED" },
+    { key: 3, displayName: t('betStatus.CANCEL'), value: "CANCEL" }
   ]
 });
 
@@ -229,11 +244,11 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
-const shortcuts = getShortcuts(t);
 const exportPercentage = ref(0);
 
-const EXPORT_HEADER = ['Bet ID', 'Transaction ID', 'Login Name', 'Platform', 'Bet', 'Payout', 'Before Balance', 'After Balance',
-  'Bet Status', 'Game Type', 'Game Name', 'Bet Time', 'Settle Time', 'Result', 'Sport Bet Result'];
+const EXPORT_HEADER = [t('fields.betId'), t('fields.transactionId'), t('fields.loginName'), t('fields.gameAccountName'), t('fields.platform'),
+  t('fields.bet'), t('fields.payout'), t('fields.companyProfit'), t('fields.betStatus'), t('fields.gameType'), t('fields.gameName'),
+  t('fields.affiliate'), t('fields.betTime'), t('fields.settleTime')];
 
 const memberDetail = ref(null);
 const platform = reactive({
@@ -254,11 +269,11 @@ const request = reactive({
   status: ["UNSETTLED", "SETTLED", "CANCEL"]
 });
 
-// const total = reactive({
-//   totalRecord: 0,
-//   totalBet: 0,
-//   totalPayout: 0
-// });
+const total = reactive({
+  // totalRecord: 0,
+  totalBet: 0,
+  totalPayout: 0
+});
 
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
@@ -284,7 +299,18 @@ function convertStartDate(date) {
 }
 
 function disabledDate(time) {
+  if (selectedDate) {
+    return time.getTime() < moment(selectedDate).startOf('month').format('x') || (time.getTime() > new Date().getTime() || time.getTime() > moment(selectedDate).endOf('month').format('x'));
+  }
   return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+}
+
+function calendarBlur() {
+  selectedDate = null;
+}
+
+function calendarChange(date) {
+  selectedDate = date[0];
 }
 
 function checkQuery() {
@@ -323,23 +349,18 @@ async function loadMemberBetRecords(frombutton) {
   const { data: ret } = await getMemberBetRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
-  page.pagingState = ret.pagingState;
+  page.total = ret.total;
 
-  //   const { data: t } = await getMemberBetRecordsTotal(query);
-  //   total.totalBet = t.totalBet;
-  //   total.totalPayout = t.totalPayout;
-
-  //   const { data: r } = await getMemberBetRecordsTotalRecord(query);
-  //   total.totalRecord = r;
+  const { data: t } = await getMemberBetRecordsTotal(query);
+  total.totalBet = t.totalBet;
+  total.totalPayout = t.totalPayout;
 
   page.loading = false;
 }
 
 function changepage(page) {
-  if (request.current >= 1) {
-    request.current = page;
-    loadMemberBetRecords();
-  }
+  request.current = page;
+  loadMemberBetRecords();
 }
 
 async function loadPlatform() {
@@ -370,7 +391,7 @@ async function exportExcel() {
   const query = checkQuery();
   query.current = 1;
   query.size = 200;
-  const { data: ret } = await getExport(query);
+  const { data: ret } = await getMemberBetRecords(query);
   const exportData = [EXPORT_HEADER];
   const maxLength = [];
 
@@ -381,7 +402,7 @@ async function exportExcel() {
 
   while (query.current < ret.pages) {
     query.current += 1;
-    const { data: ret } = await getExport(query);
+    const { data: ret } = await getMemberBetRecords(query);
     query.pagingState = ret.pagingState
     pushRecordToData(ret.records, exportData);
     exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
@@ -399,13 +420,19 @@ async function exportExcel() {
   const wsCols = maxLength.map(w => { return { width: w } });
   ws['!cols'] = wsCols;
   const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Member_Bet_Records');
-  wb.Sheets.Member_Bet_Records = ws;
-  XLSX.writeFile(wb, "member_bet_records.xlsx");
+  wb.SheetNames.push('Record');
+  wb.Sheets.Record = ws;
+  XLSX.writeFile(wb, t('reportName.Member_Bet_Record') + '(' + memberDetail.value.loginName + ').xlsx');
   exportPercentage.value = 100;
 }
 
 function pushRecordToData(records, exportData) {
+  records.forEach(item => {
+    delete item.beforeBalance;
+    delete item.afterBalance;
+    delete item.result;
+    delete item.sportBetResult;
+  })
   const data = records.map(record => Object.values(record).map(item => item !== 0 && (!item || item === '') ? '-' : item));
   exportData.push(...data);
 }
