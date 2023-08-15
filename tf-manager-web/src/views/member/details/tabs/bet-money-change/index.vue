@@ -77,7 +77,7 @@
           icon="el-icon-search"
           size="mini"
           type="primary"
-          @click="loadMemberBetRecords()"
+          @click="loadMemberBetMoneyChange()"
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
@@ -96,7 +96,7 @@
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
         <div class="clearfix">
-          <span class="role-span">{{ t('fields.memberBetRecord') }}</span>
+          <span class="role-span">{{ t('fields.betMoneyChange') }}</span>
         </div>
       </template>
       <el-table :data="page.records" ref="table"
@@ -165,7 +165,7 @@
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
-        @size-change="loadMemberBetRecords(true)"
+        @size-change="loadMemberBetMoneyChange(true)"
       />
     </el-card>
 
@@ -324,7 +324,7 @@ function checkQuery() {
   return query;
 }
 
-async function loadMemberBetRecords(frombutton) {
+async function loadMemberBetMoneyChange(frombutton) {
   if (frombutton === true) {
     request.current = 1
     page.pagingState = null
@@ -343,7 +343,7 @@ async function loadMemberBetRecords(frombutton) {
 function changepage(page) {
   if (request.current >= 1) {
     request.current = page;
-    loadMemberBetRecords();
+    loadMemberBetMoneyChange();
   }
 }
 
