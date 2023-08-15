@@ -183,7 +183,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="200" />
-        <el-table-column prop="affiliateName" :label="t('fields.affiliateName')" align="center" min-width="120" />
+        <el-table-column prop="affiliateName" :label="t('fields.affiliateName')" align="center" min-width="120">
+          <template #default="scope">
+            <span v-if="scope.row.affiliateName === null">-</span>
+            <span v-else>{{ scope.row.affiliateName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.betTime === null">-</span>
