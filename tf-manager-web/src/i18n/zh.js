@@ -55,6 +55,7 @@ export default {
     Summary_Withdraw_Record: '总结提款记录',
     Summary_Deposit_Record: '总结存款记录',
     Summary_Member_Record: '总结会员记录',
+    Member_Bet_Record: '会员投注记录'
   },
   depositStatus: {
     SUCCESS: '存款成功',
@@ -135,6 +136,11 @@ export default {
       NORMAL: '正常',
       FROZEN: '冻结'
     }
+  },
+  betStatus: {
+    UNSETTLED: "未结算",
+    SETTLED: "已结算",
+    CANCEL: "已取消"
   },
   dashboard: {
     memberCount: '人数',

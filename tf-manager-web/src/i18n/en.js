@@ -49,6 +49,7 @@ export default {
     Summary_Withdraw_Record: 'Summary_Withdraw_Record',
     Summary_Deposit_Record: 'Summary_Deposit_Record',
     Summary_Member_Record: 'Summary_Member_Record',
+    Member_Bet_Record: 'Member_Bet_Record'
   },
   dateType: {
     depositDate: 'Deposit Date',
@@ -135,6 +136,11 @@ export default {
       NORMAL: 'Normal',
       FROZEN: 'Frozen'
     }
+  },
+  betStatus: {
+    UNSETTLED: "UNSETTLED",
+    SETTLED: "SETTLED",
+    CANCEL: "CANCEL"
   },
   dashboard: {
     memberCount: 'Member Count',

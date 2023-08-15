@@ -119,9 +119,9 @@
         </el-table-column>
         <el-table-column prop="betStatus" :label="t('fields.betStatus')" align="center" min-width="140">
           <template #default="scope">
-            <el-tag v-if="scope.row.betStatus === 'SETTLED'" size="mini" type="success">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else size="mini" type="warning">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-if="scope.row.betStatus === 'SETTLED'" size="mini" type="success">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else size="mini" type="warning">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140" />
@@ -230,9 +230,9 @@ const uiControl = reactive({
     { key: 7, displayName: "LOTTERY", value: "LOTTERY" }
   ],
   status: [
-    { key: 1, displayName: "UNSETTLED", value: "UNSETTLED" },
-    { key: 2, displayName: "SETTLED", value: "SETTLED" },
-    { key: 3, displayName: "CANCEL", value: "CANCEL" }
+    { key: 1, displayName: t('betStatus.UNSETTLED'), value: "UNSETTLED" },
+    { key: 2, displayName: t('betStatus.SETTLED'), value: "SETTLED" },
+    { key: 3, displayName: t('betStatus.CANCEL'), value: "CANCEL" }
   ]
 });
 
@@ -242,8 +242,9 @@ const defaultTime = [
 ];
 const exportPercentage = ref(0);
 
-const EXPORT_HEADER = ['Bet ID', 'Transaction ID', 'Login Name', 'Game Account Name', 'Platform', 'Bet', 'Payout',
-  'Bet Status', 'Game Type', 'Game Name', 'Affiliate Name', 'Bet Time', 'Settle Time'];
+const EXPORT_HEADER = [t('fields.betId'), t('fields.transactionId'), t('fields.loginName'), t('fields.gameAccountName'), t('fields.platform'),
+  t('fields.bet'), t('fields.payout'), t('fields.companyProfit'), t('fields.betStatus'), t('fields.gameType'), t('fields.gameName'),
+  t('fields.affiliate'), t('fields.betTime'), t('fields.settleTime')];
 
 const memberDetail = ref(null);
 const platform = reactive({
@@ -415,15 +416,14 @@ async function exportExcel() {
   const wsCols = maxLength.map(w => { return { width: w } });
   ws['!cols'] = wsCols;
   const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Member_Bet_Records');
-  wb.Sheets.Member_Bet_Records = ws;
-  XLSX.writeFile(wb, "member_bet_records.xlsx");
+  wb.SheetNames.push('Record');
+  wb.Sheets.Record = ws;
+  XLSX.writeFile(wb, t('reportName.Member_Bet_Record') + '(' + memberDetail.value.loginName + ').xlsx');
   exportPercentage.value = 100;
 }
 
 function pushRecordToData(records, exportData) {
   records.forEach(item => {
-    delete item.companyProfit;
     delete item.beforeBalance;
     delete item.afterBalance;
     delete item.result;
