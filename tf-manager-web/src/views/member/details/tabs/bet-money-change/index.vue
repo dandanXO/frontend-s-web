@@ -136,7 +136,11 @@
             <el-tag v-else size="mini" type="warning">{{ scope.row.result }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140" />
+        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140">
+          <template #default="scope">
+            {{ t('gameType.' + scope.row.gameType) }}
+          </template>
+        </el-table-column>
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.betTime === null">-</span>
@@ -244,8 +248,9 @@ const defaultTime = [
 const shortcuts = getShortcuts(t);
 const exportPercentage = ref(0);
 
-const EXPORT_HEADER = ['Bet ID', 'Transaction ID', 'Login Name', 'Platform', 'Bet', 'Payout', 'Before Balance', 'After Balance',
-  'Bet Status', 'Game Type', 'Bet Time', 'Settle Time', 'Result'];
+const EXPORT_HEADER = [t('fields.betId'), t('fields.transactionId'), t('fields.loginName'), t('fields.platform'), t('fields.bet'),
+  t('fields.payout'), t('fields.beforeBalance'), t('fields.afterBalance'), t('fields.betStatus'), t('fields.gameType'),
+  t('fields.betTime'), t('fields.settleTime'), t('fields.result')];
 
 const memberDetail = ref(null);
 const platform = reactive({
@@ -404,15 +409,18 @@ async function exportExcel() {
   const wsCols = maxLength.map(w => { return { width: w } });
   ws['!cols'] = wsCols;
   const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Member_Bet_Money_Change');
-  wb.Sheets.Member_Bet_Money_Change = ws;
-  XLSX.writeFile(wb, "member_bet_money_change.xlsx");
+  wb.SheetNames.push('Record');
+  wb.Sheets.Record = ws;
+  XLSX.writeFile(wb, t('reportName.Member_Bet_Money_Change') + '(' + memberDetail.value.loginName + ').xlsx');
   exportPercentage.value = 100;
 }
 
 function pushRecordToData(records, exportData) {
   records.forEach(item => {
+    delete item.gameAccountName;
+    delete item.companyProfit;
     delete item.gameName;
+    delete item.affiliateName;
     delete item.sportBetResult;
     item.loginName = memberDetail.value.loginName;
   })

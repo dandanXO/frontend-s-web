@@ -55,7 +55,8 @@ export default {
     Summary_Withdraw_Record: '总结提款记录',
     Summary_Deposit_Record: '总结存款记录',
     Summary_Member_Record: '总结会员记录',
-    Member_Bet_Record: '会员投注记录'
+    Member_Bet_Record: '会员投注记录',
+    Member_Bet_Money_Change: '投注账变'
   },
   depositStatus: {
     SUCCESS: '存款成功',
@@ -182,6 +183,15 @@ export default {
     gameBetCountTotal: '总下注笔数',
     gameBetAmountTotal: '总下注金额',
     gameWinLossTotal: '总输/赢金额',
+  },
+  gameType: {
+    SLOT: '电子',
+    LIVE: '真人',
+    FISH: '捕鱼',
+    SPORT: '体育',
+    ESPORT: '电竞',
+    POKER: '棋牌',
+    LOTTERY: '彩票'
   },
   fields: {
     account: '账号',

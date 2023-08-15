@@ -43,7 +43,7 @@
           <el-option
             v-for="item in uiControl.gameType"
             :key="item.key"
-            :label="item.displayName"
+            :label="t('gameType.' + item.displayName)"
             :value="item.value"
           />
         </el-select>
@@ -124,7 +124,11 @@
             <el-tag v-else size="mini" type="warning">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140" />
+        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140">
+          <template #default="scope">
+            {{ t('gameType.' + scope.row.gameType) }}
+          </template>
+        </el-table-column>
         <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="200" />
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">

@@ -49,7 +49,8 @@ export default {
     Summary_Withdraw_Record: 'Summary_Withdraw_Record',
     Summary_Deposit_Record: 'Summary_Deposit_Record',
     Summary_Member_Record: 'Summary_Member_Record',
-    Member_Bet_Record: 'Member_Bet_Record'
+    Member_Bet_Record: 'Member_Bet_Record',
+    Member_Bet_Money_Change: 'Member_Bet_Money_Change'
   },
   dateType: {
     depositDate: 'Deposit Date',
@@ -182,6 +183,15 @@ export default {
     gameBetCountTotal: 'Total Bet Transaction Count',
     gameBetAmountTotal: 'Total Bet Amount',
     gameWinLossTotal: 'Total Win/Loss Amount',
+  },
+  gameType: {
+    SLOT: 'SLOT',
+    LIVE: 'LIVE',
+    FISH: 'FISH',
+    SPORT: 'SPORT',
+    ESPORT: 'ESPORT',
+    POKER: 'POKER',
+    LOTTERY: 'LOTTERY'
   },
   fields: {
     account: 'Account',
