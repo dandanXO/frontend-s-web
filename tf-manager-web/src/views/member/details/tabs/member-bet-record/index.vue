@@ -12,11 +12,12 @@
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
           style="width: 380px"
-          :shortcuts="shortcuts"
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
+          @blur="calendarBlur"
+          @calendar-change="calendarChange"
         />
         <el-select
           v-model="request.platform"
@@ -144,12 +145,22 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="table-footer">
+        <!-- <span>{{ t('fields.totalBetRecords') }}</span>
+        <span style="margin-left: 10px">{{ total.totalRecord }}</span> -->
+        <span> {{ t('fields.totalBet') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalBet, type: 'money'}" />
+        <span style="margin-left: 30px"> {{ t('fields.totalPayout') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalPayout, type: 'money'}" />
+      </div>
       <el-pagination
         class="pagination"
         :total="page.total"
         :page-sizes="[20, 50, 100, 150, 200]"
         @current-change="changepage"
-        layout="total,sizes,prev, next"
+        layout="total,sizes,prev, pager, next"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
@@ -182,12 +193,11 @@
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import * as XLSX from 'xlsx';
-import { getMemberBetRecords } from '../../../../../api/member-bet-record';
+import { getMemberBetRecords, getMemberBetRecordsTotal } from '../../../../../api/member-bet-record';
 import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
-import { getShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -197,6 +207,7 @@ const props = defineProps({
   }
 })
 
+let selectedDate = "";
 const route = useRoute()
 const site = reactive({
   id: route.query.site
@@ -229,11 +240,10 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
-const shortcuts = getShortcuts(t);
 const exportPercentage = ref(0);
 
-const EXPORT_HEADER = ['Bet ID', 'Transaction ID', 'Login Name', 'Platform', 'Bet', 'Payout',
-  'Bet Status', 'Game Type', 'Game Name', 'Bet Time', 'Settle Time'];
+const EXPORT_HEADER = ['Bet ID', 'Transaction ID', 'Login Name', 'Game Account Name', 'Platform', 'Bet', 'Payout',
+  'Bet Status', 'Game Type', 'Game Name', 'Affiliate Name', 'Bet Time', 'Settle Time'];
 
 const memberDetail = ref(null);
 const platform = reactive({
@@ -254,11 +264,11 @@ const request = reactive({
   status: ["UNSETTLED", "SETTLED", "CANCEL"]
 });
 
-// const total = reactive({
-//   totalRecord: 0,
-//   totalBet: 0,
-//   totalPayout: 0
-// });
+const total = reactive({
+  // totalRecord: 0,
+  totalBet: 0,
+  totalPayout: 0
+});
 
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
@@ -284,7 +294,18 @@ function convertStartDate(date) {
 }
 
 function disabledDate(time) {
+  if (selectedDate) {
+    return time.getTime() < moment(selectedDate).startOf('month').format('x') || (time.getTime() > new Date().getTime() || time.getTime() > moment(selectedDate).endOf('month').format('x'));
+  }
   return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+}
+
+function calendarBlur() {
+  selectedDate = null;
+}
+
+function calendarChange(date) {
+  selectedDate = date[0];
 }
 
 function checkQuery() {
@@ -323,23 +344,18 @@ async function loadMemberBetRecords(frombutton) {
   const { data: ret } = await getMemberBetRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
-  page.pagingState = ret.pagingState;
+  page.total = ret.total;
 
-  //   const { data: t } = await getMemberBetRecordsTotal(query);
-  //   total.totalBet = t.totalBet;
-  //   total.totalPayout = t.totalPayout;
-
-  //   const { data: r } = await getMemberBetRecordsTotalRecord(query);
-  //   total.totalRecord = r;
+  const { data: t } = await getMemberBetRecordsTotal(query);
+  total.totalBet = t.totalBet;
+  total.totalPayout = t.totalPayout;
 
   page.loading = false;
 }
 
 function changepage(page) {
-  if (request.current >= 1) {
-    request.current = page;
-    loadMemberBetRecords();
-  }
+  request.current = page;
+  loadMemberBetRecords();
 }
 
 async function loadPlatform() {
@@ -407,6 +423,7 @@ async function exportExcel() {
 
 function pushRecordToData(records, exportData) {
   records.forEach(item => {
+    delete item.companyProfit;
     delete item.beforeBalance;
     delete item.afterBalance;
     delete item.result;
