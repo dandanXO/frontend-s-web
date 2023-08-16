@@ -364,7 +364,7 @@ function changepage(page) {
 }
 
 async function loadPlatform() {
-  const { data: ret } = await getPlatformsBySite(memberDetail.value.siteId);
+  const { data: ret } = await getPlatformsBySite(site.id);
   platform.list = ret;
 }
 
