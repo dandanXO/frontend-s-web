@@ -12,14 +12,13 @@
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
           style="width: 380px"
+          :shortcuts="shortcuts"
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
-          @blur="calendarBlur"
-          @calendar-change="calendarChange"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.platform"
           size="small"
           :placeholder="t('fields.platform')"
@@ -34,6 +33,7 @@
           />
         </el-select>
         <el-select
+          v-if="request.platform !== null"
           v-model="request.gameType"
           size="small"
           :placeholder="t('fields.gameType')"
@@ -43,39 +43,41 @@
           <el-option
             v-for="item in uiControl.gameType"
             :key="item.key"
-            :label="t('gameType.' + item.displayName)"
+            :label="item.displayName"
             :value="item.value"
           />
         </el-select>
         <el-select
+          v-if="request.gameType.length !== 0"
           multiple
-          v-model="request.status"
+          v-model="request.result"
           size="small"
-          :placeholder="t('fields.status')"
+          :placeholder="t('fields.result')"
           class="filter-item"
-          style="margin-left: 5px; width: 300px;"
+          style="margin-left: 5px; width: 250px;"
         >
           <el-option
-            v-for="item in uiControl.status"
+            v-for="item in uiControl.result"
             :key="item.key"
             :label="item.displayName"
             :value="item.value"
           />
         </el-select>
         <el-input
+          v-if="request.gameType.length !== 0 && request.result.length !== 0"
           v-model="request.bet"
           style="margin-left: 5px; width: 200px;"
           size="small"
           maxlength="20"
           :placeholder="t('fields.betMoreThan')"
           @keypress="restrictInput($event)"
-        />
+        /> -->
         <el-button
           style="margin-left: 10px"
           icon="el-icon-search"
           size="mini"
           type="primary"
-          @click="loadMemberBetRecords()"
+          @click="loadMemberBetMoneyChange()"
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
@@ -94,7 +96,7 @@
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
         <div class="clearfix">
-          <span class="role-span">{{ t('fields.memberBetRecord') }}</span>
+          <span class="role-span">{{ t('fields.betMoneyChange') }}</span>
         </div>
       </template>
       <el-table :data="page.records" ref="table"
@@ -104,8 +106,8 @@
                 v-loading="page.loading"
                 :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="280" />
-        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="280" />
+        <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="250" />
+        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="250" />
         <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120" />
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">
@@ -117,11 +119,21 @@
             $ <span v-formatter="{data: scope.row.payout,type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="betStatus" :label="t('fields.betStatus')" align="center" min-width="140">
+        <el-table-column prop="beforeBalance" :label="t('fields.beforeBalance')" align="center" min-width="140">
           <template #default="scope">
-            <el-tag v-if="scope.row.betStatus === 'SETTLED'" size="mini" type="success">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
-            <el-tag v-else size="mini" type="warning">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            $ <span v-formatter="{data: scope.row.beforeBalance,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="afterBalance" :label="t('fields.afterBalance')" align="center" min-width="140">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.afterBalance,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="result" :label="t('fields.result')" align="center" min-width="140">
+          <template #default="scope">
+            <el-tag v-if="scope.row.result === 'WIN'" size="mini" type="success">{{ scope.row.result }}</el-tag>
+            <el-tag v-else-if="scope.row.result === 'LOSS'" size="mini" type="danger">{{ scope.row.result }}</el-tag>
+            <el-tag v-else size="mini" type="warning">{{ scope.row.result }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140">
@@ -129,7 +141,6 @@
             {{ t('gameType.' + scope.row.gameType) }}
           </template>
         </el-table-column>
-        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="200" />
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.betTime === null">-</span>
@@ -149,26 +160,16 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="table-footer">
-        <!-- <span>{{ t('fields.totalBetRecords') }}</span>
-        <span style="margin-left: 10px">{{ total.totalRecord }}</span> -->
-        <span> {{ t('fields.totalBet') }}</span>
-        <span style="margin-left: 10px">$ </span>
-        <span v-formatter="{data: total.totalBet, type: 'money'}" />
-        <span style="margin-left: 30px"> {{ t('fields.totalPayout') }}</span>
-        <span style="margin-left: 10px">$ </span>
-        <span v-formatter="{data: total.totalPayout, type: 'money'}" />
-      </div>
       <el-pagination
         class="pagination"
         :total="page.total"
         :page-sizes="[20, 50, 100, 150, 200]"
         @current-change="changepage"
-        layout="total,sizes,prev, pager, next"
+        layout="sizes,prev, next"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
-        @size-change="loadMemberBetRecords(true)"
+        @size-change="loadMemberBetMoneyChange(true)"
       />
     </el-card>
 
@@ -197,11 +198,12 @@
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import * as XLSX from 'xlsx';
-import { getMemberBetRecords, getMemberBetRecordsTotal } from '../../../../../api/member-bet-record';
+import { getBetMoneyChange } from '../../../../../api/member-bet-record';
 import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
+import { getShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -211,7 +213,6 @@ const props = defineProps({
   }
 })
 
-let selectedDate = "";
 const route = useRoute()
 const site = reactive({
   id: route.query.site
@@ -233,10 +234,10 @@ const uiControl = reactive({
     { key: 6, displayName: "POKER", value: "POKER" },
     { key: 7, displayName: "LOTTERY", value: "LOTTERY" }
   ],
-  status: [
-    { key: 1, displayName: t('betStatus.UNSETTLED'), value: "UNSETTLED" },
-    { key: 2, displayName: t('betStatus.SETTLED'), value: "SETTLED" },
-    { key: 3, displayName: t('betStatus.CANCEL'), value: "CANCEL" }
+  result: [
+    { key: 1, displayName: "WIN", value: "WIN" },
+    { key: 2, displayName: "LOSS", value: "LOSS" },
+    { key: 3, displayName: "DRAW", value: "DRAW" }
   ]
 });
 
@@ -244,11 +245,12 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
+const shortcuts = getShortcuts(t);
 const exportPercentage = ref(0);
 
-const EXPORT_HEADER = [t('fields.betId'), t('fields.transactionId'), t('fields.loginName'), t('fields.gameAccountName'), t('fields.platform'),
-  t('fields.bet'), t('fields.payout'), t('fields.companyProfit'), t('fields.betStatus'), t('fields.gameType'), t('fields.gameName'),
-  t('fields.affiliate'), t('fields.betTime'), t('fields.settleTime')];
+const EXPORT_HEADER = [t('fields.betId'), t('fields.transactionId'), t('fields.loginName'), t('fields.platform'), t('fields.bet'),
+  t('fields.payout'), t('fields.beforeBalance'), t('fields.afterBalance'), t('fields.betStatus'), t('fields.gameType'),
+  t('fields.betTime'), t('fields.settleTime'), t('fields.result')];
 
 const memberDetail = ref(null);
 const platform = reactive({
@@ -263,24 +265,24 @@ const request = reactive({
   size: 20,
   current: 1,
   betTime: [defaultStartDate, defaultEndDate],
-  platform: null,
-  bet: null,
-  gameType: [],
-  status: ["UNSETTLED", "SETTLED", "CANCEL"]
+  // platform: null,
+  // bet: null,
+  // gameType: [],
+  // result: ["WIN", "LOSS", "DRAW"]
 });
 
-const total = reactive({
-  // totalRecord: 0,
-  totalBet: 0,
-  totalPayout: 0
-});
+// const total = reactive({
+//   totalRecord: 0,
+//   totalBet: 0,
+//   totalPayout: 0
+// });
 
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
-  request.platform = null;
-  request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
-  request.bet = null;
-  request.gameType = [];
+  // request.platform = null;
+  // request.result = ["WIN", "LOSS", "DRAW"];
+  // request.bet = null;
+  // request.gameType = [];
 }
 
 const page = reactive({
@@ -299,18 +301,7 @@ function convertStartDate(date) {
 }
 
 function disabledDate(time) {
-  if (selectedDate) {
-    return time.getTime() < moment(selectedDate).startOf('month').format('x') || (time.getTime() > new Date().getTime() || time.getTime() > moment(selectedDate).endOf('month').format('x'));
-  }
   return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
-}
-
-function calendarBlur() {
-  selectedDate = null;
-}
-
-function calendarChange(date) {
-  selectedDate = date[0];
 }
 
 function checkQuery() {
@@ -326,19 +317,19 @@ function checkQuery() {
       query.betTime = request.betTime.join(",");
     }
   }
-  if (request.status !== null) {
-    if (request.status.length === 1) {
-      query.status = request.status[0];
-    } else {
-      query.status = request.status.join(",");
-    }
-  }
+  // if (request.result !== null) {
+  //   if (request.result.length === 1) {
+  //     query.result = request.result[0];
+  //   } else {
+  //     query.result = request.result.join(",");
+  //   }
+  // }
   query.memberId = props.mbrId;
   query.siteId = site.id;
   return query;
 }
 
-async function loadMemberBetRecords(frombutton) {
+async function loadMemberBetMoneyChange(frombutton) {
   if (frombutton === true) {
     request.current = 1
     page.pagingState = null
@@ -346,52 +337,50 @@ async function loadMemberBetRecords(frombutton) {
   page.loading = true;
   const query = checkQuery();
   query.pagingState = page.pagingState
-  const { data: ret } = await getMemberBetRecords(query);
+  const { data: ret } = await getBetMoneyChange(query);
   page.pages = ret.pages;
   page.records = ret.records;
-  page.total = ret.total;
-
-  const { data: t } = await getMemberBetRecordsTotal(query);
-  total.totalBet = t.totalBet;
-  total.totalPayout = t.totalPayout;
+  page.pagingState = ret.pagingState;
 
   page.loading = false;
 }
 
 function changepage(page) {
-  request.current = page;
-  loadMemberBetRecords();
+  if (request.current >= 1) {
+    request.current = page;
+    loadMemberBetMoneyChange();
+  }
 }
 
 async function loadPlatform() {
-  const { data: ret } = await getPlatformsBySite(site.id);
+  const { data: ret } = await getPlatformsBySite(memberDetail.value.siteId);
   platform.list = ret;
 }
 
-function restrictInput(event) {
-  var charCode = event.which ? event.which : event.keyCode
-  if (
-    (charCode < 48 || charCode > 57) && charCode !== 46
-  ) {
-    event.preventDefault();
-  }
+// function restrictInput(event) {
+//   var charCode = event.which ? event.which : event.keyCode
+//   if (
+//     (charCode < 48 || charCode > 57) && charCode !== 46
+//   ) {
+//     event.preventDefault();
+//   }
 
-  if (
-    request.bet !== null &&
-    request.bet.toString().indexOf('.') > -1
-  ) {
-    if (charCode === 46) {
-      event.preventDefault();
-    }
-  }
-}
+//   if (
+//     request.bet !== null &&
+//     request.bet.toString().indexOf('.') > -1
+//   ) {
+//     if (charCode === 46) {
+//       event.preventDefault();
+//     }
+//   }
+// }
 
 async function exportExcel() {
   uiControl.progressBarVisible = true;
   const query = checkQuery();
   query.current = 1;
   query.size = 200;
-  const { data: ret } = await getMemberBetRecords(query);
+  const { data: ret } = await getBetMoneyChange(query);
   const exportData = [EXPORT_HEADER];
   const maxLength = [];
 
@@ -402,7 +391,7 @@ async function exportExcel() {
 
   while (query.current < ret.pages) {
     query.current += 1;
-    const { data: ret } = await getMemberBetRecords(query);
+    const { data: ret } = await getBetMoneyChange(query);
     query.pagingState = ret.pagingState
     pushRecordToData(ret.records, exportData);
     exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
@@ -422,16 +411,18 @@ async function exportExcel() {
   const wb = XLSX.utils.book_new();
   wb.SheetNames.push('Record');
   wb.Sheets.Record = ws;
-  XLSX.writeFile(wb, t('reportName.Member_Bet_Record') + '(' + memberDetail.value.loginName + ').xlsx');
+  XLSX.writeFile(wb, t('reportName.Member_Bet_Money_Change') + '(' + memberDetail.value.loginName + ').xlsx');
   exportPercentage.value = 100;
 }
 
 function pushRecordToData(records, exportData) {
   records.forEach(item => {
-    delete item.beforeBalance;
-    delete item.afterBalance;
-    delete item.result;
+    delete item.gameAccountName;
+    delete item.companyProfit;
+    delete item.gameName;
+    delete item.affiliateName;
     delete item.sportBetResult;
+    item.loginName = memberDetail.value.loginName;
   })
   const data = records.map(record => Object.values(record).map(item => item !== 0 && (!item || item === '') ? '-' : item));
   exportData.push(...data);
