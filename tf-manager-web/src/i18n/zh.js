@@ -56,7 +56,9 @@ export default {
     Summary_Deposit_Record: '总结存款记录',
     Summary_Member_Record: '总结会员记录',
     Member_Bet_Record: '会员投注记录',
-    Member_Bet_Money_Change: '投注账变'
+    Member_Bet_Money_Change: '投注账变',
+    Daily_Record: '每日记录',
+    Platform_Game_Record: '游戏平台记录',
   },
   depositStatus: {
     SUCCESS: '存款成功',
