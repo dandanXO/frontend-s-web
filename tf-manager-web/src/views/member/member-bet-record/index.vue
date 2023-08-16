@@ -2,6 +2,20 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          style="width: 120px"
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-date-picker
           v-model="request.betTime"
           format="DD/MM/YYYY HH:mm:ss"
@@ -11,7 +25,7 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
-          style="width: 380px"
+          style="margin-left: 5px; width: 380px"
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
@@ -19,12 +33,39 @@
           @blur="calendarBlur"
           @calendar-change="calendarChange"
         />
+        <el-input
+          v-model="request.loginName"
+          style="margin-left: 5px; width: 200px;"
+          size="small"
+          :placeholder="t('fields.loginName')"
+        />
+        <el-input
+          v-model="request.gameAccountName"
+          style="margin-left: 5px; width: 200px;"
+          size="small"
+          :placeholder="t('fields.gameAccountName')"
+        />
+        <el-input
+          v-model="request.transactionId"
+          style="margin-left: 5px; width: 300px;"
+          size="small"
+          :placeholder="t('fields.transactionId')"
+        />
+        <el-input
+          v-model="request.betId"
+          style="margin-left: 5px; width: 300px;"
+          size="small"
+          :placeholder="t('fields.betId')"
+        />
+      </div>
+      <div style="margin-bottom: 10px;">
         <el-select
           v-model="request.platform"
           size="small"
           :placeholder="t('fields.platform')"
           class="filter-item"
           style="margin-left: 5px; width: 200px;"
+          clearable
         >
           <el-option
             v-for="item in platform.list"
@@ -39,6 +80,7 @@
           :placeholder="t('fields.gameType')"
           class="filter-item"
           style="margin-left: 5px; width: 200px;"
+          clearable
         >
           <el-option
             v-for="item in uiControl.gameType"
@@ -63,12 +105,16 @@
           />
         </el-select>
         <el-input
-          v-model="request.bet"
+          v-model="request.gameName"
           style="margin-left: 5px; width: 200px;"
           size="small"
-          maxlength="20"
-          :placeholder="t('fields.betMoreThan')"
-          @keypress="restrictInput($event)"
+          :placeholder="t('fields.gameName')"
+        />
+        <el-input
+          v-model="request.affiliateName"
+          style="margin-left: 5px; width: 200px;"
+          size="small"
+          :placeholder="t('fields.affiliate')"
         />
         <el-button
           style="margin-left: 10px"
@@ -107,6 +153,8 @@
         <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="280" />
         <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="280" />
         <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120" />
+        <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120" />
+        <el-table-column prop="gameAccountName" :label="t('fields.gameAccountName')" align="center" min-width="120" />
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />
@@ -115,6 +163,11 @@
         <el-table-column prop="payout" :label="t('fields.payout')" align="center" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.payout,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="companyProfit" :label="t('fields.companyProfit')" align="center" min-width="100">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.companyProfit,type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="betStatus" :label="t('fields.betStatus')" align="center" min-width="140">
@@ -130,6 +183,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="200" />
+        <el-table-column prop="affiliateName" :label="t('fields.affiliateName')" align="center" min-width="120">
+          <template #default="scope">
+            <span v-if="scope.row.affiliateName === null">-</span>
+            <span v-else>{{ scope.row.affiliateName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.betTime === null">-</span>
@@ -168,7 +227,7 @@
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
-        @size-change="loadMemberBetRecords(true)"
+        @size-change="loadMemberBetRecords()"
       />
     </el-card>
 
@@ -194,27 +253,23 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import * as XLSX from 'xlsx';
-import { getMemberBetRecords, getMemberBetRecordsTotal } from '../../../../../api/member-bet-record';
-import { getMemberDetails } from '../../../../../api/member';
-import { getPlatformsBySite } from '../../../../../api/platform';
+import { getMemberBetRecordList, getMemberBetRecordListTotal } from '../../../api/member-bet-record';
+import { getPlatformsBySite } from '../../../api/platform';
 import { useI18n } from "vue-i18n";
-import { useRoute } from 'vue-router'
+import { getSiteListSimple } from '../../../api/site';
+import { useStore } from '../../../store';
+import { TENANT } from '../../../store/modules/user/action-types';
 
 const { t } = useI18n();
-const props = defineProps({
-  mbrId: {
-    type: String,
-    required: true
-  }
-})
-
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 let selectedDate = "";
-const route = useRoute()
-const site = reactive({
-  id: route.query.site
+const siteList = reactive({
+  list: []
 });
 
 const uiControl = reactive({
@@ -250,7 +305,6 @@ const EXPORT_HEADER = [t('fields.betId'), t('fields.transactionId'), t('fields.l
   t('fields.bet'), t('fields.payout'), t('fields.companyProfit'), t('fields.betStatus'), t('fields.gameType'), t('fields.gameName'),
   t('fields.affiliate'), t('fields.betTime'), t('fields.settleTime')];
 
-const memberDetail = ref(null);
 const platform = reactive({
   list: null
 });
@@ -263,10 +317,16 @@ const request = reactive({
   size: 20,
   current: 1,
   betTime: [defaultStartDate, defaultEndDate],
+  siteId: null,
+  loginName: null,
+  gameAccountName: null,
+  transactionId: null,
+  betId: null,
   platform: null,
-  bet: null,
   gameType: [],
-  status: ["UNSETTLED", "SETTLED", "CANCEL"]
+  status: ["UNSETTLED", "SETTLED", "CANCEL"],
+  gameName: null,
+  affiliateName: null
 });
 
 const total = reactive({
@@ -277,10 +337,16 @@ const total = reactive({
 
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
+  request.siteId = siteList.list[0].id;
+  request.loginName = null;
+  request.gameAccountName = null;
+  request.transactionId = null;
+  request.betId = null;
   request.platform = null;
-  request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
-  request.bet = null;
   request.gameType = [];
+  request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
+  request.gameName = null;
+  request.affiliateName = null;
 }
 
 const page = reactive({
@@ -313,6 +379,12 @@ function calendarChange(date) {
   selectedDate = date[0];
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+  request.siteId = siteList.list[0].id;
+};
+
 function checkQuery() {
   const requestCopy = { ...request };
   const query = {};
@@ -333,28 +405,21 @@ function checkQuery() {
       query.status = request.status.join(",");
     }
   }
-  query.memberId = props.mbrId;
-  query.siteId = site.id;
   return query;
 }
 
-async function loadMemberBetRecords(frombutton) {
-  if (frombutton === true) {
-    request.current = 1
-    page.pagingState = null
-  }
+async function loadMemberBetRecords() {
   page.loading = true;
   const query = checkQuery();
   query.pagingState = page.pagingState
-  const { data: ret } = await getMemberBetRecords(query);
+  const { data: ret } = await getMemberBetRecordList(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
 
-  const { data: t } = await getMemberBetRecordsTotal(query);
+  const { data: t } = await getMemberBetRecordListTotal(query);
   total.totalBet = t.totalBet;
   total.totalPayout = t.totalPayout;
-
   page.loading = false;
 }
 
@@ -364,26 +429,8 @@ function changepage(page) {
 }
 
 async function loadPlatform() {
-  const { data: ret } = await getPlatformsBySite(memberDetail.value.siteId);
+  const { data: ret } = await getPlatformsBySite(request.siteId);
   platform.list = ret;
-}
-
-function restrictInput(event) {
-  var charCode = event.which ? event.which : event.keyCode
-  if (
-    (charCode < 48 || charCode > 57) && charCode !== 46
-  ) {
-    event.preventDefault();
-  }
-
-  if (
-    request.bet !== null &&
-    request.bet.toString().indexOf('.') > -1
-  ) {
-    if (charCode === 46) {
-      event.preventDefault();
-    }
-  }
 }
 
 async function exportExcel() {
@@ -391,7 +438,7 @@ async function exportExcel() {
   const query = checkQuery();
   query.current = 1;
   query.size = 200;
-  const { data: ret } = await getMemberBetRecords(query);
+  const { data: ret } = await getMemberBetRecordList(query);
   const exportData = [EXPORT_HEADER];
   const maxLength = [];
 
@@ -402,7 +449,7 @@ async function exportExcel() {
 
   while (query.current < ret.pages) {
     query.current += 1;
-    const { data: ret } = await getMemberBetRecords(query);
+    const { data: ret } = await getMemberBetRecordList(query);
     query.pagingState = ret.pagingState
     pushRecordToData(ret.records, exportData);
     exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
@@ -422,7 +469,7 @@ async function exportExcel() {
   const wb = XLSX.utils.book_new();
   wb.SheetNames.push('Record');
   wb.Sheets.Record = ws;
-  XLSX.writeFile(wb, t('reportName.Member_Bet_Record') + '(' + memberDetail.value.loginName + ').xlsx');
+  XLSX.writeFile(wb, t('reportName.Member_Bet_Record') + '.xlsx');
   exportPercentage.value = 100;
 }
 
@@ -438,8 +485,11 @@ function pushRecordToData(records, exportData) {
 }
 
 onMounted(async() => {
-  const { data: ret } = await getMemberDetails(props.mbrId, site.id);
-  memberDetail.value = ret;
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
   await loadPlatform();
 })
 </script>
@@ -450,8 +500,11 @@ onMounted(async() => {
 }
 
 .search {
-  display: flex;
+  float: left;
+  width: 100%;
+  display: block;
   justify-content: flex-start;
+  margin-bottom: 10px;
 }
 
 .table-footer {

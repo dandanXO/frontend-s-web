@@ -55,6 +55,8 @@ export default {
     Summary_Withdraw_Record: '总结提款记录',
     Summary_Deposit_Record: '总结存款记录',
     Summary_Member_Record: '总结会员记录',
+    Member_Bet_Record: '会员投注记录',
+    Member_Bet_Money_Change: '投注账变'
   },
   depositStatus: {
     SUCCESS: '存款成功',
@@ -136,6 +138,11 @@ export default {
       FROZEN: '冻结'
     }
   },
+  betStatus: {
+    UNSETTLED: "未结算",
+    SETTLED: "已结算",
+    CANCEL: "已取消"
+  },
   dashboard: {
     memberCount: '人数',
     totalFirstDeposit: '总首存',
@@ -176,6 +183,15 @@ export default {
     gameBetCountTotal: '总下注笔数',
     gameBetAmountTotal: '总下注金额',
     gameWinLossTotal: '总输/赢金额',
+  },
+  gameType: {
+    SLOT: '电子',
+    LIVE: '真人',
+    FISH: '捕鱼',
+    SPORT: '体育',
+    ESPORT: '电竞',
+    POKER: '棋牌',
+    LOTTERY: '彩票'
   },
   fields: {
     account: '账号',
@@ -290,6 +306,7 @@ export default {
     beforeEdit: '编辑前',
     bet: '下注金额',
     betId: '投注单号',
+    betMoneyChange: '投注账变',
     betMoreThan: '投注金额大于',
     betRecords: '投注记录',
     betStatus: '投注状态',
@@ -514,8 +531,9 @@ export default {
     ftdTime: '首存时间',
     ftdTxn: '首存交易',
     fundingInfo: '资金信息',
+    gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
-    gameName: '游戏名字',
+    gameName: '游戏名称',
     gameType: '游戏类型',
     generateSummary: '生成汇总',
     hasPromo: '有优惠',
@@ -1245,6 +1263,7 @@ export default {
     'Import Bet Records': '导入投注记录',
     'Member Transfer Record': '会员转账记录',
     'Member VIP': '会员等级列表',
+    'Member Bet Record': '会员投注记录',
     Affiliate: '代理',
     'Affiliate Summary': '代理总结',
     'Affiliate Monthly Settlement': '代理结算记录',

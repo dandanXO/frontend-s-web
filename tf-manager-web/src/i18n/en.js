@@ -49,6 +49,8 @@ export default {
     Summary_Withdraw_Record: 'Summary_Withdraw_Record',
     Summary_Deposit_Record: 'Summary_Deposit_Record',
     Summary_Member_Record: 'Summary_Member_Record',
+    Member_Bet_Record: 'Member_Bet_Record',
+    Member_Bet_Money_Change: 'Member_Bet_Money_Change'
   },
   dateType: {
     depositDate: 'Deposit Date',
@@ -136,6 +138,11 @@ export default {
       FROZEN: 'Frozen'
     }
   },
+  betStatus: {
+    UNSETTLED: "UNSETTLED",
+    SETTLED: "SETTLED",
+    CANCEL: "CANCEL"
+  },
   dashboard: {
     memberCount: 'Member Count',
     totalFirstDeposit: 'Total First Deposit',
@@ -176,6 +183,15 @@ export default {
     gameBetCountTotal: 'Total Bet Transaction Count',
     gameBetAmountTotal: 'Total Bet Amount',
     gameWinLossTotal: 'Total Win/Loss Amount',
+  },
+  gameType: {
+    SLOT: 'SLOT',
+    LIVE: 'LIVE',
+    FISH: 'FISH',
+    SPORT: 'SPORT',
+    ESPORT: 'ESPORT',
+    POKER: 'POKER',
+    LOTTERY: 'LOTTERY'
   },
   fields: {
     account: 'Account',
@@ -290,6 +306,7 @@ export default {
     beforeEdit: 'Before Edit',
     bet: 'Bet',
     betId: 'Bet ID',
+    betMoneyChange: 'Member Bet Money Change',
     betMoreThan: 'Bet More Than',
     betRecords: 'Bet Records',
     betStatus: 'Bet Status',
@@ -513,6 +530,7 @@ export default {
     ftdTime: 'FTD Time',
     ftdTxn: 'FTD Txn',
     fundingInfo: 'Funding Information',
+    gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
     gameName: 'Game Name',
     gameType: 'Game Type',
@@ -1263,6 +1281,7 @@ export default {
     'Import Bet Records': 'Import Bet Records',
     'Member Transfer Record': 'Member Transfer Record',
     'Member VIP': 'Member VIP',
+    'Member Bet Record': 'Member Bet Record',
     Affiliate: 'Affiliate',
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',
