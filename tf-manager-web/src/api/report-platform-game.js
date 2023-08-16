@@ -1,6 +1,14 @@
 import https from "@/utils/https";
 import { ContentType, Method } from "axios-mapper";
 
-export const getAffiliateReport = (query) => {
-  return https().request("/report/getAffiliateReport", Method.GET, query, ContentType.form);
+export const getPlatformGameReport = (data) => {
+  return https().request("/report/platformGameReportList", Method.GET, data, ContentType.form);
+};
+
+export const getDailyReport = (data) => {
+  return https().request("/report/dailyPlatformGameReport", Method.GET, data, ContentType.form);
+};
+
+export const getExportReport = (data) => {
+  return https().request("/report/dailyPlatformGameReport", Method.GET, data, ContentType.form);
 };
