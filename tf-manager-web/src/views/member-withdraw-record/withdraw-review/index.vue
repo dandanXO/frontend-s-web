@@ -172,7 +172,7 @@
       :data="totalwithdraw.records"
       ref="table"
       v-loading="page.loading"
-      height="100"
+      height="120"
       border
       :header-cell-style="{background: 'lightgray'}"
       :empty-text="t('fields.noData')"
