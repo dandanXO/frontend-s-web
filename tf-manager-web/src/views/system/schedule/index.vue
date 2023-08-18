@@ -73,7 +73,7 @@
                  :page-count="page.pages"
                  :current-page="request.current"
   />
-  <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
+  <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="700px">
     <el-form ref="jobForm" :model="scheduleForm" :rules="formRules" :inline="true" size="small" label-width="150px">
       <el-form-item :label="t('fields.jobName')" prop="jobName">
         <el-input v-model="scheduleForm.jobName"
@@ -81,10 +81,21 @@
         />
       </el-form-item>
       <el-form-item :label="t('fields.beanName')" prop="beanName">
-        <el-input v-model="scheduleForm.beanName" style="width: 350px;" />
+        <el-input v-model="scheduleForm.beanName" style="width: 350px;" @blur="populateParam" />
       </el-form-item>
       <el-form-item :label="t('fields.param')" prop="params">
-        <el-input v-model="scheduleForm.params" style="width: 350px;" />
+        <!-- <el-input v-model="scheduleForm.params" style="width: 350px;" /> -->
+        <div v-for="(item, index) in param" :key="index">
+          <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" :disabled="disableKey(item.key)" /> : <el-input style="width: 170px " v-model="item.value" />
+          <el-button v-if="index === param.length - 1" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+                     @click="addParam()" plain
+          >{{ t('fields.add') }}
+          </el-button>
+          <el-button v-else-if="!disableKey(item.key)" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+                     @click="delParam(index)" plain
+          >{{ t('fields.delete') }}
+          </el-button>
+        </div>
       </el-form-item>
       <el-form-item :label="t('fields.cronExpression')" prop="cronExpression">
         <el-input v-model="scheduleForm.cronExpression" style="width: 350px;" />
@@ -93,12 +104,13 @@
         <el-radio-group
           v-model="scheduleForm.state"
           class="form-input"
+          style="width: 350px;"
         >
           <el-radio v-for="s in uiControl.state" :label="s.key" :key="s.key">{{ s.value }}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item :label="t('fields.stopAfterFailure')" prop="stopAfterFailure">
-        <el-radio-group v-model="scheduleForm.stopAfterFailure">
+        <el-radio-group v-model="scheduleForm.stopAfterFailure" style="width: 350px;">
           <el-radio
             v-for="s in uiControl.stopAfterFailure"
             :key="s.key"
@@ -125,9 +137,12 @@ import { required } from "../../../utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { createJob, getAllJob, updateJob, deleteJob, runJob, stopJob } from "../../../api/schedule";
 import { useI18n } from "vue-i18n";
+import moment from "moment";
 
 const { t } = useI18n();
 const jobForm = ref(null);
+const param = ref([]);
+
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",
@@ -207,6 +222,8 @@ function showDialog(type) {
     if (jobForm.value) {
       jobForm.value.resetFields();
     }
+    param.value = [];
+    addParam();
     scheduleForm.id = null;
     uiControl.dialogTitle = t('fields.addJob');
   } else if (type === "EDIT") {
@@ -227,12 +244,24 @@ function showEdit(job) {
         scheduleForm[key] = job[key];
       }
     }
+
+    param.value = [];
+    if (scheduleForm.params) {
+      Object.entries(JSON.parse(scheduleForm.params)).forEach(([key, value]) => {
+        const json = {};
+        json.key = key;
+        json.value = value;
+        param.value.push(json);
+      })
+      addParam();
+    }
   });
 }
 
 function create() {
   jobForm.value.validate(async (valid) => {
     if (valid) {
+      scheduleForm.params = constructParam();
       await createJob(scheduleForm);
       uiControl.dialogVisible = false;
       await loadJobs();
@@ -244,6 +273,7 @@ function create() {
 function edit() {
   jobForm.value.validate(async (valid) => {
     if (valid) {
+      scheduleForm.params = constructParam();
       await updateJob(scheduleForm);
       uiControl.dialogVisible = false;
       await loadJobs();
@@ -287,6 +317,50 @@ function submit() {
   } else if (uiControl.dialogType === "EDIT") {
     edit();
   }
+}
+
+function populateParam() {
+  if (uiControl.dialogType === "CREATE" && scheduleForm.beanName === 'gameBetRecordFetchTask') {
+    param.value = [
+      { key: "barrierCondition", value: 960000 },
+      { key: "maxPeriod", value: 900000 },
+      { key: "minInterval", value: 300000 },
+      { key: "minPeriod", value: 180000 },
+      { key: "nextGetBetStartTime", value: moment(new Date()).startOf('day').format('YYYY-MM-DD HH:mm:ss') },
+      { key: "nextGetBetEndTime", value: moment(new Date()).startOf('day').add(15, 'minutes').format('YYYY-MM-DD HH:mm:ss') },
+      { key: "nextGetBetIndex", value: 1 },
+      { key: "nextGetBetPage", value: 1 },
+      { key: "platformAccountId", value: 0 },
+      { key: "", value: "" }
+    ];
+  }
+}
+
+function addParam() {
+  param.value.push({
+    key: "",
+    value: ""
+  })
+}
+
+function delParam(index) {
+  param.value.splice(index, 1);
+}
+
+function constructParam() {
+  const json = {};
+  Object.values(param.value).forEach((item) => {
+    if (item.key) {
+      json[item.key] = item.value;
+    }
+  });
+  return JSON.stringify(json);
+}
+
+function disableKey(key) {
+  return scheduleForm.beanName === 'gameBetRecordFetchTask' &&
+  (key === 'barrierCondition' || key === 'maxPeriod' || key === 'minInterval' || key === 'minPeriod' || key === 'nextGetBetEndTime' ||
+  key === 'nextGetBetIndex' || key === 'nextGetBetStartTime' || key === 'platformAccountId' || key === 'nextGetBetPage')
 }
 
 function changePage(page) {
