@@ -563,6 +563,7 @@ function json() {
 onMounted(() => {
   loadPlatfromAccount()
   loadPlatforms()
+  loadSites()
 })
 </script>
 
