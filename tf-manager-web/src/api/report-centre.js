@@ -12,3 +12,7 @@ export const getTotalFinanceReport = (data) => {
 export const getSiteMemberReport = (data) => {
   return https().request("/report/getSiteMemberReport/", Method.GET, data, ContentType.json);
 };
+
+export const getTotalSiteMemberReport = (data) => {
+  return https().request("/report/getTotalSiteMemberReport/", Method.GET, data, ContentType.json);
+};
