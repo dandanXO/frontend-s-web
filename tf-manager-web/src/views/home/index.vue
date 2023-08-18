@@ -641,6 +641,7 @@ async function getDailySummaryList() {
   quickSummary.totalWinLossAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalWinLossAmount)
   quickSummary.totalValidBetAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalValidBetAmount)
   quickSummary.totalFtdAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalFtdAmount)
+  quickSummary.totalBetCount = ret.siteDailySummaryTotalVO.totalBetCount.toLocaleString('en-US')
   quickSummary.totalWithdrawTransaction = ret.siteDailySummaryTotalVO.totalWithdrawCount.toLocaleString('en-US')
   quickSummary.totalDepositTransaction = ret.siteDailySummaryTotalVO.totalDepositCount.toLocaleString('en-US')
 
