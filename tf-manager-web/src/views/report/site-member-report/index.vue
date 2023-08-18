@@ -486,7 +486,7 @@ function getSummaries(param) {
         if (index === 0) {
           sums[index] = t('fields.total')
         } else {
-          if (index !== 1 && index !== 11 && index !== 12 && index !== 13 && index !== 15 && index !== 16 && index !== 2) {
+          if (index !== 1 && index !== 11 && index !== 12 && index !== 13 && index !== 14 && index !== 15 && index !== 16 && index !== 2) {
             var prop = column.property;
             var money = "$";
             if (index === 3 || index === 5) {
