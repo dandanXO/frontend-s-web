@@ -433,10 +433,10 @@ const quickSummary = reactive({
 })
 
 const depositBarchatOptions = reactive({
-  title: {
-    display: true,
-    text: t('dashboard.depositChartName'),
-  },
+  // title: {
+  //   display: true,
+  //   text: t('dashboard.depositChartName'),
+  // },
   height: '160px',
   tooltip: {
     trigger: 'axis',
@@ -469,10 +469,10 @@ const depositBarchatOptions = reactive({
 })
 
 const depositLinechatOptions = reactive({
-  title: {
-    display: true,
-    text: t('dashboard.depositTransactionNumChartName'),
-  },
+  // title: {
+  //   display: true,
+  //   text: t('dashboard.depositTransactionNumChartName'),
+  // },
   height: '160px',
   tooltip: {
     trigger: 'axis',
@@ -635,16 +635,16 @@ async function getDailySummaryList() {
   }
   const { data: ret } = await getSiteDailySummary(query)
   dailySummary.list = ret.siteDailySummaryVOList
-  quickSummary.totalDepositAmount = ret.siteDailySummaryTotalVO.totalDepositAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  quickSummary.totalWithdrawAmount = ret.siteDailySummaryTotalVO.totalWithdrawAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  quickSummary.totalBonusAmount = ret.siteDailySummaryTotalVO.totalBonusAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  quickSummary.totalWinLossAmount = ret.siteDailySummaryTotalVO.totalWinLossAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  quickSummary.totalValidBetAmount = ret.siteDailySummaryTotalVO.totalValidBetAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  quickSummary.totalFtdAmount = ret.siteDailySummaryTotalVO.totalFtdAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  quickSummary.totalDepositAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalDepositAmount)
+  quickSummary.totalWithdrawAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalWithdrawAmount)
+  quickSummary.totalBonusAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalBonusAmount)
+  quickSummary.totalWinLossAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalWinLossAmount)
+  quickSummary.totalValidBetAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalValidBetAmount)
+  quickSummary.totalFtdAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalFtdAmount)
   quickSummary.totalWithdrawTransaction = ret.siteDailySummaryTotalVO.totalWithdrawCount.toLocaleString('en-US')
   quickSummary.totalDepositTransaction = ret.siteDailySummaryTotalVO.totalDepositCount.toLocaleString('en-US')
 
-  quickSummary.totalAffiliateTransfer = ret.affiliateTotalTransferVO.totalTransferAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  quickSummary.totalAffiliateTransfer = getDecimalValueWithComma(ret.affiliateTotalTransferVO.totalTransferAmount)
   quickSummary.totalAffiliateTransferMemberCount = ret.affiliateTotalTransferVO.totalAffiliateMember.toLocaleString('en-US')
   quickSummary.totalAffiliateTransferCount = ret.affiliateTotalTransferVO.totalTransaction.toLocaleString('en-US')
 
@@ -653,6 +653,11 @@ async function getDailySummaryList() {
   quickSummary.total_betMember = JSON.parse(ret.siteMemberDailySummaryVO.betMember)
   quickSummary.total_bonusMember = JSON.parse(ret.siteMemberDailySummaryVO.bonusMember)
 
+  if (ret.siteDepositSummaryVO.length > 0) {
+    ret.siteDepositSummaryVO.forEach((item, index) => {
+      item.totalDepositAmount = getDecimalValue(item.totalDepositAmount);
+    })
+  }
   quickSummary.depositRecords = ret.siteDepositSummaryVO
 
   getDepositChart(ret.siteDailySummaryVOList)
@@ -660,6 +665,13 @@ async function getDailySummaryList() {
   getFinancialChart(ret.siteMemberDailySummaryVipVO, vipPiechatOptions)
   getDepositSummaryChart(ret.siteDepositReportVO)
   getTotalDailySummary()
+}
+
+function getDecimalValueWithComma(amount) {
+  return amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function getDecimalValue(amount) {
+  return amount.toFixed(2);
 }
 
 function getDepositChart(summaryList) {
@@ -671,7 +683,7 @@ function getDepositChart(summaryList) {
   if (summaryList.length > 0) {
     summaryList.forEach((item, index) => {
       recordTime.push(item.recordTime.substring(5).replace("-", "/"))
-      depositAmount.push(item.depositAmount)
+      depositAmount.push(getDecimalValue(item.depositAmount))
       depositTransactionCount.push(item.depositCount)
       depositMemberCount.push(item.withdrawCount)
     })
@@ -691,8 +703,8 @@ function getFinancialChart(summaryList, chartOptions) {
     summaryList.forEach((item, index) => {
       const data = [];
       data.push(item.financialName)
-      data.push(item.totalDeposit)
-      data.push(item.totalWithdraw)
+      data.push(getDecimalValue(item.totalDeposit))
+      data.push(getDecimalValue(item.totalWithdraw))
 
       financialData.push(data)
     })
@@ -720,7 +732,7 @@ function getDepositSummaryChart(summaryList) {
   if (summaryList.length > 0) {
     summaryList.forEach((item, index) => {
       paymentType.push(item.paymentType)
-      depositAmount.push(item.totalDepositAmount)
+      depositAmount.push(getDecimalValue(item.totalDepositAmount))
     })
     depositSummaryBarchatOptions.yAxis.data = paymentType;
     depositSummaryBarchatOptions.series[0].data = depositAmount;
@@ -792,7 +804,10 @@ function getSummaries(param) {
       } else {
         sums[index] = 0;
       }
-      // sums[index] = sums[index].toFixed(2);
+
+      if (index === 3) {
+        sums[index] = sums[index].toFixed(2);
+      }
     }
   });
 
@@ -838,7 +853,7 @@ function getSummaries(param) {
 
 .payment-chart-summary{
   width: 100%;
-  height: 300px;
+  height: 320px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
