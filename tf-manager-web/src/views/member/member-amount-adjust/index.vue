@@ -401,7 +401,7 @@ import { ElMessage } from "element-plus";
 import moment from 'moment';
 import {
   createAddMemberAmountAdjust, createDeductMemberAmountAdjust, getMemberAmountAdjust, getTotalReimburseAmount,
-  getTotalDeductionAmount, getNumberOfReimburse, getNumberOfDeduct, createBatchAmountAdjust, getExport
+  getTotalDeductionAmount, getNumberOfReimburse, getNumberOfDeduct, createBatchAmountAdjust
 } from "../../../api/member-amount-adjust";
 import { getSiteListSimple } from "../../../api/site";
 import { findIdByLoginName, getMemberBalanceByLoginNameSite } from "../../../api/member";
@@ -845,7 +845,7 @@ async function exportExcel() {
   uiControl.progressBarVisible = true;
   const query = checkQuery();
   query.current = 1;
-  const { data: ret } = await getExport(query);
+  const { data: ret } = await getMemberAmountAdjust(query);
   const exportData = [EXPORT_HEADER];
   const maxLength = [];
 
@@ -855,7 +855,7 @@ async function exportExcel() {
 
   while (query.current < ret.pages) {
     query.current += 1;
-    const { data: ret } = await getExport(query);
+    const { data: ret } = await getMemberAmountAdjust(query);
     pushRecordToData(ret.records, exportData);
     exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
   }
