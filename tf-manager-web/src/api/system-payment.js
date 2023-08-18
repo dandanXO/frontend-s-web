@@ -17,6 +17,10 @@ export const updateSystemPaymentStatus = async (id, status) => {
   await https().request(`/system-payment/${id}/status?_method=PUT`, Method.POST, { status: status }, ContentType.form);
 };
 
+export const updatePaymentPlatform = () => {
+  return https().request(`/system-payment/updatePaymentPlatform`, Method.GET, {}, ContentType.form);
+};
+
 export const getSystemPaymentById = (id) => {
   return https().request(`/system-payment/${id}/systemPayment`, Method.GET, {}, ContentType.form);
 };
