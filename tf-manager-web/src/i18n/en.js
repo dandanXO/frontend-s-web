@@ -50,7 +50,9 @@ export default {
     Summary_Deposit_Record: 'Summary_Deposit_Record',
     Summary_Member_Record: 'Summary_Member_Record',
     Member_Bet_Record: 'Member_Bet_Record',
-    Member_Bet_Money_Change: 'Member_Bet_Money_Change'
+    Member_Bet_Money_Change: 'Member_Bet_Money_Change',
+    Daily_Record: 'Daily_Record',
+    Platform_Game_Record: 'Platform_Game_Record',
   },
   dateType: {
     depositDate: 'Deposit Date',

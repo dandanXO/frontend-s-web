@@ -70,9 +70,11 @@
       highlight-current-row
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
-      style="margin-top:20px;overflow-x:scroll;width:100%"
+      style="margin-top:20px;"
       :row-style="{width: '100px'}"
       height="550"
+      :summary-method="getSummaries"
+      show-summary
     >
       <el-table-column
         style="width:80px"
@@ -80,26 +82,6 @@
         :key="column.label"
         :prop="column.prop"
         :label="column.label"
-      />
-    </el-table>
-
-    <el-table
-      :data="totalPage.records"
-      ref="table"
-      row-key="id"
-      v-loading="page.loading"
-      :empty-text="t('fields.noData')"
-      border
-      small
-      :header-cell-style="{background: 'lightgray'}"
-      height="130"
-    >
-      <el-table-column
-        v-for="column in totalPage.columns"
-        :key="column.label"
-        :prop="column.prop"
-        :label="column.label"
-        :min-width="210"
       />
     </el-table>
   </div>
@@ -115,6 +97,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import * as XLSX from 'xlsx'
 import { getShortcuts } from "@/utils/datetime";
+import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -168,16 +151,12 @@ async function loadFinanceReport() {
     }
   }
   const { data: ret } = await getFinanceReport(query)
-  console.log(ret)
   page.records = ret.financeReportItemVOS
   page.columns = ret.financeReportColumnVOS
 
   const { data: ret1 } = await getTotalFinanceReport(query)
   totalPage.records = ret1.financeReportItemVOS
   totalPage.columns = ret1.financeReportColumnVOS
-
-  console.log(page.columns)
-
   page.loading = false
 }
 
@@ -247,6 +226,40 @@ function pushRecordToData(records, exportData) {
     Object.values(record).map(item => (!item || item === '' ? '-' : item))
   )
   exportData.push(...data)
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:withdraw:total'])) {
+    const { columns } = param
+    var sums = []
+    const requestCopy = { ...request }
+    const query = {}
+    Object.entries(requestCopy).forEach(([key, value]) => {
+      if (value) {
+        query[key] = value
+      }
+    })
+    if (request.recordTime !== null) {
+      if (request.recordTime.length === 2) {
+        query.recordTime = request.recordTime.join(',')
+      }
+    }
+
+    if (totalPage.records.length > 0) {
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = t('fields.total')
+        } else {
+          var prop = column.property;
+          sums[index] = "$" + totalPage.records[0].data[prop.replace("data.", "")];
+        }
+      })
+    }
+    console.log(sums)
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 onMounted(async () => {

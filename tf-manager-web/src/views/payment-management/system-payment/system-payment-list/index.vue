@@ -194,6 +194,7 @@ import {
   getSystemPaymentList,
   updateSystemPaymentStatus,
   copyPayment,
+  updatePaymentPlatform,
 } from '../../../../api/system-payment'
 import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store'
@@ -270,6 +271,7 @@ function resetQuery() {
   request.paymentName = null
   request.status = null
   request.siteId = site.value ? site.value.id : null
+  updatePaymentPlatform();
 }
 
 async function changePaymentStatus(id, status) {

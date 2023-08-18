@@ -60,88 +60,6 @@
     </div>
 
     <el-table
-      :data="totalDeposit.records"
-      ref="table"
-      v-loading="page.loading"
-      height="100"
-      border
-      :header-cell-style="{background: 'lightgray'}"
-      :empty-text="t('fields.noData')"
-    >
-      <el-table-column
-        prop="totalDepositAmount"
-        :label="t('fields.totalDepositAmount')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.totalDepositAmount,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="totalSuccessDepositAmount"
-        :label="t('fields.totalSuccessDepositAmount')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.totalSuccessDepositAmount,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="totalFailDepositAmount"
-        :label="t('fields.totalFailDepositAmount')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.totalFailDepositAmount,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="totalDeposit"
-        :label="t('fields.totalDeposit')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.totalDeposit,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="totalSuccessDeposit"
-        :label="t('fields.totalSuccessDeposit')"
-        width="170"
-      />
-      <el-table-column
-        prop="totalFailDeposit"
-        :label="t('fields.totalFailDeposit')"
-        width="170"
-      />
-
-    </el-table>
-
-    <el-table
       :data="page.records"
       ref="table"
       row-key="id"
@@ -152,6 +70,8 @@
       @expand-change="loadDaily"
       :empty-text="t('fields.noData')"
       @sort-change="changeSort"
+      :summary-method="getSummaries"
+      show-summary
     >
       <el-table-column type="expand">
         <template #default="scope">
@@ -318,12 +238,17 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getDepositReport, getDailyReport, getTotalDeposit } from '../../../api/report-deposit'
+import {
+  getDepositReport,
+  getDailyReport,
+  getTotalDeposit,
+} from '../../../api/report-deposit'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import { getShortcuts } from "@/utils/datetime";
+import { getShortcuts } from '@/utils/datetime'
+import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -346,9 +271,10 @@ const page = reactive({
   loading: false,
 })
 
-const totalDeposit = reactive({
+const page1 = reactive({
   pages: 0,
   records: [],
+  loading: false,
 })
 
 const request = reactive({
@@ -361,7 +287,7 @@ const request = reactive({
   order: null,
 })
 
-const shortcuts = getShortcuts(t);
+const shortcuts = getShortcuts(t)
 async function loadDaily(row, expandedRows) {
   // 该处是用于判断是展开还是收起行，只有展开的时候做请求，避免多次请求！
   // 展开的时候expandedRows有值，收起的时候为空.
@@ -394,11 +320,11 @@ async function loadDaily(row, expandedRows) {
   }
 }
 
-function changeSort (aval) {
+function changeSort(aval) {
   console.log(aval)
-  request.prop = aval.prop;
-  request.order = aval.order;
-  loadDepositReport(false);
+  request.prop = aval.prop
+  request.order = aval.order
+  loadDepositReport(false)
 }
 
 function convertDate(date) {
@@ -438,8 +364,7 @@ async function loadDepositReport(first) {
 
   const { data: ret } = await getDepositReport(query)
   const { data: ret1 } = await getTotalDeposit(query)
-  totalDeposit.records = ret1.records
-
+  page1.records = ret1.records
   if (first === true) {
     // 给每行数据强制追加一个数据项, 以便注入每日数据
     ret.records.map(item => {
@@ -460,6 +385,54 @@ async function loadSites() {
 function changePage(page) {
   request.current = page
   loadDepositReport(false)
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:deposit:total'])) {
+    const { columns } = param
+    var sums = []
+    const requestCopy = { ...request }
+    const query = {}
+    Object.entries(requestCopy).forEach(([key, value]) => {
+      if (value) {
+        query[key] = value
+      }
+    })
+    if (request.recordTime !== null) {
+      if (request.recordTime.length === 2) {
+        query.recordTime = request.recordTime.join(',')
+      }
+    }
+
+    if (page1.records.length > 0) {
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = t('fields.total')
+        } else if (index === 1) {
+          sums[index] = ''
+        } else if (index === 2) {
+          sums[index] = ''
+        }
+
+        if (column.property === 'totalDeposit') {
+          sums[index] = page1.records[0].totalDeposit
+        } else if (column.property === 'totalDepositAmount') {
+          sums[index] = '$' + page1.records[0].totalDepositAmount
+        } else if (column.property === 'totalFailDeposit') {
+          sums[index] = page1.records[0].totalFailDeposit
+        } else if (column.property === 'totalFailDepositAmount') {
+          sums[index] = '$' + page1.records[0].totalFailDepositAmount
+        } else if (column.property === 'totalSuccessDeposit') {
+          sums[index] = page1.records[0].totalSuccessDeposit
+        } else if (column.property === 'totalSuccessDepositAmount') {
+          sums[index] = '$' + page1.records[0].totalSuccessDepositAmount
+        }
+      })
+    }
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 onMounted(async () => {
