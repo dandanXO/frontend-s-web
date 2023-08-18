@@ -322,8 +322,7 @@ function submit() {
 function populateParam() {
   if (uiControl.dialogType === "CREATE" && scheduleForm.beanName === 'gameBetRecordFetchTask') {
     param.value = [
-      { key: "platformCode", value: "" },
-      { key: "siteId", value: 1 },
+      { key: "platformAccountId", value: 0 },
       { key: "barrierCondition", value: 960000 },
       { key: "maxPeriod", value: 900000 },
       { key: "minInterval", value: 300000 },
@@ -362,8 +361,7 @@ function constructParam() {
 function disableKey(key) {
   return scheduleForm.beanName === 'gameBetRecordFetchTask' &&
   (key === 'barrierCondition' || key === 'maxPeriod' || key === 'minInterval' || key === 'minPeriod' || key === 'nextGetBetEndTime' ||
-  key === 'nextGetBetIndex' || key === 'lastGetBetIndex' || key === 'nextGetBetStartTime' || key === 'platformCode' || key === 'siteId' ||
-  key === 'nextGetBetPage')
+  key === 'nextGetBetIndex' || key === 'lastGetBetIndex' || key === 'nextGetBetStartTime' || key === 'platformAccountId' || key === 'nextGetBetPage')
 }
 
 function changePage(page) {
