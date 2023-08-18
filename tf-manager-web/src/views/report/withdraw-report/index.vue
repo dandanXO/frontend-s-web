@@ -60,76 +60,6 @@
     </div>
 
     <el-table
-      :data="totalPage.records"
-      ref="table"
-      row-key="id"
-      border
-      small
-      v-loading="page.loading"
-      @expand-change="loadDaily"
-      :empty-text="t('fields.noData')"
-      :header-cell-style="{background: 'lightgray'}"
-      height="130"
-    >
-
-      <el-table-column
-        prop="totalWithdrawAmount"
-        :label="t('fields.totalWithdrawAmount')"
-      >
-        <template #default="scope">
-          $
-          <span
-            v-formatter="{
-              data: scope.row.totalWithdrawAmount,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="totalSuccessWithdrawAmount"
-        :label="t('fields.totalSuccessWithdrawAmount')"
-      >
-        <template #default="scope">
-          $
-          <span
-            v-formatter="{
-              data: scope.row.totalSuccessWithdrawAmount,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="totalFailWithdrawAmount"
-        :label="t('fields.totalFailWithdrawAmount')"
-      >
-        <template #default="scope">
-          $
-          <span
-            v-formatter="{
-              data: scope.row.totalFailWithdrawAmount,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="totalWithdraw"
-        :label="t('fields.totalWithdraw')"
-        width="110"
-      />
-      <el-table-column
-        prop="totalSuccessWithdraw"
-        :label="t('fields.totalSuccessWithdraw')"
-      />
-      <el-table-column
-        prop="totalFailWithdraw"
-        :label="t('fields.totalFailWithdraw')"
-      />
-    </el-table>
-
-    <el-table
       :data="page.records"
       ref="table"
       row-key="id"
@@ -139,6 +69,8 @@
       v-loading="page.loading"
       @expand-change="loadDaily"
       :empty-text="t('fields.noData')"
+      :summary-method="getSummaries"
+      show-summary
     >
       <el-table-column type="expand">
         <template #default="scope">
@@ -308,6 +240,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from "@/utils/datetime";
+import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -436,6 +369,54 @@ async function loadSites() {
 function changePage(page) {
   request.current = page
   loadWithdrawReport(false)
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:withdraw:total'])) {
+    const { columns } = param
+    var sums = []
+    const requestCopy = { ...request }
+    const query = {}
+    Object.entries(requestCopy).forEach(([key, value]) => {
+      if (value) {
+        query[key] = value
+      }
+    })
+    if (request.recordTime !== null) {
+      if (request.recordTime.length === 2) {
+        query.recordTime = request.recordTime.join(',')
+      }
+    }
+
+    if (totalPage.records.length > 0) {
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = t('fields.total')
+        } else if (index === 1) {
+          sums[index] = ''
+        } else if (index === 2) {
+          sums[index] = ''
+        }
+
+        if (column.property === 'totalWithdraw') {
+          sums[index] = totalPage.records[0].totalWithdraw
+        } else if (column.property === 'totalWithdrawAmount') {
+          sums[index] = '$' + totalPage.records[0].totalWithdrawAmount
+        } else if (column.property === 'totalFailWithdraw') {
+          sums[index] = totalPage.records[0].totalFailWithdraw
+        } else if (column.property === 'totalFailWithdrawAmount') {
+          sums[index] = '$' + totalPage.records[0].totalFailWithdrawAmount
+        } else if (column.property === 'totalSuccessWithdraw') {
+          sums[index] = totalPage.records[0].totalSuccessWithdraw
+        } else if (column.property === 'totalSuccessWithdrawAmount') {
+          sums[index] = '$' + totalPage.records[0].totalSuccessWithdrawAmount
+        }
+      })
+    }
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 onMounted(async () => {

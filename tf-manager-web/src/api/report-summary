@@ -5,6 +5,10 @@ export const getSummaryReport = (data) => {
   return https().request("/report/getSummaryReport", Method.GET, data, ContentType.form);
 };
 
+export const getTotalSummaryReport = (data) => {
+  return https().request("/report/getTotalSummaryReport", Method.GET, data, ContentType.form);
+};
+
 export const getMemberReport = (data) => {
 	return https().request("/report/getMemberReport", Method.GET, data, ContentType.form);
   };

@@ -84,8 +84,10 @@
       highlight-current-row
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
-      style="margin-top:20px;overflow-x:scroll;width:100%"
+      style="margin-top:20px;"
       height="550"
+      :summary-method="getSummaries"
+      show-summary
     >
       <el-table-column
         prop="loginName"
@@ -159,12 +161,13 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getSiteMemberReport } from '../../../api/report-centre'
+import { getSiteMemberReport, getTotalSiteMemberReport } from '../../../api/report-centre'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import * as XLSX from 'xlsx'
+import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -182,6 +185,11 @@ const siteList = reactive({
 })
 
 const page = reactive({
+  records: [],
+  loading: false,
+})
+
+const totalPage = reactive({
   records: [],
   loading: false,
 })
@@ -217,6 +225,8 @@ async function loadSiteMemberReport() {
     }
   }
   const { data: ret } = await getSiteMemberReport(query)
+  const { data: ret1 } = await getTotalSiteMemberReport(query)
+  totalPage.records = ret1.records
   page.records = ret.records
   page.loading = false
 }
@@ -452,6 +462,46 @@ function pushRecordToData(records, exportData) {
     Object.values(record).map(item => (!item || item === '' ? '-' : item))
   )
   exportData.push(...data)
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:withdraw:total'])) {
+    const { columns } = param
+    var sums = []
+    const requestCopy = { ...request }
+    const query = {}
+    Object.entries(requestCopy).forEach(([key, value]) => {
+      if (value) {
+        query[key] = value
+      }
+    })
+    if (request.recordTime !== null) {
+      if (request.recordTime.length === 2) {
+        query.recordTime = request.recordTime.join(',')
+      }
+    }
+
+    if (totalPage.records.length > 0) {
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = t('fields.total')
+        } else {
+          if (index !== 1 && index !== 11 && index !== 12 && index !== 13 && index !== 15 && index !== 16 && index !== 2) {
+            var prop = column.property;
+            var money = "$";
+            if (index === 3 || index === 5) {
+              money = "";
+            }
+            sums[index] = money + totalPage.records[0][prop];
+          }
+        }
+      })
+    }
+    console.log(sums)
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 onMounted(async () => {
