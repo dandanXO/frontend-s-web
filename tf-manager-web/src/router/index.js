@@ -11,18 +11,7 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/dashboard",
-    children: [
-      {
-        path: "dashboard",
-        component: () => import(/* webpackChunkName: "dashboard" */ "../views/home/index.vue"),
-        name: "Dashboard",
-        meta: {
-          title: "dashboard",
-          icon: "index"
-        }
-      }
-    ]
+    redirect: "/member/list"
   },
   {
     path: '/error',
