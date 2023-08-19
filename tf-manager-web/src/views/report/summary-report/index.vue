@@ -72,6 +72,8 @@
       v-loading="page.loading"
       height="500"
       :empty-text="t('fields.noData')"
+      :summary-method="getSummaries"
+      show-summary
     >
       <el-table-column prop="date" :label="t('fields.date')" width="120" fixed>
         <template #default="scope">
@@ -122,9 +124,7 @@
         :label="t('fields.convertRate')"
         width="80"
       >
-        <template #default="scope">
-          {{ scope.row.convertRate }}%
-        </template>
+        <template #default="scope">{{ scope.row.convertRate }}%</template>
       </el-table-column>
       <el-table-column
         prop="fdAmount"
@@ -258,7 +258,11 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="bonus" :label="t('fields.summaryBonus')" width="120">
+      <el-table-column
+        prop="bonus"
+        :label="t('fields.summaryBonus')"
+        width="120"
+      >
         <template #default="scope1">
           $
           <span
@@ -270,7 +274,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="profit" :label="t('fields.summaryProfit')" width="120">
+      <el-table-column
+        prop="profit"
+        :label="t('fields.summaryProfit')"
+        width="120"
+      >
         <template #default="scope1">
           $
           <span
@@ -297,13 +305,14 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getSummaryReport } from '../../../api/report-summary'
+import { getSummaryReport, getTotalSummaryReport } from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import * as XLSX from 'xlsx'
 import { useI18n } from 'vue-i18n'
-import { getShortcuts } from "@/utils/datetime";
+import { getShortcuts } from '@/utils/datetime'
+import { hasPermission } from '../../../utils/util'
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
@@ -323,6 +332,10 @@ const page = reactive({
   loading: false,
   total: 0,
   totalAmount: 0,
+})
+
+const totalPage = reactive({
+  records: []
 })
 
 const request = reactive({
@@ -355,7 +368,7 @@ const EXPORT_HEADER = [
   t('fields.summaryProfit'),
 ]
 
-const shortcuts = getShortcuts(t);
+const shortcuts = getShortcuts(t)
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
@@ -393,7 +406,8 @@ async function loadSummaryRecord() {
   }
 
   const { data: ret } = await getSummaryReport(query)
-
+  const { data: ret1 } = await getTotalSummaryReport(query)
+  totalPage.records = ret1.records
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
@@ -409,6 +423,45 @@ async function loadSites() {
 function changePage(page) {
   request.current = page
   loadSummaryRecord()
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:withdraw:total'])) {
+    const { columns } = param
+    var sums = []
+    const requestCopy = { ...request }
+    const query = {}
+    Object.entries(requestCopy).forEach(([key, value]) => {
+      if (value) {
+        query[key] = value
+      }
+    })
+    if (request.recordTime !== null) {
+      if (request.recordTime.length === 2) {
+        query.recordTime = request.recordTime.join(',')
+      }
+    }
+
+    if (totalPage.records.length > 0) {
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = t('fields.total')
+        } else if (index === 3) {
+        } else {
+          var prop = column.property;
+          var money = "$";
+          if (index === 1 || index !== 2 || index !== 7 || index !== 9 || index !== 11) {
+            money = "";
+          }
+          sums[index] = money + totalPage.records[0][prop];
+        }
+      })
+    }
+    console.log(sums)
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 onMounted(async () => {
