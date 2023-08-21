@@ -390,22 +390,22 @@ export default defineComponent({
         icon: 'MG',
       },
       {
-        id: '27',
+        id: '55',
         code: 'TTG',
         icon: 'ttg',
       },
       {
-        id: '28',
+        id: '72',
         code: 'SG',
         icon: 'sg',
       },
       {
-        id: '46',
+        id: '22',
         code: 'PP',
         icon: 'pp',
       },
       {
-        id: '64',
+        id: '31',
         code: 'JDB',
         icon: 'jdb',
       },
