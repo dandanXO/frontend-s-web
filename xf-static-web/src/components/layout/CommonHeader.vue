@@ -458,7 +458,7 @@
                 <span class="title account">会员资料</span>
               </el-col>
             </el-row> -->
-            <el-form-item label="电话号码" prop="telephone">
+            <!-- <el-form-item label="电话号码" prop="telephone">
               <el-input
                 class="half"
                 v-model="regForm.telephone"
@@ -492,7 +492,7 @@
               <div style="margin-left: 10px" v-if="isSendOtp">
                 获取已发送（倒数 {{ countdown }}秒)
               </div>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="电话验证码" prop="smsCode" v-if="isSendOtp">
               <el-input
                 class="half"
@@ -1253,7 +1253,7 @@ export default defineComponent({
       ],
       telephone: [
         {
-          required: true,
+          required: false,
           message: "请输入电话号码",
           trigger: "blur"
         },
