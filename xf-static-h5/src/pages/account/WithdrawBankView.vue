@@ -224,7 +224,7 @@
           />
 
 
-          <q-input
+          <!-- <q-input
               filled
               ref="telRef"
               v-model="bankCardInfo.telephone"
@@ -244,7 +244,7 @@
             <template v-slot:append>
               <q-btn label="获取验证码" color="brightbtn" @click="openPhoneVeriDialog()"/>
             </template>
-          </q-input>
+          </q-input> -->
 
           <q-input v-if="isSendOtp"
               filled
@@ -274,7 +274,7 @@
                 color="warning"
                 @click="bankCardModalState.visible = false"
             />
-            <q-btn v-if="isSendOtp" color="brightbtn" label="提交" @click="submitBankCard"/>
+            <q-btn color="brightbtn" label="提交" @click="submitBankCard"/>
           </div>
         </q-form>
       </q-card>
@@ -471,7 +471,7 @@ export default defineComponent({
     const cardNumberRef = ref();
     const cardAccountRef = ref();
     const cardAddressRef = ref();
-    const telRef = ref();
+    // const telRef = ref();
 
     const unbindCardNoRef = ref(null);
     const isUnbindCardModal = ref(false);
@@ -489,9 +489,9 @@ export default defineComponent({
       cardNumber: "",
       cardAccount: "",
       cardAddress: "",
-      telephone: "",
-      smsCode: "",
-      smsCodeId: ""
+      // telephone: "",
+      // smsCode: "",
+      // smsCodeId: ""
     });
     const router = useRouter();
     const bankName = ref();
@@ -513,9 +513,9 @@ export default defineComponent({
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
-          bankCardInfo.telephone = store.phone;
-          bankCardInfo.smsCodeId = "";
-          bankCardInfo.smsCode = "";
+          // bankCardInfo.telephone = store.phone;
+          // bankCardInfo.smsCodeId = "";
+          // bankCardInfo.smsCode = "";
 
           bankCardModalState.visible = true;
           if (bankCardModalState.banks.length === 0) {
@@ -565,12 +565,12 @@ export default defineComponent({
       cardAccountRef.value.validate();
       // cardAddressRef.value.validate();
       cardNumberRef.value.validate();
-      phoneVerificationRef.value.validate();
+      // phoneVerificationRef.value.validate();
       // telRef.value.validate();
 
       if (bankCardRef.value.hasError || cardAccountRef.value.hasError
           // || cardAddressRef.value.hasError
-          || phoneVerificationRef.value.hasError
+          // || phoneVerificationRef.value.hasError
           // || telRef.value.hasError
           || cardNumberRef.value.hasError) {
       } else {
@@ -866,7 +866,7 @@ export default defineComponent({
       unbindCardNo,
       unbindcarddetail,
       unbindCardNoRef,
-      telRef,
+      // telRef,
       openPhoneVeriDialog,
       showCaptchaDialog,
       phoneVerificationImg,

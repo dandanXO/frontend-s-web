@@ -245,7 +245,7 @@
           />
         </el-form-item>
 
-        <el-form-item>
+        <!-- <el-form-item>
           <el-space>
           <el-input
               class="half"
@@ -258,7 +258,7 @@
             获取验证码
           </el-button>
         </el-space>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
           <el-input
@@ -269,7 +269,7 @@
           />
         </el-form-item>
 
-        <el-form-item class="txt-center" v-if="isSendOtp">
+        <el-form-item class="txt-center">
           <el-button class="txt-center common-btn" @click="submitBankCard">
             提交
           </el-button>
@@ -624,9 +624,9 @@ export default defineComponent({
       cardNumber: "",
       cardAccount: "",
       cardAddress: "",
-      telephone: "",
-      smsCode: "",
-      smsCodeId: ""
+      // telephone: "",
+      // smsCode: "",
+      // smsCodeId: ""
     });
     const bankName = ref()
     const banksList = ref([])
@@ -808,7 +808,7 @@ export default defineComponent({
       ],
       telephone: [
         {
-          required: true,
+          required: false,
           message: "请输入电话号码",
           trigger: "blur"
         },

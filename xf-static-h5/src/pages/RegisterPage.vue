@@ -112,7 +112,7 @@
       </template>
     </q-input>
 
-    <q-input
+    <!-- <q-input
       ref="telRef"
       hide-bottom-space
       v-model="regForm.telephone"
@@ -136,7 +136,7 @@
           @click="openPhoneVeriDialog()"
         />
       </template>
-    </q-input>
+    </q-input> -->
 
     <q-input
       v-show="regForm.smsCodeId"
@@ -359,7 +359,7 @@ export default defineComponent({
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    const telRef = ref();
+    // const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
     const phoneVerificationRef = ref();
@@ -384,8 +384,8 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      telRef.value.validate();
-      phoneVerificationRef.value.validate();
+      // telRef.value.validate();
+      // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
@@ -395,8 +395,8 @@ export default defineComponent({
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
-        telRef.value.hasError ||
-        phoneVerificationRef.value.hasError ||
+        // telRef.value.hasError ||
+        // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
         verificationRef.value.hasError
       ) {
@@ -425,7 +425,7 @@ export default defineComponent({
               }
             }
           }
-          
+
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";
           }
@@ -568,7 +568,7 @@ export default defineComponent({
       loginNameRef,
       pwdRef,
       confirmPwdRef,
-      telRef,
+      // telRef,
       emailRef,
       verificationRef,
       onSubmit,
