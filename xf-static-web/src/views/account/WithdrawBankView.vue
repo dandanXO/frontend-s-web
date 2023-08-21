@@ -245,7 +245,7 @@
           />
         </el-form-item>
 
-        <!-- <el-form-item>
+        <el-form-item>
           <el-space>
           <el-input
               class="half"
@@ -258,7 +258,7 @@
             获取验证码
           </el-button>
         </el-space>
-        </el-form-item> -->
+        </el-form-item>
 
         <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
           <el-input
@@ -269,7 +269,7 @@
           />
         </el-form-item>
 
-        <el-form-item class="txt-center">
+        <el-form-item class="txt-center" v-if="isSendOtp">
           <el-button class="txt-center common-btn" @click="submitBankCard">
             提交
           </el-button>
@@ -624,9 +624,9 @@ export default defineComponent({
       cardNumber: "",
       cardAccount: "",
       cardAddress: "",
-      // telephone: "",
-      // smsCode: "",
-      // smsCodeId: ""
+      telephone: "",
+      smsCode: "",
+      smsCodeId: ""
     });
     const bankName = ref()
     const banksList = ref([])
@@ -634,6 +634,9 @@ export default defineComponent({
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
           ElMessage.error('真实姓名不可为空');
+          router.push("/center/personal");
+        } else if (!store.phone || store.phone == "") {
+          ElMessage.error('电话号码不可为空');
           router.push("/center/personal");
         } else {
           bankCardInfo.bankId = undefined;
@@ -808,7 +811,7 @@ export default defineComponent({
       ],
       telephone: [
         {
-          required: false,
+          required: true,
           message: "请输入电话号码",
           trigger: "blur"
         },
