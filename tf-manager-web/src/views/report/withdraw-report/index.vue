@@ -372,7 +372,7 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:withdraw:total'])) {
+  if (hasPermission(['sys:report:withdraw:report:summary'])) {
     const { columns } = param
     var sums = []
     const requestCopy = { ...request }

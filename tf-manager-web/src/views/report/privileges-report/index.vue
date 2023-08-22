@@ -69,6 +69,8 @@
       v-loading="page.loading"
       @expand-change="loadDaily"
       :empty-text="t('fields.noData')"
+      :summary-method="getSummaries"
+      show-summary
     >
       <el-table-column type="expand">
         <template #default="scope">
@@ -137,17 +139,6 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
-    <div
-      class="table-footer"
-      v-permission="['sys:report:privilege:report:summary']"
-    >
-      <span>
-        {{ t('fields.totalPrivilegeClaimAmount') }}
-      </span>
-      <span style="margin-left: 10px">$</span>
-      <span v-formatter="{data: page.totalAmount, type: 'money'}" />
-    </div>
-
   </div>
 </template>
 
@@ -164,6 +155,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from "@/utils/datetime";
+import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -291,6 +283,24 @@ async function loadSites() {
 function changePage(page) {
   request.current = page
   loadPrivilegeReport(false)
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:privilege:report:summary'])) {
+    const { columns } = param
+    var sums = []
+
+    columns.forEach((column, index) => {
+      if (index === 1) {
+        sums[index] = sums[index] = t('fields.totalPrivilegeClaimAmount') + '   $' + page.totalAmount.toLocaleString()
+      }
+    })
+
+    console.log(sums)
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 onMounted(async () => {

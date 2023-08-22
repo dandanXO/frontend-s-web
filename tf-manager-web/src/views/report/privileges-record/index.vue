@@ -74,6 +74,8 @@
       highlight-current-row
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
+      :summary-method="getSummaries"
+      show-summary
     >
       <el-table-column
         prop="memberName"
@@ -117,19 +119,6 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
-
-    <div
-      class="table-footer"
-      v-permission="['sys:report:privilege:record:summary']"
-    >
-      <span>{{ t('fields.noOfPrivilegeClaimed') }}</span>
-      <span style="margin-left: 10px">{{ page.total }}</span>
-      <span style="margin-left: 30px">
-        {{ t('fields.totalPrivilegeClaimAmount') }}
-      </span>
-      <span style="margin-left: 10px">$</span>
-      <span v-formatter="{data: page.totalAmount, type: 'money'}" />
-    </div>
   </div>
 </template>
 
@@ -144,7 +133,8 @@ import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import { getShortcuts } from "@/utils/datetime";
+import { getShortcuts } from '@/utils/datetime'
+import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -176,7 +166,7 @@ const request = reactive({
   siteId: null,
 })
 
-const shortcuts = getShortcuts(t);
+const shortcuts = getShortcuts(t)
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
@@ -229,6 +219,26 @@ async function loadPrivilegeRecord() {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:privilege:record:summary'])) {
+    const { columns } = param
+    var sums = []
+
+    columns.forEach((column, index) => {
+      if (index === 0) {
+        sums[index] = t('fields.noOfPrivilegeClaimed') + '   ' + page.total
+      } else if (index === 1) {
+        sums[index] = sums[index] = t('fields.totalPrivilegeClaimAmount') + '   $' + page.totalAmount.toLocaleString()
+      }
+    })
+
+    console.log(sums)
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 function changePage(page) {

@@ -388,7 +388,7 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:deposit:total'])) {
+  if (hasPermission(['sys:report:deposit:report:summary'])) {
     const { columns } = param
     var sums = []
     const requestCopy = { ...request }

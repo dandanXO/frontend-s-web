@@ -479,7 +479,7 @@ function pushRecordToData(records, exportData) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:withdraw:total'])) {
+  if (hasPermission(['sys:report:site:member:report:summary'])) {
     const { columns } = param
     var sums = []
     const requestCopy = { ...request }
