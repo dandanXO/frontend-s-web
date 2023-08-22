@@ -388,7 +388,7 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:deposit:total'])) {
+  if (hasPermission(['sys:report:deposit:report:summary'])) {
     const { columns } = param
     var sums = []
     const requestCopy = { ...request }
@@ -417,15 +417,38 @@ function getSummaries(param) {
         if (column.property === 'totalDeposit') {
           sums[index] = page1.records[0].totalDeposit
         } else if (column.property === 'totalDepositAmount') {
-          sums[index] = '$' + page1.records[0].totalDepositAmount
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].totalDepositAmount).toLocaleString(
+              'en-US',
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            )
         } else if (column.property === 'totalFailDeposit') {
           sums[index] = page1.records[0].totalFailDeposit
         } else if (column.property === 'totalFailDepositAmount') {
-          sums[index] = '$' + page1.records[0].totalFailDepositAmount
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].totalFailDepositAmount).toLocaleString(
+              'en-US',
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            )
         } else if (column.property === 'totalSuccessDeposit') {
           sums[index] = page1.records[0].totalSuccessDeposit
         } else if (column.property === 'totalSuccessDepositAmount') {
-          sums[index] = '$' + page1.records[0].totalSuccessDepositAmount
+          sums[index] =
+            '$' +
+            parseFloat(
+              page1.records[0].totalSuccessDepositAmount
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         }
       })
     }

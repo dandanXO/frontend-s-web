@@ -636,8 +636,24 @@ export default defineComponent({
           ElMessage.error('真实姓名不可为空');
           router.push("/center/personal");
         } else if (!store.phone || store.phone == "") {
-          ElMessage.error('电话号码不可为空');
-          router.push("/center/personal");
+          ElMessageBox.alert(
+            '请先验证电话号码', "系统提示",
+            {
+              showClose: false,
+              showCancelButton: false,
+              confirmButtonText: '确认',
+              draggable: false,
+              buttonSize: 'small',
+              closeOnClickModal: false,
+              center: true,
+            }
+          )
+            .then(() => {
+            router.push('/center/personal')
+          })
+          .catch(() => {
+          })
+          
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";

@@ -123,17 +123,17 @@
             <span v-if="scope.row.transactionId !== null">{{ scope.row.transactionId }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
+        <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100" sortable>
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="payout" :label="t('fields.payout')" align="center" min-width="100">
+        <el-table-column prop="payout" :label="t('fields.payout')" align="center" min-width="100" sortable>
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.payout,type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="companyProfit" :label="t('fields.companyProfit')" align="center" min-width="100">
+        <el-table-column prop="companyProfit" :label="t('fields.companyProfit')" align="center" min-width="100" sortable>
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.companyProfit,type: 'money'}" />
           </template>
@@ -152,10 +152,17 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="table-footer">
+        <span style="margin-right:20px;">{{ t('fields.totalBet') }}: $ <span v-formatter="{data: page.totalBet,type: 'money'}" /></span>
+        <span style="margin-right:20px;">{{ t('fields.totalPayout') }}: $ <span v-formatter="{data: page.totalPayout,type: 'money'}" /></span>
+        <span style="margin-right:20px;">{{ t('fields.totalCompanyProfit') }}: $ <span v-formatter="{data: page.totalCompanyProfit,type: 'money'}" /></span>
+      </div>
       <el-pagination
         class="pagination"
         @current-change="changePage"
-        layout="prev, pager, next"
+        layout="total, prev, pager, next"
+        style="margin-top: 10px"
+        :total="page.total"
         :page-size="request.size"
         :page-count="page.pages"
         :current-page="request.current"
@@ -252,7 +259,7 @@
 import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
-import { getMemberBetRecords, getPlatformsBySite, getVipName } from '../../../api/affiliate-bet-record';
+import { getMemberBetRecords, getPlatformsBySite, getVipName, getTotal } from '../../../api/affiliate-bet-record';
 import { useI18n } from "vue-i18n";
 
 const store = useStore();
@@ -375,7 +382,11 @@ const request = reactive({
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
+  loading: false,
+  total: 0,
+  totalBet: 0,
+  totalPayout: 0,
+  totalCompanyProfit: 0
 });
 
 function convertDate(date) {
@@ -445,6 +456,11 @@ async function loadBetRecords() {
   const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
   page.pages = ret.pages;
   page.records = ret.records;
+  page.total = ret.total;
+  const { data: total } = await getTotal(store.state.user.id, query);
+  page.totalBet = total.totalBet;
+  page.totalPayout = total.totalPayout;
+  page.totalCompanyProfit = total.totalCompanyProfit;
   page.loading = false;
 }
 
@@ -511,6 +527,17 @@ onMounted(() => {
   .btn-grp {
     display: flex;
   }
+}
+
+.el-pagination {
+  display: inline-block;
+}
+
+.table-footer {
+  margin-top: 15px;
+  margin-right: 20px;
+  float: right;
+  font-size: small;
 }
 
 @media (max-width: 768px) {

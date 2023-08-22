@@ -515,7 +515,7 @@ export default defineComponent({
             message: "请输入您的电话号码",
             icon: "report_problem"
           });
-          router.push("/account/personal");
+          router.push("/account/verifyTelephone");
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";

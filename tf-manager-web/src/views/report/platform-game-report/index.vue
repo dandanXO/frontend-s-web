@@ -117,10 +117,7 @@
               prop="betCount"
               :label="t('reportGame.gameBetCount')"
             />
-            <el-table-column
-              prop="bet"
-              :label="t('reportGame.gameBetAmount')"
-            >
+            <el-table-column prop="bet" :label="t('reportGame.gameBetAmount')">
               <template #default="scope1">
                 $
                 <span
@@ -131,10 +128,7 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column
-              prop="win"
-              :label="t('reportGame.gameWinLoss')"
-            >
+            <el-table-column prop="win" :label="t('reportGame.gameWinLoss')">
               <template #default="scope1">
                 $
                 <span
@@ -148,7 +142,11 @@
           </el-table>
         </template>
       </el-table-column>
-      <el-table-column prop="siteName" :label="t('fields.siteName')" width="100" />
+      <el-table-column
+        prop="siteName"
+        :label="t('fields.siteName')"
+        width="100"
+      />
       <el-table-column
         prop="gamePlatform"
         :label="t('reportGame.gamePlatform')"
@@ -209,9 +207,13 @@ import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import { getPlatformsBySite } from "@/api/platform";
-import { getPlatformGameReport, getDailyReport } from "@/api/report-platform-game";
-import * as XLSX from "xlsx";
+import { getPlatformsBySite } from '@/api/platform'
+import {
+  getPlatformGameReport,
+  getDailyReport,
+} from '@/api/report-platform-game'
+import * as XLSX from 'xlsx'
+import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -229,7 +231,7 @@ const EXPORT_HEADER_SUMMARY = [
   t('reportGame.gameMemberCountTotal'),
   t('reportGame.gameBetCountTotal'),
   t('reportGame.gameBetAmountTotal'),
-  t('reportGame.gameWinLossTotal')
+  t('reportGame.gameWinLossTotal'),
 ]
 
 const EXPORT_HEADER_DAILY = [
@@ -239,7 +241,7 @@ const EXPORT_HEADER_DAILY = [
   t('reportGame.gameMemberCount'),
   t('reportGame.gameBetCount'),
   t('reportGame.gameBetAmount'),
-  t('reportGame.gameWinLoss')
+  t('reportGame.gameWinLoss'),
 ]
 
 const exportPercentage = ref(0)
@@ -275,7 +277,7 @@ const request = reactive({
   name: null,
   recordTime: [defaultStartDate, defaultEndDate],
   siteId: null,
-  platform: null
+  platform: null,
 })
 
 const shortcuts = [
@@ -328,50 +330,84 @@ const shortcuts = [
   {
     text: t('fields.lastWeek'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
-      return [start, end];
-    }
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'weeks')
+          .startOf('isoWeek')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'weeks')
+          .endOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
   },
   {
     text: t('fields.thisMonth'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('month').format('x'));
-      return [start, end];
-    }
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
   },
   {
     text: t('fields.lastMonth'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-      return [start, end];
-    }
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'months')
+          .endOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
   },
   {
     text: t('fields.last3Months'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(2, 'months').startOf('month').format('x'));
-      return [start, end];
-    }
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(2, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
   },
   {
     text: t('fields.last6Months'),
     value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(5, 'months').startOf('month').format('x'));
-      return [start, end];
-    }
-  }
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(5, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
 ]
 
 async function loadDaily(row, expandedRows) {
@@ -412,10 +448,10 @@ function convertDate(date) {
 function disabledDate(time) {
   return (
     time.getTime() <
-    moment(new Date())
-      .subtract(5, 'months')
-      .startOf('month')
-      .format('x') || time.getTime() > new Date().getTime()
+      moment(new Date())
+        .subtract(5, 'months')
+        .startOf('month')
+        .format('x') || time.getTime() > new Date().getTime()
   )
 }
 
@@ -482,33 +518,43 @@ onMounted(async () => {
 })
 
 function getSummaries(param) {
-  const { columns, data } = param;
-  const sums = [];
-  columns.forEach((column, index) => {
-    if (index === 0) {
-      sums[index] = t('dashboard.total');
-    } else if (index === 1 || index === 2) { // Text Ignore
-    } else {
-      const values = data.map(item => Number(item[column.property]));
-      if (!values.every(value => isNaN(value))) {
-        sums[index] = values.reduce((prev, curr) => {
-          const value = Number(curr);
-          if (!isNaN(value)) {
-            return prev + curr;
-          } else {
-            return prev;
-          }
-        }, 0);
+  if (hasPermission(['sys:report:platform:game:report:summary'])) {
+    const { columns, data } = param
+    const sums = []
+    columns.forEach((column, index) => {
+      if (index === 0) {
+        sums[index] = t('dashboard.total')
+      } else if (index === 1 || index === 2) {
+        // Text Ignore
       } else {
-        sums[index] = 0;
+        const values = data.map(item => Number(item[column.property]))
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr)
+            if (!isNaN(value)) {
+              return prev + curr
+            } else {
+              return prev
+            }
+          }, 0)
+        } else {
+          sums[index] = 0
+        }
+        if (index === 5 || index === 6) {
+          sums[index] =
+            '$ ' +
+            sums[index].toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        }
       }
-      if (index === 5 || index === 6) {
-        sums[index] = "$ " + sums[index].toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      }
-    }
-  });
+    })
 
-  return sums;
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 async function exportExcel() {
@@ -527,8 +573,16 @@ async function exportExcel() {
   }
 
   const wb = XLSX.utils.book_new()
-  XLSX.utils.book_append_sheet(wb, await genExcelSummaryTab(query, 0, 50), t('reportName.Summary_Record'));
-  XLSX.utils.book_append_sheet(wb, await genExcelDailyTab(query, 50, 50), t('reportName.Daily_Record'));
+  XLSX.utils.book_append_sheet(
+    wb,
+    await genExcelSummaryTab(query, 0, 50),
+    t('reportName.Summary_Record')
+  )
+  XLSX.utils.book_append_sheet(
+    wb,
+    await genExcelDailyTab(query, 50, 50),
+    t('reportName.Daily_Record')
+  )
   XLSX.writeFile(wb, t('reportName.Platform_Game_Record') + '.xlsx')
   exportPercentage.value = 100
 
@@ -541,14 +595,18 @@ async function genExcelSummaryTab(query, percStart, percRange) {
   const maxLength = []
 
   pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round(percStart + ((ret.current / (ret.pages + 1)) * percRange))
+  exportPercentage.value = Math.round(
+    percStart + (ret.current / (ret.pages + 1)) * percRange
+  )
   query.current = ret.current
 
   while (query.current < ret.pages) {
     query.current += 1
     const { data: ret } = await getPlatformGameReport(query)
     pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round(percStart + ((ret.current / (ret.pages + 1)) * percRange))
+    exportPercentage.value = Math.round(
+      percStart + (ret.current / (ret.pages + 1)) * percRange
+    )
   }
   const ws = XLSX.utils.aoa_to_sheet(exportData)
   exportData.map(data => {
@@ -570,7 +628,7 @@ async function genExcelSummaryTab(query, percStart, percRange) {
   })
   ws['!cols'] = wsCols
 
-  return ws;
+  return ws
 }
 
 async function genExcelDailyTab(query, percStart, percRange) {
@@ -579,14 +637,18 @@ async function genExcelDailyTab(query, percStart, percRange) {
   const maxLength = []
 
   pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round(percStart + ((ret.current / (ret.pages + 1)) * percRange))
+  exportPercentage.value = Math.round(
+    percStart + (ret.current / (ret.pages + 1)) * percRange
+  )
   query.current = ret.current
 
   while (query.current < ret.pages) {
     query.current += 1
     const { data: ret } = await getDailyReport(query)
     pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round(percStart + ((ret.current / (ret.pages + 1)) * percRange))
+    exportPercentage.value = Math.round(
+      percStart + (ret.current / (ret.pages + 1)) * percRange
+    )
   }
   const ws = XLSX.utils.aoa_to_sheet(exportData)
   exportData.map(data => {
@@ -608,7 +670,7 @@ async function genExcelDailyTab(query, percStart, percRange) {
   })
   ws['!cols'] = wsCols
 
-  return ws;
+  return ws
 }
 
 function pushRecordToData(records, exportData) {
