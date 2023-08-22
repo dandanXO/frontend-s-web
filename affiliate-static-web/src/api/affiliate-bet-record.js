@@ -12,3 +12,7 @@ export const getPlatformsBySite = (siteId) => {
 export const getVipName = (id, siteId) => {
   return https().request(`/affiliateBetRecord/${id}/vip`, Method.GET, { siteId: siteId }, ContentType.form);
 };
+
+export const getTotal = (id, query) => {
+  return https().request(`/affiliateBetRecord/${id}/total`, Method.GET, query, ContentType.form);
+};

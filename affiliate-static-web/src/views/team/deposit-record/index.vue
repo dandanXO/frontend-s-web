@@ -43,7 +43,7 @@
       >
         <el-table-column prop="serialNumber" :label="t('fields.serialNumber')" align="center" min-width="150" />
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="100" />
-        <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" min-width="100">
+        <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" min-width="100" sortable>
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.depositAmount,type: 'money'}" />
           </template>
@@ -81,10 +81,14 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="table-footer">
+        <span style="margin-right:20px;">{{ t('fields.totalDeposit') }}: $ <span v-formatter="{data: page.totalDeposit,type: 'money'}" /></span>
+      </div>
       <el-pagination
         class="pagination"
         @current-change="changePage"
-        layout="prev, pager, next"
+        layout="total, prev, pager, next"
+        :total="page.total"
         :page-size="request.size"
         :page-count="page.pages"
         :current-page="request.current"
@@ -97,7 +101,7 @@
 import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
-import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record';
+import { getMemberDepositRecords, getTotal } from '../../../api/affiliate-deposit-record';
 import { useI18n } from "vue-i18n";
 
 const store = useStore();
@@ -181,7 +185,9 @@ const request = reactive({
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
+  loading: false,
+  total: 0,
+  totalDeposit: 0
 });
 
 function convertDate(date) {
@@ -219,6 +225,9 @@ async function loadDepositRecords() {
   const { data: ret } = await getMemberDepositRecords(store.state.user.id, query);
   page.pages = ret.pages;
   page.records = ret.records;
+  page.total = ret.total;
+  const { data: total } = await getTotal(store.state.user.id, query);
+  page.totalDeposit = total;
   page.loading = false;
 }
 
@@ -262,6 +271,17 @@ onMounted(() => {
   .btn-grp {
     display: flex;
   }
+}
+
+.el-pagination {
+  display: inline-block;
+}
+
+.table-footer {
+  margin-top: 15px;
+  margin-right: 20px;
+  float: right;
+  font-size: small;
 }
 
 @media (max-width: 768px) {

@@ -22,7 +22,7 @@
           :editable="false"
           :clearable="false"
         />
-        <el-input class="input-small" v-model="request.loginName" maxlength="50" :placeholder="t('fields.loginName')" />
+        <el-input class="input-small" v-model="request.loginName" maxlength="50" :placeholder="t('fields.loginName')" size="small" />
         <div class="grp-btn">
           <el-button icon="el-icon-search" type="primary" @click="search()" size="mini">
             {{ $t('fields.search') }}
