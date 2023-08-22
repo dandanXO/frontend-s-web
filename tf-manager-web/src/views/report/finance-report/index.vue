@@ -90,13 +90,16 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getFinanceReport, getTotalFinanceReport } from '../../../api/report-centre'
+import {
+  getFinanceReport,
+  getTotalFinanceReport,
+} from '../../../api/report-centre'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import * as XLSX from 'xlsx'
-import { getShortcuts } from "@/utils/datetime";
+import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
@@ -169,7 +172,7 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
 
-const shortcuts = getShortcuts(t);
+const shortcuts = getShortcuts(t)
 function disabledDate(time) {
   return (
     time.getTime() <
@@ -201,17 +204,17 @@ async function exportExcel() {
   const exportData = ret.financeReportColumnVOS
 
   exportData.forEach(item => {
-    header.push(item.label);
+    header.push(item.label)
   })
 
   ret.financeReportItemVOS.forEach(item => {
-    data.push(item.data);
+    data.push(item.data)
   })
 
   const headerarray = []
-  headerarray.push(header);
+  headerarray.push(header)
   pushRecordToData(data, headerarray)
-  console.log(headerarray);
+  console.log(headerarray)
   const ws = XLSX.utils.aoa_to_sheet(headerarray)
   const wb = XLSX.utils.book_new()
   wb.SheetNames.push('Record')
@@ -250,8 +253,16 @@ function getSummaries(param) {
         if (index === 0) {
           sums[index] = t('fields.total')
         } else {
-          var prop = column.property;
-          sums[index] = "$" + totalPage.records[0].data[prop.replace("data.", "")];
+          var prop = column.property
+          sums[index] =
+            '$' +
+            parseFloat(totalPage.records[0].data[prop.replace('data.', '')]).toLocaleString(
+              'en-US',
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            )
         }
       })
     }

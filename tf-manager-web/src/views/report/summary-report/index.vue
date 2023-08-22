@@ -449,11 +449,14 @@ function getSummaries(param) {
         } else if (index === 3) {
         } else {
           var prop = column.property;
-          var money = "$";
-          if (index === 1 || index !== 2 || index !== 7 || index !== 9 || index !== 11) {
-            money = "";
+          if (index === 1 || index === 2 || index === 7 || index === 9 || index === 11) {
+            sums[index] = totalPage.records[0][prop];
+          } else {
+            sums[index] = "$" + parseFloat(totalPage.records[0][prop]).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            });
           }
-          sums[index] = money + totalPage.records[0][prop];
         }
       })
     }

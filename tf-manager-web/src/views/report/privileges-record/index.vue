@@ -230,7 +230,13 @@ function getSummaries(param) {
       if (index === 0) {
         sums[index] = t('fields.noOfPrivilegeClaimed') + '   ' + page.total
       } else if (index === 1) {
-        sums[index] = sums[index] = t('fields.totalPrivilegeClaimAmount') + '   $' + page.totalAmount.toLocaleString()
+        sums[index] = sums[index] =
+          t('fields.totalPrivilegeClaimAmount') +
+          '   $' +
+          page.totalAmount.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
       }
     })
 

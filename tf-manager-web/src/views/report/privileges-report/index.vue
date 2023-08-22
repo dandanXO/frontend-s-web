@@ -154,7 +154,7 @@ import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import { getShortcuts } from "@/utils/datetime";
+import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
@@ -187,7 +187,7 @@ const request = reactive({
   siteId: null,
 })
 
-const shortcuts = getShortcuts(t);
+const shortcuts = getShortcuts(t)
 async function loadDaily(row, expandedRows) {
   // 该处是用于判断是展开还是收起行，只有展开的时候做请求，避免多次请求！
   // 展开的时候expandedRows有值，收起的时候为空.
@@ -292,7 +292,13 @@ function getSummaries(param) {
 
     columns.forEach((column, index) => {
       if (index === 1) {
-        sums[index] = sums[index] = t('fields.totalPrivilegeClaimAmount') + '   $' + page.totalAmount.toLocaleString()
+        sums[index] = sums[index] =
+          t('fields.totalPrivilegeClaimAmount') +
+          '   $' +
+          page.totalAmount.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
       }
     })
 
