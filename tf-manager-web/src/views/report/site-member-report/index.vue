@@ -85,7 +85,7 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
       style="margin-top:20px;"
-      height="550"
+      height="450"
       :summary-method="getSummaries"
       show-summary
     >
@@ -155,6 +155,14 @@
         width="200"
       />
     </el-table>
+    <el-pagination
+      class="pagination"
+      @current-change="changePage"
+      layout="prev, pager, next"
+      :page-size="request.size"
+      :page-count="page.pages"
+      :current-page="request.current"
+    />
   </div>
 </template>
 
@@ -185,6 +193,7 @@ const siteList = reactive({
 })
 
 const page = reactive({
+  pages: 0,
   records: [],
   loading: false,
 })
@@ -208,6 +217,11 @@ function resetQuery() {
   request.siteId = site.value ? site.value.id : 1
   request.loginName = null
   request.affiliateName = null
+}
+
+function changePage(page) {
+  request.current = page
+  loadSiteMemberReport()
 }
 
 async function loadSiteMemberReport() {

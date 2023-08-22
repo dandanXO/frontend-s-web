@@ -72,7 +72,7 @@
       :empty-text="t('fields.noData')"
       style="margin-top:20px;"
       :row-style="{width: '100px'}"
-      height="550"
+      height="450"
       :summary-method="getSummaries"
       show-summary
     >
