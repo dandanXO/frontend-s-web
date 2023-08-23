@@ -170,7 +170,7 @@
           $
           <span
             v-formatter="{
-              data: scope1.row.validBet,
+              data: scope1.row.adjust,
               type: 'money',
             }"
           />
@@ -321,6 +321,7 @@ async function loadSiteMemberReport() {
   const { data: ret1 } = await getTotalSiteMemberReport(query)
   totalPage.records = ret1.records
   page.records = ret.records
+  page.pages = ret.pages
   page.loading = false
 }
 
