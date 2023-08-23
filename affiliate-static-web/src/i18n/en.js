@@ -255,6 +255,7 @@ export default {
     validateBankCardNumber: "Only number is accepted for bank card number",
     validateCommission: "Commission must be between 0 to 1",
     validateNumberOnly: 'Please enter number only',
+    validateNumberMoreThanOne: 'Please enter number more than 1',
     validateRevenueShare: "Revenue Share must be between 0 to 1",
     validateUsdtWallet: "Only alphabet and number is accepted for USDT wallet",
     withdrawalToday: "Withdrawal Today"

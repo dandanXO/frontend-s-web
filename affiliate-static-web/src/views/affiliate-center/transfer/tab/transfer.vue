@@ -52,7 +52,7 @@ import { View, Hide, Refresh } from "@element-plus/icons-vue";
 import { onMounted, reactive, ref } from 'vue';
 import { useStore } from "@/store";
 import { useI18n } from "vue-i18n";
-import { isNumeric, numericOnly, required } from '../../../../utils/validate';
+import { isNumeric, required } from '../../../../utils/validate';
 import { transferToMember } from '../../../../api/affiliate-member-transfer';
 import { ElMessage } from 'element-plus';
 import { checkHasWithdrawPw, getAffiliateBalance } from '../../../../api/affiliate';
@@ -75,7 +75,12 @@ const form = reactive({
 const formRules = reactive({
   loginName: [required(t('message.requiredLoginName'))],
   transferAmount: [required(t('message.requiredTransferAmount')), isNumeric(t('message.validateNumberOnly'))],
-  rollover: [required(t('message.requiredRollover')), numericOnly(t('message.validateNumberOnly'))],
+  rollover: [required(t('message.requiredRollover')), {
+    required: true,
+    pattern: /^[1-9]*$/,
+    message: t('message.validateNumberMoreThanOne'),
+    trigger: 'blur'
+  }],
   withdrawPassword: [required(t('message.requiredWithdrawPassword'))]
 });
 

@@ -255,6 +255,7 @@ export default {
     validateBankCardNumber: "银行卡号只能包含数字",
     validateCommission: "佣金必须介于 0 至 1 之间",
     validateNumberOnly: '请只输入数字',
+    validateNumberMoreThanOne: '请输入大于 1 的整数',
     validateRevenueShare: "收入必须介于 0 至 1 之间",
     validateUsdtWallet: "虚拟钱包账号只能包含数字及英文字母",
     withdrawalToday: "今日提款"
