@@ -58,9 +58,19 @@
             <Icon :icon="personMoney24Filled" class="stats-icon" />
           </el-icon>
           <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('dashboard.totalFirstDeposit') }}</div>
-            <div class="card-panel-content">{{ t('fields.amount') }} : <span class="card-panel-num">{{ quickSummary.totalFtdAmount }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.memberCount') }} : <span class="card-panel-num">{{ quickSummary.total_ftd }}</span></div>
+            <div class="card-panel-text">
+              {{ t('dashboard.totalFirstDeposit') }}
+            </div>
+            <div class="card-panel-content">
+              {{ t('fields.amount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalFtdAmount }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.memberCount') }} :
+              <span class="card-panel-num">{{ quickSummary.total_ftd }}</span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -77,9 +87,24 @@
           </el-icon>
           <div class="card-panel-description">
             <div class="card-panel-text">{{ t('dashboard.totalDeposit') }}</div>
-            <div class="card-panel-content">{{ t('fields.amount') }} : <span class="card-panel-num">{{ quickSummary.totalDepositAmount }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.memberCount') }} : <span class="card-panel-num">{{ quickSummary.total_depositMember }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.totalTransaction') }} : <span class="card-panel-num">{{ quickSummary.totalDepositTransaction }}</span></div>
+            <div class="card-panel-content">
+              {{ t('fields.amount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalDepositAmount }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.memberCount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.total_depositMember }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.totalTransaction') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalDepositTransaction }}
+              </span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -95,10 +120,27 @@
             <Icon :icon="personMoney24Filled" class="stats-icon" />
           </el-icon>
           <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('dashboard.totalTransfer') }}</div>
-            <div class="card-panel-content">{{ t('fields.amount') }} : <span class="card-panel-num">{{ quickSummary.totalAffiliateTransfer }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.memberCount') }} : <span class="card-panel-num">{{ quickSummary.totalAffiliateTransferMemberCount }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.totalTransaction') }} : <span class="card-panel-num">{{ quickSummary.totalAffiliateTransferCount }}</span></div>
+            <div class="card-panel-text">
+              {{ t('dashboard.totalTransfer') }}
+            </div>
+            <div class="card-panel-content">
+              {{ t('fields.amount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalAffiliateTransfer }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.memberCount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalAffiliateTransferMemberCount }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.totalTransaction') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalAffiliateTransferCount }}
+              </span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -114,10 +156,27 @@
             <Icon :icon="personMoney24Filled" class="stats-icon" />
           </el-icon>
           <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('dashboard.totalWithdraw') }}</div>
-            <div class="card-panel-content">{{ t('fields.amount') }} : <span class="card-panel-num">{{ quickSummary.totalWithdrawAmount }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.memberCount') }} : <span class="card-panel-num">{{ quickSummary.total_withdrawMember }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.totalTransaction') }} : <span class="card-panel-num">{{ quickSummary.totalWithdrawTransaction }}</span></div>
+            <div class="card-panel-text">
+              {{ t('dashboard.totalWithdraw') }}
+            </div>
+            <div class="card-panel-content">
+              {{ t('fields.amount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalWithdrawAmount }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.memberCount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.total_withdrawMember }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.totalTransaction') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalWithdrawTransaction }}
+              </span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -133,8 +192,21 @@
             <Icon :icon="personMoney24Filled" class="stats-icon" />
           </el-icon>
           <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('dashboard.totalWinLoss') }}</div>
-            <div class="card-panel-content">{{ t('fields.amount') }} : <span class="card-panel-num">{{ quickSummary.totalWinLossAmount }}</span></div>
+            <div class="card-panel-text">
+              <el-tooltip
+                class="box-item"
+                effect="dark"
+                content="輸贏 = 投注 - 派彩"
+              >
+                <span>{{ t('dashboard.totalWinLoss') }}</span>
+              </el-tooltip>
+            </div>
+            <div class="card-panel-content">
+              {{ t('fields.amount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalWinLossAmount }}
+              </span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -150,10 +222,27 @@
             <Icon :icon="personMoney24Filled" class="stats-icon" />
           </el-icon>
           <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('dashboard.totalValidBet') }}</div>
-            <div class="card-panel-content">{{ t('fields.amount') }} : <span class="card-panel-num">{{ quickSummary.totalValidBetAmount }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.memberCount') }} : <span class="card-panel-num">{{ quickSummary.total_betMember }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.totalTransaction') }} : <span class="card-panel-num">{{ quickSummary.totalBetCount }}</span></div>
+            <div class="card-panel-text">
+              {{ t('dashboard.totalValidBet') }}
+            </div>
+            <div class="card-panel-content">
+              {{ t('fields.amount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalValidBetAmount }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.memberCount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.total_betMember }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.totalTransaction') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalBetCount }}
+              </span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -170,8 +259,18 @@
           </el-icon>
           <div class="card-panel-description">
             <div class="card-panel-text">{{ t('dashboard.totalBonus') }}</div>
-            <div class="card-panel-content">{{ t('fields.amount') }} : <span class="card-panel-num">{{ quickSummary.totalBonusAmount }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.memberCount') }} : <span class="card-panel-num">{{ quickSummary.total_bonusMember }}</span></div>
+            <div class="card-panel-content">
+              {{ t('fields.amount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalBonusAmount }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.memberCount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.total_bonusMember }}
+              </span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -187,9 +286,21 @@
             <Icon :icon="peopleEdit20Filled" class="stats-icon" />
           </el-icon>
           <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('dashboard.totalActiveMember') }}</div>
-            <div class="card-panel-content">{{ t('dashboard.memberCount') }} : <span class="card-panel-num">{{ quickSummary.total_activeMember }}</span></div>
-            <div class="card-panel-content">{{ t('dashboard.newRegisterMember') }} : <span class="card-panel-num"> {{ quickSummary.total_registerMember }}</span></div>
+            <div class="card-panel-text">
+              {{ t('dashboard.totalActiveMember') }}
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.memberCount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.total_activeMember }}
+              </span>
+            </div>
+            <div class="card-panel-content">
+              {{ t('dashboard.newRegisterMember') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.total_registerMember }}
+              </span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -206,7 +317,42 @@
           </el-icon>
           <div class="card-panel-description">
             <div class="card-panel-text">{{ t('dashboard.totalVisit') }}</div>
-            <div class="card-panel-content">{{ t('dashboard.memberCount') }} : <span class="card-panel-num">{{ quickSummary.total_visitorMember }}</span></div>
+            <div class="card-panel-content">
+              {{ t('dashboard.memberCount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.total_visitorMember }}
+              </span>
+            </div>
+          </div>
+        </el-row>
+      </el-card>
+      <el-card
+        body-style="gap:10px; display:flex; justify-content: space-between; align-items: center"
+        :xs="12"
+        :sm="12"
+        :lg="6"
+        class="box-card"
+      >
+        <el-row>
+          <el-icon color="#1ed6ba">
+            <Icon :icon="personMoney24Filled" class="stats-icon" />
+          </el-icon>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              <el-tooltip
+                class="box-item"
+                effect="dark"
+                content="盈利 = 输赢-红利-返水-调整金额"
+              >
+                <span>{{ t('dashboard.totalProfit') }}</span>
+              </el-tooltip>
+            </div>
+            <div class="card-panel-content">
+              {{ t('fields.amount') }} :
+              <span class="card-panel-num">
+                {{ quickSummary.totalProfitAmount }}
+              </span>
+            </div>
           </div>
         </el-row>
       </el-card>
@@ -230,7 +376,9 @@
         <Chart :options="depositSummaryBarchatOptions" />
       </el-card>
       <el-card>
-        <div style="font-size: 18px; font-weight: 600;">{{ t('dashboard.paymentMethodSummary') }}</div>
+        <div style="font-size: 18px; font-weight: 600;">
+          {{ t('dashboard.paymentMethodSummary') }}
+        </div>
         <el-table
           :data="quickSummary.depositRecords"
           ref="table"
@@ -241,11 +389,26 @@
           :summary-method="getSummaries"
           show-summary
         >
-          <el-table-column prop="paymentType" :label="t('dashboard.paymentMethod')" />
-          <el-table-column prop="totalDeposit" :label="t('dashboard.totalTransaction')" />
-          <el-table-column prop="totalDepositPerc" :label="t('dashboard.ratio')" />
-          <el-table-column prop="totalDepositAmount" :label="t('dashboard.fundAmount')" />
-          <el-table-column prop="totalDepositAmountPerc" :label="t('dashboard.ratio')" />
+          <el-table-column
+            prop="paymentType"
+            :label="t('dashboard.paymentMethod')"
+          />
+          <el-table-column
+            prop="totalDeposit"
+            :label="t('dashboard.totalTransaction')"
+          />
+          <el-table-column
+            prop="totalDepositPerc"
+            :label="t('dashboard.ratio')"
+          />
+          <el-table-column
+            prop="totalDepositAmount"
+            :label="t('dashboard.fundAmount')"
+          />
+          <el-table-column
+            prop="totalDepositAmountPerc"
+            :label="t('dashboard.ratio')"
+          />
         </el-table>
       </el-card>
     </el-row>
@@ -267,13 +430,13 @@ import {
 import Chart from '@/components/charts/Charts'
 import moment from 'moment'
 import { getSiteListSimple } from '../../api/site'
-import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 
 const currentDate = new Date()
 const defaultStartDate = convertDate(currentDate, true)
 const defaultEndDate = convertDate(currentDate, false)
 
-const { t } = useI18n();
+const { t } = useI18n()
 const request = reactive({
   siteId: null,
   createTime: [defaultStartDate, defaultEndDate],
@@ -396,9 +559,9 @@ const shortcuts = [
 
 function convertDate(date, isStartDate) {
   if (isStartDate === true) {
-    return moment(date).format('YYYY-MM') + "-01";
+    return moment(date).format('YYYY-MM') + '-01'
   } else {
-    return moment(date).format('YYYY-MM-DD');
+    return moment(date).format('YYYY-MM-DD')
   }
 }
 
@@ -417,15 +580,16 @@ const quickSummary = reactive({
   total_betMember: 0,
   total_bonusMember: 0,
   visit: 0,
-  totalDepositAmount: 0.00,
-  totalWithdrawAmount: 0.00,
-  totalBonusAmount: 0.00,
-  totalWinLossAmount: 0.00,
-  totalValidBetAmount: 0.00,
-  totalFtdAmount: 0.00,
+  totalDepositAmount: 0.0,
+  totalWithdrawAmount: 0.0,
+  totalBonusAmount: 0.0,
+  totalWinLossAmount: 0.0,
+  totalProfitAmount: 0.0,
+  totalValidBetAmount: 0.0,
+  totalFtdAmount: 0.0,
   totalDepositTransaction: 0,
   totalWithdrawTransaction: 0,
-  totalAffiliateTransfer: 0.00,
+  totalAffiliateTransfer: 0.0,
   totalAffiliateTransferCount: 0,
   totalAffiliateTransferMemberCount: 0,
   totalBetCount: 0,
@@ -460,12 +624,12 @@ const depositBarchatOptions = reactive({
       name: t('dashboard.depositAmount'),
       data: [100, 101],
       type: 'bar',
-    }
+    },
   ],
   legend: {
     display: true,
     position: 'bottom',
-  }
+  },
 })
 
 const depositLinechatOptions = reactive({
@@ -511,7 +675,7 @@ const depositLinechatOptions = reactive({
       backgroundStyle: {
         color: 'rgba(180, 180, 180, 0.2)',
       },
-    }
+    },
   ],
   legend: {
     display: true,
@@ -521,29 +685,29 @@ const depositLinechatOptions = reactive({
 
 const financialPiechatOptions = reactive({
   title: {
-    text: t('dashboard.financialLevelRatio')
+    text: t('dashboard.financialLevelRatio'),
   },
   height: '220px',
   dataset: {
-    source: [
-      ['Level', 'Deposit', 'Withdraw']
-    ]
+    source: [['Level', 'Deposit', 'Withdraw']],
   },
-  series: [{
-    type: 'pie',
-    top: '20px',
-    emphasis: {
-      focus: 'self'
+  series: [
+    {
+      type: 'pie',
+      top: '20px',
+      emphasis: {
+        focus: 'self',
+      },
+      label: {
+        formatter: '{b}: [' + t('fields.deposit') + ': {@Deposit}] ({d}%)',
+      },
+      encode: {
+        itemName: 'Level',
+        value: 'Deposit',
+        tooltip: 'Deposit',
+      },
     },
-    label: {
-      formatter: '{b}: [' + t('fields.deposit') + ': {@Deposit}] ({d}%)'
-    },
-    encode: {
-      itemName: 'Level',
-      value: 'Deposit',
-      tooltip: 'Deposit'
-    }
-  }]
+  ],
 })
 
 const vipPiechatOptions = reactive({
@@ -552,25 +716,25 @@ const vipPiechatOptions = reactive({
   },
   height: '220px',
   dataset: {
-    source: [
-      ['Level', 'Deposit', 'Withdraw']
-    ]
+    source: [['Level', 'Deposit', 'Withdraw']],
   },
-  series: [{
-    type: 'pie',
-    top: '20px',
-    emphasis: {
-      focus: 'self'
+  series: [
+    {
+      type: 'pie',
+      top: '20px',
+      emphasis: {
+        focus: 'self',
+      },
+      label: {
+        formatter: '{b}: [' + t('fields.deposit') + ': {@Deposit}] ({d}%)',
+      },
+      encode: {
+        itemName: 'Level',
+        value: 'Deposit',
+        tooltip: 'Deposit',
+      },
     },
-    label: {
-      formatter: '{b}: [' + t('fields.deposit') + ': {@Deposit}] ({d}%)'
-    },
-    encode: {
-      itemName: 'Level',
-      value: 'Deposit',
-      tooltip: 'Deposit'
-    }
-  }]
+  ],
 })
 
 const depositSummaryBarchatOptions = reactive({
@@ -600,9 +764,9 @@ const depositSummaryBarchatOptions = reactive({
       name: t('dashboard.fundAmount'),
       data: [],
       type: 'bar',
-    }
+    },
   ],
-  legend: {}
+  legend: {},
 })
 
 const siteList = reactive({
@@ -635,44 +799,82 @@ async function getDailySummaryList() {
   }
   const { data: ret } = await getSiteDailySummary(query)
   dailySummary.list = ret.siteDailySummaryVOList
-  quickSummary.totalDepositAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalDepositAmount)
-  quickSummary.totalWithdrawAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalWithdrawAmount)
-  quickSummary.totalBonusAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalBonusAmount)
-  quickSummary.totalWinLossAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalWinLossAmount)
-  quickSummary.totalValidBetAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalValidBetAmount)
-  quickSummary.totalFtdAmount = getDecimalValueWithComma(ret.siteDailySummaryTotalVO.totalFtdAmount)
-  quickSummary.totalBetCount = ret.siteDailySummaryTotalVO.totalBetCount.toLocaleString('en-US')
-  quickSummary.totalWithdrawTransaction = ret.siteDailySummaryTotalVO.totalWithdrawCount.toLocaleString('en-US')
-  quickSummary.totalDepositTransaction = ret.siteDailySummaryTotalVO.totalDepositCount.toLocaleString('en-US')
+  quickSummary.totalDepositAmount = getDecimalValueWithComma(
+    ret.siteDailySummaryTotalVO.totalDepositAmount
+  )
+  quickSummary.totalWithdrawAmount = getDecimalValueWithComma(
+    ret.siteDailySummaryTotalVO.totalWithdrawAmount
+  )
+  quickSummary.totalBonusAmount = getDecimalValueWithComma(
+    ret.siteDailySummaryTotalVO.totalBonusAmount
+  )
+  quickSummary.totalWinLossAmount = getDecimalValueWithComma(
+    ret.siteDailySummaryTotalVO.totalWinLossAmount
+  )
+  quickSummary.totalValidBetAmount = getDecimalValueWithComma(
+    ret.siteDailySummaryTotalVO.totalValidBetAmount
+  )
+  quickSummary.totalFtdAmount = getDecimalValueWithComma(
+    ret.siteDailySummaryTotalVO.totalFtdAmount
+  )
+  quickSummary.totalBetCount = ret.siteDailySummaryTotalVO.totalBetCount.toLocaleString(
+    'en-US'
+  )
+  quickSummary.totalWithdrawTransaction = ret.siteDailySummaryTotalVO.totalWithdrawCount.toLocaleString(
+    'en-US'
+  )
+  quickSummary.totalDepositTransaction = ret.siteDailySummaryTotalVO.totalDepositCount.toLocaleString(
+    'en-US'
+  )
 
-  quickSummary.totalAffiliateTransfer = getDecimalValueWithComma(ret.affiliateTotalTransferVO.totalTransferAmount)
-  quickSummary.totalAffiliateTransferMemberCount = ret.affiliateTotalTransferVO.totalAffiliateMember.toLocaleString('en-US')
-  quickSummary.totalAffiliateTransferCount = ret.affiliateTotalTransferVO.totalTransaction.toLocaleString('en-US')
+  quickSummary.totalAffiliateTransfer = getDecimalValueWithComma(
+    ret.affiliateTotalTransferVO.totalTransferAmount
+  )
+  quickSummary.totalAffiliateTransferMemberCount = ret.affiliateTotalTransferVO.totalAffiliateMember.toLocaleString(
+    'en-US'
+  )
+  quickSummary.totalAffiliateTransferCount = ret.affiliateTotalTransferVO.totalTransaction.toLocaleString(
+    'en-US'
+  )
 
-  quickSummary.total_depositMember = JSON.parse(ret.siteMemberDailySummaryVO.depositMember)
-  quickSummary.total_withdrawMember = JSON.parse(ret.siteMemberDailySummaryVO.withdrawMember)
-  quickSummary.total_betMember = JSON.parse(ret.siteMemberDailySummaryVO.betMember)
-  quickSummary.total_bonusMember = JSON.parse(ret.siteMemberDailySummaryVO.bonusMember)
+  quickSummary.total_depositMember = JSON.parse(
+    ret.siteMemberDailySummaryVO.depositMember
+  )
+  quickSummary.total_withdrawMember = JSON.parse(
+    ret.siteMemberDailySummaryVO.withdrawMember
+  )
+  quickSummary.total_betMember = JSON.parse(
+    ret.siteMemberDailySummaryVO.betMember
+  )
+  quickSummary.total_bonusMember = JSON.parse(
+    ret.siteMemberDailySummaryVO.bonusMember
+  )
 
   if (ret.siteDepositSummaryVO.length > 0) {
     ret.siteDepositSummaryVO.forEach((item, index) => {
-      item.totalDepositAmount = getDecimalValue(item.totalDepositAmount);
+      item.totalDepositAmount = getDecimalValue(item.totalDepositAmount)
     })
   }
   quickSummary.depositRecords = ret.siteDepositSummaryVO
 
   getDepositChart(ret.siteDailySummaryVOList)
-  getFinancialChart(ret.siteMemberDailySummaryFinancialVO, financialPiechatOptions)
+  getFinancialChart(
+    ret.siteMemberDailySummaryFinancialVO,
+    financialPiechatOptions
+  )
   getFinancialChart(ret.siteMemberDailySummaryVipVO, vipPiechatOptions)
   getDepositSummaryChart(ret.siteDepositReportVO)
   getTotalDailySummary()
 }
 
 function getDecimalValueWithComma(amount) {
-  return amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return amount.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
 }
 function getDecimalValue(amount) {
-  return amount.toFixed(2);
+  return amount.toFixed(2)
 }
 
 function getDepositChart(summaryList) {
@@ -683,18 +885,18 @@ function getDepositChart(summaryList) {
 
   if (summaryList.length > 0) {
     summaryList.forEach((item, index) => {
-      recordTime.push(item.recordTime.substring(5).replace("-", "/"))
+      recordTime.push(item.recordTime.substring(5).replace('-', '/'))
       depositAmount.push(getDecimalValue(item.depositAmount))
       depositTransactionCount.push(item.depositCount)
       depositMemberCount.push(item.withdrawCount)
     })
     // debugger;
-    depositBarchatOptions.xAxis.data = recordTime;
-    depositBarchatOptions.series[0].data = depositAmount;
+    depositBarchatOptions.xAxis.data = recordTime
+    depositBarchatOptions.series[0].data = depositAmount
 
-    depositLinechatOptions.xAxis.data = recordTime;
-    depositLinechatOptions.series[0].data = depositMemberCount;
-    depositLinechatOptions.series[1].data = depositTransactionCount;
+    depositLinechatOptions.xAxis.data = recordTime
+    depositLinechatOptions.series[0].data = depositMemberCount
+    depositLinechatOptions.series[1].data = depositTransactionCount
   }
 }
 
@@ -702,14 +904,14 @@ function getFinancialChart(summaryList, chartOptions) {
   const financialData = chartOptions.dataset.source
   if (summaryList.length > 0) {
     summaryList.forEach((item, index) => {
-      const data = [];
+      const data = []
       data.push(item.financialName)
       data.push(getDecimalValue(item.totalDeposit))
       data.push(getDecimalValue(item.totalWithdraw))
 
       financialData.push(data)
     })
-    chartOptions.dataset.source = financialData;
+    chartOptions.dataset.source = financialData
   }
 }
 
@@ -735,8 +937,8 @@ function getDepositSummaryChart(summaryList) {
       paymentType.push(item.paymentType)
       depositAmount.push(getDecimalValue(item.totalDepositAmount))
     })
-    depositSummaryBarchatOptions.yAxis.data = paymentType;
-    depositSummaryBarchatOptions.series[0].data = depositAmount;
+    depositSummaryBarchatOptions.yAxis.data = paymentType
+    depositSummaryBarchatOptions.series[0].data = depositAmount
   }
 }
 
@@ -767,15 +969,15 @@ function resetDisplayValues() {
   quickSummary.total_betMember = 0
   quickSummary.total_bonusMember = 0
   quickSummary.visit = 0
-  quickSummary.totalDepositAmount = 0.00
-  quickSummary.totalWithdrawAmount = 0.00
-  quickSummary.totalBonusAmount = 0.00
-  quickSummary.totalWinLossAmount = 0.00
-  quickSummary.totalValidBetAmount = 0.00
-  quickSummary.totalFtdAmount = 0.00
+  quickSummary.totalDepositAmount = 0.0
+  quickSummary.totalWithdrawAmount = 0.0
+  quickSummary.totalBonusAmount = 0.0
+  quickSummary.totalWinLossAmount = 0.0
+  quickSummary.totalValidBetAmount = 0.0
+  quickSummary.totalFtdAmount = 0.0
   quickSummary.totalDepositTransaction = 0
   quickSummary.totalWithdrawTransaction = 0
-  quickSummary.totalAffiliateTransfer = 0.00
+  quickSummary.totalAffiliateTransfer = 0.0
   quickSummary.totalAffiliateTransferCount = 0
   quickSummary.totalAffiliateTransferMemberCount = 0
   quickSummary.totalBetCount = 0
@@ -784,35 +986,35 @@ function resetDisplayValues() {
 }
 
 function getSummaries(param) {
-  const { columns, data } = param;
-  const sums = [];
+  const { columns, data } = param
+  const sums = []
   columns.forEach((column, index) => {
     if (index === 0) {
-      sums[index] = t('dashboard.total');
+      sums[index] = t('dashboard.total')
     } else if (index === 2 || index === 4) {
-      sums[index] = "100 %";
+      sums[index] = '100 %'
     } else {
-      const values = data.map(item => Number(item[column.property]));
+      const values = data.map(item => Number(item[column.property]))
       if (!values.every(value => isNaN(value))) {
         sums[index] = values.reduce((prev, curr) => {
-          const value = Number(curr);
+          const value = Number(curr)
           if (!isNaN(value)) {
-            return prev + curr;
+            return prev + curr
           } else {
-            return prev;
+            return prev
           }
-        }, 0);
+        }, 0)
       } else {
-        sums[index] = 0;
+        sums[index] = 0
       }
 
       if (index === 3) {
-        sums[index] = sums[index].toFixed(2);
+        sums[index] = sums[index].toFixed(2)
       }
     }
-  });
+  })
 
-  return sums;
+  return sums
 }
 
 // onBeforeUnmount(async () => {
@@ -852,7 +1054,7 @@ function getSummaries(param) {
   margin-top: 10px;
 }
 
-.payment-chart-summary{
+.payment-chart-summary {
   width: 100%;
   height: 320px;
   display: grid;

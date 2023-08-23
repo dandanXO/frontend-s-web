@@ -22,10 +22,10 @@
           :editable="false"
           :clearable="false"
         />
-        <el-input v-model="request.loginName" class="input-small" :placeholder="t('fields.loginName')" />
-        <el-input v-model="request.realName" class="input-small" :placeholder="t('fields.name')" />
-        <el-input v-model="request.telephone" class="input-small" :placeholder="t('fields.telephone')" />
-        <el-input v-model="request.email" class="input-small" :placeholder="t('fields.email')" />
+        <el-input v-model="request.loginName" class="input-small" :placeholder="t('fields.loginName')" size="small" />
+        <el-input v-model="request.realName" class="input-small" :placeholder="t('fields.name')" size="small" />
+        <el-input v-model="request.telephone" class="input-small" :placeholder="t('fields.telephone')" size="small" />
+        <el-input v-model="request.email" class="input-small" :placeholder="t('fields.email')" size="small" />
         <div class="btn-grp">
           <el-button icon="el-icon-search" type="primary" @click="loadAffiliateMembers()" size="mini">
             {{ $t('fields.search') }}
@@ -66,6 +66,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column prop="vip" :label="t('fields.vipLevel')" align="center" min-width="150" />
+        <el-table-column prop="firstDepositAmount" :label="t('fields.firstDepositAmount')" align="center" min-width="180">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.firstDepositAmount,type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="totalDeposit" :label="t('fields.totalDeposit')" align="center" min-width="180">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.totalDeposit,type: 'money'}" />
@@ -74,6 +80,11 @@
         <el-table-column prop="totalWithdraw" :label="t('fields.totalWithdraw')" align="center" min-width="180">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.totalWithdraw,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="winLoss" :label="t('fields.winLoss')" align="center" min-width="180">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.winLoss,type: 'money'}" />
           </template>
         </el-table-column>
       </el-table>

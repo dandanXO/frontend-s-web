@@ -234,12 +234,16 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getWithdrawReport, getDailyReport, getTotalWithdrawReport } from '../../../api/report-withdraw'
+import {
+  getWithdrawReport,
+  getDailyReport,
+  getTotalWithdrawReport,
+} from '../../../api/report-withdraw'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import { getShortcuts } from "@/utils/datetime";
+import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
@@ -276,7 +280,7 @@ const request = reactive({
   siteId: null,
 })
 
-const shortcuts = getShortcuts(t);
+const shortcuts = getShortcuts(t)
 
 async function loadDaily(row, expandedRows) {
   // 该处是用于判断是展开还是收起行，只有展开的时候做请求，避免多次请求！
@@ -372,7 +376,7 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:withdraw:total'])) {
+  if (hasPermission(['sys:report:withdraw:report:summary'])) {
     const { columns } = param
     var sums = []
     const requestCopy = { ...request }
@@ -401,15 +405,36 @@ function getSummaries(param) {
         if (column.property === 'totalWithdraw') {
           sums[index] = totalPage.records[0].totalWithdraw
         } else if (column.property === 'totalWithdrawAmount') {
-          sums[index] = '$' + totalPage.records[0].totalWithdrawAmount
+          sums[index] =
+            '$' +
+            parseFloat(totalPage.records[0].totalWithdrawAmount).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         } else if (column.property === 'totalFailWithdraw') {
           sums[index] = totalPage.records[0].totalFailWithdraw
         } else if (column.property === 'totalFailWithdrawAmount') {
-          sums[index] = '$' + totalPage.records[0].totalFailWithdrawAmount
+          sums[index] =
+            '$' +
+            parseFloat(totalPage.records[0].totalFailWithdrawAmount).toLocaleString(
+              'en-US',
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            )
         } else if (column.property === 'totalSuccessWithdraw') {
           sums[index] = totalPage.records[0].totalSuccessWithdraw
         } else if (column.property === 'totalSuccessWithdrawAmount') {
-          sums[index] = '$' + totalPage.records[0].totalSuccessWithdrawAmount
+          sums[index] =
+            '$' +
+            parseFloat(totalPage.records[0].totalSuccessWithdrawAmount).toLocaleString(
+              'en-US',
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            )
         }
       })
     }

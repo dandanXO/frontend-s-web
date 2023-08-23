@@ -58,7 +58,7 @@
           $ <span v-formatter="{data: scope.row.profit,type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="ngr" :label="t('fields.ngr')" align="center" min-width="120">
+      <el-table-column prop="ngr" :label="t('fields.commission')" align="center" min-width="120">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.ngr,type: 'money'}" />
         </template>

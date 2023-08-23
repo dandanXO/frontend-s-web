@@ -85,7 +85,7 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
       style="margin-top:20px;"
-      height="550"
+      height="450"
       :summary-method="getSummaries"
       show-summary
     >
@@ -99,11 +99,17 @@
         :label="t('fields.registerTime')"
         width="200"
       />
-      <el-table-column
-        prop="balance"
-        :label="t('fields.balance')"
-        width="200"
-      />
+      <el-table-column prop="balance" :label="t('fields.balance')" width="200">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.balance,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="depositCount"
         :label="t('fields.depositCount')"
@@ -113,7 +119,17 @@
         prop="depositAmount"
         :label="t('fields.depositAmount')"
         width="200"
-      />
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.depositAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="withdrawCount"
         :label="t('fields.withdrawCount')"
@@ -123,15 +139,65 @@
         prop="withdrawAmount"
         :label="t('fields.withdrawAmount')"
         width="200"
-      />
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.withdrawAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="validBet"
         :label="t('fields.validBet')"
         width="200"
-      />
-      <el-table-column prop="adjust" :label="t('fields.adjust')" width="200" />
-      <el-table-column prop="bonus" :label="t('fields.bonus')" width="200" />
-      <el-table-column prop="profit" :label="t('fields.profit')" width="200" />
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.validBet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="adjust" :label="t('fields.adjust')" width="200">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.validBet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="bonus" :label="t('fields.bonus')" width="200">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.bonus,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="profit" :label="t('fields.profit')" width="200">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.profit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="affiliate"
         :label="t('fields.affiliate')"
@@ -141,9 +207,19 @@
       <el-table-column prop="vip" :label="t('fields.vipLevel')" width="200" />
       <el-table-column
         prop="firstDeposit"
-        :label="t('fields.firstDeposit')"
+        :label="t('fields.ftdAmount')"
         width="200"
-      />
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.profit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="lastLoginTime"
         :label="t('fields.lastLoginTime')"
@@ -155,13 +231,24 @@
         width="200"
       />
     </el-table>
+    <el-pagination
+      class="pagination"
+      @current-change="changePage"
+      layout="prev, pager, next"
+      :page-size="request.size"
+      :page-count="page.pages"
+      :current-page="request.current"
+    />
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getSiteMemberReport, getTotalSiteMemberReport } from '../../../api/report-centre'
+import {
+  getSiteMemberReport,
+  getTotalSiteMemberReport,
+} from '../../../api/report-centre'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -185,6 +272,7 @@ const siteList = reactive({
 })
 
 const page = reactive({
+  pages: 0,
   records: [],
   loading: false,
 })
@@ -208,6 +296,11 @@ function resetQuery() {
   request.siteId = site.value ? site.value.id : 1
   request.loginName = null
   request.affiliateName = null
+}
+
+function changePage(page) {
+  request.current = page
+  loadSiteMemberReport()
 }
 
 async function loadSiteMemberReport() {
@@ -465,7 +558,7 @@ function pushRecordToData(records, exportData) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:withdraw:total'])) {
+  if (hasPermission(['sys:report:site:member:report:summary'])) {
     const { columns } = param
     var sums = []
     const requestCopy = { ...request }
@@ -486,13 +579,27 @@ function getSummaries(param) {
         if (index === 0) {
           sums[index] = t('fields.total')
         } else {
-          if (index !== 1 && index !== 11 && index !== 12 && index !== 13 && index !== 14 && index !== 15 && index !== 16 && index !== 2) {
-            var prop = column.property;
-            var money = "$";
+          if (
+            index !== 1 &&
+            index !== 11 &&
+            index !== 12 &&
+            index !== 13 &&
+            index !== 14 &&
+            index !== 15 &&
+            index !== 16 &&
+            index !== 2
+          ) {
+            var prop = column.property
             if (index === 3 || index === 5) {
-              money = "";
+              sums[index] = totalPage.records[0][prop]
+            } else {
+              sums[index] =
+                '$' +
+                parseFloat(totalPage.records[0][prop]).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
             }
-            sums[index] = money + totalPage.records[0][prop];
           }
         }
       })

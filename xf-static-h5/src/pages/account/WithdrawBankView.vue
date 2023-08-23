@@ -508,6 +508,14 @@ export default defineComponent({
             icon: "report_problem"
           });
           router.push("/account/personal");
+        } else if (!store.phone || store.phone == "" || store.phone == null) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "请输入您的电话号码",
+            icon: "report_problem"
+          });
+          router.push("/account/verifyTelephone");
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
