@@ -46,6 +46,12 @@
         </template>
       </el-table-column>
       <el-table-column prop="rollover" :label="t('fields.rollover')" align="center" min-width="100" />
+      <el-table-column prop="type" :label="t('fields.transferType')" align="center" min-width="150">
+        <template #default="scope">
+          <el-tag v-if="scope.row.type === 'DEPOSIT'" type="success" size="mini">{{ t('transferType.' + scope.row.type) }}</el-tag>
+          <el-tag v-else-if="scope.row.type === 'COMMISSION'" type="warning" size="mini">{{ t('transferType.' + scope.row.type) }}</el-tag>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       class="pagination"

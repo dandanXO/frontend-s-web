@@ -45,6 +45,10 @@ export const getAffiliateBalance = (id) => {
   return https().request(`/affiliate/${id}/balance`, Method.GET);
 };
 
+export const getAffiliateCommissionBalance = (id) => {
+  return https().request(`/affiliate/${id}/commission-balance`, Method.GET);
+};
+
 // export const getAffiliateRealName = (id) => {
 //   return https().request(`/affiliate/${id}/realName`, Method.GET);
 // };

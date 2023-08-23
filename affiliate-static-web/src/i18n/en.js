@@ -41,6 +41,10 @@ export default {
     SETTLED: "SETTLED",
     CANCEL: "CANCEL"
   },
+  transferType: {
+    DEPOSIT: "Transfer from Balance",
+    COMMISSION: "Transfer from Commission Balance"
+  },
   fields: {
     account: "Account",
     accountInfo: "Account Information",
@@ -82,7 +86,9 @@ export default {
     cardNumber: "Card Number",
     changeWithdrawPw: "Change Withdraw Password",
     commission: "Commission",
+    commissionBalance: "Commission Balance",
     commissionRate: "Commission Rate",
+    commissionTransfer: "Commission Transfer",
     companyProfit: "Company Profit",
     confirm: "Confirm",
     confirmNewPassword: "Confirm New Password",
@@ -180,6 +186,7 @@ export default {
     transferIn: "Transfer In",
     transferOut: "Transfer Out",
     transferRecord: "Transfer Record",
+    transferType: "Transfer Type",
     usdtWallet: "USDT Wallet",
     usdtWalletAddress: "USDT Wallet Address",
     viewDetails: "View Details",
@@ -285,6 +292,7 @@ export default {
     603: "Token is missed",
     604: "Account already login",
     707: "Insufficient balance",
+    709: "Insufficient commission balance",
     800: "Captcha verification error",
     801: "Captcha code has expired",
     901: "Affiliate record does not exists",

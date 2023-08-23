@@ -2,7 +2,7 @@
   <el-card class="box-card" shadow="never" style="margin-top: 20px">
     <el-card style="width: fit-content; padding-right: 200px; margin-bottom: 20px;">
       <div class="card-panel-description">
-        <div class="card-panel-text">{{ $t('fields.balance') }}<el-icon class="pointer" @click="loadAffiliateBalance"><Refresh /></el-icon></div>
+        <div class="card-panel-text">{{ $t('fields.commissionBalance') }}<el-icon class="pointer" @click="loadAffiliateBalance"><Refresh /></el-icon></div>
         <span v-if="showBalance" class="card-panel-num">
           $ <span v-formatter="{data: balance,type: 'money'}" />
         </span>
@@ -55,7 +55,7 @@ import { useI18n } from "vue-i18n";
 import { isNumeric, numericOnly, required } from '../../../../utils/validate';
 import { transferToMember } from '../../../../api/affiliate-member-transfer';
 import { ElMessage } from 'element-plus';
-import { checkHasWithdrawPw, getAffiliateBalance } from '../../../../api/affiliate';
+import { checkHasWithdrawPw, getAffiliateCommissionBalance } from '../../../../api/affiliate';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -83,7 +83,7 @@ async function submitTransfer() {
   formRef.value.validate(async (valid) => {
     if (valid) {
       form.siteId = store.state.user.siteId;
-      form.type = 'DEPOSIT';
+      form.type = 'COMMISSION';
       await transferToMember(store.state.user.id, form);
       clearForm();
       loadAffiliateBalance();
@@ -103,7 +103,7 @@ function clearForm() {
 }
 
 async function loadAffiliateBalance() {
-  const { data: bal } = await getAffiliateBalance(store.state.user.id);
+  const { data: bal } = await getAffiliateCommissionBalance(store.state.user.id);
   balance.value = bal;
 }
 

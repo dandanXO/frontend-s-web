@@ -41,6 +41,10 @@ export default {
     SETTLED: "已结算",
     CANCEL: "已取消"
   },
+  transferType: {
+    DEPOSIT: "额度代存",
+    COMMISSION: "佣金代存"
+  },
   fields: {
     account: "账号",
     accountInfo: "账号信息",
@@ -82,7 +86,9 @@ export default {
     cardNumber: "银行卡号码",
     changeWithdrawPw: "更改支付密码",
     commission: "佣金",
+    commissionBalance: "佣金余额",
     commissionRate: "佣金比率",
+    commissionTransfer: "佣金代存",
     companyProfit: "公司利润",
     confirm: "确认",
     confirmNewPassword: "确认新密码",
@@ -180,6 +186,7 @@ export default {
     transferIn: "转入",
     transferOut: "转出",
     transferRecord: "代存记录",
+    transferType: "代存类型",
     usdtWallet: "钱包账号",
     usdtWalletAddress: "钱包地址",
     viewDetails: "查看详情",
@@ -285,6 +292,7 @@ export default {
     603: "无法找到令牌",
     604: "账号已登录",
     707: "余额不足",
+    709: "代理佣金余额不足",
     800: "验证码失败",
     801: "验证码已失效",
     901: "代理记录不存在",
