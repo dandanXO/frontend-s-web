@@ -273,7 +273,21 @@
           />
         </template>
       </el-table-column>
-
+      <el-table-column
+        prop="companyWinLoss"
+        :label="t('fields.summaryCompanyWinLoss')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.companyWinLoss,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="profit"
         :label="t('fields.summaryProfit')"
