@@ -178,6 +178,7 @@ export default {
     totalDownlineAffiliate: "Total Downline Affiliate",
     totalDownlineMember: "Total Downline Member",
     totalPayout: "Total Payout",
+    totalTransfer: "Total Transfer",
     totalWithdraw: "Total Withdraw",
     transactionId: "Transaction ID",
     transfer: "Transfer",

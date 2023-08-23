@@ -178,6 +178,7 @@ export default {
     totalDownlineAffiliate: "总直属代理",
     totalDownlineMember: "总直属会员",
     totalPayout: "总派彩额",
+    totalTransfer: "总代存",
     totalWithdraw: "总提款",
     transactionId: "投注单号",
     transfer: "额度代存",
