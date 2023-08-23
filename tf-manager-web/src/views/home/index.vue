@@ -811,6 +811,9 @@ async function getDailySummaryList() {
   quickSummary.totalWinLossAmount = getDecimalValueWithComma(
     ret.siteDailySummaryTotalVO.totalWinLossAmount
   )
+  quickSummary.totalProfitAmount = getDecimalValueWithComma(
+    ret.siteDailySummaryTotalVO.totalProfitAmount
+  )
   quickSummary.totalValidBetAmount = getDecimalValueWithComma(
     ret.siteDailySummaryTotalVO.totalValidBetAmount
   )
@@ -973,6 +976,7 @@ function resetDisplayValues() {
   quickSummary.totalWithdrawAmount = 0.0
   quickSummary.totalBonusAmount = 0.0
   quickSummary.totalWinLossAmount = 0.0
+  quickSummary.totalProfitAmount = 0.0
   quickSummary.totalValidBetAmount = 0.0
   quickSummary.totalFtdAmount = 0.0
   quickSummary.totalDepositTransaction = 0
