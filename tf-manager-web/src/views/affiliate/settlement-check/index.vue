@@ -19,7 +19,18 @@
               :value="item.id"
             />
           </el-select>
-          <el-input v-model="request.affiliateName" size="small" style="width: 200px;" :placeholder="t('fields.loginName')" />
+          <el-date-picker
+            v-model="request.month"
+            format="MM/YYYY"
+            value-format="YYYY-MM"
+            size="small"
+            type="month"
+            style="width: 200px; margin-left: 10px"
+            :editable="false"
+            :clearable="false"
+            :disabled-date="disabledDate"
+            :placeholder="t('fields.month')"
+          />
           <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadSettlement()">
             {{ t('fields.search') }}
           </el-button>
@@ -63,129 +74,6 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog :title="uiControl1.dialogTitle" v-model="uiControl1.dialogVisible" append-to-body width="1200px">
-      <el-table
-        size="mini"
-        :resizable="true"
-        :data="page1.records"
-        row-key="id"
-        v-loading="page1.loading"
-        :empty-text="t('fields.noData')"
-      >
-        <el-table-column prop="loginName" :label="t('fields.affiliateInfo')" align="left" min-width="200">
-          <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-            <span style="display: inline-block">
-              {{ t('fields.account') }}:
-              <router-link :to="`/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`">
-                <el-link type="primary">{{ scope.row.loginName }}</el-link>
-              </router-link>
-              <div />
-              {{ t('fields.month') }}: {{ scope.row.recordTime }}
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.depositBettingAmount')" align="left" min-width="160">
-          <template #default="scope">
-            <div>{{ t('fields.deposit') }}: $
-              <span
-                v-formatter="{data: scope.row.depositAmount, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.bet') }}: $
-              <span
-                v-formatter="{data: scope.row.bet, type: 'money'}"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.withdrawPayoutBonus')" align="left" min-width="170">
-          <template #default="scope">
-            <div>
-              {{ t('fields.withdraw') }}: $
-              <span
-                v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.payout') }}: $
-              <span
-                v-formatter="{data: scope.row.payout, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.bonus') }}: $
-              <span
-                v-formatter="{data: scope.row.bonus, type: 'money'}"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.memberInfo')" align="left" min-width="150">
-          <template #default="scope">
-            <div>{{ t('fields.activePlayer') }}: {{ scope.row.activePlayer }}</div>
-            <div>{{ t('fields.ftd') }}: {{ scope.row.ftdMember }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.subtotal')" align="left" min-width="150">
-          <template #default="scope">
-            <div>
-              {{ t('fields.adjustment') }}: $
-              <span
-                v-formatter="{data: scope.row.adjustment, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.profit') }}: $
-              <span
-                v-formatter="{data: scope.row.memberProfit, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.downlineProfit') }}: $
-              <span
-                v-formatter="{data: scope.row.downlineProfit, type: 'money'}"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.commissionPercent')" align="left" min-width="140">
-          <template #default="scope">
-            <div>{{ t('fields.commissionRate') }}: {{ scope.row.memberCommissionRate * 100 }} %</div>
-            <div>{{ t('fields.downlineCommissionRate') }}: {{ scope.row.downlineCommissionRate * 100 }} %</div>
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.commission')" align="left" min-width="180">
-          <template #default="scope">
-            <div>
-              {{ t('fields.memberCommission') }}: $
-              <span
-                v-formatter="{data: scope.row.memberCommissionProfit, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.downlineCommission') }}: $
-              <span
-                v-formatter="{data: scope.row.downlineCommissionProfit, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.clearingSum') }}: $
-              <span
-                v-formatter="{data: scope.row.clearingSum, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.totalCommission') }}: $
-              <span
-                v-formatter="{data: scope.row.totalCommissionProfit, type: 'money'}"
-              />
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-dialog>
-
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
         size="mini"
@@ -195,20 +83,25 @@
         v-loading="page.loading"
         :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="month" :label="t('fields.recordTime')" align="left" min-width="120">
+        <el-table-column prop="month" :label="t('fields.month')" align="left" min-width="120">
           <template #default="scope">
-            {{ scope.row.recordTime }}
+            {{ convertDate(scope.row.recordTime) }}
           </template>
         </el-table-column>
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="left" min-width="120" />
-        <el-table-column prop="upperName" :label="t('fields.upperName')" align="left" min-width="120" />
-        <el-table-column :label="t('fields.totalCommissionProfit')" align="left" min-width="140">
+        <el-table-column :label="t('fields.totalCommission')" align="left" min-width="140">
           <template #default="scope">
             <div>$
               <span
                 v-formatter="{data: scope.row.totalCommissionProfit, type: 'money'}"
               />
             </div>
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.adjustBy')" align="left" min-width="120">
+          <template #default="scope">
+            <span v-if="scope.row.adjustBy === null">-</span>
+            <span v-else>{{ scope.row.adjustBy }}</span>
           </template>
         </el-table-column>
         <el-table-column :label="t('fields.adjustAmount')" align="left" min-width="140">
@@ -226,6 +119,12 @@
             <span v-else>{{ scope.row.adjustReason }}</span>
           </template>
         </el-table-column>
+        <el-table-column :label="t('fields.adjustTime')" align="left" min-width="150">
+          <template #default="scope">
+            <span v-if="scope.row.adjustTime === null">-</span>
+            <span v-else>{{ scope.row.adjustTime }}</span>
+          </template>
+        </el-table-column>
         <el-table-column :label="t('fields.finalSum')" align="left" min-width="140">
           <template #default="scope">
             <div>$
@@ -239,36 +138,36 @@
           :label="t('fields.operate')"
           align="center"
           fixed="right"
-          width="230"
+          width="350"
           v-if="!hasRole(['SUB_TENANT']) && (
-            hasPermission(['sys:affiliate:settle:view']) ||
-            hasPermission(['sys:affiliate:settle:pay']) ||
-            hasPermission(['sys:affiliate:settle:edit']))"
+            hasPermission(['sys:affiliate:settle:check-adjust']) ||
+            hasPermission(['sys:affiliate:settle:check-to-pay']) ||
+            hasPermission(['sys:affiliate:settle:check-remove']))"
         >
           <template #default="scope">
             <el-button
               size="mini"
               type="warning"
-              v-permission="['sys:affiliate:settle:view']"
-              @click="showView(scope.row)"
+              v-permission="['sys:affiliate:settle:check-adjust']"
+              @click="showDialog('ADJUST', scope.row)"
             >
-              {{ t('fields.settleView') }}
+              {{ t('fields.adjust') }}
             </el-button>
             <el-button
               size="mini"
               type="danger"
-              v-permission="['sys:affiliate:settle:pay']"
-              @click="confirmPay(scope.row)"
+              v-permission="['sys:affiliate:settle:check-remove']"
+              @click="removeSettlementCheck(scope.row)"
             >
-              {{ t('fields.settlePay') }}
+              {{ t('fields.remove') }}
             </el-button>
             <el-button
               size="mini"
               type="success"
-              v-permission="['sys:affiliate:settle:edit']"
-              @click="showEdit(scope.row)"
+              v-permission="['sys:affiliate:settle:check-to-pay']"
+              @click="toPay(scope.row)"
             >
-              {{ t('fields.settleEdit') }}
+              {{ t('fields.toPay') }}
             </el-button>
           </template>
         </el-table-column>
@@ -291,7 +190,8 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
 import { hasRole, hasPermission } from "../../../utils/util";
-import { adjustAmount, getAffiliateSettlementChecking, pay, getAffiliateCommisionReport } from '../../../api/affiliate-settlement';
+import moment from 'moment';
+import { adjustAmount, deleteSettlementChecking, getAffiliateSettlementChecking, updatetoPay } from '../../../api/affiliate-settlement';
 import { getSiteListSimple } from "../../../api/site";
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { required } from '../../../utils/validate';
@@ -310,24 +210,20 @@ const uiControl = reactive({
   dialogVisible: false,
   progressBarVisible: false,
   dialogTitle: "",
+  dialogType: "ADJUST",
   adjustType: [
     { key: 1, value: "ADD" },
     { key: 2, value: "DEDUCT" }
   ]
 });
-
-const uiControl1 = reactive({
-  dialogVisible: false,
-  progressBarVisible: false,
-  dialogTitle: "",
-});
 const site = ref(null);
+const defaultQueryMonth = convertDate(moment(new Date()).subtract(1, 'months'));
 
 const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
-  affiliateName: null
+  month: defaultQueryMonth
 });
 
 const form = reactive({
@@ -366,19 +262,20 @@ async function loadSites() {
   siteList.list = site;
 }
 
+function convertDate(date) {
+  return moment(date).format('YYYY-MM');
+}
+
+function disabledDate(time) {
+  return time.getTime() >= moment(new Date()).startOf('month').format('x');
+}
+
 function resetQuery() {
-  request.affiliateName = null;
+  request.month = defaultQueryMonth;
   request.siteId = site.value ? site.value.id : siteList.list[0].id;
 };
 
 const page = reactive({
-  pages: 0,
-  records: [],
-  total: 0,
-  loading: false
-});
-
-const page1 = reactive({
   pages: 0,
   records: [],
   total: 0,
@@ -396,14 +293,6 @@ function checkQuery() {
   return query;
 }
 
-async function loadCommisionReport(row) {
-  uiControl.dialogVisible = false;
-  page1.loading = true;
-  const { data: ret } = await getAffiliateCommisionReport(row.recordTime, row.affiliateId);
-  page1.records = ret;
-  page1.loading = false;
-};
-
 async function loadSettlement() {
   uiControl.dialogVisible = false;
   page.loading = true;
@@ -415,23 +304,34 @@ async function loadSettlement() {
   page.loading = false;
 };
 
-function showEdit(adjust) {
+function showDialog(type, adjust) {
   if (adjustForm.value) {
     adjustForm.value.resetFields();
   }
-  form.id = adjust.id;
-  uiControl.dialogTitle = t('fields.adjust');
+  if (type === "ADJUST") {
+    form.id = adjust.id;
+    uiControl.dialogTitle = t('fields.adjust');
+  }
+  uiControl.dialogType = type;
   uiControl.dialogVisible = true;
 }
 
-function showView(row) {
-  console.log(row);
-  uiControl1.dialogTitle = t('fields.affiliate') + ":   " + row.loginName + "  的" + t('fields.commissionReport');
-  uiControl1.dialogVisible = true;
-  loadCommisionReport(row);
+async function removeSettlementCheck(check) {
+  ElMessageBox.confirm(
+    t('message.confirmDelete'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    await deleteSettlementChecking(check.id);
+    await loadSettlement();
+    ElMessage({ message: t('message.deleteSuccess'), type: "success" });
+  });
 }
 
-async function confirmPay(check) {
+async function toPay(check) {
   ElMessageBox.confirm(
     t('message.confirmToPay'),
     {
@@ -440,9 +340,9 @@ async function confirmPay(check) {
       type: "warning"
     }
   ).then(async () => {
-    await pay(check.id);
+    await updatetoPay(check.id);
     await loadSettlement();
-    ElMessage({ message: t('message.commissionPaySuccess'), type: "success" });
+    ElMessage({ message: t('message.settlementToPay'), type: "success" });
   });
 }
 
