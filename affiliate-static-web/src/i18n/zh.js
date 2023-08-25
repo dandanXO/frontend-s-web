@@ -41,6 +41,10 @@ export default {
     SETTLED: "已结算",
     CANCEL: "已取消"
   },
+  transferType: {
+    DEPOSIT: "额度代存",
+    COMMISSION: "佣金代存"
+  },
   fields: {
     account: "账号",
     accountInfo: "账号信息",
@@ -82,7 +86,9 @@ export default {
     cardNumber: "银行卡号码",
     changeWithdrawPw: "更改支付密码",
     commission: "佣金",
+    commissionBalance: "佣金余额",
     commissionRate: "佣金比率",
+    commissionTransfer: "佣金代存",
     companyProfit: "公司利润",
     confirm: "确认",
     confirmNewPassword: "确认新密码",
@@ -172,6 +178,7 @@ export default {
     totalDownlineAffiliate: "总直属代理",
     totalDownlineMember: "总直属会员",
     totalPayout: "总派彩额",
+    totalTransfer: "总代存",
     totalWithdraw: "总提款",
     transactionId: "投注单号",
     transfer: "额度代存",
@@ -180,6 +187,7 @@ export default {
     transferIn: "转入",
     transferOut: "转出",
     transferRecord: "代存记录",
+    transferType: "代存类型",
     usdtWallet: "钱包账号",
     usdtWalletAddress: "钱包地址",
     viewDetails: "查看详情",
@@ -247,6 +255,7 @@ export default {
     validateBankCardNumber: "银行卡号只能包含数字",
     validateCommission: "佣金必须介于 0 至 1 之间",
     validateNumberOnly: '请只输入数字',
+    validateNumberMoreThanOne: '请输入大于 1 的整数',
     validateRevenueShare: "收入必须介于 0 至 1 之间",
     validateUsdtWallet: "虚拟钱包账号只能包含数字及英文字母",
     withdrawalToday: "今日提款"
@@ -285,6 +294,7 @@ export default {
     603: "无法找到令牌",
     604: "账号已登录",
     707: "余额不足",
+    709: "代理佣金余额不足",
     800: "验证码失败",
     801: "验证码已失效",
     901: "代理记录不存在",

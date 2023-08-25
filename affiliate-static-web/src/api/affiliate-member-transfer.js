@@ -8,3 +8,7 @@ export const transferToMember = (id, transfer) => {
 export const getTransferRecords = (id, query) => {
   return https().request(`/transfer/${id}`, Method.GET, query, ContentType.form);
 };
+
+export const getTotal = (id, query) => {
+  return https().request(`/transfer/${id}/total`, Method.GET, query, ContentType.form);
+};

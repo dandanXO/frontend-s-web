@@ -10,6 +10,9 @@
         <el-tab-pane :label="t('fields.transfer')" name="transfer">
           <TransferTab />
         </el-tab-pane>
+        <el-tab-pane :label="t('fields.commissionTransfer')" name="commission-transfer">
+          <CommissionTransferTab />
+        </el-tab-pane>
         <el-tab-pane :label="t('fields.transferRecord')" name="transfer-record">
           <TransferRecordTab />
         </el-tab-pane>
@@ -21,6 +24,7 @@
 <script setup>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import CommissionTransferTab from "./tab/commission-transfer.vue";
 import TransferTab from "./tab/transfer.vue";
 import TransferRecordTab from "./tab/transfer-record.vue";
 
