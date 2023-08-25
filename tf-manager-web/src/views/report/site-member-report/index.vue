@@ -214,7 +214,7 @@
           $
           <span
             v-formatter="{
-              data: scope1.row.profit,
+              data: scope1.row.firstDeposit,
               type: 'money',
             }"
           />
@@ -283,7 +283,7 @@ const totalPage = reactive({
 })
 
 const request = reactive({
-  size: 30,
+  size: 20,
   current: 1,
   siteId: null,
   loginName: null,
