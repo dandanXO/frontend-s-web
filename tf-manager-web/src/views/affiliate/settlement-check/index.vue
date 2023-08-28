@@ -149,12 +149,12 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="t('fields.commissionPercent')" align="left" min-width="140">
+        <!-- <el-table-column :label="t('fields.commissionPercent')" align="left" min-width="140">
           <template #default="scope">
             <div>{{ t('fields.commissionRate') }}: {{ scope.row.memberCommissionRate * 100 }} %</div>
             <div>{{ t('fields.downlineCommissionRate') }}: {{ scope.row.downlineCommissionRate * 100 }} %</div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column :label="t('fields.commission')" align="left" min-width="180">
           <template #default="scope">
             <div>
@@ -169,12 +169,12 @@
                 v-formatter="{data: scope.row.downlineCommissionProfit, type: 'money'}"
               />
             </div>
-            <div>
+            <!-- <div>
               {{ t('fields.clearingSum') }}: $
               <span
                 v-formatter="{data: scope.row.clearingSum, type: 'money'}"
               />
-            </div>
+            </div> -->
             <div>
               {{ t('fields.totalCommission') }}: $
               <span
@@ -226,7 +226,7 @@
             <span v-else>{{ scope.row.adjustReason }}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="t('fields.finalSum')" align="left" min-width="140">
+        <!-- <el-table-column :label="t('fields.finalSum')" align="left" min-width="140">
           <template #default="scope">
             <div>$
               <span
@@ -234,7 +234,7 @@
               />
             </div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           :label="t('fields.operate')"
           align="center"
