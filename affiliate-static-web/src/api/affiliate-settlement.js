@@ -14,5 +14,5 @@ export const adjustAmount = (id, adjust) => {
 };
 
 export const pay = (id, memberId, siteId) => {
-  return https().request(`/affiliateSettlement/${id}/pay?_method=PUT&memberId=`+memberId + '&siteId=' + siteId, Method.POST, {}, ContentType.form);
+  return https().request(`/affiliateSettlement/${id}/pay?_method=PUT&memberId=` + memberId + '&siteId=' + siteId, Method.POST, {}, ContentType.form);
 };
