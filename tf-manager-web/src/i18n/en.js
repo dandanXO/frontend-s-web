@@ -1299,7 +1299,7 @@ export default {
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',
     'Affiliate Monthly Settlement Detail': 'Affiliate Monthly Settlement Detail',
-    'Affiliate Settlement Checking': 'Affiliate Settlement Checking',
+    'Affiliate Settlement Checking': 'Affiliate Settlement',
     'Affiliate Settlement Payment': 'Affiliate Settlement Payment',
     'Affiliate Domain Management': 'Affiliate Domain Management',
     'Affiliate List': 'Affiliate List',

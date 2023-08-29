@@ -1282,7 +1282,7 @@ export default {
     'Affiliate Summary': '代理总结',
     'Affiliate Monthly Settlement': '代理结算记录',
     'Affiliate Monthly Settlement Detail': '代理结算信息',
-    'Affiliate Settlement Checking': '代理待审核记录',
+    'Affiliate Settlement Checking': '代理审核发放',
     'Affiliate Settlement Payment': '代理待结算记录',
     'Affiliate Domain Management': '代理域名管理',
     'Affiliate List': '代理列表',
