@@ -102,7 +102,7 @@
           prop="loginName"
           :label="t('fields.affiliateInfo')"
           align="left"
-          min-width="200"
+          min-width="100"
         >
           <template
             #default="scope"
@@ -116,6 +116,19 @@
               >
                 <el-link type="primary">{{ scope.row.loginName }}</el-link>
               </router-link>
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="recordTime"
+          :label="t('fields.recordTime')"
+          align="left"
+          min-width="150"
+        >
+          <template
+            #default="scope"
+          >
+            <span style="display: inline-block">
               <div />
               {{ t('fields.month') }}: {{ scope.row.recordTime }}
             </span>
@@ -159,6 +172,10 @@
               {{ t('fields.bonus') }}: $
               <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
             </div>
+            <div>
+              {{ t('fields.adjust') }}: $
+              <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
+            </div>
           </template>
         </el-table-column>
         <el-table-column
@@ -174,19 +191,13 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="t('fields.subtotal')"
+          :label="t('fields.memberProfitDownlineProfitUnsettleCommission')"
           align="left"
           min-width="150"
         >
           <template #default="scope">
             <div>
-              {{ t('fields.adjustment') }}: $
-              <span
-                v-formatter="{data: scope.row.adjustment, type: 'money'}"
-              />
-            </div>
-            <div>
-              {{ t('fields.profit') }}: $
+              {{ t('fields.memberProfit') }}: $
               <span
                 v-formatter="{data: scope.row.memberProfit, type: 'money'}"
               />
@@ -197,61 +208,10 @@
                 v-formatter="{data: scope.row.downlineProfit, type: 'money'}"
               />
             </div>
-          </template>
-        </el-table-column>
-        <!-- <el-table-column
-          :label="t('fields.commissionPercent')"
-          align="left"
-          min-width="140"
-        >
-          <template #default="scope">
             <div>
-              {{ t('fields.commissionRate') }}:
-              {{ scope.row.memberCommissionRate * 100 }} %
-            </div>
-            <div>
-              {{ t('fields.downlineCommissionRate') }}:
-              {{ scope.row.downlineCommissionRate * 100 }} %
-            </div>
-          </template>
-        </el-table-column> -->
-        <el-table-column
-          :label="t('fields.commission')"
-          align="left"
-          min-width="180"
-        >
-          <template #default="scope">
-            <div>
-              {{ t('fields.memberCommission') }}: $
+              {{ t('fields.unsettleCommission') }}: $
               <span
-                v-formatter="{
-                  data: scope.row.memberCommissionProfit,
-                  type: 'money',
-                }"
-              />
-            </div>
-            <div>
-              {{ t('fields.downlineCommission') }}: $
-              <span
-                v-formatter="{
-                  data: scope.row.downlineCommissionProfit,
-                  type: 'money',
-                }"
-              />
-            </div>
-            <!-- <div>
-              {{ t('fields.clearingSum') }}: $
-              <span
-                v-formatter="{ data: scope.row.clearingSum, type: 'money' }"
-              />
-            </div> -->
-            <div>
-              {{ t('fields.totalCommission') }}: $
-              <span
-                v-formatter="{
-                  data: scope.row.totalCommissionProfit,
-                  type: 'money',
-                }"
+                v-formatter="{ data: scope.row.unsettleCommission, type: 'money' }"
               />
             </div>
           </template>
@@ -307,6 +267,12 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column
+          prop="commissionRate"
+          :label="t('fields.commissionRate')"
+          align="left"
+          min-width="140"
+        />
         <el-table-column
           :label="t('fields.adjustment')"
           align="left"
