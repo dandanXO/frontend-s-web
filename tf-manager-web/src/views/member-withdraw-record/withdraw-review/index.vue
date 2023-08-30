@@ -169,151 +169,6 @@
     </div>
 
     <el-table
-      :data="totalwithdraw.records"
-      ref="table"
-      v-loading="page.loading"
-      height="120"
-      border
-      :header-cell-style="{background: 'lightgray'}"
-      :empty-text="t('fields.noData')"
-    >
-      <el-table-column prop="deposit" :label="t('fields.totalDeposit')" width="120">
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.deposit,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="depositCount"
-        :label="t('fields.totalDepositCount')"
-        width="120"
-      />
-      <el-table-column
-        prop="withdraw"
-        :label="t('fields.totalWithdraw')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.withdraw,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="withdrawCount"
-        :label="t('fields.totalWithdrawCount')"
-        width="130"
-      />
-      <el-table-column
-        prop="totalBet"
-        :label="t('fields.totalBet')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.totalBet,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="totalPayout"
-        :label="t('fields.totalPayout')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.totalPayout,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="transferIn"
-        :label="t('fields.totalTransferIn')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.transferIn,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="transferOut"
-        :label="t('fields.totalTransferOut')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.transferOut,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="promo" :label="t('fields.totalPromo')" width="120">
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.promo,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="adjustment"
-        :label="t('fields.totalAdjustment')"
-        width="120"
-      >
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.adjustment,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="profit" :label="t('fields.totalProfit')" width="120">
-        <template #default="scope1">
-          $
-          <span
-            v-formatter="{
-              data: scope1.row.profit,
-              type: 'money',
-            }"
-          />
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <el-table
       :data="page.records"
       ref="table"
       row-key="id"
@@ -323,6 +178,8 @@
       height="500"
       :header-cell-style="{background: 'lightgray'}"
       :empty-text="t('fields.noData')"
+      :summary-method="getSummaries"
+      show-summary
     >
       <el-table-column
         prop="member"
@@ -330,11 +187,10 @@
         align="center"
         min-width="100"
       >
-        <template
-          #default="scope"
-          v-if="hasPermission(['sys:member:detail'])"
-        >
-          <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
+        <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
+          <router-link
+            :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`"
+          >
             <el-link type="primary">{{ scope.row.member }}</el-link>
           </router-link>
         </template>
@@ -591,7 +447,11 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getMemberReport, addReview, getTotalWithdrawReview } from '../../../api/report-summary'
+import {
+  getMemberReport,
+  addReview,
+  getTotalWithdrawReview,
+} from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -599,13 +459,17 @@ import * as XLSX from 'xlsx'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getVipList } from '../../../api/vip'
-import { getFinancialLevels } from '../../../api/financial-level';
-import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { getFinancialLevels } from '../../../api/financial-level'
+import {
+  convertDateToEnd,
+  convertDateToStart,
+  getShortcuts,
+} from '@/utils/datetime'
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
-const defaultStartDate = convertDateToStart(startDate);
-const defaultEndDate = convertDateToEnd(new Date());
+const defaultStartDate = convertDateToStart(startDate)
+const defaultEndDate = convertDateToEnd(new Date())
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
@@ -659,7 +523,7 @@ const page = reactive({
   records: [],
   loading: false,
 })
-const totalwithdraw = reactive({
+const page1 = reactive({
   pages: 0,
   records: [],
 })
@@ -715,8 +579,8 @@ const EXPORT_HEADER = [
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
-];
-const shortcuts = getShortcuts(t);
+]
+const shortcuts = getShortcuts(t)
 function disabledDate(time) {
   return (
     time.getTime() <
@@ -777,7 +641,7 @@ async function loadMemberRecord() {
     page.records = ret.records
 
     const { data: ret1 } = await getTotalWithdrawReview(query)
-    totalwithdraw.records = ret1
+    page1.records = ret1
 
     page.loading = false
   }
@@ -813,6 +677,112 @@ async function loadFinancialLevelList() {
 function changePage(page) {
   request.current = page
   loadMemberRecord()
+}
+
+function getSummaries(param) {
+  if (hasPermission(['sys:report:deposit:report:summary'])) {
+    const { columns } = param
+    var sums = []
+    const requestCopy = { ...request }
+    const query = {}
+    Object.entries(requestCopy).forEach(([key, value]) => {
+      if (value) {
+        query[key] = value
+      }
+    })
+    if (request.recordTime !== null) {
+      if (request.recordTime.length === 2) {
+        query.recordTime = request.recordTime.join(',')
+      }
+    }
+
+    if (page1.records.length > 0) {
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = t('fields.total')
+        }
+
+        if (column.property === 'deposit') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].deposit).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'depositCount') {
+          sums[index] = page1.records[0].depositCount
+        } else if (column.property === 'withdraw') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].withdraw).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'withdrawCount') {
+          sums[index] = page1.records[0].withdrawCount
+        } else if (column.property === 'companyProfit') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].companyProfit).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'totalBet') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].totalBet).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'totalPayout') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].totalPayout).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'transferIn') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].transferIn).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'transferOut') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].transferOut).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'promo') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].promo).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'adjustment') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].adjustment).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (column.property === 'profit') {
+          sums[index] =
+            '$' +
+            parseFloat(page1.records[0].profit).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        }
+      })
+    }
+    return sums
+  } else {
+    return '-'
+  }
 }
 
 onMounted(async () => {
