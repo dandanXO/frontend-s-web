@@ -8,6 +8,7 @@ const Keys = {
   id: 'member',
   siteId: 'site',
   siteCode: 'siteCode',
+  affiliateLevel: 'affiliateLevel',
   name: 'name',
   realName: 'realName'
 }
@@ -37,3 +38,7 @@ export const removeSiteId = () => Cookies.remove(Keys.siteId)
 export const getSiteCode = () => Cookies.get(Keys.siteCode)
 export const setSiteCode = (siteCode) => Cookies.set(Keys.siteCode, siteCode, { secure: true })
 export const removeSiteCode = () => Cookies.remove(Keys.siteCode)
+
+export const getAffiliateLevel = () => Cookies.get(Keys.affiliateLevel)
+export const setAffiliateLevel = (affiliateLevel) => Cookies.set(Keys.affiliateLevel, affiliateLevel, { secure: true })
+export const removeAffiliateLevel = () => Cookies.remove(Keys.affiliateLevel)

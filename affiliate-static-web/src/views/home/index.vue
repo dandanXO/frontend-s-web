@@ -1,368 +1,244 @@
 <template>
   <div class="roles-main">
-    <el-card style="margin-top: 20px;" v-loading="uiControl.loading">
-      <el-row>
-        <el-date-picker
-          v-model="request.recordTime"
-          format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
-          size="small"
-          class="input-small"
-          type="daterange"
-          range-separator=":"
-          :start-placeholder="t('fields.startDate')"
-          :end-placeholder="t('fields.endDate')"
-          :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
-          :editable="false"
-          :clearable="false"
-          @change="loadSummary"
-        />
+    <el-card style="margin-top: 20px;" v-loading="uiControl.commissionLoading">
+      <template #header>
+        <div class="clearfix">
+          <span class="role-span">{{ $t('fields.monthlyAffiliateCommission') }}</span>
+        </div>
+      </template>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-card>
+            <template #header>
+              <div class="clearfix">
+                <span class="role-span">{{ $t('fields.estimatedAffiliateCommission') }}</span>
+              </div>
+            </template>
+            <el-row :class="'row-data-' + index" v-for="(item, index) in commissionSummary" :key="item.id">
+              <el-col :span="16">{{ t('fields.' + item.time) }}</el-col>
+              <el-col :span="8">$ <span v-formatter="{data: item.estimatedCommission,type: 'money'}" /></el-col>
+            </el-row>
+          </el-card>
+        </el-col>
+        <el-col :span="8" v-if="affiliateLevel === 'MASTER_AFFILIATE' || affiliateLevel === 'SUPER_AFFILIATE'">
+          <el-card>
+            <template #header>
+              <div class="clearfix">
+                <span v-if="affiliateLevel === 'MASTER_AFFILIATE'" class="role-span">{{ $t('fields.secondLevelAffiliateCommission') }}</span>
+                <span v-else-if="affiliateLevel === 'SUPER_AFFILIATE'" class="role-span">{{ $t('fields.thirdLevelAffiliateCommission') }}</span>
+              </div>
+            </template>
+            <el-row :class="'row-data-' + index" v-for="(item, index) in commissionSummary" :key="item.id">
+              <el-col :span="16">{{ t('fields.' + item.time) }}</el-col>
+              <el-col :span="8">$ <span v-formatter="{data: item.secondLevelCommission,type: 'money'}" /></el-col>
+            </el-row>
+          </el-card>
+        </el-col>
+        <el-col :span="8" v-if="affiliateLevel === 'MASTER_AFFILIATE'">
+          <el-card>
+            <template #header>
+              <div class="clearfix">
+                <span class="role-span">{{ $t('fields.thirdLevelAffiliateCommission') }}</span>
+              </div>
+            </template>
+            <el-row :class="'row-data-' + index" v-for="(item, index) in commissionSummary" :key="item.id">
+              <el-col :span="16">{{ t('fields.' + item.time) }}</el-col>
+              <el-col :span="8">$ <span v-formatter="{data: item.thirdLevelCommission,type: 'money'}" /></el-col>
+            </el-row>
+          </el-card>
+        </el-col>
       </el-row>
-      <el-row class="summary">
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#1ed6ba">
-            <Icon :icon="money20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.bet') }}</div>
-            <span class="card-panel-num">
-              $ <span v-formatter="{data: summary[0].bet,type: 'money'}" />
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#1fa8db">
-            <Icon :icon="receiptMoney20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.winLoss') }}</div>
-            <span class="card-panel-num">
-              $ <span v-formatter="{data: summary[0].win,type: 'money'}" />
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#db1f55">
-            <Icon :icon="moneyCalculator20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.profit') }}</div>
-            <span class="card-panel-num">
-              $ <span v-formatter="{data: summary[0].profit,type: 'money'}" />
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="purple">
-            <Icon :icon="peopleAdd20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.newUsers') }}</div>
-            <span class="card-panel-num">
-              {{ summary[0].registerMemberCount }}
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#1ed6ba">
-            <Icon :icon="peopleCheckmark20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.activeUsers') }}</div>
-            <span class="card-panel-num">
-              {{ summary[0].activeMemberCount }}
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#1fa8db">
-            <Icon :icon="money20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.deposit') }}</div>
-            <span class="card-panel-num">
-              $ <span v-formatter="{data: summary[0].depositAmount,type: 'money'}" />
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#db1f55">
-            <Icon :icon="moneyHand20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.withdraw') }}</div>
-            <span class="card-panel-num">
-              $ <span v-formatter="{data: summary[0].withdrawAmount,type: 'money'}" />
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="purple">
-            <Icon :icon="giftCardMoney20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.bonus') }}</div>
-            <span class="card-panel-num">
-              $ <span v-formatter="{data: summary[0].bonus,type: 'money'}" />
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#1ed6ba">
-            <Icon :icon="peopleMoney20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.firstDepositUsers') }}</div>
-            <span class="card-panel-num">
-              {{ summary[0].ftdMemberCount }}
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#1fa8db">
-            <Icon :icon="personMoney20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.amountOfFirstDeposit') }}</div>
-            <span class="card-panel-num">
-              $ <span v-formatter="{data: summary[0].ftdAmount,type: 'money'}" />
-            </span>
-          </div>
-        </el-card>
-        <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
-          :xs="12"
-          :sm="12"
-          :lg="6"
-          class="box-card"
-        >
-          <el-icon color="#db1f55">
-            <Icon :icon="peopleTeam20Filled" class="stats-icon" />
-          </el-icon>
-          <div class="card-panel-description">
-            <div class="card-panel-text">{{ t('fields.visitsNo') }}</div>
-            <span class="card-panel-num">
-              {{ summary[0].visitsNo }}
-            </span>
-          </div>
-        </el-card>
+    </el-card>
+    <el-card style="margin-top: 20px;" v-loading="uiControl.opsLoading">
+      <template #header>
+        <div class="clearfix">
+          <span class="role-span">{{ $t('fields.operationalData') }}</span>
+        </div>
+      </template>
+      <el-row style="float: right; margin-bottom: 20px;">
+        <el-radio-group v-model="request.queryDate" size="small" @change="loadOpsSummary">
+          <el-radio-button label="today">{{ t('fields.today') }}</el-radio-button>
+          <el-radio-button label="thisMonth">{{ t('fields.thisMonth') }}</el-radio-button>
+        </el-radio-group>
+      </el-row>
+      <el-row class="ops-row-header">
+        <el-col :span="4" />
+        <el-col :span="4">{{ t('fields.newUsers') }}</el-col>
+        <el-col :span="4">{{ t('fields.betMembers') }}</el-col>
+        <el-col :span="4">{{ t('fields.firstDepositUsers') }}</el-col>
+        <el-col :span="4">{{ t('fields.depositUsers') }}</el-col>
+        <el-col :span="4">{{ t('fields.transferUsers') }}</el-col>
+      </el-row>
+      <el-row :class="'ops-row-data-' + index" v-for="(item, index) in summary" :key="item.id">
+        <el-col :span="4">{{ t('fields.' + item.time) }}</el-col>
+        <el-col :span="4">{{ item.registerMemberCount }}</el-col>
+        <el-col :span="4">{{ item.betMemberCount }}</el-col>
+        <el-col :span="4">{{ item.ftdMemberCount }}</el-col>
+        <el-col :span="4">{{ item.depositMemberCount }}</el-col>
+        <el-col :span="4">{{ item.affiliateTransferMemberCount }}</el-col>
+      </el-row>
+      <el-divider />
+      <el-row class="ops-row-header">
+        <el-col :span="4" />
+        <el-col :span="4">{{ t('fields.profit') }}</el-col>
+        <el-col :span="4">{{ t('fields.bet') }}</el-col>
+        <el-col :span="4">{{ t('fields.amountOfFirstDeposit') }}</el-col>
+        <el-col :span="4">{{ t('fields.depositAmount') }}</el-col>
+        <el-col :span="4">{{ t('fields.transferAmount') }}</el-col>
+      </el-row>
+      <el-row :class="'ops-row-data-' + index" v-for="(item, index) in summary" :key="item.id">
+        <el-col :span="4">{{ t('fields.' + item.time) }}</el-col>
+        <el-col :span="4">$ <span v-formatter="{data: item.profit,type: 'money'}" /></el-col>
+        <el-col :span="4">$ <span v-formatter="{data: item.bet,type: 'money'}" /></el-col>
+        <el-col :span="4">$ <span v-formatter="{data: item.ftdAmount,type: 'money'}" /></el-col>
+        <el-col :span="4">$ <span v-formatter="{data: item.depositAmount,type: 'money'}" /></el-col>
+        <el-col :span="4">$ <span v-formatter="{data: item.affiliateTransferAmount,type: 'money'}" /></el-col>
       </el-row>
     </el-card>
   </div>
 </template>
 
 <script setup>
-import { Icon } from '@iconify/vue'
-import money20Filled from '@iconify-icons/fluent/money-20-filled'
-import receiptMoney20Filled from '@iconify-icons/fluent/receipt-money-20-filled'
-import moneyCalculator20Filled from '@iconify-icons/fluent/money-calculator-20-filled'
-import peopleAdd20Filled from '@iconify-icons/fluent/people-add-20-filled'
-import peopleCheckmark20Filled from '@iconify-icons/fluent/people-checkmark-20-filled'
-import moneyHand20Filled from '@iconify-icons/fluent/money-hand-20-filled'
-import giftCardMoney20Filled from '@iconify-icons/fluent/gift-card-money-20-filled'
-import peopleMoney20Filled from '@iconify-icons/fluent/people-money-20-filled'
-import personMoney20Filled from '@iconify-icons/fluent/person-money-20-filled'
-import peopleTeam20Filled from '@iconify-icons/fluent/people-team-20-filled'
 import { useStore } from "@/store";
-import { onMounted, reactive } from '@vue/runtime-core'
+import { onMounted, reactive, ref } from '@vue/runtime-core'
 import moment from 'moment'
-import { dashboardSummary } from '../../api/affiliate-summary'
+import { dashboardSummary, getMonthCommission, getLastMonthCommission } from '../../api/affiliate-summary'
 import { useI18n } from "vue-i18n";
 const store = useStore();
 // eslint-disable-next-line
 const { t } = useI18n();
 const uiControl = reactive({
-  loading: false,
+  commissionLoading: false,
+  opsLoading: false
 });
-
-const currentDate = convertDate(new Date());
+const affiliateLevel = ref(null);
 
 const request = reactive({
-  recordTime: [currentDate, currentDate]
+  queryDate: 'today'
 });
 
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('month').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-      return [start, end];
-    }
-  }
-];
+const commissionSummary = reactive([{
+  time: 'thisMonth',
+  estimatedCommission: 0,
+  secondLevelCommission: 0,
+  thirdLevelCommission: 0
+}]);
+
+const summary = reactive([{
+  time: 'today',
+  id: 0,
+  registerMemberCount: 0,
+  betMemberCount: 0,
+  ftdMemberCount: 0,
+  depositMemberCount: 0,
+  affiliateTransferMemberCount: 0,
+  profit: 0,
+  bet: 0,
+  ftdAmount: 0,
+  depositAmount: 0,
+  affiliateTransferAmount: 0
+}]);
+
+async function resetSummary() {
+  summary.splice(0);
+}
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
 }
 
-function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(1, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
-}
+async function loadCommissionSummary() {
+  uiControl.commissionLoading = true;
+  commissionSummary.splice(0);
 
-const summary = reactive([{
-  id: 0,
-  affiliateId: 0,
-  loginName: null,
-  depositAmount: 0,
-  withdrawAmount: 0,
-  bet: 0,
-  win: 0,
-  payout: 0,
-  ftdMemberCount: 0,
-  activeMemberCount: 0,
-  registerMemberCount: 0,
-  ftdAmount: 0,
-  profit: 0,
-  visitsNo: 0,
-  bonus: 0
-}]);
+  const query = checkQuery('thisMonth');
+  const { data: ret } = await getMonthCommission(store.state.user.id, query);
+  const { data: subRet } = await getLastMonthCommission(store.state.user.id, store.state.user.siteId);
 
-async function resetSummary() {
-  summary[0].depositAmount = 0;
-  summary[0].withdrawAmount = 0;
-  summary[0].bet = 0;
-  summary[0].win = 0;
-  summary[0].payout = 0;
-  summary[0].ftdMemberCount = 0;
-  summary[0].activeMemberCount = 0;
-  summary[0].registerMemberCount = 0;
-  summary[0].ftdAmount = 0;
-  summary[0].profit = 0;
-  summary[0].visitsNo = 0;
-  summary[0].bonus = 0;
-}
-
-async function loadSummary() {
-  uiControl.loading = true;
-  const query = {};
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(",");
-    }
-  }
-  query.siteId = store.state.user.siteId;
-  const { data: ret } = await dashboardSummary(store.state.user.id, query);
-  await resetSummary();
+  const summaryField = {};
+  const subSummaryField = {};
   Object.keys({ ...ret }).forEach(field => {
-    if (ret[field]) {
-      summary[0][field] = ret[field];
+    if (ret[field] || ret[field] === 0) {
+      summaryField[field] = ret[field];
     }
   });
-  uiControl.loading = false;
+  Object.keys({ ...subRet }).forEach(field => {
+    if (subRet[field] || subRet[field] === 0) {
+      subSummaryField[field] = subRet[field];
+    }
+  });
+  summaryField.time = 'thisMonth';
+  subSummaryField.time = 'lastMonth';
+  commissionSummary.push(summaryField);
+  commissionSummary.push(subSummaryField);
+  uiControl.commissionLoading = false;
+}
+
+async function loadOpsSummary() {
+  uiControl.opsLoading = true;
+  let query = {};
+  let subQuery = {};
+  if (request.queryDate === 'today') {
+    query = checkQuery('today');
+    subQuery = checkQuery('yesterday');
+  } else {
+    query = checkQuery('thisMonth');
+    subQuery = checkQuery('lastMonth');
+  }
+  const { data: ret } = await dashboardSummary(store.state.user.id, query);
+  const { data: subRet } = await dashboardSummary(store.state.user.id, subQuery);
+  await resetSummary();
+  const summaryField = {};
+  const subSummaryField = {};
+  Object.keys({ ...ret }).forEach(field => {
+    if (ret[field] || ret[field] === 0) {
+      summaryField[field] = ret[field];
+    }
+  });
+  Object.keys({ ...subRet }).forEach(field => {
+    if (subRet[field] || subRet[field] === 0) {
+      subSummaryField[field] = subRet[field];
+    }
+  });
+  if (request.queryDate === 'today') {
+    summaryField.time = 'today';
+    subSummaryField.time = 'yesterday';
+  } else {
+    summaryField.time = 'thisMonth';
+    subSummaryField.time = 'lastMonth';
+  }
+  summary.push(summaryField);
+  summary.push(subSummaryField);
+  uiControl.opsLoading = false;
+}
+
+function checkQuery(dateType) {
+  const query = {};
+  query.siteId = store.state.user.siteId;
+  const end = new Date();
+  const start = new Date();
+  if (dateType === 'today') {
+    query.recordTime = [convertDate(start), convertDate(end)].join(",");
+  } else if (dateType === 'yesterday') {
+    start.setTime(moment(start).subtract(1, 'days').format('x'));
+    end.setTime(moment(end).subtract(1, 'days').format('x'));
+    query.recordTime = [convertDate(start), convertDate(end)].join(",");
+  } else if (dateType === 'thisMonth') {
+    start.setTime(moment(start).startOf('month').format('x'));
+    query.recordTime = [convertDate(start), convertDate(end)].join(",");
+  } else if (dateType === 'lastMonth') {
+    start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
+    end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
+    query.recordTime = [convertDate(start), convertDate(end)].join(",");
+  }
+  return query;
 }
 
 onMounted(() => {
-  loadSummary();
+  loadCommissionSummary()
+  loadOpsSummary();
+  affiliateLevel.value = store.state.user.affiliateLevel;
+  console.log(store.state.user.affiliateLevel)
 })
 </script>
 
@@ -379,14 +255,6 @@ onMounted(() => {
 .summary .box-card {
   flex: 1;
   flex-wrap: wrap;
-}
-
-.referral-link {
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  margin-top: 10px;
 }
 
 .box-card i {
@@ -425,14 +293,41 @@ onMounted(() => {
   float: right;
 }
 
-.btn-group {
-  margin-top: 15px;
-  display: flex;
+.row-data-0 {
+  width: 100%;
+  font-weight: bold;
 }
 
-.dialog-footer {
-  display: flex;
-  justify-content: flex-end;
+.row-data-1 {
+  width: 100%;
+  font-weight: bold;
+  color: var(--el-text-color-regular);
+}
+
+.ops-row-header {
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  line-height: 40px;
+}
+
+.ops-row-data-0 {
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: bold;
+}
+
+.ops-row-data-1 {
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: bold;
+  color: var(--el-text-color-regular);
+}
+
+.role-span {
+  font-weight: bold;
 }
 
 @media (max-width: 1200px) {
