@@ -221,7 +221,8 @@ const form = reactive({
   memberName: null,
   serialNumber: null,
   status: null,
-  remark: null
+  remark: null,
+  date: null
 });
 
 const formRules = reactive({
@@ -315,6 +316,9 @@ function showValidate(transfer) {
 function validate() {
   transferForm.value.validate(async (valid) => {
     if (valid) {
+      if (request.times && request.times.length === 2) {
+        form.date = request.times.join(',')
+      }
       await update(form);
       uiControl.dialogLoading = false;
       uiControl.dialogVisible = false;
