@@ -680,109 +680,105 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:deposit:report:summary'])) {
-    const { columns } = param
-    var sums = []
-    const requestCopy = { ...request }
-    const query = {}
-    Object.entries(requestCopy).forEach(([key, value]) => {
-      if (value) {
-        query[key] = value
+  const { columns } = param
+  var sums = []
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+
+  if (page1.records.length > 0) {
+    columns.forEach((column, index) => {
+      if (index === 0) {
+        sums[index] = t('fields.total')
+      }
+
+      if (column.property === 'deposit') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].deposit).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'depositCount') {
+        sums[index] = page1.records[0].depositCount
+      } else if (column.property === 'withdraw') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].withdraw).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'withdrawCount') {
+        sums[index] = page1.records[0].withdrawCount
+      } else if (column.property === 'companyProfit') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].companyProfit).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'totalBet') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].totalBet).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'totalPayout') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].totalPayout).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'transferIn') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].transferIn).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'transferOut') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].transferOut).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'promo') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].promo).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'adjustment') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].adjustment).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      } else if (column.property === 'profit') {
+        sums[index] =
+          '$' +
+          parseFloat(page1.records[0].profit).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
       }
     })
-    if (request.recordTime !== null) {
-      if (request.recordTime.length === 2) {
-        query.recordTime = request.recordTime.join(',')
-      }
-    }
-
-    if (page1.records.length > 0) {
-      columns.forEach((column, index) => {
-        if (index === 0) {
-          sums[index] = t('fields.total')
-        }
-
-        if (column.property === 'deposit') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].deposit).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'depositCount') {
-          sums[index] = page1.records[0].depositCount
-        } else if (column.property === 'withdraw') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].withdraw).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'withdrawCount') {
-          sums[index] = page1.records[0].withdrawCount
-        } else if (column.property === 'companyProfit') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].companyProfit).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'totalBet') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].totalBet).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'totalPayout') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].totalPayout).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'transferIn') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].transferIn).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'transferOut') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].transferOut).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'promo') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].promo).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'adjustment') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].adjustment).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (column.property === 'profit') {
-          sums[index] =
-            '$' +
-            parseFloat(page1.records[0].profit).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        }
-      })
-    }
-    return sums
-  } else {
-    return '-'
   }
+  return sums
 }
 
 onMounted(async () => {
