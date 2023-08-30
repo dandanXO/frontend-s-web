@@ -66,7 +66,7 @@
             <template
                 v-if="
                 det.status === 'SUCCESS' &&
-                det.currencyName === 'CNY' &&
+                (det.currencyName === 'CNY' || det.currencyName === 'AliCNY') &&
                 det.confirmStatus === 0
               "
             >
