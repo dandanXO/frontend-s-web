@@ -174,7 +174,7 @@
             </div>
             <div>
               {{ t('fields.adjust') }}: $
-              <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
+              <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
             </div>
           </template>
         </el-table-column>
@@ -211,7 +211,7 @@
             <div>
               {{ t('fields.unsettleCommission') }}: $
               <span
-                v-formatter="{ data: scope.row.unsettleCommission, type: 'money' }"
+                v-formatter="{data: scope.row.unsettleCommission, type: 'money'}"
               />
             </div>
           </template>
