@@ -104,9 +104,7 @@
           align="left"
           min-width="100"
         >
-          <template
-            #default="scope"
-          >
+          <template #default="scope">
             <span style="display: inline-block">
               {{ t('fields.account') }}:
               <router-link
@@ -125,9 +123,7 @@
           align="left"
           min-width="150"
         >
-          <template
-            #default="scope"
-          >
+          <template #default="scope">
             <span style="display: inline-block">
               <div />
               {{ t('fields.month') }}: {{ scope.row.recordTime }}
@@ -143,12 +139,12 @@
             <div>
               {{ t('fields.deposit') }}: $
               <span
-                v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+                v-formatter="{ data: scope.row.depositAmount, type: 'money' }"
               />
             </div>
             <div>
               {{ t('fields.bet') }}: $
-              <span v-formatter="{data: scope.row.bet, type: 'money'}" />
+              <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
             </div>
           </template>
         </el-table-column>
@@ -161,20 +157,22 @@
             <div>
               {{ t('fields.withdraw') }}: $
               <span
-                v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+                v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }"
               />
             </div>
             <div>
               {{ t('fields.payout') }}: $
-              <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+              <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
             </div>
             <div>
               {{ t('fields.bonus') }}: $
-              <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
+              <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
             </div>
             <div>
               {{ t('fields.adjust') }}: $
-              <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
+              <span
+                v-formatter="{ data: scope.row.adjustment, type: 'money' }"
+              />
             </div>
           </template>
         </el-table-column>
@@ -199,19 +197,22 @@
             <div>
               {{ t('fields.memberProfit') }}: $
               <span
-                v-formatter="{data: scope.row.memberProfit, type: 'money'}"
+                v-formatter="{ data: scope.row.memberProfit, type: 'money' }"
               />
             </div>
             <div>
               {{ t('fields.downlineProfit') }}: $
               <span
-                v-formatter="{data: scope.row.downlineProfit, type: 'money'}"
+                v-formatter="{ data: scope.row.downlineProfit, type: 'money' }"
               />
             </div>
             <div>
               {{ t('fields.unsettleCommission') }}: $
               <span
-                v-formatter="{data: scope.row.unsettleCommission, type: 'money'}"
+                v-formatter="{
+                  data: scope.row.unsettleCommission,
+                  type: 'money',
+                }"
               />
             </div>
           </template>
@@ -274,6 +275,29 @@
           min-width="140"
         />
         <el-table-column
+          :label="t('fields.finalSum')"
+          align="left"
+          min-width="140"
+        >
+          <template #default="scope">
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              content="最终佣金 = 佣金 - 调整"
+            >
+              <div>
+                $
+                <span
+                  v-formatter="{
+                    data: scope.row.finalProfit,
+                    type: 'money',
+                  }"
+                />
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.adjustment')"
           align="left"
           min-width="140"
@@ -282,7 +306,7 @@
             <div>
               $
               <span
-                v-formatter="{data: scope.row.adjustAmount, type: 'money'}"
+                v-formatter="{ data: scope.row.adjustAmount, type: 'money' }"
               />
             </div>
           </template>
@@ -316,11 +340,7 @@
           width="230"
         >
           <template #default="scope">
-            <el-button
-              size="mini"
-              type="warning"
-              @click="showView(scope.row)"
-            >
+            <el-button size="mini" type="warning" @click="showView(scope.row)">
               {{ t('fields.settleView') }}
             </el-button>
             <el-button
@@ -331,11 +351,7 @@
             >
               {{ t('fields.settlePay') }}
             </el-button>
-            <el-button
-              size="mini"
-              type="success"
-              @click="showEdit(scope.row)"
-            >
+            <el-button size="mini" type="success" @click="showEdit(scope.row)">
               {{ t('fields.settleEdit') }}
             </el-button>
           </template>
@@ -393,7 +409,6 @@ const request = reactive({
   current: 1,
   siteId: store.state.user.siteId,
   affiliateName: null,
-  name: store.state.user.name
 })
 
 const form = reactive({
@@ -401,7 +416,6 @@ const form = reactive({
   adjustType: null,
   adjustAmount: null,
   adjustReason: null,
-  name: null
 })
 
 function restrictDecimalInput(event) {
@@ -428,8 +442,6 @@ const formRules = reactive({
 
 function resetQuery() {
   request.affiliateName = null
-  request.name = store.state.user.name
-  request.siteId = store.state.user.siteId
 }
 
 const page = reactive({
@@ -506,7 +518,7 @@ async function confirmPay(check) {
     cancelButtonText: t('fields.cancel'),
     type: 'warning',
   }).then(async () => {
-    await pay(check.id, store.state.user.id, request.siteId)
+    await pay(check.id)
     await loadSettlement()
     ElMessage({ message: t('message.commissionPaySuccess'), type: 'success' })
   })
@@ -515,7 +527,6 @@ async function confirmPay(check) {
 async function adjust() {
   adjustForm.value.validate(async valid => {
     if (valid) {
-      form.name = store.state.user.realName;
       await adjustAmount(form.id, form)
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
