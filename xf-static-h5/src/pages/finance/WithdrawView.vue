@@ -239,7 +239,7 @@
           </div>
           <div class="q-py-md text-orange">
             <div
-              v-if="!isEWALLET && !isUSDT && selectedWithdrawalMethod.tips"
+              v-if="!isEWALLET && !isUSDT && isALIPAY && selectedWithdrawalMethod.tips"
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>

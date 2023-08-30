@@ -85,7 +85,7 @@
         <el-row>
           <el-col>
             <div
-              v-if="!isEWALLET && !isUSDT && selectedWithdrawalMethod.tips"
+              v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
