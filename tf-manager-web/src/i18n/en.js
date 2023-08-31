@@ -986,6 +986,14 @@ export default {
     templateId: 'Template ID',
     addSmsSetting: 'Add SMS Setting',
     editSmsSetting: 'Edit SMS Setting',
+    requestExportToExcel: 'Request Export to Excel',
+    downloadManagerRecord: 'Download Manager Record',
+    downloadExportedExcel: 'Download Exported Excel',
+    requestBy: 'Request By',
+    requestTime: 'Request Time',
+    progress: 'Progress',
+    download: 'Download',
+    updateProgress: 'Update Progress',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1283,6 +1291,7 @@ export default {
     validateSecretKeyRequired: 'Secret Key is required',
     validateAppIdRequired: 'Application ID is required',
     validateTemplateIdRequired: 'Template ID is required',
+    requestExportToExcelDone: 'Request was sent out successful, please locate "Site Management" -> "Download Manager" to check progress and download',
   },
   menu: {
     undefined: '',
@@ -1419,7 +1428,8 @@ export default {
     'Summary Member Report': 'Summary Member Report',
     'Finance Feedback': 'Finance Feedback',
     'Email Setting': 'Email Setting',
-    'SMS Setting': 'SMS Setting'
+    'SMS Setting': 'SMS Setting',
+    'Download Manager': 'Download Manager',
   },
   error: {
     400: 'Bad Request',

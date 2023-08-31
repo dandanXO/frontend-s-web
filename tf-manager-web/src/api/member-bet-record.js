@@ -21,6 +21,10 @@ export const getMemberBetRecordsTotal = (query) => {
 //   return https().request("/memberBetRecord/export", Method.POST, query, ContentType.form);
 // };
 
+export const requestExportMemberBetRecord = (query) => {
+  return https().request("/memberBetRecord/export", Method.GET, query, ContentType.form);
+};
+
 export const getMemberBetRecordList = (query) => {
   return https().request("/memberBetRecord/list", Method.GET, query, ContentType.form);
 };
