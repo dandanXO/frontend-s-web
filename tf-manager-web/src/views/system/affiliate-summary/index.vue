@@ -24,9 +24,6 @@
             :clearable="false"
           />
         </el-form-item>
-        <el-form-item label="只跑日月汇总" prop="onlyMonth" v-if="hasRole(['ADMIN'])">
-          <el-checkbox v-model="form.onlyMonth" />
-        </el-form-item>
         <div class="dialog-footer">
           <el-button
             v-if="hasRole(['ADMIN'])"
@@ -46,7 +43,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { generateSummary } from "../../../api/summary";
+import { generateAffiliateSummary } from "../../../api/summary";
 import { hasRole } from "../../../utils/util";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
@@ -54,8 +51,7 @@ import moment from "moment";
 const { t } = useI18n();
 const summaryForm = ref(null);
 const form = reactive({
-  date: [],
-  onlyMonth: false
+  date: []
 });
 
 function disabledDate(time) {
@@ -74,7 +70,7 @@ function summary() {
       const formCopy = { ...form };
       formCopy.date = form.date.join(",");
       formCopy.isAff = true;
-      await generateSummary(formCopy);
+      await generateAffiliateSummary(formCopy);
       ElMessage({ message: t('message.summarySuccess'), type: "success" });
     }
   });
