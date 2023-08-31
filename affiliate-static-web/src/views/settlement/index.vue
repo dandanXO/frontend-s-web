@@ -335,7 +335,7 @@
               size="mini"
               type="danger"
               @click="confirmPay(scope.row)"
-              v-if="scope.row.totalCommissionProfit > 0"
+              v-if="scope.row.finalProfit > 0"
             >
               {{ t('fields.settlePay') }}
             </el-button>
@@ -513,7 +513,7 @@ async function confirmPay(check) {
 }
 
 async function adjust() {
-    ElMessageBox.confirm(t('message.confirmToAdjustment'), {
+  ElMessageBox.confirm(t('message.confirmToAdjustment'), {
     confirmButtonText: t('fields.confirm'),
     cancelButtonText: t('fields.cancel'),
     type: 'warning',
