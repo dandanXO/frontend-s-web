@@ -109,6 +109,28 @@
         </div>
       </div>
     </el-form-item>
+    <el-divider />
+    <el-form-item :label="t('fields.platformFee')" size="mini">
+      <div class="withdrawal_failure_type">
+        <div style="margin-bottom: 5px" v-for="(item,index) in platformFee" :key="index">
+          <el-input v-model="item.value"
+                    style="width: 150px"
+                    :placeholder="t('fields.platformFee')"
+          />
+        </div>
+      </div>
+    </el-form-item>
+    <el-form-item :label="t('fields.paymentFee')" size="mini">
+      <div class="withdrawal_failure_type">
+        <div style="margin-bottom: 5px" v-for="(item,index) in paymentFee" :key="index">
+          <el-input v-model="item.value"
+                    style="width: 150px"
+                    :placeholder="t('fields.paymentFee')"
+          />
+        </div>
+      </div>
+    </el-form-item>
+    <el-divider />
     <el-form-item :label="t('fields.customerSupportAddress')" size="mini">
       <div class="withdrawal_failure_type">
         <div style="margin-bottom: 5px" v-for="(item,index) in csAddress" :key="index">
@@ -192,6 +214,10 @@ const withdrawFailType = computed(() => getter("cancel_type"))
 const withdrawFailCause = computed(() => getter("cancel_cause"))
 
 const adjustType = computed(() => getter("adjust_type"))
+
+const platformFee = computed(() => getter("platform_fee"))
+
+const paymentFee = computed(() => getter("payment_fee"))
 
 const csAddress = computed(() => getter("cs_address"))
 
@@ -277,6 +303,18 @@ async function updateConfigs() {
   for (let index = 0; index < configs.value.length; index++) {
     if (typeof configs.value[index].id !== 'number') {
       delete configs.value[index].id;
+    }
+    if (configs.value[index].code === 'platform_fee') {
+      if (configs.value[index].value < 0 || configs.value[index].value > 1) {
+        ElMessage({ message: t('message.validatePlatformFeeFormat'), type: "error" });
+        return;
+      }
+    }
+    if (configs.value[index].code === 'payment_fee') {
+      if (configs.value[index].value < 0 || configs.value[index].value > 1) {
+        ElMessage({ message: t('message.validatePaymentFeeFormat'), type: "error" });
+        return;
+      }
     }
     if (configs.value[index].code === 'cs_address') {
       try {
