@@ -238,9 +238,14 @@
     <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
                :close-on-click-modal="false" :close-on-press-escape="false"
     >
-      <span>{{ t('message.requestExportToExcelDone') }}</span>
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.Download Manager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
     </el-dialog>
-
   </div>
 </template>
 

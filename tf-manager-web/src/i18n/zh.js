@@ -1276,7 +1276,8 @@ export default {
     validateSecretKeyRequired: '密钥必填',
     validateAppIdRequired: '应用ID必填',
     validateTemplateIdRequired: '模板ID必填',
-    requestExportToExcelDone: '请求已经成功发送，请在 "站点管理" -> "下载中心" 进行查看进度与下载。',
+    requestExportToExcelDone1: '请求已经成功发送，请按 ',
+    requestExportToExcelDone2: ' 进行查看进度与下载。',
   },
   menu: {
     undefined: '',

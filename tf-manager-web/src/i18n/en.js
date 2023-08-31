@@ -1293,7 +1293,8 @@ export default {
     validateSecretKeyRequired: 'Secret Key is required',
     validateAppIdRequired: 'Application ID is required',
     validateTemplateIdRequired: 'Template ID is required',
-    requestExportToExcelDone: 'Request was sent out successful, please locate "Site Management" -> "Download Manager" to check progress and download',
+    requestExportToExcelDone1: 'Request was sent out successful, please click ',
+    requestExportToExcelDone2: ' to check progress and download.',
   },
   menu: {
     undefined: '',
