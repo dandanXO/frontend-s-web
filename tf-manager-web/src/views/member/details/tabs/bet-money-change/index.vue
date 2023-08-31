@@ -136,6 +136,14 @@
             <el-tag v-else size="mini" type="warning">{{ scope.row.result }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column prop="betStatus" :label="t('fields.betStatus')" align="center" min-width="140">
+          <template #default="scope">
+            <el-tag v-if="scope.row.betStatus === 'SETTLE'" size="mini" type="success">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'BET'" size="mini" type="secondary">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-else size="mini" type="warning">{{ scope.row.betStatus }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140">
           <template #default="scope">
             {{ t('gameType.' + scope.row.gameType) }}

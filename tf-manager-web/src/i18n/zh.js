@@ -990,6 +990,14 @@ export default {
     templateId: '模板ID',
     addSmsSetting: '新增短信设置',
     editSmsSetting: '编辑短信设置',
+    requestExportToExcel: '请求导出至Excel',
+    downloadManagerRecord: '下载中心记录',
+    downloadExportedExcel: '下载已导出的Excel',
+    requestBy: '请求者',
+    requestTime: '请求时间',
+    progress: '进度',
+    download: '下载',
+    updateProgress: '更新进度',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1268,6 +1276,7 @@ export default {
     validateSecretKeyRequired: '密钥必填',
     validateAppIdRequired: '应用ID必填',
     validateTemplateIdRequired: '模板ID必填',
+    requestExportToExcelDone: '请求已经成功发送，请在 "站点管理" -> "下载中心" 进行查看进度与下载。',
   },
   menu: {
     undefined: '',
@@ -1406,6 +1415,7 @@ export default {
     'Summary Member Report': '日会员总结报表',
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
+    'Download Manager': '下载中心',
   },
   error: {
     400: '请求无效',
