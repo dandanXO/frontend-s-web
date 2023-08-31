@@ -13,6 +13,10 @@ export const memberCommissionSummary = (id, query) => {
   return https().request(`/affiliateSummary/${id}/memberCommission`, Method.GET, query, ContentType.form);
 };
 
+export const lastMemberCommissionSummary = (id, siteId) => {
+  return https().request(`/affiliateSummary/${id}/lastMemberCommission`, Method.GET, { siteId: siteId }, ContentType.form);
+};
+
 export const getMonthCommission = (id, query) => {
   return https().request(`/affiliateSummary/${id}/commission`, Method.GET, query, ContentType.form);
 };

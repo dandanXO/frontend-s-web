@@ -252,6 +252,7 @@ export default {
     bindUsdtWallet: "Please bind USDT wallet first",
     chineseCharacters: "Please input chinese characters",
     commissionPaySuccess: 'Commission Pay Success',
+    confirmToAdjust: 'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
     confirmToPay: 'Confirm that you want proceed to payment?',
     domainAppCopied: "Web Domain has been copied to clipboard.",
     domainWebCopied: "App Domain has been copied to clipboard.",

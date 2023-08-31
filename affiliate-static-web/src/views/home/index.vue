@@ -200,7 +200,7 @@
 import { useStore } from "@/store";
 import { onMounted, reactive, ref } from '@vue/runtime-core'
 import moment from 'moment'
-import { dashboardSummary, getMonthCommission, getLastMonthCommission, totalCommissionSummary, memberCommissionSummary } from '../../api/affiliate-summary'
+import { dashboardSummary, getMonthCommission, getLastMonthCommission, totalCommissionSummary, memberCommissionSummary, lastMemberCommissionSummary } from '../../api/affiliate-summary'
 import { useI18n } from "vue-i18n";
 const store = useStore();
 // eslint-disable-next-line
@@ -278,9 +278,8 @@ async function loadMemberSummary() {
   loadTotalSummary();
 
   const query = checkQuery('thisMonth');
-  const subQuery = checkQuery('lastMonth');
   const { data: ret } = await memberCommissionSummary(store.state.user.id, query);
-  const { data: subRet } = await memberCommissionSummary(store.state.user.id, subQuery);
+  const { data: subRet } = await lastMemberCommissionSummary(store.state.user.id, store.state.user.siteId);
 
   const summaryField = {};
   const subSummaryField = {};
