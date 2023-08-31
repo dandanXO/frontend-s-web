@@ -239,10 +239,13 @@
           </div>
           <div class="q-py-md text-orange">
             <div
-              v-if="!isEWALLET && !isUSDT && selectedWithdrawalMethod.tips"
+              v-if="!isEWALLET && !isUSDT && isALIPAY && selectedWithdrawalMethod.tips"
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
+            <div v-if="isALIPAY" class="selected-tip">
+              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
+            </div>
           </div>
         </q-form>
       </div>
@@ -380,6 +383,7 @@ export default defineComponent({
     };
     const isUSDT = ref(false);
     const isEWALLET = ref(false);
+    const isALIPAY = ref(false);
     const selectMethod = (method, index) => {
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
@@ -387,6 +391,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
       isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
+      isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();
     };
@@ -399,8 +404,11 @@ export default defineComponent({
           // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
           response.data.forEach(element => {
             if (element.bankType === "BANK") {
-              if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element);
+              if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+                  withdrawState.bankCardList.push(element)
+                }
+                if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+                  withdrawState.bankCardList.push(element)
               }
             } else {
               if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
@@ -509,6 +517,7 @@ export default defineComponent({
       loadCards,
       isUSDT,
       isEWALLET,
+      isALIPAY,
       store,
       updateWithdrawAmt,
       platforms,
