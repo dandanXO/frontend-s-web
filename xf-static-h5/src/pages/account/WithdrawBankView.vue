@@ -126,6 +126,7 @@
                     option-value="id"
                     option-label="name"
                     :label="'选择' + chooseCard()"
+                    @update:model-value="selectCard()"
                     :rules="[(val) => !!val || '请选择' + chooseCard()]"
                     lazy-rules
                     emit-value
@@ -626,20 +627,19 @@ export default defineComponent({
       }
     }
 
-    const chooseCard = () => {
+    const selectCard = () => {
       isALIPAY.value = false;
+      if(bankCardInfo.bankId === 81) {
+          isALIPAY.value = true;
+        }
+    }
+
+    const chooseCard = () => {
       if (isCrypto.value) {
         return '虚拟币'
       } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
-        banksList.value.forEach(bank => {
-          if (bank.id === bankCardInfo.bankId) {
-            if(bank.code === 'alipay'){
-              isALIPAY.value = true;
-            }
-          }
-        });
         return '银行'
       }
     }
@@ -937,6 +937,7 @@ export default defineComponent({
       imgURL,
       store,
       chooseCard,
+      selectCard,
       cardLabel,
       unbindCardEnter,
       unbindCardLabel,
