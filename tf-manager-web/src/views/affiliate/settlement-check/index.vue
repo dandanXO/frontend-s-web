@@ -192,6 +192,29 @@
           align="left"
           min-width="140"
         />
+        <el-table-column
+          :label="t('fields.finalSum')"
+          align="left"
+          min-width="140"
+        >
+          <template #default="scope">
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              content="最终佣金 = 佣金 - 调整"
+            >
+              <div>
+                $
+                <span
+                  v-formatter="{
+                    data: scope.row.finalProfit,
+                    type: 'money',
+                  }"
+                />
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column :label="t('fields.adjustAmount')" align="left" min-width="140">
           <template #default="scope">
             <div>$
