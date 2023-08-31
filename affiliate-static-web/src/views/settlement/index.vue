@@ -335,7 +335,7 @@
               size="mini"
               type="danger"
               @click="confirmPay(scope.row)"
-              v-if="scope.row.totalCommissionProfit > 0"
+              v-if="scope.row.finalProfit > 0"
             >
               {{ t('fields.settlePay') }}
             </el-button>
