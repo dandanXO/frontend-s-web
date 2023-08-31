@@ -139,12 +139,12 @@
             <div>
               {{ t('fields.deposit') }}: $
               <span
-                v-formatter="{ data: scope.row.depositAmount, type: 'money' }"
+                v-formatter="{data: scope.row.depositAmount, type: 'money'}"
               />
             </div>
             <div>
               {{ t('fields.bet') }}: $
-              <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
+              <span v-formatter="{data: scope.row.bet, type: 'money'}" />
             </div>
           </template>
         </el-table-column>
@@ -157,21 +157,21 @@
             <div>
               {{ t('fields.withdraw') }}: $
               <span
-                v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }"
+                v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
               />
             </div>
             <div>
               {{ t('fields.payout') }}: $
-              <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
+              <span v-formatter="{data: scope.row.payout, type: 'money'}" />
             </div>
             <div>
               {{ t('fields.bonus') }}: $
-              <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
+              <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
             </div>
             <div>
               {{ t('fields.adjust') }}: $
               <span
-                v-formatter="{ data: scope.row.adjustment, type: 'money' }"
+                v-formatter="{data: scope.row.adjustment, type: 'money'}"
               />
             </div>
           </template>
@@ -197,13 +197,13 @@
             <div>
               {{ t('fields.memberProfit') }}: $
               <span
-                v-formatter="{ data: scope.row.memberProfit, type: 'money' }"
+                v-formatter="{data: scope.row.memberProfit, type: 'money'}"
               />
             </div>
             <div>
               {{ t('fields.downlineProfit') }}: $
               <span
-                v-formatter="{ data: scope.row.downlineProfit, type: 'money' }"
+                v-formatter="{data: scope.row.downlineProfit, type: 'money'}"
               />
             </div>
             <div>
@@ -306,7 +306,7 @@
             <div>
               $
               <span
-                v-formatter="{ data: scope.row.adjustAmount, type: 'money' }"
+                v-formatter="{data: scope.row.adjustAmount, type: 'money'}"
               />
             </div>
           </template>
