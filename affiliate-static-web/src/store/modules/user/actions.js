@@ -1,7 +1,7 @@
 import { state } from "./state";
 import { UserMutationTypes } from "./mutation-types";
 import { UserActionTypes } from "./action-types";
-import { removeToken, removeId, removeSiteId, removeSiteCode, removeLoginName, removeRealName } from "@/utils/cookies";
+import { removeToken, removeId, removeSiteId, removeSiteCode, removeLoginName, removeRealName, removeAffiliateLevel } from "@/utils/cookies";
 import { getDevice } from "@/utils/util";
 import { resetRouter } from "@/router";
 import { loginRequest, updatePasswordRequest, userInfoRequest, registerRequest } from "../../../api/user";
@@ -24,6 +24,7 @@ export const actions = {
     commit(UserMutationTypes.SET_REAL_NAME, loginInfo.realName);
     commit(UserMutationTypes.SET_SITE_ID, loginInfo.siteId);
     commit(UserMutationTypes.SET_SITE_CODE, loginInfo.siteCode);
+    commit(UserMutationTypes.SET_AFFILIATE_LEVEL, loginInfo.affiliateLevel);
   },
   async [UserActionTypes.ACTION_REGISTER](
     { commit },
@@ -68,6 +69,12 @@ export const actions = {
     { commit }) {
     removeSiteCode();
     commit(UserMutationTypes.SET_SITE_CODE, "");
+  },
+
+  [UserActionTypes.ACTION_RESET_AFFILIATE_LEVEL](
+    { commit }) {
+    removeAffiliateLevel();
+    commit(UserMutationTypes.SET_AFFILIATE_LEVEL, "");
   },
 
   async [UserActionTypes.ACTION_GET_USER_INFO](

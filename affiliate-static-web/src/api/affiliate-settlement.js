@@ -13,6 +13,6 @@ export const adjustAmount = (id, adjust) => {
   return https().request(`/affiliateSettlement/${id}/adjust?_method=PUT`, Method.POST, adjust, ContentType.form);
 };
 
-export const pay = (id, memberId, siteId) => {
-  return https().request(`/affiliateSettlement/${id}/pay?_method=PUT&memberId=` + memberId + '&siteId=' + siteId, Method.POST, {}, ContentType.form);
+export const pay = (id) => {
+  return https().request(`/affiliateSettlement/${id}/pay?_method=PUT`, Method.POST, {}, ContentType.form);
 };
