@@ -321,18 +321,6 @@
             <span v-else>{{ scope.row.adjustReason }}</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column
-          :label="t('fields.finalSum')"
-          align="left"
-          min-width="140"
-        >
-          <template #default="scope">
-            <div>
-              $
-              <span v-formatter="{ data: scope.row.finalSum, type: 'money' }" />
-            </div>
-          </template>
-        </el-table-column> -->
         <el-table-column
           :label="t('fields.operate')"
           align="center"
@@ -351,7 +339,7 @@
             >
               {{ t('fields.settlePay') }}
             </el-button>
-            <el-button size="mini" type="success" @click="showEdit(scope.row)">
+            <el-button size="mini" type="success" @click="showEdit(scope.row)" v-if="scope.row.adjustAmount!==null">
               {{ t('fields.settleEdit') }}
             </el-button>
           </template>
@@ -525,13 +513,19 @@ async function confirmPay(check) {
 }
 
 async function adjust() {
-  adjustForm.value.validate(async valid => {
-    if (valid) {
-      await adjustAmount(form.id, form)
-      uiControl.dialogVisible = false
-      ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
-      await loadSettlement()
-    }
+    ElMessageBox.confirm(t('message.confirmToAdjustment'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    adjustForm.value.validate(async valid => {
+      if (valid) {
+        await adjustAmount(form.id, form)
+        uiControl.dialogVisible = false
+        ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
+        await loadSettlement()
+      }
+    })
   })
 }
 

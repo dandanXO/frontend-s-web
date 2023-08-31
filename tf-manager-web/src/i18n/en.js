@@ -998,6 +998,7 @@ export default {
     changeAffiliateSuccess: 'Change Affiliate Success',
     changeSuccess: 'Change Success',
     commissionPaySuccess: 'Commission Pay Success',
+    confirmToAdjust: 'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
     confirmCopy: 'Do you want to copy from ',
     confirmCopyTo: ' to ',
     confirmDelete:

@@ -1004,6 +1004,7 @@ export default {
     confirmCopyTo: '复制至',
     confirmDelete: '请确认是否要删除这些数据, 此操作不可撤销',
     confirmSettlement: '请确认是否结算?',
+    confirmToAdjust: '请确认是否进行调整？一旦进行调整将无法再更改',
     confirmToChecking: '请确认是否将此数据返回至待审核?',
     confirmToPay: '请确认是否发放佣金?',
     confirmToCheck: '请确认是否更改用户资料',

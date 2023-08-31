@@ -253,6 +253,7 @@ export default {
     bindUsdtWallet: "请先绑定虚拟币钱包",
     chineseCharacters: "请输入中文字符",
     commissionPaySuccess: '佣金发放成功',
+    confirmToAdjust: '请确认是否进行调整？一旦进行调整将无法再更改',
     confirmToPay: '请确认是否发放佣金?',
     domainAppCopied: "移动端专属域名已复制到剪贴板",
     domainWebCopied: "PC端专属域名已复制到剪贴板",
