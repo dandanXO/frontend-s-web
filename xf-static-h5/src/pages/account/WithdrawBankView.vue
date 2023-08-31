@@ -629,7 +629,7 @@ export default defineComponent({
 
     const selectCard = () => {
       isALIPAY.value = false;
-      if(bankCardInfo.bankId === 81) {
+      if(bankCardInfo.bankId === 78) {
           isALIPAY.value = true;
         }
     }
