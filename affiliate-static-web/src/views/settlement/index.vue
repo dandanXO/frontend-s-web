@@ -339,7 +339,7 @@
             >
               {{ t('fields.settlePay') }}
             </el-button>
-            <el-button size="mini" type="success" @click="showEdit(scope.row)" v-if="scope.row.adjustAmount!==null">
+            <el-button size="mini" type="success" @click="showEdit(scope.row)" v-if="scope.row.adjustAmount===null">
               {{ t('fields.settleEdit') }}
             </el-button>
           </template>
