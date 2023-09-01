@@ -800,6 +800,9 @@ export default defineComponent({
         if (selectedBankCode === 'alipay') {
           return (val.length > 10 && val.length < 21) || '长度应为11到20个字符'
         } else {
+          if (!/^\d+$/.test(val)) {
+            return '请输入数字'
+          }
           return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
         }
       }
@@ -924,7 +927,6 @@ export default defineComponent({
       ],
       cardNumberRules: [
         val => (val && val.length > 0) || '请输入卡号',
-        val => (/^\d+$/.test(val)) || '只允许数字',
         val => validateBankLength(val)
       ],
       cardAccountRules: [

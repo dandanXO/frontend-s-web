@@ -399,9 +399,6 @@ export default defineComponent({
       var min = 6;
       var max = 12;
       if (selectedBankType.value === 'Bank') {
-        if (!/^\d+$/.test(v)) {
-          return Promise.reject('请输入数字');
-        }
         var selectedBankCode = null
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
@@ -412,6 +409,9 @@ export default defineComponent({
           min = 11;
           max = 20;
         } else {
+          if (!/^\d+$/.test(v)) {
+            return Promise.reject('请输入数字');
+          }
           min = 16;
           max = 19;
         }
@@ -666,7 +666,7 @@ export default defineComponent({
           })
           .catch(() => {
           })
-          
+
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
