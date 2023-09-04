@@ -228,6 +228,7 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
+  await loadRecords();
 })
 </script>
 
