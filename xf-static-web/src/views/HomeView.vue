@@ -288,7 +288,7 @@
           <div class="index-our-tc">
             <div>
               <img
-                src="https://jsn92.czxinbang.com/xf-resource/web/style/img/index/index_bottom_profession.png"
+                src="../assets/home/index_bottom_profession.png"
               />
             </div>
             <div>
@@ -301,7 +301,7 @@
           <div class="index-our-tc">
             <div>
               <img
-                src="https://jsn92.czxinbang.com/xf-resource/web/style/img/index/index_bottom_safe.png"
+                src="../assets/home/index_bottom_safe.png"
               />
             </div>
             <div>
@@ -316,7 +316,7 @@
           <div class="index-our-tc">
             <div>
               <img
-                src="https://jsn92.czxinbang.com/xf-resource/web/style/img/index/index_bottom_easy.png"
+                src="../assets/home/index_bottom_easy.png"
               />
             </div>
             <div>
@@ -330,7 +330,7 @@
           <div class="index-our-tc">
             <div>
               <img
-                src="https://jsn92.czxinbang.com/xf-resource/web/style/img/index/index_bottom_fast.png"
+                src="../assets/home/index_bottom_fast.png"
               />
             </div>
             <div>
