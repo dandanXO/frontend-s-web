@@ -181,6 +181,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="paymentCard"
+          :label="t('fields.paymentCard')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           prop="localCurrencyAmount"
           :label="t('fields.localCurrencyAmount')"
           align="center"
