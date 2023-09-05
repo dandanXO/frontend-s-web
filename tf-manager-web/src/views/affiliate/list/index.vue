@@ -44,12 +44,11 @@
           {{ t('fields.add') }}
         </el-button>
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:affiliate:export']"
-          @click="exportExcel"
-        >{{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -60,23 +59,16 @@
         </div>
       </template>
 
-      <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
+      <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
                  :close-on-click-modal="false" :close-on-press-escape="false"
       >
-        <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
-                     :color="uiControl.colors" v-if="exportPercentage !== 100"
-        />
-        <el-result
-          icon="success"
-          :title="t('fields.successfullyExport')"
-          v-if="exportPercentage === 100"
-        />
-        <div class="dialog-footer">
-          <el-button type="primary" :disabled="exportPercentage !== 100"
-                     @click="uiControl.progressBarVisible = false"
-          >{{ t('fields.done') }}
-          </el-button>
-        </div>
+        <span>{{ t('message.requestExportToExcelDone1') }}</span>
+        <router-link :to="`/site-management/download-manager`">
+          <el-link type="primary">
+            {{ t('menu.Download Manager') }}
+          </el-link>
+        </router-link>
+        <span>{{ t('message.requestExportToExcelDone2') }}</span>
       </el-dialog>
 
       <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
@@ -340,7 +332,6 @@
 <script setup>
 
 import { computed, reactive, ref, onMounted } from "vue";
-import * as XLSX from 'xlsx';
 import { ElMessage } from "element-plus";
 import { email, required, size } from "../../../utils/validate";
 import {
@@ -357,6 +348,7 @@ import { notEmpty } from "../../../utils/common";
 import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
+import moment from "moment/moment";
 
 const { t } = useI18n();
 const store = useStore();
@@ -416,15 +408,10 @@ const uiControl = reactive({
     { key: 1, displayName: "MONTHLY", value: "MONTHLY" },
     { key: 2, displayName: "WEEKLY", value: "WEEKLY" },
   ],
-  progressBarVisible: false,
+  messageVisible: false,
   commissionMax: 2,
   revenueMax: 2
 });
-
-const exportPercentage = ref(0);
-
-const EXPORT_HEADER = ['Affiliate ID', 'Login Name', 'Affiliate Code', 'Affiliate Level', 'Commission', 'Revenue Share', 'Total Downline Members',
-  'Total Downline Affiliates', 'Affiliate Status', 'Site', 'Balance', 'Registration Time'];
 
 const page = reactive({
   pages: 0,
@@ -594,46 +581,14 @@ async function loadAffiliates() {
   page.loading = false;
 }
 
-async function exportExcel() {
-  uiControl.progressBarVisible = true;
+async function requestExportExcel() {
   const query = checkQuery();
-  query.current = 1;
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
   const { data: ret } = await getAffiliatesForExport(query);
-  const exportData = [EXPORT_HEADER];
-  const maxLength = [];
-
-  pushRecordToData(ret.records, exportData);
-  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
-  query.current = ret.current;
-
-  while (query.current < ret.pages) {
-    query.current += 1;
-    const { data: ret } = await getAffiliatesForExport(query);
-    pushRecordToData(ret.records, exportData);
-    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  if (ret) {
+    uiControl.messageVisible = true;
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData);
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key];
-
-      maxLength[key] = typeof value === 'number'
-        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
-        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
-    });
-  });
-  const wsCols = maxLength.map(w => { return { width: w } });
-  ws['!cols'] = wsCols;
-  const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Affiliate_List');
-  wb.Sheets.Affiliate_List = ws;
-  XLSX.writeFile(wb, "affiliate_list.xlsx");
-  exportPercentage.value = 100;
-}
-
-function pushRecordToData(records, exportData) {
-  const data = records.map(record => Object.values(record).map(item => item !== 0 && (!item || item === '') ? '-' : item));
-  exportData.push(...data);
 }
 
 function changePage(page) {

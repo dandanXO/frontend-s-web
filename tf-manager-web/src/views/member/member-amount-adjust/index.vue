@@ -100,7 +100,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:member:detail']"
+          v-permission="['sys:amount:adjust:export']"
           @click="requestExportExcel"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
