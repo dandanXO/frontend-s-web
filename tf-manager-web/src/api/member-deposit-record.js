@@ -13,6 +13,10 @@ export const getDepositRecord = (query) => {
   return https().request("/deposit/depositRecordList", Method.GET, query, ContentType.form);
 };
 
+export const getExportDepositRecord = (query) => {
+  return https().request("/deposit/depositRecordListExport", Method.GET, query, ContentType.form);
+};
+
 export const getTotalDepositAmount = (query) => {
   return https().request("/deposit/totalDepositAmount", Method.GET, query, ContentType.form);
 };
