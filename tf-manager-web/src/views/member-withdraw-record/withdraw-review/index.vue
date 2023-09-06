@@ -159,7 +159,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:report:summary:member:export']"
+          v-permission="['sys:report:summary:review:export']"
           @click="requestExportExcel"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
@@ -601,7 +601,7 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getMemberReport, addReview, getTotalWithdrawReview, getExportMemberReport } from '../../../api/report-summary'
+import { getMemberReport, addReview, getTotalWithdrawReview, getExportWithdrawalReviewReport } from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -843,7 +843,7 @@ async function requestExportExcel() {
   const query = checkQuery();
   query.requestBy = store.state.user.name;
   query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getExportMemberReport(query);
+  const { data: ret } = await getExportWithdrawalReviewReport(query);
   if (ret) {
     uiControl.messageVisible = true;
   }
