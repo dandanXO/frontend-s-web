@@ -13,6 +13,10 @@ export const getMemberReport = (data) => {
 	return https().request("/report/getMemberReport", Method.GET, data, ContentType.form);
   };
 
+export const getExportMemberReport = (data) => {
+	return https().request("/report/requestMemberReportExport", Method.GET, data, ContentType.form);
+  };
+
 export const getTotalWithdrawReview = (data) => {
   return https().request("/report/getTotalWithdrawReview", Method.GET, data, ContentType.form);
 };

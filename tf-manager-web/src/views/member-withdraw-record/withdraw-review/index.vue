@@ -157,13 +157,11 @@
         </el-button>
 
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:report:summary:member:export']"
-          @click="exportExcel"
-        >
-          {{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -585,17 +583,28 @@
         </el-form>
       </div>
     </el-dialog>
+
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.Download Manager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getMemberReport, addReview, getTotalWithdrawReview } from '../../../api/report-summary'
+import { getMemberReport, addReview, getTotalWithdrawReview, getExportMemberReport } from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
-import * as XLSX from 'xlsx'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getVipList } from '../../../api/vip'
@@ -687,30 +696,10 @@ const request = reactive({
 })
 
 const uiControl = reactive({
+  messageVisible: false,
   dialogVisible: false,
   dialogTitle: '',
 })
-
-const exportPercentage = ref(0)
-
-const EXPORT_HEADER = [
-  'Member',
-  'Source Type',
-  'Deposit',
-  'Deposit Count',
-  'Withdraw',
-  'Withdraw Count',
-  'Total Bet',
-  'Total Payout',
-  'Transfer In',
-  'Transfer Out',
-  'Promo',
-  'Adjustment',
-  'Profit',
-  'Review',
-  'Review By',
-  'Remark',
-]
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -834,8 +823,7 @@ onMounted(async () => {
   await loadMemberRecord()
 })
 
-async function exportExcel() {
-  page.loading = true
+function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -848,57 +836,17 @@ async function exportExcel() {
       query.recordTime = request.recordTime.join(',')
     }
   }
-  const { data: ret } = await getMemberReport(query)
-  const exportData = [EXPORT_HEADER]
-  const maxLength = []
-
-  pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
-  query.current = ret.current
-
-  while (query.current < ret.pages) {
-    query.current += 1
-    const { data: ret } = await getMemberReport(query)
-    pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
-  }
-  const ws = XLSX.utils.aoa_to_sheet(exportData)
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key]
-
-      maxLength[key] =
-        typeof value === 'number'
-          ? maxLength[key] >= 10
-            ? maxLength[key]
-            : 10
-          : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
-    })
-  })
-  const wsCols = maxLength.map(w => {
-    return { width: w }
-  })
-  ws['!cols'] = wsCols
-  const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Deposit_Record')
-  wb.Sheets.Deposit_Record = ws
-  XLSX.writeFile(wb, 'deposit_record.xlsx')
-  exportPercentage.value = 100
-
-  page.loading = false
+  return query
 }
 
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.memberId
-    delete item.privilegesName
-  })
-  const data = records.map(record =>
-    Object.values(record).map(item => (!item || item === '' ? '-' : item))
-  )
-  exportData.push(...data)
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getExportMemberReport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
 }
 
 // function getSummaries(param) {
