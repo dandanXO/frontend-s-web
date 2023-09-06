@@ -210,5 +210,9 @@ export const getWithdrawPlatformList = (id, wd) => {
 };
 
 export const getExportWithdrawRecord = (query) => {
-  return https().request("/memberWithdrawRecord/export", Method.GET, query, ContentType.form);
+  return https().request("/memberWithdrawRecord/exportWithdraw", Method.GET, query, ContentType.form);
+};
+
+export const getExportAffiliateWithdrawRecord = (query) => {
+  return https().request("/memberWithdrawRecord/exportAffiliateWithdraw", Method.GET, query, ContentType.form);
 };
