@@ -208,3 +208,7 @@ export const getTotalWithdrawAmount = (query) => {
 export const getWithdrawPlatformList = (id, wd) => {
   return https().request("/memberWithdrawRecord/getAutoPay", Method.GET, { id: id, withdrawDate: wd }, ContentType.form);
 };
+
+export const getExportWithdrawRecord = (query) => {
+  return https().request("/memberWithdrawRecord/export", Method.GET, query, ContentType.form);
+};
