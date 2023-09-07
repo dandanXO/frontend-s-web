@@ -40,11 +40,25 @@ export default defineComponent({
   setup() {
     const navigations = [
       {
+        code: "PMLIVE",
+        icon: "pm",
+        label: "PM",
+        gameCode: "",
+        slogan: "独创首秀，现场体验"
+      },
+      {
         code: "AG",
         icon: "ag",
         label: "AG",
         gameCode: "",
         slogan: "全球顶尖, 尊享娱乐"
+      },
+      {
+        code: "BBINDY",
+        icon: "bbin",
+        label: "BBIN",
+        gameCode: "bblive_lobby_pc",
+        slogan: "资深品牌，多元娱乐"
       },
       {
         code: "EBET",
@@ -58,22 +72,9 @@ export default defineComponent({
         icon: "allbet",
         label: "ALLBET",
         gameCode: "",
-        slogan: "全球顶尖, 尊享娱乐"
+        slogan: "多端娱乐，畅享体验"
       },
-      {
-        code: "BBINDY",
-        icon: "bbin",
-        label: "BBIN",
-        gameCode: "bblive_lobby_pc",
-        slogan: "全球顶尖, 尊享娱乐"
-      },
-      {
-        code: "PMLIVE",
-        icon: "pm",
-        label: "PM",
-        gameCode: "",
-        slogan: "全球顶尖, 尊享娱乐"
-      }
+      
     ];
 
     const store = userStore();
