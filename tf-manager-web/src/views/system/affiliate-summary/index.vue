@@ -46,7 +46,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { generateSummary } from "../../../api/summary";
+import { generateAffiliateSummary } from "../../../api/summary";
 import { hasRole } from "../../../utils/util";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
@@ -74,7 +74,7 @@ function summary() {
       const formCopy = { ...form };
       formCopy.date = form.date.join(",");
       formCopy.isAff = true;
-      await generateSummary(formCopy);
+      await generateAffiliateSummary(formCopy);
       ElMessage({ message: t('message.summarySuccess'), type: "success" });
     }
   });
