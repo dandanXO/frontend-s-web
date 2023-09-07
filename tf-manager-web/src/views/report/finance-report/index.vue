@@ -50,14 +50,11 @@
           {{ t('fields.reset') }}
         </el-button>
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:report:finance:report:export']"
-          @click="exportExcel"
-          style="float: right;"
-        >
-          {{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -84,6 +81,17 @@
         :label="column.label"
       />
     </el-table>
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.Download Manager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -93,12 +101,12 @@ import moment from 'moment'
 import {
   getFinanceReport,
   getTotalFinanceReport,
+  getFinanceReportExport,
 } from '../../../api/report-centre'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import * as XLSX from 'xlsx'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
 
@@ -110,6 +118,10 @@ const defaultEndDate = convertDate(new Date())
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
+
+const uiControl = reactive({
+  messageVisible: false,
+})
 
 const siteList = reactive({
   list: [],
@@ -183,8 +195,7 @@ function disabledDate(time) {
   )
 }
 
-async function exportExcel() {
-  page.loading = true
+function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -197,38 +208,17 @@ async function exportExcel() {
       query.recordTime = request.recordTime.join(',')
     }
   }
-  const { data: ret } = await getFinanceReport(query)
-  const header = []
-  const data = []
-
-  const exportData = ret.financeReportColumnVOS
-
-  exportData.forEach(item => {
-    header.push(item.label)
-  })
-
-  ret.financeReportItemVOS.forEach(item => {
-    data.push(item.data)
-  })
-
-  const headerarray = []
-  headerarray.push(header)
-  pushRecordToData(data, headerarray)
-  console.log(headerarray)
-  const ws = XLSX.utils.aoa_to_sheet(headerarray)
-  const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Record')
-  wb.Sheets.Record = ws
-  XLSX.writeFile(wb, t('reportName.Finance_Report') + '.xlsx')
-
-  page.loading = false
+  return query
 }
 
-function pushRecordToData(records, exportData) {
-  const data = records.map(record =>
-    Object.values(record).map(item => (!item || item === '' ? '-' : item))
-  )
-  exportData.push(...data)
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getFinanceReportExport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
 }
 
 function getSummaries(param) {

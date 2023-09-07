@@ -3,11 +3,27 @@
     <div class="header-container">
       <div class="search">
         <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
           v-model="searchRequest.selectedDateType"
           size="small"
           :placeholder="t('fields.dateType')"
           class="filter-item"
-          style="width: 180px"
+          style="width: 180px; margin-left: 10px"
         >
           <el-option
             v-for="item in uiControl.selectedDateType"
@@ -58,7 +74,7 @@
           v-model="request.loginName"
           style="width: 200px; margin-left: 10px"
           size="small"
-          maxlength="50"
+          maxlength="40"
           :placeholder="t('fields.loginName')"
         />
         <el-button
@@ -83,13 +99,11 @@
 
       <div class="btn-group">
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:withdraw:export']"
-          @click="exportExcel"
-        >
-          {{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -425,35 +439,16 @@
       </div>
     </el-card>
 
-    <el-dialog
-      :title="t('fields.exportToExcel')"
-      v-model="uiControl.progressBarVisible"
-      append-to-body
-      width="500px"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
     >
-      <el-progress
-        :text-inside="true"
-        :stroke-width="26"
-        :percentage="exportPercentage"
-        :color="uiControl.colors"
-        v-if="exportPercentage !== 100"
-      />
-      <el-result
-        icon="success"
-        :title="t('fields.successfullyExport')"
-        v-if="exportPercentage === 100"
-      />
-      <div class="dialog-footer">
-        <el-button
-          type="primary"
-          :disabled="exportPercentage !== 100"
-          @click="uiControl.progressBarVisible = false"
-        >
-          {{ t('fields.done') }}
-        </el-button>
-      </div>
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.Download Manager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
     </el-dialog>
 
     <el-dialog
@@ -799,7 +794,6 @@
 
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
-import * as XLSX from 'xlsx'
 import moment from 'moment'
 import { getVipList } from '../../../api/vip'
 import { getFinancialLevels } from '../../../api/financial-level'
@@ -811,6 +805,7 @@ import {
   fromPayToBeforePaid,
   fromToFail,
   fromToConfirm,
+  getExportWithdrawRecord,
 } from '../../../api/member-withdraw-record'
 import { getMemberWithdrawLog } from '../../../api/member-withdraw-log'
 import { getAllWithdrawBankCard } from '../../../api/bank-card'
@@ -819,9 +814,13 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { getSiteListSimple } from "@/api/site";
+import { TENANT } from "@/store/modules/user/action-types";
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const siteId = ref(null)
 const searchForm = ref(null)
 const vipList = reactive({
@@ -839,6 +838,9 @@ const paymentCardList = reactive({
 const cancelTypeList = reactive({
   list: [],
 })
+const siteList = reactive({
+  list: [],
+})
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -847,7 +849,7 @@ const defaultTime = [
 const shortcuts = getShortcuts(t);
 const uiControl = reactive({
   dialogVisible: false,
-  progressBarVisible: false,
+  messageVisible: false,
   dialogTitle: '',
   dialogType: 'LOG',
   timeList: [
@@ -890,36 +892,6 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
-const exportPercentage = ref(0)
-
-const EXPORT_HEADER = [
-  'ID',
-  'Site',
-  'Serial Number',
-  'Login Name',
-  'Real Name',
-  'Member Type',
-  'VIP Level',
-  'Financial Level',
-  'Account Holder',
-  'Bank Name',
-  'Account Number',
-  'Card Address',
-  'Currency',
-  'Currency Rate',
-  'Withdraw Amount',
-  'Local Currency Amount',
-  'Withdraw Date',
-  'Check Date',
-  'Check By',
-  'Payment Date',
-  'Payment By',
-  'Payment Card',
-  'Status',
-  'Remark',
-  'Confirm Status',
-  'Confirm By',
-]
 
 const searchRequest = reactive({
   selectedDateType: uiControl.selectedDateType[0].value,
@@ -955,6 +927,7 @@ const request = reactive({
   totalTimeWithin: null,
   name: null,
   code: null,
+  siteId: null,
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
@@ -1012,6 +985,7 @@ function resetQuery() {
   request.name = null
   request.code = null
   uiControl.dialogVisible = false
+  request.siteId = siteList.list[0].id
 }
 
 const page = reactive({
@@ -1038,6 +1012,11 @@ async function loadVips() {
   if (!request.vipId) {
     request.vipId = vipList.list[0].id
   }
+}
+
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
 }
 
 async function loadFinancialLevels() {
@@ -1235,64 +1214,25 @@ async function showDialog(type, memberWithdrawRecord) {
   uiControl.dialogVisible = true
 }
 
-async function exportExcel() {
-  uiControl.progressBarVisible = true
-  const query = checkQuery()
-  const { data: ret } = await getMemberWithdrawRecord(query)
-  const exportData = [EXPORT_HEADER]
-  const maxLength = []
-
-  pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
-  query.current = ret.current
-
-  while (query.current < ret.pages) {
-    query.current += 1
-    const { data: ret } = await getMemberWithdrawRecord(query)
-    pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getExportWithdrawRecord(query);
+  if (ret) {
+    uiControl.messageVisible = true;
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData)
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key]
-
-      maxLength[key] =
-        typeof value === 'number'
-          ? maxLength[key] >= 10
-            ? maxLength[key]
-            : 10
-          : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
-    })
-  })
-  const wsCols = maxLength.map(w => {
-    return { width: w }
-  })
-  ws['!cols'] = wsCols
-  const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Withdrawal_Record')
-  wb.Sheets.Withdrawal_Record = ws
-  XLSX.writeFile(wb, 'withdrawal_record.xlsx')
-  exportPercentage.value = 100
 }
 
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.memberId
-    delete item.withdrawCode
-    delete item.withdrawName
-    delete item.siteId
-    delete item.financialColor
-  })
-  const data = records.map(record =>
-    Object.values(record).map(item => (!item || item === '' ? '-' : item))
-  )
-  exportData.push(...data)
-}
-
-onMounted(() => {
+onMounted(async () => {
+  await loadSites()
+  request.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  }
   if (LOGIN_USER_SITEID.value != null) {
     siteId.value = LOGIN_USER_SITEID.value
   }

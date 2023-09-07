@@ -51,14 +51,11 @@
         </el-button>
 
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
-          v-permission="['sys:report:summary:active:export']"
-          @click="exportExcel"
-          style="float: right;"
-        >
-          {{ t('fields.exportToExcel') }}
+          v-permission="['sys:report:summary:export']"
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -313,17 +310,28 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
+
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.Download Manager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getSummaryReport, getTotalSummaryReport } from '../../../api/report-summary'
+import { getSummaryReport, getTotalSummaryReport, getExportSummaryReport } from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
-import * as XLSX from 'xlsx'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
@@ -338,6 +346,10 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const siteList = reactive({
   list: [],
+})
+
+const uiControl = reactive({
+  messageVisible: false,
 })
 
 const page = reactive({
@@ -360,27 +372,6 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   siteId: null,
 })
-
-const exportPercentage = ref(0)
-
-const EXPORT_HEADER = [
-  t('fields.date'),
-  t('fields.registerCount'),
-  t('fields.ftdCount'),
-  t('fields.convertRate'),
-  t('fields.ftdAmount'),
-  t('fields.ftdAverage'),
-  t('fields.depositCount'),
-  t('fields.withdrawCount'),
-  t('fields.depositAmount'),
-  t('fields.withdrawAmount'),
-  t('fields.dif'),
-  t('fields.summaryTotalBet'),
-  t('fields.validBet'),
-  t('fields.summaryAdjustment'),
-  t('fields.summaryBonus'),
-  t('fields.summaryProfit'),
-]
 
 const shortcuts = getShortcuts(t)
 function convertDate(date) {
@@ -495,8 +486,7 @@ onMounted(async () => {
   await loadSummaryRecord()
 })
 
-async function exportExcel() {
-  page.loading = true
+function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -509,57 +499,17 @@ async function exportExcel() {
       query.recordTime = request.recordTime.join(',')
     }
   }
-  const { data: ret } = await getSummaryReport(query)
-  const exportData = [EXPORT_HEADER]
-  const maxLength = []
-
-  pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
-  query.current = ret.current
-
-  while (query.current < ret.pages) {
-    query.current += 1
-    const { data: ret } = await getSummaryReport(query)
-    pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
-  }
-  const ws = XLSX.utils.aoa_to_sheet(exportData)
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key]
-
-      maxLength[key] =
-        typeof value === 'number'
-          ? maxLength[key] >= 10
-            ? maxLength[key]
-            : 10
-          : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
-    })
-  })
-  const wsCols = maxLength.map(w => {
-    return { width: w }
-  })
-  ws['!cols'] = wsCols
-  const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Record')
-  wb.Sheets.Record = ws
-  XLSX.writeFile(wb, t('reportName.Summary_Record') + '.xlsx')
-  exportPercentage.value = 100
-
-  page.loading = false
+  return query
 }
 
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.memberId
-    delete item.privilegesName
-  })
-  const data = records.map(record =>
-    Object.values(record).map(item => (!item || item === '' ? '-' : item))
-  )
-  exportData.push(...data)
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getExportSummaryReport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
 }
 </script>
 

@@ -65,13 +65,11 @@
           {{ t('fields.reset') }}
         </el-button>
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:report:game:export']"
-          @click="exportExcel"
-        >
-          {{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -197,6 +195,17 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.Download Manager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -211,8 +220,8 @@ import { getPlatformsBySite } from '@/api/platform'
 import {
   getPlatformGameReport,
   getDailyReport,
+  getExportReport,
 } from '@/api/report-platform-game'
-import * as XLSX from 'xlsx'
 import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
@@ -225,26 +234,9 @@ const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 
-const EXPORT_HEADER_SUMMARY = [
-  t('fields.siteName'),
-  t('reportGame.gamePlatform'),
-  t('reportGame.gameMemberCountTotal'),
-  t('reportGame.gameBetCountTotal'),
-  t('reportGame.gameBetAmountTotal'),
-  t('reportGame.gameWinLossTotal'),
-]
-
-const EXPORT_HEADER_DAILY = [
-  t('fields.siteName'),
-  t('reportGame.gamePlatform'),
-  t('fields.date'),
-  t('reportGame.gameMemberCount'),
-  t('reportGame.gameBetCount'),
-  t('reportGame.gameBetAmount'),
-  t('reportGame.gameWinLoss'),
-]
-
-const exportPercentage = ref(0)
+const uiControl = reactive({
+  messageVisible: false,
+})
 
 const siteList = reactive({
   list: [],
@@ -557,8 +549,7 @@ function getSummaries(param) {
   }
 }
 
-async function exportExcel() {
-  page.loading = true
+function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -571,117 +562,17 @@ async function exportExcel() {
       query.recordTime = request.recordTime.join(',')
     }
   }
-
-  const wb = XLSX.utils.book_new()
-  XLSX.utils.book_append_sheet(
-    wb,
-    await genExcelSummaryTab(query, 0, 50),
-    t('reportName.Summary_Record')
-  )
-  XLSX.utils.book_append_sheet(
-    wb,
-    await genExcelDailyTab(query, 50, 50),
-    t('reportName.Daily_Record')
-  )
-  XLSX.writeFile(wb, t('reportName.Platform_Game_Record') + '.xlsx')
-  exportPercentage.value = 100
-
-  page.loading = false
+  return query
 }
 
-async function genExcelSummaryTab(query, percStart, percRange) {
-  const { data: ret } = await getPlatformGameReport(query)
-  const exportData = [EXPORT_HEADER_SUMMARY]
-  const maxLength = []
-
-  pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round(
-    percStart + (ret.current / (ret.pages + 1)) * percRange
-  )
-  query.current = ret.current
-
-  while (query.current < ret.pages) {
-    query.current += 1
-    const { data: ret } = await getPlatformGameReport(query)
-    pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round(
-      percStart + (ret.current / (ret.pages + 1)) * percRange
-    )
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getExportReport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData)
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key]
-
-      maxLength[key] =
-        typeof value === 'number'
-          ? maxLength[key] >= 10
-            ? maxLength[key]
-            : 10
-          : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
-    })
-  })
-  const wsCols = maxLength.map(w => {
-    return { width: w }
-  })
-  ws['!cols'] = wsCols
-
-  return ws
-}
-
-async function genExcelDailyTab(query, percStart, percRange) {
-  const { data: ret } = await getDailyReport(query)
-  const exportData = [EXPORT_HEADER_DAILY]
-  const maxLength = []
-
-  pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round(
-    percStart + (ret.current / (ret.pages + 1)) * percRange
-  )
-  query.current = ret.current
-
-  while (query.current < ret.pages) {
-    query.current += 1
-    const { data: ret } = await getDailyReport(query)
-    pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round(
-      percStart + (ret.current / (ret.pages + 1)) * percRange
-    )
-  }
-  const ws = XLSX.utils.aoa_to_sheet(exportData)
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key]
-
-      maxLength[key] =
-        typeof value === 'number'
-          ? maxLength[key] >= 10
-            ? maxLength[key]
-            : 10
-          : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
-    })
-  })
-  const wsCols = maxLength.map(w => {
-    return { width: w }
-  })
-  ws['!cols'] = wsCols
-
-  return ws
-}
-
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.memberId
-    delete item.privilegesName
-  })
-  const data = records.map(record =>
-    Object.values(record).map(item => (!item || item === '' ? '-' : item))
-  )
-  exportData.push(...data)
 }
 </script>
 
