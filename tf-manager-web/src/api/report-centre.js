@@ -16,6 +16,10 @@ export const getSiteMemberReport = (data) => {
   return https().request("/report/getSiteMemberReport/", Method.GET, data, ContentType.json);
 };
 
+export const getSiteMemberReportExport = (data) => {
+  return https().request("/report/requestSiteMemberReportExport/", Method.GET, data, ContentType.json);
+};
+
 export const getTotalSiteMemberReport = (data) => {
   return https().request("/report/getTotalSiteMemberReport/", Method.GET, data, ContentType.json);
 };
