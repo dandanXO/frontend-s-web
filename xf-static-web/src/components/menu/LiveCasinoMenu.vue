@@ -72,7 +72,7 @@ export default defineComponent({
         icon: "we",
         label: "WE",
         gameCode: "",
-        slogan: "全球顶尖, 尊享娱乐"
+        slogan: "玩法丰富，惊喜不断"
       },
     ];
 
