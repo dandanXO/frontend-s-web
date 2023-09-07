@@ -61,20 +61,19 @@ export default defineComponent({
         slogan: "资深品牌，多元娱乐"
       },
       {
-        code: "EBET",
-        icon: "we",
-        label: "WE",
-        gameCode: "",
-        slogan: "全球顶尖, 尊享娱乐"
-      },
-      {
         code: "ALLBET",
         icon: "allbet",
         label: "ALLBET",
         gameCode: "",
         slogan: "多端娱乐，畅享体验"
       },
-      
+      {
+        code: "EBET",
+        icon: "we",
+        label: "WE",
+        gameCode: "",
+        slogan: "玩法丰富，惊喜不断"
+      },
     ];
 
     const store = userStore();

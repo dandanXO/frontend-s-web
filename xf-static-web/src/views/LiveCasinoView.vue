@@ -68,28 +68,20 @@ export default defineComponent({
     const store = userStore();
 
     const platforms = ref([
+    {
+        code: "PMLIVE",
+        name: "PM",
+        image: "pm",
+        message:
+          "高清性感真人荷官直播娱乐场，独创真人融合棋牌电游风格。设有百家乐、牛牛、龙虎、炸金花、色碟、番摊等上百真人荷官桌台，专为亚洲人研发设计的投注界面，细致版面、极致操作让您拥有身临其境的体验！",
+        gameCode: ""
+      },
       {
         code: "AG",
         name: "AG",
         image: "ag",
         message:
           "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
-        gameCode: ""
-      },
-      {
-        code: "EBET",
-        name: "WE",
-        image: "we",
-        message:
-          "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
-        gameCode: ""
-      },
-      {
-        code: "ALLBET",
-        name: "AllBet",
-        image: "allbet",
-        message:
-          "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
         gameCode: ""
       },
       {
@@ -101,11 +93,19 @@ export default defineComponent({
         gameCode: "bblive_lobby_pc"
       },
       {
-        code: "PMLIVE",
-        name: "PM",
-        image: "pm",
+        code: "ALLBET",
+        name: "AllBet",
+        image: "allbet",
         message:
-          "高清性感真人荷官直播娱乐场，独创真人融合棋牌电游风格。设有百家乐、牛牛、龙虎、炸金花、色碟、番摊等上百真人荷官桌台，专为亚洲人研发设计的投注界面，细致版面、极致操作让您拥有身临其境的体验！",
+          "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
+        gameCode: ""
+      },
+      {
+        code: "EBET",
+        name: "WE",
+        image: "we",
+        message:
+          "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
         gameCode: ""
       },
     ]);
