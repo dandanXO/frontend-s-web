@@ -7,23 +7,23 @@ export default {
   affiliate: {
     commissionModel: {
       NORMAL: '正常',
-      SIMPLE: '普通'
+      SIMPLE: '普通',
     },
     level: {
       AFFILIATE: 'Affiliate',
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
-      CHIEF_AFFILIATE: 'Chief Affiliate'
+      CHIEF_AFFILIATE: 'Chief Affiliate',
     },
     timeType: {
       MONTHLY: '每月',
-      WEEKLY: '每周'
+      WEEKLY: '每周',
     },
     status: {
       APPLY: '申请',
       NORMAL: '正常',
-      DISABLE: '禁用'
-    }
+      DISABLE: '禁用',
+    },
   },
   types: {
     NORMAL: '正常',
@@ -40,7 +40,7 @@ export default {
     depositDate: '存款日期',
     finishDate: '完成日期',
     withdrawDate: '提款日期',
-    paymentDate: '支付日期'
+    paymentDate: '支付日期',
   },
   reportName: {
     Aff_Month_Report: '代理月报表',
@@ -64,7 +64,7 @@ export default {
     SUCCESS: '存款成功',
     SUPPLEMENT_SUCCESS: '存款补单成功',
     CLOSED: '已关闭',
-    PENDING: '待存款'
+    PENDING: '待存款',
   },
   withdrawStatus: {
     ALL: '全部',
@@ -79,7 +79,7 @@ export default {
     REJECT: '驳回',
     SENDING: '发送中',
     WAITING_CALLBACK: '自动支付中',
-    PAYING: '支付'
+    PAYING: '支付',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -94,12 +94,12 @@ export default {
     status: {
       sending: '发送中',
       success: '成功',
-      fail: '失败'
+      fail: '失败',
     },
     type: {
       deposit: '转入',
-      withdraw: '转出'
-    }
+      withdraw: '转出',
+    },
   },
   moneyChange: {
     type: {
@@ -114,36 +114,36 @@ export default {
       ROLLBACK: '回滚',
       PATCH: '修补',
       BET_N_PAYOUT: '投注并派彩',
-      AFFILIATE_TRANSFER: '代理代存'
+      AFFILIATE_TRANSFER: '代理代存',
     },
     subType: {
       DEPOSIT: '主账号转入平台',
       WITHDRAW: '平台转出主账号',
       TRASNFER_IN: '转入',
       TRANSFER_OUT: '转出',
-      AFFILIATE_SETTLEMENT: '代理结算'
-    }
+      AFFILIATE_SETTLEMENT: '代理结算',
+    },
   },
   status: {
     monthSummary: {
       UNCLEAR: '未结算',
       CLEARING: '结算中',
-      CLEARED: '已结算'
+      CLEARED: '已结算',
     },
     settlement: {
       CHECKING: '审核中',
       PAY: '结算中',
-      CLEARED: '已结算'
+      CLEARED: '已结算',
     },
     member: {
       NORMAL: '正常',
-      FROZEN: '冻结'
-    }
+      FROZEN: '冻结',
+    },
   },
   betStatus: {
-    UNSETTLED: "未结算",
-    SETTLED: "已结算",
-    CANCEL: "已取消"
+    UNSETTLED: '未结算',
+    SETTLED: '已结算',
+    CANCEL: '已取消',
   },
   dashboard: {
     memberCount: '人数',
@@ -194,7 +194,7 @@ export default {
     SPORT: '体育',
     ESPORT: '电竞',
     POKER: '棋牌',
-    LOTTERY: '彩票'
+    LOTTERY: '彩票',
   },
   fields: {
     account: '账号',
@@ -601,8 +601,8 @@ export default {
     memberPlatformAction: '操作（手动注册/删除）',
     memberPlatformUpdate: '同步密码',
     memberPrivilegeBlacklist: '会员优惠黑名单',
-    memberProfit: "代理盈利",
-    memberProfitDownlineProfitUnsettleCommission: "代理盈利/下线盈利/上月结余",
+    memberProfit: '代理盈利',
+    memberProfitDownlineProfitUnsettleCommission: '代理盈利/下线盈利/上月结余',
     memberRemark: '玩家备注',
     memberReport: '会员报表',
     memberType: '会员类型',
@@ -682,7 +682,7 @@ export default {
     payout: '派彩',
     pcWay: 'PC端',
     pending: '中止',
-    pendingTransaction: "待处理",
+    pendingTransaction: '待处理',
     permission: '权限',
     permissionAssignment: '分配权限',
     platform: '平台',
@@ -920,7 +920,7 @@ export default {
     underReview: '审核中',
     unlockMember: '解锁账号',
     unlockUser: '解锁用户',
-    unsettleCommission: "上月结余",
+    unsettleCommission: '上月结余',
     url: '访问 URL',
     update: '更新',
     updateBy: '更新人',
@@ -1421,7 +1421,7 @@ export default {
     'Summary Member Report': '日会员总结报表',
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
-    'Download Manager': '下载中心',
+    DownloadManager: '下载中心',
   },
   error: {
     400: '请求无效',
@@ -1558,6 +1558,6 @@ export default {
     20205: '找不到财务等级，请输入正确的财务等级(例：1)',
     20206: '请输入 ’测试‘ / ’普通‘ / ’三方‘ / ’代理‘',
     21000: '此游戏不存在',
-    30000: 'PG注单设置失败'
+    30000: 'PG注单设置失败',
   },
 }

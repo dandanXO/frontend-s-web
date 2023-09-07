@@ -40,7 +40,7 @@
     <span>{{ t('message.requestExportToExcelDone1') }}</span>
     <router-link :to="`/site-management/download-manager`">
       <el-link type="primary">
-        {{ t('menu.Download Manager') }}
+        {{ t('menu.DownloadManager') }}
       </el-link>
     </router-link>
     <span>{{ t('message.requestExportToExcelDone2') }}</span>
