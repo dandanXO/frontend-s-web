@@ -203,7 +203,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           src.value = res.data;
           visible.value = true;
         });
-      } else if (platformCode === "TCG" || platformCode === "VR" || platformCode === "LB") {
+      } else if (platformCode === "TCG" || platformCode === "VR" || platformCode === "LBkeno") {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
           isMobile: isMobile()
