@@ -9,13 +9,13 @@
     <div class="app_content">
       <div class="app_pic">
         <img
-          src="https://jsn92.czxinbang.com/xf-resource/web/style/img/download/app.png"
+          src="../assets/app/header_nav_app.png"
           alt=""
         />
       </div>
       <div class="app_link">
         <img
-          src="https://jsn92.czxinbang.com/xf-resource/web/style/img/download/app_text.png"
+          src="../assets/app/app_text.png"
           alt=""
         />
         <div class="app_text">
