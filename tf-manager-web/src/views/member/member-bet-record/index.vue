@@ -475,6 +475,7 @@ async function exportExcel() {
 
 function pushRecordToData(records, exportData) {
   records.forEach(item => {
+    delete item.memberId;
     delete item.beforeBalance;
     delete item.afterBalance;
     delete item.result;

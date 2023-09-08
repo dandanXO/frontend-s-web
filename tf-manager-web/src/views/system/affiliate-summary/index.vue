@@ -24,9 +24,6 @@
             :clearable="false"
           />
         </el-form-item>
-        <el-form-item label="只跑日月汇总" prop="onlyMonth" v-if="hasRole(['ADMIN'])">
-          <el-checkbox v-model="form.onlyMonth" />
-        </el-form-item>
         <div class="dialog-footer">
           <el-button
             v-if="hasRole(['ADMIN'])"
@@ -54,8 +51,7 @@ import moment from "moment";
 const { t } = useI18n();
 const summaryForm = ref(null);
 const form = reactive({
-  date: [],
-  onlyMonth: false
+  date: []
 });
 
 function disabledDate(time) {

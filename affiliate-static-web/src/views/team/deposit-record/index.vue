@@ -24,6 +24,21 @@
           :default-time="defaultTime"
         />
         <el-input v-model="request.loginName" size="small" class="input-small" :placeholder="t('fields.loginName')" />
+        <el-select
+          v-model="request.status"
+          size="small"
+          :placeholder="t('fields.status')"
+          class="filter-item"
+          style="margin-left: 5px; width: 200px;"
+          clearable
+        >
+          <el-option
+            v-for="item in uiControl.status"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
         <div class="btn-grp">
           <el-button icon="el-icon-search" type="primary" @click="loadDepositRecords()" size="mini">
             {{ $t('fields.search') }}
@@ -107,6 +122,15 @@ import { useI18n } from "vue-i18n";
 const store = useStore();
 const { t } = useI18n();
 
+const uiControl = reactive({
+  status: [
+    { key: 1, displayName: t('depositStatus.SUCCESS'), value: "SUCCESS" },
+    { key: 2, displayName: t('depositStatus.SUPPLEMENT_SUCCESS'), value: "SUPPLEMENT_SUCCESS" },
+    { key: 3, displayName: t('depositStatus.CLOSED'), value: "CLOSED" },
+    { key: 4, displayName: t('depositStatus.PENDING'), value: "PENDING" }
+  ]
+});
+
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
@@ -179,7 +203,8 @@ const request = reactive({
   size: 20,
   current: 1,
   depositDate: [convertStartDate(new Date()), convertDate(new Date())],
-  loginName: null
+  loginName: null,
+  status: null
 });
 
 const page = reactive({
@@ -205,6 +230,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.depositDate = [convertStartDate(new Date()), convertDate(new Date())];
   request.loginName = null;
+  request.status = null;
 }
 
 async function loadDepositRecords() {
@@ -226,7 +252,8 @@ async function loadDepositRecords() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
-  const { data: total } = await getTotal(store.state.user.id, query);
+  query.type = 'MEMBER';
+  const { data: total } = await getTotal(store.state.user.id, query, 'MEMBER');
   page.totalDeposit = total;
   page.loading = false;
 }
