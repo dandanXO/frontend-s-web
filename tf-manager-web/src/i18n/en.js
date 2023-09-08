@@ -7,23 +7,23 @@ export default {
   affiliate: {
     commissionModel: {
       NORMAL: 'Nomal',
-      SIMPLE: 'Simple'
+      SIMPLE: 'Simple',
     },
     level: {
       AFFILIATE: 'Affiliate',
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
-      CHIEF_AFFILIATE: 'Chief Affiliate'
+      CHIEF_AFFILIATE: 'Chief Affiliate',
     },
     timeType: {
       MONTHLY: 'Monthly',
-      WEEKLY: 'Weekly'
+      WEEKLY: 'Weekly',
     },
     status: {
       APPLY: 'Apply',
       NORMAL: 'Normal',
-      DISABLE: 'Disable'
-    }
+      DISABLE: 'Disable',
+    },
   },
   types: {
     NORMAL: 'NORMAL',
@@ -58,13 +58,13 @@ export default {
     depositDate: 'Deposit Date',
     finishDate: 'Finish Date',
     withdrawDate: 'Withdraw Date',
-    paymentDate: 'Payment Date'
+    paymentDate: 'Payment Date',
   },
   depositStatus: {
     SUCCESS: 'Success',
     SUPPLEMENT_SUCCESS: 'Supplement Success',
     CLOSED: 'Closed',
-    PENDING: 'Pending'
+    PENDING: 'Pending',
   },
   withdrawStatus: {
     ALL: 'All',
@@ -79,7 +79,7 @@ export default {
     REJECT: 'Reject',
     SENDING: 'Sending',
     WAITING_CALLBACK: 'Waiting Callback',
-    PAYING: 'Paying'
+    PAYING: 'Paying',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -94,12 +94,12 @@ export default {
     status: {
       sending: 'SENDING',
       success: 'SUCCESS',
-      fail: 'FAIL'
+      fail: 'FAIL',
     },
     type: {
       deposit: 'DEPOSIT',
-      withdraw: 'WITHDRAW'
-    }
+      withdraw: 'WITHDRAW',
+    },
   },
   moneyChange: {
     type: {
@@ -114,36 +114,36 @@ export default {
       ROLLBACK: 'ROLLBACK',
       PATCH: 'PATCH',
       BET_N_PAYOUT: 'BET AND PAYOUT',
-      AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER'
+      AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER',
     },
     subType: {
       DEPOSIT: 'Wallet to Game',
       WITHDRAW: 'Game to Wallet',
       TRASNFER_IN: 'Transfer In',
       TRANSFER_OUT: 'Transfer Out',
-      AFFILIATE_SETTLEMENT: 'Affiliate Settlement'
-    }
+      AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
+    },
   },
   status: {
     monthSummary: {
       UNCLEAR: 'Unclear',
       CLEARING: 'Clearing',
-      CLEARED: 'Cleared'
+      CLEARED: 'Cleared',
     },
     settlement: {
       CHECKING: 'Checking',
       PAY: 'Pay',
-      CLEARED: 'Cleared'
+      CLEARED: 'Cleared',
     },
     member: {
       NORMAL: 'Normal',
-      FROZEN: 'Frozen'
-    }
+      FROZEN: 'Frozen',
+    },
   },
   betStatus: {
-    UNSETTLED: "UNSETTLED",
-    SETTLED: "SETTLED",
-    CANCEL: "CANCEL"
+    UNSETTLED: 'UNSETTLED',
+    SETTLED: 'SETTLED',
+    CANCEL: 'CANCEL',
   },
   dashboard: {
     memberCount: 'Member Count',
@@ -164,7 +164,8 @@ export default {
     depositAmount: 'Deposit Amount',
     depositMemberCount: 'No. of Member Deposit',
     depositTransactionCount: 'No. of Deposit Transaction',
-    depositTransactionNumChartName: 'Number of Member Deposit /Number of Deposit Transaction',
+    depositTransactionNumChartName:
+      'Number of Member Deposit /Number of Deposit Transaction',
     financialLevelRatio: 'Financial Level Ratio',
     vipLevelRatio: 'VIP Level Ratio',
     paymentMethod: 'Payment Method',
@@ -194,7 +195,7 @@ export default {
     SPORT: 'SPORT',
     ESPORT: 'ESPORT',
     POKER: 'POKER',
-    LOTTERY: 'LOTTERY'
+    LOTTERY: 'LOTTERY',
   },
   fields: {
     account: 'Account',
@@ -603,7 +604,8 @@ export default {
     memberPlatformAction: 'Action（Manual Register/Delete）',
     memberPlatformUpdate: 'Sync Password',
     memberPrivilegeBlacklist: 'Member Privilege Blacklist',
-    memberProfitDownlineProfitUnsettleCommission: "Member Profit / Downline Profit / Unsettle Commission",
+    memberProfitDownlineProfitUnsettleCommission:
+      'Member Profit / Downline Profit / Unsettle Commission',
     memberReport: 'Member Report',
     memberType: 'Member Type',
     memberWithdrawLog: 'Member Withdraw Log',
@@ -683,7 +685,7 @@ export default {
     payout: 'Payout',
     pcWay: 'PC',
     pending: 'SUSPEND',
-    pendingTransaction: "Pending",
+    pendingTransaction: 'Pending',
     permission: 'Permission',
     permissionAssignment: 'Permission Assignment',
     platform: 'Platform',
@@ -922,7 +924,7 @@ export default {
     unlockMember: 'Unlock Member',
     unlockUser: 'Unlock User',
     url: 'Access URL',
-    unsettleCommission: "Unsettled Commission",
+    unsettleCommission: 'Unsettled Commission',
     update: 'Update',
     updateBy: 'Updated By',
     updateCommissionModel: 'Update Commission Model',
@@ -993,6 +995,14 @@ export default {
     templateId: 'Template ID',
     addSmsSetting: 'Add SMS Setting',
     editSmsSetting: 'Edit SMS Setting',
+    requestExportToExcel: 'Request Export to Excel',
+    downloadManagerRecord: 'Download Manager Record',
+    downloadExportedExcel: 'Download Exported Excel',
+    requestBy: 'Request By',
+    requestTime: 'Request Time',
+    progress: 'Progress',
+    download: 'Download',
+    updateProgress: 'Update Progress',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1005,7 +1015,8 @@ export default {
     changeAffiliateSuccess: 'Change Affiliate Success',
     changeSuccess: 'Change Success',
     commissionPaySuccess: 'Commission Pay Success',
-    confirmToAdjust: 'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
+    confirmToAdjust:
+      'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
     confirmCopy: 'Do you want to copy from ',
     confirmCopyTo: ' to ',
     confirmDelete:
@@ -1061,7 +1072,8 @@ export default {
     settlementToPay: 'Updated to payment',
     settled: 'Successfully settled',
     success: 'Success',
-    summarySuccess: 'Summary for the input period will be generated, please kindly wait',
+    summarySuccess:
+      'Summary for the input period will be generated, please kindly wait',
     transferSuccess: 'Transfer Success',
     twoPasswordNotMatch: 'Two password does not match',
     unlockMemberSuccess: 'Unlock Member Success',
@@ -1099,7 +1111,7 @@ export default {
     validateAnnouncementTypeRequired: 'Announcement Type is required',
     validateAtLeastSixChar: 'Please enter at least 6 characters',
     validateBankRequired: 'Bank is required',
-    validateBankCardNumberRequired: "Bank Card Number is required",
+    validateBankCardNumberRequired: 'Bank Card Number is required',
     validateBankCodeRequired: 'Bank Code is required',
     validateBankNameRequired: 'Bank Name is required',
     validateBankTypeRequired: 'Bank Type is required',
@@ -1293,6 +1305,8 @@ export default {
     validateSecretKeyRequired: 'Secret Key is required',
     validateAppIdRequired: 'Application ID is required',
     validateTemplateIdRequired: 'Template ID is required',
+    requestExportToExcelDone1: 'Request was sent out successful, please click ',
+    requestExportToExcelDone2: ' to check progress and download.',
   },
   menu: {
     undefined: '',
@@ -1314,7 +1328,8 @@ export default {
     Affiliate: 'Affiliate',
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',
-    'Affiliate Monthly Settlement Detail': 'Affiliate Monthly Settlement Detail',
+    'Affiliate Monthly Settlement Detail':
+      'Affiliate Monthly Settlement Detail',
     'Affiliate Settlement Checking': 'Affiliate Settlement',
     'Affiliate Settlement Payment': 'Affiliate Settlement Payment',
     'Affiliate Domain Management': 'Affiliate Domain Management',
@@ -1431,7 +1446,8 @@ export default {
     'Summary Member Report': 'Summary Member Report',
     'Finance Feedback': 'Finance Feedback',
     'Email Setting': 'Email Setting',
-    'SMS Setting': 'SMS Setting'
+    'SMS Setting': 'SMS Setting',
+    DownloadManager: 'Download Manager',
   },
   error: {
     400: 'Bad Request',
@@ -1568,6 +1584,6 @@ export default {
     20205: 'Financial level not found，please insert correct financial level (eg：1)',
     20206: 'Please insert ’测试‘ / ’普通‘ / ’三方‘ / ’代理‘',
     21000: 'Game does not exists',
-    30000: 'PG update transaction status failed'
+    30000: 'PG update transaction status failed',
   },
 }

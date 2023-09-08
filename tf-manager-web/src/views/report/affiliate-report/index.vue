@@ -67,33 +67,25 @@
       </div>
       <div class="btn-group">
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:report:summary:affiliate:export']"
-          @click="exportExcel"
-        >{{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
 
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
                :close-on-click-modal="false" :close-on-press-escape="false"
     >
-      <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
-                   :color="uiControl.colors" v-if="exportPercentage !== 100"
-      />
-      <el-result
-        icon="success"
-        :title="t('fields.successfullyExport')"
-        v-if="exportPercentage === 100"
-      />
-      <div class="dialog-footer">
-        <el-button type="primary" :disabled="exportPercentage !== 100"
-                   @click="uiControl.progressBarVisible = false"
-        >{{ t('fields.done') }}
-        </el-button>
-      </div>
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
     </el-dialog>
 
     <el-table
@@ -173,15 +165,13 @@
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
-import * as XLSX from 'xlsx';
 import moment from 'moment'
-import { getAffiliateReport } from '../../../api/report-affiliate'
+import { getAffiliateReport, getAffiliateReportExport } from '../../../api/report-affiliate'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
-import { formatMoney } from "@/utils/format-money";
 import { getShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n()
@@ -196,7 +186,7 @@ const siteList = reactive({
 })
 
 const uiControl = reactive({
-  progressBarVisible: false,
+  messageVisible: false,
   affiliateLevel: [
     { key: 1, displayName: t('affiliate.level.AFFILIATE'), value: "AFFILIATE" },
     { key: 2, displayName: t('affiliate.level.SUPER_AFFILIATE'), value: "SUPER_AFFILIATE" },
@@ -209,12 +199,6 @@ const uiControl = reactive({
     { color: '#5cb87a', percentage: 100 }
   ]
 });
-
-const exportPercentage = ref(0);
-
-const EXPORT_HEADER = [t('fields.recordTime'), t('fields.affiliateName'), t('fields.affiliateCode'), t('fields.affiliateLevel'),
-  t('fields.commissionModel'), t('fields.registerCount'), t('fields.ftdCount'), t('fields.depositAmount'), t('fields.depositMemberCount'),
-  t('fields.withdrawAmount'), t('fields.withdrawMemberCount'), t('fields.bet'), t('fields.payout'), t('fields.bonus')];
 
 const page = reactive({
   pages: 0,
@@ -274,66 +258,14 @@ async function loadAffiliateReport() {
   page.loading = false
 }
 
-async function exportExcel() {
-  uiControl.progressBarVisible = true;
+async function requestExportExcel() {
   const query = checkQuery();
-  query.current = 1;
-  const { data: ret } = await getAffiliateReport(query);
-  const exportData = [EXPORT_HEADER];
-  const maxLength = [];
-
-  pushRecordToData(ret.records, exportData);
-  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
-  query.current = ret.current;
-
-  while (query.current < ret.pages) {
-    query.current += 1;
-    const { data: ret } = await getAffiliateReport(query);
-    pushRecordToData(ret.records, exportData);
-    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getAffiliateReportExport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData);
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key];
-
-      maxLength[key] = typeof value === 'number'
-        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
-        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
-    });
-  });
-  const wsCols = maxLength.map(w => { return { width: w } });
-  ws['!cols'] = wsCols;
-  const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Summary');
-  wb.Sheets.Summary = ws;
-  XLSX.writeFile(wb, t('menu.Affiliate Report') + '(' + request.recordTime[0] + '-' + request.recordTime[1] + ').xlsx');
-  exportPercentage.value = 100;
-}
-
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.id;
-    delete item.affiliateId;
-    delete item.registerMember;
-    delete item.ftdMember;
-  })
-  const data = records.map(record => Object.entries(record).map(([key, item]) => {
-    if (item !== 0 && (!item || item === '')) {
-      return '-';
-    } else {
-      if (key === 'bet' || key === 'payout' || key === 'bonus' || key === 'depositAmount' || key === 'withdrawAmount') {
-        return '$ ' + formatMoney(item, 2);
-      } else if (key === 'commissionModel') {
-        return t('affiliate.commissionModel.' + item);
-      } else if (key === 'affiliateLevel') {
-        return t('affiliate.level.' + item);
-      } else {
-        return item;
-      }
-    }
-  }));
-  exportData.push(...data);
 }
 
 async function loadSites() {

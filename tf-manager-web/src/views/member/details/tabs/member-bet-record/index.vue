@@ -81,12 +81,11 @@
       </div>
       <div class="btn-group">
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:member:detail']"
-          @click="exportExcel"
-        >{{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -110,6 +109,11 @@
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="validBet" :label="t('fields.validBet')" align="center" min-width="100">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.validBet,type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="payout" :label="t('fields.payout')" align="center" min-width="100">
@@ -172,23 +176,16 @@
       />
     </el-card>
 
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
                :close-on-click-modal="false" :close-on-press-escape="false"
     >
-      <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
-                   :color="uiControl.colors" v-if="exportPercentage !== 100"
-      />
-      <el-result
-        icon="success"
-        :title="t('fields.successfullyExport')"
-        v-if="exportPercentage === 100"
-      />
-      <div class="dialog-footer">
-        <el-button type="primary" :disabled="exportPercentage !== 100"
-                   @click="uiControl.progressBarVisible = false"
-        >{{ t('fields.done') }}
-        </el-button>
-      </div>
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
     </el-dialog>
   </div>
 </template>
@@ -196,12 +193,13 @@
 <script setup>
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
-import * as XLSX from 'xlsx';
-import { getMemberBetRecords, getMemberBetRecordsTotal } from '../../../../../api/member-bet-record';
+import { getMemberBetRecords, getMemberBetRecordsTotal, requestExportMemberBetRecord } from '../../../../../api/member-bet-record';
 import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
+import { useStore } from "@/store";
+const store = useStore()
 
 const { t } = useI18n();
 const props = defineProps({
@@ -218,7 +216,7 @@ const site = reactive({
 });
 
 const uiControl = reactive({
-  progressBarVisible: false,
+  messageVisible: false,
   colors: [
     { color: '#f56c6c', percentage: 30 },
     { color: '#e6a23c', percentage: 70 },
@@ -244,11 +242,6 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
-const exportPercentage = ref(0);
-
-const EXPORT_HEADER = [t('fields.betId'), t('fields.transactionId'), t('fields.loginName'), t('fields.gameAccountName'), t('fields.platform'),
-  t('fields.bet'), t('fields.payout'), t('fields.companyProfit'), t('fields.betStatus'), t('fields.gameType'), t('fields.gameName'),
-  t('fields.affiliate'), t('fields.betTime'), t('fields.settleTime')];
 
 const memberDetail = ref(null);
 const platform = reactive({
@@ -368,6 +361,16 @@ async function loadPlatform() {
   platform.list = ret;
 }
 
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await requestExportMemberBetRecord(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
+}
+
 function restrictInput(event) {
   var charCode = event.which ? event.which : event.keyCode
   if (
@@ -384,58 +387,6 @@ function restrictInput(event) {
       event.preventDefault();
     }
   }
-}
-
-async function exportExcel() {
-  uiControl.progressBarVisible = true;
-  const query = checkQuery();
-  query.current = 1;
-  query.size = 200;
-  const { data: ret } = await getMemberBetRecords(query);
-  const exportData = [EXPORT_HEADER];
-  const maxLength = [];
-
-  pushRecordToData(ret.records, exportData);
-  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
-  query.current = ret.current;
-  query.pagingState = ret.pagingState
-
-  while (query.current < ret.pages) {
-    query.current += 1;
-    const { data: ret } = await getMemberBetRecords(query);
-    query.pagingState = ret.pagingState
-    pushRecordToData(ret.records, exportData);
-    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
-  }
-  const ws = XLSX.utils.aoa_to_sheet(exportData);
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key];
-
-      maxLength[key] = typeof value === 'number'
-        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
-        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
-    });
-  });
-  const wsCols = maxLength.map(w => { return { width: w } });
-  ws['!cols'] = wsCols;
-  const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Record');
-  wb.Sheets.Record = ws;
-  XLSX.writeFile(wb, t('reportName.Member_Bet_Record') + '(' + memberDetail.value.loginName + ').xlsx');
-  exportPercentage.value = 100;
-}
-
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.memberId;
-    delete item.beforeBalance;
-    delete item.afterBalance;
-    delete item.result;
-    delete item.sportBetResult;
-  })
-  const data = records.map(record => Object.values(record).map(item => item !== 0 && (!item || item === '') ? '-' : item));
-  exportData.push(...data);
 }
 
 onMounted(async() => {

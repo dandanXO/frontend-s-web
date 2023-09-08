@@ -64,14 +64,12 @@
           {{ t('fields.reset') }}
         </el-button>
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:report:site:member:report:export']"
-          @click="exportExcel"
+          @click="requestExportExcel"
           style="float: right;"
-        >
-          {{ t('fields.exportToExcel') }}
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -239,6 +237,17 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -248,12 +257,12 @@ import moment from 'moment'
 import {
   getSiteMemberReport,
   getTotalSiteMemberReport,
+  getSiteMemberReportExport,
 } from '../../../api/report-centre'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import * as XLSX from 'xlsx'
 import { hasPermission } from '../../../utils/util'
 
 const { t } = useI18n()
@@ -265,7 +274,9 @@ const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 
-const exportPercentage = ref(0)
+const uiControl = reactive({
+  messageVisible: false,
+});
 
 const siteList = reactive({
   list: [],
@@ -474,29 +485,7 @@ function disabledDate(time) {
   )
 }
 
-const EXPORT_HEADER = [
-  t('fields.loginName'),
-  t('fields.registerTime'),
-  t('fields.balance'),
-  t('fields.depositCount'),
-  t('fields.depositAmount'),
-  t('fields.withdrawCount'),
-  t('fields.withdrawAmount'),
-  t('fields.memberName'),
-  t('fields.validBet'),
-  t('fields.adjust'),
-  t('fields.bonus'),
-  t('fields.profit'),
-  t('fields.affiliate'),
-  t('fields.way'),
-  t('fields.vipLevel'),
-  t('fields.firstDeposit'),
-  t('fields.lastLoginTime'),
-  t('fields.lastLoginIp'),
-]
-
-async function exportExcel() {
-  page.loading = true
+function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -509,53 +498,17 @@ async function exportExcel() {
       query.recordTime = request.recordTime.join(',')
     }
   }
-  const { data: ret } = await getSiteMemberReport(query)
-  const exportData = [EXPORT_HEADER]
-  const maxLength = []
-
-  pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
-  query.current = ret.current
-
-  while (query.current < ret.pages) {
-    query.current += 1
-    const { data: ret } = await getSiteMemberReport(query)
-    pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
-  }
-  const ws = XLSX.utils.aoa_to_sheet(exportData)
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key]
-
-      maxLength[key] =
-        typeof value === 'number'
-          ? maxLength[key] >= 10
-            ? maxLength[key]
-            : 10
-          : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
-    })
-  })
-  const wsCols = maxLength.map(w => {
-    return { width: w }
-  })
-  ws['!cols'] = wsCols
-  const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Record')
-  wb.Sheets.Record = ws
-  XLSX.writeFile(wb, t('reportName.Summary_Member_Record') + '.xlsx')
-  exportPercentage.value = 100
-
-  page.loading = false
+  return query;
 }
 
-function pushRecordToData(records, exportData) {
-  const data = records.map(record =>
-    Object.values(record).map(item => (!item || item === '' ? '-' : item))
-  )
-  exportData.push(...data)
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getSiteMemberReportExport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
 }
 
 function getSummaries(param) {
