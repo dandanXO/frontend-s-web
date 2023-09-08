@@ -1,7 +1,6 @@
 <template>
   <div
     class="casino-container"
-    :style="'background-image: url(https://jsn92.czxinbang.com/xf-resource/web/style/img/recreation/recreation_bg.jpg)'"
   >
     <div class="recreation-money" id="numBox">LOADING...</div>
     <!-- <router-link to="/promotion"> -->
@@ -399,7 +398,7 @@ export default defineComponent({
 
 .casino-container {
   color: #ffffff;
-  // background: url("../assets/images/common/bg.jpg");
+  background-image: url(../assets/game/recreation_bg.jpg);
   background-repeat: no-repeat;
   background-position: center 0px;
   padding-bottom: 200px;
