@@ -117,7 +117,7 @@
                   {{ personalState.memberInfo.email }}
                 </div>
                 <div v-else class="basic-info-cell content">
-                  <!-- <div class="datewsend" v-if="isEdit">
+                   <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="email"
                       prop="email"
@@ -131,7 +131,7 @@
                         placeholder="邮箱"
                       />
                     </el-form-item>
-                  </div> -->
+                  </div>
                   <el-button
                     class="common-btn"
                     v-if="!personalState.memberInfo.emailVerified"
@@ -261,7 +261,7 @@
               v-model="updateSecurityVerified.verificationCode"
               :placeholder="'验证码'"
               @keyup.enter="submitUpdateSecurity"
-              
+
             />
             <el-button
               :disabled="disableSendVerificationButton"

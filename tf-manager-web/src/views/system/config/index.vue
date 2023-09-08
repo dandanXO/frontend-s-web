@@ -32,6 +32,22 @@
         />
       </el-select>
     </el-form-item>
+    <el-form-item :label="t('fields.defaultAgentVip')" size="mini">
+      <el-select
+        v-model="defaultAgentVip"
+        size="small"
+        :placeholder="t('fields.site')"
+        style="width: 200px;"
+        @focus="loadVip"
+      >
+        <el-option
+          v-for="item in vips"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
+      </el-select>
+    </el-form-item>
     <el-form-item :label="t('fields.defaultFinancialLevel')" size="mini">
       <el-select
         v-model="defaultFinancial"
@@ -48,9 +64,41 @@
         />
       </el-select>
     </el-form-item>
+    <el-form-item :label="t('fields.defaultAgentFinancialLevel')" size="mini">
+      <el-select
+        v-model="defaultAgentFinancial"
+        size="small"
+        :placeholder="t('fields.site')"
+        style="width: 200px;"
+        @focus="loadFinancialLevelInfos"
+      >
+        <el-option
+          v-for="item in financialLevel"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
+      </el-select>
+    </el-form-item>
     <el-form-item :label="t('fields.defaultRiskLevel')" size="mini">
       <el-select
         v-model="defaultRisk"
+        size="small"
+        :placeholder="t('fields.site')"
+        style="width: 200px;"
+        @focus="loadRiskLevels"
+      >
+        <el-option
+          v-for="item in risks"
+          :key="item.id"
+          :label="item.levelName"
+          :value="item.id"
+        />
+      </el-select>
+    </el-form-item>
+    <el-form-item :label="t('fields.defaultAgentRiskLevel')" size="mini">
+      <el-select
+        v-model="defaultAgentRisk"
         size="small"
         :placeholder="t('fields.site')"
         style="width: 200px;"
@@ -197,16 +245,34 @@ const defaultVip = computed({
   set: (newVla) => configs.value.find(item => item.code === 'default_vip').value = newVla
 })
 
+const defaultAgentVip = computed({
+  get: () => Number(getter("default_agent_vip", false).value),
+  // eslint-disable-next-line no-return-assign
+  set: (newVla) => configs.value.find(item => item.code === 'default_agent_vip').value = newVla
+})
+
 const defaultFinancial = computed({
   get: () => Number(getter("default_financial", false).value),
   // eslint-disable-next-line no-return-assign
   set: (newVla) => configs.value.find(item => item.code === 'default_financial').value = newVla
 })
 
+const defaultAgentFinancial = computed({
+  get: () => Number(getter("default_agent_financial", false).value),
+  // eslint-disable-next-line no-return-assign
+  set: (newVla) => configs.value.find(item => item.code === 'default_agent_financial').value = newVla
+})
+
 const defaultRisk = computed({
   get: () => Number(getter("default_risk", false).value),
   // eslint-disable-next-line no-return-assign
   set: (newVla) => configs.value.find(item => item.code === 'default_risk').value = newVla
+})
+
+const defaultAgentRisk = computed({
+  get: () => Number(getter("default_agent_risk", false).value),
+  // eslint-disable-next-line no-return-assign
+  set: (newVla) => configs.value.find(item => item.code === 'default_agent_risk').value = newVla
 })
 
 const withdrawFailType = computed(() => getter("cancel_type"))

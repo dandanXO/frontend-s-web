@@ -126,6 +126,7 @@
                     option-value="id"
                     option-label="name"
                     :label="'选择' + chooseCard()"
+                    @update:model-value="selectCard()"
                     :rules="[(val) => !!val || '请选择' + chooseCard()]"
                     lazy-rules
                     emit-value
@@ -213,7 +214,7 @@
           </q-input>
 
           <q-input
-              v-show="!isCrypto && !isEWALLET"
+              v-show="!isCrypto && !isEWALLET && !isALIPAY"
               class="q-mb-md"
               filled
               v-model="bankCardInfo.cardAddress"
@@ -383,6 +384,7 @@ export default defineComponent({
     const $q = useQuasar();
     const isCrypto = ref(false);
     const isEWALLET = ref(false);
+    const isALIPAY = ref(false);
     const isCardActive = ref();
     const isNoCard = ref(false);
     const searchForm = reactive({
@@ -625,6 +627,13 @@ export default defineComponent({
       }
     }
 
+    const selectCard = () => {
+      isALIPAY.value = false;
+      if(bankCardInfo.bankId === 78) {
+          isALIPAY.value = true;
+        }
+    }
+
     const chooseCard = () => {
       if (isCrypto.value) {
         return '虚拟币'
@@ -782,7 +791,20 @@ export default defineComponent({
           return (val.length > 15 && val.length < 17) || '长度应为16个字符'
         }
       } else {
-        return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
+        var selectedBankCode = null
+        banksList.value.forEach(bank => {
+          if (bank.id === bankCardInfo.bankId) {
+            selectedBankCode = bank.code
+          }
+        });
+        if (selectedBankCode === 'alipay') {
+          return (val.length > 10 && val.length < 21) || '长度应为11到20个字符'
+        } else {
+          if (!/^\d+$/.test(val)) {
+            return '请输入数字'
+          }
+          return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
+        }
       }
     }
     const isValidCnPhone = () => {
@@ -893,6 +915,7 @@ export default defineComponent({
       isNoCard,
       isCrypto,
       isEWALLET,
+      isALIPAY,
       bankName,
       isVirtual,
       bankCardRef,
@@ -904,7 +927,6 @@ export default defineComponent({
       ],
       cardNumberRules: [
         val => (val && val.length > 0) || '请输入卡号',
-        val => (/^\d+$/.test(val)) || '只允许数字',
         val => validateBankLength(val)
       ],
       cardAccountRules: [
@@ -917,6 +939,7 @@ export default defineComponent({
       imgURL,
       store,
       chooseCard,
+      selectCard,
       cardLabel,
       unbindCardEnter,
       unbindCardLabel,

@@ -230,7 +230,7 @@ async function submitWithdraw() {
       await confirmWithdraw(withdrawInfo).then((response) => {
         if (response.code === 0) {
           ElMessageBox.confirm(
-            t('message.redirectBankDeposit'),
+            t('message.success'),
             '',
             {
               confirmButtonText: t('fields.confirm'),
