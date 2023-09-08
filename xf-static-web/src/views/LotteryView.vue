@@ -103,7 +103,7 @@ export default defineComponent({
         gameCode: ""
       },
       {
-        code: "LB",
+        code: "LBkeno",
         name: "LB",
         image: "lb",
         message:
@@ -171,7 +171,7 @@ export default defineComponent({
       aos.refresh();
       getPlatList();
     });
-    
+
     return {
       platforms,
       selectedPlat,
