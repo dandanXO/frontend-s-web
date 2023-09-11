@@ -8,6 +8,7 @@
             :style="
               'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
             "
+            style="background-repeat: no-repeat; background-size: cover;"
           ></div>
         </router-link>
       </el-carousel-item>
@@ -926,6 +927,7 @@ export default defineComponent({
 .home {
   .promo-bg {
     height: 500px;
+    width: 100%;
   }
 }
 .imptann-modal {
