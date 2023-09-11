@@ -46,11 +46,21 @@
         </template>
       </el-table-column>
       <el-table-column prop="rollover" :label="t('fields.rollover')" align="center" min-width="100" />
+      <el-table-column prop="type" :label="t('fields.transferType')" align="center" min-width="150">
+        <template #default="scope">
+          <el-tag v-if="scope.row.type === 'DEPOSIT'" type="success" size="mini">{{ t('transferType.' + scope.row.type) }}</el-tag>
+          <el-tag v-else-if="scope.row.type === 'COMMISSION'" type="warning" size="mini">{{ t('transferType.' + scope.row.type) }}</el-tag>
+        </template>
+      </el-table-column>
     </el-table>
+    <div class="table-footer">
+      <span style="margin-right:20px;">{{ t('fields.totalTransfer') }}: $ <span v-formatter="{data: page.totalTransfer,type: 'money'}" /></span>
+    </div>
     <el-pagination
       class="pagination"
       @current-change="changePage"
-      layout="prev, pager, next"
+      layout="total, prev, pager, next"
+      :total="page.total"
       :page-size="request.size"
       :page-count="page.pages"
       :current-page="request.current"
@@ -62,7 +72,7 @@
 import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
-import { getTransferRecords } from '@/api/affiliate-member-transfer';
+import { getTransferRecords, getTotal } from '@/api/affiliate-member-transfer';
 import { useI18n } from "vue-i18n";
 
 const store = useStore();
@@ -144,7 +154,9 @@ const request = reactive({
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
+  loading: false,
+  total: 0,
+  totalTransfer: 0
 });
 
 function convertDate(date) {
@@ -177,6 +189,9 @@ async function loadTransferRecords() {
   const { data: ret } = await getTransferRecords(store.state.user.id, query);
   page.pages = ret.pages;
   page.records = ret.records;
+  page.total = ret.total;
+  const { data: total } = await getTotal(store.state.user.id, query);
+  page.totalTransfer = total;
   page.loading = false;
 }
 
@@ -214,6 +229,17 @@ onMounted(() => {
   .btn-grp {
     display: flex;
   }
+}
+
+.el-pagination {
+  display: inline-block;
+}
+
+.table-footer {
+  margin-top: 15px;
+  margin-right: 20px;
+  float: right;
+  font-size: small;
 }
 
 @media (max-width: 768px) {

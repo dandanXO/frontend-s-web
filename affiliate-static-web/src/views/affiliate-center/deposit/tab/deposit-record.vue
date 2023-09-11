@@ -17,9 +17,27 @@
         :clearable="false"
         :default-time="defaultTime"
       />
+      <el-select
+        v-model="request.status"
+        size="small"
+        :placeholder="t('fields.status')"
+        class="filter-item"
+        style="margin-left: 5px; width: 200px;"
+        clearable
+      >
+        <el-option
+          v-for="item in uiControl.status"
+          :key="item.key"
+          :label="item.displayName"
+          :value="item.value"
+        />
+      </el-select>
       <div class="btn-grp">
         <el-button icon="el-icon-search" type="primary" @click="loadDepositRecords()" size="mini">
           {{ $t('fields.search') }}
+        </el-button>
+        <el-button size="mini" type="warning" @click="resetQuery()">
+          {{ $t('fields.reset') }}
         </el-button>
       </div>
     </div>
@@ -70,10 +88,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="table-footer">
+      <span style="margin-right:20px;">{{ t('fields.totalDeposit') }}: $ <span v-formatter="{data: page.totalDeposit,type: 'money'}" /></span>
+    </div>
     <el-pagination
       class="pagination"
       @current-change="changePage"
-      layout="prev, pager, next"
+      layout="total, prev, pager, next"
+      :total="page.total"
       :page-size="request.size"
       :page-count="page.pages"
       :current-page="request.current"
@@ -85,11 +107,20 @@
 import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
-import { getDepositRecords } from '@/api/affiliate-deposit-record';
+import { getDepositRecords, getTotal } from '@/api/affiliate-deposit-record';
 import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const { t } = useI18n();
+
+const uiControl = reactive({
+  status: [
+    { key: 1, displayName: t('depositStatus.SUCCESS'), value: "SUCCESS" },
+    { key: 2, displayName: t('depositStatus.SUPPLEMENT_SUCCESS'), value: "SUPPLEMENT_SUCCESS" },
+    { key: 3, displayName: t('depositStatus.CLOSED'), value: "CLOSED" },
+    { key: 4, displayName: t('depositStatus.PENDING'), value: "PENDING" }
+  ]
+});
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -162,13 +193,16 @@ const shortcuts = [
 const request = reactive({
   size: 20,
   current: 1,
-  depositDate: [convertStartDate(new Date()), convertDate(new Date())]
+  depositDate: [convertStartDate(new Date()), convertDate(new Date())],
+  status: null
 });
 
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
+  loading: false,
+  total: 0,
+  totalDeposit: 0
 });
 
 function convertDate(date) {
@@ -181,6 +215,11 @@ function convertStartDate(date) {
 
 function disabledDate(time) {
   return time.getTime() > new Date().getTime();
+}
+
+function resetQuery() {
+  request.depositDate = [convertStartDate(new Date()), convertDate(new Date())];
+  request.status = null;
 }
 
 async function loadDepositRecords() {
@@ -201,6 +240,10 @@ async function loadDepositRecords() {
   const { data: ret } = await getDepositRecords(store.state.user.id, query);
   page.pages = ret.pages;
   page.records = ret.records;
+  page.total = ret.total;
+  query.type = 'AFFILIATE';
+  const { data: total } = await getTotal(store.state.user.id, query);
+  page.totalDeposit = total;
   page.loading = false;
 }
 
@@ -244,6 +287,17 @@ onMounted(() => {
   .btn-grp {
     display: flex;
   }
+}
+
+.el-pagination {
+  display: inline-block;
+}
+
+.table-footer {
+  margin-top: 15px;
+  margin-right: 20px;
+  float: right;
+  font-size: small;
 }
 
 @media (max-width: 768px) {

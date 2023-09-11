@@ -7,7 +7,7 @@
     </template>
     <el-card style="width: fit-content; padding-right: 200px; margin-bottom: 20px;">
       <div class="card-panel-description">
-        <div class="card-panel-text">{{ $t('fields.balance') }}<el-icon class="pointer" @click="loadAffiliateBalance"><Refresh /></el-icon></div>
+        <div class="card-panel-text">{{ $t('fields.commissionBalance') }}<el-icon class="pointer" @click="loadAffiliateBalance"><Refresh /></el-icon></div>
         <span v-if="showBalance" class="card-panel-num">
           $ <span v-formatter="{data: balance,type: 'money'}" />
         </span>
@@ -120,7 +120,7 @@ import { reactive, ref, onMounted } from "vue";
 import { ElMessageBox, ElNotification } from 'element-plus';
 import {
   loadBankCards, confirmWithdraw, withdrawEntrance,
-  getAffiliateBalance, getSecurityQuestions, checkHasWithdrawPw,
+  getAffiliateCommissionBalance, getSecurityQuestions, checkHasWithdrawPw,
   checkAnswer, checkWithdrawPassword
 } from "@/api/affiliate";
 import { useI18n } from "vue-i18n";
@@ -398,7 +398,7 @@ function getWithdrawalMethods() {
 }
 
 async function loadAffiliateBalance() {
-  const { data: bal } = await getAffiliateBalance(store.state.user.id);
+  const { data: bal } = await getAffiliateCommissionBalance(store.state.user.id);
   balance.value = bal;
 }
 
