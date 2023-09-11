@@ -168,15 +168,12 @@
             :value="item.paymentName"
           />
         </el-select>
-
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:deposit:export']"
-          @click="exportExcel"
-        >
-          {{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
 
         <el-button
@@ -414,35 +411,16 @@
       </div>
     </el-card>
 
-    <el-dialog
-      :title="t('fields.exportToExcel')"
-      v-model="uiControl.progressBarVisible"
-      append-to-body
-      width="500px"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
     >
-      <el-progress
-        :text-inside="true"
-        :stroke-width="26"
-        :percentage="exportPercentage"
-        :color="uiControl.colors"
-        v-if="exportPercentage !== 100"
-      />
-      <el-result
-        icon="success"
-        :title="t('fields.successfullyExport')"
-        v-if="exportPercentage === 100"
-      />
-      <div class="dialog-footer">
-        <el-button
-          type="primary"
-          :disabled="exportPercentage !== 100"
-          @click="uiControl.progressBarVisible = false"
-        >
-          {{ t('fields.done') }}
-        </el-button>
-      </div>
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
     </el-dialog>
 
     <el-dialog
@@ -637,13 +615,13 @@
 
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
-import * as XLSX from 'xlsx'
 import moment from 'moment'
 import { getVipList } from '../../../api/vip'
 import { getFinancialLevels } from '../../../api/financial-level'
 import {
   getDepositRecord,
   getTotalDepositAmount,
+  getExportDepositRecord,
 } from '../../../api/member-deposit-record'
 import { getSystemPaymentListForDeposit } from '../../../api/system-payment'
 import { hasPermission } from '../../../utils/util'
@@ -686,7 +664,7 @@ const shortcuts = getShortcuts(t);
 
 const uiControl = reactive({
   dialogVisible: false,
-  progressBarVisible: false,
+  messageVisible: false,
   dialogTitle: '',
   dialogType: 'SEARCH',
   status: [
@@ -736,30 +714,6 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDateToStart(startDate)
 const defaultEndDate = convertDateToEnd(new Date())
-
-const exportPercentage = ref(0)
-
-const EXPORT_HEADER = [
-  'ID',
-  'Serial Number',
-  'Third Serial Number',
-  'Third Party',
-  'Login Name',
-  'Member Type',
-  'Financial Level',
-  'VIP Level',
-  'Deposit Amount',
-  'Currency',
-  'Local Currency Amount',
-  'Currency Rate',
-  'Deposit Date',
-  'Finish Date',
-  'Status',
-  'Privilege',
-  'Payment Type',
-  'Client Type',
-  'Update By',
-]
 
 const request = reactive({
   size: 20,
@@ -966,60 +920,14 @@ async function showDialog(type) {
   uiControl.dialogVisible = true
 }
 
-async function exportExcel() {
-  uiControl.progressBarVisible = true
-  const query = checkQuery()
-  query.current = 1;
-  const { data: ret } = await getDepositRecord(query)
-  const exportData = [EXPORT_HEADER]
-  const maxLength = []
-
-  pushRecordToData(ret.records, exportData)
-  exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
-  query.current = ret.current
-
-  while (query.current < ret.pages) {
-    query.current += 1
-    const { data: ret } = await getDepositRecord(query)
-    pushRecordToData(ret.records, exportData)
-    exportPercentage.value = Math.round((ret.current / (ret.pages + 1)) * 100)
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getExportDepositRecord(query);
+  if (ret) {
+    uiControl.messageVisible = true;
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData)
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key]
-
-      maxLength[key] =
-        typeof value === 'number'
-          ? maxLength[key] >= 10
-            ? maxLength[key]
-            : 10
-          : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
-    })
-  })
-  const wsCols = maxLength.map(w => {
-    return { width: w }
-  })
-  ws['!cols'] = wsCols
-  const wb = XLSX.utils.book_new()
-  wb.SheetNames.push('Deposit_Record')
-  wb.Sheets.Deposit_Record = ws
-  XLSX.writeFile(wb, 'deposit_record.xlsx')
-  exportPercentage.value = 100
-}
-
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.memberId
-    delete item.thirdParty
-    delete item.financialColor
-  })
-  const data = records.map(record =>
-    Object.values(record).map(item => (!item || item === '' ? '-' : item))
-  )
-  exportData.push(...data)
 }
 
 async function loadThirdParty() {

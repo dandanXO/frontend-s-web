@@ -7,23 +7,23 @@ export default {
   affiliate: {
     commissionModel: {
       NORMAL: '正常',
-      SIMPLE: '普通'
+      SIMPLE: '普通',
     },
     level: {
       AFFILIATE: 'Affiliate',
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
-      CHIEF_AFFILIATE: 'Chief Affiliate'
+      CHIEF_AFFILIATE: 'Chief Affiliate',
     },
     timeType: {
       MONTHLY: '每月',
-      WEEKLY: '每周'
+      WEEKLY: '每周',
     },
     status: {
       APPLY: '申请',
       NORMAL: '正常',
-      DISABLE: '禁用'
-    }
+      DISABLE: '禁用',
+    },
   },
   types: {
     NORMAL: '正常',
@@ -40,7 +40,7 @@ export default {
     depositDate: '存款日期',
     finishDate: '完成日期',
     withdrawDate: '提款日期',
-    paymentDate: '支付日期'
+    paymentDate: '支付日期',
   },
   reportName: {
     Aff_Month_Report: '代理月报表',
@@ -64,7 +64,7 @@ export default {
     SUCCESS: '存款成功',
     SUPPLEMENT_SUCCESS: '存款补单成功',
     CLOSED: '已关闭',
-    PENDING: '待存款'
+    PENDING: '待存款',
   },
   withdrawStatus: {
     ALL: '全部',
@@ -79,7 +79,7 @@ export default {
     REJECT: '驳回',
     SENDING: '发送中',
     WAITING_CALLBACK: '自动支付中',
-    PAYING: '支付'
+    PAYING: '支付',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -94,12 +94,12 @@ export default {
     status: {
       sending: '发送中',
       success: '成功',
-      fail: '失败'
+      fail: '失败',
     },
     type: {
       deposit: '转入',
-      withdraw: '转出'
-    }
+      withdraw: '转出',
+    },
   },
   moneyChange: {
     type: {
@@ -114,36 +114,36 @@ export default {
       ROLLBACK: '回滚',
       PATCH: '修补',
       BET_N_PAYOUT: '投注并派彩',
-      AFFILIATE_TRANSFER: '代理代存'
+      AFFILIATE_TRANSFER: '代理代存',
     },
     subType: {
       DEPOSIT: '主账号转入平台',
       WITHDRAW: '平台转出主账号',
       TRASNFER_IN: '转入',
       TRANSFER_OUT: '转出',
-      AFFILIATE_SETTLEMENT: '代理结算'
-    }
+      AFFILIATE_SETTLEMENT: '代理结算',
+    },
   },
   status: {
     monthSummary: {
       UNCLEAR: '未结算',
       CLEARING: '结算中',
-      CLEARED: '已结算'
+      CLEARED: '已结算',
     },
     settlement: {
       CHECKING: '审核中',
       PAY: '结算中',
-      CLEARED: '已结算'
+      CLEARED: '已结算',
     },
     member: {
       NORMAL: '正常',
-      FROZEN: '冻结'
-    }
+      FROZEN: '冻结',
+    },
   },
   betStatus: {
-    UNSETTLED: "未结算",
-    SETTLED: "已结算",
-    CANCEL: "已取消"
+    UNSETTLED: '未结算',
+    SETTLED: '已结算',
+    CANCEL: '已取消',
   },
   dashboard: {
     memberCount: '人数',
@@ -194,7 +194,7 @@ export default {
     SPORT: '体育',
     ESPORT: '电竞',
     POKER: '棋牌',
-    LOTTERY: '彩票'
+    LOTTERY: '彩票',
   },
   fields: {
     account: '账号',
@@ -253,9 +253,9 @@ export default {
     addWithdrawPlatform: '新增提款平台',
     addWithdrawSetting: '新增提款设置',
     addWithdrawalBankBlacklist: '新增提款银行卡黑名单',
-    adjustAmount: '平账金额',
+    adjustAmount: '调整金额',
     adjustBy: '平账操作者',
-    adjustReason: '平账原因',
+    adjustReason: '调整原因',
     adjustTime: '平账时间',
     adjustType: '平账类型',
     adjustment: '调整金额',
@@ -282,7 +282,7 @@ export default {
     allprofit: '全部盈亏',
     allreviewstatus: '全部复核状态',
     amount: '金额',
-    adjust: '平账',
+    adjust: '调整',
     announcementType: '公告类型',
     applying: '申请中',
     approve: '批准',
@@ -308,6 +308,7 @@ export default {
     beforeBalance: '之前余额',
     beforeEdit: '编辑前',
     bet: '下注金额',
+    betAmount: '投注金额',
     betId: '投注单号',
     betMoneyChange: '投注账变',
     betMoreThan: '投注金额大于',
@@ -359,6 +360,7 @@ export default {
     commissionModel: '分红模式',
     commissionPercent: '分红 %',
     commissionRate: '分红比率',
+    commissionReport: '佣金明细',
     componentName: '组件名称',
     componentPath: '组件路径',
     composeMessage: '撰写邮件',
@@ -423,7 +425,7 @@ export default {
     deleteRole: '删除角色',
     deposit: '存款',
     depositAmount: '存款金额',
-    depositBettingAmount: '存款/下注金额',
+    depositBettingAmount: '存款/投注',
     depositCount: '存款次数',
     depositDate: '存款日期',
     depositExchangeRate: '存款兑换率',
@@ -451,7 +453,7 @@ export default {
     downlineCommission: '下级分红',
     downlineCommissionRate: '下级分红比率',
     downlineMember: '直属会员',
-    downlineProfit: '下级利润',
+    downlineProfit: '下级盈利',
     downloadTemplate: '下载模板',
     edit: '编辑',
     editAds: '编辑弹窗广告',
@@ -516,7 +518,7 @@ export default {
     feedbackStatusSuccess: '已核实',
     feedbackTime: '催单日期',
     feeRate: '收费率',
-    finalSum: '最终收入',
+    finalSum: '最终佣金',
     financialLevel: '会员组别',
     financePhotos: '图片',
     financeType: '存/提',
@@ -602,6 +604,8 @@ export default {
     memberPlatformAction: '操作（手动注册/删除）',
     memberPlatformUpdate: '同步密码',
     memberPrivilegeBlacklist: '会员优惠黑名单',
+    memberProfit: '代理盈利',
+    memberProfitDownlineProfitUnsettleCommission: '代理盈利/下线盈利/上月结余',
     memberRemark: '玩家备注',
     memberReport: '会员报表',
     memberType: '会员类型',
@@ -673,6 +677,7 @@ export default {
     paymentBy: '支付人',
     paymentCard: '支付卡',
     paymentDate: '支付日期',
+    paymentFee: '支付手续费',
     paymentMethod: '支付方式',
     paymentName: '支付名称',
     paymentOnGoing: '支付中',
@@ -680,6 +685,7 @@ export default {
     payout: '派彩',
     pcWay: 'PC端',
     pending: '中止',
+    pendingTransaction: '待处理',
     permission: '权限',
     permissionAssignment: '分配权限',
     platform: '平台',
@@ -687,8 +693,10 @@ export default {
     platformId: '平台 ID',
     platformBalance: '平台余额',
     platformCode: '平台代码',
+    platformFee: '场馆费',
     platformFundTransfer: '平台转账',
     platformName: '平台名',
+    playerName: '玩家名',
     pleaseChoose: '请选择',
     pleaseInput: '请输入',
     previousLevel: '上级',
@@ -787,6 +795,9 @@ export default {
     serialNo: '流水号',
     settlement: '结算',
     settleTime: '结算时间',
+    settleView: '查看',
+    settlePay: '发放',
+    settleEdit: '调整',
     show: '显示',
     sid: 'SID',
     site: '站点',
@@ -859,6 +870,7 @@ export default {
     totalBetRecords: '总投注记录',
     totalBonus: '总奖金',
     totalCommission: '总分红',
+    totalCommissionProfit: '佣金',
     totalDeductAmount: '总扣除金额',
     totalDeposit: '总存款',
     totalDepositAmount: '存款总额',
@@ -894,8 +906,9 @@ export default {
     totalWithdrawCount: '总提款次数',
     totalWithdrawnAmount: '提款总额',
     transaction: '转账信息',
+    transactionStatus: '注单状态',
     transactionTime: '交易时间',
-    transactionId: '交易单号',
+    transactionId: '注单号',
     transferDate: '转账日期',
     transferId: '转账ID',
     transferIn: '转入',
@@ -910,6 +923,7 @@ export default {
     underReview: '审核中',
     unlockMember: '解锁账号',
     unlockUser: '解锁用户',
+    unsettleCommission: '上月结余',
     url: '访问 URL',
     update: '更新',
     updateBy: '更新人',
@@ -923,6 +937,7 @@ export default {
     upgradeToCheck: '升级至审核中',
     upgradeToPaymentOnGoing: '升级至支付中',
     upload: '上传',
+    upperName: '所属上级',
     username: '用户名',
     userType: '用户类型',
     validate: '验证',
@@ -950,7 +965,7 @@ export default {
     withdrawDate: '提款日期',
     withdrawMemberCount: '提款人数',
     withdrawName: '提款平台名称',
-    withdrawPayoutBonus: '提款/派彩/奖金',
+    withdrawPayoutBonus: '提款/派彩/奖金/调整',
     withdrawPlatform: '提款平台',
     withdrawPlatformList: '提款平台列表',
     withdrawPlatformName: '提款平台名称',
@@ -980,6 +995,14 @@ export default {
     templateId: '模板ID',
     addSmsSetting: '新增短信设置',
     editSmsSetting: '编辑短信设置',
+    requestExportToExcel: '请求导出至Excel',
+    downloadManagerRecord: '下载中心记录',
+    downloadExportedExcel: '下载已导出的Excel',
+    requestBy: '请求者',
+    requestTime: '请求时间',
+    progress: '进度',
+    download: '下载',
+    updateProgress: '更新进度',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -991,12 +1014,14 @@ export default {
     cancelDepositSuccess: '取消存款成功',
     changeAffiliateSuccess: '更换代理成功',
     changeSuccess: '更改成功',
+    commissionPaySuccess: '佣金发放成功',
     confirmCopy: '请确认是否将',
     confirmCopyTo: '复制至',
     confirmDelete: '请确认是否要删除这些数据, 此操作不可撤销',
     confirmSettlement: '请确认是否结算?',
+    confirmToAdjust: '请确认是否进行调整？一旦进行调整将无法再更改',
     confirmToChecking: '请确认是否将此数据返回至待审核?',
-    confirmToPay: '请确认是否结算更新至待结算?',
+    confirmToPay: '请确认是否发放佣金?',
     confirmToCheck: '请确认是否更改用户资料',
     confirmUpdate: '请确认是否更新?',
     confirmUpdatePayment: '请确认是否更新支付?',
@@ -1041,6 +1066,7 @@ export default {
     settlementToChecking: '成功更新至待审核',
     settlementToPay: '成功更新至待结算',
     settled: '成功结算',
+    success: '成功',
     summarySuccess: '已选择时段的汇总即将生成，请稍等',
     transferSuccess: '转账成功',
     twoPasswordNotMatch: '重新输入密码不相同',
@@ -1173,6 +1199,7 @@ export default {
     validateParamRequired: '参数必填',
     validatePasswordRequired: '密码必填',
     validatePasswordSize: '密码必须在 6-12 个字之间',
+    validatePaymentFeeFormat: '支付手续费必须介于 0 至 1 之间',
     validatePaymentNameRequired: '支付名称必填',
     validatePaymentTypeRequired: '支付类型必填',
     validatePayResultTypeRequired: '支付结果显示方式必填',
@@ -1183,6 +1210,7 @@ export default {
     validatePlatformRequired: '平台必填',
     validatePlatformAccountRequired: '平台账号必填',
     validatePlatformCodeRequired: '平台代码必填',
+    validatePlatformFeeFormat: '场馆费必须介于 0 至 1 之间',
     validatePlatformNameRequired: '平台名称必填',
     validatePrivilegeRequired: '优惠名必填',
     validatePromoCodeRequired: '优惠代码必填',
@@ -1229,6 +1257,8 @@ export default {
     validateThreeDigitsNumbeRequired: '三位数字必填',
     validateTimeTypeRequired: '时间类型必填',
     validateTitleRequired: '标题必填',
+    validateTransactionIdRequired: '注单号必填',
+    validateTransactionStatusRequired: '注单状态必填',
     validateTriggerTypeRequired: '触发类型必填',
     validateUrlFormat: '请输入正确的域名地址',
     validateUsernameRequired: '用户名必填',
@@ -1254,6 +1284,8 @@ export default {
     validateSecretKeyRequired: '密钥必填',
     validateAppIdRequired: '应用ID必填',
     validateTemplateIdRequired: '模板ID必填',
+    requestExportToExcelDone1: '请求已经成功发送，请按 ',
+    requestExportToExcelDone2: ' 进行查看进度与下载。',
   },
   menu: {
     undefined: '',
@@ -1271,11 +1303,12 @@ export default {
     'Member Transfer Record': '会员转账记录',
     'Member VIP': '会员等级列表',
     'Member Bet Record': '会员投注记录',
+    'PG Pending': 'PG待处理记录',
     Affiliate: '代理',
     'Affiliate Summary': '代理总结',
     'Affiliate Monthly Settlement': '代理结算记录',
     'Affiliate Monthly Settlement Detail': '代理结算信息',
-    'Affiliate Settlement Checking': '代理待审核记录',
+    'Affiliate Settlement Checking': '代理审核发放',
     'Affiliate Settlement Payment': '代理待结算记录',
     'Affiliate Domain Management': '代理域名管理',
     'Affiliate List': '代理列表',
@@ -1393,6 +1426,7 @@ export default {
     'Summary Member Report': '日会员总结报表',
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
+    DownloadManager: '下载中心',
   },
   error: {
     400: '请求无效',
@@ -1442,6 +1476,8 @@ export default {
     10041: '风险等级颜色已存在',
     10050: 'IP标签已存在',
     10051: 'IP标签不存在',
+    10110: '平台获取待处理注单异常',
+    10111: '平台更新待处理注单异常',
     11000: '代理不存在',
     11006: '站点代理分红已存在',
     11007: '站点代理分红不存在',
@@ -1526,5 +1562,7 @@ export default {
     20204: '找不到风控等级，请输入正确的风控等级(例：1)',
     20205: '找不到财务等级，请输入正确的财务等级(例：1)',
     20206: '请输入 ’测试‘ / ’普通‘ / ’三方‘ / ’代理‘',
+    21000: '此游戏不存在',
+    30000: 'PG注单设置失败',
   },
 }

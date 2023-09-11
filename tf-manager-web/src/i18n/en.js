@@ -7,23 +7,23 @@ export default {
   affiliate: {
     commissionModel: {
       NORMAL: 'Nomal',
-      SIMPLE: 'Simple'
+      SIMPLE: 'Simple',
     },
     level: {
       AFFILIATE: 'Affiliate',
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
-      CHIEF_AFFILIATE: 'Chief Affiliate'
+      CHIEF_AFFILIATE: 'Chief Affiliate',
     },
     timeType: {
       MONTHLY: 'Monthly',
-      WEEKLY: 'Weekly'
+      WEEKLY: 'Weekly',
     },
     status: {
       APPLY: 'Apply',
       NORMAL: 'Normal',
-      DISABLE: 'Disable'
-    }
+      DISABLE: 'Disable',
+    },
   },
   types: {
     NORMAL: 'NORMAL',
@@ -58,13 +58,13 @@ export default {
     depositDate: 'Deposit Date',
     finishDate: 'Finish Date',
     withdrawDate: 'Withdraw Date',
-    paymentDate: 'Payment Date'
+    paymentDate: 'Payment Date',
   },
   depositStatus: {
     SUCCESS: 'Success',
     SUPPLEMENT_SUCCESS: 'Supplement Success',
     CLOSED: 'Closed',
-    PENDING: 'Pending'
+    PENDING: 'Pending',
   },
   withdrawStatus: {
     ALL: 'All',
@@ -79,7 +79,7 @@ export default {
     REJECT: 'Reject',
     SENDING: 'Sending',
     WAITING_CALLBACK: 'Waiting Callback',
-    PAYING: 'Paying'
+    PAYING: 'Paying',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -94,12 +94,12 @@ export default {
     status: {
       sending: 'SENDING',
       success: 'SUCCESS',
-      fail: 'FAIL'
+      fail: 'FAIL',
     },
     type: {
       deposit: 'DEPOSIT',
-      withdraw: 'WITHDRAW'
-    }
+      withdraw: 'WITHDRAW',
+    },
   },
   moneyChange: {
     type: {
@@ -114,36 +114,36 @@ export default {
       ROLLBACK: 'ROLLBACK',
       PATCH: 'PATCH',
       BET_N_PAYOUT: 'BET AND PAYOUT',
-      AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER'
+      AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER',
     },
     subType: {
       DEPOSIT: 'Wallet to Game',
       WITHDRAW: 'Game to Wallet',
       TRASNFER_IN: 'Transfer In',
       TRANSFER_OUT: 'Transfer Out',
-      AFFILIATE_SETTLEMENT: 'Affiliate Settlement'
-    }
+      AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
+    },
   },
   status: {
     monthSummary: {
       UNCLEAR: 'Unclear',
       CLEARING: 'Clearing',
-      CLEARED: 'Cleared'
+      CLEARED: 'Cleared',
     },
     settlement: {
       CHECKING: 'Checking',
       PAY: 'Pay',
-      CLEARED: 'Cleared'
+      CLEARED: 'Cleared',
     },
     member: {
       NORMAL: 'Normal',
-      FROZEN: 'Frozen'
-    }
+      FROZEN: 'Frozen',
+    },
   },
   betStatus: {
-    UNSETTLED: "UNSETTLED",
-    SETTLED: "SETTLED",
-    CANCEL: "CANCEL"
+    UNSETTLED: 'UNSETTLED',
+    SETTLED: 'SETTLED',
+    CANCEL: 'CANCEL',
   },
   dashboard: {
     memberCount: 'Member Count',
@@ -164,7 +164,8 @@ export default {
     depositAmount: 'Deposit Amount',
     depositMemberCount: 'No. of Member Deposit',
     depositTransactionCount: 'No. of Deposit Transaction',
-    depositTransactionNumChartName: 'Number of Member Deposit /Number of Deposit Transaction',
+    depositTransactionNumChartName:
+      'Number of Member Deposit /Number of Deposit Transaction',
     financialLevelRatio: 'Financial Level Ratio',
     vipLevelRatio: 'VIP Level Ratio',
     paymentMethod: 'Payment Method',
@@ -194,7 +195,7 @@ export default {
     SPORT: 'SPORT',
     ESPORT: 'ESPORT',
     POKER: 'POKER',
-    LOTTERY: 'LOTTERY'
+    LOTTERY: 'LOTTERY',
   },
   fields: {
     account: 'Account',
@@ -308,6 +309,7 @@ export default {
     beforeBalance: 'Before Balance',
     beforeEdit: 'Before Edit',
     bet: 'Bet',
+    betAmount: 'Bet Amount',
     betId: 'Bet ID',
     betMoneyChange: 'Member Bet Money Change',
     betMoreThan: 'Bet More Than',
@@ -359,6 +361,7 @@ export default {
     commissionModel: 'Commission Model',
     commissionPercent: 'Commission %',
     commissionRate: 'Commission Rate',
+    commissionReport: 'Commission Report',
     commitTime: 'Commit Time',
     companyProfit: 'Company Profit',
     componentName: 'Component Name',
@@ -601,6 +604,8 @@ export default {
     memberPlatformAction: 'Action（Manual Register/Delete）',
     memberPlatformUpdate: 'Sync Password',
     memberPrivilegeBlacklist: 'Member Privilege Blacklist',
+    memberProfitDownlineProfitUnsettleCommission:
+      'Member Profit / Downline Profit / Unsettle Commission',
     memberReport: 'Member Report',
     memberType: 'Member Type',
     memberWithdrawLog: 'Member Withdraw Log',
@@ -672,6 +677,7 @@ export default {
     paymentBy: 'Payment By',
     paymentCard: 'Payment Card',
     paymentDate: 'Payment Date',
+    paymentFee: 'Payment Fee',
     paymentMethod: 'Payment Method',
     paymentName: 'Payment Name',
     paymentOnGoing: 'Payment on going',
@@ -679,6 +685,7 @@ export default {
     payout: 'Payout',
     pcWay: 'PC',
     pending: 'SUSPEND',
+    pendingTransaction: 'Pending',
     permission: 'Permission',
     permissionAssignment: 'Permission Assignment',
     platform: 'Platform',
@@ -686,8 +693,10 @@ export default {
     platformId: 'Platform ID',
     platformBalance: 'Platform Balance',
     platformCode: 'Platform Code',
+    platformFee: 'Platform Fee',
     platformFundTransfer: 'Platform Fund Transfer',
     platformName: 'Platform Name',
+    playerName: 'Player Name',
     pleaseChoose: 'Please choose',
     pleaseInput: 'Please input',
     previousLevel: 'Previous Level',
@@ -786,6 +795,9 @@ export default {
     serialNo: 'Serial Number',
     settlement: 'Settlement',
     settleTime: 'Settle Time',
+    settleView: 'View',
+    settlePay: 'Pay',
+    settleEdit: 'Edit',
     show: 'Show',
     sid: 'SID',
     site: 'Site',
@@ -858,6 +870,7 @@ export default {
     totalBetRecords: 'Total Bet Records',
     totalBonus: 'Total Bonus',
     totalCommission: 'Total Commission',
+    totalCommissionProfit: 'Total Commission Profit',
     totalDeductAmount: 'Total Deduct Amount',
     totalDeposit: 'Total Deposit',
     totalDepositAmount: 'Total Deposit Amount',
@@ -893,6 +906,7 @@ export default {
     totalWithdrawCount: 'Total Withdraw Count',
     totalWithdrawnAmount: 'Total withdrawn amount',
     transaction: 'Transaction',
+    transactionStatus: 'Transaction Status',
     transactionTime: 'Transaction Time',
     transactionId: 'Transaction ID',
     transferDate: 'Transfer Date',
@@ -910,6 +924,7 @@ export default {
     unlockMember: 'Unlock Member',
     unlockUser: 'Unlock User',
     url: 'Access URL',
+    unsettleCommission: 'Unsettled Commission',
     update: 'Update',
     updateBy: 'Updated By',
     updateCommissionModel: 'Update Commission Model',
@@ -922,6 +937,7 @@ export default {
     upgradeToCheck: 'UPGRADE_TO_UNDER_REVIEW',
     upgradeToPaymentOnGoing: 'UPGRADE_TO_PAYMENT_ON_GOING',
     upload: 'Upload',
+    upperName: 'Upper Name',
     username: 'Username',
     userType: 'User Type',
     validate: 'Validate',
@@ -949,7 +965,7 @@ export default {
     withdrawDate: 'Withdraw Date',
     withdrawMemberCount: 'Withdraw Member Count',
     withdrawName: 'Withdraw Name',
-    withdrawPayoutBonus: 'Withdrawal/Payout/Bonus',
+    withdrawPayoutBonus: 'Withdrawal/Payout/Bonus/Adjust',
     withdrawPlatform: 'Withdraw Platform',
     withdrawPlatformList: 'Withdraw Platform List',
     withdrawPlatformName: 'Withdraw Platform Name',
@@ -979,6 +995,14 @@ export default {
     templateId: 'Template ID',
     addSmsSetting: 'Add SMS Setting',
     editSmsSetting: 'Edit SMS Setting',
+    requestExportToExcel: 'Request Export to Excel',
+    downloadManagerRecord: 'Download Manager Record',
+    downloadExportedExcel: 'Download Exported Excel',
+    requestBy: 'Request By',
+    requestTime: 'Request Time',
+    progress: 'Progress',
+    download: 'Download',
+    updateProgress: 'Update Progress',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -990,6 +1014,9 @@ export default {
     cancelDepositSuccess: 'Cancel Deposit Success',
     changeAffiliateSuccess: 'Change Affiliate Success',
     changeSuccess: 'Change Success',
+    commissionPaySuccess: 'Commission Pay Success',
+    confirmToAdjust:
+      'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
     confirmCopy: 'Do you want to copy from ',
     confirmCopyTo: ' to ',
     confirmDelete:
@@ -1044,7 +1071,9 @@ export default {
     settlementToChecking: 'Updated to checking',
     settlementToPay: 'Updated to payment',
     settled: 'Successfully settled',
-    summarySuccess: 'Summary for the input period will be generated, please kindly wait',
+    success: 'Success',
+    summarySuccess:
+      'Summary for the input period will be generated, please kindly wait',
     transferSuccess: 'Transfer Success',
     twoPasswordNotMatch: 'Two password does not match',
     unlockMemberSuccess: 'Unlock Member Success',
@@ -1082,7 +1111,7 @@ export default {
     validateAnnouncementTypeRequired: 'Announcement Type is required',
     validateAtLeastSixChar: 'Please enter at least 6 characters',
     validateBankRequired: 'Bank is required',
-    validateBankCardNumberRequired: "Bank Card Number is required",
+    validateBankCardNumberRequired: 'Bank Card Number is required',
     validateBankCodeRequired: 'Bank Code is required',
     validateBankNameRequired: 'Bank Name is required',
     validateBankTypeRequired: 'Bank Type is required',
@@ -1189,6 +1218,7 @@ export default {
     validateParamRequired: 'Parameter is required',
     validatePasswordRequired: 'Password is required',
     validatePasswordSize: 'Password has to be 6-12 characters',
+    validatePaymentFeeFormat: 'Payment Fee must be between 0 to 1',
     validatePaymentNameRequired: 'Payment Name is required',
     validatePaymentTypeRequired: 'Payment Type is required',
     validatePayResultTypeRequired: 'Pay Result Type is required',
@@ -1200,6 +1230,7 @@ export default {
     validatePlatformRequired: 'Platform is required',
     validatePlatformAccountRequired: 'Platform Account is required',
     validatePlatformCodeRequired: 'Platform Code is required',
+    validatePlatformFeeFormat: 'Platform Fee must be between 0 to 1',
     validatePlatformNameRequired: 'Platform Name is required',
     validatePrivilegeRequired: 'Privilege Name is required',
     validatePromoCodeRequired: 'Promo Code is required',
@@ -1247,6 +1278,8 @@ export default {
     validateThreeDigitsNumbeRequired: '3 digits number is required',
     validateTitleRequired: 'Title is required',
     validateTimeTypeRequired: 'Time Type is required',
+    validateTransactionIdRequired: 'Transaction ID is required',
+    validateTransactionStatusRequired: 'Transaction Status is required',
     validateTriggerTypeRequired: 'Trigger Type is required',
     validateUrlFormat: 'Please enter proper url',
     validateUsernameRequired: 'Username is required',
@@ -1272,6 +1305,8 @@ export default {
     validateSecretKeyRequired: 'Secret Key is required',
     validateAppIdRequired: 'Application ID is required',
     validateTemplateIdRequired: 'Template ID is required',
+    requestExportToExcelDone1: 'Request was sent out successful, please click ',
+    requestExportToExcelDone2: ' to check progress and download.',
   },
   menu: {
     undefined: '',
@@ -1289,11 +1324,13 @@ export default {
     'Member Transfer Record': 'Member Transfer Record',
     'Member VIP': 'Member VIP',
     'Member Bet Record': 'Member Bet Record',
+    'PG Pending': 'PG Pending Records',
     Affiliate: 'Affiliate',
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',
-    'Affiliate Monthly Settlement Detail': 'Affiliate Monthly Settlement Detail',
-    'Affiliate Settlement Checking': 'Affiliate Settlement Checking',
+    'Affiliate Monthly Settlement Detail':
+      'Affiliate Monthly Settlement Detail',
+    'Affiliate Settlement Checking': 'Affiliate Settlement',
     'Affiliate Settlement Payment': 'Affiliate Settlement Payment',
     'Affiliate Domain Management': 'Affiliate Domain Management',
     'Affiliate List': 'Affiliate List',
@@ -1409,7 +1446,8 @@ export default {
     'Summary Member Report': 'Summary Member Report',
     'Finance Feedback': 'Finance Feedback',
     'Email Setting': 'Email Setting',
-    'SMS Setting': 'SMS Setting'
+    'SMS Setting': 'SMS Setting',
+    DownloadManager: 'Download Manager',
   },
   error: {
     400: 'Bad Request',
@@ -1459,6 +1497,8 @@ export default {
     10041: 'System risk level color already exist',
     10050: 'System ip label already exist',
     10051: 'System ip label does not exist',
+    10110: 'Platform retrieve pending transaction error',
+    10111: 'Platform update pending transaction error',
     11000: 'affiliate does not exist',
     11006: 'Site affiliate commission already exist',
     11007: 'Site affiliate commission does not exist',
@@ -1543,5 +1583,7 @@ export default {
     20204: 'Risk level not found, please insert correct risk level(eg：1)',
     20205: 'Financial level not found，please insert correct financial level (eg：1)',
     20206: 'Please insert ’测试‘ / ’普通‘ / ’三方‘ / ’代理‘',
+    21000: 'Game does not exists',
+    30000: 'PG update transaction status failed',
   },
 }

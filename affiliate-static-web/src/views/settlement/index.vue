@@ -1,28 +1,13 @@
+/* eslint-disable no-alert */
 <template>
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
         <div>
-          <el-select
-            v-if="hasRole(['ADMIN'])"
-            v-model="request.siteId"
-            size="small"
-            :placeholder="t('fields.site')"
-            class="filter-item"
-            style="width: 120px;margin-left: 5px"
-            @focus="loadSites"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
           <el-input
             v-model="request.affiliateName"
             size="small"
-            style="width: 200px;margin-left: 20px"
+            style="width: 200px;"
             :placeholder="t('fields.loginName')"
           />
           <el-button
@@ -119,10 +104,7 @@
           align="left"
           min-width="100"
         >
-          <template
-            #default="scope"
-            v-if="hasPermission(['sys:member:detail'])"
-          >
+          <template #default="scope">
             <span style="display: inline-block">
               {{ t('fields.account') }}:
               <router-link
@@ -139,13 +121,11 @@
           prop="recordTime"
           :label="t('fields.recordTime')"
           align="left"
-          min-width="100"
+          min-width="150"
         >
-          <template
-            #default="scope"
-            v-if="hasPermission(['sys:member:detail'])"
-          >
+          <template #default="scope">
             <span style="display: inline-block">
+              <div />
               {{ t('fields.month') }}: {{ scope.row.recordTime }}
             </span>
           </template>
@@ -215,7 +195,7 @@
         >
           <template #default="scope">
             <div>
-              {{ t('fields.profit') }}: $
+              {{ t('fields.memberProfit') }}: $
               <span
                 v-formatter="{data: scope.row.memberProfit, type: 'money'}"
               />
@@ -318,7 +298,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="t('fields.adjustAmount')"
+          :label="t('fields.adjustment')"
           align="left"
           min-width="140"
         >
@@ -346,38 +326,20 @@
           align="center"
           fixed="right"
           width="230"
-          v-if="
-            !hasRole(['SUB_TENANT']) &&
-              (hasPermission(['sys:affiliate:settle:view']) ||
-                hasPermission(['sys:affiliate:settle:pay']) ||
-                hasPermission(['sys:affiliate:settle:edit']))
-          "
         >
           <template #default="scope">
-            <el-button
-              size="mini"
-              type="warning"
-              v-permission="['sys:affiliate:settle:view']"
-              @click="showView(scope.row)"
-            >
+            <el-button size="mini" type="warning" @click="showView(scope.row)">
               {{ t('fields.settleView') }}
             </el-button>
             <el-button
               size="mini"
               type="danger"
-              v-permission="['sys:affiliate:settle:pay']"
               @click="confirmPay(scope.row)"
               v-if="scope.row.finalProfit > 0"
             >
               {{ t('fields.settlePay') }}
             </el-button>
-            <el-button
-              size="mini"
-              type="success"
-              v-permission="['sys:affiliate:settle:edit']"
-              @click="showEdit(scope.row)"
-              v-if="scope.row.adjustAmount === null"
-            >
+            <el-button size="mini" type="success" @click="showEdit(scope.row)" v-if="scope.row.adjustAmount===null">
               {{ t('fields.settleEdit') }}
             </el-button>
           </template>
@@ -399,28 +361,21 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
-import { hasRole, hasPermission } from '../../../utils/util'
+import { onMounted, reactive, ref } from 'vue'
 import {
   adjustAmount,
-  getAffiliateSettlementChecking,
+  getAffiliateSettlement,
   pay,
-  getAffiliateCommisionReport,
-} from '../../../api/affiliate-settlement'
-import { getSiteListSimple } from '../../../api/site'
+  getAffiliateSettlementReport,
+} from '@/api/affiliate-settlement'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { required } from '../../../utils/validate'
+import { required } from '@/utils/validate'
 import { useI18n } from 'vue-i18n'
-import { useStore } from '../../../store'
-import { TENANT } from '../../../store/modules/user/action-types'
+import { useStore } from '@/store'
 
 const { t } = useI18n()
 const store = useStore()
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const adjustForm = ref(null)
-const siteList = reactive({
-  list: [],
-})
 const uiControl = reactive({
   dialogVisible: false,
   progressBarVisible: false,
@@ -436,12 +391,11 @@ const uiControl1 = reactive({
   progressBarVisible: false,
   dialogTitle: '',
 })
-const site = ref(null)
 
 const request = reactive({
   size: 20,
   current: 1,
-  siteId: null,
+  siteId: store.state.user.siteId,
   affiliateName: null,
 })
 
@@ -474,14 +428,8 @@ const formRules = reactive({
   adjustReason: [required(t('message.validateAdjustReasonRequired'))],
 })
 
-async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
-}
-
 function resetQuery() {
   request.affiliateName = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 const page = reactive({
@@ -509,10 +457,10 @@ function checkQuery() {
   return query
 }
 
-async function loadCommisionReport(row) {
+async function loadSettlementReport(row) {
   uiControl.dialogVisible = false
   page1.loading = true
-  const { data: ret } = await getAffiliateCommisionReport(
+  const { data: ret } = await getAffiliateSettlementReport(
     row.recordTime,
     row.affiliateId
   )
@@ -524,7 +472,7 @@ async function loadSettlement() {
   uiControl.dialogVisible = false
   page.loading = true
   const query = checkQuery()
-  const { data: ret } = await getAffiliateSettlementChecking(query)
+  const { data: ret } = await getAffiliateSettlement(query)
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
@@ -549,7 +497,7 @@ function showView(row) {
     '  的' +
     t('fields.commissionReport')
   uiControl1.dialogVisible = true
-  loadCommisionReport(row)
+  loadSettlementReport(row)
 }
 
 async function confirmPay(check) {
@@ -565,7 +513,7 @@ async function confirmPay(check) {
 }
 
 async function adjust() {
-  ElMessageBox.confirm(t('message.confirmToAdjust'), {
+  ElMessageBox.confirm(t('message.confirmToAdjustment'), {
     confirmButtonText: t('fields.confirm'),
     cancelButtonText: t('fields.cancel'),
     type: 'warning',
@@ -582,14 +530,6 @@ async function adjust() {
 }
 
 onMounted(async () => {
-  await loadSites()
-  request.siteId = siteList.list[0].id
-  if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
-      s => s.siteName === store.state.user.siteName
-    )
-    request.siteId = site.value.id
-  }
   await loadSettlement()
 })
 </script>

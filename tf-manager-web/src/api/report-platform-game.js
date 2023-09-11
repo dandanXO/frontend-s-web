@@ -10,5 +10,5 @@ export const getDailyReport = (data) => {
 };
 
 export const getExportReport = (data) => {
-  return https().request("/report/dailyPlatformGameReport", Method.GET, data, ContentType.form);
+  return https().request("/report/requestPlatformGameReportExport", Method.GET, data, ContentType.form);
 };

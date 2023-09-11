@@ -290,6 +290,24 @@ export const constantRoutes = [
     redirect: "noredirect"
   },
   {
+    name: "Settlement Center",
+    path: "/settlement",
+    component: Layout,
+    children: [
+      {
+        path: "",
+        component: () => import(/* webpackChunkName: "personal" */ "../views/settlement/index.vue"),
+        name: "Settlement Center",
+        meta: {
+          title: "Settlement Center",
+          icon: "money"
+        }
+      }
+    ],
+    alwaysShow: true,
+    redirect: "noredirect"
+  },
+  {
     path: "/my/login",
     name: "MYS Login",
     meta: { hidden: true },
