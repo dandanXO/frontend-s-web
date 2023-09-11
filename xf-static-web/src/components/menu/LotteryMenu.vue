@@ -52,7 +52,7 @@ export default defineComponent({
         slogan: "最新创意 最好服务"
       },
       {
-        code: "LB",
+        code: "LBkeno",
         icon: "lb",
         label: "LB",
         gameCode: "",
