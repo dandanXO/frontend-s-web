@@ -98,6 +98,13 @@ export default defineComponent({
         image: 'cr',
         message: '倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。',
         link: '/games/cr-sport.html'
+      },
+      {
+        code: 'SABA',
+        name: 'SABA',
+        image: 'saba',
+        message: '覆盖世界各地大小赛事，提供让球、大小、半全场、波胆、单双、总入球、连串过关等多元竞猜，雷火体育不会让您错过任何自己最喜爱的体育赛事。',
+        link: '/games/saba-sport.html'
       }
     ]);
     // const selectedPlat = ref(platforms.value[0].code);

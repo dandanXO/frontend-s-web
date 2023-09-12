@@ -41,6 +41,7 @@ export default defineComponent({
         { code: "IM", icon: "im", label: "IM", slogan: "赛事最多 玩法新颖" },
         { code: "PM", icon: "pm", label: "PM", slogan: "最强滚球 超高水位" },
         { code: "CR", icon: "xf", label: "CR", slogan: "崭新玩法 感受精彩" },
+        { code: "SABA", icon: "xf", label: "SABA", slogan: "最佳水位 最全赛事" },
     ];
 
     const store = userStore();
