@@ -196,6 +196,10 @@ export default {
     POKER: '棋牌',
     LOTTERY: '彩票',
   },
+  vipRebateStatus: {
+    PENDING: '未领取',
+    CLAIMED: '已领取'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -946,6 +950,7 @@ export default {
     view: '查看',
     viewLog: '查看日志',
     vipLevel: 'VIP等级',
+    vipRebateRecord: "VIP返水记录",
     virtualVotes: '虚拟投票',
     visitNumber: '访问量',
     voteTime: '投票时间',
@@ -1362,6 +1367,7 @@ export default {
     Lottery: '彩票',
     'Lottery Record List': '彩票记录',
     'Lottery Result List': '彩票结果',
+    'VIP Rebate Record': 'VIP返水记录',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',

@@ -6,5 +6,5 @@ export const getPrivilegeRecord = (data) => {
 };
 
 export const getTotalPrivilegeAmount = (data) => {
-	return https().request("/report/getTotalPrivilegeAmount", Method.GET, data, ContentType.form);
-  };
+  return https().request("/report/getTotalPrivilegeAmount", Method.GET, data, ContentType.form);
+};
