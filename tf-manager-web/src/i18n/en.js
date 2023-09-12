@@ -197,6 +197,10 @@ export default {
     POKER: 'POKER',
     LOTTERY: 'LOTTERY',
   },
+  vipRebateStatus: {
+    PENDING: 'Pending',
+    CLAIMED: 'Claimed'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -946,6 +950,7 @@ export default {
     view: 'View',
     viewLog: 'View Log',
     vipLevel: 'VIP Level',
+    vipRebateRecord: "VIP Rebate Record",
     virtualVotes: 'Virtual Votes',
     visitNumber: 'Visit Number',
     voteTime: 'Vote Time',
@@ -1383,6 +1388,7 @@ export default {
     Lottery: 'Lottery',
     'Lottery Record List': 'Lottery Record List',
     'Lottery Result List': 'Lottery Result List',
+    'VIP Rebate Record': 'VIP Rebate Record',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
