@@ -1,7 +1,7 @@
 <template>
     <div>
         
-        <div class="platform-menu sports">
+        <div class="platform-menu poker">
             
           <div
               class="platform-box"
