@@ -8,7 +8,7 @@
       </template>
       <div class="inputs-wrap">
         <el-date-picker
-          v-model="request.regTime"
+          v-model="request.lastLoginTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
@@ -111,6 +111,15 @@
             <span
               v-if="scope.row.regTime !== null"
               v-formatter="{data: scope.row.regTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column prop="lastLoginTime" :label="t('fields.lastLoginTime')" align="center" min-width="150">
+          <template #default="scope">
+            <span v-if="scope.row.lastLoginTime === null">-</span>
+            <span
+              v-if="scope.row.lastLoginTime !== null"
+              v-formatter="{data: scope.row.lastLoginTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -312,7 +321,7 @@ const shortcuts = [
 ];
 
 const request = reactive({
-  regTime: [defaultDate, defaultDate],
+  lastLoginTime: [defaultDate, defaultDate],
   loginName: null,
   size: 20,
   current: 1
@@ -413,7 +422,7 @@ function restrictCommissionDecimalInput(event) {
 }
 
 function resetQuery() {
-  request.regTime = [defaultDate, defaultDate];
+  request.lastLoginTime = [defaultDate, defaultDate];
   request.loginName = null;
 }
 
@@ -428,9 +437,9 @@ async function loadDownlineAffiliates() {
       }
     });
   }
-  if (request.regTime !== null) {
-    if (request.regTime.length === 2) {
-      query.regTime = request.regTime.join(",");
+  if (request.lastLoginTime !== null) {
+    if (request.lastLoginTime.length === 2) {
+      query.lastLoginTime = request.lastLoginTime.join(",");
     }
   }
   query.siteId = site.value.id;
