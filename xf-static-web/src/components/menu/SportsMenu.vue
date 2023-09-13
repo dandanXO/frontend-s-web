@@ -8,7 +8,7 @@
               :key="nav.code"
               @click="$emit('loadModal', nav.label, 'onlyPlatform', nav.code)"
             >
-                    <div class="platform-box">
+                    <div class="platform-box" :class="filteredNavigations.length >= 3 ? 'rearranged-box':''">
                     <img :src="require('../../assets/sports/sport_logo_'+ nav.icon + '.png')">
                     <div class="contents">
                     <p class="platform-title">{{ nav.label }} 体育</p>
