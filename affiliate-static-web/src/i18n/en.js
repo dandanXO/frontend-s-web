@@ -139,6 +139,7 @@ export default {
     ftd: 'First Deposit',
     gameName: "Game Name",
     gameType: "Game Type",
+    lastLoginTime: "Last Login Time",
     lastMonth: "Last Month",
     lastMonthTotal: "Last Month Total",
     lastWeek: "Last Week",
