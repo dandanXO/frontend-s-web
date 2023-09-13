@@ -2512,6 +2512,25 @@ body {
       align-items: center;
       justify-content: flex-start;
 
+      &.rearranged-box {
+        flex-direction: column;
+        padding: 15px 25px;
+        text-align: center;
+        
+        .platform {
+          display: none;
+        }
+
+        img {
+          width: 220px;
+        }
+
+        .contents {
+          text-align: center;
+          padding-right: 0px;
+        }
+      }
+
       .contents {
         padding-right: 30px;
         text-align: left;
