@@ -860,7 +860,7 @@ export default defineComponent({
 				if(data[i] === "E-sports") {
           this.navigations.push({code: "Esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true});
         } else if(data[i] === "Casual"){
-            this.navigations.push({code: "Esports", name: "电竞小游戏", enName: "Casual", path: "/esportsCasual", submenu: false});
+            this.navigations.push({code: "Esports", name: "小游戏", enName: "Casual", path: "/esportsCasual", submenu: false});
 				} else if (data[i] === "Fishing"){
 					this.navigations.push({code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true});
 				} else if (data[i] === "Live Casino"){
@@ -2516,7 +2516,7 @@ body {
         flex-direction: column;
         padding: 15px 25px;
         text-align: center;
-        
+
         .platform {
           display: none;
         }
