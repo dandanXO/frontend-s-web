@@ -203,7 +203,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const gameType = reactive({
-  default: ["Slots", "Live Casino", "Fishing", "Sports", "E-sports", "Poker", "Lottery"],
+  default: ["Slots", "Live Casino", "Fishing", "Sports", "E-sports", "Poker", "Lottery", "Casual"],
   list: [],
   assigned: []
 })
