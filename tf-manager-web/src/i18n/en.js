@@ -1514,6 +1514,7 @@ export default {
     14001: 'The telephone already exist',
     14005: 'Affiliate commission must be less than superior affiliate commission: ',
     11009: 'Affiliate commission must be more than child affiliate commission: ',
+    11010: 'Referral affiliate cannot have downline affiliate',
     12000: 'System privilege info name already exist',
     12001: 'System privilege info code already exist',
     12010: 'Currency name already exist',

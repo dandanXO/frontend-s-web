@@ -94,7 +94,7 @@
           <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
             <el-input v-model="form.affiliateCode" style="width: 350px;" maxlength="11" />
           </el-form-item>
-          <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
+          <!-- <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
             <el-select
               v-model="form.affiliateLevel"
               size="small"
@@ -109,7 +109,7 @@
                 :value="item.value"
               />
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item :label="t('fields.commissionModel')" prop="commissionModel">
             <el-select
               v-model="form.commissionModel"
@@ -527,7 +527,7 @@ function restrictRevenueDecimalInput(event) {
 }
 
 const formRules = reactive({
-  affiliateLevel: [required(t('message.validateAffiliateLevelRequired'))],
+  // affiliateLevel: [required(t('message.validateAffiliateLevelRequired'))],
   loginName: [required(t('message.validateLoginNameRequired')), size(6, 12, t('message.validateLoginNameSize'))],
   password: [required(t('message.validatePasswordRequired')), size(6, 12, t('message.validatePasswordSize')), { validator: validatePassword, trigger: "blur" }],
   reEnterPassword: [required(t('message.validateReenterPasswordRequired')), { validator: validateReEnterPassword, trigger: "blur" }],

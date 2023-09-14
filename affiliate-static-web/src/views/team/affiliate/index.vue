@@ -34,6 +34,7 @@
       </div>
       <div class="btn-group">
         <el-button
+          v-if="affiliateLevel !== 'AFFILIATE'"
           icon="el-icon-plus"
           size="mini"
           type="primary"
@@ -171,7 +172,7 @@
         <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
           <el-input v-model="cForm.affiliateCode" style="width: 350px;" maxlength="11" :disabled="true" />
         </el-form-item>
-        <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
+        <!-- <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
           <el-select
             v-model="cForm.affiliateLevel"
             size="small"
@@ -186,7 +187,7 @@
               :value="item.value"
             />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input v-model="cForm.loginName" style="width: 350px;" maxlength="11" />
         </el-form-item>
@@ -254,6 +255,7 @@ const uiControl = reactive({
     { key: 4, displayName: "CHIEF AFFILIATE", value: "CHIEF_AFFILIATE" }
   ]
 });
+const affiliateLevel = ref(null);
 
 const site = ref(null);
 const affInfo = ref(null);
@@ -384,7 +386,7 @@ const validateCommission = (rule, value, callback) => {
 };
 
 const cFormRules = reactive({
-  affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
+  // affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
   loginName: [required(t('message.requiredLoginName')), size(6, 12, t('message.length6To12'))],
   password: [required(t('message.requiredPassword')), size(6, 12, t('message.length6To12')), { validator: validatePassword, trigger: "blur" }],
   reEnterPassword: [required(t('message.reenterPassword')), { validator: validateReEnterPassword, trigger: "blur" }],
@@ -547,6 +549,7 @@ function breadcrumbSearch(id, name) {
 }
 
 onMounted(async() => {
+  affiliateLevel.value = store.state.user.affiliateLevel;
   checkId.value = store.state.user.id
   const item = { id: checkId.value, name: store.state.user.name };
   breadcrumbNameList.value.push(item);
