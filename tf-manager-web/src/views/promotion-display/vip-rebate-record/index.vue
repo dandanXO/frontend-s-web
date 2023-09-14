@@ -127,6 +127,15 @@
             />
           </template>
         </el-table-column>
+        <el-table-column prop="claimTime" :label="t('fields.claimTime')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.claimTime === null">-</span>
+            <span
+              v-if="scope.row.claimTime !== null"
+              v-formatter="{data: scope.row.claimTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="140">
           <template #default="scope">
             <span v-if="scope.row.updateBy === null">-</span>
@@ -269,7 +278,7 @@ const uiControl = reactive({
 });
 
 const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.gameType'), t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'),
-  t('fields.updateBy'), t('fields.updateTime')];
+  t('fields.claimTime'), t('fields.updateBy'), t('fields.updateTime')];
 
 const form = reactive({
   id: null,
