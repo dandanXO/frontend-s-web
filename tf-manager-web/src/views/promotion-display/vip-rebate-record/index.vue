@@ -74,6 +74,16 @@
           @click="loadVipRebateRecords()"
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        <div class="btn-group">
+          <el-button
+            icon="el-icon-download"
+            size="mini"
+            type="success"
+            v-permission="['sys:vip-rebate-record:export']"
+            @click="exportExcel"
+          >{{ t('fields.exportToExcel') }}
+          </el-button>
+        </div>
       </div>
     </div>
 
@@ -108,13 +118,56 @@
             {{ t('gameType.' + scope.row.gameType) }}
           </template>
         </el-table-column>
-        <el-table-column prop="recordTime" :label="t('fields.recordTime')" align="center" min-width="180">
+        <el-table-column prop="recordTime" :label="t('fields.rebateDistributeTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.recordTime === null">-</span>
             <span
               v-if="scope.row.recordTime !== null"
               v-formatter="{data: scope.row.recordTime, formatter: 'YYYY-MM-DD', type: 'date'}"
             />
+          </template>
+        </el-table-column>
+        <el-table-column prop="claimTime" :label="t('fields.claimTime')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.claimTime === null">-</span>
+            <span
+              v-if="scope.row.claimTime !== null"
+              v-formatter="{data: scope.row.claimTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="140">
+          <template #default="scope">
+            <span v-if="scope.row.updateBy === null">-</span>
+            <span v-else>{{ scope.row.updateBy }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="updateTime" :label="t('fields.updateTime')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.updateTime === null">-</span>
+            <span
+              v-if="scope.row.updateTime !== null"
+              v-formatter="{data: scope.row.updateTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          :label="t('fields.operate')"
+          align="center"
+          fixed="right"
+          width="230"
+          v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:vip-rebate-record:update'])"
+        >
+          <template #default="scope">
+            <el-button
+              v-if="scope.row.status === 'PENDING'"
+              size="mini"
+              type="success"
+              v-permission="['sys:vip-rebate-record:update']"
+              @click="showEdit(scope.row)"
+            >
+              {{ t('fields.adjustAmount') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -131,26 +184,84 @@
       />
     </el-card>
   </div>
+
+  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
+             :close-on-click-modal="false" :close-on-press-escape="false"
+  >
+    <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
+                 :color="uiControl.colors" v-if="exportPercentage !== 100"
+    />
+    <el-result
+      icon="success"
+      :title="t('fields.successfullyExport')"
+      v-if="exportPercentage === 100"
+    />
+    <div class="dialog-footer">
+      <el-button type="primary" :disabled="exportPercentage !== 100"
+                 @click="uiControl.progressBarVisible = false"
+      >{{ t('fields.done') }}
+      </el-button>
+    </div>
+  </el-dialog>
+
+  <el-dialog
+    :title="t('fields.adjustAmount')"
+    v-model="uiControl.dialogVisible"
+    append-to-body
+    width="580px"
+  >
+    <el-form
+      ref="adjustForm"
+      :model="form"
+      :rules="formRules"
+      :inline="true"
+      size="small"
+      label-width="150px"
+    >
+      <el-form-item
+        :label="t('fields.adjustAmount')"
+        prop="amount"
+        @keypress="restrictDecimalInput($event)"
+      >
+        <el-input v-model="form.amount" style="width: 350px;" />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.dialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="adjust">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
+import { hasRole, hasPermission } from '../../../utils/util'
+import * as XLSX from 'xlsx';
 import moment from 'moment';
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { getVipRebateRecord } from '../../../api/vip-rebate-record';
+import { adjustAmount, getVipRebateRecord } from '../../../api/vip-rebate-record';
+import { required } from '../../../utils/validate';
+import { ElMessage } from 'element-plus';
 
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const adjustForm = ref(null)
 const site = ref(null)
 const siteList = reactive({
   list: []
 });
-
+const exportPercentage = ref(0);
 const uiControl = reactive({
+  dialogVisible: false,
+  progressBarVisible: false,
   gameType: [
     { key: 1, displayName: "SLOT", value: "SLOT" },
     { key: 2, displayName: "LIVE", value: "LIVE" },
@@ -165,6 +276,14 @@ const uiControl = reactive({
     { key: 2, displayName: t('vipRebateStatus.CLAIMED'), value: "CLAIMED" }
   ]
 });
+
+const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.gameType'), t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'),
+  t('fields.claimTime'), t('fields.updateBy'), t('fields.updateTime')];
+
+const form = reactive({
+  id: null,
+  amount: null
+})
 
 const defaultDate = convertDate(new Date());
 
@@ -199,6 +318,26 @@ function convertDate(date) {
 function disabledDate(time) {
   return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
 }
+
+function restrictDecimalInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if ((charCode < 48 || charCode > 57) && charCode !== 46) {
+    event.preventDefault()
+  }
+
+  if (
+    form.amount !== null &&
+    form.amount.toString().indexOf('.') > -1
+  ) {
+    if (charCode === 46) {
+      event.preventDefault()
+    }
+  }
+}
+
+const formRules = reactive({
+  amount: [required(t('message.validateAmountRequired'))]
+})
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
@@ -245,6 +384,73 @@ function changepage(page) {
   loadVipRebateRecords();
 }
 
+function showEdit(adjust) {
+  if (adjustForm.value) {
+    adjustForm.value.resetFields()
+  }
+  form.id = adjust.id
+  uiControl.dialogTitle = t('fields.adjust')
+  uiControl.dialogVisible = true
+}
+
+async function adjust() {
+  adjustForm.value.validate(async valid => {
+    if (valid) {
+      await adjustAmount(form.id, form)
+      uiControl.dialogVisible = false
+      ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
+      await loadVipRebateRecords()
+    }
+  });
+}
+
+async function exportExcel() {
+  uiControl.progressBarVisible = true;
+  const query = checkQuery();
+  query.current = 1;
+  const { data: ret } = await getVipRebateRecord(query);
+  const exportData = [EXPORT_HEADER];
+  const maxLength = [];
+
+  pushRecordToData(ret.records, exportData);
+  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  query.current = ret.current;
+
+  while (query.current < ret.pages) {
+    query.current += 1;
+    const { data: ret } = await getVipRebateRecord(query);
+    pushRecordToData(ret.records, exportData);
+    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  }
+  const ws = XLSX.utils.aoa_to_sheet(exportData);
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] = typeof value === 'number'
+        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
+        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
+    });
+  });
+  const wsCols = maxLength.map(w => { return { width: w } });
+  ws['!cols'] = wsCols;
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push('VIP_Rebate_Record');
+  wb.Sheets.VIP_Rebate_Record = ws;
+  XLSX.writeFile(wb, "vip_rebate_record.xlsx");
+  exportPercentage.value = 100;
+}
+
+function pushRecordToData(records, exportData) {
+  records.forEach(item => {
+    delete item.id;
+    delete item.memberId;
+    delete item.vipId;
+  })
+  const data = records.map(record => Object.values(record).map(item => !item || item === '' ? '-' : item));
+  exportData.push(...data);
+}
+
 onMounted(async() => {
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -266,5 +472,14 @@ onMounted(async() => {
   display: block;
   justify-content: flex-start;
   margin-bottom: 10px;
+}
+
+.btn-group {
+  margin-top: 15px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

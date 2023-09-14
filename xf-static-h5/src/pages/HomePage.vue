@@ -292,6 +292,19 @@
             />
           </template>
         </swiper-slide>
+
+        <swiper-slide
+            v-for="(casual, i) in casuals"
+            :key="i"
+            :class="'casual-' + i"
+        >
+          <PlatformBlock
+              @click="playGame(casual.name, casual.code, casual.gameCode)"
+              dataType="casual"
+              :data="casual"
+          />
+        </swiper-slide>
+
         <swiper-slide style="opacity: 0"></swiper-slide>
       </swiper>
     </div>
@@ -508,6 +521,18 @@ export default defineComponent({
 
         firstSwiper.value?.slideTo(slideIndex, 500);
       }
+      if (tab.name === "casual") {
+        slideIndex =
+            livecasino.value.length +
+            sport.value.length +
+            esport.value.length +
+            slot.value.length +
+            fishing.value.length +
+            poker.value.length +
+            lottery.value.length
+
+        firstSwiper.value?.slideTo(slideIndex, 500);
+      }
     };
     const onSlideChange = (swiper) => {
       // console.log("Swiping hEre")
@@ -528,7 +553,8 @@ export default defineComponent({
         "slot",
         "fishing",
         "poker",
-        "lottery"
+        "lottery",
+        "casual"
       ];
 
       // Iterate over each keyword
@@ -583,6 +609,12 @@ export default defineComponent({
         icon: "lottery",
         label: "彩票",
         labelact: "彩票游戏"
+      },
+      {
+        name: "casual",
+        icon: "casual",
+        label: "小游戏",
+        labelact: "小游戏"
       }
     ]);
 
@@ -593,6 +625,7 @@ export default defineComponent({
     const lottery = ref([]);
     const slot = ref([]);
     const fishing = ref([]);
+    const casuals = ref([]);
 
     const ui = useUI();
     const scrollPageRef = ref(null);
@@ -627,6 +660,11 @@ export default defineComponent({
     });
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
+      // console.log(gameName)
+      // console.log(platformCode)
+      // console.log(gameCode)
+      // console.log(gameStatus);
+
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
@@ -737,32 +775,6 @@ export default defineComponent({
       }
     };
 
-    // const homePopupImg = ref("");
-    // const checkShowImgTop = () => {
-    //   const lastTime = localStorage.getItem("indexImgTop");
-    //   if (lastTime) {
-    //     const diff = new Date().getTime() - Number(lastTime);
-    //     if (diff > 1000 * 60 * 60 * 12) {
-    //       localStorage.removeItem("indexImgTop");
-    //     }
-    //   } else {
-    //     api
-    //       .get("/promo/banner?category=HOMEPOP")
-    //       .then((res) => {
-    //         if (res.code === 0) {
-    //           homePopupImg.value =
-    //             res.data.length > 0
-    //               ? imgURL + res.data[0]["mobileImageUrl"]
-    //               : "";
-    //           if (homePopupImg.value) {
-    //             isFirstView.value = true;
-    //           }
-    //         }
-    //       })
-    //       .catch(() => {});
-    //   }
-    // };
-
     function loadData() {
       api
           .get("/promo/banner?category=HOME")
@@ -819,6 +831,7 @@ export default defineComponent({
             ui.slotLists = [];
             pf.forEach((element) => {
               const platTypes = element.gameType.split(",");
+              // console.log(platTypes);
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
                 // console.log(espObj);
@@ -838,6 +851,17 @@ export default defineComponent({
                 espObj.icon = "esport";
                 espObj.subtitle = "电竞赛事";
                 esport.value.push(espObj);
+
+                //Add 1 More Casual minigame.
+                // if (platTypes.indexOf("CASUAL") > -1) {
+                var casualObj = Object.assign({}, element);
+                casualObj.gameCode = "casual";
+                casualObj.title = casualObj.name + " 小游戏";
+                casualObj.icon = "casual";
+                casualObj.subtitle = "小游戏";
+                casuals.value.push(casualObj);
+                // }
+
               }
               if (platTypes.indexOf("SPORT") > -1) {
                 var spObj = Object.assign({}, element);
@@ -911,7 +935,11 @@ export default defineComponent({
                 lottObj.title = lottObj.name + " 彩票";
                 lottObj.icon = "lottery";
                 lottObj.subtitle = "彩票游戏";
-                lottery.value.push(lottObj);
+                //HArdCode hid BBIN
+                if (lottObj.code !== 'BBINDY') {
+                  lottery.value.push(lottObj);
+                }
+
               }
             });
           })
@@ -1022,20 +1050,6 @@ export default defineComponent({
       isAppUpdateModal.value = false;
     };
 
-    const isiOS = () => {
-      return (
-          [
-            "iPad Simulator",
-            "iPhone Simulator",
-            "iPod Simulator",
-            "iPad",
-            "iPhone",
-            "iPod"
-          ].includes(navigator.platform) ||
-          // iPad on iOS 13 detection
-          (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-      );
-    };
 
     const closeTopBox = () => {
       isH5.value = false;
@@ -1068,9 +1082,7 @@ export default defineComponent({
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
-    // const openGame = (gameName, gameCode) => {
-    //   casinoGame.value.open(gameName, selectedPlat.value.code, gameCode);
-    // };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1104,6 +1116,7 @@ export default defineComponent({
       esport,
       slot,
       livecasino,
+      casuals,
       poker,
       fishing,
       lottery,
