@@ -354,6 +354,7 @@ export default {
     checkExclusiveUrl: '查看专属网址',
     checkFail: '审核失败',
     checkTime: '审核时长',
+    claimTime: '领取时间',
     className: '类别名',
     clearingSum: '结算总和',
     clientType: '客户类型',
