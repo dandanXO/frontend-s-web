@@ -355,6 +355,7 @@ export default {
     checkExclusiveUrl: 'Check Exclusive Url',
     checkFail: 'REVIEW_FAIL',
     checkTime: 'Check Time',
+    claimTime: 'Claim Time',
     className: 'Class Name',
     clearingSum: 'Clearing Sum',
     clientType: 'Client Type',
