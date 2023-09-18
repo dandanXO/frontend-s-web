@@ -897,6 +897,7 @@ export default {
     totalPrivilegeClaimAmount: 'Total Privilege Claim Amount',
     totalPromo: 'Total Promotion',
     totalProfit: 'Total Profit',
+    totalRebateAmount: 'Total Rebate Amount',
     totalRedeem: 'Total Redeem',
     totalRegister: 'Total Register',
     totalReimburseAmount: 'Total Reimburse Amount',

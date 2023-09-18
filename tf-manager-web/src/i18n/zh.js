@@ -897,6 +897,7 @@ export default {
     totalProfit: '总利润',
     totalPrivilegeAmount: '总优惠金额',
     totalPrivilegeClaimAmount: '总优惠领取金额',
+    totalRebateAmount: '总返水金额',
     totalRedeem: '总领取金额',
     totalRegister: '总新注册用户',
     totalReimburseAmount: '总报销金额',
