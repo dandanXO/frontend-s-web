@@ -81,12 +81,12 @@
           <el-tag v-else type="info" size="mini">-</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="paymentName" :label="t('fields.paymentName')" align="center" min-width="100">
+      <!-- <el-table-column prop="paymentName" :label="t('fields.paymentName')" align="center" min-width="100">
         <template #default="scope">
           <span v-if="scope.row.paymentName === null">-</span>
           <span v-if="scope.row.paymentName !== null">{{ scope.row.paymentName }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <div class="table-footer">
       <span style="margin-right:20px;">{{ t('fields.totalDeposit') }}: $ <span v-formatter="{data: page.totalDeposit,type: 'money'}" /></span>

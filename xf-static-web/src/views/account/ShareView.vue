@@ -106,10 +106,10 @@ export default defineComponent({
     const getReferral = () => {
       getReferralLink().then((res) => {
         if(res.code === 0) {
-          referralLink.value = `https://www.xf9866.com/refer/${res.data}`;
+          referralLink.value = `https://www.xf8578.com/refer/${res.data}`;
           // evip
         }
-      }).catch((err) => { 
+      }).catch((err) => {
         console.log(err)
       })
     };

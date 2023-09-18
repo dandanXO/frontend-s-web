@@ -171,6 +171,9 @@
           </template>
         </el-table-column>
       </el-table>
+      <div style="text-align: right;margin-top:10px;">
+        <span>{{ t('fields.totalRebateAmount') }}: $ <span v-formatter="{data: page.totalRebateAmount,type: 'money'}" /></span>
+      </div>
       <el-pagination
         class="pagination"
         :total="page.total"
@@ -246,7 +249,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { adjustAmount, getVipRebateRecord } from '../../../api/vip-rebate-record';
+import { adjustAmount, getTotal, getVipRebateRecord } from '../../../api/vip-rebate-record';
 import { required } from '../../../utils/validate';
 import { ElMessage } from 'element-plus';
 
@@ -308,7 +311,8 @@ function resetQuery() {
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
+  loading: false,
+  totalRebateAmount: 0
 });
 
 function convertDate(date) {
@@ -376,6 +380,8 @@ async function loadVipRebateRecords() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
+  const { data: total } = await getTotal(query);
+  page.totalRebateAmount = total;
   page.loading = false;
 }
 
