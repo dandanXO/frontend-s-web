@@ -109,6 +109,11 @@ const routes = [
                         /* webpackChunkName: "depositLoading" */ "../components/depositLoading.vue"
                         ),
             },
+            {
+                path: "/:catchAll(.*)*",
+                redirect: '/',
+                component: () => import("../views/HomeView.vue")
+            }
         ]
     },
     // {

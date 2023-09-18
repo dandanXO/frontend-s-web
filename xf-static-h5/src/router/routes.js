@@ -554,6 +554,7 @@ const routes = [
     // but you can also remove it
     {
         path: "/:catchAll(.*)*",
+        redirect: '/',
         component: () => import("pages/ErrorNotFound.vue")
     }
 ];
