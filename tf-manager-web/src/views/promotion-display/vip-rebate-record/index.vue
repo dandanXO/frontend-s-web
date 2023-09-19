@@ -75,10 +75,13 @@
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:vip-rebate-record:rebate']" @click="distributeRebate()" :disabled="uiControl.rebateBtn">
+            {{ t('fields.distributeRebate') }}
+          </el-button>
           <el-button
             icon="el-icon-download"
             size="mini"
-            type="success"
+            type="warning"
             v-permission="['sys:vip-rebate-record:export']"
             @click="exportExcel"
           >{{ t('fields.exportToExcel') }}
@@ -98,8 +101,10 @@
                 size="small"
                 highlight-current-row
                 v-loading="page.loading"
+                @selection-change="handleSelectionChange"
                 :empty-text="t('fields.noData')"
       >
+        <el-table-column type="selection" width="55" :selectable="canSelectRow" />
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120" />
         <el-table-column prop="vipName" :label="t('fields.vipLevel')" align="center" min-width="120" />
         <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="100">
@@ -111,6 +116,11 @@
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'CLAIMED'" size="mini" type="success">{{ t('vipRebateStatus.' + scope.row.status) }}</el-tag>
             <el-tag v-else size="mini" type="warning">{{ t('vipRebateStatus.' + scope.row.status) }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="140">
+          <template #default="scope">
+            {{ scope.row.platform }}
           </template>
         </el-table-column>
         <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140">
@@ -162,11 +172,20 @@
             <el-button
               v-if="scope.row.status === 'PENDING'"
               size="mini"
-              type="success"
+              type="warning"
               v-permission="['sys:vip-rebate-record:update']"
               @click="showEdit(scope.row)"
             >
               {{ t('fields.adjustAmount') }}
+            </el-button>
+            <el-button
+              v-if="scope.row.status === 'PENDING'"
+              size="mini"
+              type="success"
+              v-permission="['sys:vip-rebate-record:rebate']"
+              @click="distributeRebate(scope.row)"
+            >
+              {{ t('fields.distributeRebate') }}
             </el-button>
           </template>
         </el-table-column>
@@ -249,9 +268,9 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { adjustAmount, getTotal, getVipRebateRecord } from '../../../api/vip-rebate-record';
+import { adjustAmount, distribute, getTotal, getVipRebateRecord } from '../../../api/vip-rebate-record';
 import { required } from '../../../utils/validate';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 const { t } = useI18n();
 const store = useStore()
@@ -262,7 +281,9 @@ const siteList = reactive({
   list: []
 });
 const exportPercentage = ref(0);
+let chooseRecords = [];
 const uiControl = reactive({
+  rebateBtn: true,
   dialogVisible: false,
   progressBarVisible: false,
   gameType: [
@@ -343,6 +364,15 @@ const formRules = reactive({
   amount: [required(t('message.validateAmountRequired'))]
 })
 
+function handleSelectionChange(val) {
+  chooseRecords = val;
+  if (chooseRecords.length === 0) {
+    uiControl.rebateBtn = true;
+  } else {
+    uiControl.rebateBtn = false;
+  }
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
   siteList.list = site;
@@ -397,6 +427,10 @@ function showEdit(adjust) {
   form.id = adjust.id
   uiControl.dialogTitle = t('fields.adjust')
   uiControl.dialogVisible = true
+}
+
+function canSelectRow(row) {
+  return row.status !== 'CLAIMED';
 }
 
 async function adjust() {
@@ -457,13 +491,34 @@ function pushRecordToData(records, exportData) {
   exportData.push(...data);
 }
 
+function distributeRebate(row) {
+  ElMessageBox.confirm(
+    t('message.confirmRebate'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    const form = {};
+    if (row) {
+      form.ids = [row.id]
+    } else {
+      form.ids = chooseRecords.map(r => r.id).join(',');
+    }
+    form.siteId = request.siteId;
+    await distribute(form);
+    await loadVipRebateRecords();
+    ElMessage({ message: t('message.rebateSuccess'), type: "success" });
+  });
+}
+
 onMounted(async() => {
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
-  await loadVipRebateRecords();
 })
 </script>
 

@@ -449,6 +449,7 @@ export default {
     disableAffiliate: 'Disable Affiliate',
     disableType: 'Disable Type',
     distributePrivilege: 'Distribute Privilege',
+    distributeRebate: 'Distribute Rebate',
     domain: 'Domain',
     domainCount: 'Domain Count',
     domainList: 'Domain List',
@@ -1029,6 +1030,7 @@ export default {
     confirmCopyTo: ' to ',
     confirmDelete:
       'Confirm that you want to delete these data, the operation cannot be undone',
+    confirmRebate: 'Confirm that you want to distribute the selected rebate, the operation cannot be undone',
     confirmSettlement: 'Confirm that you want to proceed with the settlement?',
     confirmToChecking:
       'Confirm that you want revert the settlement to checking?',
