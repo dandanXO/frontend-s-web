@@ -195,6 +195,7 @@ export default {
     ESPORT: '电竞',
     POKER: '棋牌',
     LOTTERY: '彩票',
+    CASUAL: '小游戏',
   },
   vipRebateStatus: {
     PENDING: '未领取',
