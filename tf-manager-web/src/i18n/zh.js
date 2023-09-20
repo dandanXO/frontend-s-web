@@ -198,8 +198,8 @@ export default {
     CASUAL: '小游戏',
   },
   vipRebateStatus: {
-    PENDING: '未领取',
-    CLAIMED: '已领取'
+    PENDING: '未派发',
+    DISTRIBUTED: '已派发'
   },
   fields: {
     account: '账号',
@@ -448,8 +448,10 @@ export default {
     disable: '禁用',
     disableAffiliate: '禁用代理',
     disableType: '禁用类型',
+    distributeBy: '派发者',
     distributePrivilege: '发放奖金',
     distributeRebate: '发放返水',
+    distributeTime: '派发时间',
     domain: '域名',
     domainCount: '域名数量',
     domainList: '域名列表',
@@ -1063,6 +1065,7 @@ export default {
     paymentUpdate: '是否需要复制？如无需复制请按开始',
     paySuccess: '支付成功',
     promoDistributionSuccess: '发放奖金成功',
+    rebateSuccess: '派发返水成功',
     reenterPassword: '请重新输入密码',
     registerSuccess: '注册成功',
     replySuccess: '回复成功',
@@ -1539,7 +1542,7 @@ export default {
     15002: 'VIP已被现有VIP使用, 故无法删除',
     15003: 'VIP返水规则已存在于此VIP级别和游戏类型',
     15004: 'VIP返水规则不存在',
-    15005: 'VIP返水已领取',
+    15005: 'VIP返水已派发',
     15010: '会员组别名称已存在于此站点',
     15012: '会员组别不存在',
     15020: '存款记录不存在',

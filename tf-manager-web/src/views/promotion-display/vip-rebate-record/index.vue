@@ -75,7 +75,7 @@
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:vip-rebate-record:rebate']" @click="distributeRebate()" :disabled="uiControl.rebateBtn">
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:vip-rebate-record:rebate']" @click="distributeRebate()">
             {{ t('fields.distributeRebate') }}
           </el-button>
           <el-button
@@ -101,34 +101,37 @@
                 size="small"
                 highlight-current-row
                 v-loading="page.loading"
-                @selection-change="handleSelectionChange"
                 :empty-text="t('fields.noData')"
       >
-        <el-table-column type="selection" width="55" :selectable="canSelectRow" />
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120" />
-        <el-table-column prop="vipName" :label="t('fields.vipLevel')" align="center" min-width="120" />
+        <el-table-column prop="vipName" :label="t('fields.vipLevel')" align="center" min-width="100" />
+        <el-table-column prop="betAmount" :label="t('fields.betAmount')" align="center" min-width="100">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.betAmount,type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.amount,type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="140">
+        <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="120">
           <template #default="scope">
-            <el-tag v-if="scope.row.status === 'CLAIMED'" size="mini" type="success">{{ t('vipRebateStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'DISTRIBUTED'" size="mini" type="success">{{ t('vipRebateStatus.' + scope.row.status) }}</el-tag>
             <el-tag v-else size="mini" type="warning">{{ t('vipRebateStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="140">
+        <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120">
           <template #default="scope">
             {{ scope.row.platform }}
           </template>
         </el-table-column>
-        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140">
+        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="100">
           <template #default="scope">
             {{ t('gameType.' + scope.row.gameType) }}
           </template>
         </el-table-column>
-        <el-table-column prop="recordTime" :label="t('fields.rebateDistributeTime')" align="center" min-width="180">
+        <el-table-column prop="recordTime" :label="t('fields.rebateDistributeTime')" align="center" min-width="150">
           <template #default="scope">
             <span v-if="scope.row.recordTime === null">-</span>
             <span
@@ -137,16 +140,22 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="claimTime" :label="t('fields.claimTime')" align="center" min-width="180">
+        <el-table-column prop="distributeBy" :label="t('fields.distributeBy')" align="center" min-width="120">
           <template #default="scope">
-            <span v-if="scope.row.claimTime === null">-</span>
+            <span v-if="scope.row.distributeBy === null">-</span>
+            <span v-else>{{ scope.row.distributeBy }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="distributeTime" :label="t('fields.distributeTime')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.distributeTime === null">-</span>
             <span
-              v-if="scope.row.claimTime !== null"
-              v-formatter="{data: scope.row.claimTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
+              v-if="scope.row.distributeTime !== null"
+              v-formatter="{data: scope.row.distributeTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
             />
           </template>
         </el-table-column>
-        <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="140">
+        <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="120">
           <template #default="scope">
             <span v-if="scope.row.updateBy === null">-</span>
             <span v-else>{{ scope.row.updateBy }}</span>
@@ -165,7 +174,7 @@
           :label="t('fields.operate')"
           align="center"
           fixed="right"
-          width="230"
+          width="180"
           v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:vip-rebate-record:update'])"
         >
           <template #default="scope">
@@ -177,15 +186,6 @@
               @click="showEdit(scope.row)"
             >
               {{ t('fields.adjustAmount') }}
-            </el-button>
-            <el-button
-              v-if="scope.row.status === 'PENDING'"
-              size="mini"
-              type="success"
-              v-permission="['sys:vip-rebate-record:rebate']"
-              @click="distributeRebate(scope.row)"
-            >
-              {{ t('fields.distributeRebate') }}
             </el-button>
           </template>
         </el-table-column>
@@ -281,9 +281,7 @@ const siteList = reactive({
   list: []
 });
 const exportPercentage = ref(0);
-let chooseRecords = [];
 const uiControl = reactive({
-  rebateBtn: true,
   dialogVisible: false,
   progressBarVisible: false,
   gameType: [
@@ -297,12 +295,12 @@ const uiControl = reactive({
   ],
   status: [
     { key: 1, displayName: t('vipRebateStatus.PENDING'), value: "PENDING" },
-    { key: 2, displayName: t('vipRebateStatus.CLAIMED'), value: "CLAIMED" }
+    { key: 2, displayName: t('vipRebateStatus.DISTRIBUTED'), value: "DISTRIBUTED" }
   ]
 });
 
-const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'),
-  t('fields.claimTime'), t('fields.updateBy'), t('fields.updateTime')];
+const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
+  t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'), t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
 
 const form = reactive({
   id: null,
@@ -318,7 +316,7 @@ const request = reactive({
   siteId: null,
   loginName: null,
   gameType: [],
-  status: ["PENDING", "CLAIMED"]
+  status: ["PENDING", "DISTRIBUTED"]
 });
 
 function resetQuery() {
@@ -326,7 +324,7 @@ function resetQuery() {
   request.siteId = siteList.list[0].id;
   request.loginName = null;
   request.gameType = [];
-  request.status = ["PENDING", "CLAIMED"];
+  request.status = ["PENDING", "DISTRIBUTED"];
 }
 
 const page = reactive({
@@ -364,15 +362,6 @@ const formRules = reactive({
   amount: [required(t('message.validateAmountRequired'))]
 })
 
-function handleSelectionChange(val) {
-  chooseRecords = val;
-  if (chooseRecords.length === 0) {
-    uiControl.rebateBtn = true;
-  } else {
-    uiControl.rebateBtn = false;
-  }
-}
-
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
   siteList.list = site;
@@ -405,7 +394,6 @@ function checkQuery() {
 async function loadVipRebateRecords() {
   page.loading = true;
   const query = checkQuery();
-  query.pagingState = page.pagingState
   const { data: ret } = await getVipRebateRecord(query);
   page.pages = ret.pages;
   page.records = ret.records;
@@ -427,10 +415,6 @@ function showEdit(adjust) {
   form.id = adjust.id
   uiControl.dialogTitle = t('fields.adjust')
   uiControl.dialogVisible = true
-}
-
-function canSelectRow(row) {
-  return row.status !== 'CLAIMED';
 }
 
 async function adjust() {
@@ -486,12 +470,13 @@ function pushRecordToData(records, exportData) {
     delete item.id;
     delete item.memberId;
     delete item.vipId;
+    delete item.claimTime;
   })
   const data = records.map(record => Object.values(record).map(item => !item || item === '' ? '-' : item));
   exportData.push(...data);
 }
 
-function distributeRebate(row) {
+function distributeRebate() {
   ElMessageBox.confirm(
     t('message.confirmRebate'),
     {
@@ -500,14 +485,8 @@ function distributeRebate(row) {
       type: "warning"
     }
   ).then(async () => {
-    const form = {};
-    if (row) {
-      form.ids = [row.id]
-    } else {
-      form.ids = chooseRecords.map(r => r.id).join(',');
-    }
-    form.siteId = request.siteId;
-    await distribute(form);
+    const query = checkQuery();
+    await distribute(query);
     await loadVipRebateRecords();
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
   });

@@ -200,7 +200,7 @@ export default {
   },
   vipRebateStatus: {
     PENDING: 'Pending',
-    CLAIMED: 'Claimed'
+    DISTRIBUTED: 'Distributed'
   },
   fields: {
     account: 'Account',
@@ -449,8 +449,10 @@ export default {
     disable: 'Disable',
     disableAffiliate: 'Disable Affiliate',
     disableType: 'Disable Type',
+    distributeBy: 'Distribute By',
     distributePrivilege: 'Distribute Privilege',
     distributeRebate: 'Distribute Rebate',
+    distributeTime: 'Distribute Time',
     domain: 'Domain',
     domainCount: 'Domain Count',
     domainList: 'Domain List',
@@ -1069,6 +1071,7 @@ export default {
     paySuccess: 'Pay Success',
     promoDistributionSuccess: 'Promo Distribution Success',
     reenterPassword: 'Please re-enter the password',
+    rebateSuccess: 'Distribute Rebate Success',
     registerSuccess: 'Register Success',
     replySuccess: 'Reply Success',
     removePreviousLevel: 'Please remove previous level',
@@ -1560,7 +1563,7 @@ export default {
     15002: 'VIP is being used by existing VIP, it cannot be deleted',
     15003: 'VIP rebate rule exists for given VIP level and game type',
     15004: 'VIP rebate rule does not exist',
-    15005: 'VIP rebate already claimed',
+    15005: 'VIP rebate already distributed',
     15010: 'Financial level name already exist on the site',
     15012: 'Financial level does not exist',
     15020: 'Deposit Record does not exist',
