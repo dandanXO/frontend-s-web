@@ -301,7 +301,7 @@ const uiControl = reactive({
   ]
 });
 
-const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.gameType'), t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'),
+const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'),
   t('fields.claimTime'), t('fields.updateBy'), t('fields.updateTime')];
 
 const form = reactive({
