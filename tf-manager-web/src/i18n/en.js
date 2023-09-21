@@ -198,9 +198,14 @@ export default {
     LOTTERY: 'LOTTERY',
     CASUAL: 'CASUAL',
   },
-  vipRebateStatus: {
+  distributeStatus: {
     PENDING: 'Pending',
     DISTRIBUTED: 'Distributed'
+  },
+  referFriendEvent: {
+    INFO: 'Complete Info',
+    FIRST: 'First Deposit',
+    SECOND: 'Second Deposit'
   },
   fields: {
     account: 'Account',
@@ -452,6 +457,7 @@ export default {
     distributeBy: 'Distribute By',
     distributePrivilege: 'Distribute Privilege',
     distributeRebate: 'Distribute Rebate',
+    distributeRefer: 'Distribute Refer Bonus',
     distributeTime: 'Distribute Time',
     domain: 'Domain',
     domainCount: 'Domain Count',
@@ -506,6 +512,7 @@ export default {
     email: 'Email',
     endDate: 'End Date',
     endTime: 'End Time',
+    event: 'Event',
     exchangeRate: 'Exchange Rate',
     exclusiveUrlWeb: 'Exclusive Url（Web）',
     exclusiveUrlWap: 'Exclusive Url（App）',
@@ -758,6 +765,7 @@ export default {
     registerTime: 'Register Time',
     registrationDate: 'Registration Date',
     referredFriends: 'Referred Friends',
+    referFriendRecord: 'Refer Friend Record',
     remark: 'Remark',
     remove: 'Remove',
     reply: 'Reply',
@@ -1033,7 +1041,8 @@ export default {
     confirmCopyTo: ' to ',
     confirmDelete:
       'Confirm that you want to delete these data, the operation cannot be undone',
-    confirmRebate: 'Confirm that you want to distribute the selected rebate, the operation cannot be undone',
+    confirmRebate: 'Confirm that you want to distribute all rebate, the operation cannot be undone',
+    confirmRefer: 'Confirm that you want to distribute all refer friend promo, the operation cannot be undone',
     confirmSettlement: 'Confirm that you want to proceed with the settlement?',
     confirmToChecking:
       'Confirm that you want revert the settlement to checking?',
@@ -1073,6 +1082,7 @@ export default {
     reenterPassword: 'Please re-enter the password',
     rebateSuccess: 'Distribute Rebate Success',
     registerSuccess: 'Register Success',
+    referSuccess: 'Distribute Refer Friend Promo Success',
     replySuccess: 'Reply Success',
     removePreviousLevel: 'Please remove previous level',
     removeRemarkSuccess: 'Remove Remark Success',
@@ -1398,6 +1408,7 @@ export default {
     'Lottery Record List': 'Lottery Record List',
     'Lottery Result List': 'Lottery Result List',
     'VIP Rebate Record': 'VIP Rebate Record',
+    'Refer Friend': 'Refer Friend Record',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
