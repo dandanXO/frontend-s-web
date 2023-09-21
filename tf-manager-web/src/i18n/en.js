@@ -198,9 +198,14 @@ export default {
     LOTTERY: 'LOTTERY',
     CASUAL: 'CASUAL',
   },
-  vipRebateStatus: {
+  distributeStatus: {
     PENDING: 'Pending',
-    CLAIMED: 'Claimed'
+    DISTRIBUTED: 'Distributed'
+  },
+  referFriendEvent: {
+    INFO: 'Complete Info',
+    FIRST: 'First Deposit',
+    SECOND: 'Second Deposit'
   },
   fields: {
     account: 'Account',
@@ -449,7 +454,11 @@ export default {
     disable: 'Disable',
     disableAffiliate: 'Disable Affiliate',
     disableType: 'Disable Type',
+    distributeBy: 'Distribute By',
     distributePrivilege: 'Distribute Privilege',
+    distributeRebate: 'Distribute Rebate',
+    distributeRefer: 'Distribute Refer Bonus',
+    distributeTime: 'Distribute Time',
     domain: 'Domain',
     domainCount: 'Domain Count',
     domainList: 'Domain List',
@@ -503,6 +512,7 @@ export default {
     email: 'Email',
     endDate: 'End Date',
     endTime: 'End Time',
+    event: 'Event',
     exchangeRate: 'Exchange Rate',
     exclusiveUrlWeb: 'Exclusive Url（Web）',
     exclusiveUrlWap: 'Exclusive Url（App）',
@@ -755,6 +765,7 @@ export default {
     registerTime: 'Register Time',
     registrationDate: 'Registration Date',
     referredFriends: 'Referred Friends',
+    referFriendRecord: 'Refer Friend Record',
     remark: 'Remark',
     remove: 'Remove',
     reply: 'Reply',
@@ -1030,6 +1041,8 @@ export default {
     confirmCopyTo: ' to ',
     confirmDelete:
       'Confirm that you want to delete these data, the operation cannot be undone',
+    confirmRebate: 'Confirm that you want to distribute all rebate, the operation cannot be undone',
+    confirmRefer: 'Confirm that you want to distribute all refer friend promo, the operation cannot be undone',
     confirmSettlement: 'Confirm that you want to proceed with the settlement?',
     confirmToChecking:
       'Confirm that you want revert the settlement to checking?',
@@ -1067,7 +1080,9 @@ export default {
     paySuccess: 'Pay Success',
     promoDistributionSuccess: 'Promo Distribution Success',
     reenterPassword: 'Please re-enter the password',
+    rebateSuccess: 'Distribute Rebate Success',
     registerSuccess: 'Register Success',
+    referSuccess: 'Distribute Refer Friend Promo Success',
     replySuccess: 'Reply Success',
     removePreviousLevel: 'Please remove previous level',
     removeRemarkSuccess: 'Remove Remark Success',
@@ -1393,6 +1408,7 @@ export default {
     'Lottery Record List': 'Lottery Record List',
     'Lottery Result List': 'Lottery Result List',
     'VIP Rebate Record': 'VIP Rebate Record',
+    'Refer Friend': 'Refer Friend Record',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
@@ -1558,7 +1574,7 @@ export default {
     15002: 'VIP is being used by existing VIP, it cannot be deleted',
     15003: 'VIP rebate rule exists for given VIP level and game type',
     15004: 'VIP rebate rule does not exist',
-    15005: 'VIP rebate already claimed',
+    15005: 'VIP rebate already distributed',
     15010: 'Financial level name already exist on the site',
     15012: 'Financial level does not exist',
     15020: 'Deposit Record does not exist',
