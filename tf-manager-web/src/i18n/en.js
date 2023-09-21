@@ -196,6 +196,7 @@ export default {
     ESPORT: 'ESPORT',
     POKER: 'POKER',
     LOTTERY: 'LOTTERY',
+    CASUAL: 'CASUAL',
   },
   vipRebateStatus: {
     PENDING: 'Pending',
