@@ -1,8 +1,8 @@
 <template>
     <div>
-        
+
         <div class="platform-menu sports">
-            
+
           <div
               v-for="nav in filteredNavigations"
               :key="nav.code"
@@ -11,7 +11,7 @@
                     <div class="platform-box" :class="filteredNavigations.length >= 3 ? 'rearranged-box':''">
                     <img :src="require('../../assets/sports/sport_logo_'+ nav.icon + '.png')">
                     <div class="contents">
-                    <p class="platform-title">{{ nav.label }} 体育</p>
+                    <p class="platform-title">{{ nav.label }}</p>
                     <p class="platform-slogan">{{ nav.slogan }}</p>
                     <div class="platform">SPORT GAME</div>
                     </div>
@@ -38,10 +38,10 @@ import { userStore } from "@/store";
 export default defineComponent({
   setup() {
     const navigations = [
-        { code: "IM", icon: "im", label: "IM", slogan: "赛事最多 玩法新颖" },
-        { code: "PM", icon: "pm", label: "PM", slogan: "最强滚球 超高水位" },
-        { code: "CR", icon: "xf", label: "CR", slogan: "崭新玩法 感受精彩" },
-        { code: "SABA", icon: "xf", label: "SABA", slogan: "最佳水位 最全赛事" },
+        { code: "IM", icon: "im", label: "IM 体育", slogan: "赛事最多 玩法新颖" },
+        { code: "PM", icon: "pm", label: "熊猫体育", slogan: "最强滚球 超高水位" },
+        { code: "CR", icon: "xf", label: "CR 体育", slogan: "崭新玩法 感受精彩" },
+        { code: "SABA", icon: "xf", label: "SABA 体育", slogan: "最佳水位 最全赛事" },
     ];
 
     const store = userStore();

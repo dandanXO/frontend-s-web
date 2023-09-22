@@ -70,7 +70,7 @@ export default defineComponent({
     const platforms = ref([
     {
         code: "PMLIVE",
-        name: "PM",
+        name: "DB",
         image: "pm",
         message:
           "高清性感真人荷官直播娱乐场，独创真人融合棋牌电游风格。设有百家乐、牛牛、龙虎、炸金花、色碟、番摊等上百真人荷官桌台，专为亚洲人研发设计的投注界面，细致版面、极致操作让您拥有身临其境的体验！",
