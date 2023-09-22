@@ -42,7 +42,7 @@ export default defineComponent({
       {
         code: "PMLIVE",
         icon: "pm",
-        label: "PM",
+        label: "DB",
         gameCode: "",
         slogan: "独创首秀，现场体验"
       },
