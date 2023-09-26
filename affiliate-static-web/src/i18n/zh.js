@@ -139,6 +139,7 @@ export default {
     ftd: '首存',
     gameName: "游戏名称",
     gameType: "游戏类型",
+    lastLoginTime: "最近登录时间",
     lastMonth: "上月",
     lastMonthTotal: "累计上月",
     lastWeek: "上周",

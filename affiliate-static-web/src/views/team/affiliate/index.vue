@@ -8,7 +8,7 @@
       </template>
       <div class="inputs-wrap">
         <el-date-picker
-          v-model="request.regTime"
+          v-model="request.lastLoginTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
@@ -34,6 +34,7 @@
       </div>
       <div class="btn-group">
         <el-button
+          v-if="affiliateLevel !== 'AFFILIATE'"
           icon="el-icon-plus"
           size="mini"
           type="primary"
@@ -114,6 +115,15 @@
             />
           </template>
         </el-table-column>
+        <el-table-column prop="lastLoginTime" :label="t('fields.lastLoginTime')" align="center" min-width="150">
+          <template #default="scope">
+            <span v-if="scope.row.lastLoginTime === null">-</span>
+            <span
+              v-if="scope.row.lastLoginTime !== null"
+              v-formatter="{data: scope.row.lastLoginTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column prop="totalDeposit" :label="t('fields.totalDeposit')" align="center" min-width="120">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.totalDeposit,type: 'money'}" />
@@ -162,7 +172,7 @@
         <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
           <el-input v-model="cForm.affiliateCode" style="width: 350px;" maxlength="11" :disabled="true" />
         </el-form-item>
-        <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
+        <!-- <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
           <el-select
             v-model="cForm.affiliateLevel"
             size="small"
@@ -177,7 +187,7 @@
               :value="item.value"
             />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input v-model="cForm.loginName" style="width: 350px;" maxlength="11" />
         </el-form-item>
@@ -245,6 +255,7 @@ const uiControl = reactive({
     { key: 4, displayName: "CHIEF AFFILIATE", value: "CHIEF_AFFILIATE" }
   ]
 });
+const affiliateLevel = ref(null);
 
 const site = ref(null);
 const affInfo = ref(null);
@@ -312,7 +323,7 @@ const shortcuts = [
 ];
 
 const request = reactive({
-  regTime: [defaultDate, defaultDate],
+  lastLoginTime: [defaultDate, defaultDate],
   loginName: null,
   size: 20,
   current: 1
@@ -375,7 +386,7 @@ const validateCommission = (rule, value, callback) => {
 };
 
 const cFormRules = reactive({
-  affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
+  // affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
   loginName: [required(t('message.requiredLoginName')), size(6, 12, t('message.length6To12'))],
   password: [required(t('message.requiredPassword')), size(6, 12, t('message.length6To12')), { validator: validatePassword, trigger: "blur" }],
   reEnterPassword: [required(t('message.reenterPassword')), { validator: validateReEnterPassword, trigger: "blur" }],
@@ -413,7 +424,7 @@ function restrictCommissionDecimalInput(event) {
 }
 
 function resetQuery() {
-  request.regTime = [defaultDate, defaultDate];
+  request.lastLoginTime = [defaultDate, defaultDate];
   request.loginName = null;
 }
 
@@ -428,9 +439,9 @@ async function loadDownlineAffiliates() {
       }
     });
   }
-  if (request.regTime !== null) {
-    if (request.regTime.length === 2) {
-      query.regTime = request.regTime.join(",");
+  if (request.lastLoginTime !== null) {
+    if (request.lastLoginTime.length === 2) {
+      query.lastLoginTime = request.lastLoginTime.join(",");
     }
   }
   query.siteId = site.value.id;
@@ -538,6 +549,7 @@ function breadcrumbSearch(id, name) {
 }
 
 onMounted(async() => {
+  affiliateLevel.value = store.state.user.affiliateLevel;
   checkId.value = store.state.user.id
   const item = { id: checkId.value, name: store.state.user.name };
   breadcrumbNameList.value.push(item);

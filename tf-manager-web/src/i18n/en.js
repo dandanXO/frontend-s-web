@@ -200,7 +200,7 @@ export default {
   },
   vipRebateStatus: {
     PENDING: 'Pending',
-    CLAIMED: 'Claimed'
+    DISTRIBUTED: 'Distributed'
   },
   fields: {
     account: 'Account',
@@ -356,6 +356,7 @@ export default {
     checkExclusiveUrl: 'Check Exclusive Url',
     checkFail: 'REVIEW_FAIL',
     checkTime: 'Check Time',
+    claimTime: 'Claim Time',
     className: 'Class Name',
     clearingSum: 'Clearing Sum',
     clientType: 'Client Type',
@@ -448,7 +449,10 @@ export default {
     disable: 'Disable',
     disableAffiliate: 'Disable Affiliate',
     disableType: 'Disable Type',
+    distributeBy: 'Distribute By',
     distributePrivilege: 'Distribute Privilege',
+    distributeRebate: 'Distribute Rebate',
+    distributeTime: 'Distribute Time',
     domain: 'Domain',
     domainCount: 'Domain Count',
     domainList: 'Domain List',
@@ -731,6 +735,7 @@ export default {
     reasonType: 'Reason Type',
     reasonTemplate: 'Reason Template',
     rebate: 'Rebate',
+    rebateDistributeTime: 'Rebate Distribute Time',
     rebatePercentage: 'Rebate %',
     maxRebate: 'Max Rebate',
     receiveTime: 'Receive Time',
@@ -895,6 +900,7 @@ export default {
     totalPrivilegeClaimAmount: 'Total Privilege Claim Amount',
     totalPromo: 'Total Promotion',
     totalProfit: 'Total Profit',
+    totalRebateAmount: 'Total Rebate Amount',
     totalRedeem: 'Total Redeem',
     totalRegister: 'Total Register',
     totalReimburseAmount: 'Total Reimburse Amount',
@@ -1027,6 +1033,7 @@ export default {
     confirmCopyTo: ' to ',
     confirmDelete:
       'Confirm that you want to delete these data, the operation cannot be undone',
+    confirmRebate: 'Confirm that you want to distribute the selected rebate, the operation cannot be undone',
     confirmSettlement: 'Confirm that you want to proceed with the settlement?',
     confirmToChecking:
       'Confirm that you want revert the settlement to checking?',
@@ -1064,6 +1071,7 @@ export default {
     paySuccess: 'Pay Success',
     promoDistributionSuccess: 'Promo Distribution Success',
     reenterPassword: 'Please re-enter the password',
+    rebateSuccess: 'Distribute Rebate Success',
     registerSuccess: 'Register Success',
     replySuccess: 'Reply Success',
     removePreviousLevel: 'Please remove previous level',
@@ -1513,6 +1521,7 @@ export default {
     14001: 'The telephone already exist',
     14005: 'Affiliate commission must be less than superior affiliate commission: ',
     11009: 'Affiliate commission must be more than child affiliate commission: ',
+    11010: 'Referral affiliate cannot have downline affiliate',
     12000: 'System privilege info name already exist',
     12001: 'System privilege info code already exist',
     12010: 'Currency name already exist',
@@ -1554,6 +1563,7 @@ export default {
     15002: 'VIP is being used by existing VIP, it cannot be deleted',
     15003: 'VIP rebate rule exists for given VIP level and game type',
     15004: 'VIP rebate rule does not exist',
+    15005: 'VIP rebate already distributed',
     15010: 'Financial level name already exist on the site',
     15012: 'Financial level does not exist',
     15020: 'Deposit Record does not exist',
