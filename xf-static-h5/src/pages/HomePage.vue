@@ -872,7 +872,7 @@ export default defineComponent({
                   spObj.title = "小艾体育";
                 }
                 if (spObj.code === "PM") {
-                  spObj.title = "PM体育";
+                  spObj.title = "熊猫体育";
                 }
                 if (spObj.code === "CR") {
                   spObj.title = "CR体育";
@@ -887,7 +887,7 @@ export default defineComponent({
               if (platTypes.indexOf("LIVE") > -1) {
                 var liveObj = Object.assign({}, element);
                 if (liveObj.code === "PMLIVE") {
-                  liveObj.title = "PM 真人";
+                  liveObj.title = "DB 真人";
                 } else if (liveObj.code === "EBET") {
                   liveObj.title = "WE 真人";
                 } else {

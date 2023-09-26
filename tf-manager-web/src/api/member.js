@@ -164,3 +164,7 @@ export const refreshBalance = (id, site) => {
 export const forceLogout = (id, siteId) => {
   return https().request(`/member/logoutPLayer/${id}`, Method.POST, { siteId: siteId }, ContentType.form);
 };
+
+export const requestExportSiteMember = (query) => {
+  return https().request("/member/export", Method.GET, query, ContentType.form);
+};
