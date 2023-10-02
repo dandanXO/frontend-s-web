@@ -79,6 +79,13 @@ build-image-xf-download:
 
 #===============================================================================================
 
+build-image-tha-download:
+  extends: .docker-build
+  variables:
+    PROJECT: tha-download
+
+#===============================================================================================
+
 build-image-xf-maintenance:
   extends: .docker-build
   variables:
@@ -115,6 +122,22 @@ build-image-xf-static-h5:
     PROJECT: xf-static-h5
   needs:
     - build-xf-static-h5
+
+#===============================================================================================
+
+build-tha-static-h5:
+  extends:
+    - .build-projects
+    - .build-h5
+  variables:
+    PROJECT: tha-static-h5
+
+build-image-tha-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: tha-static-h5
+  needs:
+    - build-tha-static-h5
 
 #===============================================================================================
 

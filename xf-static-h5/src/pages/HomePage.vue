@@ -183,6 +183,10 @@
           class="secondSwiper"
           id="btm-second-swiper"
       >
+        <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
+          <PlatformBlock dataType="slot" :data="slt"/>
+        </swiper-slide>
+
         <swiper-slide
             v-for="(live, i) in livecasino"
             :key="i"
@@ -218,9 +222,6 @@
           />
         </swiper-slide>
 
-        <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
-          <PlatformBlock dataType="slot" :data="slt"/>
-        </swiper-slide>
 
         <swiper-slide
             v-for="(fish, i) in fishing"
@@ -471,26 +472,26 @@ export default defineComponent({
       selectedTab.value = tab.name;
       // console.log(tab.name);
       var slideIndex = 0;
-      if (tab.name === "live") {
+      if (tab.name === "slot") {
         slideIndex = 0;
         firstSwiper.value?.slideTo(slideIndex, 500);
       }
+
+      if (tab.name === "live") {
+        slideIndex = slot.value.length;
+        firstSwiper.value?.slideTo(slideIndex, 500);
+      }
       if (tab.name === "sport") {
-        slideIndex = livecasino.value.length;
+        slideIndex = livecasino.value.length + slot.value.length;
 
         firstSwiper.value?.slideTo(slideIndex, 500);
       }
       if (tab.name === "esport") {
-        slideIndex = livecasino.value.length + sport.value.length;
+        slideIndex = livecasino.value.length + sport.value.length + slot.value.length;
 
         firstSwiper.value?.slideTo(slideIndex, 500);
       }
-      if (tab.name === "slot") {
-        slideIndex =
-            livecasino.value.length + sport.value.length + esport.value.length;
 
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
       if (tab.name === "fishing") {
         slideIndex =
             livecasino.value.length +
@@ -547,10 +548,10 @@ export default defineComponent({
       // Check if the class name contains "sport," "slot," or "esport"
       // Array of keywords to check
       const keywords = [
+        "slot",
         "live",
         "sport",
         "esport",
-        "slot",
         "fishing",
         "poker",
         "lottery",
@@ -566,8 +567,14 @@ export default defineComponent({
         }
       }
     };
-    const selectedTab = ref("live");
+    const selectedTab = ref("slot");
     const tabs = ref([
+      {
+        name: "slot",
+        icon: "slot",
+        label: "电子",
+        labelact: "电子"
+      },
       {
         name: "live",
         icon: "live",
@@ -585,12 +592,6 @@ export default defineComponent({
         icon: "esport",
         label: "电竞",
         labelact: "电竞赛事"
-      },
-      {
-        name: "slot",
-        icon: "slot",
-        label: "电子",
-        labelact: "电子"
       },
       {
         name: "fishing",
@@ -916,7 +917,7 @@ export default defineComponent({
                   slot.value.push(slotObj);
                 }
               }
-              if (platTypes.indexOf("FISH") > -1) {
+              if (platTypes.indexOf("FISH") > -1  && element.code !=='AGF') {
                 var fishObj = Object.assign({}, element);
                 fishObj.title = fishObj.name + " 捕鱼";
                 fishObj.icon = "fish";
