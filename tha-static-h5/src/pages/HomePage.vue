@@ -1,0 +1,1357 @@
+<template>
+  <div class="main-section">
+
+    <q-carousel
+        :class="(!$q.screen.gt.sm) ? 'home-banner-h5' : 'home-banner-web'"
+        autoplay navigation v-model="slide" swipeable>
+      <template v-slot:navigation-icon="{ active, onClick }">
+        <q-btn
+            padding="3px 10px"
+            v-if="active"
+            size="xs"
+            color="brand"
+            @click="onClick"
+        />
+        <q-btn
+            padding="3px 10px"
+            v-else
+            size="xs"
+            color="white"
+            @click="onClick"
+        />
+      </template>
+
+      <!--        :img-src="imgURL + banner.mobileImageUrl"-->
+      <q-carousel-slide
+          v-for="(banner, i) in banners"
+          :key="i"
+          :name="i"
+          class="column no-wrap flex-center"
+          :img-src="(!$q.screen.gt.sm) ? banner.mobileImageUrl : banner.homeImageUrl"
+          @click="gotoPromo(banner)"
+      >
+      </q-carousel-slide>
+    </q-carousel>
+
+
+    <div class="midd">
+      <div class="station-notice-wrapper">
+        <div class="volume">
+          <img src="../assets/images/menu/announce-icon.png"/>
+        </div>
+        <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
+          <div v-if="announcementList">
+      <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+        {{ a.content }}
+      </span>
+          </div>
+        </marquee-text>
+      </div>
+
+    </div>
+    <div class="items-center grid">
+
+      <div class="game-board-item"
+           :class="(currentSelectedMenu=='slots') ? 'active-board' : ''"
+           @click="switchMenu('slots')"
+      >
+        <img src="../assets/images/index/home-slot.png"/>
+        <span>สล็อต</span>
+      </div>
+      <div class="game-board-item"
+           :class="(currentSelectedMenu=='sport') ? 'active-board' : ''"
+           @click="switchMenu('sport')"
+      >
+        <img src="../assets/images/index/home-sport.png"/>
+        <span>กีฬา</span>
+      </div>
+
+      <div class="game-board-item"
+           :class="(currentSelectedMenu=='live') ? 'active-board' : ''"
+           @click="switchMenu('live')"
+      >
+        <img src="../assets/images/index/home-live.png"/>
+        <span>ไลฟ์คาสิโน</span>
+      </div>
+
+      <div class="game-board-item"
+           :class="(currentSelectedMenu=='fish') ? 'active-board' : ''"
+           @click="switchMenu('fish')"
+      >
+        <img src="../assets/images/index/home-fish.png"/>
+        <span>ยิงปลา</span>
+      </div>
+
+      <div class="game-board-item"
+           :class="(currentSelectedMenu=='cf') ? 'active-board' : ''"
+           @click="switchMenu('cf')"
+      >
+        <img src="../assets/images/index/home-cf.png"/>
+        <span>ยิง</span>
+      </div>
+
+      <div class="game-board-item"
+           :class="(currentSelectedMenu=='esport') ? 'active-board' : ''"
+           @click="switchMenu('esport')"
+      >
+        <img src="../assets/images/index/home-esport.png"/>
+        <span>E-Sport</span>
+      </div>
+
+      <div class="game-board-item"
+           :class="(currentSelectedMenu=='lottery') ? 'active-board' : ''"
+           @click="switchMenu('lottery')"
+      >
+        <img src="../assets/images/index/home-lottery.png"/>
+        <span>ลอตเตอรี่</span>
+      </div>
+
+
+      <!--      <div class="game-board-item"-->
+      <!--           :class="(currentSelectedMenu=='fish2') ? 'active-board' : ''"-->
+      <!--           @click="switchMenu('fish2')"-->
+      <!--      >-->
+      <!--        <img src="../assets/images/index/home-fish2.png"/>-->
+      <!--        <span>เกมส์เล็ก ๆ</span>-->
+      <!--      </div>-->
+
+    </div>
+
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-sport-board"
+           v-if="currentSelectedMenu === 'sport'">
+        <div class="game-item btn-pointer mid-grid-column"
+             @click="playGame('Sport','SABA')"
+        >
+          <img src="../assets/images/games/sport/SABA.png"/>
+        </div>
+      </div>
+    </Transition>
+
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-live-board"
+           v-if="currentSelectedMenu === 'live'">
+        <div class="game-item btn-pointer"
+             v-for="(p, index) in liveCasinoGames"
+             :key="`live-${index}`"
+             @click="playGame(p.name, p.code, p.gameCode)"
+        >
+          <img :src="require(`../assets/images/games/live/${p.code}.png`)"/>
+        </div>
+      </div>
+    </Transition>
+
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-esport-board"
+           v-if="currentSelectedMenu === 'esport'">
+        <div class="game-item btn-pointer mid-grid-column"
+             @click="playGame('Esport','TFGaming')"
+        >
+          <img src="../assets/images/games/esport/TFGaming.png"/>
+        </div>
+      </div>
+    </Transition>
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-esport-board"
+           v-if="currentSelectedMenu === 'lottery'">
+        <div class="coming-soon-div ">
+          <img src="../assets/home/coming-soon-img.png"/>
+          <span>Coming Soon</span>
+        </div>
+      </div>
+    </Transition>
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-esport-board"
+           v-if="currentSelectedMenu === 'cf'">
+        <div class="coming-soon-div">
+          <img src="../assets/home/coming-soon-img.png"/>
+          <span>Coming Soon</span>
+        </div>
+      </div>
+    </Transition>
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-esport-board"
+           v-if="currentSelectedMenu === 'fish2'">
+        <div class="coming-soon-div">
+          <img src="../assets/home/coming-soon-img.png"/>
+          <span>Coming Soon</span>
+        </div>
+      </div>
+    </Transition>
+
+
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-slot-board"
+           v-if="currentSelectedMenu === 'slots' && !isShow"
+      >
+        <template v-for="p in platforms" :key="p">
+          <div class="game-item btn-pointer"
+               @click="selectSlotPlat(p)"
+          >
+            <img :src="require('../assets/home/slot/' + p.code + '.png')">
+          </div>
+        </template>
+
+        <div class="game-item"
+        >
+          <img :src="require('../assets/home/slot/' + 'StayTuned' + '.png')">
+        </div>
+      </div>
+    </Transition>
+
+    <Transition>
+      <div class="game-scroll-lists"
+           id="id-slot-board"
+           v-if="currentSelectedMenu === 'slots' && isShow">
+
+        <q-scroll-area style="height: 500px;width: 120px; max-width: 120px;">
+          <div class="bookmarks">
+            <div
+                class="plat-item"
+                v-for="p in platforms"
+                :class="{ active: p.id === selectedPlatId }"
+                :key="p"
+                @click="switchPlat(p,'slots')"
+            >
+              <img :src="require('../assets/logo/' + p.code + '.png')">
+            </div>
+          </div>
+          <q-scroll-observer axis="vertical"/>
+        </q-scroll-area>
+
+        <div class="loading-div" v-if="isLoading">
+          <q-spinner-hourglass
+              :color="ui.themeColor"
+              size="8em"
+          />
+        </div>
+        <q-scroll-area v-if="!isLoading" ref="scrollSlotRef" style="height: 500px;width:calc(100% - 120px);">
+          <div class="slot-grid" style="padding-bottom: 20px;">
+            <div
+                v-for="(game, index) in gamePage.gameList"
+                :key="index"
+                :data-id="index"
+                v-intersection="onIntersection"
+                @click="openGame(game.name, game.code, selectedPlat.status)"
+                style="height: auto;"
+                class="btn-pointer"
+            >
+              <transition name="in-view">
+                <q-list class="q-col-gutter-none">
+                  <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style=" border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                  >
+                    <div class="slot-name"> {{ game.name }}</div>
+                    <template v-slot:loading>
+                      <img :src="game.default"
+                           style="width: 100%; height: 100%; border-radius: 15px; overflow:hidden;">
+                    </template>
+                  </q-img>
+                </q-list>
+              </transition>
+              <!-- <q-img
+                  loading="lazy"
+                  :src="game.icon"
+                  :placeholder-src="defaultImg"
+                  fit="cover"
+                  height="120px"
+                  no-spinner
+              >
+                <template v-slot:loading>
+                  <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
+                </template>
+              </q-img> -->
+              <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
+
+            </div>
+          </div>
+          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
+          <q-scroll-observer @scroll="scrolling"/>
+        </q-scroll-area>
+      </div>
+    </Transition>
+
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-fish-board"
+           v-if="currentSelectedMenu === 'fish' && !isShow"
+      >
+        <template v-for="p in fishPlatforms" :key="p">
+          <div class="game-item btn-pointer"
+               @click="selectFishPlat(p)"
+          >
+            <img :src="require('../assets/home/fish/' + p.code + '.png')">
+          </div>
+        </template>
+
+      </div>
+    </Transition>
+
+    <Transition>
+      <div class="game-scroll-lists"
+           id="id-fish-board"
+           v-if="currentSelectedMenu === 'fish' && isShow">
+
+        <q-scroll-area style="height: 500px;width: 120px; max-width: 120px;">
+          <div class="bookmarks">
+            <div
+                class="plat-item"
+                v-for="p in fishPlatforms"
+                :class="{ active: p.id === selectedPlatId }"
+                :key="p"
+                @click="switchPlat(p,'fish')"
+            >
+              <img :src="require('../assets/logo/' + p.code + '.png')">
+            </div>
+          </div>
+          <q-scroll-observer axis="vertical"/>
+        </q-scroll-area>
+
+        <div class="loading-div" v-if="isLoading">
+          <q-spinner-hourglass
+              :color="ui.themeColor"
+              size="8em"
+          />
+        </div>
+        <q-scroll-area v-if="!isLoading" ref="scrollPageRef" style="height: 500px;width:calc(100% - 120px);">
+          <div class="slot-grid" style="padding-bottom: 20px;">
+            <div
+                v-for="(game, index) in gamePage.gameList"
+                :key="index"
+                :data-id="index"
+                v-intersection="onIntersection"
+                @click="openGame(game.name, game.code, selectedPlat.status)"
+                style="height: auto;"
+                class="btn-pointer"
+            >
+              <transition name="in-view">
+                <q-list class="q-col-gutter-none">
+                  <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style=" border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                  >
+                    <div class="slot-name"> {{ game.name }}</div>
+                    <template v-slot:loading>
+                      <img :src="game.default"
+                           style="width: 100%; height: 100%; border-radius: 15px; overflow:hidden;">
+                    </template>
+                  </q-img>
+                </q-list>
+              </transition>
+              <!-- <q-img
+                  loading="lazy"
+                  :src="game.icon"
+                  :placeholder-src="defaultImg"
+                  fit="cover"
+                  height="120px"
+                  no-spinner
+              >
+                <template v-slot:loading>
+                  <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
+                </template>
+              </q-img> -->
+              <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
+
+            </div>
+          </div>
+          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
+          <q-scroll-observer @scroll="scrolling"/>
+        </q-scroll-area>
+      </div>
+    </Transition>
+
+  </div>
+
+  <div class="home-bottom-section">
+    <div class="marquee">
+      <div class="track">
+        <div class="content">
+          <img src="../assets/logo/AE.png" height="30"/>
+          <img src="../assets/logo/AMBSLOT.png" height="30"/>
+          <img src="../assets/logo/ATA.png" height="30"/>
+          <img src="../assets/logo/CQ9.png" height="30"/>
+          <img src="../assets/logo/JILI.png" height="30"/>
+          <img src="../assets/logo/JOKER.png" height="30"/>
+          <img src="../assets/logo/KA.png" height="30"/>
+          <img src="../assets/logo/LIVE22.png" height="30"/>
+          <img src="../assets/logo/MANNAPLAY.png" height="30"/>
+          <img src="../assets/logo/PG.png" height="30"/>
+          <img src="../assets/logo/PNG.png" height="30"/>
+          <img src="../assets/logo/PP.png" height="30"/>
+          <img src="../assets/logo/SA.png" height="30"/>
+          <img src="../assets/logo/SLOTXO.png" height="30"/>
+          <img src="../assets/logo/TF88.png" height="30"/>
+          <img src="../assets/logo/WM.png" height="30"/>
+          <img src="../assets/logo/YGG.png" height="30"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-footer">
+      <img class="footer-logo" src="../assets/logo.png"/>
+      <p>เงื่อนไขการบริการ Jolly88 (TNC) : บริการที่เราให้บริการอยู่ภายใต้ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว
+        โปรดดูข้อมูลเพิ่มเติมในข้อตกลงการให้บริการของเรา.</p>
+
+      <span>Jolly88 2023@All Rights Reserved.</span>
+    </div>
+  </div>
+
+
+  <GameModal ref="gameModalRef"></GameModal>
+
+  <q-dialog width="100%" v-model="isStationNotice">
+    <q-card style="width: 100%;" class="bg-primary text-white">
+      <q-card-section class="q-mb-md">
+        <div class="menu-title">ประกาศ</div>
+
+        <q-tabs
+            v-model="activeKey"
+            dense
+            class="text-grey"
+            active-color="brand"
+            indicator-color="black"
+            align="justify"
+            narrow-indicator
+        >
+          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name"/>
+        </q-tabs>
+
+        <q-separator/>
+
+        <q-tab-panels v-model="activeKey" animated>
+          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
+            <q-list style="min-height: 65vh">
+              <div v-for="(ann,idx) in announcementList" :key="idx">
+                          <span v-if="ann.typeId === tab.id">
+                                <q-expansion-item
+                                    style="max-height: 65vh; overflow: auto;"
+                                    group="somegroup"
+                                    icon="volume_up"
+                                    :label="ann.title"
+                                >
+                                  <q-card>
+                                    <q-card-section>
+                                      {{ ann.content }}
+                                    </q-card-section>
+                                  </q-card>
+                                </q-expansion-item>
+
+                                <q-separator></q-separator>
+                          </span>
+              </div>
+            </q-list>
+          </q-tab-panel>
+
+
+        </q-tab-panels>
+
+      </q-card-section
+      >
+    </q-card>
+  </q-dialog>
+</template>
+
+<script>
+import {defineComponent, onMounted, ref, reactive, computed} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {api} from "boot/axios";
+import {cached} from "boot/cache";
+import {useQuasar, Platform} from "quasar";
+import {userStore} from "stores/index";
+import GameModal from "components/modal/GameModal";
+import {RiBasketballLine, RiUserShared2Line, RiVolumeUpLine} from "vue-remix-icons";
+import MarqueeText from 'vue-marquee-text-component';
+import BacktoTop from "components/backtotop.vue"
+
+import {useUI} from "stores/ui";
+
+export default defineComponent({
+  name: "IndexPage",
+  components: {
+    GameModal,
+    MarqueeText,
+    BacktoTop,
+    // RiVolumeUpLine,
+    // RiBilliardsLine,
+    // RiBasketballLine,
+    // RiUserShared2Line
+  },
+  setup() {
+    const $q = useQuasar();
+    const ui = useUI();
+    const siteId = process.env.SITEID;
+    ui.$onAction(({name, args}) => {
+      switch (name) {
+        case "setScrollPosition":
+          scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
+      }
+    });
+    const banners = ref([]);
+    const route = useRoute();
+    const router = useRouter();
+    const store = userStore();
+    const mainWallet = computed(() => {
+      return store.balance;
+    });
+    const gameModalRef = ref(null);
+    const openGame = (gameName, gameCode, gameStatus) => {
+      gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
+    };
+    const playGame = (gameName, platformCode, gameCode, gameStatus) => {
+      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
+    };
+    const pokerGames = [
+      // {
+      //   code: "JILI",
+      //   name: "Jili Games",
+      //   gameName: "Jili",
+      //   gameCode: "64",
+      //   bg: require("../assets/images/games/poker/poker_1.jpg"),
+      //   main: require("../assets/images/games/poker/poker1_1.png"),
+      //   logo: require("../assets/images/common/logo/jl.png")
+      // },
+      // {
+      //   code: "RICH88",
+      //   name: "Rich88",
+      //   gameName: "Rich88",
+      //   bg: require("../assets/images/games/poker/poker_2.jpg"),
+      //   main: require("../assets/images/games/poker/poker2_01.png"),
+      //   logo: require("../assets/images/common/logo/RICH88.png")
+      // },
+      // {
+      //   code: "KM",
+      //   name: "KM",
+      //   gameName: "KM",
+      //   bg: require("../assets/images/games/poker/poker_3.jpg"),
+      //   main: require("../assets/images/games/poker/poker3_01.png"),
+      //   logo: require("../assets/images/common/logo/km.png")
+      // }
+    ];
+    const liveCasinoGames = [
+      {
+        code: "Evo",
+        name: "Evolution",
+        gameName: "EVO",
+        logo: require("../assets/images/common/logo/evo.png"),
+        text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop."
+      },
+      {
+        code: "AWC",
+        name: "AE Sexy",
+        status: "NORMAL",
+        gameName: "AE Sexy",
+        gameCode: "MX-LIVE-001",
+        logo: require("../assets/images/common/logo/ae_2.png"),
+        text: "วิดีโอไลฟ์แอ็กชันที่มีศักยภาพสูงสุดในเอเชียผลิตภัณฑ์เกมคุณภาพสูง และวิดีโอเกมที่หลากหลาย การเชื่อมต่อข้ามแพลตฟอร์มที่ง่ายดาย ทำให้คุณสนุกได้ทุกที่ทุกเวลา!",
+      },
+      {
+        code: "WM",
+        name: "WM Casino",
+        gameName: "WM",
+        status: "NORMAL",
+        logo: require("../assets/images/common/logo/WM.png"),
+        text: "AE Casino วิดีโอไลฟ์แอ็กชันที่มีศักยภาพมากที่สุดในเอเชีย เชื่อมต่อและใช้งานง่าย ข้ามแพลตฟอร์ม ฟรีดาวน์โหลด และสนุกได้ทุกที่ทุกเวลา!",
+      },
+      {
+        code: "SA",
+        name: "SA gaming",
+        gameName: "SA",
+        status: "NORMAL",
+        logo: require("../assets/images/common/logo/SA.png"),
+        text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ",
+      },
+    ];
+    const esportsGame = [
+      {
+        code: "TFGaming",
+        name: "TF Gaming",
+        gameName: "AE Sexy",
+        gameCode: "MX-LIVE-001",
+        bg: require("../assets/home/e-sport/shadebg.png"),
+        main: require("../assets/home/e-sport/tf88.png"),
+        logo: require("../assets/logo/TF88.png")
+      }
+    ];
+    const sportsGame = [
+      {
+        code: "TFGaming",
+        name: "TF Gaming",
+        gameName: "AE Sexy",
+        gameCode: "MX-LIVE-001",
+        bg: require("../assets/home/e-sport/shadebg.png"),
+        main: require("../assets/home/sport/cmd.png"),
+        logo: require("../assets/logo/CMD.png")
+      }
+    ];
+
+    function loadData() {
+      //TODO:: HARDCODE
+      banners.value.push({
+        mobileImageUrl: require("../assets/home/banner1.png"),
+        homeImageUrl: require("../assets/home/web-banner1.png")
+      })
+
+      api
+          .get("/promo/banner?category=HOME")
+          .then((res) => {
+            if (res.data.code === 0) {
+              // banners.value = res.data.data;
+            } else {
+
+            }
+          })
+          .catch(() => {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: "Loading failed",
+            //   icon: "report_problem"
+            // });
+          });
+    }
+
+    const platforms = ref([]);
+    const selectedPlatId = ref();
+    const selectedPlat = reactive({
+      "code": '',
+      "status": ""
+    });
+    const gamePage = reactive({
+      gameList: [],
+      currentPage: 1,
+      pageSize: 40,
+      searchType: "",
+      searchKey: "",
+      total: 0
+    });
+    const gameListData = ref([]);
+    const fishPlatforms = ref([]);
+
+    // console.log($q.screen);
+
+    const currentSelectedMenu = ref("slots");
+    const switchMenu = (menu) => {
+      currentSelectedMenu.value = menu;
+      isShow.value = false;
+      if (menu === "slots") {
+        switchPlat(platforms.value[0], menu);
+      } else if (menu === "livecasino") {
+        // switchPlat(liveCasinoGames[0], menu);
+      } else if (menu === "fish") {
+        switchPlat(fishPlatforms.value[0], menu);
+      } else if (menu === "poker") {
+        switchPlat(pokerGames[0], menu);
+      } else if (menu === "esports") {
+        switchPlat(esportsGame[0], menu);
+      } else if (menu === "sport") {
+        switchPlat(sportsGame[0], menu);
+      }
+    };
+    const liveTabs = ref("");
+    const switchPlat = (plat, menuType) => {
+      isLoading.value = true;
+      if (menuType === "slots") {
+        selectedPlat.code = plat.code;
+        selectedPlat.status = plat.status;
+        selectedPlatId.value = plat.id;
+        loadGameList("SLOT");
+        if (scrollPageRef.value) {
+          scrollSlotRef.value.setScrollPosition('vertical', 0)
+        }
+        gamePage.searchKey = "";
+      } else if (menuType === "livecasino") {
+        selectedLiveTab.value = plat.name;
+        liveTabs.value = plat.name;
+      } else if (menuType === "fish") {
+        selectedPlat.code = plat.code;
+        selectedPlat.status = plat.status;
+        selectedPlatId.value = plat.id;
+        loadGameList("FISH");
+        if (scrollPageRef.value) {
+          scrollPageRef.value.setScrollPosition('vertical', 0)
+
+        }
+
+      } else if (menuType === "poker") {
+        selectedLiveTab.value = plat.name;
+        liveTabs.value = plat.name;
+      } else if (menuType === "esports") {
+        selectedLiveTab.value = plat.name;
+        liveTabs.value = plat.name;
+      } else if (menuType === "sport") {
+        selectedLiveTab.value = plat.name;
+        liveTabs.value = plat.name;
+      }
+    };
+    const searchList = () => {
+      if (gamePage.searchKey) {
+        gamePage.gameList = gameListData.value.filter((game) => {
+          return game.name
+              .toLowerCase()
+              .includes(gamePage.searchKey.toLowerCase());
+        });
+      } else {
+        changePage(1, gamePage.pageSize);
+      }
+    };
+    const scrollSlotRef = ref()
+    const scrollPageRef = ref();
+    const isLoading = ref(false);
+    const loadGameList = (type) => {
+      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+      const code = selectedPlatId.value;
+      const gameType = type;
+      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+
+      cached
+          .get(key, () =>
+              api
+                  .get("/platformGames", {
+                    params: {
+                      platformId: code,
+                      gameType: gameType,
+                      device: regDevice
+                    }
+                  })
+                  .then((ret) => {
+                    const res = ret.data;
+                    if (res.code === 0) {
+                      isLoading.value = false;
+                      return res;
+                    }
+                  })
+                  .catch((err) => {
+                    isLoading.value = false;
+                    // $q.notify({
+                    //   color: "negative",
+                    //   position: "top",
+                    //   message: "Loading failed",
+                    //   icon: "report_problem"
+                    // });
+                  })
+          )
+          .then((res) => {
+            isLoading.value = false;
+            res.forEach((element) => {
+              element.default = require("../assets/images/games/aviator/default.png");
+              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${element.icon}.png`;
+            });
+            gameListData.value = res;
+            gamePage.total = res.length;
+            changePage(1, gamePage.pageSize);
+          });
+    };
+    const changePage = (page, pageSize) => {
+      gamePage.gameList = gameListData.value;
+      // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
+    };
+    const getPlatList = () => {
+      cached
+          .get("PLATFORMS", () =>
+              api.get("/platform").then((res) => {
+                const response = res.data;
+                return response;
+              })
+          )
+          .then((data) => {
+            fishPlatforms.value = data.filter((element) =>
+                element.gameType.includes("FISH")
+            );
+            platforms.value = data.filter((element) =>
+                element.gameType.includes("SLOT")
+            );
+            if (currentSelectedMenu.value === "slots") {
+              switchPlat(platforms.value[0], "slots");
+              platforms.value.forEach((e, i) => {
+                if (e.code === "AWS") {
+                  platforms.value.splice(i, 1);
+                }
+              });
+            } else if (currentSelectedMenu.value === "fish") {
+              switchPlat(fishPlatforms.value[0], "fish");
+            }
+            // if (!route.query.plat) {
+            //   switchPlat(platforms.value[0], "slot");
+            //   switchPlat(fishPlatforms.value[0], "fish");
+            // } else {
+            //   platforms.value.forEach((element) => {
+            //     if (parseInt(route.query.plat) === element.id) {
+            //       switchPlat(element, "slot");
+            //     }
+            //   });
+            // }
+            switchPlat(platforms.value[0], 'slots');
+          })
+          .catch((err) => {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: "Loading failed",
+            //   icon: "report_problem"
+            // });
+          });
+    };
+    const getLength = (tab, ann) => {
+      var categoryLength = announcementList.value.filter((item) => item.id == ann.typeId);
+      return categoryLength.length;
+    }
+    const announcementList = ref([])
+    const announcementTypes = ref([])
+    const loadAnnouncement = () => {
+      api.get("/announcement").then((ret) => {
+        const res = ret.data
+        if (res.code === 0) {
+          if (res.data.announcements) {
+            const d = res.data.announcements
+            announcementList.value = d
+          }
+          if (res.data.type) {
+            announcementTypes.value = res.data.type
+            activeKey.value = res.data.type[0].id
+          }
+          // announcementList.value = d.announcements
+          // announcementList.value = res.data.announcements
+        }
+      })
+    }
+    const isStationNotice = ref(false)
+    const noticeTitle = ref('')
+    const activeKey = ref(null)
+    const openPopup = (noticeType) => {
+      if (noticeType) {
+        noticeTitle.value = "Announcement"
+        isStationNotice.value = true
+      }
+    }
+
+    const isShowBtt = ref(false)
+    const scrollPosition = ref(0)
+    const scrolling = (e) => {
+      scrollPosition.value = e.position
+      if (e.position.top > 400) {
+        isShowBtt.value = true
+      }
+    }
+    const gotoPromo = (banner) => {
+      //TODO:: HIDe it.
+      // const redirectU = '/promo'
+      // const redirectU = '/promo' + banner.redirectUrl
+      // router.push(`${redirectU}`)
+    }
+    const onIntersection = (entry) => {
+      // if (entry.isIntersecting === true) {
+      //   add(entry.target.dataset.id)
+      // }
+      // else {
+      //   remove(entry.target.dataset.id)
+      // }
+    }
+    const position = ref(0);
+    const scrollToTop = (el) => {
+      scrollSlotRef.value?.setScrollPosition('vertical', position)
+      scrollPageRef.value?.setScrollPosition('vertical', position)
+      isShowBtt.value = false
+      // const target = getScrollTarget(el[0])
+      // const duration = 1000
+      // console.log(target)
+    }
+
+    onMounted(() => {
+      getPlatList();
+      loadData();
+      loadAnnouncement();
+    });
+    const imageLoading = ref(false);
+    const selectedLiveTab = ref();
+
+    const isShow = ref(false);
+    const selectSlotPlat = (plat) => {
+      selectedPlatId.value = plat.id;
+      isShow.value = true;
+      switchPlat(plat, "slots");
+    }
+    const selectFishPlat = (plat) => {
+      selectedPlatId.value = plat.id;
+      isShow.value = true;
+      switchPlat(plat, "fish");
+    }
+
+    return {
+      imageLoading,
+      slide: ref(0),
+      tab: ref("slots"),
+      gamesTab: ref(platforms.value[0]),
+      splitterModel: ref(30),
+      imgURL: process.env.IMAGE_CDN + "/",
+      banners,
+      store,
+      ui,
+      platforms,
+      fishPlatforms,
+      liveCasinoGames,
+      isShow,
+      mainWallet,
+      playGame,
+      gameModalRef,
+      pokerGames,
+      switchPlat,
+      scrolling,
+      scrollToTop,
+      switchMenu,
+      gamePage,
+      onIntersection,
+      isLoading,
+      selectedPlat,
+      scrollPosition,
+      isShowBtt,
+      scrollSlotRef,
+      selectedPlatId,
+      searchList,
+      liveTabs,
+      selectedLiveTab,
+      currentSelectedMenu,
+      esportsGame,
+      selectFishPlat,
+      selectSlotPlat,
+      sportsGame,
+      openGame,
+      scrollPageRef,
+      announcementList,
+      isStationNotice,
+      openPopup,
+      noticeTitle,
+      announcementTypes,
+      activeKey,
+      getLength,
+      gotoPromo,
+      router
+    };
+  }
+});
+</script>
+<style scoped lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+
+.midd {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+
+  .station-notice-wrapper {
+    display: flex;
+    border-radius: 8px;
+    border: 1px solid $border-color;
+    gap: 10px;
+    padding: 2px 10px;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    flex: 1;
+
+    .volume {
+      padding-top: 3px;
+
+      img {
+        width: 21px;
+        height: auto;
+      }
+    }
+
+    span {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+
+  .share {
+    background-image: linear-gradient(to right, #de4545, #db7e42);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    flex: 1;
+  }
+
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0px auto 10px;
+  align-items: flex-start;
+  column-gap: 14px;
+  row-gap: 14px;
+  width: calc(100% - 20px);
+
+  .q-list {
+    .q-img {
+      aspect-ratio: 1/1;
+
+      .q-img__image {
+        width: 100%;
+        height: 100%;
+        object-fit: fill !important;
+      }
+    }
+
+  }
+
+
+  .slot-name {
+    background: linear-gradient(0deg, #1f2035cf 20%, transparent);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    text-align: center;
+  }
+}
+
+#id-fish-board {
+  .q-list {
+    aspect-ratio: 155/97;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  margin: 20px auto 10px;
+  align-items: flex-start;
+  column-gap: 16px;
+  row-gap: 14px;
+  width: calc(95% - 20px);
+
+
+  .game-board-item {
+    max-width: 86px;
+    max-height: 86px;
+    border-radius: 8px;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    margin: auto;
+    background: $linear-bg-3;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    padding: 4px 12px;
+
+    &.active-board {
+      background: $linear-bg-4;
+    }
+
+    &:active {
+      filter: brightness(0.86);
+    }
+
+    span {
+      font-size: 0.8em;
+    }
+
+    img {
+      width: 100%;
+      max-width: 55px;
+    }
+  }
+}
+
+.game-grid-lists {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: calc(95% - 20px);
+  margin: 12px auto 20px;
+  padding-bottom: 30px;
+  padding-top: 15px;
+  column-gap: 25px;
+  row-gap: 15px;
+  transition: 1s ease-in;
+
+  .game-item {
+    border-radius: 8px;
+
+    img {
+      width: 100%;
+
+    }
+  }
+}
+
+.home-bottom-section {
+  margin-top: 16px;
+
+  .marquee {
+    background: $third-color;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    height: 50px;
+    padding: 4px 10px;
+    overflow-x: hidden;
+  }
+
+  .content {
+    width: calc(100vw - 20px);
+    margin: auto;
+
+    img {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+  }
+
+  .track {
+    position: absolute;
+    white-space: nowrap;
+    will-change: transform;
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-1500px);
+    }
+  }
+
+  .bottom-footer {
+    background: url("../assets/images/index/footer-desc-bg.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 60px 0px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+    padding: 6px 12px 20px;
+
+    .footer-logo {
+      text-align: center;
+      width: 200px;
+      margin: 0 auto;
+    }
+  }
+
+}
+
+.img-coming-soon {
+  //max-width: 300px;
+  grid-column: 1 / 4;
+}
+
+.v-enter-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-leave-active {
+  transition: none;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.game-scroll-lists {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: calc(100% - 20px);
+  margin: 20px auto 10px;
+  position: relative;
+
+  .bookmarks {
+    width: 100px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 0px;
+    margin: 0px auto 10px 0px;
+    padding: 0px 10px 10px;
+    justify-content: flex-start;
+
+    .plat-item {
+      display: flex;
+      width: 100%;
+      height: 50px;
+      box-sizing: content-box;
+      padding: 10px 10px;
+      justify-content: center;
+      align-items: center;
+      background: $third-color;
+
+      img {
+        max-width: 70px;
+        filter: grayscale(1);
+      }
+
+      &:active {
+        filter: brightness(0.86);
+      }
+
+      &:first-of-type {
+        border-radius: 10px 10px 0px 0px;
+      }
+
+      &:last-of-type {
+        border-radius: 0px 0px 10px 10px;
+      }
+
+
+      span {
+        color: rgba(200, 200, 200, 0.5);
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      &.active {
+        background: $linear-bg-2;
+        box-shadow: inset 0 0 5px #ffffff;
+
+        img {
+          filter: grayscale(0);
+        }
+
+        span {
+          color: #ffffff;
+        }
+      }
+
+
+    }
+
+  }
+}
+
+.loading-div {
+  z-index: 99;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  right: 0px;
+  width: calc(100% - 130px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: $header-color;
+    width: 48px;
+  }
+}
+
+.mid-grid-column {
+  grid-column: 2/3;
+}
+
+.coming-soon-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  grid-column: 2/3;
+
+  img {
+    width: 200px;
+    height: auto;
+  }
+}
+
+
+@media (min-width: 600px) {
+
+}
+
+@media (min-width: 769px) {
+
+  .slot-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+
+}
+
+@media (min-width: 991px) {
+
+  .grid .game-board-item {
+    border-radius: 10px;
+    max-width: 110px;
+    max-height: 165px;
+    aspect-ratio: 110/165;
+
+    span {
+      font-size: 1em;
+    }
+  }
+
+  .main-section {
+    background-repeat: repeat-x;
+  }
+
+  .game-grid-lists {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .slot-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .grid {
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+  }
+
+  .game-grid-lists {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  #id-live-board {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .mid-grid-column {
+    grid-column: 4/6;
+  }
+
+  .coming-soon-div {
+    grid-column: 4/6;
+  }
+
+}
+
+
+</style>

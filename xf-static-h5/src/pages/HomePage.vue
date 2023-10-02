@@ -917,7 +917,7 @@ export default defineComponent({
                   slot.value.push(slotObj);
                 }
               }
-              if (platTypes.indexOf("FISH") > -1) {
+              if (platTypes.indexOf("FISH") > -1  && element.code !=='AGF') {
                 var fishObj = Object.assign({}, element);
                 fishObj.title = fishObj.name + " 捕鱼";
                 fishObj.icon = "fish";

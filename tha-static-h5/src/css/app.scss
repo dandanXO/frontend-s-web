@@ -1,0 +1,536 @@
+@import "./font.scss";
+
+html {
+  //max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+// app global css in SCSS form
+body {
+  background: #ffffff;
+}
+
+#q-app {
+  background: $dark-page;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+  // display: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #23263c;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #2b2b4b;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2b2b4b;
+}
+
+.q-toolbar {
+  padding-top: env(safe-area-inset-top, 0);
+  background: #2b2b4b;
+}
+
+.q-page-container {
+  /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> is used. */
+
+  // padding-top: env(safe-area-inset-top);
+
+  // padding-top: calc(50px + env(safe-area-inset-top)) !important;
+  // margin-bottom: calc(70px + env(safe-area-inset-top) + env(safe-area-inset-bottom)) !important;
+  height: 100%;
+}
+
+.main-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.main-section {
+  background-image: url("../assets/images/common/bg-img.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: calc(100vh - 60px);
+}
+
+.q-scrollarea__content {
+  width: 100%;
+  height: 100%;
+}
+
+body.body--dark {
+  background: $dark-page;
+}
+
+body.body--dark .q-header {
+  background-image: url(../assets/images/common/header-btm-bg.png);
+  background-size: contain;
+  background-position: top center;
+  height: 60px;
+
+  .q-card__section {
+    background-image: url(../assets/images/common/bg-header.png);
+    background-size: 100% 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    height: 100%;
+
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  margin: 0 auto;
+  padding: 3px;
+  padding-top: calc(3px + env(safe-area-inset-top, 0));
+}
+
+.q-dialog__inner--minimized {
+  padding: 0;
+}
+
+body.platform-ios .q-dialog__inner--minimized > div {
+  max-height: calc(100vh - 108px);
+}
+
+.game-title {
+  font-family: 'Wave';
+  font-size: 50px;
+  line-height: 60px;
+  color: $header-color;
+  text-align: center;
+  background-color: $linear-bg-2;
+  background-image: $linear-bg-2;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: $header-color;
+
+  .menu-title {
+    color: $header-color;
+    margin-bottom: 20px;
+    display: block;
+  }
+}
+
+.page-title {
+  margin: 5px;
+  color: #db7e42;
+  background-color: linear-gradient(to right, #de4545, #db7e42);
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #db7e42;
+  font-size: 20px;
+  text-align: center;
+  font-family: Wave;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  a {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -17px;
+    padding: 0;
+
+    svg {
+      display: block;
+    }
+  }
+}
+
+body.body--dark .q-drawer {
+  max-width: 550px;
+  //background: $main-color;
+}
+
+.q-dark {
+  //background: $main-color;
+}
+
+body.body--dark .q-footer {
+  padding-bottom: calc(1px + env(safe-area-inset-top, 0));
+  background-image: url(../assets/images/common/footer-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  margin: 0 auto;
+  width: 100%;
+
+  .q-tabs {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+a {
+  color: #db7e42;
+  text-decoration: none;
+}
+
+svg {
+  width: 25px;
+  fill: #ffffff;
+}
+
+.q-carousel.vip {
+  height: auto;
+  text-align: center;
+}
+
+.q-carousel.home-banner-h5 {
+  width: calc(100% - 20px);
+  height: auto;
+  border-radius: 20px;
+  margin: 10px;
+  aspect-ratio: 1000/445;
+
+  .q-panel > div {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .q-carousel__navigation--bottom {
+    bottom: 10px;
+  }
+}
+
+.q-carousel.home-banner-web {
+  width: calc(100% - 20px);
+  height: auto;
+  border-radius: 20px;
+  margin: 10px;
+  aspect-ratio: 106/25;
+
+  .q-panel > div {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .q-carousel__navigation--bottom {
+    bottom: 10px;
+  }
+}
+
+.q-card {
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.q-card__section--vert {
+  padding: 0;
+}
+
+.q-footer .q-tab {
+  padding: 5px 0 0px;
+}
+
+.q-tab {
+  background: transparent;
+  color: $text-footer;
+
+  &--active {
+    svg {
+      fill: $linear-bg-1;
+    }
+
+    span {
+      background-image: $linear-bg-1;
+      /* Set the background size and repeat properties. */
+      background-size: 100%;
+      background-repeat: repeat;
+
+      /* Use the text as a mask for the background. */
+      /* This will show the gradient as a text color rather than element bg. */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-background-clip: text;
+      -moz-text-fill-color: transparent;
+    }
+
+    .q-tab__label {
+      color: $header-color;
+      font-weight: bold;
+      font-size: $normal-size;
+    }
+  }
+
+  &__indicator {
+    display: none;
+  }
+}
+
+.q-splitter--dark .q-splitter__separator {
+  background: none;
+}
+
+.q-tabs--vertical .q-tab__indicator {
+  display: none;
+}
+
+.text-brand {
+  color: $header-color;
+}
+
+.bg-brand {
+  background-image: $linear-bg-1;
+}
+
+.menu-title {
+  color: $main-color;
+  background-image: $linear-bg-1;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: $header-color;;
+  font-size: 28px;
+  text-align: center;
+  font-family: Wave;
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+  align-content: center;
+  justify-content: center;
+}
+
+.page-header {
+  width: 100%;
+  background-color: $main-color;
+  font-size: $big-font-size;
+  text-align: center;
+  color: $header-color;
+  font-family: Wave;
+  min-height: 40px;
+
+  .page {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+
+    span {
+      font-size: $normal-size;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 2px;
+    }
+  }
+
+  .close-back-btn {
+    background: $header-color;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    line-height: 21px;
+    padding: 2px;
+    text-align: center;
+
+    svg {
+      fill: #000;
+      width: 21px;
+    }
+  }
+
+  .page-header-inner {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8px 12px;
+
+    .header-back{
+      margin-left:auto;
+    }
+  }
+
+}
+
+.lang-container {
+  background: $border-color;
+  border-radius:12px;
+  padding: 1px 10px;
+  height: 30px;
+
+  .q-field__control{
+    height: 30px;
+    min-height: 30px !important;
+  }
+
+  &.q-field--auto-height .q-field__native{
+    min-height: 30px !important;
+  }
+
+  &.q-field--standard .q-field__control:hover:before{
+    border-color: transparent;
+    display:none;
+  }
+  &.q-field--standard .q-field__control:before{
+    border-color: transparent;
+    display:none;
+  }
+
+  .q-field--auto-height .q-field__control {
+    height: 30px;
+  }
+
+  .q-field__after, .q-field__append {
+    height: 30px;
+  }
+}
+
+.bot-section {
+  background: #23263c;
+  display: flex;
+  justify-content: space-around;
+
+  .acct-section {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-evenly;
+
+    .q-seperator--dark {
+      border-right: 1px solid #ffffff;
+    }
+  }
+
+  .q-btn__content {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+
+    svg {
+      fill: #ffffff;
+      width: 25px;
+      display: block;
+      padding: 0;
+    }
+  }
+}
+
+.btn-pointer {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+  }
+}
+
+.common-large-btn {
+  min-width: 180px;
+  padding: 4px 16px;
+  border-radius: 10px;
+}
+
+.third-btn {
+  background: $linear-bg-4;
+}
+
+.close-btn {
+  background: $linear-bg-gray;
+}
+
+
+.gap-8 {
+  gap: 8px;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.text-main {
+  color: $text-footer
+}
+
+.q-field--filled.q-field--dark .q-field__control, .q-field--filled.q-field--dark .q-field__control:before {
+  background: $main-color;
+}
+
+input:internal-autofill-selected {
+  background-color: transparent !important;
+}
+
+.btn {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-brand {
+  border-radius: 56.5px;
+  border: 2px solid #FB3CA9;
+  background: linear-gradient(90deg, #CF027D 0%, #FF6370 100%);
+  box-shadow: 0px 0px 0.3409rem 0.06818rem rgba(251, 89, 114, 0.54), 0px 0.1818rem 0.1818rem 0px rgba(255, 178, 189, 0.26) inset, 0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
+}
+
+.btn-lg {
+  min-height: 2.5rem;
+  min-width: 8.45rem;
+}
+
+.gap-0\.35 {
+  gap: 0.35rem;
+}
+
+.gap-1\.2 {
+  gap: 1.2rem;
+}
+
+
+.hue-purple {
+  color: $header-color;
+}
+
+.w-1\.8 {
+  width: 1.8rem;
+}
+
+.text-truncate {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
+
+.q-field--with-bottom {
+  transition: padding-bottom 0.3s;
+}
+
+.q-field--with-bottom:not(.q-field--error) {
+  padding-bottom: 0;
+}
+
+
+@media (min-width: 991px) {
+  .main-section {
+    background-image: url("../assets/images/common/bg-web.png");
+    background-size: cover;
+  }
+}
