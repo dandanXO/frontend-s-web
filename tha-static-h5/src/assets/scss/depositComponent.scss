@@ -1,0 +1,51 @@
+.platform {
+  margin-inline: auto;
+  padding-bottom: 2rem;
+}
+
+.payment-method-item {
+  width: 100% !important;
+  background: $primary !important;
+  padding: 0.4rem 0.75rem !important;
+  justify-content: flex-start !important;
+  box-shadow: none !important;
+
+  filter: none !important;
+
+  &.active {
+    background: $linear-bg-2 !important;
+    border: 2px solid $purple-color !important;
+    background: $linear-bg-2;
+    box-shadow: 0px -26px 20px 0px rgba($purple-color, 0.76) inset, 0px 8px 8px 0px rgba(221, 178, 255, 0.26) inset;
+  }
+
+  img {
+    aspect-ratio: 1;
+    width: 1.6rem;
+  }
+
+  .overflow {
+    flex: 1 1 auto;
+    line-height: 1.2;
+    text-align: left;
+    font-size: 0.85rem !important;
+    margin-top: 0.15em;
+  }
+}
+
+.q-field--with-bottom {
+  transition: padding-bottom 0.3s;
+}
+
+.q-field--with-bottom:not(.q-field--error) {
+  padding-bottom: 0;
+}
+
+
+.panel {
+  margin-bottom: -1rem;
+
+  .panel-body {
+    padding-bottom: 2rem;
+  }
+}
