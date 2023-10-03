@@ -235,7 +235,20 @@ export default {
     enter_ur_dob: "Please confirm your DOB.",
     close_btn: "Close",
     if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact customer service or our ",
-    live_chat: "Live Chat"
+    live_chat: "Live Chat",
+    old_password: "Old Password",
+    confirm_new_password: "Confirm New Password",
+    hint_new_password: "Must include 6-16 characters with a combination of letters and numbers.",
+    enter_veri_code: "Enter Verification Code",
+    confirm_button: "Confirm",
+    check_your_captcha_code: "Captcha Code Check",
+    only_numbers_allowed: "Only numbers are allowed.",
+    otp_code_has_been_sent: "OTP has been sent to your email.",
+    successfully_verified: "Successfully Verified",
+    password_updated: "Password successfully updated.",
+    updated_successfully: "Updated successfully",
+    please_enter_old_password: "Please enter your old password",
+    password_must_between_6_12: "Password 's length must be between 6 to 12."
   },
   error: {
     101: "Platform not found",

@@ -78,6 +78,10 @@
                 style="min-height: 30px;height:30px;"
                 v-model="languageVal"
                 :options="langOptions"
+                option-label="label"
+                option-value="value"
+                emit-value
+                map-options
             >
             </q-select>
           </div>
@@ -198,19 +202,14 @@ export default defineComponent({
       checkRoute();
     })
     const langOptions = [
-      "th", "en"
-      // {
-      //   label: 'Thai',
-      //   value: 'th'
-      // },
-      // {
-      //   label: 'English',
-      //   value: 'en'
-      // },
-      // {
-      //   label: '简体中文',
-      //   value: 'cn'
-      // }
+      {
+        label: 'ไทย',
+        value: 'th',
+      },
+      {
+        label: 'English',
+        value: 'en',
+      }
     ]
 
     const checkRoute = () => {

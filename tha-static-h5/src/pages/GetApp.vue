@@ -11,7 +11,7 @@
         <div class="codes">
           <div class="qrcode">
             <img src="../assets/images/affiliate/qrcode.png" />
-            <a href="https://jo2.app/" target="_blank">{{ $t('lang.download') }}</a>
+            <a href="https://jo3.app/" target="_blank">{{ $t('lang.download') }}</a>
           </div>
           <div class="h5access">
             <img src="../assets/images/affiliate/h5.png" />

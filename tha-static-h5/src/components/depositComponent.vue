@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <PanelWrapper>
-      <template #title>เลือกวิธีฝากเงิน"</template>
+      <template #title>เลือกวิธีฝากเงิน</template>
       <div class="node-wrapper">
         <Node
           :level="1"

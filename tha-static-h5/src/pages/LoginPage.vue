@@ -171,7 +171,7 @@ export default defineComponent({
         passwordRef.value.validate();
         // verificationRef.value.validate();
         $q.loading.show({
-          message: t('lang.auth_error')
+          message: t('lang.loading')
         });
         if (
             loginNameRef.value.hasError ||

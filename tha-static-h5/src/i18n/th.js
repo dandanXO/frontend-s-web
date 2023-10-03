@@ -235,7 +235,20 @@ export default {
     enter_ur_dob: "กรุณายืนยันวันเกิด",
     close_btn: "ปิด",
     if_you_wish_to_change_please_contact: "หากต้องการเปลี่ยนแปลงข้อมูลส่วนบุคคล กรุณาติดต่อลูกค้าสัมพันธ์หรือ",
-    live_chat: "ไลฟ์แชท"
+    live_chat: "ไลฟ์แชท",
+    old_password: "รหัสผ่านเดิม",
+    confirm_new_password: "ยืนยันรหัสผ่านใหม่",
+    hint_new_password: "ขึ้นอยู่ที่ระหว่าง 6-16 ตัวอักษรและจำเป็นต้องมีการผสมของตัวอักษรและตัวเล",
+    enter_veri_code: "รับรหัสยืนยัน",
+    confirm_button: "ปุ่มยืนยัน",
+    check_your_captcha_code: "ตรวจสอบรหัสแคปต์ชา",
+    only_numbers_allowed: "อนุญาตเฉพาะตัวเลขเท่านั้น",
+    otp_code_has_been_sent: "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว",
+    successfully_verified: "ยืนยันสำเร็จ",
+    password_updated: "อัพเดทพาสเวิดเรียบร้อยแล้ว",
+    updated_successfully: "อัพเดทเรียบร้อยแล้ว",
+    please_enter_old_password: "กรุณารหัสผ่านเดิม",
+    password_must_between_6_12: "ความยาวควรเป็น 6 ถึง 12 ตัว"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",
