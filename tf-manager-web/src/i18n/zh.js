@@ -697,6 +697,7 @@ export default {
     pendingTransaction: '待处理',
     permission: '权限',
     permissionAssignment: '分配权限',
+    pgroup: '优惠组别',
     platform: '平台',
     platformAccount: '平台账号',
     platformId: '平台 ID',

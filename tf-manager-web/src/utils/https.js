@@ -4,6 +4,7 @@ import { useStore } from "@/store";
 import { ResponseCode } from "../api/response";
 import _cloneDeep from 'lodash/cloneDeep';
 import i18n from "../i18n/index";
+import { globals } from '../main.js'
 
 const toRawType = (value) => {
   return Object.prototype.toString.call(value).slice(8, -1)
@@ -14,7 +15,9 @@ const clearQueryStr = (param) => {
 }
 
 const clearEmptyParam = (config) => {
-  if (config.headers["Content-type"] && config.headers["Content-type"].includes("json")) { return; }
+  if (config.headers["Content-type"] && config.headers["Content-type"].includes("json")) {
+    return;
+  }
   ['data', 'params'].forEach(item => {
     if (config[item]) {
       const rawType = toRawType(config[item])
@@ -71,9 +74,19 @@ const onResponseError = (error) => {
 };
 
 const https = (timeout) => {
+  let baseApi = globals.$baseApi;
+  if (!baseApi) {
+    const sessionUrl = sessionStorage.getItem("baseApi");
+    if (sessionUrl) {
+      baseApi = sessionUrl;
+    } else {
+      baseApi = process.env.VUE_APP_BASE_API.indexOf(",") > -1 ? process.env.VUE_APP_BASE_API.split(",")[0] : process.env.VUE_APP_BASE_API;
+    }
+  }
+
   const token = useStore().state.user.token;
   const config = {
-    baseURL: process.env.VUE_APP_BASE_API,
+    baseURL: baseApi,
     headers: {
       Authorization: `Bearer ${token}`
     },

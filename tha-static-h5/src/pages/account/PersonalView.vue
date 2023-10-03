@@ -83,7 +83,7 @@
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
-                  ชื่อ
+                  ID
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -99,9 +99,9 @@
                       color="white"
                       filled
                       v-model="formDetail.nickName"
-                      placeholder="ชื่อ"
+                      placeholder="ID"
                       :rules="[
-                    (val) => (val && val.length > 0) || 'ชื่อ-นามสกุล'
+                    (val) => (val && val.length > 0) || $t('lang.enter_ur_id')
                   ]"
                   >
                   </q-input>
@@ -112,7 +112,7 @@
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
-                  ชื่อ
+                  {{ $t('lang.name') }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -126,7 +126,7 @@
                     v-if="!personalState.memberInfo.realName && isEdit == false"
                     @click="isEdit=!isEdit;"
                 >
-                  <span>แก้ไข</span><RiEditBoxLine />
+                  <span>{{ $t('lang.edit') }}</span><RiEditBoxLine />
                 </div>
 
 
@@ -136,23 +136,18 @@
                       color="white"
                       filled
                       v-model="formDetail.realName"
-                      placeholder="ชื่อ"
+                      :placeholder="$t('lang.name')"
                       :rules="[
-                    (val) => (val && val.length > 0) || 'ชื่อ-นามสกุล'
+                    (val) => (val && val.length > 0) || $t('lang.enter_lastname')
                   ]"
                   >
-                    <!-- <template v-slot:append>
-                      <q-avatar>
-                        <RiSendPlane2Line @click="updateState('realName')" />
-                      </q-avatar>
-                    </template> -->
                   </q-input>
                 </div>
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
-                  ชื่อภาษาอังกฤษ
+                  {{ $t('lang.surname') }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -165,7 +160,7 @@
                     v-if="!personalState.memberInfo.name2 && isEdit == false"
                     @click="isEdit=!isEdit;"
                 >
-                  <span>แก้ไข</span><RiEditBoxLine />
+                  <span>{{ $t('lang.edit') }}</span><RiEditBoxLine />
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.name2">
@@ -174,7 +169,7 @@
                       color="white"
                       filled
                       v-model="formDetail.name2"
-                      placeholder="ชื่อภาษาอังกฤษ"
+                      :placeholder="$t('lang.surname')"
                   >
                     <!-- <template v-slot:append>
                       <q-avatar>
@@ -187,7 +182,7 @@
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiCake2Line/>
-                  วันเกิด
+                  {{ $t('lang.dob') }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -200,13 +195,14 @@
                     v-if="!personalState.memberInfo.birthday && isEdit == false"
                     @click="isEdit=!isEdit;"
                 >
-                  <span>แก้ไข</span><RiEditBoxLine />
+                  <span>{{ $t('lang.edit') }}</span><RiEditBoxLine />
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.birthday">
-                  <q-input ref="birthdayRef" filled v-model="formDetail.birthday" placeholder="วันเกิด"
+                  <q-input ref="birthdayRef" filled v-model="formDetail.birthday"
+                           :placeholder="$t('lang.dob')"
                            :rules="[
-                    (val) => (val && val.length > 0) || 'กรุณายืนยันวันเกิด'
+                    (val) => (val && val.length > 0) || $t('lang.enter_ur_dob')
                   ]">
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
@@ -219,7 +215,7 @@
                             <div class="row items-center justify-end">
                               <q-btn
                                   v-close-popup
-                                  label="Close"
+                                  :label="$t('lang.close_btn')"
                                   color="primary"
                                   flat
                               />
@@ -241,7 +237,7 @@
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiSmartphoneLine/>
-                  เบอร์โทรศัพท์
+                  {{ $t('lang.phone_number') }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -255,9 +251,9 @@
                       color="white"
                       filled
                       v-model="formDetail.phone"
-                      placeholder="เบอร์โทรศัพท์"
+                      :placeholder="$t('lang.phone_number')"
                       :rules="[
-                    (val) => (val && val.length > 0) || 'กรุณายืนยันเบอร์โทรศัพท์',
+                    (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
                     isValidPhone
                   ]"
                   >
@@ -285,8 +281,8 @@
             </div>
           </div>
           <div class="account-tip danger">
-            หากต้องการเปลี่ยนแปลงข้อมูลส่วนบุคคล กรุณาติดต่อลูกค้าสัมพันธ์หรือ
-            <router-link to="/liveChat">ไลฟ์แชท</router-link>
+            {{ $t('lang.if_you_wish_to_change_please_contact') }}
+            <router-link to="/liveChat">{{ $t('lang.live_chat') }}</router-link>
           </div>
           <!--          <div class="buttons">-->
           <!--            <q-btn-->

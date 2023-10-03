@@ -56,14 +56,14 @@
            @click="switchMenu('slots')"
       >
         <img src="../assets/images/index/home-slot.png"/>
-        <span>สล็อต</span>
+        <span>{{ $t('lang.slot_header') }}</span>
       </div>
       <div class="game-board-item"
            :class="(currentSelectedMenu=='sport') ? 'active-board' : ''"
            @click="switchMenu('sport')"
       >
         <img src="../assets/images/index/home-sport.png"/>
-        <span>กีฬา</span>
+        <span>{{ $t('lang.sport_header') }}</span>
       </div>
 
       <div class="game-board-item"
@@ -71,7 +71,7 @@
            @click="switchMenu('live')"
       >
         <img src="../assets/images/index/home-live.png"/>
-        <span>ไลฟ์คาสิโน</span>
+        <span>{{ $t('lang.live_header') }}</span>
       </div>
 
       <div class="game-board-item"
@@ -79,7 +79,7 @@
            @click="switchMenu('fish')"
       >
         <img src="../assets/images/index/home-fish.png"/>
-        <span>ยิงปลา</span>
+        <span>{{ $t('lang.fish_header') }}</span>
       </div>
 
       <div class="game-board-item"
@@ -87,7 +87,7 @@
            @click="switchMenu('cf')"
       >
         <img src="../assets/images/index/home-cf.png"/>
-        <span>ยิง</span>
+        <span>{{ $t('lang.fish2_list') }}</span>
       </div>
 
       <div class="game-board-item"
@@ -103,7 +103,7 @@
            @click="switchMenu('lottery')"
       >
         <img src="../assets/images/index/home-lottery.png"/>
-        <span>ลอตเตอรี่</span>
+        <span>{{ $t('lang.lottery_list') }}</span>
       </div>
 
 
@@ -122,9 +122,11 @@
            id="id-sport-board"
            v-if="currentSelectedMenu === 'sport'">
         <div class="game-item btn-pointer mid-grid-column"
-             @click="playGame('Sport','SABA')"
+             v-for="(sport,index) in sportsGame"
+             :key="`sports-${index}`"
+             @click="playGame(sport.name,sport.code, sport.gameCode)"
         >
-          <img src="../assets/images/games/sport/SABA.png"/>
+          <img :src="require(`../assets/images/games/sport/${sport.gameName}.png`)"/>
         </div>
       </div>
     </Transition>
@@ -389,49 +391,57 @@
            id="id-casual-board"
            v-if="currentSelectedMenu === 'casual' && isShow"
       >
-        <div class="game-item btn-pointer"
-             v-for="(game, index) in miniGames"
-             :key="index"
-             @click="playGame(game.code, 'TFGaming' , game.code)"
-        >
-          <img :src="require('../assets/home/casual/' + game.code + '.png')">
+        <div class="loading-div" v-if="isLoading">
+          <q-spinner-hourglass
+              :color="ui.themeColor"
+              size="8em"
+          />
         </div>
-
-
-        <div class="game-item minigame-select-div"
-             v-for="(game, index) in miniGamesMore"
-             :key="index"
-             @click="showTypeH5(game.id)"
-             @mouseover="showTypeWeb(game.id)"
-             @mouseleave="showTypeWeb(0)"
-        >
-          <img :src="game.logo">
-
-          <transition
-              appear
+        <template v-if="!isLoading">
+          <div class="game-item btn-pointer"
+               v-for="(game, index) in miniGames"
+               :key="index"
+               @click="playGame(game.name, 'TFGaming' , game.code)"
           >
-            <div class="select-type-div"
-                 v-if="showMiniType == game.id"
-            >
-              <div class="game-type btn-pointer" id="copper-type"
-                   @click="openMiniGame(game.id, game.copper, selectedPlat.status, 3)"
-              >
-                10 - 3,000
-              </div>
-              <div class="game-type btn-pointer" id="silver-type"
-                   @click="openMiniGame(game.id, game.silver, selectedPlat.status, 2)"
-              >
-                500 - 100K
-              </div>
-              <div class="game-type btn-pointer" id="gold-type"
-                   @click="openMiniGame(game.id, game.gold, selectedPlat.status, 1)"
-              >
-                1,000 - 20K
-              </div>
-            </div>
-          </transition>
+            <img :src="require('../assets/home/casual/' + game.code + '.png')">
+          </div>
 
-        </div>
+          <div class="game-item minigame-select-div"
+               v-for="(game, index) in miniGamesMore"
+               :key="index"
+               @click="showTypeH5(game.id)"
+               @mouseover="showTypeWeb(game.id)"
+               @mouseleave="showTypeWeb(0)"
+          >
+            <img :src="game.logo">
+
+            <transition
+                appear
+            >
+              <div class="select-type-div"
+                   v-if="showMiniType == game.id"
+              >
+                <div class="game-type btn-pointer" id="copper-type"
+                     @click="playGame(game.name, 'TFGaming' , game.copper)"
+                >
+                  10 - 3,000
+                </div>
+                <div class="game-type btn-pointer" id="silver-type"
+                     @click="playGame(game.id, 'TFGaming' , game.silver)"
+                >
+                  500 - 100K
+                </div>
+                <div class="game-type btn-pointer" id="gold-type"
+                     @click="playGame(game.id, 'TFGaming', game.gold)"
+                >
+                  1,000 - 20K
+                </div>
+              </div>
+            </transition>
+
+          </div>
+
+        </template>
 
       </div>
     </Transition>
@@ -465,10 +475,9 @@
 
     <div class="bottom-footer">
       <img class="footer-logo" src="../assets/logo.png"/>
-      <p>เงื่อนไขการบริการ Jolly88 (TNC) : บริการที่เราให้บริการอยู่ภายใต้ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว
-        โปรดดูข้อมูลเพิ่มเติมในข้อตกลงการให้บริการของเรา.</p>
+      <p>{{ $t('lang.footer_tnc') }}</p>
 
-      <span>Jolly88 2023@All Rights Reserved.</span>
+      <span>{{ $t('lang.footer_all_rights') }}</span>
     </div>
   </div>
 
@@ -478,7 +487,12 @@
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%;" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
-        <div class="menu-title">ประกาศ</div>
+
+        <div class="menu-title flex justify-between items-center">
+          <div style="margin-right:auto;" >&nbsp;</div>
+          <div>{{ $t('lang.announcement') }}</div>
+          <q-btn style="margin-left:auto;" icon="close" flat round dense v-close-popup/>
+        </div>
 
         <q-tabs
             v-model="activeKey"
@@ -577,12 +591,6 @@ export default defineComponent({
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
-    const openMiniGame = (gameName, gameCode, gameStatus, type) => {
-      console.log("openMiniGame")
-      if (isGoMiniGame.value) {
-        gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
-      }
-    };
     const pokerGames = [
       // {
       //   code: "JILI",
@@ -644,7 +652,6 @@ export default defineComponent({
         text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ",
       },
     ];
-    //NOT USING.
     const esportsGame = [
       {
         code: "TFGaming",
@@ -658,13 +665,10 @@ export default defineComponent({
     ];
     const sportsGame = [
       {
-        code: "TFGaming",
-        name: "TF Gaming",
-        gameName: "AE Sexy",
-        gameCode: "MX-LIVE-001",
-        bg: require("../assets/home/e-sport/shadebg.png"),
-        main: require("../assets/home/sport/cmd.png"),
-        logo: require("../assets/logo/CMD.png")
+        code: "SABA",
+        name: "SABA Sport",
+        gameName: "SABA",
+        gameCode: "SABA"
       }
     ];
     const platformMinigame = ref([]);
@@ -672,7 +676,6 @@ export default defineComponent({
     const miniGamesMore = ref([
       {
         name: "KOG Draw",
-        id: 8739,
         logo: require("../assets/home/casual/2.png"),
         copper: "",
         silver: "",
@@ -680,7 +683,6 @@ export default defineComponent({
       },
       {
         name: "DOTA 2 Treasure",
-        id: 8742,
         logo: require("../assets/home/casual/5.png"),
         copper: "",
         silver: "",
@@ -688,7 +690,6 @@ export default defineComponent({
       },
       {
         name: "LOL Draft",
-        id: 8745,
         logo: require("../assets/home/casual/8.png"),
         copper: "",
         silver: "",
@@ -755,8 +756,6 @@ export default defineComponent({
         switchPlat(fishPlatforms.value[0], menu);
       } else if (menu === "poker") {
         switchPlat(pokerGames[0], menu);
-      } else if (menu === "esports") {
-        switchPlat(esportsGame[0], menu);
       } else if (menu === "sport") {
         switchPlat(sportsGame[0], menu);
       } else if (menu === "casual") {
@@ -876,11 +875,11 @@ export default defineComponent({
                   return game.name.indexOf(o.name) > -1
                 })
                 if (game.name.indexOf("(铜)") > -1) {
-                  miniGamesMore.value[index]["copper"] = game.id;
+                  miniGamesMore.value[index]["copper"] = game.code;
                 } else if (game.name.indexOf("(银)") > -1) {
-                  miniGamesMore.value[index]["silver"] = game.id;
+                  miniGamesMore.value[index]["silver"] = game.code;
                 } else if (game.name.indexOf("(金)") > -1) {
-                  miniGamesMore.value[index]["gold"] = game.id;
+                  miniGamesMore.value[index]["gold"] = game.code;
                 }
               })
               console.log(miniGamesMore.value);
@@ -918,7 +917,7 @@ export default defineComponent({
                 element.gameType.includes("SLOT")
             );
             platformMinigame.value = data.filter((element) =>
-                element.gameType.includes("CASUAL")
+                element.gameType.includes("ESPORT")
             );
             if (currentSelectedMenu.value === "slots") {
               switchPlat(platforms.value[0], "slots");
@@ -1065,7 +1064,6 @@ export default defineComponent({
     return {
       imageLoading,
       slide: ref(0),
-      tab: ref("slots"),
       imgURL: process.env.IMAGE_CDN + "/",
       banners,
       store,
@@ -1107,7 +1105,6 @@ export default defineComponent({
       showTypeWeb,
       showMiniType,
       openGame,
-      openMiniGame,
       scrollPageRef,
       announcementList,
       isStationNotice,
@@ -1256,6 +1253,7 @@ export default defineComponent({
 }
 
 .game-grid-lists {
+  position:relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: calc(95% - 20px);

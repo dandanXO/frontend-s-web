@@ -5,11 +5,11 @@
     </div>
     <div class="q-pa-md">
       <div class="account-title-container">
-        <span class="account-title">เลือกบัตร</span>
+        <span class="account-title">{{ $t('lang.choose_a_card') }}</span>
       </div>
       <div class="account-content">
         <div class="account-tip-text wbot">
-          <RiSpamLine /> กรุณาลงทะเบียนบัญชีธนาคารด้านล่างเพื่อรับการอัปเดต
+          <RiSpamLine /> {{ $t('lang.register_bank_acc_para') }}
         </div>
         <div class="addbuttons"></div>
         <div class="flex-box flex-wrap bank-card-list">
@@ -82,13 +82,13 @@
             @click="bankCardModal('bank')"
           >
             <RiLink />
-             เพิ่มบัตร
+            {{ $t('lang.add_a_card') }}
           </div>
         </div>
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">Bank Card Unbind Record</span>
+      <span class="account-title">{{ $t('lang.bank_card_unbind_record') }}</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
@@ -154,10 +154,10 @@
     <q-dialog v-model="bankCardModalState.visible" persistent>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section v-if="!isVirtual" class="q-mb-md">
-          <div class="text-h6">เพิ่มบัตร</div>
+          <div class="text-h6">{{ $t('lang.add_a_card') }}</div>
         </q-card-section>
         <q-card-section v-if="isVirtual" class="q-mb-md">
-          <div class="text-h6">Add a virtual currency</div>
+          <div class="text-h6">{{ $t('lang.add_a_virtual_currency') }}</div>
         </q-card-section>
         <q-form>
           <div v-if="!isVirtual">
@@ -167,7 +167,7 @@
                   v-model="selectedBankType"
                   filled
                   :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
-                  label="ช่องทางการถอน"
+                  :label="$t('lang.withdraw_methods')"
                   color="white"
                   label-color="grey"
                   option-label="name"
@@ -188,8 +188,8 @@
                   :options="banksList"
                   option-value="id"
                   option-label="name"
-                  label="เลือกบัญชี (เพิ่มธนาคารต่างๆเข้าไป)"
-                  :rules="[(val) => !!val || 'โปรดเลือกบัญชีธนาคาร']"
+                  :label="$t('lang.select_account_add_different_banks')"
+                  :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
                   lazy-rules
                   emit-value
                   map-options
@@ -233,7 +233,7 @@
             class="q-mb-md"
             filled
             v-model="bankCardInfo.cardAccount"
-            label="ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)"
+            :label="$t('lang.account_name_with_desc')"
             :rules="cardAccountRules"
             lazy-rules
             :disable="true"
@@ -244,7 +244,7 @@
             filled
             class="q-mb-md"
             v-model="bankCardInfo.cardNumber"
-            label="เลขบัญชี"
+            :label="$t('lang.card_number')"
             :rules="cardNumberRules"
             ref="cardNumberRef"
             color="white"
@@ -253,7 +253,7 @@
             class="q-mb-md"
             filled
             v-model="bankCardInfo.cardAddress"
-            label="สาขา (ไม่จำเป็นต้องใส่ ก็ได้)"
+            :label="$t('lang.branch_not_required')"
             :rules="cardAddressRules"
             ref="cardAddressRef"
             color="white"
@@ -261,10 +261,10 @@
           <div class="flex flex-center">
             <q-btn
               class="q-mr-md"
-              label="ยกเลิก"
+              :label="$t('lang.cancel')"
               @click="bankCardModalState.visible = false"
             />
-            <q-btn color="brand" label="ยืนยัน" @click="submitBankCard" />
+            <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard" />
           </div>
         </q-form>
       </q-card>

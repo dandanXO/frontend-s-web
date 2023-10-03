@@ -697,6 +697,7 @@ export default {
     pendingTransaction: 'Pending',
     permission: 'Permission',
     permissionAssignment: 'Permission Assignment',
+    pgroup: 'Privilege Group',
     platform: 'Platform',
     platformAccount: 'Platform Account',
     platformId: 'Platform ID',
