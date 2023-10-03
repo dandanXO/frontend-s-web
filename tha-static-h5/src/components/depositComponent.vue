@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <PanelWrapper>
-      <template #title>เลือกวิธีฝากเงิน</template>
+      <template #title>{{ $t('lang.select_deposit_method')}}</template>
       <div class="node-wrapper">
         <Node
           :level="1"
@@ -13,7 +13,7 @@
       </div>
       <div class="deposit-container">
         <q-form ref="depositForm" class="q-gutter-y-xs">
-          <p>กรุณาใส่จำนวนเงินที่ต้องการฝาก</p>
+          <p>{{  $t('lang.please_enter_deposit_amount') }}</p>
           <q-input
             v-if="amountList.length === 0"
             ref="depositAmtRef"
@@ -30,12 +30,12 @@
           <q-select
             v-else
             ref="depositAmtRef"
-            label="กรุณาใส่จำนวนเงินที่ต้องการฝาก"
+            :label="$t('lang.enter_deposit_amount')"
             name="localAmount"
             filled
             :options="amountList"
             v-model="form.localAmount"
-            placeholder="ใส่ยอดเงิน"
+            :placeholder="$t('lang.enter_amount_money')"
             color="white"
             :rules="verifyDepositAmount"
             padding="none"
@@ -45,7 +45,6 @@
           <div
             v-if="isUSDT && activeMethod.currencyRate"
             class="q-pb-md"
-            label="อัตราการแลก"
           >
             <span style="color: #9bffd1"
               >1.00 USDT ≈ {{ activeMethod.currencyRate }} THB</span
@@ -67,7 +66,7 @@
             class="q-mt-md"
             filled
             dense
-            label="เลือกโปรโมชั่น"
+            :label="$t('lang.choose_promotion')"
             :options="unselectedPrivileges"
             v-model="selectedPrivilege"
             emit-value

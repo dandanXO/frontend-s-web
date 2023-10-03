@@ -7,12 +7,11 @@
       <PanelWrapper>
         <template #title>
           <div class="text-white text-left flex column gap-0.35">
-            ขั้นตอนการถอนเงิน: <br />
+            {{ $t('lang.withdraw_process') }}: <br />
             <div class="flex justify-between">
-              <div class="hue-purple">1.วิธีถอนเงิน</div>
-              <div>2.การตรวจสอบบัญชี</div>
-              <div>3.ถอนเงิน</div>
-<!--              <div>4.收款</div>-->
+              <div class="hue-purple">1.{{ $t('lang.withdraw_method') }}</div>
+              <div>2.{{ $t('lang.verification_account') }}</div>
+              <div>3.{{ $t('lang.withdraw_money') }}</div>
             </div>
           </div>
         </template>
@@ -69,7 +68,7 @@
         </div> -->
         <div class="flex column gap-1.2 overflow-hidden">
           <div class="full-width">
-            <div class="q-mb-xs">วิธีถอนเงิน</div>
+            <div class="q-mb-xs">{{ $t('lang.withdraw_method') }}</div>
             <q-select filled :options="withdrawalMethods" dense>
               <template v-slot:selected>
                 <PlatformItem directory="/withdraw/" dense :scope="selectedPlatform" class="q-pl-xs" />
@@ -85,7 +84,7 @@
           </div>
 
           <div class="full-width">
-            <div class="q-mb-xs">เลือกบัญชีธนาคาร</div>
+            <div class="q-mb-xs">{{ $t('lang.select_bank_account') }}</div>
             <q-select
               filled
               ref="cardRef"
@@ -97,14 +96,14 @@
               dense
               :options="withdrawState.bankCardList"
               class="q-py-none"
-              :rules="[(val) => !!val || 'โปรดเลือกบัญชีธนาคาร']"
+              :rules="[(val) => !!val || $t('lang.please_select_bank_account')]"
             >
               <template v-slot:no-option>
                 <q-item dense>
                   <q-item-section class="text-grey"
-                    >ไม่มีบัตรที่สามารถใช้งานได้
+                    >{{ $t('lang.no_usable_cards') }}
                     <router-link to="/account/withdraw"
-                      >เพิ่มบัตร</router-link
+                      >{{ $t('lang.add_card') }}</router-link
                     ></q-item-section
                   >
                 </q-item>
@@ -132,7 +131,7 @@
           </div>
 
           <div class="full-width">
-            <div class="q-mb-xs">กรุณาใส่จำนวนเงินที่ต้องการถอน</div>
+            <div class="q-mb-xs">{{ $t('lang.please_enter_the_amount') }}</div>
             <q-input
               filled
               dense
@@ -142,13 +141,13 @@
               mask="######"
               color="white"
               :rules="[
-                (val) => (val && val.length > 0) || 'ใส่ยอดเงิน',
+                (val) => (val && val.length > 0) || $t('lang.enter_amount_money'),
                 (val) =>
                   val >= selectedWithdrawalMethod.withdrawMin ||
-                  'จํานวนเงินควรเป็นไปตามที่กำหนด',
+                  $t('lang.amount_should_more_than_min'),
                 (val) =>
                   val <= selectedWithdrawalMethod.withdrawMax ||
-                  'จํานวนเงินควรเป็นไปตามที่กำหนด',
+                  $t('lang.amount_should_less_than_max'),
               ]"
             >
               <template v-slot:append>
@@ -170,7 +169,7 @@
                   "
                 >
                   {{
-                    "วงเงินต่ำสุด/วงเงินสูงสุด: " +
+                    $t('lang.min_max_amount') + ": " +
                     selectedWithdrawalMethod.withdrawMin +
                     " - " +
                     selectedWithdrawalMethod.withdrawMax
@@ -179,21 +178,20 @@
                 </template>
                 <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
                   {{
-                    "ถอนวันนี้: " + selectedWithdrawalMethod.withdrawMaxAmount
+                    $t('lang.withdrawal_today') + selectedWithdrawalMethod.withdrawMaxAmount
                   }}
                 </template>
                 <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
                   {{
-                    " เหลือ: " +
+                    $t('lang.remaining') +
                     selectedWithdrawalMethod.withdrawMaxTimes +
-                    " ครั้ง"
+                    $t('lang.attempt_time')
                   }}
                 </template>
               </div>
               <div
                 class="q-mb-md"
                 v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-                label="อัตราการแลก"
               >
                 <span style="color: #9bffd1"
                   >1.00 USDT ≈
@@ -204,7 +202,6 @@
               <div
                 v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
                 class="q-my-md"
-                label="จํานวนเงินโดยประมาณ"
               >
                 <span style="color: #9bffd1"
                   >{{
@@ -240,7 +237,7 @@
                   class="btn btn-lg btn-brand q-mx-auto"
                   @click="submitWithdraw"
                   color="brand"
-                  label="ยืนยันการถอน"
+                  :label="$t('lang.confirm_withdrawal')"
                 />
               </div>
             </q-form>

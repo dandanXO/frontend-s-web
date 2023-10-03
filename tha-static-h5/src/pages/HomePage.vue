@@ -401,7 +401,7 @@
           <div class="game-item btn-pointer"
                v-for="(game, index) in miniGames"
                :key="index"
-               @click="playGame(game.name, 'TFGaming' , game.code)"
+               @click="playGame(game.name, 'TFGaming' , 'casual_' +  game.code)"
           >
             <img :src="require('../assets/home/casual/' + game.code + '.png')">
           </div>
@@ -422,17 +422,17 @@
                    v-if="showMiniType == game.id"
               >
                 <div class="game-type btn-pointer" id="copper-type"
-                     @click="playGame(game.name, 'TFGaming' , game.copper)"
+                     @click="playGame(game.name, 'TFGaming' , 'casual_' + game.copper)"
                 >
                   10 - 3,000
                 </div>
                 <div class="game-type btn-pointer" id="silver-type"
-                     @click="playGame(game.id, 'TFGaming' , game.silver)"
+                     @click="playGame(game.id, 'TFGaming' , 'casual_' +  game.silver)"
                 >
                   500 - 100K
                 </div>
                 <div class="game-type btn-pointer" id="gold-type"
-                     @click="playGame(game.id, 'TFGaming', game.gold)"
+                     @click="playGame(game.id, 'TFGaming', 'casual_' +  game.gold)"
                 >
                   1,000 - 20K
                 </div>
@@ -868,7 +868,7 @@ export default defineComponent({
                 }
               });
 
-              console.log(games);
+              // console.log(games);
 
               games.forEach((game) => {
                 let index = _.findIndex(miniGamesMore.value, function (o) {
@@ -882,7 +882,7 @@ export default defineComponent({
                   miniGamesMore.value[index]["gold"] = game.code;
                 }
               })
-              console.log(miniGamesMore.value);
+              // console.log(miniGamesMore.value);
 
             } else {
               res.forEach((element) => {
@@ -1045,7 +1045,6 @@ export default defineComponent({
     }
     const isGoMiniGame = ref(false);
     const showTypeH5 = (id) => {
-      console.log("showTypeH5");
       if (isMobile()) {
         showMiniType.value = id;
         setTimeout(() => {
