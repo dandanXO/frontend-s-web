@@ -300,8 +300,21 @@ export default {
     select_deposit_method: "เลือกวิธีฝากเงิน",
     please_enter_deposit_amount: "กรุณาใส่จำนวนเงินที่ต้องการฝาก",
     enter_deposit_amount: "กรุณาใส่จำนวนเงินที่ต้องการฝาก",
-    choose_promotion: "เลือกโปรโมชั่น"
-
+    choose_promotion: "เลือกโปรโมชั่น",
+    to_prevent_enter_amount_notified: "เพื่อป้องกันยอดเงินสูญหาย กรุณาใส่ยอดให้ตรงกับที่ระบบแจ้งค่ะ",
+    confirm_deposit: "ยืนยันฝากเงิน",
+    you_will_redirect_to_bank_page: "คุณจะถูกเปลี่ยนไปยังหน้าธ.ของคุณเพื่อทำงานฝากเงิน",
+    operation_is_successful_will_notified: "หากดำเนินการสำเร็จจะแจ้งที่หน้านี้",
+    understood: "เข้าใจแล้ว",
+    please_enter_the_deposit_amount: "กรุณาใส่ยอดเงินฝาก",
+    deposit_amount_in_between: "ยอดเงินฝากระหว่าง ",
+    deposit_balance_in_between: "ยอดเงินฝากระหว่าง ",
+    view_detail: "ดูรายละเอียด",
+    all: "ทั้งหมด",
+    welcome: "ยินดีต้อนรับ",
+    tnc:"ข้อตกลงและเงื่อนไข",
+    agree: "ตกลง",
+    claim: "โบนัส"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",
