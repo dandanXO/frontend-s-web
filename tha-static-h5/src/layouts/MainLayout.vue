@@ -110,28 +110,28 @@
         >
           <img class="footer-icon"
                :src="(tab === 'home') ? footers['home']['active']  : footers['home']['icon'] "/>
-          <span>หน้าแรก</span>
+          <span>{{ $t('lang.home_page') }}</span>
         </q-route-tab>
         <q-route-tab to="/finance/deposit" name="deposit">
           <img class="footer-icon"
                :src="(tab === 'deposit') ? footers['deposit']['active']  :   footers['deposit']['icon'] "/>
-          <span>เงินฝาก</span>
+          <span>{{ $t('lang.deposit_footer') }}</span>
         </q-route-tab>
 
         <q-route-tab to="/finance/withdraw" name="withdraw">
           <img class="footer-icon"
                :src="(tab === 'withdraw') ? footers['withdraw']['active']  : footers['withdraw']['icon'] "/>
-          <span>ถอน</span>
+          <span>{{ $t('lang.withdraw_footer') }}</span>
         </q-route-tab>
         <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs">
           <img class="footer-icon"
                :src="(tab === 'cs') ? footers['cs']['active']  :  footers['cs']['icon'] "/>
-          <span>ไลฟ์แชท</span>
+          <span>{{ $t('lang.cs_footer') }}</span>
         </q-route-tab>
         <q-route-tab to="/account/mail" name="notice">
           <img class="footer-icon"
                :src="(tab === 'notice') ? footers['notice']['active']  :  footers['notice']['icon'] "/>
-          <span>แจ้ง</span>
+          <span>{{ $t('lang.notice_footer') }}</span>
         </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -223,10 +223,10 @@ export default defineComponent({
         headerIcon.value = "";
         if (route.path === "/slot") {
           hasPage.value = true;
-          pageName.value = "สล็อต";
+          pageName.value = t('lang.slot_header');
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
-          pageName.value = "ไลฟ์คาสิโน";
+          pageName.value =  t('lang.live_header');
         } else if (route.path === "/poker") {
           hasPage.value = true;
           pageName.value = "Poker";
@@ -235,53 +235,53 @@ export default defineComponent({
           pageName.value = "Esports";
         } else if (route.path === "/sport") {
           hasPage.value = true;
-          pageName.value = "กีฬา";
+          pageName.value = t('lang.sport_header');
         } else if (route.path === "/aviator") {
           hasPage.value = true;
-          pageName.value = "ยิงปลา";
+          pageName.value = t('lang.fish_header');
         } else if (route.path === "/finance/deposit") {
           prevPage.value = '/';
           hasPage.value = true;
-          pageName.value = "วิธีชำระเงิน";
+          pageName.value = t('lang.deposit_header');
           headerIcon.value = require("../assets/images/menu/header-topup-icon.png");
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = '/';
           hasPage.value = true;
-          pageName.value = "ถอน";
+          pageName.value = t('lang.withdraw_header');
           headerIcon.value = require("../assets/images/menu/header-withdraw-icon.png");
         } else if (route.path === "/account/transit") {
           prevPage.value = 'account';
           hasPage.value = true;
-          pageName.value = "บันทึกการโอน";
+          pageName.value =  t('lang.transit_header');
         } else if (route.path === "/account") {
           prevPage.value = '/';
           hasPage.value = true;
-          pageName.value = "บัญชี";
+          pageName.value = t('lang.account_header');
           headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
           hasLang.value = true;
         } else if (route.path === "/display") {
           prevPage.value = 'finance/deposit';
           hasPage.value = true;
-          pageName.value = "ข้อมูลธนาคาร";
+          pageName.value =  t('lang.display_header');
           outOfApp.value = true;
         } else if (route.path === "/account/personal") {
           prevPage.value = '/';
           hasPage.value = true;
-          pageName.value = "ข้อมูลส่วนตัว";
+          pageName.value = t('lang.personal_header');
           headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
           hasLang.value = true;
         } else if (route.path === "/account/withdraw") {
           prevPage.value = '/';
           hasPage.value = true;
-          pageName.value = "ถอนไปยังบัญชีธนาคาร";
+          pageName.value = t('lang.withdraw_header2');
         } else if (route.path === "/account/mail") {
           prevPage.value = '/';
           hasPage.value = true;
-          pageName.value = "กล่องจดหมาย";
+          pageName.value = t('lang.mail_header');
         } else if (route.path === "/affiliate") {
           prevPage.value = '/';
           hasPage.value = true;
-          pageName.value = "สมัครพันธมิตร";
+          pageName.value = t('lang.affiliate_header');
         } else if (route.path === "/vip") {
           prevPage.value = '/';
           hasPage.value = true;
@@ -289,14 +289,14 @@ export default defineComponent({
         } else if (route.path === "/promo" && !route.query.id) {
           prevPage.value = '/';
           hasPage.value = true;
-          pageName.value = "โปรโมชั่น";
+          pageName.value = t('lang.promo_header');
         } else if (route.path === "/promo" && route.query.id) {
           prevPage.value = '/promo';
           hasPage.value = true;
-          pageName.value = "โปรโมชั่น";
+          pageName.value = t('lang.promo_header');
         } else if (route.path === "/insert-bankinfo") {
           hasPage.value = true;
-          pageName.value = "ใส่ข้อมูลธนาคาร";
+          pageName.value = t('lang.bankinfo_header');
         } else if (route.path === "/login") {
           prevPage.value = '/'
           hasPage.value = true;
@@ -305,17 +305,17 @@ export default defineComponent({
         } else if (route.path === "/register") {
           prevPage.value = '/'
           hasPage.value = true;
-          pageName.value = "ลงทะเบียน";
+          pageName.value = t('lang.register');
           hasLang.value = true;
         } else if (route.path === "/forgot-password") {
           prevPage.value = '/'
           hasPage.value = true;
-          pageName.value = "ลืมรหัสผ่าน";
+          pageName.value = t('lang.forgot_password');
           hasLang.value = true;
         } else if (route.path === "/share") {
           prevPage.value = '/'
           hasPage.value = true;
-          pageName.value = "แชร์";
+          pageName.value = t('lang.share_page');
         } else if (route.path === "/getapp") {
           prevPage.value = '/'
           hasPage.value = true;

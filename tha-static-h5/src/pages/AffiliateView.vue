@@ -2,106 +2,117 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="game-title">Jolly88</div>
-      <div class="game-title sub">{{ $t('lang.affiliate_program') }}</div>
+      <div class="game-title sub">{{ $t("lang.affiliate_program") }}</div>
       <div class="description">
         <div class="desc pro">
           <img src="../assets/images/affiliate/01.png" />
-          <span>{{ $t('lang.the_most_professional_team') }}</span>
+          <span>{{ $t("lang.the_most_professional_team") }}</span>
         </div>
         <div class="desc best">
           <img src="../assets/images/affiliate/02.png" />
-          <span>{{ $t('lang.excellent_service') }}</span>
+          <span>{{ $t("lang.excellent_service") }}</span>
         </div>
       </div>
       <div class="buttons">
         <!-- Action Required - Contact Us Link -->
-        <a :href="'https://www.jollycobber.com/th/register?agent=' + (affCode ? affCode : '')">
-          <q-btn :color="ui.themeColor" align="around" class="full-width">{{ $t('lang.apply') }}</q-btn>
+        <a
+          :href="
+            'https://www.jollycobber.com/th/register?agent=' +
+            (affCode ? affCode : '')
+          "
+        >
+          <q-btn :color="ui.themeColor" align="around" class="full-width">{{
+            $t("lang.apply")
+          }}</q-btn>
         </a>
         <a href="https://www.jollycobber.com/th/login">
-          <q-btn :color="ui.themeColor" align="around" class="full-width">{{ $t('lang.login') }}</q-btn>
+          <q-btn :color="ui.themeColor" align="around" class="full-width">{{
+            $t("lang.login")
+          }}</q-btn>
         </a>
         <router-link to="/liveChat" name="live">
-          <q-btn :color="ui.themeColor" align="around" class="full-width">{{ $t('lang.contact_us') }}</q-btn>
+          <q-btn :color="ui.themeColor" align="around" class="full-width">{{
+            $t("lang.contact_us")
+          }}</q-btn>
         </router-link>
       </div>
       <div class="steps">
         <div class="step">
           <div class="game-title">01</div>
           <div class="stepdesc">
-            {{ $t('lang.stepdesc_1') }}
+            {{ $t("lang.stepdesc_1") }}
           </div>
         </div>
         <div class="step">
           <div class="game-title">02</div>
           <div class="stepdesc">
-            {{ $t('lang.stepdesc_2') }}
+            {{ $t("lang.stepdesc_2") }}
           </div>
         </div>
         <div class="step">
           <div class="game-title">03</div>
           <div class="stepdesc">
-            {{ $t('lang.stepdesc_3') }}
+            {{ $t("lang.stepdesc_3") }}
           </div>
         </div>
       </div>
       <div class="information">
-        <div class="game-title sub">{{ $t('lang.affiliate_tnc_title') }}</div>
+        <div class="game-title sub">{{ $t("lang.affiliate_tnc_title") }}</div>
         <ol class="terms">
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_1') }}
+              {{ $t("lang.affiliate_tnc_para_1") }}
             </p>
           </li>
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_2_1') }}
+              {{ $t("lang.affiliate_tnc_para_2_1") }}
               <br />
-              {{ $t('lang.affiliate_tnc_para_2_2') }}
+              {{ $t("lang.affiliate_tnc_para_2_2") }}
               <br />
-              {{ $t('lang.affiliate_tnc_para_2_3') }} <br />
-              {{ $t('lang.affiliate_tnc_para_2_4') }} <br />
-              {{ $t('lang.affiliate_tnc_para_2_5') }}
+              {{ $t("lang.affiliate_tnc_para_2_3") }} <br />
+              {{ $t("lang.affiliate_tnc_para_2_4") }} <br />
+              {{ $t("lang.affiliate_tnc_para_2_5") }}
             </p>
           </li>
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_3') }}
+              {{ $t("lang.affiliate_tnc_para_3") }}
             </p>
           </li>
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_4') }}
+              {{ $t("lang.affiliate_tnc_para_4") }}
             </p>
           </li>
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_5') }}
+              {{ $t("lang.affiliate_tnc_para_5") }}
             </p>
           </li>
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_6') }}
+              {{ $t("lang.affiliate_tnc_para_6") }}
             </p>
           </li>
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_7') }}
+              {{ $t("lang.affiliate_tnc_para_7") }}
             </p>
           </li>
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_8') }}
+              {{ $t("lang.affiliate_tnc_para_8") }}
             </p>
           </li>
           <li>
             <p>
-              {{ $t('lang.affiliate_tnc_para_9') }}
+              {{ $t("lang.affiliate_tnc_para_9") }}
             </p>
           </li>
         </ol>
         <div class="table">
-          <div class="game-title sub">{{ $t('lang.commission_table') }}</div>
+          <div class="game-title sub">{{ $t("lang.commission_table") }}</div>
           <a-table
             :pagination="false"
             :columns="columns"
@@ -109,131 +120,129 @@
             :data-source="dataSource"
           />
         </div>
-        <div class="game-title sub">{{ $t('lang.how_to_calculate_commission') }}</div>
+        <div class="game-title sub">
+          {{ $t("lang.how_to_calculate_commission") }}
+        </div>
         <p>
-          กําไรสุทธิ = ( ชนะ/ขาดทุนทั้งหมด x 90% ) - โบนัส - (
-          ค่าธรรมเนียมการทําธุรกรรมธนาคาร x 1% ) => ในนั้น: ชนะ/แพ้ทั้งหมด =
-          เดิมพันทั้งหมด - การจ่ายเงินทั้งหมด <br />
-
-          ค่าธรรมเนียมการทําธุรกรรมธนาคาร:( ฝาก +ถอน)*1% <br />
-
-          คอมมิชชั่น = กําไรสุทธิ x เปอร์เซ็นต์ค่าคอมมิชชั่นที่สอดคล้องกัน
+          {{ $t("lang.affiliate_calulate_para_1_1") }}
+          <br />
+          {{ $t("lang.affiliate_calulate_para_1_2") }}
+          <br />
+          {{ $t("lang.affiliate_calulate_para_1_3") }}
         </p>
         <div class="boxes">
           <div class="box">
-            <p>
-              ตัวอย่างที่ 1: พันธมิตร A ได้รับกําไรค่าคอมมิชชั่นรายเดือน 30%
-            </p>
+            <p>{{ $t("lang.affiliate_example_1") }}</p>
             <div class="bx-table">
-              <div class="rw-left">- ลูกค้าเสียทั้งหมด:</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_1_table_1_left") }}
+              </div>
               <div class="rw-rgt">200,000</div>
             </div>
             <div class="bx-table">
-              <div class="rw-left">- จํานวนเงินฝากทั้งหมดในเดือน:</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_1_table_2_left") }}
+              </div>
               <div class="rw-rgt">300,000</div>
             </div>
             <div class="bx-table">
-              <div class="rw-left">- จํานวนเงินที่ถอนออกทั้งหมดในเดือน:</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_1_table_3_left") }}
+              </div>
               <div class="rw-rgt">60,000</div>
             </div>
             <div class="bx-table">
               <div class="rw-left">
-                - โปรโมชั่นทั้งหมดที่ลูกค้าได้รับในเดือน:
+                {{ $t("lang.affiliate_example_1_table_4_left") }}
               </div>
               <div class="rw-rgt">5,000</div>
             </div>
             <div class="bx-table">
               <div class="rw-left">
-                - ค่าธรรมเนียมการทําธุรกรรมผ่านธนาคาร ((ฝาก + ถอนออก) * 1%):
+                {{ $t("lang.affiliate_example_1_table_5_left") }}
               </div>
               <div class="rw-rgt">3,600</div>
             </div>
 
             <div class="bx-table">
-              <div class="rw-left">=>กําไรสุทธิ =</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_1_table_6_left") }}
+              </div>
               <div class="rw-rgt">(200,000*90%)-5,000-3,600=171,400</div>
             </div>
 
             <div class="bx-table">
-              <div class="rw-left">=>ค่าคอมมิชชั่น =</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_1_table_7_left") }}
+              </div>
               <div class="rw-rgt">171,400*30%=51,420</div>
             </div>
           </div>
 
           <div class="box">
-            <p>
-              ตัวอย่างที่ 2: พันธมิตร B ได้รับกําไรค่าคอมมิชชั่นรายเดือน 55%
-            </p>
+            <p>{{ $t("lang.affiliate_example_2") }}</p>
             <div class="bx-table">
-              <div class="rw-left">- ลูกค้าเสียทั้งหมด:</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_2_table_1_left") }}
+              </div>
               <div class="rw-rgt">8,000,000</div>
             </div>
             <div class="bx-table">
-              <div class="rw-left">- จํานวนเงินฝากทั้งหมดในเดือน:</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_2_table_2_left") }}
+              </div>
               <div class="rw-rgt">9,600,000</div>
             </div>
             <div class="bx-table">
-              <div class="rw-left">- จํานวนเงินที่ถอนออกทั้งหมดในเดือน:</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_2_table_3_left") }}
+              </div>
               <div class="rw-rgt">6,500,000</div>
             </div>
             <div class="bx-table">
               <div class="rw-left">
-                - โปรโมชั่นทั้งหมดที่ลูกค้าได้รับในเดือน:
+                {{ $t("lang.affiliate_example_2_table_4_left") }}
               </div>
               <div class="rw-rgt">600,000</div>
             </div>
             <div class="bx-table">
               <div class="rw-left">
-                - ค่าธรรมเนียมการทําธุรกรรมผ่านธนาคาร ((ฝาก + ถอนออก) * 1%):
+                {{ $t("lang.affiliate_example_2_table_5_left") }}
               </div>
               <div class="rw-rgt">160,000</div>
             </div>
             <div class="bx-table">
-              <div class="rw-left">=>กําไรสุทธิ =</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_2_table_6_left") }}
+              </div>
               <div class="rw-rgt">
                 (8,000,000*90%)-600,000-160,000=6,440,000
               </div>
             </div>
             <div class="bx-table">
-              <div class="rw-left">=>คอมมิชชัน=</div>
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_2_table_7_left") }}
+              </div>
               <div class="rw-rgt">6,440,000*55%=3,542,000</div>
             </div>
           </div>
         </div>
-        <div class="game-title sub">พันธมิตรดาวน์ไลน์</div>
-        <p>
-          ฐานดาวน์ไลน์ของพันธมิตร
-          ต้องมาจากสมาชิกทีสมัครผ่านลิ้งค์ของพันธมิตรเท่านั้น
-          เพื่อรับค่าคอมมิชชั่นเพิ่มเติม จากดาวน์ไลน์บวกค่าคอมมิชชั่นของตัวเอง
-        </p>
-        <div class="game-title sub">ขั้นตอนการรับค่าคอมมิชชั่น</div>
+        <div class="game-title sub">{{ $t("lang.downline_partners_title") }}</div>
+        <p>{{ $t("lang.downline_partners_para") }}</p>
+        <div class="game-title sub">{{ $t("lang.steps_for_receiving_commission") }}</div>
         <ol>
           <li>
-            <p>
-
-             ค่าคอมมิชชั่นจะได้รับทุกวันที่ 1 ของเดือน โดยจะได้รับเป็นเงินไทยบาท ( THB ) หลังจากได้รับคอมมิชชั่นแล้ว พันธมิตรจึงดําเนินการถอนค่าคอมมิชชั่นได้ ตามปกติ
-            </p>
+            <p>{{ $t("lang.affiliate_receiving_comm_step_1") }}</p>
           </li>
           <!-- <li><p>ค่าคอมมิชชั่นจะถูกจ่ายเป็นเงินไทยเท่านั้น</p></li> -->
           <li>
-            <p>
-              การร้องเรียนเกี่ยวกับค่าคอมมิชชั่นจะต้องส่งไปยัง ฝ่ายดูแลพันธมิตร
-              ก่อนวันที่ 10 ของแต่ละเดือน
-              มิฉะนั้นค่าคอมมิชชั่นที่ชําระแล้วจะไม่สามารถเปลี่ยนแปลงได้
-            </p>
+            <p>{{ $t("lang.affiliate_receiving_comm_step_2") }}</p>
           </li>
           <li>
-            <p>
-              Jolly88
-              ขอสงวนสิทธิ์ในการเปลี่ยนแปลงหรือแก้ไขเปอร์เซ็นต์ค่าคอมมิชชั่นที่เราเห็นว่าเหมาะสม
-            </p>
+            <p>{{ $t("lang.affiliate_receiving_comm_step_3") }}</p>
           </li>
           <li>
-            <p>
-              Jolly88
-              ขอสงวนสิทธิ์ในการเปลี่ยนแปลงหรือแก้ไขข้อกําหนดข้างต้นหรือเพิ่มข้อกําหนดเพิ่มเติมใด
-              ๆ ตามความจําเป็
-            </p>
+            <p>{{ $t("lang.affiliate_receiving_comm_step_4") }}</p>
           </li>
         </ol>
       </div>
@@ -242,11 +251,11 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import {useUI} from "stores/ui";
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   setup() {
-    const ui= useUI();
+    const ui = useUI();
     const affCode = sessionStorage.getItem("AFFILIATE_CODE");
     const columns = [
       {
@@ -302,7 +311,7 @@ export default defineComponent({
       columns,
       dataSource,
       affCode,
-      ui
+      ui,
     };
   },
 });
@@ -347,7 +356,7 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       gap: 20px;
-       width: 200px;
+      width: 200px;
     }
     .steps {
       background: #23263c;
@@ -359,8 +368,8 @@ export default defineComponent({
       display: flex;
       justify-content: space-between;
       flex-direction: column;
-       max-width: 260px;
-       gap: 10px;
+      max-width: 260px;
+      gap: 10px;
       .step {
         display: flex;
         color: #ffffff;
@@ -371,7 +380,8 @@ export default defineComponent({
     }
     .information {
       max-width: 1200px;
-      width: 90%; margin: 0 auto;
+      width: 90%;
+      margin: 0 auto;
       text-align: left;
       .game-title {
         text-align: left;

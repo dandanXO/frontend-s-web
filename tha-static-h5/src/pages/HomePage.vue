@@ -91,8 +91,8 @@
       </div>
 
       <div class="game-board-item"
-           :class="(currentSelectedMenu=='esport') ? 'active-board' : ''"
-           @click="switchMenu('esport')"
+           :class="(currentSelectedMenu=='casual') ? 'active-board' : ''"
+           @click="switchMenu('casual')"
       >
         <img src="../assets/images/index/home-esport.png"/>
         <span>E-Sport</span>
@@ -145,18 +145,7 @@
 
     <Transition>
       <div class="game-grid-lists"
-           id="id-esport-board"
-           v-if="currentSelectedMenu === 'esport'">
-        <div class="game-item btn-pointer mid-grid-column"
-             @click="playGame('Esport','TFGaming')"
-        >
-          <img src="../assets/images/games/esport/TFGaming.png"/>
-        </div>
-      </div>
-    </Transition>
-    <Transition>
-      <div class="game-grid-lists"
-           id="id-esport-board"
+           id="id-lottery-board"
            v-if="currentSelectedMenu === 'lottery'">
         <div class="coming-soon-div ">
           <img src="../assets/home/coming-soon-img.png"/>
@@ -166,7 +155,7 @@
     </Transition>
     <Transition>
       <div class="game-grid-lists"
-           id="id-esport-board"
+           id="id-cf-board"
            v-if="currentSelectedMenu === 'cf'">
         <div class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png"/>
@@ -176,7 +165,7 @@
     </Transition>
     <Transition>
       <div class="game-grid-lists"
-           id="id-esport-board"
+           id="id-fish2-board"
            v-if="currentSelectedMenu === 'fish2'">
         <div class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png"/>
@@ -205,7 +194,6 @@
         </div>
       </div>
     </Transition>
-
     <Transition>
       <div class="game-scroll-lists"
            id="id-slot-board"
@@ -301,7 +289,6 @@
 
       </div>
     </Transition>
-
     <Transition>
       <div class="game-scroll-lists"
            id="id-fish-board"
@@ -379,6 +366,73 @@
           <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
           <q-scroll-observer @scroll="scrolling"/>
         </q-scroll-area>
+      </div>
+    </Transition>
+
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-casual-board"
+           v-if="currentSelectedMenu === 'casual' && !isShow">
+        <template v-for="miniplat in platformMinigame" :key="miniplat.id">
+          <div class="game-item btn-pointer mid-grid-column"
+               @click="selectCasualPlat(miniplat)"
+          >
+            <img src="../assets/images/games/casual/TFGaming.png"/>
+          </div>
+        </template>
+
+      </div>
+    </Transition>
+
+    <Transition>
+      <div class="game-grid-lists"
+           id="id-casual-board"
+           v-if="currentSelectedMenu === 'casual' && isShow"
+      >
+        <div class="game-item btn-pointer"
+             v-for="(game, index) in miniGames"
+             :key="index"
+             @click="playGame(game.code, game.id, selectedPlat.status)"
+        >
+          <img :src="require('../assets/home/casual/' + game.code + '.png')">
+        </div>
+
+
+        <div class="game-item minigame-select-div"
+             v-for="(game, index) in miniGamesMore"
+             :key="index"
+             @click="showTypeH5(game.id)"
+             @mouseover="showTypeWeb(game.id)"
+             @mouseleave="showTypeWeb(0)"
+        >
+          <img :src="game.logo">
+
+          <transition
+              appear
+          >
+            <div class="select-type-div"
+                 v-if="showMiniType == game.id"
+            >
+              <div class="game-type btn-pointer" id="copper-type"
+                   @click="openMiniGame(game.id, game.copper, selectedPlat.status, 3)"
+              >
+                10 - 3,000
+              </div>
+              <div class="game-type btn-pointer" id="silver-type"
+                   @click="openMiniGame(game.id, game.silver, selectedPlat.status, 2)"
+              >
+                500 - 100K
+              </div>
+              <div class="game-type btn-pointer" id="gold-type"
+                   @click="openMiniGame(game.id, game.gold, selectedPlat.status, 1)"
+              >
+                1,000 - 20K
+              </div>
+            </div>
+          </transition>
+
+        </div>
+
       </div>
     </Transition>
 
@@ -481,11 +535,12 @@ import {cached} from "boot/cache";
 import {useQuasar, Platform} from "quasar";
 import {userStore} from "stores/index";
 import GameModal from "components/modal/GameModal";
-import {RiBasketballLine, RiUserShared2Line, RiVolumeUpLine} from "vue-remix-icons";
+import * as _ from "lodash";
 import MarqueeText from 'vue-marquee-text-component';
 import BacktoTop from "components/backtotop.vue"
 
 import {useUI} from "stores/ui";
+import {isMobile} from "boot/utils";
 
 export default defineComponent({
   name: "IndexPage",
@@ -521,6 +576,12 @@ export default defineComponent({
     };
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
+    };
+    const openMiniGame = (gameName, gameCode, gameStatus, type) => {
+      console.log("openMiniGame")
+      if (isGoMiniGame.value) {
+        gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
+      }
     };
     const pokerGames = [
       // {
@@ -583,6 +644,7 @@ export default defineComponent({
         text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ",
       },
     ];
+    //NOT USING.
     const esportsGame = [
       {
         code: "TFGaming",
@@ -605,19 +667,51 @@ export default defineComponent({
         logo: require("../assets/logo/CMD.png")
       }
     ];
+    const platformMinigame = ref([]);
+    const miniGames = ref([]);
+    const miniGamesMore = ref([
+      {
+        name: "KOG Draw",
+        id: 8739,
+        logo: require("../assets/home/casual/2.png"),
+        copper: "",
+        silver: "",
+        gold: ""
+      },
+      {
+        name: "DOTA 2 Treasure",
+        id: 8742,
+        logo: require("../assets/home/casual/5.png"),
+        copper: "",
+        silver: "",
+        gold: ""
+      },
+      {
+        name: "LOL Draft",
+        id: 8745,
+        logo: require("../assets/home/casual/8.png"),
+        copper: "",
+        silver: "",
+        gold: ""
+      }
+    ]);
 
     function loadData() {
-      //TODO:: HARDCODE
-      banners.value.push({
-        mobileImageUrl: require("../assets/home/banner1.png"),
-        homeImageUrl: require("../assets/home/web-banner1.png")
-      })
 
       api
           .get("/promo/banner?category=HOME")
           .then((res) => {
             if (res.data.code === 0) {
-              // banners.value = res.data.data;
+              //
+              if (res.data.data.length > 0) {
+                banners.value = res.data.data;
+              } else {
+                //TODO:: HARDCODE
+                banners.value.push({
+                  mobileImageUrl: require("../assets/home/banner1.png"),
+                  homeImageUrl: require("../assets/home/web-banner1.png")
+                })
+              }
             } else {
 
             }
@@ -649,8 +743,6 @@ export default defineComponent({
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
 
-    // console.log($q.screen);
-
     const currentSelectedMenu = ref("slots");
     const switchMenu = (menu) => {
       currentSelectedMenu.value = menu;
@@ -667,6 +759,8 @@ export default defineComponent({
         switchPlat(esportsGame[0], menu);
       } else if (menu === "sport") {
         switchPlat(sportsGame[0], menu);
+      } else if (menu === "casual") {
+        switchPlat(platformMinigame.value[0], menu);
       }
     };
     const liveTabs = ref("");
@@ -691,15 +785,19 @@ export default defineComponent({
         loadGameList("FISH");
         if (scrollPageRef.value) {
           scrollPageRef.value.setScrollPosition('vertical', 0)
-
         }
-
       } else if (menuType === "poker") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
-      } else if (menuType === "esports") {
+      } else if (menuType === "casual") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
+
+        selectedPlat.code = plat.code;
+        selectedPlat.status = plat.status;
+
+        loadGameList("CASUAL");
+
       } else if (menuType === "sport") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
@@ -754,13 +852,36 @@ export default defineComponent({
           )
           .then((res) => {
             isLoading.value = false;
-            res.forEach((element) => {
-              element.default = require("../assets/images/games/aviator/default.png");
-              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${element.icon}.png`;
-            });
-            gameListData.value = res;
-            gamePage.total = res.length;
-            changePage(1, gamePage.pageSize);
+
+            // debugger;
+            if (currentSelectedMenu.value === 'casual') {
+              miniGames.value = [];
+
+              let minis = _.orderBy(res, "sequence");
+              minis.forEach((mini) => {
+                mini.lists = [];
+              });
+              let games = [];
+              minis.forEach((mini) => {
+                if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
+                  games.push(mini);
+                } else {
+                  miniGames.value.push(mini);
+                }
+              });
+
+
+            } else {
+              res.forEach((element) => {
+                element.default = require("../assets/images/games/aviator/default.png");
+                element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${element.icon}.png`;
+              });
+              gameListData.value = res;
+              gamePage.total = res.length;
+              changePage(1, gamePage.pageSize);
+            }
+
+
           });
     };
     const changePage = (page, pageSize) => {
@@ -782,6 +903,9 @@ export default defineComponent({
             platforms.value = data.filter((element) =>
                 element.gameType.includes("SLOT")
             );
+            platformMinigame.value = data.filter((element) =>
+                element.gameType.includes("CASUAL")
+            );
             if (currentSelectedMenu.value === "slots") {
               switchPlat(platforms.value[0], "slots");
               platforms.value.forEach((e, i) => {
@@ -792,6 +916,10 @@ export default defineComponent({
             } else if (currentSelectedMenu.value === "fish") {
               switchPlat(fishPlatforms.value[0], "fish");
             }
+
+            console.log("After");
+            console.log(platformMinigame.value);
+            // alert(platformMinigame.value.length);
             // if (!route.query.plat) {
             //   switchPlat(platforms.value[0], "slot");
             //   switchPlat(fishPlatforms.value[0], "fish");
@@ -802,7 +930,7 @@ export default defineComponent({
             //     }
             //   });
             // }
-            switchPlat(platforms.value[0], 'slots');
+            // switchPlat(platforms.value[0], 'slots');
           })
           .catch((err) => {
             // $q.notify({
@@ -897,13 +1025,33 @@ export default defineComponent({
       isShow.value = true;
       switchPlat(plat, "fish");
     }
+    const selectCasualPlat = (plat) => {
+      selectedPlatId.value = plat.id;
+      isShow.value = true;
+      switchPlat(plat, "casual");
+    }
+    const isGoMiniGame = ref(false);
+    const showTypeH5 = (id) => {
+      console.log("showTypeH5");
+      if (isMobile()) {
+        showMiniType.value = id;
+        setTimeout(() => {
+          isGoMiniGame.value = true;
+        }, 500)
+      }
+    }
+    const showMiniType = ref(0);
+    const showTypeWeb = (id) => {
+      showMiniType.value = id;
+      if (id === 0) {
+        isGoMiniGame.value = false;
+      }
+    }
 
     return {
       imageLoading,
       slide: ref(0),
       tab: ref("slots"),
-      gamesTab: ref(platforms.value[0]),
-      splitterModel: ref(30),
       imgURL: process.env.IMAGE_CDN + "/",
       banners,
       store,
@@ -935,8 +1083,17 @@ export default defineComponent({
       esportsGame,
       selectFishPlat,
       selectSlotPlat,
+      selectCasualPlat,
+      platformMinigame,
+      isGoMiniGame,
+      miniGames,
+      miniGamesMore,
       sportsGame,
+      showTypeH5,
+      showTypeWeb,
+      showMiniType,
       openGame,
+      openMiniGame,
       scrollPageRef,
       announcementList,
       isStationNotice,
@@ -1288,6 +1445,86 @@ export default defineComponent({
   img {
     width: 200px;
     height: auto;
+  }
+}
+
+.minigame-select-div {
+  position: relative;
+
+  &:hover {
+
+  }
+
+  .select-type-div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+
+
+    .game-type {
+      width: 100%;
+      height: 33.3%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #000;
+      text-shadow: 1px 1px 1px #d9d9d9;
+
+      &#copper-type {
+        background: #B87333;
+        opacity: 0.85;
+        border-radius: 12px 12px 0px 0px;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &:active {
+          filter: brightness(1.2);
+        }
+      }
+
+      &#silver-type {
+        background: #C0C0C0;
+        opacity: 0.85;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &:active {
+          filter: brightness(1.2);
+        }
+      }
+
+      &#gold-type {
+        background: #FFD700;
+        opacity: 0.85;
+        border-radius: 0px 0px 12px 12px;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &:active {
+          filter: brightness(1.2);
+        }
+      }
+
+
+    }
   }
 }
 
