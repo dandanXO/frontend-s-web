@@ -34,7 +34,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -59,7 +59,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -72,7 +72,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -99,7 +99,7 @@
                 <q-btn
                   v-if="props.row.status === 'PENDING'"
                   size="sm"
-                  label="เตือนความจำ"
+                  :label="$t('lang.reminder')"
                   color="brand"
                   @click="($event) => openReminder(props)"
                 />
@@ -126,7 +126,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -151,7 +151,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -206,7 +206,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -231,7 +231,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -271,7 +271,7 @@
                 <q-btn
                   v-if="props.row.status === 'STEP_1'"
                   size="sm"
-                  label="เตือนความจำ"
+                  :label="$t('lang.reminder')"
                   color="brand"
                   @click="($event) => openReminder(props)"
                 />
@@ -298,7 +298,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -323,7 +323,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -381,7 +381,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -406,7 +406,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -457,7 +457,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -482,7 +482,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -522,7 +522,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -547,7 +547,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -601,7 +601,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -626,7 +626,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -680,7 +680,7 @@
         <q-card class="reminder-dialog-card">
           <q-card-section>
             <q-toolbar>
-              <q-toolbar-title>เตือนความจำ</q-toolbar-title>
+              <q-toolbar-title>{{ $t('lang.reminder') }}</q-toolbar-title>
               <q-btn flat v-close-popup round dense icon="close" />
             </q-toolbar>
           </q-card-section>
@@ -697,7 +697,7 @@
               class="reminder-dialog-form"
             >
               <q-input
-                label="หมายเลขสั่งซื้อ"
+                :label="$t('lang.order_number')"
                 filled
                 v-model="reminderForm.orderNo"
                 color="white"
@@ -747,8 +747,18 @@ import { useQuasar } from "quasar"
 import { userStore } from "stores/index"
 import FileUpload from "components/FileUpload.vue"
 import moment from "moment"
+import {useI18n} from "vue-i18n";
+
+export default defineComponent({
+  name: "TransitRecordView",
+  components: {
+    FileUpload,
+  },
+  setup() {
+
 var qs = require("qs");
 const store = userStore();
+const {t} = useI18n();
 const uploadFileRef = ref();
 const recordActive = ref("deposit");
 const reminderForm = reactive({});
@@ -805,7 +815,7 @@ const dataState = reactive({
 });
 const commonColumns = [
   {
-    label: "หมายเลขสั่งซื้อ",
+    label: t('lang.order_number'),
     field: "serialNumber"
   }
 ];
@@ -813,21 +823,21 @@ const tableColumns = {
   deposit: [
     ...commonColumns,
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "depositAmount"
     },
     {
-      label: "สถานะ",
+      label: t('lang.status'),
       field: "status",
       name: "status"
     },
     {
-      label: "วันที่ฝาก",
+      label: t('lang.deposit_date'),
       field: "depositDate",
       // slots: { customRender: "depositDate" }
     },
     {
-      label: "การดำเนินการ",
+      label: t('lang.operation'),
       field: "operation",
       name: "operation"
     },
@@ -835,21 +845,21 @@ const tableColumns = {
   withdraw: [
     ...commonColumns,
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "withdrawAmount"
     },
     {
-      label: "สถานะ",
+      label: t('lang.status'),
       field: "status",
       name: "status"
     },
     {
-      label: "วันที่ถอน",
+      label: t('lang.withdraw_date'),
       field: "withdrawDate",
       // slots: { customRender: "withdrawDate" }
     },
     {
-      label: "การดำเนินการ",
+      label: t('lang.operation'),
       field: "operation",
       name: "operation"
     }
@@ -857,24 +867,24 @@ const tableColumns = {
   transfer: [
     ...commonColumns,
     {
-      label: "รายละเอียดการโอน",
+      label: t('lang.type'),
       field: "type",
       key: "type",
       // slots: { customRender: "type" }
     },
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "amount",
       key: "withdrawAmount"
     },
     {
-      label: "สถานะ",
+      label: t('lang.status'),
       field: "status",
       key: "status",
       // slots: { customRender: "status" }
     },
     {
-      label: "เวลาโอน",
+      label: t('lang.transfer_date'),
       field: "transferDate",
       key: "transferDate",
       // slots: { customRender: "transferDate" }
@@ -883,15 +893,15 @@ const tableColumns = {
   rebates: [
     ...commonColumns,
     {
-      label: "ชื่อผู้มีสิทธิ์สูง",
+      label: t('lang.privilege_name'),
       field: "privilegeName"
     },
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "amount"
     },
     {
-      label: "เวลาบันทึก",
+      label: t('lang.record_time'),
       field: "recordTime",
       // slots: { customRender: "recordTime" }
     }
@@ -899,73 +909,73 @@ const tableColumns = {
   turnover: [
     ...commonColumns,
     {
-      label: "รูปแบบ",
+      label: t('lang.type'),
       field: "type",
       name: "type"
     },
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "amount"
     },
     {
-      label: "รูปแบบ",
+      label: t('lang.sub_type'),
       field: "subType"
     },
     {
-      label: "เวลาบันทึก",
+      label: t('lang.record_time'),
       field: "recordTime",
       // slots: { customRender: "recordTime" }
     }
   ],
   betRecord: [
     {
-      label: "รหัสเดิมพัน",
+      label: t('lang.bet_code'),
       field: "betId"
     },
     {
-      label: "รหัสธุรกรรม",
+      label: t('lang.transaction_id'),
       field: "transactionId"
     },
     {
-      label: "แพลตฟอร์ม",
+      label: t('lang.platform'),
       field: "platform"
     },
     {
-      label: "เดิมพัน",
+      label: t('lang.bet'),
       field: "bet"
     },
     {
-      label: "การจ่ายเงิน",
+      label: t('lang.payout'),
       field: "payout"
     },
     {
-      label: "วงเงินก่อนหน้า",
+      label: t('lang.before_balance'),
       field: "beforeBalance"
     },
     {
-      label: "วงเงินหลังจาก",
+      label: t('lang.after_balance'),
       field: "afterBalance"
     },
     {
-      label: "สถานะการเดิมพัน",
+      label: t('lang.bet_status'),
       field: "betStatus"
     },
     {
-      label: "ประเภทของเกม",
+      label: t('lang.game_type'),
       field: "gameType"
     },
     {
-      label: "เวลาเดิมพัน",
+      label: t('lang.bet_time'),
       field: "betTime",
       // slots: { customRender: "betTime" }
     },
     {
-      label: "เวลาชำระเงิน",
+      label: t('lang.settle_time'),
       field: "settleTime",
       // slots: { customRender: "settleTime" }
     },
     {
-      label: "ผลลัพท์",
+      label: t('lang.result'),
       field: "result"
     },
   ],
@@ -979,19 +989,19 @@ const tableColumns = {
     //   field: "transactionId"
     // },
     {
-      label: "เกมใหม่",
+      label: t('lang.game_name'),
       field: "gameName"
     },
     {
-      label: "แพลตฟอร์ม",
+      label: t('lang.platform'),
       field: "platform"
     },
     {
-      label: "เดิมพัน",
+      label: t('lang.bet'),
       field: "bet"
     },
     {
-      label: "การจ่ายเงิน",
+      label: t('lang.payout'),
       field: "payout"
     },
     // {
@@ -1007,7 +1017,7 @@ const tableColumns = {
     //   field: "betStatus"
     // },
     {
-      label: "ประเภทของเกม",
+      label: t('lang.game_type'),
       field: "gameType"
     },
     {
@@ -1032,19 +1042,19 @@ const tableColumns = {
   ],
   reminderRecord: [
     {
-      label: "หมายเลขสั่งซื้อ",
+      label: t('lang.order_number'),
       field: 'orderNo'
     },
     {
-      label: "หมายเหตุ",
+      label: t('lang.finance_remark'),
       field: 'financeRemark'
     },
     {
-      label: "เวลาตอบรับ",
+      label: t('lang.feedback_time'),
       field: "feedbackTime",
     },
     {
-      label: "ประเภทธุรกรรม",
+      label: t('lang.reminder_type'),
       field: "type",
       name: "type"
     }
@@ -1056,12 +1066,7 @@ const pagination = reactive({
   total: 0
 });
 
-export default defineComponent({
-  name: "TransitRecordView",
-  components: {
-    FileUpload,
-  },
-  setup() {
+
     const reminderDialog = ref(false);
     const openReminder = (record) => {
       api.get("/session/getVerifyingFeedbackCount").then((ret) => {
@@ -1081,7 +1086,7 @@ export default defineComponent({
             $q.notify({
               color: "negative",
               position: "top",
-              message: "มีความคิดเห็นที่ยังไม่ได้รับการยีนยัน",
+              message: t('lang.opinions_not_confirmed'),
               icon: "report_problem"
             });
           }
@@ -1096,7 +1101,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "สำเร็จ",
+            message: t('lang.success'),
             icon: "check_circle_outline"
           });
           reminderDialog.value = false;
@@ -1287,8 +1292,8 @@ export default defineComponent({
       pagination,
       getTime,
       chgDate,
-      noDataLabel: "ไม่มีข้อมูล",
-      rowPerPageLabel: "บันทึกต่อหน้า",
+      noDataLabel: t('lang.no_data_label'),
+      rowPerPageLabel:  t('lang.row_per_page_label'),
       humanDatetime(ts) {
         return moment(ts).format("DD-MM-YYYY HH:mm:ss");
       },

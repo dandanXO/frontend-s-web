@@ -277,7 +277,7 @@
             </div>
 
             <div v-if="isEdit" class="flex items-center justify-center">
-              <q-btn color="brand" class="login-btn common-large-btn" @click="updateState">ยืนยัน</q-btn>
+              <q-btn color="brand" class="login-btn common-large-btn" @click="updateState">{{ $t('lang.confirm') }}</q-btn>
             </div>
           </div>
           <div class="account-tip danger">
@@ -312,7 +312,7 @@
               type="password"
               filled
               v-model="updatePwdInfo.oldPassword"
-              label="รหัสผ่านเดิม"
+              :label="$t('lang.old_password')"
               stack-label
               :rules="oldPwdRules"
               clearable
@@ -322,12 +322,12 @@
               type="password"
               filled
               v-model="updatePwdInfo.password"
-              label="รหัสผ่าน"
+              :label="$t('lang.password')"
               :rules="pwdRules"
               clearable
               class="q-mb-lg"
               stack-label
-              hint="ขึ้นอยู่ที่ระหว่าง 6-16 ตัวอักษรและจำเป็นต้องมีการผสมของตัวอักษรและตัวเลข"
+              :hint="$t('lang.hint_new_password')"
           />
 
           <q-input
@@ -335,14 +335,15 @@
               type="password"
               filled
               v-model="updatePwdInfo.confirm_pass"
-              label="ยืนยันรหัสผ่านใหม่"
+              :label="$t('lang.confirm_new_password')"
               :rules="pwdRules"
               clearable
               stack-label
           />
           <div class="flex flex-center gap-10">
-            <q-btn class="common-large-btn" label="ยืนยัน" color="brand" @click="submitUpdatePwd"/>
-            <q-btn class="common-large-btn close-btn" label="ยกเลิก" v-close-popup/>
+            <q-btn class="common-large-btn" :label="$t('lang.confirm')" color="brand" @click="submitUpdatePwd"/>
+            <q-btn class="common-large-btn close-btn"
+                   :label="$t('lang.cancel')" v-close-popup/>
           </div>
         </q-form>
       </div>
@@ -355,7 +356,7 @@
           <q-input
               ref="emailAddressRef"
               v-model="updateSecurityVerified.emailAddress"
-              label="อีเมลล์"
+              :label="$t('lang.email_address')"
               stack-label
               clearable
               filled
@@ -365,16 +366,17 @@
                 ref="verificationCodeRef"
                 type="password"
                 v-model="updateSecurityVerified.verificationCode"
-                placeholder="รหัสยืนยัน"
-                label="อีเมลล์"
+                :placeholder="$t('lang.captcha_code')"
+                :label="$t('lang.captcha_code')"
                 stack-label
                 clearable
                 filled
             />
-            <q-btn class="common-large-btn third-btn" label="รับรหัสยืนยัน" @click="openVerificationModal"/>
+            <q-btn class="common-large-btn third-btn"
+                   :label="$t('lang.enter_veri_code')" @click="openVerificationModal"/>
           </div>
           <div class="flex flex-center gap-10 q-mt-md">
-            <q-btn label="ยืนยัน" class="common-large-btn" color="brand" @click="submitUpdateSecurity"/>
+            <q-btn :label="$t('lang.confirm')" class="common-large-btn" color="brand" @click="submitUpdateSecurity"/>
           </div>
         </q-form>
       </div>
@@ -385,16 +387,16 @@
           transition-hide="slide-down"
       >
         <q-card class="q-pa-md">
-          <div class="modal-head-title q-pb-md">ตรวจสอบรหัสแคปต์ชา</div>
+          <div class="modal-head-title q-pb-md">{{ $t('lang.check_your_captcha_code') }}</div>
           <q-form class="q-gutter-sm">
             <q-input
                 ref="captchaCodeRef"
                 filled
                 type="text"
                 v-model="updateSecurityVerified.captchaCode"
-                label="รหัสยืนยัน"
+                :label="$t('lang.captcha_code')"
                 :rules="[
-              (val) => (val && val.length > 3) || 'ใส่รหัสยืนยัน'
+              (val) => (val && val.length > 3) || $t('lang.enter_captcha_code')
             ]"
                 color="white"
             >
@@ -411,7 +413,7 @@
                 class="common-btn verification-btn"
                 @click.prevent="verifyVerificationCode"
             >
-              {{ isEmailSending ? 'กำลังตรวจสอบ' : 'ปุ่มยืนยัน' }}
+              {{ isEmailSending ? $t('lang.verifying') : $t('lang.confirm_button') }}
             </q-btn>
           </q-form>
         </q-card>
@@ -434,6 +436,7 @@ import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores"
+import {useI18n} from "vue-i18n";
 
 
 export default defineComponent({
@@ -450,6 +453,7 @@ export default defineComponent({
   },
   setup() {
     // const isCardActive = ref();
+    const {t} = useI18n();
     const qs = require("qs");
     const $q = useQuasar();
     const searchForm = reactive({
@@ -476,7 +480,7 @@ export default defineComponent({
 
     const isValidPhone = () => {
       const phonePattern = /^\d+$/;
-      return phonePattern.test(formDetail.value.phone) || "อนุญาตเฉพาะตัวเลขเท่านั้น";
+      return phonePattern.test(formDetail.value.phone) || t('lang.only_numbers_allowed');
     };
     const personalState = reactive({
       memberInfo: {}
@@ -544,7 +548,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว",
+            message: t('lang.otp_code_has_been_sent'),
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId
@@ -584,7 +588,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "ยืนยันสำเร็จ",
+            message: t('lang.successfully_verified'),
             icon: "check_circle_outline"
           });
           updateSecurityModalVisible.value = false
@@ -628,7 +632,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "อัพเดทพาสเวิดเรียบร้อยแล้ว",
+              message: t('lang.password_updated'),
               icon: "check_circle_outline"
             });
             updatePwdModalVisible.value = false;
@@ -696,7 +700,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "อัพเดทเรียบร้อยแล้ว",
+            message: t('lang.updated_successfully'),
             icon: "check_circle_outline"
           });
           loadInfo()
@@ -731,12 +735,12 @@ export default defineComponent({
       oldPasswordRef,
       passwordRef,
       oldPwdRules: [
-        val => (val && val.length > 0) || 'กรุณารหัสผ่านเดิม',
-        val => (val.length > 5 && val.length < 12) || 'ความยาวควรเป็น 6 ถึง 12 ตัว'
+        val => (val && val.length > 0) || t('lang.please_enter_old_password'),
+        val => (val.length > 5 && val.length < 12) || t('lang.password_must_between_6_12')
       ],
       pwdRules: [
-        val => (val && val.length > 0) || 'ใส่รหัสผ่าน',
-        val => (val.length > 5 && val.length < 12) || 'ความยาวควรเป็น 6 ถึง 12 ตัว'
+        val => (val && val.length > 0) || t('lang.input_password_empty'),
+        val => (val.length > 5 && val.length < 12) || t('lang.length_between_6_12')
       ],
       isEditRealName,
       isEditEmail,

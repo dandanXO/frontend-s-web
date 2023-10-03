@@ -51,6 +51,10 @@
         style="min-height: 30px;height:30px;width: 120px;margin-left:auto;margin-right:8px;"
         v-model="languageVal"
         :options="langOptions"
+        option-label="label"
+        option-value="value"
+        emit-value
+        map-options
     >
     </q-select>
   </div>
@@ -219,7 +223,14 @@ export default defineComponent({
       setLanguage(languageVal.value);
     })
     const langOptions = [
-      "th", "en"
+      {
+        label: 'ไทย',
+        value: 'th',
+      },
+      {
+        label: 'English',
+        value: 'en',
+      }
     ]
 
     const getBalance = () => {
