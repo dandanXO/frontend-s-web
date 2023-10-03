@@ -195,7 +195,10 @@ export default {
     affiliate_header: "สมัครพันธมิตร",
     promo_header: "โปรโมชั่น",
     bankinfo_header: "ใส่ข้อมูลธนาคาร",
-
+    basic_information: "ข้อมูลพื้นฐาน",
+    change_password: "เปลี่ยนรหัสผ่าน",
+    withdraw_account: "บัญชีถอนเงิน",
+    security_check: "ตรวจสอบความปลอดภัย"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

@@ -408,7 +408,7 @@ export default defineComponent({
       getAffiliateCode();
       getReferralCode();
       api
-          .options(`/session/withdraw/banks?siteId=${siteId}`)
+          .get(`/member/withdraw/banks?siteId=${siteId}`)
           .then((ret) => {
             const res = ret.data;
             if (res.code === 0) {
@@ -423,7 +423,7 @@ export default defineComponent({
     const step = ref(1);
     const done1 = ref(false);
     const done2 = ref(false);
-    const imgURL = process.env.IMAGE_CDN + "/";
+    const imgURL = process.env.IMAGE_CDN + "/payment/";
     const verificationImg = ref("");
     const regForm = reactive({
       loginName: "",

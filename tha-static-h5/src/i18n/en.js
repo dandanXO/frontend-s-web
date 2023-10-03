@@ -195,6 +195,10 @@ export default {
         affiliate_header: "Affiliate",
         promo_header: "Promotions",
         bankinfo_header: "Enter Bank Information",
+        basic_information: "Basic Information",
+        change_password: "Change Password",
+        withdraw_account: "Bank Account",
+        security_check: "Security Check"
     },
     error: {
         101: "Platform not found",

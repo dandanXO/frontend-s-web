@@ -7,7 +7,7 @@
           horizontal
       >
         <q-card-actions v-if="$q.screen.gt.md">
-          <q-btn size="md" class="register-btn" to="/register">สมัคร</q-btn>
+          <q-btn size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
         </q-card-actions>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png"/></router-link>

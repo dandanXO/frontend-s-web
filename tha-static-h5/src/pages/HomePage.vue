@@ -392,7 +392,7 @@
         <div class="game-item btn-pointer"
              v-for="(game, index) in miniGames"
              :key="index"
-             @click="playGame(game.code, game.id, selectedPlat.status)"
+             @click="playGame(game.code, 'TFGaming' , game.code)"
         >
           <img :src="require('../assets/home/casual/' + game.code + '.png')">
         </div>
@@ -856,7 +856,6 @@ export default defineComponent({
             // debugger;
             if (currentSelectedMenu.value === 'casual') {
               miniGames.value = [];
-
               let minis = _.orderBy(res, "sequence");
               minis.forEach((mini) => {
                 mini.lists = [];
@@ -870,6 +869,21 @@ export default defineComponent({
                 }
               });
 
+              console.log(games);
+
+              games.forEach((game) => {
+                let index = _.findIndex(miniGamesMore.value, function (o) {
+                  return game.name.indexOf(o.name) > -1
+                })
+                if (game.name.indexOf("(铜)") > -1) {
+                  miniGamesMore.value[index]["copper"] = game.id;
+                } else if (game.name.indexOf("(银)") > -1) {
+                  miniGamesMore.value[index]["silver"] = game.id;
+                } else if (game.name.indexOf("(金)") > -1) {
+                  miniGamesMore.value[index]["gold"] = game.id;
+                }
+              })
+              console.log(miniGamesMore.value);
 
             } else {
               res.forEach((element) => {
@@ -917,8 +931,8 @@ export default defineComponent({
               switchPlat(fishPlatforms.value[0], "fish");
             }
 
-            console.log("After");
-            console.log(platformMinigame.value);
+            // console.log("After");
+            // console.log(platformMinigame.value);
             // alert(platformMinigame.value.length);
             // if (!route.query.plat) {
             //   switchPlat(platforms.value[0], "slot");
