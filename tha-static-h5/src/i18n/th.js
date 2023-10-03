@@ -198,7 +198,6 @@ export default {
     basic_information: "ข้อมูลพื้นฐาน",
     change_password: "เปลี่ยนรหัสผ่าน",
     withdraw_account: "บัญชีถอนเงิน",
-    security_check: "ตรวจสอบความปลอดภัย",
 
     // TransitRecordView
     deposit: 'ฝาก',
@@ -221,6 +220,22 @@ export default {
     branch_not_required: 'สาขา (ไม่จำเป็นต้องใส่ ก็ได้)',
     cancel: 'ยกเลิก',
     confirm: 'ยืนยัน',
+    security_check: "ตรวจสอบความปลอดภัย",
+    fish2_list: "ยิง",
+    lottery_list: "ลอตเตอรี่",
+    footer_tnc: "เงื่อนไขการบริการ Jolly88 (TNC) : บริการที่เราให้บริการอยู่ภายใต้ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว โปรดดูข้อมูลเพิ่มเติมในข้อตกลงการให้บริการของเรา.",
+    footer_all_rights: "Jolly88 2023{'@'}All Rights Reserved.",
+    announcement:"ประกาศ",
+    name: "ชื่อ",
+    surname: "ชื่อภาษาอังกฤษ",
+    dob: "วันเกิด",
+    edit: "แก้ไข",
+    enter_lastname: "ชื่อ-นามสกุล",
+    enter_ur_id: "ID ว่างเปล่า",
+    enter_ur_dob: "กรุณายืนยันวันเกิด",
+    close_btn: "ปิด",
+    if_you_wish_to_change_please_contact: "หากต้องการเปลี่ยนแปลงข้อมูลส่วนบุคคล กรุณาติดต่อลูกค้าสัมพันธ์หรือ",
+    live_chat: "ไลฟ์แชท"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

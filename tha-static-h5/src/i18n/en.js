@@ -198,7 +198,6 @@ export default {
     basic_information: "Basic Information",
     change_password: "Change Password",
     withdraw_account: "Bank Account",
-    security_check: "Security Check",
 
     // TransitRecordView
     deposit: 'Deposit',
@@ -221,6 +220,22 @@ export default {
     branch_not_required: 'Branch (not required)',
     cancel: 'Cancel',
     confirm: 'Confirm',
+    security_check: "Security Check",
+    fish2_list: "Aviator",
+    lottery_list: "Lottery",
+    footer_tnc: "Jolly88 (TNC) Terms of Service: The services we provide are subject to the terms of use and privacy policy. Please refer to our service agreement for more information.",
+    footer_all_rights: "Jolly88 2023{'@'}All Rights Reserved.",
+    announcement:"Announcement",
+    name: "Name",
+    surname: "Surname",
+    dob: "DOB",
+    edit: "Edit",
+    enter_lastname: "Please enter your name.",
+    enter_ur_id: "ID is required.",
+    enter_ur_dob: "Please confirm your DOB.",
+    close_btn: "Close",
+    if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact customer service or our ",
+    live_chat: "Live Chat"
   },
   error: {
     101: "Platform not found",
