@@ -5,13 +5,13 @@
     </div>
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped">
-        <q-tab name="deposit" label="ฝาก" />
-        <q-tab name="turnover" label="กำไร" />
-        <q-tab name="withdraw" label="ถอน" />
-        <!-- <q-tab name="transfer" label="โอน" /> -->
-        <q-tab name="rebates" label="เงินคืน" />
-        <q-tab name="gameBetRecord" label="บันทึกการเดิมพัน" />
-        <q-tab name="reminderRecord" label="บันทึกช่วยจำ" />
+        <q-tab name="deposit" :label="$t('lang.deposit')" />
+        <q-tab name="turnover" :label="$t('lang.turnover')" />
+        <q-tab name="withdraw" :label="$t('lang.withdraw')" />
+        <!-- <q-tab name="transfer" :label="$t('lang.transfer')" /> -->
+        <q-tab name="rebates" :label="$t('lang.rebates')" />
+        <q-tab name="gameBetRecord" :label="$t('lang.gameBetRecord')" />
+        <q-tab name="reminderRecord" :label="$t('lang.reminderRecord')" />
       </q-tabs>
       <q-separator />
       <q-tab-panels v-model="recordActive" animated>
