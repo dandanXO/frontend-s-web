@@ -240,11 +240,11 @@ const submitTransfer = (amount) => {
 const closeDialog = () => {
   visible.value = !visible.value
   src.value = ""
-  AppFullscreen.exit()
+  // AppFullscreen.exit()
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
-  //
-  AppFullscreen.request()
+  // debugger;
+  // AppFullscreen.request()
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");

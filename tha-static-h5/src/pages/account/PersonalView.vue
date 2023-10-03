@@ -10,25 +10,25 @@
                :class="(select_menu === 'personal') ? 'is-active' : ''"
                @click="selectTab('personal')"
           >
-            ข้อมูลพื้นฐาน
+            {{$t('lang.basic_information')}}
           </div>
           <div class="top-tab-btn btn-pointer"
                :class="(select_menu === 'password') ? 'is-active' : ''"
                @click="selectTab('password')"
           >
-            เปลี่ยนรหัสผ่าน
+            {{ $t('lang.change_password') }}
           </div>
           <div class="top-tab-btn btn-pointer"
                :class="(select_menu === 'bank') ? 'is-active' : ''"
                @click="selectTab('bank')"
           >
-            บัญชีถอนเงิน
+            {{ $t('lang.withdraw_account') }}
           </div>
           <div class="top-tab-btn btn-pointer"
                :class="(select_menu === 'verify') ? 'is-active' : ''"
                @click="selectTab('verify')"
           >
-            ตรวจสอบความปลอดภัย
+            {{ $t('lang.security_check') }}
           </div>
         </div>
 

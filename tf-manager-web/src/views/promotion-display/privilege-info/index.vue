@@ -262,6 +262,7 @@
             style="width: 450px"
             filterable
             default-first-option
+            @change="onChange($event)"
           >
             <el-option
               v-for="tt in uiControl.triggerType"
@@ -270,6 +271,9 @@
               :value="tt.value"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.pgroup')" prop="pgroup" v-if="uiControl.pgroup">
+          <el-input v-model="form.pgroup" style="width: 450px" maxlength="100" />
         </el-form-item>
         <el-form-item :label="t('fields.param')" prop="param">
           <el-input
@@ -433,6 +437,7 @@ const uiControl = reactive({
     { key: 4, displayName: 'Other', value: 'OTHER' },
     { key: 5, displayName: 'Time', value: 'TIME' },
     { key: 6, displayName: 'Multiple', value: 'MULTIPLE' },
+    { key: 7, displayName: 'PGroup', value: 'PGROUP' },
   ],
   status: [
     { key: 1, displayName: 'Open', value: 'OPEN' },
@@ -440,6 +445,7 @@ const uiControl = reactive({
     { key: 3, displayName: 'Test', value: 'TEST' },
   ],
   bonusAmountRatioMax: 15,
+  pgroup: false,
 })
 const page = reactive({
   pages: 0,
@@ -476,6 +482,7 @@ const form = reactive({
   siteId: null,
   param: null,
   remark: null,
+  pgroup: null,
 })
 
 const formRules = reactive({
@@ -587,6 +594,7 @@ function showDialog(type) {
     form.triggerType = uiControl.triggerType[0].value
     form.siteId = siteList.list[0].id
     getVipBySiteId(form.siteId)
+    uiControl.pgroup = false;
     uiControl.dialogTitle = t('fields.addPrivilegeInfo')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editPrivilegeInfo')
@@ -621,6 +629,12 @@ async function showEdit(privilegeInfo) {
           form[key] = privilegeInfo[key]
         }
       }
+    }
+
+    if (privilegeInfo.triggerType === 'PGROUP') {
+      uiControl.pgroup = true;
+    } else {
+      uiControl.pgroup = false;
     }
 
     const vipArr = JSON.parse(JSON.stringify(form.vips)).split(',')
@@ -716,6 +730,14 @@ function json() {
     nextTick(() => {
       form.param = JSON.stringify(JSON.parse(form.param), null, '\t')
     })
+  }
+}
+
+function onChange(e) {
+  if (e === 'PGROUP') {
+    uiControl.pgroup = true;
+  } else {
+    uiControl.pgroup = false;
   }
 }
 
