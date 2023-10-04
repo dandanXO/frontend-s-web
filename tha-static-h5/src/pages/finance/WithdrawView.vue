@@ -255,6 +255,7 @@ import { defineComponent, reactive, ref, onMounted } from "vue";
 // import { message } from "ant-design-vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import {userStore} from "stores/index";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
 import PlatformItem from "src/components/PlatformItem.vue";
@@ -270,6 +271,7 @@ export default defineComponent({
 
     const amountRef = ref();
     const cardRef = ref();
+    const store = userStore();
     const activeItem = ref(0);
     const withdrawState = reactive({
       bankCardList: [],
@@ -302,6 +304,9 @@ export default defineComponent({
                 message: "สำเร็จ",
                 icon: "check_circle_outline"
               });
+              getWithdrawalMethods();
+              withdrawInfo.amount = "";
+              store.getBalance();
             } else {
             // $q.notify({
             //   color: "negative",
@@ -391,7 +396,8 @@ export default defineComponent({
       step: ref(),
       selectedWithdrawalMethod,
       loadCards,
-      isUSDT
+      isUSDT,
+      store,
     };
   },
   computed: {
