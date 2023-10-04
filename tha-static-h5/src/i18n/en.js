@@ -209,6 +209,7 @@ export default {
     search: 'Search',
     order_number: 'Order Number',
     reminder: 'Reminder',
+    confirm_withdraw_success: 'Confirm withdrawal',
     amount: 'Amount',
     status: 'Status',
     deposit_date: 'Deposit date',

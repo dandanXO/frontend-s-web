@@ -209,6 +209,7 @@ export default {
     search: 'ค้นหา',
     order_number: 'หมายเลขสั่งซื้อ',
     reminder: 'เตือนความจำ',
+    confirm_withdraw_success: 'ยืนยันการมาถึง',
     amount: 'ยอดเงิน',
     status: 'สถานะ',
     deposit_date: 'วันที่ฝาก',
