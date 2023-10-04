@@ -183,7 +183,7 @@
            v-if="currentSelectedMenu === 'slots' && !isShow"
       >
         <template v-for="p in platforms" :key="p">
-          <div class="game-item btn-pointer"
+          <div class="game-item btn-pointer btn-slot-game"
                @click="selectSlotPlat(p)"
           >
             <img :src="require('../assets/home/slot/' + p.code + '.png')">

@@ -108,7 +108,7 @@ body.platform-ios .q-dialog__inner--minimized > div {
 }
 
 .game-title {
-  font-family: 'Wave';
+  font-family: "Wave";
   font-size: 50px;
   line-height: 60px;
   color: $header-color;
@@ -298,7 +298,7 @@ svg {
   color: $main-color;
   background-image: $linear-bg-1;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: $header-color;;
+  -webkit-text-fill-color: $header-color;
   font-size: 28px;
   text-align: center;
   font-family: Wave;
@@ -359,42 +359,42 @@ svg {
     margin: 0 auto;
     padding: 8px 12px;
 
-    .header-back{
-      margin-left:auto;
+    .header-back {
+      margin-left: auto;
     }
   }
-
 }
 
 .lang-container {
   background: $border-color;
-  border-radius:12px;
+  border-radius: 12px;
   padding: 1px 10px;
   height: 30px;
 
-  .q-field__control{
+  .q-field__control {
     height: 30px;
     min-height: 30px !important;
   }
 
-  &.q-field--auto-height .q-field__native{
+  &.q-field--auto-height .q-field__native {
     min-height: 30px !important;
   }
 
-  &.q-field--standard .q-field__control:hover:before{
+  &.q-field--standard .q-field__control:hover:before {
     border-color: transparent;
-    display:none;
+    display: none;
   }
-  &.q-field--standard .q-field__control:before{
+  &.q-field--standard .q-field__control:before {
     border-color: transparent;
-    display:none;
+    display: none;
   }
 
   .q-field--auto-height .q-field__control {
     height: 30px;
   }
 
-  .q-field__after, .q-field__append {
+  .q-field__after,
+  .q-field__append {
     height: 30px;
   }
 }
@@ -429,11 +429,10 @@ svg {
   }
 }
 
-.vue3-marquee.horizontal>.marquee{
+.vue3-marquee.horizontal > .marquee {
   gap: 25px;
-  padding-right:25px;
+  padding-right: 25px;
 }
-
 
 .btn-pointer {
   cursor: pointer;
@@ -444,6 +443,32 @@ svg {
 
   &:active {
     filter: brightness(0.85);
+  }
+}
+
+.btn-slot-game {
+  position: relative;
+
+  &:before {
+    content: "";
+    opacity: 1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    box-shadow: inset 0 0 20px #fff;
+    background-image: url("../assets/images/games/slots/play-icon.png");
+    background-repeat: no-repeat;
+    background-size: 120px 120px;
+    background-position: 50%;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    z-index: 1;
+  }
+
+  &:hover:before {
+    opacity: 1;
+
+    background-size: 70px 70px;
   }
 }
 
@@ -461,7 +486,6 @@ svg {
   background: $linear-bg-gray;
 }
 
-
 .gap-8 {
   gap: 8px;
 }
@@ -471,10 +495,11 @@ svg {
 }
 
 .text-main {
-  color: $text-footer
+  color: $text-footer;
 }
 
-.q-field--filled.q-field--dark .q-field__control, .q-field--filled.q-field--dark .q-field__control:before {
+.q-field--filled.q-field--dark .q-field__control,
+.q-field--filled.q-field--dark .q-field__control:before {
   background: $main-color;
 }
 
@@ -491,9 +516,11 @@ input:internal-autofill-selected {
 
 .btn-brand {
   border-radius: 56.5px;
-  border: 2px solid #FB3CA9;
-  background: linear-gradient(90deg, #CF027D 0%, #FF6370 100%);
-  box-shadow: 0px 0px 0.3409rem 0.06818rem rgba(251, 89, 114, 0.54), 0px 0.1818rem 0.1818rem 0px rgba(255, 178, 189, 0.26) inset, 0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
+  border: 2px solid #fb3ca9;
+  background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%);
+  box-shadow: 0px 0px 0.3409rem 0.06818rem rgba(251, 89, 114, 0.54),
+    0px 0.1818rem 0.1818rem 0px rgba(255, 178, 189, 0.26) inset,
+    0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
 }
 
 .btn-lg {
@@ -508,7 +535,6 @@ input:internal-autofill-selected {
 .gap-1\.2 {
   gap: 1.2rem;
 }
-
 
 .hue-purple {
   color: $header-color;
@@ -532,7 +558,6 @@ input:internal-autofill-selected {
 .q-field--with-bottom:not(.q-field--error) {
   padding-bottom: 0;
 }
-
 
 @media (min-width: 991px) {
   .main-section {
