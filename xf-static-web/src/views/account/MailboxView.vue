@@ -6,7 +6,18 @@
     <div class="account-content mail">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
         <el-tab-pane key="inbox" name="inbox" :label="'收件箱'">
-          <div v-if="mailboxState.mailboxList.inbox.list.length > 0">
+          <div
+              style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 300px;
+            "
+              v-if="!isLoading['inbox']"
+          >
+            载入中
+          </div>
+          <div v-else-if="mailboxState.mailboxList.inbox.list.length > 0">
             <div class="mailbox-list">
               <div
                 class="mailbox-item"
@@ -40,7 +51,18 @@
           </div>
         </el-tab-pane>
         <el-tab-pane key="sent" name="sent" :label="'已发送'">
-          <div v-if="mailboxState.mailboxList.sent.list.length > 0">
+          <div
+              style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 300px;
+            "
+              v-if="!isLoading['outbox']"
+          >
+            载入中
+          </div>
+          <div v-else-if="mailboxState.mailboxList.sent.list.length > 0">
             <div class="mailbox-list">
               <div
                 class="mailbox-item"
@@ -150,7 +172,11 @@ export default defineComponent({
     Calendar
   },
   setup() {
-    const mailboxData = ref([])
+    const mailboxData = ref([]);
+    const isLoading= reactive({
+      inbox: false,
+      outbox: false
+    })
     const mailboxState = reactive({
       active: "inbox",
       mailboxList: {
@@ -178,33 +204,37 @@ export default defineComponent({
       if (mailboxState.active === "inbox") {
         mailboxData.value = {
           type: null,
-          current: mailboxState.mailboxList[mailboxState.active].pageNum,
-          size: mailboxState.mailboxList[mailboxState.active].pageSize,
+          current: mailboxState.mailboxList["inbox"].pageNum,
+          size: mailboxState.mailboxList["inbox"].pageSize,
           orderBy: "sendTime"
         }
         mailInbox(mailboxData.value).then((res) => {
+          isLoading["inbox"]=true;
           if (res.code === 0) {
             const response = res.data
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
-            mailboxState.mailboxList[mailboxState.active].total = (response.total);
+            mailboxState.mailboxList["inbox"].list.push(...response.records);
+            mailboxState.mailboxList["inbox"].total = (response.total);
           }
         }).catch((error) => {
+          isLoading["inbox"]=true;
           console.log(error);
           // message.error(error.message, 4)
         });
       } else {
         mailboxData.value = {
           type: null,
-          current: mailboxState.mailboxList[mailboxState.active].pageNum,
-          size: mailboxState.mailboxList[mailboxState.active].pageSize,
+          current: mailboxState.mailboxList["sent"].pageNum,
+          size: mailboxState.mailboxList["sent"].pageSize,
           orderBy: "createTime"
         }
         mailOutbox(mailboxData.value).then((response) => {
+          isLoading["outbox"]=true;
           if (response.code === 0) {
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-            mailboxState.mailboxList[mailboxState.active].total = response.data.total;
+            mailboxState.mailboxList["sent"].list.push(...response.data.records);
+            mailboxState.mailboxList["sent"].total = response.data.total;
           }
         }).catch((error) => {
+          isLoading["outbox"]=true;
           console.log(error);
           // message.error(error.message, 4)
         });
@@ -295,6 +325,7 @@ export default defineComponent({
       formRef,
       rules,
       onSubmit,
+      isLoading
     }
   },
 });

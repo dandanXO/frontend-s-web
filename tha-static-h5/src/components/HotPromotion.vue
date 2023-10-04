@@ -1,90 +1,5 @@
 <template>
   <div class="hot-promo">
-    <!-- <div
-      v-if="list.id === 32 && store.hasToken()"
-      class="promo-bg common-promo p19"
-      :style="
-        selectedHotPromo.bg
-          ? 'background-image: url(' + selectedHotPromo.bg + ')'
-          : ''
-      "
-    >
-      <img src="../assets/images/promotion/hotpromo/19/icon.png"/>
-      <div class="contents">
-        <q-btn :loading="btnLoading" @click="ClaimDailyRebate(32)" label="เงินคืนรายวัน" color="brand"/>
-        <div class="orange">
-          *โบนัสเงินคืนต้องทำ 1 เทิร์นก่อนถอนและจะถูกริบคืนหากไม่ได้ใช้ภายใน 30 วัน
-        </div>
-      </div>
-      <div class="extra-img">
-        <img src="../assets/images/promotion/hotpromo/common/extra.png"/>
-      </div>
-    </div>
-
-    <div
-      v-if="list.id === 27 && store.hasToken()"
-      class="promo-bg common-promo p-20"
-      :style="
-        selectedHotPromo.bg
-          ? 'background-image: url(' + selectedHotPromo.bg + ')'
-          : ''
-      "
-    >
-      <img src="../assets/images/promotion/hotpromo/20/icon.png"/>
-      <div class="contents">
-        โบนัสรายวันจะเข้ากระเป๋าหลักโดยอัตโนมัติหลังการฝากเงินสําเร็จ
-        <q-btn :loading="btnLoading" @click="ClaimDailyRebate(27)" label="เงินคืนรายวัน" color="brand"/>
-      </div>
-      <div class="extra-img">
-        <img src="../assets/images/promotion/hotpromo/common/extra.png"/>
-      </div>
-    </div>
-
-    <div
-      v-if="list.id === 23"
-      class="promo-bg common-promo p-23"
-      :style="
-        selectedHotPromo.bg
-          ? 'background-image: url(' + selectedHotPromo.bg + ')'
-          : ''
-      "
-    >
-      <img src="../assets/images/promotion/hotpromo/23/icon.png"/>
-      <div class="contents">
-        <q-form :colon="false">
-          <q-input filled label="Net loss bonus" color="white"/>
-          <div class="orange q-ma-md">
-            *If the member does not claim the bonus on the day, it will be
-            deemed to have waived
-          </div>
-
-          <q-btn label="เคลมตอนนี้" color="brand"/>
-        </q-form>
-      </div>
-      <div class="extra-img">
-        <img src="../assets/images/promotion/hotpromo/common/extra.png"/>
-      </div>
-    </div>
-
-    <div
-      v-if="list.id === 31  && store.hasToken()"
-      class="promo-bg common-promo p-24"
-      :style="
-        selectedHotPromo.bg
-          ? 'background-image: url(' + selectedHotPromo.bg + ')'
-          : ''
-      "
-    >
-      <img src="../assets/images/promotion/hotpromo/24/icon.png"/>
-      <div class="contents">
-        โบนัสบวกเงินฝากต้องใช้การเดิมพัน 12 รอบก่อนถอน
-        <q-btn :loading="btnLoading" @click="ClaimDailyRebate(31)" label="เคลมตอนนี้" color="brand"/>
-      </div>
-      <div class="extra-img">
-        <img src="../assets/images/promotion/hotpromo/common/extra.png"/>
-      </div>
-    </div> -->
-    
 
     <div v-if="list.id === 30 && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -238,12 +153,12 @@
         <div class="bonus-svg-div">
 
           <span class="claim-amt">{{ claimMsg }}</span>
-          <span class="bonus-text">โบนัส</span>
+          <span class="bonus-text">{{ $t('lang.claim') }}</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="ตกลง" color="primary" v-close-popup/>
+        <q-btn flat :label="$t('lang.agree')" color="primary" v-close-popup/>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -510,7 +425,7 @@ export default defineComponent({
     //     }
 
     //     // console.log(eventapi);
-        
+
     // }
     // }
 
@@ -779,7 +694,7 @@ export default defineComponent({
   }
 }
 .promo-sjb, .promo-invt {
-  background: #2b2b4b; 
+  background: #2b2b4b;
   padding: 10px;
 }
 

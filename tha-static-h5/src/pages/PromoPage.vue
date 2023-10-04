@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div class="promo-info">
-                <span class="viewdetail">ดูรายละเอียด</span>
+                <span class="viewdetail">{{ $t('lang.view_detail')}}</span>
               </div>
             </a>
           </div>
@@ -86,7 +86,7 @@
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
-            <div class="menu-title">ข้อตกลงและเงื่อนไข</div>
+            <div class="menu-title">{{ $t('lang.tnc') }}</div>
             <div v-html="selectedPromo.pageContent"></div>
           </div>
         </div>
@@ -107,6 +107,7 @@ import {userStore} from "stores/index";
 // import { loadPromoBanner } from "src/api/index/promo";
 
 import HotPromotion from 'components/HotPromotion'
+import {useI18n} from "vue-i18n";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
@@ -115,19 +116,20 @@ export default defineComponent({
     HotPromotion
   },
   setup() {
+    const {t} = useI18n()
     const store = userStore();
     const imgURL = process.env.IMAGE_CDN + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
-      active: {value: 'ALL', label: 'ทั้งหมด'},
+      active: {value: 'ALL', label: t('lang.all')},
       promoList: [],
     });
     const promoTypes = ref([
-      {value: "ALL", label: "ทั้งหมด"},
-      {value: "WELCOME", label: "ยินดีต้อนรับ"},
-      {value: "SPORT", label: "กีฬา"},
-      {value: "LIVE CASINO", label: "ไลฟ์คาสิโน"},
-      {value: "SLOT", label: "สล็อต"},
+      {value: "ALL", label: t('lang.all')},
+      {value: "WELCOME", label: t('lang.welcome')},
+      {value: "SPORT", label: t('lang.sport_header') },
+      {value: "LIVE CASINO", label: t('lang.live_header') },
+      {value: "SLOT", label: t('lang.slot_header') },
     ]);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
@@ -341,6 +343,7 @@ export default defineComponent({
           padding: 10px;
 
           .type-item {
+            text-transform: uppercase;
             padding: 5px 10px;
             cursor: pointer;
             border-radius: 20px;
