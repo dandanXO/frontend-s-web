@@ -4,7 +4,8 @@
       <div class="searchbar">
         <q-form layout="inline" :model="searchForm">
           <div class="left q-gutter-sm">
-            <q-input clearable placeholder="เลือกวันที่" filled v-model="searchForm.regTime">
+            <q-input clearable
+                     :placeholder="$t('lang.select_date')" filled v-model="searchForm.regTime">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
@@ -16,7 +17,7 @@
                       <div class="row items-center justify-end">
                         <q-btn
                           v-close-popup
-                          label="Close"
+                          :label="$t('lang.close_btn')"
                           color="primary"
                           flat
                         />
@@ -26,51 +27,50 @@
                 </q-icon>
               </template>
             </q-input>
-            <q-input placeholder="ชื่อ" filled v-model="searchForm.loginName" />
+            <q-input :placeholder="$t('lang.name')" filled v-model="searchForm.loginName" />
           </div>
               <q-btn
                 class="q-mt-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
                 :loading="btnLoading"
               />
         </q-form>
       </div>
-      <q-table :loading="btnLoading" no-data-label="ไม่มีข้อมูล" 
-          loading-label="กำลังโหลด..."
+      <q-table :loading="btnLoading" :no-data-label="$t('lang.no_data_label')"
+          :loading-label="$t('lang.loading')"
           class="q-mt-md"
           :columns="tableColumns"
           :rows="dataSource"
           row-key="id">
       </q-table>
     </div>
-    
+
     <div class="invitePromo">
       <p class="menu-title" style="font-weight: bold;">
-        เชิญเพื่อน รับเงินรางวัล
+        {{ $t('lang.invite_friend_to_receive_prize') }}
       </p>
       <div>
-        <p class="menu-title sub inv-title">เวลากิจกรรม</p>
+        <p class="menu-title sub inv-title">{{ $t('lang.event_time') }}</p>
         <p style="margin-bottom: 30px">
-          เริ่ม 20/11/2022 เวลา 00:00:00 (GMT+8)
+          {{ $t('lang.start_time') }} 20/11/2022 เวลา 00:00:00 (GMT+8)
         </p>
 
-        <p class="menu-title sub inv-title">รายละเอียดกิจกรรม</p>
+        <p class="menu-title sub inv-title">{{ $t('lang.event_details') }}</p>
         <p style="margin-bottom: 30px">
-          สมาชิก Jolly88 เปิด : ส่วนบุคคล - คลิก "เชิญเพื่อน"
-          เพื่อคัดลอกลิงก์โปรโมชั่น แชร์ผ่าน Facebook, LINE, Instagram, what's
-          app, telegram และ YouTube ฯลฯ
-          เมื่อเชิญเพื่อนสำเร็จรับรางวัลเงินสดทันที!
+          {{
+            $t('lang.event_details_content')
+          }}
         </p>
-      <q-btn color="brand" class="fit q-mb-lg" to="/share">แชร์ตอนนี้</q-btn>
+      <q-btn color="brand" class="fit q-mb-lg" to="/share">{{ $t('lang.share_now')}}</q-btn>
         <div class="table-inv">
         <table style="width: 600px;">
           <tbody>
             <tr>
-              <th>ระดับ</th>
+              <th>{{ $t('lang.level_grade') }}</th>
               <th>
-                เชิญเพื่อนใหม่เติมเงินครั้งแรก
+                {{ $t('lang.ivnite_fren_first_time') }}
               </th>
               <th>รับเงินโบนัส</th>
               <th>ข้อกำหนดรอบเทิร์น</th>
@@ -172,7 +172,7 @@ export default defineComponent({
        regTime: null,
        loginName: null,
     });
-    
+
     const searchRecord = () => {
       btnLoading.value = true;
       if (searchForm.loginName === '') {

@@ -135,14 +135,14 @@
                 >
               </q-item-section>
 
-              <q-item-section avatar>
+              <!-- <q-item-section avatar>
                 <img
                     v-if="scope.opt.bankIcon"
                     style="width: 30px; margin-top: 10px; margin-bottom: 10px"
                     :src="imgURL + scope.opt.bankIcon"
                 />
-              </q-item-section>
-              <q-item-section>
+              </q-item-section> -->
+              <!-- <q-item-section>
                 <q-item-label
                     style="
                     text-overflow: ellipsis;
@@ -151,7 +151,7 @@
                   "
                 >{{ scope.opt.name }}</q-item-label
                 >
-              </q-item-section>
+              </q-item-section> -->
 
             </template>
             <template v-slot:option="scope">

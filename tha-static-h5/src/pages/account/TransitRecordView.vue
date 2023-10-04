@@ -275,6 +275,14 @@
                   color="brand"
                   @click="($event) => openReminder(props)"
                 />
+
+                <q-btn
+                  v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
+                  size="sm"
+                  :label="$t('lang.confirm_withdraw_success')"
+                  color="brand"
+                  @click="openWithdrawConfirmDialog(props)"
+                />
               </q-td>
             </template>
           </q-table>
@@ -736,6 +744,20 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+
+      <q-dialog width="100%" v-model="isConfirmWithdraw" no-backdrop-dismiss no-esc-dismis>
+        <q-card style="width: 100%; padding: 20px">
+          <q-card-section class="q-mb-md">
+            系统提示
+            <br/>
+            <br/>
+            确认到账
+          </q-card-section>
+          <q-btn @click="openWithdrawConfirm()" label="确认" color="green" style="margin-right: 8px;"/>
+          <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning"/>
+        </q-card>
+      </q-dialog>
+
     </div>
   </div>
 </template>
@@ -761,6 +783,8 @@ const store = userStore();
 const {t} = useI18n();
 const uploadFileRef = ref();
 const recordActive = ref("deposit");
+const isConfirmWithdraw = ref(false);
+const passDet = ref(null);
 const reminderForm = reactive({});
 const totalBetRecord = reactive({
   totalBet: 0,
@@ -853,6 +877,12 @@ const tableColumns = {
       field: "status",
       name: "status"
     },
+    // {
+    //   label: 'Confirm Status',
+    //   field: "confirmStatus",
+    //   name: 'confirmStatus'
+    //   // slots: { customRender: "withdrawDate" }
+    // },
     {
       label: t('lang.withdraw_date'),
       field: "withdrawDate",
@@ -1069,6 +1099,7 @@ const pagination = reactive({
 
     const reminderDialog = ref(false);
     const openReminder = (record) => {
+      // console.log(record.row.depositDate)
       api.get("/session/getVerifyingFeedbackCount").then((ret) => {
         const res = ret.data
         if (res.code === 0) {
@@ -1078,9 +1109,11 @@ const pagination = reactive({
             reminderForm.photos = null
             reminderForm.memberRemark = "";
             if (recordActive.value === 'deposit') {
-              reminderForm.type = 1
+              reminderForm.type = 1;
+              reminderForm.recordTime = record.row.depositDate;
             } else if (recordActive.value === 'withdraw') {
-              reminderForm.type = 2
+              reminderForm.type = 2;
+              reminderForm.recordTime = record.row.withdrawDate;
             }
           } else {
             $q.notify({
@@ -1093,6 +1126,45 @@ const pagination = reactive({
         }
       })
     }
+
+    const openWithdrawConfirmDialog = (record) => {
+      isConfirmWithdraw.value = true;
+      passDet.value = record;
+    };
+
+    const openWithdrawConfirm = () => {
+      const obj = {
+        id: passDet.value.row.id,
+        withdrawDate: passDet.value.row.withdrawDate
+      };
+
+      api
+          .post("/session/withdraw/confirm", qs.stringify(obj))
+          .then((response) => {
+            // Handle the response
+            if (response.data.code === 0) {
+              isConfirmWithdraw.value = false;
+
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "已经确认到账",
+                icon: "check_circle_outline"
+              });
+              removeSessionKeys("/session/member/withdraw");
+              searchRecord();
+            }
+
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 1000);
+          })
+
+          .catch((error) => {
+            // Handle the error
+            console.error(error);
+          });
+    };
 
     const submitReminder = () => {
       api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
@@ -1230,6 +1302,8 @@ const pagination = reactive({
         return t('lang.applying') //Applying
       } else if (withdrawStatus === 'FAIL') {
         return t('lang.failed') // Failed
+      } else if (withdrawStatus === 'PENDING') {
+        return t('lang.pending') // Pending
       } else if (withdrawStatus === 'SUCCESS') {
         return t('lang.success') // Success
       } else if (withdrawStatus === 'STEP_1') {
@@ -1280,6 +1354,16 @@ const pagination = reactive({
       reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
     }
 
+    const removeSessionKeys = (prefix) => {
+      var keys= SessionStorage.getAllKeys();
+      _.each(keys, function(key, item){
+        // console.log(key);
+        if(key.indexOf(prefix) > -1){
+         SessionStorage.remove(key);
+        }
+      })
+    }
+
     return {
       recordActive,
       searchForm,
@@ -1317,7 +1401,12 @@ const pagination = reactive({
       reminderForm,
       submitReminder,
       getImageLink,
-      uploadFileRef
+      uploadFileRef,
+      openWithdrawConfirmDialog,
+      openWithdrawConfirm,
+      isConfirmWithdraw,
+      passDet,
+      removeSessionKeys
     };
   }
 });

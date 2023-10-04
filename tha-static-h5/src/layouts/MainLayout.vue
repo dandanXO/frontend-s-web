@@ -127,15 +127,22 @@
                :src="(tab === 'withdraw') ? footers['withdraw']['active']  : footers['withdraw']['icon'] "/>
           <span>{{ $t('lang.withdraw_footer') }}</span>
         </q-route-tab>
-        <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs">
-          <img class="footer-icon"
-               :src="(tab === 'cs') ? footers['cs']['active']  :  footers['cs']['icon'] "/>
-          <span>{{ $t('lang.cs_footer') }}</span>
-        </q-route-tab>
+
         <q-route-tab to="/account/mail" name="notice">
           <img class="footer-icon"
                :src="(tab === 'notice') ? footers['notice']['active']  :  footers['notice']['icon'] "/>
           <span>{{ $t('lang.notice_footer') }}</span>
+        </q-route-tab>
+        <q-route-tab to="/affiliate" name="affiliate">
+          <img class="footer-icon"
+               :src="(tab === 'affiliate') ? footers['affiliate']['active']  :  footers['affiliate']['icon'] "/>
+          <span>{{ $t('lang.affiliate_header') }}</span>
+        </q-route-tab>
+        <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs">
+          <img class="footer-icon"
+               :class="(tab != 'cs' ? 'breathing-icon' : '')"
+               :src="(tab === 'cs') ? footers['cs']['active']  :  footers['cs']['icon'] "/>
+          <span>{{ $t('lang.cs_footer') }}</span>
         </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -225,7 +232,7 @@ export default defineComponent({
           pageName.value = t('lang.slot_header');
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
-          pageName.value =  t('lang.live_header');
+          pageName.value = t('lang.live_header');
         } else if (route.path === "/poker") {
           hasPage.value = true;
           pageName.value = "Poker";
@@ -251,7 +258,7 @@ export default defineComponent({
         } else if (route.path === "/account/transit") {
           prevPage.value = 'account';
           hasPage.value = true;
-          pageName.value =  t('lang.transit_header');
+          pageName.value = t('lang.transit_header');
         } else if (route.path === "/account") {
           prevPage.value = '/';
           hasPage.value = true;
@@ -261,7 +268,7 @@ export default defineComponent({
         } else if (route.path === "/display") {
           prevPage.value = 'finance/deposit';
           hasPage.value = true;
-          pageName.value =  t('lang.display_header');
+          pageName.value = t('lang.display_header');
           outOfApp.value = true;
         } else if (route.path === "/account/personal") {
           prevPage.value = '/';
@@ -342,6 +349,10 @@ export default defineComponent({
       "notice": {
         "icon": require("../assets/images/menu/notice-icon.png"),
         "active": require("../assets/images/menu/notice-icon-notice.png")
+      },
+      "affiliate": {
+        "icon": require("../assets/images/menu/affiliate-icon.png"),
+        "active": require("../assets/images/menu/affiliate-icon-active.png")
       }
     });
 
@@ -423,6 +434,7 @@ svg path {
 
 .footer-icon {
   width: 22px;
+  filter: brightness(1.4);
   margin-bottom: 4px;
 }
 

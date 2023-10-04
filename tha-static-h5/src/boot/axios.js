@@ -24,12 +24,12 @@ function getInitApi(apiLinks, urlLsName) {
     var successRstUrl = localStorage.getItem(urlLsName);
     if (successRstUrl) {
         axios.get(successRstUrl + "/ping").then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.status !== 200) {
                 localStorage.removeItem(urlLsName);
             }
         }).catch((err) => {
-            console.log(err);
+            // console.log(err);
             localStorage.removeItem(urlLsName);
         })
 
@@ -43,7 +43,7 @@ function getInitApi(apiLinks, urlLsName) {
         }
 
         axios.get(initApi + "/ping").then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.status === 200) {
                 localStorage.setItem(urlLsName, initApi);
             } else {

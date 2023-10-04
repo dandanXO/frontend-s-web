@@ -44,7 +44,8 @@
     "vue-remix-icons": "^1.1.1",
     "vue-router": "^4.0.0",
     "vue-uuid": "^3.0.0",
-    "vue3-carousel": "^0.1.40"
+    "vue3-carousel": "^0.1.40",
+    "vue3-marquee": "^4.1.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
