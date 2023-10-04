@@ -223,6 +223,25 @@
           />
         </div>
         <q-scroll-area v-if="!isLoading" ref="scrollSlotRef" style="height: 500px;width:calc(100% - 120px);">
+          <div class="search-list">
+            <q-form @submit="searchList">
+              <q-input
+                  color="white" bg-color="primary" filled class="search-input" v-model="gamePage.searchKey"
+                       :label="$t('lang.keyin_keyword')">
+                <template v-slot:prepend>
+                  <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer"/>
+                </template>
+                <template v-slot:append>
+                  <q-icon style="margin-right: 5px;" @click="clearSearchInput" class="clear-input-icon btn-pointer" name="close"></q-icon>
+
+                  <q-icon color="brightbtn" name="search" style="" @click="searchList" class="clear-input-icon btn-pointer"></q-icon>
+
+<!--                  <q-btn type="submit" @click="searchList" :label="$t('lang.search')" color="brightbtn"/>-->
+
+                </template>
+              </q-input>
+            </q-form>
+          </div>
           <div class="slot-grid" style="padding-bottom: 20px;">
             <div
                 v-for="(game, index) in gamePage.gameList"
@@ -318,6 +337,25 @@
           />
         </div>
         <q-scroll-area v-if="!isLoading" ref="scrollPageRef" style="height: 500px;width:calc(100% - 120px);">
+          <div class="search-list">
+            <q-form @submit="searchList">
+              <q-input
+                  color="white" bg-color="primary" filled class="search-input" v-model="gamePage.searchKey"
+                  :label="$t('lang.keyin_keyword')">
+                <template v-slot:prepend>
+                  <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer"/>
+                </template>
+                <template v-slot:append>
+                  <q-icon style="margin-right: 5px;" @click="clearSearchInput" class="clear-input-icon btn-pointer" name="close"></q-icon>
+
+                  <q-icon color="brightbtn" name="search" style="" @click="searchList" class="clear-input-icon btn-pointer"></q-icon>
+
+                  <!--                  <q-btn type="submit" @click="searchList" :label="$t('lang.search')" color="brightbtn"/>-->
+
+                </template>
+              </q-input>
+            </q-form>
+          </div>
           <div class="slot-grid" style="padding-bottom: 20px;">
             <div
                 v-for="(game, index) in gamePage.gameList"
@@ -801,6 +839,10 @@ export default defineComponent({
         liveTabs.value = plat.name;
       }
     };
+    const clearSearchInput = () => {
+      gamePage.searchKey= "";
+      changePage(1, gamePage.pageSize);
+    }
     const searchList = () => {
       if (gamePage.searchKey) {
         gamePage.gameList = gameListData.value.filter((game) => {
@@ -1087,6 +1129,7 @@ export default defineComponent({
       scrollSlotRef,
       selectedPlatId,
       searchList,
+      clearSearchInput,
       liveTabs,
       selectedLiveTab,
       currentSelectedMenu,
@@ -1538,6 +1581,29 @@ export default defineComponent({
   }
 }
 
+.search-list{
+  display:flex;
+  margin-bottom: 16px;
+  margin-right: 10px;
+
+  justify-content: flex-end;
+
+  .search-input{
+    max-width: 450px;
+    margin-left:auto;
+
+    &.q-field--filled .q-field__control{
+      border-radius:12px;
+    }
+  }
+
+  .clear-input-icon{
+    cursor: pointer;
+    opacity: 0.8;
+
+
+  }
+}
 
 
 @media (min-width: 600px) {

@@ -246,6 +246,7 @@ svg {
 .q-tab {
   background: transparent;
   color: $text-footer;
+  font-weight: 700;
 
   &--active {
     svg {
@@ -277,6 +278,69 @@ svg {
     display: none;
   }
 }
+
+.breathing-icon {
+  -webkit-animation: breathing 4s ease-out infinite normal;
+  animation: breathing 4s ease-out infinite normal;
+}
+
+
+@-webkit-keyframes breathing {
+  0% {
+    -webkit-transform:  scale(1.1);
+    transform:  scale(1.1);
+    filter: brightness(1.2);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  60% {
+    -webkit-transform:  scale(1.1);
+    transform:  scale(1.1);
+    filter: brightness(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes breathing {
+  0% {
+    -webkit-transform:  scale(1.1);
+    -ms-transform: scale(1.1);
+    transform:  scale(1.1);
+    filter: brightness(1.2);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  60% {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform:  scale(1.1);
+    filter: brightness(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
 
 .q-splitter--dark .q-splitter__separator {
   background: none;
@@ -384,6 +448,7 @@ svg {
     border-color: transparent;
     display: none;
   }
+
   &.q-field--standard .q-field__control:before {
     border-color: transparent;
     display: none;
@@ -524,8 +589,8 @@ input:internal-autofill-selected {
   border: 2px solid #fb3ca9;
   background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%);
   box-shadow: 0px 0px 0.3409rem 0.06818rem rgba(251, 89, 114, 0.54),
-    0px 0.1818rem 0.1818rem 0px rgba(255, 178, 189, 0.26) inset,
-    0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
+  0px 0.1818rem 0.1818rem 0px rgba(255, 178, 189, 0.26) inset,
+  0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
 }
 
 .btn-lg {

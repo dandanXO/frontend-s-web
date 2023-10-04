@@ -136,6 +136,7 @@ export default {
     length_between_6_12: "ความยาวควรเป็น 6 ถึง 12 ตัว",
     length_between_34_37: "ความยาวควรเป็น 34 ถึง 37 ตัว",
     receive_by_email: "รับบัญชีทางอีเมลล์",
+    receive_by_phone: "รับบัญชีทางโทรศัพท์",
     email_address: "อีเมลล์",
     enter_your_email: "กรุณาใส่ที่อยู่อีเมลล์",
     send: "ส่ง",
@@ -329,6 +330,20 @@ export default {
     tnc: "ข้อกำหนดและเงื่อนไข",
     agree: "เห็นด้วย",
     claim: "เรียกร้อง",
+    select_date: "เลือกวันที่",
+    invite_friend_to_receive_prize: "เชิญเพื่อน รับเงินรางวัล",
+    event_time: "เวลากิจกรรม",
+    start_time: "เริ่ม",
+    event_details: "รายละเอียดกิจกรรม",
+    event_details_content: "สมาชิก Jolly88 เปิด : ส่วนบุคคล - คลิก \"เชิญเพื่อน\"\n" +
+        "          เพื่อคัดลอกลิงก์โปรโมชั่น แชร์ผ่าน Facebook, LINE, Instagram, what's\n" +
+        "          app, telegram และ YouTube ฯลฯ\n" +
+        "          เมื่อเชิญเพื่อนสำเร็จรับรางวัลเงินสดทันที!",
+    share_now: "แชร์ตอนนี้",
+    level_grade: "ระดับ",
+    ivnite_fren_first_time: "เชิญเพื่อนใหม่เติมเงินครั้งแรก",
+    keyin_keyword: "โปรดป้อนคำสำคัญ"
+
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

@@ -24,12 +24,12 @@
 <!--          >-->
 <!--            {{ $t('lang.withdraw_account') }}-->
 <!--          </div>-->
-          <div class="top-tab-btn btn-pointer"
-               :class="(select_menu === 'verify') ? 'is-active' : ''"
-               @click="selectTab('verify')"
-          >
-            {{ $t('lang.security_check') }}
-          </div>
+<!--          <div class="top-tab-btn btn-pointer"-->
+<!--               :class="(select_menu === 'verify') ? 'is-active' : ''"-->
+<!--               @click="selectTab('verify')"-->
+<!--          >-->
+<!--            {{ $t('lang.security_check') }}-->
+<!--          </div>-->
         </div>
 
 
@@ -124,10 +124,10 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.realName && isEdit == false"
-                    @click="isEdit=!isEdit;"
                 >
-                  <span>{{ $t('lang.edit') }}</span>
-                  <RiEditBoxLine/>
+<!--                  <span>{{ $t('lang.edit') }}</span>-->
+<!--                  <RiEditBoxLine/>-->
+                  -
                 </div>
 
 
@@ -159,10 +159,11 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.name2 && isEdit == false"
-                    @click="isEdit=!isEdit;"
                 >
-                  <span>{{ $t('lang.edit') }}</span>
-                  <RiEditBoxLine/>
+<!--                  @click="isEdit=!isEdit;"-->
+<!--                  <span>{{ $t('lang.edit') }}</span>-->
+<!--                  <RiEditBoxLine/>-->
+                  -
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.name2">
@@ -173,11 +174,6 @@
                       v-model="formDetail.name2"
                       :placeholder="$t('lang.surname')"
                   >
-                    <!-- <template v-slot:append>
-                      <q-avatar>
-                        <RiSendPlane2Line @click="updateState('realName')" />
-                      </q-avatar>
-                    </template> -->
                   </q-input>
                 </div>
               </div>
@@ -195,10 +191,12 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.birthday && isEdit == false"
-                    @click="isEdit=!isEdit;"
                 >
-                  <span>{{ $t('lang.edit') }}</span>
-                  <RiEditBoxLine/>
+<!--                  @click="isEdit=!isEdit;"
+-->
+<!--                  <span>{{ $t('lang.edit') }}</span>-->
+<!--                  <RiEditBoxLine/>-->
+                  -
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.birthday">
@@ -454,7 +452,7 @@ export default defineComponent({
     RiFileUserLine,
     RiCake2Line,
     RiSmartphoneLine,
-    RiEditBoxLine,
+    // RiEditBoxLine,
     // RiEditLine
   },
   setup() {

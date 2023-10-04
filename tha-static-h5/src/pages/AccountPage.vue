@@ -109,7 +109,7 @@
         <div class="acct-nav-label">{{ $t('lang.affiliate_page') }}</div>
       </q-card>
     </router-link>
-    <router-link to="/getapp">
+    <router-link v-if="!isH5()" to="/getapp">
       <q-card class="acct-nav-item"
               :class="route.path === '/getapp' ? 'active-class' : '' "
       >
@@ -128,7 +128,7 @@
               :class="route.path === '/share' ? 'active-class' : '' "
       >
         <RiShareBoxLine/>
-        <div class="acct-nav-label">{{ $t('lang.share_page')}}</div>
+        <div class="acct-nav-label">{{ $t('lang.share_page') }}</div>
       </q-card>
     </router-link>
     <a @click="logout">
@@ -163,6 +163,7 @@ import {useUI} from "stores/ui";
 import {useI18n} from "vue-i18n";
 import {storeToRefs} from "pinia";
 import {i18nStore} from "src/router/language";
+import {isH5} from "../boot/utils"
 
 export default defineComponent({
   name: "AccountPage",
@@ -191,6 +192,7 @@ export default defineComponent({
         router.push('/')
       });
     };
+
 
     // console.log(route);
 
@@ -251,6 +253,7 @@ export default defineComponent({
       unreadNumber,
       languageVal,
       langOptions,
+      isH5
     };
   }
 });
