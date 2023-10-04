@@ -5,7 +5,7 @@
     <div class="q-pa-md">
       <div class="q-gutter-y-md">
         <div class="white q-px-md">
-          {{ $t('lang.receive_by_email') }}
+          {{ $t('lang.receive_by_phone') }}
         </div>
         <q-card>
           <q-form v-if="!isEmailSent" class="q-gutter-y-md rounded-borders q-pa-md q-ma-md">
@@ -25,7 +25,7 @@
                 <q-icon name="person_outline"/>
               </template>
             </q-input>
-            <q-input
+            <!-- <q-input
                 ref="emailRef"
                 type="email"
                 filled
@@ -41,7 +41,27 @@
               <template v-slot:prepend>
                 <q-icon name="mail_outline"/>
               </template>
+            </q-input> -->
+
+            <q-input
+                ref="phoneRef"
+                filled
+                v-model="passwordForm.phone"
+                :label="$t('lang.phone_number')"
+                lazy-rules
+                :rules="[
+                (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+                (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone'),
+                isValidPhone
+              ]"
+                color="white"
+                clearable
+            >
+              <template v-slot:prepend>
+                <q-icon name="smartphone"/>
+              </template>
             </q-input>
+
             <q-input
                 ref="ftCaptchaRef"
                 filled
@@ -436,11 +456,13 @@ export default defineComponent({
     const verificationImg = ref("");
     const passwordForm = reactive({
       loginName: "",
-      email: "",
+      // email: "",
+      phone: "",
       captchaCode: ""
     });
     const verificationForm = reactive({
-      email: "",
+      // email: "",
+      phone: "",
       code: "",
       codeId: SessionStorage.getItem('emailCodeId'),
       newPassword: "",
@@ -468,6 +490,7 @@ export default defineComponent({
     };
     const loginNameRef = ref();
     const emailRef = ref();
+    const phoneRef = ref();
     const ftCaptchaRef = ref();
     const codeRef = ref();
     const newPwdRef = ref();
@@ -485,20 +508,20 @@ export default defineComponent({
     const isEmailSending = ref(false)
     const onSubmitForgotPwd = () => {
       loginNameRef.value.validate();
-      emailRef.value.validate();
+      // emailRef.value.validate();
       ftCaptchaRef.value.validate();
       $q.loading.show({
         message: t('lang.verifying')
       });
       if (
           loginNameRef.value.hasError ||
-          emailRef.value.hasError ||
+          // emailRef.value.hasError ||
           ftCaptchaRef.value.hasError
       ) {
         $q.loading.hide();
       } else {
         api
-            .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordForm))
+            .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordForm))
             .then((ret) => {
               const res = ret.data;
               if (res.code === 0) {
@@ -543,7 +566,7 @@ export default defineComponent({
         verificationForm.codeId = SessionStorage.getItem('emailCodeId')
         verificationForm.email = passwordForm.email
         api
-            .post("/otp/verifyForgetPasswordEmail", qs.stringify(verificationForm))
+            .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationForm))
             .then((ret) => {
               const res = ret.data;
               if (res.code === 0) {
@@ -589,6 +612,7 @@ export default defineComponent({
       onVerifyForgotPassword,
       loginNameRef,
       emailRef,
+      phoneRef,
       ftCaptchaRef,
       codeRef,
       newPwdRef,
