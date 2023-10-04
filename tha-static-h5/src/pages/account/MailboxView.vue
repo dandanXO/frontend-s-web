@@ -102,7 +102,7 @@
                     bottom-slots
                     maxlength="255"
                     v-model="mailboxState.mailboxList.write.title"
-                    :placeholder="$('lang.subject')"
+                    :placeholder="$t('lang.subject')"
                 />
                 <q-input
                     ref="contentRef"
