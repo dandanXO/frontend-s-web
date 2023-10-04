@@ -117,8 +117,6 @@ export default {
     affiliate_receiving_comm_step_2: "การร้องเรียนเกี่ยวกับค่าคอมมิชชั่นจะต้องส่งไปยัง ฝ่ายดูแลพันธมิตร ก่อนวันที่ 10 ของแต่ละเดือน มิฉะนั้นค่าคอมมิชชั่นที่ชําระแล้วจะไม่สามารถเปลี่ยนแปลงได้",
     affiliate_receiving_comm_step_3: "Jolly88 ขอสงวนสิทธิ์ในการเปลี่ยนแปลงหรือแก้ไขเปอร์เซ็นต์ค่าคอมมิชชั่นที่เราเห็นว่าเหมาะสม",
     affiliate_receiving_comm_step_4: "Jolly88 ขอสงวนสิทธิ์ในการเปลี่ยนแปลงหรือแก้ไขข้อกําหนดข้างต้นหรือเพิ่มข้อกําหนดเพิ่มเติมใด ๆ ตามความจําเป็",
-
-    //
     only_letter_number_allowed: "อนุญาตเฉพาะตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น",
     password_between_6_12: "ความยาวของรหัสผ่านควรอยู่ระหว่าง 6-12",
     password_must_at_least_good: "ระดับความปลอดภัยของรหัสผ่านต้องอยู่ในเกณท์ดีเป็นอย่างน้อย",
@@ -198,6 +196,7 @@ export default {
     basic_information: "ข้อมูลพื้นฐาน",
     change_password: "เปลี่ยนรหัสผ่าน",
     withdraw_account: "บัญชีถอนเงิน",
+    please_edit_your_personal_information: "กรุณาแก้ไขข้อมูลส่วนตัว",
 
     // TransitRecordView
     deposit: 'ฝาก',
@@ -261,6 +260,7 @@ export default {
     select_account_add_different_banks: 'เลือกบัญชี (เพิ่มธนาคารต่างๆเข้าไป)',
     please_select_a_bank_account: 'โปรดเลือกบัญชีธนาคาร',
     account_name_with_desc: 'ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)',
+    please_enter_bank_account: 'กรุณาใส่บัญชีธนาคาร',
     branch_not_required: 'สาขา (ไม่จำเป็นต้องใส่ ก็ได้)',
     cancel: 'ยกเลิก',
     confirm: 'ยืนยัน',
@@ -269,7 +269,7 @@ export default {
     lottery_list: "ลอตเตอรี่",
     footer_tnc: "เงื่อนไขการบริการ Jolly88 (TNC) : บริการที่เราให้บริการอยู่ภายใต้ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว โปรดดูข้อมูลเพิ่มเติมในข้อตกลงการให้บริการของเรา.",
     footer_all_rights: "Jolly88 2023{'@'}All Rights Reserved.",
-    announcement:"ประกาศ",
+    announcement: "ประกาศ",
     name: "ชื่อ",
     surname: "ชื่อภาษาอังกฤษ",
     dob: "วันเกิด",
@@ -309,7 +309,7 @@ export default {
     withdrawal_today: "ถอนเงินวันนี้: ",
     remaining: "ที่เหลืออยู่: ",
     attempt_time: "พยายาม",
-    confirm_withdrawal:"ยืนยัน",
+    confirm_withdrawal: "ยืนยัน",
     select_deposit_method: "เลือกวิธีการฝากเงิน",
     please_enter_deposit_amount: "กรุณากรอกจำนวนเงินฝาก",
     enter_deposit_amount: "กรอกจำนวนเงินฝาก",
@@ -325,9 +325,9 @@ export default {
     view_detail: "ดูรายละเอียด",
     all: "ทั้งหมด",
     welcome: "ยินดีต้อนรับ",
-    tnc:"ข้อกำหนดและเงื่อนไข",
+    tnc: "ข้อกำหนดและเงื่อนไข",
     agree: "เห็นด้วย",
-    claim: "เรียกร้อง"
+    claim: "เรียกร้อง",
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

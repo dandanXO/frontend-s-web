@@ -117,8 +117,6 @@ export default {
     affiliate_receiving_comm_step_2: "Commission complaints should be sent to Affiliate Administration before the 10th of each month Otherwise, the paid commission cannot be changed",
     affiliate_receiving_comm_step_3: "Jolly88 reserves the right to change or modify the commission percentage as we deem appropriate.",
     affiliate_receiving_comm_step_4: "Jolly88 reserves the right to change or modify the above terms or add any additional terms as necessary.",
-
-    //
     only_letter_number_allowed: "Only English letters and numbers are allowed",
     password_between_6_12: "Password length must be between 6-12 characters",
     password_must_at_least_good: "The password security level must be at least good",
@@ -198,6 +196,7 @@ export default {
     basic_information: "Basic Information",
     change_password: "Change Password",
     withdraw_account: "Bank Account",
+    please_edit_your_personal_information: "Please edit your personal information.",
 
     // TransitRecordView
     deposit: 'Deposit',
@@ -261,6 +260,7 @@ export default {
     select_account_add_different_banks: 'Select account (add different banks)',
     please_select_a_bank_account: 'Please select a bank account',
     account_name_with_desc: 'Account name (name matches the account used for deposit)',
+    please_enter_bank_account: 'Please enter bank account',
     branch_not_required: 'Branch (not required)',
     cancel: 'Cancel',
     confirm: 'Confirm',
@@ -269,7 +269,7 @@ export default {
     lottery_list: "Lottery",
     footer_tnc: "Jolly88 (TNC) Terms of Service: The services we provide are subject to the terms of use and privacy policy. Please refer to our service agreement for more information.",
     footer_all_rights: "Jolly88 2023{'@'}All Rights Reserved.",
-    announcement:"Announcement",
+    announcement: "Announcement",
     name: "Name",
     surname: "Surname",
     dob: "DOB",
@@ -309,7 +309,7 @@ export default {
     withdrawal_today: "Withdrawal Today: ",
     remaining: "Remaining: ",
     attempt_time: "Attempt",
-    confirm_withdrawal:"Confirm",
+    confirm_withdrawal: "Confirm",
     select_deposit_method: "Select Deposit Method",
     please_enter_deposit_amount: "Please Enter Deposit Amount",
     enter_deposit_amount: "Enter Deposit Amount",
@@ -325,9 +325,9 @@ export default {
     view_detail: "View Detail",
     all: "ALL",
     welcome: "Welcome",
-    tnc:"Terms and Conditions",
+    tnc: "Terms and Conditions",
     agree: "Agree",
-    claim: "Claim"
+    claim: "Claim",
   },
   error: {
     101: "Platform not found",

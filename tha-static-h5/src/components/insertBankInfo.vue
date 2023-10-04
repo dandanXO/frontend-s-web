@@ -14,9 +14,9 @@
             class="q-mb-md"
             filled
             v-model="updateInfo.cardAccountName"
-            label="ชื่อ - ตรงกับบัญชีธนาคาร"
+            :label="$t('lang.bank_account_name')"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'กรุณาใส่ชื่อบัญชีธนาคาร']"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.enter_bank_account_name')]"
             color="white"
           >
             <template v-slot:prepend>
@@ -28,9 +28,9 @@
             class="q-mb-md"
             filled
             v-model="updateInfo.cardAccountSurname"
-            label="นามสกุล - ตรงกับบัญชีธนาคาร"
+            :label="$t('lang.bank_account_surname')"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'กรุณาใส่นามสกุลที่ตรงกับชื่อบัญชีธนาคาร']"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.enter_bank_account_surname')]"
             color="white"
           >
             <template v-slot:prepend>
@@ -54,7 +54,7 @@
             <q-btn
               class="q-mr-md"
               color="brand"
-              label="ยืนยัน"
+              :label="$t('lang.confirm')"
               @click="updateName"
             />
           </div>
@@ -64,9 +64,9 @@
             class="q-mb-md"
             filled
             v-model="bankCardInfo.cardAccount"
-            label="ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)"
+            :label="$t('lang.account_name_with_desc')"
             :rules="[
-              val => (val && val.length > 0) || 'กรุณาใส่บัญชีธนาคาร',
+              val => (val && val.length > 0) || $t('lang.please_enter_bank_account'),
             ]"
             lazy-rules
             :disable="true"
@@ -77,9 +77,9 @@
             class="q-mb-md"
             filled
             v-model="personalInfo.phone"
-            label="เบอร์โทรศัพท์"
+            :label="$t('lang.phone_number')"
             :rules="[
-              val => (val && val.length > 0) || 'กรุณายืนยันเบอร์โทรศัพท์',
+              val => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
               isValidPhone
             ]"
             lazy-rules
@@ -94,7 +94,7 @@
                   v-model="selectedBankType"
                   filled
                   :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
-                  label="ช่องทางการถอน"
+                  :label="$t('lang.withdraw_methods')"
                   color="white"
                   label-color="grey"
                   option-label="name"
@@ -115,8 +115,8 @@
                   :options="banksList"
                   option-value="id"
                   option-label="name"
-                  label="เลือกบัญชี (เพิ่มธนาคารต่างๆเข้าไป)"
-                  :rules="[(val) => !!val || 'โปรดเลือกบัญชีธนาคาร']"
+                  :label="$t('lang.select_account_add_different_banks')"
+                  :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
                   lazy-rules
                   emit-value
                   map-options
@@ -147,9 +147,9 @@
             filled
             class="q-mb-md"
             v-model="bankCardInfo.cardNumber"
-            label="เลขบัญชี"
+            :label="$t('lang.card_number')"
             :rules="[
-              val => (val && val.length > 0) || 'กรุณาใส่เลขบัตร',
+              val => (val && val.length > 0) || $t('lang.log_in'),
               val => validateBankLength(val)
             ]"
             ref="cardNumberRef"
@@ -159,12 +159,12 @@
             class="q-mb-md"
             filled
             v-model="bankCardInfo.cardAddress"
-            label="สาขา (ไม่จำเป็นต้องใส่ ก็ได้)"
+            :label="$t('lang.branch_not_required')"
             ref="cardAddressRef"
             color="white"
           />
           <div class="flex">
-            <q-btn color="brand" label="ยืนยัน" @click="submitBankCard" />
+            <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard" />
           </div>
           </template>
         </q-form>
@@ -180,14 +180,14 @@
       <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
         <q-card-section>
           <!-- <div class="text-h6">เปลี่ยนรหัสผ่าน</div> -->
-          กรุณาแก้ไขข้อมูลส่วนตัว
+          {{ $t('lang.please_edit_your_personal_information') }}
         </q-card-section>
 
       </q-card>
     </q-dialog>
     <q-btn color="brand" class="bottombtn" @click="logout">
         <RiLogoutBoxLine />
-        <div class="acct-nav-label">ล็อกเอ้าท์</div>
+        <div class="acct-nav-label">{{ $t('lang.logout') }}</div>
     </q-btn>
   </div>
 </template>
