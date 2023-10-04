@@ -528,6 +528,7 @@ svg {
     opacity: 0;
     transition: all 0.3s ease-out;
     z-index: 1;
+    border-radius: 8px;
   }
 
   &:hover:before {
@@ -538,7 +539,7 @@ svg {
 
 .btn-slot-game.inner-slot-game{
   &:before {
-    border-radius: 40px;
+    border-radius: 20px;
   }
 }
 

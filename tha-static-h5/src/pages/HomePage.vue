@@ -301,7 +301,7 @@
            v-if="currentSelectedMenu === 'fish' && !isShow"
       >
         <template v-for="p in fishPlatforms" :key="p">
-          <div class="game-item btn-pointer"
+          <div class="game-item btn-pointer btn-slot-game"
                @click="selectFishPlat(p)"
           >
             <img :src="require('../assets/home/fish/' + p.code + '.png')">
@@ -364,7 +364,7 @@
                 v-intersection="onIntersection"
                 @click="openGame(game.name, game.code, selectedPlat.status)"
                 style="height: auto;"
-                class="btn-pointer"
+                class="btn-pointer btn-slot-game inner-slot-game"
             >
               <transition name="in-view">
                 <q-list class="q-col-gutter-none">
