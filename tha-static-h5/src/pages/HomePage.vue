@@ -182,6 +182,13 @@
            id="id-slot-board"
            v-if="currentSelectedMenu === 'slots' && !isShow"
       >
+
+        <div class="game-item btn-pointer btn-slot-game"
+             @click="showFavourite()"
+        >
+          <img :src="require('../assets/home/slot/slot-favourite-board.png')">
+        </div>
+
         <template v-for="p in platforms" :key="p">
           <div class="game-item btn-pointer btn-slot-game"
                @click="selectSlotPlat(p)"
@@ -196,6 +203,7 @@
         </div>
       </div>
     </Transition>
+
     <Transition>
       <div class="game-scroll-lists"
            id="id-slot-board"
@@ -203,6 +211,13 @@
 
         <q-scroll-area style="height: 500px;width: 120px; max-width: 120px;">
           <div class="bookmarks">
+
+            <div class="plat-item"
+                 :class="{ active: selectedPlatId === -99 }"
+                 @click="showFavourite()">
+              <img :src="require('../assets/home/slot/favourite-icon.png')">
+            </div>
+
             <div
                 class="plat-item"
                 v-for="p in platforms"
@@ -222,7 +237,11 @@
               size="8em"
           />
         </div>
-        <q-scroll-area v-if="!isLoading" ref="scrollSlotRef" style="height: 500px;width:calc(100% - 120px);">
+        <div v-if="!isLoading && selectedPlatId === -99">
+          &nbsp;&nbsp;
+<!--          FAVOURITE-->
+        </div>
+        <q-scroll-area v-if="!isLoading && selectedPlatId !== -99" ref="scrollSlotRef" style="height: 500px;width:calc(100% - 120px);">
           <div class="search-list">
             <q-form @submit="searchList">
               <q-input
@@ -1093,6 +1112,12 @@ export default defineComponent({
         }, 500)
       }
     }
+
+    const showFavourite= () => {
+      isShow.value = true;
+      selectedPlatId.value = -99;
+    }
+
     const showMiniType = ref(0);
     const showTypeWeb = (id) => {
       showMiniType.value = id;
@@ -1134,6 +1159,7 @@ export default defineComponent({
       selectedLiveTab,
       currentSelectedMenu,
       esportsGame,
+      showFavourite,
       selectFishPlat,
       selectSlotPlat,
       selectCasualPlat,
