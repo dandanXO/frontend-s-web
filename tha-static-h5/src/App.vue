@@ -52,8 +52,6 @@ export default defineComponent({
 
     let csclient;
     const initCsWeb = () => {
-      // console.log("Footer OnMounted");
-
       csclient = new CsClient('5', regDevice, 'th', '2', 'prod');
 
       csclient.set('pageurl', '/liveChat');
@@ -73,10 +71,9 @@ export default defineComponent({
         // alert(callback);
       });
 
-
       //CsClient Event Listener.
       window.addEventListener('message', function (event) {
-        console.log("Message received from the iframe: " + event.data); // Message received from child
+        // console.log("Message received from the iframe: " + event.data); // Message received from child
         if (_.isString(event.data)) {
           if (event.data == 'closenotice') {
             router.go(-1);

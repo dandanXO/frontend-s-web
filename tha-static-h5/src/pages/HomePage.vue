@@ -450,8 +450,7 @@
 
   <div class="home-bottom-section">
     <div class="marquee">
-      <div class="track">
-        <div class="content">
+      <Vue3Marquee pause-on-hover pause-on-click>
           <img src="../assets/logo/AE.png" height="30"/>
           <img src="../assets/logo/AMBSLOT.png" height="30"/>
           <img src="../assets/logo/ATA.png" height="30"/>
@@ -469,8 +468,7 @@
           <img src="../assets/logo/TF88.png" height="30"/>
           <img src="../assets/logo/WM.png" height="30"/>
           <img src="../assets/logo/YGG.png" height="30"/>
-        </div>
-      </div>
+      </Vue3Marquee>
     </div>
 
     <div class="bottom-footer">
@@ -552,6 +550,8 @@ import GameModal from "components/modal/GameModal";
 import * as _ from "lodash";
 import MarqueeText from 'vue-marquee-text-component';
 import BacktoTop from "components/backtotop.vue"
+import { Vue3Marquee } from 'vue3-marquee'
+
 
 import {useUI} from "stores/ui";
 import {isMobile} from "boot/utils";
@@ -562,6 +562,7 @@ export default defineComponent({
     GameModal,
     MarqueeText,
     BacktoTop,
+    Vue3Marquee,
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
@@ -658,8 +659,6 @@ export default defineComponent({
         name: "TF Gaming",
         gameName: "AE Sexy",
         gameCode: "MX-LIVE-001",
-        bg: require("../assets/home/e-sport/shadebg.png"),
-        main: require("../assets/home/e-sport/tf88.png"),
         logo: require("../assets/logo/TF88.png")
       }
     ];
@@ -1323,7 +1322,7 @@ export default defineComponent({
     flex-direction: column;
     width: 100%;
     gap: 12px;
-    padding: 6px 12px 20px;
+    padding: 6px 12px 60px;
 
     .footer-logo {
       text-align: center;
@@ -1538,6 +1537,7 @@ export default defineComponent({
     }
   }
 }
+
 
 
 @media (min-width: 600px) {

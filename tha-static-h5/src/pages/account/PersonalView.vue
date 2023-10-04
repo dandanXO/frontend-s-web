@@ -10,7 +10,7 @@
                :class="(select_menu === 'personal') ? 'is-active' : ''"
                @click="selectTab('personal')"
           >
-            {{$t('lang.basic_information')}}
+            {{ $t('lang.basic_information') }}
           </div>
           <div class="top-tab-btn btn-pointer"
                :class="(select_menu === 'password') ? 'is-active' : ''"
@@ -18,12 +18,12 @@
           >
             {{ $t('lang.change_password') }}
           </div>
-          <div class="top-tab-btn btn-pointer"
-               :class="(select_menu === 'bank') ? 'is-active' : ''"
-               @click="selectTab('bank')"
-          >
-            {{ $t('lang.withdraw_account') }}
-          </div>
+<!--          <div class="top-tab-btn btn-pointer"-->
+<!--               :class="(select_menu === 'bank') ? 'is-active' : ''"-->
+<!--               @click="selectTab('bank')"-->
+<!--          >-->
+<!--            {{ $t('lang.withdraw_account') }}-->
+<!--          </div>-->
           <div class="top-tab-btn btn-pointer"
                :class="(select_menu === 'verify') ? 'is-active' : ''"
                @click="selectTab('verify')"
@@ -126,7 +126,8 @@
                     v-if="!personalState.memberInfo.realName && isEdit == false"
                     @click="isEdit=!isEdit;"
                 >
-                  <span>{{ $t('lang.edit') }}</span><RiEditBoxLine />
+                  <span>{{ $t('lang.edit') }}</span>
+                  <RiEditBoxLine/>
                 </div>
 
 
@@ -160,7 +161,8 @@
                     v-if="!personalState.memberInfo.name2 && isEdit == false"
                     @click="isEdit=!isEdit;"
                 >
-                  <span>{{ $t('lang.edit') }}</span><RiEditBoxLine />
+                  <span>{{ $t('lang.edit') }}</span>
+                  <RiEditBoxLine/>
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.name2">
@@ -195,7 +197,8 @@
                     v-if="!personalState.memberInfo.birthday && isEdit == false"
                     @click="isEdit=!isEdit;"
                 >
-                  <span>{{ $t('lang.edit') }}</span><RiEditBoxLine />
+                  <span>{{ $t('lang.edit') }}</span>
+                  <RiEditBoxLine/>
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.birthday">
@@ -277,7 +280,10 @@
             </div>
 
             <div v-if="isEdit" class="flex items-center justify-center">
-              <q-btn color="brand" class="login-btn common-large-btn" @click="updateState">{{ $t('lang.confirm') }}</q-btn>
+              <q-btn color="brand" class="login-btn common-large-btn" @click="updateState">{{
+                  $t('lang.confirm')
+                }}
+              </q-btn>
             </div>
           </div>
           <div class="account-tip danger">
@@ -592,7 +598,7 @@ export default defineComponent({
             icon: "check_circle_outline"
           });
           updateSecurityModalVisible.value = false
-          loadInfo()
+          loadInfo();
         }).catch((e) => {
           // $q.notify({
           //   color: "negative",
@@ -659,7 +665,8 @@ export default defineComponent({
     const name2Ref = ref()
     const birthdayRef = ref()
     const phoneRef = ref()
-    const formDetail = ref([{}])
+    const formDetail = ref([{}]);
+    const user= userStore()
 
     const select_menu = ref('personal');
     const selectTab = (tab) => {
@@ -703,8 +710,8 @@ export default defineComponent({
             message: t('lang.updated_successfully'),
             icon: "check_circle_outline"
           });
-          loadInfo()
           isEdit.value = false;
+          location.reload();
         }
       })
       // if (field === 'email') {
@@ -874,6 +881,7 @@ export default defineComponent({
   &.verification-btn {
     flex: 1;
     padding: 8px;
+    background: $linear-bg-2
   }
 
   &.submit-btn {
@@ -917,10 +925,10 @@ export default defineComponent({
       vertical-align: middle;
     }
 
-    .edit-div{
+    .edit-div {
       color: $lightblue-color;
 
-      svg{
+      svg {
         fill: $lightblue-color;
       }
     }

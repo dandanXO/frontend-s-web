@@ -225,7 +225,7 @@ export default defineComponent({
           pageName.value = t('lang.slot_header');
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
-          pageName.value =  t('lang.live_header');
+          pageName.value = t('lang.live_header');
         } else if (route.path === "/poker") {
           hasPage.value = true;
           pageName.value = "Poker";
@@ -251,7 +251,7 @@ export default defineComponent({
         } else if (route.path === "/account/transit") {
           prevPage.value = 'account';
           hasPage.value = true;
-          pageName.value =  t('lang.transit_header');
+          pageName.value = t('lang.transit_header');
         } else if (route.path === "/account") {
           prevPage.value = '/';
           hasPage.value = true;
@@ -261,7 +261,7 @@ export default defineComponent({
         } else if (route.path === "/display") {
           prevPage.value = 'finance/deposit';
           hasPage.value = true;
-          pageName.value =  t('lang.display_header');
+          pageName.value = t('lang.display_header');
           outOfApp.value = true;
         } else if (route.path === "/account/personal") {
           prevPage.value = '/';

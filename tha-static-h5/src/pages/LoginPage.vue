@@ -1,6 +1,7 @@
 <template>
   <div class="main-section">
-    <q-form class=" login-form q-gutter-y-md rounded-borders q-pa-md " style="margin: 0px auto;">
+    <q-form class=" login-form q-gutter-y-md rounded-borders q-pa-md " style="margin: 0px auto;"
+    >
       <q-input
           class="login-input text-main"
           ref="loginNameRef"
@@ -35,38 +36,39 @@
         >
       </q-input>
 
-       <q-input
-        ref="verificationRef"
-        filled
-        type="text"
-        v-model="loginForm.captchaCode"
-        :label="$t('lang.verification_code')"
-        :rules="[
+      <q-input
+          ref="verificationRef"
+          filled
+          type="text"
+          v-model="loginForm.captchaCode"
+          :label="$t('lang.verification_code')"
+          :rules="[
           (val) => (val && val.length > 3) || $t('lang.input_code_empty')
         ]"
-        color="white"
+          color="white"
+          @keyup.enter="onSubmit"
       >
         <template v-slot:append>
-          <img :src="verificationImg"  @click="getCode()" />
+          <img :src="verificationImg" @click="getCode()"/>
         </template>
         <template v-slot:prepend>
-          <q-icon name="security" />
+          <q-icon name="security"/>
         </template>
-    </q-input>
+      </q-input>
 
-    <!-- label="Remember password" -->
-    <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
-      <q-checkbox
-          rounded
-          v-model="isCheckRmb"
-          :label="$t('lang.remember_me')"
-          size="md"
-          style="font-size: 14px;"
-          checked-icon="task_alt"
-          unchecked-icon="highlight_off"
-          color="amber-9"
-      />
-    </div>
+      <!-- label="Remember password" -->
+      <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
+        <q-checkbox
+            rounded
+            v-model="isCheckRmb"
+            :label="$t('lang.remember_me')"
+            size="md"
+            style="font-size: 14px;"
+            checked-icon="task_alt"
+            unchecked-icon="highlight_off"
+            color="amber-9"
+        />
+      </div>
 
       <div class="row justify-between items-center">
         <router-link class="forget-pwd-tip" to="/forgot-password">
@@ -95,7 +97,7 @@
 <script>
 import {defineComponent, ref, reactive, onMounted} from "vue";
 import {userStore} from "stores/index";
-import { api } from "boot/axios";
+import {api} from "boot/axios";
 import {Platform, useQuasar} from "quasar";
 import {useRoute, useRouter} from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -124,23 +126,23 @@ export default defineComponent({
     const route = useRoute();
     const getCode = () => {
       api
-        .get("/member/verificationCode")
-        .then((res) => {
-          const response = res.data;
-          if (response.code === 0) {
-            verificationImg.value =
-              "data:image/png;base64," + response.data.img;
-            loginForm.codeId = response.data.id;
-          }
-        })
-        .catch((e) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: res.data.message,
-          //   icon: "report_problem"
-    //     });
-        });
+          .get("/member/verificationCode")
+          .then((res) => {
+            const response = res.data;
+            if (response.code === 0) {
+              verificationImg.value =
+                  "data:image/png;base64," + response.data.img;
+              loginForm.codeId = response.data.id;
+            }
+          })
+          .catch((e) => {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: res.data.message,
+            //   icon: "report_problem"
+            //     });
+          });
     };
 
     const isCheckRmb = ref(false);
@@ -183,26 +185,26 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-            sid: sidParam,
-            captchaCode: loginForm.captchaCode,
-            codeId: loginForm.codeId
+                sid: sidParam,
+                captchaCode: loginForm.captchaCode,
+                codeId: loginForm.codeId
               })
               .then(() => {
                 $q.loading.hide();
 
-            if (isCheckRmb.value) {
-              localStorage.setItem(
-                  "userpass",
-                  JSON.stringify({
-                    loginName: loginForm.loginName,
-                    password: loginForm.password
-                  })
-              );
-            } else {
-              localStorage.removeItem("userpass");
-            }
+                if (isCheckRmb.value) {
+                  localStorage.setItem(
+                      "userpass",
+                      JSON.stringify({
+                        loginName: loginForm.loginName,
+                        password: loginForm.password
+                      })
+                  );
+                } else {
+                  localStorage.removeItem("userpass");
+                }
 
-            getCode();
+                getCode();
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
                   router.go(jumpUrl);
@@ -212,8 +214,8 @@ export default defineComponent({
                 }
               })
               .catch((error) => {
-            loginForm.captchaCode ="";
-            getCode();
+                loginForm.captchaCode = "";
+                getCode();
                 $q.loading.hide();
               });
         }
@@ -262,10 +264,10 @@ export default defineComponent({
   color: $info;
 }
 
-.login-form{
+.login-form {
   width: calc(100% - 12px);
   max-width: 600px;
-  margin:0 auto;
+  margin: 0 auto;
 }
 
 .mui-row {
@@ -286,7 +288,7 @@ export default defineComponent({
   }
 }
 
-.q-field--dark:not(.q-field--highlighted) .q-field__label{
-  color:#979797;
+.q-field--dark:not(.q-field--highlighted) .q-field__label {
+  color: #979797;
 }
 </style>

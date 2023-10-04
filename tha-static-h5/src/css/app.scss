@@ -429,6 +429,12 @@ svg {
   }
 }
 
+.vue3-marquee.horizontal>.marquee{
+  gap: 25px;
+  padding-right:25px;
+}
+
+
 .btn-pointer {
   cursor: pointer;
 
