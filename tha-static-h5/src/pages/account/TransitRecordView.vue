@@ -164,7 +164,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -244,7 +244,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -336,7 +336,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -419,7 +419,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -560,7 +560,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -639,7 +639,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -1218,43 +1218,43 @@ const pagination = reactive({
     const betRecordDialog = ref(false)
     const getTurnoverType = (turnoverType) => {
       if (turnoverType === 'WITHDRAW_FAIL') {
-        return 'การถอนเงินล้มเหลว' // Fail Withdrawal
+        return t('lang.withdrawal_failed') // Fail Withdrawal
       } else if (turnoverType === 'WITHDRAW') {
-        return 'ถอนเงิน' // Withdraw
+        return t('lang.withdrawal') // Withdraw
       } else {
         return turnoverType
       }
     }
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
-        return 'ส่งดำเนินการ' //Applying
+        return t('lang.applying') //Applying
       } else if (withdrawStatus === 'FAIL') {
-        return 'ล้มเหลว' // Failed
+        return t('lang.failed') // Failed
       } else if (withdrawStatus === 'SUCCESS') {
-        return 'สำเร็จ' // Success
+        return t('lang.success') // Success
       } else if (withdrawStatus === 'STEP_1') {
-        return 'กำลังตรวจสอบ' //Under review
+        return t('lang.under_review') //Under review
       } else if (withdrawStatus === 'STEP_2') {
-        return 'กำลังดำเนินการจ่าย' // To be paid
+        return t('lang.to_be_paid') // To be paid
       }  else if (withdrawStatus === 'STEP_3') {
-        return 'กำลังดำเนินการโอน' // Payment on going
+        return t('lang.payment_on_going') // Payment on going
       }  else if (withdrawStatus === 'STEP_4') {
-        return 'ชำระอัตโนมัติ' // Automatic Payment
+        return t('lang.automatic_payment') // Automatic Payment
       }  else if (withdrawStatus === 'STEP_5') {
-        return 'ระงับ' //Suspend
+        return t('lang.suspend') //Suspend
       } else {
         return withdrawStatus
       }
     }
     const getDepositStatus = (depositStatus) => {
       if (depositStatus === 'PENDING') {
-        return 'รอดำเนินการ' // Pending
+        return t('lang.pending') // Pending
       } else if (depositStatus === 'SUCCESS') {
-        return 'สำเร็จ' // Success
+        return t('lang.success') // Success
       } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
-        return 'เสริมความสำเร็จ' // Supplement Success
+        return t('lang.supplement_success') // Supplement Success
       } else if (depositStatus === 'CLOSED') {
-        return 'ปิด' // Closed
+        return t('lang.close_btn') // Closed
       } else {
         return depositStatus
       }
@@ -1299,9 +1299,9 @@ const pagination = reactive({
       },
       checkType(tp) {
         if (tp === 1) {
-          return 'ฝาก'
+          return t('lang.deposit')
         } else {
-          return 'ถอน'
+          return t('lang.withdraw')
         }
       },
       getPlatList,

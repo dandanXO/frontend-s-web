@@ -240,6 +240,17 @@ export default {
     opinions_not_confirmed: 'There are opinions that have not been confirmed',
     no_data_label: 'No data',
     row_per_page_label: 'Row per page',
+    withdrawal_failed: 'Withdrawal failed',
+    withdrawal: 'Withdraw money',
+    applying: 'Send processed',
+    failed: 'Failed',
+    under_review: 'Reviewing',
+    to_be_paid: 'Payment in progress',
+    payment_on_going: 'Transfer in progress',
+    automatic_payment: 'Automatic payment',
+    suspend: 'Suspend',
+    pending: 'Pending',
+    supplement_success: 'Supplement success',
 
     // WithdrawBankView
     choose_a_card: 'Choose a card',
