@@ -467,8 +467,13 @@ svg {
 
   &:hover:before {
     opacity: 1;
-
     background-size: 70px 70px;
+  }
+}
+
+.btn-slot-game.inner-slot-game{
+  &:before {
+    border-radius: 40px;
   }
 }
 

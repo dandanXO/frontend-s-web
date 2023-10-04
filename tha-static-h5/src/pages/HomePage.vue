@@ -231,7 +231,7 @@
                 v-intersection="onIntersection"
                 @click="openGame(game.name, game.code, selectedPlat.status)"
                 style="height: auto;"
-                class="btn-pointer"
+                class="btn-pointer btn-slot-game inner-slot-game"
             >
               <transition name="in-view">
                 <q-list class="q-col-gutter-none">
