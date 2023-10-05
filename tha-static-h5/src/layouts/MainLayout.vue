@@ -128,11 +128,11 @@
           <span>{{ $t('lang.withdraw_footer') }}</span>
         </q-route-tab>
 
-        <q-route-tab to="/account/mail" name="notice">
+        <!-- <q-route-tab to="/account/mail" name="notice">
           <img class="footer-icon"
                :src="(tab === 'notice') ? footers['notice']['active']  :  footers['notice']['icon'] "/>
           <span>{{ $t('lang.notice_footer') }}</span>
-        </q-route-tab>
+        </q-route-tab> -->
         <q-route-tab to="/affiliate" name="affiliate">
           <img class="footer-icon"
                :src="(tab === 'affiliate') ? footers['affiliate']['active']  :  footers['affiliate']['icon'] "/>
