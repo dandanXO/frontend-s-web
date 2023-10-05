@@ -145,7 +145,7 @@
                   </q-input>
                 </div>
               </div>
-              <div class="tbl-row">
+              <!-- <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
                   {{ $t('lang.surname') }}
@@ -159,11 +159,11 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.name2 && isEdit == false"
-                >
+                > -->
 <!--                  @click="isEdit=!isEdit;"-->
 <!--                  <span>{{ $t('lang.edit') }}</span>-->
 <!--                  <RiEditBoxLine/>-->
-                  -
+                  <!-- -
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.name2">
@@ -176,7 +176,7 @@
                   >
                   </q-input>
                 </div>
-              </div>
+              </div> -->
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiCake2Line/>

@@ -365,6 +365,7 @@ export default {
     903: "Email does not match the registered account",
     904: "Email has not been verified",
     905: "Real name not provided",
+    909: "Username does not match phone number",
     1000: "Login name or password error",
     1001: "Account is closed",
     1002: "Account is for affiliates",
