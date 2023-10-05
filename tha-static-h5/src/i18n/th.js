@@ -199,6 +199,7 @@ export default {
     change_password: "เปลี่ยนรหัสผ่าน",
     withdraw_account: "บัญชีถอนเงิน",
     please_edit_your_personal_information: "กรุณาแก้ไขข้อมูลส่วนตัว",
+    affiliate_footer: "ตัวแทน",
 
     // TransitRecordView
     deposit: 'ฝาก',

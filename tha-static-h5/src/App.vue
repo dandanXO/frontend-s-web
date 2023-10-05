@@ -55,8 +55,10 @@ export default defineComponent({
       csclient = new CsClient('5', regDevice, 'th', '2', 'prod');
 
       csclient.set('pageurl', '/liveChat');
+      csclient.set("btnid", "cs-web-id");
       csclient.set('notification-type', {
-        "type": "none"
+        "type": "breathing",
+        "color": "#A840FB",
       });
 
       if (store.token) {

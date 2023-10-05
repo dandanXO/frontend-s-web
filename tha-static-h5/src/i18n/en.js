@@ -199,6 +199,7 @@ export default {
     change_password: "Change Password",
     withdraw_account: "Bank Account",
     please_edit_your_personal_information: "Please edit your personal information.",
+    affiliate_footer: "Affiliate",
 
     // TransitRecordView
     deposit: 'Deposit',
@@ -347,7 +348,7 @@ export default {
     failed_upload_size_dont_meet_requirement: "Upload failed. Image size doesn't meet the specified requirements. Please upload the image again.",
     card_added: "Card added.",
     number_sent: "Number Sent.",
-    urgent_deposit: "Urgent Deposit",
+    urgent_deposit: "Quick Deposit",
     bonus_will_be_added_to_u: "Bonus will be added to your wallet once the transaction is completed.",
     claim_bonus: "Claim Bonus",
     claim_daily_cashback: "Claim Daily Rebate",

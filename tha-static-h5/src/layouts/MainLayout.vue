@@ -136,7 +136,7 @@
         <q-route-tab to="/affiliate" name="affiliate">
           <img class="footer-icon"
                :src="(tab === 'affiliate') ? footers['affiliate']['active']  :  footers['affiliate']['icon'] "/>
-          <span>{{ $t('lang.affiliate_header') }}</span>
+          <span>{{ $t('lang.affiliate_footer') }}</span>
         </q-route-tab>
         <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs">
           <img class="footer-icon"
