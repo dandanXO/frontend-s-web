@@ -1,19 +1,16 @@
 <template>
   <div>
-    <div className="menu-title-container">
-      <!-- <span className="menu-title">บันทึกการโอน</span> -->
-    </div>
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped">
-        <q-tab name="deposit" :label="$t('lang.deposit')" />
-        <q-tab name="turnover" :label="$t('lang.turnover')" />
-        <q-tab name="withdraw" :label="$t('lang.withdraw')" />
+        <q-tab name="deposit" :label="$t('lang.deposit')"/>
+        <q-tab name="turnover" :label="$t('lang.turnover')"/>
+        <q-tab name="withdraw" :label="$t('lang.withdraw')"/>
         <!-- <q-tab name="transfer" :label="$t('lang.transfer')" /> -->
-        <q-tab name="rebates" :label="$t('lang.rebates')" />
-        <q-tab name="gameBetRecord" :label="$t('lang.gameBetRecord')" />
-        <q-tab name="reminderRecord" :label="$t('lang.reminderRecord')" />
+        <q-tab name="rebates" :label="$t('lang.rebates')"/>
+        <q-tab name="gameBetRecord" :label="$t('lang.gameBetRecord')"/>
+        <q-tab name="reminderRecord" :label="$t('lang.reminderRecord')"/>
       </q-tabs>
-      <q-separator />
+      <q-separator/>
       <q-tab-panels v-model="recordActive" animated>
         <q-tab-panel name="deposit">
           <div>
@@ -23,20 +20,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.deposit.startDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.deposit.startDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -48,20 +45,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.deposit.endDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.deposit.endDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -71,20 +68,21 @@
                 </q-input>
               </div>
               <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
+                  class="q-mb-md"
+                  :label="$t('lang.search')"
+                  color="brand"
+                  @click="searchRecord"
               />
             </q-form>
           </div>
           <q-table
-            :loading="loading"
-            :columns="tableColumns.deposit"
-            :rows="dataState.deposit"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+              :grid="$q.screen.lt.md"
+              :loading="loading"
+              :columns="tableColumns.deposit"
+              :rows="dataState.deposit"
+              :no-data-label="noDataLabel"
+              :rows-per-page-label="rowPerPageLabel"
+              row-key="serialNumber"
           >
             <template v-slot:body-cell-status="props">
               <q-td :props="props">
@@ -94,14 +92,15 @@
               </q-td>
             </template>
 
+
             <template v-slot:body-cell-operation="props">
               <q-td :props="props">
                 <q-btn
-                  v-if="props.row.status === 'PENDING'"
-                  size="sm"
-                  :label="$t('lang.reminder')"
-                  color="brand"
-                  @click="($event) => openReminder(props)"
+                    v-if="props.row.status === 'PENDING'"
+                    size="sm"
+                    :label="$t('lang.reminder')"
+                    color="brand"
+                    @click="($event) => openReminder(props)"
                 />
               </q-td>
             </template>
@@ -115,20 +114,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.turnover.startDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.turnover.startDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -140,20 +139,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.turnover.endDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.turnover.endDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -163,20 +162,21 @@
                 </q-input>
               </div>
               <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
+                  class="q-mb-md"
+                  :label="$t('lang.search')"
+                  color="brand"
+                  @click="searchRecord"
               />
             </q-form>
           </div>
           <q-table
-            :loading="loading"
-            :columns="tableColumns.turnover"
-            :rows="dataState.turnover"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+              :grid="$q.screen.lt.md"
+              :loading="loading"
+              :columns="tableColumns.turnover"
+              :rows="dataState.turnover"
+              :no-data-label="noDataLabel"
+              :rows-per-page-label="rowPerPageLabel"
+              row-key="serialNumber"
           >
             <template v-slot:body-cell-type="props">
               <q-td :props="props">
@@ -195,20 +195,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.withdraw.startDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.withdraw.startDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -220,20 +220,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.withdraw.endDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.withdraw.endDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -243,20 +243,21 @@
                 </q-input>
               </div>
               <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
+                  class="q-mb-md"
+                  :label="$t('lang.search')"
+                  color="brand"
+                  @click="searchRecord"
               />
             </q-form>
           </div>
           <q-table
-            :loading="loading"
-            :columns="tableColumns.withdraw"
-            :rows="dataState.withdraw"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+              :grid="$q.screen.lt.md"
+              :loading="loading"
+              :columns="tableColumns.withdraw"
+              :rows="dataState.withdraw"
+              :no-data-label="noDataLabel"
+              :rows-per-page-label="rowPerPageLabel"
+              row-key="serialNumber"
           >
             <template v-slot:body-cell-status="props">
               <q-td :props="props">
@@ -269,19 +270,19 @@
             <template v-slot:body-cell-operation="props">
               <q-td :props="props">
                 <q-btn
-                  v-if="props.row.status === 'STEP_1'"
-                  size="sm"
-                  :label="$t('lang.reminder')"
-                  color="brand"
-                  @click="($event) => openReminder(props)"
+                    v-if="props.row.status === 'STEP_1'"
+                    size="sm"
+                    :label="$t('lang.reminder')"
+                    color="brand"
+                    @click="($event) => openReminder(props)"
                 />
 
                 <q-btn
-                  v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
-                  size="sm"
-                  :label="$t('lang.confirm_withdraw_success')"
-                  color="brand"
-                  @click="openWithdrawConfirmDialog(props)"
+                    v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
+                    size="sm"
+                    :label="$t('lang.confirm_withdraw_success')"
+                    color="brand"
+                    @click="openWithdrawConfirmDialog(props)"
                 />
               </q-td>
             </template>
@@ -295,20 +296,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.transfer.startDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.transfer.startDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -320,20 +321,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.transfer.endDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.transfer.endDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -343,25 +344,26 @@
                 </q-input>
               </div>
               <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
+                  class="q-mb-md"
+                  :label="$t('lang.search')"
+                  color="brand"
+                  @click="searchRecord"
               />
             </q-form>
           </div>
           <q-table
-            :loading="loading"
-            :columns="tableColumns.transfer"
-            :rows="dataState.transfer"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+              :grid="$q.screen.lt.md"
+              :loading="loading"
+              :columns="tableColumns.transfer"
+              :rows="dataState.transfer"
+              :no-data-label="noDataLabel"
+              :rows-per-page-label="rowPerPageLabel"
+              row-key="serialNumber"
           >
             <template v-slot:body-cell-serialNumber="props">
               <q-td :props="props">
                 <div>
-                  <q-badge color="purple" :label="props.value" />
+                  <q-badge color="purple" :label="props.value"/>
                 </div>
                 <div class="my-table-details">
                   {{ props.row.details }}
@@ -378,20 +380,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.rebates.startDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.rebates.startDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -403,20 +405,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.rebates.endDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.rebates.endDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -426,20 +428,21 @@
                 </q-input>
               </div>
               <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
+                  class="q-mb-md"
+                  :label="$t('lang.search')"
+                  color="brand"
+                  @click="searchRecord"
               />
             </q-form>
           </div>
           <q-table
-            :loading="loading"
-            :columns="tableColumns.rebates"
-            :rows="dataState.rebates"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+              :grid="$q.screen.lt.md"
+              :loading="loading"
+              :columns="tableColumns.rebates"
+              :rows="dataState.rebates"
+              :no-data-label="noDataLabel"
+              :rows-per-page-label="rowPerPageLabel"
+              row-key="serialNumber"
           />
         </q-tab-panel>
         <q-tab-panel name="gameBetRecord">
@@ -454,20 +457,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.gameBetRecord.startDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.gameBetRecord.startDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -479,20 +482,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.gameBetRecord.endDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.gameBetRecord.endDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -503,43 +506,43 @@
               </div>
               <div class="left">
                 <q-select
-                 style="width: 100%;"
-                  v-model="searchForm.gameBetRecord.platform"
-                  filled
-                  clearable
-                  :options="platformsList"
-                  label="แพลตฟอร์มเกม"
-                  color="white"
-                  label-color="grey"
-                  option-label="name"
-                  option-value="name"
-                  emit-value
-                  map-options
+                    style="width: 100%;"
+                    v-model="searchForm.gameBetRecord.platform"
+                    filled
+                    clearable
+                    :options="platformsList"
+                    label="แพลตฟอร์มเกม"
+                    color="white"
+                    label-color="grey"
+                    option-label="name"
+                    option-value="name"
+                    emit-value
+                    map-options
                 />
-                  <!-- <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                <!-- <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
+                      <q-date
+                        v-model="searchForm.gameBetRecord.startDate"
+                        mask="YYYY-MM-DD"
                       >
-                        <q-date
-                          v-model="searchForm.gameBetRecord.startDate"
-                          mask="YYYY-MM-DD"
-                        >
-                          <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input> -->
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            :label="$t('lang.close_btn')"
+                            color="white"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input> -->
                 <!-- <q-input filled v-model="searchForm.gameBetRecord.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
@@ -567,20 +570,21 @@
                 </q-input> -->
               </div>
               <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
+                  class="q-mb-md"
+                  :label="$t('lang.search')"
+                  color="brand"
+                  @click="searchRecord"
               />
             </q-form>
           </div>
           <q-table
-            :loading="loading"
-            :columns="tableColumns.gameBetRecord"
-            :rows="dataState.gameBetRecord"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+              :grid="$q.screen.lt.md"
+              :loading="loading"
+              :columns="tableColumns.gameBetRecord"
+              :rows="dataState.gameBetRecord"
+              :no-data-label="noDataLabel"
+              :rows-per-page-label="rowPerPageLabel"
+              row-key="serialNumber"
           >
 
             <!-- <template v-slot:body-cell-actions="props">
@@ -598,20 +602,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.reminderRecord.startDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.reminderRecord.startDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -623,20 +627,20 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
                       >
                         <q-date
-                          v-model="searchForm.reminderRecord.endDate"
-                          mask="YYYY-MM-DD"
+                            v-model="searchForm.reminderRecord.endDate"
+                            mask="YYYY-MM-DD"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
+                                v-close-popup
+                                :label="$t('lang.close_btn')"
+                                color="white"
+                                flat
                             />
                           </div>
                         </q-date>
@@ -646,20 +650,21 @@
                 </q-input>
               </div>
               <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
+                  class="q-mb-md"
+                  :label="$t('lang.search')"
+                  color="brand"
+                  @click="searchRecord"
               />
             </q-form>
           </div>
           <q-table
-            :loading="loading"
-            :columns="tableColumns.reminderRecord"
-            :rows="dataState.reminderRecord"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="orderNo"
+              :grid="$q.screen.lt.md"
+              :loading="loading"
+              :columns="tableColumns.reminderRecord"
+              :rows="dataState.reminderRecord"
+              :no-data-label="noDataLabel"
+              :rows-per-page-label="rowPerPageLabel"
+              row-key="orderNo"
           >
 
             <template v-slot:body-cell-type="props">
@@ -673,15 +678,16 @@
         </q-tab-panel>
       </q-tab-panels>
       <q-dialog style="margin: 20px;" v-model="betRecordDialog">
-          <q-table
+        <q-table
+            :grid="$q.screen.lt.md"
             :loading="loading"
             :columns="tableColumns.betRecord"
             :rows="dataState.betRecord"
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
-          >
-          </q-table>
+        >
+        </q-table>
       </q-dialog>
 
       <q-dialog v-model="reminderDialog" no-backdrop-dismiss no-esc-dismis>
@@ -689,57 +695,57 @@
           <q-card-section>
             <q-toolbar>
               <q-toolbar-title>{{ $t('lang.reminder') }}</q-toolbar-title>
-              <q-btn flat v-close-popup round dense icon="close" />
+              <q-btn flat v-close-popup round dense icon="close"/>
             </q-toolbar>
           </q-card-section>
           <q-card-section>
             <q-form
-              ref="formRef"
-              v-model="reminderForm"
-              hide-required-mark
-              name="basic"
-              colon
-              autocomplete="off"
-              label-align="left"
-              label-cols="5"
-              class="reminder-dialog-form"
+                ref="formRef"
+                v-model="reminderForm"
+                hide-required-mark
+                name="basic"
+                colon
+                autocomplete="off"
+                label-align="left"
+                label-cols="5"
+                class="reminder-dialog-form"
             >
               <q-input
-                :label="$t('lang.order_number')"
-                filled
-                v-model="reminderForm.orderNo"
-                color="white"
-                padding="none"
-                readonly
-                disable
+                  :label="$t('lang.order_number')"
+                  filled
+                  v-model="reminderForm.orderNo"
+                  color="white"
+                  padding="none"
+                  readonly
+                  disable
               />
-              <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+              <FileUpload @photoResponse="getImageLink" ref="uploadFileRef"/>
               <q-input
-                type="textarea"
-                v-model="reminderForm.memberRemark"
-                label="หมายเหตุ"
-                filled
-                autogrow
-                color="white"
-                class="q-mt-md"
-                :rows="2"
-                :max-rows="5"
+                  type="textarea"
+                  v-model="reminderForm.memberRemark"
+                  :label="$t('lang.finance_remark')"
+                  filled
+                  autogrow
+                  color="white"
+                  class="q-mt-md"
+                  :rows="2"
+                  :max-rows="5"
               />
               <q-btn
-                class="common-btn q-mt-md"
-                color="brand"
-                label="ส่ง"
-                @click="submitReminder"
+                  class="common-btn q-mt-md"
+                  color="brand"
+                  :label="$t('lang.send')"
+                  @click="submitReminder"
               />
             </q-form>
           </q-card-section>
 
           <q-card-actions align="right">
             <q-btn
-              label="Close"
-              flat
-              color="primary"
-              @click="reminderDialog = false"
+                :label="$t('lang.close_btn')"
+                flat
+                color="primary"
+                @click="reminderDialog = false"
             />
           </q-card-actions>
         </q-card>
@@ -748,13 +754,13 @@
       <q-dialog width="100%" v-model="isConfirmWithdraw" no-backdrop-dismiss no-esc-dismis>
         <q-card style="width: 100%; padding: 20px">
           <q-card-section class="q-mb-md">
-            系统提示
+            {{ $t('lang.system_message') }}
             <br/>
             <br/>
-            确认到账
+            {{ $t('lang.confirm_deposit_msg') }}
           </q-card-section>
-          <q-btn @click="openWithdrawConfirm()" label="确认" color="green" style="margin-right: 8px;"/>
-          <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning"/>
+          <q-btn @click="openWithdrawConfirm()" :label="$t('lang.confirm')" color="green" style="margin-right: 8px;"/>
+          <q-btn @click="isConfirmWithdraw = false" :label="$t('lang.cancel')" color="warning"/>
         </q-card>
       </q-dialog>
 
@@ -763,10 +769,10 @@
 </template>
 
 <script lang="js">
-import { defineComponent, onMounted, reactive, ref, watch } from "vue";
-import { api } from "boot/axios"
-import { useQuasar } from "quasar"
-import { userStore } from "stores/index"
+import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import {api} from "boot/axios"
+import {useQuasar} from "quasar"
+import {userStore} from "stores/index"
 import FileUpload from "components/FileUpload.vue"
 import moment from "moment"
 import {useI18n} from "vue-i18n";
@@ -778,323 +784,323 @@ export default defineComponent({
   },
   setup() {
 
-var qs = require("qs");
-const store = userStore();
-const {t} = useI18n();
-const uploadFileRef = ref();
-const recordActive = ref("deposit");
-const isConfirmWithdraw = ref(false);
-const passDet = ref(null);
-const reminderForm = reactive({});
-const totalBetRecord = reactive({
-  totalBet: 0,
-  totalPayout: 0
-})
-const searchForm = reactive({
-  turnover: {
-    startDate: "",
-    endDate: ""
-  },
-  rebates: {
-    startDate: "",
-    endDate: ""
-  },
-  transfer: {
-    startDate: "",
-    endDate: ""
-  },
-  withdraw: {
-    startDate: "",
-    endDate: ""
-  },
-  deposit: {
-    startDate: "",
-    endDate: ""
-  },
-  gameBetRecord: {
-    startDate: "",
-    endDate: "",
-    platform: "",
-    memberId: store.id
-  },
-  betRecord: {
-    platform: "",
-    gameType: "",
-    memberId: store.id
-  },
-  reminderRecord: {
-    startDate: "",
-    endDate: ""
-  }
-});
-const dataState = reactive({
-  deposit: [],
-  rebates: [],
-  transfer: [],
-  withdraw: [],
-  turnover: [],
-  betRecord: [],
-  gameBetRecord: [],
-  reminderRecord: [],
-});
-const commonColumns = [
-  {
-    label: t('lang.order_number'),
-    field: "serialNumber"
-  }
-];
-const tableColumns = {
-  deposit: [
-    ...commonColumns,
-    {
-      label: t('lang.amount'),
-      field: "depositAmount"
-    },
-    {
-      label: t('lang.status'),
-      field: "status",
-      name: "status"
-    },
-    {
-      label: t('lang.deposit_date'),
-      field: "depositDate",
-      // slots: { customRender: "depositDate" }
-    },
-    {
-      label: t('lang.operation'),
-      field: "operation",
-      name: "operation"
-    },
-  ],
-  withdraw: [
-    ...commonColumns,
-    {
-      label: t('lang.amount'),
-      field: "withdrawAmount"
-    },
-    {
-      label: t('lang.status'),
-      field: "status",
-      name: "status"
-    },
-    // {
-    //   label: 'Confirm Status',
-    //   field: "confirmStatus",
-    //   name: 'confirmStatus'
-    //   // slots: { customRender: "withdrawDate" }
-    // },
-    {
-      label: t('lang.withdraw_date'),
-      field: "withdrawDate",
-      // slots: { customRender: "withdrawDate" }
-    },
-    {
-      label: t('lang.operation'),
-      field: "operation",
-      name: "operation"
+    var qs = require("qs");
+    const store = userStore();
+    const {t} = useI18n();
+    const uploadFileRef = ref();
+    const recordActive = ref("deposit");
+    const isConfirmWithdraw = ref(false);
+    const passDet = ref(null);
+    const reminderForm = reactive({});
+    const totalBetRecord = reactive({
+      totalBet: 0,
+      totalPayout: 0
+    })
+    const searchForm = reactive({
+      turnover: {
+        startDate: "",
+        endDate: ""
+      },
+      rebates: {
+        startDate: "",
+        endDate: ""
+      },
+      transfer: {
+        startDate: "",
+        endDate: ""
+      },
+      withdraw: {
+        startDate: "",
+        endDate: ""
+      },
+      deposit: {
+        startDate: "",
+        endDate: ""
+      },
+      gameBetRecord: {
+        startDate: "",
+        endDate: "",
+        platform: "",
+        memberId: store.id
+      },
+      betRecord: {
+        platform: "",
+        gameType: "",
+        memberId: store.id
+      },
+      reminderRecord: {
+        startDate: "",
+        endDate: ""
+      }
+    });
+    const dataState = reactive({
+      deposit: [],
+      rebates: [],
+      transfer: [],
+      withdraw: [],
+      turnover: [],
+      betRecord: [],
+      gameBetRecord: [],
+      reminderRecord: [],
+    });
+    const commonColumns = [
+      {
+        label: t('lang.order_number'),
+        field: "serialNumber"
+      }
+    ];
+    const tableColumns = {
+      deposit: [
+        ...commonColumns,
+        {
+          label: t('lang.amount'),
+          field: "depositAmount"
+        },
+        {
+          label: t('lang.status'),
+          field: "status",
+          name: "status"
+        },
+        {
+          label: t('lang.deposit_date'),
+          field: "depositDate",
+          // slots: { customRender: "depositDate" }
+        },
+        {
+          label: t('lang.operation'),
+          field: "operation",
+          name: "operation"
+        },
+      ],
+      withdraw: [
+        ...commonColumns,
+        {
+          label: t('lang.amount'),
+          field: "withdrawAmount"
+        },
+        {
+          label: t('lang.status'),
+          field: "status",
+          name: "status"
+        },
+        // {
+        //   label: 'Confirm Status',
+        //   field: "confirmStatus",
+        //   name: 'confirmStatus'
+        //   // slots: { customRender: "withdrawDate" }
+        // },
+        {
+          label: t('lang.withdraw_date'),
+          field: "withdrawDate",
+          // slots: { customRender: "withdrawDate" }
+        },
+        {
+          label: t('lang.operation'),
+          field: "operation",
+          name: "operation"
+        }
+      ],
+      transfer: [
+        ...commonColumns,
+        {
+          label: t('lang.type'),
+          field: "type",
+          key: "type",
+          // slots: { customRender: "type" }
+        },
+        {
+          label: t('lang.amount'),
+          field: "amount",
+          key: "withdrawAmount"
+        },
+        {
+          label: t('lang.status'),
+          field: "status",
+          key: "status",
+          // slots: { customRender: "status" }
+        },
+        {
+          label: t('lang.transfer_date'),
+          field: "transferDate",
+          key: "transferDate",
+          // slots: { customRender: "transferDate" }
+        }
+      ],
+      rebates: [
+        ...commonColumns,
+        {
+          label: t('lang.privilege_name'),
+          field: "privilegeName"
+        },
+        {
+          label: t('lang.amount'),
+          field: "amount"
+        },
+        {
+          label: t('lang.record_time'),
+          field: "recordTime",
+          // slots: { customRender: "recordTime" }
+        }
+      ],
+      turnover: [
+        ...commonColumns,
+        {
+          label: t('lang.type'),
+          field: "type",
+          name: "type"
+        },
+        {
+          label: t('lang.amount'),
+          field: "amount"
+        },
+        {
+          label: t('lang.sub_type'),
+          field: "subType"
+        },
+        {
+          label: t('lang.record_time'),
+          field: "recordTime",
+          // slots: { customRender: "recordTime" }
+        }
+      ],
+      betRecord: [
+        {
+          label: t('lang.bet_code'),
+          field: "betId"
+        },
+        {
+          label: t('lang.transaction_id'),
+          field: "transactionId"
+        },
+        {
+          label: t('lang.platform'),
+          field: "platform"
+        },
+        {
+          label: t('lang.bet'),
+          field: "bet"
+        },
+        {
+          label: t('lang.payout'),
+          field: "payout"
+        },
+        {
+          label: t('lang.before_balance'),
+          field: "beforeBalance"
+        },
+        {
+          label: t('lang.after_balance'),
+          field: "afterBalance"
+        },
+        {
+          label: t('lang.bet_status'),
+          field: "betStatus"
+        },
+        {
+          label: t('lang.game_type'),
+          field: "gameType"
+        },
+        {
+          label: t('lang.bet_time'),
+          field: "betTime",
+          // slots: { customRender: "betTime" }
+        },
+        {
+          label: t('lang.settle_time'),
+          field: "settleTime",
+          // slots: { customRender: "settleTime" }
+        },
+        {
+          label: t('lang.result'),
+          field: "result"
+        },
+      ],
+      gameBetRecord: [
+        // {
+        //   label: "รหัสเดิมพัน",
+        //   field: "betId"
+        // },
+        // {
+        //   label: "รหัสธุรกรรม",
+        //   field: "transactionId"
+        // },
+        {
+          label: t('lang.game_name'),
+          field: "gameName"
+        },
+        {
+          label: t('lang.platform'),
+          field: "platform"
+        },
+        {
+          label: t('lang.bet'),
+          field: "bet"
+        },
+        {
+          label: t('lang.payout'),
+          field: "payout"
+        },
+        // {
+        //   label: "วงเงินก่อนหน้า",
+        //   field: "beforeBalance"
+        // },
+        // {
+        //   label: "วงเงินหลังจาก",
+        //   field: "afterBalance"
+        // },
+        // {
+        //   label: "สถานะการเดิมพัน",
+        //   field: "betStatus"
+        // },
+        {
+          label: t('lang.game_type'),
+          field: "gameType"
+        },
+        {
+          name: 'actions',
+          label: '',
+          field: '',
+        }
+        // {
+        //   label: "เวลาเดิมพัน",
+        //   field: "betTime",
+        //   // slots: { customRender: "betTime" }
+        // },
+        // {
+        //   label: "เวลาชำระเงิน",
+        //   field: "settleTime",
+        //   // slots: { customRender: "settleTime" }
+        // },
+        // {
+        //   label: "ผลลัพท์",
+        //   field: "result"
+        // },
+      ],
+      reminderRecord: [
+        {
+          label: t('lang.order_number'),
+          field: 'orderNo'
+        },
+        {
+          label: t('lang.finance_remark'),
+          field: 'financeRemark'
+        },
+        {
+          label: t('lang.feedback_time'),
+          field: "feedbackTime",
+        },
+        {
+          label: t('lang.reminder_type'),
+          field: "type",
+          name: "type"
+        }
+      ]
     }
-  ],
-  transfer: [
-    ...commonColumns,
-    {
-      label: t('lang.type'),
-      field: "type",
-      key: "type",
-      // slots: { customRender: "type" }
-    },
-    {
-      label: t('lang.amount'),
-      field: "amount",
-      key: "withdrawAmount"
-    },
-    {
-      label: t('lang.status'),
-      field: "status",
-      key: "status",
-      // slots: { customRender: "status" }
-    },
-    {
-      label: t('lang.transfer_date'),
-      field: "transferDate",
-      key: "transferDate",
-      // slots: { customRender: "transferDate" }
-    }
-  ],
-  rebates: [
-    ...commonColumns,
-    {
-      label: t('lang.privilege_name'),
-      field: "privilegeName"
-    },
-    {
-      label: t('lang.amount'),
-      field: "amount"
-    },
-    {
-      label: t('lang.record_time'),
-      field: "recordTime",
-      // slots: { customRender: "recordTime" }
-    }
-  ],
-  turnover: [
-    ...commonColumns,
-    {
-      label: t('lang.type'),
-      field: "type",
-      name: "type"
-    },
-    {
-      label: t('lang.amount'),
-      field: "amount"
-    },
-    {
-      label: t('lang.sub_type'),
-      field: "subType"
-    },
-    {
-      label: t('lang.record_time'),
-      field: "recordTime",
-      // slots: { customRender: "recordTime" }
-    }
-  ],
-  betRecord: [
-    {
-      label: t('lang.bet_code'),
-      field: "betId"
-    },
-    {
-      label: t('lang.transaction_id'),
-      field: "transactionId"
-    },
-    {
-      label: t('lang.platform'),
-      field: "platform"
-    },
-    {
-      label: t('lang.bet'),
-      field: "bet"
-    },
-    {
-      label: t('lang.payout'),
-      field: "payout"
-    },
-    {
-      label: t('lang.before_balance'),
-      field: "beforeBalance"
-    },
-    {
-      label: t('lang.after_balance'),
-      field: "afterBalance"
-    },
-    {
-      label: t('lang.bet_status'),
-      field: "betStatus"
-    },
-    {
-      label: t('lang.game_type'),
-      field: "gameType"
-    },
-    {
-      label: t('lang.bet_time'),
-      field: "betTime",
-      // slots: { customRender: "betTime" }
-    },
-    {
-      label: t('lang.settle_time'),
-      field: "settleTime",
-      // slots: { customRender: "settleTime" }
-    },
-    {
-      label: t('lang.result'),
-      field: "result"
-    },
-  ],
-  gameBetRecord: [
-    // {
-    //   label: "รหัสเดิมพัน",
-    //   field: "betId"
-    // },
-    // {
-    //   label: "รหัสธุรกรรม",
-    //   field: "transactionId"
-    // },
-    {
-      label: t('lang.game_name'),
-      field: "gameName"
-    },
-    {
-      label: t('lang.platform'),
-      field: "platform"
-    },
-    {
-      label: t('lang.bet'),
-      field: "bet"
-    },
-    {
-      label: t('lang.payout'),
-      field: "payout"
-    },
-    // {
-    //   label: "วงเงินก่อนหน้า",
-    //   field: "beforeBalance"
-    // },
-    // {
-    //   label: "วงเงินหลังจาก",
-    //   field: "afterBalance"
-    // },
-    // {
-    //   label: "สถานะการเดิมพัน",
-    //   field: "betStatus"
-    // },
-    {
-      label: t('lang.game_type'),
-      field: "gameType"
-    },
-    {
-      name: 'actions',
-      label: '',
-      field: '',
-    }
-    // {
-    //   label: "เวลาเดิมพัน",
-    //   field: "betTime",
-    //   // slots: { customRender: "betTime" }
-    // },
-    // {
-    //   label: "เวลาชำระเงิน",
-    //   field: "settleTime",
-    //   // slots: { customRender: "settleTime" }
-    // },
-    // {
-    //   label: "ผลลัพท์",
-    //   field: "result"
-    // },
-  ],
-  reminderRecord: [
-    {
-      label: t('lang.order_number'),
-      field: 'orderNo'
-    },
-    {
-      label: t('lang.finance_remark'),
-      field: 'financeRemark'
-    },
-    {
-      label: t('lang.feedback_time'),
-      field: "feedbackTime",
-    },
-    {
-      label: t('lang.reminder_type'),
-      field: "type",
-      name: "type"
-    }
-  ]
-}
-const loading = ref(false);
-const pagination = reactive({
-  pageSize: 10,
-  total: 0
-});
+    const loading = ref(false);
+    const pagination = reactive({
+      pageSize: 10,
+      total: 0
+    });
 
 
     const reminderDialog = ref(false);
@@ -1206,8 +1212,8 @@ const pagination = reactive({
         params: searchForm[recordActive.value]
       }).then((ret) => {
         const response = ret.data
-          const dataSource = dataState[recordActive.value];
-          dataSource.value = [];
+        const dataSource = dataState[recordActive.value];
+        dataSource.value = [];
         if (response.code === 0) {
           pagination.total = response.data.length;
           //clear array and then push new record
@@ -1252,7 +1258,7 @@ const pagination = reactive({
     };
 
     const getTime = () => {
-      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function(v) {
+      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function (v) {
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
@@ -1310,11 +1316,11 @@ const pagination = reactive({
         return t('lang.under_review') //Under review
       } else if (withdrawStatus === 'STEP_2') {
         return t('lang.to_be_paid') // To be paid
-      }  else if (withdrawStatus === 'STEP_3') {
+      } else if (withdrawStatus === 'STEP_3') {
         return t('lang.payment_on_going') // Payment on going
-      }  else if (withdrawStatus === 'STEP_4') {
+      } else if (withdrawStatus === 'STEP_4') {
         return t('lang.automatic_payment') // Automatic Payment
-      }  else if (withdrawStatus === 'STEP_5') {
+      } else if (withdrawStatus === 'STEP_5') {
         return t('lang.suspend') //Suspend
       } else {
         return withdrawStatus
@@ -1355,11 +1361,11 @@ const pagination = reactive({
     }
 
     const removeSessionKeys = (prefix) => {
-      var keys= SessionStorage.getAllKeys();
-      _.each(keys, function(key, item){
+      var keys = SessionStorage.getAllKeys();
+      _.each(keys, function (key, item) {
         // console.log(key);
-        if(key.indexOf(prefix) > -1){
-         SessionStorage.remove(key);
+        if (key.indexOf(prefix) > -1) {
+          SessionStorage.remove(key);
         }
       })
     }
@@ -1377,7 +1383,7 @@ const pagination = reactive({
       getTime,
       chgDate,
       noDataLabel: t('lang.no_data_label'),
-      rowPerPageLabel:  t('lang.row_per_page_label'),
+      rowPerPageLabel: t('lang.row_per_page_label'),
       humanDatetime(ts) {
         return moment(ts).format("DD-MM-YYYY HH:mm:ss");
       },
@@ -1420,21 +1426,25 @@ const pagination = reactive({
   gap: 20px;
   margin-bottom: 20px;
 }
+
 .account-content.transit {
   min-height: 740px;
   margin: 10px;
   padding: 0;
+
   .form-wrapped {
     :deep(.ant-tabs-top-bar) {
       margin-bottom: 50px;
     }
   }
 }
+
 .account-container {
   .account-content-wrapper {
     .unbind-record-wrapper {
       margin-top: 20px;
     }
+
     .common-btn {
       cursor: pointer;
 
@@ -1443,24 +1453,28 @@ const pagination = reactive({
         font-size: 14px;
       }
     }
+
     .transit .ant-form {
       display: flex;
       justify-content: space-between;
     }
+
     .ant-form-inline .ant-form-item.search {
       margin-right: 0;
     }
   }
 }
+
 .left {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
-  margin-top:14px;
+  margin-top: 14px;
 }
-.block{
+
+.block {
   color: #fff !important;
 }
 
@@ -1475,21 +1489,25 @@ const pagination = reactive({
         gap: 30px;
         width: 100%;
       }
+
       .left {
         flex-direction: column;
         margin-top: 25px;
         text-align: center;
         width: 100%;
+
         .ant-form-inline .ant-form-item {
           align-items: center;
           justify-content: center;
           margin: 0 auto;
           width: 100%;
         }
+
         .ant-calendar-picker {
           width: 100%;
         }
       }
+
       .account-btn {
         &.search-btn {
           margin-top: 10px;
@@ -1498,6 +1516,7 @@ const pagination = reactive({
     }
   }
 }
+
 .reminder-dialog-card {
   width: 100%;
   max-width: 448px;

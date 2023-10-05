@@ -93,14 +93,18 @@
       </q-card>
     </router-link>
 
-    <!--    <router-link to="/account/mail">-->
-    <!--      <q-card class="acct-nav-item">-->
-    <!--        <RiMailLine/>-->
-    <!--        <div class="acct-nav-label mailnav"><span>กล่องจดหมาย</span>-->
-    <!--          <q-chip style="margin: 0;" color="red">{{ unreadNumber }}</q-chip>-->
-    <!--        </div>-->
-    <!--      </q-card>-->
-    <!--    </router-link>-->
+    <router-link to="/account/mail">
+      <q-card class="acct-nav-item"
+              :class="route.path === '/account/mail' ? 'active-class' : '' "
+      >
+        <RiMailLine/>
+        <div class="acct-nav-label mailnav">
+          <span>{{ $t('lang.mail_header') }}</span>
+          <q-chip style="margin: 0;" color="red">{{ unreadNumber }}</q-chip>
+        </div>
+      </q-card>
+    </router-link>
+
     <router-link to="/affiliate">
       <q-card class="acct-nav-item"
               :class="route.path === '/affiliate' ? 'active-class' : '' "
@@ -175,7 +179,7 @@ export default defineComponent({
     RiBankLine,
     RiCoinsLine,
     RiTabletLine,
-    // RiMailLine,
+    RiMailLine,
     // RiVipCrown2Line,
     RiShareBoxLine,
     RiTeamLine,
