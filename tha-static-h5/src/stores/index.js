@@ -21,7 +21,9 @@ export const userStore = defineStore("userStore", {
       token: SessionStorage.getItem("TOKEN") || "",
       vip: "",
       currency: { value: "฿", label: "บาท"},
-      unreadCount: 0
+      unreadCount: 0,
+      currentDeposit: "",
+      levelUpDeposit: ""
     };
   },
   actions: {
@@ -92,7 +94,9 @@ export const userStore = defineStore("userStore", {
           this.memberType = ret.data.memberType;
           this.vip = ret.data.vip;
           this.profilePicture = ret.data.pictureUrl;
-          this.displayName = ret.data.displayName
+          this.displayName = ret.data.displayName,
+          this.currentDeposit = ret.data.currentDeposit,
+          this.levelUpDeposit = ret.data.levelUpDeposit
         } else {
           this.memberLogout();
         }

@@ -4,7 +4,7 @@
     v-model="file"
     class="q-pt-md"
     filled
-    label="โหลดรูปภาพ"
+    :label="$t('lang.upload_img')"
     color="white"
   >
     <template v-slot:prepend>
@@ -21,13 +21,15 @@
 import { ref, defineComponent, watch } from "vue";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   emits: ["photoResponse"],
   name: "UploadExample",
   setup: (props, { emit }) => {
     const store = userStore();
-    const action = `https://fxlmnp.wallykrooger.com/upload?token=${store.token}`;
+    const {t}= useI18n();
+    const action = `${process.env.UPLOAD_IMG_API}/upload?token=${store.token}`;
     const $q = useQuasar();
     const file = ref();
     watch(file, (newValue, oldValue) => {
@@ -39,7 +41,7 @@ export default defineComponent({
         formData.append("file", file.value);
         try {
           const response = await fetch(
-            `https://fxlmnp.wallykrooger.com/upload?token=${store.token}`,
+            `${process.env.UPLOAD_IMG_API}/upload?token=${store.token}`,
             {
               method: "POST",
               body: formData,
@@ -51,14 +53,14 @@ export default defineComponent({
             $q.notify({
               type: "positive",
               position: "top",
-              message: `${file.value.name} อัพโหลดเรียบร้อยแล้ว`,
+              message: `${file.value.name}` + t('lang.upload_successfully'),
               icon: "check_circle_outline"
             });
           } else {
             $q.notify({
               type: "negative",
               position: "top",
-              message: `${file.value.name} การอัพโหลดล้มเหลว ขนาดภาพไม่ตรงที่กำหนด โปรดอัปโหลดรูปภาพในภายหลัง`,
+              message: t('lang.failed_upload_size_dont_meet_requirement'),
               icon: "report_problem"
             });
             file.value = null;

@@ -208,7 +208,7 @@ export default defineComponent({
     });
     onMounted(() => {
       getBalance()
-      store.getBalance()
+      // store.getBalance()
       store.getUnreadTotal()
     });
 

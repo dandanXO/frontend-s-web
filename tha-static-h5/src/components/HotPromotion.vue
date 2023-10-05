@@ -176,6 +176,7 @@ import moment from "moment"
 import ClaimPromo from "../components/hotpromo/claimPromo.vue"
 import SJBPromo from "../components/hotpromo/40/shiJieBei.vue"
 import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue"
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "HotPromo",
@@ -293,6 +294,7 @@ export default defineComponent({
     const store = userStore();
     var qs = require("qs");
 
+    const {t} = useI18n();
     const lucky_number = ref('');
     const loading = ref(false);
     const btnLoading = ref(false);
@@ -459,7 +461,7 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: "ส่งหมายเลข",
+                message: t('lang.number_sent'),
                 icon: "check_circle_outline"
               });
 

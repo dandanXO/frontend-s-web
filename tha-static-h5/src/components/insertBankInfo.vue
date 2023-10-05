@@ -1,15 +1,15 @@
 <template>
   <div
-    style="
+      style="
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
     "
   >
-        <q-form style="width: 100%;">
-          <template v-if="step === 1">
-            <q-input
+    <q-form style="width: 100%;">
+      <template v-if="step === 1">
+        <q-input
             ref="updateInfoNameRef"
             class="q-mb-md"
             filled
@@ -18,12 +18,12 @@
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.enter_bank_account_name')]"
             color="white"
-          >
-            <template v-slot:prepend>
-              <q-icon name="web" />
-            </template>
-          </q-input>
-          <q-input
+        >
+          <template v-slot:prepend>
+            <q-icon name="web" />
+          </template>
+        </q-input>
+        <q-input
             ref="updateInfoSurnameRef"
             class="q-mb-md"
             filled
@@ -32,35 +32,35 @@
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.enter_bank_account_surname')]"
             color="white"
-          >
-            <template v-slot:prepend>
-              <q-icon name="web" />
-            </template>
-          </q-input>
-          <!-- <q-input
-            ref="updateInfoRef"
-            class="q-mb-md"
-            filled
-            v-model="updateInfo.realName"
-            label="ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)"
-            placeholder="ชื่อ"
-            :rules="[
-              (val) => (val && val.length > 0) || 'ชื่อ-นามสกุล'
-            ]"
-            lazy-rules
-            color="white"
-          /> -->
-          <div class="flex">
-            <q-btn
+        >
+          <template v-slot:prepend>
+            <q-icon name="web" />
+          </template>
+        </q-input>
+        <!-- <q-input
+          ref="updateInfoRef"
+          class="q-mb-md"
+          filled
+          v-model="updateInfo.realName"
+          label="ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)"
+          placeholder="ชื่อ"
+          :rules="[
+            (val) => (val && val.length > 0) || 'ชื่อ-นามสกุล'
+          ]"
+          lazy-rules
+          color="white"
+        /> -->
+        <div class="flex">
+          <q-btn
               class="q-mr-md"
               color="brand"
               :label="$t('lang.confirm')"
               @click="updateName"
-            />
-          </div>
-          </template>
-          <template v-if="step === 2">
-          <q-input
+          />
+        </div>
+      </template>
+      <template v-if="step === 2">
+        <q-input
             class="q-mb-md"
             filled
             v-model="bankCardInfo.cardAccount"
@@ -72,8 +72,8 @@
             :disable="true"
             ref="cardAccountRef"
             color="white"
-          />
-          <q-input
+        />
+        <q-input
             class="q-mb-md"
             filled
             v-model="personalInfo.phone"
@@ -86,11 +86,11 @@
             :disable="phoneDisabled"
             ref="telephoneRef"
             color="white"
-          />
-          <div>
-            <div class="row q-col-gutter-xs">
-              <div class="col-12">
-                <q-select
+        />
+        <div>
+          <div class="row q-col-gutter-xs">
+            <div class="col-12">
+              <q-select
                   v-model="selectedBankType"
                   filled
                   :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
@@ -102,10 +102,10 @@
                   @update:model-value="selectBankType(opt)"
                   emit-value
                   map-options
-                />
-              </div>
-              <div class="col-12">
-                <q-select
+              />
+            </div>
+            <div class="col-12">
+              <q-select
                   ref="bankCardRef"
                   class="q-mb-md"
                   color="white"
@@ -120,30 +120,30 @@
                   lazy-rules
                   emit-value
                   map-options
-                >
-                  <template v-slot:selected-item="scope">
+              >
+                <template v-slot:selected-item="scope">
+                  <q-item-section avatar>
+                    <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.name }}</q-item-label>
+                  </q-item-section>
+                </template>
+                <template v-slot:option="scope">
+                  <q-item v-bind="scope.itemProps">
                     <q-item-section avatar>
                       <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.name }}</q-item-label>
+                      <q-item-label>{{ scope.opt.name }}</q-item-label>
                     </q-item-section>
-                  </template>
-                  <template v-slot:option="scope">
-                    <q-item v-bind="scope.itemProps">
-                      <q-item-section avatar>
-                        <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>{{ scope.opt.name }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
+                  </q-item>
+                </template>
+              </q-select>
             </div>
           </div>
-          <q-input
+        </div>
+        <q-input
             filled
             class="q-mb-md"
             v-model="bankCardInfo.cardNumber"
@@ -154,28 +154,28 @@
             ]"
             ref="cardNumberRef"
             color="white"
-          />
-          <q-input
+        />
+        <q-input
             class="q-mb-md"
             filled
             v-model="bankCardInfo.cardAddress"
             :label="$t('lang.branch_not_required')"
             ref="cardAddressRef"
             color="white"
-          />
-          <div class="flex">
-            <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard" />
-          </div>
-          </template>
-        </q-form>
+        />
+        <div class="flex">
+          <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard" />
+        </div>
+      </template>
+    </q-form>
     <q-dialog v-model="isShowInstruction">
       Kindly update your details first.
     </q-dialog>
 
     <q-dialog
-      v-model="isShowInstruction"
-      transition-show="slide-up"
-      transition-hide="slide-down"
+        v-model="isShowInstruction"
+        transition-show="slide-up"
+        transition-hide="slide-down"
     >
       <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
         <q-card-section>
@@ -186,8 +186,8 @@
       </q-card>
     </q-dialog>
     <q-btn color="brand" class="bottombtn" @click="logout">
-        <RiLogoutBoxLine />
-        <div class="acct-nav-label">{{ $t('lang.logout') }}</div>
+      <RiLogoutBoxLine />
+      <div class="acct-nav-label">{{ $t('lang.logout') }}</div>
     </q-btn>
   </div>
 </template>
@@ -198,7 +198,9 @@ import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import {useRouter} from "vue-router";
 import { RiLogoutBoxLine } from "vue-remix-icons";
-import liff from '@line/liff';
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n();
 const step = ref(1)
 const store = userStore();
 const imgURL = process.env.IMAGE_CDN + '/payment/'
@@ -223,7 +225,6 @@ const updateInfoNameRef = ref();
 const updateInfoSurnameRef = ref();
 const qs = require("qs");
 const isShowInstruction = ref(true);
-const $q = useQuasar();
 const router = useRouter();
 const bankCardModalState = reactive({
   visible: false,
@@ -240,15 +241,15 @@ const selectBankType = () => {
       banksList.value.push(element);
     }
     if (
-      selectedBankType.value === "Crypto" &&
-      element.bankType === "CRYPTO"
+        selectedBankType.value === "Crypto" &&
+        element.bankType === "CRYPTO"
     ) {
       const isCrypto = ref(true);
       banksList.value.push(element);
     }
     if (
-      selectedBankType.value === "e-Wallet" &&
-      element.bankType === "EWALLET"
+        selectedBankType.value === "e-Wallet" &&
+        element.bankType === "EWALLET"
     ) {
       const isEWallet = ref(true);
       banksList.value.push(element);
@@ -258,89 +259,89 @@ const selectBankType = () => {
 
 const isValidPhone = () => {
   const phonePattern = /^\d+$/;
-  return phonePattern.test(personalInfo.phone) || "อนุญาตเฉพาะตัวเลขเท่านั้น";
+  return phonePattern.test(personalInfo.phone) || t('lang.invalid_phone_num');
 };
 const loadBankCards = () => {
   bankCardInfo.bankId = undefined;
   bankCardInfo.cardNumber = "";
   bankCardInfo.cardAddress = "";
   bankCardModalState.visible = true;
-if (bankCardModalState.banks.length === 0) {
-  api.get("/session/withdraw/card").then((ret) => {
-    const res = ret.data
-    if (res.code === 0) {
-      bankCardModalState.banks.push(...res.data);
-      selectBankType()
-    }
-  }).catch((e) => {
-    console.log("error", e);
-  });
-}
+  if (bankCardModalState.banks.length === 0) {
+    api.get("/session/withdraw/card").then((ret) => {
+      const res = ret.data
+      if (res.code === 0) {
+        bankCardModalState.banks.push(...res.data);
+        selectBankType()
+      }
+    }).catch((e) => {
+      console.log("error", e);
+    });
+  }
 }
 
 const submitBankCard = () => {
-    telephoneRef.value.validate();
-    bankCardRef.value.validate();
-    cardAccountRef.value.validate();
-    cardAddressRef.value.validate();
-    cardNumberRef.value.validate();
-    if (bankCardRef.value.hasError || cardAccountRef.value.hasError  || cardAddressRef.value.hasError || cardNumberRef.value.hasError || telephoneRef.value.hasError) {
-    }
-    else {
-        if (store.telephone) {
+  telephoneRef.value.validate();
+  bankCardRef.value.validate();
+  cardAccountRef.value.validate();
+  cardAddressRef.value.validate();
+  cardNumberRef.value.validate();
+  if (bankCardRef.value.hasError || cardAccountRef.value.hasError  || cardAddressRef.value.hasError || cardNumberRef.value.hasError || telephoneRef.value.hasError) {
+  }
+  else {
+    if (store.telephone) {
+      phoneDisabled.value = true
+      updateBankInfo()
+    } else {
+      api.post("/session/account", qs.stringify(personalInfo)).then((res) => {
+        const r = res.data
+        if (r.code === 0) {
+          // $q.notify({
+          //   color: "positive",
+          //   position: "top",
+          //   message: "อัพเดทเรียบร้อยแล้ว",
+          //   icon: "check_circle_outline"
+          // });
+          store.telephone = personalInfo.telephone
           phoneDisabled.value = true
           updateBankInfo()
-        } else {
-          api.post("/session/account", qs.stringify(personalInfo)).then((res) => {
-            const r = res.data
-              if (r.code === 0) {
-                // $q.notify({
-                //   color: "positive",
-                //   position: "top",
-                //   message: "อัพเดทเรียบร้อยแล้ว",
-                //   icon: "check_circle_outline"
-                // });
-                store.telephone = personalInfo.telephone
-                phoneDisabled.value = true
-                updateBankInfo()
-              }
-          })
         }
+      })
+    }
   }
 };
 const updateBankInfo = () => {
-    api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((res) => {
-      const response = res.data
-      if (response.code === 0) {
-        bankCardModalState.visible = false;
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "เพิ่มการ์ดแล้ว",
-          icon: "check_circle_outline"
-        });
-        router.push('/account')
-      } else {
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: response.message,
-        //   icon: "report_problem"
-        // });
-      }
-    }).catch((error) => {
-      console.log("error", error);
-    });
+  api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((res) => {
+    const response = res.data
+    if (response.code === 0) {
+      bankCardModalState.visible = false;
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: t('lang.card_added'),
+        icon: "check_circle_outline"
+      });
+      router.push('/account')
+    } else {
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: response.message,
+      //   icon: "report_problem"
+      // });
+    }
+  }).catch((error) => {
+    console.log("error", error);
+  });
 }
 
 let validateBankLength = (val) => {
   if (selectedBankType.value === "Bank") {
     return (
-      (val.length > 5 && val.length < 13) || "ความยาวควรเป็น 6 ถึง 12 ตัว"
+        (val.length > 5 && val.length < 13) || t('lang.length_between_6_12')
     );
   } else if (selectedBankType.value === "Crypto") {
     return (
-      (val.length > 33 && val.length < 38) || "ความยาวควรเป็น 34 ถึง 37 ตัว"
+        (val.length > 33 && val.length < 38) || t('lang.length_between_34_37')
     );
   }
 };
@@ -352,18 +353,18 @@ const updateName = () => {
     updateInfo.realName = updateInfo.cardAccountName + '-' + updateInfo.cardAccountSurname
     api.post("/session/account", qs.stringify(updateInfo)).then((res) => {
       const r = res.data
-        if (r.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: "อัพเดทเรียบร้อยแล้ว",
-            icon: "check_circle_outline"
-          });
-          bankCardInfo.cardAccount = updateInfo.realName
-          step.value = 2
-          loadBankCards();
-        }
-      })
+      if (r.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t('lang.updated_successfully'),
+          icon: "check_circle_outline"
+        });
+        bankCardInfo.cardAccount = updateInfo.realName
+        step.value = 2
+        loadBankCards();
+      }
+    })
   }
 }
 const logout = () => {
@@ -386,9 +387,9 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-  .bottombtn {
-    position:absolute;
-    bottom: 10px;
-    right: 10px;
-  }
+.bottombtn {
+  position:absolute;
+  bottom: 10px;
+  right: 10px;
+}
 </style>

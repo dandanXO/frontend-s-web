@@ -97,7 +97,7 @@
                   ]"
                     ref="titleRef"
                     name="title"
-                    class="q-mb-md"
+                    class="q-mb-lg"
                     counter
                     bottom-slots
                     maxlength="255"
@@ -115,7 +115,7 @@
                     filled
                     type="textarea"
                     :auto-size="{ minRows: 4, maxRows: 16 }"
-                    class="mail-txtarea q-mb-md"
+                    class="mail-txtarea q-mb-lg"
                     counter
                     maxlength="500"
                     v-model="mailboxState.mailboxList.write.content"
