@@ -298,7 +298,7 @@
       </el-table-column>
       <el-table-column prop="rebatePercentage" :label="t('fields.rebatePercentage')" align="center" min-width="120">
         <template #default="scope">
-          {{ (scope.row.rebatePercentage * 100).toFixed(2) }} %
+          {{ (scope.row.rebatePercentage).toFixed(2) }} %
         </template>
       </el-table-column>
       <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120">
