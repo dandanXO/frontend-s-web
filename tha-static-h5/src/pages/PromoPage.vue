@@ -611,7 +611,7 @@ export default defineComponent({
 
 @media (min-width: 768px){
   .banner-container .promo-top-bg {
-    aspect-ratio: 106/25;
+    aspect-ratio: 100/25;
   }
 
 }
