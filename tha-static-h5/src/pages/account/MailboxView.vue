@@ -6,57 +6,60 @@
         <div class="buttons">
           <div class="left-btns">
             <div
-              class="inbox-btn"
-              :class="{ active: !viewSentList }"
-              @click="mailTabChange('inbox')"
+                class="inbox-btn"
+                :class="{ active: !viewSentList }"
+                @click="mailTabChange('inbox')"
             >
               {{ $t('lang.inbox') }}
             </div>
             <div
-              class="sent-btn"
-              :class="{ active: viewSentList }"
-              @click="mailTabChange('sent')"
+                class="sent-btn"
+                :class="{ active: viewSentList }"
+                @click="mailTabChange('sent')"
             >
               {{ $t('lang.outbox') }}
             </div>
           </div>
           <div class="rounded-btn" @click="newMailVisible = true">
             {{ $t('lang.write') }}
-            <div class="new"><RiMailAddLine /></div>
+            <div class="new">
+              <RiMailAddLine/>
+            </div>
           </div>
         </div>
         <div class="mail-list">
           <div
-            v-if="mailboxState.mailboxList[mailboxState.active].list.length > 0"
+              v-if="mailboxState.mailboxList[mailboxState.active].list.length > 0"
           >
             <div style="flex: 2" v-if="!newMailVisible">
               <div class="mailbox-list" :class="{ hide: mailOpened }">
                 <div
-                  class="mailbox-item"
-                  :class="{ active: selectedId === m.id, unread: !m.status }"
-                  v-for="(m, index) in mailboxState.mailboxList[
+                    class="mailbox-item"
+                    :class="{ active: selectedId === m.id, unread: !m.status }"
+                    v-for="(m, index) in mailboxState.mailboxList[
                     mailboxState.active
                   ].list"
-                  :key="m.id"
-                  @click="selectItem(m, index)"
+                    :key="m.id"
+                    @click="selectItem(m, index)"
                 >
                   <div class="mailbox-title">{{ m.title }}</div>
-                  <p v-if="m.content" class="mailbox-content" v-html="(m.content = m.content.replace(/(?:\r\n|\r|\n)/g, '<br>'))"></p>
+                  <p v-if="m.content" class="mailbox-content"
+                     v-html="(m.content = m.content.replace(/(?:\r\n|\r|\n)/g, '<br>'))"></p>
                   <div class="txt-right">
                     {{
                       mailboxState.active === "sent"
-                        ? format(m.createTime)
-                        : m.sendTime
+                          ? format(m.createTime)
+                          : m.sendTime
                     }}
                   </div>
                 </div>
               </div>
             </div>
             <div
-              style="flex: 3"
-              class="openedmail"
-              :class="{ active: mailOpened }"
-              v-if="!newMailVisible && selectedId"
+                style="flex: 3"
+                class="openedmail"
+                :class="{ active: mailOpened }"
+                v-if="!newMailVisible && selectedId"
             >
               <div class="b-button" @click="mailOpened = false">{{ $t('lang.go_back') }}</div>
               <div class="mailbox-item">
@@ -67,65 +70,65 @@
               </div>
             </div>
             <div
-              style="flex: 3"
-              class="closedmail"
-              :class="{ active: !mailOpened }"
-              v-if="!newMailVisible && !selectedId"
+                style="flex: 3"
+                class="closedmail"
+                :class="{ active: !mailOpened }"
+                v-if="!newMailVisible && !selectedId"
             >
-              {{ $t('lang.no_message_selected')}}
+              {{ $t('lang.no_message_selected') }}
             </div>
           </div>
           <div style="flex: 3" class="viewmail" v-if="newMailVisible">
             <div class="newmail-section">
               <q-form
-                ref="formRef"
-                :hideRequiredMark="true"
-                :model="mailboxState.mailboxList.write"
-                :rules="rules"
-                :colon="false"
-                :label-col="{ span: 2 }"
+                  ref="formRef"
+                  :hideRequiredMark="true"
+                  :model="mailboxState.mailboxList.write"
+                  :rules="rules"
+                  :colon="false"
+                  :label-col="{ span: 2 }"
               >
                 <q-input
-                  filled
-                  :rules="[
+                    filled
+                    :rules="[
                     (val) => (val && val.length > 0) || $t('lang.please_specific_title'),
                     (val) =>
                       (val && val.length < 255) || $t('lang.length_should_less_255')
                   ]"
-                  ref="titleRef"
-                  name="title"
-                  class="q-mb-md"
-                  counter
-                  bottom-slots
-                  maxlength="255"
-                  v-model="mailboxState.mailboxList.write.title"
-                  :placeholder="$('lang.subject')"
+                    ref="titleRef"
+                    name="title"
+                    class="q-mb-md"
+                    counter
+                    bottom-slots
+                    maxlength="255"
+                    v-model="mailboxState.mailboxList.write.title"
+                    :placeholder="$t('lang.subject')"
                 />
                 <q-input
-                  ref="contentRef"
-                  :rules="[
+                    ref="contentRef"
+                    :rules="[
                     (val) => (val && val.length > 0) || $t('lang.enter_information'),
                     (val) =>
                       (val && val.length < 501) || $t('lang.max_length_500')
                   ]"
-                  name="content"
-                  filled
-                  type="textarea"
-                  :auto-size="{ minRows: 4, maxRows: 16 }"
-                  class="mail-txtarea q-mb-md"
-                  counter
-                  maxlength="500"
-                  v-model="mailboxState.mailboxList.write.content"
-                  :placeholder="$t('lang.message_cannot_be_empty')"
+                    name="content"
+                    filled
+                    type="textarea"
+                    :auto-size="{ minRows: 4, maxRows: 16 }"
+                    class="mail-txtarea q-mb-md"
+                    counter
+                    maxlength="500"
+                    v-model="mailboxState.mailboxList.write.content"
+                    :placeholder="$t('lang.message_cannot_be_empty')"
                 />
-                <q-btn color="brand" class="q-mt-md common-large-btn" @click="onSubmit" :label="$t('lang.send')" />
+                <q-btn color="brand" class="q-mt-md common-large-btn" @click="onSubmit" :label="$t('lang.send')"/>
               </q-form>
             </div>
           </div>
         </div>
         <div
-          class="mail-list"
-          v-if="
+            class="mail-list"
+            v-if="
             mailboxState.mailboxList[mailboxState.active].list.length <= 0 &&
             !newMailVisible
           "
@@ -138,17 +141,18 @@
 </template>
 
 <script lang="js">
-import { defineComponent, onMounted, reactive, ref } from "vue";
-import { RiMailAddLine } from "vue-remix-icons";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import {defineComponent, onMounted, reactive, ref} from "vue";
+import {RiMailAddLine} from "vue-remix-icons";
+import {api} from "boot/axios";
+import {useQuasar} from "quasar";
 import moment from "moment";
 import {useI18n} from "vue-i18n";
+
 var qs = require("qs");
 
 export default defineComponent({
   name: "MailboxView",
-  components: { RiMailAddLine },
+  components: {RiMailAddLine},
   setup() {
     const {t} = useI18n();
     const mailboxState = reactive({
@@ -178,17 +182,17 @@ export default defineComponent({
     }
     const $q = useQuasar();
     var qs = require("qs");
-     const mailboxData = ref({});
+    const mailboxData = ref({});
     const mailOpened = ref(false);
     const viewSentList = ref(false);
     const newMailVisible = ref(false);
     const selectedIndex = ref(null);
     const selectedId = ref(false);
     const selectItem = (item, index) => {
-      api.post("/session/inbox/read", qs.stringify({ id:item.id })).then((ret) => {
+      api.post("/session/inbox/read", qs.stringify({id: item.id})).then((ret) => {
         const res = ret.data;
         if (res.code === 0) {
-         loadPersonalMailbox();
+          loadPersonalMailbox();
         }
       })
       selectedId.value = item.id;
@@ -202,8 +206,8 @@ export default defineComponent({
       if (mailboxState.active === 'inbox') {
         mailboxData.value = {
           type: null,
-          current: mailboxState.mailboxList[mailboxState.active].pageNum,
-          size: mailboxState.mailboxList[mailboxState.active].pageSize,
+          current: mailboxState.mailboxList["inbox"].pageNum,
+          size: mailboxState.mailboxList["inbox"].pageSize,
           orderBy: "sendTime"
         }
         $q.loading.show({
@@ -220,7 +224,7 @@ export default defineComponent({
           $q.loading.hide()
           const response = res.data
           if (response.code === 0) {
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
+            mailboxState.mailboxList["inbox"].list.push(...response.data.records);
           }
         }).catch((error) => {
           $q.loading.hide()
@@ -228,10 +232,10 @@ export default defineComponent({
         });
       }
       if (mailboxState.active === 'sent') {
-      mailboxData.value = {
+        mailboxData.value = {
           type: null,
-          current: mailboxState.mailboxList[mailboxState.active].pageNum,
-          size: mailboxState.mailboxList[mailboxState.active].pageSize,
+          current: mailboxState.mailboxList['sent'].pageNum,
+          size: mailboxState.mailboxList['sent'].pageSize,
           orderBy: "createTime"
         }
         $q.loading.show({
@@ -248,8 +252,8 @@ export default defineComponent({
           $q.loading.hide()
           const response = res.data
           if (response.code === 0) {
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-            mailboxState.mailboxList[mailboxState.active].total = response.data.total;
+            mailboxState.mailboxList['sent'].list.push(...response.data.records);
+            mailboxState.mailboxList['sent'].total = response.data.total;
           }
         }).catch((error) => {
           $q.loading.hide()
@@ -266,7 +270,7 @@ export default defineComponent({
       selectedId.value = null
       mailOpened.value = false
 
-     mailboxData.value = {
+      mailboxData.value = {
         type: null,
         current: mailboxState.mailboxList[nk].pageNum,
         size: mailboxState.mailboxList[nk].pageSize,
@@ -277,8 +281,7 @@ export default defineComponent({
         mailboxState.active = 'sent'
         viewSentList.value = true
         loadPersonalMailbox()
-      }
-      else if (nk === 'inbox') {
+      } else if (nk === 'inbox') {
         mailboxState.active = 'inbox'
         viewSentList.value = false
         loadPersonalMailbox();
@@ -324,37 +327,37 @@ export default defineComponent({
       titleRef.value.validate();
       contentRef.value.validate();
       if (
-        titleRef.value.hasError ||
-        contentRef.value.hasError
+          titleRef.value.hasError ||
+          contentRef.value.hasError
       ) {
         $q.loading.hide();
       } else {
-          api.post("/session/writeOutbox", qs.stringify(mailboxState.mailboxList.write)).then((ret) => {
-            const response = ret.data
-            if(response.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: t('lang.success'),
-                  icon: "check_circle_outline"
-                });
-                mailboxState.mailboxList.write.title = "";
-                mailboxState.mailboxList.write.content = "";
-                newMailVisible.value = false
-                mailTabChange('sent')
-              } else {
+        api.post("/session/writeOutbox", qs.stringify(mailboxState.mailboxList.write)).then((ret) => {
+          const response = ret.data
+          if (response.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t('lang.success'),
+              icon: "check_circle_outline"
+            });
+            mailboxState.mailboxList.write.title = "";
+            mailboxState.mailboxList.write.content = "";
+            newMailVisible.value = false
+            mailTabChange('sent')
+          } else {
 
-                // $q.notify({
-                //   color: "negative",
-                //   position: "top",
-                //   message: response.message,
-                //   icon: "report_problem"
-                // });
-              }
-          })
-        .catch((error) => {
-          console.log("error", error);
-        });
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: response.message,
+            //   icon: "report_problem"
+            // });
+          }
+        })
+            .catch((error) => {
+              console.log("error", error);
+            });
       }
     };
     return {
@@ -401,29 +404,37 @@ export default defineComponent({
   :deep(.ant-form-horizontal .ant-form-item-label) {
     text-align: left;
   }
+
   :deep(.ant-tabs-tabpane) {
     padding: 20px 0;
   }
 }
+
 .pagination-wrapper {
   text-align: center;
   margin: 0 auto;
   padding: 20px;
+
   &.hidden {
     display: block;
   }
 }
+
 .q-pagination {
   justify-content: center;
 }
+
 :deep(.ant-tabs-nav .ant-tabs-tab) {
   font-size: 16px;
 }
+
 :deep(.ant-tabs-nav .ant-tabs-tabpane) {
   padding: 20px 30px;
 }
+
 .mail-wrapper {
   flex: 1;
+
   .buttons {
     display: flex;
     justify-content: flex-start;
@@ -440,12 +451,14 @@ export default defineComponent({
     color: $red-color;
     cursor: pointer;
     font-weight: bold;
+
     .new {
       background: $linear-bg-1;
       padding: 10px;
       border-radius: 20px;
       width: 40px;
       height: 40px;
+
       svg {
         fill: #ffffff;
         width: 20px;
@@ -453,6 +466,7 @@ export default defineComponent({
       }
     }
   }
+
   .left-btns {
     display: flex;
     justify-content: space-evenly;
@@ -462,6 +476,7 @@ export default defineComponent({
     color: #ffffff;
     cursor: pointer;
     font-weight: bold;
+
     .inbox-btn,
     .sent-btn,
     .compose-btn {
@@ -473,11 +488,13 @@ export default defineComponent({
       text-align: center;
       margin: 10px 0;
     }
+
     .active {
       color: #ffffff;
       background: #23263c;
     }
   }
+
   .bottom-content {
     background: #2b2b4b;
     margin: 10px;
@@ -487,14 +504,17 @@ export default defineComponent({
     justify-content: center;
     gap: 20px;
     align-items: flex-start;
+
     .left-list {
       flex: 2;
+
       .buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
     }
+
     .mail-list {
       flex: 2;
       background: #23263c;
@@ -502,6 +522,7 @@ export default defineComponent({
       overflow: hidden;
       display: flex;
       flex-direction: column;
+
       .mailbox-list {
         display: flex;
         flex-direction: column;
@@ -510,12 +531,15 @@ export default defineComponent({
         overflow: auto;
         padding: 20px;
         min-height: 445px;
+
         &.no-message {
           justify-content: center;
           align-items: center;
         }
+
         .mailbox-item {
           border-bottom: 1px solid #51518c;
+
           &.unread {
             &:before {
               position: absolute;
@@ -531,6 +555,7 @@ export default defineComponent({
               display: inline-block;
             }
           }
+
           display: flex;
           padding: 20px;
           gap: 10px;
@@ -541,6 +566,7 @@ export default defineComponent({
           position: relative;
           cursor: pointer;
           z-index: 5;
+
           .status {
             font-weight: bold;
             font-size: 10px;
@@ -552,6 +578,7 @@ export default defineComponent({
             right: 20px;
             top: -10px;
           }
+
           .mailbox-title {
             flex: 1;
             // font-size: 16px;
@@ -562,6 +589,7 @@ export default defineComponent({
             vertical-align: middle;
             position: relative;
           }
+
           .mailbox-content {
             width: 100%;
             overflow: hidden;
@@ -573,6 +601,7 @@ export default defineComponent({
             // text-overflow: ellipsis;
             // white-space: nowrap;
           }
+
           .txt-right {
             flex: 1;
             color: #a3a3a3;
@@ -589,9 +618,11 @@ export default defineComponent({
         background: #2b2b4b;
         border-radius: 10px;
         margin-left: 0;
+
         &.active {
           display: block;
         }
+
         .b-button {
           background: #23263c;
           cursor: pointer;
@@ -600,6 +631,7 @@ export default defineComponent({
           border-radius: 10px;
           margin: 10px;
         }
+
         .rounded-btn {
           margin-bottom: 10px;
           justify-content: flex-end;
@@ -607,6 +639,7 @@ export default defineComponent({
 
         .mailbox-item {
           padding: 20px;
+
           &.active {
             &:after {
               content: "";
@@ -621,11 +654,13 @@ export default defineComponent({
               right: 0;
             }
           }
+
           .mailbox-title {
             font-size: 30px;
             line-height: 30px;
             margin-bottom: 10px;
           }
+
           .mailbox-content {
             width: 100%;
             color: #ffffff;
@@ -633,12 +668,14 @@ export default defineComponent({
             max-height: 360px;
             overflow: auto;
           }
+
           .txt-right {
             margin-bottom: 20px;
             text-align: left;
           }
         }
       }
+
       .closedmail {
         color: #ffffff;
         display: flex;
@@ -649,6 +686,7 @@ export default defineComponent({
         margin-left: 0;
         display: none;
       }
+
       .mail-txtarea {
         // height: 180px;
       }
@@ -656,6 +694,7 @@ export default defineComponent({
       .viewmail {
         flex: 3;
         padding: 20px;
+
         .newmail-section {
           text-align: right;
         }
@@ -663,6 +702,7 @@ export default defineComponent({
     }
   }
 }
+
 .write-btn {
   width: 300px;
   height: 50px;
@@ -678,10 +718,12 @@ export default defineComponent({
   .ant-input {
     background: #2b2b4b;
   }
+
   .mailbox-list {
     .mailbox-item {
       width: 100%;
       padding: 15px 18px 18px 18px;
+
       &.read,
       &.unread {
         &::after {
@@ -690,39 +732,48 @@ export default defineComponent({
           line-height: 32px;
         }
       }
+
       .mailbox-content {
         width: 100%;
         overflow: hidden;
       }
     }
   }
+
   .bottom-content {
     .mail-list {
       flex-direction: column;
+
       .openedmail {
         display: none;
         margin: 20px;
+
         &.active {
           display: block;
         }
+
         .b-button {
           display: inline-block;
           margin-bottom: 10px;
         }
       }
+
       .closedmail {
         display: none;
       }
+
       .mailbox-list {
         &.hide {
           display: none;
         }
       }
     }
+
     .viewmail {
       width: 100%;
     }
   }
+
   .pagination-wrapper {
     &.hidden {
       display: none;

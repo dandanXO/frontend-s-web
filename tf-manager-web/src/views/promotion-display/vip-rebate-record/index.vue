@@ -181,13 +181,21 @@
           align="center"
           fixed="right"
           width="180"
-          v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:vip-rebate-record:update'])"
+          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip-rebate-record:update']) || hasPermission(['sys:vip-rebate-record:detail']))"
         >
           <template #default="scope">
             <el-button
-              v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="warning"
+              v-permission="['sys:vip-rebate-record:detail']"
+              @click="showDetails(scope.row)"
+            >
+              {{ t('fields.view') }}
+            </el-button>
+            <el-button
+              v-if="scope.row.status === 'PENDING'"
+              size="mini"
+              type="success"
               v-permission="['sys:vip-rebate-record:update']"
               @click="showEdit(scope.row)"
             >
@@ -233,12 +241,13 @@
   </el-dialog>
 
   <el-dialog
-    :title="t('fields.adjustAmount')"
+    :title="uiControl.dialogTitle"
     v-model="uiControl.dialogVisible"
     append-to-body
-    width="580px"
+    :width="uiControl.dialogWidth"
   >
     <el-form
+      v-if="uiControl.dialogType === 'ADJUST'"
       ref="adjustForm"
       :model="form"
       :rules="formRules"
@@ -262,6 +271,56 @@
         </el-button>
       </div>
     </el-form>
+    <el-table
+      v-else
+      size="small"
+      :data="recordDetails"
+      row-key="id"
+      v-loading="page.detailsLoading"
+      :empty-text="t('fields.noData')"
+    >
+      <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120">
+        <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
+          <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
+            <el-link type="primary">{{ scope.row.loginName }}</el-link>
+          </router-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="betAmount" :label="t('fields.betAmount')" align="center" min-width="100">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.betAmount,type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="rebateAmount" :label="t('fields.rebateAmount')" align="center" min-width="100">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.rebateAmount,type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="rebatePercentage" :label="t('fields.rebatePercentage')" align="center" min-width="120">
+        <template #default="scope">
+          {{ (scope.row.rebatePercentage).toFixed(2) }} %
+        </template>
+      </el-table-column>
+      <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120">
+        <template #default="scope">
+          {{ scope.row.platform }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="100">
+        <template #default="scope">
+          {{ t('gameType.' + scope.row.gameType) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="recordTime" :label="t('fields.rebateDistributeTime')" align="center" min-width="150">
+        <template #default="scope">
+          <span v-if="scope.row.recordTime === null">-</span>
+          <span
+            v-if="scope.row.recordTime !== null"
+            v-formatter="{data: scope.row.recordTime, formatter: 'YYYY-MM-DD', type: 'date'}"
+          />
+        </template>
+      </el-table-column>
+    </el-table>
   </el-dialog>
 </template>
 
@@ -277,18 +336,23 @@ import { TENANT } from '../../../store/modules/user/action-types';
 import { adjustAmount, distribute, getTotal, getVipRebateRecord } from '../../../api/vip-rebate-record';
 import { required } from '../../../utils/validate';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { getVipRebateRecordDetails } from '../../../api/vip-rebate-record-detail';
 
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const adjustForm = ref(null)
+const recordDetails = ref([])
 const site = ref(null)
 const siteList = reactive({
   list: []
 });
 const exportPercentage = ref(0);
 const uiControl = reactive({
+  dialogTitle: "",
+  dialogType: "",
   dialogVisible: false,
+  dialogWidth: '580px',
   progressBarVisible: false,
   gameType: [
     { key: 1, displayName: "SLOT", value: "SLOT" },
@@ -337,6 +401,7 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+  detailsLoading: false,
   totalRebateAmount: 0
 });
 
@@ -419,8 +484,29 @@ function showEdit(adjust) {
     adjustForm.value.resetFields()
   }
   form.id = adjust.id
-  uiControl.dialogTitle = t('fields.adjust')
+  uiControl.dialogTitle = t('fields.adjustAmount')
+  uiControl.dialogType = 'ADJUST'
+  uiControl.dialogWidth = '580px'
   uiControl.dialogVisible = true
+}
+
+async function showDetails(record) {
+  uiControl.dialogTitle = t('fields.vipRebateDetails')
+  uiControl.dialogType = 'DETAILS'
+  uiControl.dialogWidth = '1000px'
+  uiControl.dialogVisible = true
+
+  const query = {};
+  query.siteId = request.siteId;
+  query.memberId = record.memberId;
+  query.recordTime = record.recordTime;
+  query.platform = record.platform;
+  query.gameType = record.gameType;
+
+  page.detailsLoading = true;
+  const { data: ret } = await getVipRebateRecordDetails(query);
+  recordDetails.value = ret;
+  page.detailsLoading = false;
 }
 
 async function adjust() {

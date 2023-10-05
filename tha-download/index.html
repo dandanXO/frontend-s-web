@@ -100,12 +100,12 @@
 
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
             console.log("iOS");
-            $("#download-link").attr("href", "https://jo2.app/download/jolly88.mobileconfig");
+            $("#download-link").attr("href", "./download/jolly88.mobileconfig");
             $("#download-link").attr("download", "jolly88.mobileconfig");
         } else {
             //Android or Browser.
             //Change URL ./download/jb_app.apk when go Live.
-            $("#download-link").attr("href", "https://jo2.app/download/jb_app.apk");
+            $("#download-link").attr("href", "./download/jb_app.apk");
         }
 
     });

@@ -56,14 +56,14 @@
            @click="switchMenu('slots')"
       >
         <img src="../assets/images/index/home-slot.png"/>
-        <span>สล็อต</span>
+        <span>{{ $t('lang.slot_header') }}</span>
       </div>
       <div class="game-board-item"
            :class="(currentSelectedMenu=='sport') ? 'active-board' : ''"
            @click="switchMenu('sport')"
       >
         <img src="../assets/images/index/home-sport.png"/>
-        <span>กีฬา</span>
+        <span>{{ $t('lang.sport_header') }}</span>
       </div>
 
       <div class="game-board-item"
@@ -71,7 +71,7 @@
            @click="switchMenu('live')"
       >
         <img src="../assets/images/index/home-live.png"/>
-        <span>ไลฟ์คาสิโน</span>
+        <span>{{ $t('lang.live_header') }}</span>
       </div>
 
       <div class="game-board-item"
@@ -79,7 +79,7 @@
            @click="switchMenu('fish')"
       >
         <img src="../assets/images/index/home-fish.png"/>
-        <span>ยิงปลา</span>
+        <span>{{ $t('lang.fish_header') }}</span>
       </div>
 
       <div class="game-board-item"
@@ -87,7 +87,7 @@
            @click="switchMenu('cf')"
       >
         <img src="../assets/images/index/home-cf.png"/>
-        <span>ยิง</span>
+        <span>{{ $t('lang.fish2_list') }}</span>
       </div>
 
       <div class="game-board-item"
@@ -103,7 +103,7 @@
            @click="switchMenu('lottery')"
       >
         <img src="../assets/images/index/home-lottery.png"/>
-        <span>ลอตเตอรี่</span>
+        <span>{{ $t('lang.lottery_list') }}</span>
       </div>
 
 
@@ -122,9 +122,11 @@
            id="id-sport-board"
            v-if="currentSelectedMenu === 'sport'">
         <div class="game-item btn-pointer mid-grid-column"
-             @click="playGame('Sport','SABA')"
+             v-for="(sport,index) in sportsGame"
+             :key="`sports-${index}`"
+             @click="playGame(sport.name,sport.code, sport.gameCode)"
         >
-          <img src="../assets/images/games/sport/SABA.png"/>
+          <img :src="require(`../assets/images/games/sport/${sport.gameName}.png`)"/>
         </div>
       </div>
     </Transition>
@@ -180,8 +182,15 @@
            id="id-slot-board"
            v-if="currentSelectedMenu === 'slots' && !isShow"
       >
+
+        <div class="game-item btn-pointer btn-slot-game"
+             @click="showFavourite()"
+        >
+          <img :src="require('../assets/home/slot/slot-favourite-board.png')">
+        </div>
+
         <template v-for="p in platforms" :key="p">
-          <div class="game-item btn-pointer"
+          <div class="game-item btn-pointer btn-slot-game"
                @click="selectSlotPlat(p)"
           >
             <img :src="require('../assets/home/slot/' + p.code + '.png')">
@@ -194,6 +203,7 @@
         </div>
       </div>
     </Transition>
+
     <Transition>
       <div class="game-scroll-lists"
            id="id-slot-board"
@@ -201,6 +211,13 @@
 
         <q-scroll-area style="height: 500px;width: 120px; max-width: 120px;">
           <div class="bookmarks">
+
+            <div class="plat-item"
+                 :class="{ active: selectedPlatId === -99 }"
+                 @click="showFavourite()">
+              <img :src="require('../assets/home/slot/favourite-icon.png')">
+            </div>
+
             <div
                 class="plat-item"
                 v-for="p in platforms"
@@ -220,7 +237,30 @@
               size="8em"
           />
         </div>
-        <q-scroll-area v-if="!isLoading" ref="scrollSlotRef" style="height: 500px;width:calc(100% - 120px);">
+        <div v-if="!isLoading && selectedPlatId === -99">
+          &nbsp;&nbsp;
+<!--          FAVOURITE-->
+        </div>
+        <q-scroll-area v-if="!isLoading && selectedPlatId !== -99" ref="scrollSlotRef" style="height: 500px;width:calc(100% - 120px);">
+          <div class="search-list">
+            <q-form @submit="searchList">
+              <q-input
+                  color="white" bg-color="primary" filled class="search-input" v-model="gamePage.searchKey"
+                       :label="$t('lang.keyin_keyword')">
+                <template v-slot:prepend>
+                  <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer"/>
+                </template>
+                <template v-slot:append>
+                  <q-icon style="margin-right: 5px;" @click="clearSearchInput" class="clear-input-icon btn-pointer" name="close"></q-icon>
+
+                  <q-icon color="brightbtn" name="search" style="" @click="searchList" class="clear-input-icon btn-pointer"></q-icon>
+
+<!--                  <q-btn type="submit" @click="searchList" :label="$t('lang.search')" color="brightbtn"/>-->
+
+                </template>
+              </q-input>
+            </q-form>
+          </div>
           <div class="slot-grid" style="padding-bottom: 20px;">
             <div
                 v-for="(game, index) in gamePage.gameList"
@@ -229,7 +269,7 @@
                 v-intersection="onIntersection"
                 @click="openGame(game.name, game.code, selectedPlat.status)"
                 style="height: auto;"
-                class="btn-pointer"
+                class="btn-pointer btn-slot-game inner-slot-game"
             >
               <transition name="in-view">
                 <q-list class="q-col-gutter-none">
@@ -280,7 +320,7 @@
            v-if="currentSelectedMenu === 'fish' && !isShow"
       >
         <template v-for="p in fishPlatforms" :key="p">
-          <div class="game-item btn-pointer"
+          <div class="game-item btn-pointer btn-slot-game"
                @click="selectFishPlat(p)"
           >
             <img :src="require('../assets/home/fish/' + p.code + '.png')">
@@ -316,6 +356,25 @@
           />
         </div>
         <q-scroll-area v-if="!isLoading" ref="scrollPageRef" style="height: 500px;width:calc(100% - 120px);">
+          <div class="search-list">
+            <q-form @submit="searchList">
+              <q-input
+                  color="white" bg-color="primary" filled class="search-input" v-model="gamePage.searchKey"
+                  :label="$t('lang.keyin_keyword')">
+                <template v-slot:prepend>
+                  <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer"/>
+                </template>
+                <template v-slot:append>
+                  <q-icon style="margin-right: 5px;" @click="clearSearchInput" class="clear-input-icon btn-pointer" name="close"></q-icon>
+
+                  <q-icon color="brightbtn" name="search" style="" @click="searchList" class="clear-input-icon btn-pointer"></q-icon>
+
+                  <!--                  <q-btn type="submit" @click="searchList" :label="$t('lang.search')" color="brightbtn"/>-->
+
+                </template>
+              </q-input>
+            </q-form>
+          </div>
           <div class="slot-grid" style="padding-bottom: 20px;">
             <div
                 v-for="(game, index) in gamePage.gameList"
@@ -324,7 +383,7 @@
                 v-intersection="onIntersection"
                 @click="openGame(game.name, game.code, selectedPlat.status)"
                 style="height: auto;"
-                class="btn-pointer"
+                class="btn-pointer btn-slot-game inner-slot-game"
             >
               <transition name="in-view">
                 <q-list class="q-col-gutter-none">
@@ -389,49 +448,57 @@
            id="id-casual-board"
            v-if="currentSelectedMenu === 'casual' && isShow"
       >
-        <div class="game-item btn-pointer"
-             v-for="(game, index) in miniGames"
-             :key="index"
-             @click="playGame(game.code, game.id, selectedPlat.status)"
-        >
-          <img :src="require('../assets/home/casual/' + game.code + '.png')">
+        <div class="loading-div" v-if="isLoading">
+          <q-spinner-hourglass
+              :color="ui.themeColor"
+              size="8em"
+          />
         </div>
-
-
-        <div class="game-item minigame-select-div"
-             v-for="(game, index) in miniGamesMore"
-             :key="index"
-             @click="showTypeH5(game.id)"
-             @mouseover="showTypeWeb(game.id)"
-             @mouseleave="showTypeWeb(0)"
-        >
-          <img :src="game.logo">
-
-          <transition
-              appear
+        <template v-if="!isLoading">
+          <div class="game-item btn-pointer"
+               v-for="(game, index) in miniGames"
+               :key="index"
+               @click="playGame(game.name, 'TFGaming' , 'casual_' +  game.code)"
           >
-            <div class="select-type-div"
-                 v-if="showMiniType == game.id"
-            >
-              <div class="game-type btn-pointer" id="copper-type"
-                   @click="openMiniGame(game.id, game.copper, selectedPlat.status, 3)"
-              >
-                10 - 3,000
-              </div>
-              <div class="game-type btn-pointer" id="silver-type"
-                   @click="openMiniGame(game.id, game.silver, selectedPlat.status, 2)"
-              >
-                500 - 100K
-              </div>
-              <div class="game-type btn-pointer" id="gold-type"
-                   @click="openMiniGame(game.id, game.gold, selectedPlat.status, 1)"
-              >
-                1,000 - 20K
-              </div>
-            </div>
-          </transition>
+            <img :src="require('../assets/home/casual/' + game.code + '.png')">
+          </div>
 
-        </div>
+          <div class="game-item minigame-select-div"
+               v-for="(game, index) in miniGamesMore"
+               :key="index"
+               @click="showTypeH5(game.id)"
+               @mouseover="showTypeWeb(game.id)"
+               @mouseleave="showTypeWeb(0)"
+          >
+            <img :src="game.logo">
+
+            <transition
+                appear
+            >
+              <div class="select-type-div"
+                   v-if="showMiniType == game.id"
+              >
+                <div class="game-type btn-pointer" id="copper-type"
+                     @click="playGame(game.name, 'TFGaming' , 'casual_' + game.copper)"
+                >
+                  10 - 3,000
+                </div>
+                <div class="game-type btn-pointer" id="silver-type"
+                     @click="playGame(game.id, 'TFGaming' , 'casual_' +  game.silver)"
+                >
+                  500 - 100K
+                </div>
+                <div class="game-type btn-pointer" id="gold-type"
+                     @click="playGame(game.id, 'TFGaming', 'casual_' +  game.gold)"
+                >
+                  1,000 - 20K
+                </div>
+              </div>
+            </transition>
+
+          </div>
+
+        </template>
 
       </div>
     </Transition>
@@ -440,8 +507,7 @@
 
   <div class="home-bottom-section">
     <div class="marquee">
-      <div class="track">
-        <div class="content">
+      <Vue3Marquee pause-on-hover pause-on-click>
           <img src="../assets/logo/AE.png" height="30"/>
           <img src="../assets/logo/AMBSLOT.png" height="30"/>
           <img src="../assets/logo/ATA.png" height="30"/>
@@ -459,16 +525,14 @@
           <img src="../assets/logo/TF88.png" height="30"/>
           <img src="../assets/logo/WM.png" height="30"/>
           <img src="../assets/logo/YGG.png" height="30"/>
-        </div>
-      </div>
+      </Vue3Marquee>
     </div>
 
     <div class="bottom-footer">
       <img class="footer-logo" src="../assets/logo.png"/>
-      <p>เงื่อนไขการบริการ Jolly88 (TNC) : บริการที่เราให้บริการอยู่ภายใต้ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว
-        โปรดดูข้อมูลเพิ่มเติมในข้อตกลงการให้บริการของเรา.</p>
+      <p>{{ $t('lang.footer_tnc') }}</p>
 
-      <span>Jolly88 2023@All Rights Reserved.</span>
+      <span>{{ $t('lang.footer_all_rights') }}</span>
     </div>
   </div>
 
@@ -478,7 +542,12 @@
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%;" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
-        <div class="menu-title">ประกาศ</div>
+
+        <div class="menu-title flex justify-between items-center">
+          <div style="margin-right:auto;" >&nbsp;</div>
+          <div>{{ $t('lang.announcement') }}</div>
+          <q-btn style="margin-left:auto;" icon="close" flat round dense v-close-popup/>
+        </div>
 
         <q-tabs
             v-model="activeKey"
@@ -538,6 +607,8 @@ import GameModal from "components/modal/GameModal";
 import * as _ from "lodash";
 import MarqueeText from 'vue-marquee-text-component';
 import BacktoTop from "components/backtotop.vue"
+import { Vue3Marquee } from 'vue3-marquee'
+
 
 import {useUI} from "stores/ui";
 import {isMobile} from "boot/utils";
@@ -548,6 +619,7 @@ export default defineComponent({
     GameModal,
     MarqueeText,
     BacktoTop,
+    Vue3Marquee,
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
@@ -576,12 +648,6 @@ export default defineComponent({
     };
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
-    };
-    const openMiniGame = (gameName, gameCode, gameStatus, type) => {
-      console.log("openMiniGame")
-      if (isGoMiniGame.value) {
-        gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
-      }
     };
     const pokerGames = [
       // {
@@ -644,27 +710,21 @@ export default defineComponent({
         text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ",
       },
     ];
-    //NOT USING.
     const esportsGame = [
       {
         code: "TFGaming",
         name: "TF Gaming",
         gameName: "AE Sexy",
         gameCode: "MX-LIVE-001",
-        bg: require("../assets/home/e-sport/shadebg.png"),
-        main: require("../assets/home/e-sport/tf88.png"),
         logo: require("../assets/logo/TF88.png")
       }
     ];
     const sportsGame = [
       {
-        code: "TFGaming",
-        name: "TF Gaming",
-        gameName: "AE Sexy",
-        gameCode: "MX-LIVE-001",
-        bg: require("../assets/home/e-sport/shadebg.png"),
-        main: require("../assets/home/sport/cmd.png"),
-        logo: require("../assets/logo/CMD.png")
+        code: "SABA",
+        name: "SABA Sport",
+        gameName: "SABA",
+        gameCode: "SABA"
       }
     ];
     const platformMinigame = ref([]);
@@ -672,7 +732,6 @@ export default defineComponent({
     const miniGamesMore = ref([
       {
         name: "KOG Draw",
-        id: 8739,
         logo: require("../assets/home/casual/2.png"),
         copper: "",
         silver: "",
@@ -680,7 +739,6 @@ export default defineComponent({
       },
       {
         name: "DOTA 2 Treasure",
-        id: 8742,
         logo: require("../assets/home/casual/5.png"),
         copper: "",
         silver: "",
@@ -688,7 +746,6 @@ export default defineComponent({
       },
       {
         name: "LOL Draft",
-        id: 8745,
         logo: require("../assets/home/casual/8.png"),
         copper: "",
         silver: "",
@@ -755,8 +812,6 @@ export default defineComponent({
         switchPlat(fishPlatforms.value[0], menu);
       } else if (menu === "poker") {
         switchPlat(pokerGames[0], menu);
-      } else if (menu === "esports") {
-        switchPlat(esportsGame[0], menu);
       } else if (menu === "sport") {
         switchPlat(sportsGame[0], menu);
       } else if (menu === "casual") {
@@ -803,6 +858,10 @@ export default defineComponent({
         liveTabs.value = plat.name;
       }
     };
+    const clearSearchInput = () => {
+      gamePage.searchKey= "";
+      changePage(1, gamePage.pageSize);
+    }
     const searchList = () => {
       if (gamePage.searchKey) {
         gamePage.gameList = gameListData.value.filter((game) => {
@@ -856,7 +915,6 @@ export default defineComponent({
             // debugger;
             if (currentSelectedMenu.value === 'casual') {
               miniGames.value = [];
-
               let minis = _.orderBy(res, "sequence");
               minis.forEach((mini) => {
                 mini.lists = [];
@@ -870,6 +928,21 @@ export default defineComponent({
                 }
               });
 
+              // console.log(games);
+
+              games.forEach((game) => {
+                let index = _.findIndex(miniGamesMore.value, function (o) {
+                  return game.name.indexOf(o.name) > -1
+                })
+                if (game.name.indexOf("(铜)") > -1) {
+                  miniGamesMore.value[index]["copper"] = game.code;
+                } else if (game.name.indexOf("(银)") > -1) {
+                  miniGamesMore.value[index]["silver"] = game.code;
+                } else if (game.name.indexOf("(金)") > -1) {
+                  miniGamesMore.value[index]["gold"] = game.code;
+                }
+              })
+              // console.log(miniGamesMore.value);
 
             } else {
               res.forEach((element) => {
@@ -904,7 +977,7 @@ export default defineComponent({
                 element.gameType.includes("SLOT")
             );
             platformMinigame.value = data.filter((element) =>
-                element.gameType.includes("CASUAL")
+                element.gameType.includes("ESPORT")
             );
             if (currentSelectedMenu.value === "slots") {
               switchPlat(platforms.value[0], "slots");
@@ -917,8 +990,8 @@ export default defineComponent({
               switchPlat(fishPlatforms.value[0], "fish");
             }
 
-            console.log("After");
-            console.log(platformMinigame.value);
+            // console.log("After");
+            // console.log(platformMinigame.value);
             // alert(platformMinigame.value.length);
             // if (!route.query.plat) {
             //   switchPlat(platforms.value[0], "slot");
@@ -1032,7 +1105,6 @@ export default defineComponent({
     }
     const isGoMiniGame = ref(false);
     const showTypeH5 = (id) => {
-      console.log("showTypeH5");
       if (isMobile()) {
         showMiniType.value = id;
         setTimeout(() => {
@@ -1040,6 +1112,12 @@ export default defineComponent({
         }, 500)
       }
     }
+
+    const showFavourite= () => {
+      isShow.value = true;
+      selectedPlatId.value = -99;
+    }
+
     const showMiniType = ref(0);
     const showTypeWeb = (id) => {
       showMiniType.value = id;
@@ -1051,7 +1129,6 @@ export default defineComponent({
     return {
       imageLoading,
       slide: ref(0),
-      tab: ref("slots"),
       imgURL: process.env.IMAGE_CDN + "/",
       banners,
       store,
@@ -1077,10 +1154,12 @@ export default defineComponent({
       scrollSlotRef,
       selectedPlatId,
       searchList,
+      clearSearchInput,
       liveTabs,
       selectedLiveTab,
       currentSelectedMenu,
       esportsGame,
+      showFavourite,
       selectFishPlat,
       selectSlotPlat,
       selectCasualPlat,
@@ -1093,7 +1172,6 @@ export default defineComponent({
       showTypeWeb,
       showMiniType,
       openGame,
-      openMiniGame,
       scrollPageRef,
       announcementList,
       isStationNotice,
@@ -1242,6 +1320,7 @@ export default defineComponent({
 }
 
 .game-grid-lists {
+  position:relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: calc(95% - 20px);
@@ -1312,7 +1391,7 @@ export default defineComponent({
     flex-direction: column;
     width: 100%;
     gap: 12px;
-    padding: 6px 12px 20px;
+    padding: 6px 12px 60px;
 
     .footer-logo {
       text-align: center;
@@ -1525,6 +1604,30 @@ export default defineComponent({
 
 
     }
+  }
+}
+
+.search-list{
+  display:flex;
+  margin-bottom: 16px;
+  margin-right: 10px;
+
+  justify-content: flex-end;
+
+  .search-input{
+    max-width: 450px;
+    margin-left:auto;
+
+    &.q-field--filled .q-field__control{
+      border-radius:12px;
+    }
+  }
+
+  .clear-input-icon{
+    cursor: pointer;
+    opacity: 0.8;
+
+
   }
 }
 

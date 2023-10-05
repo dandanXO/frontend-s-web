@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <PanelWrapper>
-      <template #title>เลือกวิธีฝากเงิน"</template>
+      <template #title>{{ $t('lang.select_deposit_method')}}</template>
       <div class="node-wrapper">
         <Node
           :level="1"
@@ -13,7 +13,7 @@
       </div>
       <div class="deposit-container">
         <q-form ref="depositForm" class="q-gutter-y-xs">
-          <p>กรุณาใส่จำนวนเงินที่ต้องการฝาก</p>
+          <p>{{  $t('lang.please_enter_deposit_amount') }}</p>
           <q-input
             v-if="amountList.length === 0"
             ref="depositAmtRef"
@@ -30,12 +30,12 @@
           <q-select
             v-else
             ref="depositAmtRef"
-            label="กรุณาใส่จำนวนเงินที่ต้องการฝาก"
+            :label="$t('lang.enter_deposit_amount')"
             name="localAmount"
             filled
             :options="amountList"
             v-model="form.localAmount"
-            placeholder="ใส่ยอดเงิน"
+            :placeholder="$t('lang.enter_amount_money')"
             color="white"
             :rules="verifyDepositAmount"
             padding="none"
@@ -45,7 +45,6 @@
           <div
             v-if="isUSDT && activeMethod.currencyRate"
             class="q-pb-md"
-            label="อัตราการแลก"
           >
             <span style="color: #9bffd1"
               >1.00 USDT ≈ {{ activeMethod.currencyRate }} THB</span
@@ -67,7 +66,7 @@
             class="q-mt-md"
             filled
             dense
-            label="เลือกโปรโมชั่น"
+            :label="$t('lang.choose_promotion')"
             :options="unselectedPrivileges"
             v-model="selectedPrivilege"
             emit-value
@@ -95,13 +94,13 @@
           </q-select>
           <div class="q-mt-md" v-html="activeMethod.msg"></div>
           <div class="q-mt-md text-brand">
-            เพื่อป้องกันยอดเงินสูญหาย กรุณาใส่ยอดให้ตรงกับที่ระบบแจ้งค่ะ
+            {{ $t('lang.to_prevent_enter_amount_notified') }}
           </div>
           <div class="q-mt-md">
             <q-btn
               rounded
               color="brand"
-              label="ยืนยันฝากเงิน"
+              :label="$t('lang.confirm_deposit')"
               class="btn btn-lg btn-brand q-mx-auto"
               @click="confirmDeposit"
             />
@@ -114,10 +113,10 @@
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
-        คุณจะถูกเปลี่ยนไปยังหน้าธ.ของคุณเพื่อทำงานฝากเงิน<br /><br />
-        หากดำเนินการสำเร็จจะแจ้งที่หน้านี้
+        {{ $t('lang.you_will_redirect_to_bank_page') }}<br /><br />
+        {{ $t('lang.operation_is_successful_will_notified') }}
       </q-card-section>
-      <q-btn @click="clearInfo" label="เข้าใจแล้ว" color="brand" />
+      <q-btn @click="clearInfo" :label="$t('lang.understood')" color="brand" />
     </q-card>
   </q-dialog>
 </template>
@@ -133,9 +132,10 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
+import {useI18n} from "vue-i18n";
 
 var qs = require("qs");
-
+const {t} = useI18n()
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
@@ -156,16 +156,16 @@ const hasPrivilege = ref(false);
 const isOpenFromAccount = ref(false);
 const isUSDT = ref(false);
 const verifyDepositAmount = ref([
-  (val) => !!val || "กรุณาใส่ยอดเงินฝาก",
+  (val) => !!val || t('lang.please_enter_the_deposit_amount'),
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
-    "ยอดเงินฝากระหว่าง " +
+    t('lang.deposit_amount_in_between') +
       calculatedMinDeposit.value +
       " - " +
       activeMethod.value.depositMax,
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
-    "ยอดเงินฝากระหว่าง " +
+    t('lang.deposit_balance_in_between') +
       calculatedMinDeposit.value +
       " - " +
       activeMethod.value.depositMax,
@@ -183,11 +183,12 @@ const checkAmount = reactive({
   errorMessage: "",
 });
 
+
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 function initPay() {
   $q.loading.show({
-    message: "กำลังโหลด...",
+    message: t('lang.loading') + "...",
   });
 
   payMethods.value = [];
@@ -459,7 +460,7 @@ async function confirmDeposit() {
 const amountPlaceholder = computed(() => {
   if (calculatedMinDeposit.value && activeMethod.value.depositMax)
     return `(${calculatedMinDeposit.value} - ${activeMethod.value.depositMax})`;
-  else return `ใส่ยอดเงิน`;
+  else return t('lang.enter_amount_money');
 });
 
 onMounted(() => {

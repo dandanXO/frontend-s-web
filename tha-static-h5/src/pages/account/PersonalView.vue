@@ -10,26 +10,26 @@
                :class="(select_menu === 'personal') ? 'is-active' : ''"
                @click="selectTab('personal')"
           >
-            ข้อมูลพื้นฐาน
+            {{ $t('lang.basic_information') }}
           </div>
           <div class="top-tab-btn btn-pointer"
                :class="(select_menu === 'password') ? 'is-active' : ''"
                @click="selectTab('password')"
           >
-            เปลี่ยนรหัสผ่าน
+            {{ $t('lang.change_password') }}
           </div>
-          <div class="top-tab-btn btn-pointer"
-               :class="(select_menu === 'bank') ? 'is-active' : ''"
-               @click="selectTab('bank')"
-          >
-            บัญชีถอนเงิน
-          </div>
-          <div class="top-tab-btn btn-pointer"
-               :class="(select_menu === 'verify') ? 'is-active' : ''"
-               @click="selectTab('verify')"
-          >
-            ตรวจสอบความปลอดภัย
-          </div>
+<!--          <div class="top-tab-btn btn-pointer"-->
+<!--               :class="(select_menu === 'bank') ? 'is-active' : ''"-->
+<!--               @click="selectTab('bank')"-->
+<!--          >-->
+<!--            {{ $t('lang.withdraw_account') }}-->
+<!--          </div>-->
+<!--          <div class="top-tab-btn btn-pointer"-->
+<!--               :class="(select_menu === 'verify') ? 'is-active' : ''"-->
+<!--               @click="selectTab('verify')"-->
+<!--          >-->
+<!--            {{ $t('lang.security_check') }}-->
+<!--          </div>-->
         </div>
 
 
@@ -83,7 +83,7 @@
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
-                  ชื่อ
+                  ID
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -99,9 +99,9 @@
                       color="white"
                       filled
                       v-model="formDetail.nickName"
-                      placeholder="ชื่อ"
+                      placeholder="ID"
                       :rules="[
-                    (val) => (val && val.length > 0) || 'ชื่อ-นามสกุล'
+                    (val) => (val && val.length > 0) || $t('lang.enter_ur_id')
                   ]"
                   >
                   </q-input>
@@ -112,7 +112,7 @@
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
-                  ชื่อ
+                  {{ $t('lang.name') }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -124,9 +124,10 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.realName && isEdit == false"
-                    @click="isEdit=!isEdit;"
                 >
-                  <span>แก้ไข</span><RiEditBoxLine />
+<!--                  <span>{{ $t('lang.edit') }}</span>-->
+<!--                  <RiEditBoxLine/>-->
+                  -
                 </div>
 
 
@@ -136,23 +137,18 @@
                       color="white"
                       filled
                       v-model="formDetail.realName"
-                      placeholder="ชื่อ"
+                      :placeholder="$t('lang.name')"
                       :rules="[
-                    (val) => (val && val.length > 0) || 'ชื่อ-นามสกุล'
+                    (val) => (val && val.length > 0) || $t('lang.enter_lastname')
                   ]"
                   >
-                    <!-- <template v-slot:append>
-                      <q-avatar>
-                        <RiSendPlane2Line @click="updateState('realName')" />
-                      </q-avatar>
-                    </template> -->
                   </q-input>
                 </div>
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
-                  ชื่อภาษาอังกฤษ
+                  {{ $t('lang.surname') }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -163,9 +159,11 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.name2 && isEdit == false"
-                    @click="isEdit=!isEdit;"
                 >
-                  <span>แก้ไข</span><RiEditBoxLine />
+<!--                  @click="isEdit=!isEdit;"-->
+<!--                  <span>{{ $t('lang.edit') }}</span>-->
+<!--                  <RiEditBoxLine/>-->
+                  -
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.name2">
@@ -174,20 +172,15 @@
                       color="white"
                       filled
                       v-model="formDetail.name2"
-                      placeholder="ชื่อภาษาอังกฤษ"
+                      :placeholder="$t('lang.surname')"
                   >
-                    <!-- <template v-slot:append>
-                      <q-avatar>
-                        <RiSendPlane2Line @click="updateState('realName')" />
-                      </q-avatar>
-                    </template> -->
                   </q-input>
                 </div>
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiCake2Line/>
-                  วันเกิด
+                  {{ $t('lang.dob') }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -198,15 +191,19 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.birthday && isEdit == false"
-                    @click="isEdit=!isEdit;"
                 >
-                  <span>แก้ไข</span><RiEditBoxLine />
+<!--                  @click="isEdit=!isEdit;"
+-->
+<!--                  <span>{{ $t('lang.edit') }}</span>-->
+<!--                  <RiEditBoxLine/>-->
+                  -
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.birthday">
-                  <q-input ref="birthdayRef" filled v-model="formDetail.birthday" placeholder="วันเกิด"
+                  <q-input ref="birthdayRef" filled v-model="formDetail.birthday"
+                           :placeholder="$t('lang.dob')"
                            :rules="[
-                    (val) => (val && val.length > 0) || 'กรุณายืนยันวันเกิด'
+                    (val) => (val && val.length > 0) || $t('lang.enter_ur_dob')
                   ]">
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
@@ -219,7 +216,7 @@
                             <div class="row items-center justify-end">
                               <q-btn
                                   v-close-popup
-                                  label="Close"
+                                  :label="$t('lang.close_btn')"
                                   color="primary"
                                   flat
                               />
@@ -241,7 +238,7 @@
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiSmartphoneLine/>
-                  เบอร์โทรศัพท์
+                  {{ $t('lang.phone_number') }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -255,9 +252,9 @@
                       color="white"
                       filled
                       v-model="formDetail.phone"
-                      placeholder="เบอร์โทรศัพท์"
+                      :placeholder="$t('lang.phone_number')"
                       :rules="[
-                    (val) => (val && val.length > 0) || 'กรุณายืนยันเบอร์โทรศัพท์',
+                    (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
                     isValidPhone
                   ]"
                   >
@@ -281,12 +278,15 @@
             </div>
 
             <div v-if="isEdit" class="flex items-center justify-center">
-              <q-btn color="brand" class="login-btn common-large-btn" @click="updateState">ยืนยัน</q-btn>
+              <q-btn color="brand" class="login-btn common-large-btn" @click="updateState">{{
+                  $t('lang.confirm')
+                }}
+              </q-btn>
             </div>
           </div>
           <div class="account-tip danger">
-            หากต้องการเปลี่ยนแปลงข้อมูลส่วนบุคคล กรุณาติดต่อลูกค้าสัมพันธ์หรือ
-            <router-link to="/liveChat">ไลฟ์แชท</router-link>
+            {{ $t('lang.if_you_wish_to_change_please_contact') }}
+            <router-link to="/liveChat">{{ $t('lang.live_chat') }}</router-link>
           </div>
           <!--          <div class="buttons">-->
           <!--            <q-btn-->
@@ -316,7 +316,7 @@
               type="password"
               filled
               v-model="updatePwdInfo.oldPassword"
-              label="รหัสผ่านเดิม"
+              :label="$t('lang.old_password')"
               stack-label
               :rules="oldPwdRules"
               clearable
@@ -326,12 +326,12 @@
               type="password"
               filled
               v-model="updatePwdInfo.password"
-              label="รหัสผ่าน"
+              :label="$t('lang.password')"
               :rules="pwdRules"
               clearable
               class="q-mb-lg"
               stack-label
-              hint="ขึ้นอยู่ที่ระหว่าง 6-16 ตัวอักษรและจำเป็นต้องมีการผสมของตัวอักษรและตัวเลข"
+              :hint="$t('lang.hint_new_password')"
           />
 
           <q-input
@@ -339,14 +339,15 @@
               type="password"
               filled
               v-model="updatePwdInfo.confirm_pass"
-              label="ยืนยันรหัสผ่านใหม่"
+              :label="$t('lang.confirm_new_password')"
               :rules="pwdRules"
               clearable
               stack-label
           />
           <div class="flex flex-center gap-10">
-            <q-btn class="common-large-btn" label="ยืนยัน" color="brand" @click="submitUpdatePwd"/>
-            <q-btn class="common-large-btn close-btn" label="ยกเลิก" v-close-popup/>
+            <q-btn class="common-large-btn" :label="$t('lang.confirm')" color="brand" @click="submitUpdatePwd"/>
+            <q-btn class="common-large-btn close-btn"
+                   :label="$t('lang.cancel')" v-close-popup/>
           </div>
         </q-form>
       </div>
@@ -359,7 +360,7 @@
           <q-input
               ref="emailAddressRef"
               v-model="updateSecurityVerified.emailAddress"
-              label="อีเมลล์"
+              :label="$t('lang.email_address')"
               stack-label
               clearable
               filled
@@ -369,16 +370,17 @@
                 ref="verificationCodeRef"
                 type="password"
                 v-model="updateSecurityVerified.verificationCode"
-                placeholder="รหัสยืนยัน"
-                label="อีเมลล์"
+                :placeholder="$t('lang.captcha_code')"
+                :label="$t('lang.captcha_code')"
                 stack-label
                 clearable
                 filled
             />
-            <q-btn class="common-large-btn third-btn" label="รับรหัสยืนยัน" @click="openVerificationModal"/>
+            <q-btn class="common-large-btn third-btn"
+                   :label="$t('lang.enter_veri_code')" @click="openVerificationModal"/>
           </div>
           <div class="flex flex-center gap-10 q-mt-md">
-            <q-btn label="ยืนยัน" class="common-large-btn" color="brand" @click="submitUpdateSecurity"/>
+            <q-btn :label="$t('lang.confirm')" class="common-large-btn" color="brand" @click="submitUpdateSecurity"/>
           </div>
         </q-form>
       </div>
@@ -389,16 +391,16 @@
           transition-hide="slide-down"
       >
         <q-card class="q-pa-md">
-          <div class="modal-head-title q-pb-md">ตรวจสอบรหัสแคปต์ชา</div>
+          <div class="modal-head-title q-pb-md">{{ $t('lang.check_your_captcha_code') }}</div>
           <q-form class="q-gutter-sm">
             <q-input
                 ref="captchaCodeRef"
                 filled
                 type="text"
                 v-model="updateSecurityVerified.captchaCode"
-                label="รหัสยืนยัน"
+                :label="$t('lang.captcha_code')"
                 :rules="[
-              (val) => (val && val.length > 3) || 'ใส่รหัสยืนยัน'
+              (val) => (val && val.length > 3) || $t('lang.enter_captcha_code')
             ]"
                 color="white"
             >
@@ -415,7 +417,7 @@
                 class="common-btn verification-btn"
                 @click.prevent="verifyVerificationCode"
             >
-              {{ isEmailSending ? 'กำลังตรวจสอบ' : 'ปุ่มยืนยัน' }}
+              {{ isEmailSending ? $t('lang.verifying') : $t('lang.confirm_button') }}
             </q-btn>
           </q-form>
         </q-card>
@@ -438,6 +440,7 @@ import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores"
+import {useI18n} from "vue-i18n";
 
 
 export default defineComponent({
@@ -449,11 +452,12 @@ export default defineComponent({
     RiFileUserLine,
     RiCake2Line,
     RiSmartphoneLine,
-    RiEditBoxLine,
+    // RiEditBoxLine,
     // RiEditLine
   },
   setup() {
     // const isCardActive = ref();
+    const {t} = useI18n();
     const qs = require("qs");
     const $q = useQuasar();
     const searchForm = reactive({
@@ -480,7 +484,7 @@ export default defineComponent({
 
     const isValidPhone = () => {
       const phonePattern = /^\d+$/;
-      return phonePattern.test(formDetail.value.phone) || "อนุญาตเฉพาะตัวเลขเท่านั้น";
+      return phonePattern.test(formDetail.value.phone) || t('lang.only_numbers_allowed');
     };
     const personalState = reactive({
       memberInfo: {}
@@ -548,7 +552,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว",
+            message: t('lang.otp_code_has_been_sent'),
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId
@@ -588,11 +592,11 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "ยืนยันสำเร็จ",
+            message: t('lang.successfully_verified'),
             icon: "check_circle_outline"
           });
           updateSecurityModalVisible.value = false
-          loadInfo()
+          loadInfo();
         }).catch((e) => {
           // $q.notify({
           //   color: "negative",
@@ -632,7 +636,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "อัพเดทพาสเวิดเรียบร้อยแล้ว",
+              message: t('lang.password_updated'),
               icon: "check_circle_outline"
             });
             updatePwdModalVisible.value = false;
@@ -659,7 +663,8 @@ export default defineComponent({
     const name2Ref = ref()
     const birthdayRef = ref()
     const phoneRef = ref()
-    const formDetail = ref([{}])
+    const formDetail = ref([{}]);
+    const user= userStore()
 
     const select_menu = ref('personal');
     const selectTab = (tab) => {
@@ -700,11 +705,11 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "อัพเดทเรียบร้อยแล้ว",
+            message: t('lang.updated_successfully'),
             icon: "check_circle_outline"
           });
-          loadInfo()
           isEdit.value = false;
+          location.reload();
         }
       })
       // if (field === 'email') {
@@ -735,12 +740,12 @@ export default defineComponent({
       oldPasswordRef,
       passwordRef,
       oldPwdRules: [
-        val => (val && val.length > 0) || 'กรุณารหัสผ่านเดิม',
-        val => (val.length > 5 && val.length < 12) || 'ความยาวควรเป็น 6 ถึง 12 ตัว'
+        val => (val && val.length > 0) || t('lang.please_enter_old_password'),
+        val => (val.length > 5 && val.length < 12) || t('lang.password_must_between_6_12')
       ],
       pwdRules: [
-        val => (val && val.length > 0) || 'ใส่รหัสผ่าน',
-        val => (val.length > 5 && val.length < 12) || 'ความยาวควรเป็น 6 ถึง 12 ตัว'
+        val => (val && val.length > 0) || t('lang.input_password_empty'),
+        val => (val.length > 5 && val.length < 12) || t('lang.length_between_6_12')
       ],
       isEditRealName,
       isEditEmail,
@@ -874,6 +879,7 @@ export default defineComponent({
   &.verification-btn {
     flex: 1;
     padding: 8px;
+    background: $linear-bg-2
   }
 
   &.submit-btn {
@@ -917,10 +923,10 @@ export default defineComponent({
       vertical-align: middle;
     }
 
-    .edit-div{
+    .edit-div {
       color: $lightblue-color;
 
-      svg{
+      svg {
         fill: $lightblue-color;
       }
     }

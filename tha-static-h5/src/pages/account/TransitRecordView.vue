@@ -5,13 +5,13 @@
     </div>
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped">
-        <q-tab name="deposit" label="ฝาก" />
-        <q-tab name="turnover" label="กำไร" />
-        <q-tab name="withdraw" label="ถอน" />
-        <!-- <q-tab name="transfer" label="โอน" /> -->
-        <q-tab name="rebates" label="เงินคืน" />
-        <q-tab name="gameBetRecord" label="บันทึกการเดิมพัน" />
-        <q-tab name="reminderRecord" label="บันทึกช่วยจำ" />
+        <q-tab name="deposit" :label="$t('lang.deposit')" />
+        <q-tab name="turnover" :label="$t('lang.turnover')" />
+        <q-tab name="withdraw" :label="$t('lang.withdraw')" />
+        <!-- <q-tab name="transfer" :label="$t('lang.transfer')" /> -->
+        <q-tab name="rebates" :label="$t('lang.rebates')" />
+        <q-tab name="gameBetRecord" :label="$t('lang.gameBetRecord')" />
+        <q-tab name="reminderRecord" :label="$t('lang.reminderRecord')" />
       </q-tabs>
       <q-separator />
       <q-tab-panels v-model="recordActive" animated>
@@ -34,7 +34,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -59,7 +59,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -72,7 +72,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -99,7 +99,7 @@
                 <q-btn
                   v-if="props.row.status === 'PENDING'"
                   size="sm"
-                  label="เตือนความจำ"
+                  :label="$t('lang.reminder')"
                   color="brand"
                   @click="($event) => openReminder(props)"
                 />
@@ -126,7 +126,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -151,7 +151,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -164,7 +164,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -206,7 +206,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -231,7 +231,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -244,7 +244,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -271,9 +271,17 @@
                 <q-btn
                   v-if="props.row.status === 'STEP_1'"
                   size="sm"
-                  label="เตือนความจำ"
+                  :label="$t('lang.reminder')"
                   color="brand"
                   @click="($event) => openReminder(props)"
+                />
+
+                <q-btn
+                  v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
+                  size="sm"
+                  :label="$t('lang.confirm_withdraw_success')"
+                  color="brand"
+                  @click="openWithdrawConfirmDialog(props)"
                 />
               </q-td>
             </template>
@@ -298,7 +306,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -323,7 +331,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -336,7 +344,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -381,7 +389,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -406,7 +414,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -419,7 +427,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -457,7 +465,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -482,7 +490,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -522,7 +530,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -547,7 +555,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -560,7 +568,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -601,7 +609,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -626,7 +634,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="ปิด"
+                              :label="$t('lang.close_btn')"
                               color="white"
                               flat
                             />
@@ -639,7 +647,7 @@
               </div>
               <q-btn
                 class="q-mb-md"
-                label="ค้นหา"
+                :label="$t('lang.search')"
                 color="brand"
                 @click="searchRecord"
               />
@@ -680,7 +688,7 @@
         <q-card class="reminder-dialog-card">
           <q-card-section>
             <q-toolbar>
-              <q-toolbar-title>เตือนความจำ</q-toolbar-title>
+              <q-toolbar-title>{{ $t('lang.reminder') }}</q-toolbar-title>
               <q-btn flat v-close-popup round dense icon="close" />
             </q-toolbar>
           </q-card-section>
@@ -697,7 +705,7 @@
               class="reminder-dialog-form"
             >
               <q-input
-                label="หมายเลขสั่งซื้อ"
+                :label="$t('lang.order_number')"
                 filled
                 v-model="reminderForm.orderNo"
                 color="white"
@@ -736,6 +744,20 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+
+      <q-dialog width="100%" v-model="isConfirmWithdraw" no-backdrop-dismiss no-esc-dismis>
+        <q-card style="width: 100%; padding: 20px">
+          <q-card-section class="q-mb-md">
+            系统提示
+            <br/>
+            <br/>
+            确认到账
+          </q-card-section>
+          <q-btn @click="openWithdrawConfirm()" label="确认" color="green" style="margin-right: 8px;"/>
+          <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning"/>
+        </q-card>
+      </q-dialog>
+
     </div>
   </div>
 </template>
@@ -747,10 +769,22 @@ import { useQuasar } from "quasar"
 import { userStore } from "stores/index"
 import FileUpload from "components/FileUpload.vue"
 import moment from "moment"
+import {useI18n} from "vue-i18n";
+
+export default defineComponent({
+  name: "TransitRecordView",
+  components: {
+    FileUpload,
+  },
+  setup() {
+
 var qs = require("qs");
 const store = userStore();
+const {t} = useI18n();
 const uploadFileRef = ref();
 const recordActive = ref("deposit");
+const isConfirmWithdraw = ref(false);
+const passDet = ref(null);
 const reminderForm = reactive({});
 const totalBetRecord = reactive({
   totalBet: 0,
@@ -805,7 +839,7 @@ const dataState = reactive({
 });
 const commonColumns = [
   {
-    label: "หมายเลขสั่งซื้อ",
+    label: t('lang.order_number'),
     field: "serialNumber"
   }
 ];
@@ -813,21 +847,21 @@ const tableColumns = {
   deposit: [
     ...commonColumns,
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "depositAmount"
     },
     {
-      label: "สถานะ",
+      label: t('lang.status'),
       field: "status",
       name: "status"
     },
     {
-      label: "วันที่ฝาก",
+      label: t('lang.deposit_date'),
       field: "depositDate",
       // slots: { customRender: "depositDate" }
     },
     {
-      label: "การดำเนินการ",
+      label: t('lang.operation'),
       field: "operation",
       name: "operation"
     },
@@ -835,21 +869,27 @@ const tableColumns = {
   withdraw: [
     ...commonColumns,
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "withdrawAmount"
     },
     {
-      label: "สถานะ",
+      label: t('lang.status'),
       field: "status",
       name: "status"
     },
+    // {
+    //   label: 'Confirm Status',
+    //   field: "confirmStatus",
+    //   name: 'confirmStatus'
+    //   // slots: { customRender: "withdrawDate" }
+    // },
     {
-      label: "วันที่ถอน",
+      label: t('lang.withdraw_date'),
       field: "withdrawDate",
       // slots: { customRender: "withdrawDate" }
     },
     {
-      label: "การดำเนินการ",
+      label: t('lang.operation'),
       field: "operation",
       name: "operation"
     }
@@ -857,24 +897,24 @@ const tableColumns = {
   transfer: [
     ...commonColumns,
     {
-      label: "รายละเอียดการโอน",
+      label: t('lang.type'),
       field: "type",
       key: "type",
       // slots: { customRender: "type" }
     },
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "amount",
       key: "withdrawAmount"
     },
     {
-      label: "สถานะ",
+      label: t('lang.status'),
       field: "status",
       key: "status",
       // slots: { customRender: "status" }
     },
     {
-      label: "เวลาโอน",
+      label: t('lang.transfer_date'),
       field: "transferDate",
       key: "transferDate",
       // slots: { customRender: "transferDate" }
@@ -883,15 +923,15 @@ const tableColumns = {
   rebates: [
     ...commonColumns,
     {
-      label: "ชื่อผู้มีสิทธิ์สูง",
+      label: t('lang.privilege_name'),
       field: "privilegeName"
     },
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "amount"
     },
     {
-      label: "เวลาบันทึก",
+      label: t('lang.record_time'),
       field: "recordTime",
       // slots: { customRender: "recordTime" }
     }
@@ -899,73 +939,73 @@ const tableColumns = {
   turnover: [
     ...commonColumns,
     {
-      label: "รูปแบบ",
+      label: t('lang.type'),
       field: "type",
       name: "type"
     },
     {
-      label: "ยอดเงิน",
+      label: t('lang.amount'),
       field: "amount"
     },
     {
-      label: "รูปแบบ",
+      label: t('lang.sub_type'),
       field: "subType"
     },
     {
-      label: "เวลาบันทึก",
+      label: t('lang.record_time'),
       field: "recordTime",
       // slots: { customRender: "recordTime" }
     }
   ],
   betRecord: [
     {
-      label: "รหัสเดิมพัน",
+      label: t('lang.bet_code'),
       field: "betId"
     },
     {
-      label: "รหัสธุรกรรม",
+      label: t('lang.transaction_id'),
       field: "transactionId"
     },
     {
-      label: "แพลตฟอร์ม",
+      label: t('lang.platform'),
       field: "platform"
     },
     {
-      label: "เดิมพัน",
+      label: t('lang.bet'),
       field: "bet"
     },
     {
-      label: "การจ่ายเงิน",
+      label: t('lang.payout'),
       field: "payout"
     },
     {
-      label: "วงเงินก่อนหน้า",
+      label: t('lang.before_balance'),
       field: "beforeBalance"
     },
     {
-      label: "วงเงินหลังจาก",
+      label: t('lang.after_balance'),
       field: "afterBalance"
     },
     {
-      label: "สถานะการเดิมพัน",
+      label: t('lang.bet_status'),
       field: "betStatus"
     },
     {
-      label: "ประเภทของเกม",
+      label: t('lang.game_type'),
       field: "gameType"
     },
     {
-      label: "เวลาเดิมพัน",
+      label: t('lang.bet_time'),
       field: "betTime",
       // slots: { customRender: "betTime" }
     },
     {
-      label: "เวลาชำระเงิน",
+      label: t('lang.settle_time'),
       field: "settleTime",
       // slots: { customRender: "settleTime" }
     },
     {
-      label: "ผลลัพท์",
+      label: t('lang.result'),
       field: "result"
     },
   ],
@@ -979,19 +1019,19 @@ const tableColumns = {
     //   field: "transactionId"
     // },
     {
-      label: "เกมใหม่",
+      label: t('lang.game_name'),
       field: "gameName"
     },
     {
-      label: "แพลตฟอร์ม",
+      label: t('lang.platform'),
       field: "platform"
     },
     {
-      label: "เดิมพัน",
+      label: t('lang.bet'),
       field: "bet"
     },
     {
-      label: "การจ่ายเงิน",
+      label: t('lang.payout'),
       field: "payout"
     },
     // {
@@ -1007,7 +1047,7 @@ const tableColumns = {
     //   field: "betStatus"
     // },
     {
-      label: "ประเภทของเกม",
+      label: t('lang.game_type'),
       field: "gameType"
     },
     {
@@ -1032,19 +1072,19 @@ const tableColumns = {
   ],
   reminderRecord: [
     {
-      label: "หมายเลขสั่งซื้อ",
+      label: t('lang.order_number'),
       field: 'orderNo'
     },
     {
-      label: "หมายเหตุ",
+      label: t('lang.finance_remark'),
       field: 'financeRemark'
     },
     {
-      label: "เวลาตอบรับ",
+      label: t('lang.feedback_time'),
       field: "feedbackTime",
     },
     {
-      label: "ประเภทธุรกรรม",
+      label: t('lang.reminder_type'),
       field: "type",
       name: "type"
     }
@@ -1056,14 +1096,10 @@ const pagination = reactive({
   total: 0
 });
 
-export default defineComponent({
-  name: "TransitRecordView",
-  components: {
-    FileUpload,
-  },
-  setup() {
+
     const reminderDialog = ref(false);
     const openReminder = (record) => {
+      // console.log(record.row.depositDate)
       api.get("/session/getVerifyingFeedbackCount").then((ret) => {
         const res = ret.data
         if (res.code === 0) {
@@ -1073,21 +1109,62 @@ export default defineComponent({
             reminderForm.photos = null
             reminderForm.memberRemark = "";
             if (recordActive.value === 'deposit') {
-              reminderForm.type = 1
+              reminderForm.type = 1;
+              reminderForm.recordTime = record.row.depositDate;
             } else if (recordActive.value === 'withdraw') {
-              reminderForm.type = 2
+              reminderForm.type = 2;
+              reminderForm.recordTime = record.row.withdrawDate;
             }
           } else {
             $q.notify({
               color: "negative",
               position: "top",
-              message: "มีความคิดเห็นที่ยังไม่ได้รับการยีนยัน",
+              message: t('lang.opinions_not_confirmed'),
               icon: "report_problem"
             });
           }
         }
       })
     }
+
+    const openWithdrawConfirmDialog = (record) => {
+      isConfirmWithdraw.value = true;
+      passDet.value = record;
+    };
+
+    const openWithdrawConfirm = () => {
+      const obj = {
+        id: passDet.value.row.id,
+        withdrawDate: passDet.value.row.withdrawDate
+      };
+
+      api
+          .post("/session/withdraw/confirm", qs.stringify(obj))
+          .then((response) => {
+            // Handle the response
+            if (response.data.code === 0) {
+              isConfirmWithdraw.value = false;
+
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "已经确认到账",
+                icon: "check_circle_outline"
+              });
+              removeSessionKeys("/session/member/withdraw");
+              searchRecord();
+            }
+
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 1000);
+          })
+
+          .catch((error) => {
+            // Handle the error
+            console.error(error);
+          });
+    };
 
     const submitReminder = () => {
       api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
@@ -1096,7 +1173,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "สำเร็จ",
+            message: t('lang.success'),
             icon: "check_circle_outline"
           });
           reminderDialog.value = false;
@@ -1213,43 +1290,45 @@ export default defineComponent({
     const betRecordDialog = ref(false)
     const getTurnoverType = (turnoverType) => {
       if (turnoverType === 'WITHDRAW_FAIL') {
-        return 'การถอนเงินล้มเหลว' // Fail Withdrawal
+        return t('lang.withdrawal_failed') // Fail Withdrawal
       } else if (turnoverType === 'WITHDRAW') {
-        return 'ถอนเงิน' // Withdraw
+        return t('lang.withdrawal') // Withdraw
       } else {
         return turnoverType
       }
     }
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
-        return 'ส่งดำเนินการ' //Applying
+        return t('lang.applying') //Applying
       } else if (withdrawStatus === 'FAIL') {
-        return 'ล้มเหลว' // Failed
+        return t('lang.failed') // Failed
+      } else if (withdrawStatus === 'PENDING') {
+        return t('lang.pending') // Pending
       } else if (withdrawStatus === 'SUCCESS') {
-        return 'สำเร็จ' // Success
+        return t('lang.success') // Success
       } else if (withdrawStatus === 'STEP_1') {
-        return 'กำลังตรวจสอบ' //Under review
+        return t('lang.under_review') //Under review
       } else if (withdrawStatus === 'STEP_2') {
-        return 'กำลังดำเนินการจ่าย' // To be paid
+        return t('lang.to_be_paid') // To be paid
       }  else if (withdrawStatus === 'STEP_3') {
-        return 'กำลังดำเนินการโอน' // Payment on going
+        return t('lang.payment_on_going') // Payment on going
       }  else if (withdrawStatus === 'STEP_4') {
-        return 'ชำระอัตโนมัติ' // Automatic Payment
+        return t('lang.automatic_payment') // Automatic Payment
       }  else if (withdrawStatus === 'STEP_5') {
-        return 'ระงับ' //Suspend
+        return t('lang.suspend') //Suspend
       } else {
         return withdrawStatus
       }
     }
     const getDepositStatus = (depositStatus) => {
       if (depositStatus === 'PENDING') {
-        return 'รอดำเนินการ' // Pending
+        return t('lang.pending') // Pending
       } else if (depositStatus === 'SUCCESS') {
-        return 'สำเร็จ' // Success
+        return t('lang.success') // Success
       } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
-        return 'เสริมความสำเร็จ' // Supplement Success
+        return t('lang.supplement_success') // Supplement Success
       } else if (depositStatus === 'CLOSED') {
-        return 'ปิด' // Closed
+        return t('lang.close_btn') // Closed
       } else {
         return depositStatus
       }
@@ -1275,6 +1354,16 @@ export default defineComponent({
       reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
     }
 
+    const removeSessionKeys = (prefix) => {
+      var keys= SessionStorage.getAllKeys();
+      _.each(keys, function(key, item){
+        // console.log(key);
+        if(key.indexOf(prefix) > -1){
+         SessionStorage.remove(key);
+        }
+      })
+    }
+
     return {
       recordActive,
       searchForm,
@@ -1287,16 +1376,16 @@ export default defineComponent({
       pagination,
       getTime,
       chgDate,
-      noDataLabel: "ไม่มีข้อมูล",
-      rowPerPageLabel: "บันทึกต่อหน้า",
+      noDataLabel: t('lang.no_data_label'),
+      rowPerPageLabel:  t('lang.row_per_page_label'),
       humanDatetime(ts) {
         return moment(ts).format("DD-MM-YYYY HH:mm:ss");
       },
       checkType(tp) {
         if (tp === 1) {
-          return 'ฝาก'
+          return t('lang.deposit')
         } else {
-          return 'ถอน'
+          return t('lang.withdraw')
         }
       },
       getPlatList,
@@ -1312,7 +1401,12 @@ export default defineComponent({
       reminderForm,
       submitReminder,
       getImageLink,
-      uploadFileRef
+      uploadFileRef,
+      openWithdrawConfirmDialog,
+      openWithdrawConfirm,
+      isConfirmWithdraw,
+      passDet,
+      removeSessionKeys
     };
   }
 });

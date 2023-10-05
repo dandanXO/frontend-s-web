@@ -135,14 +135,14 @@
                 >
               </q-item-section>
 
-              <q-item-section avatar>
+              <!-- <q-item-section avatar>
                 <img
                     v-if="scope.opt.bankIcon"
                     style="width: 30px; margin-top: 10px; margin-bottom: 10px"
                     :src="imgURL + scope.opt.bankIcon"
                 />
-              </q-item-section>
-              <q-item-section>
+              </q-item-section> -->
+              <!-- <q-item-section>
                 <q-item-label
                     style="
                     text-overflow: ellipsis;
@@ -151,7 +151,7 @@
                   "
                 >{{ scope.opt.name }}</q-item-label
                 >
-              </q-item-section>
+              </q-item-section> -->
 
             </template>
             <template v-slot:option="scope">
@@ -408,7 +408,7 @@ export default defineComponent({
       getAffiliateCode();
       getReferralCode();
       api
-          .options(`/session/withdraw/banks?siteId=${siteId}`)
+          .get(`/member/withdraw/banks?siteId=${siteId}`)
           .then((ret) => {
             const res = ret.data;
             if (res.code === 0) {
@@ -423,7 +423,7 @@ export default defineComponent({
     const step = ref(1);
     const done1 = ref(false);
     const done2 = ref(false);
-    const imgURL = process.env.IMAGE_CDN + "/";
+    const imgURL = process.env.IMAGE_CDN + "/payment/";
     const verificationImg = ref("");
     const regForm = reactive({
       loginName: "",

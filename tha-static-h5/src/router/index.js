@@ -76,7 +76,7 @@ export default route(function(/* { store, ssrContext } */) {
             const response = res.data
             if (response.code === 0) {
               if (response.data.length === 0) {
-                next(`/insert-bankinfo`);
+                next(`/account/withdraw`);
               } else {
                 next();
               }

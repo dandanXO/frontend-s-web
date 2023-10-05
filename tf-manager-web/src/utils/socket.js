@@ -1,5 +1,6 @@
 import { useStore } from "../store";
 import { SOCKET_ONCLOSE, SOCKET_ONERROR, SOCKET_ONMESSAGE, SOCKET_ONOPEN } from "../store/modules/socket/mutation-types";
+import { globals } from '../main.js'
 
 const store = useStore();
 
@@ -9,7 +10,8 @@ export class Socket {
   }
 
   async connection() {
-    this.webSocket = new WebSocket(`${process.env.VUE_APP_SOCKET}/ws/notice`);
+    const wssSocket = globals.$baseWss;
+    this.webSocket = new WebSocket(`${wssSocket}/ws/notice`);
     this.webSocket.onmessage = message => {
       const data = JSON.parse(message.data);
       this.store.commit(SOCKET_ONMESSAGE, data);
