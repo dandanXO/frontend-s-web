@@ -355,7 +355,10 @@ export default {
     bonus_will_be_added_to_u: "โบนัสจะถูกเพิ่มเข้าไปในกระเป๋าเงินของคุณหลังจากทํารายการสําเร็จ",
     claim_bonus: "เคลมเครดิตฟรี",
     claim_daily_cashback: "เคลมเงินคืนประจำวัน",
-    cash_must_wagered_1_tme_before_withdrawal: "โบนัสเงินคืนต้องทำ 1 เทิร์นก่อนถอนและจะถูกริบคืนหากไม่ได้ใช้ภายใน 30 วัน"
+    cash_must_wagered_1_tme_before_withdrawal: "โบนัสเงินคืนต้องทำ 1 เทิร์นก่อนถอนและจะถูกริบคืนหากไม่ได้ใช้ภายใน 30 วัน",
+    system_message: "ข้อความแจ้งเตือนระบบ",
+    confirm_deposit_msg: "ยืนยันการเข้าบัญชี",
+
 
   },
   error: {
