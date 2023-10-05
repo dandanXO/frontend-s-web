@@ -17,7 +17,7 @@
         <!-- Action Required - Contact Us Link -->
         <a
           :href="
-            'https://www.jollycobber.com/th/register?agent=' +
+            'https://affiliate-web.monemental.com/th/register?agent=' +
             (affCode ? affCode : '')
           "
         >
@@ -25,7 +25,7 @@
             $t("lang.apply")
           }}</q-btn>
         </a>
-        <a href="https://www.jollycobber.com/th/login">
+        <a href="https://affiliate-web.monemental.com/th/login">
           <q-btn :color="ui.themeColor" align="around" class="full-width">{{
             $t("lang.login")
           }}</q-btn>
