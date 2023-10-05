@@ -315,7 +315,7 @@ export default defineComponent({
         });
       },
       handleRegister: () => {
-        state.loginForm.siteId = 9;
+        state.loginForm.siteId = 3;
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             state.loading = true;
