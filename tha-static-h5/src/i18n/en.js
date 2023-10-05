@@ -141,6 +141,7 @@ export default {
     enter_your_email: "Please enter your email address.",
     send: "Send",
     an_otp_has_been_sent_to_email: "An OTP code has been sent to your email.",
+    an_otp_has_been_sent_to_phone: "An OTP code has been sent to your phone.",
     one_time_otp: "One Time OTP",
     otp_cannot_be_empty: "OTP cannot be empty.",
     new_password: "New Password",

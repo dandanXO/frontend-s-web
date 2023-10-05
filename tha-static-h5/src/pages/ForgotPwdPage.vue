@@ -98,7 +98,7 @@
           </q-form>
 
           <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders q-pa-md bg-primary q-ma-md">
-            <p>{{ $t('lang.an_otp_has_been_sent_to_email') }}</p>
+            <p>{{ $t('lang.an_otp_has_been_sent_to_phone') }}</p>
             <q-input
                 ref="codeRef"
                 filled
@@ -110,6 +110,7 @@
                     (val && val.length > 0) || $t('lang.otp_cannot_be_empty')
                 ]"
                 color="white"
+                autocomplete="off"
             >
               <template v-slot:prepend>
                 <q-icon name="qr_code"/>
@@ -126,6 +127,7 @@
                   (val) => (val && val.length > 0) || $t('lang.enter_new_password')
                 ]"
                 color="white"
+                autocomplete="off"
             >
               <template v-slot:prepend>
                 <q-icon name="lock_open"/>
@@ -565,6 +567,7 @@ export default defineComponent({
       } else {
         verificationForm.codeId = SessionStorage.getItem('emailCodeId')
         verificationForm.email = passwordForm.email
+        verificationForm.phone = passwordForm.phone
         api
             .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationForm))
             .then((ret) => {

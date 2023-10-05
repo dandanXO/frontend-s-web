@@ -141,6 +141,7 @@ export default {
     enter_your_email: "กรุณาใส่ที่อยู่อีเมลล์",
     send: "ส่ง",
     an_otp_has_been_sent_to_email: "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว กรุณาใส่รหัส OTP และพาสเวิรด์ใหม่",
+    an_otp_has_been_sent_to_phone: "รหัส OTP ถูกส่งไปยังโทรศัพท์ของคุณแล้ว",
     one_time_otp: "รหัส OTP",
     otp_cannot_be_empty: "ใส่รหัส OTP",
     new_password: "รหัสผ่าน",
