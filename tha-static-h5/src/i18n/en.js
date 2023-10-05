@@ -352,7 +352,10 @@ export default {
     bonus_will_be_added_to_u: "Bonus will be added to your wallet once the transaction is completed.",
     claim_bonus: "Claim Bonus",
     claim_daily_cashback: "Claim Daily Rebate",
-    cash_must_wagered_1_tme_before_withdrawal: "Cashback bonuses must be wagered 1 time before withdrawal and will be forfeited if not used within 30 days."
+    cash_must_wagered_1_tme_before_withdrawal: "Cashback bonuses must be wagered 1 time before withdrawal and will be forfeited if not used within 30 days.",
+    system_message: "System Message",
+    confirm_deposit_msg: "Confirm deposit",
+
 
   },
   error: {
