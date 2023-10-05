@@ -342,7 +342,18 @@ export default {
     share_now: "แชร์ตอนนี้",
     level_grade: "ระดับ",
     ivnite_fren_first_time: "เชิญเพื่อนใหม่เติมเงินครั้งแรก",
-    keyin_keyword: "โปรดป้อนคำสำคัญ"
+    keyin_keyword: "โปรดป้อนคำสำคัญ",
+    bank: "ธนาคาร",
+    upload_img: "โหลดรูปภาพ",
+    upload_successfully: "อัพโหลดเรียบร้อยแล้ว",
+    failed_upload_size_dont_meet_requirement: "การอัพโหลดล้มเหลว ขนาดภาพไม่ตรงที่กำหนด โปรดอัปโหลดรูปภาพในภายหลัง",
+    card_added: "เพิ่มการ์ดแล้ว",
+    number_sent: "ส่งหมายเลข",
+    urgent_deposit: "ฝากเงินด่วน",
+    bonus_will_be_added_to_u: "โบนัสจะถูกเพิ่มเข้าไปในกระเป๋าเงินของคุณหลังจากทํารายการสําเร็จ",
+    claim_bonus: "เคลมเครดิตฟรี",
+    claim_daily_cashback: "เคลมเงินคืนประจำวัน",
+    cash_must_wagered_1_tme_before_withdrawal: "โบนัสเงินคืนต้องทำ 1 เทิร์นก่อนถอนและจะถูกริบคืนหากไม่ได้ใช้ภายใน 30 วัน"
 
   },
   error: {
