@@ -41,6 +41,7 @@ export const actions = {
     sessionStorage.removeItem("WITHDRAW");
     sessionStorage.removeItem("BEFORE_PAID");
     sessionStorage.removeItem("PAYMENT");
+    sessionStorage.removeItem("baseApi");
     resetRouter();
   },
 

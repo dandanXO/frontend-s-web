@@ -1,10 +1,13 @@
 import { ElMessage } from "element-plus";
+import { globals } from "../main";
 export const uploadImage = (formData) => {
   const requestOptions = {
     method: 'POST',
     body: formData
   };
-  return fetch(process.env.VUE_APP_BASE_API + '/image/uploadBanner', requestOptions)
+  const baseApi = globals.$baseApi;
+
+  return fetch(baseApi + '/image/uploadBanner', requestOptions)
     .then(response => {
       return response.json()
     })

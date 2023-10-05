@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Jolly88 App Download">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jolly88 App</title>
+    <link rel="icon" type="image/ico" href="img/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="wrapper">
+
+    <div class="top-container">
+        <img src="./img/banner-1.png"/>
+    </div>
+
+    <div class="item-container">
+
+        <div class="info-left">
+            <img class="logo-img" src="./img/app-icon.png"/>
+        </div>
+        <div class="info-right">
+
+            <h2>Jolly88 APP</h2>
+
+            <p class="p-info">
+                แหล่งความบันเทิงครบวงจรเจ้าแรกของโลก ศูนย์รวมเกมขนาดใหญ่ หลากหลาย ทั้งเกมกีฬา และ e-sport ชั้นนำ live
+                entertainment ,
+                ล๊อตเตอร์รี่ เกมอิเล็กทริค และอื่นๆอีกมากมาย หลากหลายความบันเทิงที่สมบรูณ์แบบที่สุด มาอยู่ในมือคุณแล้ว
+                มาเปิดประสบการณ์ใหม่กับเรา
+                มาโหลดกันเลย
+            </p>
+
+            <a id="download-link" class="download-btn" download="jb_app.apk">ดาวน์โหลด</a>
+
+        </div>
+
+    </div>
+
+    <div class="mid-container">
+
+        <div class="game-list">
+            <div class="game-item">
+                <img src="img/football2.png"/>
+                <span>กีฬา</span>
+            </div>
+            <div class="game-item">
+                <img src="img/video-console2.png"/>
+                <span>Esport</span>
+            </div>
+            <div class="game-item">
+                <img src="img/poker-cards2.png"/>
+                <span>ไลฟ์คาซิโน</span>
+            </div>
+            <div class="game-item">
+                <img src="img/jackpot2.png"/>
+                <span>สล็อต</span>
+            </div>
+            <div class="game-item">
+                <img src="img/shark2.png"/>
+                <span>ตกปลา</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="bottom-container">
+
+        <div class="screenshot-scroller">
+
+            <div class="screenshot-item">
+                <img src="img/img1.png"/>
+            </div>
+            <div class="screenshot-item">
+                <img src="img/img2.png"/>
+            </div>
+            <div class="screenshot-item">
+                <img src="img/img3.png"/>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function (e) {
+
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            console.log("iOS");
+            $("#download-link").attr("href", "./download/jolly88.mobileconfig");
+            $("#download-link").attr("download", "jolly88.mobileconfig");
+        } else {
+            //Android or Browser.
+            //Change URL ./download/jb_app.apk when go Live.
+            $("#download-link").attr("href", "./download/jb_app.apk");
+        }
+
+    });
+
+</script>
+</html>

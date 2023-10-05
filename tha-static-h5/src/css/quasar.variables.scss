@@ -1,0 +1,52 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+
+$primary: #342961;
+$main-color: #342961;
+$secondary: #433481;
+$third-color: #151553;
+$header-color: #E2A4FF;
+$border-color: #8385D7;
+$panel-bg-color: #141452;
+
+$dark-page: #000028;
+$bg-color: #000028;
+$dark-old: #2b2b4b;
+
+$white: #ffffff;
+$positive: #72FF5B;
+$negative: #FF2727;
+$info: #6DDCFF;
+
+
+$lightblue-color: #6DDCFF;
+$red-color: #de4545;
+$pink-color: #FB4BFF;
+$purple-color: #A840FB;
+
+$warning: #f2c037;
+
+
+$linear-bg-1: linear-gradient(90deg, #CF027D 0%, #FF6370 100%), linear-gradient(94.81deg, #FB3CA9 7.45%, #FFA9AB 95.9%);
+$linear-bg-2: linear-gradient(90deg, #8002EC 0%, #CD43FE 100%), linear-gradient(94.81deg, #A840FB 7.45%, #E291FF 95.9%);
+$linear-bg-3: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+$linear-bg-4: linear-gradient(360deg, rgba(132, 133, 255, 0.95) -3.64%, rgba(93, 95, 239, 0.51) 100%);
+$linear-bg-gray: linear-gradient(94.81deg, #767676 7.45%, #CFCFCF 95.9%), linear-gradient(90deg, #DBDBDB 0%, #979797 100%);
+
+$text-gray: #D9D9D9;
+$text-footer: #AFA0E2;
+
+$big-font-size: 20px;
+$normal-size: 16px;
+$md-size: 14px;

@@ -282,7 +282,11 @@ const handleCurrentChange = (currentRow) => {
   // loadDomains(currentsiteFormRow.value.id);
   gameType.list = gameType.default;
   gameType.assigned = JSON.parse(list.find(x => x.id === currentsiteFormRow.value.id).param);
-  gameType.list = gameType.list.filter(gt => !gameType.assigned.includes(gt));
+  if (gameType.assigned !== null) {
+    gameType.list = gameType.list.filter(gt => !gameType.assigned.includes(gt));
+  } else {
+    gameType.assigned = []
+  }
 }
 
 function log(evt) {
