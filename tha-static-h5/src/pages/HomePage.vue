@@ -1672,7 +1672,12 @@ export default defineComponent({
       background: $linear-bg-4;
     }
 
+    &:hover{
+      filter: brightness(0.88);
+    }
+
     &:active {
+      opacity: 0.95;
       filter: brightness(0.86);
     }
 
