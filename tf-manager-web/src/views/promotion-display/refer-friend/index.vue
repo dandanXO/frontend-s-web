@@ -25,7 +25,7 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
-          style="margin-left: 5px; width: 380px"
+          style="margin-left: 5px; width: 280px"
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
@@ -36,28 +36,19 @@
           size="small"
           :placeholder="t('fields.loginName')"
         />
-        <el-select
-          v-model="request.gameType"
-          size="small"
-          :placeholder="t('fields.gameType')"
-          class="filter-item"
+        <el-input
+          v-model="request.referrerName"
           style="margin-left: 5px; width: 200px;"
-          clearable
-        >
-          <el-option
-            v-for="item in uiControl.gameType"
-            :key="item.key"
-            :label="t('gameType.' + item.displayName)"
-            :value="item.value"
-          />
-        </el-select>
+          size="small"
+          :placeholder="t('fields.referrer')"
+        />
         <el-select
           multiple
           v-model="request.status"
           size="small"
           :placeholder="t('fields.status')"
           class="filter-item"
-          style="margin-left: 5px; width: 300px;"
+          style="margin-left: 5px; width: 240px;"
         >
           <el-option
             v-for="item in uiControl.status"
@@ -66,23 +57,37 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.event"
+          size="small"
+          :placeholder="t('fields.event')"
+          class="filter-item"
+          style="margin-left: 5px; width: 200px;"
+        >
+          <el-option
+            v-for="item in uiControl.event"
+            :key="item.key"
+            :label="t('referFriendEvent.' + item.displayName)"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           style="margin-left: 10px"
           icon="el-icon-search"
           size="mini"
           type="primary"
-          @click="loadVipRebateRecords()"
+          @click="loadReferFriendRecords()"
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:vip-rebate-record:rebate']" @click="distributeRebate()">
-            {{ t('fields.distributeRebate') }}
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:refer-friend:distribute']" @click="distributeRefer()">
+            {{ t('fields.distributeRefer') }}
           </el-button>
           <el-button
             icon="el-icon-download"
             size="mini"
             type="warning"
-            v-permission="['sys:vip-rebate-record:export']"
+            v-permission="['sys:refer-friend:export']"
             @click="exportExcel"
           >{{ t('fields.exportToExcel') }}
           </el-button>
@@ -93,7 +98,7 @@
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
         <div class="clearfix">
-          <span class="role-span">{{ t('fields.vipRebateRecord') }}</span>
+          <span class="role-span">{{ t('fields.referFriendRecord') }}</span>
         </div>
       </template>
       <el-table :data="page.records" ref="table"
@@ -110,10 +115,11 @@
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="vipName" :label="t('fields.vipLevel')" align="center" min-width="100" />
-        <el-table-column prop="betAmount" :label="t('fields.betAmount')" align="center" min-width="100">
-          <template #default="scope">
-            $ <span v-formatter="{data: scope.row.betAmount,type: 'money'}" />
+        <el-table-column prop="referrerName" :label="t('fields.referrer')" align="center" min-width="100">
+          <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
+            <router-link :to="`/member/details/${scope.row.referrerId}?site=${request.siteId}`">
+              <el-link type="primary">{{ scope.row.referrerName }}</el-link>
+            </router-link>
           </template>
         </el-table-column>
         <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="100">
@@ -121,23 +127,25 @@
             $ <span v-formatter="{data: scope.row.amount,type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="rollover" :label="t('fields.rollover')" align="center" min-width="80" />
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="120">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'DISTRIBUTED'" size="mini" type="success">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
             <el-tag v-else size="mini" type="warning">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120">
+        <el-table-column prop="event" :label="t('fields.event')" align="center" min-width="140">
           <template #default="scope">
-            {{ scope.row.platform }}
+            {{ t('referFriendEvent.' + scope.row.event) }}
           </template>
         </el-table-column>
-        <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="100">
+        <el-table-column prop="depositSerialNumber" :label="t('fields.depositSerialNo')" align="center" min-width="210">
           <template #default="scope">
-            {{ t('gameType.' + scope.row.gameType) }}
+            <span v-if="scope.row.depositSerialNumber === null">-</span>
+            <span v-else>{{ scope.row.depositSerialNumber }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="recordTime" :label="t('fields.rebateDistributeTime')" align="center" min-width="150">
+        <el-table-column prop="recordTime" :label="t('fields.recordTime')" align="center" min-width="150">
           <template #default="scope">
             <span v-if="scope.row.recordTime === null">-</span>
             <span
@@ -161,52 +169,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="120">
-          <template #default="scope">
-            <span v-if="scope.row.updateBy === null">-</span>
-            <span v-else>{{ scope.row.updateBy }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="updateTime" :label="t('fields.updateTime')" align="center" min-width="180">
-          <template #default="scope">
-            <span v-if="scope.row.updateTime === null">-</span>
-            <span
-              v-if="scope.row.updateTime !== null"
-              v-formatter="{data: scope.row.updateTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          :label="t('fields.operate')"
-          align="center"
-          fixed="right"
-          width="180"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip-rebate-record:update']) || hasPermission(['sys:vip-rebate-record:detail']))"
-        >
-          <template #default="scope">
-            <el-button
-              size="mini"
-              type="warning"
-              v-permission="['sys:vip-rebate-record:detail']"
-              @click="showDetails(scope.row)"
-            >
-              {{ t('fields.view') }}
-            </el-button>
-            <el-button
-              v-if="scope.row.status === 'PENDING'"
-              size="mini"
-              type="success"
-              v-permission="['sys:vip-rebate-record:update']"
-              @click="showEdit(scope.row)"
-            >
-              {{ t('fields.adjustAmount') }}
-            </el-button>
-          </template>
-        </el-table-column>
       </el-table>
-      <div style="text-align: right;margin-top:10px;">
-        <span>{{ t('fields.totalRebateAmount') }}: $ <span v-formatter="{data: page.totalRebateAmount,type: 'money'}" /></span>
-      </div>
       <el-pagination
         class="pagination"
         :total="page.total"
@@ -216,7 +179,7 @@
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
-        @size-change="loadVipRebateRecords()"
+        @size-change="loadReferFriendRecords()"
       />
     </el-card>
   </div>
@@ -239,143 +202,44 @@
       </el-button>
     </div>
   </el-dialog>
-
-  <el-dialog
-    :title="uiControl.dialogTitle"
-    v-model="uiControl.dialogVisible"
-    append-to-body
-    :width="uiControl.dialogWidth"
-  >
-    <el-form
-      v-if="uiControl.dialogType === 'ADJUST'"
-      ref="adjustForm"
-      :model="form"
-      :rules="formRules"
-      :inline="true"
-      size="small"
-      label-width="150px"
-    >
-      <el-form-item
-        :label="t('fields.adjustAmount')"
-        prop="amount"
-        @keypress="restrictDecimalInput($event)"
-      >
-        <el-input v-model="form.amount" style="width: 350px;" />
-      </el-form-item>
-      <div class="dialog-footer">
-        <el-button @click="uiControl.dialogVisible = false">
-          {{ t('fields.cancel') }}
-        </el-button>
-        <el-button type="primary" @click="adjust">
-          {{ t('fields.confirm') }}
-        </el-button>
-      </div>
-    </el-form>
-    <el-table
-      v-else
-      size="small"
-      :data="recordDetails"
-      row-key="id"
-      v-loading="page.detailsLoading"
-      :empty-text="t('fields.noData')"
-    >
-      <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120">
-        <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-          <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
-            <el-link type="primary">{{ scope.row.loginName }}</el-link>
-          </router-link>
-        </template>
-      </el-table-column>
-      <el-table-column prop="betAmount" :label="t('fields.betAmount')" align="center" min-width="100">
-        <template #default="scope">
-          $ <span v-formatter="{data: scope.row.betAmount,type: 'money'}" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="rebateAmount" :label="t('fields.rebateAmount')" align="center" min-width="100">
-        <template #default="scope">
-          $ <span v-formatter="{data: scope.row.rebateAmount,type: 'money'}" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="rebatePercentage" :label="t('fields.rebatePercentage')" align="center" min-width="120">
-        <template #default="scope">
-          {{ (scope.row.rebatePercentage).toFixed(2) }} %
-        </template>
-      </el-table-column>
-      <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120">
-        <template #default="scope">
-          {{ scope.row.platform }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="100">
-        <template #default="scope">
-          {{ t('gameType.' + scope.row.gameType) }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="recordTime" :label="t('fields.rebateDistributeTime')" align="center" min-width="150">
-        <template #default="scope">
-          <span v-if="scope.row.recordTime === null">-</span>
-          <span
-            v-if="scope.row.recordTime !== null"
-            v-formatter="{data: scope.row.recordTime, formatter: 'YYYY-MM-DD', type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-    </el-table>
-  </el-dialog>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
-import { hasRole, hasPermission } from '../../../utils/util'
+import { hasPermission } from '../../../utils/util'
 import * as XLSX from 'xlsx';
 import moment from 'moment';
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { adjustAmount, distribute, getTotal, getVipRebateRecord } from '../../../api/vip-rebate-record';
-import { required } from '../../../utils/validate';
+import { distribute, getReferFriend } from '../../../api/refer-friend';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { getVipRebateRecordDetails } from '../../../api/vip-rebate-record-detail';
 
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
-const adjustForm = ref(null)
-const recordDetails = ref([])
 const site = ref(null)
 const siteList = reactive({
   list: []
 });
 const exportPercentage = ref(0);
 const uiControl = reactive({
-  dialogTitle: "",
-  dialogType: "",
   dialogVisible: false,
-  dialogWidth: '580px',
   progressBarVisible: false,
-  gameType: [
-    { key: 1, displayName: "SLOT", value: "SLOT" },
-    { key: 2, displayName: "LIVE", value: "LIVE" },
-    { key: 3, displayName: "FISH", value: "FISH" },
-    { key: 4, displayName: "SPORT", value: "SPORT" },
-    { key: 5, displayName: "ESPORT", value: "ESPORT" },
-    { key: 6, displayName: "POKER", value: "POKER" },
-    { key: 7, displayName: "LOTTERY", value: "LOTTERY" }
-  ],
   status: [
     { key: 1, displayName: "PENDING", value: "PENDING" },
     { key: 2, displayName: "DISTRIBUTED", value: "DISTRIBUTED" }
+  ],
+  event: [
+    { key: 1, displayName: "INFO", value: "INFO" },
+    { key: 2, displayName: "FIRST", value: "FIRST" },
+    { key: 3, displayName: "SECOND", value: "SECOND" }
   ]
 });
 
-const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
-  t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'), t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
-
-const form = reactive({
-  id: null,
-  amount: null
-})
+const EXPORT_HEADER = [t('fields.loginName'), t('fields.referrer'), t('fields.event'), t('fields.status'), t('fields.amount'),
+  t('fields.rollover'), t('fields.depositSerialNo'), t('fields.recordTime'), t('fields.distributeBy'), t('fields.distributeTime')];
 
 const defaultDate = convertDate(new Date());
 
@@ -385,7 +249,8 @@ const request = reactive({
   recordTime: [defaultDate, defaultDate],
   siteId: null,
   loginName: null,
-  gameType: [],
+  referrerName: null,
+  event: null,
   status: ["PENDING", "DISTRIBUTED"]
 });
 
@@ -393,16 +258,15 @@ function resetQuery() {
   request.recordTime = [defaultDate, defaultDate];
   request.siteId = siteList.list[0].id;
   request.loginName = null;
-  request.gameType = [];
+  request.referrerName = null;
+  request.event = null;
   request.status = ["PENDING", "DISTRIBUTED"];
 }
 
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false,
-  detailsLoading: false,
-  totalRebateAmount: 0
+  loading: false
 });
 
 function convertDate(date) {
@@ -412,26 +276,6 @@ function convertDate(date) {
 function disabledDate(time) {
   return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
 }
-
-function restrictDecimalInput(event) {
-  var charCode = event.which ? event.which : event.keyCode
-  if ((charCode < 48 || charCode > 57) && charCode !== 46) {
-    event.preventDefault()
-  }
-
-  if (
-    form.amount !== null &&
-    form.amount.toString().indexOf('.') > -1
-  ) {
-    if (charCode === 46) {
-      event.preventDefault()
-    }
-  }
-}
-
-const formRules = reactive({
-  amount: [required(t('message.validateAmountRequired'))]
-})
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
@@ -462,69 +306,26 @@ function checkQuery() {
   return query;
 }
 
-async function loadVipRebateRecords() {
+async function loadReferFriendRecords() {
   page.loading = true;
   const query = checkQuery();
-  const { data: ret } = await getVipRebateRecord(query);
+  const { data: ret } = await getReferFriend(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
-  const { data: total } = await getTotal(query);
-  page.totalRebateAmount = total;
   page.loading = false;
 }
 
 function changepage(page) {
   request.current = page;
-  loadVipRebateRecords();
-}
-
-function showEdit(adjust) {
-  if (adjustForm.value) {
-    adjustForm.value.resetFields()
-  }
-  form.id = adjust.id
-  uiControl.dialogTitle = t('fields.adjustAmount')
-  uiControl.dialogType = 'ADJUST'
-  uiControl.dialogWidth = '580px'
-  uiControl.dialogVisible = true
-}
-
-async function showDetails(record) {
-  uiControl.dialogTitle = t('fields.vipRebateDetails')
-  uiControl.dialogType = 'DETAILS'
-  uiControl.dialogWidth = '1000px'
-  uiControl.dialogVisible = true
-
-  const query = {};
-  query.siteId = request.siteId;
-  query.memberId = record.memberId;
-  query.recordTime = record.recordTime;
-  query.platform = record.platform;
-  query.gameType = record.gameType;
-
-  page.detailsLoading = true;
-  const { data: ret } = await getVipRebateRecordDetails(query);
-  recordDetails.value = ret;
-  page.detailsLoading = false;
-}
-
-async function adjust() {
-  adjustForm.value.validate(async valid => {
-    if (valid) {
-      await adjustAmount(form.id, form)
-      uiControl.dialogVisible = false
-      ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
-      await loadVipRebateRecords()
-    }
-  });
+  loadReferFriendRecords();
 }
 
 async function exportExcel() {
   uiControl.progressBarVisible = true;
   const query = checkQuery();
   query.current = 1;
-  const { data: ret } = await getVipRebateRecord(query);
+  const { data: ret } = await getReferFriend(query);
   const exportData = [EXPORT_HEADER];
   const maxLength = [];
 
@@ -534,7 +335,7 @@ async function exportExcel() {
 
   while (query.current < ret.pages) {
     query.current += 1;
-    const { data: ret } = await getVipRebateRecord(query);
+    const { data: ret } = await getReferFriend(query);
     pushRecordToData(ret.records, exportData);
     exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
   }
@@ -551,9 +352,9 @@ async function exportExcel() {
   const wsCols = maxLength.map(w => { return { width: w } });
   ws['!cols'] = wsCols;
   const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('VIP_Rebate_Record');
-  wb.Sheets.VIP_Rebate_Record = ws;
-  XLSX.writeFile(wb, "vip_rebate_record.xlsx");
+  wb.SheetNames.push('Refer_Friend_Record');
+  wb.Sheets.Refer_Friend_Record = ws;
+  XLSX.writeFile(wb, "refer_friend_record.xlsx");
   exportPercentage.value = 100;
 }
 
@@ -561,19 +362,20 @@ function pushRecordToData(records, exportData) {
   records.forEach(item => {
     delete item.id;
     delete item.memberId;
-    delete item.vipId;
+    delete item.referrerId;
   })
   const data = records.map(record => {
+    record.event = t('referFriendEvent.' + record.event);
     record.status = t('distributeStatus.' + record.status);
-    record.gameType = t('gameType.' + record.gameType);
     return Object.values(record).map(item => !item || item === '' ? '-' : item)
   });
+  console.log(data)
   exportData.push(...data);
 }
 
-function distributeRebate() {
+function distributeRefer() {
   ElMessageBox.confirm(
-    t('message.confirmRebate'),
+    t('message.confirmRefer'),
     {
       confirmButtonText: t('fields.confirm'),
       cancelButtonText: t('fields.cancel'),
@@ -582,8 +384,8 @@ function distributeRebate() {
   ).then(async () => {
     const query = checkQuery();
     await distribute(query);
-    await loadVipRebateRecords();
-    ElMessage({ message: t('message.rebateSuccess'), type: "success" });
+    await loadReferFriendRecords();
+    ElMessage({ message: t('message.referSuccess'), type: "success" });
   });
 }
 

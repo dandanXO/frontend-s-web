@@ -797,7 +797,7 @@ import { onMounted, reactive, ref, computed } from 'vue'
 import moment from 'moment'
 import { getVipList } from '../../../api/vip'
 import { getFinancialLevels } from '../../../api/financial-level'
-import { getBankInfoListSimple } from '../../../api/bank-info'
+import { getWithdrawBankList } from '../../../api/bank-info'
 import {
   getMemberWithdrawRecord,
   getTotalWithdrawAmount,
@@ -1033,7 +1033,7 @@ async function loadFinancialLevels() {
 }
 
 async function loadBanks() {
-  const { data: bank } = await getBankInfoListSimple()
+  const { data: bank } = await getWithdrawBankList()
   bankList.list = bank
   bankList.list.unshift({
     id: 0,

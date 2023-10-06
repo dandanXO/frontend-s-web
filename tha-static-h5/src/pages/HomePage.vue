@@ -6,6 +6,7 @@
       navigation
       v-model="slide"
       swipeable
+      infinite
     >
       <template v-slot:navigation-icon="{ active, onClick }">
         <q-btn
@@ -24,14 +25,15 @@
         />
       </template>
 
-      <!--        :img-src="imgURL + banner.mobileImageUrl"-->
       <q-carousel-slide
         v-for="(banner, i) in banners"
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
         :img-src="
-          !$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl
+          !$q.screen.gt.sm
+            ? imgURL + banner.mobileImageUrl
+            : imgURL + banner.desktopImageUrl
         "
         @click="gotoPromo(banner)"
       >
@@ -175,7 +177,7 @@
       >
         <div class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
-          <span>Coming Soon</span>
+          <span>{{ $t('lang.coming_soon') }}</span>
         </div>
       </div>
     </Transition>
@@ -187,7 +189,7 @@
       >
         <div class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
-          <span>Coming Soon</span>
+          <span>{{ $t('lang.coming_soon') }}</span>
         </div>
       </div>
     </Transition>
@@ -199,7 +201,7 @@
       >
         <div class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
-          <span>Coming Soon</span>
+          <span>{{ $t('lang.coming_soon') }}</span>
         </div>
       </div>
     </Transition>
@@ -211,6 +213,7 @@
         v-if="currentSelectedMenu === 'slots' && !isShow"
       >
         <div
+          v-if="store.hasToken()"
           class="game-item btn-pointer btn-slot-game"
           @click="showFavourite()"
         >
@@ -239,11 +242,16 @@
         v-if="currentSelectedMenu === 'slots' && isShow"
       >
         <q-scroll-area
-          style="height: 500px;"
-          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
+          style="height: 500px"
+          :style="
+            !$q.screen.gt.sm
+              ? 'width: 80px; max-width: 80px'
+              : 'width: 120px; max-width: 120px'
+          "
         >
           <div class="bookmarks">
             <div
+              v-if="store.hasToken()"
               class="plat-item"
               :class="{ active: selectedPlatId === -99 }"
               @click="showFavourite()"
@@ -267,15 +275,78 @@
         <div class="loading-div" v-if="isLoading">
           <q-spinner-hourglass :color="ui.themeColor" size="8em" />
         </div>
-        <div v-if="!isLoading && selectedPlatId === -99">
-          &nbsp;&nbsp;
-          <!--          FAVOURITE-->
-        </div>
+
+        <q-scroll-area
+          v-if="!isLoading && selectedPlatId === -99"
+          style="height: 500px"
+          :style="
+            !$q.screen.gt.sm
+              ? 'width: calc(100% - 80px)'
+              : 'width: calc(100% - 120px)'
+          "
+        >
+          <!-- FAVOURITE -->
+          <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
+            <div
+              v-for="(game, index) in sortedFavGamesList"
+              :key="index"
+              :data-id="index"
+              v-intersection="onIntersection"
+              @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
+              style="height: auto"
+              class="btn-pointer btn-slot-game inner-slot-game"
+            >
+              <!-- <template v-if="game.gameClicked > 4"> -->
+                <transition name="in-view">
+                  <q-list class="q-col-gutter-none">
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <div class="slot-name">
+                        {{ game.name }}
+                        <!-- --- {{ game.gameClicked }} -->
+                      </div>
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 15px;
+                            overflow: hidden;
+                          "
+                        />
+                      </template>
+                    </q-img>
+                  </q-list>
+                </transition>
+              <!-- </template> -->
+            </div>
+          </div>
+
+          <div class="coming-soon-div" v-else>
+            <img src="../assets/home/coming-soon-img.png" />
+            <span>{{ $t('lang.no_fav_game_yet') }}</span>
+          </div>
+        </q-scroll-area>
+
         <q-scroll-area
           v-if="!isLoading && selectedPlatId !== -99"
           ref="scrollSlotRef"
-          style="height: 500px; width: calc(100% - 80px)"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
+          style="height: 500px"
+          :style="
+            !$q.screen.gt.sm
+              ? 'width: calc(100% - 80px)'
+              : 'width: calc(100% - 120px)'
+          "
         >
           <div class="search-list">
             <q-form @submit="searchList">
@@ -311,7 +382,7 @@
                     class="clear-input-icon btn-pointer"
                   ></q-icon>
 
-                  <!--                  <q-btn type="submit" @click="searchList" :label="$t('lang.search')" color="brightbtn"/>-->
+                  <!-- <q-btn type="submit" @click="searchList" :label="$t('lang.search')" color="brightbtn"/> -->
                 </template>
               </q-input>
             </q-form>
@@ -322,7 +393,7 @@
               :key="index"
               :data-id="index"
               v-intersection="onIntersection"
-              @click="openGame(game.name, game.code, selectedPlat.status)"
+              @click="openGame(game.name, game.code, selectedPlat.status, game)"
               style="height: auto"
               class="btn-pointer btn-slot-game inner-slot-game"
             >
@@ -398,8 +469,12 @@
         v-if="currentSelectedMenu === 'fish' && isShow"
       >
         <q-scroll-area
-          style="height: 500px;"
-          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
+          style="height: 500px"
+          :style="
+            !$q.screen.gt.sm
+              ? 'width: 80px; max-width: 80px'
+              : 'width: 120px; max-width: 120px'
+          "
         >
           <div class="bookmarks">
             <div
@@ -421,8 +496,12 @@
         <q-scroll-area
           v-if="!isLoading"
           ref="scrollPageRef"
-          style="height: 500px;"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
+          style="height: 500px"
+          :style="
+            !$q.screen.gt.sm
+              ? 'width: calc(100% - 80px)'
+              : 'width: calc(100% - 120px)'
+          "
         >
           <div class="search-list">
             <q-form @submit="searchList">
@@ -550,7 +629,7 @@
         </div>
         <template v-if="!isLoading">
           <div
-            class="game-item btn-pointer"
+            class="game-item btn-pointer btn-slot-game"
             v-for="(game, index) in miniGames"
             :key="index"
             @click="playGame(game.name, 'TFGaming', 'casual_' + game.code)"
@@ -779,14 +858,66 @@ export default defineComponent({
       return store.balance;
     });
     const gameModalRef = ref(null);
-    const openGame = (gameName, gameCode, gameStatus) => {
+    const openGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(
         gameName,
         selectedPlat.code,
         gameCode,
         gameStatus
       );
+
+      // gameInfo && console.log(gameInfo);
+      const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
+      const clickCount = favGames[gameInfo.id]
+        ? favGames[gameInfo.id].gameClicked + 1
+        : 1;
+      const revisedGameInfo = { ...gameInfo, gameClicked: clickCount, gamePlatformCode: selectedPlat.code };
+      gameInfo.gameClicked = clickCount;
+
+      favGames[gameInfo.id] = revisedGameInfo;
+      localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
+      favGamesList.value = favGames;
     };
+
+    const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
+      gameModalRef.value.open(
+        gameName,
+        gameInfo.gamePlatformCode,
+        gameCode,
+        gameStatus
+      );
+
+      // gameInfo && console.log(gameInfo);
+      const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
+      const clickCount = favGames[gameInfo.id]
+        ? favGames[gameInfo.id].gameClicked + 1
+        : 1;
+      const revisedGameInfo = { ...gameInfo, gameClicked: clickCount };
+      gameInfo.gameClicked = clickCount;
+
+      favGames[gameInfo.id] = revisedGameInfo;
+      localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
+      favGamesList.value = favGames;
+    };
+
+    const favGamesList = ref([]);
+    const sortedFavGamesList = computed(() => {
+      const gamesArray = Object.values(favGamesList.value);
+      return gamesArray.sort((a, b) => b.gameClicked - a.gameClicked);
+    });
+
+    const updateSortedFavGamesList = () => {
+      favGamesList.value = Object.fromEntries(
+        Object.entries(favGamesList.value).sort(([, a], [, b]) => b.gameClicked - a.gameClicked)
+      );
+    };
+
+    const getFavGameList = () => {
+      const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
+      favGamesList.value = favGames;
+      updateSortedFavGamesList();
+    };
+
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
@@ -903,11 +1034,7 @@ export default defineComponent({
             if (res.data.data.length > 0) {
               banners.value = res.data.data;
             } else {
-              //TODO:: HARDCODE
-              banners.value.push({
-                mobileImageUrl: require("../assets/home/banner1.png"),
-                desktopImageUrl: require("../assets/home/web-banner1.png"),
-              });
+
             }
           } else {
           }
@@ -929,6 +1056,14 @@ export default defineComponent({
       status: "",
     });
     const gamePage = reactive({
+      gameList: [],
+      currentPage: 1,
+      pageSize: 40,
+      searchType: "",
+      searchKey: "",
+      total: 0,
+    });
+    const favGamePage = reactive({
       gameList: [],
       currentPage: 1,
       pageSize: 40,
@@ -1201,10 +1336,12 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      //TODO:: HIDe it.
-      // const redirectU = '/promo'
-      // const redirectU = '/promo' + banner.redirectUrl
-      // router.push(`${redirectU}`)
+      if(banner.promoPageId){
+        router.push({path: '/promo', query: {id: banner.promoPageId}})
+      }else if(banner.redirectUrl){
+        const redirectPage= '/' + banner.redirectUrl;
+        router.push(`${redirectPage}`)
+      }
     };
 
     // isH5 -- platform checker
@@ -1243,7 +1380,7 @@ export default defineComponent({
         const res = await api.get(
           `/config/appVersionAndUrl?type=${appType}&device=${device}`
         );
-        console.log(res,'>>res');
+        console.log(res, ">>res");
         if (res.code === 0) {
           var version_info = res.data.version;
           var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
@@ -1305,6 +1442,7 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
+      getFavGameList();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -1394,6 +1532,7 @@ export default defineComponent({
       showTypeWeb,
       showMiniType,
       openGame,
+      openFavGame,
       scrollPageRef,
       announcementList,
       isStationNotice,
@@ -1409,6 +1548,10 @@ export default defineComponent({
       openDownloadPage,
       cancelUpdate,
       getAppDownloadUrl,
+      favGamesList,
+      sortedFavGamesList,
+      updateSortedFavGamesList,
+      getFavGameList,
     };
   },
 });
@@ -1841,6 +1984,13 @@ export default defineComponent({
   }
 }
 
+.fav-slot-game {
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+
 @media (min-width: 600px) {
 }
 
@@ -1861,8 +2011,6 @@ export default defineComponent({
     padding-top: 15px;
     column-gap: 25px;
   }
-
-
 
   .game-scroll-lists {
     .bookmarks {

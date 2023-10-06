@@ -358,7 +358,8 @@ export default {
     cash_must_wagered_1_tme_before_withdrawal: "โบนัสเงินคืนต้องทำ 1 เทิร์นก่อนถอนและจะถูกริบคืนหากไม่ได้ใช้ภายใน 30 วัน",
     system_message: "ข้อความแจ้งเตือนระบบ",
     confirm_deposit_msg: "ยืนยันการเข้าบัญชี",
-
+    coming_soon: "เร็ว ๆ นี้",
+    no_fav_game_yet: "ยังไม่มีเกมที่คุณชื่นชอบ"
 
   },
   error: {
