@@ -1342,6 +1342,7 @@ export default defineComponent({
         const redirectPage= '/' + banner.redirectUrl;
         router.push(`${redirectPage}`)
       }
+      router.push(`/promo`)
     };
 
     // isH5 -- platform checker
