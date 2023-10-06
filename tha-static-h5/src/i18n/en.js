@@ -355,7 +355,8 @@ export default {
     cash_must_wagered_1_tme_before_withdrawal: "Cashback bonuses must be wagered 1 time before withdrawal and will be forfeited if not used within 30 days.",
     system_message: "System Message",
     confirm_deposit_msg: "Confirm deposit",
-
+    coming_soon: "Coming soon",
+    no_fav_game_yet: "No favourite game yet"
 
   },
   error: {
