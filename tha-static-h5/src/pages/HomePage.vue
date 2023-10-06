@@ -630,7 +630,7 @@
         </div>
         <template v-if="!isLoading">
           <div
-            class="game-item btn-pointer"
+            class="game-item btn-pointer btn-slot-game"
             v-for="(game, index) in miniGames"
             :key="index"
             @click="playGame(game.name, 'TFGaming', 'casual_' + game.code)"
