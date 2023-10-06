@@ -303,19 +303,18 @@
               </div> -->
             </div>
 
-            <div v-if="isEdit" class="flex items-center justify-center q-mt-md">
-              <q-btn
-                color="grey"
-                class="login-btn common-large-btn q-mr-md"
-                @click="isEdit = !isEdit"
-                >{{ $t("lang.cancel") }}
-              </q-btn>
-
+            <div v-if="isEdit" class="flex items-center justify-center q-mt-md gap-10">
               <q-btn
                 color="brand"
                 class="login-btn common-large-btn"
                 @click="updateState"
                 >{{ $t("lang.confirm") }}
+              </q-btn>
+
+              <q-btn
+                class="common-large-btn close-btn"
+                @click="isEdit = !isEdit"
+                >{{ $t("lang.cancel") }}
               </q-btn>
             </div>
           </div>
