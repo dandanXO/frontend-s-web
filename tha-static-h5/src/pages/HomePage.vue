@@ -238,7 +238,10 @@
         id="id-slot-board"
         v-if="currentSelectedMenu === 'slots' && isShow"
       >
-        <q-scroll-area style="height: 500px; width: 120px; max-width: 120px">
+        <q-scroll-area
+          style="height: 500px;"
+          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
+        >
           <div class="bookmarks">
             <div
               class="plat-item"
@@ -271,7 +274,8 @@
         <q-scroll-area
           v-if="!isLoading && selectedPlatId !== -99"
           ref="scrollSlotRef"
-          style="height: 500px; width: calc(100% - 120px)"
+          style="height: 500px; width: calc(100% - 80px)"
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
         >
           <div class="search-list">
             <q-form @submit="searchList">
@@ -393,7 +397,10 @@
         id="id-fish-board"
         v-if="currentSelectedMenu === 'fish' && isShow"
       >
-        <q-scroll-area style="height: 500px; width: 120px; max-width: 120px">
+        <q-scroll-area
+          style="height: 500px;"
+          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
+        >
           <div class="bookmarks">
             <div
               class="plat-item"
@@ -414,7 +421,8 @@
         <q-scroll-area
           v-if="!isLoading"
           ref="scrollPageRef"
-          style="height: 500px; width: calc(100% - 120px)"
+          style="height: 500px;"
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
         >
           <div class="search-list">
             <q-form @submit="searchList">
@@ -1454,11 +1462,11 @@ export default defineComponent({
 
 .slot-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   margin: 0px auto 10px;
   align-items: flex-start;
-  column-gap: 14px;
-  row-gap: 14px;
+  column-gap: 10px;
+  row-gap: 10px;
   width: calc(100% - 20px);
 
   .q-list {
@@ -1501,8 +1509,6 @@ export default defineComponent({
   width: calc(95% - 20px);
 
   .game-board-item {
-    max-width: 86px;
-    max-height: 86px;
     border-radius: 8px;
     width: 100%;
     flex-direction: column;
@@ -1529,7 +1535,7 @@ export default defineComponent({
 
     img {
       width: 100%;
-      max-width: 55px;
+      max-width: 40px;
     }
   }
 }
@@ -1542,8 +1548,8 @@ export default defineComponent({
   margin: 12px auto 20px;
   padding-bottom: 30px;
   padding-top: 15px;
-  column-gap: 25px;
-  row-gap: 15px;
+  column-gap: 15px;
+  row-gap: 10px;
   transition: 1s ease-in;
 
   .game-item {
@@ -1642,7 +1648,7 @@ export default defineComponent({
   position: relative;
 
   .bookmarks {
-    width: 100px;
+    width: 70px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -1662,7 +1668,7 @@ export default defineComponent({
       background: $third-color;
 
       img {
-        max-width: 70px;
+        max-width: 50px;
         filter: grayscale(1);
       }
 
@@ -1816,6 +1822,7 @@ export default defineComponent({
   display: flex;
   margin-bottom: 16px;
   margin-right: 10px;
+  margin-left: 10px;
 
   justify-content: flex-end;
 
@@ -1838,8 +1845,41 @@ export default defineComponent({
 }
 
 @media (min-width: 769px) {
+  .grid {
+    column-gap: 16px;
+    row-gap: 14px;
+
+    .game-board-item {
+      img {
+        width: 100%;
+        max-width: 55px;
+      }
+    }
+  }
+
+  .game-grid-lists {
+    padding-top: 15px;
+    column-gap: 25px;
+  }
+
+
+
+  .game-scroll-lists {
+    .bookmarks {
+      width: 100px;
+
+      .plat-item {
+        img {
+          max-width: 70px;
+        }
+      }
+    }
+  }
+
   .slot-grid {
     grid-template-columns: repeat(4, 1fr);
+    column-gap: 14px;
+    row-gap: 14px;
   }
 }
 
