@@ -292,7 +292,7 @@
               :key="index"
               :data-id="index"
               v-intersection="onIntersection"
-              @click="openGame(game.name, game.code, selectedPlat.status, game)"
+              @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
               style="height: auto"
               class="btn-pointer btn-slot-game inner-slot-game"
             >
@@ -868,13 +868,34 @@ export default defineComponent({
 
       // gameInfo && console.log(gameInfo);
       const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
-      const clickCount = favGames[gameCode]
-        ? favGames[gameCode].gameClicked + 1
+      const clickCount = favGames[gameInfo.id]
+        ? favGames[gameInfo.id].gameClicked + 1
+        : 1;
+      const revisedGameInfo = { ...gameInfo, gameClicked: clickCount, gamePlatformCode: selectedPlat.code };
+      gameInfo.gameClicked = clickCount;
+
+      favGames[gameInfo.id] = revisedGameInfo;
+      localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
+      favGamesList.value = favGames;
+    };
+
+    const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
+      gameModalRef.value.open(
+        gameName,
+        gameInfo.gamePlatformCode,
+        gameCode,
+        gameStatus
+      );
+
+      // gameInfo && console.log(gameInfo);
+      const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
+      const clickCount = favGames[gameInfo.id]
+        ? favGames[gameInfo.id].gameClicked + 1
         : 1;
       const revisedGameInfo = { ...gameInfo, gameClicked: clickCount };
       gameInfo.gameClicked = clickCount;
 
-      favGames[gameCode] = gameInfo;
+      favGames[gameInfo.id] = revisedGameInfo;
       localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
       favGamesList.value = favGames;
     };
@@ -1511,6 +1532,7 @@ export default defineComponent({
       showTypeWeb,
       showMiniType,
       openGame,
+      openFavGame,
       scrollPageRef,
       announcementList,
       isStationNotice,
