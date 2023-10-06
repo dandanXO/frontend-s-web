@@ -574,6 +574,10 @@ svg {
   background: $main-color;
 }
 
+.verification-input:hover :before{
+  opacity: 0 !important;
+}
+
 input:internal-autofill-selected {
   background-color: transparent !important;
 }

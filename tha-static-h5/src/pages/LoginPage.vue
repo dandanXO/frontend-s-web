@@ -38,6 +38,7 @@
 
       <q-input
           ref="verificationRef"
+          class="verification-input"
           filled
           type="text"
           v-model="loginForm.captchaCode"

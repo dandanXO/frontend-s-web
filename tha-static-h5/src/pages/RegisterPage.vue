@@ -360,6 +360,7 @@
         <q-input
           ref="verificationRef"
           filled
+          class="verification-input"
           type="text"
           v-model="regForm.captchaCode"
           :label="$t('lang.captcha_code')"
@@ -448,7 +449,7 @@ export default defineComponent({
       //       console.log("error", e);
       //     });
     });
-    const step = ref(2);
+    // const step = ref(2);
     const done1 = ref(false);
     const done2 = ref(false);
     const imgURL = process.env.IMAGE_CDN + "/payment/";
@@ -459,12 +460,12 @@ export default defineComponent({
       confirmPwd: "",
       telephone: "",
       // email: "",
-      // captchaCode: "",
       codeAffiliate: "",
       // cardAccountName: "",
       // cardAccountSurname: "",
       regHost: location.hostname,
-      // codeId: ""
+      codeId: "",
+      captchaCode: "",
       birthday: ""
     });
     const getCode = () => {
@@ -475,7 +476,9 @@ export default defineComponent({
           if (response.code === 0) {
             verificationImg.value =
               "data:image/png;base64," + response.data.img;
+            regForm.captchaCode= "";
             regForm.codeId = response.data.id;
+            verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
@@ -711,7 +714,7 @@ export default defineComponent({
       validateBankLength,
       banksList,
       imgURL,
-      step,
+      // step,
       done1,
       done2,
       hasAffiliate,
@@ -831,6 +834,9 @@ h5 {
   margin-bottom: 12px;
   text-align: center;
 }
+
+
+
 
 .q-stepper--dark.q-stepper--horizontal .q-stepper__line:before, .q-stepper--dark.q-stepper--horizontal .q-stepper__line:after {
   background: transparent;

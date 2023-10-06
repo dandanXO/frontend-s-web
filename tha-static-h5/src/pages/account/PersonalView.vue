@@ -138,10 +138,10 @@
                 <div
                   class="basic-info-cell content flex items-center edit-div btn-pointer"
                   v-if="!personalState.memberInfo.realName && isEdit == false"
+                  @click="isEdit = !isEdit"
                 >
-                  <!--                  <span>{{ $t('lang.edit') }}</span>-->
-                  <!--                  <RiEditBoxLine/>-->
-                  -
+                                    <span>{{ $t('lang.edit') }}</span>
+                                    <RiEditBoxLine/>
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.realName">
@@ -212,7 +212,6 @@
                 >
                   <span @click="isEdit = !isEdit">{{ $t("lang.edit") }}</span>
                   <RiEditBoxLine />
-                  -
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.birthday">

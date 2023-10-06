@@ -545,7 +545,7 @@ svg path {
 }
 
 .home-sticky-div{
-  z-index: 9999;
+  z-index: 4000;
 }
 .home-sticky{
   display:none;
