@@ -25,7 +25,6 @@
         />
       </template>
 
-      <!--        :img-src="imgURL + banner.mobileImageUrl"-->
       <q-carousel-slide
         v-for="(banner, i) in banners"
         :key="i"
@@ -1014,11 +1013,7 @@ export default defineComponent({
             if (res.data.data.length > 0) {
               banners.value = res.data.data;
             } else {
-              //TODO:: HARDCODE
-              banners.value.push({
-                mobileImageUrl: require("../assets/home/banner1.png"),
-                desktopImageUrl: require("../assets/home/web-banner1.png"),
-              });
+
             }
           } else {
           }
@@ -1320,10 +1315,12 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      //TODO:: HIDe it.
-      // const redirectU = '/promo'
-      // const redirectU = '/promo' + banner.redirectUrl
-      // router.push(`${redirectU}`)
+      if(banner.promoPageId){
+        router.push({path: '/promo', query: {id: banner.promoPageId}})
+      }else if(banner.redirectUrl){
+        const redirectPage= '/' + banner.redirectUrl;
+        router.push(`${redirectPage}`)
+      }
     };
 
     // isH5 -- platform checker

@@ -10,8 +10,8 @@
             class="promo-top-bg"
             :style="
           (!$q.screen.gt.sm) ?
-            'background-image: url(' + banner.mobileImageUrl + ')'
-            :  'background-image: url(' + banner.desktopImageUrl + ')'
+            'background-image: url(' + imgURL + banner.mobileImageUrl + ')'
+            :  'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
           "
         ></div>
       </div>
@@ -45,12 +45,15 @@
                 <div class="promo-bg">
                   <img
                       class="promo-content"
-                      :src="imgURL + promo.mobileImgUrl"
+                      :src="
+ (!$q.screen.gt.sm) ?
+            imgURL + promo.mobileBannerUrl
+            : imgURL + promo.desktopBannerUrl "
                   />
                 </div>
               </div>
               <div class="promo-info">
-                <span class="viewdetail">{{ $t('lang.view_detail')}}</span>
+                <span class="viewdetail">{{ $t('lang.view_detail') }}</span>
               </div>
             </a>
           </div>
@@ -61,14 +64,14 @@
       <div class="selected-promo-wrapper">
         <div class="banner-container">
           <div
-              class="promo-bg"
-              :style="
-              'background-image: url(' +
-              imgURL +
-              selectedPromo.mobileImgUrl +
-              ')'
-            "
-          ></div>
+              class="promo-banner-img"
+          >
+            <img :src="
+ (!$q.screen.gt.sm) ?
+            (selectedPromo.mobileImgUrl ? imgURL + selectedPromo.mobileImgUrl : imgURL + selectedPromo.mobileBannerUrl)
+            : (selectedPromo.desktopImgUrl ? imgURL + selectedPromo.desktopImgUrl : imgURL + selectedPromo.desktopBannerUrl) "
+            />
+          </div>
         </div>
         <div class="inner">
           <div v-if="selectedPromo.hasPromo">
@@ -127,9 +130,9 @@ export default defineComponent({
     const promoTypes = ref([
       {value: "ALL", label: t('lang.all')},
       {value: "WELCOME", label: t('lang.welcome')},
-      {value: "SPORT", label: t('lang.sport_header') },
-      {value: "LIVE CASINO", label: t('lang.live_header') },
-      {value: "SLOT", label: t('lang.slot_header') },
+      {value: "SPORT", label: t('lang.sport_header')},
+      {value: "LIVE CASINO", label: t('lang.live_header')},
+      {value: "SLOT", label: t('lang.slot_header')},
     ]);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
@@ -149,23 +152,12 @@ export default defineComponent({
       }
     });
     const loadBanner = () => {
-      //TODO:: HardCoded.
-      banner.value = {
-        mobileImageUrl: require("../assets/home/banner1.png"),
-        desktopImageUrl: require("../assets/home/web-banner1.png")
-      }
-
-      // loadPromoBanner("PROMO").then((res) => {
-      //   if (res.code === 0) {
-      //       banner.value = res.data[0]
-      //   }
-      // })
       api
           .get("/promo/banner?category=PROMO")
           .then((res) => {
             const ret = res.data
             if (ret.code === 0) {
-              // banner.value = ret.data[0];
+              banner.value = ret.data[0];
             } else {
             }
           })
@@ -309,8 +301,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 60vw;
-      max-height: 240px;
+      height: auto;
+      max-height: 445px;
       //aspect-ratio: 536/335;
       margin: 10px;
       border-radius: 10px;
@@ -321,8 +313,8 @@ export default defineComponent({
     }
 
     .promo-main-container {
-      max-width: 1400px;
-      width: 95%;
+      max-width: 1280px;
+      width: 100%;
       margin-left: auto;
       margin-right: auto;
 
@@ -405,6 +397,7 @@ export default defineComponent({
 
 
           .promo-img-wrapper {
+            aspect-ratio: 1000/445;
             position: relative;
             overflow: hidden;
             border-radius: 10px 10px 0 0;
@@ -477,14 +470,18 @@ export default defineComponent({
       .banner-container {
         width: 100%;
 
-        .promo-bg {
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-position: center center;
-          overflow: hidden;
-          height: 220px;
-          margin: 10px;
+        .promo-banner-img {
+          width: calc(100% - 20px);
+          max-width: 1216px;
+          height: auto;
           border-radius: 10px;
+          margin: 10px auto 10px;
+
+          > img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+          }
         }
       }
 
@@ -609,8 +606,12 @@ export default defineComponent({
   }
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
   .banner-container .promo-top-bg {
+    aspect-ratio: 100/25;
+  }
+
+  .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-img-wrapper {
     aspect-ratio: 100/25;
   }
 
