@@ -26,6 +26,10 @@ export const getBankInfoListSimple = () => {
   return https().request("/system-bank-info/bankInfoList", Method.GET);
 }
 
+export const getWithdrawBankList = () => {
+  return https().request("/system-bank-info/withdrawBankInfoList", Method.GET);
+}
+
 export const deleteBank = async (ids) => {
   await https().request(`/system-bank-info?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
