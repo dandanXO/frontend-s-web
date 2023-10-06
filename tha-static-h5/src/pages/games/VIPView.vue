@@ -800,7 +800,7 @@ export default defineComponent({
   padding-top: 30px;
 
   .vip-headline {
-    color: #e2a4ff;
+    color: $header-color;
     font-size: 28px;
   }
 
@@ -981,7 +981,7 @@ export default defineComponent({
         background: transparent;
 
         &.active {
-          background-image: linear-gradient(to right, #de4545, #db7e42);
+          background-image: $linear-bg-red;
         }
       }
     }
@@ -1289,7 +1289,7 @@ export default defineComponent({
         }
 
         .value {
-          background: #2b2b4b;
+          background: $dark-old;
           color: #ffffff;
           margin: 20px 0 0;
           font-family: Wave;

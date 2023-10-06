@@ -489,7 +489,7 @@ svg path {
 .register-btn {
   width: 5rem;
   height: 1rem;
-  border: 1px solid #A840FB;
+  border: 1px solid $purple-color;
   background: $linear-bg-2;
   color: $white;
   border-radius: 25px;

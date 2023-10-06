@@ -58,7 +58,7 @@ export default defineComponent({
       csclient.set("btnid", "cs-web-id");
       csclient.set('notification-type', {
         "type": "breathing",
-        "color": "#A840FB",
+        "color": "#FB4BFF",
       });
 
       if (store.token) {

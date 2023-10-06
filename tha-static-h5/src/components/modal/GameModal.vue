@@ -507,8 +507,8 @@ defineExpose({
     position: absolute;
     border-radius: 10px;
     text-align: center;
-    background-color: linear-gradient(to right, #de4545, #db7e42);
-    background-image: linear-gradient(to right, #de4545, #db7e42);
+    background-color: $linear-bg-red;;
+    background-image: $linear-bg-red;;
     display: flex;
     justify-content: center;
     align-items: center;

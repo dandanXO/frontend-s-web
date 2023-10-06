@@ -926,7 +926,7 @@ export default defineComponent({
   height: 40px;
   padding: 5px 20px;
   background: #23263c;
-  color: #ffffff;
+  color: $white;
   border: 0;
 }
 
@@ -981,7 +981,7 @@ export default defineComponent({
     font-size: $md-size;
 
     svg {
-      fill: #ffffff;
+      fill: $white;
       width: 20px;
       display: inline-block;
       vertical-align: middle;

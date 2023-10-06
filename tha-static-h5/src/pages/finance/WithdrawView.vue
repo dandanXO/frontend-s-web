@@ -489,7 +489,7 @@ export default defineComponent({
     border: 1px solid #db7e42;
   }
   :deep(.ant-steps-item-finish .ant-steps-item-icon) {
-    background-image: linear-gradient(to right, #de4545, #db7e42);
+    background-image: $linear-bg-red;
 
     border: 1px solid #2b2b4b;
     svg {
@@ -601,7 +601,7 @@ export default defineComponent({
     background-position: top center;
     top: -8px;
     right: -1px;
-    background: linear-gradient(to right, #de4545, #db7e42);
+    background: $linear-bg-red;
     padding: 5px;
     color: #ffffff;
     font-size: 12px;

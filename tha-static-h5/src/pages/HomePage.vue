@@ -296,7 +296,7 @@
               style="height: auto"
               class="btn-pointer btn-slot-game inner-slot-game"
             >
-              <!-- <template v-if="game.gameClicked > 4"> -->
+<!--               <template v-if="game.gameClicked > 1"> -->
                 <transition name="in-view">
                   <q-list class="q-col-gutter-none">
                     <q-img
@@ -328,7 +328,7 @@
                     </q-img>
                   </q-list>
                 </transition>
-              <!-- </template> -->
+<!--               </template>-->
             </div>
           </div>
 
@@ -823,6 +823,7 @@ import * as _ from "lodash";
 import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
 import { Vue3Marquee } from "vue3-marquee";
+import moment from "moment"
 
 import { useUI } from "stores/ui";
 import { isMobile } from "boot/utils";
@@ -871,7 +872,8 @@ export default defineComponent({
       const clickCount = favGames[gameInfo.id]
         ? favGames[gameInfo.id].gameClicked + 1
         : 1;
-      const revisedGameInfo = { ...gameInfo, gameClicked: clickCount, gamePlatformCode: selectedPlat.code };
+      const lastPlayedAt= moment().unix();
+      const revisedGameInfo = { ...gameInfo, gameClicked: clickCount, gamePlatformCode: selectedPlat.code, lastPlayed:lastPlayedAt  };
       gameInfo.gameClicked = clickCount;
 
       favGames[gameInfo.id] = revisedGameInfo;
@@ -892,7 +894,8 @@ export default defineComponent({
       const clickCount = favGames[gameInfo.id]
         ? favGames[gameInfo.id].gameClicked + 1
         : 1;
-      const revisedGameInfo = { ...gameInfo, gameClicked: clickCount };
+      const lastPlayedAt= moment().unix();
+      const revisedGameInfo = { ...gameInfo, gameClicked: clickCount,  lastPlayed:lastPlayedAt };
       gameInfo.gameClicked = clickCount;
 
       favGames[gameInfo.id] = revisedGameInfo;
@@ -903,12 +906,12 @@ export default defineComponent({
     const favGamesList = ref([]);
     const sortedFavGamesList = computed(() => {
       const gamesArray = Object.values(favGamesList.value);
-      return gamesArray.sort((a, b) => b.gameClicked - a.gameClicked);
+      return gamesArray.filter((item) => item.gameClicked > 1).sort((a, b) => b.lastPlayed - a.lastPlayed);
     });
 
     const updateSortedFavGamesList = () => {
       favGamesList.value = Object.fromEntries(
-        Object.entries(favGamesList.value).sort(([, a], [, b]) => b.gameClicked - a.gameClicked)
+        Object.entries(favGamesList.value).sort(([, a], [, b]) => b.lastPlayed - a.lastPlayed)
       );
     };
 
@@ -1594,7 +1597,7 @@ export default defineComponent({
   }
 
   .share {
-    background-image: linear-gradient(to right, #de4545, #db7e42);
+    background-image: $linear-bg-red;
     padding: 10px;
     border-radius: 5px;
     display: flex;
@@ -1916,7 +1919,7 @@ export default defineComponent({
       font-size: 20px;
       font-weight: bold;
       color: #000;
-      text-shadow: 1px 1px 1px #d9d9d9;
+      text-shadow: 1px 1px 1px $text-gray;
 
       &#copper-type {
         background: #b87333;
@@ -2034,10 +2037,11 @@ export default defineComponent({
 
 @media (min-width: 991px) {
   .grid .game-board-item {
+    cursor: pointer;
     border-radius: 10px;
     max-width: 110px;
-    max-height: 165px;
-    aspect-ratio: 110/165;
+    max-height: 125px;
+    aspect-ratio: 110/125;
 
     span {
       font-size: 1em;
