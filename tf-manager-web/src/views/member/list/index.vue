@@ -38,12 +38,11 @@
           {{ t('fields.distributePrivilege') }}
         </el-button>
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:member:export']"
-          @click="exportExcel"
-        >{{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -53,26 +52,17 @@
           <span class="role-span">{{ t('fields.memberList') }}</span>
         </div>
       </template>
-
-      <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
+      <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
                  :close-on-click-modal="false" :close-on-press-escape="false"
       >
-        <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
-                     :color="uiControl.colors" v-if="exportPercentage !== 100"
-        />
-        <el-result
-          icon="success"
-          :title="t('fields.successfullyExport')"
-          v-if="exportPercentage === 100"
-        />
-        <div class="dialog-footer">
-          <el-button type="primary" :disabled="exportPercentage !== 100"
-                     @click="uiControl.progressBarVisible = false"
-          >{{ t('fields.done') }}
-          </el-button>
-        </div>
+        <span>{{ t('message.requestExportToExcelDone1') }}</span>
+        <router-link :to="`/site-management/download-manager`">
+          <el-link type="primary">
+            {{ t('menu.DownloadManager') }}
+          </el-link>
+        </router-link>
+        <span>{{ t('message.requestExportToExcelDone2') }}</span>
       </el-dialog>
-
       <el-dialog :title="uiControl.searchDialogTitle" v-model="uiControl.searchDialogVisible" append-to-body width="1000px">
         <el-form ref="advancedSearchForm" :model="request" :inline="true" size="small" label-width="150px">
           <el-form-item :label="t('fields.realName')" prop="realName">
@@ -389,11 +379,11 @@
 <script setup>
 
 import { computed, reactive, ref, onMounted } from "vue";
-import * as XLSX from 'xlsx';
+// import * as XLSX from 'xlsx';
 import moment from 'moment';
 import { ElMessage } from "element-plus";
 import { email, required, size } from "../../../utils/validate";
-import { getMembers, registerMember, distributePromotion } from "../../../api/member";
+import { getMembers, registerMember, distributePromotion, requestExportSiteMember } from "../../../api/member";
 import { getVipList } from "../../../api/vip";
 import { selectList } from "../../../api/risk-level";
 import { getFinancialLevels } from "../../../api/financial-level";
@@ -437,6 +427,7 @@ const uiControl = reactive({
   dialogTitle: "",
   dialogType: "CREATE",
   searchDialogVisible: false,
+  messageVisible: false,
   searchDialogTitle: t('fields.advancedSearch'),
   promoDialogVisible: false,
   promoDialogTitle: t('fields.distributePrivilege'),
@@ -462,9 +453,9 @@ const uiControl = reactive({
 let selectedBirthdayStartDate = "";
 let selectedRegTimeStartDate = "";
 
-const exportPercentage = ref(0);
-
-const EXPORT_HEADER = ['ID', 'Login Name', 'Registration Time', 'Balance', 'Total Deposit', 'Total Withdrawal', 'Last Login Time', 'Status', 'Site'];
+// const exportPercentage = ref(0);
+//
+// const EXPORT_HEADER = ['ID', 'Login Name', 'Registration Time', 'Balance', 'Total Deposit', 'Total Withdrawal', 'Last Login Time', 'Status', 'Site'];
 
 const page = reactive({
   pages: 0,
@@ -647,51 +638,61 @@ async function loadMembers() {
   table.value.clearSelection();
 }
 
-async function exportExcel() {
-  uiControl.progressBarVisible = true;
+async function requestExportExcel() {
   const query = checkQuery();
-  query.current = 1;
-  const { data: ret } = await getMembers(query);
-  const exportData = [EXPORT_HEADER];
-  const maxLength = [];
-
-  pushRecordToData(ret.records, exportData);
-  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
-  query.current = ret.current;
-
-  while (query.current < ret.pages) {
-    query.current += 1;
-    const { data: ret } = await getMembers(query);
-    pushRecordToData(ret.records, exportData);
-    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await requestExportSiteMember(query);
+  if (ret) {
+    uiControl.messageVisible = true;
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData);
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key];
-
-      maxLength[key] = typeof value === 'number'
-        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
-        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
-    });
-  });
-  const wsCols = maxLength.map(w => { return { width: w } });
-  ws['!cols'] = wsCols;
-  const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Member_List');
-  wb.Sheets.Member_List = ws;
-  XLSX.writeFile(wb, "member_list.xlsx");
-  exportPercentage.value = 100;
 }
 
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.downlineAffiliate;
-    delete item.downlineMember;
-  })
-  const data = records.map(record => Object.values(record).map(item => !item || item === '' ? '-' : item));
-  exportData.push(...data);
-}
+// async function exportExcel() {
+//   uiControl.progressBarVisible = true;
+//   const query = checkQuery();
+//   query.current = 1;
+//   const { data: ret } = await getMembers(query);
+//   const exportData = [EXPORT_HEADER];
+//   const maxLength = [];
+//
+//   pushRecordToData(ret.records, exportData);
+//   exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+//   query.current = ret.current;
+//
+//   while (query.current < ret.pages) {
+//     query.current += 1;
+//     const { data: ret } = await getMembers(query);
+//     pushRecordToData(ret.records, exportData);
+//     exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+//   }
+//   const ws = XLSX.utils.aoa_to_sheet(exportData);
+//   exportData.map(data => {
+//     Object.keys(data).map(key => {
+//       const value = data[key];
+//
+//       maxLength[key] = typeof value === 'number'
+//         ? (maxLength[key] >= 10 ? maxLength[key] : 10)
+//         : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
+//     });
+//   });
+//   const wsCols = maxLength.map(w => { return { width: w } });
+//   ws['!cols'] = wsCols;
+//   const wb = XLSX.utils.book_new();
+//   wb.SheetNames.push('Member_List');
+//   wb.Sheets.Member_List = ws;
+//   XLSX.writeFile(wb, "member_list.xlsx");
+//   exportPercentage.value = 100;
+// }
+
+// function pushRecordToData(records, exportData) {
+//   records.forEach(item => {
+//     delete item.downlineAffiliate;
+//     delete item.downlineMember;
+//   })
+//   const data = records.map(record => Object.values(record).map(item => !item || item === '' ? '-' : item));
+//   exportData.push(...data);
+// }
 
 function changePage(page) {
   if (request.current >= 1) {

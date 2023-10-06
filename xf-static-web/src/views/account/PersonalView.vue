@@ -1,6 +1,19 @@
 <template>
   <div>
     <div class="menu-title-container">
+      <span class="menu-title">推荐链接</span>
+    </div>
+    <div class="personal-container">
+      <input class="referral-link" @blur="blurCode" ref="copyinput" v-model="referralLink" readonly />
+      <button
+          class="common-btn copy-btn"
+          @blur="blurCode"
+          @click="copyCode"
+      >
+        {{ copybtntxt }}
+      </button>
+    </div>
+    <div class="menu-title-container">
       <span class="menu-title">个人资料</span>
     </div>
     <div class="personal-container">
@@ -434,6 +447,7 @@ import {
   sendSms,
   verifySms
 } from "@/api/personal/personal";
+import { getReferralLink } from "@/api/personal/share"
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
@@ -451,6 +465,19 @@ export default defineComponent({
 
     const sendOtpDisabledTimeout = 60
     const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey)
+
+    const referralLink = ref('');
+    const copybtntxt = ref("复制");
+    const copyinput = ref(null);
+    const copyCode = () => {
+      const copyText = copyinput.value
+      copyText.select()
+      document.execCommand("copy")
+      copybtntxt.value = '已复制'
+    };
+    const blurCode = () => {
+      copybtntxt.value = '复制'
+    };
 
     let cachedEmail = lsGet(emailKey);
     let cachedTelephone = lsGet(phoneKey);
@@ -488,9 +515,21 @@ export default defineComponent({
       bankCardList: []
     });
 
+    const getReferral = () => {
+      getReferralLink().then((res) => {
+        if(res.code === 0) {
+          referralLink.value = `https://www.xf8578.com/refer/${res.data}`;
+          // evip
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    };
+
     onMounted(() => {
       loadInfo();
       getCode();
+      getReferral();
     });
       const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
@@ -934,7 +973,12 @@ const verificationPhoneModalVisible = ref(false)
       disableSendVerificationButton,
       disableSendPhoneButton,
       countDown,
-      isSendEmailOTP
+      isSendEmailOTP,
+      copybtntxt,
+      copyinput,
+      copyCode,
+      blurCode,
+      referralLink
     };
   }
 });
@@ -993,5 +1037,12 @@ const verificationPhoneModalVisible = ref(false)
       justify-content: flex-end;
     }
   }
+}
+
+.referral-link {
+  width: 100%;
+  border: none;
+  background-color: #2c444f;
+  padding: 10px;
 }
 </style>
