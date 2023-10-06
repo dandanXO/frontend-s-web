@@ -1329,7 +1329,6 @@ export default defineComponent({
   }
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 .download-top-container {
   padding: 4px 10px;
 
