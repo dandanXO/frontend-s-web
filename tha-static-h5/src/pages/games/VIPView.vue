@@ -16,13 +16,35 @@
             >
               <div class="vipcontents">
                 <div class="vip-title">{{ vip.vipGrade }}</div>
-                <div class="inner-vip">
+                <div class="inner-vip" v-if="vip.vipGrade == 'Bronze'">
                   <div class="txt-inner pt-40">
                     <div class="txt-inner-title">{{ $t("lang.upgrade") }}</div>
                   </div>
                   <div class="txt-inner">
                     <div class="txt-inner-content-full">
                       {{ $t("lang.have_one_successful_deposit") }}
+                    </div>
+                  </div>
+                </div>
+                <div class="inner-vip" v-else>
+                  <div class="txt-inner pt-10">
+                    <div class="txt-inner-title">
+                      {{ $t("lang.upgrade") }}
+                    </div>
+                  </div>
+                  <div class="txt-inner">
+                    <div class="txt-inner-content-full">
+                      {{ $t("lang.upgrade") }} {{ vip.upgrade }}
+                    </div>
+                  </div>
+
+                  <div class="txt-inner pt-20">
+                    <div class="txt-inner-content">
+                      {{ $t("lang.monthly_bonus") }} <br />{{ vip.monthly }}
+                    </div>
+
+                    <div class="txt-inner-content">
+                      {{ $t("lang.birthday_bonus") }} <br />{{ vip.birthday }}
                     </div>
                   </div>
                 </div>
