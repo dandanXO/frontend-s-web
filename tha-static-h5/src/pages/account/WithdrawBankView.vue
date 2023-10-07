@@ -9,79 +9,80 @@
       </div>
       <div class="account-content">
         <div class="account-tip-text wbot">
-          <RiSpamLine /> {{ $t('lang.register_bank_acc_para') }}
+          <RiSpamLine/>
+          {{ $t('lang.register_bank_acc_para') }}
         </div>
         <div class="addbuttons"></div>
         <div class="flex-box flex-wrap bank-card-list">
           <template
-            v-for="(bc, index) in personalState.bankCardList"
-            :key="bc.id"
+              v-for="(bc, index) in personalState.bankCardList"
+              :key="bc.id"
           >
-          <div
-            class="bank-card-item"
-            :class="{
+            <div
+                class="bank-card-item"
+                :class="{
               active: index === isCardActive,
               inactive: index > isCardActive
             }"
-            v-if="bc.bankName"
-            @click="showCard(bc, index)"
-          >
-            <div class="icon"><img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon"></div>
-            <div class="cardname">
-              <div class="txt-center">
+                v-if="bc.bankName"
+                @click="showCard(bc, index)"
+            >
+              <div class="icon"><img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon"></div>
+              <div class="cardname">
+                <div class="txt-center">
                   <strong>{{ bc.bankName }}</strong>
-                <!-- <div>Bank Account Number</div> -->
+                  <!-- <div>Bank Account Number</div> -->
+                </div>
               </div>
-            </div>
-            <div class="unlink-btn" @click="unbindBankCard(bc)">
-              <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
-              <RiLinkUnlink />
-            </div>
+              <div class="unlink-btn" @click="unbindBankCard(bc)">
+                <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
+                <RiLinkUnlink/>
+              </div>
 
-            <div class="flex-box cards">
-              <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                {{ b }}
+              <div class="flex-box cards">
+                <div
+                    v-for="b in bc.cardNumber.split()"
+                    :key="b"
+                    class="card-num-box"
+                >
+                  {{ b }}
+                </div>
+                <!-- <div
+                  v-for="b in bc.cardNumber.split()"
+                  :key="b"
+                  class="card-num-box"
+                >
+                  {{ b.slice(0, 4) }}
+                </div>
+                <div
+                  v-for="b in bc.cardNumber.split()"
+                  :key="b"
+                  class="card-num-box"
+                >
+                  ****
+                </div>
+                <div
+                  v-for="b in bc.cardNumber.split()"
+                  :key="b"
+                  class="card-num-box"
+                >
+                  ****
+                </div>
+                <div
+                  v-for="b in bc.cardNumber.split()"
+                  :key="b"
+                  class="card-num-box"
+                >
+                  {{ b.slice(b.length - 4, b.length) }}
+                </div> -->
               </div>
-              <!-- <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                {{ b.slice(0, 4) }}
-              </div>
-              <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                ****
-              </div>
-              <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                ****
-              </div>
-              <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-              >
-                {{ b.slice(b.length - 4, b.length) }}
-              </div> -->
             </div>
-          </div>
           </template>
           <div
-            class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
-            @click="bankCardModal('bank')"
+              class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
+              @click="bankCardModal('bank')"
           >
-            <RiLink />
+            <RiLink/>
             {{ $t('lang.add_a_card') }}
           </div>
         </div>
@@ -98,17 +99,17 @@
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
                   >
                     <q-date v-model="searchForm.start" mask="YYYY-MM-DD">
                       <div class="row items-center justify-end">
                         <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
                         />
                       </div>
                     </q-date>
@@ -120,17 +121,17 @@
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
                   >
                     <q-date v-model="searchForm.end" mask="YYYY-MM-DD">
                       <div class="row items-center justify-end">
                         <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
                         />
                       </div>
                     </q-date>
@@ -139,7 +140,7 @@
               </template>
             </q-input>
           </div>
-          <q-btn label="ค้นหา" />
+          <q-btn label="ค้นหา"/>
           <!-- <q-form-item>
             <button class="common-btn outline search-btn" type="submit">
               Search For
@@ -164,48 +165,52 @@
             <div class="row q-col-gutter-xs">
               <div class="col-12">
                 <q-select
-                  v-model="selectedBankType"
-                  filled
-                  :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
-                  :label="$t('lang.withdraw_methods')"
-                  color="white"
-                  label-color="grey"
-                  option-label="name"
-                  option-value="name"
-                  @update:model-value="selectBankType(opt)"
-                  emit-value
-                  map-options
+                    v-model="selectedBankType"
+                    filled
+                    :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
+                    :label="$t('lang.withdraw_methods')"
+                    color="white"
+                    label-color="grey"
+                    option-label="name"
+                    option-value="name"
+                    @update:model-value="selectBankType(opt)"
+                    emit-value
+                    map-options
                 />
               </div>
               <div class="col-12">
                 <q-select
-                  ref="bankCardRef"
-                  class="q-mb-md"
-                  color="white"
-                  filled
-                  label-color="grey"
-                  v-model="bankCardInfo.bankId"
-                  :options="banksList"
-                  option-value="id"
-                  option-label="name"
-                  :label="$t('lang.select_account_add_different_banks')"
-                  :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
-                  lazy-rules
-                  emit-value
-                  map-options
+                    ref="bankCardRef"
+                    class="q-mb-md"
+                    color="white"
+                    filled
+                    label-color="grey"
+                    v-model="bankCardInfo.bankId"
+                    :options="banksList"
+                    option-value="id"
+                    option-label="name"
+                    :label="$t('lang.select_account_add_different_banks')"
+                    :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
+                    lazy-rules
+                    emit-value
+                    map-options
                 >
                   <template v-slot:selected-item="scope">
                     <q-item-section avatar>
-                      <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                      <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;"
+                           :src="imgURL + scope.opt.bankIcon">
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.name }}</q-item-label>
+                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                        {{ scope.opt.name }}
+                      </q-item-label>
                     </q-item-section>
                   </template>
                   <template v-slot:option="scope">
                     <q-item v-bind="scope.itemProps">
                       <q-item-section avatar>
-                        <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                        <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;"
+                             :src="imgURL + scope.opt.bankIcon">
                       </q-item-section>
                       <q-item-section>
                         <q-item-label>{{ scope.opt.name }}</q-item-label>
@@ -219,52 +224,52 @@
 
           <div v-if="isVirtual">
             <q-input
-              filled
-              ref="bankCardRef"
-              class="q-mb-md"
-              v-model="bankName"
-              disable
-              readonly
-              label="Bank Name"
-              color="white"
+                filled
+                ref="bankCardRef"
+                class="q-mb-md"
+                v-model="bankName"
+                disable
+                readonly
+                label="Bank Name"
+                color="white"
             />
           </div>
           <q-input
-            class="q-mb-md"
-            filled
-            v-model="bankCardInfo.cardAccount"
-            :label="$t('lang.account_name_with_desc')"
-            :rules="cardAccountRules"
-            lazy-rules
-            :disable="true"
-            ref="cardAccountRef"
-            color="white"
+              class="q-mb-md"
+              filled
+              v-model="bankCardInfo.cardAccount"
+              :label="$t('lang.account_name_with_desc')"
+              :rules="cardAccountRules"
+              lazy-rules
+              :disable="true"
+              ref="cardAccountRef"
+              color="white"
           />
           <q-input
-            filled
-            class="q-mb-md"
-            v-model="bankCardInfo.cardNumber"
-            :label="$t('lang.card_number')"
-            :rules="cardNumberRules"
-            ref="cardNumberRef"
-            color="white"
+              filled
+              class="q-mb-md"
+              v-model="bankCardInfo.cardNumber"
+              :label="$t('lang.card_number')"
+              :rules="cardNumberRules"
+              ref="cardNumberRef"
+              color="white"
           />
           <q-input
-            class="q-mb-md"
-            filled
-            v-model="bankCardInfo.cardAddress"
-            :label="$t('lang.branch_not_required')"
-            :rules="cardAddressRules"
-            ref="cardAddressRef"
-            color="white"
+              class="q-mb-md"
+              filled
+              v-model="bankCardInfo.cardAddress"
+              :label="$t('lang.branch_not_required')"
+              :rules="cardAddressRules"
+              ref="cardAddressRef"
+              color="white"
           />
           <div class="flex flex-center">
             <q-btn
-              class="q-mr-md"
-              :label="$t('lang.cancel')"
-              @click="bankCardModalState.visible = false"
+                class="q-mr-md"
+                :label="$t('lang.cancel')"
+                @click="bankCardModalState.visible = false"
             />
-            <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard" />
+            <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard"/>
           </div>
         </q-form>
       </q-card>
@@ -316,23 +321,22 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted, createVNode } from "vue";
-// import { Modal, message } from "ant-design-vue";
-// import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import { RiSpamLine, RiLink, RiLinkUnlink } from "vue-remix-icons";
-// import { loadMemberInfo, loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/personal/personal";
+import {defineComponent, reactive, ref, onMounted} from "vue";
+import {RiSpamLine, RiLink, RiLinkUnlink} from "vue-remix-icons";
 // import moment from "moment";
-import { api } from "boot/axios"
-import { useQuasar } from "quasar";
-import { userStore } from "stores/index";
+import {api} from "boot/axios"
+import {useQuasar} from "quasar";
+import {userStore} from "stores/index";
+import {useRouter} from "vue-router";
+import {useI18n} from "vue-i18n";
 
-import { useRouter } from "vue-router";
 var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    // eslint-disable-next-line vue/no-unused-components
-    RiSpamLine, RiLink, RiLinkUnlink
+    RiSpamLine,
+    RiLink,
+    RiLinkUnlink
   },
   setup() {
     const store = userStore();
@@ -348,7 +352,7 @@ export default defineComponent({
         title: "Bank Name",
         dataIndex: "name",
         key: "name",
-        slots: { title: "customTitle", customRender: "name" }
+        slots: {title: "customTitle", customRender: "name"}
       },
       {
         title: "Account Number",
@@ -364,12 +368,12 @@ export default defineComponent({
         title: "Bind Time",
         key: "tags",
         dataIndex: "tags",
-        slots: { customRender: "tags" }
+        slots: {customRender: "tags"}
       },
       {
         title: "Unbind Time",
         key: "action",
-        slots: { customRender: "action" }
+        slots: {customRender: "action"}
       }
     ];
 
@@ -428,6 +432,7 @@ export default defineComponent({
       cardAccount: "",
       cardAddress: ""
     });
+    const {t} = useI18n();
     const router = useRouter();
     const bankName = ref();
     const banksList = ref([]);
@@ -438,7 +443,7 @@ export default defineComponent({
           $q.notify({
             color: "negative",
             position: "top",
-            message: "กรุณาใส่ข้อมูลให้ถูกต้อง",
+            message: t('lang.fill_in_information'),
             icon: "report_problem"
           });
           router.push("/account/personal");
@@ -448,18 +453,18 @@ export default defineComponent({
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
           bankCardModalState.visible = true;
-        if (bankCardModalState.banks.length === 0) {
-          api.get("/session/withdraw/card").then((ret) => {
-            const res = ret.data
-            if (res.code === 0) {
-              bankCardModalState.banks.push(...res.data);
-              selectBankType()
-            }
-          }).catch((e) => {
-            console.log("error", e);
-          });
+          if (bankCardModalState.banks.length === 0) {
+            api.get("/session/withdraw/card").then((ret) => {
+              const res = ret.data
+              if (res.code === 0) {
+                bankCardModalState.banks.push(...res.data);
+                selectBankType()
+              }
+            }).catch((e) => {
+              console.log("error", e);
+            });
+          }
         }
-      }
       })
     };
 
@@ -486,31 +491,30 @@ export default defineComponent({
       cardAccountRef.value.validate();
       cardAddressRef.value.validate();
       cardNumberRef.value.validate();
-      if (bankCardRef.value.hasError || cardAccountRef.value.hasError  || cardAddressRef.value.hasError || cardNumberRef.value.hasError) {
-      }
-      else {
-          api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((res) => {
-            const response = res.data
-            if (response.code === 0) {
-              bankCardModalState.visible = false;
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "เพิ่มการ์ดแล้ว",
-                icon: "check_circle_outline"
-              });
-              loadCards();
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: response.message,
-              //   icon: "report_problem"
-              // });
-            }
-          }).catch((error) => {
-            console.log("error", error);
-          });
+      if (bankCardRef.value.hasError || cardAccountRef.value.hasError || cardAddressRef.value.hasError || cardNumberRef.value.hasError) {
+      } else {
+        api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((res) => {
+          const response = res.data
+          if (response.code === 0) {
+            bankCardModalState.visible = false;
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "เพิ่มการ์ดแล้ว",
+              icon: "check_circle_outline"
+            });
+            loadCards();
+          } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: response.message,
+            //   icon: "report_problem"
+            // });
+          }
+        }).catch((error) => {
+          console.log("error", error);
+        });
 
 
       }
@@ -534,27 +538,27 @@ export default defineComponent({
         },
         persistent: true,
       }).onOk(() => {
-          api.post(`/session/bankCard/${card.id}?_method=delete`).then((res) => {
-            const response = res.data
-            if (response.code === 0) {
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "สำเร็จ",
-                icon: "check_circle_outline"
-              });
-              loadCards();
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: response.message,
-              //   icon: "report_problem"
-              // });
-            }
+        api.post(`/session/bankCard/${card.id}?_method=delete`).then((res) => {
+          const response = res.data
+          if (response.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "สำเร็จ",
+              icon: "check_circle_outline"
+            });
+            loadCards();
+          } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: response.message,
+            //   icon: "report_problem"
+            // });
+          }
 
-          })
         })
+      })
     };
 
     //add virtual card
@@ -617,11 +621,11 @@ export default defineComponent({
     //   ]
     // };
     let validateBankLength = (val) => {
-        if (selectedBankType.value === 'Bank') {
-         return (val.length > 5 && val.length < 13) || 'ความยาวควรเป็น 6 ถึง 12 ตัว'
-        } else if (selectedBankType.value === 'Crypto') {
-          return (val.length > 33 && val.length < 38) || 'ความยาวควรเป็น 34 ถึง 37 ตัว'
-        }
+      if (selectedBankType.value === 'Bank') {
+        return (val.length > 5 && val.length < 13) || 'ความยาวควรเป็น 6 ถึง 12 ตัว'
+      } else if (selectedBankType.value === 'Crypto') {
+        return (val.length > 33 && val.length < 38) || 'ความยาวควรเป็น 34 ถึง 37 ตัว'
+      }
     }
     return {
       searchForm,
@@ -651,10 +655,9 @@ export default defineComponent({
         val => validateBankLength(val)
       ],
       cardAccountRules: [
-         val => (val && val.length > 0) || 'กรุณาใส่บัญชีธนาคาร',
+        val => (val && val.length > 0) || 'กรุณาใส่บัญชีธนาคาร',
       ],
-      cardAddressRules: [
-      ],
+      cardAddressRules: [],
       selectedBankType,
       selectBankType,
       banksList,
@@ -669,6 +672,7 @@ export default defineComponent({
   margin: 10px 0;
   font-size: 20px;
 }
+
 .account-content {
   svg.remixicon {
     width: 15px;
@@ -676,6 +680,7 @@ export default defineComponent({
     vertical-align: middle;
   }
 }
+
 .passwordModal .ant-modal {
   max-width: 520px;
   width: 100%;
@@ -690,6 +695,7 @@ export default defineComponent({
     width: 90%;
   }
 }
+
 .bankModal .ant-modal {
   max-width: 520px;
   width: 100%;
@@ -704,10 +710,12 @@ export default defineComponent({
   .ant-modal-content {
     width: 90%;
   }
+
   .ant-form-item-control-input-content {
     color: #ffffff;
   }
 }
+
 .securityModal .ant-modal {
   width: 100%;
   max-width: 600px;
@@ -722,6 +730,7 @@ export default defineComponent({
     width: 90%;
   }
 }
+
 .ant-modal.ant-modal-confirm {
   width: 100%;
   max-width: 600px;
@@ -736,27 +745,33 @@ export default defineComponent({
 :deep(.ant-form-item-label > label) {
   color: #ffffff;
 }
+
 :deep(.ant-form-item.half .ant-form-item-control-input-content) {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+
   .ant-input {
     width: 100%;
     flex-basis: 50%;
   }
 }
+
 :deep(.ant-form-item .ant-select) {
   width: 100%;
 }
+
 :deep(.ant-form-item.select .ant-form-item-control-input) {
   width: 100%;
 }
+
 :deep(.ant-select-single:not(.ant-select-customize-input)
     .ant-select-selector
     .ant-select-selection-search-input) {
   height: 40px;
 }
+
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
   height: 40px;
   padding: 5px 20px;
@@ -768,12 +783,15 @@ export default defineComponent({
 .common-btn {
   width: 100%;
   cursor: pointer;
+
   &.search-btn {
     font-size: 14px;
   }
+
   &.verification-btn {
     padding: 8px;
   }
+
   &.submit-btn {
     padding: 8px;
   }
@@ -813,6 +831,7 @@ export default defineComponent({
       left: 5px;
       bottom: 5px;
       width: 30px;
+
       img {
         width: 100%;
       }
@@ -827,19 +846,23 @@ export default defineComponent({
       padding-bottom: 10%;
 
       filter: none;
+
       .icon {
-          width: 40px;
-            position: relative;
-          }
+        width: 40px;
+        position: relative;
+      }
+
       .unlink-btn {
         display: block;
       }
+
       .txt-center {
         position: relative;
         padding-top: 0;
         transform: rotateZ(0);
         height: unset;
       }
+
       &:hover {
         &:before {
           -webkit-animation: shine 2s;
@@ -847,9 +870,11 @@ export default defineComponent({
         }
       }
     }
+
     &.inactive {
       margin-top: -40%;
     }
+
     .txt-center {
       left: 0px;
       bottom: 0;
@@ -866,18 +891,21 @@ export default defineComponent({
       width: 100%;
       height: 140px;
     }
+
     .cards {
       gap: 10px;
       margin-top: 10px;
       justify-content: center;
       display: flex;
     }
+
     &.add-bank-card {
       cursor: pointer;
       align-items: center;
       padding: 0;
       filter: none;
     }
+
     .unlink-btn {
       cursor: pointer;
       position: absolute;
@@ -885,13 +913,16 @@ export default defineComponent({
       top: 10px;
       left: 10px;
     }
+
     svg {
       fill: #ffffff;
       width: 20px;
     }
+
     .card-num-box {
       // padding: 40px 0 0;
     }
+
     &:before {
       position: absolute;
       top: 0;
@@ -902,9 +933,9 @@ export default defineComponent({
       width: 50%;
       height: 100%;
       background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 100%
+              to right,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(255, 255, 255, 0.3) 100%
       );
       border-radius: 10px;
       transform: skewX(320deg);
@@ -922,12 +953,14 @@ export default defineComponent({
     }
   }
 }
+
 .addbuttons {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 20px;
+
   .add-bank-card {
     cursor: pointer;
     border: 1px solid #ffffff;
@@ -935,14 +968,17 @@ export default defineComponent({
     padding: 10px;
     display: flex;
     gap: 10px;
+
     svg {
       width: 20px;
       fill: #ffffff;
     }
   }
 }
+
 .basic-info {
   position: relative;
+
   .buttons {
     position: absolute;
     top: 20px;
@@ -951,6 +987,7 @@ export default defineComponent({
     flex-direction: column;
     gap: 10px;
   }
+
   .account-btn {
     cursor: pointer;
     padding: 5px 20px;
@@ -958,21 +995,25 @@ export default defineComponent({
     min-width: 180px;
   }
 }
+
 .basic-info-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 70%;
+
   .tbl-row {
     display: flex;
     justify-content: flex-start;
     padding: 0 20px 15px 0px;
   }
+
   .basic-info-cell {
     padding-bottom: 0.5rem;
 
     &.title {
       width: 150px;
     }
+
     // &.content {
     //   // width: 170px;
     //   width: calc(100% - 100px);
@@ -981,18 +1022,22 @@ export default defineComponent({
     // }
   }
 }
+
 .unbind-record-wrapper {
   margin-top: 20px;
 }
+
 .left {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
 }
+
 .searchbar .ant-form {
   display: flex;
   justify-content: space-between;
+
   .ant-form-item {
     margin-right: 0;
   }
@@ -1004,6 +1049,7 @@ export default defineComponent({
     grid-template-columns: 1fr;
   }
 }
+
 .basic-info {
   .buttons {
     position: relative;
@@ -1014,9 +1060,11 @@ export default defineComponent({
     flex-direction: unset;
   }
 }
+
 .bindunbind {
   display: none;
 }
+
 .basic-info {
   .account-btn {
     padding: 5px 0px;
@@ -1024,6 +1072,7 @@ export default defineComponent({
     min-width: 140px;
   }
 }
+
 .bank-card-list {
   max-width: 300px;
   margin: 100px auto 0;
@@ -1039,13 +1088,15 @@ export default defineComponent({
     height: 150px;
     // background-image: url("../../assets/images/account/bank_card_bg.png");
     transform: none;
+
     .icon {
-      left:  4px;
+      left: 4px;
       top: 4px;
       width: 22px;
       bottom: unset;
       right: unset;
     }
+
     .unlink-btn {
       right: 10px;
       left: unset;
@@ -1053,6 +1104,7 @@ export default defineComponent({
       transition-delay: 0.5s;
       transition: all 0.3s ease-in;
     }
+
     .txt-center {
       transform: none;
       padding-top: 13px;
@@ -1060,13 +1112,16 @@ export default defineComponent({
       text-align: center;
       margin-left: 30px;
     }
+
     &.active {
       margin-bottom: 30%;
       padding-bottom: 10%;
+
       .unlink-btn {
         display: block;
       }
     }
+
     &.inactive {
       margin-top: -40%;
     }
