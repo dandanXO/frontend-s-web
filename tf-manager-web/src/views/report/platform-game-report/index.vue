@@ -419,7 +419,7 @@ async function loadDaily(row, expandedRows) {
       }
     }
 
-    dailyquery.siteId = row.siteId
+    dailyquery.siteId = request.siteId
     dailyquery.platform = row.gamePlatform
 
     const { data: ret } = await getDailyReport(dailyquery)
