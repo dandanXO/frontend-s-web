@@ -283,7 +283,7 @@ export default {
     enter_ur_id: "ID is required.",
     enter_ur_dob: "Please confirm your DOB.",
     close_btn: "Close",
-    if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact customer service or our ",
+    if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact our ",
     live_chat: "Live Chat",
     old_password: "Old Password",
     confirm_new_password: "Confirm New Password",
@@ -357,7 +357,8 @@ export default {
     system_message: "System Message",
     confirm_deposit_msg: "Confirm deposit",
     coming_soon: "Coming soon",
-    no_fav_game_yet: "No favourite game yet"
+    no_fav_game_yet: "No favourite game yet",
+    or: "หรือ"
 
   },
   error: {

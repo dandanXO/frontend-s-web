@@ -360,8 +360,8 @@ export default {
     system_message: "ข้อความแจ้งเตือนระบบ",
     confirm_deposit_msg: "ยืนยันการเข้าบัญชี",
     coming_soon: "เร็ว ๆ นี้",
-    no_fav_game_yet: "ยังไม่มีเกมที่คุณชื่นชอบ"
-
+    no_fav_game_yet: "ยังไม่มีเกมที่คุณชื่นชอบ",
+    or: "หรือ"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

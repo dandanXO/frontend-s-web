@@ -101,9 +101,14 @@ export default defineComponent({
     //   });
     // };
 
+    const initStorage = () => {
+      localStorage.removeItem("LINE_STICKY_OFF")
+    }
+
     onMounted(() => {
       checkSID()
       initCsWeb();
+      initStorage();
       // getCSA();
     })
   }

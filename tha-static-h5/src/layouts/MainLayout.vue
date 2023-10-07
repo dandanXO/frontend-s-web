@@ -548,7 +548,7 @@ svg path {
   z-index: 4000;
 }
 .home-sticky{
-  display:none;
+  //display:none;
   position:relative;
   width: 175px;
   height: 240px;
