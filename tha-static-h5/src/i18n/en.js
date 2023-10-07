@@ -127,6 +127,7 @@ export default {
     please_confirm_phone_number: "Please enter phone number",
     please_enter_valid_phone: "Please enter valid phone number",
     affiliate_code: "Invitation Code",
+    affiliate_code_hint: "Leave empty if you are not affiliate member.",
     back: "Bank",
     already_a_member_signin_now: "Already a member? Sign In now.",
     invalid_email: "Invalid Email",

@@ -589,7 +589,7 @@ export default defineComponent({
     .ant-tabs-nav .ant-tabs-tab {
       padding: 10px 48px;
       margin: 10px 5px 20px;
-      color: #ffffff;
+      color: $white;
       font-size: 16px;
       border-radius: 10px;
       border: 1px solid #db7e42;
@@ -598,7 +598,7 @@ export default defineComponent({
       text-align: center;
 
       &-active {
-        background-image: linear-gradient(to right, #de4545, #db7e42);
+        background-image: $linear-bg-red;
       }
     }
 
@@ -625,7 +625,7 @@ export default defineComponent({
 
     .ant-table-thead > tr > th,
     .ant-table-placeholder {
-      color: #ffffff;
+      color: $white;
       background-color: #23263c;
       border: 0;
     }
@@ -742,7 +742,7 @@ export default defineComponent({
 
   .q-btn__content {
     color: #fff;
-    background-image: linear-gradient(to right, #de4545, #db7e42) !important;
+    background-image: $linear-bg-red !important;
     width: 80px;
     border-radius: 5px;
     -moz-border-radius: 5px;

@@ -127,6 +127,7 @@ export default {
     please_confirm_phone_number: "กรุณายืนยันเบอร์โทรศัพท์",
     please_enter_valid_phone: "โปรดป้อนหมายเลขโทรศัพท์มือถือที่ถูกต้อง",
     affiliate_code: "รหัสผู้แนะนำ",
+    affiliate_code_hint: "เว้นว่างไว้หากคุณไม่ได้เป็นสมาชิกพันธมิตร",
     back: "กลับ",
     already_a_member_signin_now: "เป็นสมาชิกอยู่แล้วหรือยัง？เข้าสู่ระบบตอนนี้",
     invalid_email: "อีเมลยังไม่มีการใช้งาน",

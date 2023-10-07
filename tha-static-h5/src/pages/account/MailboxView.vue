@@ -709,7 +709,7 @@ export default defineComponent({
   font-size: 18px;
   line-height: 50px;
   border: none;
-  background-color: linear-gradient(to right, #de4545, #db7e42);
+  background-color: $linear-bg-red;
   cursor: pointer;
 }
 </style>

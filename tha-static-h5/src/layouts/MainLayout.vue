@@ -48,6 +48,25 @@
       </q-card-section>
     </q-header>
 
+    <q-page-sticky v-if="showSticky && isHomePage "
+                   class="home-sticky-div"
+         position="right" :offset="[0, 0]"
+    >
+      <div class="home-sticky">
+        <img class="sticky-bear" src="../assets/home/line-bear.png" />
+        <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn" >
+          <q-icon name="close"></q-icon>
+        </q-btn>
+        <div class="sticky-container">
+          <div class="line-title">LINE</div>
+          <div class="line-2">7x24</div>
+          <img src="../assets/home/line-bg.png" class="line-img" />
+          <div class="line-bottom">line ID:@jolly88</div>
+        </div>
+      </div>
+
+    </q-page-sticky>
+
     <q-drawer
         v-model="ui.leftDrawerOpen"
         bordered
@@ -150,7 +169,7 @@
 </template>
 
 <script>
-import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import {computed, defineComponent, onMounted, reactive, ref, watch} from "vue";
 import {userStore} from "stores/index";
 import {useUI} from "stores/ui";
 import {useRoute, useRouter} from "vue-router";
@@ -218,6 +237,13 @@ export default defineComponent({
         value: 'en',
       }
     ]
+
+    const isHomePage= computed(() => {
+      if(route.path === '/' || route.path === '/home'){
+        return true;
+      }
+      return false;
+    })
 
     const checkRoute = () => {
       if (route) {
@@ -379,15 +405,30 @@ export default defineComponent({
       ui.leftDrawerOpen = !ui.leftDrawerOpen;
     }
 
+    const showSticky= ref(true);
+    const checkSticky = () => {
+      const stickyOff= localStorage.getItem("LINE_STICKY_OFF");
+      if(stickyOff==="true"){
+        showSticky.value = false;
+      }
+    }
+    const closeLineSticky = () => {
+      showSticky.value= false;
+      localStorage.setItem("LINE_STICKY_OFF", "true")
+    }
+
     onMounted(() => {
       checkRoute();
       store.getBalance();
+      checkSticky();
     });
     return {
       tab: ref("home"),
       toggleLeftDrawer,
       logout,
       store,
+      isHomePage,
+      closeLineSticky,
       scrollPageRef,
       pageName,
       hasPage,
@@ -400,6 +441,7 @@ export default defineComponent({
       headerIcon,
       languageVal,
       langOptions,
+      showSticky,
       hasLang
     };
   }
@@ -489,7 +531,7 @@ svg path {
 .register-btn {
   width: 5rem;
   height: 1rem;
-  border: 1px solid #A840FB;
+  border: 1px solid $purple-color;
   background: $linear-bg-2;
   color: $white;
   border-radius: 25px;
@@ -500,6 +542,74 @@ svg path {
 .drawer-container {
   padding: 10px 16px;
   width: calc(100%);
+}
+
+.home-sticky-div{
+  z-index: 4000;
+}
+.home-sticky{
+  display:none;
+  position:relative;
+  width: 175px;
+  height: 240px;
+
+  .sticky-bear{
+    position: absolute;
+    top:0px;
+    left:0px;
+    z-index:55;
+  }
+
+  .sticky-close-btn{
+    position:absolute;
+    right:5px;
+    top:37px;
+    z-index:30;
+    border-radius: 50%;
+    width:20px;
+    padding:0px;
+    line-height: 20px;
+    height:20px;
+    background: $white;
+    color: $text-gray;
+
+    &:active{
+      filter:brightness(0.8);
+    }
+  }
+
+  .sticky-container{
+    position: absolute;
+    bottom:0px;
+    right:0px;
+    z-index:15;
+
+    width:152px;
+    height:192px;
+    background: $primary;
+    border-radius: 10px 0px 0px 10px;
+
+    color: $white;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap:3px;
+    justify-content: center;
+
+    .line-title{
+      font-size: 18px;
+    }
+
+    .line-img{
+      width: 100px;
+      height: auto;
+      margin:0 auto;
+    }
+
+    .line-bottom{
+      font-size: 16px;
+    }
+  }
 }
 
 
@@ -516,7 +626,9 @@ svg path {
 }
 
 @media (min-width: 769px) {
-
+  .home-sticky{
+    display: block;
+  }
 
 }
 

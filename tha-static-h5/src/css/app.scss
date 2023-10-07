@@ -8,7 +8,7 @@ html {
 
 // app global css in SCSS form
 body {
-  background: #ffffff;
+  background: $white;
 }
 
 #q-app {
@@ -29,18 +29,18 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #2b2b4b;
+  background: $dark-old;
   border-radius: 2px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #2b2b4b;
+  background: $dark-old;
 }
 
 .q-toolbar {
   padding-top: env(safe-area-inset-top, 0);
-  background: #2b2b4b;
+  background: $dark-old;
 }
 
 .q-page-container {
@@ -128,8 +128,8 @@ body.platform-ios .q-dialog__inner--minimized > div {
 .page-title {
   margin: 5px;
   color: #db7e42;
-  background-color: linear-gradient(to right, #de4545, #db7e42);
-  background-image: linear-gradient(to right, #de4545, #db7e42);
+  background-color: $linear-bg-red;
+  background-image: $linear-bg-red;
   -webkit-background-clip: text;
   -webkit-text-fill-color: #db7e42;
   font-size: 20px;
@@ -186,7 +186,7 @@ a {
 
 svg {
   width: 25px;
-  fill: #ffffff;
+  fill: $white;
 }
 
 .q-carousel.vip {
@@ -476,7 +476,7 @@ svg {
     justify-content: space-evenly;
 
     .q-seperator--dark {
-      border-right: 1px solid #ffffff;
+      border-right: 1px solid $white;
     }
   }
 
@@ -486,7 +486,7 @@ svg {
     flex-direction: column;
 
     svg {
-      fill: #ffffff;
+      fill: $white;
       width: 25px;
       display: block;
       padding: 0;
@@ -572,6 +572,10 @@ svg {
 .q-field--filled.q-field--dark .q-field__control,
 .q-field--filled.q-field--dark .q-field__control:before {
   background: $main-color;
+}
+
+.verification-input:hover :before{
+  opacity: 0 !important;
 }
 
 input:internal-autofill-selected {
