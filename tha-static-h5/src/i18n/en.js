@@ -362,7 +362,8 @@ export default {
     weak_level: "Weak",
     medium_level: "Good",
     strong_level: "Strong",
-    fill_in_information: "Please fill in information first."
+    fill_in_information: "Please fill in information first.",
+    verify: "Verify"
   },
   error: {
     101: "Platform not found",
