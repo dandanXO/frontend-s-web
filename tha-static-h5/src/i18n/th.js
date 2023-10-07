@@ -361,7 +361,10 @@ export default {
     confirm_deposit_msg: "ยืนยันการเข้าบัญชี",
     coming_soon: "เร็ว ๆ นี้",
     no_fav_game_yet: "ยังไม่มีเกมที่คุณชื่นชอบ",
-    or: "หรือ"
+    or: "หรือ",
+    weak_level: "อ่อน",
+    medium_level: "ดี",
+    strong_level: "รัดกุม"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

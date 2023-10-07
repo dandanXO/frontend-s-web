@@ -358,7 +358,10 @@ export default {
     confirm_deposit_msg: "Confirm deposit",
     coming_soon: "Coming soon",
     no_fav_game_yet: "No favourite game yet",
-    or: "หรือ"
+    or: "OR",
+    weak_level: "Weak",
+    medium_level: "Good",
+    strong_level: "Strong"
 
   },
   error: {

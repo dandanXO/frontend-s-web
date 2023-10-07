@@ -222,7 +222,7 @@ export default defineComponent({
 
 .invitePromo {
   text-align: center;
-  background: url(../../../assets/images/promotion/hotpromo/35/orangeborder.png)
+  background: url(../../../assets/images/promotion/hotpromo/80/orangeborder.png)
     no-repeat center center;
   background-size: cover;
   padding: 10px;
@@ -254,7 +254,7 @@ export default defineComponent({
       content: "";
       // padding: 5px 30px;
       padding: .4em .8em;
-      background: url(../../../assets/images/promotion/hotpromo/35/left.png)
+      background: url(../../../assets/images/promotion/hotpromo/80/left.png)
         no-repeat center center;
       background-size: contain;
       display: inline-block;
@@ -265,7 +265,7 @@ export default defineComponent({
       content: "";
       // padding: 5px 30px;
       padding: .4em .8em;
-      background: url(../../../assets/images/promotion/hotpromo/35/right.png)
+      background: url(../../../assets/images/promotion/hotpromo/80/right.png)
         no-repeat center center;
       background-size: contain;
       display: inline-block;
