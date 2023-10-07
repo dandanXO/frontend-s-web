@@ -142,9 +142,10 @@
 
       </div>
     </div>
-    <ClaimPromo v-if="isCommonPromo && store.hasToken()" :promo-id="list.id" :loading-claim="btnLoading" @daily-slot="handleSlot()" />
+    <ClaimPromo v-if="isCommonPromo && store.hasToken()" :promo-id="list.id"
+                :loading-claim="btnLoading" @daily-slot="handleSlot()" />
     <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" />
-    <InviteFriendPromo v-if="list.id === 35 && !isCommonPromo" class="promo-invt" />
+    <InviteFriendPromo v-if="list.id === 80 && !isCommonPromo" class="promo-invt" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -200,43 +201,6 @@ export default defineComponent({
       isCommonPromo: null,
       activeKey: "1",
       hotPromoList: [
-        // {
-        //   id: 19,
-        //   bg: require("../assets/images/promotion/hotpromo/19/bg.png"),
-        //   contents:
-        //     "*The rebate bonus needs 1 times rollover before withdrawing and will be returned if not used within 30 days."
-        // },
-        // {
-        //   id: 20,
-        //   bg: require("../assets/images/promotion/hotpromo/20/bg.png"),
-        //   contents: "Hello hello"
-        // },
-        // {
-        //   id: 21,
-        //   bg: "",
-        //   contents: "Hello hello"
-        // },
-        // {
-        //   id: 22,
-        //   bg: require("../assets/images/promotion/hotpromo/22/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // },
-        // {
-        //   id: 23,
-        //   bg: require("../assets/images/promotion/hotpromo/23/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // },
-        // {
-        //   id: 24,
-        //   bg: require("../assets/images/promotion/hotpromo/24/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // }
       ],
       selectedHotPromo: {
         id: "",
@@ -528,6 +492,11 @@ export default defineComponent({
     gap: 30px;
     text-align: center;
     padding: 20px;
+
+    > img{
+      max-width: 250px;
+      margin: auto;
+    }
 
     .extra-img {
       position: absolute;

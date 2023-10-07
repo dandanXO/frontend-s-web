@@ -240,17 +240,17 @@
                 'normal-pwd': pwdStrength == 'normal',
                 'strong-pwd': pwdStrength == 'strong'
               }"
-            >อ่อน</span
+            >{{ $t('lang.weak_level') }}</span
             >
           <span
               :class="{
                 'normal-pwd': pwdStrength == 'normal',
                 'strong-pwd': pwdStrength == 'strong'
               }"
-          >ดี</span
+          >{{ $t('lang.medium_level') }}</span
           >
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }"
-          >รัดกุม</span
+          >{{ $t('lang.strong_level') }}</span
           >
         </div>
 

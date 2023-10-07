@@ -10,7 +10,7 @@
         >{{
           promoId === 50 || promoId === 48
             ? $t('lang.claim_bonus')
-            : $t('lang.claim_daily_cashback')
+            : $t('lang.claim')
         }}</q-btn
       >
     <div v-if="promoId === 32" class="orange">
