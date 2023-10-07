@@ -318,25 +318,19 @@
             </div>
           </div>
           <div class="account-tip danger">
-            {{ $t("lang.if_you_wish_to_change_please_contact") }}
-            <router-link to="/liveChat">{{ $t("lang.live_chat") }}</router-link>
+            <div>
+              {{ $t("lang.if_you_wish_to_change_please_contact") }}
+              <router-link to="/liveChat">{{ $t("lang.live_chat") }}</router-link>
+              {{ $t('lang.or')}} <RiLineLine style="width:18px;"/> Line.
+            </div>
+            <div class="line-chat-container">
+<!--              <div class="line-title">LINE</div>-->
+              <img src="../../assets/home/line-bg.png" class="line-img" />
+              <div class="line-bottom">Line ID:@jolly88</div>
+            </div>
+
           </div>
-          <!--          <div class="buttons">-->
-          <!--            <q-btn-->
-          <!--                class="full-width"-->
-          <!--                label=" เปลี่ยนรหัสผ่าน "-->
-          <!--                type="submit"-->
-          <!--                color="brand"-->
-          <!--                @click="updatePwdModal"-->
-          <!--            />-->
-          <!--            <q-btn v-if="!personalState.memberInfo.emailVerified"-->
-          <!--                   class="full-width"-->
-          <!--                   label=" ตรวจสอบความปลอดภัย "-->
-          <!--                   type="submit"-->
-          <!--                   color="brand"-->
-          <!--                   @click="updateSecurityModal"-->
-          <!--            />-->
-          <!--          </div>-->
+
         </div>
       </div>
 
@@ -480,13 +474,10 @@
 <script lang="js">
 import {defineComponent, reactive, ref, onMounted} from "vue";
 import {
-  RiSpamLine, RiLink, RiLinkUnlink, RiEditBoxLine, RiFileUserLine, RiCake2Line, RiSmartphoneLine, RiEditLine
+  RiSpamLine, RiLink, RiLinkUnlink, RiEditBoxLine, RiFileUserLine, RiCake2Line, RiSmartphoneLine,
+    RiLineLine
 
 } from "vue-remix-icons";
-// import {
-//   loadMemberInfo,
-//   changePwd,
-// } from "@/api/personal/personal";
 import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
@@ -503,8 +494,7 @@ export default defineComponent({
     RiFileUserLine,
     RiCake2Line,
     RiSmartphoneLine,
-    // RiEditBoxLine,
-    // RiEditLine
+    RiLineLine
   },
   setup() {
     // const isCardActive = ref();
@@ -1036,6 +1026,28 @@ export default defineComponent({
 
     a {
       color: #db7e42;
+    }
+
+    .line-chat-container{
+      margin-top: 10px;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap:4px;
+
+      .line-title{
+        font-size: 18px;
+      }
+      .line-img{
+        width: 100px;
+        height: auto;
+        margin:0 auto;
+      }
+
+      .line-bottom{
+        font-size: 16px;
+      }
     }
   }
 }

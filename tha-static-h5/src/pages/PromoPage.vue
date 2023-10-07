@@ -380,7 +380,7 @@ export default defineComponent({
       .promo-list-wrapper {
         display: grid;
         margin-top: 20px;
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         grid-gap: 18px;
 
         .promo-item {
@@ -526,6 +526,12 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px){
+  .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-info .viewdetail{
+    padding: 4px 10px;
   }
 }
 
