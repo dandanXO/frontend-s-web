@@ -365,7 +365,8 @@ export default {
     weak_level: "อ่อน",
     medium_level: "ดี",
     strong_level: "รัดกุม",
-    fill_in_information: "กรุณาใส่ข้อมูลให้ถูกต้อง"
+    fill_in_information: "กรุณาใส่ข้อมูลให้ถูกต้อง",
+    verify: "ตรวจสอบ"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",
