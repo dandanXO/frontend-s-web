@@ -67,21 +67,22 @@ export default route(function(/* { store, ssrContext } */) {
         } else {
           ui.showFooter();
         }
-        if (to.path === "/account" || to.path === "/finance/deposit") {
+        if (to.path === "/finance/deposit") {
+          next();
           // if (user.nickName === "" || !user.nickName) {
           //   user.getMemberInfo().then(() => next({ ...to, replace: true }));
           // }
-          api.defaults.headers["token"] = user.token;
-          api.get("/session/bankCard").then((res) => {
-            const response = res.data
-            if (response.code === 0) {
-              if (response.data.length === 0) {
-                next(`/account/withdraw`);
-              } else {
-                next();
-              }
-            }
-          })
+          // api.defaults.headers["token"] = user.token;
+          // api.get("/session/bankCard").then((res) => {
+          //   const response = res.data
+          //   if (response.code === 0) {
+          //     if (response.data.length === 0) {
+          //       next(`/account/withdraw`);
+          //     } else {
+          //       next();
+          //     }
+          //   }
+          // })
 
         } else {
           next();

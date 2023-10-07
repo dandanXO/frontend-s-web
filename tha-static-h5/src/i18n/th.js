@@ -294,7 +294,7 @@ export default {
     only_numbers_allowed: "อนุญาตเฉพาะตัวเลขเท่านั้น",
     otp_code_has_been_sent: "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว",
     successfully_verified: "ยืนยันสำเร็จ",
-    password_updated: "อัพเดทพาสเวิดเรียบร้อยแล้ว",
+    password_updated: "อัพเดทพาสเวิดเรียบร้อยแล้ว.",
     updated_successfully: "อัพเดทเรียบร้อยแล้ว",
     please_enter_old_password: "กรุณารหัสผ่านเดิม",
     password_must_between_6_12: "ความยาวควรเป็น 6 ถึง 12 ตัว",
@@ -332,7 +332,7 @@ export default {
     welcome: "ยินดีต้อนรับ",
     tnc: "ข้อกำหนดและเงื่อนไข",
     agree: "เห็นด้วย",
-    claim: "เรียกร้อง",
+    claim: "รับโบนัส",
     select_date: "เลือกวันที่",
     invite_friend_to_receive_prize: "เชิญเพื่อน รับเงินรางวัล",
     event_time: "เวลากิจกรรม",
@@ -364,7 +364,8 @@ export default {
     or: "หรือ",
     weak_level: "อ่อน",
     medium_level: "ดี",
-    strong_level: "รัดกุม"
+    strong_level: "รัดกุม",
+    fill_in_information: "กรุณาใส่ข้อมูลให้ถูกต้อง"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

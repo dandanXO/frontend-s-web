@@ -498,6 +498,7 @@ export default defineComponent({
   },
   setup() {
     // const isCardActive = ref();
+    const store= userStore()
     const {t} = useI18n();
     const qs = require("qs");
     const $q = useQuasar();
@@ -681,13 +682,9 @@ export default defineComponent({
               icon: "check_circle_outline"
             });
             updatePwdModalVisible.value = false;
+            store.memberLogout();
           } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: response.message,
-            //   icon: "report_problem"
-            // });
+
           }
         }).catch((error) => {
           console.log("error", error);
