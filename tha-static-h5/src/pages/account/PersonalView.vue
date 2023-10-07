@@ -603,7 +603,7 @@ export default defineComponent({
         captchaCode: updateSecurityVerified.captchaCode,
         codeId: updateSecurityVerified.codeId
       }
-      api.post("/otp/sendSms", qs.stringify(phoneDetails)).then((res) => {
+      api.post("/otp/sendSmsWithPhone", qs.stringify(phoneDetails)).then((res) => {
         const ret = res.data
         if (ret.code === 0) {
           $q.notify({
