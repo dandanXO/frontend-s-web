@@ -643,7 +643,7 @@ export default defineComponent({
       verificationCodeRef.value.validate()
       if (phoneNumberRef.value.hasError || verificationCodeRef.value.hasError) {
       } else {
-        api.post("/otp/verifyAndUpdatePhone", qs.stringify({
+        api.post("/session/verifyAndUpdatePhone", qs.stringify({
           phone: updateSecurityVerified.phone,
           code: updateSecurityVerified.verificationCode,
           codeId: verificationDetails.memberInfo.codeId
