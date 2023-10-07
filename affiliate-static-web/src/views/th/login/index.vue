@@ -88,7 +88,8 @@ export default defineComponent({
     const state = reactive({
       loginForm: {
         userName: "",
-        password: ""
+        password: "",
+        site: "TH1"
       },
       loginRules: {
         userName: [
