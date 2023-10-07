@@ -26,7 +26,7 @@
 
           <div class="share-table-div">
             <div class="table-row first-row">我的推荐朋友反水总额：</div>
-            <div class="table-row first-row">{{ referInfo.totalRebate }}</div>
+            <div class="table-row first-row">{{ referInfo.totalRebate }} baht</div>
             <div class="empty-row" style="grid-column: 3/-1;">&nbsp;</div>
 
             <div class="table-row">我推荐的A线总人数:</div>
@@ -34,7 +34,7 @@
             <div class="table-row">总流水数：</div>
             <div class="table-row">{{ referInfo.alineBet }}</div>
             <div class="table-row">总反水额 ({{ referInfo.alinePercentage }}%):</div>
-            <div class="table-row row-a-last">{{ referInfo.alineRebate }}</div>
+            <div class="table-row row-a-last">{{ referInfo.alineRebate }} baht</div>
 
 
             <div class="table-row row-b-first">我推荐的B线总人数:</div>
@@ -42,7 +42,7 @@
             <div class="table-row">总流水数：</div>
             <div class="table-row">{{ referInfo.blineBet }}</div>
             <div class="table-row">总反水额 ({{ referInfo.blinePercentage }}%):</div>
-            <div class="table-row">{{ referInfo.blineRebate }}</div>
+            <div class="table-row">{{ referInfo.blineRebate }} baht</div>
 
 
           </div>
