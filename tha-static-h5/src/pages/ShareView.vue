@@ -23,6 +23,30 @@
               {{ copybtntxt }}
             </q-btn>
           </div>
+
+          <div class="share-table-div">
+            <div class="table-row first-row">我的推荐朋友反水总额：</div>
+            <div class="table-row first-row">{{ referInfo.totalRebate }} baht</div>
+            <div class="empty-row" style="grid-column: 3/-1;">&nbsp;</div>
+
+            <div class="table-row">我推荐的A线总人数:</div>
+            <div class="table-row">{{ referInfo.alineCount }}</div>
+            <div class="table-row">总流水数：</div>
+            <div class="table-row">{{ referInfo.alineBet }}</div>
+            <div class="table-row">总反水额 ({{ referInfo.alinePercentage }}%):</div>
+            <div class="table-row row-a-last">{{ referInfo.alineRebate }} baht</div>
+
+
+            <div class="table-row row-b-first">我推荐的B线总人数:</div>
+            <div class="table-row row-b-first">{{ referInfo.blineCount }}</div>
+            <div class="table-row">总流水数：</div>
+            <div class="table-row">{{ referInfo.blineBet }}</div>
+            <div class="table-row">总反水额 ({{ referInfo.blinePercentage }}%):</div>
+            <div class="table-row">{{ referInfo.blineRebate }} baht</div>
+
+
+          </div>
+
         </div>
       </div>
       <div class="otherlinks">
@@ -93,6 +117,15 @@ export default defineComponent({
     const blurCode = () => {
       copybtntxt.value = t('lang.copy')
     };
+
+    const referInfo = ref({});
+    const getReferLists = () => {
+      api.get('/session/member/referRebate').then((ret) => {
+        const res = ret.data;
+        referInfo.value = res.data;
+        console.log(referInfo.value)
+      });
+    }
     const getReferral = () => {
       api.get('/session/member/referralCode').then((ret) => {
         const res = ret.data
@@ -107,6 +140,7 @@ export default defineComponent({
     };
     onMounted(() => {
       getReferral()
+      getReferLists();
     })
     return {
       searchForm,
@@ -115,7 +149,8 @@ export default defineComponent({
       copyCode,
       blurCode,
       referralLink,
-      VueQRCodeComponent
+      VueQRCodeComponent,
+      referInfo
     };
   },
 });
@@ -212,6 +247,32 @@ export default defineComponent({
   }
 }
 
+.copy-btn {
+  min-width: 90px;
+}
+
+.share-table-div {
+  margin: 25px auto 45px;
+  width: calc(100% - 50px);
+  display: grid;
+  font-size: 16px;
+  gap: 3px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  .first-row {
+    color: $warning;
+  }
+
+  .table-row {
+    white-space: nowrap;;
+    height: 40px;
+    line-height: 32px;
+    background: $secondary;
+    padding: 8px 8px;
+  }
+
+}
+
 .preferred {
   display: flex;
   justify-content: space-between;
@@ -221,6 +282,25 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
+@media (max-width: 991px) {
+  .share-table-div {
+    grid-template-columns:  1fr 1fr;
+
+    .empty-row {
+      display: none;
+    }
+
+    .first-row {
+      margin-bottom: 8px;
+    }
+
+    .row-b-first {
+      margin-top: 8px;
+    }
+  }
+
+}
+
 @media (max-width: 768px) {
   .share-wrapper {
     flex-direction: column;
@@ -233,6 +313,30 @@ export default defineComponent({
       .share-link-wrapper {
         flex-direction: column;
       }
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .share-table-div {
+    width: calc(100% - 20px);
+    grid-template-columns:  1fr;
+    gap: 0px;
+
+
+    .first-row {
+      margin-bottom: 0px;
+
+      &:nth-child(2) {
+        margin-bottom: 10px;
+      }
+    }
+
+    .row-a-last{
+      margin-bottom: 10px;
+    }
+    .row-b-first {
+      margin-top: 0px;
     }
   }
 }

@@ -304,40 +304,40 @@
           </template>
         </q-input>
 
-        <q-input
-            ref="birthdayRef"
-            filled
-            v-model="regForm.birthday"
-            :placeholder="$t('lang.dob')"
-            color="white"
-        >
-          <template v-slot:prepend>
-            <q-icon name="cake"/>
-          </template>
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy
-                  cover
-                  transition-show="scale"
-                  transition-hide="scale"
-              >
-                <q-date
-                    v-model="regForm.birthday"
-                    mask="YYYY-MM-DD"
-                >
-                  <div class="row items-center justify-end">
-                    <q-btn
-                        v-close-popup
-                        :label="$t('lang.close_btn')"
-                        color="primary"
-                        flat
-                    />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
+<!--        <q-input-->
+<!--            ref="birthdayRef"-->
+<!--            filled-->
+<!--            v-model="regForm.birthday"-->
+<!--            :placeholder="$t('lang.dob')"-->
+<!--            color="white"-->
+<!--        >-->
+<!--          <template v-slot:prepend>-->
+<!--            <q-icon name="cake"/>-->
+<!--          </template>-->
+<!--          <template v-slot:append>-->
+<!--            <q-icon name="event" class="cursor-pointer">-->
+<!--              <q-popup-proxy-->
+<!--                  cover-->
+<!--                  transition-show="scale"-->
+<!--                  transition-hide="scale"-->
+<!--              >-->
+<!--                <q-date-->
+<!--                    v-model="regForm.birthday"-->
+<!--                    mask="YYYY-MM-DD"-->
+<!--                >-->
+<!--                  <div class="row items-center justify-end">-->
+<!--                    <q-btn-->
+<!--                        v-close-popup-->
+<!--                        :label="$t('lang.close_btn')"-->
+<!--                        color="primary"-->
+<!--                        flat-->
+<!--                    />-->
+<!--                  </div>-->
+<!--                </q-date>-->
+<!--              </q-popup-proxy>-->
+<!--            </q-icon>-->
+<!--          </template>-->
+<!--        </q-input>-->
 
         <!-- <q-input
           ref="emailRef"
@@ -466,7 +466,7 @@ export default defineComponent({
       regHost: location.hostname,
       codeId: "",
       captchaCode: "",
-      birthday: ""
+      // birthday: ""
     });
     const getCode = () => {
       api
@@ -498,7 +498,7 @@ export default defineComponent({
     const verificationRef = ref();
     const cardAccountNameRef = ref();
     const cardAccountSurnameRef = ref();
-    const birthdayRef = ref();
+    // const birthdayRef = ref();
     const cardNumberRef = ref();
     const bankCardRef = ref();
     const $q = useQuasar();
@@ -720,7 +720,7 @@ export default defineComponent({
       hasAffiliate,
       getAffiliateCode,
       getReferralCode,
-      birthdayRef
+      // birthdayRef
     };
   }
 });
