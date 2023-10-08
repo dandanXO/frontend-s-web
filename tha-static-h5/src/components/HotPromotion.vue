@@ -145,7 +145,7 @@
     <ClaimPromo v-if="isCommonPromo && store.hasToken()" :promo-id="list.id"
                 :loading-claim="btnLoading" @daily-slot="handleSlot()" />
     <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" />
-    <InviteFriendPromo v-if="list.id === 80 && !isCommonPromo" class="promo-invt" />
+<!--    <InviteFriendPromo v-if="list.id === 80 && !isCommonPromo" class="promo-invt" />-->
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -186,7 +186,7 @@ export default defineComponent({
   components: {
     ClaimPromo,
     SJBPromo,
-    InviteFriendPromo
+    // InviteFriendPromo
   },
   props: {
     list: {
