@@ -137,7 +137,7 @@
               dense
               ref="amountRef"
               v-model="withdrawInfo.amount"
-              label=""
+              :placeholder="$t('lang.minimum_withdraw_money')"
               mask="######"
               color="white"
               :rules="[
@@ -183,8 +183,8 @@
                 </template>
                 <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
                   {{
-                    $t('lang.remaining') +
-                    selectedWithdrawalMethod.withdrawMaxTimes +
+                    ' ' + $t('lang.remaining') + ' ' +
+                    selectedWithdrawalMethod.withdrawMaxTimes + ' ' +
                     $t('lang.attempt_time')
                   }}
                 </template>
