@@ -614,7 +614,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('lang.otp_code_has_been_sent'),
+            message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId

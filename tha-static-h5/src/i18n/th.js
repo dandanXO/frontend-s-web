@@ -293,6 +293,7 @@ export default {
     check_your_captcha_code: "ตรวจสอบรหัสแคปต์ชา",
     only_numbers_allowed: "อนุญาตเฉพาะตัวเลขเท่านั้น",
     otp_code_has_been_sent: "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว",
+    otp_code_has_been_sent_to_your_mobile_phone: "OTP ถูกส่งไปยังโทรศัพท์มือถือของคุณแล้ว",
     successfully_verified: "ยืนยันสำเร็จ",
     password_updated: "อัพเดทพาสเวิดเรียบร้อยแล้ว.",
     updated_successfully: "อัพเดทเรียบร้อยแล้ว",
