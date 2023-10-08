@@ -25,23 +25,23 @@
           </div>
 
           <div class="share-table-div">
-            <div class="table-row first-row">我的推荐朋友反水总额：</div>
+            <div class="table-row first-row">{{ $t('lang.my_total_refer_friends_rebate') }}</div>
             <div class="table-row first-row">{{ referInfo.totalRebate }} baht</div>
             <div class="empty-row" style="grid-column: 3/-1;">&nbsp;</div>
 
-            <div class="table-row">我推荐的A线总人数:</div>
+            <div class="table-row">{{ $t('lang.my_a_line_refer_total') }}</div>
             <div class="table-row">{{ referInfo.alineCount }}</div>
-            <div class="table-row">总流水数：</div>
+            <div class="table-row">{{ $t('lang.total_bets') }}：</div>
             <div class="table-row">{{ referInfo.alineBet }}</div>
-            <div class="table-row">总反水额 ({{ referInfo.alinePercentage }}%):</div>
+            <div class="table-row">{{ $t('lang.total_rebate_return') }} ({{ referInfo.alinePercentage }}%):</div>
             <div class="table-row row-a-last">{{ referInfo.alineRebate }} baht</div>
 
 
-            <div class="table-row row-b-first">我推荐的B线总人数:</div>
+            <div class="table-row row-b-first">{{ $t('lang.my_b_line_refer_total') }}</div>
             <div class="table-row row-b-first">{{ referInfo.blineCount }}</div>
-            <div class="table-row">总流水数：</div>
+            <div class="table-row">{{ $t('lang.total_bets') }}：</div>
             <div class="table-row">{{ referInfo.blineBet }}</div>
-            <div class="table-row">总反水额 ({{ referInfo.blinePercentage }}%):</div>
+            <div class="table-row">{{ $t('lang.total_rebate_return') }} ({{ referInfo.blinePercentage }}%):</div>
             <div class="table-row">{{ referInfo.blineRebate }} baht</div>
 
 
@@ -317,7 +317,7 @@ export default defineComponent({
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
   .share-table-div {
     width: calc(100% - 20px);
     grid-template-columns:  1fr;
