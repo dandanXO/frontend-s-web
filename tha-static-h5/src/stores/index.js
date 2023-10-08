@@ -23,7 +23,9 @@ export const userStore = defineStore("userStore", {
       currency: { value: "฿", label: "บาท"},
       unreadCount: 0,
       currentDeposit: "",
-      levelUpDeposit: ""
+      levelUpDeposit: "",
+      phoneVerified: false,
+      emailVerified: false
     };
   },
   actions: {
@@ -95,8 +97,10 @@ export const userStore = defineStore("userStore", {
           this.vip = ret.data.vip;
           this.profilePicture = ret.data.pictureUrl;
           this.displayName = ret.data.displayName,
-          this.currentDeposit = ret.data.currentDeposit,
-          this.levelUpDeposit = ret.data.levelUpDeposit
+          this.currentDeposit = ret.data.currentDeposit;
+          this.levelUpDeposit = ret.data.levelUpDeposit;
+          this.phoneVerified= ret.data.phoneVerified;
+          this.emailVerified= ret.data.emailVerified;
         } else {
           this.memberLogout();
         }

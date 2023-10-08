@@ -265,12 +265,13 @@
                 </div>
                 <div
                     class="basic-info-cell content"
-                    style="margin-left :auto; margin-right:10px;"
+                    style="margin-left :auto;"
                     v-if="personalState.memberInfo.telephone"
                 >
                   {{ personalState.memberInfo.telephone }}
                 </div>
                 <div
+                    style=" margin-left:10px;"
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="personalState.memberInfo.telephone && !personalState.memberInfo.phoneVerified"
                 >
@@ -397,12 +398,15 @@
       </div>
 
       <div class="personal-container" v-if="select_menu === 'verify'">
-        <q-form class="q-gutter-sm q-mt-lg form-verification">
+        <q-form class="q-gutter-sm q-mt-lg form-verification"
+                autocomplete="off"
+        >
           <q-input
               ref="phoneNumberRef"
               v-model="updateSecurityVerified.phone"
               :label="$t('lang.phone_number')"
               stack-label
+              autocomplete="off"
               clearable
               filled
               :rules="[
@@ -421,6 +425,7 @@
                 :label="$t('lang.captcha_code')"
                 stack-label
                 clearable
+                autocomplete="off"
                 filled
             />
             <q-btn
