@@ -289,6 +289,7 @@ export default {
     confirm_new_password: "ยืนยันรหัสผ่านใหม่",
     hint_new_password: "ขึ้นอยู่ที่ระหว่าง 6-16 ตัวอักษรและจำเป็นต้องมีการผสมของตัวอักษรและตัวเล",
     enter_veri_code: "รับรหัสยืนยัน",
+    request_otp_code: "ขอรหัส OTP โทรศัพท์",
     confirm_button: "ปุ่มยืนยัน",
     check_your_captcha_code: "ตรวจสอบรหัสแคปต์ชา",
     only_numbers_allowed: "อนุญาตเฉพาะตัวเลขเท่านั้น",

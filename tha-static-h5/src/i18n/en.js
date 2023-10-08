@@ -289,6 +289,7 @@ export default {
     confirm_new_password: "Confirm New Password",
     hint_new_password: "Must include 6-16 characters with a combination of letters and numbers.",
     enter_veri_code: "Enter Verification Code",
+    request_otp_code: "Request OTP",
     confirm_button: "Confirm",
     check_your_captcha_code: "Captcha Code Check",
     only_numbers_allowed: "Only numbers are allowed.",
