@@ -293,6 +293,7 @@ export default {
     check_your_captcha_code: "Captcha Code Check",
     only_numbers_allowed: "Only numbers are allowed.",
     otp_code_has_been_sent: "OTP has been sent to your email.",
+    otp_code_has_been_sent_to_your_mobile_phone: "OTP has been sent to your mobile phone.",
     successfully_verified: "Successfully Verified",
     password_updated: "Password successfully updated.",
     updated_successfully: "Updated successfully",
