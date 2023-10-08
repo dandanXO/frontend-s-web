@@ -283,26 +283,26 @@
           </template>
         </q-input>
 
-        <q-input
-            ref="telRef"
-            filled
-            v-model="regForm.telephone"
-            :label="$t('lang.phone_number')"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
-              (val) =>
-                (val && val.length > 7) ||
-                $t('lang.please_enter_valid_phone'),
-              isValidPhone
-            ]"
-            color="white"
-            clearable
-        >
-          <template v-slot:prepend>
-            <q-icon name="smartphone"/>
-          </template>
-        </q-input>
+<!--        <q-input-->
+<!--            ref="telRef"-->
+<!--            filled-->
+<!--            v-model="regForm.telephone"-->
+<!--            :label="$t('lang.phone_number')"-->
+<!--            lazy-rules-->
+<!--            :rules="[-->
+<!--              (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),-->
+<!--              (val) =>-->
+<!--                (val && val.length > 7) ||-->
+<!--                $t('lang.please_enter_valid_phone'),-->
+<!--              isValidPhone-->
+<!--            ]"-->
+<!--            color="white"-->
+<!--            clearable-->
+<!--        >-->
+<!--          <template v-slot:prepend>-->
+<!--            <q-icon name="smartphone"/>-->
+<!--          </template>-->
+<!--        </q-input>-->
 
 <!--        <q-input-->
 <!--            ref="birthdayRef"-->
@@ -458,7 +458,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      telephone: "",
+      // telephone: "",
       // email: "",
       codeAffiliate: "",
       // cardAccountName: "",
@@ -493,7 +493,7 @@ export default defineComponent({
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    const telRef = ref();
+    // const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
     const cardAccountNameRef = ref();
@@ -522,7 +522,7 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      telRef.value.validate();
+      // telRef.value.validate();
       // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
@@ -533,7 +533,7 @@ export default defineComponent({
           loginNameRef.value.hasError ||
           pwdRef.value.hasError ||
           confirmPwdRef.value.hasError ||
-          telRef.value.hasError ||
+          // telRef.value.hasError ||
           // emailRef.value.hasError ||
           verificationRef.value.hasError
       ) {
@@ -695,7 +695,7 @@ export default defineComponent({
       loginNameRef,
       pwdRef,
       confirmPwdRef,
-      telRef,
+      // telRef,
       emailRef,
       verificationRef,
       cardNumberRef,

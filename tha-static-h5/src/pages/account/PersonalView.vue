@@ -273,7 +273,7 @@
                 <div
                     style=" margin-left:10px;"
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
-                    v-if="personalState.memberInfo.telephone && !personalState.memberInfo.phoneVerified"
+                    v-if="!personalState.memberInfo.phoneVerified"
                 >
                   <span @click="verifyPhone">{{ $t("lang.verify") }}</span>
                   <RiEditBoxLine/>
@@ -419,10 +419,9 @@
           <div class="half">
             <q-input
                 ref="verificationCodeRef"
-                type="password"
                 v-model="updateSecurityVerified.verificationCode"
-                :placeholder="$t('lang.captcha_code')"
-                :label="$t('lang.captcha_code')"
+                :placeholder="$t('lang.one_time_otp')"
+                :label="$t('lang.one_time_otp')"
                 stack-label
                 clearable
                 autocomplete="off"
@@ -430,7 +429,7 @@
             />
             <q-btn
                 class="common-large-btn third-btn"
-                :label="$t('lang.enter_veri_code')"
+                :label="$t('lang.request_otp_code')"
                 @click="openVerificationModal"
             />
           </div>
@@ -614,7 +613,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('lang.otp_code_has_been_sent'),
+            message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId

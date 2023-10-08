@@ -311,7 +311,17 @@ export default {
     validateNumberMoreThanOne: '请输入大于 1 的整数',
     validateRevenueShare: "收入必须介于 0 至 1 之间",
     validateUsdtWallet: "虚拟钱包账号只能包含数字及英文字母",
-    withdrawalToday: "今日提款"
+    withdrawalToday: "今日提款",
+    inputUSDTAmount: "输入USDT金额",
+    inputAmount: "输入存款金额",
+    selectAmount: "选择存款金额",
+    minDepositeAmount: "最低存款",
+    maxDepositeAmount: "最高存款",
+    currencyRates: "实时汇率",
+    understand: "理解",
+    DepositCompleted: "已存款",
+    depositNotification1: "您将被重定向到您的银行页面以完成存款。",
+    depositNotification2: "如果成功，您将在此页面上收到通知。"
   },
   menu: {
     undefined: "",
