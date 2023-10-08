@@ -377,7 +377,12 @@ export default {
     medium_level: "ดี",
     strong_level: "รัดกุม",
     fill_in_information: "กรุณาใส่ข้อมูลให้ถูกต้อง",
-    verify: "ตรวจสอบ"
+    verify: "ตรวจสอบ",
+    my_total_refer_friends_rebate: "ยอดงงินคืนสุทธิ จากแนะนำเพื่อน:",
+    my_a_line_refer_total: "ค่าแนะนำ  A-Line ของฉัน:",
+    total_bets: "ยอดรวมเงินเดิมพัน",
+    total_rebate_return: "ยอดรวมเงินคืน",
+    my_b_line_refer_total: "ค่าแนะนำ B-Line ของฉัน:"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

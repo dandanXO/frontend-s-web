@@ -374,7 +374,12 @@ export default {
     medium_level: "Good",
     strong_level: "Strong",
     fill_in_information: "Please fill in information first.",
-    verify: "Verify"
+    verify: "Verify",
+    my_total_refer_friends_rebate: "Total Rebates from my Referred Friends:",
+    my_a_line_refer_total: "My A-Line Referred Total:",
+    total_bets: "Total Bets",
+    total_rebate_return: "Total Rebates",
+    my_b_line_refer_total: "My B-Line Referred Total:"
   },
   error: {
     101: "Platform not found",
