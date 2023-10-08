@@ -16,7 +16,7 @@
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
         <div class="submit-message">
           <div class="linebox">
-            <span>银行名称：</span>
+            <span>t('fields.bank')：</span>
             <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
             <button
               @blur="blurCode"
@@ -27,7 +27,7 @@
             </button>
           </div>
           <div class="linebox">
-            <span>银行账号：</span>
+            <span>t('fields.cardAccount')：</span>
             <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
             <button
               @blur="blurCode"
@@ -38,7 +38,7 @@
             </button>
           </div>
           <div class="linebox">
-            <span>银行卡号：</span>
+            <span>t('fields.cardNumber')：</span>
             <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
             <button
               @blur="blurCode"
@@ -49,7 +49,7 @@
             </button>
           </div>
           <div class="linebox">
-            <span>存款金额：</span>
+            <span>t('fields.depositAmount')：</span>
             <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
             <button
               @blur="blurCode"
@@ -71,7 +71,7 @@
           label-suffix=":"
         >
           <el-space>
-            <el-form-item class="helptxt" label="金额" prop="localAmount">
+            <el-form-item class="helptxt" :label="t('fields.depositAmount')" prop="localAmount">
               <el-input
                 v-if="amountList.length === 0"
                 v-model="form.localAmount"
@@ -116,7 +116,7 @@
           </el-form-item>
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
-            label="银行"
+            :label="t('fields.bank')"
             prop="bankId"
             name="bankId"
             value="bankName"
@@ -164,7 +164,7 @@
               @click="confirmDeposit"
               class="common-btn"
             >
-              确定
+              {t('fields.confirm')}
             </el-button>
           </div>
         </el-form>

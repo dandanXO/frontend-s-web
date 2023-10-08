@@ -130,7 +130,17 @@ export default {
     unbindConfirm: "แน่ใจหรือว่าต้องการยกเลิกการผูกบัตร ",
     validateCommission: "ค่าคอมมิชชั่นต้องอยู่ระหว่าง 0 ถึง 1",
     validateRevenueShare: "ส่วนแบ่งรายได้ต้องอยู่ระหว่าง 0 ถึง 1",
-    withdrawalToday: "กำจัดการถอน"
+    withdrawalToday: "กำจัดการถอน",
+    inputUSDTAmount: "กรุณาป้อนจำนวน USDT",
+    inputAmount: "กรุณาป้อนจำนวน",
+    selectAmount: "กรุณาเลือกจำนวน",
+    minDepositeAmount: "ยอดฝากขั้นต่ำ",
+    maxDepositeAmount: "ยอดฝากสูงสุด",
+    currencyRates: "อัตราแลกเปลี่ยนเงินตรา",
+    understand: "เข้าใจ",
+    DepositCompleted: "เสร็จสิ้น",
+    depositNotification1: "คุณจะถูกนำไปยังหน้าธนาคารเพื่อทำการฝากเงิน.",
+    depositNotification2: "หากสำเร็จ คุณจะได้รับการแจ้งเตือนที่หน้านี้"
   },
   menu: {
     undefined: "",
