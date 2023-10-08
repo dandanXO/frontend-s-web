@@ -37,7 +37,7 @@
                   {{ store.state.user.realName }}
                 </span>
                 <span v-if="store.state.user.realName === 'null' || store.state.user.realName === 'undefined' || !store.state.user.realName" class="card-panel-num">
-                  <el-form ref="editForm" :model="eForm" :rules="eFormRules" :inline="true" size="mini">
+                  <el-form ref="editForm" :model="eForm"  :inline="true" size="mini">
                     <el-form-item prop="realName">
                       <el-row>
                         <el-input v-model="eForm.realName" maxlength="50" size="mini" />

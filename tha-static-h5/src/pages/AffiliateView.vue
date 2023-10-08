@@ -131,101 +131,151 @@
           {{ $t("lang.affiliate_calulate_para_1_3") }}
         </p>
         <div class="boxes">
-          <div class="box">
-            <p>{{ $t("lang.affiliate_example_1") }}</p>
-            <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_1_table_1_left") }}
-              </div>
-              <div class="rw-rgt">200,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_1_table_2_left") }}
-              </div>
-              <div class="rw-rgt">300,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_1_table_3_left") }}
-              </div>
-              <div class="rw-rgt">60,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_1_table_4_left") }}
-              </div>
-              <div class="rw-rgt">5,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_1_table_5_left") }}
-              </div>
-              <div class="rw-rgt">3,600</div>
-            </div>
-
-            <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_1_table_6_left") }}
-              </div>
-              <div class="rw-rgt">(200,000*90%)-5,000-3,600=171,400</div>
-            </div>
-
-            <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_1_table_7_left") }}
-              </div>
-              <div class="rw-rgt">171,400*30%=51,420</div>
-            </div>
-          </div>
 
           <div class="box">
-            <p>{{ $t("lang.affiliate_example_2") }}</p>
+            <p>{{ $t("lang.affiliate_example_a") }}</p>
             <div class="bx-table">
               <div class="rw-left">
-                {{ $t("lang.affiliate_example_2_table_1_left") }}
+                {{ $t("lang.affiliate_example_a_table_1_left") }}
               </div>
-              <div class="rw-rgt">8,000,000</div>
+              <div class="rw-rgt">500,000</div>
             </div>
             <div class="bx-table">
               <div class="rw-left">
-                {{ $t("lang.affiliate_example_2_table_2_left") }}
+                {{ $t("lang.affiliate_example_a_table_2_left") }}
               </div>
-              <div class="rw-rgt">9,600,000</div>
+              <div class="rw-rgt">15,000</div>
             </div>
             <div class="bx-table">
               <div class="rw-left">
-                {{ $t("lang.affiliate_example_2_table_3_left") }}
+                {{ $t("lang.affiliate_example_a_table_3_left") }}
               </div>
-              <div class="rw-rgt">6,500,000</div>
+              <div class="rw-rgt">8%</div>
             </div>
             <div class="bx-table">
               <div class="rw-left">
-                {{ $t("lang.affiliate_example_2_table_4_left") }}
+                {{ $t("lang.affiliate_example_a_table_4_left") }}
+              </div>
+              <div class="rw-rgt">8%</div>
+            </div>
+            <div class="bx-table">
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_a_table_5_left") }}
               </div>
               <div class="rw-rgt">600,000</div>
             </div>
+
             <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_2_table_5_left") }}
+              <div class="rw-left" style="white-space: nowrap;">
+                {{ $t("lang.affiliate_example_a_table_6_left") }}
               </div>
-              <div class="rw-rgt">160,000</div>
+              <div class="rw-rgt text-right">【500,000 - 15,000 - (600,000 x 8%) - (500,000 x 8%) 】=397,000</div>
             </div>
+
             <div class="bx-table">
               <div class="rw-left">
-                {{ $t("lang.affiliate_example_2_table_6_left") }}
+                {{ $t("lang.affiliate_example_a_table_7_left") }}
               </div>
-              <div class="rw-rgt">
-                (8,000,000*90%)-600,000-160,000=6,440,000
-              </div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                {{ $t("lang.affiliate_example_2_table_7_left") }}
-              </div>
-              <div class="rw-rgt">6,440,000*55%=3,542,000</div>
+              <div class="rw-rgt">397,000x50%=198,500</div>
             </div>
           </div>
+
+
+<!--          <div class="box">-->
+<!--            <p>{{ $t("lang.affiliate_example_1") }}</p>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_1_table_1_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">200,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_1_table_2_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">300,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_1_table_3_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">60,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_1_table_4_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">5,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_1_table_5_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">3,600</div>-->
+<!--            </div>-->
+
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_1_table_6_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">(200,000*90%)-5,000-3,600=171,400</div>-->
+<!--            </div>-->
+
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_1_table_7_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">171,400*30%=51,420</div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="box">-->
+<!--            <p>{{ $t("lang.affiliate_example_2") }}</p>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_2_table_1_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">8,000,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_2_table_2_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">9,600,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_2_table_3_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">6,500,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_2_table_4_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">600,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_2_table_5_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">160,000</div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_2_table_6_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">-->
+<!--                (8,000,000*90%)-600,000-160,000=6,440,000-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="bx-table">-->
+<!--              <div class="rw-left">-->
+<!--                {{ $t("lang.affiliate_example_2_table_7_left") }}-->
+<!--              </div>-->
+<!--              <div class="rw-rgt">6,440,000*55%=3,542,000</div>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
         <div class="game-title sub">{{ $t("lang.downline_partners_title") }}</div>
         <p>{{ $t("lang.downline_partners_para") }}</p>
