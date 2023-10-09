@@ -149,16 +149,23 @@
                       ref="realNameRef"
                       color="white"
                       filled
+                      clearable
                       v-model="formDetail.realName"
                       :placeholder="$t('lang.name')"
                       :rules="[
                       (val) =>
                         (val && val.length > 0) || $t('lang.enter_lastname'),
+                        isValidName
                     ]"
                   >
                   </q-input>
                 </div>
               </div>
+
+              <div class="red-text" v-if="!personalState.memberInfo.realName">
+                {{ $t('lang.register_name_must_be_english_name')}}
+              </div>
+
               <!-- <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
@@ -366,7 +373,7 @@
               :label="$t('lang.password')"
               :rules="pwdRules"
               clearable
-              class="q-mb-lg"
+              class="mb-large"
               stack-label
               :hint="$t('lang.hint_new_password')"
           />
@@ -591,6 +598,11 @@ export default defineComponent({
       const phonePattern = /^\d+$/;
       return phonePattern.test(updateSecurityVerified.phone) || t('lang.invalid_phone_num');
     };
+    const isValidName = () => {
+      const namrPattern = /^[A-Za-z ]+$/;
+      return namrPattern.test(formDetail.value.realName) || t('lang.only_alphabet_allowed');
+    }
+
     const verificationModalVisible = ref(false)
 
     const openVerificationModal = () => {
@@ -807,6 +819,7 @@ export default defineComponent({
       loadInfo,
       isEditBirthday,
       formDetail,
+      isValidName,
       updateState,
       verificationModalVisible,
       openVerificationModal,
@@ -1101,6 +1114,12 @@ export default defineComponent({
 
 .form-changepass {
   margin-top: 15px;
+}
+
+.red-text{
+  text-align:right;
+  margin-bottom:10px;
+  color: $negative;
 }
 
 @media (max-width: 768px) {
