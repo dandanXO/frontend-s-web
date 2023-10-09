@@ -582,10 +582,6 @@
           />
         </q-tab-panel>
         <q-tab-panel name="gameBetRecord">
-          <div class="payout-total">
-            <div>{{ $t('lang.bet_amount') }} <strong>{{ totalBetRecord.totalBet }}</strong></div>
-            <div>{{ $t('lang.amount_paid') }} <strong>{{ totalBetRecord.totalPayout }}</strong></div>
-          </div>
           <div>
             <q-form layout="inline" :model="searchForm.gameBetRecord">
               <div class="left wrap-box">
@@ -660,6 +656,11 @@
                 color="brand"
                 @click="searchRecord"
               />
+
+              <div class="payout-total">
+                <div>{{ $t('lang.bet_amount') }} <strong>{{ totalBetRecord.totalBet }}</strong></div>
+                <div>{{ $t('lang.amount_paid') }} <strong>{{ totalBetRecord.totalPayout }}</strong></div>
+              </div>
             </q-form>
           </div>
           <q-table
@@ -1405,7 +1406,7 @@ export default defineComponent({
         startDate: searchForm.gameBetRecord.startDate,
         endDate: searchForm.gameBetRecord.endDate,
       }
-      api.get("/session/member/gameBetRecordTotal", {params: obj}).then((res) => {
+      api.get("/session/member/betRecordTotal", {params: obj}).then((res) => {
         const ret = res.data
         if (ret.code === 0) {
           totalBetRecord.totalBet = ret.data.totalBet
@@ -1547,7 +1548,8 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .payout-total {
-  display: flex;
+  margin-left: 15px;
+  display: inline-flex;
   justify-content: right;
   align-items: center;
   gap: 20px;

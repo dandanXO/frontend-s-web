@@ -143,6 +143,12 @@
     </a>
   </q-item-section>
 
+  <div class="version-text text-right"
+       v-if="isH5()"
+       style="margin-right: 10px;">
+    App Version: {{ versionNo }}
+  </div>
+
 </template>
 
 <script>
@@ -167,7 +173,7 @@ import {useUI} from "stores/ui";
 import {useI18n} from "vue-i18n";
 import {storeToRefs} from "pinia";
 import {i18nStore} from "src/router/language";
-import {isH5} from "../boot/utils"
+import {isH5} from "boot/utils"
 
 export default defineComponent({
   name: "AccountPage",
@@ -197,8 +203,9 @@ export default defineComponent({
       });
     };
 
-
-    // console.log(route);
+    const versionNo = computed(() => {
+      return ui.appVersion;
+    });
 
     const unreadNumber = computed(() => {
       return store.unreadCount
@@ -270,7 +277,8 @@ export default defineComponent({
       unreadNumber,
       languageVal,
       langOptions,
-      isH5
+      isH5,
+      versionNo
     };
   }
 });

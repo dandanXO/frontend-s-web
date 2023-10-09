@@ -828,6 +828,7 @@ import moment from "moment"
 import {useUI} from "stores/ui";
 import {isMobile} from "boot/utils";
 import {App} from "@capacitor/app";
+import liff from "@line/liff";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1379,10 +1380,11 @@ export default defineComponent({
         // const info = {
         //   version: "1.0.1"
         // };
-        // alert(info.version);
         var current_version = parseInt(
             info.version.replaceAll(".", "") + info.build
         );
+        ui.setVersion(info.version + " " + info.build);
+
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
@@ -1401,7 +1403,12 @@ export default defineComponent({
             isAppUpdateModal.value = true;
           }
         }
+      } else if ((Platform.is.ios &&
+          "standalone" in window.navigator &&
+          window.navigator.standalone)) {
+        ui.appVersion = "iOS App"
       }
+
     };
 
     const openDownloadPage = () => {

@@ -6,7 +6,8 @@ export const useUI = defineStore("ui-store", {
       footer: true,
       orientation: 'landscape',
       themeColor: 'purple-8',
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      appVersion: ""
     };
   },
   actions: {
@@ -25,6 +26,9 @@ export const useUI = defineStore("ui-store", {
     },
     setDrawer(status){
       this.leftDrawerOpen= status;
+    },
+    setVersion(version){
+      this.appVersion= version;
     }
   }
 });
