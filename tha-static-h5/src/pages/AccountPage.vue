@@ -208,8 +208,10 @@ export default defineComponent({
     });
 
     const mainWallet = computed(() => {
-      return store.currency.value + ' ' + store.balance;
+      const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
+      return store.currency.value + ' ' + balanceWithTwoDecimalPlaces;
     });
+
     onMounted(() => {
       getBalance()
       // store.getBalance()
