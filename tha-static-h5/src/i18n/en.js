@@ -379,7 +379,9 @@ export default {
     my_a_line_refer_total: "My A-Line Referred Total:",
     total_bets: "Total Bets",
     total_rebate_return: "Total Rebates",
-    my_b_line_refer_total: "My B-Line Referred Total:"
+    my_b_line_refer_total: "My B-Line Referred Total:",
+    bet_amount: "Bet amount:",
+    amount_paid: "Amount paid:"
   },
   error: {
     101: "Platform not found",

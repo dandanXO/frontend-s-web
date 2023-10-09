@@ -535,8 +535,8 @@
         </q-tab-panel>
         <q-tab-panel name="gameBetRecord">
           <div class="payout-total">
-            <div>ยอดเดิมพัน: {{ totalBetRecord.totalBet }}</div>
-            <div>ยอดเงินที่จ่าย: {{ totalBetRecord.totalPayout }}</div>
+            <div>{{ $t('lang.bet_amount') }} {{ totalBetRecord.totalBet }}</div>
+            <div>{{ $t('lang.amount_paid') }} {{ totalBetRecord.totalPayout }}</div>
           </div>
           <div>
             <q-form layout="inline" :model="searchForm.gameBetRecord">
