@@ -134,6 +134,7 @@ export default {
     affiliate_receiving_comm_step_3: "Jolly88 reserves the right to change or modify the commission percentage as we deem appropriate.",
     affiliate_receiving_comm_step_4: "Jolly88 reserves the right to change or modify the above terms or add any additional terms as necessary.",
     only_letter_number_allowed: "Only English letters and numbers are allowed",
+    only_alphabet_allowed: "Only English letters are allowed",
     password_between_6_12: "Password length must be between 6-12 characters",
     password_must_at_least_good: "The password security level must be at least good",
     confirm_pass: "Confirm Password",
@@ -394,7 +395,8 @@ export default {
     total_rebate_return: "Total Rebates",
     my_b_line_refer_total: "My B-Line Referred Total:",
     bet_amount: "Bet amount:",
-    amount_paid: "Amount paid:"
+    amount_paid: "Amount paid:",
+    register_name_must_be_english_name: "Register real name must be English name which is same as your withdrawal bank account name"
   },
   error: {
     101: "Platform not found",
