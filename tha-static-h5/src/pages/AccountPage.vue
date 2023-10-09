@@ -143,6 +143,12 @@
     </a>
   </q-item-section>
 
+  <div class="version-text text-right"
+       v-if="isH5()"
+       style="margin-right: 10px;">
+    App Version: {{ versionNo }}
+  </div>
+
 </template>
 
 <script>
@@ -199,6 +205,7 @@ export default defineComponent({
 
 
     // console.log(route);
+    const versionNo= ui.appVersion;
 
     const unreadNumber = computed(() => {
       return store.unreadCount
@@ -270,7 +277,8 @@ export default defineComponent({
       unreadNumber,
       languageVal,
       langOptions,
-      isH5
+      isH5,
+      versionNo
     };
   }
 });
