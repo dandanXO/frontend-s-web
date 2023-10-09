@@ -229,7 +229,18 @@ export default defineComponent({
     const {setLanguage} = i18nStore()
     watch(languageVal, (newVal) => {
       setLanguage(languageVal.value);
-    })
+
+      checkRefresh();
+    });
+
+    const refreshPages = ['/vip'];
+    const checkRefresh = () => {
+      // console.log(route.path);
+      if (refreshPages.indexOf(route.path) > -1) {
+        location.reload()
+      }
+    }
+
     const langOptions = [
       {
         label: 'ไทย',
