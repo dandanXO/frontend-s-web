@@ -2,7 +2,7 @@
   <div>
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped">
-        <q-tab name="deposit" :label="$t('lang.deposit')" />
+        <q-tab name="deposit" :label="$t('lang.deposit_title')" />
         <q-tab name="turnover" :label="$t('lang.turnover')" />
         <q-tab name="withdraw" :label="$t('lang.withdraw')" />
         <!-- <q-tab name="transfer" :label="$t('lang.transfer')" /> -->

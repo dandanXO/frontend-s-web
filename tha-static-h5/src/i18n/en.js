@@ -219,7 +219,7 @@ export default {
     affiliate_footer: "Affiliate",
 
     // TransitRecordView
-    deposit: 'Deposit',
+    deposit_title: 'Deposit',
     turnover: 'Profit',
     withdraw: 'Withdraw',
     transfer: 'Transfer',
@@ -233,6 +233,7 @@ export default {
     amount: 'Amount',
     format: 'Format',
     status: 'Status',
+    withdrawal_date: "Withdrawal Date",
     deposit_date: 'Deposit date',
     operation: 'Operation',
     withdraw_date: 'Withdrawal date',

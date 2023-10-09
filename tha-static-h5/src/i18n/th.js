@@ -219,7 +219,7 @@ export default {
     affiliate_footer: "ตัวแทน",
 
     // TransitRecordView
-    deposit: 'ฝาก',
+    deposit_title: 'ฝาก',
     turnover: 'กำไร',
     withdraw: 'ถอน',
     transfer: 'โอน',
@@ -233,6 +233,7 @@ export default {
     amount: 'ยอดเงิน',
     format: 'รูปแบบ',
     status: 'สถานะ',
+    withdrawal_date: "วันถอน",
     deposit_date: 'วันที่ฝาก',
     operation: 'การดำเนินการ',
     withdraw_date: 'วันที่ถอน',
