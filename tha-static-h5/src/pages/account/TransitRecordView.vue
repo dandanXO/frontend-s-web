@@ -213,6 +213,33 @@
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
           >
+            <template v-slot:item="props">
+              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.type") }}</div>
+                    <div class="q-table__grid-item-value">{{ getTurnoverType(props.row.type) }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.amount }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.format") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.subType }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.record_time") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.recordTime }}</div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
             <template v-slot:body-cell-type="props">
               <q-td :props="props">
                 <div>
@@ -1400,6 +1427,12 @@ export default defineComponent({
         return t('lang.withdrawal_failed') // Fail Withdrawal
       } else if (turnoverType === 'WITHDRAW') {
         return t('lang.withdrawal') // Withdraw
+      } else if (turnoverType === 'ADJUST') {
+        return t('lang.adjust') // Withdraw
+      } else if (turnoverType === 'PROMO') {
+        return t('lang.promo') // Withdraw
+      } else if (turnoverType === 'DEPOSIT') {
+        return t('lang.deposit') // Withdraw
       } else {
         return turnoverType
       }

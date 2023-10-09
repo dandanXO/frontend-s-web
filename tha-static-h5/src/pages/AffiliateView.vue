@@ -130,8 +130,8 @@
           <br />
           {{ $t("lang.affiliate_calulate_para_1_3") }}
         </p>
-        <div class="boxes">
 
+        <div class="boxes">
           <div class="box">
             <p>{{ $t("lang.affiliate_example_a") }}</p>
             <div class="bx-table">
@@ -175,6 +175,59 @@
             <div class="bx-table">
               <div class="rw-left">
                 {{ $t("lang.affiliate_example_a_table_7_left") }}
+              </div>
+              <div class="rw-rgt">397,000x30%=119,100</div>
+            </div>
+          </div>
+        </div>
+
+        <p>&nbsp;</p>
+
+        <div class="boxes">
+
+          <div class="box">
+            <p>{{ $t("lang.affiliate_example_b") }}</p>
+            <div class="bx-table">
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_b_table_1_left") }}
+              </div>
+              <div class="rw-rgt">500,000</div>
+            </div>
+            <div class="bx-table">
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_b_table_2_left") }}
+              </div>
+              <div class="rw-rgt">15,000</div>
+            </div>
+            <div class="bx-table">
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_b_table_3_left") }}
+              </div>
+              <div class="rw-rgt">8%</div>
+            </div>
+            <div class="bx-table">
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_b_table_4_left") }}
+              </div>
+              <div class="rw-rgt">8%</div>
+            </div>
+            <div class="bx-table">
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_b_table_5_left") }}
+              </div>
+              <div class="rw-rgt">600,000</div>
+            </div>
+
+            <div class="bx-table">
+              <div class="rw-left" style="white-space: nowrap;">
+                {{ $t("lang.affiliate_example_b_table_6_left") }}
+              </div>
+              <div class="rw-rgt text-right">【500,000 - 15,000 - (600,000 x 8%) - (500,000 x 8%) 】=397,000</div>
+            </div>
+
+            <div class="bx-table">
+              <div class="rw-left">
+                {{ $t("lang.affiliate_example_b_table_7_left") }}
               </div>
               <div class="rw-rgt">397,000x50%=198,500</div>
             </div>

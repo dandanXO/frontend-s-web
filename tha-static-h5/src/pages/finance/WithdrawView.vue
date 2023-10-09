@@ -96,7 +96,6 @@
               dense
               :options="withdrawState.bankCardList"
               class="q-py-none"
-              :rules="[(val) => !!val || $t('lang.please_select_bank_account')]"
             >
               <template v-slot:no-option>
                 <q-item dense>
@@ -356,8 +355,9 @@ export default defineComponent({
               }
             });
 
-            if (withdrawState.bankCardList.length)
-              withdrawInfo.cardId = withdrawState.bankCardList[0].id
+            cardRef.value.resetValidation();
+            // if (withdrawState.bankCardList.length)
+              // withdrawInfo.cardId = withdrawState.bankCardList[0].id
         }
       }).catch((error) => {
         console.log("error", error);
