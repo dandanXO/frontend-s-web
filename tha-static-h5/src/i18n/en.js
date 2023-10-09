@@ -254,7 +254,7 @@ export default {
     bet_time: 'Bet Time',
     settle_time: 'Payment time',
     result: 'Result',
-    game_name: 'New Game',
+    game_name: 'Game Name',
     actions: 'Actions',
     finance_remark: 'Note',
     feedback_time: 'Response time',
