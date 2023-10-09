@@ -27,7 +27,7 @@
         <div class="point-rebate-div">
           <img src="../assets/images/menu/coin-icon.png"/>
 
-          <span id="point-span">{{ store.balance }}</span>
+          <span id="point-span">{{ mainWalletValue }}</span>
 
           <img class="btn-pointer" @click="store.getBalance()" src="../assets/images/menu/refresh-icon.png"/>
         </div>
@@ -417,6 +417,11 @@ export default defineComponent({
       localStorage.setItem("LINE_STICKY_OFF", "true")
     }
 
+    const mainWalletValue = computed(() => {
+      const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
+      return balanceWithTwoDecimalPlaces;
+    });
+
     onMounted(() => {
       checkRoute();
       store.getBalance();
@@ -442,7 +447,8 @@ export default defineComponent({
       languageVal,
       langOptions,
       showSticky,
-      hasLang
+      hasLang,
+      mainWalletValue
     };
   }
 });

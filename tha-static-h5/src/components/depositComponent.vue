@@ -25,6 +25,8 @@
             :rules="verifyDepositAmount"
             color="white"
             padding="none"
+            @keydown="restrictDecimalInput"
+            clearable
           />
 
           <q-select
@@ -462,6 +464,11 @@ const amountPlaceholder = computed(() => {
     return `(${calculatedMinDeposit.value} - ${activeMethod.value.depositMax})`;
   else return t('lang.enter_amount_money');
 });
+
+const restrictDecimalInput = (e) => {
+  const num = +e.key;
+  if (num !== 0 && !num && !['Backspace', 'Delete'].includes(e.key)) e.preventDefault();
+};
 
 onMounted(() => {
   initPay();

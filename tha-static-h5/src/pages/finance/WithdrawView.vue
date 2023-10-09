@@ -149,6 +149,8 @@
                   val <= selectedWithdrawalMethod.withdrawMax ||
                   $t('lang.amount_should_less_than_max'),
               ]"
+              @keydown="restrictDecimalInput"
+              clearable
             >
               <template v-slot:append>
                 <span class="text-caption">THB</span>
@@ -383,6 +385,11 @@ export default defineComponent({
       })
     }
 
+    const restrictDecimalInput = (e) => {
+      const num = +e.key;
+      if (num !== 0 && !num && !['Backspace', 'Delete'].includes(e.key)) e.preventDefault();
+    };
+
     return {
       amountRef,
       cardRef,
@@ -398,6 +405,7 @@ export default defineComponent({
       loadCards,
       isUSDT,
       store,
+      restrictDecimalInput,
     };
   },
   computed: {
