@@ -583,12 +583,12 @@
         </q-tab-panel>
         <q-tab-panel name="gameBetRecord">
           <div class="payout-total">
-            <div>{{ $t('lang.bet_amount') }} {{ totalBetRecord.totalBet }}</div>
-            <div>{{ $t('lang.amount_paid') }} {{ totalBetRecord.totalPayout }}</div>
+            <div>{{ $t('lang.bet_amount') }} <strong>{{ totalBetRecord.totalBet }}</strong></div>
+            <div>{{ $t('lang.amount_paid') }} <strong>{{ totalBetRecord.totalPayout }}</strong></div>
           </div>
           <div>
             <q-form layout="inline" :model="searchForm.gameBetRecord">
-              <div class="left">
+              <div class="left wrap-box">
                 <q-input filled v-model="searchForm.gameBetRecord.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
@@ -639,71 +639,20 @@
                     </q-icon>
                   </template>
                 </q-input>
-              </div>
-              <div class="left">
                 <q-select
-                  style="width: 100%"
-                  v-model="searchForm.gameBetRecord.platform"
-                  filled
-                  clearable
-                  :options="platformsList"
-                  label="แพลตฟอร์มเกม"
-                  color="white"
-                  label-color="grey"
-                  option-label="name"
-                  option-value="name"
-                  emit-value
-                  map-options
+                    style="width: 100%;max-width: 400px;"
+                    v-model="searchForm.gameBetRecord.platform"
+                    filled
+                    clearable
+                    :options="platformsList"
+                    label="แพลตฟอร์มเกม"
+                    color="white"
+                    label-color="grey"
+                    option-label="name"
+                    option-value="name"
+                    emit-value
+                    map-options
                 />
-                <!-- <template v-slot:append>
-                  <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-date
-                        v-model="searchForm.gameBetRecord.startDate"
-                        mask="YYYY-MM-DD"
-                      >
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            :label="$t('lang.close_btn')"
-                            color="white"
-                            flat
-                          />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input> -->
-                <!-- <q-input filled v-model="searchForm.gameBetRecord.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.gameBetRecord.endDate"
-                          mask="YYYY-MM-DD"
-                        >
-                          <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input> -->
               </div>
               <q-btn
                 class="q-mb-md"
@@ -1580,6 +1529,13 @@ export default defineComponent({
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
+  font-size: 18px;
+
+  strong{
+    color: $orange;
+    font-weight: bold;
+    font-size: 20px;
+  }
 }
 
 .account-content.transit {
@@ -1667,6 +1623,16 @@ export default defineComponent({
           margin-top: 10px;
         }
       }
+    }
+  }
+
+  .wrap-box{
+    flex-wrap: wrap;
+    row-gap: 5px;
+
+    > label{
+      width:45%;
+      flex: 1 1 160px;
     }
   }
 }
