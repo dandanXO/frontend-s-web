@@ -168,6 +168,7 @@ export default {
     operationalData: "运营数据",
     password: "密码",
     paymentFee: "存提手续费",
+    paymentMethod: "支付方式",
     paymentName: "充值渠道",
     payout: "派彩金额",
     personal: "个人资料",
