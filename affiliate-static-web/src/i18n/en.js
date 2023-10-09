@@ -167,6 +167,7 @@ export default {
     operationalData: "Operational Data",
     password: "Password",
     paymentFee: "Payment Fee",
+    paymentMethod: "Payment Method",
     paymentName: "Payment Name",
     payout: "Payout",
     personal: "Personal",

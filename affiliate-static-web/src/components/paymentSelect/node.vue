@@ -1,6 +1,6 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div class="" v-if="level === 1"><strong>支付方式</strong></div>
+    <div class="" v-if="level === 1"><strong>{{ $t('fields.paymentMethod') }}</strong></div>
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>

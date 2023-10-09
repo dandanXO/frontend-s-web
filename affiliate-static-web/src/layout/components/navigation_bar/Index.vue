@@ -98,7 +98,7 @@ export default {
       logout: async () => {
         const siteId = store.state.user.siteId;
         await store.dispatch(UserActionTypes.ACTION_LOGOUT);
-        if (siteId === 3) {
+        if (siteId === "3" || siteId === 3) {
           router.push("/th/login")
         } else {
           location.reload();

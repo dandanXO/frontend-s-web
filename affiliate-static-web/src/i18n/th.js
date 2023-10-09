@@ -168,6 +168,7 @@ export default {
     operationalData: "ข้อมูลดำเนินการ",
     password: "รหัสผ่าน",
     paymentFee: "ค่าธรรมเนียมการฝากถอน",
+    paymentMethod: "วิธีการชำระเงิน",
     paymentName: "ช่องทางการเติมเงิน",
     payout: "จำนวนการจ่ายเงิน",
     personal: "ข้อมูลส่วนตัว",
