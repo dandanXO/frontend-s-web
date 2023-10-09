@@ -26,6 +26,9 @@ export const useUI = defineStore("ui-store", {
     },
     setDrawer(status){
       this.leftDrawerOpen= status;
+    },
+    setVersion(version){
+      this.appVersion= version;
     }
   }
 });

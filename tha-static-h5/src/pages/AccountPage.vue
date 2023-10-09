@@ -173,7 +173,7 @@ import {useUI} from "stores/ui";
 import {useI18n} from "vue-i18n";
 import {storeToRefs} from "pinia";
 import {i18nStore} from "src/router/language";
-import {isH5} from "../boot/utils"
+import {isH5} from "boot/utils"
 
 export default defineComponent({
   name: "AccountPage",
@@ -203,9 +203,9 @@ export default defineComponent({
       });
     };
 
-
-    // console.log(route);
-    const versionNo= ui.appVersion;
+    const versionNo = computed(() => {
+      return ui.appVersion;
+    });
 
     const unreadNumber = computed(() => {
       return store.unreadCount

@@ -1380,11 +1380,11 @@ export default defineComponent({
         // const info = {
         //   version: "1.0.1"
         // };
-        // alert(info.version);
         var current_version = parseInt(
             info.version.replaceAll(".", "") + info.build
         );
-        ui.appVersion = current_version.toString();
+        ui.setVersion(info.version + " " + info.build);
+
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
