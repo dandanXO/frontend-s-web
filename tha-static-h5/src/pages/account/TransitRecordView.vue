@@ -2,7 +2,7 @@
   <div>
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped">
-        <q-tab name="deposit" :label="$t('lang.deposit')" />
+        <q-tab name="deposit" :label="$t('lang.deposit_title')" />
         <q-tab name="turnover" :label="$t('lang.turnover')" />
         <q-tab name="withdraw" :label="$t('lang.withdraw')" />
         <!-- <q-tab name="transfer" :label="$t('lang.transfer')" /> -->
@@ -213,6 +213,33 @@
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
           >
+            <template v-slot:item="props">
+              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.type") }}</div>
+                    <div class="q-table__grid-item-value">{{ getTurnoverType(props.row.type) }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.amount }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.format") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.subType }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.record_time") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.recordTime }}</div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
             <template v-slot:body-cell-type="props">
               <q-td :props="props">
                 <div>
@@ -295,54 +322,52 @@
             row-key="serialNumber"
           >
 
-          <template v-slot:item="props">
-            <!-- <pre>{{props}}</pre> -->
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                        <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
-                    </div>
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                        <div class="q-table__grid-item-value">{{ props.row.withdrawAmount }}</div>
-                    </div>
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
-                        <div class="q-table__grid-item-value">{{ props.row.status }}</div>
-                    </div>
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.withdrawal_date") }}</div>
-                        <div class="q-table__grid-item-value">{{ props.row.withdrawDate }}</div>
-                    </div>
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
-                        <div class="q-table__grid-item-value">
-                          <q-btn
-                            v-if="props.row.status === 'STEP_1'"
-                            size="sm"
-                            :label="$t('lang.reminder')"
-                            color="brand"
-                            @click="($event) => openReminder(props)"
-                          />
+            <template v-slot:item="props">
+              <!-- <pre>{{props}}</pre> -->
+                <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                  <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                          <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                      </div>
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
+                          <div class="q-table__grid-item-value">{{ props.row.withdrawAmount }}</div>
+                      </div>
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
+                          <div class="q-table__grid-item-value">{{ getWithdrawStatus(props.row.status) }}</div>
+                      </div>
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.withdrawal_date") }}</div>
+                          <div class="q-table__grid-item-value">{{ props.row.withdrawDate }}</div>
+                      </div>
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
+                          <div class="q-table__grid-item-value">
+                            <q-btn
+                              v-if="props.row.status === 'STEP_1'"
+                              size="sm"
+                              :label="$t('lang.reminder')"
+                              color="brand"
+                              @click="($event) => openReminder(props)"
+                            />
 
-                          <q-btn
-                            v-if="
-                              props.row.status === 'SUCCESS' &&
-                              props.row.confirmStatus === 0
-                            "
-                            size="sm"
-                            :label="$t('lang.confirm_withdraw_success')"
-                            color="brand"
-                            @click="openWithdrawConfirmDialog(props)"
-                          />
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </template>
-
-
+                            <q-btn
+                              v-if="
+                                props.row.status === 'SUCCESS' &&
+                                props.row.confirmStatus === 0
+                              "
+                              size="sm"
+                              :label="$t('lang.confirm_withdraw_success')"
+                              color="brand"
+                              @click="openWithdrawConfirmDialog(props)"
+                            />
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </template>
 
             <template v-slot:body-cell-status="props">
               <q-td :props="props">
@@ -448,6 +473,29 @@
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
           >
+            <template v-slot:item="props">
+              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.privilege_name") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.privilegeName }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.amount }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.record_time") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.recordTime }}</div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
             <template v-slot:body-cell-serialNumber="props">
               <q-td :props="props">
                 <div>
@@ -535,12 +583,12 @@
         </q-tab-panel>
         <q-tab-panel name="gameBetRecord">
           <div class="payout-total">
-            <div>{{ $t('lang.bet_amount') }} {{ totalBetRecord.totalBet }}</div>
-            <div>{{ $t('lang.amount_paid') }} {{ totalBetRecord.totalPayout }}</div>
+            <div>{{ $t('lang.bet_amount') }} <strong>{{ totalBetRecord.totalBet }}</strong></div>
+            <div>{{ $t('lang.amount_paid') }} <strong>{{ totalBetRecord.totalPayout }}</strong></div>
           </div>
           <div>
             <q-form layout="inline" :model="searchForm.gameBetRecord">
-              <div class="left">
+              <div class="left wrap-box">
                 <q-input filled v-model="searchForm.gameBetRecord.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
@@ -591,71 +639,20 @@
                     </q-icon>
                   </template>
                 </q-input>
-              </div>
-              <div class="left">
                 <q-select
-                  style="width: 100%"
-                  v-model="searchForm.gameBetRecord.platform"
-                  filled
-                  clearable
-                  :options="platformsList"
-                  label="แพลตฟอร์มเกม"
-                  color="white"
-                  label-color="grey"
-                  option-label="name"
-                  option-value="name"
-                  emit-value
-                  map-options
+                    style="width: 100%;max-width: 400px;"
+                    v-model="searchForm.gameBetRecord.platform"
+                    filled
+                    clearable
+                    :options="platformsList"
+                    label="แพลตฟอร์มเกม"
+                    color="white"
+                    label-color="grey"
+                    option-label="name"
+                    option-value="name"
+                    emit-value
+                    map-options
                 />
-                <!-- <template v-slot:append>
-                  <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-date
-                        v-model="searchForm.gameBetRecord.startDate"
-                        mask="YYYY-MM-DD"
-                      >
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            :label="$t('lang.close_btn')"
-                            color="white"
-                            flat
-                          />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input> -->
-                <!-- <q-input filled v-model="searchForm.gameBetRecord.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.gameBetRecord.endDate"
-                          mask="YYYY-MM-DD"
-                        >
-                          <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input> -->
               </div>
               <q-btn
                 class="q-mb-md"
@@ -753,6 +750,29 @@
             :rows-per-page-label="rowPerPageLabel"
             row-key="orderNo"
           >
+            <template v-slot:item="props">
+              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.orderNo }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.finance_remark") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.financeRemark }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.feedback_time") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.feedbackTime }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.reminder_type") }}</div>
+                    <div class="q-table__grid-item-value">{{ checkType(props.row.type) }}</div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
             <template v-slot:body-cell-type="props">
               <q-td :props="props">
                 <div>
@@ -1400,6 +1420,12 @@ export default defineComponent({
         return t('lang.withdrawal_failed') // Fail Withdrawal
       } else if (turnoverType === 'WITHDRAW') {
         return t('lang.withdrawal') // Withdraw
+      } else if (turnoverType === 'ADJUST') {
+        return t('lang.adjust') // Withdraw
+      } else if (turnoverType === 'PROMO') {
+        return t('lang.promo') // Withdraw
+      } else if (turnoverType === 'DEPOSIT') {
+        return t('lang.deposit') // Withdraw
       } else {
         return turnoverType
       }
@@ -1526,6 +1552,13 @@ export default defineComponent({
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
+  font-size: 18px;
+
+  strong{
+    color: $orange;
+    font-weight: bold;
+    font-size: 20px;
+  }
 }
 
 .account-content.transit {
@@ -1613,6 +1646,16 @@ export default defineComponent({
           margin-top: 10px;
         }
       }
+    }
+  }
+
+  .wrap-box{
+    flex-wrap: wrap;
+    row-gap: 5px;
+
+    > label{
+      width:45%;
+      flex: 1 1 160px;
     }
   }
 }

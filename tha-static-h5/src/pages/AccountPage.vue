@@ -233,7 +233,7 @@ export default defineComponent({
       checkRefresh();
     });
 
-    const refreshPages = ['/vip'];
+    const refreshPages = ['/vip', '/account/transit', '/promo'];
     const checkRefresh = () => {
       // console.log(route.path);
       if (refreshPages.indexOf(route.path) > -1) {
