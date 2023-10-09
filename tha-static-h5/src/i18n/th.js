@@ -382,7 +382,9 @@ export default {
     my_a_line_refer_total: "ค่าแนะนำ  A-Line ของฉัน:",
     total_bets: "ยอดรวมเงินเดิมพัน",
     total_rebate_return: "ยอดรวมเงินคืน",
-    my_b_line_refer_total: "ค่าแนะนำ B-Line ของฉัน:"
+    my_b_line_refer_total: "ค่าแนะนำ B-Line ของฉัน:",
+    bet_amount: "ยอดเดิมพัน:",
+    amount_paid: "ยอดเงินที่จ่าย:"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

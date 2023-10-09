@@ -738,18 +738,18 @@ export default defineComponent({
       //     return
       //   }
       // }
-      // if (!personalState.memberInfo.realName) {
-      //   realNameRef.value.validate()
-      //   if (realNameRef.value.hasError) {
-      //     return
-      //   }
-      // }
-      // if (!personalState.memberInfo.birthday) {
-      //   birthdayRef.value.validate()
-      //   if (birthdayRef.value.hasError) {
-      //     return
-      //   }
-      // }
+      if (!personalState.memberInfo.realName) {
+        realNameRef.value.validate()
+        if (realNameRef.value.hasError) {
+          return;
+        }
+      }
+      if (!personalState.memberInfo.birthday) {
+        birthdayRef.value.validate()
+        if (birthdayRef.value.hasError) {
+          return
+        }
+      }
       // if (!personalState.memberInfo.telephone) {
       //   phoneRef.value.validate()
       //   if (phoneRef.value.hasError) {
@@ -760,26 +760,19 @@ export default defineComponent({
       //   updateInfo.name2 = null;
       // }
 
-      if (!personalState.memberInfo.birthday) {
-        birthdayRef.value.validate()
-        if (birthdayRef.value.hasError) {
-          return
-        } else {
-          api.post("/session/account", qs.stringify(updateInfo)).then((res) => {
-            const r = res.data
-            if (r.code === 0) {
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: t('lang.updated_successfully'),
-                icon: "check_circle_outline"
-              });
-              isEdit.value = false;
-              location.reload();
-            }
-          })
+      api.post("/session/account", qs.stringify(updateInfo)).then((res) => {
+        const r = res.data
+        if (r.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t('lang.updated_successfully'),
+            icon: "check_circle_outline"
+          });
+          isEdit.value = false;
+          location.reload();
         }
-      }
+      })
 
 
     }
