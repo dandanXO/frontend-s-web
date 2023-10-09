@@ -322,54 +322,52 @@
             row-key="serialNumber"
           >
 
-          <template v-slot:item="props">
-            <!-- <pre>{{props}}</pre> -->
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                        <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
-                    </div>
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                        <div class="q-table__grid-item-value">{{ props.row.withdrawAmount }}</div>
-                    </div>
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
-                        <div class="q-table__grid-item-value">{{ props.row.status }}</div>
-                    </div>
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.withdrawal_date") }}</div>
-                        <div class="q-table__grid-item-value">{{ props.row.withdrawDate }}</div>
-                    </div>
-                    <div class="q-table__grid-item-row">
-                        <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
-                        <div class="q-table__grid-item-value">
-                          <q-btn
-                            v-if="props.row.status === 'STEP_1'"
-                            size="sm"
-                            :label="$t('lang.reminder')"
-                            color="brand"
-                            @click="($event) => openReminder(props)"
-                          />
+            <template v-slot:item="props">
+              <!-- <pre>{{props}}</pre> -->
+                <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                  <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                          <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                      </div>
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
+                          <div class="q-table__grid-item-value">{{ props.row.withdrawAmount }}</div>
+                      </div>
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
+                          <div class="q-table__grid-item-value">{{ getWithdrawStatus(props.row.status) }}</div>
+                      </div>
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.withdrawal_date") }}</div>
+                          <div class="q-table__grid-item-value">{{ props.row.withdrawDate }}</div>
+                      </div>
+                      <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
+                          <div class="q-table__grid-item-value">
+                            <q-btn
+                              v-if="props.row.status === 'STEP_1'"
+                              size="sm"
+                              :label="$t('lang.reminder')"
+                              color="brand"
+                              @click="($event) => openReminder(props)"
+                            />
 
-                          <q-btn
-                            v-if="
-                              props.row.status === 'SUCCESS' &&
-                              props.row.confirmStatus === 0
-                            "
-                            size="sm"
-                            :label="$t('lang.confirm_withdraw_success')"
-                            color="brand"
-                            @click="openWithdrawConfirmDialog(props)"
-                          />
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </template>
-
-
+                            <q-btn
+                              v-if="
+                                props.row.status === 'SUCCESS' &&
+                                props.row.confirmStatus === 0
+                              "
+                              size="sm"
+                              :label="$t('lang.confirm_withdraw_success')"
+                              color="brand"
+                              @click="openWithdrawConfirmDialog(props)"
+                            />
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </template>
 
             <template v-slot:body-cell-status="props">
               <q-td :props="props">
@@ -475,6 +473,29 @@
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
           >
+            <template v-slot:item="props">
+              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.privilege_name") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.privilegeName }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.amount }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.record_time") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.recordTime }}</div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
             <template v-slot:body-cell-serialNumber="props">
               <q-td :props="props">
                 <div>
