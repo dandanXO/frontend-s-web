@@ -750,6 +750,29 @@
             :rows-per-page-label="rowPerPageLabel"
             row-key="orderNo"
           >
+            <template v-slot:item="props">
+              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.orderNo }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.finance_remark") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.financeRemark }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.feedback_time") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.feedbackTime }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.reminder_type") }}</div>
+                    <div class="q-table__grid-item-value">{{ checkType(props.row.type) }}</div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
             <template v-slot:body-cell-type="props">
               <q-td :props="props">
                 <div>
