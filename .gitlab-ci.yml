@@ -54,9 +54,20 @@ default:
       changes:
         - $PROJECT/**/*
 
+.s3-deploy:
+  stage: deploy
+  image: amazon/aws-cli
+  script:
+    - aws s3 sync $PROJECT s3://p8s1-$PROJECT
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "prod/p8s1"'
+      changes:
+        - $PROJECT/**/*
+
 stages:
   - build
   - build-image
+  - deploy
 
 build-image-pt-launch:
   extends: .docker-build
@@ -72,24 +83,31 @@ build-image-xf-landing:
 
 #===============================================================================================
 
-build-image-xf-download:
-  extends: .docker-build
+deploy-xf-download:
+  extends: .s3-deploy
   variables:
     PROJECT: xf-download
 
 #===============================================================================================
 
 build-image-tha-download:
-  extends: .docker-build
+  extends: .s3-deploy
   variables:
     PROJECT: tha-download
 
 #===============================================================================================
 
 build-image-xf-maintenance:
-  extends: .docker-build
+  extends: .s3-deploy
   variables:
     PROJECT: xf-maintenance
+
+#===============================================================================================
+
+build-image-xf-tutorials:
+  extends: .docker-build
+  variables:
+    PROJECT: xf-tutorials
 
 #===============================================================================================
 
@@ -171,9 +189,4 @@ build-image-affiliate-static-web:
   needs:
     - build-affiliate-static-web
 
-#===============================================================================================
 
-build-image-xf-tutorials:
-  extends: .docker-build
-  variables:
-    PROJECT: xf-tutorials
