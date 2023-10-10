@@ -205,7 +205,7 @@ async function loadPrivilegeRecord() {
   const { data: ret } = await getPrivilegeRecord(query)
 
   page.pages = ret.pages
-  page.records = ret.records
+  page.records = patchRecord(ret.records)
   page.total = ret.total
   if (page.records.length !== 0) {
     const { data: amount } = await getTotalPrivilegeAmount(query)
@@ -214,6 +214,17 @@ async function loadPrivilegeRecord() {
     page.totalAmount = 0
   }
   page.loading = false
+}
+
+function patchRecord(records) {
+  if (records.length > 0) {
+    records.forEach((item, index) => {
+      if (item.privilegeAlias !== null) {
+        item.privilegeName = item.privilegeAlias;
+      }
+    })
+  }
+  return records;
 }
 
 async function loadSites() {

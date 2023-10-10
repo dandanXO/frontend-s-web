@@ -265,7 +265,7 @@ async function loadPrivilegeReport(first) {
   }
   expandrowkey = [] // 收起所有展开项
   page.pages = ret.pages
-  page.records = ret.records
+  page.records = patchRecord(ret.records)
   if (page.records.length !== 0) {
     const { data: amount } = await getTotalPrivilegeAmount(query)
     page.totalAmount = amount
@@ -273,6 +273,17 @@ async function loadPrivilegeReport(first) {
     page.totalAmount = 0
   }
   page.loading = false
+}
+
+function patchRecord(records) {
+  if (records.length > 0) {
+    records.forEach((item, index) => {
+      if (item.alias !== null) {
+        item.name = item.alias;
+      }
+    })
+  }
+  return records;
 }
 
 async function loadSites() {

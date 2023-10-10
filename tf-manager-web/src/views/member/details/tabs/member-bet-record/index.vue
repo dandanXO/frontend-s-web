@@ -159,6 +159,9 @@
         <span> {{ t('fields.totalBet') }}</span>
         <span style="margin-left: 10px">$ </span>
         <span v-formatter="{data: total.totalBet, type: 'money'}" />
+        <span style="margin-left: 30px"> {{ t('dashboard.totalValidBet') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalValidBet, type: 'money'}" />
         <span style="margin-left: 30px"> {{ t('fields.totalPayout') }}</span>
         <span style="margin-left: 10px">$ </span>
         <span v-formatter="{data: total.totalPayout, type: 'money'}" />
@@ -266,6 +269,7 @@ const request = reactive({
 const total = reactive({
   // totalRecord: 0,
   totalBet: 0,
+  totalValidBet: 0,
   totalPayout: 0
 });
 
@@ -347,6 +351,7 @@ async function loadMemberBetRecords(frombutton) {
 
   const { data: t } = await getMemberBetRecordsTotal(query);
   total.totalBet = t.totalBet;
+  total.totalValidBet = t.totalValidBet;
   total.totalPayout = t.totalPayout;
 
   page.loading = false;
