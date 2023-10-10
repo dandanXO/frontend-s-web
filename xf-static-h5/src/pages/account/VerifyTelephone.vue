@@ -4,6 +4,7 @@
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
+            ref="phoneNumberRef"
             standout
             class="q-pb-xs"
             hide-bottom-space
@@ -11,7 +12,12 @@
             type="tel"
             label="手机号码"
             lazy-rules
-            :rules="[(_) => isValidPhone()]"
+            :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    '请输入正确的电话号码',
+                  isValidPhone,
+                ]"
             label-color="secondary"
             color="secondary"
             :readonly="showVerifyBtn ? false : true"
@@ -185,9 +191,12 @@ export default defineComponent({
     };
     const emailAddressRef = ref();
     const verificationCodeRef = ref();
+    const phoneNumberRef= ref();
     const submitUpdateSecurity = () => {
-      phoneOtpRef.value.validate()
-      if (phoneOtpRef.value.hasError) {
+      phoneOtpRef.value.validate();
+      phoneNumberRef.value.validate()
+
+      if (phoneNumberRef.value.hasError || phoneOtpRef.value.hasError) {
       } else {
         api.post("/session/verifyAndUpdatePhone", qs.stringify({
           phone: formDetails.phone,
@@ -334,7 +343,7 @@ export default defineComponent({
       moment,
       canEdit,
       isValidName,
-
+      phoneNumberRef,
       showVerificationTokenInput,
       isValidPhone,
       captchaRef,
