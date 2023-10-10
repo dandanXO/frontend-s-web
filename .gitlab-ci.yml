@@ -69,8 +69,8 @@ stages:
   - build-image
   - deploy
 
-build-image-pt-launch:
-  extends: .docker-build
+deploy-pt-launch:
+  extends: .s3-deploy
   variables:
     PROJECT: pt-launch
 
