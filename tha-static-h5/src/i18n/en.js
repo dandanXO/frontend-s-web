@@ -376,6 +376,9 @@ export default {
     number_sent: "Number Sent.",
     urgent_deposit: "Quick Deposit",
     bonus_will_be_added_to_u: "Bonus will be added to your wallet once the transaction is completed.",
+    register_bonus_will_be_added_once: "Claim your Bonus and it will be added to your wallet once the phone number is verified.",
+    refer_bonus_will_be_added_once: "Claim your Bonus and it will be added to your wallet once your friend completed the transaction.",
+    insurance_bonus_will_be_added_once: "Claim your Bonus and it will be added to your wallet once the requirement is complete.",
     claim_bonus: "Claim Bonus",
     claim_daily_cashback: "Claim Daily Rebate",
     cash_must_wagered_1_tme_before_withdrawal: "Cashback bonuses must be wagered 1 time before withdrawal and will be forfeited if not used within 30 days.",
@@ -396,7 +399,7 @@ export default {
     my_b_line_refer_total: "My B-Line Referred Total:",
     bet_amount: "Bet amount:",
     amount_paid: "Amount paid:",
-    register_name_must_be_english_name: "Register real name must be English name which is same as your withdrawal bank account name"
+    register_name_must_be_english_name: "Register real name must be English name which is same as your withdrawal bank account name."
   },
   error: {
     101: "Platform not found",

@@ -2,7 +2,11 @@
   <div class="common-promo">
     <img :src="require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)" />
     <div class="contents">
-      {{ $t('lang.bonus_will_be_added_to_u') }}
+      <div v-if="promoId===75">{{ $t('lang.register_bonus_will_be_added_once') }}</div>
+      <div v-else-if="promoId===80">{{ $t('lang.refer_bonus_will_be_added_once') }}</div>
+      <div v-else-if="promoId===79">{{ $t('lang.insurance_bonus_will_be_added_once') }}</div>
+      <div v-else>{{ $t('lang.bonus_will_be_added_to_u') }}</div>
+
       <q-btn
         class="claim-btn"
         :loading="loadingClaim"
