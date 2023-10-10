@@ -290,6 +290,7 @@ export default {
     afterEdit: 'After Edit',
     amount: 'Amount',
     adjust: 'Amount Adjust',
+    alias: 'Alias',
     allvip: 'All VIP',
     allfinanciallevel: 'All Financial Status',
     allprofit: 'All Profit',

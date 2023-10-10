@@ -177,9 +177,20 @@ async function loadMemberPrivilegeRecord() {
   query.memberId = props.mbrId;
   const { data: ret } = await getMemberPrivilegeRecord(props.mbrId, query);
   page.pages = ret.pages;
-  page.records = ret.records;
+  page.records = patchRecord(ret.records);
   page.total = ret.total;
   page.loading = false;
+}
+
+function patchRecord(records) {
+  if (records.length > 0) {
+    records.forEach((item, index) => {
+      if (item.privilegeAlias !== null) {
+        item.privilegeName = item.privilegeAlias;
+      }
+    })
+  }
+  return records;
 }
 
 onMounted(() => {
