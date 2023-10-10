@@ -10,7 +10,7 @@ variables:
 
 default:
   tags:
-    - jolly88-complex-runners
+    - p8s1-runners
 
 .build-h5:
   script:
@@ -90,14 +90,14 @@ deploy-xf-download:
 
 #===============================================================================================
 
-build-image-tha-download:
+deploy-tha-download:
   extends: .s3-deploy
   variables:
     PROJECT: tha-download
 
 #===============================================================================================
 
-build-image-xf-maintenance:
+deploy-xf-maintenance:
   extends: .s3-deploy
   variables:
     PROJECT: xf-maintenance
