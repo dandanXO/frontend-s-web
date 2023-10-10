@@ -282,6 +282,7 @@ export default {
     afterAmount: '之后金额',
     afterBalance: '之后余额',
     afterEdit: '编辑后',
+    alias: '别名',
     allvip: '全部VIP',
     allfinanciallevel: '全部组别',
     allprofit: '全部盈亏',
