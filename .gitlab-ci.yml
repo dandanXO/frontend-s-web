@@ -105,7 +105,7 @@ deploy-xf-maintenance:
 #===============================================================================================
 
 build-image-xf-tutorials:
-  extends: .docker-build
+  extends: .s3-deploy
   variables:
     PROJECT: xf-tutorials
 
