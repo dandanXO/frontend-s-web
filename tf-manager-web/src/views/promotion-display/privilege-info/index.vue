@@ -90,6 +90,9 @@
         <el-form-item :label="t('fields.name')" prop="name">
           <el-input v-model="form.name" style="width: 450px" maxlength="100" />
         </el-form-item>
+        <el-form-item :label="t('fields.alias')" prop="alias">
+          <el-input v-model="form.alias" style="width: 450px" maxlength="100" />
+        </el-form-item>
         <el-form-item :label="t('fields.code')" prop="code">
           <el-input v-model="form.code" style="width: 450px" maxlength="50" />
         </el-form-item>
@@ -311,6 +314,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="name" :label="t('fields.name')" width="200" />
+      <el-table-column prop="alias" :label="t('fields.alias')" width="200" />
       <el-table-column prop="bonusType" :label="t('fields.bonusType')" width="150">
         <template #default="scope">
           <span v-for="b in uiControl.bonusType" :key="b.key">
