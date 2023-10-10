@@ -9,6 +9,10 @@ export const getBetMoneyChange = (query) => {
   return https().request("/memberBetRecord/money-change", Method.GET, query, ContentType.form);
 };
 
+export const getBetMoneyChangeTotal = (query) => {
+  return https().request("/memberBetRecord/money-change-total", Method.GET, query, ContentType.form);
+};
+
 export const requestBetMoneyChangeExport = (query) => {
   return https().request("/memberBetRecord/money-change-export", Method.GET, query, ContentType.form);
 };
