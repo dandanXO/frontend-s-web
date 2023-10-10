@@ -280,7 +280,7 @@
                 <div
                     style=" margin-left:10px;"
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
-                    v-if="!personalState.memberInfo.phoneVerified"
+                    v-if="!personalState.memberInfo.phoneVerified || !personalState.memberInfo.telephone"
                 >
                   <span @click="verifyPhone">{{ $t("lang.verify") }}</span>
                   <RiEditBoxLine/>

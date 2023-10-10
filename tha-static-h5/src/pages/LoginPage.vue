@@ -184,7 +184,7 @@ export default defineComponent({
         } else {
           store
               .memberLogin({
-                loginName: loginForm.loginName,
+                loginName: loginForm.loginName.trim(),
                 password: loginForm.password,
                 sid: sidParam,
                 captchaCode: loginForm.captchaCode,
@@ -197,7 +197,7 @@ export default defineComponent({
                   localStorage.setItem(
                       "userpass",
                       JSON.stringify({
-                        loginName: loginForm.loginName,
+                        loginName: loginForm.loginName.trim(),
                         password: loginForm.password
                       })
                   );
