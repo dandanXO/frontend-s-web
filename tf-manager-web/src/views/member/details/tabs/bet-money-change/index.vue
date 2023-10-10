@@ -18,60 +18,6 @@
           :clearable="false"
           :default-time="defaultTime"
         />
-        <!-- <el-select
-          v-model="request.platform"
-          size="small"
-          :placeholder="t('fields.platform')"
-          class="filter-item"
-          style="margin-left: 5px; width: 200px;"
-        >
-          <el-option
-            v-for="item in platform.list"
-            :key="item.id"
-            :label="item.name"
-            :value="item.code"
-          />
-        </el-select>
-        <el-select
-          v-if="request.platform !== null"
-          v-model="request.gameType"
-          size="small"
-          :placeholder="t('fields.gameType')"
-          class="filter-item"
-          style="margin-left: 5px; width: 200px;"
-        >
-          <el-option
-            v-for="item in uiControl.gameType"
-            :key="item.key"
-            :label="item.displayName"
-            :value="item.value"
-          />
-        </el-select>
-        <el-select
-          v-if="request.gameType.length !== 0"
-          multiple
-          v-model="request.result"
-          size="small"
-          :placeholder="t('fields.result')"
-          class="filter-item"
-          style="margin-left: 5px; width: 250px;"
-        >
-          <el-option
-            v-for="item in uiControl.result"
-            :key="item.key"
-            :label="item.displayName"
-            :value="item.value"
-          />
-        </el-select>
-        <el-input
-          v-if="request.gameType.length !== 0 && request.result.length !== 0"
-          v-model="request.bet"
-          style="margin-left: 5px; width: 200px;"
-          size="small"
-          maxlength="20"
-          :placeholder="t('fields.betMoreThan')"
-          @keypress="restrictInput($event)"
-        /> -->
         <el-button
           style="margin-left: 10px"
           icon="el-icon-search"
@@ -111,6 +57,11 @@
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="validBet" :label="t('fields.validBet')" align="center" min-width="100">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.validBet,type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="payout" :label="t('fields.payout')" align="center" min-width="100">
@@ -167,6 +118,19 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="table-footer" v-if="site.id === '3'">
+        <!-- <span>{{ t('fields.totalBetRecords') }}</span>
+        <span style="margin-left: 10px">{{ total.totalRecord }}</span> -->
+        <span> {{ t('fields.totalBet') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalBet, type: 'money'}" />
+        <span style="margin-left: 30px"> {{ t('dashboard.totalValidBet') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalValidBet, type: 'money'}" />
+        <span style="margin-left: 30px"> {{ t('fields.totalPayout') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalPayout, type: 'money'}" />
+      </div>
       <el-pagination
         class="pagination"
         :total="page.total"
@@ -198,8 +162,8 @@
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import {
-  getBetMoneyChange,
-  requestBetMoneyChangeExport
+  getBetMoneyChange, getBetMoneyChangeTotal,
+  requestBetMoneyChangeExport,
 } from '../../../../../api/member-bet-record';
 import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
@@ -270,11 +234,11 @@ const request = reactive({
   // result: ["WIN", "LOSS", "DRAW"]
 });
 
-// const total = reactive({
-//   totalRecord: 0,
-//   totalBet: 0,
-//   totalPayout: 0
-// });
+const total = reactive({
+  totalBet: 0,
+  totalValidBet: 0,
+  totalPayout: 0
+});
 
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
@@ -340,6 +304,14 @@ async function loadMemberBetMoneyChange(frombutton) {
   page.pages = ret.pages;
   page.records = ret.records;
   page.pagingState = ret.pagingState;
+
+  // Only for Thailand
+  if (site.id === '3') {
+    const { data: t } = await getBetMoneyChangeTotal(query);
+    total.totalBet = t.totalBet;
+    total.totalValidBet = t.totalValidBet;
+    total.totalPayout = t.totalPayout;
+  }
 
   page.loading = false;
 }
