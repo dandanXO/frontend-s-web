@@ -1478,6 +1478,7 @@ export default {
     'Email Setting': 'Email Setting',
     'SMS Setting': 'SMS Setting',
     DownloadManager: 'Download Manager',
+    GoogleAuth: "Google Auth"
   },
   error: {
     400: 'Bad Request',
