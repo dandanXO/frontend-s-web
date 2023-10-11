@@ -25,8 +25,14 @@ router.beforeEach(async (to, _, next) => {
       // In the free login whitelist, go directly
       next();
     } else {
+      const currentHost = window.location.host
+      const thaiHost = "affiliate-web.monemental.com"
+      if (currentHost === thaiHost) {
+        next(`/th/login?redirect=${to.path}`);
+      } else {
+        next(`/login?redirect=${to.path}`);
+      }
       // Other pages that do not have menu to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`);
     }
   }
 })
