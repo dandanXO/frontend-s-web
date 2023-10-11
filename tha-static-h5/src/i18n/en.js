@@ -399,7 +399,12 @@ export default {
     my_b_line_refer_total: "My B-Line Referred Total:",
     bet_amount: "Bet amount:",
     amount_paid: "Amount paid:",
-    register_name_must_be_english_name: "Register real name must be English name which is same as your withdrawal bank account name."
+    register_name_must_be_english_name: "Register real name must be English name which is same as your withdrawal bank account name.",
+    fav_game_added: "Game has been added to your favorite games list.",
+    fav_game_removed: "Game has been removed from your favorite games list.",
+    update_app_title: "Update App",
+    detected_new_version: "New Update Available. Do you wish to download it now?",
+    update_now: "Update Now"
   },
   error: {
     101: "Platform not found",
@@ -461,6 +466,7 @@ export default {
     14003: "Affiliate code not found",
     15201: "Incorrect old code",
     15202: "New code must match old code",
+    21000: "This game is already in your favorite games list.",
     30000: "Member data not found",
     30001: "Member has already received the promotion",
     30002: "Member has sent the number today",
