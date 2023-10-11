@@ -234,7 +234,6 @@
         </div>
       </div>
     </Transition>
-
     <Transition>
       <div
           class="game-scroll-lists"
@@ -288,17 +287,18 @@
           <!-- FAVOURITE -->
           <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
             <div
-                v-for="(game, index) in sortedFavGamesList.slice(0,12)"
+                v-for="(game, index) in sortedFavGamesList"
                 :key="index"
                 :data-id="index"
                 v-intersection="onIntersection"
-                @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
+
                 style="height: auto"
-                class="btn-pointer btn-slot-game inner-slot-game"
+                class="btn-pointer inner-slot-game"
             >
-              <!--               <template v-if="game.gameClicked > 1"> -->
               <transition name="in-view">
-                <q-list class="q-col-gutter-none">
+                <q-list class="btn-slot-game q-col-gutter-none"
+                        @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
+                >
                   <q-img
                       loading="lazy"
                       :src="game.icon"
@@ -328,7 +328,18 @@
                   </q-img>
                 </q-list>
               </transition>
-              <!--               </template>-->
+
+
+              <template v-if="favLists.indexOf(game.id) === -1">
+                <RiStarLine
+                    @click="toggleFavGame(game.id, true)"
+                    class="favourite-star"/>
+              </template>
+              <template v-else>
+                <RiStarFill
+                    @click="toggleFavGame(game.id, false)"
+                    class="favourite-star" style="fill:#ffd700 !important;"/>
+              </template>
             </div>
           </div>
 
@@ -393,12 +404,13 @@
                 :key="index"
                 :data-id="index"
                 v-intersection="onIntersection"
-                @click="openGame(game.name, game.code, selectedPlat.status, game)"
                 style="height: auto"
-                class="btn-pointer btn-slot-game inner-slot-game"
+                class="btn-pointer inner-slot-game"
             >
               <transition name="in-view">
-                <q-list class="q-col-gutter-none">
+                <q-list class="btn-slot-game q-col-gutter-none"
+                        @click="openGame(game.name, game.code, selectedPlat.status, game)"
+                >
                   <q-img
                       loading="lazy"
                       :src="game.icon"
@@ -425,6 +437,19 @@
                   </q-img>
                 </q-list>
               </transition>
+
+
+              <template v-if="favLists.indexOf(game.id) === -1">
+                <RiStarLine
+                    @click="toggleFavGame(game.id, true)"
+                    class="favourite-star"/>
+              </template>
+              <template v-else>
+                <RiStarFill
+                    @click="toggleFavGame(game.id, false)"
+                    class="favourite-star" style="fill:#ffd700 !important;"/>
+              </template>
+
               <!-- <q-img
                   loading="lazy"
                   :src="game.icon"
@@ -795,15 +820,15 @@
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
-          <div class="titles backgroundColor">更新公告</div>
+          <div class="titles backgroundColor">{{ $t('lang.update_app_title') }}</div>
         </div>
-        <div class="contents">检测到新版本，你是否要更新？</div>
+        <div class="contents">{{ $t('lang.detected_new_version') }}</div>
         <div class="btnsreas">
           <div class="cacnels borderColor fontColor" @click="cancelUpdate">
-            取消
+            {{ $t('lang.cancel') }}
           </div>
           <div class="confirmsbtns btncolor" @click="openDownloadPage">
-            立即更新
+            {{ $t('lang.update_now') }}
           </div>
         </div>
       </div>
@@ -812,6 +837,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import {defineComponent, onMounted, ref, reactive, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
@@ -824,11 +850,14 @@ import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
 import {Vue3Marquee} from "vue3-marquee";
 import moment from "moment"
+import {RiStarLine, RiStarFill} from "vue-remix-icons";
 
 import {useUI} from "stores/ui";
 import {isMobile} from "boot/utils";
 import {App} from "@capacitor/app";
 import liff from "@line/liff";
+import qs from "qs";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "IndexPage",
@@ -837,6 +866,8 @@ export default defineComponent({
     MarqueeText,
     BacktoTop,
     Vue3Marquee,
+    RiStarLine,
+    RiStarFill
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
@@ -844,6 +875,7 @@ export default defineComponent({
   },
   setup() {
     const $q = useQuasar();
+    const {t} = useI18n()
     const ui = useUI();
     const siteId = process.env.SITEID;
     ui.$onAction(({name, args}) => {
@@ -869,62 +901,87 @@ export default defineComponent({
       );
 
       // gameInfo && console.log(gameInfo);
-      const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
-      const clickCount = favGames[gameInfo.id]
-          ? favGames[gameInfo.id].gameClicked + 1
-          : 1;
-      const lastPlayedAt = moment().unix();
-      const revisedGameInfo = {
-        ...gameInfo,
-        gameClicked: clickCount,
-        gamePlatformCode: selectedPlat.code,
-        lastPlayed: lastPlayedAt
-      };
-      gameInfo.gameClicked = clickCount;
-
-      favGames[gameInfo.id] = revisedGameInfo;
-      localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
-      favGamesList.value = favGames;
+      // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
+      // const clickCount = favGames[gameInfo.id]
+      //     ? favGames[gameInfo.id].gameClicked + 1
+      //     : 1;
+      // const lastPlayedAt = moment().unix();
+      // const revisedGameInfo = {
+      //   ...gameInfo,
+      //   gameClicked: clickCount,
+      //   gamePlatformCode: selectedPlat.code,
+      //   lastPlayed: lastPlayedAt
+      // };
+      // gameInfo.gameClicked = clickCount;
+      //
+      // favGames[gameInfo.id] = revisedGameInfo;
+      // localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
+      // favGamesList.value = favGames;
     };
+
 
     const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(
           gameName,
-          gameInfo.gamePlatformCode,
+          gameInfo.platformCode,
           gameCode,
           gameStatus
       );
 
       // gameInfo && console.log(gameInfo);
-      const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
-      const clickCount = favGames[gameInfo.id]
-          ? favGames[gameInfo.id].gameClicked + 1
-          : 1;
-      const lastPlayedAt = moment().unix();
-      const revisedGameInfo = {...gameInfo, gameClicked: clickCount, lastPlayed: lastPlayedAt};
-      gameInfo.gameClicked = clickCount;
-
-      favGames[gameInfo.id] = revisedGameInfo;
-      localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
-      favGamesList.value = favGames;
+      // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
+      // const clickCount = favGames[gameInfo.id]
+      //     ? favGames[gameInfo.id].gameClicked + 1
+      //     : 1;
+      // const lastPlayedAt = moment().unix();
+      // const revisedGameInfo = {...gameInfo, gameClicked: clickCount, lastPlayed: lastPlayedAt};
+      // gameInfo.gameClicked = clickCount;
+      //
+      // favGames[gameInfo.id] = revisedGameInfo;
+      // localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
+      // favGamesList.value = favGames;
     };
 
     const favGamesList = ref([]);
     const sortedFavGamesList = computed(() => {
-      const gamesArray = Object.values(favGamesList.value);
-      return gamesArray.filter((item) => item.gameClicked > 1).sort((a, b) => b.lastPlayed - a.lastPlayed);
+      if (favGamesList.value.length === 0) {
+        return [];
+      }
+      return favGamesList.value.sort((a, b) => a.updateTime - b.updateTime);
     });
 
-    const updateSortedFavGamesList = () => {
-      favGamesList.value = Object.fromEntries(
-          Object.entries(favGamesList.value).sort(([, a], [, b]) => b.lastPlayed - a.lastPlayed)
-      );
-    };
+    // const updateSortedFavGamesList = () => {
+    //   favGamesList.value = Object.fromEntries(
+    //       Object.entries(favGamesList.value).sort(([, a], [, b]) => b.lastPlayed - a.lastPlayed)
+    //   );
+    // };
 
+    const favLists = computed(() => {
+      let lists = [];
+      favGamesList.value.forEach((element) => {
+        lists.push(element.id);
+      });
+      return lists;
+    })
     const getFavGameList = () => {
-      const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
-      favGamesList.value = favGames;
-      updateSortedFavGamesList();
+      // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
+      // favGamesList.value = favGames;
+      // updateSortedFavGamesList();
+
+      api.get("/session/member/fav-games").then((res) => {
+        if (res.data.code === 0) {
+          favGamesList.value = res.data.data;
+
+          favGamesList.value.forEach((element) => {
+            element.default = require("../assets/images/games/aviator/default.png");
+            element.icon = `${
+                process.env.IMAGE_CDN
+            }/game/${siteId}/${element.platformCode.toLowerCase()}/${
+                element.icon
+            }.png`;
+          });
+        }
+      })
     };
 
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
@@ -1433,6 +1490,35 @@ export default defineComponent({
           });
     };
 
+    const toggleFavGame = (gameId, status) => {
+      if (status === true) {
+        api.post("/session/member/fav-games", qs.stringify({gameId: gameId})).then((res) => {
+          console.log(res);
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t('lang.fav_game_added'),
+            icon: "report_problem"
+          });
+          favGamesList.value.push({id: gameId})
+        })
+
+      } else {
+        api.delete("/session/member/fav-games?gameId=" + gameId).then((res) => {
+          console.log(res);
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t('lang.fav_game_removed'),
+            icon: "report_problem"
+          })
+          _.remove(favGamesList.value, {
+            id: gameId
+          });
+        })
+      }
+    }
+
     const onIntersection = (entry) => {
       // if (entry.isIntersecting === true) {
       //   add(entry.target.dataset.id)
@@ -1492,6 +1578,7 @@ export default defineComponent({
     const showFavourite = () => {
       isShow.value = true;
       selectedPlatId.value = -99;
+      getFavGameList();
     };
 
     const showMiniType = ref(0);
@@ -1523,6 +1610,8 @@ export default defineComponent({
       switchMenu,
       gamePage,
       onIntersection,
+      toggleFavGame,
+      favLists,
       isLoading,
       selectedPlat,
       scrollPosition,
@@ -1566,7 +1655,7 @@ export default defineComponent({
       getAppDownloadUrl,
       favGamesList,
       sortedFavGamesList,
-      updateSortedFavGamesList,
+      // updateSortedFavGamesList,
       getFavGameList,
     };
   },
@@ -1627,6 +1716,10 @@ export default defineComponent({
   column-gap: 10px;
   row-gap: 10px;
   width: calc(100% - 20px);
+
+  .inner-slot-game {
+    position: relative;
+  }
 
   .q-list {
     .q-img {
@@ -1801,6 +1894,26 @@ export default defineComponent({
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+.favourite-star {
+  position: absolute;
+  z-index: 10;
+  top: 3px;
+  right: 3px;
+
+
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.2);
+    transform-origin: center;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: scale(1.2);
+    transform-origin: center;
+  }
 }
 
 .game-scroll-lists {
