@@ -125,12 +125,6 @@
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input style="width: 350px" v-model="memberInfoForm.loginName" />
         </el-form-item>
-        <el-form-item :label="t('fields.realName')" prop="realName">
-          <el-input style="width: 350px" v-model="memberInfoForm.realName" />
-        </el-form-item>
-        <el-form-item :label="t('fields.telephone')" prop="telephone">
-          <el-input style="width: 350px" v-model="memberInfoForm.telephone" />
-        </el-form-item>
 
         <div class="dialog-footer">
           <el-button @click="uiControl.memberInfoDialogVisible = false">
@@ -430,8 +424,6 @@ function resetQuery() {
 
 const memberInfoForm = reactive({
   loginName: null,
-  realName: null,
-  telephone: null,
   siteId: null,
 })
 
@@ -442,9 +434,7 @@ const editLogForm = reactive({
 })
 
 const memberInfoFormRules = reactive({
-  loginName: [required(t('message.validateLoginNameRequired'))],
-  realName: [required(t('message.validateRealNameRequired'))],
-  telephone: [required(t('message.validateTelephoneRequired'))],
+  loginName: [required(t('message.validateLoginNameRequired'))]
 })
 
 const editLogFormRules = reactive({
