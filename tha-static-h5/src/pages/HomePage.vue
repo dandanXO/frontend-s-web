@@ -1544,7 +1544,9 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
-      getFavGameList();
+      if(store.hasToken()){
+        getFavGameList();
+      }
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
