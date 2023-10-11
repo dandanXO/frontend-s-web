@@ -1457,6 +1457,7 @@ export default {
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
     DownloadManager: '下载中心',
+    GoogleAuth: "Google 验证中心"
   },
   error: {
     400: '请求无效',

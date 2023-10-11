@@ -14,6 +14,21 @@ export const constantRoutes = [
     redirect: "/member/list"
   },
   {
+    path: "/google-auth",
+    name: "GoogleAuth",
+    component: Layout,
+    meta: {
+      title: 'Google Auth',
+    },
+    children: [
+      {
+        path: "",
+        name: "Auth",
+        component: () => import("../views/auth/google-auth.vue")
+      }
+    ]
+  },
+  {
     path: '/error',
     component: Layout,
     name: 'Error Pages',
