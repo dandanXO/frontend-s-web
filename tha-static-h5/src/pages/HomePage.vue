@@ -1449,10 +1449,10 @@ export default defineComponent({
             `/config/appVersionAndUrl?type=${appType}&device=${device}`
         );
         console.log(res, ">>res");
-        if (res.code === 0) {
-          var version_info = res.data.version;
+        if (res.data.code === 0) {
+          var version_info = res.data.data.version;
           var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
-          download_url.value = res.data.url;
+          download_url.value = res.data.data.url;
 
           // alert(latest_ver_no);
           // console.log(download_url.value);
