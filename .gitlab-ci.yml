@@ -46,7 +46,7 @@ default:
   script:
     - cd $PROJECT
     - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
-    - if [ "$CI_COMMIT_BRANCH" == "dev" ]; then export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$IMAGE_TAG-$CI_COMMIT_REF_NAME-$(date +%s); elif [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$IMAGE_TAG-${CI_COMMIT_REF_NAME/\//-}-$(date +%s); else export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$IMAGE_TAG-${CI_COMMIT_REF_NAME/\//-}-$(date +%s); fi
+    - if [ "$CI_COMMIT_BRANCH" == "dev" ]; then export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$PROJECT-$CI_COMMIT_REF_NAME-$(date +%s); elif [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$PROJECT-${CI_COMMIT_REF_NAME/\//-}-$(date +%s); else export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$PROJECT-${CI_COMMIT_REF_NAME/\//-}-$(date +%s); fi
     - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $IMAGE_FULL_TAG . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
