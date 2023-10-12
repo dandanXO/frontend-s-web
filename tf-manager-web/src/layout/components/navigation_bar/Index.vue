@@ -43,7 +43,7 @@
             </ForgetPasswordModal>
 
             <el-dropdown-item @click="goToGoogleAuth">
-              谷歌验证
+              {{ $t('google.google_auth_menu') }}
             </el-dropdown-item>
 
             <el-dropdown-item
