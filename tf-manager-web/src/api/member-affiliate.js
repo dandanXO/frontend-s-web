@@ -57,6 +57,14 @@ export const updateAffiliatePassword = (id, password, site) => {
   return https().request(`/affiliate/${id}/password?_method=PUT`, Method.POST, { password: password, site: site }, ContentType.form);
 };
 
+export const validPwd2GoogleKey = (password) => {
+  return https().request(`/authority/user/validPwd2GoogleKey?_method=PUT`, Method.POST, { password: password }, ContentType.form);
+};
+
+export const bindGoogleKey = (code) => {
+  return https().request(`/authority/user/bindGoogleKey?_method=PUT`, Method.POST, { code: code }, ContentType.form);
+};
+
 export const updateAffiliateFinancial = (id, financialId, site) => {
   return https().request(`/affiliate/${id}/financialId?_method=PUT`, Method.POST, { financialId: financialId, site: site }, ContentType.form);
 };

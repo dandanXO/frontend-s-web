@@ -63,6 +63,25 @@
         </el-form-item>
       </el-tooltip>
 
+      <el-form-item prop="googlecode" style="margin-bottom:4px;">
+        <span class="svg-container">
+          <i class="el-icon-success" />
+        </span>
+        <el-input
+          ref="googleCodeRef"
+          v-model="loginForm.googleCode"
+          :placeholder="'Google Authenticator Code'"
+          name="googleCode"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+        />
+      </el-form-item>
+
+      <div class="input-hint">
+        <span>*: 若未绑定Google Auth则无需填写</span>
+      </div>
+
       <el-button
         :loading="loading"
         type="primary"
@@ -101,7 +120,8 @@ export default defineComponent({
     const state = reactive({
       loginForm: {
         userName: "",
-        password: ""
+        password: "",
+        googleCode: ""
       },
       loginRules: {
         username: [{ validator: userNameRef, trigger: "blur" }],
@@ -288,6 +308,17 @@ export default defineComponent({
         margin-right: 16px;
       }
     }
+  }
+
+  .el-input-group__append{
+    background:  transparent;
+  }
+
+  .input-hint{
+    padding-left: 30px;
+    margin-bottom: 15px;
+    background: transparent;
+    color: #E35050;
   }
 
   .svg-container {
