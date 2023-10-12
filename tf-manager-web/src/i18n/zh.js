@@ -1497,9 +1497,7 @@ export default {
     auth_code: "身份验证码",
     bind_now: "立即绑定",
     please_enter_password: "请输入您的密码",
-    added_success: "谷歌验证码成功添加。",
-    if_not_google_auth_then: "若未绑定Google Authenticator 则无需填写",
-    google_auth_code: "请输入6位数谷歌验证码"
+    added_success: "谷歌验证码成功添加。"
   },
   error: {
     400: '请求无效',

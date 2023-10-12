@@ -1515,9 +1515,7 @@ export default {
     auth_code: "Google Authenticator",
     bind_now: "Bind Now",
     please_enter_password: "Please enter your password",
-    added_success: "Google Authenticator code added successfully",
-    if_not_google_auth_then: "If you haven't bound Google Authenticator, there's no need to fill it out.",
-    google_auth_code: "Enter 6 digits Google Authenticator Code"
+    added_success: "Google Authenticator code added successfully"
   },
   error: {
     400: 'Bad Request',

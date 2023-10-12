@@ -70,7 +70,7 @@
         <el-input
           ref="googleCodeRef"
           v-model="loginForm.googleCode"
-          :placeholder="$t('google.google_auth_code')"
+          :placeholder="'Google Authenticator Code'"
           name="googleCode"
           type="text"
           tabindex="1"
@@ -79,7 +79,7 @@
       </el-form-item>
 
       <div class="input-hint">
-        <span>*: {{ $t('google.if_not_google_auth_then') }}</span>
+        <span>*: 若未绑定Google Auth则无需填写</span>
       </div>
 
       <el-button
