@@ -80,8 +80,8 @@ async function loadReferralLink() {
     link.value = "https://www.dy1698.com/agent/" + affInfo.affiliateCode;
     appLink.value = "https://www.dy1698.com/app/agent/" + affInfo.affiliateCode;
   } else if (store.state.user.siteId === 3 || store.state.user.siteId === "3") {
-    link.value = "https://jo88.cc/agent/" + affInfo.affiliateCode;
-    appLink.value = "https://jo88.cc/app/agent/" + affInfo.affiliateCode;
+    link.value = "https://www.jolly8858.com/agent/" + affInfo.affiliateCode;
+    appLink.value = "https://www.jolly8858.com/app/agent/" + affInfo.affiliateCode;
   } else {
     link.value = "";
     appLink.value = "";

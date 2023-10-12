@@ -858,7 +858,7 @@ async function loadReferralLink() {
   } else if (memberDetail.siteId === '2') {
     link.value = "https://www.dy1698.com/agent/" + affiliateDetails.affiliateCode;
   } else if (memberDetail.siteId === '3') {
-    link.value = "https://jo88.cc/agent/" + affiliateDetails.affiliateCode;
+    link.value = "https://www.jolly8858.com/agent/" + affiliateDetails.affiliateCode;
   } else {
     link.value = "";
   }
