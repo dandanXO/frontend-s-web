@@ -36,10 +36,10 @@ default:
    expire_in: 24 hrs
    exclude:
      - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
-      changes:
-        - $PROJECT/**/*
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+#      changes:
+#        - $PROJECT/**/*
 
 .docker-build:
   stage: build-image
@@ -50,21 +50,21 @@ default:
     - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $IMAGE_FULL_TAG . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
-      changes:
-        - $PROJECT/**/*
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+#      changes:
+#        - $PROJECT/**/*
 
-.s3-deploy:
-  stage: deploy
-  image: amazon/aws-cli
-  script:
-    - if [ "$CI_COMMIT_BRANCH" == "dev" ] || [ "$CI_COMMIT_BRANCH" == "staging" ]; then export BUCKET=p8s1-$CI_COMMIT_BRANCH-$PROJECT; else export BUCKET=p8s1-$PROJECT; fi
-    - aws s3 sync $PROJECT s3://$BUCKET
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
-      changes:
-        - $PROJECT/**/*
+#.s3-deploy:
+#  stage: deploy
+#  image: amazon/aws-cli
+#  script:
+#    - if [ "$CI_COMMIT_BRANCH" == "dev" ] || [ "$CI_COMMIT_BRANCH" == "staging" ]; then export BUCKET=p8s1-$CI_COMMIT_BRANCH-$PROJECT; else export BUCKET=p8s1-$PROJECT; fi
+#    - aws s3 sync $PROJECT s3://$BUCKET
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+#      changes:
+#        - $PROJECT/**/*
 
 stages:
   - build
