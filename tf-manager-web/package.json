@@ -44,6 +44,7 @@
     "qrcode.vue": "^3.3.3",
     "reflect-metadata": "^0.1.13",
     "sortablejs": "^1.13.0",
+    "speakeasy": "^2.0.0",
     "vue": "^3.2.4",
     "vue-class-component": "^8.0.0-0",
     "vue-element-loading": "^2.0.2",

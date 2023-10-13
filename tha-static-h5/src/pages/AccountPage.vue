@@ -93,14 +93,18 @@
       </q-card>
     </router-link>
 
-    <!--    <router-link to="/account/mail">-->
-    <!--      <q-card class="acct-nav-item">-->
-    <!--        <RiMailLine/>-->
-    <!--        <div class="acct-nav-label mailnav"><span>กล่องจดหมาย</span>-->
-    <!--          <q-chip style="margin: 0;" color="red">{{ unreadNumber }}</q-chip>-->
-    <!--        </div>-->
-    <!--      </q-card>-->
-    <!--    </router-link>-->
+    <router-link to="/account/mail">
+      <q-card class="acct-nav-item"
+              :class="route.path === '/account/mail' ? 'active-class' : '' "
+      >
+        <RiMailLine/>
+        <div class="acct-nav-label mailnav">
+          <span>{{ $t('lang.mail_header') }}</span>
+          <q-chip style="margin: 0;" color="red">{{ unreadNumber }}</q-chip>
+        </div>
+      </q-card>
+    </router-link>
+
     <router-link to="/affiliate">
       <q-card class="acct-nav-item"
               :class="route.path === '/affiliate' ? 'active-class' : '' "
@@ -139,6 +143,12 @@
     </a>
   </q-item-section>
 
+  <div class="version-text text-right"
+       v-if="isH5()"
+       style="margin-right: 10px;">
+    App Version: {{ versionNo }}
+  </div>
+
 </template>
 
 <script>
@@ -163,7 +173,7 @@ import {useUI} from "stores/ui";
 import {useI18n} from "vue-i18n";
 import {storeToRefs} from "pinia";
 import {i18nStore} from "src/router/language";
-import {isH5} from "../boot/utils"
+import {isH5} from "boot/utils"
 
 export default defineComponent({
   name: "AccountPage",
@@ -175,7 +185,7 @@ export default defineComponent({
     RiBankLine,
     RiCoinsLine,
     RiTabletLine,
-    // RiMailLine,
+    RiMailLine,
     // RiVipCrown2Line,
     RiShareBoxLine,
     RiTeamLine,
@@ -193,8 +203,9 @@ export default defineComponent({
       });
     };
 
-
-    // console.log(route);
+    const versionNo = computed(() => {
+      return ui.appVersion;
+    });
 
     const unreadNumber = computed(() => {
       return store.unreadCount
@@ -204,11 +215,13 @@ export default defineComponent({
     });
 
     const mainWallet = computed(() => {
-      return store.currency.value + ' ' + store.balance;
+      const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
+      return store.currency.value + ' ' + balanceWithTwoDecimalPlaces;
     });
+
     onMounted(() => {
       getBalance()
-      store.getBalance()
+      // store.getBalance()
       store.getUnreadTotal()
     });
 
@@ -223,7 +236,18 @@ export default defineComponent({
     const {setLanguage} = i18nStore()
     watch(languageVal, (newVal) => {
       setLanguage(languageVal.value);
-    })
+
+      checkRefresh();
+    });
+
+    const refreshPages = ['/vip', '/account/transit'];
+    const checkRefresh = () => {
+      // console.log(route.path);
+      if (refreshPages.indexOf(route.path) > -1) {
+        location.reload()
+      }
+    }
+
     const langOptions = [
       {
         label: 'ไทย',
@@ -253,7 +277,8 @@ export default defineComponent({
       unreadNumber,
       languageVal,
       langOptions,
-      isH5
+      isH5,
+      versionNo
     };
   }
 });

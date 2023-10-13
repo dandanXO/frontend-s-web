@@ -8,7 +8,7 @@
       </template>
       <div class="inputs-wrap">
         <el-date-picker
-          v-model="request.lastLoginTime"
+          v-model="request.regTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
@@ -115,12 +115,12 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="lastLoginTime" :label="t('fields.lastLoginTime')" align="center" min-width="150">
+        <el-table-column prop="regTime" :label="t('fields.regTime')" align="center" min-width="150">
           <template #default="scope">
-            <span v-if="scope.row.lastLoginTime === null">-</span>
+            <span v-if="scope.row.regTime === null">-</span>
             <span
-              v-if="scope.row.lastLoginTime !== null"
-              v-formatter="{data: scope.row.lastLoginTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-if="scope.row.regTime !== null"
+              v-formatter="{data: scope.row.regTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -259,7 +259,9 @@ const affiliateLevel = ref(null);
 
 const site = ref(null);
 const affInfo = ref(null);
-const defaultDate = convertDate(new Date());
+const startDate = new Date();
+const defaultStartDate = convertDate(startDate.setTime(moment(startDate).startOf('month').format('x')));
+const defaultEndDate = convertDate(new Date());
 const checkId = ref(null);
 const breadcrumbNameList = ref([]);
 
@@ -323,7 +325,7 @@ const shortcuts = [
 ];
 
 const request = reactive({
-  lastLoginTime: [defaultDate, defaultDate],
+  regTime: [defaultStartDate, defaultEndDate],
   loginName: null,
   size: 20,
   current: 1
@@ -424,7 +426,7 @@ function restrictCommissionDecimalInput(event) {
 }
 
 function resetQuery() {
-  request.lastLoginTime = [defaultDate, defaultDate];
+  request.regTime = [defaultStartDate, defaultEndDate];
   request.loginName = null;
 }
 
@@ -439,9 +441,9 @@ async function loadDownlineAffiliates() {
       }
     });
   }
-  if (request.lastLoginTime !== null) {
-    if (request.lastLoginTime.length === 2) {
-      query.lastLoginTime = request.lastLoginTime.join(",");
+  if (request.regTime !== null) {
+    if (request.regTime.length === 2) {
+      query.regTime = request.regTime.join(",");
     }
   }
   query.siteId = site.value.id;

@@ -1,7 +1,8 @@
 <template>
   <div :class="isLoading ? 'wload deposit' : ''">
     <div class="loading" v-if="isLoading">
-      <TFLoading />
+      <TFLoading v-if="siteId === 1" />
+      <Jolly88Loading v-if="siteId === 3" />
     </div>
     <div v-if="!isLoading">
       <div class="node-wrapper">
@@ -16,7 +17,7 @@
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
         <div class="submit-message">
           <div class="linebox">
-            <span>银行名称：</span>
+            <span>$t('fields.bank')：</span>
             <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
             <button
               @blur="blurCode"
@@ -27,7 +28,7 @@
             </button>
           </div>
           <div class="linebox">
-            <span>银行账号：</span>
+            <span>$t('fields.cardAccount')：</span>
             <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
             <button
               @blur="blurCode"
@@ -38,7 +39,7 @@
             </button>
           </div>
           <div class="linebox">
-            <span>银行卡号：</span>
+            <span>$t('fields.cardNumber')：</span>
             <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
             <button
               @blur="blurCode"
@@ -49,7 +50,7 @@
             </button>
           </div>
           <div class="linebox">
-            <span>存款金额：</span>
+            <span>$t('fields.depositAmount')：</span>
             <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
             <button
               @blur="blurCode"
@@ -71,15 +72,15 @@
           label-suffix=":"
         >
           <el-space>
-            <el-form-item class="helptxt" label="金额" prop="localAmount">
+            <el-form-item class="helptxt" :label="$t('fields.depositAmount')" prop="localAmount">
               <el-input
                 v-if="amountList.length === 0"
                 v-model="form.localAmount"
-                :placeholder="isUSDT ? '输入USDT金额' : '输入存款金额'"
+                :placeholder="isUSDT ? $t('message.inputUSDTAmount') : $t('message.inputAmount')"
               />
 
               <el-select
-                placeholder="选择存款金额"
+                :placeholder="$t('message.selectAmount')"
                 v-else
                 v-model="form.localAmount"
               >
@@ -93,30 +94,30 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              最低存款: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-              {{ isUSDT ? "USDT" : "RMB" }}
+              {{ $t('message.minDepositeAmount') }}: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
+              {{ isUSDT ? "USDT" : (siteId === "3" || siteId === 3 ? "THB" : "RMB") }}
               <br>
-              最高存款:
+              {{ $t('message.maxDepositeAmount') }}:
               {{
                 activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
               }}
-              {{ isUSDT ? "USDT" : "RMB" }}
+              {{ isUSDT ? "USDT" : (siteId === "3" || siteId === 3 ? "THB" : "RMB") }}
             </div>
           </el-space>
 
           <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
             class="helptxt"
-            label="实时汇率"
+            :label="$t('message.currencyRates')"
           >
             <span style="color: #17cd27">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
-              RMB
+              {{ siteId === "3" || siteId === 3 ? "THB" : "RMB" }}
             </span>
           </el-form-item>
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
-            label="银行"
+            :label="$t('fields.bank')"
             prop="bankId"
             name="bankId"
             value="bankName"
@@ -164,7 +165,7 @@
               @click="confirmDeposit"
               class="common-btn"
             >
-              确定
+              {{ $t('fields.confirm') }}
             </el-button>
           </div>
         </el-form>
@@ -200,12 +201,14 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
+import Jolly88Loading from "@/components/loading/Jolly88Loading.vue";
 import { useRouter } from "vue-router";
 import { doIt } from "@/utils/action";
 import { useStore } from "@/store";
 const router = useRouter();
 const loadingBtn = ref(false);
 const store = useStore();
+const siteId = store.state.user.siteId;
 const formRef = ref();
 const isDeposited = ref(false);
 const isLoading = ref(true);

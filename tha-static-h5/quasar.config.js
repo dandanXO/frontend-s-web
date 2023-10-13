@@ -198,8 +198,6 @@ module.exports = configure(function (ctx) {
       hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
       appName: 'Jolly88', // string
-      // (Optional) If not present, will look for package.json > version
-      version: '1.0.2', // string
       // (Optional) If not present, will look for package.json > description
       description: 'Jolly88 App', // string
     },

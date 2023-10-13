@@ -167,6 +167,7 @@ export default {
     operationalData: "Operational Data",
     password: "Password",
     paymentFee: "Payment Fee",
+    paymentMethod: "Payment Method",
     paymentName: "Payment Name",
     payout: "Payout",
     personal: "Personal",
@@ -310,7 +311,17 @@ export default {
     validateNumberMoreThanOne: 'Please enter number more than 1',
     validateRevenueShare: "Revenue Share must be between 0 to 1",
     validateUsdtWallet: "Only alphabet and number is accepted for USDT wallet",
-    withdrawalToday: "Withdrawal Today"
+    withdrawalToday: "Withdrawal Today",
+    inputUSDTAmount: "Please input USDT amount",
+    inputAmount: "Please input amount",
+    selectAmount: "Please select amount",
+    minDepositeAmount: "Minimum deposit",
+    maxDepositeAmount: "Maximum deposit",
+    currencyRates: "currency rates",
+    understand: "understand",
+    DepositCompleted: "Completed",
+    depositNotification1: "You will be redirected to your bank's page to complete the deposit.",
+    depositNotification2: "If successful, you will receive a notification on this page."
   },
   menu: {
     undefined: "",

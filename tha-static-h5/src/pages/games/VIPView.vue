@@ -7,24 +7,16 @@
         </div>
       </div>
 
-      <q-carousel
-        class="vip bg-transparent"
-        animated
-        v-model="slide"
-        no-arrows
-        infinite
-        swipeable
-      >
-        <q-carousel-slide
-          v-for="(vip, vipIndex) in vipItems"
-          :key="vipIndex"
-          :name="vipIndex"
-        >
-          <div class="carousel__item">
-            <div class="vipitem" :class="'vipitem-' + vip.vipGrade">
+      <div v-for="(vip, vipIndex) in vipItems" :key="vipIndex" :name="vipIndex">
+        <div class="carousel__item">
+          <template v-if="vipGrade === vip.vipGrade">
+            <div
+              class="vipitem"
+              :class="'vipitem-' + vip.vipGrade.toLowerCase()"
+            >
               <div class="vipcontents">
                 <div class="vip-title">{{ vip.vipGrade }}</div>
-                <div class="inner-vip">
+                <div class="inner-vip" v-if="vip.vipGrade == 'Bronze'">
                   <div class="txt-inner pt-40">
                     <div class="txt-inner-title">{{ $t("lang.upgrade") }}</div>
                   </div>
@@ -34,40 +26,59 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="inner-vip">
+                <div class="inner-vip" v-else>
                   <div class="txt-inner pt-10">
-                    <div class="txt-inner-title">升级</div>
+                    <div class="txt-inner-title">
+                      {{ $t("lang.upgrade") }}
+                    </div>
                   </div>
                   <div class="txt-inner">
-                    <div class="txt-inner-content">累计存款 5,000</div>
-                    <div class="txt-inner-content">营业额要求 5,000</div>
+                    <div class="txt-inner-content-full">
+                      {{ $t("lang.upgrade") }} {{ vip.upgrade }}
+                    </div>
                   </div>
 
                   <div class="txt-inner pt-20">
-                    <div class="txt-inner-title">升级</div>
+                    <div class="txt-inner-content">
+                      {{ $t("lang.monthly_bonus") }} <br />{{ vip.monthly }}
+                    </div>
+
+                    <div class="txt-inner-content">
+                      {{ $t("lang.birthday_bonus") }} <br />{{ vip.birthday }}
+                    </div>
                   </div>
-                  <div class="txt-inner">
-                    <div class="txt-inner-content">累计存款 5,000</div>
-                    <div class="txt-inner-content">营业额要求 5,000</div>
-                  </div>
-                </div> -->
+                </div>
               </div>
             </div>
-          </div>
-        </q-carousel-slide>
-      </q-carousel>
+          </template>
+        </div>
+      </div>
 
       <div class="content-container">
-        <div class="content-txt-title">{{ $t("lang.accumulated_deposits") }}</div>
-        <div class="content-txt-value">
-          <div class="content-txt-num">0/500,000</div>
-          <div class="content-txt-num">0.00%</div>
+        <div class="content-txt-title">
+          {{ $t("lang.accumulated_deposits") }}
         </div>
-        <div class="content-txt-title">{{ $t("lang.turnover_requirements") }}</div>
+        <div class="content-txt-value">
+          <div class="content-txt-num">
+            {{ formatAmount(vipAccumulatedDepositsCurrent) }} /
+            {{ formatAmount(vipAccumulatedDeposits) }}
+          </div>
+          <div class="content-txt-num">
+            {{
+              vipAccumulatedDeposits === 0
+                ? (
+                    (vipAccumulatedDepositsCurrent / vipAccumulatedDeposits) *
+                    100
+                  ).toFixed(2)
+                : 0
+            }}%
+          </div>
+        </div>
+        <!-- <div class="content-txt-title">{{ $t("lang.turnover_requirements") }}</div>
         <div class="content-txt-value">
           <div class="content-txt-num">0/6,000</div>
           <div class="content-txt-num">0.00%</div>
-        </div>
+        </div> -->
       </div>
 
       <div class="vip-lower-wrap">
@@ -78,12 +89,17 @@
             :name="vipIndex"
           >
             <div class="vip__item">
-              <div class="vipitem" :class="'vipitem-' + vip.vipGrade">
+              <div
+                class="vipitem"
+                :class="'vipitem-' + vip.vipGrade.toLowerCase()"
+              >
                 <div class="vipcontents">
                   <div class="vip-title">{{ vip.vipGrade }}</div>
                   <div class="inner-vip">
                     <div class="txt-inner pt-10">
-                      <div class="txt-inner-title">{{ $t("lang.upgrade") }}</div>
+                      <div class="txt-inner-title">
+                        {{ $t("lang.upgrade") }}
+                      </div>
                     </div>
                     <div class="txt-inner">
                       <div class="txt-inner-content-full">
@@ -97,7 +113,7 @@
                       </div>
 
                       <div class="txt-inner-content">
-                        โบนัสวันเกิด <br />{{ vip.birthday }}
+                        {{ $t("lang.birthday_bonus") }} <br />{{ vip.birthday }}
                       </div>
                     </div>
                   </div>
@@ -176,24 +192,40 @@
 </template>
 
 <script>
-import { ref, defineComponent, onMounted } from "vue";
+import { ref, defineComponent, onMounted, computed } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import {useI18n} from "vue-i18n";
-
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "TransitRecordView",
   setup() {
     const $q = useQuasar();
-    const {t} = useI18n();
+    const { t } = useI18n();
 
     const slide = ref(0);
     const showRebate = ref(false);
 
     const store = userStore();
     const vipLevel = ref("");
+    // const vipGrade = ref("");
+    const vipGrade = computed(() => {
+      return store.vip;
+    });
+
+    const vipAccumulatedDeposits = computed(() => {
+      return store.levelUpDeposit;
+    });
+
+    const vipAccumulatedDepositsCurrent = computed(() => {
+      return store.currentDeposit;
+    });
+
+    // const vipAccumulatedDeposits = ref(0);
+    // const vipAccumulatedDepositsCurrent = ref(0);
+    const vipTurnoverRequirements = ref(0);
+
     const loading = ref(false);
     const loadingMClaim = ref(false);
     const loadingBClaim = ref(false);
@@ -412,225 +444,225 @@ export default defineComponent({
     ];
     const terms = [
       {
-        text: t('lang.vip_tnc_para_1'),
+        text: t("lang.vip_tnc_para_1"),
       },
       {
-        text: t('lang.vip_tnc_para_2'),
+        text: t("lang.vip_tnc_para_2"),
       },
       {
-       text: t('lang.vip_tnc_para_3'),
+        text: t("lang.vip_tnc_para_3"),
       },
       {
-        text: t('lang.vip_tnc_para_4'),
+        text: t("lang.vip_tnc_para_4"),
       },
       {
-        text: t('lang.vip_tnc_para_5'),
+        text: t("lang.vip_tnc_para_5"),
       },
       {
-        text: t('lang.vip_tnc_para_6'),
+        text: t("lang.vip_tnc_para_6"),
       },
       {
-        text: t('lang.vip_tnc_para_7'),
+        text: t("lang.vip_tnc_para_7"),
       },
       {
-        text: t('lang.vip_tnc_para_8'),
+        text: t("lang.vip_tnc_para_8"),
       },
     ];
     const vipItems = [
       {
         vipLevel: "1",
-        vipGrade: "classic",
-        upgrade: t('lang.first_successful_deposit'),
+        vipGrade: "Bronze",
+        upgrade: t("lang.first_successful_deposit"),
         monthly: "0",
         birthday: "0",
         rebates: [
           {
-            rebateName: t('lang.slots_rebate'),
+            rebateName: t("lang.slots_rebate"),
             rebateValue: "0.40%",
           },
           {
-            rebateName: t('lang.fishing_rebate'),
+            rebateName: t("lang.fishing_rebate"),
             rebateValue: "0.40%",
           },
           {
-            rebateName: t('lang.live_casino_rebate'),
+            rebateName: t("lang.live_casino_rebate"),
             rebateValue: "0.40%",
           },
           {
-            rebateName: t('lang.poker_rebate'),
+            rebateName: t("lang.poker_rebate"),
             rebateValue: "0.40%",
           },
           {
-            rebateName: t('lang.sport_esports_rebate'),
+            rebateName: t("lang.sport_esports_rebate"),
             rebateValue: "0.20%",
           },
           {
-            rebateName: t('lang.lottery_rebate'),
+            rebateName: t("lang.lottery_rebate"),
             rebateValue: "0.30%",
           },
         ],
       },
       {
         vipLevel: "2",
-        vipGrade: "silver",
+        vipGrade: "Silver",
         upgrade: "500,000",
         monthly: "688",
         birthday: "888",
         rebates: [
           {
-            rebateName: t('lang.slots_rebate'),
+            rebateName: t("lang.slots_rebate"),
             rebateValue: "0.45%",
           },
           {
-            rebateName: t('lang.fishing_rebate'),
+            rebateName: t("lang.fishing_rebate"),
             rebateValue: "0.45%",
           },
           {
-            rebateName: t('lang.live_casino_rebate'),
+            rebateName: t("lang.live_casino_rebate"),
             rebateValue: "0.45%",
           },
           {
-            rebateName: t('lang.poker_rebate'),
+            rebateName: t("lang.poker_rebate"),
             rebateValue: "0.45%",
           },
           {
-            rebateName: t('lang.sport_esports_rebate'),
+            rebateName: t("lang.sport_esports_rebate"),
             rebateValue: "0.30%",
           },
           {
-            rebateName: t('lang.lottery_rebate'),
+            rebateName: t("lang.lottery_rebate"),
             rebateValue: "0.30%",
           },
         ],
       },
       {
         vipLevel: "3",
-        vipGrade: "gold",
+        vipGrade: "Gold",
         upgrade: "1,500,000",
         monthly: "1,588",
         birthday: "2,888",
         rebates: [
           {
-            rebateName: t('lang.slots_rebate'),
+            rebateName: t("lang.slots_rebate"),
             rebateValue: "0.50%",
           },
           {
-            rebateName: t('lang.fishing_rebate'),
+            rebateName: t("lang.fishing_rebate"),
             rebateValue: "0.50%",
           },
           {
-            rebateName: t('lang.live_casino_rebate'),
+            rebateName: t("lang.live_casino_rebate"),
             rebateValue: "0.50%",
           },
           {
-            rebateName: t('lang.poker_rebate'),
+            rebateName: t("lang.poker_rebate"),
             rebateValue: "0.50%",
           },
           {
-            rebateName: t('lang.sport_esports_rebate'),
+            rebateName: t("lang.sport_esports_rebate"),
             rebateValue: "0.35%",
           },
           {
-            rebateName: t('lang.lottery_rebate'),
+            rebateName: t("lang.lottery_rebate"),
             rebateValue: "0.40%",
           },
         ],
       },
       {
         vipLevel: "4",
-        vipGrade: "platinium",
+        vipGrade: "Platinium",
         upgrade: "3,500,000",
         monthly: "2,888",
         birthday: "5,888",
         rebates: [
           {
-            rebateName: t('lang.slots_rebate'),
+            rebateName: t("lang.slots_rebate"),
             rebateValue: "0.60%",
           },
           {
-            rebateName: t('lang.fishing_rebate'),
+            rebateName: t("lang.fishing_rebate"),
             rebateValue: "0.60%",
           },
           {
-            rebateName: t('lang.live_casino_rebate'),
+            rebateName: t("lang.live_casino_rebate"),
             rebateValue: "0.60%",
           },
           {
-            rebateName: t('lang.poker_rebate'),
+            rebateName: t("lang.poker_rebate"),
             rebateValue: "0.60%",
           },
           {
-            rebateName: t('lang.sport_esports_rebate'),
+            rebateName: t("lang.sport_esports_rebate"),
             rebateValue: "0.40%",
           },
           {
-            rebateName: t('lang.lottery_rebate'),
+            rebateName: t("lang.lottery_rebate"),
             rebateValue: "0.40%",
           },
         ],
       },
       {
         vipLevel: "5",
-        vipGrade: "diamond",
+        vipGrade: "Diamond",
         upgrade: "7,000,000",
         monthly: "6,888",
         birthday: "8,888",
         rebates: [
           {
-            rebateName: t('lang.slots_rebate'),
+            rebateName: t("lang.slots_rebate"),
             rebateValue: "0.80%",
           },
           {
-            rebateName: t('lang.fishing_rebate'),
+            rebateName: t("lang.fishing_rebate"),
             rebateValue: "0.70%",
           },
           {
-            rebateName: t('lang.live_casino_rebate'),
+            rebateName: t("lang.live_casino_rebate"),
             rebateValue: "0.70%",
           },
           {
-            rebateName: t('lang.poker_rebate'),
+            rebateName: t("lang.poker_rebate"),
             rebateValue: "0.70%",
           },
           {
-            rebateName: t('lang.sport_esports_rebate'),
+            rebateName: t("lang.sport_esports_rebate"),
             rebateValue: "0.45%",
           },
           {
-            rebateName: t('lang.lottery_rebate'),
+            rebateName: t("lang.lottery_rebate"),
             rebateValue: "0.50%",
           },
         ],
       },
       {
         vipLevel: "6",
-        vipGrade: "ruby",
+        vipGrade: "Ruby",
         upgrade: "20,000,000",
         monthly: "18,888",
         birthday: "48,888",
         rebates: [
           {
-            rebateName: t('lang.slots_rebate'),
+            rebateName: t("lang.slots_rebate"),
             rebateValue: "1.00%",
           },
           {
-            rebateName: t('lang.fishing_rebate'),
+            rebateName: t("lang.fishing_rebate"),
             rebateValue: "0.80%",
           },
           {
-            rebateName: t('lang.live_casino_rebate'),
+            rebateName: t("lang.live_casino_rebate"),
             rebateValue: "0.80%",
           },
           {
-            rebateName: t('lang.poker_rebate'),
+            rebateName: t("lang.poker_rebate"),
             rebateValue: "0.80%",
           },
           {
-            rebateName: t('lang.sport_esports_rebate'),
+            rebateName: t("lang.sport_esports_rebate"),
             rebateValue: "0.55%",
           },
           {
-            rebateName: t('lang.lottery_rebate'),
+            rebateName: t("lang.lottery_rebate"),
             rebateValue: "0.50%",
           },
         ],
@@ -640,8 +672,14 @@ export default defineComponent({
     const isClaimModal = ref(false);
     const claimMsg = ref("");
 
+    const formatAmount = (num) => {
+      return Math.floor(num)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
     onMounted(() => {
-      vipLevel.value = store.vip.replace("VIP", "");
+      // console.log(store);
     });
 
     const claimRebate = (type, vipType) => {
@@ -711,6 +749,7 @@ export default defineComponent({
       vipItems,
       loading,
       vipLevel,
+      vipGrade,
       slide,
       claimRebate,
       store,
@@ -718,6 +757,10 @@ export default defineComponent({
       claimMsg,
       loadingMClaim,
       loadingBClaim,
+      vipAccumulatedDeposits,
+      vipAccumulatedDepositsCurrent,
+      vipTurnoverRequirements,
+      formatAmount,
     };
   },
 });
@@ -779,7 +822,7 @@ export default defineComponent({
   padding-top: 30px;
 
   .vip-headline {
-    color: #e2a4ff;
+    color: $header-color;
     font-size: 28px;
   }
 
@@ -810,6 +853,11 @@ export default defineComponent({
 
     &.vipitem-classic {
       background: url("../../assets/vip/vip-sec-classic.png") no-repeat top
+        center;
+    }
+
+    &.vipitem-bronze {
+      background: url("../../assets/vip/vip-sec-bronze.png") no-repeat top
         center;
     }
 
@@ -955,7 +1003,7 @@ export default defineComponent({
         background: transparent;
 
         &.active {
-          background-image: linear-gradient(to right, #de4545, #db7e42);
+          background-image: $linear-bg-red;
         }
       }
     }
@@ -1263,7 +1311,7 @@ export default defineComponent({
         }
 
         .value {
-          background: #2b2b4b;
+          background: $dark-old;
           color: #ffffff;
           margin: 20px 0 0;
           font-family: Wave;

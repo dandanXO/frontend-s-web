@@ -364,7 +364,7 @@ export default defineComponent({
     };
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://p8s1-files.s3.ap-northeast-1.amazonaws.com/order/1/${linkId}`;
+      reminderForm.photos = `https://file.rd7etvkrgt.com/order/1/${linkId}`;
     };
 
     const submitReminder = () => {

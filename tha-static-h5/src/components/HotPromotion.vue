@@ -142,9 +142,10 @@
 
       </div>
     </div>
-    <ClaimPromo v-if="isCommonPromo && store.hasToken()" :promo-id="list.id" :loading-claim="btnLoading" @daily-slot="handleSlot()" />
+    <ClaimPromo v-if="isCommonPromo && store.hasToken()" :promo-id="list.id"
+                :loading-claim="btnLoading" @daily-slot="handleSlot()" />
     <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" />
-    <InviteFriendPromo v-if="list.id === 35 && !isCommonPromo" class="promo-invt" />
+<!--    <InviteFriendPromo v-if="list.id === 80 && !isCommonPromo" class="promo-invt" />-->
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -176,6 +177,7 @@ import moment from "moment"
 import ClaimPromo from "../components/hotpromo/claimPromo.vue"
 import SJBPromo from "../components/hotpromo/40/shiJieBei.vue"
 import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue"
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "HotPromo",
@@ -184,7 +186,7 @@ export default defineComponent({
   components: {
     ClaimPromo,
     SJBPromo,
-    InviteFriendPromo
+    // InviteFriendPromo
   },
   props: {
     list: {
@@ -199,43 +201,6 @@ export default defineComponent({
       isCommonPromo: null,
       activeKey: "1",
       hotPromoList: [
-        // {
-        //   id: 19,
-        //   bg: require("../assets/images/promotion/hotpromo/19/bg.png"),
-        //   contents:
-        //     "*The rebate bonus needs 1 times rollover before withdrawing and will be returned if not used within 30 days."
-        // },
-        // {
-        //   id: 20,
-        //   bg: require("../assets/images/promotion/hotpromo/20/bg.png"),
-        //   contents: "Hello hello"
-        // },
-        // {
-        //   id: 21,
-        //   bg: "",
-        //   contents: "Hello hello"
-        // },
-        // {
-        //   id: 22,
-        //   bg: require("../assets/images/promotion/hotpromo/22/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // },
-        // {
-        //   id: 23,
-        //   bg: require("../assets/images/promotion/hotpromo/23/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // },
-        // {
-        //   id: 24,
-        //   bg: require("../assets/images/promotion/hotpromo/24/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // }
       ],
       selectedHotPromo: {
         id: "",
@@ -293,6 +258,7 @@ export default defineComponent({
     const store = userStore();
     var qs = require("qs");
 
+    const {t} = useI18n();
     const lucky_number = ref('');
     const loading = ref(false);
     const btnLoading = ref(false);
@@ -459,7 +425,7 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: "ส่งหมายเลข",
+                message: t('lang.number_sent'),
                 icon: "check_circle_outline"
               });
 
@@ -527,6 +493,11 @@ export default defineComponent({
     text-align: center;
     padding: 20px;
 
+    > img{
+      max-width: 250px;
+      margin: auto;
+    }
+
     .extra-img {
       position: absolute;
       right: 100px;
@@ -587,7 +558,7 @@ export default defineComponent({
     .ant-tabs-nav .ant-tabs-tab {
       padding: 10px 48px;
       margin: 10px 5px 20px;
-      color: #ffffff;
+      color: $white;
       font-size: 16px;
       border-radius: 10px;
       border: 1px solid #db7e42;
@@ -596,7 +567,7 @@ export default defineComponent({
       text-align: center;
 
       &-active {
-        background-image: linear-gradient(to right, #de4545, #db7e42);
+        background-image: $linear-bg-red;
       }
     }
 
@@ -623,7 +594,7 @@ export default defineComponent({
 
     .ant-table-thead > tr > th,
     .ant-table-placeholder {
-      color: #ffffff;
+      color: $white;
       background-color: #23263c;
       border: 0;
     }
@@ -740,7 +711,7 @@ export default defineComponent({
 
   .q-btn__content {
     color: #fff;
-    background-image: linear-gradient(to right, #de4545, #db7e42) !important;
+    background-image: $linear-bg-red !important;
     width: 80px;
     border-radius: 5px;
     -moz-border-radius: 5px;

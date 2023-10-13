@@ -2,19 +2,23 @@
   <div class="common-promo">
     <img :src="require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)" />
     <div class="contents">
-      โบนัสจะถูกเพิ่มเข้าไปในกระเป๋าเงินของคุณหลังจากทํารายการสําเร็จ
+      <div v-if="promoId===75">{{ $t('lang.register_bonus_will_be_added_once') }}</div>
+      <div v-else-if="promoId===80">{{ $t('lang.refer_bonus_will_be_added_once') }}</div>
+      <div v-else-if="promoId===79">{{ $t('lang.insurance_bonus_will_be_added_once') }}</div>
+      <div v-else>{{ $t('lang.bonus_will_be_added_to_u') }}</div>
+
       <q-btn
         class="claim-btn"
         :loading="loadingClaim"
         @click="$emit('daily-slot')"
         >{{
           promoId === 50 || promoId === 48
-            ? "เคลมเครดิตฟรี"
-            : "เคลมเงินคืนประจำวัน"
+            ? $t('lang.claim_bonus')
+            : $t('lang.claim')
         }}</q-btn
       >
     <div v-if="promoId === 32" class="orange">
-      *โบนัสเงินคืนต้องทำ 1 เทิร์นก่อนถอนและจะถูกริบคืนหากไม่ได้ใช้ภายใน 30 วัน
+      *{{ $t('lang.cash_must_wagered_1_tme_before_withdrawal') }}
     </div>
     <div v-if="promoId === 27" class="extra-img">
       <img src="../../assets/images/promotion/hotpromo/common/extra.png" />
@@ -24,6 +28,7 @@
 </template>
 <script>
 import { defineComponent, onMounted } from "vue";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   props: {
@@ -38,9 +43,11 @@ export default defineComponent({
   },
   emits: ["daily-slot"],
   setup() {
+    const {t}= useI18n()
     onMounted(() => {
     })
     return {
+      t
     }
   },
 })

@@ -37,7 +37,7 @@
                   {{ store.state.user.realName }}
                 </span>
                 <span v-if="store.state.user.realName === 'null' || store.state.user.realName === 'undefined' || !store.state.user.realName" class="card-panel-num">
-                  <el-form ref="editForm" :model="eForm" :rules="eFormRules" :inline="true" size="mini">
+                  <el-form ref="editForm" :model="eForm" :inline="true" size="mini">
                     <el-form-item prop="realName">
                       <el-row>
                         <el-input v-model="eForm.realName" maxlength="50" size="mini" />
@@ -445,10 +445,6 @@ const affInfo = reactive({
 
 const eForm = reactive({
   realName: null
-});
-
-const eFormRules = reactive({
-  realName: [required(t('message.requiredRealName')), { pattern: '^([\u4e00-\u9fa5]*)$', message: t('message.inputChineseCharacters'), trigger: 'change' }]
 });
 
 const pwForm = reactive({

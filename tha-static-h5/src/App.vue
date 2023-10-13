@@ -55,8 +55,10 @@ export default defineComponent({
       csclient = new CsClient('5', regDevice, 'th', '2', 'prod');
 
       csclient.set('pageurl', '/liveChat');
+      csclient.set("btnid", "cs-web-id");
       csclient.set('notification-type', {
-        "type": "none"
+        "type": "breathing",
+        "color": "#FB4BFF",
       });
 
       if (store.token) {
@@ -99,9 +101,14 @@ export default defineComponent({
     //   });
     // };
 
+    const initStorage = () => {
+      localStorage.removeItem("LINE_STICKY_OFF")
+    }
+
     onMounted(() => {
       checkSID()
       initCsWeb();
+      initStorage();
       // getCSA();
     })
   }

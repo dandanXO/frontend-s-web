@@ -106,7 +106,7 @@ $loadingwidth: 300px;
   .txt {
     display: block;
     font-size: 30px;
-    color: #ffffff;
+    color: $white;
   }
   display: flex;
   flex-direction: column;

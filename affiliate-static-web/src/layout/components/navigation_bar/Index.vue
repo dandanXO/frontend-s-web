@@ -68,6 +68,7 @@ import { AppActionTypes } from "@/store/modules/app/action-types";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "@/store/language";
+import { useRouter } from 'vue-router';
 
 export default {
   components: {
@@ -76,6 +77,7 @@ export default {
     ForgetPasswordModal
   },
   setup() {
+    const router = useRouter();
     const store = useStore();
     const sidebar = computed(() => {
       return store.state.app.sidebar;
@@ -94,8 +96,13 @@ export default {
         store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false);
       },
       logout: async () => {
+        const siteId = store.state.user.siteId;
         await store.dispatch(UserActionTypes.ACTION_LOGOUT);
-        location.reload();
+        if (siteId === "3" || siteId === 3) {
+          router.push("/th/login")
+        } else {
+          location.reload();
+        }
       }
     });
     const i18nStoreLanguage = i18nStore();

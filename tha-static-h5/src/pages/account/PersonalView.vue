@@ -1,82 +1,98 @@
 <template>
-
   <div class="main-section">
     <div class="personal-wrapper">
-
       <div class="personal-section">
-
         <div class="personal-top-tabs">
-          <div class="top-tab-btn btn-pointer"
-               :class="(select_menu === 'personal') ? 'is-active' : ''"
-               @click="selectTab('personal')"
+          <div
+              class="top-tab-btn btn-pointer"
+              :class="(select_menu === 'personal' || select_menu === 'verify') ? 'is-active' : ''"
+              @click="selectTab('personal')"
           >
-            {{ $t('lang.basic_information') }}
+            {{ $t("lang.basic_information") }}
           </div>
-          <div class="top-tab-btn btn-pointer"
-               :class="(select_menu === 'password') ? 'is-active' : ''"
-               @click="selectTab('password')"
+          <div
+              class="top-tab-btn btn-pointer"
+              :class="select_menu === 'password' ? 'is-active' : ''"
+              @click="selectTab('password')"
           >
-            {{ $t('lang.change_password') }}
+            {{ $t("lang.change_password") }}
           </div>
-<!--          <div class="top-tab-btn btn-pointer"-->
-<!--               :class="(select_menu === 'bank') ? 'is-active' : ''"-->
-<!--               @click="selectTab('bank')"-->
-<!--          >-->
-<!--            {{ $t('lang.withdraw_account') }}-->
-<!--          </div>-->
-<!--          <div class="top-tab-btn btn-pointer"-->
-<!--               :class="(select_menu === 'verify') ? 'is-active' : ''"-->
-<!--               @click="selectTab('verify')"-->
-<!--          >-->
-<!--            {{ $t('lang.security_check') }}-->
-<!--          </div>-->
+          <!--          <div class="top-tab-btn btn-pointer"-->
+          <!--               :class="(select_menu === 'bank') ? 'is-active' : ''"-->
+          <!--               @click="selectTab('bank')"-->
+          <!--          >-->
+          <!--            {{ $t('lang.withdraw_account') }}-->
+          <!--          </div>-->
+          <!--          <div class="top-tab-btn btn-pointer"-->
+          <!--               :class="(select_menu === 'verify') ? 'is-active' : ''"-->
+          <!--               @click="selectTab('verify')"-->
+          <!--          >-->
+          <!--            {{ $t('lang.security_check') }}-->
+          <!--          </div>-->
         </div>
-
-
       </div>
 
-
-      <div class="personal-container"
-           v-if="select_menu==='personal'"
-      >
-        <!--        <q-form>-->
-        <!--          <div class="name-email">-->
-        <!--            <div class="top-right">-->
-        <!--              <RiEditLine style="width: 20px; fill:#ffffff;"-->
-        <!--                          v-if="!isEdit && (!personalState.memberInfo.realName || !personalState.memberInfo.name2 || !personalState.memberInfo.email || !personalState.memberInfo.birthday || !personalState.memberInfo.telephone)"-->
-        <!--                          @click="isEdit = !isEdit"-->
-        <!--              />-->
-        <!--              <span v-if="isEdit">-->
-        <!--            <q-btn outline @click="updateState">ยืนยัน</q-btn>-->
-        <!--          </span>-->
-        <!--            </div>-->
-        <!--            <div v-if="personalState.memberInfo.profilePicture" class="info-picture"><img-->
-        <!--                :src="personalState.memberInfo.profilePicture"></div>-->
-        <!--            <div class="info-name"><span v-if="!personalState.memberInfo.displayName">{{-->
-        <!--                personalState.memberInfo.nickName-->
-        <!--              }}</span><span v-if="personalState.memberInfo.displayName">{{-->
-        <!--                personalState.memberInfo.displayName-->
-        <!--              }} ({{ personalState.memberInfo.nickName }})</span></div>-->
-        <!--            <div class="info-email" v-if="personalState.memberInfo.email">-->
-        <!--              {{ personalState.memberInfo.email }}-->
-        <!--              <q-icon size="xs" color="white" name="mark_email_read" v-if="personalState.memberInfo.emailVerified"/>-->
-        <!--            </div>-->
-        <!--            <div v-if="isEdit && !personalState.memberInfo.email">-->
-        <!--              <q-input-->
-        <!--                  class="whiteError"-->
-        <!--                  ref="emailRef"-->
-        <!--                  filled-->
-        <!--                  color="white"-->
-        <!--                  v-model="formDetail.email"-->
-        <!--                  placeholder="อีเมลล์"-->
-        <!--                  :rules="[-->
-        <!--              (val) => (val && val.length > 0) || 'กรุณาใส่ที่อยู่อีเมลล์'-->
-        <!--            ]"-->
-        <!--              >-->
-        <!--              </q-input>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </q-form>-->
+      <div class="personal-container" v-if="select_menu === 'personal'">
+        <q-form>
+          <div class="name-email">
+            <div class="top-right">
+              <RiEditLine
+                  style="width: 20px; fill: #ffffff"
+                  v-if="
+                  !isEdit &&
+                  (!personalState.memberInfo.realName ||
+                    !personalState.memberInfo.name2 ||
+                    !personalState.memberInfo.email ||
+                    !personalState.memberInfo.birthday ||
+                    !personalState.memberInfo.telephone)
+                "
+                  @click="isEdit = !isEdit"
+              />
+              <!-- <span v-if="isEdit">
+                <q-btn outline @click="updateState">ยืนยัน</q-btn>
+              </span> -->
+            </div>
+            <div
+                v-if="personalState.memberInfo.profilePicture"
+                class="info-picture"
+            >
+              <img :src="personalState.memberInfo.profilePicture"/>
+            </div>
+            <!-- <div class="info-name">
+              <span v-if="!personalState.memberInfo.displayName">{{
+                personalState.memberInfo.nickName
+              }}</span
+              ><span v-if="personalState.memberInfo.displayName"
+                >{{ personalState.memberInfo.displayName }} ({{
+                  personalState.memberInfo.nickName
+                }})</span
+              >
+            </div> -->
+            <div class="info-email" v-if="personalState.memberInfo.email">
+              {{ personalState.memberInfo.email }}
+              <q-icon
+                  size="xs"
+                  color="white"
+                  name="mark_email_read"
+                  v-if="personalState.memberInfo.emailVerified"
+              />
+            </div>
+            <!-- <div v-if="isEdit && !personalState.memberInfo.email">
+              <q-input
+                class="whiteError"
+                ref="emailRef"
+                filled
+                color="white"
+                v-model="formDetail.email"
+                placeholder="อีเมลล์"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณาใส่ที่อยู่อีเมลล์',
+                ]"
+              >
+              </q-input>
+            </div> -->
+          </div>
+        </q-form>
         <div class="other-info">
           <div class="account-content basic-info">
             <div class="basic-info-table">
@@ -89,9 +105,7 @@
                     class="basic-info-cell content"
                     v-if="personalState.memberInfo.nickName"
                 >
-                  {{
-                    personalState.memberInfo.nickName
-                  }}
+                  {{ personalState.memberInfo.nickName }}
                 </div>
                 <div v-if="isEdit && !personalState.memberInfo.nickName">
                   <q-input
@@ -101,18 +115,18 @@
                       v-model="formDetail.nickName"
                       placeholder="ID"
                       :rules="[
-                    (val) => (val && val.length > 0) || $t('lang.enter_ur_id')
-                  ]"
+                      (val) =>
+                        (val && val.length > 0) || $t('lang.enter_ur_id'),
+                    ]"
                   >
                   </q-input>
                 </div>
               </div>
 
-
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
-                  {{ $t('lang.name') }}
+                  {{ $t("lang.name") }}
                 </div>
                 <div
                     class="basic-info-cell content"
@@ -124,28 +138,35 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.realName && isEdit == false"
+                    @click="isEdit = !isEdit"
                 >
-<!--                  <span>{{ $t('lang.edit') }}</span>-->
-<!--                  <RiEditBoxLine/>-->
-                  -
+                  <span>{{ $t('lang.edit') }}</span>
+                  <RiEditBoxLine/>
                 </div>
-
 
                 <div v-if="isEdit && !personalState.memberInfo.realName">
                   <q-input
                       ref="realNameRef"
                       color="white"
                       filled
+                      clearable
                       v-model="formDetail.realName"
                       :placeholder="$t('lang.name')"
                       :rules="[
-                    (val) => (val && val.length > 0) || $t('lang.enter_lastname')
-                  ]"
+                      (val) =>
+                        (val && val.length > 0) || $t('lang.enter_lastname'),
+                        isValidName
+                    ]"
                   >
                   </q-input>
                 </div>
               </div>
-              <div class="tbl-row">
+
+              <div class="red-text" v-if="!personalState.memberInfo.realName">
+                {{ $t('lang.register_name_must_be_english_name')}}
+              </div>
+
+              <!-- <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiFileUserLine/>
                   {{ $t('lang.surname') }}
@@ -159,11 +180,11 @@
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.name2 && isEdit == false"
-                >
-<!--                  @click="isEdit=!isEdit;"-->
-<!--                  <span>{{ $t('lang.edit') }}</span>-->
-<!--                  <RiEditBoxLine/>-->
-                  -
+                > -->
+              <!--                  @click="isEdit=!isEdit;"-->
+              <!--                  <span>{{ $t('lang.edit') }}</span>-->
+              <!--                  <RiEditBoxLine/>-->
+              <!-- -
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.name2">
@@ -176,35 +197,41 @@
                   >
                   </q-input>
                 </div>
-              </div>
+              </div> -->
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiCake2Line/>
-                  {{ $t('lang.dob') }}
+                  {{ $t("lang.dob") }}
                 </div>
                 <div
                     class="basic-info-cell content"
-                    v-if="personalState.memberInfo.birthday "
+                    v-if="personalState.memberInfo.birthday"
                 >
-                  {{ (moment(personalState.memberInfo.birthday).format("DD-MM-YYYY")) }}
+                  {{
+                    moment(personalState.memberInfo.birthday).format(
+                        "DD-MM-YYYY"
+                    )
+                  }}
                 </div>
                 <div
                     class="basic-info-cell content flex items-center edit-div btn-pointer"
                     v-if="!personalState.memberInfo.birthday && isEdit == false"
                 >
-<!--                  @click="isEdit=!isEdit;"
--->
-<!--                  <span>{{ $t('lang.edit') }}</span>-->
-<!--                  <RiEditBoxLine/>-->
-                  -
+                  <span @click="isEdit = !isEdit">{{ $t("lang.edit") }}</span>
+                  <RiEditBoxLine/>
                 </div>
 
                 <div v-if="isEdit && !personalState.memberInfo.birthday">
-                  <q-input ref="birthdayRef" filled v-model="formDetail.birthday"
-                           :placeholder="$t('lang.dob')"
-                           :rules="[
-                    (val) => (val && val.length > 0) || $t('lang.enter_ur_dob')
-                  ]">
+                  <q-input
+                      ref="birthdayRef"
+                      filled
+                      v-model="formDetail.birthday"
+                      :placeholder="$t('lang.dob')"
+                      :rules="[
+                      (val) =>
+                        (val && val.length > 0) || $t('lang.enter_ur_dob'),
+                    ]"
+                  >
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy
@@ -212,7 +239,10 @@
                             transition-show="scale"
                             transition-hide="scale"
                         >
-                          <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
+                          <q-date
+                              v-model="formDetail.birthday"
+                              mask="YYYY-MM-DD"
+                          >
                             <div class="row items-center justify-end">
                               <q-btn
                                   v-close-popup
@@ -238,33 +268,45 @@
               <div class="tbl-row">
                 <div class="basic-info-cell title">
                   <RiSmartphoneLine/>
-                  {{ $t('lang.phone_number') }}
+                  {{ $t("lang.phone_number") }}
                 </div>
                 <div
                     class="basic-info-cell content"
+                    style="margin-left :auto;"
                     v-if="personalState.memberInfo.telephone"
                 >
                   {{ personalState.memberInfo.telephone }}
                 </div>
-                <div v-if="isEdit && !personalState.memberInfo.telephone">
-                  <q-input
-                      ref="phoneRef"
-                      color="white"
-                      filled
-                      v-model="formDetail.phone"
-                      :placeholder="$t('lang.phone_number')"
-                      :rules="[
-                    (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
-                    isValidPhone
-                  ]"
-                  >
-                    <!-- <template v-slot:append>
-                      <q-avatar>
-                        <RiSendPlane2Line @click="updateState('phone')" />
-                      </q-avatar>
-                    </template> -->
-                  </q-input>
+                <div
+                    style=" margin-left:10px;"
+                    class="basic-info-cell content flex items-center edit-div btn-pointer"
+                    v-if="!personalState.memberInfo.phoneVerified || !personalState.memberInfo.telephone"
+                >
+                  <span @click="verifyPhone">{{ $t("lang.verify") }}</span>
+                  <RiEditBoxLine/>
                 </div>
+
+                <!--                <div v-if="isEdit && !personalState.memberInfo.telephone">-->
+                <!--                  <q-input-->
+                <!--                    ref="phoneRef"-->
+                <!--                    color="white"-->
+                <!--                    filled-->
+                <!--                    v-model="formDetail.phone"-->
+                <!--                    :placeholder="$t('lang.phone_number')"-->
+                <!--                    :rules="[-->
+                <!--                      (val) =>-->
+                <!--                        (val && val.length > 0) ||-->
+                <!--                        $t('lang.please_confirm_phone_number'),-->
+                <!--                      isValidPhone,-->
+                <!--                    ]"-->
+                <!--                  >-->
+                <!--                    &lt;!&ndash; <template v-slot:append>-->
+                <!--                      <q-avatar>-->
+                <!--                        <RiSendPlane2Line @click="updateState('phone')" />-->
+                <!--                      </q-avatar>-->
+                <!--                    </template> &ndash;&gt;-->
+                <!--                  </q-input>-->
+                <!--                </div>-->
               </div>
               <!-- <div class="tbl-row">
                 <div class="basic-info-cell title">
@@ -277,39 +319,41 @@
               </div> -->
             </div>
 
-            <div v-if="isEdit" class="flex items-center justify-center">
-              <q-btn color="brand" class="login-btn common-large-btn" @click="updateState">{{
-                  $t('lang.confirm')
-                }}
+            <div v-if="isEdit" class="flex items-center justify-center q-mt-md gap-10">
+              <q-btn
+                  color="brand"
+                  class="login-btn common-large-btn"
+                  @click="updateState"
+              >{{ $t("lang.confirm") }}
+              </q-btn>
+
+              <q-btn
+                  class="common-large-btn close-btn"
+                  @click="isEdit = !isEdit"
+              >{{ $t("lang.cancel") }}
               </q-btn>
             </div>
           </div>
           <div class="account-tip danger">
-            {{ $t('lang.if_you_wish_to_change_please_contact') }}
-            <router-link to="/liveChat">{{ $t('lang.live_chat') }}</router-link>
+            <div>
+              {{ $t("lang.if_you_wish_to_change_please_contact") }}
+              <router-link to="/liveChat">{{ $t("lang.live_chat") }}</router-link>
+              {{ $t('lang.or') }}
+              <RiLineLine style="width:18px;"/>
+              Line.
+            </div>
+            <div class="line-chat-container">
+              <!--              <div class="line-title">LINE</div>-->
+              <img src="../../assets/home/line-bg.png" class="line-img"/>
+              <div class="line-bottom">Line ID:@jolly88</div>
+            </div>
+
           </div>
-          <!--          <div class="buttons">-->
-          <!--            <q-btn-->
-          <!--                class="full-width"-->
-          <!--                label=" เปลี่ยนรหัสผ่าน "-->
-          <!--                type="submit"-->
-          <!--                color="brand"-->
-          <!--                @click="updatePwdModal"-->
-          <!--            />-->
-          <!--            <q-btn v-if="!personalState.memberInfo.emailVerified"-->
-          <!--                   class="full-width"-->
-          <!--                   label=" ตรวจสอบความปลอดภัย "-->
-          <!--                   type="submit"-->
-          <!--                   color="brand"-->
-          <!--                   @click="updateSecurityModal"-->
-          <!--            />-->
-          <!--          </div>-->
+
         </div>
       </div>
 
-      <div class="personal-container"
-           v-if="select_menu==='password'"
-      >
+      <div class="personal-container" v-if="select_menu === 'password'">
         <q-form class="q-gutter-sm form-changepass">
           <q-input
               ref="oldPasswordRef"
@@ -329,7 +373,7 @@
               :label="$t('lang.password')"
               :rules="pwdRules"
               clearable
-              class="q-mb-lg"
+              class="mb-large"
               stack-label
               :hint="$t('lang.hint_new_password')"
           />
@@ -345,42 +389,64 @@
               stack-label
           />
           <div class="flex flex-center gap-10">
-            <q-btn class="common-large-btn" :label="$t('lang.confirm')" color="brand" @click="submitUpdatePwd"/>
-            <q-btn class="common-large-btn close-btn"
-                   :label="$t('lang.cancel')" v-close-popup/>
+            <q-btn
+                class="common-large-btn"
+                :label="$t('lang.confirm')"
+                color="brand"
+                @click="submitUpdatePwd"
+            />
+            <q-btn
+                class="common-large-btn close-btn"
+                :label="$t('lang.cancel')"
+                v-close-popup
+            />
           </div>
         </q-form>
       </div>
 
-
-      <div class="personal-container"
-           v-if="select_menu==='verify'"
-      >
-        <q-form class="q-gutter-sm q-mt-lg form-verification">
+      <div class="personal-container" v-if="select_menu === 'verify'">
+        <q-form class="q-gutter-sm q-mt-lg form-verification"
+                autocomplete="off"
+        >
           <q-input
-              ref="emailAddressRef"
-              v-model="updateSecurityVerified.emailAddress"
-              :label="$t('lang.email_address')"
+              ref="phoneNumberRef"
+              v-model="updateSecurityVerified.phone"
+              :label="$t('lang.phone_number')"
               stack-label
+              autocomplete="off"
               clearable
               filled
+              :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    $t('lang.please_confirm_phone_number'),
+                  isValidPhone,
+                ]"
           />
           <div class="half">
             <q-input
                 ref="verificationCodeRef"
-                type="password"
                 v-model="updateSecurityVerified.verificationCode"
-                :placeholder="$t('lang.captcha_code')"
-                :label="$t('lang.captcha_code')"
+                :placeholder="$t('lang.one_time_otp')"
+                :label="$t('lang.one_time_otp')"
                 stack-label
                 clearable
+                autocomplete="off"
                 filled
             />
-            <q-btn class="common-large-btn third-btn"
-                   :label="$t('lang.enter_veri_code')" @click="openVerificationModal"/>
+            <q-btn
+                class="common-large-btn third-btn"
+                :label="$t('lang.request_otp_code')"
+                @click="openVerificationModal"
+            />
           </div>
           <div class="flex flex-center gap-10 q-mt-md">
-            <q-btn :label="$t('lang.confirm')" class="common-large-btn" color="brand" @click="submitUpdateSecurity"/>
+            <q-btn
+                :label="$t('lang.confirm')"
+                class="common-large-btn"
+                color="brand"
+                @click="submitUpdateSecurity"
+            />
           </div>
         </q-form>
       </div>
@@ -391,17 +457,22 @@
           transition-hide="slide-down"
       >
         <q-card class="q-pa-md">
-          <div class="modal-head-title q-pb-md">{{ $t('lang.check_your_captcha_code') }}</div>
+          <div class="modal-head-title q-pb-md">
+            {{ $t("lang.check_your_captcha_code") }}
+          </div>
           <q-form class="q-gutter-sm">
             <q-input
+                class="verification-input"
                 ref="captchaCodeRef"
                 filled
                 type="text"
+                maxlength="4"
                 v-model="updateSecurityVerified.captchaCode"
                 :label="$t('lang.captcha_code')"
                 :rules="[
-              (val) => (val && val.length > 3) || $t('lang.enter_captcha_code')
-            ]"
+                (val) =>
+                  (val && val.length > 3) || $t('lang.enter_captcha_code'),
+              ]"
                 color="white"
             >
               <template v-slot:append>
@@ -417,7 +488,11 @@
                 class="common-btn verification-btn"
                 @click.prevent="verifyVerificationCode"
             >
-              {{ isEmailSending ? $t('lang.verifying') : $t('lang.confirm_button') }}
+              {{
+                isEmailSending
+                    ? $t("lang.verifying")
+                    : $t("lang.confirm_button")
+              }}
             </q-btn>
           </q-form>
         </q-card>
@@ -429,13 +504,10 @@
 <script lang="js">
 import {defineComponent, reactive, ref, onMounted} from "vue";
 import {
-  RiSpamLine, RiLink, RiLinkUnlink, RiEditBoxLine, RiFileUserLine, RiCake2Line, RiSmartphoneLine, RiEditLine
+  RiSpamLine, RiLink, RiLinkUnlink, RiEditBoxLine, RiFileUserLine, RiCake2Line, RiSmartphoneLine,
+  RiLineLine
 
 } from "vue-remix-icons";
-// import {
-//   loadMemberInfo,
-//   changePwd,
-// } from "@/api/personal/personal";
 import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
@@ -446,17 +518,13 @@ import {useI18n} from "vue-i18n";
 export default defineComponent({
   name: "PersonalView",
   components: {
-    // RiSpamLine,
-    // RiLink,
-    // RiLinkUnlink,
     RiFileUserLine,
     RiCake2Line,
     RiSmartphoneLine,
-    // RiEditBoxLine,
-    // RiEditLine
+    RiLineLine
   },
   setup() {
-    // const isCardActive = ref();
+    const store = userStore()
     const {t} = useI18n();
     const qs = require("qs");
     const $q = useQuasar();
@@ -482,10 +550,6 @@ export default defineComponent({
       // })
     }
 
-    const isValidPhone = () => {
-      const phonePattern = /^\d+$/;
-      return phonePattern.test(formDetail.value.phone) || t('lang.only_numbers_allowed');
-    };
     const personalState = reactive({
       memberInfo: {}
     });
@@ -507,7 +571,9 @@ export default defineComponent({
             if (response.code === 0) {
               verificationImg.value =
                   "data:image/png;base64," + response.data.img;
+              updateSecurityVerified.captchaCode = "";
               updateSecurityVerified.codeId = response.data.id;
+              isEmailSending.value = false;
             }
           })
           .catch((e) => {
@@ -519,47 +585,53 @@ export default defineComponent({
             });
           });
     };
-    //update security
 
+    const captchaCodeRef = ref();
     const isEmailSending = ref(false)
     const updateSecurityModalVisible = ref(false);
     const updateSecurityFormRef = ref();
     const updateSecurityVerified = reactive({
-      mobileNumber: "",
+      phone: "",
       verificationCode: ""
     });
-    const verificationModalVisible = ref(false)
-    const updateSecurityModal = () => {
-      updateSecurityVerified.emailAddress = "";
-      updateSecurityVerified.verificationCode = "";
-      updateSecurityModalVisible.value = true;
+    const isValidPhone = () => {
+      const phonePattern = /^\d+$/;
+      return phonePattern.test(updateSecurityVerified.phone) || t('lang.invalid_phone_num');
     };
+    const isValidName = () => {
+      const namrPattern = /^[A-Za-z ]+$/;
+      return namrPattern.test(formDetail.value.realName) || t('lang.only_alphabet_allowed');
+    }
+
+    const verificationModalVisible = ref(false)
+
     const openVerificationModal = () => {
       getCode();
       verificationModalVisible.value = true;
     }
+    const verifyPhone = () => {
+      select_menu.value = 'verify';
+    }
     const verifyVerificationCode = () => {
-      isEmailSending.value = true
-      verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
-      const emailDetails = {
-        email: updateSecurityVerified.emailAddress,
+      isEmailSending.value = true;
+      const phoneDetails = {
+        telephone: updateSecurityVerified.phone,
         captchaCode: updateSecurityVerified.captchaCode,
         codeId: updateSecurityVerified.codeId
       }
-      api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((res) => {
+      api.post("/otp/sendSms", qs.stringify(phoneDetails)).then((res) => {
         const ret = res.data
         if (ret.code === 0) {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('lang.otp_code_has_been_sent'),
+            message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId
           verificationModalVisible.value = false;
           isEmailSending.value = false
         } else {
-          getCode()
           // $q.notify({
           //   color: "negative",
           //   position: "top",
@@ -583,20 +655,23 @@ export default defineComponent({
     const emailAddressRef = ref()
     const verificationCodeRef = ref()
     const submitUpdateSecurity = () => {
-      emailAddressRef.value.validate()
+      phoneNumberRef.value.validate()
       verificationCodeRef.value.validate()
-      if (emailAddressRef.value.hasError || verificationCodeRef.value.hasError) {
+      if (phoneNumberRef.value.hasError || verificationCodeRef.value.hasError) {
       } else {
-        verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode
-        api.post("/otp/verifyEmail", qs.stringify(verificationDetails.memberInfo)).then((res) => {
+        api.post("/session/verifyAndUpdatePhone", qs.stringify({
+          phone: updateSecurityVerified.phone,
+          code: updateSecurityVerified.verificationCode,
+          codeId: verificationDetails.memberInfo.codeId
+        })).then((res) => {
           $q.notify({
             color: "positive",
             position: "top",
             message: t('lang.successfully_verified'),
             icon: "check_circle_outline"
           });
-          updateSecurityModalVisible.value = false
-          loadInfo();
+          updateSecurityModalVisible.value = false;
+          location.reload();
         }).catch((e) => {
           // $q.notify({
           //   color: "negative",
@@ -611,6 +686,7 @@ export default defineComponent({
     const updatePwdModalVisible = ref(false);
     const oldPasswordRef = ref();
     const passwordRef = ref();
+    const phoneNumberRef = ref();
     const updatePwdInfo = reactive({
       oldPassword: "",
       password: "",
@@ -640,13 +716,9 @@ export default defineComponent({
               icon: "check_circle_outline"
             });
             updatePwdModalVisible.value = false;
+            store.memberLogout();
           } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: response.message,
-            //   icon: "report_problem"
-            // });
+
           }
         }).catch((error) => {
           console.log("error", error);
@@ -664,7 +736,7 @@ export default defineComponent({
     const birthdayRef = ref()
     const phoneRef = ref()
     const formDetail = ref([{}]);
-    const user= userStore()
+    const user = userStore()
 
     const select_menu = ref('personal');
     const selectTab = (tab) => {
@@ -681,24 +753,25 @@ export default defineComponent({
       if (!personalState.memberInfo.realName) {
         realNameRef.value.validate()
         if (realNameRef.value.hasError) {
+          return;
+        }
+      }
+      if (!personalState.memberInfo.birthday) {
+        birthdayRef.value.validate()
+        if (birthdayRef.value.hasError) {
           return
         }
       }
-      // if (!personalState.memberInfo.birthday) {
-      //   birthdayRef.value.validate()
-      //   if (birthdayRef.value.hasError) {
-      //     return
-      //   }
-      // }
       // if (!personalState.memberInfo.telephone) {
       //   phoneRef.value.validate()
       //   if (phoneRef.value.hasError) {
       //     return
       //   }
       // }
-      if (!personalState.memberInfo.name2 && !updateInfo.name2) {
-        updateInfo.name2 = null;
-      }
+      // if (!personalState.memberInfo.name2 && !updateInfo.name2) {
+      //   updateInfo.name2 = null;
+      // }
+
       api.post("/session/account", qs.stringify(updateInfo)).then((res) => {
         const r = res.data
         if (r.code === 0) {
@@ -712,30 +785,23 @@ export default defineComponent({
           location.reload();
         }
       })
-      // if (field === 'email') {
-      //   isEditEmail.value = false
-      // }
-      // if (field === 'name') {
-      //   isEditRealName.value = false
-      // }
-      // if (field === 'phone') {
-      //   isEditPhone.value = false
-      // }
-      // if (field === 'birthday') {
-      //   isEditBirthday.value = false
-      // }
+
+
     }
     return {
       searchForm,
       personalState,
+      verifyPhone,
       updateSecurityFormRef,
       updateSecurityVerified,
-      updateSecurityModal,
+      isValidPhone,
+      phoneNumberRef,
       updateSecurityModalVisible,
       submitUpdateSecurity,
       updatePwdInfo,
       updatePwdModal,
       updatePwdModalVisible,
+      captchaCodeRef,
       submitUpdatePwd,
       oldPasswordRef,
       passwordRef,
@@ -753,6 +819,7 @@ export default defineComponent({
       loadInfo,
       isEditBirthday,
       formDetail,
+      isValidName,
       updateState,
       verificationModalVisible,
       openVerificationModal,
@@ -770,7 +837,6 @@ export default defineComponent({
       birthdayRef,
       phoneRef,
       moment,
-      isValidPhone,
       selectTab,
       select_menu
     };
@@ -852,9 +918,11 @@ export default defineComponent({
   border-radius: 10px;
 }
 
-:deep(.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector
-    .ant-select-selection-search-input) {
+:deep(
+    .ant-select-single:not(.ant-select-customize-input)
+      .ant-select-selector
+      .ant-select-selection-search-input
+  ) {
   height: 40px;
 }
 
@@ -862,7 +930,7 @@ export default defineComponent({
   height: 40px;
   padding: 5px 20px;
   background: #23263c;
-  color: #ffffff;
+  color: $white;
   border: 0;
 }
 
@@ -879,7 +947,7 @@ export default defineComponent({
   &.verification-btn {
     flex: 1;
     padding: 8px;
-    background: $linear-bg-2
+    background: $linear-bg-2;
   }
 
   &.submit-btn {
@@ -917,7 +985,7 @@ export default defineComponent({
     font-size: $md-size;
 
     svg {
-      fill: #ffffff;
+      fill: $white;
       width: 20px;
       display: inline-block;
       vertical-align: middle;
@@ -965,7 +1033,6 @@ export default defineComponent({
   align-items: center;
   flex-direction: column;
 
-
   .account-tip {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
@@ -975,8 +1042,30 @@ export default defineComponent({
     a {
       color: #db7e42;
     }
-  }
 
+    .line-chat-container {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+
+      .line-title {
+        font-size: 18px;
+      }
+
+      .line-img {
+        width: 100px;
+        height: auto;
+        margin: 0 auto;
+      }
+
+      .line-bottom {
+        font-size: 16px;
+      }
+    }
+  }
 }
 
 .personal-section {
@@ -987,7 +1076,7 @@ export default defineComponent({
   margin: 15px auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  //grid-template-rows: repeat(2, 1fr);
   gap: 15px;
   column-gap: 25px;
   align-items: center;
@@ -1010,16 +1099,13 @@ export default defineComponent({
     &.is-active {
       background: $linear-bg-2;
     }
-
   }
-
 }
 
 .personal-container {
   width: calc(100% - 24px);
   max-width: 650px;
   margin: 0 auto;
-
 }
 
 .common-large-btn {
@@ -1030,9 +1116,13 @@ export default defineComponent({
   margin-top: 15px;
 }
 
+.red-text{
+  text-align:right;
+  margin-bottom:10px;
+  color: $negative;
+}
 
 @media (max-width: 768px) {
-
   .personal-wrapper {
     .buttons {
       flex-direction: column;
@@ -1045,7 +1135,6 @@ export default defineComponent({
     }
 
     .account-content-wrapper {
-
       .bank-card-list {
         max-width: 300px;
         margin: 100px auto;
@@ -1107,6 +1196,4 @@ export default defineComponent({
     }
   }
 }
-
-
 </style>

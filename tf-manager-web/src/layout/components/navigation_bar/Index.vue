@@ -35,11 +35,17 @@
             <el-dropdown-item>
               <span style="display:block;"> {{ name }}</span>
             </el-dropdown-item>
+
             <ForgetPasswordModal :requireOld="true" @submit="changePassword">
               <el-dropdown-item divided>
                 {{ $t('common.changePassword') }}
               </el-dropdown-item>
             </ForgetPasswordModal>
+
+            <el-dropdown-item @click="goToGoogleAuth">
+              {{ $t('google.google_auth_menu') }}
+            </el-dropdown-item>
+
             <el-dropdown-item
               @click="logout"
             >
@@ -66,6 +72,7 @@ import { UserActionTypes } from "@/store/modules/user/action-types";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "@/store/language";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
 export default {
   components: {
@@ -77,6 +84,7 @@ export default {
     // eslint-disable-next-line
     const { t } = useI18n();
     const store = useStore();
+    const router = useRouter();
     const sidebar = computed(() => {
       return store.state.app.sidebar;
     });
@@ -108,6 +116,12 @@ export default {
     const changePassword = async (formObj) => {
       await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj);
     };
+    const goToGoogleAuth = () => {
+      router.push({ path: '/google-auth' }).catch(err => {
+        console.warn(err)
+      })
+    }
+
     return {
       sidebar,
       device,
@@ -116,7 +130,8 @@ export default {
       languageVal,
       handleLanguage,
       ...toRefs(state),
-      changePassword
+      changePassword,
+      goToGoogleAuth
     };
   }
 };

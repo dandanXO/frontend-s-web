@@ -96,7 +96,6 @@
               dense
               :options="withdrawState.bankCardList"
               class="q-py-none"
-              :rules="[(val) => !!val || $t('lang.please_select_bank_account')]"
             >
               <template v-slot:no-option>
                 <q-item dense>
@@ -137,7 +136,7 @@
               dense
               ref="amountRef"
               v-model="withdrawInfo.amount"
-              label=""
+              :placeholder="$t('lang.minimum_withdraw_money')"
               mask="######"
               color="white"
               :rules="[
@@ -149,6 +148,8 @@
                   val <= selectedWithdrawalMethod.withdrawMax ||
                   $t('lang.amount_should_less_than_max'),
               ]"
+              @keydown="restrictDecimalInput"
+              clearable
             >
               <template v-slot:append>
                 <span class="text-caption">THB</span>
@@ -183,8 +184,8 @@
                 </template>
                 <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
                   {{
-                    $t('lang.remaining') +
-                    selectedWithdrawalMethod.withdrawMaxTimes +
+                    ' ' + $t('lang.remaining') + ' ' +
+                    selectedWithdrawalMethod.withdrawMaxTimes + ' ' +
                     $t('lang.attempt_time')
                   }}
                 </template>
@@ -354,8 +355,9 @@ export default defineComponent({
               }
             });
 
-            if (withdrawState.bankCardList.length)
-              withdrawInfo.cardId = withdrawState.bankCardList[0].id
+            cardRef.value.resetValidation();
+            // if (withdrawState.bankCardList.length)
+              // withdrawInfo.cardId = withdrawState.bankCardList[0].id
         }
       }).catch((error) => {
         console.log("error", error);
@@ -383,6 +385,11 @@ export default defineComponent({
       })
     }
 
+    const restrictDecimalInput = (e) => {
+      const num = +e.key;
+      if (num !== 0 && !num && !['Backspace', 'Delete'].includes(e.key)) e.preventDefault();
+    };
+
     return {
       amountRef,
       cardRef,
@@ -398,6 +405,7 @@ export default defineComponent({
       loadCards,
       isUSDT,
       store,
+      restrictDecimalInput,
     };
   },
   computed: {
@@ -489,7 +497,7 @@ export default defineComponent({
     border: 1px solid #db7e42;
   }
   :deep(.ant-steps-item-finish .ant-steps-item-icon) {
-    background-image: linear-gradient(to right, #de4545, #db7e42);
+    background-image: $linear-bg-red;
 
     border: 1px solid #2b2b4b;
     svg {
@@ -601,7 +609,7 @@ export default defineComponent({
     background-position: top center;
     top: -8px;
     right: -1px;
-    background: linear-gradient(to right, #de4545, #db7e42);
+    background: $linear-bg-red;
     padding: 5px;
     color: #ffffff;
     font-size: 12px;

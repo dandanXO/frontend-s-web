@@ -19,7 +19,7 @@
         />
 
         <el-input
-          v-model="request.memberName"
+          v-model="request.loginName"
           size="small"
           style="width: 150px; margin-left: 5px"
           :placeholder="t('fields.memberName')"

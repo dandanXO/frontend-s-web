@@ -12,9 +12,9 @@ export const actions = {
     { commit },
     userInfo
   ) {
-    let { userName, password } = userInfo;
+    let { userName, password, googleCode } = userInfo;
     userName = userName.trim();
-    const { data: token } = await loginRequest({ userName: userName, password });
+    const { data: token } = await loginRequest({ userName: userName, password, googleCode: googleCode });
     commit(UserMutationTypes.SET_TOKEN, token);
   },
   [UserActionTypes.ACTION_RESET_TOKEN](
