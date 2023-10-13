@@ -70,14 +70,14 @@ stages:
   - build-image
   - deploy
 
-build-image-pt-launch:
+deploy-pt-launch:
   extends: .s3-deploy
   variables:
     PROJECT: pt-launch
 
 #===============================================================================================
 
-build-image-xf-landing:
+deploy-xf-landing:
   extends: .s3-deploy
   variables:
     PROJECT: xf-landing
@@ -105,7 +105,7 @@ deploy-xf-maintenance:
 
 #===============================================================================================
 
-build-image-xf-tutorials:
+deploy-xf-tutorials:
   extends: .s3-deploy
   variables:
     PROJECT: xf-tutorials
