@@ -55,16 +55,16 @@ default:
 #      changes:
 #        - $PROJECT/**/*
 
-#.s3-deploy:
-#  stage: deploy
-#  image: amazon/aws-cli
-#  script:
-#    - if [ "$CI_COMMIT_BRANCH" == "dev" ] || [ "$CI_COMMIT_BRANCH" == "staging" ]; then export BUCKET=p8s1-$CI_COMMIT_BRANCH-$PROJECT; else export BUCKET=p8s1-$PROJECT; fi
-#    - aws s3 sync $PROJECT s3://$BUCKET
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
-#      changes:
-#        - $PROJECT/**/*
+.s3-deploy:
+  stage: deploy
+  image: amazon/aws-cli
+  script:
+    - if [ "$CI_COMMIT_BRANCH" == "dev" ] || [ "$CI_COMMIT_BRANCH" == "staging" ]; then export BUCKET=p8s1-$CI_COMMIT_BRANCH-$PROJECT; else export BUCKET=p8s1-$PROJECT; fi
+    - aws s3 sync $PROJECT s3://$BUCKET
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "prod/p8s1"'
+      changes:
+        - $PROJECT/**/*
 
 stages:
   - build
