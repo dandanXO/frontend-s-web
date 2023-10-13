@@ -23,7 +23,7 @@ default:
   script:
     - cd $PROJECT
     - npm install
-    - if [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "dev" ]; then npm run build:dev; else npm run build:prod; fi
+    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "dev" ]; then npm run build:dev; else npm run build:prod; fi
 
 .build-projects:
   stage: build
@@ -37,7 +37,7 @@ default:
    exclude:
      - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging/p8s1" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
       changes:
         - $PROJECT/**/*
 
@@ -46,12 +46,12 @@ default:
   script:
     - cd $PROJECT
     - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
-    - if [ "$CI_COMMIT_BRANCH" == "dev" ]; then export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$PROJECT-$CI_COMMIT_REF_NAME-$(date +%s); elif [ "$CI_COMMIT_BRANCH" == "staging/p8s1" ]; then export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$PROJECT-${CI_COMMIT_REF_NAME/\//-}-$(date +%s); else export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$PROJECT-${CI_COMMIT_REF_NAME/\//-}-$(date +%s); fi
+    - if [ "$CI_COMMIT_BRANCH" == "dev" ] || [ "$CI_COMMIT_BRANCH" == "staging" ]; then export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$PROJECT-$CI_COMMIT_REF_NAME-$(date +%s); else export IMAGE_FULL_TAG=$CI_REGISTRY_IMAGE:$PROJECT-${CI_COMMIT_REF_NAME/\//-}-$(date +%s); fi
     - docker build --build-arg image_proxy=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX -t $IMAGE_FULL_TAG . --no-cache
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging/p8s1" || $CI_COMMIT_BRANCH == "prod/p8s1"'
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "prod/p8s1"'
       changes:
         - $PROJECT/**/*
 
