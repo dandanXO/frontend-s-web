@@ -80,7 +80,7 @@ build-image-pt-launch:
 build-image-xf-landing:
   extends: .s3-deploy
   variables:
-    PROJECT: xf-landing-page
+    PROJECT: xf-landing
 
 #===============================================================================================
 
