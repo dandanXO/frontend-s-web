@@ -1,8 +1,8 @@
 {
-  "name": "xf-project",
-  "version": "1.0.27",
-  "description": "兴發官网 - 最专业的竞猜网站",
-  "productName": "兴發",
+  "name": "ind-project",
+  "version": "1.0.1",
+  "description": "IndWin7 App",
+  "productName": "IndWin7",
   "author": "Mika <mika@eagrp.net>",
   "private": true,
   "scripts": {
