@@ -46,6 +46,15 @@ export default route(function(/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
+    if (to.name === "loginToken") {
+      var logintoken= atob(to.params.loginToken);
+      if(logintoken){
+        sessionStorage.setItem("TOKEN", logintoken);
+        next(`/vip`);
+      }else{
+        next(`/register`);
+      }
+    }
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       next(`/register`);

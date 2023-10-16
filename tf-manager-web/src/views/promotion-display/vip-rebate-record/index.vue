@@ -102,6 +102,7 @@
                 highlight-current-row
                 v-loading="page.loading"
                 :empty-text="t('fields.noData')"
+                sortable
       >
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120">
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
@@ -111,12 +112,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="vipName" :label="t('fields.vipLevel')" align="center" min-width="100" />
-        <el-table-column prop="betAmount" :label="t('fields.betAmount')" align="center" min-width="100">
+        <el-table-column prop="betAmount" :label="t('fields.betAmount')" align="center" min-width="100" sortable>
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.betAmount,type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="100">
+        <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="100" sortable>
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.amount,type: 'money'}" />
           </template>

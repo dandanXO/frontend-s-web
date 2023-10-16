@@ -1,0 +1,7 @@
+{
+  "appId": "com.xf.client",
+  "appName": "IndWin7",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
