@@ -180,6 +180,12 @@ const routes = [
         // component: () => {},
     },
     {
+      path: "/logintoken/:loginToken",
+      name: "loginToken",
+      component: () => {},
+      // component: () => {},
+    },
+    {
         path: "/account/transit",
         component: () => import("layouts/MainLayout.vue"),
         children: [

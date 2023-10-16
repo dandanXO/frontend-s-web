@@ -395,7 +395,7 @@ export default {
     strong_level: "รัดกุม",
     fill_in_information: "กรุณาใส่ข้อมูลให้ถูกต้อง",
     verify: "ตรวจสอบ",
-    my_total_refer_friends_rebate: "ยอดงงินคืนสุทธิ จากแนะนำเพื่อน:",
+    my_total_refer_friends_rebate: "ยอดเงินคืนสุทธิ จากแนะนำเพื่อน:",
     my_a_line_refer_total: "เงินคืนจากค่าแนะนำเพื่อน ระดับที่ 1:",
     total_bets: "ยอดรวมเงินเดิมพัน",
     total_rebate_return: "ยอดรวมเงินคืน",
