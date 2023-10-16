@@ -23,7 +23,7 @@ default:
   script:
     - cd $PROJECT
     - npm install
-    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "dev" ]; then npm run build:dev; else npm run build:prod; fi
+    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:dev; else npm run build:prod; fi
 
 .build-projects:
   stage: build
@@ -37,7 +37,7 @@ default:
    exclude:
      - $CI_PROJECT_DIR/$PROJECT/node_modules/**/*
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
+    - if: '$CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
       changes:
         - $PROJECT/**/*
 
@@ -50,7 +50,7 @@ default:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push -a $CI_REGISTRY_IMAGE
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
+    - if: '$CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
       changes:
         - $PROJECT/**/*
 
@@ -58,10 +58,10 @@ default:
   stage: deploy
   image: amazon/aws-cli
   script:
-    - if [ "$CI_COMMIT_BRANCH" == "dev" ] || [ "$CI_COMMIT_BRANCH" == "staging" ]; then export BUCKET=p8s1-$CI_COMMIT_BRANCH-$PROJECT; else export BUCKET=p8s1-$PROJECT; fi
+    - if [ "$CI_COMMIT_BRANCH" == "test" ]; then export BUCKET=p8s1-dev-$PROJECT; elif [ "$CI_COMMIT_BRANCH" == "staging" ]; then export BUCKET=p8s1-$CI_COMMIT_BRANCH-$PROJECT; else export BUCKET=p8s1-$PROJECT; fi
     - aws s3 sync $PROJECT s3://$BUCKET
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
+    - if: '$CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
       changes:
         - $PROJECT/**/*
 

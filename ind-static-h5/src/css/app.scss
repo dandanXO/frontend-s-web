@@ -1,0 +1,285 @@
+@import "./font.scss";
+
+html {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+// app global css in SCSS form
+body {
+  //font-family: "Jura";
+  background: #ffffff;
+}
+#q-app {
+  background: url(../assets/images/index/home-bg.png) no-repeat center center;
+  background-size: cover;
+  background-color: #280946;
+}
+.q-layout,
+.q-header,
+.q-footer,
+.q-page {
+  max-width: 500px;
+  margin: 0 auto;
+}
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+  // display: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #212534;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #2b2b4b;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2b2b4b;
+}
+.q-toolbar {
+  padding-top: env(safe-area-inset-top, 0);
+  background: #2b2b4b;
+  &__title {
+    font-size: 16px;
+  }
+}
+.q-page-container {
+  /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> is used. */
+
+  // padding-top: env(safe-area-inset-top);
+
+  // padding-top: calc(50px + env(safe-area-inset-top)) !important;
+  // margin-bottom: calc(70px + env(safe-area-inset-top) + env(safe-area-inset-bottom)) !important;
+}
+.q-scrollarea__content {
+  width: 100%;
+  height: 100%;
+}
+body.body--dark {
+  background: #11131f;
+}
+body.body--dark .q-header {
+  // background: url(../assets/images/common/bgheader.png) no-repeat top center;
+  background: #212534;
+  // border-radius: 0 0 20px 20px;
+  background-size: cover;
+}
+.q-dialog__inner--minimized {
+  padding: 0;
+}
+// body.platform-ios .q-dialog__inner--minimized > div, body.platform-android:not(.native-mobile) .q-dialog__inner--minimized > div {
+//   max-height: unset;
+// }
+
+body.platform-ios .q-dialog__inner--minimized > div {
+  max-height: calc(100% - 108px);
+}
+.game-title {
+  font-family: "Wave";
+  font-size: 50px;
+  line-height: 60px;
+  color: #db7e42;
+  text-align: center;
+  background-color: linear-gradient(to right, #de4545, #db7e42);
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #db7e42;
+  .menu-title {
+    color: #db7e42;
+    margin-bottom: 20px;
+    display: block;
+  }
+}
+.page-title {
+  min-height: 40px;
+  // margin: 5px;
+  color: #bacef1;
+  font-size: 16px;
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  a {
+    display: block;
+    position: absolute;
+    left: 0;
+    padding: 0;
+    svg {
+      display: block;
+      width: 40px;
+      fill: #bacef1;
+    }
+  }
+}
+
+body.body--dark .q-header,
+body.body--dark .q-footer,
+body.body--dark .q-drawer {
+  max-width: 500px;
+  margin: 0 auto;
+}
+body.body--dark .q-header {
+  padding: 3px;
+  padding-top: calc(3px + env(safe-area-inset-top, 0));
+}
+body.body--dark .q-footer {
+  padding-bottom: calc(1px + env(safe-area-inset-bottom, 0));
+  // border-radius: 15px 15px 0 0;
+  overflow: hidden;
+}
+svg {
+  width: 25px;
+  fill: #ffffff;
+}
+.q-carousel.vip {
+  height: auto;
+  text-align: center;
+}
+.q-carousel.home {
+  height: 50vw;
+  border-radius: 10px;
+  // margin: 10px;
+  max-height: 240px;
+  .q-panel > div {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+  .q-carousel__navigation--bottom {
+    bottom: 30px;
+  }
+}
+.q-card {
+  margin: 10px;
+  border-radius: 10px;
+}
+.q-card__section--vert {
+  padding: 0;
+}
+.login-card {
+  .q-card__section--vert {
+    padding: 10px;
+  }
+}
+.q-footer .q-tab {
+  padding: 5px 0 5px;
+  background: #3f1e5e;
+  color: #7f828b;
+  img {
+    // width: 25px;
+    height: 25px;
+    margin-bottom: 8px;
+    &.inactive {
+      display: block;
+    }
+    &.hover {
+      display: none;
+    }
+  }
+  &__indicator {
+    display: none;
+  }
+  &--active {
+    color: #fed87d;
+    img {
+      &.inactive {
+        display: none;
+      }
+      &.hover {
+        display: block;
+      }
+    }
+  }
+}
+.q-splitter--dark .q-splitter__separator {
+  background: none;
+}
+.q-tabs--vertical .q-tab__indicator {
+  display: none;
+}
+.text-brand {
+  color: #bacef1;
+}
+.bg-brand {
+  background: #063c50;
+}
+.bg-neontb {
+  background: #313542;
+}
+.text-neontb {
+  color: #13f129;
+}
+.text-bright {
+  color: #33bcd4;
+}
+.bg-bright {
+  background: #063c50;
+  color: #26e6fb !important;
+}
+.bg-brightbtn {
+  background: #33bcd4;
+  color: #ffffff;
+}
+.bg-darkbtn {
+  background: #212534;
+  color: #bacef1;
+}
+.menu-title {
+  color: #db7e42;
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #db7e42;
+  font-size: 28px;
+  text-align: center;
+  font-family: Wave;
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+  align-content: center;
+  justify-content: center;
+}
+.page-header {
+  background-image: linear-gradient(to right, #de4545, #db7e42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #db7e42;
+  font-size: 28px;
+  text-align: center;
+  font-family: Wave;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  align-content: center;
+  justify-content: center;
+}
+// .fullscreen {
+//   max-width: 500px;
+//   margin: 0 auto;
+// }
+// .q-body--fullscreen-mixin,
+// .q-body--prevent-scroll {
+//   max-width: 500px;
+//   width: 100%;
+//   margin: 0 auto;
+//   right: 0;
+// }
+.q-field__marginal {
+  font-size: 16px;
+}
+.q-field--filled.q-field--readonly .q-field__control:before {
+  border-bottom: 0;
+}
+.q-field--readonly.q-field--float .q-field__native,
+.q-field--readonly.q-field--float .q-field__input {
+  color: #bacef1;
+}
