@@ -197,11 +197,11 @@ build-tha-landing:
     - .build-projects
     - .build-web
   variables:
-    PROJECT: affiliate-static-web
+    PROJECT: tha-landing
 
-build-image-affiliate-static-web:
+build-image-tha-landing:
   extends: .docker-build
   variables:
-    PROJECT: affiliate-static-web
+    PROJECT: tha-landing
   needs:
-    - build-affiliate-static-web
+    - build-tha-landing
