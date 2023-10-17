@@ -4,6 +4,7 @@ html {
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
+  font-size: calc(100vw / 31.25); // 500 / 16 = 31.25
 }
 // app global css in SCSS form
 body {

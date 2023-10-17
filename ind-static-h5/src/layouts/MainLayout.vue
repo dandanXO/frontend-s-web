@@ -1,11 +1,7 @@
 <template>
   <q-layout view="hHh Lpr fFf">
     <q-header v-if="hasPage">
-      <q-card-section
-        v-if="!hasPage"
-        class="top-section justify-between items-center"
-        horizontal
-      >
+      <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
@@ -16,16 +12,8 @@
         <!-- <q-card-actions v-if="store.hasToken()">
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
         </q-card-actions> -->
-        <q-btn
-          v-if="store.hasToken()"
-          class="flex"
-          to="/finance/deposit"
-          no-caps
-          flat
-        >
-          <span style="font-size: 10px; margin-left: 5px; display: block">
-            充值
-          </span>
+        <q-btn v-if="store.hasToken()" class="flex" to="/finance/deposit" no-caps flat>
+          <span style="font-size: 10px; margin-left: 5px; display: block">充值</span>
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
@@ -58,14 +46,7 @@
       </q-card-actions> -->
     </q-header>
 
-    <q-drawer
-      side="right"
-      elevated
-      v-model="ui.drawerRight"
-      :width="250"
-      :breakpoint="500"
-      v-if="hasDrawer"
-    >
+    <q-drawer side="right" elevated v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
       <div class="q-pa-md bg-brightbtn">游戏平台</div>
       <div class="platforms q-pt-md">
         <!--        <div class="text-bright q-px-sm q-pt-md">-->
@@ -98,49 +79,20 @@
       <router-view />
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
-      <q-tabs
-        v-model="tab"
-        no-caps
-        class="bg-primary"
-        :breakpoint="0"
-        align="justify"
-      >
+      <q-tabs v-model="tab" no-caps class="bg-primary" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/home-icon.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/home-icon-hover.png"
-          />
+          <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
           HOME
         </q-route-tab>
-        <q-route-tab to="/promo" name="promo">
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/earn-icon.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/earn-icon-hover.png"
-          />
+        <q-route-tab to="/earn-money" name="earn-money">
+          <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
           EARN MONEY
         </q-route-tab>
-        <q-route-tab
-          class="cs-web-id"
-          to="/liveChat"
-          id="cs-web-id"
-          name="live"
-        >
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/bonus-icon.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/bonus-icon-hover.png"
-          />
+        <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
+          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           BONUS
         </q-route-tab>
         <!--        <q-route-tab to="/affiliate" name="affiliate">-->
@@ -149,14 +101,8 @@
         <!--          加盟-->
         <!--        </q-route-tab>-->
         <q-route-tab to="/account" name="account">
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/account-icon.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/account-icon-hover.png"
-          />
+          <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
           MINE
         </q-route-tab>
       </q-tabs>
@@ -228,10 +174,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName =
-              route.query.platform == "BBINDY"
-                ? "BBIN"
-                : translateRecord(route.query.platform);
+            var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {

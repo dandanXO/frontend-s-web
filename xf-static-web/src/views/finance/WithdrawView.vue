@@ -142,8 +142,8 @@
         >
           <span style="color: #9bffd1">
             {{
-              (
-                withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
+              (selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin) ? '0.00' : (
+                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate) - 1
               ).toFixed(2)
             }}
             USDT
@@ -190,7 +190,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -417,6 +417,8 @@ export default defineComponent({
         return '银行卡'
       }
     }
+
+
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
