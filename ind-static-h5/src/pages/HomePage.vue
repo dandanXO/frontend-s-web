@@ -1,5 +1,36 @@
 <template>
   <div class="home-wrapper">
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab class="bg-yellow floating-btn">
+        <img src="../assets/images/index/icon-customer-service.png" alt="" />
+      </q-btn>
+    </q-page-sticky>
+
+    <div class="profile-wrapper">
+      <div class="profile-pic">
+        <q-avatar size="80px">
+          <img src="https://cdn.quasar.dev/img/avatar.png" />
+        </q-avatar>
+      </div>
+      <div class="profile-details-container">
+        <div class="profile-name">
+          Guest0238434
+          <div class="vip-details">
+            <img src="../assets/images/index/icon-vip-badge.png" alt="" />
+            <div class="vip-level">VIP1</div>
+          </div>
+        </div>
+        <div class="profile-balance">
+          <span class="balance-amount">1213</span>
+        </div>
+      </div>
+      <div class="profile-msg">
+        <q-icon name="mail" size="40px" color="yellow-7" />
+      </div>
+    </div>
+
+    <div class="home-divider"></div>
+
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
@@ -53,10 +84,16 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
-        :img-src="imgURL + banner.mobileImageUrl"
+        :img-src="require(`../assets/images/index/banner/${banner.mobileImageUrl}`)"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
     </q-carousel>
+
+    <!-- :img-src="require('../assets/images/index/') + banner.mobileImageUrl" -->
+    <!-- <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" alt=""> -->
+    <!-- require(`/src/assets/${srcPath}` -->
+
+    <!-- ../assets/images/index/hot-elephant-left.png -->
 
     <!-- <div>start here</div> -->
 
@@ -75,15 +112,42 @@
         <img src="../assets/images/index/hot-elephant-right.png" alt="" />
       </div>
       <div class="game-platform-wrapper">
-        <div class="game-platform-item"></div>
-        <div class="game-platform-item"></div>
-        <div class="game-platform-item"></div>
-        <div class="game-platform-item"></div>
+        <div class="game-platform-item">
+          <div
+            class="game-platform-img"
+            :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
+          ></div>
+          <div class="game-platform-title">Foutune Tiger</div>
+        </div>
+        <div class="game-platform-item">
+          <div class="game-platform-img"></div>
+          <div class="game-platform-title">Foutune Mouse</div>
+        </div>
+        <div class="game-platform-item">
+          <div class="game-platform-img"></div>
+          <div class="game-platform-title">Foutune Ox</div>
+        </div>
+        <div class="game-platform-item">
+          <div class="game-platform-img"></div>
+          <div class="game-platform-title">Rocket Crash</div>
+        </div>
 
-        <div class="game-platform-item"></div>
-        <div class="game-platform-item"></div>
-        <div class="game-platform-item"></div>
-        <div class="game-platform-item"></div>
+        <div class="game-platform-item">
+          <div class="game-platform-img"></div>
+          <div class="game-platform-title">Rocket Game</div>
+        </div>
+        <div class="game-platform-item">
+          <div class="game-platform-img"></div>
+          <div class="game-platform-title">Game Bonanza</div>
+        </div>
+        <div class="game-platform-item">
+          <div class="game-platform-img"></div>
+          <div class="game-platform-title">Crazy777</div>
+        </div>
+        <div class="game-platform-item">
+          <div class="game-platform-img"></div>
+          <div class="game-platform-title">Foutune Rabbit</div>
+        </div>
       </div>
       <div class="hot-games-pattern-bottom"></div>
       <div class="btn-load-more">Load More</div>
@@ -91,31 +155,91 @@
 
     <div class="games-selection-wrapper">
       <div class="title-game">
+        <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
         <span class="txt-style">Slot Games</span>
       </div>
+      <div class="game-platform-container">
+        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-jdb.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-joker.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-jili.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" /></div>
+      </div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
+        <img class="title-game-icon" src="../assets/images/index/title-icon-livecasino.png" alt="" />
         <span class="txt-style">Live Casino</span>
       </div>
+      <div class="game-platform-container">
+        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-ezugi.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-evolution.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-comingsoon.png" alt="" /></div>
+      </div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
+        <img class="title-game-icon" src="../assets/images/index/title-icon-gamepoker.png" alt="" />
         <span class="txt-style">Game &amp; Poker</span>
       </div>
-    </div>
-
-    <div class="games-selection-wrapper">
-      <div class="title-game">
-        <span class="txt-style">Fishing</span>
+      <div class="game-platform-container">
+        <div class="game-platform-item">
+          <img src="../assets/images/index/poker/item-game-gpipoker.png" alt="" />
+          <div class="game-platform-title">GPI-POKER</div>
+        </div>
+        <div class="game-platform-item">
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <div class="game-platform-title">COMING SOON</div>
+        </div>
+        <div class="game-platform-item">
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <div class="game-platform-title">COMING SOON</div>
+        </div>
+        <div class="game-platform-item">
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <div class="game-platform-title">COMING SOON</div>
+        </div>
+        <div class="game-platform-item">
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <div class="game-platform-title">COMING SOON</div>
+        </div>
+        <div class="game-platform-item">
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <div class="game-platform-title">COMING SOON</div>
+        </div>
       </div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
+        <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt="" />
+        <span class="txt-style">Fishing</span>
+      </div>
+      <div class="game-platform-container">
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-jili.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-simpleplay.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-spadegaming.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-zl.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-ag.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-giocoplus.png" alt="" /></div>
+      </div>
+    </div>
+
+    <div class="games-selection-wrapper">
+      <div class="title-game">
+        <img class="title-game-icon" src="../assets/images/index/title-icon-sports.png" alt="" />
         <span class="txt-style">Sports</span>
+      </div>
+      <div class="game-platform-container sport-platform">
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-cmd.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-saba.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-sbobet.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-bti.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im2.png" alt="" /></div>
       </div>
     </div>
   </div>
@@ -432,6 +556,8 @@ export default defineComponent({
 
     const imgURL = process.env.IMAGE_CDN + "/promo/";
 
+    const imgURLLocal = "http://";
+
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const homePopupImg = ref("");
@@ -528,12 +654,61 @@ export default defineComponent({
       }
     };
 
+    const homeBannerData = ref({
+      code: 0,
+      data: [
+        {
+          promoPageId: null,
+          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+          mobileImageUrl: "home-banner-01.png",
+          redirectUrl: "XingFa-red-packet-rain",
+          category: "HOME"
+        },
+        {
+          promoPageId: null,
+          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+          mobileImageUrl: "home-banner-02.png",
+          redirectUrl: "XingFa-red-packet-rain",
+          category: "HOME"
+        },
+        {
+          promoPageId: null,
+          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+          mobileImageUrl: "home-banner-03.png",
+          redirectUrl: "XingFa-red-packet-rain",
+          category: "HOME"
+        },
+        {
+          promoPageId: null,
+          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+          mobileImageUrl: "home-banner-04.png",
+          redirectUrl: "XingFa-red-packet-rain",
+          category: "HOME"
+        },
+        {
+          promoPageId: null,
+          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+          mobileImageUrl: "home-banner-05.png",
+          redirectUrl: "XingFa-red-packet-rain",
+          category: "HOME"
+        },
+        {
+          promoPageId: null,
+          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+          mobileImageUrl: "home-banner-06.png",
+          redirectUrl: "XingFa-red-packet-rain",
+          category: "HOME"
+        }
+      ]
+    });
+
     function loadData() {
       api
         .get("/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            banners.value = res.data;
+            // banners.value = res.data;
+            banners.value = homeBannerData.value.data;
           } else {
             // $q.notify({
             //   color: "negative",
@@ -831,6 +1006,7 @@ export default defineComponent({
       gamesTab: ref(platforms.value[0]),
       splitterModel: ref(27),
       imgURL,
+      imgURLLocal,
       banners,
       store,
       platforms,
@@ -892,7 +1068,8 @@ export default defineComponent({
       homePopupFrequency,
       homePopupFrequencyNum,
       isImpt,
-      isImportantAnnoucementModal
+      isImportantAnnoucementModal,
+      homeBannerData
     };
   }
 });
@@ -1119,9 +1296,10 @@ export default defineComponent({
   // margin: 10px;
   // margin-top: -29px;
   // height: 30px;
+  margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
 
   .station-notice-wrapper {
@@ -1427,12 +1605,102 @@ export default defineComponent({
 
 .home-wrapper {
   width: 95%;
-  margin: 12px auto;
+  margin: auto;
+  padding: 12px 0;
+}
+
+.home-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  height: 1px;
+  width: 105%;
+  margin: 0 -2.5%;
+}
+
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  .profile-details-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+  }
+  .profile-name {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    gap: 10px;
+
+    .vip-details {
+      position: relative;
+      margin-left: 25px;
+      margin-bottom: 10px;
+      img {
+        display: block;
+        width: 40px;
+        position: absolute;
+        top: -6px;
+        left: -26px;
+      }
+
+      .vip-level {
+        background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
+          linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
+        border-radius: 0px 2px 5px 0px;
+        width: 45px;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+      }
+    }
+  }
+  .profile-balance {
+    position: relative;
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    width: 130px;
+    font-size: 14px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: -3px;
+      background-image: url(../assets/images/index/icon-balance.png);
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 40px 40px;
+      display: block;
+      width: 40px;
+      height: 40px;
+      // margin-left: -50px;
+    }
+
+    .balance-amount {
+      margin-left: 15px;
+    }
+  }
+  .profile-msg {
+    margin-left: auto;
+    margin-top: 30px;
+  }
 }
 
 .top-action {
   display: flex;
   gap: 16px;
+  margin-top: 10px;
   .action-btn {
     display: flex;
     justify-content: center;
@@ -1464,6 +1732,8 @@ export default defineComponent({
 }
 
 .games-selection-wrapper {
+  margin-top: 10px;
+  margin-bottom: 40px;
   .hot-games-pattern-top {
     background-image: url(../assets/images/index/hot-games-pattern-top.png);
     background-size: contain;
@@ -1525,8 +1795,11 @@ export default defineComponent({
   .title-game {
     display: flex;
     margin-top: 30px;
+    gap: 8px;
+    align-items: center;
 
     .txt-style {
+      font-family: Wave;
       background-color: #f3ec78;
       background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
       background-size: 100%;
@@ -1535,10 +1808,16 @@ export default defineComponent({
       -webkit-text-fill-color: transparent;
       -moz-text-fill-color: transparent;
       line-height: 1;
+      letter-spacing: 2px;
       font-size: 30px;
-      font-weight: 900;
+      font-weight: 400;
+      // font-weight: bold;
       -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color: #a94700;
+    }
+
+    img.title-game-icon {
+      height: 35px;
     }
   }
 }
@@ -1546,14 +1825,71 @@ export default defineComponent({
 .game-platform-wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 12px;
-  row-gap: 16px;
+  column-gap: 8px;
+  row-gap: 12px;
   margin-top: 10px;
 
   .game-platform-item {
-    border: 5px solid #ffc027;
+    border: 3px solid #ffc027;
     height: 120px;
     border-radius: 30px;
+    // position: relative;
+    overflow: hidden;
+
+    .game-platform-img {
+      background-color: salmon;
+      width: 100%;
+      // height: 75px;
+      // height: 70%;
+      height: calc(100% - 30px);
+      background-size: cover;
+      background-position: center center;
+      background-image: url("../assets/images/index/hot-games-bg.png");
+    }
+
+    .game-platform-title {
+      padding: 5px 5px 10px;
+      color: #ffe248;
+      font-weight: 700;
+      font-size: 10px;
+      line-height: 1.1;
+      // white-space: nowrap;
+      // position: absolute;
+      text-align: center;
+      // height: 30%;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(270deg, #370f59 -0.1%, #57009d 50.22%, #340c56 97.6%);
+    }
+  }
+}
+
+.game-platform-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 16px;
+  row-gap: 24px;
+  margin-top: 20px;
+
+  &.sport-platform {
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+  }
+
+  .game-platform-item {
+    .game-platform-title {
+      text-align: center;
+      margin-top: 6px;
+      color: #ffe248;
+      font-weight: bold;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
   }
 }
 
@@ -1573,5 +1909,15 @@ export default defineComponent({
   background-image: url(../assets/images/index/btn-load-more.png);
   color: #ffffff;
   margin: auto;
+}
+
+.bg-yellow {
+  background: linear-gradient(180deg, #FED87D 0%, #E6A60C 100%) !important;
+}
+
+.floating-btn {
+  img {
+    width: 30px;
+  }
 }
 </style>

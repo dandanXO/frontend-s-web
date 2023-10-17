@@ -11,8 +11,10 @@ body {
   background: #ffffff;
 }
 #q-app {
-  background: url(../assets/images/index/home-bg.png) no-repeat center center;
-  background-size: cover;
+  background-image: url(../assets/images/index/home-bg.png);
+  background-position: top center;
+  background-repeat: repeat-y;
+  background-size: 100%;
   background-color: #280946;
 }
 .q-layout,
