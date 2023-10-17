@@ -201,6 +201,53 @@
         </el-row>
         <el-row>
           <el-col>
+            <el-form-item :label="t('fields.slotRollover')" prop="slotRollover">
+              <el-input-number
+                v-model="form.slotRollover"
+                style="width: 145px"
+                :min="0"
+                :max="100"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.sportsRollover')" prop="sportsRollover">
+              <el-input-number
+                v-model="form.sportsRollover"
+                style="width: 145px"
+                :min="0"
+                :max="100"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.liveRollover')" prop="liveRollover">
+              <el-input-number
+                v-model="form.liveRollover"
+                style="width: 145px"
+                :min="0"
+                :max="100"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.minBalance')" prop="minBalance">
+              <el-input-number
+                v-model="form.minBalance"
+                style="width: 145px"
+                :min="0"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
             <el-form-item :label="t('fields.minDeposit')" prop="depositMin">
               $
               <el-input-number
@@ -475,6 +522,10 @@ const form = reactive({
   startTime: null,
   endTime: null,
   rollover: null,
+  slotRollover: null,
+  sportsRollover: null,
+  liveRollover: null,
+  minBalance: null,
   bonusType: null,
   bonusAmount: null,
   bonusAmountRatio: null,
