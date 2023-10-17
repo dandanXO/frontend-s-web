@@ -27,6 +27,7 @@ const backButton = () => {
   display: flex;
   align-items: center;
   background: transparent;
+  padding: 1rem;
 
   .back-btn {
     width: 2.25rem;

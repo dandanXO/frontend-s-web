@@ -20,11 +20,7 @@
   </div>
 
   <div class="bg-container">
-    <img class="scroll-btn scroll-up" src="../../assets/images/index/scroll-btn.png" alt="" />
-    <img class="bg-frame" src="../../assets/images/index/bg-frame.png" alt="" />
-    <img class="bg" src="../../assets/images/index/bg.png" alt="" />
-    <img class="bg-character" src="../../assets/images/index/bg-character.png" alt="" />
-    <img class="scroll-btn scroll-down" src="../../assets/images/index/scroll-btn.png" alt="" />
+    <ContentFrame></ContentFrame>
 
     <div class="member-info-container">
       <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
@@ -59,6 +55,7 @@
 
 <script setup>
 import { ref } from "vue";
+import ContentFrame from "../ContentFrame.vue";
 
 const myMemberList = ref([
   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
@@ -198,13 +195,14 @@ const showMoreButton = () => {
 
         .amount {
           text-align: center;
+          font-size: 1rem;
+
           span {
             background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: Helvetica;
-            font-size: 1rem;
             font-style: normal;
             font-weight: 700;
           }

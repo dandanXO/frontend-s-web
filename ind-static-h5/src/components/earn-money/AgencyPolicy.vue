@@ -1,10 +1,6 @@
 <template>
   <div class="bg-container">
-    <img class="scroll-btn scroll-up" src="../../assets/images/index/scroll-btn.png" alt="" />
-    <img class="bg-frame" src="../../assets/images/index/bg-frame.png" alt="" />
-    <img class="bg" src="../../assets/images/index/bg.png" alt="" />
-    <img class="bg-character" src="../../assets/images/index/bg-character.png" alt="" />
-    <img class="scroll-btn scroll-down" src="../../assets/images/index/scroll-btn.png" alt="" />
+    <ContentFrame></ContentFrame>
 
     <div class="agency-policy">
       <ul class="margin-style">
@@ -57,6 +53,7 @@ import { ref, onMounted } from "vue";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
+import ContentFrame from "../ContentFrame.vue";
 
 const $q = useQuasar();
 const store = userStore();
@@ -148,34 +145,6 @@ onMounted(() => {
 
 <style lang="scss">
 .bg-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  position: relative;
-
-  .scroll-btn {
-    width: 2rem;
-    margin: 0.5rem 0;
-
-    &.scroll-up {
-      transform: rotate(180deg);
-    }
-  }
-
-  .bg {
-    position: absolute;
-  }
-
-  .bg-character {
-    position: absolute;
-    top: 2rem;
-  }
-
-  img {
-    width: 30rem;
-  }
-
   .agency-policy {
     position: absolute;
     padding: 0 2rem;
