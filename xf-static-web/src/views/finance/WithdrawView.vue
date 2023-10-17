@@ -140,15 +140,21 @@
           class="helptxt"
           label="预计到账"
         >
-          <span style="color: #9bffd1">
+          <div style="color: #9bffd1">
             {{
               (selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin) ? '0.00' : (
                 (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate) - 1
               ).toFixed(2)
             }}
             USDT
-          </span>
+          </div>
+
         </el-form-item>
+        <div  v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #9bffd1;">
+          *特别说明：三方自动收取提币 1.00 USDT 手续费！
+        </div>
+
+
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
