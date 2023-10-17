@@ -186,8 +186,13 @@ const validateBankLength = async (r, v) => {
   var min = 6;
   var max = 12;
   if (selectedBankType.value === 'Bank') {
-    min = 16;
-    max = 19;
+    if (store.state.user.siteId === 3) {
+      min = 10;
+      max = 15;
+    } else {
+      min = 16;
+      max = 19;
+    }
   } else if (selectedBankType.value === 'Crypto') {
     min = 34;
     max = 36;
