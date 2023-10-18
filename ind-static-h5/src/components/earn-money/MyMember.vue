@@ -20,7 +20,7 @@
   </div>
 
   <div class="bg-container">
-    <ContentFrame></ContentFrame>
+    <ContentFrame :isNoInfo="isNoInfoRef" :noInfoTitle="`No Member`"></ContentFrame>
 
     <div class="member-info-container">
       <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
@@ -57,13 +57,10 @@
 import { ref } from "vue";
 import ContentFrame from "../ContentFrame.vue";
 
-const myMemberList = ref([
-  { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
-  { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
-  { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
-  { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
-  { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 }
-]);
+const myMemberList = ref([]);
+
+let isNoInfoRef = ref(true);
+if (myMemberList.value.length) isNoInfoRef.value = true;
 
 const showMoreButton = () => {
   console.log("show more button clicked");

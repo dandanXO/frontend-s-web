@@ -493,6 +493,13 @@ svg path {
   }
 }
 
+// .fixed-top {
+//   position: relative;
+//   top: unset;
+//   left: unset;
+//   right: unset;
+// }
+
 .back-btn {
   width: 2.25rem;
   margin: 0.5rem 0 0 0;
