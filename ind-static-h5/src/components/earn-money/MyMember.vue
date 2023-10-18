@@ -119,7 +119,7 @@ const showMoreButton = () => {
 .member-info-container {
   position: absolute;
   padding: 0 2rem;
-  width: 100%;
+  width: 30rem;
   height: 39.5rem;
   overflow: scroll;
   top: 14rem;

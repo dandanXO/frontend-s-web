@@ -71,9 +71,7 @@ body.body--dark {
   background: #11131f;
 }
 body.body--dark .q-header {
-  // background: url(../assets/images/common/bgheader.png) no-repeat top center;
-  background: #212534;
-  // border-radius: 0 0 20px 20px;
+  background: transparent;
   background-size: cover;
 }
 .q-dialog__inner--minimized {
@@ -115,14 +113,9 @@ body.platform-ios .q-dialog__inner--minimized > div {
   position: relative;
   a {
     display: block;
-    position: absolute;
-    left: 0;
-    padding: 0;
-    svg {
-      display: block;
-      width: 40px;
-      fill: #bacef1;
-    }
+    position: relative;
+    left: 2rem;
+    margin: 0.75rem 3rem 0 0rem;
   }
 }
 

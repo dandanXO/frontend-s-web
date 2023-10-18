@@ -148,7 +148,6 @@ onMounted(() => {
   .agency-policy {
     position: absolute;
     padding: 0 2rem;
-    width: 100%;
     height: 37rem;
     overflow: scroll;
     top: 15rem;
