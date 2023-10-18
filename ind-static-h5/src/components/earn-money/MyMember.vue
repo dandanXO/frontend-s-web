@@ -57,6 +57,13 @@
 import { ref } from "vue";
 import ContentFrame from "../ContentFrame.vue";
 
+// [
+//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
+//   { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
+//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
+//   { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
+//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 }
+// ]
 const myMemberList = ref([]);
 
 let isNoInfoRef = ref(true);
