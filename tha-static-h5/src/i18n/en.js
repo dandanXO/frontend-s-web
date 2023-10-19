@@ -405,7 +405,8 @@ export default {
     update_app_title: "Update App",
     detected_new_version: "New Update Available. Do you wish to download it now?",
     update_now: "Update Now",
-    usdt_will_be_charged: "1.00 USDT will be charged for each transaction!"
+    usdt_will_be_charged: "1.00 USDT will be charged for each transaction!",
+    estimate_arrival: "Estimate Withdraw: "
   },
   error: {
     101: "Platform not found",
