@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <q-header v-if="hasPage">
+    <q-header v-if="hasPage" reveal>
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
@@ -496,13 +496,6 @@ svg path {
     width: 100%;
   }
 }
-
-// .fixed-top {
-//   position: relative;
-//   top: unset;
-//   left: unset;
-//   right: unset;
-// }
 
 .back-btn {
   width: 2.25rem;
