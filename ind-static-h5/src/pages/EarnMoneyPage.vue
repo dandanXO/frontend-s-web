@@ -1,6 +1,4 @@
 <template>
-  <TitleNavigation :title="title"></TitleNavigation>
-
   <TabNavigation :tabList="tabList" :onTabClick="onTabClick" :isActiveTab="isActiveTab"></TabNavigation>
 
   <template v-if="currentTab === tabList[0]">
@@ -14,12 +12,9 @@
 
 <script setup>
 import { ref } from "vue";
-import TitleNavigation from "../components/TitleNavigation.vue";
 import TabNavigation from "../components/TabNavigation.vue";
 import MyMember from "../components/earn-money/MyMember.vue";
 import AgencyPolicy from "../components/earn-money/AgencyPolicy.vue";
-
-const title = "Earn Money";
 
 let tabList = ref(["My Member", "Agency Policy"]);
 let currentTab = ref(tabList.value[0]);

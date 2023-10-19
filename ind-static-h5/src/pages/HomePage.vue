@@ -98,8 +98,8 @@
     <!-- <div>start here</div> -->
 
     <div class="top-action">
-      <btn class="action-btn action-btn--withdrawal">Withdrawal</btn>
-      <btn class="action-btn action-btn--deposit">Deposit</btn>
+      <div class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true">Withdrawal</div>
+      <div class="action-btn action-btn--deposit" @click="depositDialog = true">Deposit</div>
     </div>
 
     <div class="games-selection-wrapper">
@@ -159,12 +159,24 @@
         <span class="txt-style">Slot Games</span>
       </div>
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-jdb.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-joker.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-jili.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" /></div>
+        <div class="game-platform-item" @click="fullGameDialog = true">
+          <img src="../assets/images/index/slot/item-game-jdb.png" alt="" />
+        </div>
+        <div class="game-platform-item" @click="fullGameDialog = true">
+          <img src="../assets/images/index/slot/item-game-joker.png" alt="" />
+        </div>
+        <div class="game-platform-item" @click="fullGameDialog = true">
+          <img src="../assets/images/index/slot/item-game-jili.png" alt="" />
+        </div>
+        <div class="game-platform-item" @click="fullGameDialog = true">
+          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
+        </div>
+        <div class="game-platform-item" @click="fullGameDialog = true">
+          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
+        </div>
+        <div class="game-platform-item" @click="fullGameDialog = true">
+          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
+        </div>
       </div>
     </div>
 
@@ -327,6 +339,210 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="fullGameDialog" persistent maximized transition-show="slide-up" transition-hide="slide-down">
+    <q-card class="fullgame-card">
+      <q-card-section>
+        <div class="home-wrapper fullgame-wrapper">
+          <div class="fullgame-header">
+            <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-lg" v-close-popup />
+
+            <div class="fullgame-search">
+              <q-input dense standout v-model="searchText" label="Search" clearable clear-icon="close">
+                <template v-slot:append>
+                  <q-icon name="search" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+
+          <div class="games-selection-wrapper">
+            <div class="game-platform-wrapper">
+              <div class="game-platform-item">
+                <div
+                  class="game-platform-img"
+                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
+                ></div>
+                <div class="game-platform-title">Foutune Tiger</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Foutune Mouse</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Foutune Ox</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Rocket Crash</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Rocket Game</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Game Bonanza</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Crazy777</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Foutune Rabbit</div>
+              </div>
+              <div class="game-platform-item">
+                <div
+                  class="game-platform-img"
+                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
+                ></div>
+                <div class="game-platform-title">Foutune Tiger</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Foutune Mouse</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Foutune Ox</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Rocket Crash</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Rocket Game</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Game Bonanza</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Crazy777</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Foutune Rabbit</div>
+              </div>
+              <div class="game-platform-item">
+                <div
+                  class="game-platform-img"
+                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
+                ></div>
+                <div class="game-platform-title">Foutune Tiger</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Foutune Mouse</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Foutune Ox</div>
+              </div>
+              <div class="game-platform-item">
+                <div class="game-platform-img"></div>
+                <div class="game-platform-title">Rocket Crash</div>
+              </div>
+            </div>
+            <!-- <div class="btn-load-more">Load More</div> -->
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="withdrawalDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="popout-main-title">
+          <div class="txt-title">Withdrawal</div>
+        </div>
+        <div class="btn-go">Go</div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="depositDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="popout-main-title">
+          <div class="txt-title">Deposit</div>
+        </div>
+        <div class="deposit-item-container">
+          <div class="deposit-item">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-1.png" alt="" />
+            </div>
+            <div class="deposit-amt">100</div>
+          </div>
+          <div class="deposit-item active">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-2.png" alt="" />
+            </div>
+            <div class="deposit-amt">300</div>
+          </div>
+          <div class="deposit-item">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-3.png" alt="" />
+            </div>
+            <div class="deposit-amt">500</div>
+          </div>
+          <div class="deposit-item">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-4.png" alt="" />
+            </div>
+            <div class="deposit-amt">1000</div>
+          </div>
+          <div class="deposit-item">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-5.png" alt="" />
+            </div>
+            <div class="deposit-amt">3000</div>
+          </div>
+          <div class="deposit-item">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-6.png" alt="" />
+            </div>
+            <div class="deposit-amt">5000</div>
+          </div>
+          <div class="deposit-item">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-7.png" alt="" />
+            </div>
+            <div class="deposit-amt">10000</div>
+          </div>
+          <div class="deposit-item">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-8.png" alt="" />
+            </div>
+            <div class="deposit-amt">30000</div>
+          </div>
+          <div class="deposit-item">
+            <div class="deposit-icon">
+              <img src="../assets/images/index/popout/deposit-coin-9.png" alt="" />
+            </div>
+            <div class="deposit-amt">50000</div>
+          </div>
+        </div>
+        <div class="deposit-enter-amt">
+          <!-- <q-input v-model.number="model" type="number" filled style="max-width: 200px" /> -->
+          <div>Amount</div>
+          <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
+        </div>
+        <div class="deposit-options">
+          <q-btn flat class="deposit-option-btn active" label="UPI1" />
+          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" />
+        </div>
+        <div class="btn-go">Go</div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
 <script>
@@ -362,6 +578,14 @@ export default defineComponent({
       localStorage.setItem("indexImgTop", new Date().getTime());
       isFirstView.value = false;
     };
+
+    const fullGameDialog = ref(false);
+    const searchText = ref("");
+
+    const depositDialog = ref(false);
+    const withdrawalDialog = ref(false);
+    const depositAmountInput = ref("");
+
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
@@ -1069,7 +1293,12 @@ export default defineComponent({
       homePopupFrequencyNum,
       isImpt,
       isImportantAnnoucementModal,
-      homeBannerData
+      homeBannerData,
+      fullGameDialog,
+      searchText,
+      depositDialog,
+      withdrawalDialog,
+      depositAmountInput
     };
   }
 });
@@ -1656,6 +1885,8 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         font-size: 10px;
+        line-height: 1;
+        padding-bottom: 1px;
       }
     }
   }
@@ -1765,6 +1996,7 @@ export default defineComponent({
     }
 
     .title-hot-games {
+      font-family: Arial;
       background-image: url(../assets/images/index/hot-games-title.png);
       background-size: contain;
       background-repeat: no-repeat;
@@ -1784,7 +2016,7 @@ export default defineComponent({
         -webkit-text-fill-color: transparent;
         -moz-text-fill-color: transparent;
         line-height: 1;
-        font-size: 30px;
+        font-size: 28px;
         font-weight: 800;
         -webkit-text-stroke-width: 1px;
         -webkit-text-stroke-color: #db0011;
@@ -1832,7 +2064,7 @@ export default defineComponent({
   .game-platform-item {
     border: 3px solid #ffc027;
     height: 120px;
-    border-radius: 30px;
+    border-radius: 15px;
     // position: relative;
     overflow: hidden;
 
@@ -1897,13 +2129,13 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
   font-weight: 700;
-  width: 50%;
+  width: 180px;
   height: 60px;
   transition: 0.3s all;
   background-image: url(../assets/images/index/btn-load-more.png);
@@ -1911,13 +2143,215 @@ export default defineComponent({
   margin: auto;
 }
 
+.btn-go {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 1;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  width: 180px;
+  height: 60px;
+  transition: 0.3s all;
+  background-image: url(../assets/images/index/popout/btn-go.png);
+  color: #ffffff;
+  margin: auto;
+}
+
 .bg-yellow {
-  background: linear-gradient(180deg, #FED87D 0%, #E6A60C 100%) !important;
+  background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%) !important;
 }
 
 .floating-btn {
   img {
     width: 30px;
+  }
+}
+
+.fullgame-card {
+  margin: 0;
+  background-image: url(../assets/images/index/home-bg.png);
+  background-position: top center;
+  background-repeat: repeat-y;
+  background-size: 100%;
+  background-color: #280946;
+}
+
+.fullgame-wrapper {
+  padding: 0;
+
+  .fullgame-header {
+    background-image: url(../assets/images/index/fullgame-banner.png);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 -2.5%;
+    // min-height: 200px;
+    padding: 12px;
+  }
+
+  .fullgame-search {
+    padding-top: 90px;
+  }
+}
+
+.popout-dialog {
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  padding-top: 90px;
+  padding-right: 10px;
+
+  .popout-close {
+    position: absolute;
+    right: 0px;
+    top: 80px;
+  }
+
+  .popout-dialog-container {
+    background-image: url(../assets/images/index/popout/deposit-bg.png);
+    background-position: bottom center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30px 20px 20px;
+    border-radius: 30px !important;
+  }
+
+  .popout-main-title {
+    background-image: url(../assets/images/index/popout/popout-title.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    max-width: 290px;
+    height: 120px;
+    margin: -110px auto 0;
+    // position: absolute;
+    // top: 0px;
+    position: relative;
+
+    .txt-title {
+      background-color: #f3ec78;
+      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      line-height: 1;
+      font-size: 22px;
+      font-weight: 800;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: #a94700;
+
+      position: absolute;
+      bottom: 28px;
+      left: 52%;
+      transform: translate(-50%, 0%);
+    }
+  }
+
+  .deposit-item-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 12px;
+    column-gap: 8x;
+
+    .deposit-item {
+      .deposit-icon {
+        background-image: url(../assets/images/index/popout/deposit-item-frame.png);
+        background-position: top center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        height: 80px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        margin-left: 3px;
+        margin-right: 3px;
+        transition: all 0.3s;
+        img {
+          display: block;
+          width: 70%;
+        }
+      }
+
+      &.active > .deposit-icon {
+        background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
+      }
+
+      .deposit-amt {
+        background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding: 3px;
+        width: 100%;
+        max-width: 100px;
+        margin: auto;
+      }
+    }
+  }
+
+  .deposit-enter-amt {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+
+    .deposit-input {
+      background-color: rgba(21, 0, 37, 0.5);
+      border-radius: 5px;
+      width: 100%;
+    }
+  }
+
+  .deposit-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 16px;
+    .deposit-option-btn {
+      color: #cccccc;
+      background-color: rgba(21, 0, 37, 0.5) !important;
+      min-width: 100px;
+      max-width: 160px;
+      width: 100%;
+      border-radius: 6px;
+      border: 3px solid transparent;
+
+      &.active {
+        color: #ffe66b;
+        border: 3px solid #ffe66b;
+      }
+
+      &.label-on-discount {
+        position: relative;
+        &:after {
+          content: "";
+          background-image: url(../assets/images/index/popout/label-discount.png);
+          background-repeat: no-repeat;
+          display: block;
+          position: absolute;
+          top: -4px;
+          right: -5px;
+          width: 30px;
+          height: 30px;
+          background-size: 100%;
+        }
+      }
+    }
   }
 }
 </style>
