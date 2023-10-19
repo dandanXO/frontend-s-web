@@ -15,7 +15,7 @@
       <div class="profile-details-container">
         <div class="profile-name">
           Guest0238434
-          <div class="vip-details">
+          <div class="vip-details" @click="router.push('/vip')">
             <img src="../assets/images/index/icon-vip-badge.png" alt="" />
             <div class="vip-level">VIP1</div>
           </div>
@@ -462,7 +462,105 @@
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
         </div>
+
+        <q-tabs
+          v-model="withdrawalDialogTab"
+          dense
+          no-caps
+          class="withdrawal-tab"
+          indicator-color="transparent"
+          align="justify"
+        >
+          <q-tab name="backcard" label="Backcard" />
+          <q-tab name="upi" label="UPI" />
+        </q-tabs>
+
+        <q-tab-panels
+          class="withdrawal-tab-panel"
+          v-model="withdrawalDialogTab"
+          animated
+          transition-prev="fade"
+          transition-next="fade"
+        >
+          <q-tab-panel name="backcard">
+            <div class="withdrawal-table">
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Cash Balance:</div>
+                <div class="w-tbl-col"><span class="w-txt-red">1731.5</span></div>
+              </div>
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Withdrawable:</div>
+                <div class="w-tbl-col">0</div>
+              </div>
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Remaining Wager:</div>
+                <div class="w-tbl-col">30822.5</div>
+              </div>
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="upi">
+            <div class="withdrawal-table">
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Cash Balance:</div>
+                <div class="w-tbl-col"><span class="w-txt-red">1731.5</span></div>
+              </div>
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Withdrawable:</div>
+                <div class="w-tbl-col">0</div>
+              </div>
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Remaining Wager:</div>
+                <div class="w-tbl-col">30822.5</div>
+              </div>
+            </div>
+          </q-tab-panel>
+        </q-tab-panels>
+
+        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'backcard'">
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Withdraw Amount</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Account Holder Name</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Account Holder Name"></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Account Number</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Account Number"></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Bank IFSC Code</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Bank IFSC Code"></q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'upi'">
+          <div class="w-form-item w-form-item--upi">
+            <div class="w-form-label">Withdraw Amount</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--upi">
+            <div class="w-form-label">VPA</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter VPA"></q-input>
+            </div>
+          </div>
+        </div>
+
         <div class="btn-go">Go</div>
+
+        <div class="bottom-tnc">3%+6Rs of the withdrawal amount would be deducted as bank commission</div>
       </div>
     </div>
   </q-dialog>
@@ -475,69 +573,41 @@
           <div class="txt-title">Deposit</div>
         </div>
         <div class="deposit-item-container">
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-1.png" alt="" />
+          <template v-for="(item, index) in depositItems" :key="index">
+            <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
+              <div class="deposit-icon">
+                <img
+                  :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
+                  :alt="item.amount + ' Coin'"
+                />
+                <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
+              </div>
+              <div class="deposit-amt">{{ item.amount }}</div>
             </div>
-            <div class="deposit-amt">100</div>
-          </div>
-          <div class="deposit-item active">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-2.png" alt="" />
-            </div>
-            <div class="deposit-amt">300</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-3.png" alt="" />
-            </div>
-            <div class="deposit-amt">500</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-4.png" alt="" />
-            </div>
-            <div class="deposit-amt">1000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-5.png" alt="" />
-            </div>
-            <div class="deposit-amt">3000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-6.png" alt="" />
-            </div>
-            <div class="deposit-amt">5000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-7.png" alt="" />
-            </div>
-            <div class="deposit-amt">10000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-8.png" alt="" />
-            </div>
-            <div class="deposit-amt">30000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-9.png" alt="" />
-            </div>
-            <div class="deposit-amt">50000</div>
-          </div>
+          </template>
         </div>
         <div class="deposit-enter-amt">
-          <!-- <q-input v-model.number="model" type="number" filled style="max-width: 200px" /> -->
           <div>Amount</div>
           <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
         </div>
         <div class="deposit-options">
-          <q-btn flat class="deposit-option-btn active" label="UPI1" />
-          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" />
+          <q-btn
+            flat
+            class="deposit-option-btn"
+            :class="{ active: isUpi1Active }"
+            label="UPI1"
+            @click="handleDepositUpiClick(1)"
+          />
+          <q-btn
+            flat
+            class="deposit-option-btn label-on-discount"
+            :class="{ active: isUpi2Active }"
+            label="UPI2"
+            @click="handleDepositUpiClick(2)"
+          />
+
+          <!-- <q-btn flat class="deposit-option-btn active" label="UPI1" />
+          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" /> -->
         </div>
         <div class="btn-go">Go</div>
       </div>
@@ -583,7 +653,42 @@ export default defineComponent({
     const searchText = ref("");
 
     const depositDialog = ref(false);
+    const depositItems = reactive([
+      { amount: 100, hotLabel: 5, isActive: false },
+      { amount: 300, hotLabel: 15, isActive: false },
+      { amount: 500, hotLabel: 25, isActive: false },
+      { amount: 1000, hotLabel: 50, isActive: false },
+      { amount: 3000, hotLabel: 150, isActive: false },
+      { amount: 5000, hotLabel: 250, isActive: false },
+      { amount: 10000, hotLabel: 500, isActive: false },
+      { amount: 30000, hotLabel: 1500, isActive: false },
+      { amount: 50000, hotLabel: 2500, isActive: false }
+    ]);
+
+    const handleDepositItemClick = (index) => {
+      depositItems.forEach((item, i) => {
+        item.isActive = i === index;
+        if (i === index) {
+          depositAmountInput.value = item.amount;
+        }
+      });
+    };
+
+    const isUpi1Active = ref(true);
+    const isUpi2Active = ref(false);
+
+    const handleDepositUpiClick = (option) => {
+      if (option === 1) {
+        isUpi1Active.value = true;
+        isUpi2Active.value = false;
+      } else if (option === 2) {
+        isUpi1Active.value = false;
+        isUpi2Active.value = true;
+      }
+    };
+
     const withdrawalDialog = ref(false);
+    const withdrawalDialogTab = ref("");
     const depositAmountInput = ref("");
 
     const thumbsSwiper = ref(null);
@@ -1219,6 +1324,8 @@ export default defineComponent({
       getVersionNo();
       checkShowImgTop();
       getAppDownloadUrl();
+
+      withdrawalDialogTab.value = "backcard";
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -1297,8 +1404,14 @@ export default defineComponent({
       fullGameDialog,
       searchText,
       depositDialog,
+      depositItems,
+      handleDepositItemClick,
+      isUpi1Active,
+      isUpi2Active,
+      handleDepositUpiClick,
+      depositAmountInput,
       withdrawalDialog,
-      depositAmountInput
+      withdrawalDialogTab
     };
   }
 });
@@ -2069,7 +2182,7 @@ export default defineComponent({
     overflow: hidden;
 
     .game-platform-img {
-      background-color: salmon;
+      background-color: #cccccc;
       width: 100%;
       // height: 75px;
       // height: 70%;
@@ -2161,6 +2274,11 @@ export default defineComponent({
   margin: auto;
 }
 
+.bottom-tnc {
+  font-size: 80%;
+  text-align: center;
+}
+
 .bg-yellow {
   background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%) !important;
 }
@@ -2200,6 +2318,7 @@ export default defineComponent({
 
 .popout-dialog {
   width: 90%;
+
   max-width: 500px;
   position: relative;
   padding-top: 90px;
@@ -2284,6 +2403,24 @@ export default defineComponent({
         background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
       }
 
+      .deposit-hot-label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-image: url(../assets/images/index/popout/hot-label.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 50px;
+        height: 28px;
+        font-size: 0.725rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding-bottom: 3px;
+      }
+
       .deposit-amt {
         background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
         background-position: center center;
@@ -2351,6 +2488,66 @@ export default defineComponent({
           background-size: 100%;
         }
       }
+    }
+  }
+
+  .withdrawal-tab {
+    background-color: #896742;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+
+    .q-tab__label {
+      font-weight: 800;
+    }
+
+    .q-tab--active {
+      color: #000000;
+      background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+    }
+  }
+
+  .withdrawal-tab-panel {
+    background: rgba(21, 0, 37, 0.3);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    .withdrawal-table {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+
+      .w-tbl-row {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .w-tbl-col {
+        font-weight: 700;
+
+        &:nth-child(2) {
+          font-size: 140%;
+        }
+      }
+
+      .w-txt-red {
+        color: #ff0000;
+      }
+    }
+  }
+
+  .withdrawal-form {
+    margin-top: 20px;
+    .w-form-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+    .w-form-label {
+    }
+    .w-form-input {
+      background-color: rgba(21, 0, 37, 0.5);
+      border-radius: 5px;
     }
   }
 }
