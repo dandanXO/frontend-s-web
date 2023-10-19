@@ -96,7 +96,7 @@
           <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
           EARN MONEY
         </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
+        <q-route-tab class="cs-web-id" to="/bonus" id="cs-web-id" name="live">
           <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           BONUS
@@ -182,6 +182,10 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = "Earn Money";
+        } else if (route.path === "/bonus") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "Daily Activity";
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
