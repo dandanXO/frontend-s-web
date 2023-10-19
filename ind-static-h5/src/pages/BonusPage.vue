@@ -33,12 +33,7 @@
       <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
         <template v-slot:header="props">
           <q-tr :props="props">
-            <q-th
-              v-for="(col, colIndex) in props.cols"
-              :key="col.name"
-              :props="props"
-              :class="colIndex === 0 ? 'vip-icon-th' : ''"
-            >
+            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <img v-if="colIndex === 0" class="vip-icon" src="../assets/images/bonus/vip.png" alt="" />
               <template v-if="colIndex === props.cols.length - 1">
                 1st Day Of
@@ -300,14 +295,9 @@ const redeem = () => {};
       background: transparent !important;
     }
 
-    .vip-icon-th {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .vip-icon {
-        width: 3.5rem;
-      }
+    .vip-icon {
+      width: 3.5rem;
+      margin: 0.5rem 0 0;
     }
 
     .coin-container {

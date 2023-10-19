@@ -3,12 +3,7 @@
     <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
         <q-tr :props="props">
-          <q-th
-            v-for="(col, colIndex) in props.cols"
-            :key="col.name"
-            :props="props"
-            :class="colIndex === 0 ? 'vip-icon-th' : ''"
-          >
+          <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <!-- unable to adjust table width... -->
             <template v-else>
@@ -48,12 +43,7 @@
     <q-table flat :hide-pagination="true" :columns="columns2" :rows="rows2" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
         <q-tr :props="props">
-          <q-th
-            v-for="(col, colIndex) in props.cols"
-            :key="col.name"
-            :props="props"
-            :class="colIndex === 0 ? 'vip-icon-th' : ''"
-          >
+          <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <!-- unable to adjust table width... -->
             <template v-else>
@@ -217,14 +207,9 @@ const rows2 = [
     margin: 0 0 1.25rem 0;
   }
 
-  .vip-icon-th {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .vip-icon {
-      width: 3.5rem;
-    }
+  .vip-icon {
+    width: 3.5rem;
+    margin: 0.5rem 0 0;
   }
 
   thead {
@@ -235,7 +220,7 @@ const rows2 = [
     }
   }
   thead > :first-child {
-    background: rgba(21, 0, 37, 0.5);
+    background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
   }
   tbody > :nth-child(odd) {
     background: rgba(21, 0, 37, 0.2);
