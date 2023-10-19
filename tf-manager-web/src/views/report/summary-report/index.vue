@@ -124,6 +124,13 @@
         <template #default="scope">{{ scope.row.convertRate }}%</template>
       </el-table-column>
       <el-table-column
+        prop="fdConvertRate"
+        :label="t('fields.fdConvertRate')"
+        width="80"
+      >
+        <template #default="scope">{{ scope.row.fdConvertRate }}%</template>
+      </el-table-column>
+      <el-table-column
         prop="fdAmount"
         :label="t('fields.ftdAmount')"
         width="120"
@@ -151,6 +158,23 @@
               type: 'money',
             }"
           />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalDepositNumber"
+        :label="t('fields.totalDepositNumber')"
+        width="120"
+      >
+        <template #default="scope">
+          <router-link
+            :to="
+              `/report/summary/depositNumber?date=${scope.row.date}&site=${request.siteId}`
+            "
+          >
+            <el-link type="primary">
+              {{ scope.row.totalDepositNumber }}
+            </el-link>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column
