@@ -189,8 +189,8 @@
               <span style="flex: 1">预计到帐：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{
-                  (
-                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
+                  (selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin) ? '0.00' : (
+                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate) - 1
                   ).toFixed(2)
                 }}
                 USDT

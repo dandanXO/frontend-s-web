@@ -4,6 +4,7 @@ html {
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
+  font-size: calc(100vw / 31.25); // 500 / 16 = 31.25
 }
 // app global css in SCSS form
 body {
@@ -11,8 +12,10 @@ body {
   background: #ffffff;
 }
 #q-app {
-  background: url(../assets/images/index/home-bg.png) no-repeat center center;
-  background-size: cover;
+  background-image: url(../assets/images/index/home-bg.png);
+  background-position: top center;
+  background-repeat: repeat-y;
+  background-size: 100%;
   background-color: #280946;
 }
 .q-layout,
@@ -52,6 +55,7 @@ body {
   }
 }
 .q-page-container {
+  padding-top: 0 !important;
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> is used. */
 
@@ -68,9 +72,7 @@ body.body--dark {
   background: #11131f;
 }
 body.body--dark .q-header {
-  // background: url(../assets/images/common/bgheader.png) no-repeat top center;
-  background: #212534;
-  // border-radius: 0 0 20px 20px;
+  background: transparent;
   background-size: cover;
 }
 .q-dialog__inner--minimized {
@@ -112,14 +114,9 @@ body.platform-ios .q-dialog__inner--minimized > div {
   position: relative;
   a {
     display: block;
-    position: absolute;
-    left: 0;
-    padding: 0;
-    svg {
-      display: block;
-      width: 40px;
-      fill: #bacef1;
-    }
+    position: relative;
+    left: 2rem;
+    margin: 0.75rem 3rem 0 0rem;
   }
 }
 
@@ -282,4 +279,10 @@ svg {
 .q-field--readonly.q-field--float .q-field__native,
 .q-field--readonly.q-field--float .q-field__input {
   color: #bacef1;
+}
+
+@media (min-width: 501px) {
+  html {
+    font-size: 16px;
+  }
 }

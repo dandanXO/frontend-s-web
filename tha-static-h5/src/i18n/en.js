@@ -404,7 +404,8 @@ export default {
     fav_game_removed: "Game has been removed from your favorite games list.",
     update_app_title: "Update App",
     detected_new_version: "New Update Available. Do you wish to download it now?",
-    update_now: "Update Now"
+    update_now: "Update Now",
+    usdt_will_be_charged: "1.00 USDT will be charged for each transaction!"
   },
   error: {
     101: "Platform not found",
