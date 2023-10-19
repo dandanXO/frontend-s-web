@@ -408,7 +408,8 @@ export default {
     update_app_title: "อัพเดทเรียบร้อย",
     detected_new_version: "มีรายการอัพเดทใหม่ ต้องการดาวน์โหลดตอนนี้เลยหรือไม่?",
     update_now: "อัพเดท",
-    usdt_will_be_charged: "บันทึก: มีค่าธรรมเนียมในการถอนเงิน 1.00 USDT/ครั้ง"
+    usdt_will_be_charged: "บันทึก: มีค่าธรรมเนียมในการถอนเงิน 1.00 USDT/ครั้ง",
+    estimate_arrival: "ประมาณการถอน: "
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

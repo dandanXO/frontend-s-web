@@ -221,9 +221,11 @@
                 class="text-left full-width"
               >
                 <span style="color: #9bffd1"
-                  >{{
+                  >{{ $t('lang.estimate_arrival')}} {{
                     selectedWithdrawalMethod &&
-                    withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                    (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount /
+                      selectedWithdrawalMethod.exchangeRate -
+                      1) < 0)
                       ? "0.00"
                       : (
                           withdrawInfo.amount /
@@ -239,7 +241,7 @@
                 v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
                 class="text-left full-width"
               >
-                <span style="color: #9bffd1;">{{ $t("lang.usdt_will_be_charged") }}</span>
+                <span style="color: #9bffd1;">({{ $t("lang.usdt_will_be_charged") }})</span>
               </div>
 
               <!-- <a-form-item
@@ -380,6 +382,14 @@ export default defineComponent({
                   icon: element.bankIcon
                 })
               }
+            } else {
+              if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+                withdrawState.bankCardList.push({
+                  ...element,
+                  name: `${element.bankName} - ${element.cardNumber}`,
+                  icon: element.bankIcon
+                })
+              }
             }
           });
 
@@ -397,10 +407,7 @@ export default defineComponent({
         if (response.code === 0) {
           withdrawalMethods.value = response.data
           //Remove this for real data
-          // withdrawalMethods.value = [
-          //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
-          //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
-          if (withdrawalMethods.value.length > 0) {
+      if (withdrawalMethods.value.length > 0) {
             selectMethod(withdrawalMethods.value[0], 0)
           }
         } else {
