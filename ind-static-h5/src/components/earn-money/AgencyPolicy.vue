@@ -179,6 +179,10 @@ onMounted(() => {
     }
 
     .table-container {
+      .q-table__card {
+        background: transparent !important;
+      }
+
       thead {
         background: #15002580;
       }

@@ -16,8 +16,6 @@ import TabNavigation from "../components/TabNavigation.vue";
 import MyMember from "../components/earn-money/MyMember.vue";
 import AgencyPolicy from "../components/earn-money/AgencyPolicy.vue";
 
-const title = "Earn Money";
-
 let tabList = ref(["My Member", "Agency Policy"]);
 let currentTab = ref(tabList.value[0]);
 
