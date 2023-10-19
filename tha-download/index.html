@@ -27,7 +27,7 @@
         </div>
         <div class="info-right">
 
-            <h2>Jolly88 APP</h2>
+            <h2>Jolly88 APP <span id="ver-no"></span></h2>
 
             <p class="p-info">
                 แหล่งความบันเทิงครบวงจรเจ้าแรกของโลก ศูนย์รวมเกมขนาดใหญ่ หลากหลาย ทั้งเกมกีฬา และ e-sport ชั้นนำ live
@@ -94,7 +94,11 @@
 </body>
 
 <script type="text/javascript">
+    var versionNo= "1.0.9";
+
     $(document).ready(function (e) {
+
+        $("#ver-no").html("(v" + versionNo + ")")
 
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
@@ -105,7 +109,7 @@
         } else {
             //Android or Browser.
             //Change URL ./download/jb_app.apk when go Live.
-            $("#download-link").attr("href", "https://file.rd7etvkrgt.com/apps/3/jb_app_1.0.7.apk");
+            $("#download-link").attr("href", "https://file.rd7etvkrgt.com/apps/3/jb_app_1.0.9.apk");
         }
 
     });
