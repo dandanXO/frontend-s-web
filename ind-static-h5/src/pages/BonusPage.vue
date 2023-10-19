@@ -35,7 +35,14 @@
           <q-tr :props="props">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <img v-if="colIndex === 0" class="vip-icon" src="../assets/images/bonus/vip.png" alt="" />
-              {{ col.label }}
+              <template v-if="colIndex === props.cols.length - 1">
+                1st Day Of
+                <br />
+                Next Month
+              </template>
+              <template v-else>
+                {{ col.label }}
+              </template>
             </q-th>
           </q-tr>
         </template>
@@ -43,7 +50,7 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <div class="coin-container">
+              <div :class="colIndex === 0 ? '' : 'coin-container'">
                 <img v-if="colIndex !== 0" class="coin" src="../assets/images/bonus/coin.png" alt="" />
                 {{ col.value }}
               </div>
@@ -109,8 +116,8 @@ const columns = [
     align: "center",
     field: (row) => row.name
   },
-  { name: "award", label: "Award", field: "award", align: "center" },
-  { name: "firstDay", label: "1st Day Of Next Month", field: "firstDay", align: "center" }
+  { name: "award", label: "Award", field: "award", align: "right" },
+  { name: "firstDay", label: "1st Day Of Next Month", field: "firstDay", align: "right" }
 ];
 const rows = [
   {
@@ -203,7 +210,7 @@ const redeem = () => {};
 
 <style lang="scss">
 .bonus-page {
-  padding: 0 2rem;
+  padding: 0 1.75rem;
   overflow: hidden;
 
   .progress-container {
@@ -289,13 +296,14 @@ const redeem = () => {};
     }
 
     .vip-icon {
-      width: 3rem;
+      width: 3.5rem;
+      margin: 0.5rem 0 0;
     }
 
     .coin-container {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: end;
 
       .coin {
         width: 1.5rem;
@@ -303,29 +311,21 @@ const redeem = () => {};
       }
     }
 
-    thead {
+    thead > :first-child {
+      background: rgba(21, 0, 37, 0.5);
+    }
+    tbody > :nth-child(odd) {
+      background: rgba(21, 0, 37, 0.2);
+    }
+    tbody > :nth-child(even) {
       background: rgba(21, 0, 37, 0.5);
     }
 
-    tbody {
-      :nth-child(odd) {
-        background: rgba(21, 0, 37, 0.2);
-      }
-
-      :nth-child(even) {
-        background: rgba(21, 0, 37, 0.5);
-      }
-
-      td {
-        background: unset !important;
-      }
-    }
-
-    .text-center {
+    .text-center,
+    .text-right {
       font-size: 1rem;
       font-weight: 700;
-      padding: 0.5rem;
-      width: 33%;
+      padding: 0.5rem 1.5rem;
       border-bottom-width: 0;
     }
   }

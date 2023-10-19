@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <q-header v-if="hasPage" reveal>
+    <div v-if="hasPage">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
@@ -50,7 +50,7 @@
           ><RiBankCardLine />Quick Withdraw</q-btn
         >
       </q-card-actions> -->
-    </q-header>
+    </div>
 
     <q-drawer side="right" elevated v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
       <div class="q-pa-md bg-brightbtn">游戏平台</div>
@@ -186,6 +186,10 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = "Daily Activity";
+        } else if (route.path === "/vip") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "VIP Privileges";
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
