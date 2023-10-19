@@ -303,7 +303,7 @@ const redeem = () => {};
     .coin-container {
       display: flex;
       align-items: center;
-      justify-content: end;
+      justify-content: flex-end;
 
       .coin {
         width: 1.5rem;
