@@ -407,7 +407,8 @@ export default {
     fav_game_removed: "ลบเกมออกจากรายการโปรดแล้ว",
     update_app_title: "อัพเดทเรียบร้อย",
     detected_new_version: "มีรายการอัพเดทใหม่ ต้องการดาวน์โหลดตอนนี้เลยหรือไม่?",
-    update_now: "อัพเดท"
+    update_now: "อัพเดท",
+    usdt_will_be_charged: "บันทึก: มีค่าธรรมเนียมในการถอนเงิน 1.00 USDT/ครั้ง"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

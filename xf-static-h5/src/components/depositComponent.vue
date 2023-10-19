@@ -314,6 +314,13 @@ const blurCode = () => {
   });
 };
 
+const isValidDecimal = () => {
+  const decimalPattern =
+    /^[0-9]*(\.[0-9]{0,2})?$/;
+  return decimalPattern.test(form.localAmount) || "金额数字不正确";
+};
+
+
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
   (val) =>
