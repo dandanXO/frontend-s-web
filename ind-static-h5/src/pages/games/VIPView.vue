@@ -214,7 +214,7 @@ const rows2 = [
 
   .q-table__card {
     background: transparent !important;
-    margin: 1.25rem 0;
+    margin: 0 0 1.25rem 0;
   }
 
   .vip-icon-th {
