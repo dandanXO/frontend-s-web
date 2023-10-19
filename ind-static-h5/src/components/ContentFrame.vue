@@ -2,12 +2,17 @@
   <img class="scroll-btn scroll-up" src="../assets/images/index/scroll-btn.png" alt="" />
   <img class="bg-frame" src="../assets/images/index/bg-frame.png" alt="" />
   <img class="bg" src="../assets/images/index/bg.png" alt="" />
-  <img class="bg-character" src="../assets/images/index/bg-character.png" alt="" />
+
+  <img v-if="!isNoInfo" class="bg-character" src="../assets/images/index/bg-character.png" alt="" />
+  <div v-else class="no-info-container">
+    <img class="" src="../assets/images/earn-money/no-info.png" alt="" />
+    <div class="no-info-text">{{ noInfoTitle }}</div>
+  </div>
   <img class="scroll-btn scroll-down" src="../assets/images/index/scroll-btn.png" alt="" />
 </template>
 
 <script setup>
-const props = defineProps(["tabList", "onTabClick", "isActiveTab"]);
+const props = defineProps(["isNoInfo", "noInfoTitle"]);
 </script>
 
 <style lang="scss">
@@ -34,6 +39,21 @@ const props = defineProps(["tabList", "onTabClick", "isActiveTab"]);
   .bg-character {
     position: absolute;
     top: 2rem;
+  }
+
+  .no-info-container {
+    position: absolute;
+    top: 10rem;
+
+    img {
+      width: 20rem;
+    }
+
+    .no-info-text {
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-align: center;
+    }
   }
 
   img {

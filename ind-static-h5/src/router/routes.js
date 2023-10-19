@@ -52,6 +52,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
   },
   {
+    path: "/bonus",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/BonusPage.vue") }]
+  },
+  {
     path: "/maintenance",
     component: () => import("layouts/MainLayout.vue"),
     children: [
