@@ -382,7 +382,7 @@ export default defineComponent({
                   icon: element.bankIcon
                 })
               }
-            } else {
+            } else if(element.bankType === 'CRYPTO'){
               if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
                 withdrawState.bankCardList.push({
                   ...element,
