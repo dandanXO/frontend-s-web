@@ -42,6 +42,7 @@ onMounted(() => {
 .swiper-nav-container {
   width: 100%;
   text-align: center;
+  overflow: hidden;
 
   .swiper-wrapper {
     .slide-item {
