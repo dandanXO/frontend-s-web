@@ -2,7 +2,7 @@
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
   <template v-if="currentSlide === slideList[0]">
-    <PersonalRecord></PersonalRecord>
+    <MyMember></MyMember>
   </template>
 
   <template v-if="currentSlide === slideList[1]">
@@ -13,7 +13,7 @@
 <script setup>
 import { ref } from "vue";
 import SwiperNav from "../components/SwiperNav.vue";
-import PersonalRecord from "../components/personal/PersonalRecord.vue";
+import MyMember from "../components/earn-money/MyMember.vue";
 import AgencyPolicy from "../components/earn-money/AgencyPolicy.vue";
 
 let slideList = ref(["My Member", "Agency Policy"]);

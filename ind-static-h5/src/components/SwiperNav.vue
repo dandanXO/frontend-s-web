@@ -2,7 +2,7 @@
   <div class="swiper-container swiper-nav-container">
     <div class="swiper-wrapper">
       <div v-for="(e, i) in slideList" :key="`${e}-${i}`" class="swiper-slide">
-        <div class="slide-item" @click="onSlideClick(e)" :class="{ 'active-slide': isActiveSlide(e) }">
+        <div class="slide-item" @click="onSlideClick(e, i)" :class="{ 'active-slide': isActiveSlide(e) }">
           <img v-if="isActiveSlide(e)" class="slide-title-deco left" src="../assets/images/index/tab-title-deco.png" />
           <img v-if="isActiveSlide(e)" class="text-glow" src="../assets/images/index/text-glow.png" alt="" />
           <div :class="{ 'inactive-text': !isActiveSlide(e) }">
@@ -30,10 +30,7 @@ onMounted(() => {
     loop: loopValue,
     spaceBetween: 1,
     centeredSlides: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true
-    }
+    pagination: false
   });
 });
 </script>
