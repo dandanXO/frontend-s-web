@@ -207,6 +207,14 @@ export default {
     FIRST: 'First Deposit',
     SECOND: 'Second Deposit'
   },
+  rollover: {
+    recordStatus: {
+      ONGOING: 'Ongoing',
+      COMPLETED: 'Completed',
+      VOID: 'Void',
+      CANCEL: 'Cancel'
+    }
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -343,6 +351,7 @@ export default {
     cancel: 'Cancel',
     cancelDeposit: 'Cancel Deposit',
     cancelRemark: 'Cancel Remark',
+    cancelRolloverRecord: 'Cancel Rollover Record',
     cancelUpdate: 'Cancel Update',
     cancelType: 'Cancel Type',
     cardAccount: 'Card Account',
@@ -598,6 +607,7 @@ export default {
     logoutPlayer: 'Logout Player',
     lotteryRecordList: 'Lottery Record List',
     lotteryResultList: 'Lottery Result List',
+    lowBalance: 'Minimum Balance',
     mallCode: 'Mall Code',
     mallExtraKey: 'Mall Extra Key',
     mallKey: 'Mall Key',
@@ -725,6 +735,7 @@ export default {
     privilegeId: 'Privilege ID',
     privilegeName: 'Privilege Name',
     privilegeRedeemed: 'Privilege Redeemed',
+    privilegeSerialNo: 'Privilege Serial Number',
     privilegeType: 'Privilege Type',
     profit: 'Profit',
     profitpositive: 'Positive Profit',
@@ -798,6 +809,7 @@ export default {
     roleList: 'Role List',
     roleName: 'Role Name',
     rollover: 'Rollover',
+    rolloverAmount: 'Rollover Amount',
     gameTypeRollover: 'Game Type Rollover',
     router: 'Router',
     ruleParam: 'Rule Param',
@@ -890,6 +902,7 @@ export default {
     totalAdjustment: 'Total Adjustment',
     totalBalance: 'Total Balance',
     totalBet: 'Total Bet',
+    totalBetAmount: 'Total Bet Amount',
     totalBetRecords: 'Total Bet Records',
     totalBonus: 'Total Bonus',
     totalCommission: 'Total Commission',
@@ -1038,6 +1051,7 @@ export default {
     affiliateDisabled: 'Affiliate Disabled',
     autopaySuccess: 'Autopay Success',
     cancelDepositSuccess: 'Cancel Deposit Success',
+    cancelRolloverRecordSuccess: 'Cancel Rollover Record Success',
     changeAffiliateSuccess: 'Change Affiliate Success',
     changeSuccess: 'Change Success',
     commissionPaySuccess: 'Commission Pay Success',
@@ -1355,6 +1369,7 @@ export default {
     'Member VIP': 'Member VIP',
     'Member Bet Record': 'Member Bet Record',
     'PG Pending': 'PG Pending Records',
+    'Member Rollover Record': 'Member Rollover Record',
     Affiliate: 'Affiliate',
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',
@@ -1659,6 +1674,7 @@ export default {
     20204: 'Risk level not found, please insert correct risk level(eg：1)',
     20205: 'Financial level not found，please insert correct financial level (eg：1)',
     20206: 'Please insert ’测试‘ / ’普通‘ / ’三方‘ / ’代理‘',
+    20400: 'Rollover record does not exists',
     21000: 'Game does not exists',
     30000: 'PG update transaction status failed',
   },
