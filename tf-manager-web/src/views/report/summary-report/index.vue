@@ -168,7 +168,7 @@
         <template #default="scope">
           <router-link
             :to="
-              `/report/summary/depositNumber?date=${scope.row.date}&site=${request.siteId}`
+              `/report/summary/depositmemberdetail?date=${scope.row.date}&site=${request.siteId}`
             "
           >
             <el-link type="primary">
