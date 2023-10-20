@@ -8,7 +8,7 @@
 
     <div class="profile-wrapper">
       <div class="profile-pic">
-        <q-avatar size="80px">
+        <q-avatar size="70px">
           <img src="https://cdn.quasar.dev/img/avatar.png" />
         </q-avatar>
       </div>

@@ -178,6 +178,10 @@ export default defineComponent({
             var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
+        } else if (route.path === "/account") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "Personal Center";
         } else if (route.path === "/earn-money") {
           prevPage.value = "/";
           hasPage.value = true;

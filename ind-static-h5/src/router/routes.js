@@ -197,7 +197,7 @@ const routes = [
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AccountPage.vue") }],
-    meta: { requiresAuth: true }
+    // meta: { requiresAuth: true }
   },
   {
     path: "/account/records",
