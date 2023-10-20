@@ -1369,6 +1369,7 @@ export default {
     'Member VIP': 'Member VIP',
     'Member Bet Record': 'Member Bet Record',
     'PG Pending': 'PG Pending Records',
+    'Member Privilege': 'Member Privilege',
     'Member Rollover Record': 'Member Rollover Record',
     Affiliate: 'Affiliate',
     'Affiliate Summary': 'Affiliate Summary',

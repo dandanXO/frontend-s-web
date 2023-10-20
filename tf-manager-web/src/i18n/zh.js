@@ -1348,6 +1348,7 @@ export default {
     'Member VIP': '会员等级列表',
     'Member Bet Record': '会员投注记录',
     'PG Pending': 'PG待处理记录',
+    'Member Privilege': '会员优惠记录',
     'Member Rollover Record': '会员流水记录',
     Affiliate: '代理',
     'Affiliate Summary': '代理总结',
