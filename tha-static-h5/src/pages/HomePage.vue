@@ -1409,7 +1409,7 @@ export default defineComponent({
           }
 
           // console.log("After");
-          // console.log(platformMinigame.value);
+          console.log(fishPlatforms.value);
           // alert(platformMinigame.value.length);
           // if (!route.query.plat) {
           //   switchPlat(platforms.value[0], "slot");
