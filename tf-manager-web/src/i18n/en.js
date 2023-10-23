@@ -914,6 +914,7 @@ export default {
     totalRebateAmount: 'Total Rebate Amount',
     totalRedeem: 'Total Redeem',
     totalRegister: 'Total Register',
+    totalRegisterCount: 'Total Register Count',
     totalReimburseAmount: 'Total Reimburse Amount',
     totalSuccessDeposit: 'Total Success Deposit',
     totalSuccessDepositAmount: 'Total Success Deposit Amount',
