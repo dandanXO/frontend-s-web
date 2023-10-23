@@ -19,14 +19,6 @@
           type="success"
           @click="refresh()"
         />
-
-        <el-button
-          size="mini"
-          type="primary"
-          v-permission="['sys:report:summary:register:export']"
-          @click="requestExportExcel"
-        >{{ t('fields.requestExportToExcel') }}
-        </el-button>
       </div>
     </div>
 
@@ -40,25 +32,26 @@
       height="500"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="member" :label="t('fields.member')" width="150" fixed />
-      <el-table-column prop="source" :label="t('fields.sourceType')" width="120" />
-      <el-table-column prop="upperName" :label="t('fields.upperName')" width="180" />
-      <el-table-column prop="referrer" :label="t('fields.referrer')" width="180" />
-      <el-table-column prop="registerTime" :label="t('fields.registerTime')" width="180" />
-      <el-table-column prop="registerHost" :label="t('fields.registerHost')" width="180" />
-      <el-table-column prop="ftdTime" :label="t('fields.ftdTime')" width="180" />
-      <el-table-column prop="ftdAmount" :label="t('fields.ftdAmount')" width="120">
-        <template #default="scope1">
+      <el-table-column prop="loginName" :label="t('fields.loginName')" width="120">
+        <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
+          <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
+            <el-link type="primary">{{ scope.row.loginName }}</el-link>
+          </router-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" width="120">
+        <template #default="scope">
           $
           <span
             v-formatter="{
-              data: scope1.row.ftdAmount,
+              data: scope.row.depositAmount,
               type: 'money',
             }"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="ftdTxn" :label="t('fields.ftdTxn')" width="230" />
+      <el-table-column prop="depositCount" :label="t('fields.depositCount')" width="220" />
+      <el-table-column prop="recordTime" :label="t('fields.recordTime')" width="150" />
     </el-table>
 
     <el-pagination
@@ -69,29 +62,17 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
-
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
-    >
-      <span>{{ t('message.requestExportToExcelDone1') }}</span>
-      <router-link :to="`/site-management/download-manager`">
-        <el-link type="primary">
-          {{ t('menu.DownloadManager') }}
-        </el-link>
-      </router-link>
-      <span>{{ t('message.requestExportToExcelDone2') }}</span>
-    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
-import { getSummaryRegisterReport, getExportSummaryRegisterReport } from '../../../../api/report-summary'
 import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
+import { hasPermission } from '../../../../utils/util'
 import { useI18n } from "vue-i18n";
-import moment from "moment/moment";
+import { getAffiliateMemberDeposit } from '../../../../api/report-affiliate'
 
 // eslint-disable-next-line
 const { t } = useI18n();
@@ -103,10 +84,7 @@ const siteList = reactive({
 })
 var date = new URL(location.href).searchParams.get('date')
 var siteIdFromParam = new URL(location.href).searchParams.get('site')
-
-const uiControl = reactive({
-  messageVisible: false,
-})
+var affiliateId = new URL(location.href).searchParams.get('affiliateId')
 
 const page = reactive({
   pages: 0,
@@ -118,35 +96,22 @@ const request = reactive({
   size: 30,
   current: 1,
   recordTime: date,
-  siteId: null,
+  siteId: siteIdFromParam,
+  affiliateId: affiliateId
 })
 
-async function loadSummaryRegisterRecord() {
+async function loadSummaryDepositMemberDetail() {
   page.loading = true
-  const requestCopy = { ...request }
-  const query = {}
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
-    }
-  })
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
-    }
-  }
-
-  const { data: ret } = await getSummaryRegisterReport(query)
-
+  const query = checkQuery();
+  const { data: ret } = await getAffiliateMemberDeposit(query)
   page.pages = ret.pages
   page.records = ret.records
-
   page.loading = false
 }
 
 function changePage(page) {
   request.current = page
-  loadSummaryRegisterRecord()
+  loadSummaryDepositMemberDetail()
 }
 
 async function loadSites() {
@@ -155,11 +120,11 @@ async function loadSites() {
 }
 
 function back() {
-  window.location.href = '/report/summaryreport'
+  window.location.href = '/report/affiliate-report'
 }
 
 function refresh() {
-  loadSummaryRegisterRecord()
+  loadSummaryDepositMemberDetail()
 }
 
 onMounted(async () => {
@@ -174,7 +139,7 @@ onMounted(async () => {
     request.siteId = siteIdFromParam
   }
 
-  await loadSummaryRegisterRecord()
+  await loadSummaryDepositMemberDetail()
 })
 
 function checkQuery() {
@@ -185,22 +150,7 @@ function checkQuery() {
       query[key] = value
     }
   })
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
-    }
-  }
   return query
-}
-
-async function requestExportExcel() {
-  const query = checkQuery();
-  query.requestBy = store.state.user.name;
-  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getExportSummaryRegisterReport(query);
-  if (ret) {
-    uiControl.messageVisible = true;
-  }
 }
 </script>
 

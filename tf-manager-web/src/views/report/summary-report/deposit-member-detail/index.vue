@@ -12,18 +12,36 @@
           {{ t('fields.back') }}
         </el-button>
 
-        <el-button
-          style="margin-left: 20px"
-          icon="el-icon-refresh"
-          size="mini"
-          type="success"
-          @click="refresh()"
-        />
+        <el-select
+          v-model="request.source"
+          size="small"
+          :placeholder="t('fields.sourceType')"
+          class="filter-item"
+          style="width: 200px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in source.list"
+            :key="item.name"
+            :label="item.name"
+            :value="item.name"
+          />
+        </el-select>
 
         <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          @click="loadMemberRecord()"
+        >
+          {{ t('fields.search') }}
+        </el-button>
+
+        <el-button
+          v-if="uiControl.show"
           size="mini"
           type="primary"
-          v-permission="['sys:report:summary:register:export']"
+          v-permission="['sys:report:summary:deposit:member:detail:export']"
           @click="requestExportExcel"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
@@ -40,25 +58,67 @@
       height="500"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="member" :label="t('fields.member')" width="150" fixed />
-      <el-table-column prop="source" :label="t('fields.sourceType')" width="120" />
-      <el-table-column prop="upperName" :label="t('fields.upperName')" width="180" />
-      <el-table-column prop="referrer" :label="t('fields.referrer')" width="180" />
-      <el-table-column prop="registerTime" :label="t('fields.registerTime')" width="180" />
-      <el-table-column prop="registerHost" :label="t('fields.registerHost')" width="180" />
-      <el-table-column prop="ftdTime" :label="t('fields.ftdTime')" width="180" />
-      <el-table-column prop="ftdAmount" :label="t('fields.ftdAmount')" width="120">
+      <el-table-column
+        prop="member"
+        :label="t('fields.member')"
+        width="160"
+        fixed
+      />
+      <el-table-column
+        prop="source"
+        :label="t('fields.sourceType')"
+        width="160"
+      />
+      <el-table-column prop="deposit" :label="t('fields.memberDetailDeposit')" width="160">
         <template #default="scope1">
           $
           <span
             v-formatter="{
-              data: scope1.row.ftdAmount,
+              data: scope1.row.deposit,
               type: 'money',
             }"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="ftdTxn" :label="t('fields.ftdTxn')" width="230" />
+      <el-table-column
+        prop="depositCount"
+        :label="t('fields.memberDetailDepositCount')"
+        width="160"
+      />
+
+      <el-table-column prop="promo" :label="t('fields.memberDetailPrivilege')" width="160">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.promo,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="withdraw"
+        :label="t('fields.memberDetailWithdraw')"
+        width="160"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.withdraw,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="time"
+        :label="t('fields.recordTime')"
+        width="160"
+      />
     </el-table>
 
     <el-pagination
@@ -86,32 +146,37 @@
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
-import { getSummaryRegisterReport, getExportSummaryRegisterReport } from '../../../../api/report-summary'
+import { getSummaryMemberReport, getExportSummaryMemberReport } from '../../../../api/report-summary'
 import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
-import { useI18n } from "vue-i18n";
-import moment from "moment/moment";
+import { useI18n } from 'vue-i18n'
+import moment from "moment";
 
-// eslint-disable-next-line
-const { t } = useI18n();
+const { t } = useI18n()
+
+var date = new URL(location.href).searchParams.get('date')
+var siteIdFromParam = new URL(location.href).searchParams.get('site')
+
+const uiControl = reactive({
+  messageVisible: false,
+  show: false,
+})
+
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const siteList = reactive({
   list: [],
 })
-var date = new URL(location.href).searchParams.get('date')
-var siteIdFromParam = new URL(location.href).searchParams.get('site')
-
-const uiControl = reactive({
-  messageVisible: false,
-})
-
 const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+})
+
+const source = reactive({
+  list: [{ name: 'DIRECT' }, { name: "REFER" }, { name: "AFFILIATE" }],
 })
 
 const request = reactive({
@@ -119,9 +184,11 @@ const request = reactive({
   current: 1,
   recordTime: date,
   siteId: null,
+  source: null,
+  isDeposit: true,
 })
 
-async function loadSummaryRegisterRecord() {
+async function loadMemberRecord() {
   page.loading = true
   const requestCopy = { ...request }
   const query = {}
@@ -130,23 +197,17 @@ async function loadSummaryRegisterRecord() {
       query[key] = value
     }
   })
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
-    }
-  }
 
-  const { data: ret } = await getSummaryRegisterReport(query)
+  const { data: ret } = await getSummaryMemberReport(query)
 
   page.pages = ret.pages
   page.records = ret.records
-
   page.loading = false
 }
 
 function changePage(page) {
   request.current = page
-  loadSummaryRegisterRecord()
+  loadMemberRecord()
 }
 
 async function loadSites() {
@@ -156,10 +217,6 @@ async function loadSites() {
 
 function back() {
   window.location.href = '/report/summaryreport'
-}
-
-function refresh() {
-  loadSummaryRegisterRecord()
 }
 
 onMounted(async () => {
@@ -174,7 +231,7 @@ onMounted(async () => {
     request.siteId = siteIdFromParam
   }
 
-  await loadSummaryRegisterRecord()
+  await loadMemberRecord()
 })
 
 function checkQuery() {
@@ -185,11 +242,6 @@ function checkQuery() {
       query[key] = value
     }
   })
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
-    }
-  }
   return query
 }
 
@@ -197,7 +249,7 @@ async function requestExportExcel() {
   const query = checkQuery();
   query.requestBy = store.state.user.name;
   query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getExportSummaryRegisterReport(query);
+  const { data: ret } = await getExportSummaryMemberReport(query);
   if (ret) {
     uiControl.messageVisible = true;
   }
@@ -207,5 +259,27 @@ async function requestExportExcel() {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .header-container {
   margin-bottom: 10px;
+}
+
+.search {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn-group {
+  margin-top: 15px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.el-table--enabled-row-transition .el-table__body td.el-table__cell {
+  padding: 4px 0;
+}
+
+.el-input-number:deep .el-input__inner {
+  text-align: left;
 }
 </style>
