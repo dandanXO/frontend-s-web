@@ -95,9 +95,14 @@
       size="small"
       highlight-current-row
       v-loading="page.loading"
+      :load="load"
+      lazy
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       :empty-text="t('fields.noData')"
+      show-summary
+      :summary-method="populateReportTotal"
     >
-      <el-table-column prop="recordTime" :label="t('fields.recordTime')" align="center" min-width="110" fixed="left" />
+      <el-table-column prop="recordTime" :label="t('fields.recordTime')" align="center" min-width="140" fixed="left" />
       <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="110" fixed="left">
         <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
           <router-link :to="`/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`">
@@ -106,7 +111,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="affiliateCode" :label="t('fields.affiliateCode')" align="center" min-width="100" />
-      <el-table-column prop="affiliateLevel" :label="t('fields.affiliateLevel')" align="center" min-width="100">
+      <el-table-column prop="affiliateLevel" :label="t('fields.affiliateLevel')" align="center" min-width="120">
         <template #default="scope">
           {{ t('affiliate.level.' + scope.row.affiliateLevel) }}
         </template>
@@ -118,13 +123,26 @@
         </template>
       </el-table-column>
       <el-table-column prop="registerMemberCount" :label="t('fields.registerCount')" align="center" min-width="110" />
+      <el-table-column prop="totalRegisterMemberCount" :label="t('fields.totalRegisterCount')" align="center" min-width="140" />
       <el-table-column prop="ftdMemberCount" :label="t('fields.ftdCount')" align="center" min-width="100" />
       <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" min-width="120">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.depositAmount, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="depositMemberCount" :label="t('fields.depositMemberCount')" align="center" min-width="150" />
+      <el-table-column prop="depositMemberCount" :label="t('fields.depositMemberCount')" align="center" min-width="150">
+        <template #default="scope">
+          <router-link
+            :to="
+              `/report/summary/depositmemberdetail?date=${scope.row.recordTime}&site=${request.siteId}&affiliateId=${scope.row.affiliateId}`
+            "
+          >
+            <el-link type="primary">
+              {{ scope.row.depositMemberCount }}
+            </el-link>
+          </router-link>
+        </template>
+      </el-table-column>
       <el-table-column prop="withdrawAmount" :label="t('fields.withdrawAmount')" align="center" min-width="120">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.withdrawAmount, type: 'money'}" />
@@ -166,7 +184,7 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getAffiliateReport, getAffiliateReportExport } from '../../../api/report-affiliate'
+import { getAffiliateChildReport, getAffiliateReport, getAffiliateReportExport, getAffiliateReportTotal } from '../../../api/report-affiliate'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -203,6 +221,7 @@ const uiControl = reactive({
 const page = reactive({
   pages: 0,
   records: [],
+  total: null,
   loading: false,
 })
 
@@ -255,7 +274,17 @@ async function loadAffiliateReport() {
   const { data: ret } = await getAffiliateReport(query)
   page.pages = ret.pages
   page.records = ret.records
+  const { data: total } = await getAffiliateReportTotal(query)
+  page.total = total;
   page.loading = false
+}
+
+async function load(tree, treeNode, resolve) {
+  const query = {};
+  query.recordTime = tree.recordTime;
+  query.superiorAffiliateId = tree.affiliateId;
+  const { data: children } = await getAffiliateChildReport(query);
+  resolve(children);
 }
 
 async function requestExportExcel() {
@@ -276,6 +305,29 @@ async function loadSites() {
 function changePage(page) {
   request.current = page
   loadAffiliateReport()
+}
+
+function populateReportTotal(param) {
+  const { columns } = param;
+  const total = []
+  columns.forEach((column, index) => {
+    if (index === 0) {
+      total[index] = t('fields.total')
+    }
+
+    const totalCopy = { ...page.total }
+
+    Object.entries(totalCopy).forEach(([key, value]) => {
+      if (key === column.property && value !== null) {
+        if (key === 'depositAmount' || key === 'withdrawAmount') {
+          total[index] = '$' + value.toFixed(2);
+        } else {
+          total[index] = value;
+        }
+      }
+    })
+  })
+  return total
 }
 
 onMounted(async () => {
