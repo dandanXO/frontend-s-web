@@ -42,7 +42,10 @@
     >
       <el-table-column prop="member" :label="t('fields.member')" width="150" fixed />
       <el-table-column prop="source" :label="t('fields.sourceType')" width="120" />
+      <el-table-column prop="upperName" :label="t('fields.upperName')" width="180" />
+      <el-table-column prop="referrer" :label="t('fields.referrer')" width="180" />
       <el-table-column prop="registerTime" :label="t('fields.registerTime')" width="180" />
+      <el-table-column prop="registerHost" :label="t('fields.registerHost')" width="180" />
       <el-table-column prop="ftdTime" :label="t('fields.ftdTime')" width="180" />
       <el-table-column prop="ftdAmount" :label="t('fields.ftdAmount')" width="120">
         <template #default="scope1">

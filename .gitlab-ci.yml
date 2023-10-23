@@ -23,7 +23,7 @@ default:
   script:
     - cd $PROJECT
     - npm install
-    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:dev; else npm run build:prod; fi
+    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
 
 .build-projects:
   stage: build
@@ -190,4 +190,18 @@ build-image-affiliate-static-web:
   needs:
     - build-affiliate-static-web
 
+#===============================================================================================
 
+build-tha-landing:
+  extends:
+    - .build-projects
+    - .build-web
+  variables:
+    PROJECT: tha-landing
+
+build-image-tha-landing:
+  extends: .docker-build
+  variables:
+    PROJECT: tha-landing
+  needs:
+    - build-tha-landing

@@ -33,6 +33,21 @@
         />
 
         <el-select
+          v-model="request.isDeposit"
+          size="small"
+          :placeholder="t('fields.isDeposit')"
+          class="filter-item"
+          style="width: 140px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in deposit.isDeposit"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+
+        <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -282,6 +297,10 @@ const siteList = reactive({
   list: [],
 })
 
+const deposit = reactive({
+  isDeposit: [{ id: 1, name: t('fields.showAll') }, { id: 2, name: t('fields.onlyDeposit') }],
+})
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -297,6 +316,7 @@ const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
+  isDeposit: 1,
   loginName: null,
   affiliateName: null,
   recordTime: [defaultStartDate, defaultEndDate],
@@ -307,6 +327,7 @@ function resetQuery() {
   request.siteId = site.value ? site.value.id : 1
   request.loginName = null
   request.affiliateName = null
+  request.isDeposit = 1
 }
 
 function changePage(page) {

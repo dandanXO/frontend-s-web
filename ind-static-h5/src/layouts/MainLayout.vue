@@ -1,11 +1,7 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <q-header v-if="hasPage">
-      <q-card-section
-        v-if="!hasPage"
-        class="top-section justify-between items-center"
-        horizontal
-      >
+    <div v-if="hasPage">
+      <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
@@ -16,23 +12,21 @@
         <!-- <q-card-actions v-if="store.hasToken()">
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
         </q-card-actions> -->
-        <q-btn
-          v-if="store.hasToken()"
-          class="flex"
-          to="/finance/deposit"
-          no-caps
-          flat
-        >
-          <span style="font-size: 10px; margin-left: 5px; display: block">
-            充值
-          </span>
+        <q-btn v-if="store.hasToken()" class="flex" to="/finance/deposit" no-caps flat>
+          <span style="font-size: 10px; margin-left: 5px; display: block">充值</span>
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage ? '/' + prevPage : '/'">
-          <RiArrowDropLeftLine />
+          <img class="back-btn" src="../assets/images/index/back-btn.png" />
         </router-link>
-        {{ pageName }}
+        <div class="page-title-wrapper">
+          <img src="../assets/images/index/hot-elephant-left.png" alt="" />
+          <div class="title-container">
+            <span class="title">{{ pageName }}</span>
+          </div>
+          <img src="../assets/images/index/hot-elephant-right.png" alt="" />
+        </div>
         <q-btn
           v-if="hasDrawer"
           style="position: absolute; right: 10px"
@@ -56,16 +50,9 @@
           ><RiBankCardLine />Quick Withdraw</q-btn
         >
       </q-card-actions> -->
-    </q-header>
+    </div>
 
-    <q-drawer
-      side="right"
-      elevated
-      v-model="ui.drawerRight"
-      :width="250"
-      :breakpoint="500"
-      v-if="hasDrawer"
-    >
+    <q-drawer side="right" elevated v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
       <div class="q-pa-md bg-brightbtn">游戏平台</div>
       <div class="platforms q-pt-md">
         <!--        <div class="text-bright q-px-sm q-pt-md">-->
@@ -98,49 +85,20 @@
       <router-view />
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
-      <q-tabs
-        v-model="tab"
-        no-caps
-        class="bg-primary"
-        :breakpoint="0"
-        align="justify"
-      >
+      <q-tabs v-model="tab" no-caps class="bg-primary" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/home-icon.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/home-icon-hover.png"
-          />
+          <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
           HOME
         </q-route-tab>
-        <q-route-tab to="/promo" name="promo">
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/earn-icon.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/earn-icon-hover.png"
-          />
+        <q-route-tab to="/earn-money" name="earn-money">
+          <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
           EARN MONEY
         </q-route-tab>
-        <q-route-tab
-          class="cs-web-id"
-          to="/liveChat"
-          id="cs-web-id"
-          name="live"
-        >
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/bonus-icon.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/bonus-icon-hover.png"
-          />
+        <q-route-tab class="cs-web-id" to="/bonus" id="cs-web-id" name="live">
+          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           BONUS
         </q-route-tab>
         <!--        <q-route-tab to="/affiliate" name="affiliate">-->
@@ -149,14 +107,8 @@
         <!--          加盟-->
         <!--        </q-route-tab>-->
         <q-route-tab to="/account" name="account">
-          <img
-            class="inactive"
-            src="../assets/images/index/menu/account-icon.png"
-          />
-          <img
-            class="hover"
-            src="../assets/images/index/menu/account-icon-hover.png"
-          />
+          <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
           MINE
         </q-route-tab>
       </q-tabs>
@@ -171,15 +123,10 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 // import EssentialLink from "components/EssentialLink.vue";
 
-import { RiArrowDropLeftLine } from "vue-remix-icons";
 import { translateRecord } from "src/directives/translate";
 
 export default defineComponent({
   name: "MainLayout",
-
-  components: {
-    RiArrowDropLeftLine
-  },
 
   setup() {
     const route = useRoute();
@@ -228,12 +175,21 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName =
-              route.query.platform == "BBINDY"
-                ? "BBIN"
-                : translateRecord(route.query.platform);
+            var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
+        } else if (route.path === "/earn-money") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "Earn Money";
+        } else if (route.path === "/bonus") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "Daily Activity";
+        } else if (route.path === "/vip") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "VIP Privileges";
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
@@ -542,6 +498,53 @@ svg path {
 
   img {
     width: 100%;
+  }
+}
+
+.back-btn {
+  width: 2.25rem;
+  margin: 0.5rem 0 0 0;
+}
+
+.page-title-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0 5rem 0 0;
+  padding: 1rem;
+
+  img {
+    width: 2.25rem;
+  }
+
+  .title-container {
+    background-image: url(../assets/images/index/hot-games-title.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14rem;
+    margin: 0 0.5rem;
+
+    .title {
+      background-color: #f3ec78;
+      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      line-height: 1.25;
+      font-size: 1.25rem;
+      font-weight: 800;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: #a94700;
+    }
+  }
+
+  svg {
+    width: 250px;
   }
 }
 </style>

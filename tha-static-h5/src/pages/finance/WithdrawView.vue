@@ -7,11 +7,11 @@
       <PanelWrapper>
         <template #title>
           <div class="text-white text-left flex column gap-0.35">
-            {{ $t('lang.withdraw_process') }}: <br />
+            {{ $t("lang.withdraw_process") }}: <br />
             <div class="flex justify-between">
-              <div class="hue-purple">1.{{ $t('lang.withdraw_method') }}</div>
-              <div>2.{{ $t('lang.verification_account') }}</div>
-              <div>3.{{ $t('lang.withdraw_money') }}</div>
+              <div class="hue-purple">1.{{ $t("lang.withdraw_method") }}</div>
+              <div>2.{{ $t("lang.verification_account") }}</div>
+              <div>3.{{ $t("lang.withdraw_money") }}</div>
             </div>
           </div>
         </template>
@@ -68,14 +68,19 @@
         </div> -->
         <div class="flex column gap-1.2 overflow-hidden">
           <div class="full-width">
-            <div class="q-mb-xs">{{ $t('lang.withdraw_method') }}</div>
+            <div class="q-mb-xs">{{ $t("lang.withdraw_method") }}</div>
             <q-select filled :options="withdrawalMethods" dense>
               <template v-slot:selected>
-                <PlatformItem directory="/withdraw/" dense :scope="selectedPlatform" class="q-pl-xs" />
+                <PlatformItem
+                  directory="/withdraw/"
+                  dense
+                  :scope="selectedPlatform"
+                  class="q-pl-xs"
+                />
               </template>
               <template v-slot:option="scope">
                 <PlatformItem
-                    directory="/withdraw/"
+                  directory="/withdraw/"
                   :scope="scope"
                   @click="selectMethod(scope.opt, scope.index)"
                 />
@@ -84,7 +89,7 @@
           </div>
 
           <div class="full-width">
-            <div class="q-mb-xs">{{ $t('lang.select_bank_account') }}</div>
+            <div class="q-mb-xs">{{ $t("lang.select_bank_account") }}</div>
             <q-select
               filled
               ref="cardRef"
@@ -100,11 +105,11 @@
               <template v-slot:no-option>
                 <q-item dense>
                   <q-item-section class="text-grey"
-                    >{{ $t('lang.no_usable_cards') }}
+                    >{{ $t("lang.no_usable_cards") }}
                     <router-link to="/account/withdraw"
-                      >{{ $t('lang.add_card') }}</router-link
-                    ></q-item-section
-                  >
+                      >{{ $t("lang.add_card") }}
+                    </router-link>
+                  </q-item-section>
                 </q-item>
               </template>
               <template v-slot:option="scope">
@@ -113,7 +118,7 @@
                     <img
                       v-if="scope.opt.bankIcon"
                       style="width: 30px"
-                      :src="imgURL  + scope.opt.bankIcon"
+                      :src="imgURL + scope.opt.bankIcon"
                     />
                   </q-item-section>
                   <q-item-section>
@@ -124,13 +129,18 @@
                 </q-item>
               </template>
               <template v-slot:selected-item="scope">
-                <PlatformItem directory="/payment/" dense :scope="scope" class="q-pl-xs" />
+                <PlatformItem
+                  directory="/payment/"
+                  dense
+                  :scope="scope"
+                  class="q-pl-xs"
+                />
               </template>
             </q-select>
           </div>
 
           <div class="full-width">
-            <div class="q-mb-xs">{{ $t('lang.please_enter_the_amount') }}</div>
+            <div class="q-mb-xs">{{ $t("lang.please_enter_the_amount") }}</div>
             <q-input
               filled
               dense
@@ -140,7 +150,8 @@
               mask="######"
               color="white"
               :rules="[
-                (val) => (val && val.length > 0) || $t('lang.enter_amount_money'),
+                (val) =>
+                  (val && val.length > 0) || $t('lang.enter_amount_money'),
                 (val) =>
                   val >= selectedWithdrawalMethod.withdrawMin ||
                   $t('lang.amount_should_more_than_min'),
@@ -158,7 +169,7 @@
           </div>
 
           <div class="account-content last">
-            <q-form class="flex column items-center gap-1.2">
+            <q-form class="flex column items-center gap-8">
               <div
                 class="text-left full-width"
                 v-show="selectedWithdrawalMethod"
@@ -170,7 +181,8 @@
                   "
                 >
                   {{
-                    $t('lang.min_max_amount') + ": " +
+                    $t("lang.min_max_amount") +
+                    ": " +
                     selectedWithdrawalMethod.withdrawMin +
                     " - " +
                     selectedWithdrawalMethod.withdrawMax
@@ -179,19 +191,23 @@
                 </template>
                 <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
                   {{
-                    $t('lang.withdrawal_today') + selectedWithdrawalMethod.withdrawMaxAmount
+                    $t("lang.withdrawal_today") +
+                    selectedWithdrawalMethod.withdrawMaxAmount
                   }}
                 </template>
                 <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
                   {{
-                    ' ' + $t('lang.remaining') + ' ' +
-                    selectedWithdrawalMethod.withdrawMaxTimes + ' ' +
-                    $t('lang.attempt_time')
+                    " " +
+                    $t("lang.remaining") +
+                    " " +
+                    selectedWithdrawalMethod.withdrawMaxTimes +
+                    " " +
+                    $t("lang.attempt_time")
                   }}
                 </template>
               </div>
               <div
-                class="q-mb-md"
+                class="text-left full-width"
                 v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
               >
                 <span style="color: #9bffd1"
@@ -202,18 +218,30 @@
 
               <div
                 v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-                class="q-my-md"
+                class="text-left full-width"
               >
                 <span style="color: #9bffd1"
                   >{{
-                    (
-                      withdrawInfo.amount /
-                      selectedWithdrawalMethod.exchangeRate
-                    ).toFixed(2)
+                    selectedWithdrawalMethod &&
+                    withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                      ? "0.00"
+                      : (
+                          withdrawInfo.amount /
+                            selectedWithdrawalMethod.exchangeRate -
+                          1
+                        ).toFixed(2)
                   }}
                   USDT</span
                 >
               </div>
+
+              <div
+                v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
+                class="text-left full-width"
+              >
+                <span style="color: #9bffd1;">{{ $t("lang.usdt_will_be_charged") }}</span>
+              </div>
+
               <!-- <a-form-item
             class="select"
             name="cardId"
@@ -250,12 +278,12 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import {defineComponent, reactive, ref, onMounted} from "vue";
 // import { loadBankCards, confirmWithdraw, withdrawEntrance
 // //  } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import {api} from "boot/axios";
+import {useQuasar} from "quasar";
 import {userStore} from "stores/index";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
@@ -296,30 +324,30 @@ export default defineComponent({
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
       } else {
-          api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((res) => {
-            const response = res.data
-            if(response.code === 0) {
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "สำเร็จ",
-                icon: "check_circle_outline"
-              });
-              getWithdrawalMethods();
-              withdrawInfo.amount = "";
-              store.getBalance();
-            } else {
+        api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((res) => {
+          const response = res.data
+          if (response.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "สำเร็จ",
+              icon: "check_circle_outline"
+            });
+            getWithdrawalMethods();
+            withdrawInfo.amount = "";
+            store.getBalance();
+          } else {
             // $q.notify({
             //   color: "negative",
             //   position: "top",
             //   message: response.message,
             //   icon: "report_problem"
             // });
-            }
-          }).catch((error) => {
-            console.log("error", error);
-          });
-          $q.loading.hide();
+          }
+        }).catch((error) => {
+          console.log("error", error);
+        });
+        $q.loading.hide();
       }
     }
     const isUSDT = ref(false);
@@ -331,7 +359,7 @@ export default defineComponent({
       if (withdrawInfo.withdrawCode.includes('USDT')) {
         isUSDT.value = true
       } else {
-        isUSDT.value = false
+        isUSDT.value = false;
       }
       activeItem.value = index;
       loadCards()
@@ -341,27 +369,28 @@ export default defineComponent({
       api.get("/session/bankCard").then((res) => {
         const response = res.data
         withdrawState.bankCardList = []
-        if(response.code === 0) {
+        if (response.code === 0) {
           // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
-            response.data.forEach(element => {
-              if (element.bankType === 'BANK') {
-                if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                  withdrawState.bankCardList.push({
-                    ...element,
-                    name: `${element.bankName} - ${element.cardNumber}`,
-                    icon: element.bankIcon
-                  })
-                }
+          response.data.forEach(element => {
+            if (element.bankType === 'BANK') {
+              if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+                withdrawState.bankCardList.push({
+                  ...element,
+                  name: `${element.bankName} - ${element.cardNumber}`,
+                  icon: element.bankIcon
+                })
               }
-            });
+            }
+          });
 
-            cardRef.value.resetValidation();
-            // if (withdrawState.bankCardList.length)
-              // withdrawInfo.cardId = withdrawState.bankCardList[0].id
+          cardRef.value.resetValidation();
+          // if (withdrawState.bankCardList.length)
+          // withdrawInfo.cardId = withdrawState.bankCardList[0].id
         }
       }).catch((error) => {
         console.log("error", error);
-      });}
+      });
+    }
     const getWithdrawalMethods = () => {
       api.get("/session/withdraw/entrance").then((res) => {
         const response = res.data
@@ -372,7 +401,7 @@ export default defineComponent({
           //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
           //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
           if (withdrawalMethods.value.length > 0) {
-              selectMethod(withdrawalMethods.value[0], 0)
+            selectMethod(withdrawalMethods.value[0], 0)
           }
         } else {
           $q.notify({
@@ -412,9 +441,10 @@ export default defineComponent({
     selectedPlatform(props) {
       const selectedIndex = props.activeItem ?? 0;
 
-      return { ...props.withdrawalMethods[selectedIndex],
-        opt: { ...props.withdrawalMethods[selectedIndex] },
-        itemProps: { }
+      return {
+        ...props.withdrawalMethods[selectedIndex],
+        opt: {...props.withdrawalMethods[selectedIndex]},
+        itemProps: {}
       }
     }
   },
@@ -424,14 +454,17 @@ export default defineComponent({
 <style scoped lang="scss">
 :deep(.ant-form-item) {
   align-items: center;
+
   &.tip {
     margin-top: -20px;
     color: #ffffff;
   }
 }
+
 .helptxt {
   display: flex;
   align-items: flex-start;
+
   .ant-input {
     background: #23263c;
     width: 50%;
@@ -439,6 +472,7 @@ export default defineComponent({
     padding: 10px;
     border: #23263c;
   }
+
   :deep(.ant-form-item-control-input-content) {
     display: flex;
     justify-content: flex-start;
@@ -446,18 +480,23 @@ export default defineComponent({
     align-items: flex-start;
   }
 }
+
 :deep(.ant-form-horizontal .ant-form-item-label) {
   width: 160px;
 }
+
 :deep(.ant-form-horizontal .ant-form-item-control) {
   width: unset;
 }
+
 :deep(.ant-form-item .ant-select) {
   width: 280px;
 }
+
 :deep(.ant-form-item.select .ant-form-item-control-input) {
   max-width: 280px;
 }
+
 :deep(
     .ant-select-single:not(.ant-select-customize-input)
       .ant-select-selector
@@ -465,6 +504,7 @@ export default defineComponent({
   ) {
   height: 40px;
 }
+
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
   height: 40px;
   padding: 5px 20px;
@@ -481,30 +521,37 @@ export default defineComponent({
   overflow-x: auto;
   padding: 15px 5px;
 }
+
 .withdrawal {
   ul {
     padding: 0 0 0 20px;
+
     li {
       list-style-type: disc;
       margin-bottom: 10px;
     }
   }
+
   :deep(.ant-steps-item) {
     flex: unset;
   }
+
   :deep(.ant-steps-item-process .ant-steps-item-icon) {
     background: #2b2b4b;
     border: 1px solid #db7e42;
   }
+
   :deep(.ant-steps-item-finish .ant-steps-item-icon) {
     background-image: $linear-bg-red;
 
     border: 1px solid #2b2b4b;
+
     svg {
       color: #ffffff;
       stroke-width: 5px;
     }
   }
+
   :deep(
       .ant-steps-item-finish
         > .ant-steps-item-container
@@ -513,6 +560,7 @@ export default defineComponent({
     ) {
     color: #db7e42;
   }
+
   :deep(
       .ant-steps-item-process
         > .ant-steps-item-container
@@ -521,10 +569,12 @@ export default defineComponent({
     ) {
     color: #ffffff;
   }
+
   :deep(.ant-steps-item-title::after) {
     display: none;
   }
 }
+
 .step-item {
   color: #ffffff;
   width: 130px;
@@ -537,6 +587,7 @@ export default defineComponent({
   border-left: 0;
   padding-left: 20px;
   font-weight: bold;
+
   &::before,
   &::after {
     content: "";
@@ -545,6 +596,7 @@ export default defineComponent({
     border-bottom: 23px solid transparent;
     top: 0px;
   }
+
   &::before {
     left: 0;
     top: -2px;
@@ -552,16 +604,19 @@ export default defineComponent({
     border-top: 25px solid transparent;
     border-bottom: 25px solid transparent;
   }
+
   &::after {
     border-left: 23px solid #2b2b4b;
     right: -23px;
     z-index: 1;
   }
+
   &.active {
     color: #24222e;
     background: #ffffff;
     border: 0;
     padding-left: 0px;
+
     &::after {
       border-left: 25px solid #ffffff;
       top: 0;
@@ -570,11 +625,13 @@ export default defineComponent({
       border-bottom: 25px solid transparent;
     }
   }
+
   &:first-child::before,
   &:last-child::after {
     display: none;
   }
 }
+
 .withdraw-type-item {
   width: 120px;
   margin-right: 10px;
@@ -586,20 +643,24 @@ export default defineComponent({
 
   position: relative;
   cursor: pointer;
+
   img {
     width: 100%;
   }
+
   &.active {
     background: #23263c;
     color: #db7e42;
     box-shadow: none;
     filter: drop-shadow(0px 0px 3px #ffffff);
   }
+
   .type-name {
     line-height: 15px;
     margin: 10px 0 0;
     overflow-wrap: break-word;
   }
+
   .promo {
     position: absolute;
     right: 0;
@@ -616,13 +677,16 @@ export default defineComponent({
     line-height: 10px;
     border-radius: 0 10px;
     font-weight: bold;
+
     ::after {
       position: relative;
     }
   }
 }
+
 .withdraw-btn {
   margin: 30px auto;
+
   &.cancel {
     margin-right: 60px;
   }
@@ -637,16 +701,19 @@ export default defineComponent({
         min-width: unset;
         margin: 20px auto;
       }
+
       .step-item {
         font-size: 10px;
         line-height: 25px;
         font-weight: bold;
+
         &::before,
         &::after {
           content: "";
           position: absolute;
           top: 0px;
         }
+
         &::before {
           left: 0;
           top: -2px;
@@ -654,6 +721,7 @@ export default defineComponent({
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
         }
+
         &::after {
           border-left: 13px solid #2b2b4b;
           right: -13px;
@@ -661,11 +729,13 @@ export default defineComponent({
           border-bottom: 13px solid transparent;
           z-index: 1;
         }
+
         &.active {
           color: #24222e;
           background: #ffffff;
           border: 0;
           padding-left: 0px;
+
           &::after {
             border-left: 15px solid #ffffff;
             top: 0;
@@ -674,6 +744,7 @@ export default defineComponent({
             border-bottom: 15px solid transparent;
           }
         }
+
         &:first-child::before,
         &:last-child::after {
           display: none;
@@ -699,6 +770,7 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
     }
+
     .ant-input {
       width: 100%;
     }
