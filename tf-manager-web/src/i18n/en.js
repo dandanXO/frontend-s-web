@@ -1447,6 +1447,7 @@ export default {
     'Affiliate Report': 'Affiliate Report',
     'Platform Game Report': 'Platform Game Report',
     'Site Member Report': 'Member Report',
+    'Deposit Member Detail': 'Deposit Member Detail',
     System: 'System',
     'Operator Log': 'Operator Log',
     'Member Platform': 'Member Platform',

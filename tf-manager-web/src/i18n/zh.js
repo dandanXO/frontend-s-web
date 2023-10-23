@@ -1425,6 +1425,7 @@ export default {
     'Finance Report': '财务报表',
     'Affiliate Report': '代理报表',
     'Site Member Report': '会员报表',
+    'Deposit Member Detail': '今日充值会员列表',
     System: '系统',
     'Operator Log': '后台日志',
     'Member Platform': '用户平台设置',
