@@ -1425,6 +1425,7 @@ export default {
     'Withdraw Report': '提款报表',
     'Finance Report': '财务报表',
     'Affiliate Report': '代理报表',
+    'Affiliate Deposit Members': '代理报表存款会员',
     'Site Member Report': '会员报表',
     'Deposit Member Detail': '今日充值会员列表',
     System: '系统',
