@@ -32,98 +32,14 @@
 
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
-  <div class="bg-container">
-    <ContentFrame></ContentFrame>
-
-    <div class="bank-card-container">
-      <div class="bank-card-item card-unshow">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
-          <div class="card-label">BPI Bank</div>
-        </div>
-      </div>
-      <div class="bank-card-item card-unshow">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
-          <div class="card-label">BDO Unibank</div>
-          <div class="card-num">
-            568912447905877426
-            <q-icon size="xs" name="content_copy" />
-          </div>
-          <div class="card-unlink">
-            <q-icon size="sm" name="link_off" />
-          </div>
-        </div>
-      </div>
-      <div :class="['bank-card-item', cardClass]" @click="handleBankCardClick">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
-          <div class="card-label">BDO Unibank</div>
-          <div class="card-num">
-            568912447905877426
-            <q-icon size="xs" name="content_copy" />
-          </div>
-          <div class="card-unlink">
-            <q-icon size="sm" name="link_off" />
-          </div>
-        </div>
-      </div>
-      <div class="bank-card-item card-unshow">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
-          <div class="card-label">BDO Unibank</div>
-        </div>
-      </div>
-      <div class="bank-card-item card-unshow">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
-          <div class="card-label">BDO Unibank</div>
-        </div>
-      </div>
-      <div class="bank-card-item card-unshow">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
-          <div class="card-label">BDO Unibank</div>
-        </div>
-      </div>
-      <div class="bank-card-item card-unshow">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
-          <div class="card-label">BDO Unibank</div>
-        </div>
-      </div>
-      <div class="bank-card-item card-unshow">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
-          <div class="card-label">BDO Unibank</div>
-        </div>
-      </div>
-      <div class="bank-card-item">
-        <div class="bank-card-add">
-          <div class="card-icon">
-            <q-icon key="md" size="md" name="add" />
-          </div>
-          <div class="card-label">Add Card</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ContentView contentTopStatus="faded">
+    <!-- <template #top-content> -->
+      <!-- Content for the top slot -->
+      <!-- <div>This is the top content for OrderView</div> -->
+    <!-- </template> -->
+    <!-- Default slot for main content -->
+    <div style="height: 500px">asdasd Content here in orderview please</div>
+  </ContentView>
 </template>
 
 <script setup>
@@ -131,16 +47,16 @@ import { ref, watch } from "vue";
 import SwiperNav from "../../components/SwiperNav.vue";
 import { useRouter } from "vue-router";
 import ContentFrame from "../../components/ContentFrame.vue";
-import AgencyPolicy from "../../components/earn-money/AgencyPolicy.vue";
+import ContentView from "../../components/ContentView.vue";
 
-let slideList = ref(["Bank", "Message", "Personal Center", "Discount", "Record", "Order"]);
+let slideList = ref(["Order", "Bank", "Message", "Personal Center", "Discount", "Record"]);
 let slideListPath = ref([
+  "/account/order",
   "/account/bank",
   "/account/message",
   "/account",
   "/account/discount",
-  "/account/record",
-  "/account/order"
+  "/account/record"
 ]);
 let currentSlide = ref(slideList.value[0]);
 

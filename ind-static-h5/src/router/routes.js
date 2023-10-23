@@ -16,6 +16,10 @@ const routes = [
     children: [{ path: "", component: () => import("pages/LoginPage.vue") }]
   },
   {
+    path: "/landing",
+    children: [{ path: "", component: () => import("pages/LandingPage.vue") }]
+  },
+  {
     path: "/register",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -203,6 +207,12 @@ const routes = [
     path: "/account/bank",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+    // meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/order",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/OrderView.vue") }],
     // meta: { requiresAuth: true }
   },
   {
