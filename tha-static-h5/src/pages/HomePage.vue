@@ -866,6 +866,14 @@
       <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
+        <router-link to="/promo?id=80">
+          <div class="popup-item">
+            <span
+            >แนะนำเพื่อน รับโบนัสสูงถึง <em>6,888</em> รับเงินคืนสูงสุด
+              <em>20,000</em></span
+            >
+          </div>
+        </router-link>
         <router-link to="/promo?id=75">
           <div class="popup-item">
             <span
@@ -897,14 +905,6 @@
         <router-link to="/promo?id=79">
           <div class="popup-item">
             <span>ประกันยอดเสีย <em>10,000</em></span>
-          </div>
-        </router-link>
-        <router-link to="/promo?id=80">
-          <div class="popup-item">
-            <span
-              >แนะนำเพื่อน รับโบนัสสูงถึง <em>6,888</em> รับเงินคืนสูงสุด
-              <em>20,000</em></span
-            >
           </div>
         </router-link>
       </div>
@@ -2406,7 +2406,7 @@ export default defineComponent({
     .popup-btn {
       position: absolute;
       top: 0px;
-      left: 0px;
+      left: 10px;
       z-index: 999;
       cursor: pointer;
     }
