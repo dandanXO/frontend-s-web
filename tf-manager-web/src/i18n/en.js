@@ -1446,6 +1446,7 @@ export default {
     'Withdraw Report': 'Withdraw Report',
     'Finance Report': 'Finance Report',
     'Affiliate Report': 'Affiliate Report',
+    'Affiliate Deposit Members': 'Affiliate Deposit Members',
     'Platform Game Report': 'Platform Game Report',
     'Site Member Report': 'Member Report',
     'Deposit Member Detail': 'Deposit Member Detail',
