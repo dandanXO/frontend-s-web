@@ -82,7 +82,7 @@
             <!-- eslint-disable -->
             <span
               v-if="scope.row.recordTime !== null"
-              v-formatter="{ data: scope.row.recordTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date' }"
+              v-formatter="{ data: scope.row.recordTime, timeZone: timeZone, type: 'date' }"
             />
           </template>
         </el-table-column>
@@ -113,6 +113,10 @@ const props = defineProps({
   mbrId: {
     type: String,
     required: true
+  },
+  timeZone: {
+    type: String,
+    required: true,
   }
 })
 
