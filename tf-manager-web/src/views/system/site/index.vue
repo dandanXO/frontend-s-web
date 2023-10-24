@@ -115,7 +115,12 @@
               <el-table-column prop="domainCount" :label="t('fields.domainCount')" width="150" />
               <el-table-column prop="subsiteCount" :label="t('fields.subSiteCount')" width="150" />
               <el-table-column prop="currency" :label="t('fields.currency')" width="150" />
-              <el-table-column prop="createTime" :label="t('fields.createTime')" width="150" />
+              <el-table-column prop="createTime" :label="t('fields.createTime')" width="150">
+                <template #default="scope">
+                  <span v-formatter="{data: scope.row.createTime, type: 'date', timeZone: scope.row.timeZone}" />
+                </template>
+              </el-table-column>
+              <el-table-column prop="timeZone" :label="t('fields.timeZone')" width="150" />
               <el-table-column :label="t('fields.operate')" align="right" fixed="right">
                 <template #default="scope">
                   <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
