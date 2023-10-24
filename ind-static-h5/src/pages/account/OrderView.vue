@@ -1,34 +1,5 @@
 <template>
-  <div class="infoboard-container q-pa-md">
-    <img src="../../assets/images/earn-money/infoboard.png" />
-    <div class="infoboard-wrapper">
-      <div class="profile-wrapper">
-        <div class="profile-pic">
-          <q-avatar size="70px">
-            <img src="https://cdn.quasar.dev/img/avatar.png" />
-          </q-avatar>
-        </div>
-        <div class="profile-details-container">
-          <div class="profile-name">
-            Guest0238434
-            <div class="vip-details" @click="router.push('/vip')">
-              <img src="../../assets/images/index/icon-vip-badge.png" alt="" />
-              <div class="vip-level">VIP1</div>
-            </div>
-          </div>
-          <div class="profile-rating">
-            <img src="../../assets/images/index/profile-rating-off.png" alt="" />
-            <img src="../../assets/images/index/profile-rating-off.png" alt="" />
-            <img src="../../assets/images/index/profile-rating-off.png" alt="" />
-          </div>
-          <div class="profile-agency">
-            <div class="profile-agency-lbl">Agency Level:</div>
-            <div class="profile-agency-val">1</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ProfileSummary />
 
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
@@ -170,6 +141,7 @@ import { onMounted, ref, watch } from "vue";
 import SwiperNav from "../../components/SwiperNav.vue";
 import { useRouter } from "vue-router";
 import ContentView from "../../components/ContentView.vue";
+import ProfileSummary from "../../components/ProfileSummary.vue";
 
 let slideList = ref(["Order", "Bank", "Message", "Personal Center", "Discount", "Record"]);
 let slideListPath = ref([
@@ -186,6 +158,8 @@ const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
   return false;
 };
+
+
 
 const orderOptionTab = ref("");
 
