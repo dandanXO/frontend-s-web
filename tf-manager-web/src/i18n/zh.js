@@ -938,7 +938,7 @@ export default {
     totalRebateAmount: '总返水金额',
     totalRedeem: '总领取金额',
     totalRegister: '总新注册用户',
-    totalRegisterCount: '新注册用户总人数',
+    totalRegisterCount: '注册会员总数',
     totalReimburseAmount: '总报销金额',
     totalSuccessDeposit: '存款成功数量',
     totalSuccessDepositAmount: '存款成功总额',
