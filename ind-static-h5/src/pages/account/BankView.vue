@@ -1,6 +1,6 @@
 <template>
   <!-- unbind dialog -->
-  <q-dialog align-center v-model="isUnbindDialogOpen" width="500">
+  <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
     <q-card>
       <DialogHeader title="Are You Sure To Unbind?"></DialogHeader>
 
@@ -27,7 +27,7 @@
   </q-dialog>
 
   <!-- add card dialog -->
-  <q-dialog align-center v-model="isAddCardDialogOpen" width="500">
+  <q-dialog align-center v-model="isAddCardDialogOpen" width="500" class="modal-container">
     <q-card>
       <DialogHeader :title="dialogDisplays.title"></DialogHeader>
 
@@ -126,9 +126,7 @@
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
   <!-- bank card -->
-  <div class="bg-container">
-    <ContentFrame></ContentFrame>
-
+  <ContentView contentTopStatus="solid">
     <div class="bank-card-container">
       <div
         v-for="bc in personalState.bankCardList"
@@ -160,7 +158,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </ContentView>
 </template>
 
 <script setup>
@@ -171,7 +169,7 @@ import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import moment from "moment";
 import SwiperNav from "../../components/SwiperNav.vue";
-import ContentFrame from "../../components/ContentFrame.vue";
+import ContentView from "../../components/ContentView.vue";
 import DialogHeader from "../../atoms//DialogHeader.vue";
 import ConfirmButton from "../../atoms//ConfirmButton.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
@@ -420,13 +418,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .bank-card-container {
-  position: absolute;
-  padding: 0 2rem;
-  height: 37rem;
-  overflow: auto;
-  top: 15rem;
-  width: 100%;
-
+  padding: 0 1rem;
   .bank-card-item {
     background: linear-gradient(90deg, #ffffff 0%, #703c98 100%);
     padding: 3px;
@@ -505,18 +497,26 @@ onMounted(() => {
   }
 }
 
-.input-title {
-  color: rgba(255, 255, 255, 0.5);
-  font-family: Helvetica;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 2.25rem; /* 100% */
-  text-transform: capitalize;
-}
+.modal-container {
+  .input-title {
+    color: rgba(255, 255, 255, 0.5);
+    font-family: Helvetica;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 2.25rem; /* 100% */
+    text-transform: capitalize;
+  }
 
-.dialog-input {
-  border-radius: 1.25rem;
-  background: rgba(21, 0, 37, 0.5);
+  .dialog-input {
+    border-radius: 1.25rem;
+    background: rgba(21, 0, 37, 0.5);
+  }
+
+  .q-dialog__inner > div {
+    padding: 1.5rem;
+    border-radius: 2rem;
+    background: url("../../assets/images/index/modal-bg.png");
+  }
 }
 </style>

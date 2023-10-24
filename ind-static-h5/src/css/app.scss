@@ -76,13 +76,6 @@ body.body--dark .q-header {
   background-size: cover;
 }
 
-.q-dialog__inner > div {
-  padding: 1.5rem;
-  overflow-y: scroll;
-  border-radius: 2rem;
-  background: url("../assets/images/index/modal-bg.png");
-}
-
 .q-dialog__inner--minimized {
   padding: 0;
 }
@@ -379,4 +372,3 @@ svg {
     margin: auto;
   }
 }
-
