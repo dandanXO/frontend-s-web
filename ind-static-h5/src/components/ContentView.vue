@@ -16,15 +16,7 @@
       </div>
     </div>
     <div class="content-view-middle">
-      <!-- <div class="content-view-middle--img">
-        <img src="../assets/images/common/content-frame-middle.png" />
-      </div> -->
-
-      <div class="content-view-middle--content">
-        <slot></slot>
-      </div>
-
-      <!-- Default slot for main content -->
+      <slot></slot>
     </div>
     <div class="content-view-bottom"></div>
   </div>
@@ -36,14 +28,23 @@ const props = defineProps(["contentTopStatus"]);
 
 <style lang="scss">
 .content-view {
-  height: 600px;
   width: 95%;
   margin: auto;
+
   .content-view-top {
-    background-image: url(../assets/images/common/content-frame-top.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: top center;
+    background: url(../assets/images/common/content-frame-top.png) no-repeat center/contain;
+    position: relative;
+    margin-top: 40px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      background: url(../assets/images/common/content-frame-up-icon.png) no-repeat center/contain;
+      display: block;
+      width: 100%;
+      height: 30px;
+    }
 
     &--img {
       position: relative;
@@ -58,10 +59,11 @@ const props = defineProps(["contentTopStatus"]);
     &--content {
       .top-content-status {
         position: absolute;
-        bottom: 0px;
+        bottom: -16px;
         left: 0;
         width: 100%;
-        //position absolute center center
+        z-index: 2;
+
         img {
           display: block;
           width: 80%;
@@ -73,6 +75,11 @@ const props = defineProps(["contentTopStatus"]);
   }
 
   .content-view-middle {
+    position: relative;
+    background: url(../assets/images/common/content-frame-middle.png) round top/100% auto;
+    min-height: 435px;
+    padding: 16px;
+
     &--img {
       img {
         display: block;
@@ -80,36 +87,22 @@ const props = defineProps(["contentTopStatus"]);
         height: auto;
       }
     }
-    position: relative;
-    background-image: url(../assets/images/common/content-frame-middle-below.png);
-    background-size: contain;
-    background-repeat: repeat-y;
-    width: 100%;
-    height: auto;
-    background-position: top center;
-    // margin-top: -2px;
-
-    &:before {
-      content: "";
-      display: block;
-      background-image: url(../assets/images/common/content-frame-middle.png);
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: top center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-    }
   }
 
   .content-view-bottom {
-    background-image: url(../assets/images/common/content-frame-bottom.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: top center;
+    background: url(../assets/images/common/content-frame-bottom.png) no-repeat top center / contain;
     min-height: 100px;
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      bottom: 15px;
+      background: url(../assets/images/common/content-frame-down-icon.png) no-repeat center/contain;
+      display: block;
+      width: 100%;
+      height: 30px;
+    }
   }
 }
 </style>

@@ -2279,10 +2279,6 @@ export default defineComponent({
   text-align: center;
 }
 
-.bg-yellow {
-  background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%) !important;
-}
-
 .floating-btn {
   img {
     width: 30px;

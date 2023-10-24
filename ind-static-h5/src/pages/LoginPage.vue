@@ -1,13 +1,17 @@
 <template>
   <div class="login-container">
     <div class="back-left">
-      <router-link :to="'/'">
-        <RiArrowDropLeftLine />
+      <router-link :to="'/landing'">
+        <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-sm" />
       </router-link>
     </div>
 
     <div class="logo">
       <img src="../assets/logo.png" />
+    </div>
+
+    <div class="landing-img">
+      <img src="../assets/images/login/landing-img.png" />
     </div>
 
     <q-form ref="loginFormRef" @submit="onSubmit">
@@ -42,7 +46,7 @@
         >
           <template v-slot:append>
             <q-icon
-              color="yellow-5"
+              color="gray-3"
               :name="isPwd ? 'visibility_off' : 'visibility'"
               class="cursor-pointer"
               @click="isPwd = !isPwd"
@@ -72,50 +76,6 @@
         </q-input>
       </div>
 
-      <div v-if="loginType" class="q-gutter-y-md">
-        <q-input
-          hide-bottom-space
-          ref="telephoneRef"
-          v-model="phoneLoginForm.phoneNumber"
-          label="电话号码"
-          :rules="[(val) => (val && val.length > 0) || '请输入电话号码', isValidCnPhone]"
-          color="white"
-          :readonly="phoneLoginForm.smsCodeId ? true : false"
-          clearable
-          label-color="brand"
-          autocomplete="username"
-        >
-          <template v-slot:prepend>
-            <q-icon color="bright" name="phone" />
-          </template>
-        </q-input>
-        <q-input
-          @pressEnter="alert('ah')"
-          ref="phoneVerificationRef"
-          hide-bottom-space
-          type="text"
-          v-model="phoneLoginForm.code"
-          label="短信验证码"
-          clearable
-          :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
-          color="white"
-          label-color="brand"
-        >
-          <template v-slot:append>
-            <q-btn
-              size="md"
-              color="brightbtn"
-              label="发送验证码"
-              @click="toggleInnerCode"
-              style="white-space: nowrap"
-            />
-          </template>
-          <template v-slot:prepend>
-            <q-icon color="bright" name="security" />
-          </template>
-        </q-input>
-      </div>
-
       <div class="row items-center justify-between q-mt-sm">
         <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
           <q-checkbox
@@ -123,21 +83,19 @@
             v-model="isCheckRmb"
             label="Remember Me"
             size="md"
-            style="font-size: 14px; color: #91829d"
-            checked-icon="task_alt"
-            unchecked-icon="highlight_off"
-            color="yellow-4"
+            class="rmb-checked-box"
+            color="yellow"
           />
         </div>
       </div>
 
-      <q-btn @click.prevent="onSubmit" type="submit" class="btn-yellow" label="Sign Up Now" rounded no-caps />
+      <q-btn @click.prevent="onSubmit" type="submit" class="btn-yellow" label="Login" rounded no-caps />
     </q-form>
 
     <div class="tip-container">
-      <router-link class="forget-pwd-tip" to="/forgot-password">Forgot Password ?</router-link>
+      <router-link class="landing-tip" to="/forgot-password">Forgot Password ?</router-link>
 
-      <router-link class="forget-pwd-tip" to="/register">Sign Up Now</router-link>
+      <router-link class="landing-tip" to="/register">Sign Up Now</router-link>
     </div>
   </div>
 
@@ -174,15 +132,14 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import RegisterPage from "../pages/RegisterPage.vue";
+// import RegisterPage from "../pages/RegisterPage.vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
-import { RiArrowDropLeftLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "LoginPage",
   components: {
-    RiArrowDropLeftLine
+    // RiArrowDropLeftLine
   },
   setup() {
     const tab = ref("login");
@@ -455,93 +412,49 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss">
-.login-container {
-  position: relative;
-  background: url(../assets/images/login/landing-bg.png) no-repeat center center;
-  background-size: cover;
-  height: 100vh;
-  padding: 16px;
-
-  .logo {
-    margin: 0 auto;
-    padding: 25px 0 30px;
-    display: flex;
-    width: 150px;
-
-    img {
-      width: 100%;
-    }
-  }
-
-  .landing-img {
-    img {
-      display: block;
-      width: 95%;
-      margin: auto;
-      max-width: 400px;
-    }
-  }
-
-  .landing-btns {
-    display: flex;
-    gap: 16px;
-    flex-direction: column;
-  }
-
-  .btn-yellow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    line-height: 1;
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    font-weight: 700;
-    width: 100%;
-    height: 48px;
-    transition: 0.3s all;
-    background-image: url(../assets/images/login/btn-yellow.png);
-    color: #ffffff;
-    margin: auto;
-  }
-
-  .btn-purple {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    line-height: 1;
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    font-weight: 700;
-    width: 100%;
-    height: 48px;
-    transition: 0.3s all;
-    background-image: url(../assets/images/login/btn-purple.png);
-    color: #ffffff;
-    margin: auto;
-  }
-}
+<style scoped lang="scss">
 
 .tip-container {
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
+  padding-bottom: 24px;
 }
 
-.forget-pwd-tip {
+.landing-tip {
   color: #fae576;
   text-decoration: none;
   font-weight: 700;
 }
 
 .landing-input {
-  .q-field__control:before {
+  :deep(.q-field__control) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  :deep(.q-field__control):before {
     border-color: #ffdd27;
     border-width: 2px;
   }
 }
+
+.rmb-checked-box {
+  font-size: 14px;
+  color: #91829d;
+  margin-bottom: 8px;
+
+  :deep(.q-checkbox__bg) {
+    border-radius: 50%;
+  }
+  :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
+    background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%);
+
+    svg {
+      color: #000;
+      padding: 2px;
+    }
+  }
+}
+
+
 </style>

@@ -32,18 +32,23 @@
 
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
-  <ContentView contentTopStatus="faded">
-    <!-- <template #top-content> -->
-      <!-- Content for the top slot -->
-      <!-- <div>This is the top content for OrderView</div> -->
-    <!-- </template> -->
-    <!-- Default slot for main content -->
-    <div style="height: 500px">asdasd Content here in orderview please</div>
+  <ContentView contentTopStatus="solid">
+    <q-tabs
+      v-model="orderOptionTab"
+      dense
+      no-caps
+      class="order-option-tab"
+      indicator-color="transparent"
+      align="justify"
+    >
+      <q-tab name="withdrawal" label="Withdrawal" />
+      <q-tab name="recharge" label="Recharge" />
+    </q-tabs>
   </ContentView>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import SwiperNav from "../../components/SwiperNav.vue";
 import { useRouter } from "vue-router";
 import ContentFrame from "../../components/ContentFrame.vue";
@@ -64,6 +69,9 @@ const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
   return false;
 };
+
+const orderOptionTab = ref("");
+
 const router = useRouter();
 
 const onSlideClick = (e, i) => {
@@ -85,6 +93,10 @@ watch(isCardShown, (newValue) => {
 const handleBankCardClick = () => {
   isCardShown.value = !isCardShown.value;
 };
+
+onMounted(() => {
+  orderOptionTab.value = "withdrawal";
+});
 </script>
 
 <style lang="scss" scoped>
@@ -313,6 +325,20 @@ const handleBankCardClick = () => {
         justify-content: center;
       }
     }
+  }
+}
+
+.order-option-tab {
+  background-color: rgba(21, 0, 37, 0.6);
+  border-radius: 8px;
+
+  :deep(.q-tab__label) {
+    font-weight: 700;
+  }
+
+  :deep(.q-tab--active) {
+    color: #000000;
+    background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
   }
 }
 </style>
