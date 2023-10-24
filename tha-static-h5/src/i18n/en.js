@@ -410,7 +410,20 @@ export default {
     detected_new_version: "New Update Available. Do you wish to download it now?",
     update_now: "Update Now",
     usdt_will_be_charged: "1.00 USDT will be charged for each transaction!",
-    estimate_arrival: "Estimate Withdraw: "
+    phone_verification_code: "Phone Verification Code",
+    please_enter_phone_code: "Please enter the phone verification code",
+    get_code: "Get Code",
+    bind_crypto_need_phone_veri: "To link your eWallet card, phone verification is required.",
+    click_to_refresh_captcha: "Click to refresh",
+    send_veri_code: "Send",
+    phone_number_cannot_empty: "Phone number cannot be empty",
+    captcha_code_must_be_digits: "Captcha code must be 4 characters",
+    phone_veri_sent_success: "Successfully sent phone verification code.",
+    are_you_sure_want_delete: "Are you sure you want to delete ",
+    delete: "Delete",
+    please_enter_card_num: "Please enter card number.",
+    please_enter_bank_acc: "Please enter bank account.",
+   estimate_arrival: "Estimate Withdraw: "
   },
   error: {
     101: "Platform not found",
