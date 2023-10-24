@@ -26,6 +26,7 @@ const props = defineProps(["title"]);
     right: 0;
     top: 0;
     width: 2rem;
+    height: 2rem;
   }
 }
 </style>

@@ -4,7 +4,7 @@
     <q-card>
       <DialogHeader title="Are You Sure To Unbind?"></DialogHeader>
 
-      <q-card-section class="q-pt-none">
+      <q-card-section>
         <q-form>
           <div class="input-title">Bank Card Number</div>
           <q-input
@@ -31,9 +31,9 @@
     <q-card>
       <DialogHeader :title="dialogDisplays.title"></DialogHeader>
 
-      <q-card-section class="q-pt-none">
+      <q-card-section>
         <q-form>
-          <div class="q-my-sm">
+          <div class="q-my-sm select-wrapper">
             <div class="input-title">Card Type</div>
             <q-select
               standout
@@ -129,18 +129,18 @@
   <ContentView contentTopStatus="solid">
     <div class="bank-card-container">
       <div
-        v-for="bc in personalState.bankCardList"
+        v-for="(bc, bcIndex) in personalState.bankCardList"
         :key="bc.id"
-        :class="['bank-card-item', cardClass]"
-        @click="handleBankCardClick"
+        :class="`bank-card-item ${isCardShown[bcIndex] ? 'card-show' : 'card-unshow'}`"
+        @click="handleBankCardClick(bcIndex)"
       >
         <div class="bank-card-add">
           <div class="card-icon">
             <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
           </div>
           <div class="card-label">{{ bc.bankName }}</div>
-          <div class="card-num">
-            {{ bc.cardNumber }}
+          <div class="card-num-wrapper">
+            <div class="card-num">{{ bc.cardNumber }}</div>
             <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
           </div>
           <div class="card-unlink" @click.stop.prevent="onUnbindClick()">
@@ -201,14 +201,10 @@ const onSlideClick = (e, i) => {
   currentSlide.value = e;
 };
 
-const cardClass = ref("card-show");
-let isCardShown = ref(true);
-watch(isCardShown, (newValue) => {
-  cardClass.value = newValue ? "card-show" : "card-unshow";
-});
-
-const handleBankCardClick = () => {
-  isCardShown.value = !isCardShown.value;
+let isCardShown = ref([]);
+const handleBankCardClick = (index) => {
+  if (!isCardShown.value[index]) isCardShown.value[index] = true;
+  else isCardShown.value[index] = false;
 };
 
 const copy = (val) => {
@@ -390,6 +386,28 @@ const loadCards = () => {
   api
     .get("/session/bankCard")
     .then((res) => {
+      res.data = [
+        {
+          id: 227853,
+          cardNumber: "A7SYA8UAS89ACJ9A8SU8AUC8A9SA98DY6891",
+          cardAccount: "测试",
+          cardAddress: "",
+          bankName: "USDTTRC",
+          bankType: "CRYPTO",
+          bankCode: "USDTTRC",
+          bankIcon: "85908fe1-3bee-479a-802d-1037946d6dad.png"
+        },
+        {
+          id: 231305,
+          cardNumber: "1332656543452136",
+          cardAccount: "测试",
+          cardAddress: "",
+          bankName: "广发银行",
+          bankType: "BANK",
+          bankCode: "2",
+          bankIcon: "97c73b1b-bcbb-4f3e-814a-86b15956d683.png"
+        }
+      ];
       if (res.code === 0) personalState.bankCardList.push(...res.data);
     })
     .catch((error) => {
@@ -416,7 +434,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .bank-card-container {
   padding: 0 1rem;
   .bank-card-item {
@@ -439,7 +457,7 @@ onMounted(() => {
           display: none;
         }
 
-        .card-num {
+        .card-num-wrapper {
           display: none;
         }
 
@@ -468,6 +486,18 @@ onMounted(() => {
         top: 1rem;
         right: 1rem;
         color: black;
+      }
+
+      .card-num-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        gap: 0.5rem;
+
+        .card-num {
+          word-break: break-all;
+        }
       }
     }
 
@@ -513,10 +543,25 @@ onMounted(() => {
     background: rgba(21, 0, 37, 0.5);
   }
 
+  .select-wrapper {
+    .q-item--active {
+      color: red;
+    }
+  }
+
   .q-dialog__inner > div {
     padding: 1.5rem;
     border-radius: 2rem;
     background: url("../../assets/images/index/modal-bg.png");
+    width: 90%;
   }
+
+  .q-card__section {
+    background: transparent;
+  }
+}
+
+.q-item--active {
+  color: #fdd835;
 }
 </style>
