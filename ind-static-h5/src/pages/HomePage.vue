@@ -89,14 +89,6 @@
       ></q-carousel-slide>
     </q-carousel>
 
-    <!-- :img-src="require('../assets/images/index/') + banner.mobileImageUrl" -->
-    <!-- <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" alt=""> -->
-    <!-- require(`/src/assets/${srcPath}` -->
-
-    <!-- ../assets/images/index/hot-elephant-left.png -->
-
-    <!-- <div>start here</div> -->
-
     <div class="top-action">
       <div class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true">Withdrawal</div>
       <div class="action-btn action-btn--deposit" @click="depositDialog = true">Deposit</div>
@@ -1919,6 +1911,242 @@ export default defineComponent({
   font-size: 14px;
   font-weight: bold;
 }
+
+.popout-dialog {
+  width: 90%;
+
+  max-width: 500px;
+  position: relative;
+  padding-top: 90px;
+  padding-right: 10px;
+
+  .popout-close {
+    position: absolute;
+    right: 0px;
+    top: 80px;
+  }
+
+  .popout-dialog-container {
+    background-image: url(../assets/images/index/popout/deposit-bg.png);
+    background-position: bottom center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30px 20px 20px;
+    border-radius: 30px !important;
+  }
+
+  .popout-main-title {
+    background-image: url(../assets/images/index/popout/popout-title.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    max-width: 290px;
+    height: 120px;
+    margin: -110px auto 0;
+    // position: absolute;
+    // top: 0px;
+    position: relative;
+
+    .txt-title {
+      background-color: #f3ec78;
+      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      line-height: 1;
+      font-size: 22px;
+      font-weight: 800;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: #a94700;
+
+      position: absolute;
+      bottom: 28px;
+      left: 52%;
+      transform: translate(-50%, 0%);
+    }
+  }
+
+  .deposit-item-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 12px;
+    column-gap: 8x;
+
+    .deposit-item {
+      .deposit-icon {
+        background-image: url(../assets/images/index/popout/deposit-item-frame.png);
+        background-position: top center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        height: 80px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        margin-left: 3px;
+        margin-right: 3px;
+        transition: all 0.3s;
+        img {
+          display: block;
+          width: 70%;
+        }
+      }
+
+      &.active > .deposit-icon {
+        background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
+      }
+
+      .deposit-hot-label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-image: url(../assets/images/index/popout/hot-label.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 50px;
+        height: 28px;
+        font-size: 0.725rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding-bottom: 3px;
+      }
+
+      .deposit-amt {
+        background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding: 3px;
+        width: 100%;
+        max-width: 100px;
+        margin: auto;
+      }
+    }
+  }
+
+  .deposit-enter-amt {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+
+    .deposit-input {
+      background-color: rgba(21, 0, 37, 0.5);
+      border-radius: 5px;
+      width: 100%;
+    }
+  }
+
+  .deposit-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 16px;
+    .deposit-option-btn {
+      color: #cccccc;
+      background-color: rgba(21, 0, 37, 0.5) !important;
+      min-width: 100px;
+      max-width: 160px;
+      width: 100%;
+      border-radius: 6px;
+      border: 3px solid transparent;
+
+      &.active {
+        color: #ffe66b;
+        border: 3px solid #ffe66b;
+      }
+
+      &.label-on-discount {
+        position: relative;
+        &:after {
+          content: "";
+          background-image: url(../assets/images/index/popout/label-discount.png);
+          background-repeat: no-repeat;
+          display: block;
+          position: absolute;
+          top: -4px;
+          right: -5px;
+          width: 30px;
+          height: 30px;
+          background-size: 100%;
+        }
+      }
+    }
+  }
+
+  .withdrawal-tab {
+    background-color: #896742;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+
+    .q-tab__label {
+      font-weight: 800;
+    }
+
+    .q-tab--active {
+      color: #000000;
+      background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+    }
+  }
+
+  .withdrawal-tab-panel {
+    background: rgba(21, 0, 37, 0.3);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    .withdrawal-table {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+
+      .w-tbl-row {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .w-tbl-col {
+        font-weight: 700;
+
+        &:nth-child(2) {
+          font-size: 140%;
+        }
+      }
+
+      .w-txt-red {
+        color: #ff0000;
+      }
+    }
+  }
+
+  .withdrawal-form {
+    margin-top: 20px;
+    .w-form-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+    .w-form-label {
+    }
+    .w-form-input {
+      background-color: rgba(21, 0, 37, 0.5);
+      border-radius: 5px;
+    }
+  }
+}
 </style>
 
 <style lang="scss">
@@ -2312,239 +2540,5 @@ export default defineComponent({
   }
 }
 
-.popout-dialog {
-  width: 90%;
 
-  max-width: 500px;
-  position: relative;
-  padding-top: 90px;
-  padding-right: 10px;
-
-  .popout-close {
-    position: absolute;
-    right: 0px;
-    top: 80px;
-  }
-
-  .popout-dialog-container {
-    background-image: url(../assets/images/index/popout/deposit-bg.png);
-    background-position: bottom center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 30px 20px 20px;
-    border-radius: 30px !important;
-  }
-
-  .popout-main-title {
-    background-image: url(../assets/images/index/popout/popout-title.png);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 100%;
-    max-width: 290px;
-    height: 120px;
-    margin: -110px auto 0;
-    // position: absolute;
-    // top: 0px;
-    position: relative;
-
-    .txt-title {
-      background-color: #f3ec78;
-      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-      line-height: 1;
-      font-size: 22px;
-      font-weight: 800;
-      -webkit-text-stroke-width: 1px;
-      -webkit-text-stroke-color: #a94700;
-
-      position: absolute;
-      bottom: 28px;
-      left: 52%;
-      transform: translate(-50%, 0%);
-    }
-  }
-
-  .deposit-item-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 12px;
-    column-gap: 8x;
-
-    .deposit-item {
-      .deposit-icon {
-        background-image: url(../assets/images/index/popout/deposit-item-frame.png);
-        background-position: top center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        display: flex;
-        height: 80px;
-        position: relative;
-        align-items: center;
-        justify-content: center;
-        margin-left: 3px;
-        margin-right: 3px;
-        transition: all 0.3s;
-        img {
-          display: block;
-          width: 70%;
-        }
-      }
-
-      &.active > .deposit-icon {
-        background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
-      }
-
-      .deposit-hot-label {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-image: url(../assets/images/index/popout/hot-label.png);
-        background-size: 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-        width: 50px;
-        height: 28px;
-        font-size: 0.725rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
-        padding-bottom: 3px;
-      }
-
-      .deposit-amt {
-        background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
-        background-position: center center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
-        padding: 3px;
-        width: 100%;
-        max-width: 100px;
-        margin: auto;
-      }
-    }
-  }
-
-  .deposit-enter-amt {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-
-    .deposit-input {
-      background-color: rgba(21, 0, 37, 0.5);
-      border-radius: 5px;
-      width: 100%;
-    }
-  }
-
-  .deposit-options {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 16px;
-    .deposit-option-btn {
-      color: #cccccc;
-      background-color: rgba(21, 0, 37, 0.5) !important;
-      min-width: 100px;
-      max-width: 160px;
-      width: 100%;
-      border-radius: 6px;
-      border: 3px solid transparent;
-
-      &.active {
-        color: #ffe66b;
-        border: 3px solid #ffe66b;
-      }
-
-      &.label-on-discount {
-        position: relative;
-        &:after {
-          content: "";
-          background-image: url(../assets/images/index/popout/label-discount.png);
-          background-repeat: no-repeat;
-          display: block;
-          position: absolute;
-          top: -4px;
-          right: -5px;
-          width: 30px;
-          height: 30px;
-          background-size: 100%;
-        }
-      }
-    }
-  }
-
-  .withdrawal-tab {
-    background-color: #896742;
-    border-top-right-radius: 16px;
-    border-top-left-radius: 16px;
-
-    .q-tab__label {
-      font-weight: 800;
-    }
-
-    .q-tab--active {
-      color: #000000;
-      background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
-    }
-  }
-
-  .withdrawal-tab-panel {
-    background: rgba(21, 0, 37, 0.3);
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-
-    .withdrawal-table {
-      display: flex;
-      gap: 10px;
-      flex-direction: column;
-
-      .w-tbl-row {
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .w-tbl-col {
-        font-weight: 700;
-
-        &:nth-child(2) {
-          font-size: 140%;
-        }
-      }
-
-      .w-txt-red {
-        color: #ff0000;
-      }
-    }
-  }
-
-  .withdrawal-form {
-    margin-top: 20px;
-    .w-form-item {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      margin-bottom: 12px;
-    }
-    .w-form-label {
-    }
-    .w-form-input {
-      background-color: rgba(21, 0, 37, 0.5);
-      border-radius: 5px;
-    }
-  }
-}
 </style>

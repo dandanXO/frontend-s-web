@@ -44,6 +44,124 @@
       <q-tab name="withdrawal" label="Withdrawal" />
       <q-tab name="recharge" label="Recharge" />
     </q-tabs>
+
+    <q-tab-panels
+      class="order-option-tab-panel"
+      v-model="orderOptionTab"
+      animated
+      transition-prev="fade"
+      transition-next="fade"
+    >
+      <q-tab-panel name="withdrawal">
+        <div class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">Order NO.</div>
+            <div class="order-col">P2323265549</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-col">2050</div>
+            <div class="order-col">UPI</div>
+            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
+            <div class="order-col"><span class="txt-green">Successful</span></div>
+          </div>
+        </div>
+
+        <div class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">Order NO.</div>
+            <div class="order-col">P2323265549</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-col">2050</div>
+            <div class="order-col">UPI</div>
+            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
+            <div class="order-col"><span class="txt-red">Failed</span></div>
+          </div>
+        </div>
+
+        <div class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">Order NO.</div>
+            <div class="order-col">P2323265549</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-col">2050</div>
+            <div class="order-col">UPI</div>
+            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
+            <div class="order-col"><span class="txt-red">Failed</span></div>
+          </div>
+        </div>
+
+        <div class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">Order NO.</div>
+            <div class="order-col">P2323265549</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-col">2050</div>
+            <div class="order-col">UPI</div>
+            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
+            <div class="order-col"><span class="txt-red">Failed</span></div>
+          </div>
+        </div>
+
+        <div class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">Order NO.</div>
+            <div class="order-col">P2323265549</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-col">2050</div>
+            <div class="order-col">UPI</div>
+            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
+            <div class="order-col"><span class="txt-red">Failed</span></div>
+          </div>
+        </div>
+
+      </q-tab-panel>
+
+      <q-tab-panel name="recharge">
+        <div class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">Order NO.</div>
+            <div class="order-col">P2323265549</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-col">2050</div>
+            <div class="order-col">UPI</div>
+            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
+            <div class="order-col"><span class="txt-green">Successful</span></div>
+          </div>
+        </div>
+
+        <div class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">Order NO.</div>
+            <div class="order-col">P2323265549</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-col">2050</div>
+            <div class="order-col">UPI</div>
+            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
+            <div class="order-col"><span class="txt-green">Successful</span></div>
+          </div>
+        </div>
+
+        <div class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">Order NO.</div>
+            <div class="order-col">P2323265549</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-col">2050</div>
+            <div class="order-col">UPI</div>
+            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
+            <div class="order-col"><span class="txt-red">Failed</span></div>
+          </div>
+        </div>
+
+      </q-tab-panel>
+    </q-tab-panels>
   </ContentView>
 </template>
 
@@ -51,7 +169,6 @@
 import { onMounted, ref, watch } from "vue";
 import SwiperNav from "../../components/SwiperNav.vue";
 import { useRouter } from "vue-router";
-import ContentFrame from "../../components/ContentFrame.vue";
 import ContentView from "../../components/ContentView.vue";
 
 let slideList = ref(["Order", "Bank", "Message", "Personal Center", "Discount", "Record"]);
@@ -331,6 +448,7 @@ onMounted(() => {
 .order-option-tab {
   background-color: rgba(21, 0, 37, 0.6);
   border-radius: 8px;
+  margin-bottom: 4px;
 
   :deep(.q-tab__label) {
     font-weight: 700;
@@ -339,6 +457,54 @@ onMounted(() => {
   :deep(.q-tab--active) {
     color: #000000;
     background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  }
+}
+
+.order-option-tab-panel {
+  background: transparent;
+
+  :deep(.q-tab-panel) {
+    // padding: 8px 12px;
+    padding: 0;
+  }
+  .order-table {
+    margin-top: 12px;
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 12px;
+
+      &--title {
+        background-color: rgba(21, 0, 37, 0.5);
+        border-top-right-radius: 16px;
+        border-top-left-radius: 16px;
+      }
+
+      &--content {
+        background-color: rgba(21, 0, 37, 0.2);
+        flex-wrap: wrap;
+      }
+    }
+
+    .order-col {
+      width: 50%;
+
+      &:nth-child(even) {
+        text-align: right;
+      }
+
+      span.txt-gray {
+        color: #888888;
+      }
+
+      span.txt-green {
+        color: #5bf25c;
+      }
+
+      span.txt-red {
+        color: #f24c5a;
+      }
+    }
   }
 }
 </style>

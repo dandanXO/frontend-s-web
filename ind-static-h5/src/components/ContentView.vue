@@ -79,6 +79,7 @@ const props = defineProps(["contentTopStatus"]);
     background: url(../assets/images/common/content-frame-middle.png) round top/100% auto;
     min-height: 435px;
     padding: 16px;
+    margin-top: -1px;
 
     &--img {
       img {
@@ -90,14 +91,15 @@ const props = defineProps(["contentTopStatus"]);
   }
 
   .content-view-bottom {
-    background: url(../assets/images/common/content-frame-bottom.png) no-repeat top center / contain;
-    min-height: 100px;
+    background: url(../assets/images/common/content-frame-bottom.png) round top/100% auto;
+    min-height: 50px;
     position: relative;
+    margin-bottom: 60px;
 
     &:before {
       content: "";
       position: absolute;
-      bottom: 15px;
+      bottom: -40px;
       background: url(../assets/images/common/content-frame-down-icon.png) no-repeat center/contain;
       display: block;
       width: 100%;
