@@ -413,7 +413,20 @@ export default {
     detected_new_version: "มีรายการอัพเดทใหม่ ต้องการดาวน์โหลดตอนนี้เลยหรือไม่?",
     update_now: "อัพเดท",
     usdt_will_be_charged: "บันทึก: มีค่าธรรมเนียมในการถอนเงิน 1.00 USDT/ครั้ง",
-    estimate_arrival: "ประมาณการถอน: "
+    estimate_arrival: "ประมาณการถอน: ",
+   phone_verification_code: "รหัสยืนยันโทรศัพท์",
+    please_enter_phone_code: "กรุณากรอกรหัสยืนยันทางโทรศัพท์",
+    get_code: "รับรหัส",
+    bind_crypto_need_phone_veri: "ในการเชื่อมโยงบัตร eWallet ของคุณ จำเป็นต้องมีการยืนยันทางโทรศัพท์",
+    click_to_refresh_captcha: "คลิกเพื่อรีเฟรช",
+    send_veri_code: "ส่ง",
+    phone_number_cannot_empty: "หมายเลขโทรศัพท์ไม่สามารถเว้นว่างได้",
+    captcha_code_must_be_digits: "รหัส Captcha ต้องเป็น 4 ตัวอักษร",
+    phone_veri_sent_success: "ส่งรหัสยืนยันทางโทรศัพท์เรียบร้อยแล้ว",
+    are_you_sure_want_delete: "คุณแน่ใจหรือไม่ว่าต้องการลบ ",
+    delete: "ลบ",
+    please_enter_card_num: "กรุณาใส่เลขบัตร",
+    please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",
