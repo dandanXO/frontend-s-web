@@ -3,8 +3,13 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
+    children: [{ path: "", component: () => import("pages/LandingPage.vue") }]
+  },
+  {
+    path: "/home",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/HomePage.vue") }]
+    children: [{ path: "", component: () => import("pages/HomePage.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/welcome",
@@ -15,10 +20,7 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LoginPage.vue") }]
   },
-  {
-    path: "/landing",
-    children: [{ path: "", component: () => import("pages/LandingPage.vue") }]
-  },
+
   {
     path: "/register",
     component: () => import("layouts/MainLayout.vue"),
@@ -194,26 +196,26 @@ const routes = [
   {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/AccountPage.vue") }]
-    // meta: { requiresAuth: true }
+    children: [{ path: "", component: () => import("pages/AccountPage.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/account/bank",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/BankView.vue") }]
-    // meta: { requiresAuth: true }
+    children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/account/order",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/OrderView.vue") }]
-    // meta: { requiresAuth: true }
+    children: [{ path: "", component: () => import("pages/account/OrderView.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/account/discount",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/DiscountView.vue") }]
-    // meta: { requiresAuth: true }
+    children: [{ path: "", component: () => import("pages/account/DiscountView.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/account/records",
@@ -580,7 +582,7 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
-    redirect: "/",
+    redirect: "/home",
     component: () => import("pages/ErrorNotFound.vue")
   }
 ];

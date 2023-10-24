@@ -316,7 +316,7 @@ export default defineComponent({
                 loginFormRef.value.reset();
 
                 if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
                   router.go(jumpUrl);
                 }
               })
