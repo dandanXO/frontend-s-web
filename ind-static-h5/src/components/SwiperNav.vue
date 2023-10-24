@@ -64,6 +64,7 @@ onMounted(() => {
         &.text-glow {
           position: absolute;
           width: 5rem;
+          z-index: -1;
         }
       }
       .inactive-text {
