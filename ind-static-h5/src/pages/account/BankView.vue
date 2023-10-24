@@ -162,7 +162,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
@@ -386,28 +386,6 @@ const loadCards = () => {
   api
     .get("/session/bankCard")
     .then((res) => {
-      res.data = [
-        {
-          id: 227853,
-          cardNumber: "A7SYA8UAS89ACJ9A8SU8AUC8A9SA98DY6891",
-          cardAccount: "测试",
-          cardAddress: "",
-          bankName: "USDTTRC",
-          bankType: "CRYPTO",
-          bankCode: "USDTTRC",
-          bankIcon: "85908fe1-3bee-479a-802d-1037946d6dad.png"
-        },
-        {
-          id: 231305,
-          cardNumber: "1332656543452136",
-          cardAccount: "测试",
-          cardAddress: "",
-          bankName: "广发银行",
-          bankType: "BANK",
-          bankCode: "2",
-          bankIcon: "97c73b1b-bcbb-4f3e-814a-86b15956d683.png"
-        }
-      ];
       if (res.code === 0) personalState.bankCardList.push(...res.data);
     })
     .catch((error) => {
