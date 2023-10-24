@@ -17,7 +17,7 @@ default:
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
-    - quasar build
+    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
 
 .build-web:
   script:
