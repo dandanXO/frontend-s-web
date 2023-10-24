@@ -1,4 +1,4 @@
-package com.xf.client;
+package com.ind.indwin77;
 
 import com.getcapacitor.BridgeActivity;
 

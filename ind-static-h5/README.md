@@ -1,6 +1,6 @@
-# Jolly88 App (ph-project)
+# IndWin77 App (ind-h5-project)
 
-APP
+India H5 APP
 
 ## Install the dependencies
 ```bash
@@ -15,31 +15,13 @@ quasar dev
 ```
 
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
-
-
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
-
-
-### Build the app for production
+### Build the app for production (SPA Page)
 ```bash
 quasar build
 ```
 
 ### Customize the configuration
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
-
 
 
 ### Build The App in Android.

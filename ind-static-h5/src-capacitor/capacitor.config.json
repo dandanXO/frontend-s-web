@@ -1,7 +1,8 @@
 {
-  "appId": "com.xf.client",
+  "appId": "com.ind.indwin77",
   "appName": "IndWin7",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www"
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
 }
