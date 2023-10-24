@@ -5,7 +5,7 @@
 
   <ContentView contentTopStatus="faded">
     <q-form ref="profileFormRef" class="pc-form">
-      <div class="pc-form-item">
+      <div class="pc-form-item" @click="openPersonalCenterDialog">
         <div class="pc-form-label">Full Name</div>
         <div class="pc-form-input">
           <q-input
@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div class="pc-form-item">
+      <div class="pc-form-item" @click="openPersonalCenterDialog">
         <div class="pc-form-label">Phone</div>
         <div class="pc-form-input">
           <q-input
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="pc-form-item">
+      <div class="pc-form-item" @click="openPersonalCenterDialog">
         <div class="pc-form-label">Email</div>
         <div class="pc-form-input">
           <q-input
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <a class="pc-tip-chg-pwd">Change Password</a>
+      <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
 
       <div class="pc-tip">
         <div class="pc-ver">
@@ -145,8 +145,18 @@
             <div class="pc-form-label">Verification Code</div>
             <div class="pc-form-input">
               <q-input filled dense clearable placeholder="Enter Verification Code"></q-input>
+              <div class="pc-form-side-btn">
+                <q-btn
+                  no-caps
+                  dense
+                  class="bg-yellow text-black"
+                  label="Get Code"
+                  @click="openVerificationCodeDialog"
+                />
+              </div>
             </div>
           </div>
+
           <div class="pc-form-item">
             <div class="pc-form-label">Email</div>
             <div class="pc-form-input">
@@ -157,6 +167,98 @@
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
           <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup>Submit</q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="changePasswordDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Change Password</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Password</div>
+            <div class="pc-form-input">
+              <q-input filled dense clearable placeholder="Enter Current Password"></q-input>
+            </div>
+          </div>
+          <div class="pc-form-item">
+            <div class="pc-form-label">New Password</div>
+            <div class="pc-form-input">
+              <q-input filled dense clearable placeholder="Enter New Password"></q-input>
+            </div>
+          </div>
+          <div class="pc-form-item">
+            <div class="pc-form-label">New Password Again</div>
+            <div class="pc-form-input">
+              <q-input filled dense clearable placeholder="Enter New Password Again"></q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup>Confirm</q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Captcha Code Check</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Captcha Code</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                hide-bottom-space
+                dense
+                clearable
+                placeholder="Enter Captcha Code"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert verification code',
+                  (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
+                ]"
+              >
+                <template v-slot:append>
+                  <img :src="verificationImg" @click="getCode" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+
+          <!-- <q-input
+            ref="verificationRef"
+            hide-bottom-space
+            clearable
+            type="text"
+            v-model="captchaRef"
+            label="Verification Code"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please insert verification code',
+              (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
+            ]"
+            label-color="brand"
+            rounded
+            outlined
+            color="white"
+            class="landing-input"
+          >
+            <template v-slot:append>
+              <img :src="verificationImg" @click="getCode" />
+            </template>
+          </q-input> -->
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn>
         </div>
       </div>
     </div>
@@ -214,7 +316,20 @@ const startRefresh = () => {
   }, 700);
 };
 
-const personalCenterDialog = ref(true);
+const personalCenterDialog = ref(false);
+const openPersonalCenterDialog = () => {
+  personalCenterDialog.value = !personalCenterDialog.value;
+};
+
+const changePasswordDialog = ref(false);
+const openChangePasswordDialog = () => {
+  changePasswordDialog.value = !changePasswordDialog.value;
+};
+
+const verificationCodeDialog = ref(false);
+const openVerificationCodeDialog = () => {
+  verificationCodeDialog.value = !verificationCodeDialog.value;
+};
 
 const onSlideClick = (e, i) => {
   if (e === currentSlide.value) return;
@@ -686,11 +801,25 @@ const onCaptchaSubmit = () => {
     color: rgba(255, 255, 255, 0.5);
   }
   .pc-form-input {
-    background-color: rgba(21, 0, 37, 0.7);
     border-radius: 5px;
+    position: relative;
+
+    :deep(.q-field__control) {
+      background-color: rgba(21, 0, 37, 0.7) !important;
+    }
 
     :deep(.q-field__native) {
       color: #ffffff;
+    }
+  }
+
+  .pc-form-side-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    :deep(.q-btn-item) {
+      height: 38px;
     }
   }
 }

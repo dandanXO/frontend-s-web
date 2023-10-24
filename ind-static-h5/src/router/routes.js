@@ -194,19 +194,25 @@ const routes = [
   {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/AccountPage.vue") }],
+    children: [{ path: "", component: () => import("pages/AccountPage.vue") }]
     // meta: { requiresAuth: true }
   },
   {
     path: "/account/bank",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+    children: [{ path: "", component: () => import("pages/account/BankView.vue") }]
     // meta: { requiresAuth: true }
   },
   {
     path: "/account/order",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/OrderView.vue") }],
+    children: [{ path: "", component: () => import("pages/account/OrderView.vue") }]
+    // meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/discount",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/DiscountView.vue") }]
     // meta: { requiresAuth: true }
   },
   {

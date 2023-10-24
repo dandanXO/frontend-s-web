@@ -372,3 +372,7 @@ svg {
     margin: auto;
   }
 }
+
+.q-dialog__backdrop {
+  backdrop-filter: blur(4px);
+}
