@@ -288,7 +288,7 @@ function resetQuery() {
   request.memberName = null
   request.privilegeName = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 async function loadPrivilegeRecord() {
@@ -354,8 +354,6 @@ function getSummaries(param) {
           })
       }
     })
-
-    console.log(sums)
     return sums
   } else {
     return '-'
