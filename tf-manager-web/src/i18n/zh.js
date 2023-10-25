@@ -1360,6 +1360,7 @@ export default {
     'PG Pending': 'PG待处理记录',
     'Member Privilege': '会员优惠记录',
     'Member Rollover Record': '会员流水记录',
+    'Member Distribute Privilege': '会员发放奖金',
     Affiliate: '代理',
     'Affiliate Summary': '代理总结',
     'Affiliate Monthly Settlement': '代理结算记录',

@@ -1381,6 +1381,7 @@ export default {
     'PG Pending': 'PG Pending Records',
     'Member Privilege': 'Member Privilege',
     'Member Rollover Record': 'Member Rollover Record',
+    'Member Distribute Privilege': 'Member Distribute Privilege',
     Affiliate: 'Affiliate',
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',
