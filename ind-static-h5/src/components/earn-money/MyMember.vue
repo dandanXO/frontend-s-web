@@ -12,17 +12,15 @@
           <div>0</div>
         </div>
       </div>
-
       <div class="right-container">
         <img src="../../assets/images/index/more-btn.png" alt="" @click="showMoreButton()" />
       </div>
     </div>
   </div>
 
-  <div class="bg-container">
-    <ContentFrame :isNoInfo="isNoInfoRef" :noInfoTitle="`No Member`"></ContentFrame>
-
-    <div class="member-info-container">
+  <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
+    <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Member"></NoInfoComponent>
+    <div v-else class="member-info-container">
       <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
         <div class="top-container">
           <div class="id-container">
@@ -50,12 +48,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </ContentView>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import ContentFrame from "../ContentFrame.vue";
+import ContentView from "../ContentView.vue";
+import NoInfoComponent from "../NoInfoComponent.vue";
 
 // [
 //   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
@@ -66,8 +65,8 @@ import ContentFrame from "../ContentFrame.vue";
 // ]
 const myMemberList = ref([]);
 
-let isNoInfoRef = ref(true);
-if (myMemberList.value.length) isNoInfoRef.value = true;
+const isNoInfo = ref(false);
+if (myMemberList.value.length === 0) isNoInfo.value = true;
 
 const showMoreButton = () => {
   console.log("show more button clicked");

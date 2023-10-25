@@ -86,7 +86,7 @@
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-primary" :breakpoint="0" align="justify">
-        <q-route-tab to="/" name="home" exact>
+        <q-route-tab to="/home" name="home" exact>
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
           HOME
@@ -101,11 +101,6 @@
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           BONUS
         </q-route-tab>
-        <!--        <q-route-tab to="/affiliate" name="affiliate">-->
-        <!--          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">-->
-        <!--          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">-->
-        <!--          加盟-->
-        <!--        </q-route-tab>-->
         <q-route-tab to="/account" name="account">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
@@ -178,6 +173,20 @@ export default defineComponent({
             var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
+        } else if (route.path === "/account") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "Personal Center";
+        } else if (
+          route.path === "/account/bank" ||
+          route.path === "/account/message" ||
+          route.path === "/account/record" ||
+          route.path === "/account/order" ||
+          route.path === "/account/discount"
+        ) {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "Personal Center";
         } else if (route.path === "/earn-money") {
           prevPage.value = "/";
           hasPage.value = true;

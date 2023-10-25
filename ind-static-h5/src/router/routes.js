@@ -3,8 +3,13 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
+    children: [{ path: "", component: () => import("pages/LandingPage.vue") }]
+  },
+  {
+    path: "/home",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/HomePage.vue") }]
+    children: [{ path: "", component: () => import("pages/HomePage.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/welcome",
@@ -15,16 +20,11 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LoginPage.vue") }]
   },
+
   {
     path: "/register",
     component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "RegisterPage",
-        component: () => {}
-      }
-    ]
+    children: [{ path: "", component: () => import("pages/RegisterPage.vue") }]
   },
   {
     path: "/forgot-password",
@@ -200,12 +200,42 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/account/records",
+    path: "/account/bank",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/message",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/MessageView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/message-detail",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/MessageDetailView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/order",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/OrderView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/discount",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/DiscountView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/record",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        component: () => import("pages/account/RecordsView.vue")
+        component: () => import("pages/account/RecordView.vue")
       }
     ],
     meta: { requiresAuth: true }
@@ -564,7 +594,7 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
-    redirect: "/",
+    redirect: "/home",
     component: () => import("pages/ErrorNotFound.vue")
   }
 ];

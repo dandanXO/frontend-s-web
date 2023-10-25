@@ -6,28 +6,7 @@
       </q-btn>
     </q-page-sticky>
 
-    <div class="profile-wrapper">
-      <div class="profile-pic">
-        <q-avatar size="80px">
-          <img src="https://cdn.quasar.dev/img/avatar.png" />
-        </q-avatar>
-      </div>
-      <div class="profile-details-container">
-        <div class="profile-name">
-          Guest0238434
-          <div class="vip-details">
-            <img src="../assets/images/index/icon-vip-badge.png" alt="" />
-            <div class="vip-level">VIP1</div>
-          </div>
-        </div>
-        <div class="profile-balance">
-          <span class="balance-amount">1213</span>
-        </div>
-      </div>
-      <div class="profile-msg">
-        <q-icon name="mail" size="40px" color="yellow-7" />
-      </div>
-    </div>
+    <ProfileSummary :homeProfile="true" />
 
     <div class="home-divider"></div>
 
@@ -88,14 +67,6 @@
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
     </q-carousel>
-
-    <!-- :img-src="require('../assets/images/index/') + banner.mobileImageUrl" -->
-    <!-- <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" alt=""> -->
-    <!-- require(`/src/assets/${srcPath}` -->
-
-    <!-- ../assets/images/index/hot-elephant-left.png -->
-
-    <!-- <div>start here</div> -->
 
     <div class="top-action">
       <div class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true">Withdrawal</div>
@@ -462,7 +433,105 @@
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
         </div>
+
+        <q-tabs
+          v-model="withdrawalDialogTab"
+          dense
+          no-caps
+          class="withdrawal-tab"
+          indicator-color="transparent"
+          align="justify"
+        >
+          <q-tab name="backcard" label="Backcard" />
+          <q-tab name="upi" label="UPI" />
+        </q-tabs>
+
+        <q-tab-panels
+          class="withdrawal-tab-panel"
+          v-model="withdrawalDialogTab"
+          animated
+          transition-prev="fade"
+          transition-next="fade"
+        >
+          <q-tab-panel name="backcard">
+            <div class="withdrawal-table">
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Cash Balance:</div>
+                <div class="w-tbl-col"><span class="w-txt-red">1731.5</span></div>
+              </div>
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Withdrawable:</div>
+                <div class="w-tbl-col">0</div>
+              </div>
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Remaining Wager:</div>
+                <div class="w-tbl-col">30822.5</div>
+              </div>
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="upi">
+            <div class="withdrawal-table">
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Cash Balance:</div>
+                <div class="w-tbl-col"><span class="w-txt-red">1731.5</span></div>
+              </div>
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Withdrawable:</div>
+                <div class="w-tbl-col">0</div>
+              </div>
+              <div class="w-tbl-row">
+                <div class="w-tbl-col">Remaining Wager:</div>
+                <div class="w-tbl-col">30822.5</div>
+              </div>
+            </div>
+          </q-tab-panel>
+        </q-tab-panels>
+
+        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'backcard'">
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Withdraw Amount</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Account Holder Name</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Account Holder Name"></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Account Number</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Account Number"></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Bank IFSC Code</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Bank IFSC Code"></q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'upi'">
+          <div class="w-form-item w-form-item--upi">
+            <div class="w-form-label">Withdraw Amount</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--upi">
+            <div class="w-form-label">VPA</div>
+            <div class="w-form-input">
+              <q-input filled dense clearable placeholder="Enter VPA"></q-input>
+            </div>
+          </div>
+        </div>
+
         <div class="btn-go">Go</div>
+
+        <div class="bottom-tnc">3%+6Rs of the withdrawal amount would be deducted as bank commission</div>
       </div>
     </div>
   </q-dialog>
@@ -475,69 +544,41 @@
           <div class="txt-title">Deposit</div>
         </div>
         <div class="deposit-item-container">
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-1.png" alt="" />
+          <template v-for="(item, index) in depositItems" :key="index">
+            <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
+              <div class="deposit-icon">
+                <img
+                  :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
+                  :alt="item.amount + ' Coin'"
+                />
+                <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
+              </div>
+              <div class="deposit-amt">{{ item.amount }}</div>
             </div>
-            <div class="deposit-amt">100</div>
-          </div>
-          <div class="deposit-item active">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-2.png" alt="" />
-            </div>
-            <div class="deposit-amt">300</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-3.png" alt="" />
-            </div>
-            <div class="deposit-amt">500</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-4.png" alt="" />
-            </div>
-            <div class="deposit-amt">1000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-5.png" alt="" />
-            </div>
-            <div class="deposit-amt">3000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-6.png" alt="" />
-            </div>
-            <div class="deposit-amt">5000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-7.png" alt="" />
-            </div>
-            <div class="deposit-amt">10000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-8.png" alt="" />
-            </div>
-            <div class="deposit-amt">30000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-9.png" alt="" />
-            </div>
-            <div class="deposit-amt">50000</div>
-          </div>
+          </template>
         </div>
         <div class="deposit-enter-amt">
-          <!-- <q-input v-model.number="model" type="number" filled style="max-width: 200px" /> -->
           <div>Amount</div>
           <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
         </div>
         <div class="deposit-options">
-          <q-btn flat class="deposit-option-btn active" label="UPI1" />
-          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" />
+          <q-btn
+            flat
+            class="deposit-option-btn"
+            :class="{ active: isUpi1Active }"
+            label="UPI1"
+            @click="handleDepositUpiClick(1)"
+          />
+          <q-btn
+            flat
+            class="deposit-option-btn label-on-discount"
+            :class="{ active: isUpi2Active }"
+            label="UPI2"
+            @click="handleDepositUpiClick(2)"
+          />
+
+          <!-- <q-btn flat class="deposit-option-btn active" label="UPI1" />
+          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" /> -->
         </div>
         <div class="btn-go">Go</div>
       </div>
@@ -561,6 +602,7 @@ import { useUI } from "stores/ui";
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
+import ProfileSummary from "../components/ProfileSummary.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -569,7 +611,8 @@ export default defineComponent({
     // SwiperSlide,
     GameModal,
     MarqueeText,
-    RiVolumeUpFill
+    RiVolumeUpFill,
+    ProfileSummary
     // PlatformBlock
   },
   setup() {
@@ -583,7 +626,42 @@ export default defineComponent({
     const searchText = ref("");
 
     const depositDialog = ref(false);
+    const depositItems = reactive([
+      { amount: 100, hotLabel: 5, isActive: false },
+      { amount: 300, hotLabel: 15, isActive: false },
+      { amount: 500, hotLabel: 25, isActive: false },
+      { amount: 1000, hotLabel: 50, isActive: false },
+      { amount: 3000, hotLabel: 150, isActive: false },
+      { amount: 5000, hotLabel: 250, isActive: false },
+      { amount: 10000, hotLabel: 500, isActive: false },
+      { amount: 30000, hotLabel: 1500, isActive: false },
+      { amount: 50000, hotLabel: 2500, isActive: false }
+    ]);
+
+    const handleDepositItemClick = (index) => {
+      depositItems.forEach((item, i) => {
+        item.isActive = i === index;
+        if (i === index) {
+          depositAmountInput.value = item.amount;
+        }
+      });
+    };
+
+    const isUpi1Active = ref(true);
+    const isUpi2Active = ref(false);
+
+    const handleDepositUpiClick = (option) => {
+      if (option === 1) {
+        isUpi1Active.value = true;
+        isUpi2Active.value = false;
+      } else if (option === 2) {
+        isUpi1Active.value = false;
+        isUpi2Active.value = true;
+      }
+    };
+
     const withdrawalDialog = ref(false);
+    const withdrawalDialogTab = ref("");
     const depositAmountInput = ref("");
 
     const thumbsSwiper = ref(null);
@@ -1219,6 +1297,8 @@ export default defineComponent({
       getVersionNo();
       checkShowImgTop();
       getAppDownloadUrl();
+
+      withdrawalDialogTab.value = "backcard";
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -1297,8 +1377,14 @@ export default defineComponent({
       fullGameDialog,
       searchText,
       depositDialog,
+      depositItems,
+      handleDepositItemClick,
+      isUpi1Active,
+      isUpi2Active,
+      handleDepositUpiClick,
+      depositAmountInput,
       withdrawalDialog,
-      depositAmountInput
+      withdrawalDialogTab
     };
   }
 });
@@ -1806,6 +1892,242 @@ export default defineComponent({
   font-size: 14px;
   font-weight: bold;
 }
+
+.popout-dialog {
+  width: 90%;
+
+  max-width: 500px;
+  position: relative;
+  padding-top: 90px;
+  padding-right: 10px;
+
+  .popout-close {
+    position: absolute;
+    right: 0px;
+    top: 80px;
+  }
+
+  .popout-dialog-container {
+    background-image: url(../assets/images/index/popout/deposit-bg.png);
+    background-position: bottom center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30px 20px 20px;
+    border-radius: 30px !important;
+  }
+
+  .popout-main-title {
+    background-image: url(../assets/images/index/popout/popout-title.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    max-width: 290px;
+    height: 120px;
+    margin: -110px auto 0;
+    // position: absolute;
+    // top: 0px;
+    position: relative;
+
+    .txt-title {
+      background-color: #f3ec78;
+      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      line-height: 1;
+      font-size: 22px;
+      font-weight: 800;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: #a94700;
+
+      position: absolute;
+      bottom: 28px;
+      left: 52%;
+      transform: translate(-50%, 0%);
+    }
+  }
+
+  .deposit-item-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 12px;
+    column-gap: 8x;
+
+    .deposit-item {
+      .deposit-icon {
+        background-image: url(../assets/images/index/popout/deposit-item-frame.png);
+        background-position: top center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        height: 80px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        margin-left: 3px;
+        margin-right: 3px;
+        transition: all 0.3s;
+        img {
+          display: block;
+          width: 70%;
+        }
+      }
+
+      &.active > .deposit-icon {
+        background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
+      }
+
+      .deposit-hot-label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-image: url(../assets/images/index/popout/hot-label.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 50px;
+        height: 28px;
+        font-size: 0.725rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding-bottom: 3px;
+      }
+
+      .deposit-amt {
+        background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding: 3px;
+        width: 100%;
+        max-width: 100px;
+        margin: auto;
+      }
+    }
+  }
+
+  .deposit-enter-amt {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+
+    .deposit-input {
+      background-color: rgba(21, 0, 37, 0.5);
+      border-radius: 5px;
+      width: 100%;
+    }
+  }
+
+  .deposit-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 16px;
+    .deposit-option-btn {
+      color: #cccccc;
+      background-color: rgba(21, 0, 37, 0.5) !important;
+      min-width: 100px;
+      max-width: 160px;
+      width: 100%;
+      border-radius: 6px;
+      border: 3px solid transparent;
+
+      &.active {
+        color: #ffe66b;
+        border: 3px solid #ffe66b;
+      }
+
+      &.label-on-discount {
+        position: relative;
+        &:after {
+          content: "";
+          background-image: url(../assets/images/index/popout/label-discount.png);
+          background-repeat: no-repeat;
+          display: block;
+          position: absolute;
+          top: -4px;
+          right: -5px;
+          width: 30px;
+          height: 30px;
+          background-size: 100%;
+        }
+      }
+    }
+  }
+
+  .withdrawal-tab {
+    background-color: #896742;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+
+    .q-tab__label {
+      font-weight: 800;
+    }
+
+    .q-tab--active {
+      color: #000000;
+      background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+    }
+  }
+
+  .withdrawal-tab-panel {
+    background: rgba(21, 0, 37, 0.3);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    .withdrawal-table {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+
+      .w-tbl-row {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .w-tbl-col {
+        font-weight: 700;
+
+        &:nth-child(2) {
+          font-size: 140%;
+        }
+      }
+
+      .w-txt-red {
+        color: #ff0000;
+      }
+    }
+  }
+
+  .withdrawal-form {
+    margin-top: 20px;
+    .w-form-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+    .w-form-label {
+    }
+    .w-form-input {
+      background-color: rgba(21, 0, 37, 0.5);
+      border-radius: 5px;
+    }
+  }
+}
 </style>
 
 <style lang="scss">
@@ -1835,7 +2157,6 @@ export default defineComponent({
 .home-wrapper {
   width: 95%;
   margin: auto;
-  padding: 12px 0;
 }
 
 .home-divider {
@@ -1843,89 +2164,6 @@ export default defineComponent({
   height: 1px;
   width: 105%;
   margin: 0 -2.5%;
-}
-
-.profile-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-  .profile-details-container {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-  }
-  .profile-name {
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    gap: 10px;
-
-    .vip-details {
-      position: relative;
-      margin-left: 25px;
-      margin-bottom: 10px;
-      img {
-        display: block;
-        width: 40px;
-        position: absolute;
-        top: -6px;
-        left: -26px;
-      }
-
-      .vip-level {
-        background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-          linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-        border-radius: 0px 2px 5px 0px;
-        width: 45px;
-        height: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        line-height: 1;
-        padding-bottom: 1px;
-      }
-    }
-  }
-  .profile-balance {
-    position: relative;
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width: 130px;
-    font-size: 14px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: -9px;
-      left: -3px;
-      background-image: url(../assets/images/index/icon-balance.png);
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: 40px 40px;
-      display: block;
-      width: 40px;
-      height: 40px;
-      // margin-left: -50px;
-    }
-
-    .balance-amount {
-      margin-left: 15px;
-    }
-  }
-  .profile-msg {
-    margin-left: auto;
-    margin-top: 30px;
-  }
 }
 
 .top-action {
@@ -2069,7 +2307,7 @@ export default defineComponent({
     overflow: hidden;
 
     .game-platform-img {
-      background-color: salmon;
+      background-color: #cccccc;
       width: 100%;
       // height: 75px;
       // height: 70%;
@@ -2161,8 +2399,9 @@ export default defineComponent({
   margin: auto;
 }
 
-.bg-yellow {
-  background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%) !important;
+.bottom-tnc {
+  font-size: 80%;
+  text-align: center;
 }
 
 .floating-btn {
@@ -2198,160 +2437,83 @@ export default defineComponent({
   }
 }
 
-.popout-dialog {
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-  padding-top: 90px;
-  padding-right: 10px;
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
 
-  .popout-close {
-    position: absolute;
-    right: 0px;
-    top: 80px;
-  }
+  .profile-details-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
 
-  .popout-dialog-container {
-    background-image: url(../assets/images/index/popout/deposit-bg.png);
-    background-position: bottom center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 30px 20px 20px;
-    border-radius: 30px !important;
-  }
-
-  .popout-main-title {
-    background-image: url(../assets/images/index/popout/popout-title.png);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 100%;
-    max-width: 290px;
-    height: 120px;
-    margin: -110px auto 0;
-    // position: absolute;
-    // top: 0px;
-    position: relative;
-
-    .txt-title {
-      background-color: #f3ec78;
-      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
+    .profile-name {
+      display: flex;
+      align-items: center;
       line-height: 1;
-      font-size: 22px;
-      font-weight: 800;
-      -webkit-text-stroke-width: 1px;
-      -webkit-text-stroke-color: #a94700;
+      gap: 10px;
 
-      position: absolute;
-      bottom: 28px;
-      left: 52%;
-      transform: translate(-50%, 0%);
-    }
-  }
-
-  .deposit-item-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 12px;
-    column-gap: 8x;
-
-    .deposit-item {
-      .deposit-icon {
-        background-image: url(../assets/images/index/popout/deposit-item-frame.png);
-        background-position: top center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        display: flex;
-        height: 80px;
+      .vip-details {
         position: relative;
-        align-items: center;
-        justify-content: center;
-        margin-left: 3px;
-        margin-right: 3px;
-        transition: all 0.3s;
+        margin-left: 25px;
+
         img {
           display: block;
-          width: 70%;
-        }
-      }
-
-      &.active > .deposit-icon {
-        background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
-      }
-
-      .deposit-amt {
-        background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
-        background-position: center center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
-        padding: 3px;
-        width: 100%;
-        max-width: 100px;
-        margin: auto;
-      }
-    }
-  }
-
-  .deposit-enter-amt {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-
-    .deposit-input {
-      background-color: rgba(21, 0, 37, 0.5);
-      border-radius: 5px;
-      width: 100%;
-    }
-  }
-
-  .deposit-options {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 16px;
-    .deposit-option-btn {
-      color: #cccccc;
-      background-color: rgba(21, 0, 37, 0.5) !important;
-      min-width: 100px;
-      max-width: 160px;
-      width: 100%;
-      border-radius: 6px;
-      border: 3px solid transparent;
-
-      &.active {
-        color: #ffe66b;
-        border: 3px solid #ffe66b;
-      }
-
-      &.label-on-discount {
-        position: relative;
-        &:after {
-          content: "";
-          background-image: url(../assets/images/index/popout/label-discount.png);
-          background-repeat: no-repeat;
-          display: block;
+          width: 40px;
           position: absolute;
-          top: -4px;
-          right: -5px;
-          width: 30px;
-          height: 30px;
-          background-size: 100%;
+          top: -6px;
+          left: -26px;
+        }
+
+        .vip-level {
+          background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
+            linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
+          border-radius: 0px 2px 5px 0px;
+          width: 45px;
+          height: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          line-height: 1;
+          padding-bottom: 1px;
         }
       }
     }
+  }
+
+  .profile-balance {
+    position: relative;
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    padding: 3px 0;
+    width: 130px;
+    font-size: 14px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: -3px;
+      background: url(../assets/images/index/icon-balance.png) center/40px no-repeat;
+      display: block;
+      width: 40px;
+      height: 40px;
+    }
+
+    .balance-amount {
+      margin-left: 15px;
+    }
+  }
+
+  .profile-msg {
+    margin-left: auto;
+    margin-top: 30px;
   }
 }
 </style>
