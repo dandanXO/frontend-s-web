@@ -8,7 +8,6 @@
         <q-form>
           <div class="input-title">Bank Card Number</div>
           <q-input
-            type="number"
             standout
             class="q-pb-xs dialog-input"
             hide-bottom-space
@@ -16,13 +15,22 @@
             v-model="unbindField.bankCardNumber"
             label="Bank Card Number"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please Enter Bank Card Number']"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please Enter Bank Card Number',
+              (val) =>
+                (val && val == personalState.bankCardList[selectedBankIndex].cardNumber) ||
+                'Please Enter The Correct Card Number'
+            ]"
             label-color="secondary"
           />
         </q-form>
       </q-card-section>
 
-      <ConfirmButton label="Confirm" :confirmFunc="unbind"></ConfirmButton>
+      <ConfirmButton
+        label="Confirm"
+        :confirmFunc="unbind"
+        :isDisabled="unbindField.bankCardNumber !== personalState.bankCardList[selectedBankIndex].cardNumber"
+      ></ConfirmButton>
     </q-card>
   </q-dialog>
 
@@ -145,7 +153,7 @@
             <div class="card-num">{{ bc.cardNumber }}</div>
             <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
           </div>
-          <div class="card-unlink" @click.stop.prevent="onUnbindClick()">
+          <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
             <q-icon size="sm" name="link_off" />
           </div>
         </div>
@@ -234,15 +242,19 @@ const unbindField = ref({ bankCardNumber: "" });
 
 const isUnbindDialogOpen = ref(false);
 
-const onUnbindClick = () => {
+const onUnbindClick = (index) => {
+  selectedBankIndex.value = index;
   isUnbindDialogOpen.value = true;
 };
 
 const unbind = () => {
+  const selectedBank = personalState.bankCardList[selectedBankIndex.value];
+  if (unbindField.value.bankCardNumber !== selectedBank.cardNumber) return;
+
   isUnbindDialogOpen.value = false;
 
-  const card = unbindField.value.bankCardNumber;
-  api.post(`/session/bankCard/${card}?_method=delete`).then((response) => {
+  const selectedCardID = selectedBank.id;
+  api.post(`/session/bankCard/${selectedCardID}?_method=delete`).then((response) => {
     if (response.code === 0) {
       $q.notify({
         color: "positive",
@@ -260,6 +272,7 @@ const cardType = ["Bank", "Crypto", "EWallet"];
 const currentCardType = ref("Bank");
 // use to display
 const currBankList = ref([]);
+const selectedBankIndex = ref();
 
 // use to cache
 const bankList = [];

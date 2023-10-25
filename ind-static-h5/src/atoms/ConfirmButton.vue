@@ -1,6 +1,6 @@
 <template>
   <q-card-actions>
-    <div class="confirm-btn-container" @click="confirmFunc()">
+    <div :class="`confirm-btn-container ${isDisabled ? 'disabled' : ''}`" @click="confirmFunc()">
       <img class="confirm-btn" src="../assets/images/index/confirm-btn.png" alt="" />
       <span class="confirm-btn-text">{{ label }}</span>
     </div>
@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-const props = defineProps(["label", "confirmFunc"]);
+const props = defineProps(["label", "confirmFunc", "isDisabled"]);
 </script>
 
 <style lang="scss">
@@ -17,6 +17,10 @@ const props = defineProps(["label", "confirmFunc"]);
   align-items: center;
   justify-content: center;
   margin: 1rem 0;
+
+  &.disabled {
+    opacity: 0.5;
+  }
 
   .confirm-btn {
     width: 100%;

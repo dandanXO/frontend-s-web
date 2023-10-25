@@ -16,7 +16,10 @@
       <q-tab name="recharge" label="Recharge" />
     </q-tabs>
 
+    <LoadingComponent v-if="isLoading"></LoadingComponent>
+    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
     <q-tab-panels
+      v-else
       class="order-option-tab-panel"
       v-model="orderOptionTab"
       animated
@@ -24,124 +27,69 @@
       transition-next="fade"
     >
       <q-tab-panel name="withdrawal">
-        <div class="order-table">
+        <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
             <div class="order-col">Order NO.</div>
-            <div class="order-col">P2323265549</div>
+            <div class="order-col">{{ e.serialNumber }}</div>
           </div>
           <div class="order-row order-row--content">
-            <div class="order-col">2050</div>
-            <div class="order-col">UPI</div>
-            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
-            <div class="order-col"><span class="txt-green">Successful</span></div>
+            <div class="order-subrow">
+              <div class="order-col">{{ e.withdrawAmount }}</div>
+              <div class="order-col">UPI</div>
+            </div>
+            <div class="order-subrow">
+              <div class="order-col">
+                <span class="txt-gray">{{ e.withdrawDate }}</span>
+              </div>
+              <div class="order-col">
+                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+                  {{ getWithdrawStatus(e.status) }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
-            <div class="order-col">P2323265549</div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-col">2050</div>
-            <div class="order-col">UPI</div>
-            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
-            <div class="order-col"><span class="txt-red">Failed</span></div>
-          </div>
-        </div>
-
-        <div class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
-            <div class="order-col">P2323265549</div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-col">2050</div>
-            <div class="order-col">UPI</div>
-            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
-            <div class="order-col"><span class="txt-red">Failed</span></div>
-          </div>
-        </div>
-
-        <div class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
-            <div class="order-col">P2323265549</div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-col">2050</div>
-            <div class="order-col">UPI</div>
-            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
-            <div class="order-col"><span class="txt-red">Failed</span></div>
-          </div>
-        </div>
-
-        <div class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
-            <div class="order-col">P2323265549</div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-col">2050</div>
-            <div class="order-col">UPI</div>
-            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
-            <div class="order-col"><span class="txt-red">Failed</span></div>
-          </div>
-        </div>
-
       </q-tab-panel>
 
       <q-tab-panel name="recharge">
-        <div class="order-table">
+        <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
             <div class="order-col">Order NO.</div>
-            <div class="order-col">P2323265549</div>
+            <div class="order-col">{{ e.serialNumber }}</div>
           </div>
           <div class="order-row order-row--content">
-            <div class="order-col">2050</div>
-            <div class="order-col">UPI</div>
-            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
-            <div class="order-col"><span class="txt-green">Successful</span></div>
+            <div class="order-subrow">
+              <div class="order-col">{{ e.depositAmount }}</div>
+              <div class="order-col">UPI</div>
+            </div>
+            <div class="order-subrow">
+              <div class="order-col">
+                <span class="txt-gray">{{ e.depositDate }}</span>
+              </div>
+              <div class="order-col">
+                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+                  {{ getDepositStatus(e.status) }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
-            <div class="order-col">P2323265549</div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-col">2050</div>
-            <div class="order-col">UPI</div>
-            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
-            <div class="order-col"><span class="txt-green">Successful</span></div>
-          </div>
-        </div>
-
-        <div class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
-            <div class="order-col">P2323265549</div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-col">2050</div>
-            <div class="order-col">UPI</div>
-            <div class="order-col"><span class="txt-gray">2023-10-04 16:47</span></div>
-            <div class="order-col"><span class="txt-red">Failed</span></div>
-          </div>
-        </div>
-
       </q-tab-panel>
     </q-tab-panels>
   </ContentView>
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import SwiperNav from "../../components/SwiperNav.vue";
+import { onMounted, reactive, ref } from "vue";
+import { api } from "boot/axios";
 import { useRouter } from "vue-router";
+import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
+import LoadingComponent from "../../components/LoadingComponent.vue";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
+
+const router = useRouter();
 
 let slideList = ref(["Order", "Bank", "Message", "Personal Center", "Discount", "Record"]);
 let slideListPath = ref([
@@ -159,266 +107,130 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-
-
-const orderOptionTab = ref("");
-
-const router = useRouter();
-
 const onSlideClick = (e, i) => {
   if (e === currentSlide.value) return;
   router.push(slideListPath.value[i]);
   currentSlide.value = e;
 };
 
-const cardClass = ref("card-show");
+const isLoading = ref(true);
+const isNoInfo = ref(false);
 
-const showMoreButton = () => {
-  console.log("show more button clicked");
+const orderOptionTab = ref("withdrawal");
+
+const searchForm = reactive({ startDate: "", endDate: "" });
+const updateDate = (val) => {
+  const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
+  const oldDate = new Date(gapDate);
+  const newDate = {
+    Y: oldDate.getFullYear() + "-",
+    M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
+    D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
+  };
+  return newDate.Y + newDate.M + newDate.D;
 };
-let isCardShown = ref(true);
-watch(isCardShown, (newValue) => {
-  cardClass.value = newValue ? "card-show" : "card-unshow";
-});
 
-const handleBankCardClick = () => {
-  isCardShown.value = !isCardShown.value;
+const setTime = () => {
+  searchForm.startDate = updateDate(7);
+  searchForm.endDate = updateDate(0);
+};
+
+const withdrawalData = ref([]);
+const searchWithdrawalRecord = () => {
+  isLoading.value = true;
+  withdrawalData.value = [];
+
+  const { startDate, endDate } = searchForm;
+  api
+    .get("/session/member/withdraw", {
+      params: { startDate, endDate, current: 1, size: 10 }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        withdrawalData.value.push(...data);
+
+        if (data.length === 0) isNoInfo.value = true;
+      }
+    })
+    .catch((error) => {})
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+const depositData = ref([]);
+const searchDepositRecord = () => {
+  isLoading.value = true;
+  depositData.value = [];
+
+  const { startDate, endDate } = searchForm;
+  api
+    .get("/session/member/deposit", {
+      params: { startDate, endDate, current: 1, size: 10 }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        depositData.value.push(...data);
+
+        if (data.length === 0) isNoInfo.value = true;
+      }
+    })
+    .catch((error) => {})
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+const getWithdrawStatus = (withdrawStatus) => {
+  switch (withdrawStatus) {
+    case "APPLY":
+      return "Applying";
+    case "FAIL":
+      return "Failed";
+    case "SUCCESS":
+      return "Success";
+    case "STEP_1":
+      return "Under review";
+    case "STEP_2":
+      return "To be paid";
+    case "STEP_3":
+      return "Payment on going";
+    case "STEP_4":
+      return "Automatic Payment";
+    case "STEP_5":
+      return "Suspend";
+    default:
+      return withdrawStatus;
+  }
+};
+
+const getDepositStatus = (depositStatus) => {
+  switch (depositStatus) {
+    case "PENDING":
+      return "Pending";
+    case "SUCCESS":
+      return "Success";
+    case "SUPPLEMENT_SUCCESS":
+      return "Supplement Success";
+    case "CLOSED":
+      return "Closed";
+    default:
+      return depositStatus;
+  }
 };
 
 onMounted(() => {
-  orderOptionTab.value = "withdrawal";
+  setTime();
+
+  // NOTE: load both 1st, change if need implement search field
+  searchWithdrawalRecord();
+  searchDepositRecord();
 });
 </script>
 
 <style lang="scss" scoped>
-.infoboard-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-
-  .infoboard-wrapper {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    width: 22rem;
-    margin: 0;
-
-    .left-container {
-      width: 100%;
-
-      .infoboard {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #fff;
-        margin: 1rem 0;
-
-        font-family: Helvetica;
-        font-size: 1rem;
-        font-style: normal;
-        font-weight: 700;
-        text-transform: capitalize;
-      }
-    }
-
-    .right-container {
-      img {
-        width: 1.75rem;
-      }
-    }
-  }
-
-  img {
-    width: 30rem;
-  }
-}
-
-.profile-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-  .profile-details-container {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-  }
-  .profile-name {
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    gap: 10px;
-
-    .vip-details {
-      position: relative;
-      margin-left: 25px;
-      margin-bottom: 10px;
-      img {
-        display: block;
-        width: 40px;
-        position: absolute;
-        top: -6px;
-        left: -26px;
-      }
-
-      .vip-level {
-        background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-          linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-        border-radius: 0px 2px 5px 0px;
-        width: 45px;
-        height: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        line-height: 1;
-        padding-bottom: 1px;
-      }
-    }
-  }
-  .profile-agency {
-    display: flex;
-    gap: 0.75rem;
-
-    .profile-agency-lbl {
-      color: rgba(255, 255, 255, 0.5);
-    }
-  }
-  .profile-rating {
-    display: flex;
-    gap: 6px;
-    img {
-      display: block;
-      width: 20px;
-    }
-  }
-  .profile-balance {
-    position: relative;
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width: 130px;
-    font-size: 14px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: -9px;
-      left: -3px;
-      background-image: url(../../assets/images/index/icon-balance.png);
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: 40px 40px;
-      display: block;
-      width: 40px;
-      height: 40px;
-    }
-
-    .balance-amount {
-      margin-left: 15px;
-    }
-  }
-  .profile-msg {
-    margin-left: auto;
-    margin-top: 30px;
-  }
-}
-
-.bank-card-container {
-  position: absolute;
-  padding: 0 2rem;
-  height: 37rem;
-  overflow: auto;
-  top: 15rem;
-  width: 100%;
-
-  .bank-card-item {
-    background: linear-gradient(90deg, #ffffff 0%, #703c98 100%);
-    padding: 3px;
-    border-radius: 1.25rem;
-    position: relative;
-    transition: 0.3s all;
-
-    &.card-unshow {
-      margin-bottom: -3.5rem;
-
-      .bank-card-add {
-        display: flex;
-        flex-direction: row;
-        height: auto;
-        padding: 1rem 0 4rem;
-
-        .card-unlink {
-          display: none;
-        }
-
-        .card-num {
-          display: none;
-        }
-
-        .card-icon {
-          position: absolute;
-          left: 1rem;
-          height: 21px;
-
-          img {
-            display: block;
-            width: 100%;
-          }
-        }
-      }
-    }
-
-    &.card-show {
-      margin-bottom: -2rem;
-
-      .bank-card-add {
-        gap: 0.5rem;
-      }
-
-      .card-unlink {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-      }
-    }
-
-    .bank-card-add {
-      padding: 10px;
-      width: 100%;
-      height: 15rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      border-radius: 1.25rem;
-      background: linear-gradient(180deg, #702fad 0%, #491960 100%);
-      backdrop-filter: blur(6px);
-
-      .card-label {
-        font-weight: 700;
-      }
-
-      .card-icon {
-        width: 50px;
-        margin-bottom: 0.25rem;
-        display: flex;
-        justify-content: center;
-      }
-    }
-  }
-}
-
 .order-option-tab {
   background-color: rgba(21, 0, 37, 0.6);
   border-radius: 8px;
@@ -457,12 +269,16 @@ onMounted(() => {
       &--content {
         background-color: rgba(21, 0, 37, 0.2);
         flex-wrap: wrap;
+        flex-direction: column;
+      }
+
+      .order-subrow {
+        display: flex;
+        justify-content: space-between;
       }
     }
 
     .order-col {
-      width: 50%;
-
       &:nth-child(even) {
         text-align: right;
       }
