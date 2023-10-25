@@ -3,7 +3,6 @@
 
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
-  <!-- bank card -->
   <ContentView contentTopStatus="solid">
     <q-card v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
       <q-card-section class="title">{{ e.title }}</q-card-section>
@@ -11,7 +10,7 @@
 
       <q-card-section class="bottom-wrapper">
         <div class="time">{{ e.sendTime }}</div>
-        <q-btn class="detail-btn" label="Details >" @click="onDetailsClick()"></q-btn>
+        <q-btn class="detail-btn" label="Details >" @click="onDetailsClick(e)"></q-btn>
       </q-card-section>
     </q-card>
   </ContentView>
@@ -21,11 +20,13 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
+import { userStore } from "stores/index";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 
 const router = useRouter();
+const store = userStore();
 
 let slideList = ref(["Message", "Personal Center", "Discount", "Record", "Order", "Bank"]);
 let slideListPath = ref([
@@ -71,8 +72,9 @@ const loadInbox = () => {
     });
 };
 
-const onDetailsClick = () => {
-  //   router.push({ name: "/account/message-detail" });
+const onDetailsClick = (mailData) => {
+  store.setMailData(mailData);
+  router.push("/account/message-detail");
 };
 
 onMounted(() => {

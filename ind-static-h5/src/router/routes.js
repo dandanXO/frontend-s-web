@@ -212,6 +212,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/message-detail",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/MessageDetailView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/account/order",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/OrderView.vue") }],
