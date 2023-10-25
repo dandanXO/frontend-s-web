@@ -69,7 +69,7 @@ export default defineComponent({
       csclient = new CsClient(
         "XFCS",
         regDevice,
-        "zh-CN",
+        "en",
         "2",
         "prod",
         `https://${CSAUrl}`
@@ -78,6 +78,7 @@ export default defineComponent({
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
       csclient.set("openanimation", false);
+      csclient.set("bottom", "73");
 
       csclient.set("notification-type", {
         type: "none"
