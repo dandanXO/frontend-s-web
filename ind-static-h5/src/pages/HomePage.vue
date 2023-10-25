@@ -6,28 +6,7 @@
       </q-btn>
     </q-page-sticky>
 
-    <div class="profile-wrapper">
-      <div class="profile-pic">
-        <q-avatar size="70px">
-          <img src="https://cdn.quasar.dev/img/avatar.png" />
-        </q-avatar>
-      </div>
-      <div class="profile-details-container">
-        <div class="profile-name">
-          Guest0238434
-          <div class="vip-details" @click="router.push('/vip')">
-            <img src="../assets/images/index/icon-vip-badge.png" alt="" />
-            <div class="vip-level">VIP1</div>
-          </div>
-        </div>
-        <div class="profile-balance">
-          <span class="balance-amount">1213</span>
-        </div>
-      </div>
-      <div class="profile-msg">
-        <q-icon name="mail" size="40px" color="yellow-7" />
-      </div>
-    </div>
+    <ProfileSummary :homeProfile="true" />
 
     <div class="home-divider"></div>
 
@@ -623,6 +602,7 @@ import { useUI } from "stores/ui";
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
+import ProfileSummary from "../components/ProfileSummary.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -631,7 +611,8 @@ export default defineComponent({
     // SwiperSlide,
     GameModal,
     MarqueeText,
-    RiVolumeUpFill
+    RiVolumeUpFill,
+    ProfileSummary
     // PlatformBlock
   },
   setup() {
@@ -2176,7 +2157,6 @@ export default defineComponent({
 .home-wrapper {
   width: 95%;
   margin: auto;
-  padding: 12px 0;
 }
 
 .home-divider {
@@ -2184,89 +2164,6 @@ export default defineComponent({
   height: 1px;
   width: 105%;
   margin: 0 -2.5%;
-}
-
-.profile-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-  .profile-details-container {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-  }
-  .profile-name {
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    gap: 10px;
-
-    .vip-details {
-      position: relative;
-      margin-left: 25px;
-      margin-bottom: 10px;
-      img {
-        display: block;
-        width: 40px;
-        position: absolute;
-        top: -6px;
-        left: -26px;
-      }
-
-      .vip-level {
-        background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-          linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-        border-radius: 0px 2px 5px 0px;
-        width: 45px;
-        height: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        line-height: 1;
-        padding-bottom: 1px;
-      }
-    }
-  }
-  .profile-balance {
-    position: relative;
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width: 130px;
-    font-size: 14px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: -9px;
-      left: -3px;
-      background-image: url(../assets/images/index/icon-balance.png);
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: 40px 40px;
-      display: block;
-      width: 40px;
-      height: 40px;
-      // margin-left: -50px;
-    }
-
-    .balance-amount {
-      margin-left: 15px;
-    }
-  }
-  .profile-msg {
-    margin-left: auto;
-    margin-top: 30px;
-  }
 }
 
 .top-action {
@@ -2540,5 +2437,83 @@ export default defineComponent({
   }
 }
 
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
 
+  .profile-details-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+
+    .profile-name {
+      display: flex;
+      align-items: center;
+      line-height: 1;
+      gap: 10px;
+
+      .vip-details {
+        position: relative;
+        margin-left: 25px;
+
+        img {
+          display: block;
+          width: 40px;
+          position: absolute;
+          top: -6px;
+          left: -26px;
+        }
+
+        .vip-level {
+          background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
+            linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
+          border-radius: 0px 2px 5px 0px;
+          width: 45px;
+          height: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          line-height: 1;
+          padding-bottom: 1px;
+        }
+      }
+    }
+  }
+
+  .profile-balance {
+    position: relative;
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    padding: 3px 0;
+    width: 130px;
+    font-size: 14px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: -3px;
+      background: url(../assets/images/index/icon-balance.png) center/40px no-repeat;
+      display: block;
+      width: 40px;
+      height: 40px;
+    }
+
+    .balance-amount {
+      margin-left: 15px;
+    }
+  }
+
+  .profile-msg {
+    margin-left: auto;
+    margin-top: 30px;
+  }
+}
 </style>

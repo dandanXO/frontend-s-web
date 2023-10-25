@@ -80,7 +80,7 @@
       </div>
 
       <div class="q-mt-md q-pl-lg q-pr-lg">
-        <q-btn rounded flat no-caps class="btn-purple-pattern" @click="logout">Sign Out</q-btn>
+        <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
       </div>
 
       <!-- <div class="text-center q-mt-md" v-if="canEdit">
@@ -263,6 +263,22 @@
       </div>
     </div>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Sign Out</div>
+
+        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
+
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <q-btn label="Cancel" class="btn-cancel" v-close-popup />
+          <q-btn label="Confirm" class="btn-confirm" @click="logout" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -331,6 +347,11 @@ const openVerificationCodeDialog = () => {
   verificationCodeDialog.value = !verificationCodeDialog.value;
 };
 
+const confirmSignOutDialog = ref(false);
+const openConfirmSignOutDialog = () => {
+  confirmSignOutDialog.value = !confirmSignOutDialog.value;
+};
+
 const onSlideClick = (e, i) => {
   if (e === currentSlide.value) return;
 
@@ -348,14 +369,6 @@ const onSlideClick = (e, i) => {
 
   currentSlide.value = e;
 };
-
-// [
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 }
-// ]
 
 const myMemberList = ref([]);
 
@@ -414,10 +427,6 @@ const verificationDetails = reactive({
 onMounted(() => {
   loadInfo();
   getCode();
-
-  formDetail.realName = "Jay Chow";
-  formDetail.phone = "93384372";
-  formDetail.email = "jay.chow@outlook.com";
 });
 
 const verificationImg = ref("");
@@ -897,5 +906,23 @@ const onCaptchaSubmit = () => {
     padding: 30px 20px 20px;
     border-radius: 30px !important;
   }
+}
+
+.y-n-container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+.btn-cancel {
+  background: rgba(21, 0, 37, 0.5);
+  font-weight: 700;
+  color: #ffffff;
+  border-radius: 8px;
+}
+.btn-confirm {
+  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  font-weight: 700;
+  color: #150025;
+  border-radius: 8px;
 }
 </style>

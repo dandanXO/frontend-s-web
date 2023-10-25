@@ -283,7 +283,7 @@ export default defineComponent({
           passwordRef.value.validate();
           verificationRef.value.validate();
           $q.loading.show({
-            message: "登录中"
+            message: "Logging in"
           });
           if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
             $q.loading.hide();
@@ -330,7 +330,7 @@ export default defineComponent({
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
           $q.loading.show({
-            message: "登录中"
+            message: "Logging in"
           });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();

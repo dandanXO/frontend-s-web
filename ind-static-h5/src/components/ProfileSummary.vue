@@ -1,30 +1,47 @@
 <template>
-  <div class="infoboard-container q-pa-md">
-    <img src="../assets/images/earn-money/infoboard.png" />
-    <div class="infoboard-wrapper">
+  <div class="infoboard-container" :class="!homeProfile && 'q-pa-md'">
+    <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
+    <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper">
         <div class="profile-pic">
           <q-avatar size="70px">
-            <img src="https://cdn.quasar.dev/img/avatar.png" />
+            <img src="../assets/images/account/profile-pic.png" />
           </q-avatar>
         </div>
         <div class="profile-details-container">
           <div class="profile-name">
-            Guest0238434
+            {{ store.realName ? store.realName : store.nickName }}
             <div class="vip-details" @click="router.push('/vip')">
               <img src="../assets/images/index/icon-vip-badge.png" alt="" />
-              <div class="vip-level">VIP1</div>
+              <div class="vip-level">
+                {{ store.vip }}
+              </div>
             </div>
           </div>
-          <div class="profile-rating">
-            <img src="../assets/images/index/profile-rating-off.png" alt="" />
-            <img src="../assets/images/index/profile-rating-off.png" alt="" />
-            <img src="../assets/images/index/profile-rating-off.png" alt="" />
-          </div>
-          <div class="profile-agency">
-            <div class="profile-agency-lbl">Agency Level:</div>
-            <div class="profile-agency-val">1</div>
-          </div>
+
+          <template v-if="!homeProfile">
+            <div class="profile-rating">
+              <img src="../assets/images/index/profile-rating-off.png" alt="" />
+              <img src="../assets/images/index/profile-rating-off.png" alt="" />
+              <img src="../assets/images/index/profile-rating-off.png" alt="" />
+            </div>
+            <div class="profile-agency">
+              <div class="profile-agency-lbl">Agency Level:</div>
+              <div class="profile-agency-val">1</div>
+            </div>
+          </template>
+
+          <template v-else>
+            <div class="profile-balance">
+              <span class="balance-amount">
+                {{ store.balance.toFixed(2) }}
+              </span>
+            </div>
+          </template>
+        </div>
+
+        <div class="profile-msg" v-if="homeProfile">
+          <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
         </div>
       </div>
     </div>
@@ -32,8 +49,12 @@
 </template>
 
 <script setup>
+import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+
+const props = defineProps(["homeProfile"]);
 const router = useRouter();
+const store = userStore();
 </script>
 
 <style scoped lang="scss">
@@ -51,6 +72,13 @@ const router = useRouter();
     gap: 1.5rem;
     width: 22rem;
     margin: 0;
+
+    &.home-profile {
+      position: relative;
+      width: 100%;
+      gap: 0;
+      justify-content: space-between;
+    }
   }
 
   .profile-wrapper {
@@ -59,6 +87,7 @@ const router = useRouter();
     gap: 12px;
     padding-top: 20px;
     padding-bottom: 20px;
+    width: 100%;
 
     .profile-details-container {
       display: flex;
@@ -94,7 +123,7 @@ const router = useRouter();
           justify-content: center;
           font-size: 10px;
           line-height: 1;
-          padding-bottom: 1px;
+          padding-top: 2px;
         }
       }
     }

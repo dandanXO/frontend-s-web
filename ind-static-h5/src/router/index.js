@@ -61,7 +61,7 @@ export default route(function (/* { store, ssrContext } */) {
     }
 
     if (user.hasToken()) {
-      if (to.path === "/" || to.path === "/register" || to.path === "/login") {
+      if (to.path === "/" || to.path === "/register" || to.path === "/login" || to.path === "//") {
         next({ path: "/home" });
       } else {
         if (user.nickName === "") {
