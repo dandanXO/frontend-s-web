@@ -79,6 +79,10 @@ body.body--dark .q-header {
 .q-dialog__inner--minimized {
   padding: 0;
 }
+
+.q-item--active {
+  color: #fdd835;
+}
 // body.platform-ios .q-dialog__inner--minimized > div, body.platform-android:not(.native-mobile) .q-dialog__inner--minimized > div {
 //   max-height: unset;
 // }

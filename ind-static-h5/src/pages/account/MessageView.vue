@@ -5,7 +5,7 @@
 
   <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
       <q-card-section class="title">{{ e.title }}</q-card-section>
       <q-card-section class="content">{{ e.content }}</q-card-section>
@@ -78,11 +78,11 @@ const loadInbox = () => {
 
         if (record.length === 0) isNoInfo.value = true;
       }
-
-      isLoading.value = false;
     })
     .catch((error) => {
       console.log("error", error);
+    })
+    .then(() => {
       isLoading.value = false;
     });
 };
@@ -136,6 +136,7 @@ onMounted(() => {
       font-size: 1rem;
       font-weight: 700;
       padding: 0 1rem;
+      min-height: unset;
     }
   }
 }

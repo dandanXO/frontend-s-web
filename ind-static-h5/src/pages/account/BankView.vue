@@ -520,25 +520,17 @@ onMounted(() => {
     background: rgba(21, 0, 37, 0.5);
   }
 
-  .select-wrapper {
-    .q-item--active {
-      color: red;
-    }
-  }
-
   .q-dialog__inner > div {
     padding: 1.5rem;
-    border-radius: 2rem;
-    background: url("../../assets/images/index/modal-bg.png");
+    border-radius: 3.5rem;
+    background-image: url("../../assets/images/index/modal-bg.png");
+    background-size: 100% 100%;
+    background-color: transparent;
     width: 90%;
   }
 
   .q-card__section {
     background: transparent;
   }
-}
-
-.q-item--active {
-  color: #fdd835;
 }
 </style>
