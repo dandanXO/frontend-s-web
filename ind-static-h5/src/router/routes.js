@@ -230,12 +230,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/account/records",
+    path: "/account/record",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        component: () => import("pages/account/RecordsView.vue")
+        component: () => import("pages/account/RecordView.vue")
       }
     ],
     meta: { requiresAuth: true }

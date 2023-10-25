@@ -179,6 +179,8 @@ export default defineComponent({
           pageName.value = "Personal Center";
         } else if (
           route.path === "/account/bank" ||
+          route.path === "/account/message" ||
+          route.path === "/account/record" ||
           route.path === "/account/order" ||
           route.path === "/account/discount"
         ) {
