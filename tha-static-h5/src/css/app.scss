@@ -637,6 +637,12 @@ input:internal-autofill-selected {
   padding-bottom: 0;
 }
 
+.home-popup-banner {
+  .q-dialog__backdrop {
+    background: #00000080;
+  }
+}
+
 @media (min-width: 991px) {
   .main-section {
     background-image: url("../assets/images/common/bg-web.png");
