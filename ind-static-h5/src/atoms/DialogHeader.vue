@@ -10,7 +10,7 @@
 const props = defineProps(["title"]);
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .dialog-header {
   position: relative;
   text-align: center;

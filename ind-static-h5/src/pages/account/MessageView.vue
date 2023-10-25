@@ -3,8 +3,10 @@
 
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
-  <ContentView contentTopStatus="solid">
-    <q-card v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
+  <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
+    <LoadingComponent v-if="isLoading"></LoadingComponent>
+    <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
+    <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
       <q-card-section class="title">{{ e.title }}</q-card-section>
       <q-card-section class="content">{{ e.content }}</q-card-section>
 
@@ -24,6 +26,8 @@ import { userStore } from "stores/index";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
+import LoadingComponent from "../../components/LoadingComponent.vue";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
 const router = useRouter();
 const store = userStore();
@@ -50,12 +54,14 @@ const onSlideClick = (e, i) => {
   currentSlide.value = e;
 };
 
+const isLoading = ref(true);
+const isNoInfo = ref(false);
+
 const mailData = ref([]);
 const mailboxData = ref({
   type: null,
   orderBy: "sendTime"
 });
-
 const loadInbox = () => {
   api
     .get("/session/inbox", {
@@ -65,10 +71,18 @@ const loadInbox = () => {
       }
     })
     .then((response) => {
-      if (response.code === 0) mailData.value = response.data.records;
+      if (response.code === 0) {
+        const record = response.data.records;
+        mailData.value = record;
+
+        if (record.length === 0) isNoInfo.value = true;
+      }
+
+      isLoading.value = false;
     })
     .catch((error) => {
       console.log("error", error);
+      isLoading.value = false;
     });
 };
 
