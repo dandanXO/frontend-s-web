@@ -43,7 +43,7 @@
               v-model="currentCardType"
               label="Select A Card Type"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Please Select A Card Type']"
+              :rules="[(val) => !!val || 'Please Select A Card Type']"
               label-color="secondary"
               :options="cardType"
               @update:model-value="selectBankType(opt)"
@@ -60,12 +60,14 @@
               filled
               v-model="bankCardField.bankId"
               :label="dialogDisplays.selectionPlaceholder"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Please Select A Bank']"
+              :rules="[(val) => !!val || dialogDisplays.selectionError]"
               label-color="secondary"
               :options="currBankList"
               option-value="id"
               option-label="name"
+              lazy-rules
+              emit-value
+              map-options
             />
           </div>
 
@@ -269,9 +271,7 @@ const bankCardField = ref({
   cardAccount: "",
   cardNumber: "",
   cardAddress: "",
-  telephone: "",
-  smsCode: "",
-  smsCodeId: ""
+  telephone: ""
 });
 
 const isAddCardDialogOpen = ref(false);
@@ -300,8 +300,6 @@ const onAddCardClick = () => {
       bankCardField.value.cardAccount = store.realName;
       bankCardField.value.cardAddress = "";
       bankCardField.value.telephone = store.phone;
-      bankCardField.value.smsCodeId = "";
-      bankCardField.value.smsCode = "";
 
       if (bankList.length === 0 || cryptoList.length === 0 || ewalletList.length === 0) {
         api
