@@ -132,19 +132,19 @@
           <div class="pc-form-item">
             <div class="pc-form-label">Full Name</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Your Full Name"></q-input>
+              <q-input filled dense clearable placeholder="Enter Your Full Name" v-model="formDetail.realName" />
             </div>
           </div>
           <div class="pc-form-item">
             <div class="pc-form-label">Phone</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Your Phone"></q-input>
+              <q-input filled dense clearable placeholder="Enter Your Phone" v-model="formDetail.phone" />
             </div>
           </div>
           <div class="pc-form-item">
             <div class="pc-form-label">Verification Code</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Verification Code"></q-input>
+              <q-input filled dense clearable placeholder="Enter Verification Code" v-model="formDetail.phoneOtpRef" />
               <div class="pc-form-side-btn">
                 <q-btn
                   no-caps
@@ -160,13 +160,13 @@
           <div class="pc-form-item">
             <div class="pc-form-label">Email</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Your Email"></q-input>
+              <q-input filled dense clearable placeholder="Enter Your Email" v-model="formDetail.email"></q-input>
             </div>
           </div>
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup>Submit</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="updateState">Submit</q-btn>
         </div>
       </div>
     </div>
@@ -182,25 +182,85 @@
           <div class="pc-form-item">
             <div class="pc-form-label">Password</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Current Password"></q-input>
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Current Password"
+                v-model="updatePwdInfo.oldPassword"
+                ref="oldPasswordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[(val) => (val && val.length > 0) || 'Please insert old password']"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
             </div>
           </div>
           <div class="pc-form-item">
             <div class="pc-form-label">New Password</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter New Password"></q-input>
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter New Password"
+                v-model="updatePwdInfo.password"
+                ref="passwordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[(val) => (val && val.length > 0) || 'Please insert new password']"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
             </div>
           </div>
           <div class="pc-form-item">
             <div class="pc-form-label">New Password Again</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter New Password Again"></q-input>
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter New Password Again"
+                v-model="updatePwdInfo.confirmNewPwd"
+                ref="confirmPasswordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password again',
+                  (val) => val === updatePwdInfo.password || 'Confimed password does not match with new password'
+                ]"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
             </div>
           </div>
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup>Confirm</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn>
         </div>
       </div>
     </div>
@@ -273,8 +333,8 @@
         <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
 
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn label="Cancel" class="btn-cancel" v-close-popup />
-          <q-btn label="Confirm" class="btn-confirm" @click="logout" />
+          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
+          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
         </div>
       </div>
     </div>
@@ -334,7 +394,8 @@ const startRefresh = () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  personalCenterDialog.value = !personalCenterDialog.value;
+  (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) &&
+    (personalCenterDialog.value = true)
 };
 
 const changePasswordDialog = ref(false);
@@ -354,19 +415,7 @@ const openConfirmSignOutDialog = () => {
 
 const onSlideClick = (e, i) => {
   if (e === currentSlide.value) return;
-
-  // console.log(i);
-  // console.log(slideListPath.value[i]);
   router.push(slideListPath.value[i]);
-
-  //   for (let i = 0, l = tabList.value.length; i < l; i++) {
-  //     const _currentTab = tabList.value[i];
-  //     if (_currentTab === e) {
-  //       tabList.value.splice(i, 1);
-  //       tabList.value.unshift(e);
-  //     }
-  //   }
-
   currentSlide.value = e;
 };
 
@@ -393,6 +442,7 @@ const isEditPhone = ref(false);
 const isEditBirthday = ref(false);
 const loadInfo = () => {
   personalState.memberInfo = userStore();
+  personalState.memberInfo.realName === null && openPersonalCenterDialog();
   console.log(personalState.memberInfo.realName);
   if (personalState.memberInfo.birthday > 0) {
     personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
@@ -427,6 +477,8 @@ const verificationDetails = reactive({
 onMounted(() => {
   loadInfo();
   getCode();
+
+  window.location.search.includes("personal") && openPersonalCenterDialog();
 });
 
 const verificationImg = ref("");
@@ -545,6 +597,7 @@ const formDetail = reactive([]);
 const realNameRef = ref();
 const birthdayRef = ref();
 const emailRef = ref();
+const phoneOtpRef = ref();
 
 const captchaRef = ref();
 const showCaptchaDialog = ref(false);
@@ -552,21 +605,12 @@ const showVerificationTokenInput = ref(false);
 
 const updateState = () => {
   const updateInfo = {};
-  if (!personalState.memberInfo.birthday) {
-    birthdayRef.value.validate();
-    if (birthdayRef.value.hasError) {
-      return;
-    }
-  }
-  if (!personalState.memberInfo.realName) {
-    realNameRef.value.validate();
-    if (realNameRef.value.hasError) {
-      return;
-    }
-  }
   console.log(updateInfo);
-  updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
+
   updateInfo.realName = formDetail.realName;
+  updateInfo.phone = formDetail.phone;
+  updateInfo.phoneOtpRef = formDetail.phoneOtpRef;
+  updateInfo.email = formDetail.email;
 
   api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
     if (r.code === 0) {
@@ -575,12 +619,13 @@ const updateState = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: "更新成功",
+        message: "Updated successfully",
         icon: "check_circle_outline"
       });
 
       store.getMemberInfo().then(() => {
         loadInfo();
+        personalCenterDialog.value = false;
       });
     } else {
       $q.notify({
@@ -640,6 +685,55 @@ const onCaptchaSubmit = () => {
 
       console.log("onCaptchaSubmit", res);
     });
+};
+
+const isPwd = ref(true);
+const oldPasswordRef = ref();
+const passwordRef = ref();
+const confirmPasswordRef = ref();
+const updatePwdInfo = reactive({
+  oldPassword: "",
+  password: "",
+  confirmNewPwd: ""
+});
+const submitUpdatePwd = () => {
+  oldPasswordRef.value.validate();
+  passwordRef.value.validate();
+  confirmPasswordRef.value.validate();
+
+  if (oldPasswordRef.value.hasError || passwordRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/password",
+        qs.stringify({
+          oldPassword: updatePwdInfo.oldPassword,
+          password: updatePwdInfo.password
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "New password updated successfully",
+            icon: "check_circle_outline"
+          });
+          // router.go("/account");
+          changePasswordDialog.value = false;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
 };
 </script>
 

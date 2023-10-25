@@ -276,26 +276,25 @@ const bankCardField = ref({
 
 const isAddCardDialogOpen = ref(false);
 const onAddCardClick = () => {
-  isAddCardDialogOpen.value = true;
-
   store.getMemberInfo().then(() => {
-    if (!store.realName || store.realName == "" || store.realName == null) {
+    if (
+      !store.realName ||
+      store.realName == "" ||
+      store.realName == null ||
+      !store.phone ||
+      store.phone == "" ||
+      store.phone == null
+    ) {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "请输入您的真实姓名",
+        message: "Please fill in your personal details",
         icon: "report_problem"
       });
-      router.push("/account/personal");
-    } else if (!store.phone || store.phone == "" || store.phone == null) {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "请输入您的电话号码",
-        icon: "report_problem"
-      });
-      router.push("/account/verifyTelephone");
+      router.push("/account?personal");
     } else {
+      isAddCardDialogOpen.value = true;
+
       bankCardField.value.bankId = undefined;
       bankCardField.value.cardNumber = "";
       bankCardField.value.cardAccount = store.realName;

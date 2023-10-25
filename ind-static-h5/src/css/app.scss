@@ -145,14 +145,16 @@ svg {
   text-align: center;
 }
 .q-carousel.home {
-  height: 50vw;
+  // height: 50vw;
+  width: 100%;
   border-radius: 10px;
-  // margin: 10px;
-  max-height: 240px;
+  height: auto;
+
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    aspect-ratio: 20 / 9;
   }
   .q-carousel__navigation--bottom {
     bottom: 30px;
@@ -219,7 +221,7 @@ svg {
   color: #13f129;
 }
 .text-bright {
-  color: #33bcd4;
+  color: #f1be43;
 }
 .bg-bright {
   background: #063c50;

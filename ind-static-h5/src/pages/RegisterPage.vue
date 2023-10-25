@@ -10,7 +10,7 @@
       <img src="../assets/logo.png" />
     </div>
 
-    <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
+    <q-form class="q-gutter-y-md rounded-borders">
       <q-input
         ref="loginNameRef"
         hide-bottom-space
@@ -154,15 +154,11 @@
       </div>
 
       <div class="q-mt-xs">
-        <q-btn
-          @click.prevent="onSubmit"
-          type="submit"
-          class="btn-yellow"
-          label="Register"
-          rounded
-          no-caps
-          :disable="!isAgreeReg"
-        />
+        <q-btn @click="onSubmit" class="btn-yellow" label="Register" rounded no-caps :disable="!isAgreeReg">
+          <template v-slot:loading>
+            <q-spinner-hourglass size="24px" color="white" />
+          </template>
+        </q-btn>
       </div>
 
       <div class="tip-container">
@@ -290,6 +286,7 @@ export default defineComponent({
     };
 
     const router = useRouter();
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -298,9 +295,11 @@ export default defineComponent({
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
       verificationRef.value.validate();
+
       $q.loading.show({
-        message: "注册中"
+        message: "Registering in progress"
       });
+
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
@@ -431,7 +430,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "手机号码不能为空",
+          message: "Phone number cannot be empty",
           icon: "report_problem"
         });
         getInnerCode();
@@ -447,7 +446,7 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          let message = res.message || "发送手机验证码成功",
+          let message = res.message || "OTP sent to phone successfully",
             color = "positive";
 
           if (res.code === 0) {
@@ -472,7 +471,7 @@ export default defineComponent({
     };
 
     return {
-      header: "注册账号",
+      header: "Register Account",
       regForm,
       verificationImg,
       loginNameRef,
