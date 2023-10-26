@@ -225,20 +225,22 @@
       </div>
     </div>
 
-    <!-- <div class="games-selection-wrapper">
+    <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-sports.png" alt="" />
         <span class="txt-style">Sports</span>
       </div>
       <div class="game-platform-container sport-platform">
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-cmd.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-saba.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-sbobet.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-bti.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im2.png" alt="" /></div>
+        <template v-for="(item, index) in sport" :key="index">
+          <div
+            class="game-platform-item"
+            @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+          >
+            <img :src="require(`../assets/images/index/sport/item-game-${item.code.toLowerCase()}.png`)" />
+          </div>
+        </template>
       </div>
-    </div> -->
+    </div>
   </div>
 
   <GameModal ref="allGames"></GameModal>
@@ -2142,12 +2144,25 @@ export default defineComponent({
     .game-platform-img {
       background-color: #cccccc;
       width: 100%;
-      // height: 75px;
-      // height: 70%;
       height: calc(100% - 30px);
       background-size: cover;
       background-position: center center;
-      background-image: url("../assets/images/index/hot-games-bg.png");
+      position: relative;
+      z-index: 1;
+      background-image: url("../assets/images/index/mini-game-bg.png");
+
+      // &::before {
+      //   content: "";
+      //   background-image: url("../assets/images/index/mini-game-bg.png");
+      //   background-size: cover;
+      //   background-position: center center;
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   width: 100%;
+      //   height: 100%;
+      //   z-index: 0;
+      // }
     }
 
     .game-platform-title {
