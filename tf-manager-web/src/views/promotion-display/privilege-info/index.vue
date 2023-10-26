@@ -498,6 +498,7 @@ const request = reactive({
 
 const form = reactive({
   id: null,
+  alias: null,
   name: null,
   code: null,
   status: 'OPEN',
