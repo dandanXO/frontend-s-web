@@ -105,7 +105,7 @@
             style="width: 450px"
             default-first-option
             @focus="loadSites"
-            @change="getVipBySiteId"
+            @change="changeSite"
           >
             <el-option
               v-for="item in siteList.list"
@@ -193,6 +193,35 @@
                 style="width: 145px"
                 :min="1"
                 :max="100"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.gameTypeRollover')" prop="gameTypeRollover">
+            <div v-for="(item, index) in rollover" :key="index">
+              <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" /> : <el-input style="width: 170px " v-model="item.value" />
+              <el-button v-if="index === rollover.length - 1" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+                         @click="addRollover()" plain
+              >{{ t('fields.add') }}
+              </el-button>
+              <el-button v-else icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+                         @click="delRollover(index)" plain
+              >{{ t('fields.delete') }}
+              </el-button>
+            </div>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.minBalance')" prop="minBalance">
+              $
+              <el-input-number
+                v-model="form.minBalance"
+                style="width: 145px"
+                :min="0"
                 :controls="false"
                 @keypress="restrictInput($event)"
               />
@@ -419,6 +448,7 @@ const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
+const rollover = ref([]);
 const privilegeInfoForm = ref(null)
 const siteList = reactive({
   list: [],
@@ -483,6 +513,8 @@ const form = reactive({
   startTime: null,
   endTime: null,
   rollover: null,
+  gameTypeRollover: null,
+  minBalance: null,
   bonusType: null,
   bonusAmount: null,
   bonusAmountRatio: null,
@@ -505,6 +537,7 @@ const formRules = reactive({
   startTime: [required(t('message.validateStartTimeRequired'))],
   endTime: [required(t('message.validateEndTimeRequired'))],
   rollover: [required(t('message.validateRolloverRequired'))],
+  minBalance: [required(t('message.validateMinBalanceRequired'))],
   bonusType: [required(t('message.validateBonusTypeRequired'))],
   bonusAmount: [required(t('message.validateBonusAmountRequired'))],
   bonusAmountRatio: [required(t('message.validateBonusAmountRatioRequired'))],
@@ -561,6 +594,17 @@ function handleCheckedChange(type) {
   }
 }
 
+function changeSite(siteId) {
+  if (siteId === 1) {
+    form.minBalance = 5
+  } else if (siteId === 3) {
+    form.minBalance = 20
+  } else {
+    form.minBalance = 0
+  }
+  getVipBySiteId(siteId)
+}
+
 async function getVipBySiteId(siteId) {
   await loadVips()
   vipList.list = vipList.list.filter(vip => vip.siteId === siteId)
@@ -605,7 +649,9 @@ function showDialog(type) {
     form.bonusType = uiControl.bonusType[0].value
     form.triggerType = uiControl.triggerType[0].value
     form.siteId = siteList.list[0].id
-    getVipBySiteId(form.siteId)
+    changeSite(form.siteId)
+    rollover.value = [];
+    addRollover();
     uiControl.pgroup = false;
     uiControl.dialogTitle = t('fields.addPrivilegeInfo')
   } else if (type === 'EDIT') {
@@ -658,6 +704,19 @@ async function showEdit(privilegeInfo) {
     payTypeArr.forEach(element => {
       selectedPayTypes.payTypeChecked.push(element)
     })
+
+    rollover.value = [];
+    if (form.gameTypeRollover) {
+      Object.entries(JSON.parse(form.gameTypeRollover)).forEach(([key, value]) => {
+        const json = {};
+        json.key = key;
+        json.value = value;
+        rollover.value.push(json);
+      })
+      addRollover();
+    } else {
+      addRollover();
+    }
   })
 }
 
@@ -672,6 +731,7 @@ function create() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
+      form.gameTypeRollover = constructRollover();
       await createPrivilegeInfo(form)
       uiControl.dialogVisible = false
       await loadPrivilegeInfo()
@@ -691,6 +751,7 @@ function edit() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
+      form.gameTypeRollover = constructRollover();
       await updatePrivilegeInfo(form)
       uiControl.dialogVisible = false
       await loadPrivilegeInfo()
@@ -751,6 +812,27 @@ function onChange(e) {
   } else {
     uiControl.pgroup = false;
   }
+}
+
+function addRollover() {
+  rollover.value.push({
+    key: "",
+    value: ""
+  })
+}
+
+function delRollover(index) {
+  rollover.value.splice(index, 1);
+}
+
+function constructRollover() {
+  const json = {};
+  Object.values(rollover.value).forEach((item) => {
+    if (item.key) {
+      json[item.key] = item.value;
+    }
+  });
+  return JSON.stringify(json);
 }
 
 onMounted(async () => {
