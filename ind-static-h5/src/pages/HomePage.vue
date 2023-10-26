@@ -262,12 +262,12 @@
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
-          <div class="titles backgroundColor">更新公告</div>
+          <div class="titles backgroundColor">Update Announcement</div>
         </div>
-        <div class="contents">检测到新版本，你是否要更新？</div>
+        <div class="contents">New Version Detected, Do You Want To Update?</div>
         <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">取消</div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">立即更新</div>
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate">Cancel</div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">Update Now</div>
         </div>
       </div>
     </q-card>
