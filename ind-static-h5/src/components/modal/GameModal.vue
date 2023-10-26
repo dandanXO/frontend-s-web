@@ -13,8 +13,9 @@
       <q-btn flat round dense icon="close" v-close-popup />
     </q-toolbar> -->
       <q-toolbar>
+        {{ exitClickCount }}
         <div class="topActions">
-          <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="closeDialog()" />
+          <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="onExitClick" />
           <q-toolbar-title></q-toolbar-title>
           <q-btn
             v-if="!drawerVisible"
@@ -109,7 +110,7 @@ import DepositComponent from "components/depositComponent.vue";
 // import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
-import { useQuasar, Platform, AppFullscreen } from "quasar";
+import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 const $q = useQuasar();
 
@@ -162,6 +163,25 @@ function selectPayType(value) {
 }
 
 const drawerVisible = ref(false);
+const exitClickCount = ref(0);
+
+const onExitClick = () => {
+  if (exitClickCount.value === 1) {
+    closeDialog();
+    exitClickCount.value = 0;
+  } else {
+    exitClickCount.value++;
+    Notify.create({
+      timeout: 1000,
+      position: "top",
+      message: "Tap one more time to exit"
+    });
+
+    setTimeout(() => {
+      exitClickCount.value = 0;
+    }, 2000);
+  }
+};
 
 const router = useRouter();
 const route = useRoute();
@@ -209,6 +229,7 @@ const submitTransfer = (amount) => {
 const closeDialog = () => {
   visible.value = !visible.value;
   src.value = "";
+  store.getBalance();
   // AppFullscreen.exit()
 };
 const open = (gameName, platformCode, gameCode, gameType) => {

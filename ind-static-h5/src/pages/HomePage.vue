@@ -2150,9 +2150,7 @@ export default defineComponent({
 
   .game-platform-item {
     border: 3px solid #ffc027;
-    height: 120px;
     border-radius: 15px;
-    // position: relative;
     overflow: hidden;
 
     .game-platform-img {
@@ -2187,13 +2185,13 @@ export default defineComponent({
     }
 
     .game-platform-title {
-      padding: 3px 5px 12px;
+      padding: 0px 5px;
       color: #ffe248;
       font-weight: 700;
       font-size: 10px;
       line-height: 1.1;
       text-align: center;
-      height: 35px;
+      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
