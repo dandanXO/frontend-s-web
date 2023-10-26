@@ -1140,7 +1140,7 @@ export default defineComponent({
     };
     const gotoPromo = (banner) => {
       const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
+      // router.push(`${redirectU}`);
     };
 
     const download_url = ref("");

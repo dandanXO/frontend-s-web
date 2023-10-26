@@ -54,11 +54,10 @@
       </div>
 
       <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
       <div class="pc-tip">
-        <div class="pc-ver">
+        <div class="pc-ver" v-if="appVersionNo">
           Version:
-          <span>99.2.2</span>
+          <span>{{ appVersionNo }}</span>
         </div>
         <div>
           <q-btn
@@ -395,7 +394,7 @@ const startRefresh = () => {
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
   (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) &&
-    (personalCenterDialog.value = true)
+    (personalCenterDialog.value = true);
 };
 
 const changePasswordDialog = ref(false);
@@ -474,9 +473,22 @@ const verificationDetails = reactive({
   memberInfo: {}
 });
 
+const appVersionNo = ref(null);
+const getVersionNo = async () => {
+  if (store.getDeviceType() == "ANDROID") {
+    const info = await App.getInfo();
+    var current_version = info.version + "." + info.build;
+    appVersionNo.value = current_version;
+  } else if (store.getDeviceType() == "IOS") {
+    appVersionNo.value = "iOS v0.3";
+  } else {
+  }
+};
+
 onMounted(() => {
   loadInfo();
   getCode();
+  getVersionNo();
 
   window.location.search.includes("personal") && openPersonalCenterDialog();
 });
