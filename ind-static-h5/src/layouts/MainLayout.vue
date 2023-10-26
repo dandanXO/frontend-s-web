@@ -6,14 +6,14 @@
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
-          <q-btn glossy color="brand" to="/login">登录</q-btn>
-          <q-btn outline color="brand" to="/register">注册</q-btn>
+          <q-btn glossy color="brand" to="/login">Login</q-btn>
+          <q-btn outline color="brand" to="/register">Register</q-btn>
         </q-card-actions>
         <!-- <q-card-actions v-if="store.hasToken()">
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
         </q-card-actions> -->
         <q-btn v-if="store.hasToken()" class="flex" to="/finance/deposit" no-caps flat>
-          <span style="font-size: 10px; margin-left: 5px; display: block">充值</span>
+          <span style="font-size: 10px; margin-left: 5px; display: block">Deposit</span>
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
@@ -171,7 +171,7 @@ export default defineComponent({
           pageName.value = "Slot";
           if (route.query.platform) {
             var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
-            pageName.value = `${platformName}游戏大厅`;
+            pageName.value = `${platformName} Game Lobby`;
           }
         } else if (route.path === "/account") {
           prevPage.value = "/";
@@ -202,11 +202,11 @@ export default defineComponent({
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
-          pageName.value = "找回账号";
+          pageName.value = "Forgot Account";
         } else if (route.path === "/forgot-password") {
           prevPage.value = "login";
           hasPage.value = true;
-          pageName.value = "找回密码";
+          pageName.value = "Forgot Password";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
@@ -215,16 +215,16 @@ export default defineComponent({
           pageName.value = "Poker";
         } else if (route.path === "/e-sport") {
           hasPage.value = true;
-          pageName.value = "电子竞技";
+          pageName.value = "E-Sports";
         } else if (route.path === "/sport") {
           hasPage.value = true;
-          pageName.value = "体育";
+          pageName.value = "Sports";
         } else if (route.path === "/fish") {
           hasPage.value = true;
-          pageName.value = "捕鱼达人";
+          pageName.value = "Fishing";
         } else if (route.path === "/promo") {
           hasPage.value = false;
-          pageName.value = "优惠活动";
+          pageName.value = "Promotion";
           prevPage.value = "";
           if (route.query.name) {
             if (route.query.fromAccount) {
@@ -237,28 +237,28 @@ export default defineComponent({
         } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "存款";
+          pageName.value = "Deposit";
           if (route.query.redirect) {
             prevPage.value = route.query.name;
           }
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "提款";
+          pageName.value = "Withdrawal";
           if (route.query.redirect) {
             prevPage.value = route.query.name;
           }
         } else if (route.path === "/account/transfer") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "转账";
+          pageName.value = "Transfer";
           if (route.query.redirect) {
             prevPage.value = route.query.name;
           }
         } else if (route.path === "/account/records") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "交易记录";
+          pageName.value = "Records";
         } else if (route.path === "/account/transit") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -266,43 +266,43 @@ export default defineComponent({
         } else if (route.path === "/account/personal") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "账户信息";
+          pageName.value = "Personal Information";
         } else if (route.path === "/account/verifyTelephone") {
           prevPage.value = "account/personal";
           hasPage.value = true;
-          pageName.value = "手机号码";
+          pageName.value = "Verify Mobile Number";
         } else if (route.path === "/account/verifyEmail") {
           prevPage.value = "account/personal";
           hasPage.value = true;
-          pageName.value = "邮箱";
+          pageName.value = "E-mail";
         } else if (route.path === "/account/changePwd") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "修改密码";
+          pageName.value = "Change Password";
         } else if (route.path === "/account/download") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "兴發下载";
+          pageName.value = "Download";
         } else if (route.path === "/account/invite") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "呼朋唤友";
+          pageName.value = "Referral";
         } else if (route.path === "/account/announcement") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "系统公告";
+          pageName.value = "Announcement";
         } else if (route.path === "/account/mail") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "站内信";
+          pageName.value = "Mail";
         } else if (route.path === "/account/mail/inbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;
-          pageName.value = "收件箱";
+          pageName.value = "Inbox";
         } else if (route.path === "/account/mail/outbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;
-          pageName.value = "发件箱";
+          pageName.value = "Outbox";
         } else if (route.path === "/account/mail/write") {
           prevPage.value = "account/mail";
           hasPage.value = true;
@@ -310,30 +310,30 @@ export default defineComponent({
         } else if (route.path === "/account/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "银行信息";
+          pageName.value = "Bank Detail";
         } else if (route.path === "/account/promotion") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "优惠领取区";
+          pageName.value = "Promotion Claim";
         } else if (route.path === "/affiliate") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "加盟";
+          pageName.value = "Affiliate";
         } else if (route.path === "/insert-bankinfo") {
           hasPage.value = true;
           pageName.value = "Bank Information";
         } else if (route.path === "/account/records/deposit") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "存款记录";
+          pageName.value = "Deposit Record";
         } else if (route.path === "/account/records/withdraw") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "提款记录";
+          pageName.value = "Withdrawal Record";
         } else if (route.path === "/account/records/transfer") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "转账记录";
+          pageName.value = "Transfer Record";
         } else if (route.path === "/account/records/moneyChange") {
           prevPage.value = "account/records";
           hasPage.value = true;
@@ -341,11 +341,11 @@ export default defineComponent({
         } else if (route.path === "/account/records/promo") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "优惠记录";
+          pageName.value = "Promotion Record";
         } else if (route.path === "/account/records/bet") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "投注记录";
+          pageName.value = "Bet Record";
         } else if (route.path === "/account/records/financeFeedback") {
           prevPage.value = "account/records";
           hasPage.value = true;
@@ -357,11 +357,11 @@ export default defineComponent({
         } else if (route.path === "/account/records/betRecord") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "投注记录";
+          pageName.value = "Bet Record";
         } else if (route.path === "/account/records/recommend") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "推荐好友记录";
+          pageName.value = "Referral Record";
         } else if (route.path === "/account/records/help") {
           prevPage.value = "account/records";
           hasPage.value = true;
