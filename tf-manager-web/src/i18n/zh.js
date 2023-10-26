@@ -568,6 +568,7 @@ export default {
     fundingInfo: '资金信息',
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
+    gameLabel: '游戏标签',
     gameName: '游戏名称',
     gameType: '游戏类型',
     generateSummary: '生成汇总',

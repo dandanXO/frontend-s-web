@@ -568,6 +568,7 @@ export default {
     fundingInfo: 'Funding Information',
     gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
+    gameLabel: 'Game Label',
     gameName: 'Game Name',
     gameType: 'Game Type',
     generateSummary: 'Generate Summary',
