@@ -63,6 +63,15 @@
         >
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          icon="el-icon-edit"
+          size="mini"
+          type="primary"
+          v-permission="['sys:member-privilege:distribute']"
+          @click="showPromo()"
+        >
+          {{ t('fields.distributePrivilege') }}
+        </el-button>
       </div>
     </div>
 
@@ -120,6 +129,71 @@
       :current-page="request.current"
     />
   </div>
+  <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
+    <el-form ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
+      <el-row>
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 100px;"
+            default-first-option
+            @focus="loadSites"
+            @change="changeSite"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.privilegeName')" prop="privilegeId">
+          <el-select
+            v-model="form.privilegeId"
+            size="small"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+            @focus="loadPrivilegeInfos"
+            @change="selectPrivilege"
+          >
+            <el-option
+              v-for="item in privilegeInfoList.list"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+      </el-row>
+      <el-row>
+        <el-form-item :label="t('fields.amount')" prop="amount">
+          <el-input v-model="form.amount" style="width: 350px;" :disabled="uiControl.promoAmountInput" />
+          <br>
+          <span style="margin-left: 10px" v-if="selectedPrivilege !== null && selectedPrivilege.bonusMax !== null && selectedPrivilege.bonusMax !== 0 && selectedPrivilege.bonusType !== 'FIXED'">
+            {{ t('fields.maxBonus') }} : $ <span v-formatter="{data: selectedPrivilege.bonusMax,type: 'money'}" /></span>
+        </el-form-item>
+      </el-row>
+      <el-row>
+        <el-form-item :label="t('fields.turnoverMultiple')" prop="rollover">
+          <el-input v-model="form.rollover" style="width: 350px;" disabled />
+        </el-form-item>
+      </el-row>
+      <el-row>
+        <el-form-item :label="t('fields.loginName')" prop="loginName">
+          <el-input type="textarea" v-model="form.loginName" :rows="6" style="width: 350px; margin-top: 5px;" :placeholder="t('fields.loginNameSeparateComma')" />
+        </el-form-item>
+      </el-row>
+      <span class="dialog-footer">
+        <el-button @click="uiControl.dialogVisible=false">{{ t('fields.cancel') }}</el-button>
+        <el-button type="primary" @click="distributePromo">{{ t('fields.confirm') }}</el-button>
+      </span>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -135,6 +209,10 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
+import { required } from '../../../utils/validate'
+import { ElMessage } from 'element-plus'
+import { getActivePrivilegeInfoBySiteId } from '../../../api/privilege-info'
+import { distributePrivilege } from '../../../api/member-privilege'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -145,9 +223,21 @@ const defaultEndDate = convertDate(new Date())
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
+const formRef = ref(null);
+const privilegeInfoList = reactive({
+  list: []
+});
 const siteList = reactive({
   list: [],
 })
+const selectedPrivilege = ref(null);
+
+const uiControl = reactive({
+  dialogTitle: t('fields.distributePrivilege'),
+  dialogVisible: false,
+  dialogType: "DISTRIBUTE",
+  promoAmountInput: true
+});
 
 const page = reactive({
   pages: 0,
@@ -165,6 +255,20 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   siteId: null,
 })
+
+const form = reactive({
+  siteId: null,
+  privilegeId: null,
+  amount: null,
+  rollover: null,
+  loginName: []
+})
+
+const formRules = reactive({
+  privilegeId: [required(t('message.validatePrivilegeRequired'))],
+  amount: [required(t('message.validateAmountRequired'))],
+  loginName: [required(t('message.validateLoginNameRequired'))]
+});
 
 const shortcuts = getShortcuts(t)
 function convertDate(date) {
@@ -184,7 +288,7 @@ function resetQuery() {
   request.memberName = null
   request.privilegeName = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 async function loadPrivilegeRecord() {
@@ -233,7 +337,7 @@ async function loadSites() {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:privilege:record:summary'])) {
+  if (hasPermission(['sys:report:privilege:record:total'])) {
     const { columns } = param
     var sums = []
 
@@ -250,8 +354,6 @@ function getSummaries(param) {
           })
       }
     })
-
-    console.log(sums)
     return sums
   } else {
     return '-'
@@ -263,9 +365,67 @@ function changePage(page) {
   loadPrivilegeRecord()
 }
 
+async function showPromo() {
+  form.siteId = request.siteId;
+  await changeSite(form.siteId);
+  if (privilegeInfoList.list.length !== 0) {
+    uiControl.dialogTitle = t('fields.distributePrivilege');
+    uiControl.dialogVisible = true;
+    form.privilegeId = privilegeInfoList.list[0].id;
+    form.loginName = [];
+    selectPrivilege(privilegeInfoList.list[0].id);
+  } else {
+    ElMessage({ message: t('message.noAvailablePrivilege'), type: "error" });
+  }
+}
+
+function selectPrivilege(val) {
+  privilegeInfoList.list.forEach(privilege => {
+    if (privilege.id === val) {
+      form.rollover = privilege.rollover;
+      if (privilege.bonusType === "FIXED") {
+        form.amount = privilege.bonusAmount;
+        uiControl.promoAmountInput = true;
+      } else {
+        form.amount = null;
+        uiControl.promoAmountInput = false;
+      }
+      selectedPrivilege.value = privilege;
+    }
+  })
+}
+
+function distributePromo() {
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      await distributePrivilege(form);
+      form.loginName = [];
+      form.privilegeId = privilegeInfoList.list[0].id;
+      selectPrivilege(privilegeInfoList.list[0].id);
+      ElMessage({ message: t('message.promoDistributionSuccess'), type: "success" });
+      uiControl.dialogVisible = false;
+      await loadPrivilegeRecord()
+    }
+  });
+}
+
+async function loadPrivilegeInfos() {
+  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteId(form.siteId);
+  privilegeInfoList.list = privilegeInfo;
+}
+
+async function changeSite(siteId) {
+  await loadPrivilegeInfos(siteId);
+  if (privilegeInfoList.list.length !== 0) {
+    form.privilegeId = privilegeInfoList.list[0].id;
+    selectPrivilege(privilegeInfoList.list[0].id);
+  } else {
+    form.privilegeId = null
+  }
+}
+
 onMounted(async () => {
   await loadSites()
-
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
