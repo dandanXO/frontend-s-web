@@ -103,24 +103,24 @@
     <q-card width="100%">
       <q-card-section class="q-pa-md bg-brightbtn text-white">
         <q-toolbar>
-          <q-toolbar-title>验证码</q-toolbar-title>
+          <q-toolbar-title>Verification Code</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-card-section>
       <div class="q-px-lg q-pt-sm q-pb-lg">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" placeholder="验证码">
+          <q-input v-model="innerCaptchaRef" placeholder="Verification Code">
             <template v-slot:append>
               <img
                 :src="phoneVerificationImg"
-                title="点击刷新验证码"
+                title="Tap to refresh captcha"
                 style="margin-top: 6px; cursor: pointer"
                 @click="getInnerCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="sendOtpSms" label="发送验证码" color="brightbtn" />
+        <q-btn @click="sendOtpSms" label="Send OTP" color="brightbtn" />
       </div>
     </q-card>
   </q-dialog>
@@ -241,7 +241,7 @@ export default defineComponent({
         )
         .then((res) => {
           getCode();
-          let message = res.message || "发送手机验证码成功",
+          let message = res.message || "Phone verification code sent successfully",
             color = "positive";
 
           if (res.code === 0) {

@@ -164,10 +164,10 @@ export default boot(({app, router}) => {
                 if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
                     return Dialog.create({
                         class: "login-card",
-                        title: '请登录',
-                        message: "请登录后操作",
-                        cancel: {color: "negative", label: "取消"},
-                        ok: {color: "brightbtn", label: "去登录"},
+                        title: 'Please Login',
+                        message: "Please log in to operate",
+                        cancel: {color: "negative", label: "Cancel"},
+                        ok: {color: "brightbtn", label: "Login"},
                         padding: '20px'
                     }).onOk(() => {
                         router.push("/login")

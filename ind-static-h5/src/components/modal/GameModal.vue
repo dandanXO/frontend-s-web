@@ -1,5 +1,4 @@
 <template>
-
   <q-scroll-area>
     <q-dialog v-model="visible" class="gameDialog" full-height full-width>
       <!-- <q-toolbar>
@@ -15,10 +14,16 @@
     </q-toolbar> -->
       <q-toolbar>
         <div class="topActions">
+          <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="closeDialog()" />
           <q-toolbar-title></q-toolbar-title>
-          <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />
-          <q-btn v-if="!drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="menu_open" />
-          <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" />
+          <q-btn
+            v-if="!drawerVisible"
+            dense
+            rounded
+            icon="add"
+            class="bg-yellow text-black"
+            @click="drawerVisible = !drawerVisible"
+          />
         </div>
 
         <iframe
@@ -31,60 +36,60 @@
           class="game-iframe"
         ></iframe>
 
-        <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
+        <!-- <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
           <div class="q-pa-sm q-pt-sm">
-            <div>
-              <!-- Uncomment for quick Transfer -->
-              <!-- <q-btn-group push>
+            <div></div>
+          </div>
+        </q-drawer> -->
+
+        <q-dialog width="100%" v-model="drawerVisible" presistent>
+          <div class="popout-dialog">
+            <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+            <div class="popout-dialog-container">
+              <div class="popout-main-title">
+                <div class="txt-title">Deposit</div>
+              </div>
+              <div class="deposit-item-container">
+                <template v-for="(item, index) in depositItems" :key="index">
+                  <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
+                    <div class="deposit-icon">
+                      <img
+                        :src="require(`../../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
+                        :alt="item.amount + ' Coin'"
+                      />
+                      <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
+                    </div>
+                    <div class="deposit-amt">{{ item.amount }}</div>
+                  </div>
+                </template>
+              </div>
+              <div class="deposit-enter-amt">
+                <div>Amount</div>
+                <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
+              </div>
+              <div class="deposit-options">
                 <q-btn
-                  size="sm"
-                  :color="quickTransferTab ? 'white' : 'primary'"
-                  glossy
-                  :text-color="quickTransferTab ? 'black' : 'white'"
-                  push
-                  label="Quick Transfer"
-                  icon="multiple_stop"
-                  @click="quickTransferTab = true"
+                  flat
+                  class="deposit-option-btn"
+                  :class="{ active: isUpi1Active }"
+                  label="UPI1"
+                  @click="handleDepositUpiClick(1)"
+                />
+                <q-btn
+                  flat
+                  class="deposit-option-btn label-on-discount"
+                  :class="{ active: isUpi2Active }"
+                  label="UPI2"
+                  @click="handleDepositUpiClick(2)"
                 />
 
-                <q-btn
-                  size="sm"
-                  :color="!quickTransferTab ? 'white' : 'primary'"
-                  glossy
-                  :text-color="!quickTransferTab ? 'black' : 'white'"
-                  push
-                  label="Bank Transfer"
-                  icon="account_balance"
-                  @click="quickTransferTab = false"
-                />
-              </q-btn-group> -->
-
-              <!-- <template v-if="quickTransferTab">
-                <div class="numbers">
-                  <div class="instruction">Transfer amount to platform</div>
-
-                  <q-btn
-                    class="full-width"
-                    push
-                    glossy
-                    color="brand"
-                    v-for="(val, valIndex) in values"
-                    :key="valIndex"
-                    @click="submitTransfer(val)"
-                  >
-                    {{ val }}
-                  </q-btn>
-                </div>
-              </template> -->
-              <!-- <template v-if="!quickTransferTab">
-                <div>
-                  <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>
-                </div>
-                <DepositComponent />
-              </template> -->
+                <!-- <q-btn flat class="deposit-option-btn active" label="UPI1" />
+          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" /> -->
+              </div>
+              <div class="btn-go">Go</div>
             </div>
           </div>
-        </q-drawer>
+        </q-dialog>
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
@@ -277,8 +282,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         .then((ret) => {
           const res = ret;
           src.value = res.data;
-
-          console.log(res,'~~~')
         });
     } else {
       router.push({ path: "/login", query: { redirect: route.path } });
@@ -299,13 +302,50 @@ const close = () => {
   payMethods = [];
 };
 
+const depositItems = reactive([
+  { amount: 100, hotLabel: 5, isActive: false },
+  { amount: 300, hotLabel: 15, isActive: false },
+  { amount: 500, hotLabel: 25, isActive: false },
+  { amount: 1000, hotLabel: 50, isActive: false },
+  { amount: 3000, hotLabel: 150, isActive: false },
+  { amount: 5000, hotLabel: 250, isActive: false },
+  { amount: 10000, hotLabel: 500, isActive: false },
+  { amount: 30000, hotLabel: 1500, isActive: false },
+  { amount: 50000, hotLabel: 2500, isActive: false }
+]);
+
+const handleDepositItemClick = (index) => {
+  depositItems.forEach((item, i) => {
+    item.isActive = i === index;
+    if (i === index) {
+      depositAmountInput.value = item.amount;
+    }
+  });
+};
+
+const isUpi1Active = ref(true);
+const isUpi2Active = ref(false);
+
+const handleDepositUpiClick = (option) => {
+  if (option === 1) {
+    isUpi1Active.value = true;
+    isUpi2Active.value = false;
+  } else if (option === 2) {
+    isUpi1Active.value = false;
+    isUpi2Active.value = true;
+  }
+};
+
+const depositAmountInput = ref("");
+
 defineExpose({
   open
 });
 </script>
+
 <style lang="scss">
 .gameDialog {
-  background: #23263cbc;
+  background-color: #4b027c;
 }
 
 #iphone-tips-close-button {
@@ -371,18 +411,23 @@ defineExpose({
   align-items: flex-start;
   flex-direction: column;
   padding: 0;
+  background: transparent;
+  background-image: url(../../assets/images/index/modal-bg.png);
+  background-size: cover;
+  background-position: top center;
 
   .topActions {
     display: flex;
 
     justify-content: flex-end;
     width: 100%;
+    padding: 16px;
   }
 }
 
 .game-iframe {
   width: 100%;
-  height: calc(100% - 35px);
+  height: calc(100% - 65px);
 }
 
 // .game-iframe {
@@ -511,7 +556,7 @@ defineExpose({
   position: fixed;
   width: 100vw;
   z-index: 1;
-  top: 35px;
+  top: 65px;
 }
 
 .q-toolbar .topActions {
@@ -538,4 +583,180 @@ defineExpose({
 //       // padding: env(safe-area-inset-top, 40px) env(safe-area-inset-right, 40px)  env(safe-area-inset-bottom, 40px)  env(safe-area-inset-left, 40px) ;
 //   }
 // }
+
+.popout-dialog {
+  width: 90%;
+
+  max-width: 500px;
+  position: relative;
+  padding-top: 90px;
+  padding-right: 10px;
+
+  .popout-close {
+    position: absolute;
+    right: 0px;
+    top: 80px;
+  }
+
+  .popout-dialog-container {
+    background-image: url(../../assets/images/index/popout/deposit-bg.png);
+    background-position: bottom center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30px 20px 20px;
+    border-radius: 30px !important;
+  }
+
+  .popout-main-title {
+    background-image: url(../../assets/images/index/popout/popout-title.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    max-width: 290px;
+    height: 120px;
+    margin: -110px auto 0;
+    // position: absolute;
+    // top: 0px;
+    position: relative;
+
+    .txt-title {
+      background-color: #f3ec78;
+      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      line-height: 1;
+      font-size: 22px;
+      font-weight: 800;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: #a94700;
+
+      position: absolute;
+      bottom: 28px;
+      left: 52%;
+      transform: translate(-50%, 0%);
+    }
+  }
+
+  .deposit-item-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 12px;
+    column-gap: 8x;
+
+    .deposit-item {
+      .deposit-icon {
+        background-image: url(../../assets/images/index/popout/deposit-item-frame.png);
+        background-position: top center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        height: 80px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        margin-left: 3px;
+        margin-right: 3px;
+        transition: all 0.3s;
+        img {
+          display: block;
+          width: 70%;
+        }
+      }
+
+      &.active > .deposit-icon {
+        background-image: url(../../assets/images/index/popout/deposit-item-frame-active.png);
+      }
+
+      .deposit-hot-label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-image: url(../../assets/images/index/popout/hot-label.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 50px;
+        height: 28px;
+        font-size: 0.725rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding-bottom: 3px;
+      }
+
+      .deposit-amt {
+        background-image: url(../../assets/images/index/popout/deposit-item-frame-amount.png);
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding: 3px;
+        width: 100%;
+        max-width: 100px;
+        margin: auto;
+      }
+    }
+  }
+
+  .deposit-enter-amt {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+
+    .deposit-input {
+      background-color: rgba(21, 0, 37, 0.5);
+      border-radius: 5px;
+      width: 100%;
+    }
+  }
+
+  .deposit-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 16px;
+    .deposit-option-btn {
+      color: #cccccc;
+      background-color: rgba(21, 0, 37, 0.5) !important;
+      min-width: 100px;
+      max-width: 160px;
+      width: 100%;
+      border-radius: 6px;
+      border: 3px solid transparent;
+
+      &.active {
+        color: #ffe66b;
+        border: 3px solid #ffe66b;
+      }
+
+      &.label-on-discount {
+        position: relative;
+        &:after {
+          content: "";
+          background-image: url(../../assets/images/index/popout/label-discount.png);
+          background-repeat: no-repeat;
+          display: block;
+          position: absolute;
+          top: -4px;
+          right: -5px;
+          width: 30px;
+          height: 30px;
+          background-size: 100%;
+        }
+      }
+    }
+  }
+}
 </style>

@@ -138,12 +138,6 @@
             <div class="pc-form-label">Phone</div>
             <div class="pc-form-input">
               <q-input filled dense clearable placeholder="Enter Your Phone" v-model="formDetail.phone" />
-            </div>
-          </div>
-          <div class="pc-form-item">
-            <div class="pc-form-label">Verification Code</div>
-            <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Verification Code" v-model="formDetail.phoneOtpRef" />
               <div class="pc-form-side-btn">
                 <q-btn
                   no-caps
@@ -153,6 +147,12 @@
                   @click="openVerificationCodeDialog"
                 />
               </div>
+            </div>
+          </div>
+          <div class="pc-form-item">
+            <div class="pc-form-label">Verification Code</div>
+            <div class="pc-form-input">
+              <q-input filled dense clearable placeholder="Enter Verification Code" v-model="formDetail.phoneOtpRef" />
             </div>
           </div>
 

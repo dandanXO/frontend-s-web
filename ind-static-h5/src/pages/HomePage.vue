@@ -762,8 +762,6 @@ export default defineComponent({
           //   changePage(1, gamePage.pageSize);
           // }
         });
-
-      // console.log("~~~~~~~");
     };
 
     const imgURLGame = process.env.IMAGE_CDN + "/game/5/";
