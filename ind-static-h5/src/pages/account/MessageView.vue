@@ -56,7 +56,7 @@ const onSlideClick = (e, i) => {
 };
 
 const isLoading = ref(true);
-const isNoInfo = ref(false);
+const isNoInfo = ref(true);
 
 const mailData = ref([]);
 const mailboxData = ref({
@@ -77,6 +77,7 @@ const loadInbox = () => {
         mailData.value = record;
 
         if (record.length === 0) isNoInfo.value = true;
+        else isNoInfo.value = false;
       }
     })
     .catch((error) => {

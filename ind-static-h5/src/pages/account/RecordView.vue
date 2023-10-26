@@ -87,6 +87,7 @@ import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { updateDate } from "src/boot/utils";
 import moment from "moment";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
@@ -120,20 +121,9 @@ const onSlideClick = (e, i) => {
 };
 
 const isLoading = ref(true);
-const isNoInfo = ref(false);
+const isNoInfo = ref(true);
 
 const searchForm = reactive({ startDate: "", endDate: "", platform: "", memberId: store.id });
-const updateDate = (val) => {
-  const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
-  const oldDate = new Date(gapDate);
-  const newDate = {
-    Y: oldDate.getFullYear() + "-",
-    M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
-    D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
-  };
-  return newDate.Y + newDate.M + newDate.D;
-};
-
 const setTime = () => {
   searchForm.startDate = updateDate(7);
   searchForm.endDate = updateDate(0);
@@ -161,6 +151,7 @@ const searchRecord = () => {
         gameBetRecordData.value.push(...data);
 
         if (data.length === 0) isNoInfo.value = true;
+        else isNoInfo.value = false;
       }
     })
     .catch((error) => {})
