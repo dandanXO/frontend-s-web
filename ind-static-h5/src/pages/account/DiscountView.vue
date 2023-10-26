@@ -3,15 +3,20 @@
 
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
-  <ContentView contentTopStatus="solid">
-    <div>
-      <div class="discount-table">
-        <div class="discount-row discount-row--title">
-          <div class="discount-col"><span class="txt-gray">2023-10-05 09:11:57</span></div>
+  <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
+    <LoadingComponent v-if="isLoading"></LoadingComponent>
+    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
+      <div class="discount-row discount-row--title">
+        <div class="discount-col">
+          <span class="txt-gray">{{ e.recordTime }}</span>
         </div>
-        <div class="discount-row discount-row--content">
-          <div class="discount-col">Bonus Pot</div>
-          <div class="discount-col">Amount: <span class="txt-yellow">4</span></div>
+      </div>
+      <div class="discount-row discount-row--content">
+        <div class="discount-col">{{ e.privilegeName }}</div>
+        <div class="discount-col">
+          Amount:
+          <span class="txt-yellow">{{ e.amount }}</span>
         </div>
       </div>
     </div>
@@ -19,11 +24,17 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import SwiperNav from "../../components/SwiperNav.vue";
+import { onMounted, reactive, ref } from "vue";
+import { api } from "boot/axios";
 import { useRouter } from "vue-router";
+import { updateDate } from "src/boot/utils";
+import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
+import LoadingComponent from "../../components/LoadingComponent.vue";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
+
+const router = useRouter();
 
 let slideList = ref(["Discount", "Record", "Order", "Bank", "Message", "Personal Center"]);
 let slideListPath = ref([
@@ -41,33 +52,50 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-const orderOptionTab = ref("");
-
-const router = useRouter();
-
 const onSlideClick = (e, i) => {
   if (e === currentSlide.value) return;
   router.push(slideListPath.value[i]);
   currentSlide.value = e;
 };
 
-const cardClass = ref("card-show");
+const isLoading = ref(true);
+const isNoInfo = ref(true);
 
-const showMoreButton = () => {
-  console.log("show more button clicked");
+const searchForm = reactive({ startDate: "", endDate: "" });
+const setTime = () => {
+  searchForm.startDate = updateDate(7);
+  searchForm.endDate = updateDate(0);
 };
-let isCardShown = ref(true);
-watch(isCardShown, (newValue) => {
-  cardClass.value = newValue ? "card-show" : "card-unshow";
+
+const discountData = ref([]);
+const searchDiscountRecord = () => {
+  isLoading.value = true;
+  discountData.value = [];
+
+  const { startDate, endDate } = searchForm;
+  api
+    .get("/session/member/privilege", {
+      params: { startDate, endDate, current: 1, size: 10 }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        discountData.value.push(...data);
+
+        if (data.length === 0) isNoInfo.value = true;
+        else isNoInfo.value = false;
+      }
+    })
+    .catch((error) => {})
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+onMounted(() => {
+  setTime();
+  searchDiscountRecord();
 });
-
-const handleBankCardClick = () => {
-  isCardShown.value = !isCardShown.value;
-};
-
-// onMounted(() => {
-//   orderOptionTab.value = "withdrawal";
-// });
 </script>
 
 <style lang="scss" scoped>
