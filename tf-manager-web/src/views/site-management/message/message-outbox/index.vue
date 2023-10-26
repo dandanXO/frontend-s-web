@@ -121,7 +121,7 @@
           <!-- eslint-disable -->
           <span
             v-if="scope.row.createTime !== null"
-            v-formatter="{ data: scope.row.createTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date' }"
+            v-formatter="{ data: scope.row.createTime, timeZone: scope.row.siteTimeZone, type: 'date' }"
           />
         </template>
       </el-table-column>
