@@ -415,10 +415,13 @@ async function loadPrivilegeInfos() {
 }
 
 async function changeSite(siteId) {
-  console.log(siteId)
   await loadPrivilegeInfos(siteId);
-  form.privilegeId = privilegeInfoList.list[0].id;
-  selectPrivilege(privilegeInfoList.list[0].id);
+  if (privilegeInfoList.list.length !== 0) {
+    form.privilegeId = privilegeInfoList.list[0].id;
+    selectPrivilege(privilegeInfoList.list[0].id);
+  } else {
+    form.privilegeId = null
+  }
 }
 
 onMounted(async () => {
