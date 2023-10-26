@@ -86,12 +86,14 @@
 import { ref } from "vue";
 import { date } from "quasar";
 import { useRouter } from "vue-router";
+import { userStore } from "stores/index";
 
 const router = useRouter();
+const store = userStore();
 
 // progress bar
-const maxProgress = 5000;
-const progressRef = ref(2350);
+const maxProgress = store.levelUpDeposit.toFixed(2);
+const progressRef = ref(store.currentDeposit.toFixed(2));
 
 /**
  * NOTE: q-linear-progress
