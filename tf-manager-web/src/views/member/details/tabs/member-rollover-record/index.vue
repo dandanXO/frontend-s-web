@@ -3,28 +3,6 @@
     <div class="header-container">
       <div class="search">
         <el-select
-          v-model="request.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 100px;"
-          default-first-option
-          @focus="loadSites"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
-        <el-input
-          v-model="request.loginName"
-          size="small"
-          style="width: 200px; margin-left: 5px;"
-          :placeholder="t('fields.loginName')"
-        />
-        <el-select
           multiple
           v-model="request.recordStatus"
           size="small"
@@ -51,7 +29,13 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
     </div>
-    <el-card class="box-card" shadow="never" style="margin-top: 40px">
+
+    <el-card class="box-card" shadow="never" style="margin-top: 20px">
+      <template #header>
+        <div class="clearfix">
+          <span class="role-span">{{ t('fields.rolloverRecord') }}</span>
+        </div>
+      </template>
       <el-table
         :data="page.records"
         ref="table"
@@ -62,20 +46,6 @@
         highlight-current-row
         :empty-text="t('fields.noData')"
       >
-        <el-table-column
-          prop="loginName"
-          :label="t('fields.loginName')"
-          align="center"
-          min-width="100"
-        >
-          <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-            <span style="display: inline-block">
-              <router-link :to="`/member/details/${scope.row.memberId}?site=${scope.row.siteId}`">
-                <el-link type="primary">{{ scope.row.loginName }}</el-link>
-              </router-link>
-            </span>
-          </template>
-        </el-table-column>
         <el-table-column
           prop="depositSerialNumber"
           :label="t('fields.depositSerialNo')"
@@ -202,7 +172,7 @@
         :page-count="page.pages"
         :current-page="request.current"
       />
-      <div class="table-footer" v-permission="['sys:rollover-record:list']">
+      <div class="table-footer">
         <span>{{ t('fields.totalBetAmount') }}</span>
         <span style="margin-left: 10px">$</span>
         <span v-formatter="{data: page.totalValidBet, type: 'money'}" />
@@ -229,24 +199,27 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onMounted, reactive, ref } from 'vue'
-import { hasPermission, hasRole } from '../../../utils/util'
+import { defineProps, nextTick, onMounted, reactive, ref } from 'vue'
+import { hasPermission, hasRole } from '../../../../../utils/util'
 import { useI18n } from 'vue-i18n'
-import { getSiteListSimple } from '../../../api/site';
-import { cancelRollover, getMemberRolloverRecords, getTotal } from '../../../api/member-rollover-records'
-import { useStore } from '../../../store';
-import { TENANT } from '../../../store/modules/user/action-types';
-import { required } from '../../../utils/validate';
+import { cancelRollover, getMemberRolloverRecords, getTotal } from '../../../../../api/member-rollover-records'
+import { required } from '../../../../../utils/validate';
 import { ElMessage } from 'element-plus';
+import { useRoute } from 'vue-router';
+
+const props = defineProps({
+  mbrId: {
+    type: String,
+    required: true
+  }
+})
 
 const { t } = useI18n()
-const store = useStore()
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
-const site = ref(null)
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
+});
 const formRef = ref(null)
-const siteList = reactive({
-  list: [],
-})
 
 const uiControl = reactive({
   dialogTitle: t('fields.cancelRolloverRecord'),
@@ -272,7 +245,7 @@ const request = reactive({
   size: 30,
   current: 1,
   siteId: null,
-  loginName: null,
+  memberId: null,
   recordStatus: ['ONGOING', 'COMPLETED', 'VOID', 'CANCEL']
 })
 
@@ -288,14 +261,7 @@ const formRules = reactive({
 });
 
 function resetQuery() {
-  request.siteId = siteList.list[0].id;
-  request.loginName = null;
   request.recordStatus = ['ONGOING', 'COMPLETED', 'VOID', 'CANCEL'];
-}
-
-async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
 }
 
 function checkQuery() {
@@ -314,6 +280,8 @@ function checkQuery() {
       query.recordStatus = request.recordStatus.join(",");
     }
   }
+  query.memberId = props.mbrId;
+  query.siteId = site.id;
   return query
 }
 
@@ -374,15 +342,8 @@ function cancelRecord() {
   });
 }
 
-onMounted(async () => {
-  await loadSites()
-  request.siteId = siteList.list[0].id
-  if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
-      s => s.siteName === store.state.user.siteName
-    )
-    request.siteId = site.value.id
-  }
+onMounted(() => {
+  loadRolloverRecords()
 })
 </script>
 

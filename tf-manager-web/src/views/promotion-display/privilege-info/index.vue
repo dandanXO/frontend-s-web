@@ -105,7 +105,7 @@
             style="width: 450px"
             default-first-option
             @focus="loadSites"
-            @change="getVipBySiteId"
+            @change="changeSite"
           >
             <el-option
               v-for="item in siteList.list"
@@ -529,6 +529,7 @@ const formRules = reactive({
   startTime: [required(t('message.validateStartTimeRequired'))],
   endTime: [required(t('message.validateEndTimeRequired'))],
   rollover: [required(t('message.validateRolloverRequired'))],
+  minBalance: [required(t('message.validateMinBalanceRequired'))],
   bonusType: [required(t('message.validateBonusTypeRequired'))],
   bonusAmount: [required(t('message.validateBonusAmountRequired'))],
   bonusAmountRatio: [required(t('message.validateBonusAmountRatioRequired'))],
@@ -585,6 +586,17 @@ function handleCheckedChange(type) {
   }
 }
 
+function changeSite(siteId) {
+  if (siteId === 1) {
+    form.minBalance = 5
+  } else if (siteId === 3) {
+    form.minBalance = 20
+  } else {
+    form.minBalance = 0
+  }
+  getVipBySiteId(siteId)
+}
+
 async function getVipBySiteId(siteId) {
   await loadVips()
   vipList.list = vipList.list.filter(vip => vip.siteId === siteId)
@@ -629,7 +641,7 @@ function showDialog(type) {
     form.bonusType = uiControl.bonusType[0].value
     form.triggerType = uiControl.triggerType[0].value
     form.siteId = siteList.list[0].id
-    getVipBySiteId(form.siteId)
+    changeSite(form.siteId)
     rollover.value = [];
     addRollover();
     uiControl.pgroup = false;
@@ -693,6 +705,8 @@ async function showEdit(privilegeInfo) {
         json.value = value;
         rollover.value.push(json);
       })
+      addRollover();
+    } else {
       addRollover();
     }
   })
