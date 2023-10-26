@@ -680,7 +680,7 @@ const updateState = () => {
 
 const isValidName = () => {
   const { realName } = formDetail;
-  const namePattern = /^[a-zA-Z]+$/;
+  const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
 
   const result = !realName
     ? "Please Enter Your Full Name"

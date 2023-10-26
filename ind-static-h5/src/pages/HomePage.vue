@@ -1341,7 +1341,7 @@ export default defineComponent({
       box-sizing: border-box;
       height: 37px;
       line-height: 37px;
-      background: #1976d2;
+      background: $primary;
       color: #fff;
       text-align: center;
       font-size: 15px;
@@ -1354,7 +1354,7 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 10px 12px;
       text-align: center;
-
+      color: black;
       .contentfonts {
         text-align: center;
         color: #333;
@@ -1410,7 +1410,7 @@ export default defineComponent({
         height: 40px;
         text-align: center;
         color: #fff;
-        background: #1976d2;
+        background: $primary;
         letter-spacing: 1px;
         font-size: 14px;
       }
