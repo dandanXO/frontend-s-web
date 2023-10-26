@@ -59,6 +59,8 @@ export default {
     finishDate: 'Finish Date',
     withdrawDate: 'Withdraw Date',
     paymentDate: 'Payment Date',
+    regTime: 'Register Time',
+    recordTime: 'Record Time'
   },
   depositStatus: {
     SUCCESS: 'Success',
