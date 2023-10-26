@@ -1,13 +1,6 @@
 <template>
-  <q-scroll-area
-  >
-    <q-dialog
-        v-model="visible"
-        class="gameDialog"
-        full-height
-        full-width
-    >
-
+  <q-scroll-area>
+    <q-dialog v-model="visible" class="gameDialog" full-height full-width>
       <!--      <q-page-sticky id="sticky-item" position="bottom-right" style="z-index:999999;" :offset="fabPos"-->
       <!--                     v-touch-pan.prevent.mouse="moveFab"-->
       <!--      >-->
@@ -32,8 +25,7 @@
 
       <q-btn flat round dense icon="close" v-close-popup />
     </q-toolbar> -->
-      <q-toolbar
-      >
+      <q-toolbar>
         <!--        <div class="topActions">-->
         <!--          <q-toolbar-title></q-toolbar-title>-->
         <!--          <q-btn-->
@@ -63,13 +55,13 @@
         <!--        </div>-->
 
         <iframe
-            @load="loadGame()"
-            v-show="!logoShow"
-            :src="src"
-            id="game-iframe"
-            scrolling="no"
-            frameborder="0"
-            class="game-iframe"
+          @load="loadGame()"
+          v-show="!logoShow"
+          :src="src"
+          id="game-iframe"
+          scrolling="no"
+          frameborder="0"
+          class="game-iframe"
         ></iframe>
         <!--        <q-drawer-->
         <!--            v-model="drawerVisible"-->
@@ -131,34 +123,28 @@
         <!--        </q-drawer>-->
       </q-toolbar>
     </q-dialog>
-    <q-dialog
-        v-model="visibleComingSoon"
-        class="gameDialog"
-        style="width: 100%; margin: 0 auto"
-    >
+    <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
       <!--      <img src="../../assets/logo-coming.png" style="width: 80%;"/>-->
     </q-dialog>
-
-
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
-import {userStore} from "stores/index";
+import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
-import {useRoute, useRouter} from "vue-router";
-import {ref, defineExpose, reactive, shallowRef} from "vue";
-import {isAndroid, isHuaweiPhone} from "boot/utils";
+import { useRoute, useRouter } from "vue-router";
+import { ref, defineExpose, reactive, shallowRef } from "vue";
+import { isAndroid, isHuaweiPhone } from "boot/utils";
 
-import {storeToRefs} from "pinia";
-import {api} from "boot/axios";
-import {useQuasar, Platform, AppFullscreen, openURL} from "quasar";
-import liff from "@line/liff"
+import { storeToRefs } from "pinia";
+import { api } from "boot/axios";
+import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
+import liff from "@line/liff";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 const $q = useQuasar();
 
 const store = userStore();
-const {token} = storeToRefs(store);
+const { token } = storeToRefs(store);
 
 const formRef = ref();
 const payTypeClass = ref();
@@ -170,17 +156,14 @@ const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
 
-const fabPos = ref([18, 18])
+const fabPos = ref([18, 18]);
 const draggingFab = ref(false);
 
 const moveFab = (ev) => {
-  draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
+  draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
 
-  fabPos.value = [
-    fabPos.value[0] - ev.delta.x,
-    fabPos.value[1] - ev.delta.y
-  ]
-}
+  fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
+};
 
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
@@ -235,41 +218,41 @@ const isClicked = ref("");
 const submitTransfer = (amount) => {
   transferInfo.value.amount = amount;
   api
-      .post("/session/balance/transfer/deposit", transferInfo.value)
-      .then((response) => {
-        if (response.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: "转账成功",
-            icon: "check_circle_outline"
-          });
-          isClicked.value = amount;
-          if (token) {
-            store.getBalance();
-          }
-          setTimeout(function () {
-            isClicked.value = null;
-          }, 1000);
+    .post("/session/balance/transfer/deposit", transferInfo.value)
+    .then((response) => {
+      if (response.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Transfer successfully",
+          icon: "check_circle_outline"
+        });
+        isClicked.value = amount;
+        if (token) {
+          store.getBalance();
         }
-      })
-      .catch((error) => {
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: error.message,
-        //   icon: "report_problem"
-        // });
-      });
+        setTimeout(function () {
+          isClicked.value = null;
+        }, 1000);
+      }
+    })
+    .catch((error) => {
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: error.message,
+      //   icon: "report_problem"
+      // });
+    });
 };
 const closeDialog = () => {
   visible.value = false;
-  src.value = ""
+  src.value = "";
   if (isAndroid() && !isHuaweiPhone()) {
-    AppFullscreen.exit()
-    window.screen.orientation.lock('portrait');
+    AppFullscreen.exit();
+    window.screen.orientation.lock("portrait");
   }
-}
+};
 const open = (gameName, platformCode, gameCode, gameType) => {
   //
   // AppFullscreen.request()
@@ -277,14 +260,14 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
 
-// Get the iframe
-  const iFrame = document.getElementById('game-iframe');
+  // Get the iframe
+  const iFrame = document.getElementById("game-iframe");
 
-// Let's say that you want to access a button with the ID `'myButton'`,
-// you can access via the followi ng code:
-// const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-// buttonInIFrame.style.visible = visible;
-//   console.log(iframe)
+  // Let's say that you want to access a button with the ID `'myButton'`,
+  // you can access via the followi ng code:
+  // const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
+  // buttonInIFrame.style.visible = visible;
+  //   console.log(iframe)
   title.value = gameName;
   const store = userStore();
   if (store.memberType !== "TEST" && gameType === "TEST") {
@@ -296,7 +279,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         window.screen.orientation.unlock();
       }
       // visible.value = true;
-      var way = null
+      var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
         way = "IOS";
       } else {
@@ -308,30 +291,63 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         }
       }
 
-      $q.loading.show({message: "加载中..."});
+      $q.loading.show({ message: "Loading..." });
 
       if (way !== "H5") {
         //Change to open at same page.
-        if (platformCode === 'platformType') {
+        if (platformCode === "platformType") {
           api
-              .get(`/session/launch?_time=${new Date().getTime()}`, {
-                params: {
-                  platform: gameCode,
-                  isMobile: Platform.is.mobile ? true : false,
-                  way: way
-                }
-              })
-              .then((response) => {
-                $q.loading.hide();
+            .get(`/session/launch?_time=${new Date().getTime()}`, {
+              params: {
+                platform: gameCode,
+                isMobile: Platform.is.mobile ? true : false,
+                way: way
+              }
+            })
+            .then((response) => {
+              $q.loading.hide();
 
-                if (way == "ANDROID") {
-                  var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
-                } else {
-                  window.location.href = response.data;
-                }
-                // src.value = response.data;
-                // visible.value = true;
-              }).catch((err) => {
+              if (way == "ANDROID") {
+                var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
+              } else {
+                window.location.href = response.data;
+              }
+              // src.value = response.data;
+              // visible.value = true;
+            })
+            .catch((err) => {
+              $q.loading.hide();
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: err.message,
+                icon: "report_problem"
+              });
+            });
+          return;
+        }
+        api
+          .get(`/session/launch?_time=${new Date().getTime()}`, {
+            params: {
+              platform: platformCode,
+              gameCode: gameCode,
+              isMobile: Platform.is.mobile ? true : false,
+              way: way
+            }
+          })
+          .then((response) => {
+            $q.loading.hide();
+
+            if (way === "ANDROID") {
+              var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
+            } else {
+              window.location.href = response.data;
+            }
+
+            // src.value = response.data;
+            // visible.value = true;
+          })
+          .catch((err) => {
             $q.loading.hide();
             $q.notify({
               color: "negative",
@@ -340,60 +356,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               icon: "report_problem"
             });
           });
-          return;
-        }
-        api
-            .get(`/session/launch?_time=${new Date().getTime()}`, {
-              params: {
-                platform: platformCode,
-                gameCode: gameCode,
-                isMobile: Platform.is.mobile ? true : false,
-                way: way
-              }
-            })
-            .then((response) => {
-              $q.loading.hide();
-
-              if (way === "ANDROID") {
-                var ref = cordova.InAppBrowser.open(response.data, '_blank', 'location=no,zoom=no');
-              } else {
-                window.location.href = response.data;
-              }
-
-              // src.value = response.data;
-              // visible.value = true;
-            }).catch((err) => {
-          $q.loading.hide();
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: err.message,
-            icon: "report_problem"
-          });
-        })
-
       } else {
-        if (platformCode === 'platformType') {
+        if (platformCode === "platformType") {
           api
-              .get(`/session/launch?_time=${new Date().getTime()}`, {
-                params: {
-                  platform: gameCode,
-                  isMobile: Platform.is.mobile ? true : false,
-                  way: way
-                }
-              })
-              .then((response) => {
-                $q.loading.hide();
-                // newWin.location.href = response.data;
-                window.location.href = response.data;
-              });
-          return;
-        }
-        api
             .get(`/session/launch?_time=${new Date().getTime()}`, {
               params: {
-                platform: platformCode,
-                gameCode: gameCode,
+                platform: gameCode,
                 isMobile: Platform.is.mobile ? true : false,
                 way: way
               }
@@ -402,19 +370,35 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               $q.loading.hide();
               // newWin.location.href = response.data;
               window.location.href = response.data;
-            }).catch((err) => {
-          $q.loading.hide();
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: err.message,
-            icon: "report_problem"
+            });
+          return;
+        }
+        api
+          .get(`/session/launch?_time=${new Date().getTime()}`, {
+            params: {
+              platform: platformCode,
+              gameCode: gameCode,
+              isMobile: Platform.is.mobile ? true : false,
+              way: way
+            }
+          })
+          .then((response) => {
+            $q.loading.hide();
+            // newWin.location.href = response.data;
+            window.location.href = response.data;
+          })
+          .catch((err) => {
+            $q.loading.hide();
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: err.message,
+              icon: "report_problem"
+            });
           });
-        });
       }
-
     } else {
-      router.push({path: "/login", query: {redirect: route.path}});
+      router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
 };
@@ -500,29 +484,22 @@ defineExpose({
       display: none;
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%,
-      15% 15%, 10% 10%, 18% 18%;
+        radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
-      20% 20%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 
     &.animate {
@@ -545,31 +522,25 @@ defineExpose({
 
     @keyframes topBubbles {
       0% {
-        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
-        40% 90%, 55% 90%, 70% 90%;
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
       }
       50% {
-        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
-        50% 50%, 65% 20%, 90% 30%;
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
       }
       100% {
-        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
-        50% 40%, 65% 10%, 90% 20%;
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
     @keyframes bottomBubbles {
       0% {
-        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
-        70% -10%, 70% 0%;
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
       }
       50% {
-        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%,
-        95% 60%, 105% 0%;
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
       }
       100% {
-        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%,
-        95% 70%, 110% 10%;
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
@@ -641,10 +612,11 @@ defineExpose({
   color: #ffffff;
 }
 
-:deep(.ant-form-vertical
-    .ant-form-item-label
-    > label, .ant-col-24.ant-form-item-label
-    > label, .ant-col-xl-24.ant-form-item-label > label) {
+:deep(
+    .ant-form-vertical .ant-form-item-label > label,
+    .ant-col-24.ant-form-item-label > label,
+    .ant-col-xl-24.ant-form-item-label > label
+  ) {
   color: #ffffff;
 }
 

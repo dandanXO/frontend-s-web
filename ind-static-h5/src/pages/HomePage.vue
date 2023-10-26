@@ -129,25 +129,19 @@
         <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
         <span class="txt-style">Slot Games</span>
       </div>
+
       <div class="game-platform-container">
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-jdb.png" alt="" />
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-joker.png" alt="" />
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-jili.png" alt="" />
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
+        <template v-for="(item, index) in slot" :key="index">
+          <!-- <pre>{{ item }}</pre> -->
+          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)">
+            <img :src="require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)" />
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <div class="game-platform-item">
           <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
         </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
-        </div>
+        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
@@ -157,13 +151,20 @@
         <span class="txt-style">Live Casino</span>
       </div>
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-ezugi.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-evolution.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-comingsoon.png" alt="" /></div>
+        <template v-for="(item, index) in livecasino" :key="index">
+          <div class="game-platform-item" @click="playGame(item.name, item.code)">
+            <img :src="require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)" />
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <div class="game-platform-item">
+          <img src="../assets/images/index/live/item-game-comingsoon.png" alt="" />
+        </div>
+        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
-    <div class="games-selection-wrapper">
+    <!-- <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-gamepoker.png" alt="" />
         <span class="txt-style">Game &amp; Poker</span>
@@ -194,24 +195,33 @@
           <div class="game-platform-title">COMING SOON</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt="" />
         <span class="txt-style">Fishing</span>
       </div>
+
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-jili.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-simpleplay.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-spadegaming.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-zl.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-ag.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-giocoplus.png" alt="" /></div>
+        <template v-for="(item, index) in slot" :key="index">
+          <div
+            class="game-platform-item"
+            @click="playGame(item.name, item.code)"
+            v-if="item.code === 'JILI' || item.code === 'JDB'"
+          >
+            <img :src="require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)" />
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <!-- <div class="game-platform-item">
+          <img src="../assets/images/index/live/item-game-comingsoon.png" alt="" />
+        </div> -->
+        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
-    <div class="games-selection-wrapper">
+    <!-- <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-sports.png" alt="" />
         <span class="txt-style">Sports</span>
@@ -224,7 +234,7 @@
         <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im.png" alt="" /></div>
         <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im2.png" alt="" /></div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <GameModal ref="allGames"></GameModal>
@@ -329,95 +339,17 @@
 
           <div class="games-selection-wrapper">
             <div class="game-platform-wrapper">
-              <div class="game-platform-item">
-                <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Game</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Game Bonanza</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Crazy777</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Rabbit</div>
-              </div>
-              <div class="game-platform-item">
-                <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Game</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Game Bonanza</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Crazy777</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Rabbit</div>
-              </div>
-              <div class="game-platform-item">
-                <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
+              <template v-for="(item, index) in subGameList" :key="index">
+                <div class="game-platform-item" @click="playGame(item.name, subGameCode, item.code, '', item.status)">
+                  <div
+                    class="game-platform-img"
+                    :style="{
+                      backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                    }"
+                  ></div>
+                  <div class="game-platform-title">{{ item.name }}</div>
+                </div>
+              </template>
             </div>
             <!-- <div class="btn-load-more">Load More</div> -->
           </div>
@@ -848,13 +780,117 @@ export default defineComponent({
     });
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
-      // console.log(gameName)
-      // console.log(platformCode)
-      // console.log(gameCode)
-      // console.log(gameStatus);
+      // console.log("gameName: ", gameName);
+      // console.log("platformCode: ", platformCode);
+      // console.log("gameCode: ", gameCode);
+      // console.log("gameStatus: ", gameStatus);
 
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
+
+    const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+      // console.log("gameName: ", gameName);
+      // console.log("platformCode: ", platformCode);
+      // console.log("gameCode: ", gameCode);
+      // console.log("gameStatus: ", gameStatus);
+      // console.log("gameType: ", gameType);
+      // console.log("gameId: ", gameId);
+
+      subGameCode.value = platformCode;
+      loadGameList(gameType, gameId);
+      fullGameDialog.value = true;
+    };
+
+    const subGameList = ref([]);
+    const subGameCode = ref("");
+
+    const loadGameList = (type, id) => {
+      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+      const code = id;
+      const gameType = type;
+      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+
+      // cached
+      cached
+        .get(key, () =>
+          api
+            .get("/platformGames", {
+              params: {
+                platformId: code,
+                gameType: gameType,
+                device: regDevice
+              }
+            })
+            .then((ret) => {
+              const res = ret;
+              if (res.code === 0) {
+                // isLoading.value = false;
+                return res;
+              }
+            })
+            .catch((err) => {
+              // isLoading.value = false;
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: "Loading failed",
+              //   icon: "report_problem"
+              // });
+            })
+        )
+        .then((res) => {
+          // isLoading.value = false;
+          // console.log(res, " ___res");
+          subGameList.value = res;
+
+          // debugger;
+          // if (currentSelectedMenu.value === "casual") {
+          //   miniGames.value = [];
+          //   let minis = _.orderBy(res, "sequence");
+          //   minis.forEach((mini) => {
+          //     mini.lists = [];
+          //   });
+          //   let games = [];
+          //   minis.forEach((mini) => {
+          //     if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
+          //       games.push(mini);
+          //     } else {
+          //       miniGames.value.push(mini);
+          //     }
+          //   });
+
+          //   // console.log(games);
+
+          //   games.forEach((game) => {
+          //     let index = _.findIndex(miniGamesMore.value, function (o) {
+          //       return game.name.indexOf(o.name) > -1;
+          //     });
+          //     if (game.name.indexOf("(铜)") > -1) {
+          //       miniGamesMore.value[index]["copper"] = game.code;
+          //     } else if (game.name.indexOf("(银)") > -1) {
+          //       miniGamesMore.value[index]["silver"] = game.code;
+          //     } else if (game.name.indexOf("(金)") > -1) {
+          //       miniGamesMore.value[index]["gold"] = game.code;
+          //     }
+          //   });
+          //   // console.log(miniGamesMore.value);
+          // } else {
+          //   res.forEach((element) => {
+          //     element.default = require("../assets/images/games/aviator/default.png");
+          //     element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+          //       element.icon
+          //     }.png`;
+          //   });
+          //   gameListData.value = res;
+          //   gamePage.total = res.length;
+          //   changePage(1, gamePage.pageSize);
+          // }
+        });
+
+      // console.log("~~~~~~~");
+    };
+
+    const imgURLGame = process.env.IMAGE_CDN + "/game/5/";
 
     const imgURL = process.env.IMAGE_CDN + "/promo/";
 
@@ -1304,18 +1340,21 @@ export default defineComponent({
     const selectedLiveTab = ref();
 
     return {
+      loadGameList,
       imageLoading,
       slide: ref(0),
       tab: ref("esport"),
       gamesTab: ref(platforms.value[0]),
       splitterModel: ref(27),
       imgURL,
+      imgURLGame,
       imgURLLocal,
       banners,
       store,
       platforms,
       mainWallet,
       playGame,
+      openGame,
       allGames,
       gamePage,
       selectedPlatId,
@@ -1384,7 +1423,9 @@ export default defineComponent({
       handleDepositUpiClick,
       depositAmountInput,
       withdrawalDialog,
-      withdrawalDialogTab
+      withdrawalDialogTab,
+      subGameList,
+      subGameCode
     };
   }
 });
@@ -2318,7 +2359,7 @@ export default defineComponent({
     }
 
     .game-platform-title {
-      padding: 5px 5px 10px;
+      padding: 8px 5px 10px;
       color: #ffe248;
       font-weight: 700;
       font-size: 10px;
