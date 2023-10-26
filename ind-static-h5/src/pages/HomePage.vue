@@ -63,7 +63,7 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
-        :img-src="require(`../assets/images/index/banner/${banner.mobileImageUrl}`)"
+        :img-src="imgURL + banner.mobileImageUrl"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
     </q-carousel>
@@ -151,7 +151,10 @@
       </div>
       <div class="game-platform-container">
         <template v-for="(item, index) in livecasino" :key="index">
-          <div class="game-platform-item" @click="playGame(item.name, item.code)">
+          <div
+            class="game-platform-item"
+            @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+          >
             <img :src="require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)" />
           </div>
         </template>
@@ -203,17 +206,14 @@
       </div>
 
       <div class="game-platform-container">
-        <template v-for="(item, index) in slot" :key="index">
+        <template v-for="(item, index) in fishing" :key="index">
           <!-- <div
             class="game-platform-item"
             @click="playGame(item.name, item.code)"
             v-if="item.code === 'JILI' || item.code === 'JDB'"
           > -->
-          <div
-            class="game-platform-item"
-            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
-            v-if="item.code === 'JILI' || item.code === 'JDB'"
-          >
+          <!-- @click="playGame(item.name, item.code, item.code, item.status, item.gameType, item.id)" -->
+          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)">
             <img :src="require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)" />
           </div>
         </template>
@@ -344,7 +344,10 @@
           <div class="games-selection-wrapper">
             <div class="game-platform-wrapper">
               <template v-for="(item, index) in filteredSubGameList" :key="index">
-                <div class="game-platform-item" @click="playGame(item.name, subGameCode, item.code, '', item.status)">
+                <div
+                  class="game-platform-item"
+                  @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                >
                   <div
                     class="game-platform-img"
                     :style="{
@@ -636,13 +639,18 @@ export default defineComponent({
       return store.balance;
     });
     const allGames = ref(null);
-    const playGame = (gameName, platformCode, gameCode, gameStatus) => {
+    const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
       // console.log("gameName: ", gameName);
       // console.log("platformCode: ", platformCode);
       // console.log("gameCode: ", gameCode);
       // console.log("gameStatus: ", gameStatus);
+      // console.log("gameInfo", gameInfo)
 
-      allGames.value.open(gameName, platformCode, gameCode, gameStatus);
+      allGames.value.open(gameName, platformCode, gameCode, gameType);
+
+      // open = (gameName, platformCode, gameCode, gameType)
+
+      // gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
     };
 
     const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
@@ -913,8 +921,8 @@ export default defineComponent({
         .get("/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            // banners.value = res.data;
-            banners.value = homeBannerData.value.data;
+            banners.value = res.data;
+            // banners.value = homeBannerData.value.data;
           } else {
             // $q.notify({
             //   color: "negative",
