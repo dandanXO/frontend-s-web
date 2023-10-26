@@ -1,19 +1,7 @@
 <template>
   <q-scroll-area>
     <q-dialog v-model="visible" class="gameDialog" full-height full-width>
-      <!-- <q-toolbar>
-      <q-avatar>
-        <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
-      </q-avatar>
-
-      <q-toolbar-title
-        ><span class="text-weight-bold">Quasar</span> Framework</q-toolbar-title
-      >
-
-      <q-btn flat round dense icon="close" v-close-popup />
-    </q-toolbar> -->
       <q-toolbar>
-        {{ exitClickCount }}
         <div class="topActions">
           <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="onExitClick" />
           <q-toolbar-title></q-toolbar-title>
