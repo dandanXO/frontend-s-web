@@ -6,6 +6,9 @@
     <!--  ></iframe>-->
     <!-- <div class="iFrameFull">
   </div> -->
+    <div class="loader-container">
+      <q-spinner color="yellow" size="10em" :thickness="10" />
+    </div>
   </q-page>
 </template>
 
@@ -49,5 +52,13 @@ iframe {
   right: 0;
   left: 0;
   margin: auto;
+}
+
+.loader-container {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
