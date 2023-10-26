@@ -141,11 +141,11 @@
               />
             </div>
           </div>
+
           <div class="pc-form-item">
             <div class="pc-form-label">Phone</div>
             <div class="pc-form-input">
               <q-input
-                class="phone-input"
                 type="number"
                 filled
                 dense
@@ -169,6 +169,7 @@
               </q-input>
             </div>
           </div>
+
           <div v-if="showVerificationTokenInput" class="pc-form-item">
             <div class="pc-form-label">Verification Code</div>
             <div class="pc-form-input">
@@ -180,12 +181,6 @@
                 v-model="formDetail.phoneOtpRef"
                 :rules="[(_) => isValidOTP()]"
               />
-            </div>
-          </div>
-          <div class="pc-form-item">
-            <div class="pc-form-label">Verification Code</div>
-            <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Verification Code" v-model="formDetail.phoneOtpRef" />
             </div>
           </div>
 
