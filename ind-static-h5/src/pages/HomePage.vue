@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrapper">
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab class="bg-yellow floating-btn">
+    <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
+      <q-btn fab class="bg-yellow" @click="router.push('/liveChat')">
         <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
@@ -84,10 +84,16 @@
       </div>
       <div class="game-platform-wrapper">
         <div class="game-platform-item">
-          <div
+          <!-- <div
             class="game-platform-img"
             :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-          ></div>
+          ></div> -->
+          <div class="game-platform-img">
+            <div
+              class="game--bg"
+              :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
+            ></div>
+          </div>
           <div class="game-platform-title">Foutune Tiger</div>
         </div>
         <div class="game-platform-item">
@@ -350,12 +356,20 @@
                   class="game-platform-item"
                   @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
                 >
-                  <div
+                  <!-- <div
                     class="game-platform-img"
                     :style="{
                       backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
                     }"
-                  ></div>
+                  ></div> -->
+                  <div class="game-platform-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                      }"
+                    ></div>
+                  </div>
                   <div class="game-platform-title">{{ item.name }}</div>
                 </div>
               </template>
@@ -2144,11 +2158,11 @@ export default defineComponent({
     .game-platform-img {
       background-color: #cccccc;
       width: 100%;
-      height: calc(100% - 30px);
+      aspect-ratio: 1/1;
+      // height: calc(100% - 30px);
       background-size: cover;
       background-position: center center;
       position: relative;
-      z-index: 1;
       background-image: url("../assets/images/index/mini-game-bg.png");
 
       // &::before {
@@ -2163,19 +2177,23 @@ export default defineComponent({
       //   height: 100%;
       //   z-index: 0;
       // }
+
+      .game--bg {
+        background-size: cover;
+        background-position: center center;
+        height: 100%;
+        width: 100%;
+      }
     }
 
     .game-platform-title {
-      padding: 8px 5px 10px;
+      padding: 3px 5px 12px;
       color: #ffe248;
       font-weight: 700;
       font-size: 10px;
       line-height: 1.1;
-      // white-space: nowrap;
-      // position: absolute;
       text-align: center;
-      // height: 30%;
-      height: 30px;
+      height: 35px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2253,6 +2271,7 @@ export default defineComponent({
 }
 
 .floating-btn {
+  z-index: 5;
   img {
     width: 30px;
   }
