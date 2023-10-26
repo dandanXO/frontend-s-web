@@ -659,8 +659,15 @@ export default defineComponent({
     };
 
     const subGameList = ref([]);
+    // const filteredSubGameList = computed(() => {
+    //   return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+    // });
     const filteredSubGameList = computed(() => {
-      return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+      if (searchText.value) {
+        return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+      } else {
+        return subGameList.value;
+      }
     });
 
     const subGameCode = ref("");
