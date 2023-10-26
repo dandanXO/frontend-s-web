@@ -132,7 +132,6 @@
 
       <div class="game-platform-container">
         <template v-for="(item, index) in slot" :key="index">
-          <!-- <pre>{{ item }}</pre> -->
           <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)">
             <img :src="require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)" />
           </div>
@@ -205,9 +204,14 @@
 
       <div class="game-platform-container">
         <template v-for="(item, index) in slot" :key="index">
-          <div
+          <!-- <div
             class="game-platform-item"
             @click="playGame(item.name, item.code)"
+            v-if="item.code === 'JILI' || item.code === 'JDB'"
+          > -->
+          <div
+            class="game-platform-item"
+            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
             v-if="item.code === 'JILI' || item.code === 'JDB'"
           >
             <img :src="require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)" />
@@ -339,7 +343,7 @@
 
           <div class="games-selection-wrapper">
             <div class="game-platform-wrapper">
-              <template v-for="(item, index) in subGameList" :key="index">
+              <template v-for="(item, index) in filteredSubGameList" :key="index">
                 <div class="game-platform-item" @click="playGame(item.name, subGameCode, item.code, '', item.status)">
                   <div
                     class="game-platform-img"
@@ -539,13 +543,10 @@ import ProfileSummary from "../components/ProfileSummary.vue";
 export default defineComponent({
   name: "IndexPage",
   components: {
-    // Swiper,
-    // SwiperSlide,
     GameModal,
     MarqueeText,
     RiVolumeUpFill,
     ProfileSummary
-    // PlatformBlock
   },
   setup() {
     const isFirstView = ref(false);
@@ -595,150 +596,6 @@ export default defineComponent({
     const withdrawalDialog = ref(false);
     const withdrawalDialogTab = ref("");
     const depositAmountInput = ref("");
-
-    const thumbsSwiper = ref(null);
-    const firstSwiper = ref(null);
-    const secondSwiper = ref(null);
-
-    const setFirstSwiper = (swiper) => {
-      firstSwiper.value = swiper;
-    };
-    const setSecondSwiper = (swiper) => {
-      secondSwiper.value = swiper;
-    };
-    const setSelectedSwiper = (tab) => {
-      selectedTab.value = tab.name;
-      // console.log(tab.name);
-      var slideIndex = 0;
-      if (tab.name === "slot") {
-        slideIndex = 0;
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-
-      if (tab.name === "live") {
-        slideIndex = slot.value.length;
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "sport") {
-        slideIndex = livecasino.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "esport") {
-        slideIndex = livecasino.value.length + sport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-
-      if (tab.name === "fishing") {
-        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "poker") {
-        slideIndex =
-          livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "lottery") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "casual") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length +
-          lottery.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-    };
-    const onSlideChange = (swiper) => {
-      // console.log("Swiping hEre")
-      // Get the active slide index
-      const activeIndex = swiper.activeIndex;
-
-      // Get the active slide element
-      const activeSlide = swiper.slides[activeIndex];
-
-      // Get the class name of the active slide
-      const activeSlideClassName = activeSlide.className;
-      // Check if the class name contains "sport," "slot," or "esport"
-      // Array of keywords to check
-      const keywords = ["slot", "live", "sport", "esport", "fishing", "poker", "lottery", "casual"];
-
-      // Iterate over each keyword
-      for (const keyword of keywords) {
-        // Check if the class name contains the current keyword
-        if (activeSlideClassName.includes(keyword)) {
-          // console.log("select: "+ keyword);
-          selectedTab.value = keyword;
-        }
-      }
-    };
-    const selectedTab = ref("slot");
-    const tabs = ref([
-      {
-        name: "slot",
-        icon: "slot",
-        label: "电子",
-        labelact: "电子"
-      },
-      {
-        name: "live",
-        icon: "live",
-        label: "真人",
-        labelact: "真人娱乐"
-      },
-      {
-        name: "sport",
-        icon: "sport",
-        label: "体育",
-        labelact: "体育赛事"
-      },
-      {
-        name: "esport",
-        icon: "esport",
-        label: "电竞",
-        labelact: "电竞赛事"
-      },
-      {
-        name: "fishing",
-        icon: "fishing",
-        label: "捕鱼",
-        labelact: "捕鱼"
-      },
-      {
-        name: "poker",
-        icon: "poker",
-        label: "棋牌",
-        labelact: "棋牌游戏"
-      },
-      {
-        name: "lottery",
-        icon: "lottery",
-        label: "彩票",
-        labelact: "彩票游戏"
-      },
-      {
-        name: "casual",
-        icon: "casual",
-        label: "小游戏",
-        labelact: "小游戏"
-      }
-    ]);
 
     const esport = ref([]);
     const sport = ref([]);
@@ -802,6 +659,10 @@ export default defineComponent({
     };
 
     const subGameList = ref([]);
+    const filteredSubGameList = computed(() => {
+      return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+    });
+
     const subGameCode = ref("");
 
     const loadGameList = (type, id) => {
@@ -1083,6 +944,7 @@ export default defineComponent({
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
     const getPlatList = () => {
       cached
         .get(platformApiKey, () =>
@@ -1370,8 +1232,6 @@ export default defineComponent({
       activeKey,
       gotoPromo,
       router,
-      tabs,
-      selectedTab,
       sport,
       esport,
       slot,
@@ -1381,16 +1241,6 @@ export default defineComponent({
       fishing,
       lottery,
       isH5,
-      onSlideChange,
-      // Thumbs,
-      // thumbsSwiper,
-      // modules: [Scrollbar],
-      // Controller,
-      // firstSwiper,
-      // secondSwiper,
-      // setFirstSwiper,
-      // setSecondSwiper,
-      // setSelectedSwiper,
       isFirstView,
       closeAlert,
       isAppUpdateModal,
@@ -1425,20 +1275,16 @@ export default defineComponent({
       withdrawalDialog,
       withdrawalDialogTab,
       subGameList,
+      filteredSubGameList,
       subGameCode
     };
   }
 });
 </script>
+
 <style scoped lang="scss">
 .q-page-container {
   min-height: 100vh;
-}
-
-.secondSwiper {
-  height: calc(100vh - 380px);
-  padding-bottom: 0px;
-  padding-top: 25px;
 }
 
 .longer-swiper {
@@ -1447,65 +1293,6 @@ export default defineComponent({
 
 :deep(.q-mb-md) {
   margin-bottom: 0;
-}
-
-:deep(.secondSwiper .swiper-wrapper) {
-  .swiper-slide {
-    height: calc(45vh / 5);
-    width: 95%;
-    margin: 0 auto;
-    overflow: hidden;
-    min-height: 120px;
-    padding-top: 0;
-    margin-bottom: 5px;
-
-    a {
-      display: block;
-    }
-
-    img {
-      width: 100%;
-    }
-
-    &:first-child {
-      // padding-top: 65px;
-      // margin-top: -40px;
-      // padding-top: 30px;
-    }
-
-    &-active {
-      // padding-top: 30px;
-    }
-  }
-}
-
-:deep(.firstSwiper .swiper-wrapper) {
-  background: #23263c;
-}
-
-.swiper-container {
-  position: relative;
-
-  .firstSwiper {
-    margin-bottom: -30px;
-    padding-bottom: 10px;
-    z-index: 999;
-    text-align: center;
-
-    .swiper-slide {
-      background: #23263c;
-      padding: 8px 5px 2px;
-      max-width: 60px;
-      cursor: pointer;
-
-      &.tbact {
-        background: url("../assets/images/index/game_tab_active.png") no-repeat center center;
-        background-size: cover;
-        white-space: nowrap;
-        padding: 8px 20px 2px;
-      }
-    }
-  }
 }
 
 .modal-update-div {
@@ -1907,14 +1694,6 @@ export default defineComponent({
   border-radius: 50%;
   color: #222a34 !important;
   // background: transparent;
-}
-
-@media (max-width: 480px) {
-  .secondSwiper .swiper-wrapper .swiper-slide {
-    height: calc(45vh / 4);
-    min-height: 25vw;
-    max-height: unset;
-  }
 }
 
 @media (max-width: 400px) {
