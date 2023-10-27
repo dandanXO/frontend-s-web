@@ -107,7 +107,7 @@ export default route(function(/* { store, ssrContext } */) {
       liff.init({
         liffId: '1657725286-kDOM4WMb', // Use own liffId
       }).then(() => {
-        // alert(liff.getLineVersion())
+        alert(liff.getLineVersion())
         if (liff.isInClient()) {
           if (liff.isLoggedIn()) {
 
