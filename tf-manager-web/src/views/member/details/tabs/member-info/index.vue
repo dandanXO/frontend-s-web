@@ -353,7 +353,11 @@
                 :empty-text="t('fields.noData')"
       >
         <el-table-column prop="remark" :label="t('fields.remark')" />
-        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200px" />
+        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200px">
+          <template #default="scope">
+            <span v-formatter="{data: scope.row.createTime, type: 'date', timeZone: timeZone}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="createBy" :label="t('fields.createBy')" width="200px" />
         <el-table-column align="right" fixed="right">
           <template #default="scope">
@@ -399,7 +403,7 @@
                               class-name="member-context"
         >
           <span v-if="memberDetail.regTime !== null"
-                v-formatter="{data: memberDetail.regTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}"
+                v-formatter="{data: memberDetail.regTime,timeZone: timeZone,type: 'date'}"
           />
           <span v-if="memberDetail.regTime === null">-</span>
         </el-descriptions-item>
@@ -436,7 +440,7 @@
                               class-name="member-context"
         >
           <span v-if="memberDetail.lastLoginTime !== null"
-                v-formatter="{data: memberDetail.lastLoginTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}"
+                v-formatter="{data: memberDetail.lastLoginTime,timeZone: timeZone,type: 'date'}"
           />
           <span v-if="memberDetail.lastLoginTime === null">-</span>
         </el-descriptions-item>
@@ -805,6 +809,10 @@ export default defineComponent({
     mbrId: {
       type: String,
       required: true
+    },
+    timeZone: {
+      type: String,
+      required: true,
     }
   },
   setup(props) {

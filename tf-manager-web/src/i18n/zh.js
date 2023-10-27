@@ -1054,6 +1054,7 @@ export default {
     progress: '进度',
     download: '下载',
     updateProgress: '更新进度',
+    timeZone: '时区',
   },
   message: {
     addRemarkSuccess: '新增备注成功',

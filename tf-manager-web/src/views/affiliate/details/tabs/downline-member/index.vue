@@ -32,7 +32,7 @@
             <span v-if="scope.row.regTime === null">-</span>
             <span
               v-if="scope.row.regTime !== null"
-              v-formatter="{data: scope.row.regTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.regTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -72,6 +72,10 @@ import { useRoute } from 'vue-router';
 const { t } = useI18n();
 const props = defineProps({
   affId: {
+    type: String,
+    required: true
+  },
+  timeZone: {
     type: String,
     required: true
   }

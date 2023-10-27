@@ -1054,6 +1054,7 @@ export default {
     progress: 'Progress',
     download: 'Download',
     updateProgress: 'Update Progress',
+    timeZone: 'Time Zone'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',

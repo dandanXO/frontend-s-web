@@ -148,7 +148,15 @@
       <el-table-column prop="secretId" :label="t('fields.secretId')" min-width="150" />
       <el-table-column prop="appId" :label="t('fields.appId')" width="150" />
       <el-table-column prop="templateId" :label="t('fields.templateId')" width="150" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
       <el-table-column
         :label="t('fields.operate')"

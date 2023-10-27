@@ -79,7 +79,7 @@
             <span v-if="scope.row.requestTime === null">-</span>
             <span
               v-if="scope.row.requestTime !== null"
-              v-formatter="{data: scope.row.requestTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.requestTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -126,6 +126,9 @@ const downloadLinkPrefix = process.env.VUE_APP_IMAGE
 let selectedDate = "";
 const siteList = reactive({
   list: []
+});
+const siteTimeZone = reactive({
+  timeZone: null,
 });
 
 const defaultTime = [
@@ -219,6 +222,10 @@ async function loadRecords() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
+
+  var siteSelected = siteList.list.find(e => e.id === request.siteId)
+  siteTimeZone.timeZone = siteSelected.timeZone;
+
   page.loading = false;
 }
 
