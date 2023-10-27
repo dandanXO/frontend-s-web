@@ -374,7 +374,7 @@ export default defineComponent({
         if (response.code === 0) {
           // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
           response.data.forEach(element => {
-            if (element.bankType === 'BANK') {
+            if (element && element.bankType === 'BANK') {
               if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
                 withdrawState.bankCardList.push({
                   ...element,
