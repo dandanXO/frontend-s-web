@@ -42,9 +42,7 @@
       </span>
     </div>
 
-    <!-- <pre>{{ paymentNode }}</pre> -->
-
-    <div class="node-wrapper" style="display:none;">
+    <div class="node-wrapper" style="display: none">
       <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
@@ -826,6 +824,7 @@ onMounted(() => {
       img {
         display: block;
         width: 70%;
+        max-width: 70px;
       }
     }
 
