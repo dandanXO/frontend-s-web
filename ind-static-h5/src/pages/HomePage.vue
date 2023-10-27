@@ -82,48 +82,32 @@
         </div>
         <img src="../assets/images/index/hot-elephant-right.png" alt="" />
       </div>
-      <div class="game-platform-wrapper">
-        <div class="game-platform-item btn-effect">
-          <div class="game-platform-img">
-            <div
-              class="game--bg"
-              :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-            ></div>
-          </div>
-          <div class="game-platform-title">Foutune Tiger</div>
-        </div>
-        <div class="game-platform-item btn-effect">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Mouse</div>
-        </div>
-        <div class="game-platform-item btn-effect">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Ox</div>
-        </div>
-        <div class="game-platform-item btn-effect">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Rocket Crash</div>
-        </div>
 
-        <div class="game-platform-item btn-effect">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Rocket Game</div>
-        </div>
-        <div class="game-platform-item btn-effect">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Game Bonanza</div>
-        </div>
-        <div class="game-platform-item btn-effect">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Crazy777</div>
-        </div>
-        <div class="game-platform-item btn-effect">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Rabbit</div>
-        </div>
+      <div class="game-platform-wrapper">
+        <template v-for="(item, index) in hotGameList" :key="index">
+          <template v-if="index <= 8">
+            <div
+              class="game-platform-item btn-effect"
+              @click="playGame(item.name, item.platformId, item.code, item.status, item.gameType, item.id)"
+            >
+              <div class="game-platform-img">
+                <div
+                  class="game--bg"
+                  :style="{
+                    backgroundImage: `url(${imgURLGame}${item.gameType.toLowerCase()}/${item.icon}.png)`
+                  }"
+                ></div>
+              </div>
+              <div class="game-platform-title">{{ item.name }}</div>
+            </div>
+          </template>
+        </template>
       </div>
       <div class="hot-games-pattern-bottom"></div>
-      <div class="btn-load-more btn-effect">Load More</div>
+      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">
+        Load More
+      </div>
+      <div v-else class="hot-games-pattern-bottom--filled"></div>
     </div>
 
     <div class="games-selection-wrapper">
@@ -238,7 +222,7 @@
         <template v-for="(item, index) in fishing" :key="index">
           <div
             class="game-platform-item btn-effect"
-            @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
           >
             <img src="../assets/images/index/fish/item-game-maintenance.png" />
             <div
@@ -395,12 +379,6 @@
                   class="game-platform-item"
                   @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
                 >
-                  <!-- <div
-                    class="game-platform-img"
-                    :style="{
-                      backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
-                    }"
-                  ></div> -->
                   <div class="game-platform-img">
                     <div
                       class="game--bg"
@@ -413,7 +391,6 @@
                 </div>
               </template>
             </div>
-            <!-- <div class="btn-load-more">Load More</div> -->
           </div>
         </div>
       </q-card-section>
@@ -602,6 +579,29 @@ const filteredSubGameList = computed(() => {
 });
 
 const subGameCode = ref("");
+
+const openHotGame = (hotGameList) => {
+  // hotGameList
+  subGameList.value = hotGameList;
+  fullGameDialog.value = true;
+};
+
+const hotGameList = ref([]);
+
+const loadHotGameList = () => {
+  api
+    .get("/platformGamesByLabel?device=H5&gameLabel=HOT", {})
+    .then((ret) => {
+      const res = ret;
+      if (res.code === 0) {
+        return res;
+      }
+    })
+    .catch((err) => {})
+    .then((res) => {
+      hotGameList.value = res.data;
+    });
+};
 
 const loadGameList = (type, id) => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1133,6 +1133,7 @@ onMounted(() => {
   getVersionNo();
   checkShowImgTop();
   getAppDownloadUrl();
+  loadHotGameList();
 });
 const imageLoading = ref(false);
 const selectedLiveTab = ref();
@@ -1843,6 +1844,16 @@ const selectedLiveTab = ref();
     margin-top: 20px;
     margin-bottom: -40px;
     background-position: center center;
+
+    &--filled {
+      height: 15px;
+      width: 15px;
+      margin: 20px auto 10px;
+      border-radius: 50%;
+      background-color: #fbe984;
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .hot-games-container {
