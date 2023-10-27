@@ -817,6 +817,7 @@ export default {
     roleName: 'Role Name',
     rollover: 'Rollover',
     rolloverAmount: 'Rollover Amount',
+    rolloverRecord: 'Rollover Record',
     gameTypeRollover: 'Game Type Rollover',
     router: 'Router',
     ruleParam: 'Rule Param',
@@ -1246,6 +1247,7 @@ export default {
       'Max Withdraw Amount must be greater than min withdraw amount',
     validateMemberTypeRequired: 'Member type is required',
     validateMenuTitleRequired: 'Menu Title is required',
+    validateMinBalanceRequired: 'Minimum balance is required',
     validateMinDepositRequired: 'Minimum deposit is required',
     validateMinDepositLesser:
       'Min Deposit Amount must be lesser than max deposit amount',

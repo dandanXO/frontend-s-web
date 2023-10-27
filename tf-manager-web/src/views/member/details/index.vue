@@ -27,6 +27,9 @@
     <el-tab-pane :label="t('fields.privilege')" name="member-privilege-record">
       <MemberPrivilegeRecord :mbr-id="id" />
     </el-tab-pane>
+    <el-tab-pane :label="t('fields.rolloverRecord')" name="member-rollover-record">
+      <MemberRolloverRecord :mbr-id="id" />
+    </el-tab-pane>
     <el-tab-pane :label="t('fields.riskControl')" name="risk-info">
       <RiskInfoTab :mbr-id="id" />
     </el-tab-pane>
@@ -54,6 +57,7 @@ import MemberBankTab from "./tabs/member-bank/index.vue";
 import RiskInfoTab from "./tabs/risk-info/index.vue";
 import MemberBetRecordTab from "./tabs/member-bet-record/index.vue";
 import MemberReferFriendTab from "./tabs/member-refer-friend/index.vue";
+import MemberRolloverRecord from "./tabs/member-rollover-record/index.vue";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -69,7 +73,8 @@ export default defineComponent({
     MemberBankTab,
     RiskInfoTab,
     MemberBetRecordTab,
-    MemberReferFriendTab
+    MemberReferFriendTab,
+    MemberRolloverRecord
   },
   setup() {
     const { t } = useI18n()
