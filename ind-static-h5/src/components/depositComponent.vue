@@ -140,66 +140,59 @@
         </q-select> -->
         <div class="q-mt-md" v-html="activeMethod.msg"></div>
         <div class="q-mt-md">
-          <!-- <q-btn
-            :loading="btnLoading"
-            color="fit"
-            class="bg-yellow text-black"
-            no-caps
-            @click="confirmDeposit"
-            label="Confirm Deposit"
-          /> -->
-
           <q-btn :loading="btnLoading" rounded class="btn-go" @click="confirmDeposit">Go</q-btn>
         </div>
       </q-form>
     </div>
   </div>
 
-  <q-dialog width="100%" v-model="isDeposited">
-    <q-card style="width: 100%">
-      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-primary text-white">Deposited</q-card-section>
-      <div style="padding: 20px">
-        <q-card-section class="q-mb-md q-pa-md">
+  <q-dialog width="100%" v-model="isDeposited" presistent>
+    <div class="popout-dialog">
+      <div class="popout-dialog-container">
+        <div class="txt-title">Deposited</div>
+        <div class="txt-content q-mt-md text-center">
           You will be redirected to your bank page to complete the deposit.
           <br />
           <br />
           After deposited successfully, it will be reflected here.
-        </q-card-section>
-        <q-btn @click="clearInfo" label="Understood" class="bg-yellow text-black" />
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <q-btn @click="clearInfo" label="Understood" class="bg-yellow text-black" no-caps />
+        </div>
       </div>
-    </q-card>
+    </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
-    <q-card style="width: 100%; padding: 20px" class="text-white">
-      <q-card-section class="q-mb-md">
-        <strong>Tips</strong>
-        <br />
-        <br />
-        To ensure the safety of funds, you need to verify your mobile phone number before depositing
-      </q-card-section>
-      <q-card-actions align="right">
-        <router-link to="/account?personal">
-          <q-btn label="Verify Mobile Phone" class="bg-yellow text-black" />
-        </router-link>
-      </q-card-actions>
-    </q-card>
+    <div class="popout-dialog">
+      <div class="popout-dialog-container">
+        <div class="txt-title">Tips</div>
+        <div class="txt-content q-mt-md text-center">
+          To ensure the safety of funds, you need to verify your mobile phone number before depositing
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <router-link to="/account?personal">
+            <q-btn label="Verify Mobile Phone" class="bg-yellow text-black" no-caps />
+          </router-link>
+        </div>
+      </div>
+    </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
-    <q-card style="width: 100%; padding: 20px" class="text-white">
-      <q-card-section class="q-mb-md">
-        <strong>Tips</strong>
-        <br />
-        <br />
-        To ensure the safety of funds, bind your bank card before depositing
-      </q-card-section>
-      <q-card-actions align="right">
-        <router-link to="/account/bank">
-          <q-btn label="Add Bank Card" class="bg-yellow text-black" />
-        </router-link>
-      </q-card-actions>
-    </q-card>
+    <div class="popout-dialog">
+      <div class="popout-dialog-container">
+        <div class="txt-title">Tips</div>
+        <div class="txt-content q-mt-md text-center">
+          To ensure the safety of funds, bind your bank card before depositing
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <router-link to="/account/bank">
+            <q-btn label="Add Bank Card" class="bg-yellow text-black" no-caps />
+          </router-link>
+        </div>
+      </div>
+    </div>
   </q-dialog>
 </template>
 
@@ -544,7 +537,8 @@ async function pDepo(deposit) {
             !liff.isInClient()
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
-              const newWin = window.open(`/`, `_self`);
+              const newWin = window.open(`/`, `_blank`);
+              isDeposited.value = true;
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
                 btnLoading.value = false;

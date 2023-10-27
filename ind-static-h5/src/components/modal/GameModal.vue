@@ -30,12 +30,6 @@
           class="game-iframe"
         ></iframe>
 
-        <!-- <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
-          <div class="q-pa-sm q-pt-sm">
-            <div></div>
-          </div>
-        </q-drawer> -->
-
         <q-dialog width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
             <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
@@ -43,44 +37,7 @@
               <div class="popout-main-title">
                 <div class="txt-title">Deposit</div>
               </div>
-              <div class="deposit-item-container">
-                <template v-for="(item, index) in depositItems" :key="index">
-                  <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
-                    <div class="deposit-icon">
-                      <img
-                        :src="require(`../../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
-                        :alt="item.amount + ' Coin'"
-                      />
-                      <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
-                    </div>
-                    <div class="deposit-amt">{{ item.amount }}</div>
-                  </div>
-                </template>
-              </div>
-              <div class="deposit-enter-amt">
-                <div>Amount</div>
-                <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
-              </div>
-              <div class="deposit-options">
-                <q-btn
-                  flat
-                  class="deposit-option-btn"
-                  :class="{ active: isUpi1Active }"
-                  label="UPI1"
-                  @click="handleDepositUpiClick(1)"
-                />
-                <q-btn
-                  flat
-                  class="deposit-option-btn label-on-discount"
-                  :class="{ active: isUpi2Active }"
-                  label="UPI2"
-                  @click="handleDepositUpiClick(2)"
-                />
-
-                <!-- <q-btn flat class="deposit-option-btn active" label="UPI1" />
-          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" /> -->
-              </div>
-              <div class="btn-go">Go</div>
+              <DepositComponent />
             </div>
           </div>
         </q-dialog>
@@ -105,6 +62,7 @@ import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
+
 const $q = useQuasar();
 
 const store = userStore();
@@ -315,42 +273,6 @@ const close = () => {
   logoShow.value = true;
   payMethods = [];
 };
-
-const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
-  { amount: 300, hotLabel: 15, isActive: false },
-  { amount: 500, hotLabel: 25, isActive: false },
-  { amount: 1000, hotLabel: 50, isActive: false },
-  { amount: 3000, hotLabel: 150, isActive: false },
-  { amount: 5000, hotLabel: 250, isActive: false },
-  { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 1500, isActive: false },
-  { amount: 50000, hotLabel: 2500, isActive: false }
-]);
-
-const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
-    item.isActive = i === index;
-    if (i === index) {
-      depositAmountInput.value = item.amount;
-    }
-  });
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
-};
-
-const depositAmountInput = ref("");
 
 defineExpose({
   open

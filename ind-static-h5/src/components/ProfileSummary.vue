@@ -135,6 +135,7 @@ const refreshBalance = () => {
           font-size: 10px;
           line-height: 1;
           padding-top: 2px;
+          padding-bottom: 4px;
         }
       }
     }

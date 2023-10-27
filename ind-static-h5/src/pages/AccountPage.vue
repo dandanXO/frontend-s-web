@@ -54,7 +54,7 @@
       </div>
 
       <div class="pc-tip">
-        <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
+        <a class="pc-tip-chg-pwd q-mb-md" @click="openChangePasswordDialog">Change Password</a>
         <div class="pc-ver" v-if="appVersionNo">
           Version:
           <span>{{ appVersionNo }}</span>
@@ -66,8 +66,7 @@
             text-color="white"
             icon="refresh"
             label="Updated"
-            :loading="progress.loading"
-            :percentage="progress.percentage"
+            :loading="loadingUpdated"
             @click="startRefresh"
           >
             <template v-slot:loading>
@@ -91,39 +90,39 @@
   <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
       <q-card-section class="q-mb-md">
-        <strong>系统提示</strong>
+        <strong>Tips</strong>
         <br />
         <br />
-        请登录后再操作
+        Please login to proceed
       </q-card-section>
-      <router-link to="/login?redirect=/account"><q-btn label="确认" color="brightbtn" /></router-link>
+      <router-link to="/login?redirect=/account"><q-btn label="Confirm" color="brightbtn" /></router-link>
     </q-card>
   </q-dialog>
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
-      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">验证码</q-card-section>
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">OTP</q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="captchaRef" label="验证码">
+          <q-input v-model="captchaRef" label="OTP">
             <template v-slot:append>
               <img
                 :src="verificationImg"
-                title="点击刷新验证码"
+                title="Click to Refresh OTP"
                 style="margin-top: 6px; cursor: pointer"
                 @click="getCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn" />
+        <q-btn @click="onCaptchaSubmit" label="Send OTP" color="brightbtn" />
       </div>
     </q-card>
   </q-dialog>
 
   <q-dialog width="100%" v-model="personalCenterDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closePersonalCenterDialog()" />
       <div class="popout-dialog-container">
         <div class="txt-title">KYC Info</div>
 
@@ -393,35 +392,41 @@ const isActiveSlide = (e) => {
 };
 
 const logout = () => {
+  loadingLogout.value = true;
+
+  $q.loading.show({
+    message: "Logging out..."
+  });
+
   store.memberLogout().then(() => {
+    loadingLogout.value = false;
     router.push("/");
   });
 };
 
-const progress = ref([{ loading: false, percentage: 0 }]);
+const loadingUpdated = ref(false);
 
 const intervals = ref(null);
 
-const startRefresh = () => {
-  progress.value.loading = true;
-  progress.value.percentage = 0;
+const startRefresh = async () => {
+  loadingUpdated.value = true;
 
-  intervals.value = setInterval(() => {
-    progress.value.percentage += 50;
-    if (progress.value.percentage >= 100) {
-      clearInterval(intervals);
-      intervals.value = null;
-      progress.value.loading = false;
-    }
-  }, 700);
-
-  store.getMemberInfo();
+  store.getMemberInfo().then(() => {
+    setTimeout(() => {
+      loadingUpdated.value = false;
+    }, 2000);
+  });
 };
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
   (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) &&
     (personalCenterDialog.value = true);
+};
+
+const closePersonalCenterDialog = () => {
+  loadInfo();
+  personalCenterDialog.value = false;
 };
 
 const changePasswordDialog = ref(false);
@@ -514,6 +519,8 @@ const getVersionNo = async () => {
   } else {
   }
 };
+
+const loadingLogout = ref(false);
 
 onMounted(() => {
   loadInfo();
@@ -870,104 +877,6 @@ const submitUpdatePwd = () => {
   }
 }
 
-.profile-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-  .profile-details-container {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-  }
-  .profile-name {
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    gap: 10px;
-
-    .vip-details {
-      position: relative;
-      margin-left: 25px;
-      margin-bottom: 10px;
-      img {
-        display: block;
-        width: 40px;
-        position: absolute;
-        top: -6px;
-        left: -26px;
-      }
-
-      .vip-level {
-        background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-          linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-        border-radius: 0px 2px 5px 0px;
-        width: 45px;
-        height: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        line-height: 1;
-        padding-bottom: 1px;
-      }
-    }
-  }
-  .profile-agency {
-    display: flex;
-    gap: 0.75rem;
-
-    .profile-agency-lbl {
-      color: rgba(255, 255, 255, 0.5);
-    }
-  }
-  .profile-rating {
-    display: flex;
-    gap: 6px;
-    img {
-      display: block;
-      width: 20px;
-    }
-  }
-  .profile-balance {
-    position: relative;
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width: 130px;
-    font-size: 14px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: -9px;
-      left: -3px;
-      background-image: url(../assets/images/index/icon-balance.png);
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: 40px 40px;
-      display: block;
-      width: 40px;
-      height: 40px;
-    }
-
-    .balance-amount {
-      margin-left: 15px;
-    }
-  }
-  .profile-msg {
-    margin-left: auto;
-    margin-top: 30px;
-  }
-}
-
 .bank-card-add {
   position: absolute;
   padding: 0 2rem;
@@ -1055,41 +964,6 @@ const submitUpdatePwd = () => {
   }
 }
 
-.popout-dialog {
-  width: 90%;
-
-  max-width: 500px;
-  position: relative;
-  padding-top: 90px;
-  padding-right: 10px;
-
-  .popout-close {
-    position: absolute;
-    right: 0px;
-    top: 80px;
-  }
-
-  .txt-title {
-    font-size: 28px;
-    text-align: center;
-    font-weight: 700;
-  }
-
-  .popout-dialog-container {
-    background-image: url(../assets/images/account/kyc-bg.png);
-    background-position: top center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 30px 20px 20px;
-    border-radius: 30px !important;
-  }
-}
-
-.y-n-container {
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-}
 .btn-cancel {
   background: rgba(21, 0, 37, 0.5);
   font-weight: 700;

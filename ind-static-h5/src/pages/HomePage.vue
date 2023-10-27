@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrapper">
     <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
-      <q-btn fab class="bg-yellow text-black" @click="router.push('/liveChat')">
+      <q-btn fab class="bg-yellow text-black btn-effect" @click="router.push('/liveChat')">
         <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
@@ -70,7 +70,7 @@
 
     <div class="top-action">
       <q-btn class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true" no-caps label="Withdrawal" />
-      <q-btn class="action-btn action-btn--deposit" @click="depositDialog = true" no-caps label="Deposit" />
+      <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
     </div>
 
     <div class="games-selection-wrapper">
@@ -83,7 +83,7 @@
         <img src="../assets/images/index/hot-elephant-right.png" alt="" />
       </div>
       <div class="game-platform-wrapper">
-        <div class="game-platform-item">
+        <div class="game-platform-item btn-effect">
           <div class="game-platform-img">
             <div
               class="game--bg"
@@ -92,38 +92,38 @@
           </div>
           <div class="game-platform-title">Foutune Tiger</div>
         </div>
-        <div class="game-platform-item">
+        <div class="game-platform-item btn-effect">
           <div class="game-platform-img"></div>
           <div class="game-platform-title">Foutune Mouse</div>
         </div>
-        <div class="game-platform-item">
+        <div class="game-platform-item btn-effect">
           <div class="game-platform-img"></div>
           <div class="game-platform-title">Foutune Ox</div>
         </div>
-        <div class="game-platform-item">
+        <div class="game-platform-item btn-effect">
           <div class="game-platform-img"></div>
           <div class="game-platform-title">Rocket Crash</div>
         </div>
 
-        <div class="game-platform-item">
+        <div class="game-platform-item btn-effect">
           <div class="game-platform-img"></div>
           <div class="game-platform-title">Rocket Game</div>
         </div>
-        <div class="game-platform-item">
+        <div class="game-platform-item btn-effect">
           <div class="game-platform-img"></div>
           <div class="game-platform-title">Game Bonanza</div>
         </div>
-        <div class="game-platform-item">
+        <div class="game-platform-item btn-effect">
           <div class="game-platform-img"></div>
           <div class="game-platform-title">Crazy777</div>
         </div>
-        <div class="game-platform-item">
+        <div class="game-platform-item btn-effect">
           <div class="game-platform-img"></div>
           <div class="game-platform-title">Foutune Rabbit</div>
         </div>
       </div>
       <div class="hot-games-pattern-bottom"></div>
-      <div class="btn-load-more">Load More</div>
+      <div class="btn-load-more btn-effect">Load More</div>
     </div>
 
     <div class="games-selection-wrapper">
@@ -134,7 +134,10 @@
 
       <div class="game-platform-container">
         <template v-for="(item, index) in slot" :key="index">
-          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)">
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+          >
             <img src="../assets/images/index/slot/item-game-maintenance.png" />
             <div
               class="game-platform-item--img"
@@ -166,7 +169,7 @@
       <div class="game-platform-container">
         <template v-for="(item, index) in livecasino" :key="index">
           <div
-            class="game-platform-item"
+            class="game-platform-item btn-effect"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
           >
             <img src="../assets/images/index/live/item-game-maintenance.png" />
@@ -233,7 +236,10 @@
 
       <div class="game-platform-container">
         <template v-for="(item, index) in fishing" :key="index">
-          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)">
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+          >
             <img src="../assets/images/index/fish/item-game-maintenance.png" />
             <div
               class="game-platform-item--img"
@@ -260,7 +266,7 @@
       <div class="game-platform-container sport-platform">
         <template v-for="(item, index) in sport" :key="index">
           <div
-            class="game-platform-item"
+            class="game-platform-item btn-effect"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
           >
             <img src="../assets/images/index/sport/item-game-maintenance.png" />
@@ -531,44 +537,7 @@
         <div class="popout-main-title">
           <div class="txt-title">Deposit</div>
         </div>
-
         <DepositComponent />
-
-        <!-- <div class="deposit-item-container">
-          <template v-for="(item, index) in depositItems" :key="index">
-            <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
-              <div class="deposit-icon">
-                <img
-                  :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
-                  :alt="item.amount + ' Coin'"
-                />
-                <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
-              </div>
-              <div class="deposit-amt">{{ item.amount }}</div>
-            </div>
-          </template>
-        </div>
-        <div class="deposit-enter-amt">
-          <div>Amount</div>
-          <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
-        </div>
-        <div class="deposit-options">
-          <q-btn
-            flat
-            class="deposit-option-btn"
-            :class="{ active: isUpi1Active }"
-            label="UPI1"
-            @click="handleDepositUpiClick(1)"
-          />
-          <q-btn
-            flat
-            class="deposit-option-btn label-on-discount"
-            :class="{ active: isUpi2Active }"
-            label="UPI2"
-            @click="handleDepositUpiClick(2)"
-          />
-        </div>
-        <div class="btn-go">Go</div> -->
       </div>
     </div>
   </q-dialog>
@@ -614,6 +583,10 @@ export default defineComponent({
     const searchText = ref("");
 
     const depositDialog = ref(false);
+    const openDepositDialog = () => {
+      depositDialog.value = true;
+    };
+
     const depositItems = reactive([
       { amount: 100, hotLabel: 5, isActive: false },
       { amount: 300, hotLabel: 15, isActive: false },
@@ -1341,7 +1314,8 @@ export default defineComponent({
       withdrawalDialogTab,
       subGameList,
       filteredSubGameList,
-      subGameCode
+      subGameCode,
+      openDepositDialog
     };
   }
 });
