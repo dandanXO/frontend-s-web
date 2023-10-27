@@ -63,13 +63,13 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
-        :img-src="imgURL + banner.mobileImageUrl"
+        :img-src="imgURLPromo + banner.mobileImageUrl"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
     </q-carousel>
 
     <div class="top-action">
-      <q-btn class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true" no-caps label="Withdrawal" />
+      <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
     </div>
 
@@ -436,8 +436,8 @@
           indicator-color="transparent"
           align="justify"
         >
-          <q-tab name="backcard" label="Backcard" />
-          <q-tab name="upi" label="UPI" />
+          <q-tab name="BANK" label="Bankcard" />
+          <q-tab name="UPI" label="UPI" />
         </q-tabs>
 
         <q-tab-panels
@@ -447,75 +447,175 @@
           transition-prev="fade"
           transition-next="fade"
         >
-          <q-tab-panel name="backcard">
+          <q-tab-panel name="BANK">
             <div class="withdrawal-table">
               <div class="w-tbl-row">
                 <div class="w-tbl-col">Cash Balance:</div>
-                <div class="w-tbl-col"><span class="w-txt-red">1731.5</span></div>
+                <div class="w-tbl-col">
+                  <span class="w-txt-red">{{ mainWallet }}</span>
+                </div>
               </div>
               <div class="w-tbl-row">
                 <div class="w-tbl-col">Withdrawable:</div>
-                <div class="w-tbl-col">0</div>
+                <div class="w-tbl-col">
+                  {{
+                    `${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
+                  }}
+                </div>
               </div>
               <div class="w-tbl-row">
                 <div class="w-tbl-col">Remaining Wager:</div>
-                <div class="w-tbl-col">30822.5</div>
+                <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount }}</div>
               </div>
             </div>
           </q-tab-panel>
-          <q-tab-panel name="upi">
+          <q-tab-panel name="UPI">
             <div class="withdrawal-table">
               <div class="w-tbl-row">
                 <div class="w-tbl-col">Cash Balance:</div>
-                <div class="w-tbl-col"><span class="w-txt-red">1731.5</span></div>
+                <div class="w-tbl-col">
+                  <span class="w-txt-red">{{ mainWallet }}</span>
+                </div>
               </div>
               <div class="w-tbl-row">
                 <div class="w-tbl-col">Withdrawable:</div>
-                <div class="w-tbl-col">0</div>
+                <div class="w-tbl-col">
+                  {{
+                    `${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
+                  }}
+                </div>
               </div>
               <div class="w-tbl-row">
                 <div class="w-tbl-col">Remaining Wager:</div>
-                <div class="w-tbl-col">30822.5</div>
+                <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount }}</div>
               </div>
             </div>
           </q-tab-panel>
         </q-tab-panels>
 
-        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'backcard'">
+        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'BANK'">
           <div class="w-form-item w-form-item--bankcard">
             <div class="w-form-label">Withdraw Amount</div>
             <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
+              <q-input
+                type="number"
+                ref="amountRef"
+                filled
+                dense
+                clearable
+                placeholder="Enter Withdraw Amount"
+                v-model="withdrawInfo.amount"
+                :rules="[
+                  (val) => !!val || 'Please Enter Withdraw Amount',
+                  (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
+                  (val) =>
+                    (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
+                      val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
+                    `Withdraw Amount Must In Between ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
+                ]"
+                lazy-rules
+                hide-bottom-space
+              ></q-input>
+            </div>
+          </div>
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="w-form-label">Bank Card</div>
+            <div class="w-form-input">
+              <q-select
+                ref="cardRef"
+                filled
+                dense
+                clearable
+                v-model="withdrawInfo.cardId"
+                @update:model-value="onCardChanged"
+                :label="`Select Bank Card`"
+                :options="bankCardList"
+                option-value="id"
+                emit-value
+                map-options
+                :rules="[(val) => !!val || 'Please Select A Bank Card']"
+                lazy-rules
+                hide-bottom-space
+              >
+                <template v-slot:option="scope">
+                  <q-item v-bind="scope.itemProps">
+                    <q-item-section avatar v-if="scope.opt.bankIcon">
+                      <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>
+                        {{ scope.opt.bankName }} - ****{{
+                          scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                        }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+                <template v-slot:selected-item="scope">
+                  <q-item-section avatar v-if="scope.opt.bankIcon">
+                    <img
+                      style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                      :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                      {{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
+                    </q-item-label>
+                  </q-item-section>
+                </template>
+              </q-select>
             </div>
           </div>
           <div class="w-form-item w-form-item--bankcard">
             <div class="w-form-label">Account Holder Name</div>
             <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Account Holder Name"></q-input>
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Account Holder Name"
+                v-model="withdrawReadOnlyInfo.cardAccount"
+                readonly
+              ></q-input>
             </div>
           </div>
           <div class="w-form-item w-form-item--bankcard">
             <div class="w-form-label">Account Number</div>
             <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Account Number"></q-input>
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Account Number"
+                v-model="withdrawReadOnlyInfo.cardNumber"
+                readonly
+              ></q-input>
             </div>
           </div>
           <div class="w-form-item w-form-item--bankcard">
             <div class="w-form-label">Bank IFSC Code</div>
             <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Bank IFSC Code"></q-input>
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Bank IFSC Code"
+                v-model="withdrawReadOnlyInfo.cardAddress"
+                readonly
+              ></q-input>
             </div>
           </div>
         </div>
 
-        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'upi'">
-          <div class="w-form-item w-form-item--upi">
+        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'UPI'">
+          <div class="w-form-item w-form-item--UPI">
             <div class="w-form-label">Withdraw Amount</div>
             <div class="w-form-input">
               <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
             </div>
           </div>
-          <div class="w-form-item w-form-item--upi">
+          <div class="w-form-item w-form-item--UPI">
             <div class="w-form-label">VPA</div>
             <div class="w-form-input">
               <q-input filled dense clearable placeholder="Enter VPA"></q-input>
@@ -523,8 +623,7 @@
           </div>
         </div>
 
-        <div class="btn-go">Go</div>
-
+        <div class="btn-go" @click="submitWithdraw">Go</div>
         <div class="bottom-tnc">3%+6Rs of the withdrawal amount would be deducted as bank commission</div>
       </div>
     </div>
@@ -543,8 +642,8 @@
   </q-dialog>
 </template>
 
-<script>
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+<script setup>
+import { onMounted, ref, reactive, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -563,762 +662,799 @@ import ProfileSummary from "../components/ProfileSummary.vue";
 
 import DepositComponent from "../components/depositComponent.vue";
 
-export default defineComponent({
-  name: "IndexPage",
-  components: {
-    GameModal,
-    MarqueeText,
-    RiVolumeUpFill,
-    ProfileSummary,
-    DepositComponent
-  },
-  setup() {
-    const isFirstView = ref(false);
-    const closeAlert = () => {
-      localStorage.setItem("indexImgTop", new Date().getTime());
-      isFirstView.value = false;
-    };
+const slide = ref(0);
+const tab = ref("esport");
 
-    const fullGameDialog = ref(false);
-    const searchText = ref("");
+const isFirstView = ref(false);
+const closeAlert = () => {
+  localStorage.setItem("indexImgTop", new Date().getTime());
+  isFirstView.value = false;
+};
 
-    const depositDialog = ref(false);
-    const openDepositDialog = () => {
-      depositDialog.value = true;
-    };
+const fullGameDialog = ref(false);
+const searchText = ref("");
 
-    const depositItems = reactive([
-      { amount: 100, hotLabel: 5, isActive: false },
-      { amount: 300, hotLabel: 15, isActive: false },
-      { amount: 500, hotLabel: 25, isActive: false },
-      { amount: 1000, hotLabel: 50, isActive: false },
-      { amount: 3000, hotLabel: 150, isActive: false },
-      { amount: 5000, hotLabel: 250, isActive: false },
-      { amount: 10000, hotLabel: 500, isActive: false },
-      { amount: 30000, hotLabel: 1500, isActive: false },
-      { amount: 50000, hotLabel: 2500, isActive: false }
-    ]);
+const depositDialog = ref(false);
+const openDepositDialog = () => {
+  depositDialog.value = true;
+};
 
-    const handleDepositItemClick = (index) => {
-      depositItems.forEach((item, i) => {
-        item.isActive = i === index;
-        if (i === index) {
-          depositAmountInput.value = item.amount;
-        }
-      });
-    };
+const depositItems = reactive([
+  { amount: 100, hotLabel: 5, isActive: false },
+  { amount: 300, hotLabel: 15, isActive: false },
+  { amount: 500, hotLabel: 25, isActive: false },
+  { amount: 1000, hotLabel: 50, isActive: false },
+  { amount: 3000, hotLabel: 150, isActive: false },
+  { amount: 5000, hotLabel: 250, isActive: false },
+  { amount: 10000, hotLabel: 500, isActive: false },
+  { amount: 30000, hotLabel: 1500, isActive: false },
+  { amount: 50000, hotLabel: 2500, isActive: false }
+]);
 
-    const isUpi1Active = ref(true);
-    const isUpi2Active = ref(false);
+const handleDepositItemClick = (index) => {
+  depositItems.forEach((item, i) => {
+    item.isActive = i === index;
+    if (i === index) {
+      depositAmountInput.value = item.amount;
+    }
+  });
+};
 
-    const handleDepositUpiClick = (option) => {
-      if (option === 1) {
-        isUpi1Active.value = true;
-        isUpi2Active.value = false;
-      } else if (option === 2) {
-        isUpi1Active.value = false;
-        isUpi2Active.value = true;
-      }
-    };
+const isUpi1Active = ref(true);
+const isUpi2Active = ref(false);
 
-    const withdrawalDialog = ref(false);
-    const withdrawalDialogTab = ref("");
-    const depositAmountInput = ref("");
+const handleDepositUpiClick = (option) => {
+  if (option === 1) {
+    isUpi1Active.value = true;
+    isUpi2Active.value = false;
+  } else if (option === 2) {
+    isUpi1Active.value = false;
+    isUpi2Active.value = true;
+  }
+};
 
-    const esport = ref([]);
-    const sport = ref([]);
-    const livecasino = ref([]);
-    const poker = ref([]);
-    const lottery = ref([]);
-    const slot = ref([]);
-    const fishing = ref([]);
-    const casuals = ref([]);
+const withdrawalDialog = ref(false);
+const withdrawalDialogTab = ref("");
+const depositAmountInput = ref("");
 
-    const ui = useUI();
-    const scrollPageRef = ref(null);
-    const isH5 = ref(false);
-    const checkPlatform = () => {
-      //Is iOS Webclip App || Is Android Apk
-      if (
-        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
-      ) {
-        isH5.value = false;
-      } else {
-        isH5.value = true;
-      }
-    };
+const esport = ref([]);
+const sport = ref([]);
+const livecasino = ref([]);
+const poker = ref([]);
+const lottery = ref([]);
+const slot = ref([]);
+const fishing = ref([]);
+const casuals = ref([]);
 
-    ui.$onAction(({ name, args }) => {
-      switch (name) {
-        case "setScrollPosition":
-          scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-      }
-    });
-    const $q = useQuasar();
-    const banners = ref(null);
-    const route = useRoute();
-    const router = useRouter();
-    const store = userStore();
-    const mainWallet = computed(() => {
-      return store.balance;
-    });
-    const allGames = ref(null);
-    const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-      // console.log("gameName: ", gameName);
-      // console.log("platformCode: ", platformCode);
-      // console.log("gameCode: ", gameCode);
-      // console.log("gameStatus: ", gameStatus);
-      // console.log("gameInfo", gameInfo)
+const ui = useUI();
+const scrollPageRef = ref(null);
+const isH5 = ref(false);
+const checkPlatform = () => {
+  //Is iOS Webclip App || Is Android Apk
+  if (
+    (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
+    (Platform.is.android && Platform.is.capacitor)
+  ) {
+    isH5.value = false;
+  } else {
+    isH5.value = true;
+  }
+};
 
-      allGames.value.open(gameName, platformCode, gameCode, gameType);
+ui.$onAction(({ name, args }) => {
+  switch (name) {
+    case "setScrollPosition":
+      scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
+  }
+});
+const qs = require("qs");
+const $q = useQuasar();
+const banners = ref(null);
+const route = useRoute();
+const router = useRouter();
+const store = userStore();
+const mainWallet = computed(() => {
+  return store.balance;
+});
+const allGames = ref(null);
+const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  // console.log("gameName: ", gameName);
+  // console.log("platformCode: ", platformCode);
+  // console.log("gameCode: ", gameCode);
+  // console.log("gameStatus: ", gameStatus);
+  // console.log("gameInfo", gameInfo)
 
-      // open = (gameName, platformCode, gameCode, gameType)
+  allGames.value.open(gameName, platformCode, gameCode, gameType);
 
-      // gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
-    };
+  // open = (gameName, platformCode, gameCode, gameType)
 
-    const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-      // console.log("gameName: ", gameName);
-      // console.log("platformCode: ", platformCode);
-      // console.log("gameCode: ", gameCode);
-      // console.log("gameStatus: ", gameStatus);
-      // console.log("gameType: ", gameType);
-      // console.log("gameId: ", gameId);
+  // gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
+};
 
-      subGameCode.value = platformCode;
-      loadGameList(gameType, gameId);
-      fullGameDialog.value = true;
-    };
+const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  // console.log("gameName: ", gameName);
+  // console.log("platformCode: ", platformCode);
+  // console.log("gameCode: ", gameCode);
+  // console.log("gameStatus: ", gameStatus);
+  // console.log("gameType: ", gameType);
+  // console.log("gameId: ", gameId);
 
-    const subGameList = ref([]);
-    // const filteredSubGameList = computed(() => {
-    //   return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
-    // });
-    const filteredSubGameList = computed(() => {
-      if (searchText.value) {
-        return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
-      } else {
-        return subGameList.value;
-      }
-    });
+  subGameCode.value = platformCode;
+  loadGameList(gameType, gameId);
+  fullGameDialog.value = true;
+};
 
-    const subGameCode = ref("");
+const subGameList = ref([]);
+// const filteredSubGameList = computed(() => {
+//   return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+// });
+const filteredSubGameList = computed(() => {
+  if (searchText.value) {
+    return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+  } else {
+    return subGameList.value;
+  }
+});
 
-    const loadGameList = (type, id) => {
-      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-      const code = id;
-      const gameType = type;
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+const subGameCode = ref("");
 
-      // cached
-      cached
-        .get(key, () =>
-          api
-            .get("/platformGames", {
-              params: {
-                platformId: code,
-                gameType: gameType,
-                device: regDevice
-              }
-            })
-            .then((ret) => {
-              const res = ret;
-              if (res.code === 0) {
-                // isLoading.value = false;
-                return res;
-              }
-            })
-            .catch((err) => {
-              // isLoading.value = false;
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: "Loading failed",
-              //   icon: "report_problem"
-              // });
-            })
-        )
-        .then((res) => {
-          // isLoading.value = false;
-          // console.log(res, " ___res");
-          subGameList.value = res;
+const loadGameList = (type, id) => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const code = id;
+  const gameType = type;
+  const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
 
-          // debugger;
-          // if (currentSelectedMenu.value === "casual") {
-          //   miniGames.value = [];
-          //   let minis = _.orderBy(res, "sequence");
-          //   minis.forEach((mini) => {
-          //     mini.lists = [];
-          //   });
-          //   let games = [];
-          //   minis.forEach((mini) => {
-          //     if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
-          //       games.push(mini);
-          //     } else {
-          //       miniGames.value.push(mini);
-          //     }
-          //   });
-
-          //   // console.log(games);
-
-          //   games.forEach((game) => {
-          //     let index = _.findIndex(miniGamesMore.value, function (o) {
-          //       return game.name.indexOf(o.name) > -1;
-          //     });
-          //     if (game.name.indexOf("(铜)") > -1) {
-          //       miniGamesMore.value[index]["copper"] = game.code;
-          //     } else if (game.name.indexOf("(银)") > -1) {
-          //       miniGamesMore.value[index]["silver"] = game.code;
-          //     } else if (game.name.indexOf("(金)") > -1) {
-          //       miniGamesMore.value[index]["gold"] = game.code;
-          //     }
-          //   });
-          //   // console.log(miniGamesMore.value);
-          // } else {
-          //   res.forEach((element) => {
-          //     element.default = require("../assets/images/games/aviator/default.png");
-          //     element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
-          //       element.icon
-          //     }.png`;
-          //   });
-          //   gameListData.value = res;
-          //   gamePage.total = res.length;
-          //   changePage(1, gamePage.pageSize);
-          // }
-        });
-    };
-
-    const imgURLGame = process.env.IMAGE_CDN + "/game/5/";
-
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
-
-    const imgURLLocal = "http://";
-
-    // Pop out ads banner
-    const isImportantAnnoucementModal = ref(false);
-    const homePopupImg = ref("");
-    const homePopupContent = ref("");
-    const homePopupType = ref("");
-    const homePopupId = ref(0);
-    const homePopupFrequency = ref(0);
-    const homePopupFrequencyNum = ref(0);
-
-    const setExpiryBanner = () => {
-      if (homePopupFrequencyNum.value !== 0) {
-        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-      }
-      isImportantAnnoucementModal.value = false;
-    };
-
-    const setWithExpiry = (key, value, interval) => {
-      const now = new Date();
-      const item = {
-        value: value,
-        expiry: now.getTime() + interval,
-        id: homePopupId.value,
-        frequency: homePopupFrequency.value
-      };
-      sessionStorage.setItem(key, JSON.stringify(item));
-    };
-
-    const getWithExpiry = (key) => {
-      const itemStr = sessionStorage.getItem(key);
-      if (!itemStr) {
-        return null;
-      }
-      const item = JSON.parse(itemStr);
-      const now = new Date();
+  // cached
+  cached
+    .get(key, () =>
       api
-        .get("/member/ads-popout")
-        .then((res) => {
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
-            return null;
+        .get("/platformGames", {
+          params: {
+            platformId: code,
+            gameType: gameType,
+            device: regDevice
           }
         })
-        .catch(() => {});
-      return item.value;
-    };
-
-    const isImpt = getWithExpiry("isImpt");
-
-    const checkShowImgTop = () => {
-      const lastTime = sessionStorage.getItem("indexImgTop");
-      if (lastTime) {
-        const diff = new Date().getTime() - Number(lastTime);
-        if (diff > 1000 * 60 * 60 * 12) {
-          isFirstView.value = true;
-        }
-      } else {
-        api
-          .get("/member/ads-popout")
-          .then((res) => {
-            if (res.code === 0) {
-              // if (res.data[id] !== null) {
-              if (isImpt === null) {
-                switch (res.data["frequency"]) {
-                  case "EVERYTIME":
-                    homePopupFrequencyNum.value = 0;
-                    break;
-                  case "EVERYDAY":
-                    homePopupFrequencyNum.value = 86400000; // 24hrs
-                    break;
-                  case "SESSION":
-                    homePopupFrequencyNum.value = 7866432000; // 3months
-                    break;
-                  default:
-                    homePopupFrequencyNum.value = 10000;
-                    break;
-                }
-                isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
-                homePopupContent.value = res.data["content"];
-                homePopupType.value = res.data["type"];
-                homePopupId.value = res.data["id"];
-                homePopupFrequency.value = res.data["frequency"];
-                // if (homePopupImg.value) {
-                isFirstView.value = true;
-                // }
-              }
-              // } else {
-              // isImportantAnnoucementModal.value = false;
-              // }
-            }
-          })
-          .catch(() => {});
-      }
-    };
-
-    const homeBannerData = ref({
-      code: 0,
-      data: [
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-01.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-02.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-03.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-04.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-05.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-06.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        }
-      ]
-    });
-
-    function loadData() {
-      api
-        .get("/promo/banner?category=HOME")
-        .then((res) => {
+        .then((ret) => {
+          const res = ret;
           if (res.code === 0) {
-            banners.value = res.data;
-            // banners.value = homeBannerData.value.data;
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: res.data.message,
-            //   icon: "report_problem"
-            // });
+            // isLoading.value = false;
+            return res;
           }
-          // banners.value = response.data;
         })
-        .catch(() => {
+        .catch((err) => {
+          // isLoading.value = false;
           // $q.notify({
           //   color: "negative",
           //   position: "top",
           //   message: "Loading failed",
           //   icon: "report_problem"
           // });
-        });
-    }
-
-    const platforms = ref([]);
-    const selectedPlatId = ref();
-    const selectedPlat = ref(platforms.value[0]);
-    const gamePage = reactive({
-      gameList: [],
-      currentPage: 1,
-      pageSize: 40,
-      searchType: "",
-      searchKey: "",
-      total: 0
-    });
-    const gameListData = ref([]);
-    const fishPlatforms = ref([]);
-
-    var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
-    var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
-
-    const getPlatList = () => {
-      cached
-        .get(platformApiKey, () =>
-          api.get(platformApiUrl).then((res) => {
-            return res;
-          })
-        )
-        .then((data) => {
-          var pf = data;
-          ui.slotLists = [];
-          pf.forEach((element) => {
-            const platTypes = element.gameType.split(",");
-            // console.log(platTypes);
-            if (platTypes.indexOf("ESPORT") > -1) {
-              var espObj = Object.assign({}, element);
-              // console.log(espObj);
-
-              if (espObj.code === "TFGaming") {
-                espObj.title = "兴發电竞";
-              }
-              if (espObj.code === "IA") {
-                espObj.title = "小艾电竞";
-              }
-              if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
-              }
-              if (!espObj.title) {
-                espObj.title = espObj.code + "电竞";
-              }
-              espObj.icon = "esport";
-              espObj.subtitle = "电竞赛事";
-              esport.value.push(espObj);
-
-              //Add 1 More Casual minigame.
-              // if (platTypes.indexOf("CASUAL") > -1) {
-              var casualObj = Object.assign({}, element);
-              casualObj.gameCode = "casual";
-              casualObj.title = casualObj.name + " 小游戏";
-              casualObj.icon = "casual";
-              casualObj.subtitle = "小游戏";
-              casuals.value.push(casualObj);
-              // }
-            }
-            if (platTypes.indexOf("SPORT") > -1) {
-              var spObj = Object.assign({}, element);
-              if (spObj.code === "IM") {
-                spObj.title = "IM体育";
-              }
-              if (spObj.code === "IA") {
-                spObj.title = "小艾体育";
-              }
-              if (spObj.code === "PM") {
-                spObj.title = "熊猫体育";
-              }
-              if (spObj.code === "CR") {
-                spObj.title = "CR体育";
-              }
-              if (spObj.code === "SABA") {
-                spObj.title = spObj.code + "体育";
-              }
-              spObj.icon = "sport";
-              spObj.subtitle = "体育赛事";
-              sport.value.push(spObj);
-            }
-            if (platTypes.indexOf("LIVE") > -1) {
-              var liveObj = Object.assign({}, element);
-              if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB 真人";
-              } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE 真人";
-              } else {
-                liveObj.title = liveObj.name + " 真人";
-              }
-              liveObj.icon = "live";
-              liveObj.subtitle = "真人娱乐";
-              livecasino.value.push(liveObj);
-            }
-            if (platTypes.indexOf("SLOT") > -1) {
-              // console.log(element)
-              var slotObj = Object.assign({}, element);
-              slotObj.title = translateRecord(slotObj.name) + " 电子";
-              slotObj.icon = "slot";
-              slotObj.subtitle = "电子游戏";
-              // console.log(slotObj);
-              if (slotObj.code === "AG") {
-              } else {
-                let slotItem = {
-                  id: slotObj.id,
-                  code: slotObj.code,
-                  icon: slotObj.name
-                };
-                // console.log(slotItem);
-                ui.slotLists.push(slotItem);
-                slot.value.push(slotObj);
-              }
-            }
-            if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
-              var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
-              fishObj.icon = "fish";
-              fishObj.subtitle = "捕鱼游戏";
-              fishing.value.push(fishObj);
-            }
-            if (platTypes.indexOf("POKER") > -1) {
-              var pokerObj = Object.assign({}, element);
-              pokerObj.title = translateRecord(pokerObj.name);
-              pokerObj.icon = "poker";
-              pokerObj.subtitle = "棋牌娱乐";
-              poker.value.push(pokerObj);
-            }
-            if (platTypes.indexOf("LOTTERY") > -1) {
-              var lottObj = Object.assign({}, element);
-              lottObj.title = lottObj.name + " 彩票";
-              lottObj.icon = "lottery";
-              lottObj.subtitle = "彩票游戏";
-              //HArdCode hid BBIN
-              if (lottObj.code !== "BBINDY") {
-                lottery.value.push(lottObj);
-              }
-            }
-          });
         })
-        .catch((err) => {});
-    };
+    )
+    .then((res) => {
+      // isLoading.value = false;
+      // console.log(res, " ___res");
+      subGameList.value = res;
 
-    const liveTabs = ref("");
-    const searchList = () => {
-      if (gamePage.searchKey) {
-        gamePage.gameList = gameListData.value.filter((game) => {
-          return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
-        });
-      } else {
-        changePage(1, gamePage.pageSize);
+      // debugger;
+      // if (currentSelectedMenu.value === "casual") {
+      //   miniGames.value = [];
+      //   let minis = _.orderBy(res, "sequence");
+      //   minis.forEach((mini) => {
+      //     mini.lists = [];
+      //   });
+      //   let games = [];
+      //   minis.forEach((mini) => {
+      //     if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
+      //       games.push(mini);
+      //     } else {
+      //       miniGames.value.push(mini);
+      //     }
+      //   });
+
+      //   // console.log(games);
+
+      //   games.forEach((game) => {
+      //     let index = _.findIndex(miniGamesMore.value, function (o) {
+      //       return game.name.indexOf(o.name) > -1;
+      //     });
+      //     if (game.name.indexOf("(铜)") > -1) {
+      //       miniGamesMore.value[index]["copper"] = game.code;
+      //     } else if (game.name.indexOf("(银)") > -1) {
+      //       miniGamesMore.value[index]["silver"] = game.code;
+      //     } else if (game.name.indexOf("(金)") > -1) {
+      //       miniGamesMore.value[index]["gold"] = game.code;
+      //     }
+      //   });
+      //   // console.log(miniGamesMore.value);
+      // } else {
+      //   res.forEach((element) => {
+      //     element.default = require("../assets/images/games/aviator/default.png");
+      //     element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+      //       element.icon
+      //     }.png`;
+      //   });
+      //   gameListData.value = res;
+      //   gamePage.total = res.length;
+      //   changePage(1, gamePage.pageSize);
+      // }
+    });
+};
+
+const imgURL = process.env.IMAGE_CDN;
+const imgURLGame = imgURL + "/game/5/";
+const imgURLPromo = imgURL + "/promo/";
+
+const imgURLLocal = "http://";
+
+// Pop out ads banner
+const isImportantAnnoucementModal = ref(false);
+const homePopupImg = ref("");
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+
+const setExpiryBanner = () => {
+  if (homePopupFrequencyNum.value !== 0) {
+    setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+  }
+  isImportantAnnoucementModal.value = false;
+};
+
+const setWithExpiry = (key, value, interval) => {
+  const now = new Date();
+  const item = {
+    value: value,
+    expiry: now.getTime() + interval,
+    id: homePopupId.value,
+    frequency: homePopupFrequency.value
+  };
+  sessionStorage.setItem(key, JSON.stringify(item));
+};
+
+const getWithExpiry = (key) => {
+  const itemStr = sessionStorage.getItem(key);
+  if (!itemStr) {
+    return null;
+  }
+  const item = JSON.parse(itemStr);
+  const now = new Date();
+  api
+    .get("/member/ads-popout")
+    .then((res) => {
+      if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
+        sessionStorage.removeItem(key);
+        isImportantAnnoucementModal.value = true;
+        return null;
       }
-    };
+    })
+    .catch(() => {});
+  return item.value;
+};
 
-    const changePage = (page, pageSize) => {
-      gamePage.gameList = gameListData.value;
-      // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
-    };
+const isImpt = getWithExpiry("isImpt");
 
-    const isLoadingBalance = ref(false);
-    const refreshBalance = () => {
-      if (store.token) {
-        isLoadingBalance.value = true;
-        store.getBalance().then((res) => {
-          isLoadingBalance.value = false;
-        });
-      }
-    };
-
-    const announcementList = ref([]);
-    const announcementTypes = ref([]);
-    const loadAnnouncement = () => {
-      api.get("/announcement").then((res) => {
+const checkShowImgTop = () => {
+  const lastTime = sessionStorage.getItem("indexImgTop");
+  if (lastTime) {
+    const diff = new Date().getTime() - Number(lastTime);
+    if (diff > 1000 * 60 * 60 * 12) {
+      isFirstView.value = true;
+    }
+  } else {
+    api
+      .get("/member/ads-popout")
+      .then((res) => {
         if (res.code === 0) {
-          if (res.data.announcements) {
-            const d = res.data.announcements;
-            announcementList.value = d;
+          // if (res.data[id] !== null) {
+          if (isImpt === null) {
+            switch (res.data["frequency"]) {
+              case "EVERYTIME":
+                homePopupFrequencyNum.value = 0;
+                break;
+              case "EVERYDAY":
+                homePopupFrequencyNum.value = 86400000; // 24hrs
+                break;
+              case "SESSION":
+                homePopupFrequencyNum.value = 7866432000; // 3months
+                break;
+              default:
+                homePopupFrequencyNum.value = 10000;
+                break;
+            }
+            isImportantAnnoucementModal.value = true;
+            homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
+            homePopupContent.value = res.data["content"];
+            homePopupType.value = res.data["type"];
+            homePopupId.value = res.data["id"];
+            homePopupFrequency.value = res.data["frequency"];
+            // if (homePopupImg.value) {
+            isFirstView.value = true;
+            // }
           }
-          if (res.data.type) {
-            announcementTypes.value = res.data.type;
-            activeKey.value = res.data.type[0].id;
+          // } else {
+          // isImportantAnnoucementModal.value = false;
+          // }
+        }
+      })
+      .catch(() => {});
+  }
+};
+
+const homeBannerData = ref({
+  code: 0,
+  data: [
+    {
+      promoPageId: null,
+      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+      mobileImageUrl: "home-banner-01.png",
+      redirectUrl: "XingFa-red-packet-rain",
+      category: "HOME"
+    },
+    {
+      promoPageId: null,
+      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+      mobileImageUrl: "home-banner-02.png",
+      redirectUrl: "XingFa-red-packet-rain",
+      category: "HOME"
+    },
+    {
+      promoPageId: null,
+      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+      mobileImageUrl: "home-banner-03.png",
+      redirectUrl: "XingFa-red-packet-rain",
+      category: "HOME"
+    },
+    {
+      promoPageId: null,
+      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+      mobileImageUrl: "home-banner-04.png",
+      redirectUrl: "XingFa-red-packet-rain",
+      category: "HOME"
+    },
+    {
+      promoPageId: null,
+      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+      mobileImageUrl: "home-banner-05.png",
+      redirectUrl: "XingFa-red-packet-rain",
+      category: "HOME"
+    },
+    {
+      promoPageId: null,
+      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
+      mobileImageUrl: "home-banner-06.png",
+      redirectUrl: "XingFa-red-packet-rain",
+      category: "HOME"
+    }
+  ]
+});
+
+function loadData() {
+  api
+    .get("/promo/banner?category=HOME")
+    .then((res) => {
+      if (res.code === 0) {
+        banners.value = res.data;
+        // banners.value = homeBannerData.value.data;
+      } else {
+        // $q.notify({
+        //   color: "negative",
+        //   position: "top",
+        //   message: res.data.message,
+        //   icon: "report_problem"
+        // });
+      }
+      // banners.value = response.data;
+    })
+    .catch(() => {
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: "Loading failed",
+      //   icon: "report_problem"
+      // });
+    });
+}
+
+const platforms = ref([]);
+const selectedPlatId = ref();
+const selectedPlat = ref(platforms.value[0]);
+const gamesTa = ref(platforms.value[0]);
+const splitterModel = ref(27);
+const gamePage = reactive({
+  gameList: [],
+  currentPage: 1,
+  pageSize: 40,
+  searchType: "",
+  searchKey: "",
+  total: 0
+});
+const gameListData = ref([]);
+const fishPlatforms = ref([]);
+
+var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
+var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+const getPlatList = () => {
+  cached
+    .get(platformApiKey, () =>
+      api.get(platformApiUrl).then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      var pf = data;
+      ui.slotLists = [];
+      pf.forEach((element) => {
+        const platTypes = element.gameType.split(",");
+        // console.log(platTypes);
+        if (platTypes.indexOf("ESPORT") > -1) {
+          var espObj = Object.assign({}, element);
+          // console.log(espObj);
+
+          if (espObj.code === "TFGaming") {
+            espObj.title = "兴發电竞";
           }
-          // announcementList.value = d.announcements
-          // announcementList.value = res.data.announcements
+          if (espObj.code === "IA") {
+            espObj.title = "小艾电竞";
+          }
+          if (espObj.code === "IMES") {
+            espObj.title = "IM电竞";
+          }
+          if (!espObj.title) {
+            espObj.title = espObj.code + "电竞";
+          }
+          espObj.icon = "esport";
+          espObj.subtitle = "电竞赛事";
+          esport.value.push(espObj);
+
+          //Add 1 More Casual minigame.
+          // if (platTypes.indexOf("CASUAL") > -1) {
+          var casualObj = Object.assign({}, element);
+          casualObj.gameCode = "casual";
+          casualObj.title = casualObj.name + " 小游戏";
+          casualObj.icon = "casual";
+          casualObj.subtitle = "小游戏";
+          casuals.value.push(casualObj);
+          // }
+        }
+        if (platTypes.indexOf("SPORT") > -1) {
+          var spObj = Object.assign({}, element);
+          if (spObj.code === "IM") {
+            spObj.title = "IM体育";
+          }
+          if (spObj.code === "IA") {
+            spObj.title = "小艾体育";
+          }
+          if (spObj.code === "PM") {
+            spObj.title = "熊猫体育";
+          }
+          if (spObj.code === "CR") {
+            spObj.title = "CR体育";
+          }
+          if (spObj.code === "SABA") {
+            spObj.title = spObj.code + "体育";
+          }
+          spObj.icon = "sport";
+          spObj.subtitle = "体育赛事";
+          sport.value.push(spObj);
+        }
+        if (platTypes.indexOf("LIVE") > -1) {
+          var liveObj = Object.assign({}, element);
+          if (liveObj.code === "PMLIVE") {
+            liveObj.title = "DB 真人";
+          } else if (liveObj.code === "EBET") {
+            liveObj.title = "WE 真人";
+          } else {
+            liveObj.title = liveObj.name + " 真人";
+          }
+          liveObj.icon = "live";
+          liveObj.subtitle = "真人娱乐";
+          livecasino.value.push(liveObj);
+        }
+        if (platTypes.indexOf("SLOT") > -1) {
+          // console.log(element)
+          var slotObj = Object.assign({}, element);
+          slotObj.title = translateRecord(slotObj.name) + " 电子";
+          slotObj.icon = "slot";
+          slotObj.subtitle = "电子游戏";
+          // console.log(slotObj);
+          if (slotObj.code === "AG") {
+          } else {
+            let slotItem = {
+              id: slotObj.id,
+              code: slotObj.code,
+              icon: slotObj.name
+            };
+            // console.log(slotItem);
+            ui.slotLists.push(slotItem);
+            slot.value.push(slotObj);
+          }
+        }
+        if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
+          var fishObj = Object.assign({}, element);
+          fishObj.title = fishObj.name + " 捕鱼";
+          fishObj.icon = "fish";
+          fishObj.subtitle = "捕鱼游戏";
+          fishing.value.push(fishObj);
+        }
+        if (platTypes.indexOf("POKER") > -1) {
+          var pokerObj = Object.assign({}, element);
+          pokerObj.title = translateRecord(pokerObj.name);
+          pokerObj.icon = "poker";
+          pokerObj.subtitle = "棋牌娱乐";
+          poker.value.push(pokerObj);
+        }
+        if (platTypes.indexOf("LOTTERY") > -1) {
+          var lottObj = Object.assign({}, element);
+          lottObj.title = lottObj.name + " 彩票";
+          lottObj.icon = "lottery";
+          lottObj.subtitle = "彩票游戏";
+          //HArdCode hid BBIN
+          if (lottObj.code !== "BBINDY") {
+            lottery.value.push(lottObj);
+          }
         }
       });
-    };
-    const isStationNotice = ref(false);
-    const noticeTitle = ref("");
-    const activeKey = ref(null);
-    const openPopup = (noticeType) => {
-      if (noticeType) {
-        noticeTitle.value = "Announcement";
-        isStationNotice.value = true;
+    })
+    .catch((err) => {});
+};
+
+const liveTabs = ref("");
+const searchList = () => {
+  if (gamePage.searchKey) {
+    gamePage.gameList = gameListData.value.filter((game) => {
+      return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
+    });
+  } else {
+    changePage(1, gamePage.pageSize);
+  }
+};
+
+const changePage = (page, pageSize) => {
+  gamePage.gameList = gameListData.value;
+  // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
+};
+
+const isLoadingBalance = ref(false);
+const refreshBalance = () => {
+  if (store.token) {
+    isLoadingBalance.value = true;
+    store.getBalance().then((res) => {
+      isLoadingBalance.value = false;
+    });
+  }
+};
+
+const announcementList = ref([]);
+const announcementTypes = ref([]);
+const loadAnnouncement = () => {
+  api.get("/announcement").then((res) => {
+    if (res.code === 0) {
+      if (res.data.announcements) {
+        const d = res.data.announcements;
+        announcementList.value = d;
       }
-    };
-    const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      // router.push(`${redirectU}`);
-    };
+      if (res.data.type) {
+        announcementTypes.value = res.data.type;
+        activeKey.value = res.data.type[0].id;
+      }
+      // announcementList.value = d.announcements
+      // announcementList.value = res.data.announcements
+    }
+  });
+};
+const isStationNotice = ref(false);
+const noticeTitle = ref("");
+const activeKey = ref(null);
+const openPopup = (noticeType) => {
+  if (noticeType) {
+    noticeTitle.value = "Announcement";
+    isStationNotice.value = true;
+  }
+};
+const gotoPromo = (banner) => {
+  const redirectU = "/promo?name=" + banner.redirectUrl;
+  // router.push(`${redirectU}`);
+};
 
-    const download_url = ref("");
-    const isAppUpdateModal = ref(false);
-    const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
-        const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        // alert(info.version);
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
-        // info.version && info.build
-        const appType = "ALL";
-        const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
-        // console.log(res);
-        if (res.code === 0) {
-          var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
-          download_url.value = res.data.url;
+const download_url = ref("");
+const isAppUpdateModal = ref(false);
+const getVersionNo = async () => {
+  // console.log(Platform);
+  // alert("Capacitor" + Platform.is.capacitor);
+  if (Platform.is.android && Platform.is.capacitor) {
+    const info = await App.getInfo();
+    // const info = {
+    //   version: "1.0.1"
+    // };
+    // alert(info.version);
+    var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+    // info.version && info.build
+    const appType = "ALL";
+    const device = Platform.is.android ? "ANDROID" : "IOS";
+    const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+    // console.log(res);
+    if (res.code === 0) {
+      var version_info = res.data.version;
+      var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+      download_url.value = res.data.url;
 
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
-          if (latest_ver_no > current_version) {
-            isAppUpdateModal.value = true;
-          }
+      // alert(latest_ver_no);
+      // console.log(download_url.value);
+      if (latest_ver_no > current_version) {
+        isAppUpdateModal.value = true;
+      }
+    }
+  }
+};
+
+const openDownloadPage = () => {
+  window.open(download_url.value, "_system");
+  isAppUpdateModal.value = false;
+};
+const cancelUpdate = () => {
+  isAppUpdateModal.value = false;
+};
+
+const closeTopBox = () => {
+  isH5.value = false;
+  var btmSwiper = document.getElementById("btm-second-swiper");
+  btmSwiper.classList.add("longer-swiper");
+};
+
+const downloadUrl = ref("");
+
+const getAppDownloadUrl = () => {
+  api
+    .get("/config/appDownloadUrl")
+    .then((res) => {
+      // console.log(res);
+      downloadUrl.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const onWithdrawalClick = () => {
+  getWithdrawalMethods();
+  refreshBalance();
+  loadCards();
+
+  resetField();
+  withdrawalDialog.value = true;
+};
+
+const withdrawalMethods = reactive({ BANK: {}, UPI: {} });
+const getWithdrawalMethods = () => {
+  api.get("/session/withdraw/entrance").then((response) => {
+    if (response.code === 0) {
+      for (let i = 0, l = response.data.length; i < l; i++) {
+        const currentData = response.data[i];
+        withdrawalMethods[currentData.code] = currentData;
+      }
+    } else {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: response.message,
+        icon: "report_problem"
+      });
+    }
+  });
+};
+
+const bankCardList = ref([]);
+const selectedBankIndex = ref();
+const loadCards = () => {
+  bankCardList.value = [];
+
+  api
+    .get("/session/bankCard")
+    .then((res) => {
+      if (res.code === 0) {
+        bankCardList.value.push(...res.data);
+
+        if (cardRef.value) {
+          cardRef.value.resetValidation();
+        }
+        if (amountRef.value) {
+          withdrawInfo.amount = "";
+          amountRef.value.resetValidation();
         }
       }
-    };
-
-    const openDownloadPage = () => {
-      window.open(download_url.value, "_system");
-      isAppUpdateModal.value = false;
-    };
-    const cancelUpdate = () => {
-      isAppUpdateModal.value = false;
-    };
-
-    const closeTopBox = () => {
-      isH5.value = false;
-      var btmSwiper = document.getElementById("btm-second-swiper");
-      btmSwiper.classList.add("longer-swiper");
-    };
-
-    const downloadUrl = ref("");
-
-    const getAppDownloadUrl = () => {
-      api
-        .get("/config/appDownloadUrl")
-        .then((res) => {
-          // console.log(res);
-          downloadUrl.value = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    onMounted(() => {
-      getPlatList();
-      loadData();
-      loadAnnouncement();
-      checkPlatform();
-      getVersionNo();
-      checkShowImgTop();
-      getAppDownloadUrl();
-
-      withdrawalDialogTab.value = "backcard";
+    })
+    .catch((error) => {
+      console.log("error", error);
     });
-    const imageLoading = ref(false);
-    const selectedLiveTab = ref();
+};
 
-    return {
-      loadGameList,
-      imageLoading,
-      slide: ref(0),
-      tab: ref("esport"),
-      gamesTab: ref(platforms.value[0]),
-      splitterModel: ref(27),
-      imgURL,
-      imgURLGame,
-      imgURLLocal,
-      banners,
-      store,
-      platforms,
-      mainWallet,
-      playGame,
-      openGame,
-      allGames,
-      gamePage,
-      selectedPlatId,
-      searchList,
-      liveTabs,
-      selectedLiveTab,
-      scrollPageRef,
-      announcementList,
-      isStationNotice,
-      openPopup,
-      noticeTitle,
-      announcementTypes,
-      activeKey,
-      gotoPromo,
-      router,
-      sport,
-      esport,
-      slot,
-      livecasino,
-      casuals,
-      poker,
-      fishing,
-      lottery,
-      isH5,
-      isFirstView,
-      closeAlert,
-      isAppUpdateModal,
-      cancelUpdate,
-      openDownloadPage,
-      homePopupImg,
-      refreshBalance,
-      isLoadingBalance,
-      closeTopBox,
-      getAppDownloadUrl,
-      downloadUrl,
-      getWithExpiry,
-      setWithExpiry,
-      setExpiryBanner,
-      homePopupContent,
-      homePopupType,
-      homePopupId,
-      homePopupFrequency,
-      homePopupFrequencyNum,
-      isImpt,
-      isImportantAnnoucementModal,
-      homeBannerData,
-      fullGameDialog,
-      searchText,
-      depositDialog,
-      depositItems,
-      handleDepositItemClick,
-      isUpi1Active,
-      isUpi2Active,
-      handleDepositUpiClick,
-      depositAmountInput,
-      withdrawalDialog,
-      withdrawalDialogTab,
-      subGameList,
-      filteredSubGameList,
-      subGameCode,
-      openDepositDialog
-    };
-  }
+const withdrawInfo = reactive({
+  cardId: undefined,
+  amount: "",
+  withdrawCode: ""
 });
+const withdrawReadOnlyInfo = reactive({ cardAccount: "", cardNumber: "", cardAddress: "" });
+watch(withdrawalDialogTab, () => {
+  withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
+  resetField();
+});
+
+const onCardChanged = () => {
+  bankCardList.value.forEach((e) => {
+    if (e.id === withdrawInfo.cardId) {
+      withdrawReadOnlyInfo.cardAccount = e.cardAccount;
+      withdrawReadOnlyInfo.cardNumber = e.cardNumber;
+      withdrawReadOnlyInfo.cardAddress = e.cardAddress || "-";
+    }
+  });
+};
+
+const resetField = () => {
+  withdrawInfo.cardId = null;
+  withdrawInfo.amount = "";
+
+  withdrawReadOnlyInfo.cardAccount = "";
+  withdrawReadOnlyInfo.cardNumber = "";
+  withdrawReadOnlyInfo.cardAddress = "";
+};
+
+const cardRef = ref();
+const amountRef = ref();
+const submitWithdraw = () => {
+  cardRef.value.validate();
+  amountRef.value.validate();
+  $q.loading.show({
+    message: "Withdrawing..."
+  });
+  if (cardRef.value.hasError || amountRef.value.hasError) {
+    $q.loading.hide();
+  } else {
+    withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
+    api
+      .post("/session/withdraw/", qs.stringify(withdrawInfo))
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "提交成功",
+            icon: "check_circle_outline"
+          });
+          getWithdrawalMethods();
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+    $q.loading.hide();
+  }
+};
+
+onMounted(() => {
+  getPlatList();
+  loadData();
+  loadAnnouncement();
+  checkPlatform();
+  getVersionNo();
+  checkShowImgTop();
+  getAppDownloadUrl();
+
+  withdrawalDialogTab.value = "BANK";
+});
+const imageLoading = ref(false);
+const selectedLiveTab = ref();
 </script>
 
 <style scoped lang="scss">

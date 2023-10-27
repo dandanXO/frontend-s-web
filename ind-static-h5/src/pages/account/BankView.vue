@@ -60,7 +60,6 @@
           <div class="q-my-sm">
             <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
             <q-select
-              type="number"
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
