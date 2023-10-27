@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrapper">
     <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
-      <q-btn fab class="bg-yellow" @click="router.push('/liveChat')">
+      <q-btn fab class="bg-yellow text-black" @click="router.push('/liveChat')">
         <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
@@ -263,7 +263,7 @@
             class="game-platform-item"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
           >
-          <img src="../assets/images/index/sport/item-game-maintenance.png" />
+            <img src="../assets/images/index/sport/item-game-maintenance.png" />
             <div
               class="game-platform-item--img"
               :style="{
@@ -531,7 +531,10 @@
         <div class="popout-main-title">
           <div class="txt-title">Deposit</div>
         </div>
-        <div class="deposit-item-container">
+
+        <DepositComponent />
+
+        <!-- <div class="deposit-item-container">
           <template v-for="(item, index) in depositItems" :key="index">
             <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
               <div class="deposit-icon">
@@ -564,11 +567,8 @@
             label="UPI2"
             @click="handleDepositUpiClick(2)"
           />
-
-          <!-- <q-btn flat class="deposit-option-btn active" label="UPI1" />
-          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" /> -->
         </div>
-        <div class="btn-go">Go</div>
+        <div class="btn-go">Go</div> -->
       </div>
     </div>
   </q-dialog>
@@ -592,13 +592,16 @@ import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
 import ProfileSummary from "../components/ProfileSummary.vue";
 
+import DepositComponent from "../components/depositComponent.vue";
+
 export default defineComponent({
   name: "IndexPage",
   components: {
     GameModal,
     MarqueeText,
     RiVolumeUpFill,
-    ProfileSummary
+    ProfileSummary,
+    DepositComponent
   },
   setup() {
     const isFirstView = ref(false);
