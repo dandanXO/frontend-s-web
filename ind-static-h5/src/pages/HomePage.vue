@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrapper">
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab class="bg-yellow floating-btn">
+    <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
+      <q-btn fab class="bg-yellow" @click="router.push('/liveChat')">
         <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
@@ -63,7 +63,7 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
-        :img-src="require(`../assets/images/index/banner/${banner.mobileImageUrl}`)"
+        :img-src="imgURL + banner.mobileImageUrl"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
     </q-carousel>
@@ -84,10 +84,16 @@
       </div>
       <div class="game-platform-wrapper">
         <div class="game-platform-item">
-          <div
+          <!-- <div
             class="game-platform-img"
             :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-          ></div>
+          ></div> -->
+          <div class="game-platform-img">
+            <div
+              class="game--bg"
+              :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
+            ></div>
+          </div>
           <div class="game-platform-title">Foutune Tiger</div>
         </div>
         <div class="game-platform-item">
@@ -129,25 +135,18 @@
         <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
         <span class="txt-style">Slot Games</span>
       </div>
+
       <div class="game-platform-container">
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-jdb.png" alt="" />
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-joker.png" alt="" />
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-jili.png" alt="" />
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
+        <template v-for="(item, index) in slot" :key="index">
+          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)">
+            <img :src="require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)" />
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <div class="game-platform-item">
           <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
         </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
-        </div>
+        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
@@ -157,13 +156,23 @@
         <span class="txt-style">Live Casino</span>
       </div>
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-ezugi.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-evolution.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-comingsoon.png" alt="" /></div>
+        <template v-for="(item, index) in livecasino" :key="index">
+          <div
+            class="game-platform-item"
+            @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+          >
+            <img :src="require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)" />
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <div class="game-platform-item">
+          <img src="../assets/images/index/live/item-game-comingsoon.png" alt="" />
+        </div>
+        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
-    <div class="games-selection-wrapper">
+    <!-- <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-gamepoker.png" alt="" />
         <span class="txt-style">Game &amp; Poker</span>
@@ -194,20 +203,31 @@
           <div class="game-platform-title">COMING SOON</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt="" />
         <span class="txt-style">Fishing</span>
       </div>
+
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-jili.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-simpleplay.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-spadegaming.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-zl.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-ag.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-giocoplus.png" alt="" /></div>
+        <template v-for="(item, index) in fishing" :key="index">
+          <!-- <div
+            class="game-platform-item"
+            @click="playGame(item.name, item.code)"
+            v-if="item.code === 'JILI' || item.code === 'JDB'"
+          > -->
+          <!-- @click="playGame(item.name, item.code, item.code, item.status, item.gameType, item.id)" -->
+          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)">
+            <img :src="require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)" />
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <!-- <div class="game-platform-item">
+          <img src="../assets/images/index/live/item-game-comingsoon.png" alt="" />
+        </div> -->
+        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
@@ -217,12 +237,14 @@
         <span class="txt-style">Sports</span>
       </div>
       <div class="game-platform-container sport-platform">
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-cmd.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-saba.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-sbobet.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-bti.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im2.png" alt="" /></div>
+        <template v-for="(item, index) in sport" :key="index">
+          <div
+            class="game-platform-item"
+            @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+          >
+            <img :src="require(`../assets/images/index/sport/item-game-${item.code.toLowerCase()}.png`)" />
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -240,12 +262,12 @@
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
-          <div class="titles backgroundColor">更新公告</div>
+          <div class="titles backgroundColor">Update Announcement</div>
         </div>
-        <div class="contents">检测到新版本，你是否要更新？</div>
+        <div class="contents">New Version Detected, Do You Want To Update?</div>
         <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">取消</div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">立即更新</div>
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate">Cancel</div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">Update Now</div>
         </div>
       </div>
     </q-card>
@@ -329,95 +351,28 @@
 
           <div class="games-selection-wrapper">
             <div class="game-platform-wrapper">
-              <div class="game-platform-item">
+              <template v-for="(item, index) in filteredSubGameList" :key="index">
                 <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Game</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Game Bonanza</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Crazy777</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Rabbit</div>
-              </div>
-              <div class="game-platform-item">
-                <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Game</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Game Bonanza</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Crazy777</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Rabbit</div>
-              </div>
-              <div class="game-platform-item">
-                <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
+                  class="game-platform-item"
+                  @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                >
+                  <!-- <div
+                    class="game-platform-img"
+                    :style="{
+                      backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                    }"
+                  ></div> -->
+                  <div class="game-platform-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                      }"
+                    ></div>
+                  </div>
+                  <div class="game-platform-title">{{ item.name }}</div>
+                </div>
+              </template>
             </div>
             <!-- <div class="btn-load-more">Load More</div> -->
           </div>
@@ -607,13 +562,10 @@ import ProfileSummary from "../components/ProfileSummary.vue";
 export default defineComponent({
   name: "IndexPage",
   components: {
-    // Swiper,
-    // SwiperSlide,
     GameModal,
     MarqueeText,
     RiVolumeUpFill,
     ProfileSummary
-    // PlatformBlock
   },
   setup() {
     const isFirstView = ref(false);
@@ -664,150 +616,6 @@ export default defineComponent({
     const withdrawalDialogTab = ref("");
     const depositAmountInput = ref("");
 
-    const thumbsSwiper = ref(null);
-    const firstSwiper = ref(null);
-    const secondSwiper = ref(null);
-
-    const setFirstSwiper = (swiper) => {
-      firstSwiper.value = swiper;
-    };
-    const setSecondSwiper = (swiper) => {
-      secondSwiper.value = swiper;
-    };
-    const setSelectedSwiper = (tab) => {
-      selectedTab.value = tab.name;
-      // console.log(tab.name);
-      var slideIndex = 0;
-      if (tab.name === "slot") {
-        slideIndex = 0;
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-
-      if (tab.name === "live") {
-        slideIndex = slot.value.length;
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "sport") {
-        slideIndex = livecasino.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "esport") {
-        slideIndex = livecasino.value.length + sport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-
-      if (tab.name === "fishing") {
-        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "poker") {
-        slideIndex =
-          livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "lottery") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "casual") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length +
-          lottery.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-    };
-    const onSlideChange = (swiper) => {
-      // console.log("Swiping hEre")
-      // Get the active slide index
-      const activeIndex = swiper.activeIndex;
-
-      // Get the active slide element
-      const activeSlide = swiper.slides[activeIndex];
-
-      // Get the class name of the active slide
-      const activeSlideClassName = activeSlide.className;
-      // Check if the class name contains "sport," "slot," or "esport"
-      // Array of keywords to check
-      const keywords = ["slot", "live", "sport", "esport", "fishing", "poker", "lottery", "casual"];
-
-      // Iterate over each keyword
-      for (const keyword of keywords) {
-        // Check if the class name contains the current keyword
-        if (activeSlideClassName.includes(keyword)) {
-          // console.log("select: "+ keyword);
-          selectedTab.value = keyword;
-        }
-      }
-    };
-    const selectedTab = ref("slot");
-    const tabs = ref([
-      {
-        name: "slot",
-        icon: "slot",
-        label: "电子",
-        labelact: "电子"
-      },
-      {
-        name: "live",
-        icon: "live",
-        label: "真人",
-        labelact: "真人娱乐"
-      },
-      {
-        name: "sport",
-        icon: "sport",
-        label: "体育",
-        labelact: "体育赛事"
-      },
-      {
-        name: "esport",
-        icon: "esport",
-        label: "电竞",
-        labelact: "电竞赛事"
-      },
-      {
-        name: "fishing",
-        icon: "fishing",
-        label: "捕鱼",
-        labelact: "捕鱼"
-      },
-      {
-        name: "poker",
-        icon: "poker",
-        label: "棋牌",
-        labelact: "棋牌游戏"
-      },
-      {
-        name: "lottery",
-        icon: "lottery",
-        label: "彩票",
-        labelact: "彩票游戏"
-      },
-      {
-        name: "casual",
-        icon: "casual",
-        label: "小游戏",
-        labelact: "小游戏"
-      }
-    ]);
-
     const esport = ref([]);
     const sport = ref([]);
     const livecasino = ref([]);
@@ -847,14 +655,132 @@ export default defineComponent({
       return store.balance;
     });
     const allGames = ref(null);
-    const playGame = (gameName, platformCode, gameCode, gameStatus) => {
-      // console.log(gameName)
-      // console.log(platformCode)
-      // console.log(gameCode)
-      // console.log(gameStatus);
+    const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+      // console.log("gameName: ", gameName);
+      // console.log("platformCode: ", platformCode);
+      // console.log("gameCode: ", gameCode);
+      // console.log("gameStatus: ", gameStatus);
+      // console.log("gameInfo", gameInfo)
 
-      allGames.value.open(gameName, platformCode, gameCode, gameStatus);
+      allGames.value.open(gameName, platformCode, gameCode, gameType);
+
+      // open = (gameName, platformCode, gameCode, gameType)
+
+      // gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
     };
+
+    const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+      // console.log("gameName: ", gameName);
+      // console.log("platformCode: ", platformCode);
+      // console.log("gameCode: ", gameCode);
+      // console.log("gameStatus: ", gameStatus);
+      // console.log("gameType: ", gameType);
+      // console.log("gameId: ", gameId);
+
+      subGameCode.value = platformCode;
+      loadGameList(gameType, gameId);
+      fullGameDialog.value = true;
+    };
+
+    const subGameList = ref([]);
+    // const filteredSubGameList = computed(() => {
+    //   return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+    // });
+    const filteredSubGameList = computed(() => {
+      if (searchText.value) {
+        return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+      } else {
+        return subGameList.value;
+      }
+    });
+
+    const subGameCode = ref("");
+
+    const loadGameList = (type, id) => {
+      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+      const code = id;
+      const gameType = type;
+      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+
+      // cached
+      cached
+        .get(key, () =>
+          api
+            .get("/platformGames", {
+              params: {
+                platformId: code,
+                gameType: gameType,
+                device: regDevice
+              }
+            })
+            .then((ret) => {
+              const res = ret;
+              if (res.code === 0) {
+                // isLoading.value = false;
+                return res;
+              }
+            })
+            .catch((err) => {
+              // isLoading.value = false;
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: "Loading failed",
+              //   icon: "report_problem"
+              // });
+            })
+        )
+        .then((res) => {
+          // isLoading.value = false;
+          // console.log(res, " ___res");
+          subGameList.value = res;
+
+          // debugger;
+          // if (currentSelectedMenu.value === "casual") {
+          //   miniGames.value = [];
+          //   let minis = _.orderBy(res, "sequence");
+          //   minis.forEach((mini) => {
+          //     mini.lists = [];
+          //   });
+          //   let games = [];
+          //   minis.forEach((mini) => {
+          //     if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
+          //       games.push(mini);
+          //     } else {
+          //       miniGames.value.push(mini);
+          //     }
+          //   });
+
+          //   // console.log(games);
+
+          //   games.forEach((game) => {
+          //     let index = _.findIndex(miniGamesMore.value, function (o) {
+          //       return game.name.indexOf(o.name) > -1;
+          //     });
+          //     if (game.name.indexOf("(铜)") > -1) {
+          //       miniGamesMore.value[index]["copper"] = game.code;
+          //     } else if (game.name.indexOf("(银)") > -1) {
+          //       miniGamesMore.value[index]["silver"] = game.code;
+          //     } else if (game.name.indexOf("(金)") > -1) {
+          //       miniGamesMore.value[index]["gold"] = game.code;
+          //     }
+          //   });
+          //   // console.log(miniGamesMore.value);
+          // } else {
+          //   res.forEach((element) => {
+          //     element.default = require("../assets/images/games/aviator/default.png");
+          //     element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+          //       element.icon
+          //     }.png`;
+          //   });
+          //   gameListData.value = res;
+          //   gamePage.total = res.length;
+          //   changePage(1, gamePage.pageSize);
+          // }
+        });
+    };
+
+    const imgURLGame = process.env.IMAGE_CDN + "/game/5/";
 
     const imgURL = process.env.IMAGE_CDN + "/promo/";
 
@@ -1009,8 +935,8 @@ export default defineComponent({
         .get("/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            // banners.value = res.data;
-            banners.value = homeBannerData.value.data;
+            banners.value = res.data;
+            // banners.value = homeBannerData.value.data;
           } else {
             // $q.notify({
             //   color: "negative",
@@ -1047,6 +973,7 @@ export default defineComponent({
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
     const getPlatList = () => {
       cached
         .get(platformApiKey, () =>
@@ -1227,7 +1154,7 @@ export default defineComponent({
     };
     const gotoPromo = (banner) => {
       const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
+      // router.push(`${redirectU}`);
     };
 
     const download_url = ref("");
@@ -1304,18 +1231,21 @@ export default defineComponent({
     const selectedLiveTab = ref();
 
     return {
+      loadGameList,
       imageLoading,
       slide: ref(0),
       tab: ref("esport"),
       gamesTab: ref(platforms.value[0]),
       splitterModel: ref(27),
       imgURL,
+      imgURLGame,
       imgURLLocal,
       banners,
       store,
       platforms,
       mainWallet,
       playGame,
+      openGame,
       allGames,
       gamePage,
       selectedPlatId,
@@ -1331,8 +1261,6 @@ export default defineComponent({
       activeKey,
       gotoPromo,
       router,
-      tabs,
-      selectedTab,
       sport,
       esport,
       slot,
@@ -1342,16 +1270,6 @@ export default defineComponent({
       fishing,
       lottery,
       isH5,
-      onSlideChange,
-      // Thumbs,
-      // thumbsSwiper,
-      // modules: [Scrollbar],
-      // Controller,
-      // firstSwiper,
-      // secondSwiper,
-      // setFirstSwiper,
-      // setSecondSwiper,
-      // setSelectedSwiper,
       isFirstView,
       closeAlert,
       isAppUpdateModal,
@@ -1384,20 +1302,18 @@ export default defineComponent({
       handleDepositUpiClick,
       depositAmountInput,
       withdrawalDialog,
-      withdrawalDialogTab
+      withdrawalDialogTab,
+      subGameList,
+      filteredSubGameList,
+      subGameCode
     };
   }
 });
 </script>
+
 <style scoped lang="scss">
 .q-page-container {
   min-height: 100vh;
-}
-
-.secondSwiper {
-  height: calc(100vh - 380px);
-  padding-bottom: 0px;
-  padding-top: 25px;
 }
 
 .longer-swiper {
@@ -1406,65 +1322,6 @@ export default defineComponent({
 
 :deep(.q-mb-md) {
   margin-bottom: 0;
-}
-
-:deep(.secondSwiper .swiper-wrapper) {
-  .swiper-slide {
-    height: calc(45vh / 5);
-    width: 95%;
-    margin: 0 auto;
-    overflow: hidden;
-    min-height: 120px;
-    padding-top: 0;
-    margin-bottom: 5px;
-
-    a {
-      display: block;
-    }
-
-    img {
-      width: 100%;
-    }
-
-    &:first-child {
-      // padding-top: 65px;
-      // margin-top: -40px;
-      // padding-top: 30px;
-    }
-
-    &-active {
-      // padding-top: 30px;
-    }
-  }
-}
-
-:deep(.firstSwiper .swiper-wrapper) {
-  background: #23263c;
-}
-
-.swiper-container {
-  position: relative;
-
-  .firstSwiper {
-    margin-bottom: -30px;
-    padding-bottom: 10px;
-    z-index: 999;
-    text-align: center;
-
-    .swiper-slide {
-      background: #23263c;
-      padding: 8px 5px 2px;
-      max-width: 60px;
-      cursor: pointer;
-
-      &.tbact {
-        background: url("../assets/images/index/game_tab_active.png") no-repeat center center;
-        background-size: cover;
-        white-space: nowrap;
-        padding: 8px 20px 2px;
-      }
-    }
-  }
 }
 
 .modal-update-div {
@@ -1484,7 +1341,7 @@ export default defineComponent({
       box-sizing: border-box;
       height: 37px;
       line-height: 37px;
-      background: #1976d2;
+      background: $primary;
       color: #fff;
       text-align: center;
       font-size: 15px;
@@ -1497,7 +1354,7 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 10px 12px;
       text-align: center;
-
+      color: black;
       .contentfonts {
         text-align: center;
         color: #333;
@@ -1553,7 +1410,7 @@ export default defineComponent({
         height: 40px;
         text-align: center;
         color: #fff;
-        background: #1976d2;
+        background: $primary;
         letter-spacing: 1px;
         font-size: 14px;
       }
@@ -1866,14 +1723,6 @@ export default defineComponent({
   border-radius: 50%;
   color: #222a34 !important;
   // background: transparent;
-}
-
-@media (max-width: 480px) {
-  .secondSwiper .swiper-wrapper .swiper-slide {
-    height: calc(45vh / 4);
-    min-height: 25vw;
-    max-height: unset;
-  }
 }
 
 @media (max-width: 400px) {
@@ -2301,32 +2150,47 @@ export default defineComponent({
 
   .game-platform-item {
     border: 3px solid #ffc027;
-    height: 120px;
     border-radius: 15px;
-    // position: relative;
     overflow: hidden;
 
     .game-platform-img {
       background-color: #cccccc;
       width: 100%;
-      // height: 75px;
-      // height: 70%;
-      height: calc(100% - 30px);
+      aspect-ratio: 1/1;
+      // height: calc(100% - 30px);
       background-size: cover;
       background-position: center center;
-      background-image: url("../assets/images/index/hot-games-bg.png");
+      position: relative;
+      background-image: url("../assets/images/index/mini-game-bg.png");
+
+      // &::before {
+      //   content: "";
+      //   background-image: url("../assets/images/index/mini-game-bg.png");
+      //   background-size: cover;
+      //   background-position: center center;
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   width: 100%;
+      //   height: 100%;
+      //   z-index: 0;
+      // }
+
+      .game--bg {
+        background-size: cover;
+        background-position: center center;
+        height: 100%;
+        width: 100%;
+      }
     }
 
     .game-platform-title {
-      padding: 5px 5px 10px;
+      padding: 0px 5px;
       color: #ffe248;
       font-weight: 700;
       font-size: 10px;
       line-height: 1.1;
-      // white-space: nowrap;
-      // position: absolute;
       text-align: center;
-      // height: 30%;
       height: 30px;
       display: flex;
       align-items: center;
@@ -2405,6 +2269,7 @@ export default defineComponent({
 }
 
 .floating-btn {
+  z-index: 5;
   img {
     width: 30px;
   }

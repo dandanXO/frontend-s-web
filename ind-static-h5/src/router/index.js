@@ -41,23 +41,23 @@ export default route(function (/* { store, ssrContext } */) {
 
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-    //   next(`/login?register`);
+    //   next(`/register`);
     // }
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       if (to.query.reg) {
-        next(`/login?register`);
+        next(`/register`);
       } else {
         next(`/`);
       }
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-      next(`/login?register`);
+      next(`/register`);
     }
 
     if (to.name === "RegisterPage") {
-      next(`/login?register`);
+      next(`/register`);
     }
 
     if (user.hasToken()) {

@@ -16,8 +16,8 @@
       <q-tab name="recharge" label="Recharge" />
     </q-tabs>
 
-    <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <LoadingComponent v-if="isLoading[orderOptionTab]"></LoadingComponent>
+    <NoInfoComponent v-else-if="isNoInfo[orderOptionTab]" noInfoTitle="No Record"></NoInfoComponent>
     <q-tab-panels
       v-else
       class="order-option-tab-panel"
@@ -83,6 +83,7 @@
 import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
+import { updateDate } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
@@ -113,23 +114,12 @@ const onSlideClick = (e, i) => {
   currentSlide.value = e;
 };
 
-const isLoading = ref(true);
-const isNoInfo = ref(false);
+const isLoading = reactive({ withdrawal: true, recharge: true });
+const isNoInfo = reactive({ withdrawal: true, recharge: true });
 
 const orderOptionTab = ref("withdrawal");
 
 const searchForm = reactive({ startDate: "", endDate: "" });
-const updateDate = (val) => {
-  const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
-  const oldDate = new Date(gapDate);
-  const newDate = {
-    Y: oldDate.getFullYear() + "-",
-    M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
-    D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
-  };
-  return newDate.Y + newDate.M + newDate.D;
-};
-
 const setTime = () => {
   searchForm.startDate = updateDate(7);
   searchForm.endDate = updateDate(0);
@@ -137,7 +127,7 @@ const setTime = () => {
 
 const withdrawalData = ref([]);
 const searchWithdrawalRecord = () => {
-  isLoading.value = true;
+  isLoading.withdrawal = true;
   withdrawalData.value = [];
 
   const { startDate, endDate } = searchForm;
@@ -150,18 +140,19 @@ const searchWithdrawalRecord = () => {
         const data = response.data.records;
         withdrawalData.value.push(...data);
 
-        if (data.length === 0) isNoInfo.value = true;
+        if (data.length === 0) isNoInfo.withdrawal = true;
+        else isNoInfo.withdrawal = false;
       }
     })
     .catch((error) => {})
     .then(() => {
-      isLoading.value = false;
+      isLoading.withdrawal = false;
     });
 };
 
 const depositData = ref([]);
 const searchDepositRecord = () => {
-  isLoading.value = true;
+  isLoading.recharge = true;
   depositData.value = [];
 
   const { startDate, endDate } = searchForm;
@@ -174,12 +165,13 @@ const searchDepositRecord = () => {
         const data = response.data.records;
         depositData.value.push(...data);
 
-        if (data.length === 0) isNoInfo.value = true;
+        if (data.length === 0) isNoInfo.recharge = true;
+        else isNoInfo.recharge = false;
       }
     })
     .catch((error) => {})
     .then(() => {
-      isLoading.value = false;
+      isLoading.recharge = false;
     });
 };
 

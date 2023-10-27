@@ -67,7 +67,7 @@ export default defineComponent({
       // 'XFCS' / 2
       // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
       csclient = new CsClient(
-        "XFCS",
+        "INDWINCS",
         regDevice,
         "en",
         "2",

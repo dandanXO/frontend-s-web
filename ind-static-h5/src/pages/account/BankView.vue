@@ -18,8 +18,7 @@
             :rules="[
               (val) => (val && val.length > 0) || 'Please Enter Bank Card Number',
               (val) =>
-                (val && val == personalState.bankCardList[selectedBankIndex].cardNumber) ||
-                'Please Enter The Correct Card Number'
+                (val && val == bankCardList[selectedBankIndex].cardNumber) || 'Please Enter The Correct Card Number'
             ]"
             label-color="secondary"
           />
@@ -29,7 +28,7 @@
       <ConfirmButton
         label="Confirm"
         :confirmFunc="unbind"
-        :isDisabled="unbindField.bankCardNumber !== personalState.bankCardList[selectedBankIndex].cardNumber"
+        :isDisabled="unbindField.bankCardNumber !== bankCardList[selectedBankIndex].cardNumber"
       ></ConfirmButton>
     </q-card>
   </q-dialog>
@@ -139,7 +138,7 @@
   <ContentView contentTopStatus="solid">
     <div class="bank-card-container">
       <div
-        v-for="(bc, bcIndex) in personalState.bankCardList"
+        v-for="(bc, bcIndex) in bankCardList"
         :key="bc.id"
         :class="`bank-card-item ${isCardShown[bcIndex] ? 'card-show' : 'card-unshow'}`"
         @click="handleBankCardClick(bcIndex)"
@@ -248,7 +247,7 @@ const onUnbindClick = (index) => {
 };
 
 const unbind = () => {
-  const selectedBank = personalState.bankCardList[selectedBankIndex.value];
+  const selectedBank = bankCardList[selectedBankIndex.value];
   if (unbindField.value.bankCardNumber !== selectedBank.cardNumber) return;
 
   isUnbindDialogOpen.value = false;
@@ -304,7 +303,7 @@ const onAddCardClick = () => {
         message: "Please fill in your personal details",
         icon: "report_problem"
       });
-      router.push("/account?personal");
+      router.push("/account");
     } else {
       isAddCardDialogOpen.value = true;
 
@@ -385,18 +384,15 @@ const addCard = () => {
 };
 
 // api
-const personalState = reactive({
-  memberInfo: {},
-  bankCardList: []
-});
+const bankCardList = ref([]);
 
 const loadCards = () => {
-  personalState.bankCardList = [];
+  bankCardList.value = [];
 
   api
     .get("/session/bankCard")
     .then((res) => {
-      if (res.code === 0) personalState.bankCardList.push(...res.data);
+      if (res.code === 0) bankCardList.value.push(...res.data);
     })
     .catch((error) => {
       console.log("error", error);
@@ -404,20 +400,6 @@ const loadCards = () => {
 };
 
 onMounted(() => {
-  api
-    .get("session/member")
-    .then((response) => {
-      if (response.code === 0) {
-        personalState.memberInfo = response.data;
-
-        if (personalState.memberInfo.birthday > 0) {
-          personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
-        }
-      }
-    })
-    .catch((error) => {
-      console.log("error", error);
-    });
   loadCards();
 });
 </script>
