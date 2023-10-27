@@ -208,7 +208,7 @@
             :disable="
               !(isValidName() === true && isValidPhone() === true && isValidOTP() === true && isValidEmail() === true)
             "
-            @click="updateState"
+            @click="submitKYC"
           >
             Submit
           </q-btn>
@@ -431,8 +431,10 @@ const openChangePasswordDialog = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
-  verificationCodeDialog.value = !verificationCodeDialog.value;
+  captchaRef.value = "";
   getCode();
+
+  verificationCodeDialog.value = !verificationCodeDialog.value;
 };
 
 const confirmSignOutDialog = ref(false);
@@ -645,11 +647,7 @@ const showVerificationTokenInput = ref(false);
 
 const updateState = () => {
   const updateInfo = {};
-  console.log(updateInfo);
-
   updateInfo.realName = formDetail.realName;
-  updateInfo.phone = formDetail.phone;
-  updateInfo.phoneOtpRef = formDetail.phoneOtpRef;
   updateInfo.email = formDetail.email;
 
   api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
@@ -675,6 +673,28 @@ const updateState = () => {
         icon: "report_problem"
       });
     }
+  });
+};
+
+const verifyNUpdatePhone = (callback) => {
+  api
+    .post(
+      "/session/verifyAndUpdatePhone",
+      qs.stringify({
+        phone: formDetail.phone,
+        code: formDetail.phoneOtpRef,
+        codeId: verificationCodeID
+      })
+    )
+    .then((res) => {
+      callback && callback();
+    })
+    .catch((e) => {});
+};
+
+const submitKYC = () => {
+  verifyNUpdatePhone(() => {
+    updateState();
   });
 };
 
@@ -727,6 +747,7 @@ const goToPage = (page) => {
   router.push(page);
 };
 
+let verificationCodeID = "";
 const onCaptchaSubmit = () => {
   api
     .post(
@@ -744,6 +765,7 @@ const onCaptchaSubmit = () => {
       if (res.code === 0) {
         showCaptchaDialog.value = false;
         showVerificationTokenInput.value = true;
+        verificationCodeID = res.data.codeId;
       } else color = "negative";
 
       if (message) $q.notify({ message, color });
