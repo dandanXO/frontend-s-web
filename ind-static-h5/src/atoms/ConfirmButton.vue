@@ -18,8 +18,10 @@ const props = defineProps(["label", "confirmFunc", "isDisabled"]);
   justify-content: center;
   margin: 1rem 0;
 
+  // NOTE: next time straight use q-btn + background url
+  // standardize opacity value 0.7 w/ quasar framework
   &.disabled {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 
   .confirm-btn {

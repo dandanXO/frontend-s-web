@@ -53,12 +53,11 @@
         </div>
       </div>
 
-      <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
       <div class="pc-tip">
-        <div class="pc-ver">
+        <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
+        <div class="pc-ver" v-if="appVersionNo">
           Version:
-          <span>99.2.2</span>
+          <span>{{ appVersionNo }}</span>
         </div>
         <div>
           <q-btn
@@ -132,41 +131,87 @@
           <div class="pc-form-item">
             <div class="pc-form-label">Full Name</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Your Full Name" v-model="formDetail.realName" />
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Full Name"
+                v-model="formDetail.realName"
+                :rules="[(_) => isValidName()]"
+              />
             </div>
           </div>
+
           <div class="pc-form-item">
             <div class="pc-form-label">Phone</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Your Phone" v-model="formDetail.phone" />
+              <q-input
+                type="number"
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Phone"
+                v-model="formDetail.phone"
+                :rules="[(_) => isValidPhone()]"
+              >
+                <template v-slot:append>
+                  <div class="pc-form-side-btn">
+                    <q-btn
+                      no-caps
+                      dense
+                      class="bg-yellow text-black"
+                      label="Get Code"
+                      :disable="!formDetail.phone"
+                      @click="openVerificationCodeDialog"
+                    />
+                  </div>
+                </template>
+              </q-input>
             </div>
           </div>
-          <div class="pc-form-item">
+
+          <div v-if="showVerificationTokenInput" class="pc-form-item">
             <div class="pc-form-label">Verification Code</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Verification Code" v-model="formDetail.phoneOtpRef" />
-              <div class="pc-form-side-btn">
-                <q-btn
-                  no-caps
-                  dense
-                  class="bg-yellow text-black"
-                  label="Get Code"
-                  @click="openVerificationCodeDialog"
-                />
-              </div>
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Verification Code"
+                v-model="formDetail.phoneOtpRef"
+                :rules="[(_) => isValidOTP()]"
+              />
             </div>
           </div>
 
           <div class="pc-form-item">
             <div class="pc-form-label">Email</div>
             <div class="pc-form-input">
-              <q-input filled dense clearable placeholder="Enter Your Email" v-model="formDetail.email"></q-input>
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Email"
+                v-model="formDetail.email"
+                :rules="[(_) => isValidEmail()]"
+              ></q-input>
             </div>
           </div>
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="updateState">Submit</q-btn>
+          <q-btn
+            rounded
+            flat
+            no-caps
+            class="btn-purple-pattern"
+            :disable="
+              !(isValidName() === true && isValidPhone() === true && isValidOTP() === true && isValidEmail() === true)
+            "
+            @click="updateState"
+          >
+            Submit
+          </q-btn>
         </div>
       </div>
     </div>
@@ -282,9 +327,10 @@
                 dense
                 clearable
                 placeholder="Enter Captcha Code"
+                v-model="captchaRef"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert verification code',
-                  (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
+                  (val) => (val && val.length > 0) || 'Please insert captcha code',
+                  (val) => (val && val.length > 3 && val.length < 5) || 'Captcha code length is 4 characters'
                 ]"
               >
                 <template v-slot:append>
@@ -293,28 +339,6 @@
               </q-input>
             </div>
           </div>
-
-          <!-- <q-input
-            ref="verificationRef"
-            hide-bottom-space
-            clearable
-            type="text"
-            v-model="captchaRef"
-            label="Verification Code"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please insert verification code',
-              (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
-            ]"
-            label-color="brand"
-            rounded
-            outlined
-            color="white"
-            class="landing-input"
-          >
-            <template v-slot:append>
-              <img :src="verificationImg" @click="getCode" />
-            </template>
-          </q-input> -->
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
@@ -390,12 +414,14 @@ const startRefresh = () => {
       progress.value.loading = false;
     }
   }, 700);
+
+  store.getMemberInfo();
 };
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
   (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) &&
-    (personalCenterDialog.value = true)
+    (personalCenterDialog.value = true);
 };
 
 const changePasswordDialog = ref(false);
@@ -406,6 +432,7 @@ const openChangePasswordDialog = () => {
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
   verificationCodeDialog.value = !verificationCodeDialog.value;
+  getCode();
 };
 
 const confirmSignOutDialog = ref(false);
@@ -474,9 +501,22 @@ const verificationDetails = reactive({
   memberInfo: {}
 });
 
+const appVersionNo = ref(null);
+const getVersionNo = async () => {
+  if (store.getDeviceType() == "ANDROID") {
+    const info = await App.getInfo();
+    var current_version = info.version + "." + info.build;
+    appVersionNo.value = current_version;
+  } else if (store.getDeviceType() == "IOS") {
+    appVersionNo.value = "iOS v0.3";
+  } else {
+  }
+};
+
 onMounted(() => {
   loadInfo();
   getCode();
+  getVersionNo();
 
   window.location.search.includes("personal") && openPersonalCenterDialog();
 });
@@ -639,16 +679,41 @@ const updateState = () => {
 };
 
 const isValidName = () => {
-  const namePattern = /^([\u4e00-\u9fa5]*)$/;
-  return namePattern.test(formDetail.realName) || "请输入中文字符";
+  const { realName } = formDetail;
+  const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
+
+  const result = !realName
+    ? "Please Enter Your Full Name"
+    : !namePattern.test(realName)
+    ? "Please Enter A Valid Full Name"
+    : true;
+  return result;
 };
 
 const isValidPhone = () => {
-  const reg = /^\d+$/;
   const { phone } = formDetail;
 
-  const result = "" === phone ? "请验证您的电话号码" : !reg.test(phone) ? "电话号码只允许使用数字" : true;
+  const result = !phone ? "Please Enter Phone Number" : true;
+  return result;
+};
 
+const isValidOTP = () => {
+  const { phoneOtpRef } = formDetail;
+
+  const result = !phoneOtpRef ? "Please Enter Verification Code" : true;
+  return result;
+};
+
+const isValidEmail = () => {
+  const { email } = formDetail;
+  const emailPattern =
+    /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+
+  const result = !email
+    ? "Please Enter Your Email Address"
+    : !emailPattern.test(email)
+    ? "Please Enter A Valid Email Address"
+    : true;
   return result;
 };
 
@@ -673,7 +738,7 @@ const onCaptchaSubmit = () => {
       })
     )
     .then((res) => {
-      let message = res.message || "发送手机验证码成功",
+      let message = res.message,
         color = "positive";
 
       if (res.code === 0) {
@@ -887,9 +952,6 @@ const submitUpdatePwd = () => {
   height: 37rem;
   overflow: auto;
   top: 15rem;
-
-  .card-overall {
-  }
 }
 
 .pc-form {
@@ -917,9 +979,8 @@ const submitUpdatePwd = () => {
   }
 
   .pc-form-side-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: relative;
+    right: -12px;
 
     :deep(.q-btn-item) {
       height: 38px;
@@ -951,7 +1012,7 @@ const submitUpdatePwd = () => {
 
 .pc-tip {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-end;
 }
 .pc-ver {

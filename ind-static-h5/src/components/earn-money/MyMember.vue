@@ -65,8 +65,9 @@ import NoInfoComponent from "../NoInfoComponent.vue";
 // ]
 const myMemberList = ref([]);
 
-const isNoInfo = ref(false);
+const isNoInfo = ref(true);
 if (myMemberList.value.length === 0) isNoInfo.value = true;
+else isNoInfo.value = false;
 
 const showMoreButton = () => {
   console.log("show more button clicked");

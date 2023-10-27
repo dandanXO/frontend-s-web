@@ -36,6 +36,8 @@ export const userStore = defineStore("userStore", {
       unreadInboxMail: 0,
       phoneVerified: false,
       emailVerified: false,
+      currentDeposit: "",
+      levelUpDeposit: "",
       currentMailData: {}
     };
   },
@@ -174,21 +176,41 @@ export const userStore = defineStore("userStore", {
       });
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
-          this.id = response.data.id;
-          this.nickName = response.data.loginName;
-          this.realName = response.data.realName;
-          this.birthday = response.data.birthday;
-          this.email = response.data.email;
-          this.phone = response.data.telephone;
-          this.memberType = response.data.memberType;
-          this.vip = response.data.vip;
-          this.profilePicture = response.data.pictureUrl;
-          this.displayName = response.data.displayName;
-          // this.personalAddress = response.data.personalAddress
-          this.phoneVerified = response.data.phoneVerified;
-          this.emailVerified = response.data.emailVerified;
-          if (response.data.evip) {
-            var exclusive = JSON.parse(response.data.evip);
+          const {
+            id,
+            loginName,
+            realName,
+            birthday,
+            email,
+            telephone,
+            memberType,
+            vip,
+            pictureUrl,
+            displayName,
+            phoneVerified,
+            emailVerified,
+            evip,
+            currentDeposit,
+            levelUpDeposit
+          } = response.data;
+
+          this.id = id;
+          this.nickName = loginName;
+          this.realName = realName;
+          this.birthday = birthday;
+          this.email = email;
+          this.phone = telephone;
+          this.memberType = memberType;
+          this.vip = vip;
+          this.profilePicture = pictureUrl;
+          this.displayName = displayName;
+          this.phoneVerified = phoneVerified;
+          this.emailVerified = emailVerified;
+          this.currentDeposit = parseFloat(currentDeposit);
+          this.levelUpDeposit = parseFloat(levelUpDeposit);
+
+          if (evip) {
+            var exclusive = JSON.parse(evip);
             this.evip = exclusive.wap;
           }
 

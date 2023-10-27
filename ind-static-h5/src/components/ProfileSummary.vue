@@ -32,9 +32,9 @@
           </template>
 
           <template v-else>
-            <div class="profile-balance">
+            <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
               <span class="balance-amount">
-                {{ store.balance.toFixed(2) }}
+                {{ isLoadingBalance ? "Loading..." : store.balance.toFixed(2) }}
               </span>
             </div>
           </template>
@@ -49,12 +49,23 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 
 const props = defineProps(["homeProfile"]);
 const router = useRouter();
 const store = userStore();
+
+const isLoadingBalance = ref(false);
+const refreshBalance = () => {
+  if (store.token) {
+    isLoadingBalance.value = true;
+    store.getBalance().then((res) => {
+      isLoadingBalance.value = false;
+    });
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -155,6 +166,9 @@ const store = userStore();
       padding-bottom: 3px;
       width: 130px;
       font-size: 14px;
+      &:active {
+        filter: brightness(0.75);
+      }
 
       &:before {
         content: "";
