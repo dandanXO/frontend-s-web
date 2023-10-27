@@ -693,7 +693,7 @@ const isValidName = () => {
 const isValidPhone = () => {
   const { phone } = formDetail;
 
-  const result = "" === phone ? "Please Enter Phone Number" : true;
+  const result = !phone ? "Please Enter Phone Number" : true;
   return result;
 };
 
