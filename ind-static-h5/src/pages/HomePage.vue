@@ -69,8 +69,8 @@
     </q-carousel>
 
     <div class="top-action">
-      <div class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true">Withdrawal</div>
-      <div class="action-btn action-btn--deposit" @click="depositDialog = true">Deposit</div>
+      <q-btn class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true" no-caps label="Withdrawal" />
+      <q-btn class="action-btn action-btn--deposit" @click="depositDialog = true" no-caps label="Deposit" />
     </div>
 
     <div class="games-selection-wrapper">
@@ -2072,11 +2072,17 @@ export default defineComponent({
     &--withdrawal {
       background-image: url(../assets/images/index/action-btn-withdrawal.png);
       color: #ffffff;
+      &:before {
+        box-shadow: none;
+      }
     }
 
     &--deposit {
       background-image: url(../assets/images/index/action-btn-deposit.png);
       color: #fae576;
+      &:before {
+        box-shadow: none;
+      }
     }
 
     &:hover {
@@ -2294,6 +2300,9 @@ export default defineComponent({
   background-image: url(../assets/images/index/popout/btn-go.png);
   color: #ffffff;
   margin: auto;
+  &:before {
+    box-shadow: none;
+  }
 }
 
 .bottom-tnc {
@@ -2332,86 +2341,6 @@ export default defineComponent({
 
   .fullgame-search {
     padding-top: 90px;
-  }
-}
-
-.profile-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px 0;
-
-  .profile-details-container {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-
-    .profile-name {
-      display: flex;
-      align-items: center;
-      line-height: 1;
-      gap: 10px;
-
-      .vip-details {
-        position: relative;
-        margin-left: 25px;
-
-        img {
-          display: block;
-          width: 40px;
-          position: absolute;
-          top: -6px;
-          left: -26px;
-        }
-
-        .vip-level {
-          background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-            linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-          border-radius: 0px 2px 5px 0px;
-          width: 45px;
-          height: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 10px;
-          line-height: 1;
-          padding-bottom: 1px;
-        }
-      }
-    }
-  }
-
-  .profile-balance {
-    position: relative;
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-    padding: 3px 0;
-    width: 130px;
-    font-size: 14px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: -9px;
-      left: -3px;
-      background: url(../assets/images/index/icon-balance.png) center/40px no-repeat;
-      display: block;
-      width: 40px;
-      height: 40px;
-    }
-
-    .balance-amount {
-      margin-left: 15px;
-    }
-  }
-
-  .profile-msg {
-    margin-left: auto;
-    margin-top: 30px;
   }
 }
 </style>

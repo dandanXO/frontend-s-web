@@ -40,7 +40,7 @@
           </template>
         </div>
 
-        <div class="profile-msg" v-if="homeProfile">
+        <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
         </div>
       </div>

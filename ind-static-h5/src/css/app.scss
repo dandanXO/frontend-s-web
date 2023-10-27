@@ -382,3 +382,9 @@ svg {
 .q-dialog__backdrop {
   backdrop-filter: blur(4px);
 }
+
+.btn-effect {
+  &:hover {
+    filter: brightness(0.8);
+  }
+}

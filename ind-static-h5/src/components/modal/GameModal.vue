@@ -15,6 +15,11 @@
           />
         </div>
 
+        <div class="loader-container">
+          <div><q-spinner color="yellow" size="10em" :thickness="10" /></div>
+          <div>Loading... Please wait...</div>
+        </div>
+
         <iframe
           @load="loadGame()"
           v-show="!logoShow"
@@ -767,5 +772,14 @@ defineExpose({
       }
     }
   }
+}
+.loader-container {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>

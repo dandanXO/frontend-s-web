@@ -1,48 +1,12 @@
 <template>
   <div>
-    <div class="deposit-item-container">
-      <template v-for="(item, index) in depositItems" :key="index">
-        <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
-          <div class="deposit-icon">
-            <img
-              :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
-              :alt="item.amount + ' Coin'"
-            />
-            <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
-          </div>
-          <div class="deposit-amt">{{ item.amount }}</div>
-        </div>
-      </template>
-    </div>
-
-    <div class="deposit-options">
-      <q-btn
-        flat
-        class="deposit-option-btn"
-        :class="{ active: isUpi1Active }"
-        label="UPI1"
-        @click="handleDepositUpiClick(1)"
-      />
-      <q-btn
-        flat
-        class="deposit-option-btn label-on-discount"
-        :class="{ active: isUpi2Active }"
-        label="UPI2"
-        @click="handleDepositUpiClick(2)"
-      />
-    </div>
-    <!-- <div class="deposit-enter-amt">
-      <div>Amount</div>
-      <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
-    </div> -->
-
-    <div class="q-my-lg">
+    <div class="q-mb-lg">
       <span class="additional-tips">
         If you encounter deposit problems, please contact online customer service immediately to solve it!
       </span>
     </div>
 
-    <div class="node-wrapper" style="display: none">
+    <div class="node-wrapper">
       <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
@@ -102,26 +66,6 @@
             </template>
           </q-input>
         </div>
-
-        <!-- <q-input
-          v-if="amountList.length === 0"
-          hide-bottom-space
-          ref="depositAmtRef"
-          label="Deposit Amount"
-          name="localAmount"
-          v-model="form.localAmount"
-          placeholder="Enter Amount"
-          color="white"
-          :rules="verifyDepositAmount"
-          padding="none"
-        >
-          <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-grey">
-              <template v-if="isUSDT">USDT</template>
-              <template v-else>{{ store.currency.value }}</template>
-            </span>
-          </template>
-        </q-input> -->
 
         <q-select
           v-else
@@ -205,7 +149,7 @@
             label="Confirm Deposit"
           /> -->
 
-          <div class="btn-go" @click="confirmDeposit">Go</div>
+          <q-btn :loading="btnLoading" rounded class="btn-go" @click="confirmDeposit">Go</q-btn>
         </div>
       </q-form>
     </div>
@@ -314,10 +258,10 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
-const copybtntxt0 = ref("复制");
-const copybtntxt1 = ref("复制");
-const copybtntxt2 = ref("复制");
-const copybtntxt3 = ref("复制");
+const copybtntxt0 = ref("Copy");
+const copybtntxt1 = ref("Copy");
+const copybtntxt2 = ref("Copy");
+const copybtntxt3 = ref("Copy");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -366,42 +310,6 @@ const checkAmount = reactive({
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
-
-const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
-  { amount: 300, hotLabel: 15, isActive: false },
-  { amount: 500, hotLabel: 25, isActive: false },
-  { amount: 1000, hotLabel: 50, isActive: false },
-  { amount: 3000, hotLabel: 150, isActive: false },
-  { amount: 5000, hotLabel: 250, isActive: false },
-  { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 1500, isActive: false },
-  { amount: 50000, hotLabel: 2500, isActive: false }
-]);
-
-const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
-    item.isActive = i === index;
-    if (i === index) {
-      // depositAmountInput.value = item.amount;
-      form.localAmount = item.amount;
-    }
-  });
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
-};
-const depositAmountInput = ref("");
 
 function initPay() {
   $q.loading.show({
@@ -526,10 +434,10 @@ function checkMinDepositAmt() {
 
 function checkPrivilege(v) {
   selectPayType(v);
-  if (v.paymentId !== null && v.paymentId !== undefined) {
-    loadPrivilege(v);
-    // unselectedPrivileges.value = [];
-  }
+  // if (v.paymentId !== null && v.paymentId !== undefined) {
+  //   loadPrivilege(v);
+  //   // unselectedPrivileges.value = [];
+  // }
 }
 
 function selectedBank(value) {
@@ -880,43 +788,6 @@ onMounted(() => {
     background-color: rgba(21, 0, 37, 0.5);
     border-radius: 5px;
     width: 100%;
-  }
-}
-
-.deposit-options {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 16px;
-  .deposit-option-btn {
-    color: #cccccc;
-    background-color: rgba(21, 0, 37, 0.5) !important;
-    min-width: 100px;
-    max-width: 160px;
-    width: 100%;
-    border-radius: 6px;
-    border: 3px solid transparent;
-
-    &.active {
-      color: #ffe66b;
-      border: 3px solid #ffe66b;
-    }
-
-    &.label-on-discount {
-      position: relative;
-      &:after {
-        content: "";
-        background-image: url(../assets/images/index/popout/label-discount.png);
-        background-repeat: no-repeat;
-        display: block;
-        position: absolute;
-        top: -4px;
-        right: -5px;
-        width: 30px;
-        height: 30px;
-        background-size: 100%;
-      }
-    }
   }
 }
 </style>
