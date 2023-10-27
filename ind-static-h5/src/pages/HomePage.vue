@@ -84,10 +84,6 @@
       </div>
       <div class="game-platform-wrapper">
         <div class="game-platform-item">
-          <!-- <div
-            class="game-platform-img"
-            :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-          ></div> -->
           <div class="game-platform-img">
             <div
               class="game--bg"
@@ -139,13 +135,25 @@
       <div class="game-platform-container">
         <template v-for="(item, index) in slot" :key="index">
           <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)">
-            <img :src="require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)" />
+            <img src="../assets/images/index/slot/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
         <!-- coming soon placeholder // start -->
-        <div class="game-platform-item">
+        <!-- <div class="game-platform-item">
           <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
-        </div>
+        </div> -->
         <!-- coming soon placeholder // end -->
       </div>
     </div>
@@ -161,7 +169,19 @@
             class="game-platform-item"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
           >
-            <img :src="require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)" />
+            <img src="../assets/images/index/live/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
         <!-- coming soon placeholder // start -->
@@ -213,21 +233,22 @@
 
       <div class="game-platform-container">
         <template v-for="(item, index) in fishing" :key="index">
-          <!-- <div
-            class="game-platform-item"
-            @click="playGame(item.name, item.code)"
-            v-if="item.code === 'JILI' || item.code === 'JDB'"
-          > -->
-          <!-- @click="playGame(item.name, item.code, item.code, item.status, item.gameType, item.id)" -->
-          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)">
-            <img :src="require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)" />
+          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)">
+            <img src="../assets/images/index/fish/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
-        <!-- coming soon placeholder // start -->
-        <!-- <div class="game-platform-item">
-          <img src="../assets/images/index/live/item-game-comingsoon.png" alt="" />
-        </div> -->
-        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
@@ -242,7 +263,19 @@
             class="game-platform-item"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
           >
-            <img :src="require(`../assets/images/index/sport/item-game-${item.code.toLowerCase()}.png`)" />
+          <img src="../assets/images/index/sport/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/sport/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
       </div>
@@ -2157,24 +2190,10 @@ export default defineComponent({
       background-color: #cccccc;
       width: 100%;
       aspect-ratio: 1/1;
-      // height: calc(100% - 30px);
       background-size: cover;
       background-position: center center;
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
-
-      // &::before {
-      //   content: "";
-      //   background-image: url("../assets/images/index/mini-game-bg.png");
-      //   background-size: cover;
-      //   background-position: center center;
-      //   position: absolute;
-      //   top: 0;
-      //   left: 0;
-      //   width: 100%;
-      //   height: 100%;
-      //   z-index: 0;
-      // }
 
       .game--bg {
         background-size: cover;
@@ -2213,6 +2232,17 @@ export default defineComponent({
   }
 
   .game-platform-item {
+    position: relative;
+    &--img {
+      background-size: cover;
+      background-position: center center;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
     .game-platform-title {
       text-align: center;
       margin-top: 6px;
