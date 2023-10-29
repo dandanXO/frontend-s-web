@@ -55,6 +55,26 @@
                    src="https://www.facebook.com/tr?id=6757510457678415&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
+
+    <!-- Google tag (gtag.js) 780-462-3466 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-780462346-6"></script>
+    <script>
+      console.log(location.href);
+      if(location.href.indexOf('/agent/0DDC3F') > -1) {
+        console.log("GA 780-462-3466");
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-780462346-6');
+      }
+    </script>
+
+
   </head>
   <body>
     <!-- DO NOT touch the following DIV -->
