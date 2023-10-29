@@ -108,10 +108,9 @@ export default route(function(/* { store, ssrContext } */) {
         liffId: '1657725286-kDOM4WMb', // Use own liffId
       }).then(() => {
         if (liff.isInClient()) {
-          alert("Line" + liff.getLineVersion())
+          // alert("Line" + liff.getLineVersion())
           if (liff.isLoggedIn()) {
-            alert("Line Logged In.")
-
+            // alert("Line Logged In.")
             const fpPromise = FingerprintJS.load();
             (async () => {
               const fp = await fpPromise;
@@ -145,7 +144,7 @@ export default route(function(/* { store, ssrContext } */) {
                 message: 'Logging in'
               })
               api.post('/member/lineLogin', string).then((res) => {
-                alert(res);
+                // alert(res);
                 if (res.data.code === 0) {
                   sessionStorage.setItem("TOKEN", res.data.data);
                   location.reload();
