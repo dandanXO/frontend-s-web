@@ -1053,7 +1053,11 @@ export default {
     progress: 'Progress',
     download: 'Download',
     updateProgress: 'Update Progress',
-    timeZone: 'Time Zone'
+    timeZone: 'Time Zone',
+    image: 'Image',
+    imageName: 'Image Name',
+    addPromotionImage: 'Add Promotion Image',
+    editPromotionImage: 'Edit Promotion Image',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1364,6 +1368,8 @@ export default {
     validateTemplateIdRequired: 'Template ID is required',
     requestExportToExcelDone1: 'Request was sent out successful, please click ',
     requestExportToExcelDone2: ' to check progress and download.',
+    validateImageRequired: 'Image is required',
+    validateImageNameRequired: 'Image Name is required',
   },
   menu: {
     undefined: '',
@@ -1512,7 +1518,9 @@ export default {
     'Email Setting': 'Email Setting',
     'SMS Setting': 'SMS Setting',
     DownloadManager: 'Download Manager',
-    GoogleAuth: "Google Auth"
+    GoogleAuth: "Google Auth",
+    'Image Setting': 'Image Setting',
+    'Promotion Image': 'Promotion Image'
   },
   google: {
     google_auth_menu: "Google Authenticator",

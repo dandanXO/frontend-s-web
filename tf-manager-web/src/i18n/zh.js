@@ -1054,6 +1054,10 @@ export default {
     download: '下载',
     updateProgress: '更新进度',
     timeZone: '时区',
+    image: '图像',
+    imageName: '图像名',
+    addPromotionImage: '新增优惠图像',
+    editPromotionImage: '编辑优惠图像',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1343,6 +1347,8 @@ export default {
     validateTemplateIdRequired: '模板ID必填',
     requestExportToExcelDone1: '请求已经成功发送，请按 ',
     requestExportToExcelDone2: ' 进行查看进度与下载。',
+    validateImageRequired: '图像必填',
+    validateImageNameRequired: '图像名必填',
   },
   menu: {
     undefined: '',
@@ -1491,7 +1497,9 @@ export default {
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
     DownloadManager: '下载中心',
-    GoogleAuth: "Google 验证中心"
+    GoogleAuth: "Google 验证中心",
+    'Image Setting': '图片设置',
+    'Promotion Image': '优惠图片'
   },
   google: {
     google_auth_menu: "谷歌验证",
