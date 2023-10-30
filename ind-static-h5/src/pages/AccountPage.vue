@@ -462,8 +462,6 @@
       </div>
     </div>
   </q-dialog>
-
-  <!-- <pre>{{ store }}-~~~</pre> -->
 </template>
 
 <script setup>
@@ -522,7 +520,9 @@ const startRefresh = async () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
+  if (store.guest) {
+    openNewChangePasswordDialog();
+  } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
     personalCenterDialog.value = true;
   }
 };
@@ -539,7 +539,7 @@ const openChangePasswordDialog = () => {
 
 const changeNewPasswordDialog = ref(false);
 const openNewChangePasswordDialog = () => {
-  changeNewPasswordDialog.value = !changeNewPasswordDialog.value;
+  changeNewPasswordDialog.value = true;
   newLoginName.value = store.nickName;
 };
 
@@ -599,7 +599,15 @@ const isEditPhone = ref(false);
 const isEditBirthday = ref(false);
 const loadInfo = () => {
   personalState.memberInfo = userStore();
-  personalState.memberInfo.realName === null && openPersonalCenterDialog();
+
+  if (store.guest && personalState.memberInfo.realName === null) {
+    openNewChangePasswordDialog();
+  }
+
+  if (!store.guest && personalState.memberInfo.realName === null) {
+    openPersonalCenterDialog();
+  }
+
   console.log(personalState.memberInfo);
   if (personalState.memberInfo.birthday > 0) {
     personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
@@ -977,7 +985,7 @@ const submitUpdateNewPwd = () => {
   } else {
     api
       .post(
-        "/session/password",
+        "/session/guest-password",
         qs.stringify({
           password: updatePwdInfo.password
         })

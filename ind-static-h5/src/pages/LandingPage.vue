@@ -15,9 +15,10 @@
       <q-btn rounded flat no-caps class="btn-purple" @click="guestLogin()" v-if="Platform.is.capacitor">
         Play As Guest
       </q-btn>
+
+      <q-btn rounded flat no-caps class="btn-purple" @click="guestLogin()">Play As Guest PC</q-btn>
     </div>
   </div>
-
 </template>
 
 <script setup>
@@ -65,6 +66,14 @@ const guestLogin = () => {
           if (store.hasToken()) {
             router.push("/home");
           }
+        } else if (res.code === 1010) {
+          $q.notify({
+            color: "warning",
+            position: "top",
+            message: "Please login with password to continue",
+            icon: "report_problem"
+          });
+          router.push("/login");
         } else {
           $q.notify({
             color: "negative",
@@ -77,14 +86,6 @@ const guestLogin = () => {
       })
       .catch((error) => {
         $q.loading.hide();
-
-        $q.notify({
-          color: "warning",
-          position: "top",
-          message: "Please login to continue",
-          icon: "report_problem"
-        });
-        router.push("/login");
       });
     // getCode();
   })();
@@ -99,8 +100,6 @@ const getAppInfo = async () => {
   // console.log(info.identifier);
 
   guestDeviceInfo.value = info.identifier;
-
-  // console.log(guestDeviceInfo.value, "~~~");
 };
 
 onMounted(() => {
