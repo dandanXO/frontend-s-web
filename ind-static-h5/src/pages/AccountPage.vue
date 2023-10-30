@@ -1000,6 +1000,7 @@ const submitUpdateNewPwd = () => {
           });
           // router.go("/account");
           changeNewPasswordDialog.value = false;
+          store.getMemberInfo();
         } else {
           $q.notify({
             color: "negative",
