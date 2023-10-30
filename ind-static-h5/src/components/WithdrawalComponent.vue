@@ -3,7 +3,7 @@
     <div class="popout-dialog">
       <div class="popout-dialog-container">
         <div class="txt-title">Tips</div>
-        <div class="txt-content q-mt-md text-center">Please Add Your Bank Card In Order To Proceed Withdrawal</div>
+        <div class="txt-content q-mt-md text-center">Please Add Your Bank Card To Continue Withdraw</div>
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <router-link to="/account/bank">
             <q-btn label="Add Bank Card" class="bg-yellow text-black" no-caps />
@@ -22,7 +22,7 @@
     align="justify"
   >
     <q-tab name="BANK" label="Bankcard" />
-    <q-tab name="UPI" label="UPI" />
+    <!-- <q-tab name="UPI" label="UPI" /> -->
   </q-tabs>
 
   <q-tab-panels
@@ -54,7 +54,7 @@
         </div>
       </div>
     </q-tab-panel>
-    <q-tab-panel name="UPI">
+    <!-- <q-tab-panel name="UPI">
       <div class="withdrawal-table">
         <div class="w-tbl-row">
           <div class="w-tbl-col">Cash Balance:</div>
@@ -75,7 +75,7 @@
           <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount }}</div>
         </div>
       </div>
-    </q-tab-panel>
+    </q-tab-panel> -->
   </q-tab-panels>
 
   <div class="withdrawal-form" v-if="withdrawalDialogTab === 'BANK'">
