@@ -22,11 +22,11 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/RegisterPage.vue") }]
   },
-  // {
-  //   path: "/forgot-password",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [{ path: "", component: () => import("pages/ForgotPwdPage.vue") }]
-  // },
+  {
+    path: "/forgot-password",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/ForgotPwdPage.vue") }]
+  },
   // {
   //   path: "/home",
   //   component: () => import("layouts/MainLayout.vue"),
