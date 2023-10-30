@@ -40,7 +40,7 @@
 
       <q-card-section>
         <q-form>
-          <div class="q-my-sm select-wrapper">
+          <!-- <div class="q-my-sm select-wrapper">
             <div class="input-title">Card Type</div>
             <q-select
               standout
@@ -75,7 +75,7 @@
               emit-value
               map-options
             />
-          </div>
+          </div> -->
 
           <div class="q-my-sm">
             <div class="input-title">Card Account</div>
@@ -108,14 +108,14 @@
           </div>
 
           <div class="q-my-sm">
-            <div class="input-title">Address</div>
+            <div class="input-title">IFSC Code</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="bankCardField.cardAddress"
-              label="Enter Bank Ifsc Code"
+              label="Enter Bank IFSC Code"
               lazy-rules
               :rules="[(_) => isValidCardAddress()]"
               label-color="secondary"
@@ -129,10 +129,8 @@
         :confirmFunc="addCard"
         :isDisabled="
           !(
-            isValidBank() === true &&
-            isValidCardAccount() === true &&
-            isValidCardNumber() === true &&
-            isValidCardAddress() === true
+            // isValidBank() === true &&
+            (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
           )
         "
       ></ConfirmButton>
@@ -272,7 +270,7 @@ const unbind = () => {
 };
 
 // add card dialog
-const cardType = ["Bank", "Crypto", "EWallet"];
+const cardType = ["Bank" /*, "Crypto", "EWallet"*/];
 const currentCardType = ref("Bank");
 
 // display
@@ -288,8 +286,7 @@ const bankCardField = reactive({
   bankId: undefined,
   cardAccount: "",
   cardNumber: "",
-  cardAddress: "",
-  telephone: ""
+  cardAddress: ""
 });
 
 const isAddCardDialogOpen = ref(false);
@@ -324,7 +321,7 @@ const onAddCardClick = () => {
                 const bankType = e.bankType;
                 if (bankType === "BANK") bankList.push(e);
                 else if (bankType === "CRYPTO") cryptoList.push(e);
-                else if (bankType === "EWallet") ewalletList.push(e);
+                else if (bankType === "EWALLET") ewalletList.push(e);
               });
               selectBankType();
             }
@@ -353,6 +350,9 @@ const selectBankType = () => {
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
+
+    // NOTE: temp write here, since no other card type.
+    bankCardField.bankId = currBankList.value[0].id;
   } else if (currentCardType.value === "Crypto") {
     currBankList.value = cryptoList;
     dialogDisplays.title = "Add Crypto Wallet";
@@ -373,7 +373,6 @@ const clearField = () => {
   bankCardField.cardNumber = "";
   bankCardField.cardAccount = store.realName;
   bankCardField.cardAddress = "";
-  bankCardField.telephone = store.phone;
 };
 
 // validation
@@ -400,8 +399,11 @@ const isValidCardNumber = () => {
 
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
-
-  const result = !cardAddress ? "Please Enter Bank Ifsc Code" : true;
+  const result = !cardAddress
+    ? "Please Enter Bank Ifsc Code"
+    : cardAddress.length !== 11
+    ? "Bank IFSC Code Must Be 11 Character"
+    : true;
   return result;
 };
 
