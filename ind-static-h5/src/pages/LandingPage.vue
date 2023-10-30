@@ -12,15 +12,18 @@
       <q-btn rounded flat no-caps class="btn-yellow" @click="$router.push('/login')">Login</q-btn>
       <q-btn rounded flat no-caps class="btn-yellow" @click="$router.push('/register')">Register</q-btn>
       <!-- <q-btn rounded flat no-caps class="btn-purple" @click="$router.push('/guestlogin')">Play As Guest</q-btn> -->
-      <q-btn rounded flat no-caps class="btn-purple" @click="guestLogin()">Play As Guest</q-btn>
+      <q-btn rounded flat no-caps class="btn-purple" @click="guestLogin()" v-if="Platform.is.capacitor">
+        Play As Guest
+      </q-btn>
     </div>
   </div>
+
 </template>
 
 <script setup>
 import { onMounted, ref, reactive } from "vue";
 import { Device } from "@capacitor/device";
-import { useQuasar } from "quasar";
+import { useQuasar, Platform } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -48,9 +51,7 @@ const guestLogin = () => {
       .post("/member/quickRegister", qs.stringify(guestLoginInfo))
       .then((ret) => {
         const res = ret;
-        console.log(res, "-->res");
-
-        console.log("!@#!@#@!#@!#?");
+        console.log("res:", res);
 
         if (res.code === 0) {
           $q.notify({
