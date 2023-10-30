@@ -1,4 +1,18 @@
 <template>
+  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+    <div class="popout-dialog">
+      <div class="popout-dialog-container">
+        <div class="txt-title">Tips</div>
+        <div class="txt-content q-mt-md text-center">Please Add Your Bank Card In Order To Proceed Withdrawal</div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <router-link to="/account/bank">
+            <q-btn label="Add Bank Card" class="bg-yellow text-black" no-caps />
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
   <q-tabs
     v-model="withdrawalDialogTab"
     dense
@@ -208,6 +222,8 @@ const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 
+const imgURL = process.env.IMAGE_CDN;
+
 const refreshBalance = () => {
   if (store.token) store.getBalance();
 };
@@ -233,6 +249,7 @@ const getWithdrawalMethods = () => {
 };
 
 const bankCardList = ref([]);
+const isNoBankCard = ref(false);
 const loadCards = () => {
   bankCardList.value = [];
 
@@ -243,6 +260,9 @@ const loadCards = () => {
     })
     .catch((error) => {
       console.log("error", error);
+    })
+    .then(() => {
+      if (bankCardList.value.length === 0) isNoBankCard.value = true;
     });
 };
 
