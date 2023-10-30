@@ -11,7 +11,7 @@
         <div class="profile-details-container">
           <div class="profile-name">
             {{ store.realName ? store.realName : store.nickName }}
-            <div class="vip-details" @click="router.push('/vip')">
+            <div class="vip-details" @click="onVipClick">
               <img src="../assets/images/index/icon-vip-badge.png" alt="" />
               <div class="vip-level">
                 {{ store.vip }}
@@ -51,9 +51,10 @@
 <script setup>
 import { ref } from "vue";
 import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps(["homeProfile"]);
+const route = useRoute();
 const router = useRouter();
 const store = userStore();
 
@@ -65,6 +66,10 @@ const refreshBalance = () => {
       isLoadingBalance.value = false;
     });
   }
+};
+
+const onVipClick = () => {
+  router.push({ path: "/vip", query: { redirect: route.path } });
 };
 </script>
 

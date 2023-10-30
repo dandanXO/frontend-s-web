@@ -85,9 +85,10 @@
 <script setup>
 import { ref } from "vue";
 import { date } from "quasar";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 
+const route = useRoute();
 const router = useRouter();
 const store = userStore();
 
@@ -106,7 +107,7 @@ progressBarRef.value = 1 - progressRef.value / maxProgress;
 
 // detail btn
 const onDetailClick = () => {
-  router.push("/vip");
+  router.push({ path: "/vip", query: { redirect: route.path } });
 };
 
 // table
