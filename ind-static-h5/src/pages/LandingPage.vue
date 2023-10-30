@@ -42,13 +42,15 @@ const guestLogin = () => {
 
   (async () => {
     guestLoginInfo.sid = guestDeviceInfo.value;
-    console.log(guestLoginInfo);
+    // console.log(guestLoginInfo);
 
     api
       .post("/member/quickRegister", qs.stringify(guestLoginInfo))
       .then((ret) => {
         const res = ret;
         console.log(res, "-->res");
+
+        console.log("!@#!@#@!#@!#?");
 
         if (res.code === 0) {
           $q.notify({
@@ -60,7 +62,7 @@ const guestLogin = () => {
           store.autoLogin(res.data);
           sessionStorage.removeItem("REFERRAL_CODE");
           if (store.hasToken()) {
-            router.go("/home");
+            router.push("/home");
           }
         } else {
           $q.notify({
@@ -74,6 +76,14 @@ const guestLogin = () => {
       })
       .catch((error) => {
         $q.loading.hide();
+
+        $q.notify({
+          color: "warning",
+          position: "top",
+          message: "Please login to continue",
+          icon: "report_problem"
+        });
+        router.push("/login");
       });
     // getCode();
   })();
@@ -83,13 +93,13 @@ const guestDeviceInfo = ref("");
 
 const getAppInfo = async () => {
   const info = await Device.getId();
-  console.log("Device ID:");
-  console.log(info);
-  console.log(info.identifier);
+  // console.log("Device ID:");
+  // console.log(info);
+  // console.log(info.identifier);
 
   guestDeviceInfo.value = info.identifier;
 
-  console.log(guestDeviceInfo.value, "~~~");
+  // console.log(guestDeviceInfo.value, "~~~");
 };
 
 onMounted(() => {

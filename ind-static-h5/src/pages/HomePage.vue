@@ -89,7 +89,7 @@
           <template v-if="index < 8">
             <div
               class="game-platform-item btn-effect"
-              @click="playGame(item.name, item.platformCode, item.platformId, item.status, item.gameType, item.id)"
+              @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
             >
               <div class="game-platform-img">
                 <div
@@ -639,8 +639,7 @@ const loadGameList = (type, id) => {
             return res;
           }
         })
-        .catch((err) => {
-        })
+        .catch((err) => {})
     )
     .then((res) => {
       subGameList.value = res;
@@ -749,61 +748,12 @@ const checkShowImgTop = () => {
   }
 };
 
-const homeBannerData = ref({
-  code: 0,
-  data: [
-    {
-      promoPageId: null,
-      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-      mobileImageUrl: "home-banner-01.png",
-      redirectUrl: "XingFa-red-packet-rain",
-      category: "HOME"
-    },
-    {
-      promoPageId: null,
-      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-      mobileImageUrl: "home-banner-02.png",
-      redirectUrl: "XingFa-red-packet-rain",
-      category: "HOME"
-    },
-    {
-      promoPageId: null,
-      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-      mobileImageUrl: "home-banner-03.png",
-      redirectUrl: "XingFa-red-packet-rain",
-      category: "HOME"
-    },
-    {
-      promoPageId: null,
-      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-      mobileImageUrl: "home-banner-04.png",
-      redirectUrl: "XingFa-red-packet-rain",
-      category: "HOME"
-    },
-    {
-      promoPageId: null,
-      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-      mobileImageUrl: "home-banner-05.png",
-      redirectUrl: "XingFa-red-packet-rain",
-      category: "HOME"
-    },
-    {
-      promoPageId: null,
-      desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-      mobileImageUrl: "home-banner-06.png",
-      redirectUrl: "XingFa-red-packet-rain",
-      category: "HOME"
-    }
-  ]
-});
-
 function loadData() {
   api
     .get("/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
         banners.value = res.data;
-        // banners.value = homeBannerData.value.data;
       } else {
         // $q.notify({
         //   color: "negative",
