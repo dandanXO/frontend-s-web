@@ -122,7 +122,13 @@
 
   <q-dialog width="100%" v-model="personalCenterDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closePersonalCenterDialog()" />
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="bg-yellow text-black popout-close"
+        @click="closePersonalCenterDialog()"
+      />
       <div class="popout-dialog-container">
         <div class="txt-title">KYC Info</div>
 
@@ -152,6 +158,7 @@
                 placeholder="Enter Your Phone"
                 v-model="formDetail.phone"
                 :rules="[(_) => isValidPhone()]"
+                :disable="startCountdownResendOTP"
               >
                 <template v-slot:append>
                   <div class="pc-form-side-btn">
@@ -159,8 +166,8 @@
                       no-caps
                       dense
                       class="bg-yellow text-black"
-                      label="Get Code"
-                      :disable="!formDetail.phone"
+                      :label="!startCountdownResendOTP && 'Get Code'"
+                      :disable="!formDetail.phone || startCountdownResendOTP"
                       @click="openVerificationCodeDialog"
                     />
                   </div>
@@ -179,7 +186,9 @@
                 placeholder="Enter Verification Code"
                 v-model="formDetail.phoneOtpRef"
                 :rules="[(_) => isValidOTP()]"
-              />
+              >
+                <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+              </q-input>
             </div>
           </div>
 
@@ -310,6 +319,97 @@
     </div>
   </q-dialog>
 
+  <q-dialog width="100%" v-model="changeNewPasswordDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Change New Password</div>
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Login Name</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                v-model="newLoginName"
+                disable
+                hint="Please remember the login name"
+              ></q-input>
+              <div class="pc-form-side-btn copy-btn">
+                <q-btn
+                  no-caps
+                  dense
+                  class="bg-yellow text-black"
+                  @click="copyLoginName"
+                  :label="copyActive ? 'Copied' : 'Copy'"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="pc-form-item">
+            <div class="pc-form-label">New Password</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter New Password"
+                v-model="updatePwdInfo.password"
+                ref="passwordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[(val) => (val && val.length > 0) || 'Please insert new password']"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
+          </div>
+          <div class="pc-form-item">
+            <div class="pc-form-label">New Password Again</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter New Password Again"
+                v-model="updatePwdInfo.confirmNewPwd"
+                ref="confirmPasswordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password again',
+                  (val) => val === updatePwdInfo.password || 'Confimed password does not match with new password'
+                ]"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdateNewPwd">Confirm</q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
   <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
@@ -362,6 +462,8 @@
       </div>
     </div>
   </q-dialog>
+
+  <!-- <pre>{{ store }}-~~~</pre> -->
 </template>
 
 <script setup>
@@ -371,7 +473,7 @@ import ProfileSummary from "../components/ProfileSummary.vue";
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 
@@ -420,8 +522,9 @@ const startRefresh = async () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) &&
-    (personalCenterDialog.value = true);
+  if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
+    personalCenterDialog.value = true;
+  }
 };
 
 const closePersonalCenterDialog = () => {
@@ -432,6 +535,26 @@ const closePersonalCenterDialog = () => {
 const changePasswordDialog = ref(false);
 const openChangePasswordDialog = () => {
   changePasswordDialog.value = !changePasswordDialog.value;
+};
+
+const changeNewPasswordDialog = ref(false);
+const openNewChangePasswordDialog = () => {
+  changeNewPasswordDialog.value = !changeNewPasswordDialog.value;
+  newLoginName.value = store.nickName;
+};
+
+const copyActive = ref(false);
+const copyLoginName = () => {
+  const el = document.createElement("textarea");
+  el.value = newLoginName.value;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+  copyActive.value = true;
+  setTimeout(() => {
+    copyActive.value = false;
+  }, 2000);
 };
 
 const verificationCodeDialog = ref(false);
@@ -477,7 +600,7 @@ const isEditBirthday = ref(false);
 const loadInfo = () => {
   personalState.memberInfo = userStore();
   personalState.memberInfo.realName === null && openPersonalCenterDialog();
-  console.log(personalState.memberInfo.realName);
+  console.log(personalState.memberInfo);
   if (personalState.memberInfo.birthday > 0) {
     personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
   }
@@ -755,6 +878,9 @@ const goToPage = (page) => {
 };
 
 let verificationCodeID = "";
+const startCountdownResendOTP = ref(false);
+const countdownOTP = ref();
+
 const onCaptchaSubmit = () => {
   api
     .post(
@@ -773,6 +899,17 @@ const onCaptchaSubmit = () => {
         showCaptchaDialog.value = false;
         showVerificationTokenInput.value = true;
         verificationCodeID = res.data.codeId;
+
+        startCountdownResendOTP.value = true;
+
+        countdownOTP.value = 59;
+        let timer = setInterval(() => {
+          countdownOTP.value -= 1;
+          if (countdownOTP.value === 0) {
+            clearInterval(timer);
+            startCountdownResendOTP.value = false;
+          }
+        }, 1000);
       } else color = "negative";
 
       if (message) $q.notify({ message, color });
@@ -785,11 +922,13 @@ const isPwd = ref(true);
 const oldPasswordRef = ref();
 const passwordRef = ref();
 const confirmPasswordRef = ref();
+const newLoginName = ref();
 const updatePwdInfo = reactive({
   oldPassword: "",
   password: "",
   confirmNewPwd: ""
 });
+
 const submitUpdatePwd = () => {
   oldPasswordRef.value.validate();
   passwordRef.value.validate();
@@ -815,6 +954,44 @@ const submitUpdatePwd = () => {
           });
           // router.go("/account");
           changePasswordDialog.value = false;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+};
+
+const submitUpdateNewPwd = () => {
+  passwordRef.value.validate();
+  confirmPasswordRef.value.validate();
+
+  if (passwordRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/password",
+        qs.stringify({
+          password: updatePwdInfo.password
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "New password updated successfully",
+            icon: "check_circle_outline"
+          });
+          // router.go("/account");
+          changeNewPasswordDialog.value = false;
         } else {
           $q.notify({
             color: "negative",
@@ -915,6 +1092,12 @@ const submitUpdatePwd = () => {
 
     :deep(.q-btn-item) {
       height: 38px;
+    }
+
+    &.copy-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   }
 }

@@ -72,6 +72,7 @@
       <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
     </div>
+    <!-- <pre>{{ hotGameList }}---</pre> -->
 
     <div class="games-selection-wrapper">
       <div class="hot-games-pattern-top"></div>
@@ -85,19 +86,20 @@
 
       <div class="game-platform-wrapper">
         <template v-for="(item, index) in hotGameList" :key="index">
-          <template v-if="index <= 8">
+          <template v-if="index < 8">
             <div
               class="game-platform-item btn-effect"
-              @click="playGame(item.name, item.platformId, item.code, item.status, item.gameType, item.id)"
+              @click="playGame(item.name, item.platformCode, item.platformId, item.status, item.gameType, item.id)"
             >
               <div class="game-platform-img">
                 <div
                   class="game--bg"
                   :style="{
-                    backgroundImage: `url(${imgURLGame}${item.gameType.toLowerCase()}/${item.icon}.png)`
+                    backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
                   }"
                 ></div>
               </div>
+
               <div class="game-platform-title">{{ item.name }}</div>
             </div>
           </template>
@@ -374,21 +376,42 @@
 
           <div class="games-selection-wrapper">
             <div class="game-platform-wrapper">
-              <template v-for="(item, index) in filteredSubGameList" :key="index">
-                <div
-                  class="game-platform-item"
-                  @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
-                >
-                  <div class="game-platform-img">
-                    <div
-                      class="game--bg"
-                      :style="{
-                        backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
-                      }"
-                    ></div>
+              <template v-if="hotGameOn">
+                <template v-for="(item, index) in filteredHotGameList" :key="index">
+                  <div
+                    class="game-platform-item"
+                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  >
+                    <div class="game-platform-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                        }"
+                      ></div>
+                    </div>
+                    <div class="game-platform-title">{{ item.name }}</div>
                   </div>
-                  <div class="game-platform-title">{{ item.name }}</div>
-                </div>
+                </template>
+              </template>
+
+              <template v-else>
+                <template v-for="(item, index) in filteredSubGameList" :key="index">
+                  <div
+                    class="game-platform-item"
+                    @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                  >
+                    <div class="game-platform-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                        }"
+                      ></div>
+                    </div>
+                    <div class="game-platform-title">{{ item.name }}</div>
+                  </div>
+                </template>
               </template>
             </div>
           </div>
@@ -540,36 +563,18 @@ const store = userStore();
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-  // console.log("gameName: ", gameName);
-  // console.log("platformCode: ", platformCode);
-  // console.log("gameCode: ", gameCode);
-  // console.log("gameStatus: ", gameStatus);
-  // console.log("gameInfo", gameInfo)
-
   allGames.value.open(gameName, platformCode, gameCode, gameType);
-
-  // open = (gameName, platformCode, gameCode, gameType)
-
-  // gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
 };
 
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-  // console.log("gameName: ", gameName);
-  // console.log("platformCode: ", platformCode);
-  // console.log("gameCode: ", gameCode);
-  // console.log("gameStatus: ", gameStatus);
-  // console.log("gameType: ", gameType);
-  // console.log("gameId: ", gameId);
-
   subGameCode.value = platformCode;
   loadGameList(gameType, gameId);
   fullGameDialog.value = true;
+  hotGameOn.value = false;
 };
 
+const hotGameOn = ref(false);
 const subGameList = ref([]);
-// const filteredSubGameList = computed(() => {
-//   return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
-// });
 const filteredSubGameList = computed(() => {
   if (searchText.value) {
     return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
@@ -581,12 +586,20 @@ const filteredSubGameList = computed(() => {
 const subGameCode = ref("");
 
 const openHotGame = (hotGameList) => {
-  // hotGameList
   subGameList.value = hotGameList;
   fullGameDialog.value = true;
+  hotGameOn.value = true;
 };
 
 const hotGameList = ref([]);
+
+const filteredHotGameList = computed(() => {
+  if (searchText.value) {
+    return hotGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+  } else {
+    return hotGameList.value;
+  }
+});
 
 const loadHotGameList = () => {
   api
@@ -623,67 +636,14 @@ const loadGameList = (type, id) => {
         .then((ret) => {
           const res = ret;
           if (res.code === 0) {
-            // isLoading.value = false;
             return res;
           }
         })
         .catch((err) => {
-          // isLoading.value = false;
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
         })
     )
     .then((res) => {
-      // isLoading.value = false;
-      // console.log(res, " ___res");
       subGameList.value = res;
-
-      // debugger;
-      // if (currentSelectedMenu.value === "casual") {
-      //   miniGames.value = [];
-      //   let minis = _.orderBy(res, "sequence");
-      //   minis.forEach((mini) => {
-      //     mini.lists = [];
-      //   });
-      //   let games = [];
-      //   minis.forEach((mini) => {
-      //     if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
-      //       games.push(mini);
-      //     } else {
-      //       miniGames.value.push(mini);
-      //     }
-      //   });
-
-      //   // console.log(games);
-
-      //   games.forEach((game) => {
-      //     let index = _.findIndex(miniGamesMore.value, function (o) {
-      //       return game.name.indexOf(o.name) > -1;
-      //     });
-      //     if (game.name.indexOf("(铜)") > -1) {
-      //       miniGamesMore.value[index]["copper"] = game.code;
-      //     } else if (game.name.indexOf("(银)") > -1) {
-      //       miniGamesMore.value[index]["silver"] = game.code;
-      //     } else if (game.name.indexOf("(金)") > -1) {
-      //       miniGamesMore.value[index]["gold"] = game.code;
-      //     }
-      //   });
-      //   // console.log(miniGamesMore.value);
-      // } else {
-      //   res.forEach((element) => {
-      //     element.default = require("../assets/images/games/aviator/default.png");
-      //     element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
-      //       element.icon
-      //     }.png`;
-      //   });
-      //   gameListData.value = res;
-      //   gamePage.total = res.length;
-      //   changePage(1, gamePage.pageSize);
-      // }
     });
 };
 
