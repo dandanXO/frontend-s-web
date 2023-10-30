@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <div class="q-gutter-y-md">
       <div class="text-blue-grey">
-        Please Provide Your Username And Phone Number, And We Will Send A New Password To Your Registered Phone Number.
+        Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
       </div>
 
       <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
