@@ -15,8 +15,6 @@
       <q-btn rounded flat no-caps class="btn-purple" @click="guestLogin()" v-if="Platform.is.capacitor">
         Play As Guest
       </q-btn>
-
-      <q-btn rounded flat no-caps class="btn-purple" @click="guestLogin()">Play As Guest PC</q-btn>
     </div>
   </div>
 </template>
