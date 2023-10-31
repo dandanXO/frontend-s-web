@@ -38,7 +38,8 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       currentDeposit: "",
       levelUpDeposit: "",
-      currentMailData: {}
+      currentMailData: {},
+      guest: false,
     };
   },
   actions: {
@@ -191,7 +192,8 @@ export const userStore = defineStore("userStore", {
             emailVerified,
             evip,
             currentDeposit,
-            levelUpDeposit
+            levelUpDeposit,
+            guest
           } = response.data;
 
           this.id = id;
@@ -208,6 +210,7 @@ export const userStore = defineStore("userStore", {
           this.emailVerified = emailVerified;
           this.currentDeposit = parseFloat(currentDeposit);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
+          this.guest = guest;
 
           if (evip) {
             var exclusive = JSON.parse(evip);

@@ -7,11 +7,12 @@
           <q-avatar size="70px">
             <img src="../assets/images/account/profile-pic.png" />
           </q-avatar>
+          <div class="profile-pic-frame" v-if="!homeProfile"></div>
         </div>
         <div class="profile-details-container">
           <div class="profile-name">
             {{ store.realName ? store.realName : store.nickName }}
-            <div class="vip-details" @click="router.push('/vip')">
+            <div class="vip-details" @click="onVipClick">
               <img src="../assets/images/index/icon-vip-badge.png" alt="" />
               <div class="vip-level">
                 {{ store.vip }}
@@ -40,7 +41,7 @@
           </template>
         </div>
 
-        <div class="profile-msg" v-if="homeProfile">
+        <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
         </div>
       </div>
@@ -51,9 +52,10 @@
 <script setup>
 import { ref } from "vue";
 import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps(["homeProfile"]);
+const route = useRoute();
 const router = useRouter();
 const store = userStore();
 
@@ -65,6 +67,10 @@ const refreshBalance = () => {
       isLoadingBalance.value = false;
     });
   }
+};
+
+const onVipClick = () => {
+  router.push({ path: "/vip", query: { redirect: route.path } });
 };
 </script>
 
@@ -89,6 +95,10 @@ const refreshBalance = () => {
       width: 100%;
       gap: 0;
       justify-content: space-between;
+
+      .profile-pic {
+        margin: 0;
+      }
     }
   }
 
@@ -99,6 +109,20 @@ const refreshBalance = () => {
     padding-top: 20px;
     padding-bottom: 20px;
     width: 100%;
+
+    .profile-pic {
+      position: relative;
+      margin: 6px 6px 6px 12px;
+    }
+    .profile-pic-frame {
+      background-image: url(../assets/images/common/profile-frame.png);
+      width: 90px;
+      height: 90px;
+      background-size: 100%;
+      position: absolute;
+      top: -12px;
+      left: -10px;
+    }
 
     .profile-details-container {
       display: flex;
@@ -135,6 +159,7 @@ const refreshBalance = () => {
           font-size: 10px;
           line-height: 1;
           padding-top: 2px;
+          padding-bottom: 4px;
         }
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrapper">
     <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
-      <q-btn fab class="bg-yellow" @click="router.push('/liveChat')">
+      <q-btn fab class="bg-yellow text-black btn-effect" @click="router.push('/liveChat')">
         <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
@@ -23,9 +23,6 @@
           </div>
         </marquee-text>
       </div>
-      <!-- <div class="share" @click="router.push('/promo?id=35')">
-      <RiUserShared2Line />
-    </div> -->
     </div>
 
     <q-carousel
@@ -63,14 +60,14 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
-        :img-src="imgURL + banner.mobileImageUrl"
+        :img-src="imgURLPromo + banner.mobileImageUrl"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
     </q-carousel>
 
     <div class="top-action">
-      <div class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true">Withdrawal</div>
-      <div class="action-btn action-btn--deposit" @click="depositDialog = true">Deposit</div>
+      <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
+      <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
     </div>
 
     <div class="games-selection-wrapper">
@@ -82,52 +79,33 @@
         </div>
         <img src="../assets/images/index/hot-elephant-right.png" alt="" />
       </div>
-      <div class="game-platform-wrapper">
-        <div class="game-platform-item">
-          <!-- <div
-            class="game-platform-img"
-            :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-          ></div> -->
-          <div class="game-platform-img">
-            <div
-              class="game--bg"
-              :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-            ></div>
-          </div>
-          <div class="game-platform-title">Foutune Tiger</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Mouse</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Ox</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Rocket Crash</div>
-        </div>
 
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Rocket Game</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Game Bonanza</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Crazy777</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Rabbit</div>
-        </div>
+      <div class="game-platform-wrapper">
+        <template v-for="(item, index) in hotGameList" :key="index">
+          <template v-if="index < 8">
+            <div
+              class="game-platform-item btn-effect"
+              @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+            >
+              <div class="game-platform-img">
+                <div
+                  class="game--bg"
+                  :style="{
+                    backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                  }"
+                ></div>
+              </div>
+
+              <div class="game-platform-title">{{ item.name }}</div>
+            </div>
+          </template>
+        </template>
       </div>
       <div class="hot-games-pattern-bottom"></div>
-      <div class="btn-load-more">Load More</div>
+      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">
+        Load More
+      </div>
+      <div v-else class="hot-games-pattern-bottom--filled"></div>
     </div>
 
     <div class="games-selection-wrapper">
@@ -138,14 +116,29 @@
 
       <div class="game-platform-container">
         <template v-for="(item, index) in slot" :key="index">
-          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)">
-            <img :src="require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)" />
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+          >
+            <img src="../assets/images/index/slot/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
         <!-- coming soon placeholder // start -->
-        <div class="game-platform-item">
+        <!-- <div class="game-platform-item">
           <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
-        </div>
+        </div> -->
         <!-- coming soon placeholder // end -->
       </div>
     </div>
@@ -158,10 +151,22 @@
       <div class="game-platform-container">
         <template v-for="(item, index) in livecasino" :key="index">
           <div
-            class="game-platform-item"
+            class="game-platform-item btn-effect"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
           >
-            <img :src="require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)" />
+            <img src="../assets/images/index/live/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
         <!-- coming soon placeholder // start -->
@@ -186,22 +191,6 @@
           <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
           <div class="game-platform-title">COMING SOON</div>
         </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
       </div>
     </div> -->
 
@@ -213,21 +202,25 @@
 
       <div class="game-platform-container">
         <template v-for="(item, index) in fishing" :key="index">
-          <!-- <div
-            class="game-platform-item"
-            @click="playGame(item.name, item.code)"
-            v-if="item.code === 'JILI' || item.code === 'JDB'"
-          > -->
-          <!-- @click="playGame(item.name, item.code, item.code, item.status, item.gameType, item.id)" -->
-          <div class="game-platform-item" @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)">
-            <img :src="require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)" />
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
+          >
+            <img src="../assets/images/index/fish/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
-        <!-- coming soon placeholder // start -->
-        <!-- <div class="game-platform-item">
-          <img src="../assets/images/index/live/item-game-comingsoon.png" alt="" />
-        </div> -->
-        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
@@ -239,10 +232,22 @@
       <div class="game-platform-container sport-platform">
         <template v-for="(item, index) in sport" :key="index">
           <div
-            class="game-platform-item"
+            class="game-platform-item btn-effect"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
           >
-            <img :src="require(`../assets/images/index/sport/item-game-${item.code.toLowerCase()}.png`)" />
+            <img src="../assets/images/index/sport/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/sport/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
       </div>
@@ -351,30 +356,44 @@
 
           <div class="games-selection-wrapper">
             <div class="game-platform-wrapper">
-              <template v-for="(item, index) in filteredSubGameList" :key="index">
-                <div
-                  class="game-platform-item"
-                  @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
-                >
-                  <!-- <div
-                    class="game-platform-img"
-                    :style="{
-                      backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
-                    }"
-                  ></div> -->
-                  <div class="game-platform-img">
-                    <div
-                      class="game--bg"
-                      :style="{
-                        backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
-                      }"
-                    ></div>
+              <template v-if="hotGameOn">
+                <template v-for="(item, index) in filteredHotGameList" :key="index">
+                  <div
+                    class="game-platform-item"
+                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  >
+                    <div class="game-platform-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                        }"
+                      ></div>
+                    </div>
+                    <div class="game-platform-title">{{ item.name }}</div>
                   </div>
-                  <div class="game-platform-title">{{ item.name }}</div>
-                </div>
+                </template>
+              </template>
+
+              <template v-else>
+                <template v-for="(item, index) in filteredSubGameList" :key="index">
+                  <div
+                    class="game-platform-item"
+                    @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                  >
+                    <div class="game-platform-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                        }"
+                      ></div>
+                    </div>
+                    <div class="game-platform-title">{{ item.name }}</div>
+                  </div>
+                </template>
               </template>
             </div>
-            <!-- <div class="btn-load-more">Load More</div> -->
           </div>
         </div>
       </q-card-section>
@@ -388,105 +407,7 @@
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
         </div>
-
-        <q-tabs
-          v-model="withdrawalDialogTab"
-          dense
-          no-caps
-          class="withdrawal-tab"
-          indicator-color="transparent"
-          align="justify"
-        >
-          <q-tab name="backcard" label="Backcard" />
-          <q-tab name="upi" label="UPI" />
-        </q-tabs>
-
-        <q-tab-panels
-          class="withdrawal-tab-panel"
-          v-model="withdrawalDialogTab"
-          animated
-          transition-prev="fade"
-          transition-next="fade"
-        >
-          <q-tab-panel name="backcard">
-            <div class="withdrawal-table">
-              <div class="w-tbl-row">
-                <div class="w-tbl-col">Cash Balance:</div>
-                <div class="w-tbl-col"><span class="w-txt-red">1731.5</span></div>
-              </div>
-              <div class="w-tbl-row">
-                <div class="w-tbl-col">Withdrawable:</div>
-                <div class="w-tbl-col">0</div>
-              </div>
-              <div class="w-tbl-row">
-                <div class="w-tbl-col">Remaining Wager:</div>
-                <div class="w-tbl-col">30822.5</div>
-              </div>
-            </div>
-          </q-tab-panel>
-          <q-tab-panel name="upi">
-            <div class="withdrawal-table">
-              <div class="w-tbl-row">
-                <div class="w-tbl-col">Cash Balance:</div>
-                <div class="w-tbl-col"><span class="w-txt-red">1731.5</span></div>
-              </div>
-              <div class="w-tbl-row">
-                <div class="w-tbl-col">Withdrawable:</div>
-                <div class="w-tbl-col">0</div>
-              </div>
-              <div class="w-tbl-row">
-                <div class="w-tbl-col">Remaining Wager:</div>
-                <div class="w-tbl-col">30822.5</div>
-              </div>
-            </div>
-          </q-tab-panel>
-        </q-tab-panels>
-
-        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'backcard'">
-          <div class="w-form-item w-form-item--bankcard">
-            <div class="w-form-label">Withdraw Amount</div>
-            <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
-            </div>
-          </div>
-          <div class="w-form-item w-form-item--bankcard">
-            <div class="w-form-label">Account Holder Name</div>
-            <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Account Holder Name"></q-input>
-            </div>
-          </div>
-          <div class="w-form-item w-form-item--bankcard">
-            <div class="w-form-label">Account Number</div>
-            <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Account Number"></q-input>
-            </div>
-          </div>
-          <div class="w-form-item w-form-item--bankcard">
-            <div class="w-form-label">Bank IFSC Code</div>
-            <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Bank IFSC Code"></q-input>
-            </div>
-          </div>
-        </div>
-
-        <div class="withdrawal-form" v-if="withdrawalDialogTab === 'upi'">
-          <div class="w-form-item w-form-item--upi">
-            <div class="w-form-label">Withdraw Amount</div>
-            <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
-            </div>
-          </div>
-          <div class="w-form-item w-form-item--upi">
-            <div class="w-form-label">VPA</div>
-            <div class="w-form-input">
-              <q-input filled dense clearable placeholder="Enter VPA"></q-input>
-            </div>
-          </div>
-        </div>
-
-        <div class="btn-go">Go</div>
-
-        <div class="bottom-tnc">3%+6Rs of the withdrawal amount would be deducted as bank commission</div>
+        <WithdrawalComponent></WithdrawalComponent>
       </div>
     </div>
   </q-dialog>
@@ -498,51 +419,14 @@
         <div class="popout-main-title">
           <div class="txt-title">Deposit</div>
         </div>
-        <div class="deposit-item-container">
-          <template v-for="(item, index) in depositItems" :key="index">
-            <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
-              <div class="deposit-icon">
-                <img
-                  :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
-                  :alt="item.amount + ' Coin'"
-                />
-                <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
-              </div>
-              <div class="deposit-amt">{{ item.amount }}</div>
-            </div>
-          </template>
-        </div>
-        <div class="deposit-enter-amt">
-          <div>Amount</div>
-          <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
-        </div>
-        <div class="deposit-options">
-          <q-btn
-            flat
-            class="deposit-option-btn"
-            :class="{ active: isUpi1Active }"
-            label="UPI1"
-            @click="handleDepositUpiClick(1)"
-          />
-          <q-btn
-            flat
-            class="deposit-option-btn label-on-discount"
-            :class="{ active: isUpi2Active }"
-            label="UPI2"
-            @click="handleDepositUpiClick(2)"
-          />
-
-          <!-- <q-btn flat class="deposit-option-btn active" label="UPI1" />
-          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" /> -->
-        </div>
-        <div class="btn-go">Go</div>
+        <DepositComponent />
       </div>
     </div>
   </q-dialog>
 </template>
 
-<script>
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+<script setup>
+import { onMounted, ref, reactive, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -552,762 +436,456 @@ import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpFill } from "vue-remix-icons";
 import { App } from "@capacitor/app";
-
 import { useUI } from "stores/ui";
-
-import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import WithdrawalComponent from "../components/WithdrawalComponent.vue";
+import DepositComponent from "../components/depositComponent.vue";
 
-export default defineComponent({
-  name: "IndexPage",
-  components: {
-    GameModal,
-    MarqueeText,
-    RiVolumeUpFill,
-    ProfileSummary
-  },
-  setup() {
-    const isFirstView = ref(false);
-    const closeAlert = () => {
-      localStorage.setItem("indexImgTop", new Date().getTime());
-      isFirstView.value = false;
-    };
+const slide = ref(0);
 
-    const fullGameDialog = ref(false);
-    const searchText = ref("");
+const isFirstView = ref(false);
+const closeAlert = () => {
+  localStorage.setItem("indexImgTop", new Date().getTime());
+  isFirstView.value = false;
+};
 
-    const depositDialog = ref(false);
-    const depositItems = reactive([
-      { amount: 100, hotLabel: 5, isActive: false },
-      { amount: 300, hotLabel: 15, isActive: false },
-      { amount: 500, hotLabel: 25, isActive: false },
-      { amount: 1000, hotLabel: 50, isActive: false },
-      { amount: 3000, hotLabel: 150, isActive: false },
-      { amount: 5000, hotLabel: 250, isActive: false },
-      { amount: 10000, hotLabel: 500, isActive: false },
-      { amount: 30000, hotLabel: 1500, isActive: false },
-      { amount: 50000, hotLabel: 2500, isActive: false }
-    ]);
+const fullGameDialog = ref(false);
+const searchText = ref("");
 
-    const handleDepositItemClick = (index) => {
-      depositItems.forEach((item, i) => {
-        item.isActive = i === index;
-        if (i === index) {
-          depositAmountInput.value = item.amount;
-        }
-      });
-    };
+const withdrawalDialog = ref(false);
+const onWithdrawalClick = () => {
+  withdrawalDialog.value = true;
+};
 
-    const isUpi1Active = ref(true);
-    const isUpi2Active = ref(false);
+const depositDialog = ref(false);
+const openDepositDialog = () => {
+  depositDialog.value = true;
+};
 
-    const handleDepositUpiClick = (option) => {
-      if (option === 1) {
-        isUpi1Active.value = true;
-        isUpi2Active.value = false;
-      } else if (option === 2) {
-        isUpi1Active.value = false;
-        isUpi2Active.value = true;
-      }
-    };
+const depositItems = reactive([
+  { amount: 100, hotLabel: 5, isActive: false },
+  { amount: 300, hotLabel: 15, isActive: false },
+  { amount: 500, hotLabel: 25, isActive: false },
+  { amount: 1000, hotLabel: 50, isActive: false },
+  { amount: 3000, hotLabel: 150, isActive: false },
+  { amount: 5000, hotLabel: 250, isActive: false },
+  { amount: 10000, hotLabel: 500, isActive: false },
+  { amount: 30000, hotLabel: 1500, isActive: false },
+  { amount: 50000, hotLabel: 2500, isActive: false }
+]);
 
-    const withdrawalDialog = ref(false);
-    const withdrawalDialogTab = ref("");
-    const depositAmountInput = ref("");
-
-    const esport = ref([]);
-    const sport = ref([]);
-    const livecasino = ref([]);
-    const poker = ref([]);
-    const lottery = ref([]);
-    const slot = ref([]);
-    const fishing = ref([]);
-    const casuals = ref([]);
-
-    const ui = useUI();
-    const scrollPageRef = ref(null);
-    const isH5 = ref(false);
-    const checkPlatform = () => {
-      //Is iOS Webclip App || Is Android Apk
-      if (
-        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
-      ) {
-        isH5.value = false;
-      } else {
-        isH5.value = true;
-      }
-    };
-
-    ui.$onAction(({ name, args }) => {
-      switch (name) {
-        case "setScrollPosition":
-          scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-      }
-    });
-    const $q = useQuasar();
-    const banners = ref(null);
-    const route = useRoute();
-    const router = useRouter();
-    const store = userStore();
-    const mainWallet = computed(() => {
-      return store.balance;
-    });
-    const allGames = ref(null);
-    const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-      // console.log("gameName: ", gameName);
-      // console.log("platformCode: ", platformCode);
-      // console.log("gameCode: ", gameCode);
-      // console.log("gameStatus: ", gameStatus);
-      // console.log("gameInfo", gameInfo)
-
-      allGames.value.open(gameName, platformCode, gameCode, gameType);
-
-      // open = (gameName, platformCode, gameCode, gameType)
-
-      // gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
-    };
-
-    const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-      // console.log("gameName: ", gameName);
-      // console.log("platformCode: ", platformCode);
-      // console.log("gameCode: ", gameCode);
-      // console.log("gameStatus: ", gameStatus);
-      // console.log("gameType: ", gameType);
-      // console.log("gameId: ", gameId);
-
-      subGameCode.value = platformCode;
-      loadGameList(gameType, gameId);
-      fullGameDialog.value = true;
-    };
-
-    const subGameList = ref([]);
-    // const filteredSubGameList = computed(() => {
-    //   return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
-    // });
-    const filteredSubGameList = computed(() => {
-      if (searchText.value) {
-        return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
-      } else {
-        return subGameList.value;
-      }
-    });
-
-    const subGameCode = ref("");
-
-    const loadGameList = (type, id) => {
-      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-      const code = id;
-      const gameType = type;
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
-
-      // cached
-      cached
-        .get(key, () =>
-          api
-            .get("/platformGames", {
-              params: {
-                platformId: code,
-                gameType: gameType,
-                device: regDevice
-              }
-            })
-            .then((ret) => {
-              const res = ret;
-              if (res.code === 0) {
-                // isLoading.value = false;
-                return res;
-              }
-            })
-            .catch((err) => {
-              // isLoading.value = false;
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: "Loading failed",
-              //   icon: "report_problem"
-              // });
-            })
-        )
-        .then((res) => {
-          // isLoading.value = false;
-          // console.log(res, " ___res");
-          subGameList.value = res;
-
-          // debugger;
-          // if (currentSelectedMenu.value === "casual") {
-          //   miniGames.value = [];
-          //   let minis = _.orderBy(res, "sequence");
-          //   minis.forEach((mini) => {
-          //     mini.lists = [];
-          //   });
-          //   let games = [];
-          //   minis.forEach((mini) => {
-          //     if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
-          //       games.push(mini);
-          //     } else {
-          //       miniGames.value.push(mini);
-          //     }
-          //   });
-
-          //   // console.log(games);
-
-          //   games.forEach((game) => {
-          //     let index = _.findIndex(miniGamesMore.value, function (o) {
-          //       return game.name.indexOf(o.name) > -1;
-          //     });
-          //     if (game.name.indexOf("(铜)") > -1) {
-          //       miniGamesMore.value[index]["copper"] = game.code;
-          //     } else if (game.name.indexOf("(银)") > -1) {
-          //       miniGamesMore.value[index]["silver"] = game.code;
-          //     } else if (game.name.indexOf("(金)") > -1) {
-          //       miniGamesMore.value[index]["gold"] = game.code;
-          //     }
-          //   });
-          //   // console.log(miniGamesMore.value);
-          // } else {
-          //   res.forEach((element) => {
-          //     element.default = require("../assets/images/games/aviator/default.png");
-          //     element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
-          //       element.icon
-          //     }.png`;
-          //   });
-          //   gameListData.value = res;
-          //   gamePage.total = res.length;
-          //   changePage(1, gamePage.pageSize);
-          // }
-        });
-    };
-
-    const imgURLGame = process.env.IMAGE_CDN + "/game/5/";
-
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
-
-    const imgURLLocal = "http://";
-
-    // Pop out ads banner
-    const isImportantAnnoucementModal = ref(false);
-    const homePopupImg = ref("");
-    const homePopupContent = ref("");
-    const homePopupType = ref("");
-    const homePopupId = ref(0);
-    const homePopupFrequency = ref(0);
-    const homePopupFrequencyNum = ref(0);
-
-    const setExpiryBanner = () => {
-      if (homePopupFrequencyNum.value !== 0) {
-        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-      }
-      isImportantAnnoucementModal.value = false;
-    };
-
-    const setWithExpiry = (key, value, interval) => {
-      const now = new Date();
-      const item = {
-        value: value,
-        expiry: now.getTime() + interval,
-        id: homePopupId.value,
-        frequency: homePopupFrequency.value
-      };
-      sessionStorage.setItem(key, JSON.stringify(item));
-    };
-
-    const getWithExpiry = (key) => {
-      const itemStr = sessionStorage.getItem(key);
-      if (!itemStr) {
-        return null;
-      }
-      const item = JSON.parse(itemStr);
-      const now = new Date();
-      api
-        .get("/member/ads-popout")
-        .then((res) => {
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
-            return null;
-          }
-        })
-        .catch(() => {});
-      return item.value;
-    };
-
-    const isImpt = getWithExpiry("isImpt");
-
-    const checkShowImgTop = () => {
-      const lastTime = sessionStorage.getItem("indexImgTop");
-      if (lastTime) {
-        const diff = new Date().getTime() - Number(lastTime);
-        if (diff > 1000 * 60 * 60 * 12) {
-          isFirstView.value = true;
-        }
-      } else {
-        api
-          .get("/member/ads-popout")
-          .then((res) => {
-            if (res.code === 0) {
-              // if (res.data[id] !== null) {
-              if (isImpt === null) {
-                switch (res.data["frequency"]) {
-                  case "EVERYTIME":
-                    homePopupFrequencyNum.value = 0;
-                    break;
-                  case "EVERYDAY":
-                    homePopupFrequencyNum.value = 86400000; // 24hrs
-                    break;
-                  case "SESSION":
-                    homePopupFrequencyNum.value = 7866432000; // 3months
-                    break;
-                  default:
-                    homePopupFrequencyNum.value = 10000;
-                    break;
-                }
-                isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
-                homePopupContent.value = res.data["content"];
-                homePopupType.value = res.data["type"];
-                homePopupId.value = res.data["id"];
-                homePopupFrequency.value = res.data["frequency"];
-                // if (homePopupImg.value) {
-                isFirstView.value = true;
-                // }
-              }
-              // } else {
-              // isImportantAnnoucementModal.value = false;
-              // }
-            }
-          })
-          .catch(() => {});
-      }
-    };
-
-    const homeBannerData = ref({
-      code: 0,
-      data: [
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-01.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-02.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-03.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-04.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-05.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-06.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        }
-      ]
-    });
-
-    function loadData() {
-      api
-        .get("/promo/banner?category=HOME")
-        .then((res) => {
-          if (res.code === 0) {
-            banners.value = res.data;
-            // banners.value = homeBannerData.value.data;
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: res.data.message,
-            //   icon: "report_problem"
-            // });
-          }
-          // banners.value = response.data;
-        })
-        .catch(() => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
-        });
+const handleDepositItemClick = (index) => {
+  depositItems.forEach((item, i) => {
+    item.isActive = i === index;
+    if (i === index) {
+      depositAmountInput.value = item.amount;
     }
+  });
+};
 
-    const platforms = ref([]);
-    const selectedPlatId = ref();
-    const selectedPlat = ref(platforms.value[0]);
-    const gamePage = reactive({
-      gameList: [],
-      currentPage: 1,
-      pageSize: 40,
-      searchType: "",
-      searchKey: "",
-      total: 0
-    });
-    const gameListData = ref([]);
-    const fishPlatforms = ref([]);
+const isUpi1Active = ref(true);
+const isUpi2Active = ref(false);
 
-    var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
-    var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+const handleDepositUpiClick = (option) => {
+  if (option === 1) {
+    isUpi1Active.value = true;
+    isUpi2Active.value = false;
+  } else if (option === 2) {
+    isUpi1Active.value = false;
+    isUpi2Active.value = true;
+  }
+};
 
-    const getPlatList = () => {
-      cached
-        .get(platformApiKey, () =>
-          api.get(platformApiUrl).then((res) => {
-            return res;
-          })
-        )
-        .then((data) => {
-          var pf = data;
-          ui.slotLists = [];
-          pf.forEach((element) => {
-            const platTypes = element.gameType.split(",");
-            // console.log(platTypes);
-            if (platTypes.indexOf("ESPORT") > -1) {
-              var espObj = Object.assign({}, element);
-              // console.log(espObj);
+const depositAmountInput = ref("");
 
-              if (espObj.code === "TFGaming") {
-                espObj.title = "兴發电竞";
-              }
-              if (espObj.code === "IA") {
-                espObj.title = "小艾电竞";
-              }
-              if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
-              }
-              if (!espObj.title) {
-                espObj.title = espObj.code + "电竞";
-              }
-              espObj.icon = "esport";
-              espObj.subtitle = "电竞赛事";
-              esport.value.push(espObj);
+const esport = ref([]);
+const sport = ref([]);
+const livecasino = ref([]);
+const poker = ref([]);
+const lottery = ref([]);
+const slot = ref([]);
+const fishing = ref([]);
+const casuals = ref([]);
 
-              //Add 1 More Casual minigame.
-              // if (platTypes.indexOf("CASUAL") > -1) {
-              var casualObj = Object.assign({}, element);
-              casualObj.gameCode = "casual";
-              casualObj.title = casualObj.name + " 小游戏";
-              casualObj.icon = "casual";
-              casualObj.subtitle = "小游戏";
-              casuals.value.push(casualObj);
-              // }
-            }
-            if (platTypes.indexOf("SPORT") > -1) {
-              var spObj = Object.assign({}, element);
-              if (spObj.code === "IM") {
-                spObj.title = "IM体育";
-              }
-              if (spObj.code === "IA") {
-                spObj.title = "小艾体育";
-              }
-              if (spObj.code === "PM") {
-                spObj.title = "熊猫体育";
-              }
-              if (spObj.code === "CR") {
-                spObj.title = "CR体育";
-              }
-              if (spObj.code === "SABA") {
-                spObj.title = spObj.code + "体育";
-              }
-              spObj.icon = "sport";
-              spObj.subtitle = "体育赛事";
-              sport.value.push(spObj);
-            }
-            if (platTypes.indexOf("LIVE") > -1) {
-              var liveObj = Object.assign({}, element);
-              if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB 真人";
-              } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE 真人";
-              } else {
-                liveObj.title = liveObj.name + " 真人";
-              }
-              liveObj.icon = "live";
-              liveObj.subtitle = "真人娱乐";
-              livecasino.value.push(liveObj);
-            }
-            if (platTypes.indexOf("SLOT") > -1) {
-              // console.log(element)
-              var slotObj = Object.assign({}, element);
-              slotObj.title = translateRecord(slotObj.name) + " 电子";
-              slotObj.icon = "slot";
-              slotObj.subtitle = "电子游戏";
-              // console.log(slotObj);
-              if (slotObj.code === "AG") {
-              } else {
-                let slotItem = {
-                  id: slotObj.id,
-                  code: slotObj.code,
-                  icon: slotObj.name
-                };
-                // console.log(slotItem);
-                ui.slotLists.push(slotItem);
-                slot.value.push(slotObj);
-              }
-            }
-            if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
-              var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
-              fishObj.icon = "fish";
-              fishObj.subtitle = "捕鱼游戏";
-              fishing.value.push(fishObj);
-            }
-            if (platTypes.indexOf("POKER") > -1) {
-              var pokerObj = Object.assign({}, element);
-              pokerObj.title = translateRecord(pokerObj.name);
-              pokerObj.icon = "poker";
-              pokerObj.subtitle = "棋牌娱乐";
-              poker.value.push(pokerObj);
-            }
-            if (platTypes.indexOf("LOTTERY") > -1) {
-              var lottObj = Object.assign({}, element);
-              lottObj.title = lottObj.name + " 彩票";
-              lottObj.icon = "lottery";
-              lottObj.subtitle = "彩票游戏";
-              //HArdCode hid BBIN
-              if (lottObj.code !== "BBINDY") {
-                lottery.value.push(lottObj);
-              }
-            }
-          });
+const ui = useUI();
+const scrollPageRef = ref(null);
+const isH5 = ref(false);
+const checkPlatform = () => {
+  //Is iOS Webclip App || Is Android Apk
+  if (
+    (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
+    (Platform.is.android && Platform.is.capacitor)
+  ) {
+    isH5.value = false;
+  } else {
+    isH5.value = true;
+  }
+};
+
+ui.$onAction(({ name, args }) => {
+  switch (name) {
+    case "setScrollPosition":
+      scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
+  }
+});
+const qs = require("qs");
+const $q = useQuasar();
+const banners = ref(null);
+const route = useRoute();
+const router = useRouter();
+const store = userStore();
+
+const allGames = ref(null);
+const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  allGames.value.open(gameName, platformCode, gameCode, gameType);
+};
+
+const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  subGameCode.value = platformCode;
+  loadGameList(gameType, gameId);
+  fullGameDialog.value = true;
+  hotGameOn.value = false;
+};
+
+const hotGameOn = ref(false);
+const subGameList = ref([]);
+const filteredSubGameList = computed(() => {
+  if (searchText.value) {
+    return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+  } else {
+    return subGameList.value;
+  }
+});
+
+const subGameCode = ref("");
+
+const openHotGame = (hotGameList) => {
+  subGameList.value = hotGameList;
+  fullGameDialog.value = true;
+  hotGameOn.value = true;
+};
+
+const hotGameList = ref([]);
+
+const filteredHotGameList = computed(() => {
+  if (searchText.value) {
+    return hotGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+  } else {
+    return hotGameList.value;
+  }
+});
+
+const loadHotGameList = () => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const key = `PLATFORM_HOT_GAMES_${regDevice}`;
+
+  // cached
+  cached
+    .get(key, () =>
+      api
+        .get("/platformGamesByLabel", {
+          params: {
+            gameLabel: "HOT",
+            device: regDevice
+          }
         })
-        .catch((err) => {});
-    };
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
+    .then((res) => {
+      hotGameList.value = res;
+    });
+};
 
-    const liveTabs = ref("");
-    const searchList = () => {
-      if (gamePage.searchKey) {
-        gamePage.gameList = gameListData.value.filter((game) => {
-          return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
-        });
+const loadGameList = (type, id) => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const code = id;
+  const gameType = type;
+  const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+
+  // cached
+  cached
+    .get(key, () =>
+      api
+        .get("/platformGames", {
+          params: {
+            platformId: code,
+            gameType: gameType,
+            device: regDevice
+          }
+        })
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
+    .then((res) => {
+      subGameList.value = res;
+    });
+};
+
+const imgURL = process.env.IMAGE_CDN;
+const imgURLGame = imgURL + "/game/5/";
+const imgURLPromo = imgURL + "/promo/";
+
+// Pop out ads banner
+const isImportantAnnoucementModal = ref(false);
+const homePopupImg = ref("");
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+
+const setExpiryBanner = () => {
+  if (homePopupFrequencyNum.value !== 0) {
+    setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+  }
+  isImportantAnnoucementModal.value = false;
+};
+
+const setWithExpiry = (key, value, interval) => {
+  const now = new Date();
+  const item = {
+    value: value,
+    expiry: now.getTime() + interval,
+    id: homePopupId.value,
+    frequency: homePopupFrequency.value
+  };
+  sessionStorage.setItem(key, JSON.stringify(item));
+};
+
+function loadData() {
+  api
+    .get("/promo/banner?category=HOME")
+    .then((res) => {
+      if (res.code === 0) {
+        banners.value = res.data;
       } else {
-        changePage(1, gamePage.pageSize);
+        // $q.notify({
+        //   color: "negative",
+        //   position: "top",
+        //   message: res.data.message,
+        //   icon: "report_problem"
+        // });
       }
-    };
+      // banners.value = response.data;
+    })
+    .catch(() => {
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: "Loading failed",
+      //   icon: "report_problem"
+      // });
+    });
+}
 
-    const changePage = (page, pageSize) => {
-      gamePage.gameList = gameListData.value;
-      // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
-    };
+var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
+var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
-    const isLoadingBalance = ref(false);
-    const refreshBalance = () => {
-      if (store.token) {
-        isLoadingBalance.value = true;
-        store.getBalance().then((res) => {
-          isLoadingBalance.value = false;
-        });
-      }
-    };
+const getPlatList = () => {
+  cached
+    .get(platformApiKey, () =>
+      api.get(platformApiUrl).then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      var pf = data;
+      ui.slotLists = [];
+      pf.forEach((element) => {
+        const platTypes = element.gameType.split(",");
+        // console.log(platTypes);
+        if (platTypes.indexOf("ESPORT") > -1) {
+          var espObj = Object.assign({}, element);
+          // console.log(espObj);
 
-    const announcementList = ref([]);
-    const announcementTypes = ref([]);
-    const loadAnnouncement = () => {
-      api.get("/announcement").then((res) => {
-        if (res.code === 0) {
-          if (res.data.announcements) {
-            const d = res.data.announcements;
-            announcementList.value = d;
+          esport.value.push(espObj);
+
+          //Add 1 More Casual minigame.
+          // if (platTypes.indexOf("CASUAL") > -1) {
+          var casualObj = Object.assign({}, element);
+          casualObj.gameCode = "casual";
+          casualObj.title = casualObj.name + " 小游戏";
+          casualObj.icon = "casual";
+          casualObj.subtitle = "小游戏";
+          casuals.value.push(casualObj);
+          // }
+        }
+        if (platTypes.indexOf("SPORT") > -1) {
+          var spObj = Object.assign({}, element);
+          if (spObj.code === "IM") {
+            spObj.title = "IM体育";
           }
-          if (res.data.type) {
-            announcementTypes.value = res.data.type;
-            activeKey.value = res.data.type[0].id;
+          if (spObj.code === "IA") {
+            spObj.title = "小艾体育";
           }
-          // announcementList.value = d.announcements
-          // announcementList.value = res.data.announcements
+          if (spObj.code === "PM") {
+            spObj.title = "熊猫体育";
+          }
+          if (spObj.code === "CR") {
+            spObj.title = "CR体育";
+          }
+          if (spObj.code === "SABA") {
+            spObj.title = spObj.code + "体育";
+          }
+          spObj.icon = "sport";
+          spObj.subtitle = "体育赛事";
+          sport.value.push(spObj);
+        }
+        if (platTypes.indexOf("LIVE") > -1) {
+          var liveObj = Object.assign({}, element);
+          if (liveObj.code === "PMLIVE") {
+            liveObj.title = "DB 真人";
+          } else if (liveObj.code === "EBET") {
+            liveObj.title = "WE 真人";
+          } else {
+            liveObj.title = liveObj.name + " 真人";
+          }
+          liveObj.icon = "live";
+          liveObj.subtitle = "真人娱乐";
+          livecasino.value.push(liveObj);
+        }
+        if (platTypes.indexOf("SLOT") > -1) {
+          // console.log(element)
+          var slotObj = Object.assign({}, element);
+          slotObj.title = translateRecord(slotObj.name) + " 电子";
+          slotObj.icon = "slot";
+          slotObj.subtitle = "电子游戏";
+          // console.log(slotObj);
+          if (slotObj.code === "AG") {
+          } else {
+            let slotItem = {
+              id: slotObj.id,
+              code: slotObj.code,
+              icon: slotObj.name
+            };
+            // console.log(slotItem);
+            ui.slotLists.push(slotItem);
+            slot.value.push(slotObj);
+          }
+        }
+        if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
+          var fishObj = Object.assign({}, element);
+          fishObj.title = fishObj.name + " 捕鱼";
+          fishObj.icon = "fish";
+          fishObj.subtitle = "捕鱼游戏";
+          fishing.value.push(fishObj);
+        }
+        if (platTypes.indexOf("POKER") > -1) {
+          var pokerObj = Object.assign({}, element);
+          pokerObj.title = translateRecord(pokerObj.name);
+          pokerObj.icon = "poker";
+          pokerObj.subtitle = "棋牌娱乐";
+          poker.value.push(pokerObj);
+        }
+        if (platTypes.indexOf("LOTTERY") > -1) {
+          var lottObj = Object.assign({}, element);
+          lottObj.title = lottObj.name + " 彩票";
+          lottObj.icon = "lottery";
+          lottObj.subtitle = "彩票游戏";
+          //HArdCode hid BBIN
+          if (lottObj.code !== "BBINDY") {
+            lottery.value.push(lottObj);
+          }
         }
       });
-    };
-    const isStationNotice = ref(false);
-    const noticeTitle = ref("");
-    const activeKey = ref(null);
-    const openPopup = (noticeType) => {
-      if (noticeType) {
-        noticeTitle.value = "Announcement";
-        isStationNotice.value = true;
+    })
+    .catch((err) => {});
+};
+
+const announcementList = ref([]);
+const announcementTypes = ref([]);
+const loadAnnouncement = () => {
+  api.get("/announcement").then((res) => {
+    if (res.code === 0) {
+      if (res.data.announcements) {
+        const d = res.data.announcements;
+        announcementList.value = d;
       }
-    };
-    const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      // router.push(`${redirectU}`);
-    };
-
-    const download_url = ref("");
-    const isAppUpdateModal = ref(false);
-    const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
-        const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        // alert(info.version);
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
-        // info.version && info.build
-        const appType = "ALL";
-        const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
-        // console.log(res);
-        if (res.code === 0) {
-          var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
-          download_url.value = res.data.url;
-
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
-          if (latest_ver_no > current_version) {
-            isAppUpdateModal.value = true;
-          }
-        }
+      if (res.data.type) {
+        announcementTypes.value = res.data.type;
+        activeKey.value = res.data.type[0].id;
       }
-    };
-
-    const openDownloadPage = () => {
-      window.open(download_url.value, "_system");
-      isAppUpdateModal.value = false;
-    };
-    const cancelUpdate = () => {
-      isAppUpdateModal.value = false;
-    };
-
-    const closeTopBox = () => {
-      isH5.value = false;
-      var btmSwiper = document.getElementById("btm-second-swiper");
-      btmSwiper.classList.add("longer-swiper");
-    };
-
-    const downloadUrl = ref("");
-
-    const getAppDownloadUrl = () => {
-      api
-        .get("/config/appDownloadUrl")
-        .then((res) => {
-          // console.log(res);
-          downloadUrl.value = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    onMounted(() => {
-      getPlatList();
-      loadData();
-      loadAnnouncement();
-      checkPlatform();
-      getVersionNo();
-      checkShowImgTop();
-      getAppDownloadUrl();
-
-      withdrawalDialogTab.value = "backcard";
-    });
-    const imageLoading = ref(false);
-    const selectedLiveTab = ref();
-
-    return {
-      loadGameList,
-      imageLoading,
-      slide: ref(0),
-      tab: ref("esport"),
-      gamesTab: ref(platforms.value[0]),
-      splitterModel: ref(27),
-      imgURL,
-      imgURLGame,
-      imgURLLocal,
-      banners,
-      store,
-      platforms,
-      mainWallet,
-      playGame,
-      openGame,
-      allGames,
-      gamePage,
-      selectedPlatId,
-      searchList,
-      liveTabs,
-      selectedLiveTab,
-      scrollPageRef,
-      announcementList,
-      isStationNotice,
-      openPopup,
-      noticeTitle,
-      announcementTypes,
-      activeKey,
-      gotoPromo,
-      router,
-      sport,
-      esport,
-      slot,
-      livecasino,
-      casuals,
-      poker,
-      fishing,
-      lottery,
-      isH5,
-      isFirstView,
-      closeAlert,
-      isAppUpdateModal,
-      cancelUpdate,
-      openDownloadPage,
-      homePopupImg,
-      refreshBalance,
-      isLoadingBalance,
-      closeTopBox,
-      getAppDownloadUrl,
-      downloadUrl,
-      getWithExpiry,
-      setWithExpiry,
-      setExpiryBanner,
-      homePopupContent,
-      homePopupType,
-      homePopupId,
-      homePopupFrequency,
-      homePopupFrequencyNum,
-      isImpt,
-      isImportantAnnoucementModal,
-      homeBannerData,
-      fullGameDialog,
-      searchText,
-      depositDialog,
-      depositItems,
-      handleDepositItemClick,
-      isUpi1Active,
-      isUpi2Active,
-      handleDepositUpiClick,
-      depositAmountInput,
-      withdrawalDialog,
-      withdrawalDialogTab,
-      subGameList,
-      filteredSubGameList,
-      subGameCode
-    };
+    }
+  });
+};
+const isStationNotice = ref(false);
+const noticeTitle = ref("");
+const activeKey = ref(null);
+const openPopup = (noticeType) => {
+  if (noticeType) {
+    noticeTitle.value = "Announcement";
+    isStationNotice.value = true;
   }
+};
+const gotoPromo = (banner) => {
+  const redirectU = "/promo?name=" + banner.redirectUrl;
+  // router.push(`${redirectU}`);
+};
+
+const download_url = ref("");
+const isAppUpdateModal = ref(false);
+const getVersionNo = async () => {
+  if (Platform.is.android && Platform.is.capacitor) {
+    const info = await App.getInfo();
+    var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+    // info.version && info.build
+    const appType = "ALL";
+    const device = Platform.is.android ? "ANDROID" : "IOS";
+    const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+    // console.log(res);
+    if (res.code === 0) {
+      var version_info = res.data.version;
+      var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+      download_url.value = res.data.url;
+      if (latest_ver_no > current_version) {
+        isAppUpdateModal.value = true;
+      }
+    }
+  }
+};
+
+const openDownloadPage = () => {
+  window.open(download_url.value, "_system");
+  isAppUpdateModal.value = false;
+};
+const cancelUpdate = () => {
+  isAppUpdateModal.value = false;
+};
+
+const downloadUrl = ref("");
+
+const getAppDownloadUrl = () => {
+  api
+    .get("/config/appDownloadUrl")
+    .then((res) => {
+      // console.log(res);
+      downloadUrl.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+onMounted(() => {
+  getPlatList();
+  loadData();
+  loadAnnouncement();
+  checkPlatform();
+  getVersionNo();
+  getAppDownloadUrl();
+  loadHotGameList();
 });
 </script>
 
@@ -1916,66 +1494,6 @@ export default defineComponent({
       }
     }
   }
-
-  .withdrawal-tab {
-    background-color: #896742;
-    border-top-right-radius: 16px;
-    border-top-left-radius: 16px;
-
-    .q-tab__label {
-      font-weight: 800;
-    }
-
-    .q-tab--active {
-      color: #000000;
-      background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
-    }
-  }
-
-  .withdrawal-tab-panel {
-    background: rgba(21, 0, 37, 0.3);
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-
-    .withdrawal-table {
-      display: flex;
-      gap: 10px;
-      flex-direction: column;
-
-      .w-tbl-row {
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .w-tbl-col {
-        font-weight: 700;
-
-        &:nth-child(2) {
-          font-size: 140%;
-        }
-      }
-
-      .w-txt-red {
-        color: #ff0000;
-      }
-    }
-  }
-
-  .withdrawal-form {
-    margin-top: 20px;
-    .w-form-item {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      margin-bottom: 12px;
-    }
-    .w-form-label {
-    }
-    .w-form-input {
-      background-color: rgba(21, 0, 37, 0.5);
-      border-radius: 5px;
-    }
-  }
 }
 </style>
 
@@ -2036,11 +1554,17 @@ export default defineComponent({
     &--withdrawal {
       background-image: url(../assets/images/index/action-btn-withdrawal.png);
       color: #ffffff;
+      &:before {
+        box-shadow: none;
+      }
     }
 
     &--deposit {
       background-image: url(../assets/images/index/action-btn-deposit.png);
       color: #fae576;
+      &:before {
+        box-shadow: none;
+      }
     }
 
     &:hover {
@@ -2070,6 +1594,16 @@ export default defineComponent({
     margin-top: 20px;
     margin-bottom: -40px;
     background-position: center center;
+
+    &--filled {
+      height: 15px;
+      width: 15px;
+      margin: 20px auto 10px;
+      border-radius: 50%;
+      background-color: #fbe984;
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .hot-games-container {
@@ -2157,24 +1691,10 @@ export default defineComponent({
       background-color: #cccccc;
       width: 100%;
       aspect-ratio: 1/1;
-      // height: calc(100% - 30px);
       background-size: cover;
       background-position: center center;
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
-
-      // &::before {
-      //   content: "";
-      //   background-image: url("../assets/images/index/mini-game-bg.png");
-      //   background-size: cover;
-      //   background-position: center center;
-      //   position: absolute;
-      //   top: 0;
-      //   left: 0;
-      //   width: 100%;
-      //   height: 100%;
-      //   z-index: 0;
-      // }
 
       .game--bg {
         background-size: cover;
@@ -2213,6 +1733,17 @@ export default defineComponent({
   }
 
   .game-platform-item {
+    position: relative;
+    &--img {
+      background-size: cover;
+      background-position: center center;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
     .game-platform-title {
       text-align: center;
       margin-top: 6px;
@@ -2243,29 +1774,6 @@ export default defineComponent({
   background-image: url(../assets/images/index/btn-load-more.png);
   color: #ffffff;
   margin: auto;
-}
-
-.btn-go {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  line-height: 1;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  font-weight: 700;
-  width: 180px;
-  height: 60px;
-  transition: 0.3s all;
-  background-image: url(../assets/images/index/popout/btn-go.png);
-  color: #ffffff;
-  margin: auto;
-}
-
-.bottom-tnc {
-  font-size: 80%;
-  text-align: center;
 }
 
 .floating-btn {
@@ -2299,86 +1807,6 @@ export default defineComponent({
 
   .fullgame-search {
     padding-top: 90px;
-  }
-}
-
-.profile-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px 0;
-
-  .profile-details-container {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-
-    .profile-name {
-      display: flex;
-      align-items: center;
-      line-height: 1;
-      gap: 10px;
-
-      .vip-details {
-        position: relative;
-        margin-left: 25px;
-
-        img {
-          display: block;
-          width: 40px;
-          position: absolute;
-          top: -6px;
-          left: -26px;
-        }
-
-        .vip-level {
-          background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-            linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-          border-radius: 0px 2px 5px 0px;
-          width: 45px;
-          height: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 10px;
-          line-height: 1;
-          padding-bottom: 1px;
-        }
-      }
-    }
-  }
-
-  .profile-balance {
-    position: relative;
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-    padding: 3px 0;
-    width: 130px;
-    font-size: 14px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: -9px;
-      left: -3px;
-      background: url(../assets/images/index/icon-balance.png) center/40px no-repeat;
-      display: block;
-      width: 40px;
-      height: 40px;
-    }
-
-    .balance-amount {
-      margin-left: 15px;
-    }
-  }
-
-  .profile-msg {
-    margin-left: auto;
-    margin-top: 30px;
   }
 }
 </style>
