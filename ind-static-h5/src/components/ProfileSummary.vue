@@ -7,6 +7,7 @@
           <q-avatar size="70px">
             <img src="../assets/images/account/profile-pic.png" />
           </q-avatar>
+          <div class="profile-pic-frame" v-if="!homeProfile"></div>
         </div>
         <div class="profile-details-container">
           <div class="profile-name">
@@ -94,6 +95,10 @@ const onVipClick = () => {
       width: 100%;
       gap: 0;
       justify-content: space-between;
+
+      .profile-pic {
+        margin: 0;
+      }
     }
   }
 
@@ -104,6 +109,20 @@ const onVipClick = () => {
     padding-top: 20px;
     padding-bottom: 20px;
     width: 100%;
+
+    .profile-pic {
+      position: relative;
+      margin: 6px 6px 6px 12px;
+    }
+    .profile-pic-frame {
+      background-image: url(../assets/images/common/profile-frame.png);
+      width: 90px;
+      height: 90px;
+      background-size: 100%;
+      position: absolute;
+      top: -12px;
+      left: -10px;
+    }
 
     .profile-details-container {
       display: flex;
