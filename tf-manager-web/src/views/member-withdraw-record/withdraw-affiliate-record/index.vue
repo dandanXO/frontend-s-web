@@ -244,7 +244,7 @@
               v-if="scope.row.withdrawDate !== null"
               v-formatter="{
                 data: scope.row.withdrawDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: siteTimeZone.timeZone,
                 type: 'date',
               }"
             />
@@ -262,7 +262,7 @@
               v-if="scope.row.checkDate !== null"
               v-formatter="{
                 data: scope.row.checkDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: siteTimeZone.timeZone,
                 type: 'date',
               }"
             />
@@ -293,7 +293,7 @@
               v-if="scope.row.paymentDate !== null"
               v-formatter="{
                 data: scope.row.paymentDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: siteTimeZone.timeZone,
                 type: 'date',
               }"
             />
@@ -569,7 +569,7 @@
               v-if="scope.row.operateTime !== null"
               v-formatter="{
                 data: scope.row.operateTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: siteTimeZone.timeZone,
                 type: 'date',
               }"
             />
@@ -852,7 +852,7 @@ import { onMounted, reactive, ref, computed } from 'vue'
 import moment from 'moment'
 import { getVipList } from '../../../api/vip'
 import { getFinancialLevels } from '../../../api/financial-level'
-import { getWithdrawBankList } from '../../../api/bank-info'
+import { getWithdrawBanks } from '../../../api/bank-info'
 import {
   getMemberWithdrawRecord,
   getTotalWithdrawAmount,
@@ -895,6 +895,9 @@ const cancelTypeList = reactive({
 })
 const siteList = reactive({
   list: [],
+})
+const siteTimeZone = reactive({
+  timeZone: null,
 })
 
 const defaultTime = [
@@ -1088,7 +1091,7 @@ async function loadSites() {
 }
 
 async function loadBanks() {
-  const { data: bank } = await getWithdrawBankList()
+  const { data: bank } = await getWithdrawBanks()
   bankList.list = bank
   bankList.list.unshift({
     id: 0,
@@ -1252,6 +1255,10 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+
+  var siteSelected = siteList.list.find(e => e.id === request.siteId)
+  siteTimeZone.timeZone = siteSelected.timeZone;
+
   page.loading = false
 }
 

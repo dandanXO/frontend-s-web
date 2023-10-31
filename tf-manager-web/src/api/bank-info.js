@@ -26,7 +26,7 @@ export const getBankInfoListSimple = () => {
   return https().request("/system-bank-info/bankInfoList", Method.GET);
 }
 
-export const getWithdrawBankList = () => {
+export const getWithdrawBanks = () => {
   return https().request("/system-bank-info/withdrawBankInfoList", Method.GET);
 }
 

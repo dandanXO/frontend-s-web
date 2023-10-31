@@ -136,7 +136,7 @@ import {
   createWithdrawBank,
   deleteWithdrawBank,
 } from '../../../api/system-withdraw-bank'
-import { getBankInfoListSimple } from '../../../api/bank-info'
+import { getWithdrawBanks } from '../../../api/bank-info'
 import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
 import { required } from '../../../utils/validate'
 // import { hasRole, hasPermission } from '../../../utils/util'
@@ -215,7 +215,7 @@ async function create() {
 }
 
 async function loadBank() {
-  const { data: ret } = await getBankInfoListSimple(request)
+  const { data: ret } = await getWithdrawBanks(request)
   list.bankInfo = ret
 }
 

@@ -39,6 +39,21 @@
           />
         </el-select>
 
+        <el-select
+          v-model="request.payType"
+          size="small"
+          :placeholder="t('fields.paymentType')"
+          class="filter-item"
+          style="width: 150px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in paymentTypeList.list"
+            :key="item.id"
+            :label="item.code"
+            :value="item.code"
+          />
+        </el-select>
+
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -202,6 +217,7 @@ import { TENANT } from '../../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from "vue-i18n";
 import { ElMessage } from 'element-plus'
+import { getActivePaymentTypes } from "../../../../api/payment-type";
 
 // eslint-disable-next-line
 const { t } = useI18n();
@@ -210,6 +226,9 @@ const copyPaymentForm = ref(null)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const siteList = reactive({
+  list: [],
+})
+const paymentTypeList = reactive({
   list: [],
 })
 
@@ -270,6 +289,7 @@ const form = reactive({
 function resetQuery() {
   request.paymentName = null
   request.status = null
+  request.payType = null
   request.siteId = site.value ? site.value.id : null
   updatePaymentPlatform();
 }
@@ -343,6 +363,11 @@ async function loadSites() {
   siteList.list = site
 }
 
+async function loadPaymentType() {
+  const { data: ret } = await getActivePaymentTypes();
+  paymentTypeList.list = ret;
+}
+
 const route = useRoute()
 
 onMounted(async () => {
@@ -351,7 +376,7 @@ onMounted(async () => {
   }
 
   await loadSites()
-
+  await loadPaymentType()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

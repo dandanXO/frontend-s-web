@@ -5,29 +5,31 @@
     </div>
     <div class="q-pa-md">
       <div class="account-title-container">
-        <span class="account-title">{{ $t('lang.choose_a_card') }}</span>
+        <span class="account-title">{{ $t("lang.choose_a_card") }}</span>
       </div>
       <div class="account-content">
         <div class="account-tip-text wbot">
-          <RiSpamLine/>
-          {{ $t('lang.register_bank_acc_para') }}
+          <RiSpamLine />
+          {{ $t("lang.register_bank_acc_para") }}
         </div>
         <div class="addbuttons"></div>
         <div class="flex-box flex-wrap bank-card-list">
           <template
-              v-for="(bc, index) in personalState.bankCardList"
-              :key="bc.id"
+            v-for="(bc, index) in personalState.bankCardList"
+            :key="bc.id"
           >
             <div
-                class="bank-card-item"
-                :class="{
-              active: index === isCardActive,
-              inactive: index > isCardActive
-            }"
-                v-if="bc.bankName"
-                @click="showCard(bc, index)"
+              class="bank-card-item"
+              :class="{
+                active: index === isCardActive,
+                inactive: index > isCardActive,
+              }"
+              v-if="bc.bankName"
+              @click="showCard(bc, index)"
             >
-              <div class="icon"><img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon"></div>
+              <div class="icon">
+                <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
+              </div>
               <div class="cardname">
                 <div class="txt-center">
                   <strong>{{ bc.bankName }}</strong>
@@ -36,14 +38,14 @@
               </div>
               <div class="unlink-btn" @click="unbindBankCard(bc)">
                 <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
-                <RiLinkUnlink/>
+                <RiLinkUnlink />
               </div>
 
               <div class="flex-box cards">
                 <div
-                    v-for="b in bc.cardNumber.split()"
-                    :key="b"
-                    class="card-num-box"
+                  v-for="b in bc.cardNumber.split()"
+                  :key="b"
+                  class="card-num-box"
                 >
                   {{ b }}
                 </div>
@@ -79,17 +81,19 @@
             </div>
           </template>
           <div
-              class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
-              @click="bankCardModal('bank')"
+            class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
+            @click="bankCardModal('bank')"
           >
-            <RiLink/>
-            {{ $t('lang.add_a_card') }}
+            <RiLink />
+            {{ $t("lang.add_a_card") }}
           </div>
         </div>
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">{{ $t('lang.bank_card_unbind_record') }}</span>
+      <span class="account-title">{{
+        $t("lang.bank_card_unbind_record")
+      }}</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
@@ -99,17 +103,17 @@
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
                   >
                     <q-date v-model="searchForm.start" mask="YYYY-MM-DD">
                       <div class="row items-center justify-end">
                         <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
                         />
                       </div>
                     </q-date>
@@ -121,17 +125,17 @@
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
                   >
                     <q-date v-model="searchForm.end" mask="YYYY-MM-DD">
                       <div class="row items-center justify-end">
                         <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
                         />
                       </div>
                     </q-date>
@@ -140,7 +144,7 @@
               </template>
             </q-input>
           </div>
-          <q-btn label="ค้นหา"/>
+          <q-btn label="ค้นหา" />
           <!-- <q-form-item>
             <button class="common-btn outline search-btn" type="submit">
               Search For
@@ -155,123 +159,231 @@
     <q-dialog v-model="bankCardModalState.visible" persistent>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section v-if="!isVirtual" class="q-mb-md">
-          <div class="text-h6">{{ $t('lang.add_a_card') }}</div>
+          <div class="text-h6">{{ $t("lang.add_a_card") }}</div>
         </q-card-section>
         <q-card-section v-if="isVirtual" class="q-mb-md">
-          <div class="text-h6">{{ $t('lang.add_a_virtual_currency') }}</div>
+          <div class="text-h6">{{ $t("lang.add_a_virtual_currency") }}</div>
         </q-card-section>
         <q-form>
-          <div v-if="!isVirtual">
-            <div class="row q-col-gutter-xs">
-              <div class="col-12">
-                <q-select
-                    v-model="selectedBankType"
-                    filled
-                    :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
-                    :label="$t('lang.withdraw_methods')"
-                    color="white"
-                    label-color="grey"
-                    option-label="name"
-                    option-value="name"
-                    @update:model-value="selectBankType(opt)"
-                    emit-value
-                    map-options
-                />
-              </div>
-              <div class="col-12">
-                <q-select
-                    ref="bankCardRef"
-                    class="q-mb-md"
-                    color="white"
-                    filled
-                    label-color="grey"
-                    v-model="bankCardInfo.bankId"
-                    :options="banksList"
-                    option-value="id"
-                    option-label="name"
-                    :label="$t('lang.select_account_add_different_banks')"
-                    :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
-                    lazy-rules
-                    emit-value
-                    map-options
-                >
-                  <template v-slot:selected-item="scope">
+          <div class="row q-col-gutter-xs">
+            <div class="col-12">
+              <q-select
+                v-model="selectedBankType"
+                filled
+                :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
+                :label="$t('lang.withdraw_methods')"
+                color="white"
+                label-color="grey"
+                option-label="name"
+                option-value="name"
+                @update:model-value="selectBankType(opt)"
+                emit-value
+                map-options
+              />
+            </div>
+            <div class="col-12">
+              <q-select
+                ref="bankCardRef"
+                class="q-mb-md"
+                color="white"
+                filled
+                label-color="grey"
+                v-model="bankCardInfo.bankId"
+                :options="banksList"
+                option-value="id"
+                option-label="name"
+                :label="$t('lang.select_account_add_different_banks')"
+                :rules="[
+                  (val) => !!val || $t('lang.please_select_a_bank_account'),
+                ]"
+                lazy-rules
+                emit-value
+                map-options
+              >
+                <template v-slot:selected-item="scope">
+                  <q-item-section avatar>
+                    <img
+                      v-if="scope.opt.bankIcon"
+                      style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                      :src="imgURL + scope.opt.bankIcon"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label
+                      style="
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                      "
+                    >
+                      {{ scope.opt.name }}
+                    </q-item-label>
+                  </q-item-section>
+                </template>
+                <template v-slot:option="scope">
+                  <q-item v-bind="scope.itemProps">
                     <q-item-section avatar>
-                      <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;"
-                           :src="imgURL + scope.opt.bankIcon">
+                      <img
+                        v-if="scope.opt.bankIcon"
+                        style="
+                          width: 30px;
+                          margin-top: 10px;
+                          margin-bottom: 10px;
+                        "
+                        :src="imgURL + scope.opt.bankIcon"
+                      />
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-                        {{ scope.opt.name }}
-                      </q-item-label>
+                      <q-item-label>{{ scope.opt.name }}</q-item-label>
                     </q-item-section>
-                  </template>
-                  <template v-slot:option="scope">
-                    <q-item v-bind="scope.itemProps">
-                      <q-item-section avatar>
-                        <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;"
-                             :src="imgURL + scope.opt.bankIcon">
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>{{ scope.opt.name }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
+                  </q-item>
+                </template>
+              </q-select>
             </div>
           </div>
 
+          <q-input
+            class="q-mb-md"
+            filled
+            v-model="bankCardInfo.cardAccount"
+            :label="$t('lang.account_name_with_desc')"
+            :rules="cardAccountRules"
+            lazy-rules
+            :disable="true"
+            ref="cardAccountRef"
+            color="white"
+          />
+          <q-input
+            filled
+            class="q-mb-md"
+            v-model="bankCardInfo.cardNumber"
+            :label="$t('lang.card_number')"
+            :rules="cardNumberRules"
+            ref="cardNumberRef"
+            color="white"
+          />
           <div v-if="isVirtual">
             <q-input
-                filled
-                ref="bankCardRef"
-                class="q-mb-md"
-                v-model="bankName"
-                disable
-                readonly
-                label="Bank Name"
-                color="white"
-            />
-          </div>
-          <q-input
-              class="q-mb-md"
               filled
-              v-model="bankCardInfo.cardAccount"
-              :label="$t('lang.account_name_with_desc')"
-              :rules="cardAccountRules"
+              style="margin-bottom: 36px"
+              ref="telRef"
+              v-model="bankCardInfo.telephone"
+              :label="$t('lang.phone_number')"
+              :hint="$t('lang.bind_crypto_need_phone_veri')"
               lazy-rules
-              :disable="true"
-              ref="cardAccountRef"
+              readonly
+              clearable
+              :rules="[
+                (val) =>
+                  (val && val.length > 7) ||
+                  $t('lang.please_enter_valid_phone'),
+              ]"
               color="white"
-          />
-          <q-input
+            >
+              <template v-slot:prepend>
+                <q-icon color="white" name="smartphone" />
+              </template>
+              <template v-slot:append>
+                <q-btn
+                  :label="$t('lang.get_code')"
+                  color="brand"
+                  @click="openPhoneVeriDialog()"
+                />
+              </template>
+            </q-input>
+
+            <q-input
+              v-if="isSendOtp"
               filled
               class="q-mb-md"
-              v-model="bankCardInfo.cardNumber"
-              :label="$t('lang.card_number')"
-              :rules="cardNumberRules"
-              ref="cardNumberRef"
+              v-show="bankCardInfo.smsCodeId"
+              ref="phoneVerificationRef"
+              type="text"
+              v-model="bankCardInfo.smsCode"
+              :label="$t('lang.phone_verification_code')"
+              lazy-rules
               color="white"
-          />
+              maxlength="6"
+              :rules="[
+                (val) =>
+                  (val && val.length > 3) || $t('lang.please_enter_phone_code'),
+              ]"
+            >
+              <template v-slot:prepend>
+                <q-icon color="white" name="shield" />
+              </template>
+            </q-input>
+          </div>
+
           <q-input
-              class="q-mb-md"
-              filled
-              v-model="bankCardInfo.cardAddress"
-              :label="$t('lang.branch_not_required')"
-              :rules="cardAddressRules"
-              ref="cardAddressRef"
-              color="white"
+            class="q-mb-md"
+            filled
+            v-model="bankCardInfo.cardAddress"
+            :label="$t('lang.branch_not_required')"
+            :rules="cardAddressRules"
+            ref="cardAddressRef"
+            color="white"
           />
           <div class="flex flex-center">
             <q-btn
-                class="q-mr-md"
-                :label="$t('lang.cancel')"
-                @click="bankCardModalState.visible = false"
+              class="q-mr-md"
+              :label="$t('lang.cancel')"
+              @click="bankCardModalState.visible = false"
             />
-            <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard"/>
+            <q-btn
+              color="brand"
+              :label="$t('lang.confirm')"
+              @click="submitBankCard"
+            />
           </div>
         </q-form>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog
+      v-model="showCaptchaDialog"
+      width="100%"
+      no-backdrop-dismiss
+      no-esc-dismiss
+    >
+      <q-card width="100%">
+        <q-card-section
+          style="padding: 10px 5px"
+          class="q-pa-md bg-dyblue text-white"
+        >
+          <q-toolbar>
+            <q-toolbar-title>{{ $t("lang.captcha_code") }}</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close" />
+          </q-toolbar>
+        </q-card-section>
+        <div style="padding: 20px">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input
+              ref="refInnerCaptcha"
+              :rules="[
+                (val) =>
+                  (val && val.length > 3 && val.length < 5) ||
+                  $t('lang.enter_captcha_code'),
+              ]"
+              v-model="innerCaptchaRef"
+              :placeholder="$t('lang.captcha_code')"
+            >
+              <template v-slot:append>
+                <img
+                  :src="phoneVerificationImg"
+                  :title="$t('lang.click_to_refresh_captcha')"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn
+            @click="onCaptchaSubmit"
+            :label="$t('lang.send_veri_code')"
+            color="primary"
+          />
+        </div>
       </q-card>
     </q-dialog>
 
@@ -321,7 +433,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, computed} from "vue";
 import {RiSpamLine, RiLink, RiLinkUnlink} from "vue-remix-icons";
 // import moment from "moment";
 import {api} from "boot/axios"
@@ -430,13 +542,15 @@ export default defineComponent({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      cardAddress: ""
+      cardAddress: "",
+      smsCodeId: "",
+      smsCode: ""
     });
     const {t} = useI18n();
     const router = useRouter();
     const bankName = ref();
     const banksList = ref([]);
-    const isVirtual = ref(false)
+
     const bankCardModal = (type) => {
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "" || store.realName == null) {
@@ -452,6 +566,8 @@ export default defineComponent({
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
+          bankCardInfo.telephone = store.telephone;
+
           bankCardModalState.visible = true;
           if (bankCardModalState.banks.length === 0) {
             api.get("/session/withdraw/card").then((ret) => {
@@ -468,7 +584,12 @@ export default defineComponent({
       })
     };
 
-    const selectedBankType = ref('Bank')
+    const selectedBankType = ref('Bank');
+    const isVirtual = computed(() => {
+      return selectedBankType.value === 'Crypto'
+    })
+
+
     const selectBankType = () => {
       bankCardInfo.bankId = "";
       banksList.value = []
@@ -491,16 +612,29 @@ export default defineComponent({
       cardAccountRef.value.validate();
       cardAddressRef.value.validate();
       cardNumberRef.value.validate();
+
+      let paramsInfo = {};
+      if (selectedBankType.value === 'Bank') {
+        paramsInfo = {
+          bankId: bankCardInfo.bankId,
+          cardNumber: bankCardInfo.cardNumber,
+          cardAccount: bankCardInfo.cardAccount,
+          cardAddress: bankCardInfo.cardAddress,
+        }
+      } else {
+        paramsInfo = bankCardInfo;
+      }
+
       if (bankCardRef.value.hasError || cardAccountRef.value.hasError || cardAddressRef.value.hasError || cardNumberRef.value.hasError) {
       } else {
-        api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((res) => {
+        api.post("/session/bankCard", qs.stringify(paramsInfo)).then((res) => {
           const response = res.data
           if (response.code === 0) {
             bankCardModalState.visible = false;
             $q.notify({
               color: "positive",
               position: "top",
-              message: "เพิ่มการ์ดแล้ว",
+              message: t('lang.card_added'),
               icon: "check_circle_outline"
             });
             loadCards();
@@ -522,18 +656,18 @@ export default defineComponent({
     const unbindBankCard = (card) => {
       const dialog = $q.dialog({
         class: "q-px-md q-pt-md",
-        title: "ลบ " + card.bankName + "?",
-        message: "คุณแน่ใจหรือไม่ว่าต้องการลบ " + card.bankName + "?",
+        title: t('lang.delete') + " " + card.bankName + "?",
+        message: t('lang.are_you_sure_want_delete') + " " + card.bankName + "?",
         ok: {
           push: true,
           color: 'deep-orange',
-          label: "ตกลง",
+          label: t('lang.agree'),
           tabindex: 1
         },
         cancel: {
           push: true,
           color: '',
-          label: "ยกเลิก",
+          label: t('lang.cancel'),
           tabindex: 0
         },
         persistent: true,
@@ -544,7 +678,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "สำเร็จ",
+              message: t('lang.success'),
               icon: "check_circle_outline"
             });
             loadCards();
@@ -560,6 +694,89 @@ export default defineComponent({
         })
       })
     };
+
+    const innerCodeId = ref("");
+    const innerCaptchaRef = ref("");
+    const isSendOtp = ref(false);
+    const phoneVerificationImg = ref("");
+    const phoneVerificationRef = ref(null);
+    const refInnerCaptcha = ref();
+
+    const showCaptchaDialog = ref(false);
+    const openPhoneVeriDialog = () => {
+      // telRef.value.validate();
+      // if (!telRef.value.hasError) {
+      showCaptchaDialog.value = true;
+      getInnerCode();
+      // }
+
+    }
+
+    const getInnerCode = () => {
+      api
+        .get("/member/verificationCode")
+        .then((response) => {
+          if (response.data.code === 0) {
+            phoneVerificationImg.value =
+              "data:image/png;base64," + response.data.data.img;
+            innerCodeId.value = response.data.data.id;
+            innerCaptchaRef.value = "";
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        });
+    }
+
+    const onCaptchaSubmit = () => {
+      if (!bankCardInfo.telephone) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: t('lang.phone_number_cannot_empty'),
+          icon: "report_problem"
+        });
+        getInnerCode();
+        return;
+      } else if (refInnerCaptcha.value?.hasError) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: t('lang.captcha_code_must_be_digits'),
+          icon: "report_problem"
+        });
+        getInnerCode();
+        return;
+      }
+      api.post(`/session/sendSms`, qs.stringify({
+        captchaCode: innerCaptchaRef.value,
+        codeId: innerCodeId.value
+      }))
+        .then(res => {
+          let message = res.message || t('lang.phone_veri_sent_success'),
+            color = 'positive'
+
+          if (res.data.code === 0) {
+            isSendOtp.value = true;
+            showCaptchaDialog.value = false;
+            bankCardInfo.smsCode = "";
+            bankCardInfo.smsCodeId = res.data.data.codeId;
+            console.log(res.data.data.codeId)
+          } else {
+            color = 'negative';
+            getInnerCode();
+          }
+
+          if (message) {
+            $q.notify({message, color});
+          }
+
+          console.log('onCaptchaSubmit', res)
+        }).catch(() => {
+        getInnerCode();
+      })
+    }
+
 
     //add virtual card
     // const virtualCurrencyModalState = reactive({
@@ -622,9 +839,9 @@ export default defineComponent({
     // };
     let validateBankLength = (val) => {
       if (selectedBankType.value === 'Bank') {
-        return (val.length > 5 && val.length < 13) || 'ความยาวควรเป็น 6 ถึง 12 ตัว'
+        return (val.length > 5 && val.length < 13) || t('lang.length_between_6_12')
       } else if (selectedBankType.value === 'Crypto') {
-        return (val.length > 33 && val.length < 38) || 'ความยาวควรเป็น 34 ถึง 37 ตัว'
+        return (val.length > 33 && val.length < 38) || t('lang.length_between_34_37')
       }
     }
     return {
@@ -642,6 +859,14 @@ export default defineComponent({
       // virtualCurrencyRules,
       // submitvirtualCurrency,
       // virtualCurrencyModal,
+      openPhoneVeriDialog,
+      phoneVerificationImg,
+      showCaptchaDialog,
+      isSendOtp,
+      onCaptchaSubmit,
+      getInnerCode,
+      innerCaptchaRef,
+      refInnerCaptcha,
       showCard,
       isCardActive,
       bankName,
@@ -651,11 +876,11 @@ export default defineComponent({
       cardAccountRef,
       cardAddressRef,
       cardNumberRules: [
-        val => (val && val.length > 0) || 'กรุณาใส่เลขบัตร',
+        val => (val && val.length > 0) || t('lang.please_enter_card_num'),
         val => validateBankLength(val)
       ],
       cardAccountRules: [
-        val => (val && val.length > 0) || 'กรุณาใส่บัญชีธนาคาร',
+        val => (val && val.length > 0) || t('lang.please_enter_bank_acc'),
       ],
       cardAddressRules: [],
       selectedBankType,
@@ -766,9 +991,11 @@ export default defineComponent({
   width: 100%;
 }
 
-:deep(.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector
-    .ant-select-selection-search-input) {
+:deep(
+    .ant-select-single:not(.ant-select-customize-input)
+      .ant-select-selector
+      .ant-select-selection-search-input
+  ) {
   height: 40px;
 }
 
@@ -933,9 +1160,9 @@ export default defineComponent({
       width: 50%;
       height: 100%;
       background: linear-gradient(
-              to right,
-              rgba(255, 255, 255, 0) 0%,
-              rgba(255, 255, 255, 0.3) 100%
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 100%
       );
       border-radius: 10px;
       transform: skewX(320deg);

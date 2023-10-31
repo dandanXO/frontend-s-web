@@ -297,7 +297,7 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:privilege:report:summary'])) {
+  if (hasPermission(['sys:report:privilege:report:total'])) {
     const { columns } = param
     var sums = []
 

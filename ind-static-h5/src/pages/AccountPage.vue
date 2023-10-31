@@ -571,6 +571,7 @@ const openVerificationCodeDialog = () => {
   getCode();
 
   verificationCodeDialog.value = !verificationCodeDialog.value;
+  getCode();
 };
 
 const confirmSignOutDialog = ref(false);

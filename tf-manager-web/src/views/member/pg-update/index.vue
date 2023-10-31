@@ -62,7 +62,16 @@
       </el-table-column>
       <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="150">
         <template #default="scope">
-          <span>{{ moment(scope.row.betTime).format("yyyy-MM-DD HH:mm:ss") }}</span>
+          <span v-if="scope.row.betTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.betTime !== null"
+            v-formatter="{
+              data: scope.row.betTime,
+              timeZone: siteTimeZone.timeZone,
+              type: 'date',
+            }"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -106,6 +115,9 @@ const startDate = new Date();
 startDate.setDate(startDate.getDate() - 6);
 const defaultStartDate = convertDate(startDate);
 const defaultEndDate = convertDate(new Date());
+const siteTimeZone = reactive({
+  timeZone: null,
+});
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
@@ -171,6 +183,10 @@ async function loadPendingRecords() {
   page.total = ret.length;
   page.pages = Math.ceil(page.total / request.size);
   getShowRecords();
+
+  var siteSelected = siteList.list.find(e => e.id === request.siteId)
+  siteTimeZone.timeZone = siteSelected.timeZone;
+
   page.loading = false;
 }
 
