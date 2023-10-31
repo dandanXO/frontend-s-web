@@ -44,13 +44,15 @@
           <div class="w-tbl-col">Withdrawable:</div>
           <div class="w-tbl-col">
             {{
-              `${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
+              `${withdrawalMethods[withdrawalDialogTab].withdrawMin || 0} - ${
+                withdrawalMethods[withdrawalDialogTab].withdrawMax || 0
+              }`
             }}
           </div>
         </div>
         <div class="w-tbl-row">
           <div class="w-tbl-col">Remaining Wager:</div>
-          <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount }}</div>
+          <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount || 0 }}</div>
         </div>
       </div>
     </q-tab-panel>
