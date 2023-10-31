@@ -54,11 +54,15 @@
       </div>
 
       <div class="pc-tip">
-        <a class="pc-tip-chg-pwd q-mb-md" @click="openChangePasswordDialog">Change Password</a>
-        <div class="pc-ver" v-if="appVersionNo">
-          Version:
-          <span>{{ appVersionNo }}</span>
+        <div>
+          <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
+
+          <div class="pc-ver" v-if="appVersionNo">
+            Version:
+            <span>{{ appVersionNo }}</span>
+          </div>
         </div>
+
         <div>
           <q-btn
             class="btn-refresh"
@@ -209,6 +213,7 @@
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
           <q-btn
+            :loading="btnLoading"
             rounded
             flat
             no-caps
@@ -474,6 +479,7 @@ import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
+import { App } from "@capacitor/app";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -503,6 +509,8 @@ const logout = () => {
     router.push("/");
   });
 };
+
+const btnLoading = ref(false);
 
 const loadingUpdated = ref(false);
 
@@ -608,7 +616,7 @@ const loadInfo = () => {
     openPersonalCenterDialog();
   }
 
-  console.log(personalState.memberInfo);
+  // console.log(personalState.memberInfo);
   if (personalState.memberInfo.birthday > 0) {
     personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
   }
@@ -803,6 +811,8 @@ const updateState = () => {
         loadInfo();
         personalCenterDialog.value = false;
       });
+
+      btnLoading.value = false;
     } else {
       $q.notify({
         color: "negative",
@@ -810,6 +820,7 @@ const updateState = () => {
         message: r.message,
         icon: "report_problem"
       });
+      btnLoading.value = false;
     }
   });
 };
@@ -827,10 +838,13 @@ const verifyNUpdatePhone = (callback) => {
     .then((res) => {
       callback && callback();
     })
-    .catch((e) => {});
+    .catch((e) => {
+      btnLoading.value = false;
+    });
 };
 
 const submitKYC = () => {
+  btnLoading.value = true;
   verifyNUpdatePhone(() => {
     updateState();
   });
@@ -1135,11 +1149,13 @@ const submitUpdateNewPwd = () => {
 
 .pc-tip {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  justify-content: space-between;
+  // flex-direction: column;
+  // align-items: flex-end;
 }
 .pc-ver {
   color: rgba(255, 255, 255, 0.5);
+  margin-top: 8px;
 
   span {
     color: #fae576;
@@ -1150,6 +1166,7 @@ const submitUpdateNewPwd = () => {
   background: rgba(21, 0, 37, 0.7);
   border-radius: 8px;
   font-weight: 700;
+  margin-top: auto;
 
   :deep(.q-icon) {
     color: #fed87d;
