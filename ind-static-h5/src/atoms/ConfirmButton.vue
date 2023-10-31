@@ -1,6 +1,6 @@
 <template>
   <q-card-actions>
-    <div :class="`confirm-btn-container ${isDisabled ? 'disabled' : ''}`" @click="confirmFunc()">
+    <div :class="`confirm-btn-container ${isDisabled ? 'disabled' : ''}`" @click="onBtnClick()">
       <img class="confirm-btn" src="../assets/images/index/confirm-btn.png" alt="" />
       <span class="confirm-btn-text">{{ label }}</span>
     </div>
@@ -9,6 +9,15 @@
 
 <script setup>
 const props = defineProps(["label", "confirmFunc", "isDisabled"]);
+// NOTE: declaring won't update the value, probably defineProps cloned it.
+// const { confirmFunc, isDisabled } = props;
+
+const onBtnClick = () => {
+  const { confirmFunc, isDisabled } = props;
+  if (isDisabled) return;
+
+  confirmFunc && confirmFunc();
+};
 </script>
 
 <style lang="scss">
@@ -31,6 +40,7 @@ const props = defineProps(["label", "confirmFunc", "isDisabled"]);
   .confirm-btn-text {
     position: absolute;
     font-size: 1.25rem;
+    font-weight: bold;
   }
 }
 </style>

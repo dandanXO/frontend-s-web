@@ -180,6 +180,8 @@ svg {
   padding: 5px 0 5px;
   background: #3f1e5e;
   color: #7f828b;
+  flex: 1;
+
   img {
     // width: 25px;
     height: 25px;
@@ -381,4 +383,46 @@ svg {
 
 .q-dialog__backdrop {
   backdrop-filter: blur(4px);
+}
+
+.btn-effect {
+  &:hover {
+    filter: brightness(0.8);
+  }
+}
+
+.popout-dialog {
+  width: 90%;
+
+  max-width: 500px;
+  position: relative;
+  padding-top: 90px;
+  padding-right: 10px;
+
+  .popout-close {
+    position: absolute;
+    right: 0px;
+    top: 80px;
+  }
+
+  .txt-title {
+    font-size: 28px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .popout-dialog-container {
+    background-image: url(../assets/images/account/kyc-bg.png);
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30px 20px 20px;
+    border-radius: 30px !important;
+  }
+}
+
+.y-n-container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
 }

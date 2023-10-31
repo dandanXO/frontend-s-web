@@ -40,7 +40,7 @@
 
       <q-card-section>
         <q-form>
-          <div class="q-my-sm select-wrapper">
+          <!-- <div class="q-my-sm select-wrapper">
             <div class="input-title">Card Type</div>
             <q-select
               standout
@@ -60,14 +60,13 @@
           <div class="q-my-sm">
             <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
             <q-select
-              type="number"
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="bankCardField.bankId"
               :label="dialogDisplays.selectionPlaceholder"
-              :rules="[(val) => !!val || dialogDisplays.selectionError]"
+              :rules="[(_) => isValidBank()]"
               label-color="secondary"
               :options="currBankList"
               option-value="id"
@@ -76,7 +75,7 @@
               emit-value
               map-options
             />
-          </div>
+          </div> -->
 
           <div class="q-my-sm">
             <div class="input-title">Card Account</div>
@@ -87,7 +86,6 @@
               filled
               v-model="bankCardField.cardAccount"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Please Enter Card Account']"
               label-color="secondary"
               readonly
             />
@@ -104,29 +102,38 @@
               v-model="bankCardField.cardNumber"
               label="Enter Card Number"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Please Enter Card Number']"
+              :rules="[(_) => isValidCardNumber()]"
               label-color="secondary"
             />
           </div>
 
           <div class="q-my-sm">
-            <div class="input-title">Address</div>
+            <div class="input-title">IFSC Code</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="bankCardField.cardAddress"
-              label="Enter Bank Ifsc Code"
+              label="Enter Bank IFSC Code"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Please Enter Bank Ifsc Code']"
+              :rules="[(_) => isValidCardAddress()]"
               label-color="secondary"
             />
           </div>
         </q-form>
       </q-card-section>
 
-      <ConfirmButton label="Confirm" :confirmFunc="addCard"></ConfirmButton>
+      <ConfirmButton
+        label="Confirm"
+        :confirmFunc="addCard"
+        :isDisabled="
+          !(
+            // isValidBank() === true &&
+            (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
+          )
+        "
+      ></ConfirmButton>
     </q-card>
   </q-dialog>
 
@@ -176,7 +183,6 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
-import moment from "moment";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import DialogHeader from "../../atoms//DialogHeader.vue";
@@ -237,22 +243,19 @@ const copy = (val) => {
 };
 
 // unbind dialog
-const unbindField = ref({ bankCardNumber: "" });
-
+const unbindField = reactive({ bankCardNumber: "" });
 const isUnbindDialogOpen = ref(false);
-
 const onUnbindClick = (index) => {
-  selectedBankIndex.value = index;
+  unbindField.bankCardNumber = "";
   isUnbindDialogOpen.value = true;
+
+  selectedBankIndex.value = index;
 };
 
 const unbind = () => {
-  const selectedBank = bankCardList[selectedBankIndex.value];
-  if (unbindField.value.bankCardNumber !== selectedBank.cardNumber) return;
-
   isUnbindDialogOpen.value = false;
 
-  const selectedCardID = selectedBank.id;
+  const selectedCardID = bankCardList.value[selectedBankIndex.value].id;
   api.post(`/session/bankCard/${selectedCardID}?_method=delete`).then((response) => {
     if (response.code === 0) {
       $q.notify({
@@ -267,23 +270,23 @@ const unbind = () => {
 };
 
 // add card dialog
-const cardType = ["Bank", "Crypto", "EWallet"];
+const cardType = ["Bank" /*, "Crypto", "EWallet"*/];
 const currentCardType = ref("Bank");
-// use to display
+
+// display
 const currBankList = ref([]);
 const selectedBankIndex = ref();
 
-// use to cache
+// cache
 const bankList = [];
 const cryptoList = [];
 const ewalletList = [];
 
-const bankCardField = ref({
+const bankCardField = reactive({
   bankId: undefined,
   cardAccount: "",
   cardNumber: "",
-  cardAddress: "",
-  telephone: ""
+  cardAddress: ""
 });
 
 const isAddCardDialogOpen = ref(false);
@@ -305,15 +308,11 @@ const onAddCardClick = () => {
       });
       router.push("/account");
     } else {
+      clearField();
       isAddCardDialogOpen.value = true;
 
-      bankCardField.value.bankId = undefined;
-      bankCardField.value.cardNumber = "";
-      bankCardField.value.cardAccount = store.realName;
-      bankCardField.value.cardAddress = "";
-      bankCardField.value.telephone = store.phone;
-
-      if (bankList.length === 0 || cryptoList.length === 0 || ewalletList.length === 0) {
+      // NOTE: fire once
+      if (bankList.length === 0 && cryptoList.length === 0 && ewalletList.length === 0) {
         api
           .get("/session/withdraw/card")
           .then((res) => {
@@ -322,7 +321,7 @@ const onAddCardClick = () => {
                 const bankType = e.bankType;
                 if (bankType === "BANK") bankList.push(e);
                 else if (bankType === "CRYPTO") cryptoList.push(e);
-                else if (bankType === "EWallet") ewalletList.push(e);
+                else if (bankType === "EWALLET") ewalletList.push(e);
               });
               selectBankType();
             }
@@ -342,12 +341,18 @@ const dialogDisplays = reactive({
   selectionError: "Please Select A Bank"
 });
 const selectBankType = () => {
+  currBankList.value = [];
+  bankCardField.bankId = undefined;
+
   if (currentCardType.value === "Bank") {
     currBankList.value = bankList;
     dialogDisplays.title = "Add Bank Card";
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
+
+    // NOTE: temp write here, since no other card type.
+    bankCardField.bankId = currBankList.value[0].id;
   } else if (currentCardType.value === "Crypto") {
     currBankList.value = cryptoList;
     dialogDisplays.title = "Add Crypto Wallet";
@@ -363,9 +368,48 @@ const selectBankType = () => {
   }
 };
 
+const clearField = () => {
+  bankCardField.bankId = undefined;
+  bankCardField.cardNumber = "";
+  bankCardField.cardAccount = store.realName;
+  bankCardField.cardAddress = "";
+};
+
+// validation
+const isValidBank = () => {
+  const { bankId } = bankCardField;
+
+  const result = !bankId ? dialogDisplays.selectionError : true;
+  return result;
+};
+
+const isValidCardAccount = () => {
+  const { cardAccount } = bankCardField;
+
+  const result = !cardAccount ? "Please Enter Card Account" : true;
+  return result;
+};
+
+const isValidCardNumber = () => {
+  const { cardNumber } = bankCardField;
+
+  const result = !cardNumber ? "Please Enter Card Number" : true;
+  return result;
+};
+
+const isValidCardAddress = () => {
+  const { cardAddress } = bankCardField;
+  const result = !cardAddress
+    ? "Please Enter Bank Ifsc Code"
+    : cardAddress.length !== 11
+    ? "Bank IFSC Code Must Be 11 Character"
+    : true;
+  return result;
+};
+
 const addCard = () => {
   api
-    .post("/session/bankCard", qs.stringify(bankCardField.value))
+    .post("/session/bankCard", qs.stringify(bankCardField))
     .then((response) => {
       if (response.code === 0) {
         isAddCardDialogOpen.value = false;
@@ -383,9 +427,8 @@ const addCard = () => {
     });
 };
 
-// api
+// init
 const bankCardList = ref([]);
-
 const loadCards = () => {
   bankCardList.value = [];
 

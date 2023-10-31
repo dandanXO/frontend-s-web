@@ -15,6 +15,11 @@
           />
         </div>
 
+        <div class="loader-container">
+          <div><q-spinner color="yellow" size="10em" :thickness="10" /></div>
+          <div>Loading... Please wait...</div>
+        </div>
+
         <iframe
           @load="loadGame()"
           v-show="!logoShow"
@@ -25,12 +30,6 @@
           class="game-iframe"
         ></iframe>
 
-        <!-- <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
-          <div class="q-pa-sm q-pt-sm">
-            <div></div>
-          </div>
-        </q-drawer> -->
-
         <q-dialog width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
             <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
@@ -38,44 +37,7 @@
               <div class="popout-main-title">
                 <div class="txt-title">Deposit</div>
               </div>
-              <div class="deposit-item-container">
-                <template v-for="(item, index) in depositItems" :key="index">
-                  <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
-                    <div class="deposit-icon">
-                      <img
-                        :src="require(`../../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
-                        :alt="item.amount + ' Coin'"
-                      />
-                      <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
-                    </div>
-                    <div class="deposit-amt">{{ item.amount }}</div>
-                  </div>
-                </template>
-              </div>
-              <div class="deposit-enter-amt">
-                <div>Amount</div>
-                <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
-              </div>
-              <div class="deposit-options">
-                <q-btn
-                  flat
-                  class="deposit-option-btn"
-                  :class="{ active: isUpi1Active }"
-                  label="UPI1"
-                  @click="handleDepositUpiClick(1)"
-                />
-                <q-btn
-                  flat
-                  class="deposit-option-btn label-on-discount"
-                  :class="{ active: isUpi2Active }"
-                  label="UPI2"
-                  @click="handleDepositUpiClick(2)"
-                />
-
-                <!-- <q-btn flat class="deposit-option-btn active" label="UPI1" />
-          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" /> -->
-              </div>
-              <div class="btn-go">Go</div>
+              <DepositComponent />
             </div>
           </div>
         </q-dialog>
@@ -100,6 +62,7 @@ import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
+
 const $q = useQuasar();
 
 const store = userStore();
@@ -767,5 +730,14 @@ defineExpose({
       }
     }
   }
+}
+.loader-container {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>

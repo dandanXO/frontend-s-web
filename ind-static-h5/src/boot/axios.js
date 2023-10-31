@@ -165,6 +165,9 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
         return res;
       }
+      if (res.code === ResponseCode.ERROR_GUEST_LOGGED) {
+        return res;
+      }
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
         location.reload();
       } else {

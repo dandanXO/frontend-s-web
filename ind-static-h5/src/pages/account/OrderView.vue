@@ -35,7 +35,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">{{ e.withdrawAmount }}</div>
-              <div class="order-col">UPI</div>
+              <div class="order-col">BANK</div>
             </div>
             <div class="order-subrow">
               <div class="order-col">
@@ -60,7 +60,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">{{ e.depositAmount }}</div>
-              <div class="order-col">UPI</div>
+              <div class="order-col">{{ e.paymentType }}</div>
             </div>
             <div class="order-subrow">
               <div class="order-col">

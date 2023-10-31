@@ -267,6 +267,9 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
+      $q.loading.show({
+        message: "Logging in"
+      });
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
@@ -413,7 +416,6 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-
 .tip-container {
   display: flex;
   justify-content: space-between;
@@ -455,6 +457,4 @@ export default defineComponent({
     }
   }
 }
-
-
 </style>
