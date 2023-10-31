@@ -147,7 +147,7 @@
       </el-table-column>
       <el-table-column
         prop="fdAverage"
-        :label="t('fields.ftdAverage')"
+        :label="t('fields.depositAverage')"
         width="120"
       >
         <template #default="scope1">
