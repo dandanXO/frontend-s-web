@@ -11,7 +11,6 @@
     <div class="landing-btns">
       <q-btn rounded flat no-caps class="btn-yellow" @click="$router.push('/login')">Login</q-btn>
       <q-btn rounded flat no-caps class="btn-yellow" @click="$router.push('/register')">Register</q-btn>
-      <!-- <q-btn rounded flat no-caps class="btn-purple" @click="$router.push('/guestlogin')">Play As Guest</q-btn> -->
       <q-btn rounded flat no-caps class="btn-purple" @click="guestLogin()" v-if="Platform.is.capacitor">
         Play As Guest
       </q-btn>
@@ -25,7 +24,7 @@ import { Device } from "@capacitor/device";
 import { useQuasar, Platform } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const $q = useQuasar();
 const qs = require("qs");
@@ -44,7 +43,6 @@ const guestLogin = () => {
 
   (async () => {
     guestLoginInfo.sid = guestDeviceInfo.value;
-    // console.log(guestLoginInfo);
 
     api
       .post("/member/quickRegister", qs.stringify(guestLoginInfo))
@@ -93,10 +91,6 @@ const guestDeviceInfo = ref("");
 
 const getAppInfo = async () => {
   const info = await Device.getId();
-  // console.log("Device ID:");
-  // console.log(info);
-  // console.log(info.identifier);
-
   guestDeviceInfo.value = info.identifier;
 };
 

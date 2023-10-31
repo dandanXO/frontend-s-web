@@ -690,17 +690,6 @@ function loadData() {
     });
 }
 
-const platforms = ref([]);
-const gamePage = reactive({
-  gameList: [],
-  currentPage: 1,
-  pageSize: 40,
-  searchType: "",
-  searchKey: "",
-  total: 0
-});
-const gameListData = ref([]);
-
 var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
 var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
@@ -721,20 +710,6 @@ const getPlatList = () => {
           var espObj = Object.assign({}, element);
           // console.log(espObj);
 
-          if (espObj.code === "TFGaming") {
-            espObj.title = "兴發电竞";
-          }
-          if (espObj.code === "IA") {
-            espObj.title = "小艾电竞";
-          }
-          if (espObj.code === "IMES") {
-            espObj.title = "IM电竞";
-          }
-          if (!espObj.title) {
-            espObj.title = espObj.code + "电竞";
-          }
-          espObj.icon = "esport";
-          espObj.subtitle = "电竞赛事";
           esport.value.push(espObj);
 
           //Add 1 More Casual minigame.

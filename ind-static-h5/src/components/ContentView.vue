@@ -96,6 +96,11 @@ const props = defineProps(["contentTopStatus"]);
     position: relative;
     margin-bottom: 60px;
 
+    @media (max-width: 370px) {
+      background-size: 100% 100%;
+      background-position: bottom center;
+    }
+
     &:before {
       content: "";
       position: absolute;
