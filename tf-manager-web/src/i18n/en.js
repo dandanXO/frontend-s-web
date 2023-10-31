@@ -438,7 +438,6 @@ export default {
     deleteRole: 'Delete Role',
     deposit: 'Deposit',
     depositAmount: 'Deposit Amount',
-    depositAverage: 'Deposit Averate',
     depositBettingAmount: 'Deposit/Betting Amount',
     depositCount: 'Deposit Count',
     depositDate: 'Deposit Date',

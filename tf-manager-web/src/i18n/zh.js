@@ -437,7 +437,6 @@ export default {
     deleteRole: '删除角色',
     deposit: '存款',
     depositAmount: '存款金额',
-    depositAverage: '人均充值',
     depositBettingAmount: '存款/投注',
     depositCount: '存款次数',
     depositDate: '存款日期',

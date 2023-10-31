@@ -921,13 +921,13 @@ function getFinancialChart(summaryList, chartOptions) {
 function getTotalDailySummary() {
   dailySummary.list.forEach(x => {
     quickSummary.total_ftd =
-      quickSummary.total_ftd + parseInt(x.ftdMember)
+      quickSummary.total_ftd + JSON.parse(x.ftdMember).length
     quickSummary.total_registerMember =
       quickSummary.total_registerMember + x.registerMember
     quickSummary.total_visitorMember =
       quickSummary.total_visitorMember + x.visitsNo
     quickSummary.total_activeMember =
-      quickSummary.total_activeMember + parseInt(x.activeMember)
+      quickSummary.total_activeMember + JSON.parse(x.activeMember).length
   })
 }
 
