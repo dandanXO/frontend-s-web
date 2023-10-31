@@ -106,7 +106,7 @@ export default route(function(/* { store, ssrContext } */) {
         // }
     }  else {
       liff.init({
-        liffId: '1657725286-kDOM4WMb', // Use own liffId
+        liffId: '2001411735-Ow892Zrl', // Use own liffId
       }).then(() => {
         if (liff.isInClient()) {
           // alert("Line" + liff.getLineVersion())
