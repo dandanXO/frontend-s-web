@@ -6,69 +6,65 @@
       </div>
 
       <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
+        <!-- <q-input
+          hide-bottom-space
+          ref="loginNameRef"
+          v-model="loginForm.loginName"
+          label="Login Name"
+          :rules="[(val) => (val && val.length > 0) || 'Please insert login name']"
+          label-color="brand"
+          autocomplete="username"
+          rounded
+          outlined
+          color="white"
+          class="landing-input"
+        ></q-input> -->
+
         <q-input
           ref="loginNameRef"
-          filled
           hide-bottom-space
           v-model="passwordForm.loginName"
           label="Username"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please Enter Username']"
+          rounded
+          outlined
+          label-color="brand"
           color="white"
-        >
-          <template v-slot:prepend>
-            <q-icon name="person_outline" />
-          </template>
-        </q-input>
-
-        <!-- <q-input
-          ref="emailRef"
-          type="email"
-          filled
-          hide-bottom-space
-          v-model="passwordForm.email"
-          label="Email Address"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please Enter Email Address', isValidEmail]"
-          color="white"
-        >
-          <template v-slot:prepend>
-            <q-icon name="mail_outline" />
-          </template>
-        </q-input> -->
+          class="landing-input"
+        ></q-input>
 
         <q-input
           ref="phoneRef"
           type="number"
-          filled
           hide-bottom-space
           v-model="passwordForm.phone"
           label="Phone Number"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please Enter Phone Number']"
+          rounded
+          outlined
+          label-color="brand"
           color="white"
-        >
-          <template v-slot:prepend>
-            <q-icon name="smartphone" />
-          </template>
-        </q-input>
+          class="landing-input"
+        ></q-input>
 
         <q-input
           ref="ftCaptchaRef"
-          filled
           hide-bottom-space
           type="text"
           v-model="passwordForm.captchaCode"
           label="Verification Code"
           lazy-rules
-          color="white"
           :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
+          rounded
+          outlined
+          label-color="brand"
+          color="white"
+          class="landing-input"
         >
           <template v-slot:append>
             <img :src="verificationImg" @click="getCode()" />
-          </template>
-          <template v-slot:prepend>
-            <q-icon name="security" />
           </template>
         </q-input>
 
@@ -78,23 +74,22 @@
         <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
         <q-input
           ref="codeRef"
-          filled
           hide-bottom-space
           v-model="verificationForm.code"
           label="OTP"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please Enter OTP']"
+          rounded
+          outlined
+          label-color="brand"
           color="white"
+          class="landing-input"
         >
-          <template v-slot:prepend>
-            <q-icon name="qr_code" />
-          </template>
         </q-input>
 
         <q-input
           ref="newPwdRef"
           :type="isPwd ? 'password' : 'text'"
-          filled
           hide-bottom-space
           v-model="verificationForm.newPassword"
           label="New Password"
@@ -104,11 +99,12 @@
             (val) => (val.length > 5 && val.length <= 12) || 'Password Must Be 6 To 12 Character',
             (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || 'Stronger Password Is Recommended'
           ]"
+          rounded
+          outlined
+          label-color="brand"
           color="white"
+          class="landing-input"
         >
-          <template v-slot:prepend>
-            <q-icon name="lock_open" />
-          </template>
           <template v-slot:append>
             <q-icon
               color="bright"
@@ -122,7 +118,6 @@
         <q-input
           ref="newConfirmPwdRef"
           :type="isConfirmPwd ? 'password' : 'text'"
-          filled
           hide-bottom-space
           v-model="newConfirmPwdVModel"
           label="Confirm New Password"
@@ -132,11 +127,12 @@
             (val) => (val.length > 5 && val.length <= 12) || 'Confirm Password Must Be 6 To 12 Character',
             (val) => (val && val === verificationForm.newPassword) || 'Confirm Password Does Not Match'
           ]"
+          rounded
+          outlined
+          label-color="brand"
           color="white"
+          class="landing-input"
         >
-          <template v-slot:prepend>
-            <q-icon name="lock_open" />
-          </template>
           <template v-slot:append>
             <q-icon
               color="bright"
@@ -170,20 +166,20 @@
 
         <q-input
           ref="captchaRef"
-          filled
           hide-bottom-space
           type="text"
           v-model="verificationForm.captchaCode"
           label="Verification Code"
           lazy-rules
-          color="white"
           :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
+          rounded
+          outlined
+          label-color="brand"
+          color="white"
+          class="landing-input"
         >
           <template v-slot:append>
             <img :src="verificationImg" @click="getCode()" />
-          </template>
-          <template v-slot:prepend>
-            <q-icon name="security" />
           </template>
         </q-input>
 
@@ -454,6 +450,16 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.landing-input {
+  :deep(.q-field__control) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  :deep(.q-field__control):before {
+    border-color: #ffdd27;
+    border-width: 2px;
+  }
+}
 .password-str-div {
   display: flex;
   align-items: center;

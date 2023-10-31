@@ -112,7 +112,7 @@
           v-model="form.bankId"
           :bank-list="bankCardList"
           @selected="selectedBank"
-          @successful="isDeposited = true"
+          @successful="isDeposited.value = true"
         ></BankComponent>
         <!-- <q-select
           ref="offerRef"

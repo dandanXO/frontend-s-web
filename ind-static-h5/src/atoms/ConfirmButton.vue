@@ -40,6 +40,7 @@ const onBtnClick = () => {
   .confirm-btn-text {
     position: absolute;
     font-size: 1.25rem;
+    font-weight: bold;
   }
 }
 </style>
