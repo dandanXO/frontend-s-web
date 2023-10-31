@@ -278,6 +278,7 @@ const request = reactive({
   current: 1,
   name: null,
   siteId: null,
+  category: 'PROMO'
 })
 
 const form = reactive({
@@ -359,7 +360,7 @@ function showEdit(image) {
 async function attachPhoto(event) {
   const files = event.target.files[0]
   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-  const dir = 'promo'
+  const dir = 'temp'
   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
     ElMessage({ message: t('message.invalidFileType'), type: 'error' })
   } else {
@@ -368,7 +369,6 @@ async function attachPhoto(event) {
     formData.append('dir', dir)
     formData.append('overwrite', false)
     uploadedImage.url = URL.createObjectURL(files)
-
     return await uploadImage(formData)
   }
 }
