@@ -52,7 +52,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadAffiliateReport()"
+          @click="loadAffiliateReport(true)"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -268,21 +268,28 @@ function checkQuery() {
   return query;
 }
 
-async function loadAffiliateReport() {
+async function loadAffiliateReport(withTotal) {
   page.loading = true
   const query = checkQuery();
   const { data: ret } = await getAffiliateReport(query)
   page.pages = ret.pages
   page.records = ret.records
+  if (withTotal) {
+    loadAffiliateReportTotal(query)
+  }
+  page.loading = false
+}
+
+async function loadAffiliateReportTotal(query) {
   const { data: total } = await getAffiliateReportTotal(query)
   page.total = total;
-  page.loading = false
 }
 
 async function load(tree, treeNode, resolve) {
   const query = {};
   query.recordTime = tree.recordTime;
   query.superiorAffiliateId = tree.affiliateId;
+  query.siteId = request.siteId;
   const { data: children } = await getAffiliateChildReport(query);
   resolve(children);
 }
@@ -304,7 +311,7 @@ async function loadSites() {
 
 function changePage(page) {
   request.current = page
-  loadAffiliateReport()
+  loadAffiliateReport(false)
 }
 
 function populateReportTotal(param) {
@@ -337,7 +344,7 @@ onMounted(async () => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
-  await loadAffiliateReport()
+  await loadAffiliateReport(true)
 })
 </script>
 

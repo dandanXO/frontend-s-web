@@ -41,6 +41,8 @@ export default {
     finishDate: '完成日期',
     withdrawDate: '提款日期',
     paymentDate: '支付日期',
+    regTime: '注册时间',
+    recordTime: '记录时间'
   },
   reportName: {
     Aff_Month_Report: '代理月报表',
@@ -446,6 +448,7 @@ export default {
     deleteRole: '删除角色',
     deposit: '存款',
     depositAmount: '存款金额',
+    depositAverage: '人均充值',
     depositBettingAmount: '存款/投注',
     depositCount: '存款次数',
     depositDate: '存款日期',
