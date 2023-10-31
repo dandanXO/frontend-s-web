@@ -63,6 +63,7 @@ export default route(function(/* { store, ssrContext } */) {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
       next(`/register`);
     }
+
     if (user.hasToken()) {
       user.getMemberInfo();
       if (to.path === "/login") {
@@ -159,6 +160,26 @@ export default route(function(/* { store, ssrContext } */) {
       } else {
         next();
       }
+    }
+
+    //Add Google Analytics && FB Event Manager If Affiliate Code Matched.
+    const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+    if(affiliateCode && affiliateCode === "0DDC3F"){
+      console.log("GA 780-462-3466");
+      // alert("YES")
+      // debugger;
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', 'UA-780462346-6');
+
+      fbq('init', '1404052756844706');
+      fbq('track', 'PageView');
+
     }
 
     // if (user.hasToken()) {
