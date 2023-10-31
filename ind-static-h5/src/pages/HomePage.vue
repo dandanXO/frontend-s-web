@@ -23,9 +23,6 @@
           </div>
         </marquee-text>
       </div>
-      <!-- <div class="share" @click="router.push('/promo?id=35')">
-      <RiUserShared2Line />
-    </div> -->
     </div>
 
     <q-carousel
@@ -72,7 +69,6 @@
       <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
     </div>
-    <!-- <pre>{{ hotGameList }}---</pre> -->
 
     <div class="games-selection-wrapper">
       <div class="hot-games-pattern-top"></div>
@@ -190,22 +186,6 @@
         <div class="game-platform-item">
           <img src="../assets/images/index/poker/item-game-gpipoker.png" alt="" />
           <div class="game-platform-title">GPI-POKER</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
-          <div class="game-platform-title">COMING SOON</div>
         </div>
         <div class="game-platform-item">
           <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
@@ -456,18 +436,13 @@ import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpFill } from "vue-remix-icons";
 import { App } from "@capacitor/app";
-
 import { useUI } from "stores/ui";
-
-import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
 import ProfileSummary from "../components/ProfileSummary.vue";
-
 import WithdrawalComponent from "../components/WithdrawalComponent.vue";
 import DepositComponent from "../components/depositComponent.vue";
 
 const slide = ref(0);
-const tab = ref("esport");
 
 const isFirstView = ref(false);
 const closeAlert = () => {
@@ -602,17 +577,29 @@ const filteredHotGameList = computed(() => {
 });
 
 const loadHotGameList = () => {
-  api
-    .get("/platformGamesByLabel?device=H5&gameLabel=HOT", {})
-    .then((ret) => {
-      const res = ret;
-      if (res.code === 0) {
-        return res;
-      }
-    })
-    .catch((err) => {})
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const key = `PLATFORM_HOT_GAMES_${regDevice}`;
+
+  // cached
+  cached
+    .get(key, () =>
+      api
+        .get("/platformGamesByLabel", {
+          params: {
+            gameLabel: "HOT",
+            device: regDevice
+          }
+        })
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
     .then((res) => {
-      hotGameList.value = res.data;
+      hotGameList.value = res;
     });
 };
 
@@ -650,8 +637,6 @@ const imgURL = process.env.IMAGE_CDN;
 const imgURLGame = imgURL + "/game/5/";
 const imgURLPromo = imgURL + "/promo/";
 
-const imgURLLocal = "http://";
-
 // Pop out ads banner
 const isImportantAnnoucementModal = ref(false);
 const homePopupImg = ref("");
@@ -677,75 +662,6 @@ const setWithExpiry = (key, value, interval) => {
     frequency: homePopupFrequency.value
   };
   sessionStorage.setItem(key, JSON.stringify(item));
-};
-
-const getWithExpiry = (key) => {
-  const itemStr = sessionStorage.getItem(key);
-  if (!itemStr) {
-    return null;
-  }
-  const item = JSON.parse(itemStr);
-  const now = new Date();
-  api
-    .get("/member/ads-popout")
-    .then((res) => {
-      if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-        sessionStorage.removeItem(key);
-        isImportantAnnoucementModal.value = true;
-        return null;
-      }
-    })
-    .catch(() => {});
-  return item.value;
-};
-
-const isImpt = getWithExpiry("isImpt");
-
-const checkShowImgTop = () => {
-  const lastTime = sessionStorage.getItem("indexImgTop");
-  if (lastTime) {
-    const diff = new Date().getTime() - Number(lastTime);
-    if (diff > 1000 * 60 * 60 * 12) {
-      isFirstView.value = true;
-    }
-  } else {
-    api
-      .get("/member/ads-popout")
-      .then((res) => {
-        if (res.code === 0) {
-          // if (res.data[id] !== null) {
-          if (isImpt === null) {
-            switch (res.data["frequency"]) {
-              case "EVERYTIME":
-                homePopupFrequencyNum.value = 0;
-                break;
-              case "EVERYDAY":
-                homePopupFrequencyNum.value = 86400000; // 24hrs
-                break;
-              case "SESSION":
-                homePopupFrequencyNum.value = 7866432000; // 3months
-                break;
-              default:
-                homePopupFrequencyNum.value = 10000;
-                break;
-            }
-            isImportantAnnoucementModal.value = true;
-            homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
-            homePopupContent.value = res.data["content"];
-            homePopupType.value = res.data["type"];
-            homePopupId.value = res.data["id"];
-            homePopupFrequency.value = res.data["frequency"];
-            // if (homePopupImg.value) {
-            isFirstView.value = true;
-            // }
-          }
-          // } else {
-          // isImportantAnnoucementModal.value = false;
-          // }
-        }
-      })
-      .catch(() => {});
-  }
 };
 
 function loadData() {
@@ -775,10 +691,6 @@ function loadData() {
 }
 
 const platforms = ref([]);
-const selectedPlatId = ref();
-const selectedPlat = ref(platforms.value[0]);
-const gamesTa = ref(platforms.value[0]);
-const splitterModel = ref(27);
 const gamePage = reactive({
   gameList: [],
   currentPage: 1,
@@ -788,7 +700,6 @@ const gamePage = reactive({
   total: 0
 });
 const gameListData = ref([]);
-const fishPlatforms = ref([]);
 
 var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
 var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
@@ -918,32 +829,6 @@ const getPlatList = () => {
     .catch((err) => {});
 };
 
-const liveTabs = ref("");
-const searchList = () => {
-  if (gamePage.searchKey) {
-    gamePage.gameList = gameListData.value.filter((game) => {
-      return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
-    });
-  } else {
-    changePage(1, gamePage.pageSize);
-  }
-};
-
-const changePage = (page, pageSize) => {
-  gamePage.gameList = gameListData.value;
-  // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
-};
-
-const isLoadingBalance = ref(false);
-const refreshBalance = () => {
-  if (store.token) {
-    isLoadingBalance.value = true;
-    store.getBalance().then((res) => {
-      isLoadingBalance.value = false;
-    });
-  }
-};
-
 const announcementList = ref([]);
 const announcementTypes = ref([]);
 const loadAnnouncement = () => {
@@ -957,8 +842,6 @@ const loadAnnouncement = () => {
         announcementTypes.value = res.data.type;
         activeKey.value = res.data.type[0].id;
       }
-      // announcementList.value = d.announcements
-      // announcementList.value = res.data.announcements
     }
   });
 };
@@ -979,14 +862,8 @@ const gotoPromo = (banner) => {
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const getVersionNo = async () => {
-  // console.log(Platform);
-  // alert("Capacitor" + Platform.is.capacitor);
   if (Platform.is.android && Platform.is.capacitor) {
     const info = await App.getInfo();
-    // const info = {
-    //   version: "1.0.1"
-    // };
-    // alert(info.version);
     var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
     // info.version && info.build
     const appType = "ALL";
@@ -997,9 +874,6 @@ const getVersionNo = async () => {
       var version_info = res.data.version;
       var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
       download_url.value = res.data.url;
-
-      // alert(latest_ver_no);
-      // console.log(download_url.value);
       if (latest_ver_no > current_version) {
         isAppUpdateModal.value = true;
       }
@@ -1013,12 +887,6 @@ const openDownloadPage = () => {
 };
 const cancelUpdate = () => {
   isAppUpdateModal.value = false;
-};
-
-const closeTopBox = () => {
-  isH5.value = false;
-  var btmSwiper = document.getElementById("btm-second-swiper");
-  btmSwiper.classList.add("longer-swiper");
 };
 
 const downloadUrl = ref("");
@@ -1041,12 +909,9 @@ onMounted(() => {
   loadAnnouncement();
   checkPlatform();
   getVersionNo();
-  checkShowImgTop();
   getAppDownloadUrl();
   loadHotGameList();
 });
-const imageLoading = ref(false);
-const selectedLiveTab = ref();
 </script>
 
 <style scoped lang="scss">
