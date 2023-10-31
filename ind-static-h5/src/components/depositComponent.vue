@@ -510,6 +510,9 @@ async function pDepo(deposit) {
   if (deposit.privilegeId) {
     obj.privilegeId = deposit.privilegeId;
   }
+
+  isDeposited.value = true;
+
   await cashier
     .post("/session/payment/submit", qs.stringify(obj))
     .then((res) => {
@@ -537,8 +540,8 @@ async function pDepo(deposit) {
             !liff.isInClient()
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
-              const newWin = window.open(`/`, `_blank`);
               isDeposited.value = true;
+              const newWin = window.open(`/`, `_self`);
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
                 btnLoading.value = false;
@@ -553,6 +556,7 @@ async function pDepo(deposit) {
                 }
               }
             } else {
+              isDeposited.value = true;
               const newWin = window.open(`/`);
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
