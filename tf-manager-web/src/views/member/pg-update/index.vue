@@ -68,7 +68,7 @@
             v-if="scope.row.betTime !== null"
             v-formatter="{
               data: scope.row.betTime,
-              timeZone: siteTimeZone.timeZone,
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -115,9 +115,7 @@ const startDate = new Date();
 startDate.setDate(startDate.getDate() - 6);
 const defaultStartDate = convertDate(startDate);
 const defaultEndDate = convertDate(new Date());
-const siteTimeZone = reactive({
-  timeZone: null,
-});
+let timeZone = null;
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
@@ -184,8 +182,7 @@ async function loadPendingRecords() {
   page.pages = Math.ceil(page.total / request.size);
   getShowRecords();
 
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
 
   page.loading = false;
 }

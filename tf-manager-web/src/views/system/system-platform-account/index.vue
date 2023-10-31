@@ -269,7 +269,7 @@
           <span v-if="scope.row.nextActivationTime === null">-</span>
           <span
             v-if="scope.row.nextActivationTime !== null"
-            v-formatter="{data: scope.row.nextActivationTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            v-formatter="{data: scope.row.nextActivationTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -278,7 +278,7 @@
           <span v-if="scope.row.nextGetBetStartTime === null">-</span>
           <span
             v-if="scope.row.nextGetBetStartTime !== null"
-            v-formatter="{data: scope.row.nextGetBetStartTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            v-formatter="{data: scope.row.nextGetBetStartTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -287,7 +287,7 @@
           <span v-if="scope.row.nextGetBetEndTime === null">-</span>
           <span
             v-if="scope.row.nextGetBetEndTime !== null"
-            v-formatter="{data: scope.row.nextGetBetEndTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            v-formatter="{data: scope.row.nextGetBetEndTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -353,9 +353,11 @@ import {
 } from '../../../api/system-platform-account'
 import { getPlatformNames } from '../../../api/platform'
 import moment from 'moment'
+import { useStore } from '../../../store';
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site'
 
+const store = useStore();
 const { t } = useI18n();
 const sitePlatformForm = ref(null)
 const uiControl = reactive({
@@ -473,19 +475,16 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM-DD HH:mm:ss');
 }
 
-function setTimeZone(data) {
-  data.forEach((e) => {
-    const siteTimeZone = sites.list.find(site => site.id === e.siteId) ? sites.list.find(site => site.id === e.siteId).timeZone : null;
-    e.siteTimeZone = siteTimeZone
-  })
-}
-
 async function loadPlatfromAccount() {
   page.loading = true
   const { data: ret } = await getPlatformAccount(request)
   page.pages = ret.pages
   page.records = ret.records
-  setTimeZone(ret.records)
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.loading = false
 }
 

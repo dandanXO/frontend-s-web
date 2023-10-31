@@ -284,7 +284,7 @@
         <el-table-column prop="regTime" :label="t('fields.registerTime')" width="150">
           <template #default="scope">
             <span v-if="scope.row.regTime === null">-</span>
-            <span v-if="scope.row.regTime !== null" v-formatter="{data: scope.row.regTime,timeZone: siteTimeZone.timeZone,type: 'date'}" />
+            <span v-if="scope.row.regTime !== null" v-formatter="{data: scope.row.regTime,timeZone: timeZone,type: 'date'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -361,9 +361,7 @@ const table = ref(null);
 const siteList = reactive({
   list: []
 });
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null;
 const freezeType = reactive({
   list: [
     { key: 1, name: "NORMAL", value: "NORMAL" },
@@ -581,10 +579,7 @@ async function loadAffiliates() {
 
   page.pages = result.data.pages;
   page.records = result.data.records;
-
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

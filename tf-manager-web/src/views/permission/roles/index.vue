@@ -319,6 +319,11 @@ function showDialog(type) {
 async function loadData() {
   const { data: ret } = await getRoles(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
+      ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
+      : null
+  });
   page.records = ret.records
 }
 

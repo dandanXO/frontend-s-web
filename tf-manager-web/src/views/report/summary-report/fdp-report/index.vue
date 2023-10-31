@@ -47,7 +47,7 @@
           <span v-if="scope.row.registerTime === null">-</span>
           <span
             v-if="scope.row.registerTime !== null"
-            v-formatter="{data: scope.row.registerTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+            v-formatter="{data: scope.row.registerTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -56,7 +56,7 @@
           <span v-if="scope.row.ftdTime === null">-</span>
           <span
             v-if="scope.row.ftdTime !== null"
-            v-formatter="{data: scope.row.ftdTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+            v-formatter="{data: scope.row.ftdTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -120,9 +120,7 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null;
 var date = new URL(location.href).searchParams.get('date')
 var siteIdFromParam = new URL(location.href).searchParams.get('site')
 
@@ -163,9 +161,7 @@ async function loadSummaryFdpRecord() {
   page.pages = ret.pages
   page.records = ret.records
 
-  var siteSelected = siteList.list.find(e => e.id === parseInt(request.siteId))
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
+  timeZone = siteList.list.find(e => e.id === parseInt(request.siteId)).timeZone;
   page.loading = false
 }
 

@@ -319,7 +319,7 @@
           <template #default="scope">
             <span v-if="scope.row.regTime === null">-</span>
             <span v-if="scope.row.lastLoginTime !== null"
-                  v-formatter="{data: scope.row.regTime,timeZone: scope.row.siteTimeZone,type: 'date'}"
+                  v-formatter="{data: scope.row.regTime,timeZone: timeZone,type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -364,7 +364,7 @@
           <template #default="scope">
             <span v-if="scope.row.lastLoginTime === null">-</span>
             <span v-if="scope.row.lastLoginTime !== null"
-                  v-formatter="{data: scope.row.lastLoginTime,timeZone: scope.row.siteTimeZone,type: 'date'}"
+                  v-formatter="{data: scope.row.lastLoginTime,timeZone: timeZone,type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -424,6 +424,7 @@ const siteList = reactive({
   list: []
 });
 
+let timeZone = null;
 let chooseMembers = [];
 
 const uiControl = reactive({
@@ -638,6 +639,7 @@ async function loadMembers() {
   const { data: ret } = await getMembers(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
   table.value.clearSelection();
 }

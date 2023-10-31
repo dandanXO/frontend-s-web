@@ -121,7 +121,7 @@
             v-if="scope.row.recordTime !== null"
             v-formatter="{
               data: scope.row.recordTime,
-              timeZone: siteTimeZone.timeZone,
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -232,9 +232,7 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null
 
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -334,9 +332,7 @@ async function loadPrivilegeRecord() {
     page.totalAmount = 0
   }
 
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 

@@ -301,7 +301,7 @@
           <span v-if="scope.row.createTime === null">-</span>
           <span
             v-if="scope.row.createTime !== null"
-            v-formatter="{data: scope.row.createTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            v-formatter="{data: scope.row.createTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -311,7 +311,7 @@
           <span v-if="scope.row.updateTime === null">-</span>
           <span
             v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -510,8 +510,12 @@ function handleSelectionChange(val) {
 async function loadUser() {
   const { data: ret } = await getUsers(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
-  setTimeZone(ret.records)
 }
 
 async function loadRoles(siteId) {
@@ -663,13 +667,6 @@ function toSiteName(row, column, cellValue, index) {
   } else {
     return "-";
   }
-}
-
-function setTimeZone(data) {
-  data.forEach((e) => {
-    const siteTimeZone = siteList.list.find(site => site.id === e.siteId) ? siteList.list.find(site => site.id === e.siteId).timeZone : null;
-    e.siteTimeZone = siteTimeZone
-  })
 }
 
 function getRolesTxt(roleIds) {

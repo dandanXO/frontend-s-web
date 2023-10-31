@@ -78,7 +78,11 @@
         label-width="180px"
       >
         <div id="preview">
-          <el-image v-if="uploadedImage.url" :src="uploadedImage.url" :fit="contain" />
+          <el-image
+            v-if="uploadedImage.url"
+            :src="uploadedImage.url"
+            :fit="contain"
+          />
         </div>
         <el-form-item :label="t('fields.image')" prop="path">
           <el-row :gutter="10">
@@ -163,9 +167,33 @@
       </el-table-column>
       <el-table-column prop="name" :label="t('fields.imageName')" />
       <el-table-column prop="siteName" :label="t('fields.site')" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
       <el-table-column
         type="title"
@@ -359,6 +387,11 @@ async function loadSiteImage() {
   const { data: ret } = await getSiteImage(request)
   ret.records.forEach(e => (e.displayPath = e.path))
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
+      ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
+      : null
+  });
   page.records = ret.records
 }
 

@@ -206,7 +206,7 @@
             <span v-if="scope.row.withdrawDate === null">-</span>
             <span
               v-if="scope.row.withdrawDate !== null"
-              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.siteTimeZone, type: 'date'}"
+              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -220,7 +220,7 @@
             <span v-if="scope.row.checkDate === null">-</span>
             <span
               v-if="scope.row.checkDate !== null"
-              v-formatter="{data: scope.row.checkDate, timeZone: scope.row.siteTimeZone, type: 'date'}"
+              v-formatter="{data: scope.row.checkDate, timeZone: scope.row.timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -405,8 +405,10 @@ import {
 } from '../../../../api/member-withdraw-record'
 import { ElMessage } from 'element-plus'
 import { hasPermission } from '../../../../utils/util'
+import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
 const vipList = reactive({
@@ -547,6 +549,11 @@ async function loadRecord() {
   query.memberType = "AFFILIATE";
   const { data: ret } = await getAffiliateWithdrawRecordBeforePaid(query)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {

@@ -28,7 +28,7 @@
       <MemberPrivilegeRecord :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.rolloverRecord')" name="member-rollover-record">
-      <MemberRolloverRecord :mbr-id="id" />
+      <MemberRolloverRecord :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.riskControl')" name="risk-info">
       <RiskInfoTab :mbr-id="id" :time-zone="timeZone" />

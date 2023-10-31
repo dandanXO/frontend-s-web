@@ -150,7 +150,7 @@
           <span v-if="scope.row.createTime === null">-</span>
           <span
             v-if="scope.row.createTime !== null"
-            v-formatter="{data: scope.row.createTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            v-formatter="{data: scope.row.createTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -188,7 +188,9 @@ import { createAnnouncementType, updateAnnouncementType, getAnnouncementType, up
 import { getSiteListSimple } from "../../../../api/site";
 import { hasRole, hasPermission } from "../../../../utils/util";
 import { useI18n } from "vue-i18n";
+import { useStore } from '../../../../store';
 
+const store = useStore();
 const { t } = useI18n();
 const announcementTypeForm = ref(null);
 const siteList = reactive({
@@ -258,6 +260,11 @@ async function loadAnnouncementType() {
   page.loading = true;
   const { data: ret } = await getAnnouncementType(request);
   page.pages = ret.pages;
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records;
   page.loading = false;
 }

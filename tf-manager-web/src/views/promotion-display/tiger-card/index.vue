@@ -126,7 +126,7 @@
           <span v-if="scope.row.opTime === null">-</span>
           <span
             v-if="scope.row.opTime !== null"
-            v-formatter="{data: scope.row.opTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+            v-formatter="{data: scope.row.opTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -157,7 +157,7 @@
           <span v-if="scope.row.lotteryStartTime === null">-</span>
           <span
             v-if="scope.row.lotteryStartTime !== null"
-            v-formatter="{data: scope.row.lotteryStartTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+            v-formatter="{data: scope.row.lotteryStartTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -166,7 +166,7 @@
           <span v-if="scope.row.lotteryEndTime === null">-</span>
           <span
             v-if="scope.row.lotteryEndTime !== null"
-            v-formatter="{data: scope.row.lotteryEndTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+            v-formatter="{data: scope.row.lotteryEndTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -258,9 +258,7 @@ const tigerCardSettingForm = ref(null)
 const siteList = reactive({
   list: [],
 })
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
@@ -372,9 +370,7 @@ async function loadTigerCardRecord() {
   page.pages = ret.pages
   page.records = ret.records
 
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.loading = false
 }
 

@@ -209,6 +209,11 @@ async function loadRiskLevel() {
   });
   const { data: ret } = await getRiskLevel(query);
   page.pages = ret.pages;
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records;
   page.loading = false;
 }
