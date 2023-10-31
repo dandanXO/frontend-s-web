@@ -164,7 +164,7 @@
             <el-option
               v-for="item in privilegeInfoList.list"
               :key="item.id"
-              :label="item.name"
+              :label="item.alias !== null ? item.alias : item.name"
               :value="item.id"
             />
           </el-select>
