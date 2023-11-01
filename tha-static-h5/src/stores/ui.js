@@ -7,7 +7,8 @@ export const useUI = defineStore("ui-store", {
       orientation: 'landscape',
       themeColor: 'purple-8',
       leftDrawerOpen: false,
-      appVersion: ""
+      appVersion: "",
+      isCardUpdate: false
     };
   },
   actions: {

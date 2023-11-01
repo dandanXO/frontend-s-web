@@ -65,7 +65,6 @@ export default route(function(/* { store, ssrContext } */) {
     }
 
     if (user.hasToken()) {
-      user.getMemberInfo();
       if (to.path === "/login") {
         next({ path: "/" });
       } else {
