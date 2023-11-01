@@ -1,7 +1,5 @@
 <template>
-  <div class="bg-container">
-    <ContentFrame></ContentFrame>
-
+  <ContentView contentTopStatus="faded">
     <div class="agency-policy">
       <ul class="margin-style">
         <li>How To Earn Commissions?</li>
@@ -21,6 +19,7 @@
         :columns="columns"
         :rows="rows"
         row-key="name"
+        dense
       ></q-table>
 
       <ul>
@@ -38,6 +37,7 @@
         :columns="columns2"
         :rows="rows2"
         row-key="name"
+        dense
       ></q-table>
 
       <div class="copy-link-container" @click="copyShareLink(selfTgurl)">
@@ -45,7 +45,7 @@
         <span>Copy Share Link</span>
       </div>
     </div>
-  </div>
+  </ContentView>
 </template>
 
 <script setup>
@@ -53,7 +53,7 @@ import { ref, onMounted } from "vue";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import ContentFrame from "../ContentFrame.vue";
+import ContentView from "../ContentView.vue";
 
 const $q = useQuasar();
 const store = userStore();
@@ -143,81 +143,68 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
-.bg-container {
-  .agency-policy {
-    position: absolute;
-    padding: 0 2rem;
-    height: 37rem;
-    overflow: scroll;
-    top: 15rem;
+<style scoped lang="scss">
+.agency-policy {
+  .margin-style {
+    margin: 0;
+  }
 
-    &::-webkit-scrollbar {
-      display: none;
+  ul {
+    padding-inline-start: 1.5rem;
+
+    li {
+      list-style-type: decimal;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.25rem;
+      text-align: left;
+      color: #edd3ff;
+      margin: 0 0 0.75rem 0;
     }
 
-    .margin-style {
-      margin: 0;
+    .dot-style {
+      list-style-type: disc;
+    }
+  }
+  :deep(.q-table__container) {
+    background: transparent !important;
+    border-radius: 12px;
+  }
+  .table-container {
+    :deep(thead) {
+      background: rgba(21, 0, 37, 0.5);
     }
 
-    ul {
-      padding-inline-start: 3rem;
-
-      li {
-        list-style-type: decimal;
-        font-size: 0.95rem;
-        font-weight: 700;
-        line-height: 1.25rem;
-        text-align: left;
-        color: #edd3ff;
-        margin: 0 0 0.75rem 0;
-      }
-
-      .dot-style {
-        list-style-type: disc;
-      }
+    :deep(tbody) {
+      background: rgba(21, 0, 37, 0.2);
     }
 
-    .table-container {
-      .q-table__card {
-        background: transparent !important;
-      }
+    .text-center {
+      font-size: 0.95rem;
+      font-weight: 700;
+      width: 2rem;
+      border-bottom-width: 0;
+      border-right-width: 1px;
+      border-color: black;
+      padding: 0 0.25rem;
+    }
+  }
 
-      thead {
-        background: #15002580;
-      }
+  .copy-link-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-      tbody {
-        background: #15002533;
-      }
-
-      .text-center {
-        font-size: 0.95rem;
-        font-weight: 700;
-        width: 2rem;
-        border-bottom-width: 0;
-        border-right-width: 1px;
-        border-color: black;
-        padding: 0 0.25rem;
-      }
+    .copy-link {
+      width: 25rem;
+      padding: 1rem;
     }
 
-    .copy-link-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .copy-link {
-        width: 25rem;
-        padding: 1rem;
-      }
-
-      span {
-        position: absolute;
-        font-size: 1.25rem;
-        font-weight: 700;
-      }
+    span {
+      position: absolute;
+      font-size: 1.25rem;
+      font-weight: 700;
     }
   }
 }

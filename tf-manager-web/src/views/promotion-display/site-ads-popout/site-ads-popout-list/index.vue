@@ -247,7 +247,15 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{data: scope.row.createTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column type="title" :label="t('fields.action')" v-if="hasPermission(['sys:ads-popout:update'])|| hasPermission(['sys:ads-popout:del'])">
         <template #default="scope">

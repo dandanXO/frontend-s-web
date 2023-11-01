@@ -296,9 +296,25 @@
           {{ getRolesTxt(scope.row.roles) }}
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{data: scope.row.createTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="100" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="100" />
       <el-table-column :label="t('fields.operate')" align="center" fixed="right" min-width="500"
                        v-if="hasPermission(['sys:user:update:password'])||hasPermission(['sys:user:update'])||hasPermission(['sys:user:delete'])"
@@ -495,6 +511,7 @@ async function loadUser() {
   const { data: ret } = await getUsers(request)
   page.pages = ret.pages
   page.records = ret.records
+  setTimeZone(ret.records)
 }
 
 async function loadRoles(siteId) {
@@ -646,6 +663,13 @@ function toSiteName(row, column, cellValue, index) {
   } else {
     return "-";
   }
+}
+
+function setTimeZone(data) {
+  data.forEach((e) => {
+    const siteTimeZone = siteList.list.find(site => site.id === e.siteId) ? siteList.list.find(site => site.id === e.siteId).timeZone : null;
+    e.siteTimeZone = siteTimeZone
+  })
 }
 
 function getRolesTxt(roleIds) {
