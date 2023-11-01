@@ -15,57 +15,6 @@
             </div>
           </div>
         </template>
-        <!-- <div class="account-content withdrawal q-gutter-md q-pa-md">
-          <div class="text-h6">รายการที่รอดำเนินการชำระเงิน</div>
-          <q-stepper
-            v-model="step"
-            vertical
-            active-color="white"
-            inactive-color="white"
-          >
-            <q-step
-              :done="true"
-              prefix="1"
-              :name="1"
-              status="process"
-              title="ยื่นคำขอ"
-              icon=""
-            >
-            </q-step>
-            <q-step
-              :done="true"
-              prefix="2"
-              :name="2"
-              status="process"
-              title="ดำเนินการ"
-            >
-            </q-step>
-            <q-step
-              :done="true"
-              prefix="3"
-              :name="3"
-              status="process"
-              title="จ่าย"
-            >
-            </q-step>
-            <q-step
-              :done="true"
-              prefix="4"
-              :name="4"
-              status="process"
-              title="สำเร็จ"
-            >
-            </q-step>
-          </q-stepper>
-          <ul>
-            <li>
-              หลังจบเกม ระบบจะตรวจสอบคะแนนและประสานการจ่ายเงิน โปรดอดทนรอสักครู่
-            </li>
-            <li>
-              หากการถอนล้มเหลว โปรดตรวจสอบสาเหตุที่ระบุไว้ในประกาศบนเว็บไซต์!
-            </li>
-          </ul>
-        </div> -->
         <div class="flex column gap-1.2 overflow-hidden">
           <div class="full-width">
             <div class="q-mb-xs">{{ $t("lang.withdraw_method") }}</div>
@@ -221,11 +170,15 @@
                 class="text-left full-width"
               >
                 <span style="color: #9bffd1"
-                  >{{ $t('lang.estimate_arrival')}} {{
+                  >{{ $t("lang.estimate_arrival") }}
+                  {{
                     selectedWithdrawalMethod &&
-                    (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount /
-                      selectedWithdrawalMethod.exchangeRate -
-                      1) < 0)
+                    (withdrawInfo.amount <
+                      selectedWithdrawalMethod.withdrawMin ||
+                      withdrawInfo.amount /
+                        selectedWithdrawalMethod.exchangeRate -
+                        1 <
+                        0)
                       ? "0.00"
                       : (
                           withdrawInfo.amount /
@@ -241,7 +194,9 @@
                 v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
                 class="text-left full-width"
               >
-                <span style="color: #9bffd1;">({{ $t("lang.usdt_will_be_charged") }})</span>
+                <span style="color: #9bffd1"
+                  >({{ $t("lang.usdt_will_be_charged") }})</span
+                >
               </div>
 
               <!-- <a-form-item
@@ -280,7 +235,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, onUpdated} from "vue";
 // import { loadBankCards, confirmWithdraw, withdrawEntrance
 // //  } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
@@ -290,6 +245,7 @@ import {userStore} from "stores/index";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
 import PlatformItem from "src/components/PlatformItem.vue";
+import {useUI} from "stores/ui";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -303,6 +259,7 @@ export default defineComponent({
     const amountRef = ref();
     const cardRef = ref();
     const store = userStore();
+    const ui = useUI()
     const activeItem = ref(0);
     const withdrawState = reactive({
       bankCardList: [],
@@ -317,6 +274,12 @@ export default defineComponent({
     onMounted(() => {
       getWithdrawalMethods()
     });
+    onUpdated(() => {
+      if (ui.isCardUpdate === true) {
+        ui.isCardUpdate = false;
+        getWithdrawalMethods()
+      }
+    })
     const submitWithdraw = () => {
       cardRef.value.validate();
       amountRef.value.validate();
@@ -374,7 +337,7 @@ export default defineComponent({
         if (response.code === 0) {
           // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
           response.data.forEach(element => {
-            if (element.bankType === 'BANK') {
+            if (element && element.bankType === 'BANK') {
               if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
                 withdrawState.bankCardList.push({
                   ...element,
@@ -382,7 +345,7 @@ export default defineComponent({
                   icon: element.bankIcon
                 })
               }
-            } else if(element.bankType === 'CRYPTO'){
+            } else if (element.bankType === 'CRYPTO') {
               if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
                 withdrawState.bankCardList.push({
                   ...element,
@@ -407,7 +370,7 @@ export default defineComponent({
         if (response.code === 0) {
           withdrawalMethods.value = response.data
           //Remove this for real data
-      if (withdrawalMethods.value.length > 0) {
+          if (withdrawalMethods.value.length > 0) {
             selectMethod(withdrawalMethods.value[0], 0)
           }
         } else {

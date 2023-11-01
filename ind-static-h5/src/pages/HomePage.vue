@@ -1576,6 +1576,7 @@ onMounted(() => {
 .games-selection-wrapper {
   margin-top: 10px;
   margin-bottom: 40px;
+
   .hot-games-pattern-top {
     background-image: url(../assets/images/index/hot-games-pattern-top.png);
     background-size: contain;
