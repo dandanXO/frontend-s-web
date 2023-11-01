@@ -316,18 +316,6 @@
             />
           </el-select>
         </el-form-item>
-      <!-- <el-form-item :label="t('fields.label')" prop="gameLabel">
-        <el-radio-group v-model="form.gameLabel">
-          <el-radio
-            v-for="c in gameLabel.list"
-            :label="c.value"
-            :key="c.key"
-            v-model="form.gameLabel"
-          >
-            {{ c.displayName }}
-          </el-radio>
-        </el-radio-group>
-      </el-form-item> -->
         <el-form-item :label="t('fields.device')" prop="device">
           <el-radio-group v-model="form.device">
             <el-radio
