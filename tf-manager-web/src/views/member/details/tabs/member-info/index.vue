@@ -473,7 +473,7 @@
       </template>
       <div v-loading="loading.fundingInfo">
         <el-descriptions>
-          <el-descriptions-item :label="t('fields.totalBalance')" width="15%">
+          <el-descriptions-item :label="t('fields.totalBalance')" width="20%">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
                 $ <span v-formatter="{data: memberDetail.balance,type: 'money'}" />
