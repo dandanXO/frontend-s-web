@@ -187,7 +187,7 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = "Personal Center";
-        } else if (route.path === "/earn-money") {
+        } else if (route.path === "/earn-money" || route.path === "/agency-policy") {
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = "Earn Money";
