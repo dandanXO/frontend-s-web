@@ -63,8 +63,8 @@ export default route(function(/* { store, ssrContext } */) {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
       next(`/register`);
     }
+
     if (user.hasToken()) {
-      user.getMemberInfo();
       if (to.path === "/login") {
         next({ path: "/" });
       } else {
@@ -104,61 +104,32 @@ export default route(function(/* { store, ssrContext } */) {
         //   next();
         // }
     }  else {
-      liff.init({
-        liffId: '1657725286-kDOM4WMb', // Use own liffId
-      }).then(() => {
-        if (liff.isInClient()) {
-          // alert("Line" + liff.getLineVersion())
-          if (liff.isLoggedIn()) {
-            // alert("Line Logged In.")
-            const fpPromise = FingerprintJS.load();
-            (async () => {
-              const fp = await fpPromise;
-              const result = await fp.get();
-              const excludes = { value: ["timezone", "timeZoneOffset"] };
-              const allComponents = { ...result.components };
-              excludes.value.forEach((element) => {
-                delete allComponents[element];
-              });
-              const sidParam = FingerprintJS.hashComponents(allComponents);
-              const accessToken = liff.getAccessToken();
-              var regDevice = Platform.is.mobile ? "H5" : "WEB";
-              if (("standalone" in window.navigator) && window.navigator.standalone) {
-                regDevice = "IOS"
-              } else {
-                regDevice = Platform.is.mobile ? "H5" : "WEB";
-                if (Platform.is.capacitor) {
-                  if (Platform.is.android) {
-                    regDevice = "ANDROID"
-                  }
-                }
-              }
-              const loginInfo = {
-                siteId: siteId,
-                way: regDevice,
-                sid: sidParam,
-                accessToken: accessToken
-              }
-              var string = qs.stringify(loginInfo);
-              Loading.show({
-                message: 'Logging in'
-              })
-              api.post('/member/lineLogin', string).then((res) => {
-                // alert(res);
-                if (res.data.code === 0) {
-                  sessionStorage.setItem("TOKEN", res.data.data);
-                  location.reload();
-                }
-              })
-            })();
-          }
-        }
-      })
+
       if(to.meta.requiresAuth) {
         next(`/login?redirect=${to.path}`);
       } else {
         next();
       }
+    }
+
+    //Add Google Analytics && FB Event Manager If Affiliate Code Matched.
+    const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+    if(affiliateCode && affiliateCode === "0DDC3F"){
+      console.log("GA 780-462-3466");
+      // alert("YES")
+      // debugger;
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', 'UA-780462346-6');
+
+      fbq('init', '1404052756844706');
+      fbq('track', 'PageView');
+
     }
 
     // if (user.hasToken()) {
