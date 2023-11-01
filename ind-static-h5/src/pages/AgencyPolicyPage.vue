@@ -1,17 +1,17 @@
 <template>
   <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
-  <MyMember></MyMember>
+  <AgencyPolicy></AgencyPolicy>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import SwiperNav from "../components/SwiperNav.vue";
-import MyMember from "../components/earn-money/MyMember.vue";
+import AgencyPolicy from "../components/earn-money/AgencyPolicy.vue";
 
 const router = useRouter();
-let slideList = ref(["My Member", "Agency Policy"]);
-let slideListPath = ref(["/earn-money", "/agency-policy"]);
+let slideList = ref(["Agency Policy", "My Member"]);
+let slideListPath = ref(["/agency-policy", "/earn-money"]);
 let currentSlide = ref(slideList.value[0]);
 
 const isActiveSlide = (e) => {
