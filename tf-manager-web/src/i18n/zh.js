@@ -216,6 +216,21 @@ export default {
       CANCEL: '手动取消'
     }
   },
+  rebateLevel: {
+    LEVEL_1: '等级 1',
+    LEVEL_2: '等级 2',
+    LEVEL_3: '等级 3',
+    LEVEL_4: '等级 4',
+    LEVEL_5: '等级 5',
+    LEVEL_6: '等级 6',
+    LEVEL_7: '等级 7',
+    LEVEL_8: '等级 8',
+    LEVEL_9: '等级 9',
+    LEVEL_10: '等级 10',
+    LEVEL_11: '等级 11',
+    LEVEL_12: '等级 12',
+    LEVEL_13: '等级 13'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -333,6 +348,8 @@ export default {
     betId: '投注单号',
     betMoneyChange: '投注账变',
     betMoreThan: '投注金额大于',
+    betRebateDetails: '投注返水记录明细',
+    betRebateRecord: '投注返水记录',
     betRecords: '投注记录',
     betStatus: '投注状态',
     betTime: '投注时间',
@@ -767,6 +784,7 @@ export default {
     reasonTemplate: '原因模板',
     rebate: '返点',
     rebateDistributeTime: '返水发放时间',
+    rebateLevel: '返水等级',
     rebatePercentage: '返水比例 %',
     maxRebate: '最大返水额',
     rebateAmount: '返水金额',
@@ -1426,6 +1444,7 @@ export default {
     'Lottery Result List': '彩票结果',
     'VIP Rebate Record': 'VIP返水记录',
     'Refer Friend': '推荐人记录',
+    'Bet Rebate Record': '投注返水记录',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
