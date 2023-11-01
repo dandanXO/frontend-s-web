@@ -521,7 +521,6 @@ const form = reactive({
   gameLabel: null,
   device: 'WEB',
   sequence: null,
-  gameLabel: null,
 })
 
 const formRules = reactive({
