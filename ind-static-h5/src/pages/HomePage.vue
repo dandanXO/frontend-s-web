@@ -2,21 +2,21 @@
   <div class="home-wrapper">
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab class="bg-yellow floating-btn">
-        <img src="../assets/images/index/icon-customer-service.png" alt="" />
+        <img src="../assets/images/index/icon-customer-service.png" alt=""/>
       </q-btn>
     </q-page-sticky>
 
     <div class="profile-wrapper">
       <div class="profile-pic">
         <q-avatar size="80px">
-          <img src="https://cdn.quasar.dev/img/avatar.png" />
+          <img src="https://cdn.quasar.dev/img/avatar.png"/>
         </q-avatar>
       </div>
       <div class="profile-details-container">
         <div class="profile-name">
           Guest0238434
           <div class="vip-details">
-            <img src="../assets/images/index/icon-vip-badge.png" alt="" />
+            <img src="../assets/images/index/icon-vip-badge.png" alt=""/>
             <div class="vip-level">VIP1</div>
           </div>
         </div>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="profile-msg">
-        <q-icon name="mail" size="40px" color="yellow-7" />
+        <q-icon name="mail" size="40px" color="yellow-7"/>
       </div>
     </div>
 
@@ -34,7 +34,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpFill style="fill: #ffffff" />
+          <RiVolumeUpFill style="fill: #ffffff"/>
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
@@ -105,11 +105,11 @@
     <div class="games-selection-wrapper">
       <div class="hot-games-pattern-top"></div>
       <div class="hot-games-container">
-        <img src="../assets/images/index/hot-elephant-left.png" alt="" />
+        <img src="../assets/images/index/hot-elephant-left.png" alt=""/>
         <div class="title-hot-games">
           <span class="txt-style">HOT GAMES</span>
         </div>
-        <img src="../assets/images/index/hot-elephant-right.png" alt="" />
+        <img src="../assets/images/index/hot-elephant-right.png" alt=""/>
       </div>
       <div class="game-platform-wrapper">
         <div class="game-platform-item">
@@ -155,71 +155,71 @@
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
+        <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt=""/>
         <span class="txt-style">Slot Games</span>
       </div>
       <div class="game-platform-container">
         <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-jdb.png" alt="" />
+          <img src="../assets/images/index/slot/item-game-jdb.png" alt=""/>
         </div>
         <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-joker.png" alt="" />
+          <img src="../assets/images/index/slot/item-game-joker.png" alt=""/>
         </div>
         <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-jili.png" alt="" />
+          <img src="../assets/images/index/slot/item-game-jili.png" alt=""/>
         </div>
         <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
+          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt=""/>
         </div>
         <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
+          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt=""/>
         </div>
         <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
+          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt=""/>
         </div>
       </div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-livecasino.png" alt="" />
+        <img class="title-game-icon" src="../assets/images/index/title-icon-livecasino.png" alt=""/>
         <span class="txt-style">Live Casino</span>
       </div>
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-ezugi.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-evolution.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-comingsoon.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-ezugi.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-evolution.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-comingsoon.png" alt=""/></div>
       </div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-gamepoker.png" alt="" />
+        <img class="title-game-icon" src="../assets/images/index/title-icon-gamepoker.png" alt=""/>
         <span class="txt-style">Game &amp; Poker</span>
       </div>
       <div class="game-platform-container">
         <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-gpipoker.png" alt="" />
+          <img src="../assets/images/index/poker/item-game-gpipoker.png" alt=""/>
           <div class="game-platform-title">GPI-POKER</div>
         </div>
         <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
           <div class="game-platform-title">COMING SOON</div>
         </div>
         <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
           <div class="game-platform-title">COMING SOON</div>
         </div>
         <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
           <div class="game-platform-title">COMING SOON</div>
         </div>
         <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
           <div class="game-platform-title">COMING SOON</div>
         </div>
         <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
           <div class="game-platform-title">COMING SOON</div>
         </div>
       </div>
@@ -227,31 +227,31 @@
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt="" />
+        <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt=""/>
         <span class="txt-style">Fishing</span>
       </div>
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-jili.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-simpleplay.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-spadegaming.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-zl.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-ag.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-giocoplus.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-jili.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-simpleplay.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-spadegaming.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-zl.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-ag.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-giocoplus.png" alt=""/></div>
       </div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-sports.png" alt="" />
+        <img class="title-game-icon" src="../assets/images/index/title-icon-sports.png" alt=""/>
         <span class="txt-style">Sports</span>
       </div>
       <div class="game-platform-container sport-platform">
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-cmd.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-saba.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-sbobet.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-bti.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im.png" alt="" /></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im2.png" alt="" /></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-cmd.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-saba.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-sbobet.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-bti.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im.png" alt=""/></div>
+        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im2.png" alt=""/></div>
       </div>
     </div>
   </div>
@@ -291,10 +291,10 @@
           indicator-color="bright"
           align="justify"
         >
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
+          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name"/>
         </q-tabs>
 
-        <q-separator />
+        <q-separator/>
 
         <q-tab-panels v-model="activeKey" animated>
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
@@ -333,7 +333,7 @@
         <div class="promo-banner-container">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
-            <img :src="homePopupImg" class="alert-img" />
+            <img :src="homePopupImg" class="alert-img"/>
           </div>
         </div>
       </q-card-section>
@@ -345,12 +345,12 @@
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
-            <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-lg" v-close-popup />
+            <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-lg" v-close-popup/>
 
             <div class="fullgame-search">
               <q-input dense standout v-model="searchText" label="Search" clearable clear-icon="close">
                 <template v-slot:append>
-                  <q-icon name="search" />
+                  <q-icon name="search"/>
                 </template>
               </q-input>
             </div>
@@ -457,7 +457,7 @@
 
   <q-dialog width="100%" v-model="withdrawalDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup/>
       <div class="popout-dialog-container">
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
@@ -469,7 +469,7 @@
 
   <q-dialog width="100%" v-model="depositDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup/>
       <div class="popout-dialog-container">
         <div class="popout-main-title">
           <div class="txt-title">Deposit</div>
@@ -477,55 +477,55 @@
         <div class="deposit-item-container">
           <div class="deposit-item">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-1.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-1.png" alt=""/>
             </div>
             <div class="deposit-amt">100</div>
           </div>
           <div class="deposit-item active">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-2.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-2.png" alt=""/>
             </div>
             <div class="deposit-amt">300</div>
           </div>
           <div class="deposit-item">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-3.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-3.png" alt=""/>
             </div>
             <div class="deposit-amt">500</div>
           </div>
           <div class="deposit-item">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-4.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-4.png" alt=""/>
             </div>
             <div class="deposit-amt">1000</div>
           </div>
           <div class="deposit-item">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-5.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-5.png" alt=""/>
             </div>
             <div class="deposit-amt">3000</div>
           </div>
           <div class="deposit-item">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-6.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-6.png" alt=""/>
             </div>
             <div class="deposit-amt">5000</div>
           </div>
           <div class="deposit-item">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-7.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-7.png" alt=""/>
             </div>
             <div class="deposit-amt">10000</div>
           </div>
           <div class="deposit-item">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-8.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-8.png" alt=""/>
             </div>
             <div class="deposit-amt">30000</div>
           </div>
           <div class="deposit-item">
             <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-9.png" alt="" />
+              <img src="../assets/images/index/popout/deposit-coin-9.png" alt=""/>
             </div>
             <div class="deposit-amt">50000</div>
           </div>
@@ -536,8 +536,8 @@
           <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
         </div>
         <div class="deposit-options">
-          <q-btn flat class="deposit-option-btn active" label="UPI1" />
-          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2" />
+          <q-btn flat class="deposit-option-btn active" label="UPI1"/>
+          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2"/>
         </div>
         <div class="btn-go">Go</div>
       </div>
@@ -546,21 +546,21 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
-import { cached, TIME_EXPIRED } from "boot/cache";
-import { useQuasar, Platform } from "quasar";
-import { userStore } from "stores/index";
+import {defineComponent, onMounted, ref, reactive, computed} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {api} from "boot/axios";
+import {cached, TIME_EXPIRED} from "boot/cache";
+import {useQuasar, Platform} from "quasar";
+import {userStore} from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpFill } from "vue-remix-icons";
-import { App } from "@capacitor/app";
+import {RiVolumeUpFill} from "vue-remix-icons";
+import {App} from "@capacitor/app";
 
-import { useUI } from "stores/ui";
+import {useUI} from "stores/ui";
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
-import { translateRecord } from "src/directives/translate";
+import {translateRecord} from "src/directives/translate";
 
 export default defineComponent({
   name: "IndexPage",
@@ -754,7 +754,7 @@ export default defineComponent({
       }
     };
 
-    ui.$onAction(({ name, args }) => {
+    ui.$onAction(({name, args}) => {
       switch (name) {
         case "setScrollPosition":
           scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
@@ -825,7 +825,8 @@ export default defineComponent({
             return null;
           }
         })
-        .catch(() => {});
+        .catch(() => {
+        });
       return item.value;
     };
 
@@ -874,7 +875,8 @@ export default defineComponent({
               // }
             }
           })
-          .catch(() => {});
+          .catch(() => {
+          });
       }
     };
 
@@ -1091,7 +1093,8 @@ export default defineComponent({
             }
           });
         })
-        .catch((err) => {});
+        .catch((err) => {
+        });
     };
 
     const liveTabs = ref("");
@@ -1857,6 +1860,7 @@ export default defineComponent({
     flex-direction: column;
     font-size: 18px;
   }
+
   .profile-name {
     display: flex;
     align-items: center;
@@ -1867,6 +1871,7 @@ export default defineComponent({
       position: relative;
       margin-left: 25px;
       margin-bottom: 10px;
+
       img {
         display: block;
         width: 40px;
@@ -1877,7 +1882,7 @@ export default defineComponent({
 
       .vip-level {
         background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-          linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
+        linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
         border-radius: 0px 2px 5px 0px;
         width: 45px;
         height: 15px;
@@ -1890,6 +1895,7 @@ export default defineComponent({
       }
     }
   }
+
   .profile-balance {
     position: relative;
     background: rgba(255, 255, 255, 0.24);
@@ -1922,6 +1928,7 @@ export default defineComponent({
       margin-left: 15px;
     }
   }
+
   .profile-msg {
     margin-left: auto;
     margin-top: 30px;
@@ -1932,6 +1939,7 @@ export default defineComponent({
   display: flex;
   gap: 16px;
   margin-top: 10px;
+
   .action-btn {
     display: flex;
     justify-content: center;
@@ -1965,6 +1973,7 @@ export default defineComponent({
 .games-selection-wrapper {
   margin-top: 10px;
   margin-bottom: 40px;
+
   .hot-games-pattern-top {
     background-image: url(../assets/images/index/hot-games-pattern-top.png);
     background-size: contain;
@@ -2007,6 +2016,7 @@ export default defineComponent({
       width: 270px;
       margin-left: 10px;
       margin-right: 10px;
+
       .txt-style {
         background-color: #f3ec78;
         background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
@@ -2274,6 +2284,7 @@ export default defineComponent({
         margin-left: 3px;
         margin-right: 3px;
         transition: all 0.3s;
+
         img {
           display: block;
           width: 70%;
@@ -2322,6 +2333,7 @@ export default defineComponent({
     justify-content: center;
     gap: 30px;
     margin-top: 16px;
+
     .deposit-option-btn {
       color: #cccccc;
       background-color: rgba(21, 0, 37, 0.5) !important;
@@ -2338,6 +2350,7 @@ export default defineComponent({
 
       &.label-on-discount {
         position: relative;
+
         &:after {
           content: "";
           background-image: url(../assets/images/index/popout/label-discount.png);

@@ -100,8 +100,8 @@
 
         <div
           class="game-board-item"
-          :class="currentSelectedMenu == 'cf' ? 'active-board' : ''"
-          @click="switchMenu('cf')"
+          :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"
+          @click="switchMenu('xfj')"
         >
           <img src="../assets/images/index/home-cf.png" />
           <span>{{ $t("lang.fish2_list") }}</span>
@@ -146,11 +146,16 @@
             :key="`sports-${index}`"
             @click="playGame(sport.name, sport.code, sport.gameCode)"
           >
-            <img
-              :src="
-                require(`../assets/images/games/sport/${sport.gameName}.png`)
-              "
-            />
+            <div class="platform-img"
+                 :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/games/sport/${sport.gameName}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
           </div>
         </div>
       </Transition>
@@ -167,7 +172,16 @@
             :key="`live-${index}`"
             @click="playGame(p.name, p.code, p.gameCode)"
           >
-            <img :src="require(`../assets/images/games/live/${p.code}.png`)" />
+            <div class="platform-img"
+                 :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/games/live/${p.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
           </div>
         </div>
       </Transition>
@@ -188,7 +202,7 @@
         <div
           class="game-grid-lists"
           id="id-cf-board"
-          v-if="currentSelectedMenu === 'cf'"
+          v-if="currentSelectedMenu === 'xfj'"
         >
           <div class="coming-soon-div">
             <img src="../assets/home/coming-soon-img.png" />
@@ -230,7 +244,17 @@
               class="game-item btn-pointer btn-slot-game"
               @click="selectSlotPlat(p)"
             >
-              <img :src="require('../assets/home/slot/' + p.code + '.png')" />
+              <div class="platform-img"
+                   :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/slot/${p.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
+
             </div>
           </template>
 
@@ -272,7 +296,18 @@
                 :key="p"
                 @click="switchPlat(p, 'slots')"
               >
-                <img :src="require('../assets/logo/' + p.code + '.png')" />
+                <div class="platform-img"
+                     :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
+
+<!--                <img :src="require('../assets/logo/' + p.code + '.png')" />-->
               </div>
             </div>
             <q-scroll-observer axis="vertical" />
@@ -507,7 +542,16 @@
               class="game-item btn-pointer btn-slot-game"
               @click="selectFishPlat(p)"
             >
-              <img :src="require('../assets/home/fish/' + p.code + '.png')" />
+              <div class="platform-img"
+                   :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/fish/${p.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
             </div>
           </template>
         </div>
@@ -534,7 +578,17 @@
                 :key="p"
                 @click="switchPlat(p, 'fish')"
               >
-                <img :src="require('../assets/logo/' + p.code + '.png')" />
+                <div class="platform-img"
+                     :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
+
               </div>
             </div>
             <q-scroll-observer axis="vertical" />
@@ -662,7 +716,16 @@
               class="game-item btn-pointer mid-grid-column"
               @click="selectCasualPlat(miniplat)"
             >
-              <img src="../assets/images/games/casual/TFGaming.png" />
+              <div class="platform-img"
+                   :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/games/casual/TFGaming.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
             </div>
           </template>
         </div>
@@ -684,9 +747,16 @@
               :key="index"
               @click="playGame(game.name, 'TFGaming', 'casual_' + game.code)"
             >
-              <img
-                :src="require('../assets/home/casual/' + game.code + '.png')"
-              />
+              <div class="platform-img"
+                   :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/casual/${game.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
             </div>
 
             <div
@@ -1471,6 +1541,8 @@ export default defineComponent({
         }
       });
     };
+    const comingSoonImg= require(`../assets/home/slot/StayTuned.png`);
+
     const isStationNotice = ref(false);
     const noticeTitle = ref("");
     const activeKey = ref(null);
@@ -1706,6 +1778,7 @@ export default defineComponent({
       ui,
       platforms,
       fishPlatforms,
+      comingSoonImg,
       liveCasinoGames,
       isShow,
       mainWallet,
@@ -1922,6 +1995,15 @@ export default defineComponent({
   .game-item {
     border-radius: 8px;
 
+    .platform-img{
+      width: 100%;
+      height: auto;
+      aspect-ratio: 280/328;
+      background-size: contain;
+      background-repeat:no-repeat;
+      background-position:top center;
+    }
+
     img {
       width: 100%;
     }
@@ -2052,6 +2134,18 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       background: $third-color;
+
+      .platform-img{
+        max-width: 85px;
+        filter: grayscale(1);
+
+        width: 100%;
+        height: auto;
+        aspect-ratio: 200/133;
+        background-size: contain;
+        background-repeat:no-repeat;
+        background-position:top center;
+      }
 
       img {
         max-width: 50px;

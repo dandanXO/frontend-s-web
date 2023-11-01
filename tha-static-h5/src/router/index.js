@@ -104,56 +104,7 @@ export default route(function(/* { store, ssrContext } */) {
         //   next();
         // }
     }  else {
-      liff.init({
-        liffId: '2001411735-Ow892Zrl', // Use own liffId
-      }).then(() => {
-        if (liff.isInClient()) {
-          // alert("Line" + liff.getLineVersion())
-          if (liff.isLoggedIn()) {
-            // alert("Line Logged In.")
-            const fpPromise = FingerprintJS.load();
-            (async () => {
-              const fp = await fpPromise;
-              const result = await fp.get();
-              const excludes = { value: ["timezone", "timeZoneOffset"] };
-              const allComponents = { ...result.components };
-              excludes.value.forEach((element) => {
-                delete allComponents[element];
-              });
-              const sidParam = FingerprintJS.hashComponents(allComponents);
-              const accessToken = liff.getAccessToken();
-              var regDevice = Platform.is.mobile ? "H5" : "WEB";
-              if (("standalone" in window.navigator) && window.navigator.standalone) {
-                regDevice = "IOS"
-              } else {
-                regDevice = Platform.is.mobile ? "H5" : "WEB";
-                if (Platform.is.capacitor) {
-                  if (Platform.is.android) {
-                    regDevice = "ANDROID"
-                  }
-                }
-              }
-              const loginInfo = {
-                siteId: siteId,
-                way: regDevice,
-                sid: sidParam,
-                accessToken: accessToken
-              }
-              var string = qs.stringify(loginInfo);
-              Loading.show({
-                message: 'Logging in'
-              })
-              api.post('/member/lineLogin', string).then((res) => {
-                // alert(res);
-                if (res.data.code === 0) {
-                  sessionStorage.setItem("TOKEN", res.data.data);
-                  location.reload();
-                }
-              })
-            })();
-          }
-        }
-      })
+
       if(to.meta.requiresAuth) {
         next(`/login?redirect=${to.path}`);
       } else {
