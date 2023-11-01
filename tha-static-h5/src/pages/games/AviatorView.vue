@@ -77,7 +77,7 @@
         </div> -->
         <q-scroll-area
           ref="scrollPageRef"
-          style="height: calc(100vh - 265px)" 
+          style="height: calc(100vh - 265px)"
           :thumb-style="{ width: 0 }"
         >
           <div class="loading-div" v-if="isLoading">
@@ -103,7 +103,7 @@
                       <img :src="game.default"/>
                     </template>
                   </q-img> -->
-                  
+
                     <div class="box" style="display: flex; justify-content:center;" :style="`background: url(${game.default})no-repeat center center; background-size: cover`">
                        <img :src="game.icon" v-bind:alt="game.default" style="height: 150px; left: -50px;" >
                     </div>
@@ -263,7 +263,7 @@ export default defineComponent({
       var way = null
       if (Platform.is.android) {
         way = "ANDROID"
-      } else if (Platform.is.ios) { 
+      } else if (Platform.is.ios) {
         way="IOS"
       }
       const code = selectedPlatId.value;
@@ -825,7 +825,7 @@ export default defineComponent({
         display: grid;
         grid-auto-rows: 100px;
         // grid-template-columns: repeat(3, 1fr);
-        
+
          grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
         gap: 10px;
 
@@ -840,7 +840,7 @@ export default defineComponent({
           // transform: scale(0, 0);
           // -webkit-animation-fill-mode: forwards;
           // animation-fill-mode: forwards;
-          
+
           @-webkit-keyframes scale {
             100% {
               -webkit-transform: scale(1, 1);
@@ -861,6 +861,8 @@ export default defineComponent({
             right: 0;
             padding: 10px;
             text-align: center;
+            font-size: 12px;
+            line-height: 14px;
           }
         }
       }

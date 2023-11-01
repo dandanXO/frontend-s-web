@@ -116,7 +116,11 @@
 
       </div>
       <div class="main-content">
-        <router-view/>
+          <router-view v-slot="{Component}">
+            <KeepAlive :max="8">
+              <component :is="Component" />
+            </KeepAlive>
+          </router-view>
       </div>
     </q-page-container>
     <q-footer
@@ -129,7 +133,7 @@
           :breakpoint="0"
           align="justify"
       >
-        <q-route-tab to="/" name="home" exact
+        <q-route-tab  to="/" name="home" exact
         >
           <img class="footer-icon"
                :src="(tab === 'home') ? footers['home']['active']  : footers['home']['icon'] "/>
