@@ -551,10 +551,6 @@ const gameTypes = reactive({
   list: [],
 })
 
-const gameLabel = reactive({
-  list: ["HOT"],
-})
-
 const devices = reactive({
   list: [
     { key: 1, displayName: 'ALL', value: 'ALL' },
