@@ -3,12 +3,20 @@
     <div class="swiper-wrapper">
       <div v-for="(e, i) in slideList" :key="`${e}-${i}`" class="swiper-slide">
         <div class="slide-item" @click="onSlideClick(e, i)" :class="{ 'active-slide': isActiveSlide(e) }">
-          <img v-if="isActiveSlide(e)" class="slide-title-deco left" src="../assets/images/index/tab-title-deco.png" />
+          <img
+            class="slide-title-deco left"
+            :class="!isActiveSlide(e) && 'deco-hide'"
+            src="../assets/images/index/tab-title-deco.png"
+          />
           <img v-if="isActiveSlide(e)" class="text-glow" src="../assets/images/index/text-glow.png" alt="" />
           <div :class="{ 'inactive-text': !isActiveSlide(e) }">
             {{ e }}
           </div>
-          <img v-if="isActiveSlide(e)" class="slide-title-deco" src="../assets/images/index/tab-title-deco.png" />
+          <img
+            class="slide-title-deco"
+            :class="!isActiveSlide(e) && 'deco-hide'"
+            src="../assets/images/index/tab-title-deco.png"
+          />
         </div>
       </div>
     </div>
@@ -56,6 +64,9 @@ onMounted(() => {
       img {
         width: 2.25rem;
         &.slide-title-deco {
+          &.deco-hide {
+            visibility: hidden;
+          }
           &.left {
             transform: rotate(180deg);
           }

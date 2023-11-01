@@ -4,7 +4,9 @@
       <q-toolbar>
         <div class="topActions">
           <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="onExitClick" />
-          <q-toolbar-title></q-toolbar-title>
+          <div class="game-logo-img">
+            <img :src="require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)" />
+          </div>
           <q-btn
             v-if="!drawerVisible"
             dense
@@ -183,9 +185,13 @@ const closeDialog = () => {
   store.getBalance();
   // AppFullscreen.exit()
 };
+
+const platformCodeImg = ref();
 const open = (gameName, platformCode, gameCode, gameType) => {
   // debugger;
   // AppFullscreen.request()
+
+  platformCodeImg.value = platformCode;
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
@@ -274,42 +280,6 @@ const close = () => {
   payMethods = [];
 };
 
-const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
-  { amount: 300, hotLabel: 15, isActive: false },
-  { amount: 500, hotLabel: 25, isActive: false },
-  { amount: 1000, hotLabel: 50, isActive: false },
-  { amount: 3000, hotLabel: 150, isActive: false },
-  { amount: 5000, hotLabel: 250, isActive: false },
-  { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 1500, isActive: false },
-  { amount: 50000, hotLabel: 2500, isActive: false }
-]);
-
-const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
-    item.isActive = i === index;
-    if (i === index) {
-      depositAmountInput.value = item.amount;
-    }
-  });
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
-};
-
-const depositAmountInput = ref("");
-
 defineExpose({
   open
 });
@@ -390,10 +360,19 @@ defineExpose({
 
   .topActions {
     display: flex;
-
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
     padding: 16px;
+    align-items: center;
+
+    .game-logo-img {
+      height: 25px;
+      img {
+        display: block;
+        height: 100%;
+        width: auto;
+      }
+    }
   }
 }
 
