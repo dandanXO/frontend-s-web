@@ -1007,6 +1007,7 @@ export default {
     web: '电脑版',
     webMessage: '网页提示信息',
     withdraw: '提款',
+    withdrawableBalance: '可提余额',
     withdrawArea: '提款区域',
     withdrawExchangeRate: '提款兑换率',
     withdrawalFailureCause: '提款失败原因',
