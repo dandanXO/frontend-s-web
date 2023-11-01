@@ -1007,6 +1007,7 @@ export default {
     web: 'Web',
     webMessage: 'Web Message',
     withdraw: 'Withdraw',
+    withdrawableBalance: 'Withdrawable Balance',
     withdrawArea: 'Withdraw Area',
     withdrawExchangeRate: 'Withdraw Exchange Rate',
     withdrawalFailureCause: 'Withdrawal Failure Cause',
