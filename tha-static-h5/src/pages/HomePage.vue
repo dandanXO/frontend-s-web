@@ -192,7 +192,7 @@
           id="id-lottery-board"
           v-if="currentSelectedMenu === 'lottery'"
         >
-          <div class="coming-soon-div">
+          <div v-if="lotteryGames.length === 0" class="coming-soon-div">
             <img src="../assets/home/coming-soon-img.png" />
             <span>{{ $t("lang.coming_soon") }}</span>
           </div>
@@ -204,24 +204,44 @@
           id="id-cf-board"
           v-if="currentSelectedMenu === 'xfj'"
         >
-          <div class="coming-soon-div">
+
+          <div v-if="xfjGames.length === 0" class="coming-soon-div">
             <img src="../assets/home/coming-soon-img.png" />
             <span>{{ $t("lang.coming_soon") }}</span>
           </div>
-        </div>
-      </Transition>
-      <Transition>
-        <div
-          class="game-grid-lists"
-          id="id-fish2-board"
-          v-if="currentSelectedMenu === 'fish2'"
-        >
-          <div class="coming-soon-div">
-            <img src="../assets/home/coming-soon-img.png" />
-            <span>{{ $t("lang.coming_soon") }}</span>
+
+          <div
+            class="game-item btn-pointer"
+            v-for="(p, index) in xfjGames"
+            :key="`xfj-${index}`"
+            @click="playGame(p.name, p.code, p.gameCode)"
+          >
+            <div class="platform-img"
+                 :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/games/xfj/${p.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"></div>
           </div>
+
         </div>
       </Transition>
+<!--      <Transition>-->
+<!--        <div-->
+<!--          class="game-grid-lists"-->
+<!--          id="id-fish2-board"-->
+<!--          v-if="currentSelectedMenu === 'fish2'"-->
+<!--        >-->
+<!--          <div class="coming-soon-div">-->
+<!--            <img src="../assets/home/coming-soon-img.png" />-->
+<!--            <span>{{ $t("lang.coming_soon") }}</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </Transition>-->
 
       <Transition>
         <div
@@ -1173,40 +1193,8 @@ export default defineComponent({
       //   logo: require("../assets/images/common/logo/km.png")
       // }
     ];
-    const liveCasinoGames = [
-      {
-        code: "Evo",
-        name: "Evolution",
-        gameName: "EVO",
-        logo: require("../assets/images/common/logo/evo.png"),
-        text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop.",
-      },
-      {
-        code: "AWC",
-        name: "AE Sexy",
-        status: "NORMAL",
-        gameName: "AE Sexy",
-        gameCode: "MX-LIVE-001",
-        logo: require("../assets/images/common/logo/ae_2.png"),
-        text: "วิดีโอไลฟ์แอ็กชันที่มีศักยภาพสูงสุดในเอเชียผลิตภัณฑ์เกมคุณภาพสูง และวิดีโอเกมที่หลากหลาย การเชื่อมต่อข้ามแพลตฟอร์มที่ง่ายดาย ทำให้คุณสนุกได้ทุกที่ทุกเวลา!",
-      },
-      {
-        code: "WM",
-        name: "WM Casino",
-        gameName: "WM",
-        status: "NORMAL",
-        logo: require("../assets/images/common/logo/WM.png"),
-        text: "AE Casino วิดีโอไลฟ์แอ็กชันที่มีศักยภาพมากที่สุดในเอเชีย เชื่อมต่อและใช้งานง่าย ข้ามแพลตฟอร์ม ฟรีดาวน์โหลด และสนุกได้ทุกที่ทุกเวลา!",
-      },
-      {
-        code: "SA",
-        name: "SA gaming",
-        gameName: "SA",
-        status: "NORMAL",
-        logo: require("../assets/images/common/logo/SA.png"),
-        text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ",
-      },
-    ];
+    const xfjGames = ref([]);
+    const liveCasinoGames = ref([]);
     const esportsGame = [
       {
         code: "TFGaming",
@@ -1297,6 +1285,7 @@ export default defineComponent({
     });
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
+    const lotteryGames= ref([]);
 
     const currentSelectedMenu = ref("slots");
     const switchMenu = (menu) => {
@@ -1304,7 +1293,7 @@ export default defineComponent({
       isShow.value = false;
       if (menu === "slots") {
         switchPlat(platforms.value[0], menu);
-      } else if (menu === "livecasino") {
+      } else if (menu === "live") {
         // switchPlat(liveCasinoGames[0], menu);
       } else if (menu === "fish") {
         switchPlat(fishPlatforms.value[0], menu);
@@ -1314,6 +1303,10 @@ export default defineComponent({
         switchPlat(sportsGame[0], menu);
       } else if (menu === "casual") {
         switchPlat(platformMinigame.value[0], menu);
+      } else if(menu ==='xfjGames'){
+
+      } else if(menu ==='lottery'){
+
       }
     };
     const liveTabs = ref("");
@@ -1481,6 +1474,16 @@ export default defineComponent({
           platformMinigame.value = data.filter((element) =>
             element.gameType.includes("ESPORT")
           );
+          liveCasinoGames.value = data.filter((element) =>
+            element.gameType.includes("LIVE")
+          );
+          xfjGames.value = data.filter((element) =>
+            element.gameType.includes("MINIGAME")
+          );
+          lotteryGames.value = data.filter((element) =>
+            element.gameType.includes("LOTTERY")
+          );
+
           if (currentSelectedMenu.value === "slots") {
             switchPlat(platforms.value[0], "slots");
             platforms.value.forEach((e, i) => {
@@ -1493,7 +1496,7 @@ export default defineComponent({
           }
 
           // console.log("After");
-          // console.log(fishPlatforms.value);
+          console.log(xfjGames.value);
           // alert(platformMinigame.value.length);
           // if (!route.query.plat) {
           //   switchPlat(platforms.value[0], "slot");
@@ -1780,6 +1783,8 @@ export default defineComponent({
       fishPlatforms,
       comingSoonImg,
       liveCasinoGames,
+      xfjGames,
+      lotteryGames,
       isShow,
       mainWallet,
       playGame,
