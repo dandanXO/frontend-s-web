@@ -1056,8 +1056,8 @@ export default {
     timeZone: '时区',
     image: '图像',
     imageName: '图像名',
-    addPromotionImage: '新增优惠图像',
-    editPromotionImage: '编辑优惠图像',
+    addImage: '新增图像',
+    editImage: '编辑图像',
   },
   message: {
     addRemarkSuccess: '新增备注成功',

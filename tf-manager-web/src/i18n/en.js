@@ -1056,8 +1056,8 @@ export default {
     timeZone: 'Time Zone',
     image: 'Image',
     imageName: 'Image Name',
-    addPromotionImage: 'Add Promotion Image',
-    editPromotionImage: 'Edit Promotion Image',
+    addImage: 'Add Image',
+    editImage: 'Edit Image',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',

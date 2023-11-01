@@ -322,7 +322,6 @@ const form = reactive({
   category: null,
   siteId: null,
   remark: null,
-  state: true,
 })
 
 const page = reactive({
@@ -354,9 +353,9 @@ function showDialog(type) {
       uploadedImage.url = null
       form.id = null
     }
-    uiControl.dialogTitle = t('fields.addPromotionImage')
+    uiControl.dialogTitle = t('fields.addImage')
   } else {
-    uiControl.dialogTitle = t('fields.editPromotionImage')
+    uiControl.dialogTitle = t('fields.editImage')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
