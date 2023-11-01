@@ -521,7 +521,6 @@ const form = reactive({
   gameLabel: null,
   device: 'WEB',
   sequence: null,
-  gameLabel: null,
 })
 
 const formRules = reactive({
@@ -549,10 +548,6 @@ const sites = reactive({
 
 const gameTypes = reactive({
   list: [],
-})
-
-const gameLabel = reactive({
-  list: ["HOT"],
 })
 
 const devices = reactive({
