@@ -201,13 +201,29 @@
           :label="t('fields.withdrawDate')"
           align="center"
           min-width="150"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.withdrawDate === null">-</span>
+            <span
+              v-if="scope.row.withdrawDate !== null"
+              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="checkDate"
           :label="t('fields.checkDate')"
           align="center"
           min-width="150"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.checkDate === null">-</span>
+            <span
+              v-if="scope.row.checkDate !== null"
+              v-formatter="{data: scope.row.checkDate, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="checkBy"
           :label="t('fields.checkBy')"

@@ -568,6 +568,7 @@ export default {
     fundingInfo: '资金信息',
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
+    gameLabel: '游戏标签',
     gameName: '游戏名称',
     gameType: '游戏类型',
     generateSummary: '生成汇总',
@@ -1053,6 +1054,7 @@ export default {
     progress: '进度',
     download: '下载',
     updateProgress: '更新进度',
+    timeZone: '时区',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1643,6 +1645,7 @@ export default {
     15020: '存款记录不存在',
     15021: '此会员组别, 支付类型, 站点和设备设置已存在',
     15030: '无法处理该 JSON 数据',
+    15031: '每个站点热门游戏不能超过20个',
     15040: '提款显示名称已存在',
     15041: '提款显示不存在',
     15050: '支付银行已存在',

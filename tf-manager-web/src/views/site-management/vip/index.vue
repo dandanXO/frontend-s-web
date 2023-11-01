@@ -147,7 +147,15 @@
         width="150"
         v-if="!hasRole(['SUB_TENANT']) && !hasRole(['TENANT'])"
       />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{data: scope.row.createTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column :label="t('fields.action')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip:update']) || hasPermission(['sys:vip:del']))">
         <template #default="scope">
@@ -216,6 +224,9 @@ const vipForm = ref(null);
 const sites = reactive({
   list: []
 });
+const siteTimeZone = reactive({
+  timeZone: null,
+})
 
 const minCredit = ref(Number(0));
 
@@ -322,6 +333,10 @@ async function loadVip() {
   const { data: ret } = await getVips(request);
   page.records = ret;
   page.loading = false;
+
+  var siteSelected = sites.list.find(e => e.id === request.siteId)
+  siteTimeZone.timeZone = siteSelected.timeZone;
+
   list.previousLevel = ret;
 }
 

@@ -51,7 +51,7 @@
         <el-input
           v-model="request.name"
           size="small"
-          style="width: 200px"
+          style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.gameName')"
         />
         <el-button
@@ -365,8 +365,17 @@
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="120"/>
       <el-table-column prop="siteName" :label="t('fields.site')" width="150"/>
       <el-table-column prop="status" :label="t('fields.status')" width="150"/>
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150"/>
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150"/>
+      <el-table-column prop="gameLabel" :label="t('fields.gameLabel')" width="150"/>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -440,6 +449,7 @@ const EXPORT_GAME_LIST_HEADER = [
   'Game Type',
   'Device',
   'Sequence',
+  'Game Label',
 ]
 
 const IMPORT_GAME_LIST_JSON = [
@@ -451,7 +461,7 @@ const IMPORT_GAME_LIST_JSON = [
   'status',
   'gameType',
   'device',
-  'sequence',
+  'gameLabel',
 ]
 
 const EXPORT_MAPPING_PLATFORM_HEADER = [
@@ -511,6 +521,7 @@ const form = reactive({
   gameLabel: null,
   device: 'WEB',
   sequence: null,
+  gameLabel: null,
 })
 
 const formRules = reactive({
@@ -538,6 +549,10 @@ const sites = reactive({
 
 const gameTypes = reactive({
   list: [],
+})
+
+const gameLabel = reactive({
+  list: ["HOT"],
 })
 
 const devices = reactive({

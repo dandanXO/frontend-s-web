@@ -568,6 +568,7 @@ export default {
     fundingInfo: 'Funding Information',
     gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
+    gameLabel: 'Game Label',
     gameName: 'Game Name',
     gameType: 'Game Type',
     generateSummary: 'Generate Summary',
@@ -1053,6 +1054,7 @@ export default {
     progress: 'Progress',
     download: 'Download',
     updateProgress: 'Update Progress',
+    timeZone: 'Time Zone'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1661,6 +1663,7 @@ export default {
     15020: 'Deposit Record does not exist',
     15021: 'Financial Level, Pay Type, Site, and Way with same name already exist',
     15030: 'Unable to process the JSON data',
+    15031: 'Every site hot game should not exceed 20 limit.',
     15040: 'Withdraw Dsiplay name already exist',
     15041: 'Withdraw Dsiplay does not exist',
     15050: 'Bank already exists in given payment',

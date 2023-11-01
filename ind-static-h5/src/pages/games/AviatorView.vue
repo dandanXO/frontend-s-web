@@ -23,7 +23,7 @@
                 :key="p"
                 @click="switchPlat(p)"
             >
-              <img :src="require('../../assets/logo/' + p.code + '.png')">
+              <!-- <img :src="require('../../assets/logo/' + p.code + '.png')"> -->
               <!-- <img
                 v-if="p.name === 'JDB'"
                 src="../../assets/images/common/logo/JDB.png"

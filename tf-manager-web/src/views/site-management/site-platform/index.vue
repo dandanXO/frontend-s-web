@@ -91,7 +91,7 @@
             v-if="scope.row.updateTime !== null"
             v-formatter="{
               data: scope.row.updateTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
+              timeZone: scope.row.siteTimeZone,
               type: 'date',
             }"
           />

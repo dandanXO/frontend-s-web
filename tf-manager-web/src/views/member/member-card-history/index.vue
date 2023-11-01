@@ -146,7 +146,20 @@
         prop="cardTime"
         :label="t('fields.cardTime')"
         width="170"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.cardTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.cardTime !== null"
+            v-formatter="{
+              data: scope.row.cardTime,
+              timeZone: siteTimeZone.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
 
       <el-table-column prop="level" :label="t('fields.level')" width="80" />
 
@@ -201,6 +214,9 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+const siteTimeZone = reactive({
+  timeZone: null,
+})
 
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -286,6 +302,8 @@ async function loadBankCardHistory() {
 
   page.pages = ret.pages
   page.records = ret.records
+  var siteSelected = siteList.list.find(e => e.id === request.siteId)
+  siteTimeZone.timeZone = siteSelected.timeZone;
   page.loading = false
 }
 
