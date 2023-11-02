@@ -298,7 +298,6 @@
             />
           </el-select>
         </el-form-item>
-<<<<<<< HEAD
         <el-form-item :label="t('fields.label')" prop="gameLabel">
           <el-select
             filterable
@@ -317,8 +316,6 @@
             />
           </el-select>
         </el-form-item>
-=======
->>>>>>> 60d4cc97321fec28cbc5932222e71555e67dd34b
         <el-form-item :label="t('fields.device')" prop="device">
           <el-radio-group v-model="form.device">
             <el-radio
