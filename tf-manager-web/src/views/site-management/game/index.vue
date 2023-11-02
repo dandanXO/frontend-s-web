@@ -51,7 +51,7 @@
         <el-input
           v-model="request.name"
           size="small"
-          style="width: 200px; margin-left: 5px"
+          style="width: 200px"
           :placeholder="t('fields.gameName')"
         />
         <el-button
@@ -298,6 +298,7 @@
             />
           </el-select>
         </el-form-item>
+<<<<<<< HEAD
         <el-form-item :label="t('fields.label')" prop="gameLabel">
           <el-select
             filterable
@@ -316,6 +317,8 @@
             />
           </el-select>
         </el-form-item>
+=======
+>>>>>>> 60d4cc97321fec28cbc5932222e71555e67dd34b
         <el-form-item :label="t('fields.device')" prop="device">
           <el-radio-group v-model="form.device">
             <el-radio
@@ -365,17 +368,8 @@
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="120"/>
       <el-table-column prop="siteName" :label="t('fields.site')" width="150"/>
       <el-table-column prop="status" :label="t('fields.status')" width="150"/>
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
-        <template #default="scope">
-          <span v-if="scope.row.updateTime === null">-</span>
-          <span
-            v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150"/>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150"/>
-      <el-table-column prop="gameLabel" :label="t('fields.gameLabel')" width="150"/>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -449,7 +443,6 @@ const EXPORT_GAME_LIST_HEADER = [
   'Game Type',
   'Device',
   'Sequence',
-  'Game Label',
 ]
 
 const IMPORT_GAME_LIST_JSON = [
@@ -461,7 +454,7 @@ const IMPORT_GAME_LIST_JSON = [
   'status',
   'gameType',
   'device',
-  'gameLabel',
+  'sequence',
 ]
 
 const EXPORT_MAPPING_PLATFORM_HEADER = [
@@ -853,14 +846,14 @@ async function confirmImport() {
 }
 
 function handleChangePlatform(value) {
-  const selectedPlatform = platforms.list.find(item => item.id === value)
+  const selectedPlatform = dialogPlats.list.find(item => item.id === value)
   form.platformId = value
   platformCode.value = selectedPlatform.code
 }
 
 function handleChangeSite(value) {
   form.siteId = value
-  loadPlatformNames(value, false)
+  loadPlatformNames()
 }
 
 function validateClick(ref) {
@@ -896,7 +889,7 @@ async function attachPhoto(event) {
   } else {
     var formData = new FormData()
     formData.append('files', files)
-    formData.append('dir', 'game/' + platformCode.value.toLowerCase() + '/' + form.gameType.toLowerCase());
+    formData.append('dir', 'game/' + form.siteId + '/' + platformCode.value.toLowerCase());
     formData.append('overwrite', false)
     const data = await uploadImage(formData)
     if (data.code === 0) {

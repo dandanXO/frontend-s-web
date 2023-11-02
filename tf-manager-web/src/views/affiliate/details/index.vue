@@ -1,28 +1,28 @@
 <template>
   <el-tabs v-model="activeName">
     <el-tab-pane :label="t('fields.affiliate')" name="affiliate-info">
-      <AffiliateInfoTab :aff-id="id" :time-zone="timeZone" />
+      <AffiliateInfoTab :aff-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.downlineMember')" name="downline-member">
-      <DownlineMemberTab :aff-id="id" :time-zone="timeZone" />
+      <DownlineMemberTab :aff-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.downlineAffiliate')" name="downline-affiliate">
-      <DownlineAffiliateTab :aff-id="id" :time-zone="timeZone" />
+      <DownlineAffiliateTab :aff-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.login')" name="login-info">
-      <LoginInfoTab :aff-id="id" :time-zone="timeZone" />
+      <LoginInfoTab :aff-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.bankCard')" name="member-bank">
-      <MemberBankTab :aff-id="id" :time-zone="timeZone" />
+      <MemberBankTab :aff-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change">
-      <MemberMoneyChange :aff-id="id" :time-zone="timeZone" />
+      <MemberMoneyChange :aff-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.withdraw')" name="withdraw-info">
-      <WithdrawInfoTab :aff-id="id" :time-zone="timeZone" />
+      <WithdrawInfoTab :aff-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.affiliateTransferRecord')" name="affiliate-transfer">
-      <AffiliateTransferTab :aff-id="id" :time-zone="timeZone" />
+      <AffiliateTransferTab :aff-id="id" />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -39,7 +39,6 @@ import MemberBankTab from "./tabs/member-bank/index.vue";
 import AffiliateTransferTab from "./tabs/affiliate-transfer/index.vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { getSiteTimeZoneById } from "@/api/site";
 
 export default defineComponent({
   components: {
@@ -52,20 +51,18 @@ export default defineComponent({
     MemberBankTab,
     AffiliateTransferTab
   },
-  async setup() {
+  setup() {
     const { t } = useI18n();
     const activeName = ref('affiliate-info')
     const router = useRouter()
     const {
       params: { id }
     } = router.currentRoute.value
-    const { data: timeZone } = await getSiteTimeZoneById(router.currentRoute.value.query.site);
 
     return {
       activeName,
       id,
-      t,
-      timeZone
+      t
     }
   }
 })

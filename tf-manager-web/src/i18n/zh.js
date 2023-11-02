@@ -41,6 +41,8 @@ export default {
     finishDate: '完成日期',
     withdrawDate: '提款日期',
     paymentDate: '支付日期',
+    regTime: '注册时间',
+    recordTime: '记录时间'
   },
   reportName: {
     Aff_Month_Report: '代理月报表',
@@ -446,6 +448,7 @@ export default {
     deleteRole: '删除角色',
     deposit: '存款',
     depositAmount: '存款金额',
+    depositAverage: '人均充值',
     depositBettingAmount: '存款/投注',
     depositCount: '存款次数',
     depositDate: '存款日期',
@@ -568,7 +571,6 @@ export default {
     fundingInfo: '资金信息',
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
-    gameLabel: '游戏标签',
     gameName: '游戏名称',
     gameType: '游戏类型',
     generateSummary: '生成汇总',
@@ -1005,6 +1007,7 @@ export default {
     web: '电脑版',
     webMessage: '网页提示信息',
     withdraw: '提款',
+    withdrawableBalance: '可提余额',
     withdrawArea: '提款区域',
     withdrawExchangeRate: '提款兑换率',
     withdrawalFailureCause: '提款失败原因',
@@ -1054,7 +1057,6 @@ export default {
     progress: '进度',
     download: '下载',
     updateProgress: '更新进度',
-    timeZone: '时区',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1645,7 +1647,6 @@ export default {
     15020: '存款记录不存在',
     15021: '此会员组别, 支付类型, 站点和设备设置已存在',
     15030: '无法处理该 JSON 数据',
-    15031: '每个站点热门游戏不能超过20个',
     15040: '提款显示名称已存在',
     15041: '提款显示不存在',
     15050: '支付银行已存在',

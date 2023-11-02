@@ -92,7 +92,7 @@
             <span
               v-formatter="{
                 data: scope.row.depositDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -111,7 +111,7 @@
               v-else
               v-formatter="{
                 data: scope.row.finishDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -146,7 +146,7 @@
               v-else
               v-formatter="{
                 data: scope.row.updateTime,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -225,10 +225,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  timeZone: {
-    type: String,
-    required: true,
-  }
 })
 
 const { t } = useI18n();

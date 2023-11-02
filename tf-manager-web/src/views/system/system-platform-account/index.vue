@@ -264,33 +264,9 @@
     >
       <el-table-column prop="platformName" :label="t('fields.platformName')" width="150" />
       <el-table-column prop="name" :label="t('fields.name')" width="150" />
-      <el-table-column prop="nextActivationTime" :label="t('fields.nextActivationTime')" width="180">
-        <template #default="scope">
-          <span v-if="scope.row.nextActivationTime === null">-</span>
-          <span
-            v-if="scope.row.nextActivationTime !== null"
-            v-formatter="{data: scope.row.nextActivationTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="nextGetBetStartTime" :label="t('fields.nextGetBetStartTime')" width="200">
-        <template #default="scope">
-          <span v-if="scope.row.nextGetBetStartTime === null">-</span>
-          <span
-            v-if="scope.row.nextGetBetStartTime !== null"
-            v-formatter="{data: scope.row.nextGetBetStartTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="nextGetBetEndTime" :label="t('fields.nextGetBetEndTime')" width="200">
-        <template #default="scope">
-          <span v-if="scope.row.nextGetBetEndTime === null">-</span>
-          <span
-            v-if="scope.row.nextGetBetEndTime !== null"
-            v-formatter="{data: scope.row.nextGetBetEndTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
+      <el-table-column prop="nextActivationTime" :label="t('fields.nextActivationTime')" width="180" />
+      <el-table-column prop="nextGetBetStartTime" :label="t('fields.nextGetBetStartTime')" width="200" />
+      <el-table-column prop="nextGetBetEndTime" :label="t('fields.nextGetBetEndTime')" width="200" />
       <el-table-column prop="nextGetBetPage" :label="t('fields.nextGetBetPage')" width="150" />
       <el-table-column prop="walletType" :label="t('fields.walletType')" width="150" />
       <el-table-column prop="status" :label="t('fields.status')" width="120">
@@ -473,19 +449,11 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM-DD HH:mm:ss');
 }
 
-function setTimeZone(data) {
-  data.forEach((e) => {
-    const siteTimeZone = sites.list.find(site => site.id === e.siteId) ? sites.list.find(site => site.id === e.siteId).timeZone : null;
-    e.siteTimeZone = siteTimeZone
-  })
-}
-
 async function loadPlatfromAccount() {
   page.loading = true
   const { data: ret } = await getPlatformAccount(request)
   page.pages = ret.pages
   page.records = ret.records
-  setTimeZone(ret.records)
   page.loading = false
 }
 

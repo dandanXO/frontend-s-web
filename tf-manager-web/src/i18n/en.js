@@ -59,6 +59,8 @@ export default {
     finishDate: 'Finish Date',
     withdrawDate: 'Withdraw Date',
     paymentDate: 'Payment Date',
+    regTime: 'Register Time',
+    recordTime: 'Record Time'
   },
   depositStatus: {
     SUCCESS: 'Success',
@@ -447,6 +449,7 @@ export default {
     deleteRole: 'Delete Role',
     deposit: 'Deposit',
     depositAmount: 'Deposit Amount',
+    depositAverage: 'Deposit Averate',
     depositBettingAmount: 'Deposit/Betting Amount',
     depositCount: 'Deposit Count',
     depositDate: 'Deposit Date',
@@ -568,7 +571,6 @@ export default {
     fundingInfo: 'Funding Information',
     gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
-    gameLabel: 'Game Label',
     gameName: 'Game Name',
     gameType: 'Game Type',
     generateSummary: 'Generate Summary',
@@ -1005,6 +1007,7 @@ export default {
     web: 'Web',
     webMessage: 'Web Message',
     withdraw: 'Withdraw',
+    withdrawableBalance: 'Withdrawable Balance',
     withdrawArea: 'Withdraw Area',
     withdrawExchangeRate: 'Withdraw Exchange Rate',
     withdrawalFailureCause: 'Withdrawal Failure Cause',
@@ -1054,7 +1057,6 @@ export default {
     progress: 'Progress',
     download: 'Download',
     updateProgress: 'Update Progress',
-    timeZone: 'Time Zone'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1663,7 +1665,6 @@ export default {
     15020: 'Deposit Record does not exist',
     15021: 'Financial Level, Pay Type, Site, and Way with same name already exist',
     15030: 'Unable to process the JSON data',
-    15031: 'Every site hot game should not exceed 20 limit.',
     15040: 'Withdraw Dsiplay name already exist',
     15041: 'Withdraw Dsiplay does not exist',
     15050: 'Bank already exists in given payment',

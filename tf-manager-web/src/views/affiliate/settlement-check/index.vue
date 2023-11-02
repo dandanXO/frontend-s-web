@@ -19,6 +19,17 @@
               :value="item.id"
             />
           </el-select>
+          <el-date-picker
+            v-model="request.month"
+            format="MM/YYYY"
+            value-format="YYYY-MM"
+            size="small"
+            type="month"
+            style="width: 200px; margin-left: 10px"
+            :editable="false"
+            :clearable="false"
+            :disabled-date="disabledDate"
+          />
           <el-input
             v-model="request.affiliateName"
             size="small"
@@ -146,7 +157,7 @@
             v-if="hasPermission(['sys:member:detail'])"
           >
             <span style="display: inline-block">
-              {{ t('fields.month') }}: <span v-formatter="{data: scope.row.recordTime, timeZone: siteTimeZone.timeZone, type: 'date'}" />
+              {{ t('fields.month') }}: {{ scope.row.recordTime }}
             </span>
           </template>
         </el-table-column>
@@ -256,11 +267,7 @@
           min-width="120"
         >
           <template #default="scope">
-            <span v-if="scope.row.recordTime === null">-</span>
-            <span
-              v-if="scope.row.recordTime !== null"
-              v-formatter="{data: scope.row.recordTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
-            />
+            {{ scope.row.recordTime }}
           </template>
         </el-table-column>
         <el-table-column
@@ -274,7 +281,12 @@
           :label="t('fields.upperName')"
           align="left"
           min-width="120"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.upperName === null">-</span>
+            <span v-else>{{ scope.row.upperName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :label="t('fields.totalCommissionProfit')"
           align="left"
@@ -417,6 +429,7 @@ import { required } from '../../../utils/validate'
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
+import moment from 'moment'
 
 const { t } = useI18n()
 const store = useStore()
@@ -424,9 +437,6 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const adjustForm = ref(null)
 const siteList = reactive({
   list: [],
-})
-const siteTimeZone = reactive({
-  timeZone: null,
 })
 const uiControl = reactive({
   dialogVisible: false,
@@ -437,6 +447,11 @@ const uiControl = reactive({
     { key: 2, value: 'DEDUCT' },
   ],
 })
+const defaultQueryMonth = convertDate(moment(new Date()));
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM');
+}
 
 const uiControl1 = reactive({
   dialogVisible: false,
@@ -450,6 +465,7 @@ const request = reactive({
   current: 1,
   siteId: null,
   affiliateName: null,
+  month: defaultQueryMonth
 })
 
 const form = reactive({
@@ -487,6 +503,7 @@ async function loadSites() {
 }
 
 function resetQuery() {
+  request.month = defaultQueryMonth
   request.affiliateName = null
   request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
@@ -535,10 +552,6 @@ async function loadSettlement() {
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
-
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
   page.loading = false
 }
 

@@ -121,15 +121,7 @@
       </el-table-column>
       <el-table-column prop="comeFrom" :label="t('fields.tigerCardSource')" width="160" />
       <el-table-column prop="beforeNum" :label="t('fields.tigerCardBeforeCount')" width="120" />
-      <el-table-column prop="opTime" :label="t('fields.operateTime')" width="200">
-        <template #default="scope">
-          <span v-if="scope.row.opTime === null">-</span>
-          <span
-            v-if="scope.row.opTime !== null"
-            v-formatter="{data: scope.row.opTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
+      <el-table-column prop="opTime" :label="t('fields.operateTime')" width="200" />
       <el-table-column prop="cardDesc" :label="t('fields.description')" width="300" />
     </el-table>
     <el-pagination
@@ -152,24 +144,8 @@
       <el-table-column prop="realCount" :label="t('fields.tigerCardRealCount')" width="150" />
       <el-table-column prop="virtualCount" :label="t('fields.tigerCardVirtualCount')" width="150" />
       <el-table-column prop="sumAward" :label="t('fields.totalBonus')" width="200" />
-      <el-table-column prop="lotteryStartTime" :label="t('fields.startTime')" width="200">
-        <template #default="scope">
-          <span v-if="scope.row.lotteryStartTime === null">-</span>
-          <span
-            v-if="scope.row.lotteryStartTime !== null"
-            v-formatter="{data: scope.row.lotteryStartTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="lotteryEndTime" :label="t('fields.endTime')" width="200">
-        <template #default="scope">
-          <span v-if="scope.row.lotteryEndTime === null">-</span>
-          <span
-            v-if="scope.row.lotteryEndTime !== null"
-            v-formatter="{data: scope.row.lotteryEndTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
+      <el-table-column prop="lotteryStartTime" :label="t('fields.startTime')" width="200" />
+      <el-table-column prop="lotteryEndTime" :label="t('fields.endTime')" width="200" />
       <el-table-column prop="period" :label="t('fields.tigerCardPeriod')" width="160" />
       <el-table-column prop="lotteryTime" :label="t('fields.tigerCardTime')" width="200" />
       <el-table-column prop="bonusTime" :label="t('fields.tigerCardBonusTime')" width="200" />
@@ -257,9 +233,6 @@ const site = ref(null)
 const tigerCardSettingForm = ref(null)
 const siteList = reactive({
   list: [],
-})
-const siteTimeZone = reactive({
-  timeZone: null,
 })
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -371,10 +344,6 @@ async function loadTigerCardRecord() {
   const { data: ret } = await getTigerCardList(query)
   page.pages = ret.pages
   page.records = ret.records
-
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
   page.loading = false
 }
 

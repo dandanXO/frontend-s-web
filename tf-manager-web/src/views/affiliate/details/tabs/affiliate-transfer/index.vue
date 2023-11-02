@@ -41,7 +41,7 @@
           <span v-if="scope.row.transferDate === null">-</span>
           <span
             v-if="scope.row.transferDate !== null"
-            v-formatter="{data: scope.row.transferDate, timeZone: timeZone, type: 'date'}"
+            v-formatter="{data: scope.row.transferDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -72,10 +72,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  timeZone: {
-    type: String,
-    required: true
-  }
 })
 
 const route = useRoute()

@@ -155,15 +155,7 @@
       <el-table-column prop="port" :label="t('fields.port')" width="100" />
       <el-table-column prop="user" :label="t('fields.user')" width="200" />
       <el-table-column prop="fromEmail" :label="t('fields.from')" width="200" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
-        <template #default="scope">
-          <span v-if="scope.row.updateTime === null">-</span>
-          <span
-            v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
       <el-table-column
         :label="t('fields.operate')"

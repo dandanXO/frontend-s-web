@@ -391,15 +391,7 @@
       </el-table-column>
       <el-table-column prop="site" :label="t('fields.site')" width="120" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')">
-        <template #default="scope">
-          <span v-if="scope.row.updateTime === null">-</span>
-          <span
-            v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" />
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -506,6 +498,7 @@ const request = reactive({
 
 const form = reactive({
   id: null,
+  alias: null,
   name: null,
   code: null,
   status: 'OPEN',
