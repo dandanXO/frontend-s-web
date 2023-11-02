@@ -5,15 +5,15 @@
       <div class="left-container">
         <div class="infoboard">
           <div>Income</div>
-          <div>0</div>
+          <div>{{ rebateSummary.rebateAmount }}</div>
         </div>
         <div class="infoboard">
-          <div>Direct Income</div>
-          <div>0</div>
+          <div>Direct Member</div>
+          <div>{{ rebateSummary.memberCount }}</div>
         </div>
       </div>
       <div class="right-container">
-        <img src="../../assets/images/index/more-btn.png" alt="" @click="showMoreButton()" />
+        <!-- <img src="../../assets/images/index/more-btn.png" alt="" @click="showMoreButton()" /> -->
       </div>
     </div>
   </div>
@@ -24,17 +24,18 @@
       <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
         <div class="top-container">
           <div class="id-container">
-            <span class="id">{{ e.id }}</span>
-            <img src="../../assets/images/index/vip.png" alt="" />
+            <span class="id">{{ e.loginName }}</span>
+            <img src="../../assets/images/index/icon-vip-badge.png" alt="" />
+            <div class="vip-name">{{ e.vipName }}</div>
           </div>
-          <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div>
+          <!-- <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div> -->
         </div>
         <div class="bot-container">
           <div class="amount-container">
             <div class="amount-text">Recharge Amount</div>
             <div class="amount">
               RS
-              <span>{{ e.rechargeAmount }}</span>
+              <span>{{ e.rebateAmount }}</span>
             </div>
           </div>
 
@@ -42,7 +43,7 @@
             <div class="amount-text">Income</div>
             <div class="amount">
               RS
-              <span>{{ e.income }}</span>
+              <span>{{ e.validBet }}</span>
             </div>
           </div>
         </div>
@@ -52,26 +53,46 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
+import { api } from "boot/axios";
 import ContentView from "../ContentView.vue";
 import NoInfoComponent from "../NoInfoComponent.vue";
-
-// [
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 }
-// ]
-const myMemberList = ref([]);
-
-const isNoInfo = ref(true);
-if (myMemberList.value.length === 0) isNoInfo.value = true;
-else isNoInfo.value = false;
 
 const showMoreButton = () => {
   console.log("show more button clicked");
 };
+
+const getBetRebateRecord = () => {
+  api.get("/session/member/betRebateRecord").then((response) => {
+    const a = response;
+    console.log("rebate record" + a);
+  });
+};
+
+let rebateSummary = reactive({
+  rebateAmount: 0,
+  memberCount: 0
+});
+const getBetRebateSummary = () => {
+  api.get("/session/member/betRebateSummary").then((response) => {
+    rebateSummary = response.data;
+  });
+};
+
+const myMemberList = ref([]);
+const isNoInfo = ref(true);
+const getReferredBetRebateRecord = () => {
+  api.get("/session/member/referredBetRebateRecord").then((response) => {
+    myMemberList.value = response.data.records;
+    if (myMemberList.value.length !== 0) isNoInfo.value = false;
+  });
+};
+
+onMounted(() => {
+  //   getBetRebateRecord();
+  getBetRebateSummary();
+  getReferredBetRebateRecord();
+});
 </script>
 
 <style lang="scss">
@@ -121,13 +142,6 @@ const showMoreButton = () => {
 }
 
 .member-info-container {
-  position: absolute;
-  padding: 0 2rem;
-  width: 30rem;
-  height: 39.5rem;
-  overflow: scroll;
-  top: 14rem;
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -136,7 +150,7 @@ const showMoreButton = () => {
     border-radius: 1.25rem;
     background: rgba(21, 0, 37, 0.2);
     padding: 1.25rem;
-    margin: 1rem 0;
+    margin: 0 0 1rem 0;
 
     .top-container {
       display: flex;
@@ -145,8 +159,8 @@ const showMoreButton = () => {
       margin: 0 0 1.5rem 0;
 
       .id-container {
-        width: 50%;
         display: flex;
+        align-items: center;
 
         .id {
           color: #fff;
@@ -157,8 +171,22 @@ const showMoreButton = () => {
           margin: 0 1rem 0 0;
         }
 
+        .vip-name {
+          border-radius: 0rem 0.125rem 0.3125rem 0rem;
+          border: 0.5px solid rgba(255, 255, 255, 0.55);
+          background: linear-gradient(94deg, #ffd84d 11.24%, #d97d00 91.82%);
+          position: relative;
+          right: 1rem;
+          width: 3.25rem;
+          text-align: right;
+          padding: 0 0.5rem 0 0;
+          font-size: 0.75rem;
+          font-weight: 700;
+        }
+
         img {
-          width: 5rem;
+          width: 3rem;
+          z-index: 1;
         }
       }
 
