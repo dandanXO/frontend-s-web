@@ -5,7 +5,7 @@
       <div class="profile-wrapper">
         <div class="profile-pic">
           <q-avatar size="70px">
-            <img :src="require(`../assets/images/account/${randomProfileImg}.png`)" />
+            <img :src="profileImagePath" />
           </q-avatar>
           <div class="profile-pic-frame" v-if="!homeProfile"></div>
         </div>
@@ -64,11 +64,21 @@ const profileImg = [
     imgPath: ["profile-pic-01", "profile-pic-02", "profile-pic-03", "profile-pic-04", "profile-pic-05"]
   }
 ];
-
 const randomProfileImg = computed(() => {
-  const randomProfile = profileImg[0];
-  const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-  return randomProfile.imgPath[randomIndex];
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomProfile = profileImg[0];
+    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+    const imgPath = randomProfile.imgPath[randomIndex];
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/${randomProfileImg.value}.png`);
 });
 
 const isLoadingBalance = ref(false);
@@ -84,6 +94,15 @@ const refreshBalance = () => {
 const onVipClick = () => {
   router.push({ path: "/vip", query: { redirect: route.path } });
 };
+
+onMounted(() => {
+  if (!sessionStorage.getItem("PROFILE_IMG")) {
+    const randomProfile = profileImg[0];
+    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+    const imgPath = randomProfile.imgPath[randomIndex];
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+  }
+});
 </script>
 
 <style scoped lang="scss">
