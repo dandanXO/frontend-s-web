@@ -244,7 +244,7 @@
               v-if="scope.row.withdrawDate !== null"
               v-formatter="{
                 data: scope.row.withdrawDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: siteTimeZone.timeZone,
                 type: 'date',
               }"
             />
@@ -262,7 +262,7 @@
               v-if="scope.row.checkDate !== null"
               v-formatter="{
                 data: scope.row.checkDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: siteTimeZone.timeZone,
                 type: 'date',
               }"
             />
@@ -293,7 +293,7 @@
               v-if="scope.row.paymentDate !== null"
               v-formatter="{
                 data: scope.row.paymentDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: siteTimeZone.timeZone,
                 type: 'date',
               }"
             />
@@ -569,7 +569,7 @@
               v-if="scope.row.operateTime !== null"
               v-formatter="{
                 data: scope.row.operateTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: siteTimeZone.timeZone,
                 type: 'date',
               }"
             />
@@ -895,6 +895,9 @@ const cancelTypeList = reactive({
 })
 const siteList = reactive({
   list: [],
+})
+const siteTimeZone = reactive({
+  timeZone: null,
 })
 
 const defaultTime = [
@@ -1252,6 +1255,10 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+
+  var siteSelected = siteList.list.find(e => e.id === request.siteId)
+  siteTimeZone.timeZone = siteSelected.timeZone;
+
   page.loading = false
 }
 

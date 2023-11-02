@@ -1,18 +1,10 @@
 <template>
-
-  <q-card-section class="page-title">
-    优惠活动
-  </q-card-section>
+  <q-card-section class="page-title">优惠活动</q-card-section>
 
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab
-          v-for="(tab, i) in tabItems"
-          :key="i"
-          :name="tab.name"
-          :label="tab.label"
-        />
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -28,15 +20,7 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div 
-                  class="promo-item"
-                    v-if="
-                      promo.promoType
-                        .toLowerCase()
-                        .split(',')
-                        .includes(tab.name)
-                    "
-                  >
+                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
@@ -46,10 +30,7 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                            class="promo-content"
-                            :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
@@ -66,10 +47,7 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                            class="promo-content"
-                            :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
@@ -105,13 +83,11 @@
                 </div>
                 <div
                   :class="{
-                    welcome:
-                      selectedPromo.promoType.toLowerCase() === 'welcome',
+                    welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
-                    liveCasino:
-                      selectedPromo.promoType.toLowerCase() === 'live casino',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
@@ -126,10 +102,7 @@
   </div>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-white text-black text-center"
-    >
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md">
         <strong>系统提示</strong>
         <br />
@@ -472,7 +445,7 @@ export default defineComponent({
         // display: grid;
         // margin-top: 20px;
         // grid-template-columns: 1fr;
-        
+
         display: flex;
         margin-top: 20px;
         flex-direction: column;
@@ -660,8 +633,7 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%),
-              linear-gradient(#d0d1d3, #d0d1d3);
+            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
           }
 
           td {
@@ -724,11 +696,10 @@ export default defineComponent({
   right: 5px;
   top: 5px;
   z-index: 3;
-  
 }
 
 .pad-label.label-new {
-  background: url(../assets/promo/yh_label_new.png) no-repeat;
+  //   background: url(../assets/promo/yh_label_new.png) no-repeat;
   // background-size: 100%;
   background-size: 78px 45px;
   font-size: 12px;
@@ -765,8 +736,7 @@ export default defineComponent({
   }
 
   .q-tab--active .q-tab__indicator {
-    background: url("../assets/images/promotion/tab_bg.png") no-repeat center
-      center;
+    background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
     background-size: 20px 10px;
     width: 100%;
     height: 10px;
