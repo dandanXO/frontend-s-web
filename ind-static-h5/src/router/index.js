@@ -2,12 +2,7 @@ import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 
-import {
-  createRouter,
-  createMemoryHistory,
-  createWebHistory,
-  createWebHashHistory
-} from "vue-router";
+import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
 
 /*
@@ -33,43 +28,41 @@ export default route(function (/* { store, ssrContext } */) {
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
-    history: createHistory(
-      process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
-    )
+    history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
     if (to.path === "/login" || to.path === "/register") {
-      ui.hiddenFooter()
+      ui.hiddenFooter();
     } else {
-      ui.showFooter()
+      ui.showFooter();
     }
 
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-    //   next(`/login?register`);
+    //   next(`/register`);
     // }
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-      if(to.query.reg) {
-        next(`/login?register`);
+      if (to.query.reg) {
+        next(`/register`);
       } else {
         next(`/`);
       }
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-      next(`/login?register`);
+      next(`/register`);
     }
 
     if (to.name === "RegisterPage") {
-      next(`/login?register`);
+      next(`/register`);
     }
 
     if (user.hasToken()) {
-      if (to.path === "/login") {
-        next({ path: "/" });
+      if (to.path === "/" || to.path === "/register" || to.path === "/login" || to.path === "//") {
+        next({ path: "/home" });
       } else {
         if (user.nickName === "") {
           user.getMemberInfo().then(() => next({ ...to, replace: true }));
@@ -79,7 +72,7 @@ export default route(function (/* { store, ssrContext } */) {
       }
     } else {
       if (to.meta.requiresAuth) {
-        next(`/login?redirect=${to.path}`);
+        next(`/`);
       } else {
         next();
       }

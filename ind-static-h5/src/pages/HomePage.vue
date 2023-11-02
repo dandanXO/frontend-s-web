@@ -1,40 +1,19 @@
 <template>
   <div class="home-wrapper">
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab class="bg-yellow floating-btn">
-        <img src="../assets/images/index/icon-customer-service.png" alt=""/>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
+      <q-btn fab class="bg-yellow text-black btn-effect" @click="router.push('/liveChat')">
+        <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
 
-    <div class="profile-wrapper">
-      <div class="profile-pic">
-        <q-avatar size="80px">
-          <img src="https://cdn.quasar.dev/img/avatar.png"/>
-        </q-avatar>
-      </div>
-      <div class="profile-details-container">
-        <div class="profile-name">
-          Guest0238434
-          <div class="vip-details">
-            <img src="../assets/images/index/icon-vip-badge.png" alt=""/>
-            <div class="vip-level">VIP1</div>
-          </div>
-        </div>
-        <div class="profile-balance">
-          <span class="balance-amount">1213</span>
-        </div>
-      </div>
-      <div class="profile-msg">
-        <q-icon name="mail" size="40px" color="yellow-7"/>
-      </div>
-    </div>
+    <ProfileSummary :homeProfile="true" />
 
     <div class="home-divider"></div>
 
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpFill style="fill: #ffffff"/>
+          <RiVolumeUpFill style="fill: #ffffff" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
@@ -44,9 +23,6 @@
           </div>
         </marquee-text>
       </div>
-      <!-- <div class="share" @click="router.push('/promo?id=35')">
-      <RiUserShared2Line />
-    </div> -->
     </div>
 
     <q-carousel
@@ -84,174 +60,196 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
-        :img-src="require(`../assets/images/index/banner/${banner.mobileImageUrl}`)"
+        :img-src="imgURLPromo + banner.mobileImageUrl"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
     </q-carousel>
 
-    <!-- :img-src="require('../assets/images/index/') + banner.mobileImageUrl" -->
-    <!-- <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" alt=""> -->
-    <!-- require(`/src/assets/${srcPath}` -->
-
-    <!-- ../assets/images/index/hot-elephant-left.png -->
-
-    <!-- <div>start here</div> -->
-
     <div class="top-action">
-      <div class="action-btn action-btn--withdrawal" @click="withdrawalDialog = true">Withdrawal</div>
-      <div class="action-btn action-btn--deposit" @click="depositDialog = true">Deposit</div>
+      <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
+      <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
     </div>
 
     <div class="games-selection-wrapper">
       <div class="hot-games-pattern-top"></div>
       <div class="hot-games-container">
-        <img src="../assets/images/index/hot-elephant-left.png" alt=""/>
+        <img src="../assets/images/index/hot-elephant-left.png" alt="" />
         <div class="title-hot-games">
           <span class="txt-style">HOT GAMES</span>
         </div>
-        <img src="../assets/images/index/hot-elephant-right.png" alt=""/>
+        <img src="../assets/images/index/hot-elephant-right.png" alt="" />
       </div>
-      <div class="game-platform-wrapper">
-        <div class="game-platform-item">
-          <div
-            class="game-platform-img"
-            :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-          ></div>
-          <div class="game-platform-title">Foutune Tiger</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Mouse</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Ox</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Rocket Crash</div>
-        </div>
 
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Rocket Game</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Game Bonanza</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Crazy777</div>
-        </div>
-        <div class="game-platform-item">
-          <div class="game-platform-img"></div>
-          <div class="game-platform-title">Foutune Rabbit</div>
-        </div>
+      <div class="game-platform-wrapper">
+        <template v-for="(item, index) in hotGameList" :key="index">
+          <template v-if="index < 8">
+            <div
+              class="game-platform-item btn-effect"
+              @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+            >
+              <div class="game-platform-img">
+                <div
+                  class="game--bg"
+                  :style="{
+                    backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                  }"
+                ></div>
+              </div>
+
+              <div class="game-platform-title">{{ item.name }}</div>
+            </div>
+          </template>
+        </template>
       </div>
       <div class="hot-games-pattern-bottom"></div>
-      <div class="btn-load-more">Load More</div>
+      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">
+        Load More
+      </div>
+      <div v-else class="hot-games-pattern-bottom--filled"></div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt=""/>
+        <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
         <span class="txt-style">Slot Games</span>
       </div>
+
       <div class="game-platform-container">
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-jdb.png" alt=""/>
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-joker.png" alt=""/>
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-jili.png" alt=""/>
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt=""/>
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt=""/>
-        </div>
-        <div class="game-platform-item" @click="fullGameDialog = true">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt=""/>
-        </div>
+        <template v-for="(item, index) in slot" :key="index">
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+          >
+            <img src="../assets/images/index/slot/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <!-- <div class="game-platform-item">
+          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
+        </div> -->
+        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-livecasino.png" alt=""/>
+        <img class="title-game-icon" src="../assets/images/index/title-icon-livecasino.png" alt="" />
         <span class="txt-style">Live Casino</span>
       </div>
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-ezugi.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-evolution.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/live/item-game-comingsoon.png" alt=""/></div>
+        <template v-for="(item, index) in livecasino" :key="index">
+          <div
+            class="game-platform-item btn-effect"
+            @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+          >
+            <img src="../assets/images/index/live/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <div class="game-platform-item">
+          <img src="../assets/images/index/live/item-game-comingsoon.png" alt="" />
+        </div>
+        <!-- coming soon placeholder // end -->
       </div>
     </div>
 
-    <div class="games-selection-wrapper">
+    <!-- <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-gamepoker.png" alt=""/>
+        <img class="title-game-icon" src="../assets/images/index/title-icon-gamepoker.png" alt="" />
         <span class="txt-style">Game &amp; Poker</span>
       </div>
       <div class="game-platform-container">
         <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-gpipoker.png" alt=""/>
+          <img src="../assets/images/index/poker/item-game-gpipoker.png" alt="" />
           <div class="game-platform-title">GPI-POKER</div>
         </div>
         <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
-          <div class="game-platform-title">COMING SOON</div>
-        </div>
-        <div class="game-platform-item">
-          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt=""/>
+          <img src="../assets/images/index/poker/item-game-comingsoon.png" alt="" />
           <div class="game-platform-title">COMING SOON</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt=""/>
+        <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt="" />
         <span class="txt-style">Fishing</span>
       </div>
+
       <div class="game-platform-container">
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-jili.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-simpleplay.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-spadegaming.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-zl.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-ag.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/fish/item-game-giocoplus.png" alt=""/></div>
+        <template v-for="(item, index) in fishing" :key="index">
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
+          >
+            <img src="../assets/images/index/fish/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
+          </div>
+        </template>
       </div>
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-sports.png" alt=""/>
+        <img class="title-game-icon" src="../assets/images/index/title-icon-sports.png" alt="" />
         <span class="txt-style">Sports</span>
       </div>
       <div class="game-platform-container sport-platform">
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-cmd.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-saba.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-sbobet.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-bti.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im.png" alt=""/></div>
-        <div class="game-platform-item"><img src="../assets/images/index/sport/item-game-im2.png" alt=""/></div>
+        <template v-for="(item, index) in sport" :key="index">
+          <div
+            class="game-platform-item btn-effect"
+            @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+          >
+            <img src="../assets/images/index/sport/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/sport/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -269,12 +267,12 @@
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
-          <div class="titles backgroundColor">更新公告</div>
+          <div class="titles backgroundColor">Update Announcement</div>
         </div>
-        <div class="contents">检测到新版本，你是否要更新？</div>
+        <div class="contents">New Version Detected, Do You Want To Update?</div>
         <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">取消</div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">立即更新</div>
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate">Cancel</div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">Update Now</div>
         </div>
       </div>
     </q-card>
@@ -291,10 +289,10 @@
           indicator-color="bright"
           align="justify"
         >
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name"/>
+          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
         </q-tabs>
 
-        <q-separator/>
+        <q-separator />
 
         <q-tab-panels v-model="activeKey" animated>
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
@@ -333,7 +331,7 @@
         <div class="promo-banner-container">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
-            <img :src="homePopupImg" class="alert-img"/>
+            <img :src="homePopupImg" class="alert-img" />
           </div>
         </div>
       </q-card-section>
@@ -345,12 +343,12 @@
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
-            <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-lg" v-close-popup/>
+            <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-lg" v-close-popup />
 
             <div class="fullgame-search">
               <q-input dense standout v-model="searchText" label="Search" clearable clear-icon="close">
                 <template v-slot:append>
-                  <q-icon name="search"/>
+                  <q-icon name="search" />
                 </template>
               </q-input>
             </div>
@@ -358,97 +356,44 @@
 
           <div class="games-selection-wrapper">
             <div class="game-platform-wrapper">
-              <div class="game-platform-item">
-                <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Game</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Game Bonanza</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Crazy777</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Rabbit</div>
-              </div>
-              <div class="game-platform-item">
-                <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Game</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Game Bonanza</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Crazy777</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Rabbit</div>
-              </div>
-              <div class="game-platform-item">
-                <div
-                  class="game-platform-img"
-                  :style="{ backgroundImage: `url(${require(`../assets/images/index/hot-games-bg.png`)})` }"
-                ></div>
-                <div class="game-platform-title">Foutune Tiger</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Mouse</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Foutune Ox</div>
-              </div>
-              <div class="game-platform-item">
-                <div class="game-platform-img"></div>
-                <div class="game-platform-title">Rocket Crash</div>
-              </div>
+              <template v-if="hotGameOn">
+                <template v-for="(item, index) in filteredHotGameList" :key="index">
+                  <div
+                    class="game-platform-item"
+                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  >
+                    <div class="game-platform-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                        }"
+                      ></div>
+                    </div>
+                    <div class="game-platform-title">{{ item.name }}</div>
+                  </div>
+                </template>
+              </template>
+
+              <template v-else>
+                <template v-for="(item, index) in filteredSubGameList" :key="index">
+                  <div
+                    class="game-platform-item"
+                    @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                  >
+                    <div class="game-platform-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                        }"
+                      ></div>
+                    </div>
+                    <div class="game-platform-title">{{ item.name }}</div>
+                  </div>
+                </template>
+              </template>
             </div>
-            <!-- <div class="btn-load-more">Load More</div> -->
           </div>
         </div>
       </q-card-section>
@@ -457,864 +402,496 @@
 
   <q-dialog width="100%" v-model="withdrawalDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup/>
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
         </div>
-        <div class="btn-go">Go</div>
+        <WithdrawalComponent></WithdrawalComponent>
       </div>
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="depositDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup/>
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="popout-main-title">
           <div class="txt-title">Deposit</div>
         </div>
-        <div class="deposit-item-container">
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-1.png" alt=""/>
-            </div>
-            <div class="deposit-amt">100</div>
-          </div>
-          <div class="deposit-item active">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-2.png" alt=""/>
-            </div>
-            <div class="deposit-amt">300</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-3.png" alt=""/>
-            </div>
-            <div class="deposit-amt">500</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-4.png" alt=""/>
-            </div>
-            <div class="deposit-amt">1000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-5.png" alt=""/>
-            </div>
-            <div class="deposit-amt">3000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-6.png" alt=""/>
-            </div>
-            <div class="deposit-amt">5000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-7.png" alt=""/>
-            </div>
-            <div class="deposit-amt">10000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-8.png" alt=""/>
-            </div>
-            <div class="deposit-amt">30000</div>
-          </div>
-          <div class="deposit-item">
-            <div class="deposit-icon">
-              <img src="../assets/images/index/popout/deposit-coin-9.png" alt=""/>
-            </div>
-            <div class="deposit-amt">50000</div>
-          </div>
-        </div>
-        <div class="deposit-enter-amt">
-          <!-- <q-input v-model.number="model" type="number" filled style="max-width: 200px" /> -->
-          <div>Amount</div>
-          <q-input class="deposit-input" filled v-model="depositAmountInput" dense clearable></q-input>
-        </div>
-        <div class="deposit-options">
-          <q-btn flat class="deposit-option-btn active" label="UPI1"/>
-          <q-btn flat class="deposit-option-btn label-on-discount" label="UPI2"/>
-        </div>
-        <div class="btn-go">Go</div>
+        <DepositComponent />
       </div>
     </div>
   </q-dialog>
 </template>
 
-<script>
-import {defineComponent, onMounted, ref, reactive, computed} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {api} from "boot/axios";
-import {cached, TIME_EXPIRED} from "boot/cache";
-import {useQuasar, Platform} from "quasar";
-import {userStore} from "stores/index";
+<script setup>
+import { onMounted, ref, reactive, computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { api } from "boot/axios";
+import { cached, TIME_EXPIRED } from "boot/cache";
+import { useQuasar, Platform } from "quasar";
+import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import {RiVolumeUpFill} from "vue-remix-icons";
-import {App} from "@capacitor/app";
+import { RiVolumeUpFill } from "vue-remix-icons";
+import { App } from "@capacitor/app";
+import { useUI } from "stores/ui";
+import { translateRecord } from "src/directives/translate";
+import ProfileSummary from "../components/ProfileSummary.vue";
+import WithdrawalComponent from "../components/WithdrawalComponent.vue";
+import DepositComponent from "../components/depositComponent.vue";
 
-import {useUI} from "stores/ui";
+const slide = ref(0);
 
-import PlatformBlock from "components/platform/PlatformBlock.vue";
-import {translateRecord} from "src/directives/translate";
+const isFirstView = ref(false);
+const closeAlert = () => {
+  localStorage.setItem("indexImgTop", new Date().getTime());
+  isFirstView.value = false;
+};
 
-export default defineComponent({
-  name: "IndexPage",
-  components: {
-    // Swiper,
-    // SwiperSlide,
-    GameModal,
-    MarqueeText,
-    RiVolumeUpFill
-    // PlatformBlock
-  },
-  setup() {
-    const isFirstView = ref(false);
-    const closeAlert = () => {
-      localStorage.setItem("indexImgTop", new Date().getTime());
-      isFirstView.value = false;
-    };
+const fullGameDialog = ref(false);
+const searchText = ref("");
 
-    const fullGameDialog = ref(false);
-    const searchText = ref("");
+const withdrawalDialog = ref(false);
+const onWithdrawalClick = () => {
+  withdrawalDialog.value = true;
+};
 
-    const depositDialog = ref(false);
-    const withdrawalDialog = ref(false);
-    const depositAmountInput = ref("");
+const depositDialog = ref(false);
+const openDepositDialog = () => {
+  depositDialog.value = true;
+};
 
-    const thumbsSwiper = ref(null);
-    const firstSwiper = ref(null);
-    const secondSwiper = ref(null);
+const depositItems = reactive([
+  { amount: 100, hotLabel: 5, isActive: false },
+  { amount: 300, hotLabel: 15, isActive: false },
+  { amount: 500, hotLabel: 25, isActive: false },
+  { amount: 1000, hotLabel: 50, isActive: false },
+  { amount: 3000, hotLabel: 150, isActive: false },
+  { amount: 5000, hotLabel: 250, isActive: false },
+  { amount: 10000, hotLabel: 500, isActive: false },
+  { amount: 30000, hotLabel: 1500, isActive: false },
+  { amount: 50000, hotLabel: 2500, isActive: false }
+]);
 
-    const setFirstSwiper = (swiper) => {
-      firstSwiper.value = swiper;
-    };
-    const setSecondSwiper = (swiper) => {
-      secondSwiper.value = swiper;
-    };
-    const setSelectedSwiper = (tab) => {
-      selectedTab.value = tab.name;
-      // console.log(tab.name);
-      var slideIndex = 0;
-      if (tab.name === "slot") {
-        slideIndex = 0;
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-
-      if (tab.name === "live") {
-        slideIndex = slot.value.length;
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "sport") {
-        slideIndex = livecasino.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "esport") {
-        slideIndex = livecasino.value.length + sport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-
-      if (tab.name === "fishing") {
-        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "poker") {
-        slideIndex =
-          livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "lottery") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "casual") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length +
-          lottery.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-    };
-    const onSlideChange = (swiper) => {
-      // console.log("Swiping hEre")
-      // Get the active slide index
-      const activeIndex = swiper.activeIndex;
-
-      // Get the active slide element
-      const activeSlide = swiper.slides[activeIndex];
-
-      // Get the class name of the active slide
-      const activeSlideClassName = activeSlide.className;
-      // Check if the class name contains "sport," "slot," or "esport"
-      // Array of keywords to check
-      const keywords = ["slot", "live", "sport", "esport", "fishing", "poker", "lottery", "casual"];
-
-      // Iterate over each keyword
-      for (const keyword of keywords) {
-        // Check if the class name contains the current keyword
-        if (activeSlideClassName.includes(keyword)) {
-          // console.log("select: "+ keyword);
-          selectedTab.value = keyword;
-        }
-      }
-    };
-    const selectedTab = ref("slot");
-    const tabs = ref([
-      {
-        name: "slot",
-        icon: "slot",
-        label: "电子",
-        labelact: "电子"
-      },
-      {
-        name: "live",
-        icon: "live",
-        label: "真人",
-        labelact: "真人娱乐"
-      },
-      {
-        name: "sport",
-        icon: "sport",
-        label: "体育",
-        labelact: "体育赛事"
-      },
-      {
-        name: "esport",
-        icon: "esport",
-        label: "电竞",
-        labelact: "电竞赛事"
-      },
-      {
-        name: "fishing",
-        icon: "fishing",
-        label: "捕鱼",
-        labelact: "捕鱼"
-      },
-      {
-        name: "poker",
-        icon: "poker",
-        label: "棋牌",
-        labelact: "棋牌游戏"
-      },
-      {
-        name: "lottery",
-        icon: "lottery",
-        label: "彩票",
-        labelact: "彩票游戏"
-      },
-      {
-        name: "casual",
-        icon: "casual",
-        label: "小游戏",
-        labelact: "小游戏"
-      }
-    ]);
-
-    const esport = ref([]);
-    const sport = ref([]);
-    const livecasino = ref([]);
-    const poker = ref([]);
-    const lottery = ref([]);
-    const slot = ref([]);
-    const fishing = ref([]);
-    const casuals = ref([]);
-
-    const ui = useUI();
-    const scrollPageRef = ref(null);
-    const isH5 = ref(false);
-    const checkPlatform = () => {
-      //Is iOS Webclip App || Is Android Apk
-      if (
-        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
-      ) {
-        isH5.value = false;
-      } else {
-        isH5.value = true;
-      }
-    };
-
-    ui.$onAction(({name, args}) => {
-      switch (name) {
-        case "setScrollPosition":
-          scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-      }
-    });
-    const $q = useQuasar();
-    const banners = ref(null);
-    const route = useRoute();
-    const router = useRouter();
-    const store = userStore();
-    const mainWallet = computed(() => {
-      return store.balance;
-    });
-    const allGames = ref(null);
-    const playGame = (gameName, platformCode, gameCode, gameStatus) => {
-      // console.log(gameName)
-      // console.log(platformCode)
-      // console.log(gameCode)
-      // console.log(gameStatus);
-
-      allGames.value.open(gameName, platformCode, gameCode, gameStatus);
-    };
-
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
-
-    const imgURLLocal = "http://";
-
-    // Pop out ads banner
-    const isImportantAnnoucementModal = ref(false);
-    const homePopupImg = ref("");
-    const homePopupContent = ref("");
-    const homePopupType = ref("");
-    const homePopupId = ref(0);
-    const homePopupFrequency = ref(0);
-    const homePopupFrequencyNum = ref(0);
-
-    const setExpiryBanner = () => {
-      if (homePopupFrequencyNum.value !== 0) {
-        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-      }
-      isImportantAnnoucementModal.value = false;
-    };
-
-    const setWithExpiry = (key, value, interval) => {
-      const now = new Date();
-      const item = {
-        value: value,
-        expiry: now.getTime() + interval,
-        id: homePopupId.value,
-        frequency: homePopupFrequency.value
-      };
-      sessionStorage.setItem(key, JSON.stringify(item));
-    };
-
-    const getWithExpiry = (key) => {
-      const itemStr = sessionStorage.getItem(key);
-      if (!itemStr) {
-        return null;
-      }
-      const item = JSON.parse(itemStr);
-      const now = new Date();
-      api
-        .get("/member/ads-popout")
-        .then((res) => {
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
-            return null;
-          }
-        })
-        .catch(() => {
-        });
-      return item.value;
-    };
-
-    const isImpt = getWithExpiry("isImpt");
-
-    const checkShowImgTop = () => {
-      const lastTime = sessionStorage.getItem("indexImgTop");
-      if (lastTime) {
-        const diff = new Date().getTime() - Number(lastTime);
-        if (diff > 1000 * 60 * 60 * 12) {
-          isFirstView.value = true;
-        }
-      } else {
-        api
-          .get("/member/ads-popout")
-          .then((res) => {
-            if (res.code === 0) {
-              // if (res.data[id] !== null) {
-              if (isImpt === null) {
-                switch (res.data["frequency"]) {
-                  case "EVERYTIME":
-                    homePopupFrequencyNum.value = 0;
-                    break;
-                  case "EVERYDAY":
-                    homePopupFrequencyNum.value = 86400000; // 24hrs
-                    break;
-                  case "SESSION":
-                    homePopupFrequencyNum.value = 7866432000; // 3months
-                    break;
-                  default:
-                    homePopupFrequencyNum.value = 10000;
-                    break;
-                }
-                isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
-                homePopupContent.value = res.data["content"];
-                homePopupType.value = res.data["type"];
-                homePopupId.value = res.data["id"];
-                homePopupFrequency.value = res.data["frequency"];
-                // if (homePopupImg.value) {
-                isFirstView.value = true;
-                // }
-              }
-              // } else {
-              // isImportantAnnoucementModal.value = false;
-              // }
-            }
-          })
-          .catch(() => {
-          });
-      }
-    };
-
-    const homeBannerData = ref({
-      code: 0,
-      data: [
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-01.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-02.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-03.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-04.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-05.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        },
-        {
-          promoPageId: null,
-          desktopImageUrl: "265bfc14-9b59-4ac3-9d73-7fedadae2276.jpg",
-          mobileImageUrl: "home-banner-06.png",
-          redirectUrl: "XingFa-red-packet-rain",
-          category: "HOME"
-        }
-      ]
-    });
-
-    function loadData() {
-      api
-        .get("/promo/banner?category=HOME")
-        .then((res) => {
-          if (res.code === 0) {
-            // banners.value = res.data;
-            banners.value = homeBannerData.value.data;
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: res.data.message,
-            //   icon: "report_problem"
-            // });
-          }
-          // banners.value = response.data;
-        })
-        .catch(() => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
-        });
+const handleDepositItemClick = (index) => {
+  depositItems.forEach((item, i) => {
+    item.isActive = i === index;
+    if (i === index) {
+      depositAmountInput.value = item.amount;
     }
+  });
+};
 
-    const platforms = ref([]);
-    const selectedPlatId = ref();
-    const selectedPlat = ref(platforms.value[0]);
-    const gamePage = reactive({
-      gameList: [],
-      currentPage: 1,
-      pageSize: 40,
-      searchType: "",
-      searchKey: "",
-      total: 0
-    });
-    const gameListData = ref([]);
-    const fishPlatforms = ref([]);
+const isUpi1Active = ref(true);
+const isUpi2Active = ref(false);
 
-    var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
-    var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
-    const getPlatList = () => {
-      cached
-        .get(platformApiKey, () =>
-          api.get(platformApiUrl).then((res) => {
-            return res;
-          })
-        )
-        .then((data) => {
-          var pf = data;
-          ui.slotLists = [];
-          pf.forEach((element) => {
-            const platTypes = element.gameType.split(",");
-            // console.log(platTypes);
-            if (platTypes.indexOf("ESPORT") > -1) {
-              var espObj = Object.assign({}, element);
-              // console.log(espObj);
+const handleDepositUpiClick = (option) => {
+  if (option === 1) {
+    isUpi1Active.value = true;
+    isUpi2Active.value = false;
+  } else if (option === 2) {
+    isUpi1Active.value = false;
+    isUpi2Active.value = true;
+  }
+};
 
-              if (espObj.code === "TFGaming") {
-                espObj.title = "兴發电竞";
-              }
-              if (espObj.code === "IA") {
-                espObj.title = "小艾电竞";
-              }
-              if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
-              }
-              if (!espObj.title) {
-                espObj.title = espObj.code + "电竞";
-              }
-              espObj.icon = "esport";
-              espObj.subtitle = "电竞赛事";
-              esport.value.push(espObj);
+const depositAmountInput = ref("");
 
-              //Add 1 More Casual minigame.
-              // if (platTypes.indexOf("CASUAL") > -1) {
-              var casualObj = Object.assign({}, element);
-              casualObj.gameCode = "casual";
-              casualObj.title = casualObj.name + " 小游戏";
-              casualObj.icon = "casual";
-              casualObj.subtitle = "小游戏";
-              casuals.value.push(casualObj);
-              // }
-            }
-            if (platTypes.indexOf("SPORT") > -1) {
-              var spObj = Object.assign({}, element);
-              if (spObj.code === "IM") {
-                spObj.title = "IM体育";
-              }
-              if (spObj.code === "IA") {
-                spObj.title = "小艾体育";
-              }
-              if (spObj.code === "PM") {
-                spObj.title = "熊猫体育";
-              }
-              if (spObj.code === "CR") {
-                spObj.title = "CR体育";
-              }
-              if (spObj.code === "SABA") {
-                spObj.title = spObj.code + "体育";
-              }
-              spObj.icon = "sport";
-              spObj.subtitle = "体育赛事";
-              sport.value.push(spObj);
-            }
-            if (platTypes.indexOf("LIVE") > -1) {
-              var liveObj = Object.assign({}, element);
-              if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB 真人";
-              } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE 真人";
-              } else {
-                liveObj.title = liveObj.name + " 真人";
-              }
-              liveObj.icon = "live";
-              liveObj.subtitle = "真人娱乐";
-              livecasino.value.push(liveObj);
-            }
-            if (platTypes.indexOf("SLOT") > -1) {
-              // console.log(element)
-              var slotObj = Object.assign({}, element);
-              slotObj.title = translateRecord(slotObj.name) + " 电子";
-              slotObj.icon = "slot";
-              slotObj.subtitle = "电子游戏";
-              // console.log(slotObj);
-              if (slotObj.code === "AG") {
-              } else {
-                let slotItem = {
-                  id: slotObj.id,
-                  code: slotObj.code,
-                  icon: slotObj.name
-                };
-                // console.log(slotItem);
-                ui.slotLists.push(slotItem);
-                slot.value.push(slotObj);
-              }
-            }
-            if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
-              var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
-              fishObj.icon = "fish";
-              fishObj.subtitle = "捕鱼游戏";
-              fishing.value.push(fishObj);
-            }
-            if (platTypes.indexOf("POKER") > -1) {
-              var pokerObj = Object.assign({}, element);
-              pokerObj.title = translateRecord(pokerObj.name);
-              pokerObj.icon = "poker";
-              pokerObj.subtitle = "棋牌娱乐";
-              poker.value.push(pokerObj);
-            }
-            if (platTypes.indexOf("LOTTERY") > -1) {
-              var lottObj = Object.assign({}, element);
-              lottObj.title = lottObj.name + " 彩票";
-              lottObj.icon = "lottery";
-              lottObj.subtitle = "彩票游戏";
-              //HArdCode hid BBIN
-              if (lottObj.code !== "BBINDY") {
-                lottery.value.push(lottObj);
-              }
-            }
-          });
-        })
-        .catch((err) => {
-        });
-    };
+const esport = ref([]);
+const sport = ref([]);
+const livecasino = ref([]);
+const poker = ref([]);
+const lottery = ref([]);
+const slot = ref([]);
+const fishing = ref([]);
+const casuals = ref([]);
 
-    const liveTabs = ref("");
-    const searchList = () => {
-      if (gamePage.searchKey) {
-        gamePage.gameList = gameListData.value.filter((game) => {
-          return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
-        });
-      } else {
-        changePage(1, gamePage.pageSize);
-      }
-    };
+const ui = useUI();
+const scrollPageRef = ref(null);
+const isH5 = ref(false);
+const checkPlatform = () => {
+  //Is iOS Webclip App || Is Android Apk
+  if (
+    (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
+    (Platform.is.android && Platform.is.capacitor)
+  ) {
+    isH5.value = false;
+  } else {
+    isH5.value = true;
+  }
+};
 
-    const changePage = (page, pageSize) => {
-      gamePage.gameList = gameListData.value;
-      // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
-    };
-
-    const isLoadingBalance = ref(false);
-    const refreshBalance = () => {
-      if (store.token) {
-        isLoadingBalance.value = true;
-        store.getBalance().then((res) => {
-          isLoadingBalance.value = false;
-        });
-      }
-    };
-
-    const announcementList = ref([]);
-    const announcementTypes = ref([]);
-    const loadAnnouncement = () => {
-      api.get("/announcement").then((res) => {
-        if (res.code === 0) {
-          if (res.data.announcements) {
-            const d = res.data.announcements;
-            announcementList.value = d;
-          }
-          if (res.data.type) {
-            announcementTypes.value = res.data.type;
-            activeKey.value = res.data.type[0].id;
-          }
-          // announcementList.value = d.announcements
-          // announcementList.value = res.data.announcements
-        }
-      });
-    };
-    const isStationNotice = ref(false);
-    const noticeTitle = ref("");
-    const activeKey = ref(null);
-    const openPopup = (noticeType) => {
-      if (noticeType) {
-        noticeTitle.value = "Announcement";
-        isStationNotice.value = true;
-      }
-    };
-    const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
-    };
-
-    const download_url = ref("");
-    const isAppUpdateModal = ref(false);
-    const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
-        const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        // alert(info.version);
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
-        // info.version && info.build
-        const appType = "ALL";
-        const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
-        // console.log(res);
-        if (res.code === 0) {
-          var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
-          download_url.value = res.data.url;
-
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
-          if (latest_ver_no > current_version) {
-            isAppUpdateModal.value = true;
-          }
-        }
-      }
-    };
-
-    const openDownloadPage = () => {
-      window.open(download_url.value, "_system");
-      isAppUpdateModal.value = false;
-    };
-    const cancelUpdate = () => {
-      isAppUpdateModal.value = false;
-    };
-
-    const closeTopBox = () => {
-      isH5.value = false;
-      var btmSwiper = document.getElementById("btm-second-swiper");
-      btmSwiper.classList.add("longer-swiper");
-    };
-
-    const downloadUrl = ref("");
-
-    const getAppDownloadUrl = () => {
-      api
-        .get("/config/appDownloadUrl")
-        .then((res) => {
-          // console.log(res);
-          downloadUrl.value = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    onMounted(() => {
-      getPlatList();
-      loadData();
-      loadAnnouncement();
-      checkPlatform();
-      getVersionNo();
-      checkShowImgTop();
-      getAppDownloadUrl();
-    });
-    const imageLoading = ref(false);
-    const selectedLiveTab = ref();
-
-    return {
-      imageLoading,
-      slide: ref(0),
-      tab: ref("esport"),
-      gamesTab: ref(platforms.value[0]),
-      splitterModel: ref(27),
-      imgURL,
-      imgURLLocal,
-      banners,
-      store,
-      platforms,
-      mainWallet,
-      playGame,
-      allGames,
-      gamePage,
-      selectedPlatId,
-      searchList,
-      liveTabs,
-      selectedLiveTab,
-      scrollPageRef,
-      announcementList,
-      isStationNotice,
-      openPopup,
-      noticeTitle,
-      announcementTypes,
-      activeKey,
-      gotoPromo,
-      router,
-      tabs,
-      selectedTab,
-      sport,
-      esport,
-      slot,
-      livecasino,
-      casuals,
-      poker,
-      fishing,
-      lottery,
-      isH5,
-      onSlideChange,
-      // Thumbs,
-      // thumbsSwiper,
-      // modules: [Scrollbar],
-      // Controller,
-      // firstSwiper,
-      // secondSwiper,
-      // setFirstSwiper,
-      // setSecondSwiper,
-      // setSelectedSwiper,
-      isFirstView,
-      closeAlert,
-      isAppUpdateModal,
-      cancelUpdate,
-      openDownloadPage,
-      homePopupImg,
-      refreshBalance,
-      isLoadingBalance,
-      closeTopBox,
-      getAppDownloadUrl,
-      downloadUrl,
-      getWithExpiry,
-      setWithExpiry,
-      setExpiryBanner,
-      homePopupContent,
-      homePopupType,
-      homePopupId,
-      homePopupFrequency,
-      homePopupFrequencyNum,
-      isImpt,
-      isImportantAnnoucementModal,
-      homeBannerData,
-      fullGameDialog,
-      searchText,
-      depositDialog,
-      withdrawalDialog,
-      depositAmountInput
-    };
+ui.$onAction(({ name, args }) => {
+  switch (name) {
+    case "setScrollPosition":
+      scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
   }
 });
+const qs = require("qs");
+const $q = useQuasar();
+const banners = ref(null);
+const route = useRoute();
+const router = useRouter();
+const store = userStore();
+
+const allGames = ref(null);
+const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  allGames.value.open(gameName, platformCode, gameCode, gameType);
+};
+
+const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  subGameCode.value = platformCode;
+  loadGameList(gameType, gameId);
+  fullGameDialog.value = true;
+  hotGameOn.value = false;
+};
+
+const hotGameOn = ref(false);
+const subGameList = ref([]);
+const filteredSubGameList = computed(() => {
+  if (searchText.value) {
+    return subGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+  } else {
+    return subGameList.value;
+  }
+});
+
+const subGameCode = ref("");
+
+const openHotGame = (hotGameList) => {
+  subGameList.value = hotGameList;
+  fullGameDialog.value = true;
+  hotGameOn.value = true;
+};
+
+const hotGameList = ref([]);
+
+const filteredHotGameList = computed(() => {
+  if (searchText.value) {
+    return hotGameList.value.filter((item) => item.name.toLowerCase().includes(searchText.value.toLowerCase()));
+  } else {
+    return hotGameList.value;
+  }
+});
+
+const loadHotGameList = () => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const key = `PLATFORM_HOT_GAMES_${regDevice}`;
+
+  // cached
+  cached
+    .get(key, () =>
+      api
+        .get("/platformGamesByLabel", {
+          params: {
+            gameLabel: "HOT",
+            device: regDevice
+          }
+        })
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
+    .then((res) => {
+      hotGameList.value = res;
+    });
+};
+
+const loadGameList = (type, id) => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const code = id;
+  const gameType = type;
+  const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+
+  // cached
+  cached
+    .get(key, () =>
+      api
+        .get("/platformGames", {
+          params: {
+            platformId: code,
+            gameType: gameType,
+            device: regDevice
+          }
+        })
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
+    .then((res) => {
+      subGameList.value = res;
+    });
+};
+
+const imgURL = process.env.IMAGE_CDN;
+const imgURLGame = imgURL + "/game/5/";
+const imgURLPromo = imgURL + "/promo/";
+
+// Pop out ads banner
+const isImportantAnnoucementModal = ref(false);
+const homePopupImg = ref("");
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+
+const setExpiryBanner = () => {
+  if (homePopupFrequencyNum.value !== 0) {
+    setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+  }
+  isImportantAnnoucementModal.value = false;
+};
+
+const setWithExpiry = (key, value, interval) => {
+  const now = new Date();
+  const item = {
+    value: value,
+    expiry: now.getTime() + interval,
+    id: homePopupId.value,
+    frequency: homePopupFrequency.value
+  };
+  sessionStorage.setItem(key, JSON.stringify(item));
+};
+
+function loadData() {
+  api
+    .get("/promo/banner?category=HOME")
+    .then((res) => {
+      if (res.code === 0) {
+        banners.value = res.data;
+      } else {
+        // $q.notify({
+        //   color: "negative",
+        //   position: "top",
+        //   message: res.data.message,
+        //   icon: "report_problem"
+        // });
+      }
+      // banners.value = response.data;
+    })
+    .catch(() => {
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: "Loading failed",
+      //   icon: "report_problem"
+      // });
+    });
+}
+
+var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
+var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+const getPlatList = () => {
+  cached
+    .get(platformApiKey, () =>
+      api.get(platformApiUrl).then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      var pf = data;
+      ui.slotLists = [];
+      pf.forEach((element) => {
+        const platTypes = element.gameType.split(",");
+        // console.log(platTypes);
+        if (platTypes.indexOf("ESPORT") > -1) {
+          var espObj = Object.assign({}, element);
+          // console.log(espObj);
+
+          esport.value.push(espObj);
+
+          //Add 1 More Casual minigame.
+          // if (platTypes.indexOf("CASUAL") > -1) {
+          var casualObj = Object.assign({}, element);
+          casualObj.gameCode = "casual";
+          casualObj.title = casualObj.name + " 小游戏";
+          casualObj.icon = "casual";
+          casualObj.subtitle = "小游戏";
+          casuals.value.push(casualObj);
+          // }
+        }
+        if (platTypes.indexOf("SPORT") > -1) {
+          var spObj = Object.assign({}, element);
+          if (spObj.code === "IM") {
+            spObj.title = "IM体育";
+          }
+          if (spObj.code === "IA") {
+            spObj.title = "小艾体育";
+          }
+          if (spObj.code === "PM") {
+            spObj.title = "熊猫体育";
+          }
+          if (spObj.code === "CR") {
+            spObj.title = "CR体育";
+          }
+          if (spObj.code === "SABA") {
+            spObj.title = spObj.code + "体育";
+          }
+          spObj.icon = "sport";
+          spObj.subtitle = "体育赛事";
+          sport.value.push(spObj);
+        }
+        if (platTypes.indexOf("LIVE") > -1) {
+          var liveObj = Object.assign({}, element);
+          if (liveObj.code === "PMLIVE") {
+            liveObj.title = "DB 真人";
+          } else if (liveObj.code === "EBET") {
+            liveObj.title = "WE 真人";
+          } else {
+            liveObj.title = liveObj.name + " 真人";
+          }
+          liveObj.icon = "live";
+          liveObj.subtitle = "真人娱乐";
+          livecasino.value.push(liveObj);
+        }
+        if (platTypes.indexOf("SLOT") > -1) {
+          // console.log(element)
+          var slotObj = Object.assign({}, element);
+          slotObj.title = translateRecord(slotObj.name) + " 电子";
+          slotObj.icon = "slot";
+          slotObj.subtitle = "电子游戏";
+          // console.log(slotObj);
+          if (slotObj.code === "AG") {
+          } else {
+            let slotItem = {
+              id: slotObj.id,
+              code: slotObj.code,
+              icon: slotObj.name
+            };
+            // console.log(slotItem);
+            ui.slotLists.push(slotItem);
+            slot.value.push(slotObj);
+          }
+        }
+        if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
+          var fishObj = Object.assign({}, element);
+          fishObj.title = fishObj.name + " 捕鱼";
+          fishObj.icon = "fish";
+          fishObj.subtitle = "捕鱼游戏";
+          fishing.value.push(fishObj);
+        }
+        if (platTypes.indexOf("POKER") > -1) {
+          var pokerObj = Object.assign({}, element);
+          pokerObj.title = translateRecord(pokerObj.name);
+          pokerObj.icon = "poker";
+          pokerObj.subtitle = "棋牌娱乐";
+          poker.value.push(pokerObj);
+        }
+        if (platTypes.indexOf("LOTTERY") > -1) {
+          var lottObj = Object.assign({}, element);
+          lottObj.title = lottObj.name + " 彩票";
+          lottObj.icon = "lottery";
+          lottObj.subtitle = "彩票游戏";
+          //HArdCode hid BBIN
+          if (lottObj.code !== "BBINDY") {
+            lottery.value.push(lottObj);
+          }
+        }
+      });
+    })
+    .catch((err) => {});
+};
+
+const announcementList = ref([]);
+const announcementTypes = ref([]);
+const loadAnnouncement = () => {
+  api.get("/announcement").then((res) => {
+    if (res.code === 0) {
+      if (res.data.announcements) {
+        const d = res.data.announcements;
+        announcementList.value = d;
+      }
+      if (res.data.type) {
+        announcementTypes.value = res.data.type;
+        activeKey.value = res.data.type[0].id;
+      }
+    }
+  });
+};
+const isStationNotice = ref(false);
+const noticeTitle = ref("");
+const activeKey = ref(null);
+const openPopup = (noticeType) => {
+  if (noticeType) {
+    noticeTitle.value = "Announcement";
+    isStationNotice.value = true;
+  }
+};
+const gotoPromo = (banner) => {
+  const redirectU = "/promo?name=" + banner.redirectUrl;
+  // router.push(`${redirectU}`);
+};
+
+const download_url = ref("");
+const isAppUpdateModal = ref(false);
+const getVersionNo = async () => {
+  if (Platform.is.android && Platform.is.capacitor) {
+    const info = await App.getInfo();
+    var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+    // info.version && info.build
+    const appType = "ALL";
+    const device = Platform.is.android ? "ANDROID" : "IOS";
+    const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+    // console.log(res);
+    if (res.code === 0) {
+      var version_info = res.data.version;
+      var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+      download_url.value = res.data.url;
+      if (latest_ver_no > current_version) {
+        isAppUpdateModal.value = true;
+      }
+    }
+  }
+};
+
+const openDownloadPage = () => {
+  window.open(download_url.value, "_system");
+  isAppUpdateModal.value = false;
+};
+const cancelUpdate = () => {
+  isAppUpdateModal.value = false;
+};
+
+const downloadUrl = ref("");
+
+const getAppDownloadUrl = () => {
+  api
+    .get("/config/appDownloadUrl")
+    .then((res) => {
+      // console.log(res);
+      downloadUrl.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+onMounted(() => {
+  getPlatList();
+  loadData();
+  loadAnnouncement();
+  checkPlatform();
+  getVersionNo();
+  getAppDownloadUrl();
+  loadHotGameList();
+});
 </script>
+
 <style scoped lang="scss">
 .q-page-container {
   min-height: 100vh;
-}
-
-.secondSwiper {
-  height: calc(100vh - 380px);
-  padding-bottom: 0px;
-  padding-top: 25px;
 }
 
 .longer-swiper {
@@ -1323,65 +900,6 @@ export default defineComponent({
 
 :deep(.q-mb-md) {
   margin-bottom: 0;
-}
-
-:deep(.secondSwiper .swiper-wrapper) {
-  .swiper-slide {
-    height: calc(45vh / 5);
-    width: 95%;
-    margin: 0 auto;
-    overflow: hidden;
-    min-height: 120px;
-    padding-top: 0;
-    margin-bottom: 5px;
-
-    a {
-      display: block;
-    }
-
-    img {
-      width: 100%;
-    }
-
-    &:first-child {
-      // padding-top: 65px;
-      // margin-top: -40px;
-      // padding-top: 30px;
-    }
-
-    &-active {
-      // padding-top: 30px;
-    }
-  }
-}
-
-:deep(.firstSwiper .swiper-wrapper) {
-  background: #23263c;
-}
-
-.swiper-container {
-  position: relative;
-
-  .firstSwiper {
-    margin-bottom: -30px;
-    padding-bottom: 10px;
-    z-index: 999;
-    text-align: center;
-
-    .swiper-slide {
-      background: #23263c;
-      padding: 8px 5px 2px;
-      max-width: 60px;
-      cursor: pointer;
-
-      &.tbact {
-        background: url("../assets/images/index/game_tab_active.png") no-repeat center center;
-        background-size: cover;
-        white-space: nowrap;
-        padding: 8px 20px 2px;
-      }
-    }
-  }
 }
 
 .modal-update-div {
@@ -1401,7 +919,7 @@ export default defineComponent({
       box-sizing: border-box;
       height: 37px;
       line-height: 37px;
-      background: #1976d2;
+      background: $primary;
       color: #fff;
       text-align: center;
       font-size: 15px;
@@ -1414,7 +932,7 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 10px 12px;
       text-align: center;
-
+      color: black;
       .contentfonts {
         text-align: center;
         color: #333;
@@ -1470,7 +988,7 @@ export default defineComponent({
         height: 40px;
         text-align: center;
         color: #fff;
-        background: #1976d2;
+        background: $primary;
         letter-spacing: 1px;
         font-size: 14px;
       }
@@ -1785,14 +1303,6 @@ export default defineComponent({
   // background: transparent;
 }
 
-@media (max-width: 480px) {
-  .secondSwiper .swiper-wrapper .swiper-slide {
-    height: calc(45vh / 4);
-    min-height: 25vw;
-    max-height: unset;
-  }
-}
-
 @media (max-width: 400px) {
   .grid {
     .q-card {
@@ -1809,407 +1319,10 @@ export default defineComponent({
   font-size: 14px;
   font-weight: bold;
 }
-</style>
-
-<style lang="scss">
-.q-card__section {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.promo-banner-container {
-  color: #ffffff;
-
-  .promo-banner-content {
-    h3 {
-      font-size: 20px;
-      line-height: 0;
-      padding: 20px 0 5px;
-    }
-  }
-
-  .promo-banner-img {
-    img {
-      width: 100%;
-      display: block;
-    }
-  }
-}
-
-.home-wrapper {
-  width: 95%;
-  margin: auto;
-  padding: 12px 0;
-}
-
-.home-divider {
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  height: 1px;
-  width: 105%;
-  margin: 0 -2.5%;
-}
-
-.profile-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-  .profile-details-container {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-  }
-
-  .profile-name {
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    gap: 10px;
-
-    .vip-details {
-      position: relative;
-      margin-left: 25px;
-      margin-bottom: 10px;
-
-      img {
-        display: block;
-        width: 40px;
-        position: absolute;
-        top: -6px;
-        left: -26px;
-      }
-
-      .vip-level {
-        background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-        linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-        border-radius: 0px 2px 5px 0px;
-        width: 45px;
-        height: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        line-height: 1;
-        padding-bottom: 1px;
-      }
-    }
-  }
-
-  .profile-balance {
-    position: relative;
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width: 130px;
-    font-size: 14px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: -9px;
-      left: -3px;
-      background-image: url(../assets/images/index/icon-balance.png);
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: 40px 40px;
-      display: block;
-      width: 40px;
-      height: 40px;
-      // margin-left: -50px;
-    }
-
-    .balance-amount {
-      margin-left: 15px;
-    }
-  }
-
-  .profile-msg {
-    margin-left: auto;
-    margin-top: 30px;
-  }
-}
-
-.top-action {
-  display: flex;
-  gap: 16px;
-  margin-top: 10px;
-
-  .action-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    line-height: 1;
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    font-weight: 700;
-    width: 50%;
-    height: 60px;
-    transition: 0.3s all;
-
-    &--withdrawal {
-      background-image: url(../assets/images/index/action-btn-withdrawal.png);
-      color: #ffffff;
-    }
-
-    &--deposit {
-      background-image: url(../assets/images/index/action-btn-deposit.png);
-      color: #fae576;
-    }
-
-    &:hover {
-      filter: opacity(0.8);
-    }
-  }
-}
-
-.games-selection-wrapper {
-  margin-top: 10px;
-  margin-bottom: 40px;
-
-  .hot-games-pattern-top {
-    background-image: url(../assets/images/index/hot-games-pattern-top.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    margin-left: -2.5%;
-    margin-right: -2.5%;
-    height: 140px;
-    background-position: center center;
-  }
-
-  .hot-games-pattern-bottom {
-    background-image: url(../assets/images/index/hot-games-pattern-bottom.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 50px;
-    margin-top: 20px;
-    margin-bottom: -40px;
-    background-position: center center;
-  }
-
-  .hot-games-container {
-    // padding-top: 60px;
-    margin-top: -30px;
-    display: flex;
-    justify-content: center;
-
-    img {
-      width: 50px;
-    }
-
-    .title-hot-games {
-      font-family: Arial;
-      background-image: url(../assets/images/index/hot-games-title.png);
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 270px;
-      margin-left: 10px;
-      margin-right: 10px;
-
-      .txt-style {
-        background-color: #f3ec78;
-        background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-        background-size: 100%;
-        -webkit-background-clip: text;
-        -moz-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -moz-text-fill-color: transparent;
-        line-height: 1;
-        font-size: 28px;
-        font-weight: 800;
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: #db0011;
-      }
-    }
-  }
-
-  .title-game {
-    display: flex;
-    margin-top: 30px;
-    gap: 8px;
-    align-items: center;
-
-    .txt-style {
-      font-family: Wave;
-      background-color: #f3ec78;
-      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-      line-height: 1;
-      letter-spacing: 2px;
-      font-size: 30px;
-      font-weight: 400;
-      // font-weight: bold;
-      -webkit-text-stroke-width: 1px;
-      -webkit-text-stroke-color: #a94700;
-    }
-
-    img.title-game-icon {
-      height: 35px;
-    }
-  }
-}
-
-.game-platform-wrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 8px;
-  row-gap: 12px;
-  margin-top: 10px;
-
-  .game-platform-item {
-    border: 3px solid #ffc027;
-    height: 120px;
-    border-radius: 15px;
-    // position: relative;
-    overflow: hidden;
-
-    .game-platform-img {
-      background-color: salmon;
-      width: 100%;
-      // height: 75px;
-      // height: 70%;
-      height: calc(100% - 30px);
-      background-size: cover;
-      background-position: center center;
-      background-image: url("../assets/images/index/hot-games-bg.png");
-    }
-
-    .game-platform-title {
-      padding: 5px 5px 10px;
-      color: #ffe248;
-      font-weight: 700;
-      font-size: 10px;
-      line-height: 1.1;
-      // white-space: nowrap;
-      // position: absolute;
-      text-align: center;
-      // height: 30%;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(270deg, #370f59 -0.1%, #57009d 50.22%, #340c56 97.6%);
-    }
-  }
-}
-
-.game-platform-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 16px;
-  row-gap: 24px;
-  margin-top: 20px;
-
-  &.sport-platform {
-    grid-template-columns: 1fr;
-    row-gap: 12px;
-  }
-
-  .game-platform-item {
-    .game-platform-title {
-      text-align: center;
-      margin-top: 6px;
-      color: #ffe248;
-      font-weight: bold;
-    }
-
-    img {
-      display: block;
-      width: 100%;
-    }
-  }
-}
-
-.btn-load-more {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  line-height: 1;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  font-weight: 700;
-  width: 180px;
-  height: 60px;
-  transition: 0.3s all;
-  background-image: url(../assets/images/index/btn-load-more.png);
-  color: #ffffff;
-  margin: auto;
-}
-
-.btn-go {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  line-height: 1;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  font-weight: 700;
-  width: 180px;
-  height: 60px;
-  transition: 0.3s all;
-  background-image: url(../assets/images/index/popout/btn-go.png);
-  color: #ffffff;
-  margin: auto;
-}
-
-.bg-yellow {
-  background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%) !important;
-}
-
-.floating-btn {
-  img {
-    width: 30px;
-  }
-}
-
-.fullgame-card {
-  margin: 0;
-  background-image: url(../assets/images/index/home-bg.png);
-  background-position: top center;
-  background-repeat: repeat-y;
-  background-size: 100%;
-  background-color: #280946;
-}
-
-.fullgame-wrapper {
-  padding: 0;
-
-  .fullgame-header {
-    background-image: url(../assets/images/index/fullgame-banner.png);
-    background-position: top center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0 -2.5%;
-    // min-height: 200px;
-    padding: 12px;
-  }
-
-  .fullgame-search {
-    padding-top: 90px;
-  }
-}
 
 .popout-dialog {
   width: 90%;
+
   max-width: 500px;
   position: relative;
   padding-top: 90px;
@@ -2284,7 +1397,6 @@ export default defineComponent({
         margin-left: 3px;
         margin-right: 3px;
         transition: all 0.3s;
-
         img {
           display: block;
           width: 70%;
@@ -2293,6 +1405,24 @@ export default defineComponent({
 
       &.active > .deposit-icon {
         background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
+      }
+
+      .deposit-hot-label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-image: url(../assets/images/index/popout/hot-label.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 50px;
+        height: 28px;
+        font-size: 0.725rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding-bottom: 3px;
       }
 
       .deposit-amt {
@@ -2333,7 +1463,6 @@ export default defineComponent({
     justify-content: center;
     gap: 30px;
     margin-top: 16px;
-
     .deposit-option-btn {
       color: #cccccc;
       background-color: rgba(21, 0, 37, 0.5) !important;
@@ -2350,7 +1479,6 @@ export default defineComponent({
 
       &.label-on-discount {
         position: relative;
-
         &:after {
           content: "";
           background-image: url(../assets/images/index/popout/label-discount.png);
@@ -2365,6 +1493,321 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.q-card__section {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.promo-banner-container {
+  color: #ffffff;
+
+  .promo-banner-content {
+    h3 {
+      font-size: 20px;
+      line-height: 0;
+      padding: 20px 0 5px;
+    }
+  }
+
+  .promo-banner-img {
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+}
+
+.home-wrapper {
+  width: 95%;
+  margin: auto;
+}
+
+.home-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  height: 1px;
+  width: 105%;
+  margin: 0 -2.5%;
+}
+
+.top-action {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  .action-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    line-height: 1;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    font-weight: 700;
+    width: 50%;
+    height: 60px;
+    transition: 0.3s all;
+
+    &--withdrawal {
+      background-image: url(../assets/images/index/action-btn-withdrawal.png);
+      color: #ffffff;
+      &:before {
+        box-shadow: none;
+      }
+    }
+
+    &--deposit {
+      background-image: url(../assets/images/index/action-btn-deposit.png);
+      color: #fae576;
+      &:before {
+        box-shadow: none;
+      }
+    }
+
+    &:hover {
+      filter: opacity(0.8);
+    }
+  }
+}
+
+.games-selection-wrapper {
+  margin-top: 10px;
+  margin-bottom: 40px;
+
+  .hot-games-pattern-top {
+    background-image: url(../assets/images/index/hot-games-pattern-top.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: -2.5%;
+    margin-right: -2.5%;
+    height: 140px;
+    background-position: center center;
+  }
+
+  .hot-games-pattern-bottom {
+    background-image: url(../assets/images/index/hot-games-pattern-bottom.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 50px;
+    margin-top: 20px;
+    margin-bottom: -40px;
+    background-position: center center;
+
+    &--filled {
+      height: 15px;
+      width: 15px;
+      margin: 20px auto 10px;
+      border-radius: 50%;
+      background-color: #fbe984;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .hot-games-container {
+    // padding-top: 60px;
+    margin-top: -30px;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 50px;
+    }
+
+    .title-hot-games {
+      font-family: Arial;
+      background-image: url(../assets/images/index/hot-games-title.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 270px;
+      margin-left: 10px;
+      margin-right: 10px;
+      .txt-style {
+        background-color: #f3ec78;
+        background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+        background-size: 100%;
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-text-fill-color: transparent;
+        line-height: 1;
+        font-size: 28px;
+        font-weight: 800;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: #db0011;
+      }
+    }
+  }
+
+  .title-game {
+    display: flex;
+    margin-top: 30px;
+    gap: 8px;
+    align-items: center;
+
+    .txt-style {
+      font-family: Wave;
+      background-color: #f3ec78;
+      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      line-height: 1;
+      letter-spacing: 2px;
+      font-size: 30px;
+      font-weight: 400;
+      // font-weight: bold;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: #a94700;
+    }
+
+    img.title-game-icon {
+      height: 35px;
+    }
+  }
+}
+
+.game-platform-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 8px;
+  row-gap: 12px;
+  margin-top: 10px;
+
+  .game-platform-item {
+    border: 3px solid #ffc027;
+    border-radius: 15px;
+    overflow: hidden;
+
+    .game-platform-img {
+      background-color: #cccccc;
+      width: 100%;
+      aspect-ratio: 1/1;
+      background-size: cover;
+      background-position: center center;
+      position: relative;
+      background-image: url("../assets/images/index/mini-game-bg.png");
+
+      .game--bg {
+        background-size: cover;
+        background-position: center center;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .game-platform-title {
+      padding: 0px 5px;
+      color: #ffe248;
+      font-weight: 700;
+      font-size: 10px;
+      line-height: 1.1;
+      text-align: center;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(270deg, #370f59 -0.1%, #57009d 50.22%, #340c56 97.6%);
+    }
+  }
+}
+
+.game-platform-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 16px;
+  row-gap: 24px;
+  margin-top: 20px;
+
+  &.sport-platform {
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+  }
+
+  .game-platform-item {
+    position: relative;
+    &--img {
+      background-size: cover;
+      background-position: center center;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .game-platform-title {
+      text-align: center;
+      margin-top: 6px;
+      color: #ffe248;
+      font-weight: bold;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.btn-load-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 1;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  width: 180px;
+  height: 60px;
+  transition: 0.3s all;
+  background-image: url(../assets/images/index/btn-load-more.png);
+  color: #ffffff;
+  margin: auto;
+}
+
+.floating-btn {
+  z-index: 5;
+  img {
+    width: 30px;
+  }
+}
+
+.fullgame-card {
+  margin: 0;
+  background-image: url(../assets/images/index/home-bg.png);
+  background-position: top center;
+  background-repeat: repeat-y;
+  background-size: 100%;
+  background-color: #280946;
+}
+
+.fullgame-wrapper {
+  padding: 0;
+
+  .fullgame-header {
+    background-image: url(../assets/images/index/fullgame-banner.png);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 -2.5%;
+    // min-height: 200px;
+    padding: 12px;
+  }
+
+  .fullgame-search {
+    padding-top: 90px;
   }
 }
 </style>

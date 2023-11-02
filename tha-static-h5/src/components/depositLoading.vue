@@ -6,21 +6,21 @@
       align-items: center;
       height: 100vh;
     "
-  >
-  </div>
+  ></div>
 </template>
 <script setup>
-import {onMounted} from "vue";
-import {doIt} from "boot/action";
-import {cashier} from "boot/axios";
-import {useQuasar, Platform} from "quasar";
+import { onMounted } from "vue";
+import { doIt } from "boot/action";
+import { cashier } from "boot/axios";
+import { useQuasar, Platform } from "quasar";
 import i18n from "../i18n/index";
-import liff from '@line/liff';
+import liff from "@line/liff";
 // import {Preferences} from "@capacitor/preferences";
-import {useRouter} from "vue-router";
-import {useI18n} from "vue-i18n";
+import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { userStore } from "src/stores";
 
-const {t} = useI18n()
+const { t } = useI18n();
 const qs = require("qs");
 
 async function pDepo(deposit) {
@@ -28,30 +28,40 @@ async function pDepo(deposit) {
     bankId: deposit.bankId,
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
-    paymentId: deposit.paymentId
-  }
+    paymentId: deposit.paymentId,
+  };
   if (deposit.privilegeId) {
-    obj.privilegeId = deposit.privilegeId
+    obj.privilegeId = deposit.privilegeId;
   }
-  await cashier.post("/session/payment/submit", qs.stringify(obj)).then((d) => {
-    const res = d.data;
-    if (res.code === 0) {
-      doIt(res).then(() => {
-        if (!Platform.is.desktop) {
-          setTimeout(()=>{
-            router.go(-1);
-          },1000);
-        }
-        $q.loading.hide();
-        postMessage({msg: "success"}, "*");
-      });
-    } else {
-      postMessage({msg: res.message === 'too often request' ? t('error.504') : i18n.global.t('error.' + res.code)}, "*");
-      closeWindowOrBack();
-    }
-  }).catch((error) => {
-    alert(error)
-        console.log(error)
+  await cashier
+    .post("/session/payment/submit", qs.stringify(obj))
+    .then((d) => {
+      const res = d.data;
+      if (res.code === 0) {
+        doIt(res).then(() => {
+          if (!Platform.is.desktop) {
+            setTimeout(() => {
+              router.go(-1);
+            }, 1000);
+          }
+          $q.loading.hide();
+          postMessage({ msg: "success" }, "*");
+        });
+      } else {
+        postMessage(
+          {
+            msg:
+              res.message === "too often request"
+                ? t("error.504")
+                : i18n.global.t("error." + res.code),
+          },
+          "*"
+        );
+        closeWindowOrBack();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
       // postMessage(
       //   {
       //     msg:
@@ -62,11 +72,16 @@ async function pDepo(deposit) {
       //   "*"
       // );
       // closeWindowOrBack();
-  });
+    });
 }
 
 function closeWindowOrBack() {
-  if (((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient())) {
+  if (
+    (Platform.is.desktop || Platform.is.webkit) &&
+    !Platform.is.capacitor &&
+    Platform.is.name !== "webkit" &&
+    !liff.isInClient()
+  ) {
     window.close();
   } else {
     router.go(-1);
@@ -74,7 +89,12 @@ function closeWindowOrBack() {
 }
 
 function postMessage(item1, item2) {
-  if (((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient())) {
+  if (
+    (Platform.is.desktop || Platform.is.webkit) &&
+    !Platform.is.capacitor &&
+    Platform.is.name !== "webkit" &&
+    !liff.isInClient()
+  ) {
     window.opener.postMessage(item1, item2);
   } else {
     window.postMessage(item1, item2);
@@ -97,12 +117,19 @@ function postMessage(item1, item2) {
 // }
 const $q = useQuasar();
 const router = useRouter();
+const store = userStore();
 
 onMounted(async () => {
+  await store.getMemberInfo();
   $q.loading.show({
-    message: t('lang.loading') + "..."
+    message: t("lang.loading") + "...",
   });
-  if (((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient())) {
+  if (
+    (Platform.is.desktop || Platform.is.webkit) &&
+    !Platform.is.capacitor &&
+    Platform.is.name !== "webkit" &&
+    !liff.isInClient()
+  ) {
     let params = localStorage.getItem("formDetails");
     params = params ? JSON.parse(params) : "";
     var form = params;
@@ -115,17 +142,18 @@ onMounted(async () => {
   }
   // console.log(form);
 
-  cashier.get(
-    "/session/payment/" +
-    form.paymentId +
-    "/amount/" +
-    form.localAmount +
-    "/verify"
-  )
+  cashier
+    .get(
+      "/session/payment/" +
+        form.paymentId +
+        "/amount/" +
+        form.localAmount +
+        "/verify"
+    )
     .then((res) => {
       const d = res.data;
       if (d.code === 0) {
-        const copy = {...form};
+        const copy = { ...form };
         const data = {};
         Object.entries(copy).forEach(([key, value]) => {
           if (value) {
@@ -135,14 +163,13 @@ onMounted(async () => {
         data.bankCardId = 0;
         pDepo(data);
       } else {
-        postMessage({msg: d.message}, "*");
+        postMessage({ msg: d.message }, "*");
         closeWindowOrBack();
       }
     })
     .catch((error) => {
-      postMessage({msg: error.message}, "*");
+      postMessage({ msg: error.message }, "*");
       closeWindowOrBack();
     });
-
 });
 </script>
