@@ -5,7 +5,7 @@
       <div class="profile-wrapper">
         <div class="profile-pic">
           <q-avatar size="70px">
-            <img src="../assets/images/account/profile-pic.png" />
+            <img :src="require(`../assets/images/account/${randomProfileImg}.png`)" />
           </q-avatar>
           <div class="profile-pic-frame" v-if="!homeProfile"></div>
         </div>
@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 
@@ -58,6 +58,18 @@ const props = defineProps(["homeProfile"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+
+const profileImg = [
+  {
+    imgPath: ["profile-pic-01", "profile-pic-02", "profile-pic-03", "profile-pic-04", "profile-pic-05"]
+  }
+];
+
+const randomProfileImg = computed(() => {
+  const randomProfile = profileImg[0];
+  const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+  return randomProfile.imgPath[randomIndex];
+});
 
 const isLoadingBalance = ref(false);
 const refreshBalance = () => {

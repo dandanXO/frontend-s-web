@@ -133,6 +133,10 @@
                 })()
               }"
             ></div>
+
+            <div v-if="item.name === 'JOKER'" class="burning-hot">
+              <img src="../assets/images/index/hot.png" />
+            </div>
           </div>
         </template>
         <!-- coming soon placeholder // start -->
@@ -391,7 +395,15 @@
                       ></div>
                     </div>
                     <div class="game-platform-title">{{ item.name }}</div>
+
+                    <div class="game-platform-label game-platform-label--hot" v-if="item.gameLabel && item.gameLabel.includes('HOT')">
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div class="game-platform-label game-platform-label--new" v-if="item.gameLabel && item.gameLabel.includes('NEW')">
+                      <img src="../assets/images/index/platform-label-new.png" alt="" />
+                    </div>
                   </div>
+
                 </template>
               </template>
             </div>
@@ -1614,6 +1626,26 @@ onMounted(() => {
     border: 3px solid #ffc027;
     border-radius: 15px;
     overflow: hidden;
+    position: relative;
+
+    .game-platform-label {
+      position: absolute;
+      top: 0;
+      width: 36px;
+
+      &--hot {
+        left: 0;
+      }
+
+      &--new {
+        right: 0;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
 
     .game-platform-img {
       background-color: #cccccc;
@@ -1736,5 +1768,12 @@ onMounted(() => {
   .fullgame-search {
     padding-top: 90px;
   }
+}
+
+.burning-hot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
 }
 </style>
