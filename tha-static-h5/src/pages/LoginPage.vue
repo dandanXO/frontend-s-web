@@ -357,7 +357,7 @@ export default defineComponent({
   gap: 15px;
 
   .line-login-btn {
-    background: #00b900;
+    background: $line-app;
 
     img {
       width: 28px;
