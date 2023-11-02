@@ -805,14 +805,14 @@ async function confirmImport() {
 }
 
 function handleChangePlatform(value) {
-  const selectedPlatform = platforms.list.find(item => item.id === value)
+  const selectedPlatform = dialogPlats.list.find(item => item.id === value)
   form.platformId = value
   platformCode.value = selectedPlatform.code
 }
 
 function handleChangeSite(value) {
   form.siteId = value
-  loadPlatformNames(value, false)
+  loadPlatformNames()
 }
 
 function validateClick(ref) {
@@ -844,7 +844,7 @@ async function attachPhoto(event) {
   } else {
     var formData = new FormData()
     formData.append('files', files)
-    formData.append('dir', 'game/' + platformCode.value.toLowerCase() + '/' + form.gameType.toLowerCase());
+    formData.append('dir', 'game/' + form.siteId + '/' + platformCode.value.toLowerCase());
     formData.append('overwrite', false)
     const data = await uploadImage(formData)
     if (data.code === 0) {

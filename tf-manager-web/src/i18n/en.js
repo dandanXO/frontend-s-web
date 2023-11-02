@@ -59,6 +59,8 @@ export default {
     finishDate: 'Finish Date',
     withdrawDate: 'Withdraw Date',
     paymentDate: 'Payment Date',
+    regTime: 'Register Time',
+    recordTime: 'Record Time'
   },
   depositStatus: {
     SUCCESS: 'Success',
@@ -447,6 +449,7 @@ export default {
     deleteRole: 'Delete Role',
     deposit: 'Deposit',
     depositAmount: 'Deposit Amount',
+    depositAverage: 'Deposit Averate',
     depositBettingAmount: 'Deposit/Betting Amount',
     depositCount: 'Deposit Count',
     depositDate: 'Deposit Date',
@@ -1004,6 +1007,7 @@ export default {
     web: 'Web',
     webMessage: 'Web Message',
     withdraw: 'Withdraw',
+    withdrawableBalance: 'Withdrawable Balance',
     withdrawArea: 'Withdraw Area',
     withdrawExchangeRate: 'Withdraw Exchange Rate',
     withdrawalFailureCause: 'Withdrawal Failure Cause',
