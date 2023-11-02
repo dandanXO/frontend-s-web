@@ -104,7 +104,7 @@
             <span v-if="scope.row.betTime === null">-</span>
             <span
               v-if="scope.row.betTime !== null"
-              v-formatter="{data: scope.row.betTime, timeZone: timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.betTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -113,7 +113,7 @@
             <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
             <span
               v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
-              v-formatter="{data: scope.row.settleTime, timeZone: timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -178,10 +178,6 @@ const props = defineProps({
   mbrId: {
     type: String,
     required: true
-  },
-  timeZone: {
-    type: String,
-    required: true,
   }
 })
 

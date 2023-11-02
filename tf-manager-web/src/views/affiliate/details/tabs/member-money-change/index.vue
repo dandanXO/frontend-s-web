@@ -100,7 +100,7 @@
             <!-- eslint-disable -->
             <span
               v-if="scope.row.recordTime !== null"
-              v-formatter="{ data: scope.row.recordTime, timeZone: timeZone, type: 'date' }"
+              v-formatter="{ data: scope.row.recordTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date' }"
             />
           </template>
         </el-table-column>
@@ -130,10 +130,6 @@ import { getShortcuts } from "@/utils/datetime";
 const { t } = useI18n();
 const props = defineProps({
   affId: {
-    type: String,
-    required: true
-  },
-  timeZone: {
     type: String,
     required: true
   }

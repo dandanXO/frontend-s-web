@@ -201,15 +201,7 @@
           :label="t('fields.withdrawDate')"
           align="center"
           min-width="150"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.withdrawDate === null">-</span>
-            <span
-              v-if="scope.row.withdrawDate !== null"
-              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.siteTimeZone, type: 'date'}"
-            />
-          </template>
-        </el-table-column>
+        />
         <el-table-column
           :label="t('fields.operate')"
           align="center"

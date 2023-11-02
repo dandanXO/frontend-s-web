@@ -236,7 +236,7 @@
             v-if="scope.row.createTime !== null"
             v-formatter="{
               data: scope.row.createTime,
-              timeZone: siteTimeZone.timeZone,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
               type: 'date',
             }"
           />
@@ -255,7 +255,7 @@
             v-if="scope.row.checkedTime !== null"
             v-formatter="{
               data: scope.row.checkedTime,
-              timeZone: siteTimeZone.timeZone,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
               type: 'date',
             }"
           />
@@ -365,9 +365,6 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
-const siteTimeZone = reactive({
-  timeZone: null,
-})
 
 const uiControl = reactive({
   memberInfoDialogVisible: false,
@@ -505,9 +502,6 @@ async function loadMemberEditLog() {
   const { data: ret } = await getMemberEditLogList(query)
   page.pages = ret.pages
   page.records = ret.records
-
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
 }
 
 async function loadSites() {

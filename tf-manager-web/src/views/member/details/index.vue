@@ -1,43 +1,43 @@
 <template>
   <el-tabs v-model="activeName" :key="id">
     <el-tab-pane :label="t('fields.member')" name="member-info">
-      <MemberInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <MemberInfoTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.login')" name="login-info">
-      <LoginInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <LoginInfoTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.bankCard')" name="member-bank">
-      <MemberBankTab :mbr-id="id" :time-zone="timeZone" />
+      <MemberBankTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.betMoneyChange')" name="bet-money-change">
-      <BetMoneyChange :mbr-id="id" :time-zone="timeZone" />
+      <BetMoneyChange :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change">
-      <MemberMoneyChange :mbr-id="id" :time-zone="timeZone" />
+      <MemberMoneyChange :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.deposit')" name="deposit-info">
-      <DepositInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <DepositInfoTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.withdraw')" name="withdraw-info">
-      <WithdrawInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <WithdrawInfoTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.transaction')" name="transaction-info">
-      <TransactionInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <TransactionInfoTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.privilege')" name="member-privilege-record">
-      <MemberPrivilegeRecord :mbr-id="id" :time-zone="timeZone" />
+      <MemberPrivilegeRecord :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.rolloverRecord')" name="member-rollover-record">
       <MemberRolloverRecord :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.riskControl')" name="risk-info">
-      <RiskInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <RiskInfoTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.betRecords')" name="member-bet-record">
-      <MemberBetRecordTab :mbr-id="id" :time-zone="timeZone" />
+      <MemberBetRecordTab :mbr-id="id" />
     </el-tab-pane>
     <el-tab-pane :label="t('fields.referredFriends')" name="member-refer-friend">
-      <MemberReferFriendTab :mbr-id="id" :site-id="siteId" :time-zone="timeZone" />
+      <MemberReferFriendTab :mbr-id="id" :site-id="siteId" />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -59,7 +59,6 @@ import MemberBetRecordTab from "./tabs/member-bet-record/index.vue";
 import MemberReferFriendTab from "./tabs/member-refer-friend/index.vue";
 import MemberRolloverRecord from "./tabs/member-rollover-record/index.vue";
 import { useI18n } from "vue-i18n";
-import { getSiteTimeZoneById } from "@/api/site";
 
 export default defineComponent({
   components: {
@@ -77,20 +76,18 @@ export default defineComponent({
     MemberReferFriendTab,
     MemberRolloverRecord
   },
-  async setup() {
+  setup() {
     const { t } = useI18n()
     const router = useRouter()
     const activeName = computed(() => router.currentRoute.value.query.tab || 'member-info')
     const id = computed(() => router.currentRoute.value.params.id)
     const siteId = computed(() => router.currentRoute.value.query.site)
-    const { data: timeZone } = await getSiteTimeZoneById(router.currentRoute.value.query.site);
 
     return {
       activeName,
       id,
       siteId,
-      t,
-      timeZone
+      t
     }
   }
 })

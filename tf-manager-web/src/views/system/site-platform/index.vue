@@ -183,7 +183,7 @@
             v-if="scope.row.createTime !== null"
             v-formatter="{
               data: scope.row.createTime,
-              timeZone: scope.row.siteTimeZone,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
               type: 'date',
             }"
           />

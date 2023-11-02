@@ -114,20 +114,7 @@
       <el-table-column prop="site" :label="t('fields.site')" width="120" />
       <el-table-column prop="memberName" :label="t('fields.loginName')" width="150" />
       <el-table-column prop="serialNumber" :label="t('fields.transferId')" width="250" />
-      <el-table-column prop="transferDate" :label="t('fields.transferTime')" width="150">
-        <template #default="scope">
-          <span v-if="scope.row.transferDate === null">-</span>
-          <!-- eslint-disable -->
-          <span
-            v-if="scope.row.transferDate !== null"
-            v-formatter="{
-              data: scope.row.transferDate,
-              timeZone: scope.row.siteTimeZone,
-              type: 'date',
-            }"
-          />
-        </template>
-      </el-table-column>
+      <el-table-column prop="transferDate" :label="t('fields.transferTime')" width="150" />
       <el-table-column prop="type" :label="t('fields.transferType')" width="100" />
       <el-table-column prop="amount" :label="t('fields.amount')" width="100" />
       <el-table-column prop="platformName" :label="t('fields.platform')" width="100" />
@@ -141,14 +128,7 @@
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
-          <span
-            v-if="scope.row.updateTime !== null"
-            v-formatter="{
-              data: scope.row.updateTime,
-              timeZone: scope.row.siteTimeZone,
-              type: 'date',
-            }"
-          />
+          <span v-else>{{ scope.row.updateTime }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="100">

@@ -153,15 +153,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="createBy" :label="t('fields.createBy')" width="200" />
-        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
-          <template #default="scope">
-            <span v-if="scope.row.createTime === null">-</span>
-            <span
-              v-if="scope.row.createTime !== null"
-              v-formatter="{data: scope.row.createTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
-            />
-          </template>
-        </el-table-column>
+        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
         <el-table-column
           :label="t('fields.operate')"
           align="right"
@@ -205,9 +197,6 @@ const memberForm = ref(null);
 const table = ref(null);
 const siteList = reactive({
   list: []
-});
-const siteTimeZone = reactive({
-  timeZone: null,
 });
 
 const uiControl = reactive({
@@ -274,10 +263,6 @@ async function loadAffiliateDomains() {
 
   page.pages = result.data.pages;
   page.records = result.data.records;
-
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
   page.loading = false;
 }
 
