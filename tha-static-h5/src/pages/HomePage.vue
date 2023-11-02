@@ -212,6 +212,7 @@
 
           <div
             class="game-item btn-pointer"
+            :class="(xfjGames.length === 1) ? 'mid-grid-column' : ''"
             v-for="(p, index) in xfjGames"
             :key="`xfj-${index}`"
             @click="playGame(p.name, p.code, p.gameCode)"
@@ -227,6 +228,7 @@
                 })()
               }"></div>
           </div>
+
 
         </div>
       </Transition>
@@ -1321,7 +1323,7 @@ export default defineComponent({
           scrollSlotRef.value.setScrollPosition("vertical", 0);
         }
         gamePage.searchKey = "";
-      } else if (menuType === "livecasino") {
+      } else if (menuType === "live") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
       } else if (menuType === "fish") {
