@@ -97,6 +97,19 @@
               </div>
 
               <div class="game-platform-title">{{ item.name }}</div>
+
+              <div
+                class="game-platform-label game-platform-label--hot"
+                v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+              >
+                <img src="../assets/images/index/platform-label-hot.png" alt="" />
+              </div>
+              <div
+                class="game-platform-label game-platform-label--new"
+                v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+              >
+                <img src="../assets/images/index/platform-label-new.png" alt="" />
+              </div>
             </div>
           </template>
         </template>
@@ -376,6 +389,19 @@
                       ></div>
                     </div>
                     <div class="game-platform-title">{{ item.name }}</div>
+
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                    >
+                      <img src="../assets/images/index/platform-label-new.png" alt="" />
+                    </div>
                   </div>
                 </template>
               </template>
@@ -396,14 +422,19 @@
                     </div>
                     <div class="game-platform-title">{{ item.name }}</div>
 
-                    <div class="game-platform-label game-platform-label--hot" v-if="item.gameLabel && item.gameLabel.includes('HOT')">
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                    >
                       <img src="../assets/images/index/platform-label-hot.png" alt="" />
                     </div>
-                    <div class="game-platform-label game-platform-label--new" v-if="item.gameLabel && item.gameLabel.includes('NEW')">
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                    >
                       <img src="../assets/images/index/platform-label-new.png" alt="" />
                     </div>
                   </div>
-
                 </template>
               </template>
             </div>
