@@ -87,6 +87,7 @@
           <component :is="Component" />
         </KeepAlive>
       </router-view>
+      <!-- <router-view /> -->
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-primary" :breakpoint="0" align="justify">

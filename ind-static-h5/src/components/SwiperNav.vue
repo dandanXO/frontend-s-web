@@ -27,13 +27,20 @@
 <script setup>
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
-import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
 
-const props = defineProps(["slideList", "onSlideClick", "isActiveSlide"]);
+const props = defineProps(["slideList", "slideListPath", "isActiveSlide"]);
+const router = useRouter();
+const loopValue = props.slideList.length > 2;
+const swiperNav = ref(null);
+
+const onSlideClick = (e, i) => {
+  router.push(props.slideListPath[i]);
+};
 
 onMounted(() => {
-  const loopValue = props.slideList.length > 2;
-  const swiperNav = new Swiper(".swiper-nav-container", {
+  swiperNav.value = new Swiper(".swiper-nav-container", {
     slidesPerView: 3,
     loop: loopValue,
     spaceBetween: 1,

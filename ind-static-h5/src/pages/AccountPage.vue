@@ -1,7 +1,7 @@
 <template>
   <ProfileSummary />
 
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
 
   <ContentView contentTopStatus="faded">
     <q-form ref="profileFormRef" class="pc-form">
@@ -577,12 +577,6 @@ const openVerificationCodeDialog = () => {
 const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
-};
-
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
 };
 
 const myMemberList = ref([]);

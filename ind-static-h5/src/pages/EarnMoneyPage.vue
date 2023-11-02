@@ -1,5 +1,5 @@
 <template>
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
   <MyMember></MyMember>
 </template>
 
@@ -19,9 +19,4 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
-};
 </script>
