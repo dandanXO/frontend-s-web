@@ -6,10 +6,6 @@
       </router-link>
     </div>
 
-    <div class="logo">
-      <img src="../assets/logo.png" />
-    </div>
-
     <div class="landing-img">
       <img src="../assets/images/login/landing-img.png" />
     </div>

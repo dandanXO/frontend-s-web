@@ -156,7 +156,7 @@
           </div>
           <div class="card-label">{{ bc.bankName }}</div>
           <div class="card-num-wrapper">
-            <div class="card-num">{{ bc.cardNumber }}</div>
+            <div class="card-num">{{ maskCardNumber(bc.cardNumber) }}</div>
             <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
           </div>
           <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
@@ -222,13 +222,17 @@ const handleBankCardClick = (index) => {
   else isCardShown.value[index] = false;
 };
 
+const maskCardNumber = (cardNumber) => {
+  return `*******${cardNumber.slice(-4)}`;
+};
+
 const copy = (val) => {
   copyToClipboard(val)
     .then(() => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${val} copied to clipboard`,
+        message: `${maskCardNumber(val)} copied to clipboard`,
         icon: "check_circle_outline"
       });
     })

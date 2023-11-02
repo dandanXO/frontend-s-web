@@ -232,6 +232,8 @@
             }"
           ></div>
         </div>
+
+
       </div>
     </Transition>
     <!--      <Transition>-->
@@ -1308,6 +1310,10 @@ export default defineComponent({
         switchPlat(platformMinigame.value[0], menu);
       } else if (menu === "xfjGames") {
       } else if (menu === "lottery") {
+      } else if(menu ==='xfjGames'){
+
+      } else if(menu ==='lottery'){
+
       }
     };
     const liveTabs = ref("");

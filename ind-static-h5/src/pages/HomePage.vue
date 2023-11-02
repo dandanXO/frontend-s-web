@@ -279,6 +279,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
+    <q-btn dense rounded icon="close" class="bg-yellow text-black announcement-close" v-close-popup />
     <q-card style="width: 100%" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
         <q-tabs
@@ -474,30 +475,6 @@ const depositItems = reactive([
   { amount: 30000, hotLabel: 1500, isActive: false },
   { amount: 50000, hotLabel: 2500, isActive: false }
 ]);
-
-const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
-    item.isActive = i === index;
-    if (i === index) {
-      depositAmountInput.value = item.amount;
-    }
-  });
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
-};
-
-const depositAmountInput = ref("");
 
 const esport = ref([]);
 const sport = ref([]);
@@ -705,99 +682,42 @@ const getPlatList = () => {
       ui.slotLists = [];
       pf.forEach((element) => {
         const platTypes = element.gameType.split(",");
-        // console.log(platTypes);
         if (platTypes.indexOf("ESPORT") > -1) {
           var espObj = Object.assign({}, element);
-          // console.log(espObj);
-
           esport.value.push(espObj);
-
           //Add 1 More Casual minigame.
-          // if (platTypes.indexOf("CASUAL") > -1) {
           var casualObj = Object.assign({}, element);
-          casualObj.gameCode = "casual";
-          casualObj.title = casualObj.name + " 小游戏";
-          casualObj.icon = "casual";
-          casualObj.subtitle = "小游戏";
           casuals.value.push(casualObj);
-          // }
         }
         if (platTypes.indexOf("SPORT") > -1) {
           var spObj = Object.assign({}, element);
-          if (spObj.code === "IM") {
-            spObj.title = "IM体育";
-          }
-          if (spObj.code === "IA") {
-            spObj.title = "小艾体育";
-          }
-          if (spObj.code === "PM") {
-            spObj.title = "熊猫体育";
-          }
-          if (spObj.code === "CR") {
-            spObj.title = "CR体育";
-          }
-          if (spObj.code === "SABA") {
-            spObj.title = spObj.code + "体育";
-          }
-          spObj.icon = "sport";
-          spObj.subtitle = "体育赛事";
           sport.value.push(spObj);
         }
         if (platTypes.indexOf("LIVE") > -1) {
           var liveObj = Object.assign({}, element);
-          if (liveObj.code === "PMLIVE") {
-            liveObj.title = "DB 真人";
-          } else if (liveObj.code === "EBET") {
-            liveObj.title = "WE 真人";
-          } else {
-            liveObj.title = liveObj.name + " 真人";
-          }
-          liveObj.icon = "live";
-          liveObj.subtitle = "真人娱乐";
           livecasino.value.push(liveObj);
         }
         if (platTypes.indexOf("SLOT") > -1) {
-          // console.log(element)
           var slotObj = Object.assign({}, element);
-          slotObj.title = translateRecord(slotObj.name) + " 电子";
-          slotObj.icon = "slot";
-          slotObj.subtitle = "电子游戏";
-          // console.log(slotObj);
-          if (slotObj.code === "AG") {
-          } else {
-            let slotItem = {
-              id: slotObj.id,
-              code: slotObj.code,
-              icon: slotObj.name
-            };
-            // console.log(slotItem);
-            ui.slotLists.push(slotItem);
-            slot.value.push(slotObj);
-          }
+          let slotItem = {
+            id: slotObj.id,
+            code: slotObj.code,
+            icon: slotObj.name
+          };
+          ui.slotLists.push(slotItem);
+          slot.value.push(slotObj);
         }
         if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
           var fishObj = Object.assign({}, element);
-          fishObj.title = fishObj.name + " 捕鱼";
-          fishObj.icon = "fish";
-          fishObj.subtitle = "捕鱼游戏";
           fishing.value.push(fishObj);
         }
         if (platTypes.indexOf("POKER") > -1) {
           var pokerObj = Object.assign({}, element);
-          pokerObj.title = translateRecord(pokerObj.name);
-          pokerObj.icon = "poker";
-          pokerObj.subtitle = "棋牌娱乐";
           poker.value.push(pokerObj);
         }
         if (platTypes.indexOf("LOTTERY") > -1) {
           var lottObj = Object.assign({}, element);
-          lottObj.title = lottObj.name + " 彩票";
-          lottObj.icon = "lottery";
-          lottObj.subtitle = "彩票游戏";
-          //HArdCode hid BBIN
-          if (lottObj.code !== "BBINDY") {
-            lottery.value.push(lottObj);
-          }
+          lottery.value.push(lottObj);
         }
       });
     })
@@ -1320,6 +1240,13 @@ onMounted(() => {
   font-weight: bold;
 }
 
+.announcement-close {
+  position: absolute;
+  right: 4px;
+  top: 80px;
+  z-index: 3;
+}
+
 .popout-dialog {
   width: 90%;
 
@@ -1576,7 +1503,6 @@ onMounted(() => {
 .games-selection-wrapper {
   margin-top: 10px;
   margin-bottom: 40px;
-
   .hot-games-pattern-top {
     background-image: url(../assets/images/index/hot-games-pattern-top.png);
     background-size: contain;
