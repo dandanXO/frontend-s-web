@@ -724,6 +724,9 @@ const getPlatList = () => {
       var pf = data;
       ui.slotLists = [];
       pf.forEach((element) => {
+        const { status } = element;
+        if (status === "TEST" && store.memberType !== "TEST") return;
+
         const platTypes = element.gameType.split(",");
         if (platTypes.indexOf("ESPORT") > -1) {
           var espObj = Object.assign({}, element);
