@@ -83,7 +83,7 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <KeepAlive :max="8">
+        <KeepAlive :max="8" >
           <component :is="Component" />
         </KeepAlive>
       </router-view>
