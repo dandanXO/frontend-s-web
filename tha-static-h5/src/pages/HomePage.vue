@@ -796,7 +796,7 @@
                 :style="{
                 backgroundImage: (() => {
                   try {
-                    return `url(${require(`../assets/home/casual/${game.code}.png`)})`;
+                    return `url(${game.icon})`;
                   } catch (e) {
                     return `url(${comingSoonImg})`;
                   }
@@ -874,6 +874,8 @@
         <img src="../assets/logo/TF88.png" height="30"/>
         <img src="../assets/logo/WM.png" height="30"/>
         <img src="../assets/logo/YGG.png" height="30"/>
+        <img src="../assets/logo/CG.png" height="30"/>
+        <img src="../assets/logo/SP.png" height="30"/>
       </Vue3Marquee>
     </div>
 
@@ -1442,6 +1444,12 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
+              mini.icon = `${
+                process.env.IMAGE_CDN
+              }/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+                mini.code
+              }.png`;
+
               if (
                 mini.name.indexOf("(铜)") > -1 ||
                 mini.name.indexOf("(银)") > -1 ||
@@ -1453,7 +1461,7 @@ export default defineComponent({
               }
             });
 
-            // console.log(games);
+            console.log(miniGames);
 
             games.forEach((game) => {
               let index = _.findIndex(miniGamesMore.value, function (o) {
