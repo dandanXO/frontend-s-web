@@ -220,10 +220,11 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      store.getMemberInfo();
+      if(!store.id){
+        store.getMemberInfo()
+      }
       getBalance()
       // store.getBalance()
-      store.getUnreadTotal()
     });
 
     const openDeposit = () => {
