@@ -112,7 +112,7 @@
         @click="switchMenu('casual')"
       >
         <img src="../assets/images/index/home-esport.png"/>
-        <span>E-Sport</span>
+        <span>Mini Game</span>
       </div>
 
       <div
