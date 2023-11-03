@@ -219,12 +219,11 @@ export default defineComponent({
       return store.currency.value + ' ' + balanceWithTwoDecimalPlaces;
     });
 
-    onMounted(() => {
-      if(!store.id){
-        store.getMemberInfo()
+    onMounted(async () => {
+      if(!store.id && route.path !== "/" ){
+        await store.getMemberInfo()
       }
-      getBalance()
-      // store.getBalance()
+      await getBalance()
     });
 
     const openDeposit = () => {
