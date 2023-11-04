@@ -132,6 +132,7 @@ import { useRouter } from "vue-router";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
 import { useI18n } from "vue-i18n";
+import {useUI} from "stores/ui";
 
 var qs = require("qs");
 const { t } = useI18n();
@@ -183,6 +184,7 @@ const checkAmount = reactive({
 });
 
 const $q = useQuasar();
+const ui= useUI();
 const calculatedMinDeposit = ref("");
 function initPay() {
   $q.loading.show({
@@ -365,6 +367,14 @@ async function confirmDeposit() {
       } else {
         localStorage.setItem("formDetails", JSON.stringify(form));
         router.push({ path: "/depositLoading" });
+      }
+
+      if (ui.isAffiliateA) {
+        // console.log("Submit Event");
+        fbq("track", "InitiateCheckout", {
+          currency: 'THB',
+          value: form.localAmount,
+        });
       }
 
       window.addEventListener(

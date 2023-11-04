@@ -36,13 +36,6 @@ async function pDepo(deposit) {
     obj.privilegeId = deposit.privilegeId;
   }
 
-  if (ui.isAffiliateA) {
-    // console.log("Submit Event");
-    fbq("track", "Purchase", {
-      currency: 'THB',
-      value: obj.localAmount,
-    });
-  }
 
   await cashier
     .post("/session/payment/submit", qs.stringify(obj))
