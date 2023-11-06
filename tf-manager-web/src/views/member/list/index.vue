@@ -318,7 +318,9 @@
         <el-table-column prop="regTime" :label="t('fields.registerTime')">
           <template #default="scope">
             <span v-if="scope.row.regTime === null">-</span>
-            <span v-if="scope.row.regTime !== null" v-formatter="{data: scope.row.regTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+            <span v-if="scope.row.regTime !== null"
+                  v-formatter="{data: scope.row.regTime,timeZone: timeZone,type: 'date'}"
+            />
           </template>
         </el-table-column>
         <el-table-column prop="totalDeposit" :label="t('fields.totalDeposit')">
@@ -361,7 +363,9 @@
         <el-table-column prop="lastLoginTime" :label="t('fields.lastLogin')">
           <template #default="scope">
             <span v-if="scope.row.lastLoginTime === null">-</span>
-            <span v-if="scope.row.lastLoginTime !== null" v-formatter="{data: scope.row.lastLoginTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+            <span v-if="scope.row.lastLoginTime !== null"
+                  v-formatter="{data: scope.row.lastLoginTime,timeZone: timeZone,type: 'date'}"
+            />
           </template>
         </el-table-column>
       </el-table>
@@ -420,6 +424,7 @@ const siteList = reactive({
   list: []
 });
 
+let timeZone = null;
 let chooseMembers = [];
 
 const uiControl = reactive({
@@ -634,6 +639,7 @@ async function loadMembers() {
   const { data: ret } = await getMembers(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
   table.value.clearSelection();
 }
