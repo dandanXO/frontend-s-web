@@ -11,7 +11,7 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/member/list"
+    redirect: "/home/dashboard"
   },
   {
     path: "/google-auth",
