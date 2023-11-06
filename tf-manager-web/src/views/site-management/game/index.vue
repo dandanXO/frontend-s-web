@@ -51,7 +51,7 @@
         <el-input
           v-model="request.name"
           size="small"
-          style="width: 200px"
+          style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.gameName')"
         />
         <el-button
@@ -298,6 +298,22 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.gameLabel')" prop="gameLabel">
+          <el-select
+            v-model="form.gameLabel"
+            value-key="id"
+            style="width: 350px"
+            filterable
+            clearable
+          >
+            <el-option
+              v-for="item in gameLabel.list"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.device')" prop="device">
           <el-radio-group v-model="form.device">
             <el-radio
@@ -349,6 +365,7 @@
       <el-table-column prop="status" :label="t('fields.status')" width="150"/>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150"/>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150"/>
+      <el-table-column prop="gameLabel" :label="t('fields.gameLabel')" width="150"/>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -422,6 +439,7 @@ const EXPORT_GAME_LIST_HEADER = [
   'Game Type',
   'Device',
   'Sequence',
+  'Game Label',
 ]
 
 const IMPORT_GAME_LIST_JSON = [
@@ -433,7 +451,7 @@ const IMPORT_GAME_LIST_JSON = [
   'status',
   'gameType',
   'device',
-  'sequence',
+  'gameLabel',
 ]
 
 const EXPORT_MAPPING_PLATFORM_HEADER = [
@@ -492,6 +510,7 @@ const form = reactive({
   siteId: null,
   device: 'WEB',
   sequence: null,
+  gameLabel: null,
 })
 
 const formRules = reactive({
@@ -519,6 +538,10 @@ const sites = reactive({
 
 const gameTypes = reactive({
   list: [],
+})
+
+const gameLabel = reactive({
+  list: ["HOT"],
 })
 
 const devices = reactive({
