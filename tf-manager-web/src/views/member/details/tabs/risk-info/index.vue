@@ -97,7 +97,7 @@
             <span
               v-formatter="{
                 data: scope.row.registrationDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -184,10 +184,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  timeZone: {
-    type: String,
-    required: true,
-  }
 })
 
 const queryValueList = reactive({

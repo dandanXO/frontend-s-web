@@ -108,7 +108,6 @@
           />
         </template>
       </el-table-column>
-      l
       <el-table-column prop="createTime" :label="t('fields.createTime')">
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>

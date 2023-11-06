@@ -1,27 +1,29 @@
 <template>
   <div>
     <q-select
-        filled
-        class="q-mt-md"
-        label="银行"
-        color="white"
-        v-model="selectedBankId"
-        :options="bankList"
-        option-value="id"
-        option-label="name"
-        :rules="verifyBank"
-        @update:model-value="selectBank()"
+      filled
+      label="Bank"
+      color="white"
+      standout
+      class="q-pb-xs dialog-input"
+      hide-bottom-space
+      v-model="selectedBankId"
+      :options="bankList"
+      option-value="id"
+      option-label="name"
+      :rules="verifyBank"
+      @update:model-value="selectBank()"
     />
   </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import { ref } from "vue";
 // import { postDeposit } from "@/api/personal/deposit";
 // import { doIt } from "@/utils/action";
-import {doIt} from "boot/action";
-import {cashier} from "boot/axios";
-import {useQuasar} from "quasar";
+import { doIt } from "boot/action";
+import { cashier } from "boot/axios";
+import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 const props = defineProps({
@@ -31,9 +33,7 @@ const props = defineProps({
   }
 });
 const emits = defineEmits(["selected", "successful"]);
-const verifyBank = ref([
-  (val) => (props.bankList && !!val) || "请输入银行"
-]);
+const verifyBank = ref([(val) => (props.bankList && !!val) || "Please enter bank"]);
 
 const selectedBankId = ref();
 
@@ -53,16 +53,15 @@ async function validateBank(value) {
 const qs = require("qs");
 
 async function submitDeposit(deposit) {
-
   const obj = {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
     paymentId: deposit.paymentId,
     bankId: selectedBankId.value.id
-  }
+  };
 
   if (deposit.privilegeId) {
-    obj.privilegeId = deposit.privilegeId
+    obj.privilegeId = deposit.privilegeId;
   }
   await cashier.post("/session/payment/submit", qs.stringify(obj)).then((res) => {
     if (res.code === 0) {
@@ -80,7 +79,12 @@ async function submitDeposit(deposit) {
   });
 }
 
-defineExpose({submitDeposit, validateBank});
+defineExpose({ submitDeposit, validateBank });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.dialog-input {
+  border-radius: 1.25rem;
+  background: rgba(21, 0, 37, 0.5);
+}
+</style>

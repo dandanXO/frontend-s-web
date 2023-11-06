@@ -1,6 +1,6 @@
-# Jolly88 App (ph-project)
+# IndWin77 App (ind-h5-project)
 
-APP
+India H5 APP
 
 ## Install the dependencies
 ```bash
@@ -15,31 +15,13 @@ quasar dev
 ```
 
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
-
-
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
-
-
-### Build the app for production
+### Build the app for production (SPA Page)
 ```bash
 quasar build
 ```
 
 ### Customize the configuration
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
-
 
 
 ### Build The App in Android.
@@ -55,12 +37,29 @@ npx cap sync
 
 4(a). Build and Run on Android device. (Plug your Android device, Enable Developer Option, Enable USB Debugging.)
 adb devices  ##(Optional.)
-npx cap run android -l
+npx cap run android
 
 4(b). Build on Android Studio/ Build .apk
 npx cap open android
 
 ```
+
+### Run LiveReload on Device
+```bash
+1. Run CMD
+quasar dev
+
+2. Plug your Device, Open 2nd CMD and run:
+cd src-capacitor
+npx cap run android -l
+
+3. So it will build and run App on your device, and you can do a LiveReload on it.
+
+4. If you want to change port/host, can try RUN:
+npx cap run android -l --host=192.168.10.22 --port=9090
+
+```
+
 
 ### Change Android Version Name
 
@@ -83,3 +82,15 @@ npx cap open android
 1. goto https://ivi.cx/
 2. Insert all inputs. (Logo/Name/URL/Description/Install File Name)
 3. Submit & Download file .mobileconfig
+
+
+### File Directory.
+
+- WithDrawal Dialog :: src/components/WithdrawalComponent.vue
+- Deposit Dialog :: src/components/depositComponent.vue
+- Message Page:: src/pages/account/MessageView.vue
+- Message Detail Page:: src/pages/account/MessageDetailView.vue
+- Personal Center:: src/pages/AccountPage.vue
+- ForgetPwd Page:: src/pages/ForgotPwdPage.vue
+- Order Page:: src/pages/account/OrderView.vue
+- Add Bank Card Page:: src/pages/account/BankView.vue

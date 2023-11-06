@@ -51,7 +51,7 @@
         <el-input
           v-model="request.name"
           size="small"
-          style="width: 200px; margin-left: 5px"
+          style="width: 200px"
           :placeholder="t('fields.gameName')"
         />
         <el-button
@@ -296,19 +296,21 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.gameLabel')" prop="gameLabel">
+        <el-form-item :label="t('fields.label')" prop="gameLabel">
           <el-select
-            v-model="form.gameLabel"
-            value-key="id"
-            style="width: 350px"
             filterable
             clearable
+            multiple
+            v-model="selected.gameLabels"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+            @change="handleChangeLabel()"
           >
             <el-option
               v-for="item in gameLabel.list"
-              :key="item"
-              :label="item"
-              :value="item"
+              :key="item.key"
+              :label="item.value"
+              :value="item.value"
             />
           </el-select>
         </el-form-item>
@@ -478,7 +480,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150"/>
-      <el-table-column prop="gameLabel" :label="t('fields.gameLabel')" width="150"/>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -554,7 +555,6 @@ const EXPORT_GAME_LIST_HEADER = [
   'Game Type',
   'Device',
   'Sequence',
-  'Game Label',
 ]
 
 const IMPORT_GAME_LIST_JSON = [
@@ -566,7 +566,7 @@ const IMPORT_GAME_LIST_JSON = [
   'status',
   'gameType',
   'device',
-  'gameLabel',
+  'sequence',
 ]
 
 const EXPORT_MAPPING_PLATFORM_HEADER = [
@@ -630,9 +630,9 @@ const form = reactive({
   platformName: null,
   siteName: null,
   siteId: null,
+  gameLabel: null,
   device: 'WEB',
   sequence: null,
-  gameLabel: null,
 })
 
 const imageList = reactive({
@@ -674,10 +674,6 @@ const gameTypes = reactive({
   list: [],
 })
 
-const gameLabel = reactive({
-  list: ["HOT"],
-})
-
 const devices = reactive({
   list: [
     { key: 1, displayName: 'ALL', value: 'ALL' },
@@ -687,9 +683,17 @@ const devices = reactive({
   ],
 })
 
+const gameLabel = reactive({
+  list: [
+    { key: 1, displayName: 'NEW', value: 'NEW' },
+    { key: 2, displayName: 'HOT', value: 'HOT' },
+  ],
+})
+
 let chooseGame = []
 
 const platformCode = ref('')
+const selected = reactive({ gameLabels: [] });
 
 function resetQuery() {
   request.name = null
@@ -777,8 +781,10 @@ function showDialog(type) {
     form.status = 'OPEN'
     form.platformName = null
     form.siteName = null
+    selected.gameLabels = []
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editGame')
+    selected.gameLabels = []
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -790,6 +796,7 @@ function showEdit(game) {
   }
   const selectedPlatform = platforms.list.find(item => item.id === game.platformId)
   platformCode.value = selectedPlatform.code
+
   showDialog('EDIT')
 
   nextTick(() => {
@@ -797,7 +804,15 @@ function showEdit(game) {
       if (Object.keys(form).find(k => k === key)) {
       }
       form[key] = game[key]
+      form.siteId = selectedPlatform.siteId
     }
+    if (form.gameLabel !== null) {
+      const arr = form.gameLabel.split(",")
+      arr.forEach(element => {
+        selected.gameLabels.push(element);
+      })
+    }
+    loadPlatformNames()
   })
 }
 
@@ -1029,7 +1044,9 @@ function selectImage(item) {
   selectedImage.remark = item.remark
 }
 
-
+function handleChangeLabel() {
+  form.gameLabel = selected.gameLabels.join(",");
+}
 
 async function browseImage() {
   loadSiteImage()

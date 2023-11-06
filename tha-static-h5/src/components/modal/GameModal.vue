@@ -241,6 +241,7 @@ const submitTransfer = (amount) => {
 const closeDialog = () => {
   visible.value = !visible.value
   src.value = ""
+  store.getBalance();
   // AppFullscreen.exit()
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
