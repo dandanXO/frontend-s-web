@@ -1058,6 +1058,10 @@ export default {
     imageName: 'Image Name',
     addImage: 'Add Image',
     editImage: 'Edit Image',
+    browse: 'Browse',
+    imageSite: 'Image Site',
+    imageRemark: 'Image Remark',
+    selectedImage: 'Selected Image'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1520,7 +1524,6 @@ export default {
     DownloadManager: 'Download Manager',
     GoogleAuth: "Google Auth",
     'Image Setting': 'Image Setting',
-    'Promotion Image': 'Promotion Image'
   },
   google: {
     google_auth_menu: "Google Authenticator",
@@ -1646,6 +1649,7 @@ export default {
     12052: 'System bank code already exist',
     12053: 'System bank card identify code exists',
     12054: 'System bank card already exist',
+    12055: 'Site image is being used',
     14110: 'Platform and Site with same name already exist',
     14111: 'The status must be in CLOSE for one month before delete',
     14112: 'The status of this Site Platform in CLOSE is less than one month, please delete after one month',

@@ -1058,6 +1058,10 @@ export default {
     imageName: '图像名',
     addImage: '新增图像',
     editImage: '编辑图像',
+    browse: '浏览',
+    imageSite: '图像站点',
+    imageRemark: '图像备注',
+    selectedImage: '已选图像'
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1499,7 +1503,6 @@ export default {
     DownloadManager: '下载中心',
     GoogleAuth: "Google 验证中心",
     'Image Setting': '图片设置',
-    'Promotion Image': '优惠图片'
   },
   google: {
     google_auth_menu: "谷歌验证",
@@ -1628,6 +1631,7 @@ export default {
     12052: '银行代码已存在',
     12053: '银行卡识别码已存在',
     12054: '银行卡已存在',
+    12055: '图片已被使用',
     14110: '平台已存在于此站点',
     14111: '状态必须为 CLOSE 为期一个月方能删除',
     14112: '此平台站点的状态为 CLOSE 的时间少于一个月, 请于一个月后再删除',

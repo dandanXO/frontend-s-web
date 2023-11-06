@@ -82,6 +82,7 @@
       v-model="uiControl.dialogVisible"
       append-to-body
       width="600px"
+      :close-on-press-escape="false"
     >
       <el-form
         ref="imageForm"
@@ -96,6 +97,7 @@
             v-if="uploadedImage.url"
             :src="uploadedImage.url"
             :fit="contain"
+            :preview-src-list="[uploadedImage.url]"
           />
         </div>
         <el-form-item :label="t('fields.image')" prop="path">
@@ -287,6 +289,8 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const inputImage = ref(null)
 const imageForm = ref(null)
+const imageDir = process.env.VUE_APP_S3_URL
+const categoryList = ['/promo/', '/game/', '/payment/']
 const siteList = reactive({
   list: [],
 })
@@ -305,7 +309,6 @@ const uiControl = reactive({
 })
 
 let chooseImage = []
-
 const request = reactive({
   size: 30,
   current: 1,
@@ -418,7 +421,23 @@ async function attachImage(event) {
 
 async function loadSiteImage() {
   const { data: ret } = await getSiteImage(request)
-  ret.records.forEach(e => (e.displayPath = e.path))
+  ret.records.forEach(e => {
+    let categoryDir
+    switch (e.category) {
+      case "PROMO":
+        categoryDir = categoryList[0]
+        break
+      case "GAME":
+        categoryDir = categoryList[1]
+        break
+      case "PAYMENT":
+        categoryDir = categoryList[2]
+        break
+      default:
+        categoryDir = "/temp/"
+    }
+    e.displayPath = imageDir + categoryDir + e.path
+  })
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone =
