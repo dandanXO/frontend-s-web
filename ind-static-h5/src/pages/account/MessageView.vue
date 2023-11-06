@@ -1,7 +1,7 @@
 <template>
   <ProfileSummary></ProfileSummary>
 
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
 
   <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
@@ -47,12 +47,6 @@ let currentSlide = ref(slideList.value[0]);
 const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
   return false;
-};
-
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
 };
 
 const isLoading = ref(true);

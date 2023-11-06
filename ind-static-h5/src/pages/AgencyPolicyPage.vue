@@ -18,7 +18,6 @@ const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
   return false;
 };
-
 const onSlideClick = (e, i) => {
   if (e === currentSlide.value) return;
   router.push(slideListPath.value[i]);

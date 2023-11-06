@@ -27,19 +27,42 @@
 <script setup>
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
-import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { onMounted, ref, onActivated } from "vue";
 
-const props = defineProps(["slideList", "onSlideClick", "isActiveSlide"]);
+const props = defineProps(["slideList", "slideListPath", "isActiveSlide"]);
+const router = useRouter();
+const loopValue = props.slideList.length > 2;
 
-onMounted(() => {
-  const loopValue = props.slideList.length > 2;
-  const swiperNav = new Swiper(".swiper-nav-container", {
+const onSlideClick = (e, i) => {
+  router.push(props.slideListPath[i]);
+};
+
+const swiperNav = ref(null);
+
+const initializeSwiperNav = () => {
+  swiperNav.value = new Swiper(".swiper-nav-container", {
     slidesPerView: 3,
     loop: loopValue,
     spaceBetween: 1,
+    initialSlide: 0,
     centeredSlides: true,
     pagination: false
   });
+};
+const rebuildSwiper = () => {
+  if (swiperNav.value) {
+    swiperNav.value.destroy();
+    initializeSwiperNav();
+  }
+};
+
+onMounted(() => {
+  initializeSwiperNav();
+});
+
+onActivated(() => {
+  rebuildSwiper();
 });
 </script>
 

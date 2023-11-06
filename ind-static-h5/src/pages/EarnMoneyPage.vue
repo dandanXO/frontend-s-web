@@ -24,4 +24,5 @@ const onSlideClick = (e, i) => {
   router.push(slideListPath.value[i]);
   currentSlide.value = e;
 };
+
 </script>
