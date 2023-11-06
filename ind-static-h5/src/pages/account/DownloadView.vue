@@ -1,11 +1,6 @@
 <template>
   <div class="download">
-    <q-tabs
-      v-model="tab"
-      active-color="white"
-      indicator-color="bright"
-      align="justify"
-    >
+    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">
       <q-tab name="android" label="安卓系统" />
       <q-tab name="apple" label="苹果系统" />
     </q-tabs>
@@ -13,13 +8,9 @@
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="android">
         <div class="downloads">
-          <div
-            class="download-item q-my-sm"
-            v-for="(dn, i) in androidItems"
-            :key="i"
-          >
+          <div class="download-item q-my-sm" v-for="(dn, i) in androidItems" :key="i">
             <div class="imgtext">
-              <img :src="require(`../../assets/download/${dn.icon}.png`)" />
+              <!-- <img :src="require(`../../assets/download/${dn.icon}.png`)" /> -->
               <div>
                 {{ dn.title }}
                 <br />
@@ -27,10 +18,10 @@
               </div>
             </div>
             <a :href="dn.downloadLink" target="_blank">
-              <img
+              <!-- <img
                 class="download"
                 src="../../assets/download/btn_download.png"
-              />
+              /> -->
             </a>
           </div>
         </div>
@@ -38,13 +29,9 @@
 
       <q-tab-panel name="apple">
         <div class="downloads">
-          <div
-            class="download-item q-my-sm"
-            v-for="(dn, i) in appleItems"
-            :key="i"
-          >
+          <div class="download-item q-my-sm" v-for="(dn, i) in appleItems" :key="i">
             <div class="imgtext">
-              <img :src="require(`../../assets/download/${dn.icon}.png`)" />
+              <!-- <img :src="require(`../../assets/download/${dn.icon}.png`)" /> -->
               <div>
                 {{ dn.title }}
                 <br />
@@ -52,10 +39,10 @@
               </div>
             </div>
             <a :href="dn.downloadLink" target="_blank">
-              <img
+              <!-- <img
                 class="download"
                 src="../../assets/download/btn_download.png"
-              />
+              /> -->
             </a>
           </div>
         </div>
@@ -95,8 +82,7 @@ const androidItems = computed(() => {
       downloadLink: downloadUrl.value
     }
   ];
-})
-
+});
 
 const appleItems = computed(() => {
   return [
@@ -107,7 +93,7 @@ const appleItems = computed(() => {
       downloadLink: downloadUrl.value
     }
   ];
-})
+});
 
 const getAppDownloadUrl = () => {
   api

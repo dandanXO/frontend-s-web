@@ -441,6 +441,7 @@ import {useQuasar} from "quasar";
 import {userStore} from "stores/index";
 import {useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
+import {useUI} from "stores/ui";
 
 var qs = require("qs");
 export default defineComponent({
@@ -553,6 +554,7 @@ export default defineComponent({
     const {t} = useI18n();
     const router = useRouter();
     const bankName = ref();
+    const ui= useUI()
     const banksList = ref([]);
 
     const bankCardModal = (type) => {
@@ -635,6 +637,7 @@ export default defineComponent({
           const response = res.data
           if (response.code === 0) {
             bankCardModalState.visible = false;
+            ui.isCardUpdate = true;
             $q.notify({
               color: "positive",
               position: "top",
@@ -685,6 +688,7 @@ export default defineComponent({
               message: t('lang.success'),
               icon: "check_circle_outline"
             });
+            ui.isCardUpdate = true;
             loadCards();
           } else {
             // $q.notify({

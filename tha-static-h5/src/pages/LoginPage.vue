@@ -81,7 +81,7 @@
         </router-link>
       </div>
     </q-form>
-    <div class="txt-center">
+    <div class="login-btn-list">
       <q-btn
           class="common-large-btn"
           @click.prevent="onSubmit"
@@ -91,6 +91,19 @@
           rounded
           size="md"
       />
+
+<!--      <q-btn-->
+<!--        v-if="isMobile()"-->
+<!--        class="common-large-btn line-login-btn"-->
+<!--        @click="loginViaLine"-->
+<!--        type="submit"-->
+<!--        color="brand"-->
+<!--        rounded-->
+<!--        size="md"-->
+<!--      >-->
+<!--        <img src="../assets/images/common/line-official.svg" />-->
+<!--        <span>LINE Login</span>-->
+<!--      </q-btn>-->
     </div>
   </div>
 </template>
@@ -99,13 +112,17 @@
 import {defineComponent, ref, reactive, onMounted} from "vue";
 import {userStore} from "stores/index";
 import {api} from "boot/axios";
-import {Platform, useQuasar} from "quasar";
+import {Loading, Platform, useQuasar} from "quasar";
 import {useRoute, useRouter} from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {useI18n} from "vue-i18n";
+import liff from "@line/liff";
+import qs from "qs";
+import { isMobile} from "boot/utils";
 
 export default defineComponent({
   name: "LoginPage",
+  methods: {isMobile},
   setup() {
     const {t} = useI18n();
     const store = userStore();
@@ -223,6 +240,65 @@ export default defineComponent({
       })();
     };
 
+    const loginViaLine = () => {
+      const siteId= process.env.SITEID;
+
+      const url =`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2001411735&redirect_uri=https://jolly88.com/login&state=12345abcde&scope=profile%20openid&nonce=09876xyz`
+      window.open(url, "_blank");
+
+      // liff.init({
+      //   liffId: '2001411735-Ow892Zrl', // Use own liffId
+      // }).then(() => {
+      //   // alert("HERE");
+      //   // if (liff.isInClient()) {
+      //     // alert("Line" + liff.getLineVersion())
+      //     // if (liff.isLoggedIn()) {
+      //       // alert("Line Logged In.")
+      //       const fpPromise = FingerprintJS.load();
+      //       (async () => {
+      //         const fp = await fpPromise;
+      //         const result = await fp.get();
+      //         const excludes = { value: ["timezone", "timeZoneOffset"] };
+      //         const allComponents = { ...result.components };
+      //         excludes.value.forEach((element) => {
+      //           delete allComponents[element];
+      //         });
+      //         const sidParam = FingerprintJS.hashComponents(allComponents);
+      //         const accessToken = liff.getAccessToken();
+      //         var regDevice = Platform.is.mobile ? "H5" : "WEB";
+      //         if (("standalone" in window.navigator) && window.navigator.standalone) {
+      //           regDevice = "IOS"
+      //         } else {
+      //           regDevice = Platform.is.mobile ? "H5" : "WEB";
+      //           if (Platform.is.capacitor) {
+      //             if (Platform.is.android) {
+      //               regDevice = "ANDROID"
+      //             }
+      //           }
+      //         }
+      //         const loginInfo = {
+      //           siteId: siteId,
+      //           way: regDevice,
+      //           sid: sidParam,
+      //           accessToken: accessToken
+      //         }
+      //         var string = qs.stringify(loginInfo);
+      //         Loading.show({
+      //           message: 'Logging in'
+      //         })
+      //         api.post('/member/lineLogin', string).then((res) => {
+      //           // alert(res);
+      //           if (res.data.code === 0) {
+      //             sessionStorage.setItem("TOKEN", res.data.data);
+      //             location.reload();
+      //           }
+      //         })
+      //       })();
+      //     // }
+      //   // }
+      // })
+    }
+
     onMounted(() => {
       getCode();
       checkRememberPwd();
@@ -238,12 +314,29 @@ export default defineComponent({
       store,
       isPwd: ref(true),
       getCode,
+      loginViaLine,
       isCheckRmb,
     };
   }
 });
 </script>
 <style scoped lang="scss">
+.login-btn-list{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+
+  .line-login-btn{
+    background: #00b900;
+
+    img{
+      width: 28px;
+      margin-right:8px;
+    }
+  }
+}
 
 .verification {
   display: flex;

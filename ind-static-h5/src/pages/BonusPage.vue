@@ -1,6 +1,4 @@
 <template>
-  <q-dialog align-center v-model="isDetailModalOpen" title="" width="500">Hello</q-dialog>
-
   <div class="bonus-page">
     <div class="progress-container">
       <div class="left-container">
@@ -22,7 +20,7 @@
         <q-linear-progress reverse rounded size="5px" :value="progressBarRef" class="progress-bar"></q-linear-progress>
         <div class="common-text">Deposit Monthly To Win Gifts</div>
 
-        <div class="detail-btn-container absolute-bottom-right" @click="openDetailModal()">
+        <div class="detail-btn-container absolute-bottom-right" @click="onDetailClick()">
           <img class="detail-btn" src="../assets/images/bonus/detail-btn.png" alt="" />
           <span class="common-text">Detail</span>
         </div>
@@ -63,7 +61,7 @@
     <div class="countdown-container">
       <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" />
       <div class="right-container">
-        <div class="countdown">
+        <!-- <div class="countdown">
           <div class="common-text">
             Ready To
             <br />
@@ -73,7 +71,7 @@
             <img class="countdown-btn" src="../assets/images/bonus/countdown-btn.png" alt="" />
             <span class="countdown-text">{{ timeRef }}</span>
           </div>
-        </div>
+        </div> -->
         <div class="noticeboard">
           You Can Get
           <span>0.3%</span>
@@ -87,10 +85,16 @@
 <script setup>
 import { ref } from "vue";
 import { date } from "quasar";
+import { useRoute, useRouter } from "vue-router";
+import { userStore } from "stores/index";
+
+const route = useRoute();
+const router = useRouter();
+const store = userStore();
 
 // progress bar
-const maxProgress = 5000;
-const progressRef = ref(2350);
+const maxProgress = store.levelUpDeposit.toFixed(2);
+const progressRef = ref(store.currentDeposit.toFixed(2));
 
 /**
  * NOTE: q-linear-progress
@@ -102,9 +106,8 @@ let progressBarRef = ref();
 progressBarRef.value = 1 - progressRef.value / maxProgress;
 
 // detail btn
-const isDetailModalOpen = ref(false);
-const openDetailModal = () => {
-  isDetailModalOpen.value = true;
+const onDetailClick = () => {
+  router.push({ path: "/vip", query: { redirect: route.path } });
 };
 
 // table

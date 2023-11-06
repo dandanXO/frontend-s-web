@@ -220,6 +220,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      store.getMemberInfo();
       getBalance()
       // store.getBalance()
       store.getUnreadTotal()
@@ -261,6 +262,7 @@ export default defineComponent({
 
     const getBalance = () => {
       setInterval(function () {
+        // console.log("Get Balance")
         if (store.hasToken()) {
           store.getBalance()
         }
