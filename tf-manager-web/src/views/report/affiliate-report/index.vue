@@ -122,6 +122,12 @@
           <el-tag v-else type="primary">{{ t('affiliate.commissionModel.' + scope.row.commissionModel) }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="commission" :label="t('fields.commission')" width="100">
+        <template #default="scope">
+          <span v-if="scope.row.commission === null">0.00 %</span>
+          <span v-if="scope.row.commission !== null">{{ (scope.row.commission * 100).toFixed(2) }} %</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="registerMemberCount" :label="t('fields.registerCount')" align="center" min-width="110" />
       <el-table-column prop="totalRegisterMemberCount" :label="t('fields.totalRegisterCount')" align="center" min-width="140" />
       <el-table-column prop="ftdMemberCount" :label="t('fields.ftdCount')" align="center" min-width="100" />

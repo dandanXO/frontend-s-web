@@ -36,7 +36,3 @@ export const getSiteExcelMapping = () => {
 export const getSiteIdByName = (name) => {
   return https().request("/site/getIdByName", Method.GET, { name: name }, ContentType.form);
 }
-
-export const getSiteTimeZoneById = (id) => {
-  return https().request("/site/getTimeZoneById", Method.GET, { id: id });
-}

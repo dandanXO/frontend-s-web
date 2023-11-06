@@ -5,7 +5,7 @@
         <el-date-picker
           v-model="request.withdrawDate"
           format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD HH:mm:ss"
+          value-format="YYYY-MM-DD"
           size="small"
           type="daterange"
           range-separator=":"
@@ -126,7 +126,7 @@
               v-if="scope.row.withdrawDate !== null"
               v-formatter="{
                 data: scope.row.withdrawDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -145,7 +145,7 @@
               v-if="scope.row.checkDate !== null"
               v-formatter="{
                 data: scope.row.checkDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -164,7 +164,7 @@
               v-if="scope.row.paymentDate !== null"
               v-formatter="{
                 data: scope.row.paymentDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -341,10 +341,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  timeZone: {
-    type: String,
-    required: true
-  }
 })
 
 const shortcuts = getShortcuts(t);

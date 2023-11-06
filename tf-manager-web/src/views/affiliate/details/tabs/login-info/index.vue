@@ -32,7 +32,7 @@
                        align="center" min-width="180"
       >
         <template #default="scope">
-          <span v-formatter="{data: scope.row.loginTime,timeZone: timeZone,type: 'date'}" />
+          <span v-formatter="{data: scope.row.loginTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.loginIp')" prop="loginIp"
@@ -98,10 +98,6 @@ import { getShortcuts } from "@/utils/datetime";
 export default defineComponent({
   props: {
     affId: {
-      type: String,
-      required: true
-    },
-    timeZone: {
       type: String,
       required: true
     }
