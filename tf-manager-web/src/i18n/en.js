@@ -1075,6 +1075,15 @@ export default {
     progress: 'Progress',
     download: 'Download',
     updateProgress: 'Update Progress',
+    timeZone: 'Time Zone',
+    image: 'Image',
+    imageName: 'Image Name',
+    addImage: 'Add Image',
+    editImage: 'Edit Image',
+    browse: 'Browse',
+    imageSite: 'Image Site',
+    imageRemark: 'Image Remark',
+    selectedImage: 'Selected Image'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1385,6 +1394,8 @@ export default {
     validateTemplateIdRequired: 'Template ID is required',
     requestExportToExcelDone1: 'Request was sent out successful, please click ',
     requestExportToExcelDone2: ' to check progress and download.',
+    validateImageRequired: 'Image is required',
+    validateImageNameRequired: 'Image Name is required',
   },
   menu: {
     undefined: '',
@@ -1534,7 +1545,8 @@ export default {
     'Email Setting': 'Email Setting',
     'SMS Setting': 'SMS Setting',
     DownloadManager: 'Download Manager',
-    GoogleAuth: "Google Auth"
+    GoogleAuth: "Google Auth",
+    'Image Setting': 'Image Setting',
   },
   google: {
     google_auth_menu: "Google Authenticator",
@@ -1660,6 +1672,7 @@ export default {
     12052: 'System bank code already exist',
     12053: 'System bank card identify code exists',
     12054: 'System bank card already exist',
+    12055: 'Site image is being used',
     14110: 'Platform and Site with same name already exist',
     14111: 'The status must be in CLOSE for one month before delete',
     14112: 'The status of this Site Platform in CLOSE is less than one month, please delete after one month',

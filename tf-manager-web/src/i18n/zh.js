@@ -1075,6 +1075,15 @@ export default {
     progress: '进度',
     download: '下载',
     updateProgress: '更新进度',
+    timeZone: '时区',
+    image: '图像',
+    imageName: '图像名',
+    addImage: '新增图像',
+    editImage: '编辑图像',
+    browse: '浏览',
+    imageSite: '图像站点',
+    imageRemark: '图像备注',
+    selectedImage: '已选图像'
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1364,6 +1373,8 @@ export default {
     validateTemplateIdRequired: '模板ID必填',
     requestExportToExcelDone1: '请求已经成功发送，请按 ',
     requestExportToExcelDone2: ' 进行查看进度与下载。',
+    validateImageRequired: '图像必填',
+    validateImageNameRequired: '图像名必填',
   },
   menu: {
     undefined: '',
@@ -1513,7 +1524,8 @@ export default {
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
     DownloadManager: '下载中心',
-    GoogleAuth: "Google 验证中心"
+    GoogleAuth: "Google 验证中心",
+    'Image Setting': '图片设置',
   },
   google: {
     google_auth_menu: "谷歌验证",
@@ -1642,6 +1654,7 @@ export default {
     12052: '银行代码已存在',
     12053: '银行卡识别码已存在',
     12054: '银行卡已存在',
+    12055: '图片已被使用',
     14110: '平台已存在于此站点',
     14111: '状态必须为 CLOSE 为期一个月方能删除',
     14112: '此平台站点的状态为 CLOSE 的时间少于一个月, 请于一个月后再删除',

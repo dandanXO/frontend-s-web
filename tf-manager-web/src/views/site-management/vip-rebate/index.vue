@@ -127,7 +127,15 @@
       <el-table-column prop="rebatePercentage" :label="t('fields.rebatePercentage')" width="150" />
       <el-table-column prop="maxRebate" :label="t('fields.maxRebate')" width="150" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -222,6 +230,11 @@ async function loadVipRebateRules() {
   const requestCopy = { ...request };
   const { data: ret } = await getVipRebateRule(requestCopy);
   page.records = ret;
+  ret.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.loading = false;
 }
 
