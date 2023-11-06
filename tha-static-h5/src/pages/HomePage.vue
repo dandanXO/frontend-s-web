@@ -789,7 +789,7 @@
           <template v-for="(game, index) in miniGames" :key="index">
             <div
               class="game-item btn-pointer btn-slot-game"
-              @click="playGame(game.name, selectedPlat.code , 'casual_' + game.code)"
+              @click="playGame(game.name, selectedPlat.code , game.code)"
             >
               <div
                 class="platform-img"
@@ -823,7 +823,7 @@
                     class="game-type btn-pointer"
                     id="copper-type"
                     @click="
-                    playGame(game.name, 'TFGaming', 'casual_' + game.copper)
+                    playGame(game.name, 'TFGaming', game.copper)
                   "
                   >
                     10 - 3,000
@@ -832,7 +832,7 @@
                     class="game-type btn-pointer"
                     id="silver-type"
                     @click="
-                    playGame(game.id, 'TFGaming', 'casual_' + game.silver)
+                    playGame(game.id, 'TFGaming', game.silver)
                   "
                   >
                     500 - 100K
@@ -840,7 +840,7 @@
                   <div
                     class="game-type btn-pointer"
                     id="gold-type"
-                    @click="playGame(game.id, 'TFGaming', 'casual_' + game.gold)"
+                    @click="playGame(game.id, 'TFGaming', game.gold)"
                   >
                     1,000 - 20K
                   </div>
