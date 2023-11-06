@@ -1,25 +1,30 @@
 <template>
   <div class="infoboard-container q-pa-md">
     <img src="../../assets/images/earn-money/infoboard.png" />
+
     <div class="infoboard-wrapper">
-      <div class="left-container">
-        <div class="infoboard">
-          <div>Income</div>
-          <div>{{ rebateSummary.rebateAmount }}</div>
+      <LoadingComponent v-if="isLoading.betRebateSummary"></LoadingComponent>
+      <template v-else>
+        <div class="left-container">
+          <div class="infoboard">
+            <div>Income</div>
+            <div>{{ rebateSummary.rebateAmount }}</div>
+          </div>
+          <div class="infoboard">
+            <div>Direct Member</div>
+            <div>{{ rebateSummary.memberCount }}</div>
+          </div>
         </div>
-        <div class="infoboard">
-          <div>Direct Member</div>
-          <div>{{ rebateSummary.memberCount }}</div>
+        <div class="right-container">
+          <!-- <img src="../../assets/images/index/more-btn.png" alt="" @click="showMoreButton()" /> -->
         </div>
-      </div>
-      <div class="right-container">
-        <!-- <img src="../../assets/images/index/more-btn.png" alt="" @click="showMoreButton()" /> -->
-      </div>
+      </template>
     </div>
   </div>
 
   <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
-    <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Member"></NoInfoComponent>
+    <LoadingComponent v-if="isLoading.referredBetRebateRecord"></LoadingComponent>
+    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member"></NoInfoComponent>
     <div v-else class="member-info-container">
       <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
         <div class="top-container">
@@ -57,6 +62,7 @@ import { onMounted, ref, reactive } from "vue";
 import { api } from "boot/axios";
 import ContentView from "../ContentView.vue";
 import NoInfoComponent from "../NoInfoComponent.vue";
+import LoadingComponent from "../LoadingComponent.vue";
 
 const showMoreButton = () => {
   console.log("show more button clicked");
@@ -69,22 +75,32 @@ const getBetRebateRecord = () => {
   });
 };
 
+const isLoading = reactive({ betRebateSummary: true, referredBetRebateRecord: true });
+const isNoInfo = ref(true);
+
 let rebateSummary = reactive({
   rebateAmount: 0,
   memberCount: 0
 });
 const getBetRebateSummary = () => {
+  isLoading.betRebateSummary = true;
+
   api.get("/session/member/betRebateSummary").then((response) => {
     rebateSummary = response.data;
+
+    isLoading.betRebateSummary = false;
   });
 };
 
 const myMemberList = ref([]);
-const isNoInfo = ref(true);
 const getReferredBetRebateRecord = () => {
+  isLoading.referredBetRebateRecord = true;
+
   api.get("/session/member/referredBetRebateRecord").then((response) => {
     myMemberList.value = response.data.records;
     if (myMemberList.value.length !== 0) isNoInfo.value = false;
+
+    isLoading.referredBetRebateRecord = false;
   });
 };
 
@@ -107,9 +123,8 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
     width: 22rem;
-    margin: 0 0 0 2rem;
+    padding: 0 1rem;
 
     .left-container {
       width: 100%;
