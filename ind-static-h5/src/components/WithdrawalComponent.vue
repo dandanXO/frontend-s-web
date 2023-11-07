@@ -1,5 +1,5 @@
 <template>
-  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+  <q-dialog v-if="isNoBankCard" width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
     <div class="popout-dialog">
       <div class="popout-dialog-container">
         <div class="txt-title">Tips</div>
@@ -13,50 +13,51 @@
     </div>
   </q-dialog>
 
-  <q-tabs
-    v-model="withdrawalDialogTab"
-    dense
-    no-caps
-    class="withdrawal-tab"
-    indicator-color="transparent"
-    align="justify"
-  >
-    <q-tab name="BANK" label="Bankcard" />
-    <!-- <q-tab name="UPI" label="UPI" /> -->
-  </q-tabs>
+  <template v-else>
+    <q-tabs
+      v-model="withdrawalDialogTab"
+      dense
+      no-caps
+      class="withdrawal-tab"
+      indicator-color="transparent"
+      align="justify"
+    >
+      <q-tab name="BANK" label="Bankcard" />
+      <!-- <q-tab name="UPI" label="UPI" /> -->
+    </q-tabs>
 
-  <q-tab-panels
-    class="withdrawal-tab-panel"
-    v-model="withdrawalDialogTab"
-    animated
-    transition-prev="fade"
-    transition-next="fade"
-  >
-    <q-tab-panel name="BANK">
-      <div class="withdrawal-table">
-        <div class="w-tbl-row">
-          <div class="w-tbl-col">Cash Balance:</div>
-          <div class="w-tbl-col">
-            <span class="w-txt-red">{{ store.balance }}</span>
+    <q-tab-panels
+      class="withdrawal-tab-panel"
+      v-model="withdrawalDialogTab"
+      animated
+      transition-prev="fade"
+      transition-next="fade"
+    >
+      <q-tab-panel name="BANK">
+        <div class="withdrawal-table">
+          <div class="w-tbl-row">
+            <div class="w-tbl-col">Cash Balance:</div>
+            <div class="w-tbl-col">
+              <span class="w-txt-red">{{ store.balance }}</span>
+            </div>
+          </div>
+          <div class="w-tbl-row">
+            <div class="w-tbl-col">Withdrawable:</div>
+            <div class="w-tbl-col">
+              {{
+                `${withdrawalMethods[withdrawalDialogTab].withdrawMin || 0} - ${
+                  withdrawalMethods[withdrawalDialogTab].withdrawMax || 0
+                }`
+              }}
+            </div>
+          </div>
+          <div class="w-tbl-row">
+            <div class="w-tbl-col">Remaining Wager:</div>
+            <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount || 0 }}</div>
           </div>
         </div>
-        <div class="w-tbl-row">
-          <div class="w-tbl-col">Withdrawable:</div>
-          <div class="w-tbl-col">
-            {{
-              `${withdrawalMethods[withdrawalDialogTab].withdrawMin || 0} - ${
-                withdrawalMethods[withdrawalDialogTab].withdrawMax || 0
-              }`
-            }}
-          </div>
-        </div>
-        <div class="w-tbl-row">
-          <div class="w-tbl-col">Remaining Wager:</div>
-          <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount || 0 }}</div>
-        </div>
-      </div>
-    </q-tab-panel>
-    <!-- <q-tab-panel name="UPI">
+      </q-tab-panel>
+      <!-- <q-tab-panel name="UPI">
       <div class="withdrawal-table">
         <div class="w-tbl-row">
           <div class="w-tbl-col">Cash Balance:</div>
@@ -78,140 +79,141 @@
         </div>
       </div>
     </q-tab-panel> -->
-  </q-tab-panels>
+    </q-tab-panels>
 
-  <div class="withdrawal-form" v-if="withdrawalDialogTab === 'BANK'">
-    <div class="w-form-item w-form-item--bankcard">
-      <div class="w-form-label">Withdraw Amount</div>
-      <div class="w-form-input">
-        <q-input
-          type="number"
-          ref="amountRef"
-          filled
-          dense
-          clearable
-          placeholder="Enter Withdraw Amount"
-          v-model="withdrawInfo.amount"
-          :rules="[
-            (val) => !!val || 'Please Enter Withdraw Amount',
-            (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-            (val) =>
-              (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
-                val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
-              `Withdraw Amount Must In Between ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
-          ]"
-          lazy-rules
-          hide-bottom-space
-        ></q-input>
+    <div class="withdrawal-form" v-if="withdrawalDialogTab === 'BANK'">
+      <div class="w-form-item w-form-item--bankcard">
+        <div class="w-form-label">Withdraw Amount</div>
+        <div class="w-form-input">
+          <q-input
+            type="number"
+            ref="amountRef"
+            filled
+            dense
+            clearable
+            placeholder="Enter Withdraw Amount"
+            v-model="withdrawInfo.amount"
+            :rules="[
+              (val) => !!val || 'Please Enter Withdraw Amount',
+              (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
+              (val) =>
+                (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
+                  val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
+                `Withdraw Amount Must In Between ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
+            ]"
+            lazy-rules
+            hide-bottom-space
+          ></q-input>
+        </div>
       </div>
-    </div>
-    <div class="w-form-item w-form-item--bankcard">
-      <div class="w-form-label">Bank Card</div>
-      <div class="w-form-input">
-        <q-select
-          ref="cardRef"
-          filled
-          dense
-          clearable
-          v-model="withdrawInfo.cardId"
-          @update:model-value="onCardChanged"
-          :label="`Select Bank Card`"
-          :options="bankCardList"
-          option-value="id"
-          emit-value
-          map-options
-          :rules="[(val) => !!val || 'Please Select A Bank Card']"
-          lazy-rules
-          hide-bottom-space
-        >
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
+      <div class="w-form-item w-form-item--bankcard">
+        <div class="w-form-label">Bank Card</div>
+        <div class="w-form-input">
+          <q-select
+            ref="cardRef"
+            filled
+            dense
+            clearable
+            v-model="withdrawInfo.cardId"
+            @update:model-value="onCardChanged"
+            :label="`Select Bank Card`"
+            :options="bankCardList"
+            option-value="id"
+            emit-value
+            map-options
+            :rules="[(val) => !!val || 'Please Select A Bank Card']"
+            lazy-rules
+            hide-bottom-space
+          >
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section avatar v-if="scope.opt.bankIcon">
+                  <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>
+                    {{ scope.opt.bankName }} - ****{{
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                    }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+            <template v-slot:selected-item="scope">
               <q-item-section avatar v-if="scope.opt.bankIcon">
-                <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                <img
+                  style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                />
               </q-item-section>
               <q-item-section>
-                <q-item-label>
-                  {{ scope.opt.bankName }} - ****{{
-                    scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
-                  }}
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                  {{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
                 </q-item-label>
               </q-item-section>
-            </q-item>
-          </template>
-          <template v-slot:selected-item="scope">
-            <q-item-section avatar v-if="scope.opt.bankIcon">
-              <img
-                style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                :src="imgURL + '/payment/' + scope.opt.bankIcon"
-              />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                {{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
-              </q-item-label>
-            </q-item-section>
-          </template>
-        </q-select>
+            </template>
+          </q-select>
+        </div>
+      </div>
+      <div class="w-form-item w-form-item--bankcard">
+        <div class="w-form-label">Account Holder Name</div>
+        <div class="w-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            placeholder="Enter Account Holder Name"
+            v-model="withdrawReadOnlyInfo.cardAccount"
+            readonly
+          ></q-input>
+        </div>
+      </div>
+      <div class="w-form-item w-form-item--bankcard">
+        <div class="w-form-label">Account Number</div>
+        <div class="w-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            placeholder="Enter Account Number"
+            v-model="withdrawReadOnlyInfo.cardNumber"
+            readonly
+          ></q-input>
+        </div>
+      </div>
+      <div class="w-form-item w-form-item--bankcard">
+        <div class="w-form-label">Bank IFSC Code</div>
+        <div class="w-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            placeholder="Enter Bank IFSC Code"
+            v-model="withdrawReadOnlyInfo.cardAddress"
+            readonly
+          ></q-input>
+        </div>
       </div>
     </div>
-    <div class="w-form-item w-form-item--bankcard">
-      <div class="w-form-label">Account Holder Name</div>
-      <div class="w-form-input">
-        <q-input
-          filled
-          dense
-          clearable
-          placeholder="Enter Account Holder Name"
-          v-model="withdrawReadOnlyInfo.cardAccount"
-          readonly
-        ></q-input>
-      </div>
-    </div>
-    <div class="w-form-item w-form-item--bankcard">
-      <div class="w-form-label">Account Number</div>
-      <div class="w-form-input">
-        <q-input
-          filled
-          dense
-          clearable
-          placeholder="Enter Account Number"
-          v-model="withdrawReadOnlyInfo.cardNumber"
-          readonly
-        ></q-input>
-      </div>
-    </div>
-    <div class="w-form-item w-form-item--bankcard">
-      <div class="w-form-label">Bank IFSC Code</div>
-      <div class="w-form-input">
-        <q-input
-          filled
-          dense
-          clearable
-          placeholder="Enter Bank IFSC Code"
-          v-model="withdrawReadOnlyInfo.cardAddress"
-          readonly
-        ></q-input>
-      </div>
-    </div>
-  </div>
 
-  <div class="withdrawal-form" v-if="withdrawalDialogTab === 'UPI'">
-    <div class="w-form-item w-form-item--UPI">
-      <div class="w-form-label">Withdraw Amount</div>
-      <div class="w-form-input">
-        <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
+    <div class="withdrawal-form" v-if="withdrawalDialogTab === 'UPI'">
+      <div class="w-form-item w-form-item--UPI">
+        <div class="w-form-label">Withdraw Amount</div>
+        <div class="w-form-input">
+          <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
+        </div>
+      </div>
+      <div class="w-form-item w-form-item--UPI">
+        <div class="w-form-label">VPA</div>
+        <div class="w-form-input">
+          <q-input filled dense clearable placeholder="Enter VPA"></q-input>
+        </div>
       </div>
     </div>
-    <div class="w-form-item w-form-item--UPI">
-      <div class="w-form-label">VPA</div>
-      <div class="w-form-input">
-        <q-input filled dense clearable placeholder="Enter VPA"></q-input>
-      </div>
-    </div>
-  </div>
 
-  <div class="btn-go" @click="submitWithdraw">Go</div>
-  <div class="bottom-tnc">3%+6Rs of the withdrawal amount would be deducted as bank commission</div>
+    <div class="btn-go" @click="submitWithdraw">Go</div>
+    <div class="bottom-tnc">3%+6Rs of the withdrawal amount would be deducted as bank commission</div>
+  </template>
 </template>
 
 <script setup>
@@ -251,7 +253,7 @@ const getWithdrawalMethods = () => {
 };
 
 const bankCardList = ref([]);
-const isNoBankCard = ref(false);
+const isNoBankCard = ref(true);
 const loadCards = () => {
   bankCardList.value = [];
 
