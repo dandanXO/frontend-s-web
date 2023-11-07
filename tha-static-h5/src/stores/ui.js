@@ -4,12 +4,14 @@ export const useUI = defineStore("ui-store", {
   state: () => {
     return {
       footer: true,
-      orientation: 'landscape',
-      themeColor: 'purple-8',
+      orientation: "landscape",
+      themeColor: "purple-8",
       leftDrawerOpen: false,
       appVersion: "",
-      isCardUpdate: false
+      isCardUpdate: false,
+      isAffiliateA: false,
     };
+
   },
   actions: {
     setScrollPosition: (axis = "vertical", offset = 0, duration = 0) => null,
@@ -20,16 +22,16 @@ export const useUI = defineStore("ui-store", {
       this.footer = true;
     },
     orientationPotrait() {
-      this.orientation = 'portrait'
+      this.orientation = "portrait";
     },
     orientationLandscape() {
-      this.orientation = 'landscape'
+      this.orientation = "landscape";
     },
-    setDrawer(status){
-      this.leftDrawerOpen= status;
+    setDrawer(status) {
+      this.leftDrawerOpen = status;
     },
-    setVersion(version){
-      this.appVersion= version;
-    }
-  }
+    setVersion(version) {
+      this.appVersion = version;
+    },
+  },
 });

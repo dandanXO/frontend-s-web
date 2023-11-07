@@ -114,13 +114,13 @@ export default route(function (/* { store, ssrContext } */) {
     const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
     if (affiliateCode && affiliateCode === "5D0E5C") {
       console.log("FB Pixel ID");
+      ui.isAffiliateA = true;
 
       fbq("init", "1404052756844706");
       fbq("track", "PageView");
-
       //For Testing Only.
-      // fbq('init', '6757510457678415');
-      // fbq('track', 'PageView');
+      // fbq("init", "6757510457678415");
+      // fbq("track", "PageView");
     } else if (affiliateCode && affiliateCode === "0DDC3F") {
       console.log("GA 780-462-3466");
       window.dataLayer = window.dataLayer || [];

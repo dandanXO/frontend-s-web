@@ -107,7 +107,7 @@
       <!--        rounded-->
       <!--        size="md"-->
       <!--      >-->
-      <!--        <img src="../assets/images/common/line-official.svg" />-->
+      <!--        <img src="../assets/images/common/line-official.svg"/>-->
       <!--        <span>LINE Login</span>-->
       <!--      </q-btn>-->
     </div>
@@ -118,7 +118,13 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import { Loading, Platform, useQuasar } from "quasar";
+import {
+  Loading,
+  LocalStorage,
+  Platform,
+  SessionStorage,
+  useQuasar,
+} from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
@@ -150,6 +156,16 @@ export default defineComponent({
     const verificationRef = ref();
     const router = useRouter();
     const route = useRoute();
+
+    //LINE.
+    const clientId = 2001411735;
+    const clientSecret = "4e90ef3551da974394de3486261f0b7f";
+    // const redirectUrl = encodeURI(`https://jolly88.com/login`);
+    const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
+    const nonce = `jolly88`;
+    const stateId = uuid.v1();
+    const checkIp = ref("");
+
     const getCode = () => {
       api
         .get("/member/verificationCode")
@@ -172,7 +188,6 @@ export default defineComponent({
     };
 
     const isCheckRmb = ref(false);
-    const stateId = ref(uuid.v1());
 
     const checkRememberPwd = () => {
       const d = localStorage.getItem("userpass");
@@ -250,17 +265,21 @@ export default defineComponent({
     const getLineCode = () => {
       const codeId = route.query.code;
       const state = route.query.state;
-      if (codeId && state && state === stateId.value) {
-        // alert("API")
+
+      const localState = LocalStorage.getItem("STATE_ID");
+      // alert(state);
+      // alert(localState);
+
+      if (codeId && state && state === localState) {
         axios
           .post(
             "https://api.line.me/oauth2/v2.1/token",
             qs.stringify({
               code: codeId,
               grant_type: "authorization_code",
-              client_id: 2001411735,
-              client_secret: "4e90ef3551da974394de3486261f0b7f",
-              redirect_uri: encodeURI(`http://192.168.79.63:9090/login`),
+              client_id: clientId,
+              client_secret: clientSecret,
+              redirect_uri: redirectUrl,
             })
           )
           .then((res) => {
@@ -299,6 +318,9 @@ export default defineComponent({
                   accessToken: accessToken,
                 };
                 var string = qs.stringify(loginInfo);
+
+                LocalStorage.remove("STATE_ID");
+
                 Loading.show({
                   message: "Logging in",
                 });
@@ -316,12 +338,11 @@ export default defineComponent({
     };
 
     const loginViaLine = () => {
-      // const redirectUrl = encodeURI(`https://jolly88.com/login`);
-      const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
-      const nonce = `jolly88`;
-      const stateUr = stateId.value;
+      const stateUr = stateId;
+      // alert(stateUr);
+      LocalStorage.set("STATE_ID", stateUr);
 
-      const url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2001411735&redirect_uri=${redirectUrl}&state=${stateUr}&scope=profile%20openid&nonce=${nonce}`;
+      const url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}&state=${stateUr}&scope=profile%20openid&nonce=${nonce}`;
       window.open(url, "_blank");
     };
 

@@ -19,9 +19,11 @@ import liff from "@line/liff";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { userStore } from "src/stores";
+import {useUI} from "stores/ui";
 
 const { t } = useI18n();
 const qs = require("qs");
+const ui= useUI()
 
 async function pDepo(deposit) {
   const obj = {
@@ -33,6 +35,8 @@ async function pDepo(deposit) {
   if (deposit.privilegeId) {
     obj.privilegeId = deposit.privilegeId;
   }
+
+
   await cashier
     .post("/session/payment/submit", qs.stringify(obj))
     .then((d) => {
