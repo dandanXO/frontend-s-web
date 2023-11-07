@@ -99,7 +99,7 @@
       />
 
       <q-btn
-        v-if="isMobile()"
+        v-if="!isH5()"
         class="common-large-btn line-login-btn"
         @click="loginViaLine"
         type="submit"
@@ -130,13 +130,13 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import liff from "@line/liff";
 import qs from "qs";
-import { isMobile } from "boot/utils";
+import { isMobile, isH5 } from "boot/utils";
 import { uuid } from "vue-uuid";
 import axios from "axios";
 
 export default defineComponent({
   name: "LoginPage",
-  methods: { isMobile },
+  methods: { isMobile, isH5 },
   setup() {
     const { t } = useI18n();
     const store = userStore();
