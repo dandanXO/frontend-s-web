@@ -28,7 +28,7 @@
         </div>
         <div v-else>请稍等{{ seconds }}秒</div>
         <div
-          v-if="isTransfer && !isTransferring"
+          v-if="!isTransferring"
           class="transferAll"
           @click="transferOutAll"
         >
@@ -371,9 +371,11 @@ onMounted(() => {
 
   .toggle-container {
     display: flex;
+    flex-direction: column;
+    padding: 0px 4px;
 
     .balance-transfer-note {
-      width: 50%;
+      width: 100%;
     }
 
     .balance-transfer-button {
