@@ -99,7 +99,7 @@
       />
 
       <q-btn
-        v-if="isH5()"
+        v-if="!isH5()"
         class="common-large-btn line-login-btn"
         @click="loginViaLine"
         type="submit"
