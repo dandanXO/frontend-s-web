@@ -98,18 +98,18 @@
         size="md"
       />
 
-      <!--      <q-btn-->
-      <!--        v-if="isMobile()"-->
-      <!--        class="common-large-btn line-login-btn"-->
-      <!--        @click="loginViaLine"-->
-      <!--        type="submit"-->
-      <!--        color="brand"-->
-      <!--        rounded-->
-      <!--        size="md"-->
-      <!--      >-->
-      <!--        <img src="../assets/images/common/line-official.svg"/>-->
-      <!--        <span>LINE Login</span>-->
-      <!--      </q-btn>-->
+      <q-btn
+        v-if="isMobile()"
+        class="common-large-btn line-login-btn"
+        @click="loginViaLine"
+        type="submit"
+        color="brand"
+        rounded
+        size="md"
+      >
+        <img src="../assets/images/common/line-official.svg" />
+        <span>LINE Login</span>
+      </q-btn>
     </div>
   </div>
 </template>
@@ -160,8 +160,8 @@ export default defineComponent({
     //LINE.
     const clientId = 2001411735;
     const clientSecret = "4e90ef3551da974394de3486261f0b7f";
-    // const redirectUrl = encodeURI(`https://jolly88.com/login`);
-    const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
+    const redirectUrl = encodeURI(`https://jolly88.com/login`);
+    // const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
     const nonce = `jolly88`;
     const stateId = uuid.v1();
     const checkIp = ref("");
