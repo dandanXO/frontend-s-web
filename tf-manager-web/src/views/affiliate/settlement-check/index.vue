@@ -392,7 +392,7 @@
             !hasRole(['SUB_TENANT']) &&
               (hasPermission(['sys:affiliate:settle:view']) ||
                 hasPermission(['sys:affiliate:settle:pay']) ||
-                hasPermission(['sys:affiliate:settle:edit']))
+                hasPermission(['sys:affiliate:settle:check-adjust']))
           "
         >
           <template #default="scope">
@@ -409,14 +409,14 @@
               type="danger"
               v-permission="['sys:affiliate:settle:pay']"
               @click="confirmPay(scope.row)"
-              v-if="scope.row.finalProfit > 0"
+              v-if="scope.row.finalProfit > 0 && scope.row.status === 'CHECKING'"
             >
               {{ t('fields.settlePay') }}
             </el-button>
             <el-button
               size="mini"
               type="success"
-              v-permission="['sys:affiliate:settle:edit']"
+              v-permission="['sys:affiliate:settle:check-adjust']"
               @click="showEdit(scope.row)"
               v-if="scope.row.adjustAmount === null"
             >
