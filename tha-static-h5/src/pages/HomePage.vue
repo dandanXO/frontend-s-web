@@ -26,6 +26,18 @@
       </template>
 
       <q-carousel-slide
+        name="mainSlide"
+        class="column no-wrap flex-center"
+        :img-src="
+          !$q.screen.gt.sm
+            ? require('../assets/images/index/main-home-banner-mobile.jpg')
+            : require('../assets/images/index/main-home-banner-desktop.jpg')
+        "
+      >
+        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-jolly88</h1>
+      </q-carousel-slide>
+
+      <q-carousel-slide
         v-for="(banner, i) in banners"
         :key="i"
         :name="i"
@@ -43,7 +55,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img src="../assets/images/menu/announce-icon.png"/>
+          <img src="../assets/images/menu/announce-icon.png" />
         </div>
         <marquee-text
           :repeat="announcementList.length"
@@ -67,7 +79,7 @@
         :class="currentSelectedMenu == 'slots' ? 'active-board' : ''"
         @click="switchMenu('slots')"
       >
-        <img src="../assets/images/index/home-slot.png"/>
+        <img src="../assets/images/index/home-slot.png" />
         <span>{{ $t("lang.slot_header") }}</span>
       </div>
       <div
@@ -75,7 +87,7 @@
         :class="currentSelectedMenu == 'sport' ? 'active-board' : ''"
         @click="switchMenu('sport')"
       >
-        <img src="../assets/images/index/home-sport.png"/>
+        <img src="../assets/images/index/home-sport.png" />
         <span>{{ $t("lang.sport_header") }}</span>
       </div>
 
@@ -84,7 +96,7 @@
         :class="currentSelectedMenu == 'live' ? 'active-board' : ''"
         @click="switchMenu('live')"
       >
-        <img src="../assets/images/index/home-live.png"/>
+        <img src="../assets/images/index/home-live.png" />
         <span>{{ $t("lang.live_header") }}</span>
       </div>
 
@@ -93,25 +105,25 @@
         :class="currentSelectedMenu == 'fish' ? 'active-board' : ''"
         @click="switchMenu('fish')"
       >
-        <img src="../assets/images/index/home-fish.png"/>
+        <img src="../assets/images/index/home-fish.png" />
         <span>{{ $t("lang.fish_header") }}</span>
       </div>
 
-<!--      <div-->
-<!--        class="game-board-item"-->
-<!--        :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"-->
-<!--        @click="switchMenu('xfj')"-->
-<!--      >-->
-<!--        <img src="../assets/images/index/home-cf.png"/>-->
-<!--        <span>{{ $t("lang.fish2_list") }}</span>-->
-<!--      </div>-->
+      <!--      <div-->
+      <!--        class="game-board-item"-->
+      <!--        :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"-->
+      <!--        @click="switchMenu('xfj')"-->
+      <!--      >-->
+      <!--        <img src="../assets/images/index/home-cf.png"/>-->
+      <!--        <span>{{ $t("lang.fish2_list") }}</span>-->
+      <!--      </div>-->
 
       <div
         class="game-board-item"
         :class="currentSelectedMenu == 'casual' ? 'active-board' : ''"
         @click="switchMenu('casual')"
       >
-        <img src="../assets/images/index/home-esport.png"/>
+        <img src="../assets/images/index/home-esport.png" />
         <span>Mini Game</span>
       </div>
 
@@ -120,7 +132,7 @@
         :class="currentSelectedMenu == 'lottery' ? 'active-board' : ''"
         @click="switchMenu('lottery')"
       >
-        <img src="../assets/images/index/home-lottery.png"/>
+        <img src="../assets/images/index/home-lottery.png" />
         <span>{{ $t("lang.lottery_list") }}</span>
       </div>
 
@@ -196,7 +208,7 @@
         v-if="currentSelectedMenu === 'lottery'"
       >
         <div v-if="lotteryGames.length === 0" class="coming-soon-div">
-          <img src="../assets/home/coming-soon-img.png"/>
+          <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
       </div>
@@ -208,7 +220,7 @@
         v-if="currentSelectedMenu === 'xfj'"
       >
         <div v-if="xfjGames.length === 0" class="coming-soon-div">
-          <img src="../assets/home/coming-soon-img.png"/>
+          <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
 
@@ -258,7 +270,7 @@
           class="game-item btn-pointer btn-slot-game"
           @click="showFavourite()"
         >
-          <img :src="require('../assets/home/slot/slot-favourite-board.png')"/>
+          <img :src="require('../assets/home/slot/slot-favourite-board.png')" />
         </div>
 
         <template v-for="p in platforms" :key="p">
@@ -282,7 +294,7 @@
         </template>
 
         <div class="game-item">
-          <img :src="require('../assets/home/slot/' + 'StayTuned' + '.png')"/>
+          <img :src="require('../assets/home/slot/' + 'StayTuned' + '.png')" />
         </div>
       </div>
     </Transition>
@@ -307,7 +319,7 @@
               :class="{ active: selectedPlatId === -99 }"
               @click="showFavourite()"
             >
-              <img :src="require('../assets/home/slot/favourite-icon.png')"/>
+              <img :src="require('../assets/home/slot/favourite-icon.png')" />
             </div>
 
             <div
@@ -333,11 +345,11 @@
               <!--                <img :src="require('../assets/logo/' + p.code + '.png')" />-->
             </div>
           </div>
-          <q-scroll-observer axis="vertical"/>
+          <q-scroll-observer axis="vertical" />
         </q-scroll-area>
 
         <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="ui.themeColor" size="8em"/>
+          <q-spinner-hourglass :color="ui.themeColor" size="8em" />
         </div>
 
         <q-scroll-area
@@ -417,7 +429,7 @@
           </div>
 
           <div class="coming-soon-div" v-else>
-            <img src="../assets/home/coming-soon-img.png"/>
+            <img src="../assets/home/coming-soon-img.png" />
             <span>{{ $t("lang.no_fav_game_yet") }}</span>
           </div>
         </q-scroll-area>
@@ -543,8 +555,8 @@
               <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
             </div>
           </div>
-          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
-          <q-scroll-observer @scroll="scrolling"/>
+          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+          <q-scroll-observer @scroll="scrolling" />
         </q-scroll-area>
       </div>
     </Transition>
@@ -612,11 +624,11 @@
               ></div>
             </div>
           </div>
-          <q-scroll-observer axis="vertical"/>
+          <q-scroll-observer axis="vertical" />
         </q-scroll-area>
 
         <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="ui.themeColor" size="8em"/>
+          <q-spinner-hourglass :color="ui.themeColor" size="8em" />
         </div>
         <q-scroll-area
           v-if="!isLoading"
@@ -720,8 +732,8 @@
               <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
             </div>
           </div>
-          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
-          <q-scroll-observer @scroll="scrolling"/>
+          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+          <q-scroll-observer @scroll="scrolling" />
         </q-scroll-area>
       </div>
     </Transition>
@@ -733,9 +745,8 @@
         v-if="currentSelectedMenu === 'casual' && !isShow"
       >
         <template v-for="miniplat in platformMinigame" :key="miniplat.id">
-
           <div
-            v-if="miniplat.code ==='Spribe'"
+            v-if="miniplat.code === 'Spribe'"
             class="game-item btn-pointer"
             @click="playGame(miniplat.name, miniplat.code, 'aviator')"
           >
@@ -770,8 +781,6 @@
               }"
             ></div>
           </div>
-
-
         </template>
       </div>
     </Transition>
@@ -782,31 +791,30 @@
         v-if="currentSelectedMenu === 'casual' && isShow"
       >
         <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="ui.themeColor" size="8em"/>
+          <q-spinner-hourglass :color="ui.themeColor" size="8em" />
         </div>
         <template v-if="!isLoading">
-
           <template v-for="(game, index) in miniGames" :key="index">
             <div
               class="game-item btn-pointer btn-slot-game"
-              @click="playGame(game.name, selectedPlat.code , game.code)"
+              @click="playGame(game.name, selectedPlat.code, game.code)"
             >
               <div
                 class="platform-img"
                 :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${game.icon})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })(),
-              }"
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${game.icon})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })(),
+                }"
               ></div>
             </div>
           </template>
 
-          <template v-if="selectedPlat.code ==='TFGaming'">
+          <template v-if="selectedPlat.code === 'TFGaming'">
             <div
               class="game-item minigame-select-div"
               v-for="(game, index) in miniGamesMore"
@@ -815,25 +823,21 @@
               @mouseover="showTypeWeb(game.id)"
               @mouseleave="showTypeWeb(0)"
             >
-              <img :src="game.logo"/>
+              <img :src="game.logo" />
 
               <transition appear>
                 <div class="select-type-div" v-if="showMiniType == game.id">
                   <div
                     class="game-type btn-pointer"
                     id="copper-type"
-                    @click="
-                    playGame(game.name, 'TFGaming', game.copper)
-                  "
+                    @click="playGame(game.name, 'TFGaming', game.copper)"
                   >
                     10 - 3,000
                   </div>
                   <div
                     class="game-type btn-pointer"
                     id="silver-type"
-                    @click="
-                    playGame(game.id, 'TFGaming', game.silver)
-                  "
+                    @click="playGame(game.id, 'TFGaming', game.silver)"
                   >
                     500 - 100K
                   </div>
@@ -848,7 +852,6 @@
               </transition>
             </div>
           </template>
-
         </template>
       </div>
     </Transition>
@@ -857,30 +860,30 @@
   <div class="home-bottom-section">
     <div class="marquee">
       <Vue3Marquee pause-on-hover pause-on-click>
-        <img src="../assets/logo/AE.png" height="30"/>
-        <img src="../assets/logo/AMBSLOT.png" height="30"/>
-        <img src="../assets/logo/ATA.png" height="30"/>
-        <img src="../assets/logo/CQ9.png" height="30"/>
-        <img src="../assets/logo/JILI.png" height="30"/>
-        <img src="../assets/logo/JOKER.png" height="30"/>
-        <img src="../assets/logo/KA.png" height="30"/>
-        <img src="../assets/logo/LIVE22.png" height="30"/>
-        <img src="../assets/logo/MANNAPLAY.png" height="30"/>
-        <img src="../assets/logo/PG.png" height="30"/>
-        <img src="../assets/logo/PNG.png" height="30"/>
-        <img src="../assets/logo/PP.png" height="30"/>
-        <img src="../assets/logo/SA.png" height="30"/>
-        <img src="../assets/logo/SLOTXO.png" height="30"/>
-        <img src="../assets/logo/TF88.png" height="30"/>
-        <img src="../assets/logo/WM.png" height="30"/>
-        <img src="../assets/logo/YGG.png" height="30"/>
-        <img src="../assets/logo/CG.png" height="30"/>
-        <img src="../assets/logo/SP.png" height="30"/>
+        <img src="../assets/logo/AE.png" height="30" />
+        <img src="../assets/logo/AMBSLOT.png" height="30" />
+        <img src="../assets/logo/ATA.png" height="30" />
+        <img src="../assets/logo/CQ9.png" height="30" />
+        <img src="../assets/logo/JILI.png" height="30" />
+        <img src="../assets/logo/JOKER.png" height="30" />
+        <img src="../assets/logo/KA.png" height="30" />
+        <img src="../assets/logo/LIVE22.png" height="30" />
+        <img src="../assets/logo/MANNAPLAY.png" height="30" />
+        <img src="../assets/logo/PG.png" height="30" />
+        <img src="../assets/logo/PNG.png" height="30" />
+        <img src="../assets/logo/PP.png" height="30" />
+        <img src="../assets/logo/SA.png" height="30" />
+        <img src="../assets/logo/SLOTXO.png" height="30" />
+        <img src="../assets/logo/TF88.png" height="30" />
+        <img src="../assets/logo/WM.png" height="30" />
+        <img src="../assets/logo/YGG.png" height="30" />
+        <img src="../assets/logo/CG.png" height="30" />
+        <img src="../assets/logo/SP.png" height="30" />
       </Vue3Marquee>
     </div>
 
     <div class="bottom-footer">
-      <img class="footer-logo" src="../assets/logo.png"/>
+      <img class="footer-logo" src="../assets/logo.png" />
       <p>{{ $t("lang.footer_tnc") }}</p>
 
       <span>{{ $t("lang.footer_all_rights") }}</span>
@@ -922,7 +925,7 @@
           />
         </q-tabs>
 
-        <q-separator/>
+        <q-separator />
 
         <q-tab-panels v-model="activeKey" animated>
           <q-tab-panel
@@ -997,13 +1000,13 @@
         v-close-popup
       />
 
-      <img src="../assets/images/common/home-popup-img.png"/>
+      <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
         <router-link to="/promo?id=80">
           <div class="popup-item">
             <span
-            >แนะนำเพื่อน รับโบนัสสูงถึง <em>6,888</em> รับเงินคืนสูงสุด
+              >แนะนำเพื่อน รับโบนัสสูงถึง <em>6,888</em> รับเงินคืนสูงสุด
               <em>20,000</em></span
             >
           </div>
@@ -1011,14 +1014,14 @@
         <router-link to="/promo?id=75">
           <div class="popup-item">
             <span
-            >สมาชิกใหม่ รับฟรี <em>50</em> ถอนสูงสุดถึง <em>1,000</em></span
+              >สมาชิกใหม่ รับฟรี <em>50</em> ถอนสูงสุดถึง <em>1,000</em></span
             >
           </div>
         </router-link>
         <router-link to="/promo?id=76">
           <div class="popup-item">
             <span
-            >เลือกรับ <em>100%-150%</em> รับสูงสุด
+              >เลือกรับ <em>100%-150%</em> รับสูงสุด
               <em>6,000</em> ถอนไม่อั้น</span
             >
           </div>
@@ -1026,7 +1029,7 @@
         <router-link to="/promo?id=77">
           <div class="popup-item">
             <span
-            >โบนัสสูงสุด <em>30%</em> รับ <em>2,000</em> ทุกวัน
+              >โบนัสสูงสุด <em>30%</em> รับ <em>2,000</em> ทุกวัน
               ถอนไม่อั้น</span
             >
           </div>
@@ -1048,25 +1051,25 @@
 
 <script>
 /* eslint-disable */
-import {defineComponent, onMounted, ref, reactive, computed} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {api} from "boot/axios";
-import {cached} from "boot/cache";
-import {useQuasar, Platform, SessionStorage} from "quasar";
-import {userStore} from "stores/index";
+import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { api } from "boot/axios";
+import { cached } from "boot/cache";
+import { useQuasar, Platform, SessionStorage } from "quasar";
+import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import * as _ from "lodash";
 import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
-import {Vue3Marquee} from "vue3-marquee";
-import {RiStarLine, RiStarFill} from "vue-remix-icons";
+import { Vue3Marquee } from "vue3-marquee";
+import { RiStarLine, RiStarFill } from "vue-remix-icons";
 
-import {useUI} from "stores/ui";
-import {isMobile} from "boot/utils";
-import {App} from "@capacitor/app";
+import { useUI } from "stores/ui";
+import { isMobile } from "boot/utils";
+import { App } from "@capacitor/app";
 import liff from "@line/liff";
 import qs from "qs";
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1084,7 +1087,7 @@ export default defineComponent({
   },
   setup() {
     const $q = useQuasar();
-    const {t} = useI18n();
+    const { t } = useI18n();
     const ui = useUI();
     const siteId = process.env.SITEID;
     // ui.$onAction(({ name, args }) => {
@@ -1225,9 +1228,7 @@ export default defineComponent({
     ];
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
-    const esportsGame = ref([
-
-    ]);
+    const esportsGame = ref([]);
 
     // {
     //   code: "TFGaming",
@@ -1496,7 +1497,9 @@ export default defineComponent({
       // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
     };
 
-    var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
+    var platformApiUrl = store.hasToken()
+      ? "/session/loggedInPlatform"
+      : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
     const getPlatList = () => {
       cached
@@ -1507,11 +1510,11 @@ export default defineComponent({
           })
         )
         .then((data) => {
-          if (store.memberType !== 'TEST') {
+          if (store.memberType !== "TEST") {
             console.log(store.memberType);
             data = data.filter((element) => {
               return element.status === "OPEN";
-            })
+            });
           }
           console.log(data);
 
@@ -1524,9 +1527,9 @@ export default defineComponent({
           platformMinigame.value = data.filter((element) =>
             element.gameType.includes("CASUAL")
           );
-          platformMinigame.value.push(...data.filter((element) =>
-            element.gameType.includes("ESPORT")
-          ))
+          platformMinigame.value.push(
+            ...data.filter((element) => element.gameType.includes("ESPORT"))
+          );
           liveCasinoGames.value = data.filter((element) =>
             element.gameType.includes("LIVE")
           );
@@ -1619,7 +1622,7 @@ export default defineComponent({
     };
     const gotoPromo = (banner) => {
       if (banner.promoPageId) {
-        router.push({path: "/promo", query: {id: banner.promoPageId}});
+        router.push({ path: "/promo", query: { id: banner.promoPageId } });
       } else if (banner.redirectUrl) {
         const redirectPage = "/" + banner.redirectUrl;
         router.push(`${redirectPage}`);
@@ -1710,7 +1713,7 @@ export default defineComponent({
     const toggleFavGame = (gameId, status) => {
       if (status === true) {
         api
-          .post("/session/member/fav-games", qs.stringify({gameId: gameId}))
+          .post("/session/member/fav-games", qs.stringify({ gameId: gameId }))
           .then((res) => {
             // console.log(res);
             $q.notify({
@@ -1719,7 +1722,7 @@ export default defineComponent({
               message: t("lang.fav_game_added"),
               icon: "report_problem",
             });
-            favGamesList.value.push({id: gameId});
+            favGamesList.value.push({ id: gameId });
           });
       } else {
         api.delete("/session/member/fav-games?gameId=" + gameId).then((res) => {
@@ -1829,7 +1832,7 @@ export default defineComponent({
 
     return {
       imageLoading,
-      slide: ref(0),
+      slide: ref("mainSlide"),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
       store,
@@ -2238,7 +2241,7 @@ export default defineComponent({
           filter: grayscale(0);
         }
 
-        .platform-img{
+        .platform-img {
           filter: grayscale(0);
         }
 
@@ -2639,6 +2642,20 @@ export default defineComponent({
         font-style: normal;
       }
     }
+  }
+}
+
+.main-slide-txt {
+  font-size: 1.5rem;
+  max-width: 10rem;
+  margin-right: auto;
+  line-height: 1.4;
+
+  @media (min-width: 769px) {
+    font-size: 2rem;
+    max-width: 15rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 </style>
