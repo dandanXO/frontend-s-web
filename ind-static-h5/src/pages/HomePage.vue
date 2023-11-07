@@ -1288,10 +1288,9 @@ onMounted(() => {
 
 .announcement-close {
   position: absolute;
-  bottom: 20px;
+  right: 4px;
+  top: 80px;
   z-index: 3;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .popout-dialog {

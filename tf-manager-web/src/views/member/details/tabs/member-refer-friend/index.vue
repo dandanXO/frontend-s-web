@@ -40,7 +40,7 @@
                        align="center" min-width="180"
       >
         <template #default="scope">
-          <span v-formatter="{data: scope.row.regTime,timeZone: timeZone,type: 'date'}" />
+          <span v-formatter="{data: scope.row.regTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.depositSerialNo')" prop="depositSerialNumber"
@@ -69,7 +69,7 @@
                        align="center" min-width="180"
       >
         <template #default="scope">
-          <span v-if="scope.row.dateReceived !== null" v-formatter="{data: scope.row.dateReceived,timeZone: timeZone,type: 'date'}" />
+          <span v-if="scope.row.dateReceived !== null" v-formatter="{data: scope.row.dateReceived,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
           <span v-else>-</span>
         </template>
       </el-table-column> -->
@@ -104,10 +104,6 @@ export default defineComponent({
     siteId: {
       type: String,
       required: true
-    },
-    timeZone: {
-      type: String,
-      required: true,
     }
   },
   setup(props) {

@@ -88,7 +88,7 @@
             v-if="scope.row.createTime !== null"
             v-formatter="{
               data: scope.row.createTime,
-              timeZone: siteTimeZone.timeZone,
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -128,9 +128,7 @@ const startDate = new Date();
 startDate.setDate(startDate.getDate() - 2);
 const defaultStartDate = convertDate(startDate);
 const defaultEndDate = convertDate(new Date());
-const siteTimeZone = reactive({
-  timeZone: null,
-});
+let timeZone = null
 
 const request = reactive({
   size: 30,
@@ -190,9 +188,8 @@ async function loadFreezeRecords() {
   const { data: ret } = await getFreezeRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.loading = false;
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
 }
 
 function changePage(page) {

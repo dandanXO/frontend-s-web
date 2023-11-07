@@ -158,7 +158,7 @@
             <span v-if="scope.row.createTime === null">-</span>
             <span
               v-if="scope.row.createTime !== null"
-              v-formatter="{data: scope.row.createTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -206,9 +206,7 @@ const table = ref(null);
 const siteList = reactive({
   list: []
 });
-const siteTimeZone = reactive({
-  timeZone: null,
-});
+let timeZone = null;
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -274,10 +272,7 @@ async function loadAffiliateDomains() {
 
   page.pages = result.data.pages;
   page.records = result.data.records;
-
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

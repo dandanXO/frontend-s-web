@@ -91,7 +91,7 @@
             v-if="scope.row.updateTime !== null"
             v-formatter="{
               data: scope.row.updateTime,
-              timeZone: scope.row.siteTimeZone,
+              timeZone: scope.row.timeZone,
               type: 'date',
             }"
           />
@@ -154,6 +154,11 @@ async function loadSitePlatform() {
   page.loading = true
   const { data: ret } = await getSitePlatformList(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
   page.loading = false
 }

@@ -109,7 +109,7 @@
           <span v-if="scope.row.updateTime === null">-</span>
           <span
             v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -215,6 +215,11 @@ async function loadAffiliateCommission() {
   });
   const { data: ret } = await getAffiliateCommission(query);
   page.pages = ret.pages;
+  ret.records.forEach(data => {
+    data.timeZone = siteList.list.find(e => e.siteName === data.site) !== undefined
+      ? siteList.list.find(e => e.siteName === data.site).timeZone
+      : null
+  });
   page.records = ret.records;
   page.loading = false;
 }

@@ -217,7 +217,23 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" />
+        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
+          <template #label>
+            <div>
+              <svg-icon icon-class="monitor" style="height: 16px;width: 16px;" />
+              {{ t('fields.securityQuestion') }}
+            </div>
+          </template>
+          <el-tag v-if="memberDetail.hasSecurityQuestion" size="mini" type="success">
+            {{ t('fields.binded') }}
+          </el-tag>
+          <el-tag v-else size="mini" type="danger">
+            {{ t('fields.notBinded') }}
+          </el-tag>
+          <el-button v-if="hasPermission(['sys:affiliate:update:security-question']) && memberDetail.hasSecurityQuestion" type="info" size="mini" style="float: right;" v-permission="['sys:affiliate:update:security-question']" @click="resetSecurityQuestion">
+            {{ t('fields.reset') }}
+          </el-button>
+        </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" />
       </el-descriptions>
     </el-card>
@@ -357,15 +373,7 @@
                 :empty-text="t('fields.noData')"
       >
         <el-table-column prop="remark" :label="t('fields.remark')" />
-        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200px">
-          <template #default="scope">
-            <span v-if="scope.row.createTime === null">-</span>
-            <span
-              v-if="scope.row.createTime !== null"
-              v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}"
-            />
-          </template>
-        </el-table-column>
+        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200px" />
         <el-table-column prop="createBy" :label="t('fields.createBy')" width="200px" />
         <el-table-column align="right" fixed="right">
           <template #default="scope">
@@ -409,7 +417,7 @@
         v-loading="loading.loginInfo"
       >
         <el-descriptions-item label-align="left" :label="t('fields.registerTime')" label-class-name="member-label" class-name="member-context">
-          <span v-if="memberDetail.regTime !== null" v-formatter="{data: memberDetail.regTime,timeZone: timeZone,type: 'date'}" />
+          <span v-if="memberDetail.regTime !== null" v-formatter="{data: memberDetail.regTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
           <span v-if="memberDetail.regTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.registerIp')" label-class-name="member-label" class-name="member-context">
@@ -421,7 +429,7 @@
           <span v-if="memberDetail.regAddress === '-,-,-' || memberDetail.regAddress === 'null,null,null' || memberDetail.regAddress === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.lastLoginTime')" label-class-name="member-label" class-name="member-context">
-          <span v-if="memberDetail.lastLoginTime === null" v-formatter="{data: memberDetail.lastLoginTime,timeZone: timeZone,type: 'date'}" />
+          <span v-if="memberDetail.lastLoginTime === null" v-formatter="{data: memberDetail.lastLoginTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
           <span v-if="memberDetail.lastLoginTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.lastLoginIp')" label-class-name="member-label" class-name="member-context">
@@ -621,13 +629,13 @@
 import { computed, defineProps, nextTick, onMounted, reactive, ref } from "vue";
 import { useRoute } from 'vue-router'
 import { hasPermission } from "../../../../../utils/util";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { required, size } from "../../../../../utils/validate";
 import { getAffiliateInfo, getMemberBalance, getMemberEmail, getMemberRealName, getMemberTelephone } from "../../../../../api/member";
 import { getFinancialLevels } from "../../../../../api/financial-level";
 import { getAffiliateRecord } from "../../../../../api/affiliate-record";
 import {
-  addAffiliateRemark, approveAffiliate, changeNewAffilaite, deleteAffiliateRemark, disableAffiliate,
+  addAffiliateRemark, approveAffiliate, changeNewAffilaite, deleteAffiliateRemark, deleteSecurityQuestion, disableAffiliate,
   editAffiliateRemark, getAffiliateDetails, getAffiliateRemark, updateAffiliateFinancial,
   updateAffiliatePassword, updateCommissionModel, updateCommissionRate, updateTimeType
 } from "../../../../../api/member-affiliate";
@@ -640,10 +648,6 @@ const LOGIN_USER_NAME = computed(() => store.state.user.name);
 const link = ref("");
 const props = defineProps({
   affId: {
-    type: String,
-    required: true
-  },
-  timeZone: {
     type: String,
     required: true
   }
@@ -1142,6 +1146,24 @@ async function changeAffiliate() {
     superiorAffiliateDetail[detailField] = aff[detailField];
   });
   loading.superiorAffiliateInfo = false;
+}
+
+async function resetSecurityQuestion() {
+  ElMessageBox.confirm(
+    t('message.confirmReset'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    await deleteSecurityQuestion(props.affId);
+    const data = await getAffiliateDetails(props.affId, site.id);
+    Object.keys({ ...data.data }).forEach(detailField => {
+      memberDetail[detailField] = data.data[detailField];
+    });
+    ElMessage({ message: t('message.resetSuccess'), type: "success" });
+  });
 }
 
 onMounted(async () => {

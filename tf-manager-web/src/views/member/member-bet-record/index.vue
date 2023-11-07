@@ -198,7 +198,7 @@
             <span v-if="scope.row.betTime === null">-</span>
             <span
               v-if="scope.row.betTime !== null"
-              v-formatter="{data: scope.row.betTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.betTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -207,7 +207,7 @@
             <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
             <span
               v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
-              v-formatter="{data: scope.row.settleTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.settleTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -304,9 +304,7 @@ const platform = reactive({
 const date = new Date();
 const defaultStartDate = convertStartDate(date);
 const defaultEndDate = convertDate(date);
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null;
 
 const request = reactive({
   size: 20,
@@ -416,8 +414,7 @@ async function loadMemberBetRecords() {
   total.totalBet = t.totalBet;
   total.totalPayout = t.totalPayout;
 
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

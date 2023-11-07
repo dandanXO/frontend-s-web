@@ -364,7 +364,7 @@
             v-if="scope.row.createTime !== null"
             v-formatter="{
               data: scope.row.createTime,
-              timeZone: siteTimeZone.timeZone,
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -472,9 +472,7 @@ const startDate = new Date();
 startDate.setDate(startDate.getDate() - 2);
 const defaultStartDate = convertDate(startDate);
 const defaultEndDate = convertDate(new Date());
-const siteTimeZone = reactive({
-  timeZone: null,
-});
+let timeZone = null;
 
 const page = reactive({
   pages: 0,
@@ -644,8 +642,7 @@ async function loadMemberAmountAdjust() {
       page.totalDeduct = deductAmount;
     }
   }
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

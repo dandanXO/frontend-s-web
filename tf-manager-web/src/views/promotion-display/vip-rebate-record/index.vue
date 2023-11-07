@@ -158,7 +158,7 @@
             <span v-if="scope.row.distributeTime === null">-</span>
             <span
               v-if="scope.row.distributeTime !== null"
-              v-formatter="{data: scope.row.distributeTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.distributeTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -173,7 +173,7 @@
             <span v-if="scope.row.updateTime === null">-</span>
             <span
               v-if="scope.row.updateTime !== null"
-              v-formatter="{data: scope.row.updateTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.updateTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -348,9 +348,7 @@ const site = ref(null)
 const siteList = reactive({
   list: []
 });
-const siteTimeZone = reactive({
-  timeZone: null,
-});
+let timeZone = null;
 const exportPercentage = ref(0);
 const uiControl = reactive({
   dialogTitle: "",
@@ -476,9 +474,7 @@ async function loadVipRebateRecords() {
   const { data: total } = await getTotal(query);
   page.totalRebateAmount = total;
 
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

@@ -147,7 +147,7 @@
       </el-table-column>
       <el-table-column
         prop="fdAverage"
-        :label="t('fields.ftdAverage')"
+        :label="t('fields.depositAverage')"
         width="120"
       >
         <template #default="scope1">
@@ -478,7 +478,7 @@ function getSummaries(param) {
         } else if (index === 3) {
         } else {
           var prop = column.property;
-          if (index === 1 || index === 2 || index === 7 || index === 9 || index === 11) {
+          if (index === 1 || index === 2 || index === 7 || index === 9 || index === 11 || index === 13) {
             sums[index] = totalPage.records[0][prop];
           } else {
             sums[index] = "$" + parseFloat(totalPage.records[0][prop]).toLocaleString('en-US', {

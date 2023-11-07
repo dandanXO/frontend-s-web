@@ -62,7 +62,7 @@
                        sortable
       >
         <template #default="scope">
-          <span v-formatter="{data: scope.row.transferDate,timeZone: timeZone,type: 'date'}" />
+          <span v-formatter="{data: scope.row.transferDate,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
         </template>
       </el-table-column>
     </el-table>
@@ -93,10 +93,6 @@ export default defineComponent({
     mbrId: {
       type: String,
       required: true
-    },
-    timeZone: {
-      type: String,
-      required: true,
     }
   },
   setup(props) {
