@@ -253,7 +253,7 @@ const getWithdrawalMethods = () => {
 };
 
 const bankCardList = ref([]);
-const isNoBankCard = ref(true);
+const isNoBankCard = ref(false);
 const loadCards = () => {
   bankCardList.value = [];
 
