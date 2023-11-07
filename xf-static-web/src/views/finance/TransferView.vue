@@ -15,7 +15,6 @@
           </div> -->
 
           <el-button
-            v-if="!autoTransfer"
             type="success"
             class="common-btn"
             @click="transferOutAllModal"

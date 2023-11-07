@@ -6,109 +6,52 @@ import LocalStorage from "boot/local-storage"
 import axios from "axios";
 import {getRndInteger} from "boot/utils";
 
-const rstArray = Object.values(process.env.RST_API);
-const evtArray = Object.values(process.env.EVT_API);
-const crtArray = Object.values(process.env.CR_API);
+const rstArray = process.env.RST_API;
+const crArray = process.env.CR_API;
+const evtArray =process.env.EVT_API;
 
-var rstApi = getRstApi();
-var crtApi = getCrtApi();
-var evtApi = getEvtApi();
+var rstApi = getInitApi(rstArray, "XF_H5_RST_URL");
+var crtApi = getInitApi(crArray,"XF_H5_CRT_URL");
+var evtApi = getInitApi(evtArray,"XF_H5_EVT_URL");
+
 
 const api = axios.create({baseURL: rstApi});
 const cashier = axios.create({baseURL: crtApi});
 const eventapi = axios.create({baseURL: evtApi});
 
-function getCrtApi() {
-    var successCrtUrl = localStorage.getItem("successCrtUrl");
-    if (successCrtUrl) {
+function getInitApi(apiLinks, urlLsName) {
+  var successRstUrl = localStorage.getItem(urlLsName);
+  if (successRstUrl) {
+    axios.get(successRstUrl + "/ping").then((res) => {
+      console.log(res);
+      if (res.status !== 200) {
+        localStorage.removeItem(urlLsName);
+      }
+    }).catch((err) => {
+      console.log(err);
+      localStorage.removeItem(urlLsName);
+    })
 
-        axios.get(successCrtUrl+ "/ping").then((res) => {
-            console.log(res);
-            if (res.status !== 200) {
-                localStorage.removeItem("successCrtUrl");
-            }
-        }).catch((err) => {
-            console.log(err);
-            localStorage.removeItem("successCrtUrl");
-        })
-
-        return successCrtUrl;
-    } else {
-        var crtTestApi = crtArray[getRndInteger(0, crtArray.length)];
-
-        axios.get(crtTestApi+ "/ping").then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-                localStorage.setItem("successCrtUrl", crtTestApi);
-            } else {
-                localStorage.removeItem("successCrtUrl");
-            }
-        })
-
-        return crtTestApi;
+    return successRstUrl;
+  } else {
+    if(typeof apiLinks === 'string' || apiLinks instanceof String){
+      var initApi = apiLinks;
+    }else{
+      var apiLists = Object.values(apiLinks);
+      var initApi = apiLists[getRndInteger(0, apiLists.length)];
     }
-}
 
-function getEvtApi() {
-    var successEvtUrl = localStorage.getItem("successEvtUrl");
-    if (successEvtUrl) {
 
-        axios.get(successEvtUrl + "/ping").then((res) => {
-            console.log(res);
-            if (res.status !== 200) {
-                localStorage.removeItem("successEvtUrl");
-            }
-        }).catch((err) => {
-            console.log(err);
-            localStorage.removeItem("successEvtUrl");
-        })
-
-        return successEvtUrl;
-    } else {
-        var testEvtApi = evtArray[getRndInteger(0, evtArray.length)];
-
-        axios.get(testEvtApi + "/ping").then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-                localStorage.setItem("successEvtUrl", testEvtApi);
-            } else {
-                localStorage.removeItem("successEvtUrl");
-            }
-        })
-
-        return testEvtApi;
-    }
-}
-
-function getRstApi() {
-    var successRstUrl = localStorage.getItem("successRstUrl");
-    if (successRstUrl) {
-
-        axios.get(successRstUrl + "/ping").then((res) => {
-            console.log(res);
-            if (res.status !== 200) {
-                localStorage.removeItem("successRstUrl");
-            }
-        }).catch((err) => {
-            console.log(err);
-            localStorage.removeItem("successRstUrl");
-        })
-
-        return successRstUrl;
-    } else {
-        var testApi = rstArray[getRndInteger(0, rstArray.length)];
-
-        axios.get(testApi + "/ping").then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-                localStorage.setItem("successRstUrl", testApi);
-            } else {
-                localStorage.removeItem("successRstUrl");
-            }
-        })
-
-        return testApi;
-    }
+    axios.get(initApi + "/ping").then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem(urlLsName, initApi);
+      } else {
+        localStorage.removeItem(urlLsName);
+      }
+    })
+    return initApi;
+  }
 }
 
 export default boot(({app, router}) => {
