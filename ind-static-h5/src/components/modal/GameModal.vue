@@ -48,6 +48,15 @@
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
       <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
     </q-dialog>
+
+    <q-dialog v-model="isExitDialogOpen" class="gameDialog" style="width: 100%; margin: 0 auto">
+      <div class="popout-dialog">
+        <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <q-btn label="Confirm" class="bg-yellow text-black" no-caps @click="closeDialog()" v-close-popup />
+        </div>
+      </div>
+    </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
@@ -116,24 +125,9 @@ function selectPayType(value) {
 }
 
 const drawerVisible = ref(false);
-const exitClickCount = ref(0);
-
+const isExitDialogOpen = ref(false);
 const onExitClick = () => {
-  if (exitClickCount.value === 1) {
-    closeDialog();
-    exitClickCount.value = 0;
-  } else {
-    exitClickCount.value++;
-    Notify.create({
-      timeout: 1000,
-      position: "top",
-      message: "Tap one more time to exit"
-    });
-
-    setTimeout(() => {
-      exitClickCount.value = 0;
-    }, 2000);
-  }
+  isExitDialogOpen.value = true;
 };
 
 const router = useRouter();
