@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <PanelWrapper>
-      <template #title>{{ $t('lang.select_deposit_method')}}</template>
+      <template #title>{{ $t("lang.select_deposit_method") }}</template>
       <div class="node-wrapper">
         <Node
           :level="1"
@@ -13,7 +13,7 @@
       </div>
       <div class="deposit-container">
         <q-form ref="depositForm" class="q-gutter-y-xs">
-          <p>{{  $t('lang.please_enter_deposit_amount') }}</p>
+          <p>{{ $t("lang.please_enter_deposit_amount") }}</p>
           <q-input
             v-if="amountList.length === 0"
             ref="depositAmtRef"
@@ -44,10 +44,7 @@
             dense
           />
 
-          <div
-            v-if="isUSDT && activeMethod.currencyRate"
-            class="q-pb-md"
-          >
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md">
             <span style="color: #9bffd1"
               >1.00 USDT ≈ {{ activeMethod.currencyRate }} THB</span
             >
@@ -96,7 +93,7 @@
           </q-select>
           <div class="q-mt-md" v-html="activeMethod.msg"></div>
           <div class="q-mt-md text-brand">
-            {{ $t('lang.to_prevent_enter_amount_notified') }}
+            {{ $t("lang.to_prevent_enter_amount_notified") }}
           </div>
           <div class="q-mt-md">
             <q-btn
@@ -115,8 +112,8 @@
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
-        {{ $t('lang.you_will_redirect_to_bank_page') }}<br /><br />
-        {{ $t('lang.operation_is_successful_will_notified') }}
+        {{ $t("lang.you_will_redirect_to_bank_page") }}<br /><br />
+        {{ $t("lang.operation_is_successful_will_notified") }}
       </q-card-section>
       <q-btn @click="clearInfo" :label="$t('lang.understood')" color="brand" />
     </q-card>
@@ -134,10 +131,11 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
+import {useUI} from "stores/ui";
 
 var qs = require("qs");
-const {t} = useI18n()
+const { t } = useI18n();
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
@@ -158,16 +156,16 @@ const hasPrivilege = ref(false);
 const isOpenFromAccount = ref(false);
 const isUSDT = ref(false);
 const verifyDepositAmount = ref([
-  (val) => !!val || t('lang.please_enter_the_deposit_amount'),
+  (val) => !!val || t("lang.please_enter_the_deposit_amount"),
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
-    t('lang.deposit_amount_in_between') +
+    t("lang.deposit_amount_in_between") +
       calculatedMinDeposit.value +
       " - " +
       activeMethod.value.depositMax,
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
-    t('lang.deposit_balance_in_between') +
+    t("lang.deposit_balance_in_between") +
       calculatedMinDeposit.value +
       " - " +
       activeMethod.value.depositMax,
@@ -185,12 +183,12 @@ const checkAmount = reactive({
   errorMessage: "",
 });
 
-
 const $q = useQuasar();
+const ui= useUI();
 const calculatedMinDeposit = ref("");
 function initPay() {
   $q.loading.show({
-    message: t('lang.loading') + "...",
+    message: t("lang.loading") + "...",
   });
 
   payMethods.value = [];
@@ -371,6 +369,14 @@ async function confirmDeposit() {
         router.push({ path: "/depositLoading" });
       }
 
+      if (ui.isAffiliateA) {
+        // console.log("Submit Event");
+        fbq("track", "InitiateCheckout", {
+          currency: 'THB',
+          value: form.localAmount,
+        });
+      }
+
       window.addEventListener(
         "message",
         (event) => {
@@ -462,12 +468,13 @@ async function confirmDeposit() {
 const amountPlaceholder = computed(() => {
   if (calculatedMinDeposit.value && activeMethod.value.depositMax)
     return `(${calculatedMinDeposit.value} - ${activeMethod.value.depositMax})`;
-  else return t('lang.enter_amount_money');
+  else return t("lang.enter_amount_money");
 });
 
 const restrictDecimalInput = (e) => {
   const num = +e.key;
-  if (num !== 0 && !num && !['Backspace', 'Delete'].includes(e.key)) e.preventDefault();
+  if (num !== 0 && !num && !["Backspace", "Delete"].includes(e.key))
+    e.preventDefault();
 };
 
 onMounted(() => {

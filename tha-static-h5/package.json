@@ -1,6 +1,6 @@
 {
   "name": "tha-static-h5",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "APP",
   "productName": "Jolly88 App",
   "author": "Mika <mika@eagrp.net>",
@@ -36,6 +36,7 @@
     "dotenv-cli": "^7.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "pinia": "^2.0.17",
     "process": "^0.11.10",
     "qs": "^6.11.0",

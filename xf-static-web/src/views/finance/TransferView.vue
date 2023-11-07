@@ -24,6 +24,19 @@
           <el-button type="success" class="common-btn" @click="refreshAllModal">
             一键刷新
           </el-button>
+
+          <div class="balance-transfer-button">
+            <span>自动平台转账: </span>
+            <el-switch
+              v-model="autoTransfer"
+              class="ml-2"
+              inline-prompt
+              style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+              active-text="已开启"
+              inactive-text="已关闭"
+              @change="updateAutoTransfer($event)"
+            />
+          </div>
         </div>
         <div class="account-content">
           <div class="account-tip-text">
@@ -52,10 +65,10 @@
           <div
             class="flex-box flex-justify-space flex-wrap transfer-action-box"
           >
-            <button class="outline transfer-btn" @click="transferModal(0, p)">
+            <button v-if="!autoTransfer" class="outline transfer-btn" @click="transferModal(0, p)">
               转进
             </button>
-            <button class="transfer-btn" @click="transferModal(1, p)">
+            <button v-if="!autoTransfer" class="transfer-btn" @click="transferModal(1, p)">
               转出
             </button>
           </div>
@@ -145,7 +158,14 @@
 <script lang="js">
 import { defineComponent, ref, reactive, computed, onMounted } from "vue";
 import { loadBalance } from "@/api/personal/personal";
-import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList } from "@/api/personal/transfer";
+import {
+  transfer,
+  withdrawAll,
+  getPlatforms,
+  getLoggedInPlatformList,
+  updateAutoTransferState,
+  getAutoTransferState
+} from "@/api/personal/transfer";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
@@ -163,11 +183,13 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const platforms = reactive([]);
+    const autoTransfer = ref(false);
     const mainWallet = computed(() => {
       return store.balance;
     });
     onMounted(() => {
       loadPlatform();
+      getAutoTransfer();
     });
     // const { t } = useI18n();
     const transferModalVisible = ref(false);
@@ -250,6 +272,23 @@ export default defineComponent({
       }
       , 1000);
     };
+
+    const updateAutoTransfer = async(state) => {
+      updateAutoTransferState(state).then(res => {
+        autoTransfer.value = res.data;
+      }).catch(e => {
+        console.log(e)
+      });
+    };
+
+    const getAutoTransfer = () => {
+      getAutoTransferState().then(res => {
+        autoTransfer.value = res.data;
+      }).catch(e => {
+          console.log(e)
+      });
+    };
+
     const loadPlatform = () => {
       if(store.memberType === 'TEST') {
         getLoggedInPlatformList().then((response) => {
@@ -362,6 +401,8 @@ export default defineComponent({
       cancelTransfer,
       submitTransfer,
       mainWallet,
+      autoTransfer,
+      updateAutoTransfer,
       refreshBalance,
       formRef,
       MAIN,
@@ -441,7 +482,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
         }
         .balance-wrapper {
           display: flex;
-          justify-content: center;
+          width: 15%;
+          justify-content: flex-start;
           gap: 10px;
           align-items: center;
           font-size: 14px;
@@ -450,6 +492,14 @@ body .transferinout .el-dialog__header .el-dialog__title {
           .currency {
             color: #a0bcd6;
           }
+        }
+        .balance-transfer-button {
+          display: flex;
+          width: 80%;
+          justify-content: flex-end;
+          gap: 10px;
+          align-items: center;
+          font-size: 14px;
         }
         .balance-refresh {
           cursor: pointer;

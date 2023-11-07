@@ -2,16 +2,15 @@
   <div>
     <div class="transit-buttons">
       <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`mail/${trans.code}`">
-        <img :src="require(`../../assets/images/account/${trans.icon}_letters.png`)">
+        <!-- <img :src="require(`../../assets/images/account/${trans.icon}_letters.png`)"> -->
         {{ trans.name }}
         <div class="right">
-<!--          <q-chip v-if="trans.icon === 'inbox' && store.unreadInboxMail!= 0" color="brand" size="sm">-->
-<!--            {{ store.unreadInboxMail }}-->
-<!--          </q-chip>-->
-          <RiArrowRightSLine/>
+          <!--          <q-chip v-if="trans.icon === 'inbox' && store.unreadInboxMail!= 0" color="brand" size="sm">-->
+          <!--            {{ store.unreadInboxMail }}-->
+          <!--          </q-chip>-->
+          <RiArrowRightSLine />
         </div>
       </router-link>
-
     </div>
   </div>
 </template>
@@ -95,4 +94,3 @@ export default defineComponent({
   }
 }
 </style>
-

@@ -1,31 +1,31 @@
 <template>
-  <TabNavigation :tabList="tabList" :onTabClick="onTabClick" :isActiveTab="isActiveTab"></TabNavigation>
+  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
 
-  <template v-if="currentTab === tabList[0]">
+  <template v-if="currentSlide === slideList[0]">
     <MyMember></MyMember>
   </template>
 
-  <template v-if="currentTab === tabList[1]">
+  <template v-if="currentSlide === slideList[1]">
     <AgencyPolicy></AgencyPolicy>
   </template>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import TabNavigation from "../components/TabNavigation.vue";
+import SwiperNav from "../components/SwiperNav.vue";
 import MyMember from "../components/earn-money/MyMember.vue";
 import AgencyPolicy from "../components/earn-money/AgencyPolicy.vue";
 
-let tabList = ref(["My Member", "Agency Policy"]);
-let currentTab = ref(tabList.value[0]);
+let slideList = ref(["My Member", "Agency Policy"]);
+let currentSlide = ref(slideList.value[0]);
 
-const isActiveTab = (e) => {
-  if (e === currentTab.value) return true;
+const isActiveSlide = (e) => {
+  if (e === currentSlide.value) return true;
   return false;
 };
 
-const onTabClick = (e) => {
-  if (e === currentTab.value) return;
+const onSlideClick = (e) => {
+  if (e === currentSlide.value) return;
 
   //   for (let i = 0, l = tabList.value.length; i < l; i++) {
   //     const _currentTab = tabList.value[i];
@@ -34,8 +34,6 @@ const onTabClick = (e) => {
   //       tabList.value.unshift(e);
   //     }
   //   }
-  currentTab.value = e;
+  currentSlide.value = e;
 };
 </script>
-
-<style lang="scss"></style>

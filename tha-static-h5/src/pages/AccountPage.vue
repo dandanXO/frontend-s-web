@@ -219,10 +219,11 @@ export default defineComponent({
       return store.currency.value + ' ' + balanceWithTwoDecimalPlaces;
     });
 
-    onMounted(() => {
-      getBalance()
-      // store.getBalance()
-      store.getUnreadTotal()
+    onMounted(async () => {
+      if(!store.id && route.path !== "/" ){
+        await store.getMemberInfo()
+      }
+      await getBalance()
     });
 
     const openDeposit = () => {
@@ -261,6 +262,7 @@ export default defineComponent({
 
     const getBalance = () => {
       setInterval(function () {
+        // console.log("Get Balance")
         if (store.hasToken()) {
           store.getBalance()
         }
