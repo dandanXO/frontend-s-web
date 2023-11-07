@@ -418,7 +418,7 @@
               type="success"
               v-permission="['sys:affiliate:settle:check-adjust']"
               @click="showEdit(scope.row)"
-              v-if="scope.row.adjustAmount === null"
+              v-if="scope.row.adjustAmount === null && scope.row.status === 'CHECKING'"
             >
               {{ t('fields.settleEdit') }}
             </el-button>
