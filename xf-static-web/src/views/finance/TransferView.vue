@@ -14,7 +14,11 @@
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
 
-          <el-button type="success" class="common-btn" @click="transferOutAllModal">
+          <el-button
+            type="success"
+            class="common-btn"
+            @click="transferOutAllModal"
+          >
             一键转出
           </el-button>
           <el-button type="success" class="common-btn" @click="refreshAllModal">

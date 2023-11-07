@@ -107,7 +107,7 @@ const router = useRouter();
 
 onMounted(async () => {
   $q.loading.show({
-    message: "加载中..."
+    message: "Loading..."
   });
   if (
     (Platform.is.desktop || Platform.is.webkit) &&

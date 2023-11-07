@@ -5,18 +5,13 @@
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
-    <div class="node-content payment-method-wrapper"
-      :style="gridColAmount"
-    >
+    <div class="node-content payment-method-wrapper deposit-options" :style="gridColAmount">
       <div
-        class="node-item payment-method-item"
+        class="node-item payment-method-item deposit-option-btn"
         :id="level + '_' + i"
         @click="clickItem(item)"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
-        :style="item.group && item.children.length === 0 ? 'display:none': ''"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+        :style="item.group && item.children.length === 0 ? 'display:none' : ''"
         :key="i"
         v-for="(item, i) in list"
       >
@@ -24,10 +19,7 @@
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
           <div class="promo">
-            <img
-              v-if="item.promotionIcon"
-              :src="`${imgURL}label/${item.promotionIcon}`"
-            />
+            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`" />
           </div>
 
           <div class="payment-method-wrapper">
@@ -48,10 +40,7 @@
       <node
         @click="clickChildItem(item)"
         :name="item.nodeName"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
         v-if="selectItem === item"
         :level="parseInt(level) + 1"
         :list="item.children"
@@ -64,8 +53,7 @@
 <script>
 import { defineComponent, reactive } from "vue";
 
-
-const imgURL = process.env.IMAGE_CDN + '/payment/'
+const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -87,7 +75,7 @@ export default defineComponent({
     },
     gridcol: {
       type: Number,
-      default: 4
+      default: 3
     }
   },
   data() {
@@ -102,12 +90,10 @@ export default defineComponent({
       payMethods: reactive([]),
       nodeKey: 0,
       imgURL,
-      gridColAmount: 'grid-template-columns: repeat('+ this.gridcol +', 1fr);'
+      gridColAmount: "grid-template-columns: repeat(" + this.gridcol + ", 1fr);"
     };
   },
-  computed() {
-
-  },
+  computed() {},
   updated() {
     this.$nextTick().then(() => {
       if (!this.selectItem) {
@@ -146,9 +132,7 @@ export default defineComponent({
         item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find(
-            (child) => child.hasActive === true
-          );
+          let activeChild = item.children.find((child) => child.hasActive === true);
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -195,8 +179,7 @@ $node-color: #33bcd4;
   top: 8px;
   width: 6px;
   height: 6px;
-  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%), linear-gradient(#ffffff, #ffffff);
 }
 
 .title::before {
@@ -214,7 +197,7 @@ $node-color: #33bcd4;
   grid-gap: 15px;
   display: grid;
   margin-bottom: 20px;
-    width: 100%;
+  width: 100%;
 
   .payment-method-item {
     text-align: center;
@@ -235,32 +218,30 @@ $node-color: #33bcd4;
     &.active {
       // background: rgba(255,255,255, .2);
       .node-text {
-
         .node-txt-img {
-        border-color: $node-color;
+          border-color: $node-color;
 
-        // &:before {
-        //   display: block;
-        //   content: "";
-        //   position: absolute;
-        //   bottom: 23px;
-        //   right: 3px;
-        //   background-color: #4873f1;
-        //   height: 15px;
-        //   width: 15px;
-        //   z-index: 3;
-        //   border-radius: 3px;
-        //   background-image: url("../../assets/images/account/CheckBox.svg");
-        //   background-size: 100%;
-        //   background-position: center center;
-        // }
+          // &:before {
+          //   display: block;
+          //   content: "";
+          //   position: absolute;
+          //   bottom: 23px;
+          //   right: 3px;
+          //   background-color: #4873f1;
+          //   height: 15px;
+          //   width: 15px;
+          //   z-index: 3;
+          //   border-radius: 3px;
+          //   background-image: url("../../assets/images/account/CheckBox.svg");
+          //   background-size: 100%;
+          //   background-position: center center;
+          // }
 
-        img {
-          // border-color: $node-color;
+          img {
+            // border-color: $node-color;
+          }
         }
       }
-      }
-
     }
   }
 }
@@ -294,7 +275,7 @@ $node-color: #33bcd4;
     &.node-group {
       display: flex;
       justify-content: flex-start;
-      align-items:  flex-start;
+      align-items: flex-start;
       gap: 10px;
       margin: 10px 0px;
       padding: 0 0px;
@@ -307,7 +288,7 @@ $node-color: #33bcd4;
       }
       .payment-method-item {
         border: 1px solid transparent;
-       }
+      }
       .node-text {
         display: flex;
         gap: 5px;
@@ -327,7 +308,6 @@ $node-color: #33bcd4;
         }
       }
     }
-
   }
 
   .node-content {
@@ -359,6 +339,7 @@ $node-color: #33bcd4;
       & > div {
         font-size: 12px;
         color: #fff;
+        padding-bottom: 5px;
       }
 
       .node-txt-img {
@@ -366,12 +347,8 @@ $node-color: #33bcd4;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         width: 4rem;
         height: 4rem;
-        margin-bottom: 5px;
-        border: 2px solid #ddd;
-        border-radius: 3px;
 
         img {
           background-color: transparent;
@@ -435,5 +412,40 @@ $node-color: #33bcd4;
   }
 }
 
+.deposit-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 16px;
+  .deposit-option-btn {
+    color: #cccccc;
+    background-color: rgba(21, 0, 37, 0.5) !important;
+    min-width: 100px;
+    max-width: 160px;
+    width: 100%;
+    border-radius: 6px;
+    border: 3px solid transparent;
 
+    &.active {
+      color: #ffe66b;
+      border: 3px solid #ffe66b;
+    }
+
+    &.label-on-discount {
+      position: relative;
+      &:after {
+        content: "";
+        background-image: url(../../assets/images/index/popout/label-discount.png);
+        background-repeat: no-repeat;
+        display: block;
+        position: absolute;
+        top: -4px;
+        right: -5px;
+        width: 30px;
+        height: 30px;
+        background-size: 100%;
+      }
+    }
+  }
+}
 </style>
