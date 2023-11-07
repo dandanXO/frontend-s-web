@@ -34,7 +34,7 @@
             : require('../assets/images/index/main-home-banner-desktop.jpg')
         "
       >
-        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-jolly88</h1>
+        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>
       </q-carousel-slide>
 
       <q-carousel-slide
@@ -2650,12 +2650,18 @@ export default defineComponent({
   max-width: 10rem;
   margin-right: auto;
   line-height: 1.4;
+  color: #ffc700;
 
   @media (min-width: 769px) {
     font-size: 2rem;
     max-width: 15rem;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 2.5rem;
+    max-width: 20rem;
   }
 }
 </style>
