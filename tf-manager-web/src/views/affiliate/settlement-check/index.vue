@@ -36,6 +36,21 @@
             style="width: 200px;margin-left: 20px"
             :placeholder="t('fields.loginName')"
           />
+          <el-select
+            multiple
+            v-model="request.status"
+            size="small"
+            :placeholder="t('fields.status')"
+            class="filter-item"
+            style="width: 250px;margin-left: 5px"
+          >
+            <el-option
+              v-for="item in uiControl.status"
+              :key="item.key"
+              :label="t('status.settlement.' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
           <el-button
             style="margin-left: 20px"
             icon="el-icon-search"
@@ -288,6 +303,17 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="status"
+          :label="t('fields.status')"
+          align="left"
+          min-width="120"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.status === 'CHECKING'" type="warning">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'CLEARED'" type="success">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.totalCommissionProfit')"
           align="left"
           min-width="140"
@@ -446,6 +472,10 @@ const uiControl = reactive({
     { key: 1, value: 'ADD' },
     { key: 2, value: 'DEDUCT' },
   ],
+  status: [
+    { key: 1, displayName: 'CHECKING', value: 'CHECKING' },
+    { key: 2, displayName: 'CLEARED', value: 'CLEARED' },
+  ]
 })
 const defaultQueryMonth = convertDate(moment(new Date()));
 
@@ -465,7 +495,8 @@ const request = reactive({
   current: 1,
   siteId: null,
   affiliateName: null,
-  month: defaultQueryMonth
+  month: defaultQueryMonth,
+  status: ['CHECKING', 'CLEARED']
 })
 
 const form = reactive({
@@ -506,6 +537,7 @@ function resetQuery() {
   request.month = defaultQueryMonth
   request.affiliateName = null
   request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.status = ['CHECKING', 'CLEARED']
 }
 
 const page = reactive({
@@ -530,6 +562,13 @@ function checkQuery() {
       query[key] = value
     }
   })
+  if (request.status !== null) {
+    if (request.status.length > 1) {
+      query.status = request.status.join(",");
+    } else {
+      query.status = request.status[0];
+    }
+  }
   return query
 }
 
