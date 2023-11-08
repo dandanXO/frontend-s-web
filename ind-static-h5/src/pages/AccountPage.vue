@@ -563,7 +563,7 @@ const openChangePasswordDialog = () => {
   changePasswordDialog.value = !changePasswordDialog.value;
 };
 
-const changeNewPasswordDialog = ref(true);
+const changeNewPasswordDialog = ref(false);
 const openNewChangePasswordDialog = () => {
   changeNewPasswordDialog.value = true;
   newLoginName.value = store.nickName;
