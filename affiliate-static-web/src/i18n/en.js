@@ -263,6 +263,7 @@ export default {
     emailFormat: "Please input the correct email address format",
     inputChineseCharacters: "Please input chinese characters",
     inputDigits: "Please input digits",
+    inputEnglishRealName: "Register real name must be English name which is same as your withdrawal bank account name.",
     inputPassword: "Please input the password",
     inputPasswordAgain: "Please input the password again",
     length6To12: "Length should be 6 to 12",
