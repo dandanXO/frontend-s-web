@@ -19,7 +19,9 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert username',
-          (val) => (val && val.length >= 6 && val.length <= 11) || 'The characters of username must be between 6 and 11'
+          (val) =>
+            (val && val.length >= 6 && val.length <= 11) || 'The characters of username must be between 6 and 11',
+          () => isAlphanumeric(regForm.loginName, 'Username')
         ]"
         placeholder="Please Enter Account"
         color="white"
@@ -38,7 +40,8 @@
         :type="isPwd ? 'password' : 'text'"
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert password',
-          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11'
+          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
+          () => isAlphanumeric(regForm.password, 'Password')
         ]"
         placeholder="Please Enter Password"
         color="white"
@@ -86,8 +89,7 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert password',
-          (val) => val === regForm.password || 'Password does not match',
-          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11'
+          (val) => val === regForm.password || 'Password does not match'
         ]"
         placeholder="Please Enter Password Again"
         color="white"
@@ -283,6 +285,11 @@ export default defineComponent({
     const isValidCnPhone = () => {
       const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
       return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
+    };
+
+    const isAlphanumeric = (value, translation) => {
+      const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+      return passwordPattern.test(value) || `${translation} must be alphanumeric`;
     };
 
     const router = useRouter();
@@ -495,7 +502,8 @@ export default defineComponent({
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
-      isAgreeReg
+      isAgreeReg,
+      isAlphanumeric
     };
   }
 });

@@ -59,7 +59,7 @@ export default {
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
     15201: "Incorrect old password",
-    15202: "New password must match old password",
+    15202: "New password must not match with old password",
     21000: "This game is already in your favorite games list.",
     30000: "Member data not found",
     30001: "Member has already received the promotion",

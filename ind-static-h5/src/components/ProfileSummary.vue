@@ -43,6 +43,7 @@
 
         <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
+          <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div>
       </div>
     </div>
@@ -247,6 +248,13 @@ onMounted(() => {
     .profile-msg {
       margin-left: auto;
       margin-top: 30px;
+      position: relative;
+
+      .notification {
+        position: absolute;
+        top: -0.25rem;
+        left: -0.5rem;
+      }
     }
   }
 

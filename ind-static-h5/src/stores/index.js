@@ -39,7 +39,7 @@ export const userStore = defineStore("userStore", {
       currentDeposit: "",
       levelUpDeposit: "",
       currentMailData: {},
-      guest: false,
+      guest: false
     };
   },
   actions: {
@@ -245,7 +245,6 @@ export const userStore = defineStore("userStore", {
     getUnreadTotal() {
       if (this.token) {
         return api.get("/session/inbox/getUnreadTotal").then((total) => {
-          console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
           }

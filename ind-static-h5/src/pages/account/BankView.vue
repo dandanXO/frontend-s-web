@@ -306,7 +306,6 @@ const onAddCardClick = () => {
       });
       router.push("/account");
     } else {
-      clearField();
       isAddCardDialogOpen.value = true;
 
       // NOTE: fire once
@@ -327,6 +326,9 @@ const onAddCardClick = () => {
           .catch((e) => {
             console.log("error", e);
           });
+      } else {
+        clearField();
+        bankCardField.bankId = currBankList.value[0].id;
       }
     }
   });
@@ -348,9 +350,6 @@ const selectBankType = () => {
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
-
-    // NOTE: temp write here, since no other card type.
-    bankCardField.bankId = currBankList.value[0].id;
   } else if (currentCardType.value === "Crypto") {
     currBankList.value = cryptoList;
     dialogDisplays.title = "Add Crypto Wallet";
