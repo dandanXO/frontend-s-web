@@ -21,7 +21,7 @@
           (val) => (val && val.length > 0) || 'Please insert username',
           (val) =>
             (val && val.length >= 6 && val.length <= 11) || 'The characters of username must be between 6 and 11',
-          () => isAlphanumeric(regForm.loginName, 'Username')
+          () => isValidName(regForm.loginName, 'Username')
         ]"
         placeholder="Please Enter Account"
         color="white"
@@ -287,6 +287,11 @@ export default defineComponent({
       return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
     };
 
+    const isValidName = (value, translation) => {
+      const namePattern = /^[A-Za-z0-9]+$/;
+      return namePattern.test(value) || `${translation} must be alphanumeric`;
+    }
+
     const isAlphanumeric = (value, translation) => {
       const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
       return passwordPattern.test(value) || `${translation} must be alphanumeric`;
@@ -503,7 +508,8 @@ export default defineComponent({
       isValidCnPhone,
       hasAffiliate,
       isAgreeReg,
-      isAlphanumeric
+      isAlphanumeric,
+      isValidName
     };
   }
 });
