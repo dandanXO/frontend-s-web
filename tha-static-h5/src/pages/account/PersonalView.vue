@@ -211,11 +211,7 @@
                   class="basic-info-cell content"
                   v-if="personalState.memberInfo.birthday"
                 >
-                  {{
-                    moment(personalState.memberInfo.birthday).format(
-                      "DD-MM-YYYY"
-                    )
-                  }}
+                  {{ displayBirthday }}
                 </div>
                 <div
                   class="basic-info-cell content flex items-center edit-div btn-pointer"
@@ -246,6 +242,7 @@
                           <q-date
                             v-model="formDetail.birthday"
                             mask="YYYY-MM-DD"
+                            @update:model-value="updateBirthday"
                           >
                             <div class="row items-center justify-end">
                               <q-btn
@@ -513,13 +510,13 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, computed} from "vue";
 import {
-  RiSpamLine, RiLink, RiLinkUnlink, RiEditBoxLine, RiFileUserLine, RiCake2Line, RiSmartphoneLine,
+  RiFileUserLine, RiCake2Line, RiSmartphoneLine,
   RiLineLine
 
 } from "vue-remix-icons";
-import moment from "moment";
+import moment from "moment-timezone";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores"
@@ -749,6 +746,17 @@ export default defineComponent({
     const formDetail = ref([{}]);
     const user = userStore()
 
+    const updateBirthday= () => {
+      // console.log("HEre");
+      // console.log(formDetail.value.birthday);
+    }
+
+    const displayBirthday = computed(() => {
+      return  moment(personalState.memberInfo.birthday)
+        .tz("Asia/Shanghai")
+        .format("DD-MM-YYYY");
+    })
+
     const select_menu = ref('personal');
     const selectTab = (tab) => {
       select_menu.value = tab;
@@ -785,7 +793,9 @@ export default defineComponent({
 
       // debugger;
       // console.log(updateInfo);
+      // debugger;
       updateInfo.birthday = moment(updateInfo.birthday).format("YYYY-MM-DD");
+      // alert(updateInfo.birthday);
       // return;
 
       api.post("/session/account", qs.stringify(updateInfo)).then((res) => {
@@ -807,6 +817,7 @@ export default defineComponent({
     return {
       searchForm,
       personalState,
+      displayBirthday,
       verifyPhone,
       updateSecurityFormRef,
       updateSecurityVerified,
@@ -843,6 +854,7 @@ export default defineComponent({
       verificationImg,
       verifyVerificationCode,
       getCode,
+      updateBirthday,
       verificationDetails,
       verificationCodeRef,
       emailAddressRef,

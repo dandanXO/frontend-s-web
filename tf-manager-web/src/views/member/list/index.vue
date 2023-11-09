@@ -11,7 +11,7 @@
           size="small"
           :placeholder="t('fields.site')"
           class="filter-item"
-          style="width: 100px;"
+          style="width: 100px;margin-left: 5px"
           default-first-option
           @focus="loadSites"
           @change="changeSite"

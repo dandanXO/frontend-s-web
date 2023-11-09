@@ -895,7 +895,7 @@ export default {
     summaryCompanyWinLoss: 'Company Win/Loss',
     summaryProfit: 'Profit',
     summaryReport: 'Summary Report',
-    summaryTotalBet: 'Total Bet Count',
+    summaryTotalBet: 'Total Bet Member Count',
     superiorAffiliateInfo: 'Superior Affiliate Info',
     superiorAffiliateName: 'Superior Affiliate Name',
     superiorAffiliateCode: 'Superior Affiliate Code',
