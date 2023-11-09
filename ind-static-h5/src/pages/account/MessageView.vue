@@ -8,7 +8,7 @@
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
       <q-card-section class="title">
-        <div v-if="!e.status" class="status">New</div>
+        <div v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1" class="status">New</div>
         <div>{{ e.title }}</div>
       </q-card-section>
       <q-card-section class="content">{{ e.content }}</q-card-section>
@@ -54,7 +54,7 @@ const isActiveSlide = (e) => {
 
 const isLoading = ref(true);
 const isNoInfo = ref(true);
-
+const readIdLists= ref([]);
 const mailData = ref([]);
 const mailboxData = ref({
   type: null,
@@ -94,6 +94,7 @@ const onDetailsClick = (mailData) => {
 
 onMounted(() => {
   loadInbox();
+  store.setReadMsg();
 });
 </script>
 

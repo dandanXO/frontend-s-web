@@ -39,7 +39,8 @@ export const userStore = defineStore("userStore", {
       currentDeposit: "",
       levelUpDeposit: "",
       currentMailData: {},
-      guest: false
+      guest: false,
+      readMsgLists: []
     };
   },
   actions: {
@@ -143,6 +144,18 @@ export const userStore = defineStore("userStore", {
           });
         }
       });
+    },
+    addReadMsg(id){
+     this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
+     if(this.readMsgLists.length === 0){
+       SessionStorage.set("READ_MAIL_IDS", [id]);
+     }else{
+       this.readMsgLists.push(id);
+       SessionStorage.set("READ_MAIL_IDS", this.readMsgLists);
+     }
+    },
+    setReadMsg(){
+      this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
       api.interceptors.request.use(async (req) => {

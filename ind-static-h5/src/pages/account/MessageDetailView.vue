@@ -42,7 +42,9 @@ const updateMailReadStatus = () => {
         id: mailDataRef.value.id
       })
     )
-    .then((response) => {})
+    .then((response) => {
+      store.addReadMsg(mailDataRef.value.id);
+    })
     .catch((error) => {
       console.log("error", error);
     });
