@@ -194,7 +194,7 @@ const getDepositStatus = (depositStatus) => {
     case "SUCCESS":
       return "Success";
     case "SUPPLEMENT_SUCCESS":
-      return "Supplement Success";
+      return "Success";
     case "CLOSED":
       return "Closed";
     default:

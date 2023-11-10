@@ -321,6 +321,7 @@ const onAddCardClick = () => {
                 else if (bankType === "EWALLET") ewalletList.push(e);
               });
               selectBankType();
+              bankCardField.bankId = currBankList.value[0].id;
             }
           })
           .catch((e) => {
@@ -441,6 +442,7 @@ const loadCards = () => {
 
 onMounted(() => {
   loadCards();
+  clearField();
 });
 </script>
 
