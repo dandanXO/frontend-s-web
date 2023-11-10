@@ -6,22 +6,25 @@
           <span class="role-span">{{ $t('fields.downlineMember') }}</span>
         </div>
       </template>
-      <el-row>
-        <el-col>
-          会员标签
-        </el-col>
-        <el-col>
-          <el-checkbox label="test" />
-          <el-checkbox label="test1" />
-          <el-checkbox label="test2" />
-          <el-checkbox label="test3" />
-        </el-col>
-        <el-col>
-          <el-button>
-            test
-          </el-button>
-        </el-col>
-      </el-row>
+
+      <div class="inputs-wrap" style="width: 100%;">
+        <el-row :gutter="20">
+          <el-col :span="4">
+            会员标签
+          </el-col>
+          <el-col :span="16">
+            <el-checkbox label="test" />
+            <el-checkbox label="test1" />
+            <el-checkbox label="test2" />
+            <el-checkbox label="test3" />
+          </el-col>
+          <el-col :span="4">
+            <el-button>
+              test
+            </el-button>
+          </el-col>
+        </el-row>
+      </div>
       <div class="inputs-wrap">
         <el-date-picker
           v-model="request.regTime"
