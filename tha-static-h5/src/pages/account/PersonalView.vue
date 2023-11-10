@@ -1134,6 +1134,16 @@ export default defineComponent({
   width: calc(100% - 24px);
   max-width: 650px;
   margin: 0 auto;
+
+  .info-picture {
+    width: 50%;
+    min-width: 300px;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+    }
+  }
 }
 
 .common-large-btn {

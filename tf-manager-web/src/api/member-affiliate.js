@@ -96,3 +96,7 @@ export const changeNewAffilaite = (id, code, memberType) => {
 export const getTransferRecords = (id, query) => {
   return https().request(`/affiliate/${id}/member/transfer`, Method.GET, query, ContentType.form);
 };
+
+export const deleteSecurityQuestion = (id) => {
+  return https().request(`/affiliate/${id}/resetSecurityQuestion`, Method.DELETE, ContentType.form);
+};

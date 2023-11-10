@@ -99,7 +99,7 @@
       />
 
       <q-btn
-        v-if="isMobile()"
+        v-if="!isIOS()"
         class="common-large-btn line-login-btn"
         @click="loginViaLine"
         type="submit"
@@ -130,13 +130,13 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import liff from "@line/liff";
 import qs from "qs";
-import { isMobile } from "boot/utils";
+import { isMobile, isH5 } from "boot/utils";
 import { uuid } from "vue-uuid";
 import axios from "axios";
 
 export default defineComponent({
   name: "LoginPage",
-  methods: { isMobile },
+  methods: { isMobile, isH5 },
   setup() {
     const { t } = useI18n();
     const store = userStore();
@@ -158,9 +158,13 @@ export default defineComponent({
     const route = useRoute();
 
     //LINE.
-    const clientId = 2001411735;
-    const clientSecret = "4e90ef3551da974394de3486261f0b7f";
-    const redirectUrl = encodeURI(`https://jolly88.com/login`);
+    const clientId = isH5() ? 2001537318 : 2001411735;
+    const clientSecret = isH5()
+      ? "6625f545954c947d95864a7c9cc144d9"
+      : "4e90ef3551da974394de3486261f0b7f";
+    const redirectUrl = isH5()
+      ? encodeURI(`https://jo2.app/`)
+      : encodeURI(`https://jolly88.com/login`);
     // const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
     const nonce = `jolly88`;
     const stateId = uuid.v1();
@@ -270,7 +274,8 @@ export default defineComponent({
       // alert(state);
       // alert(localState);
 
-      if (codeId && state && state === localState) {
+      // && state === localState
+      if (codeId && state) {
         axios
           .post(
             "https://api.line.me/oauth2/v2.1/token",
@@ -305,10 +310,8 @@ export default defineComponent({
                   regDevice = "IOS";
                 } else {
                   regDevice = Platform.is.mobile ? "H5" : "WEB";
-                  if (Platform.is.capacitor) {
-                    if (Platform.is.android) {
-                      regDevice = "ANDROID";
-                    }
+                  if (Platform.is.capacitor && Platform.is.android) {
+                    regDevice = "ANDROID";
                   }
                 }
                 const loginInfo = {
@@ -337,12 +340,23 @@ export default defineComponent({
       }
     };
 
+    const isIOS = () => {
+      if (
+        Platform.is.ios &&
+        "standalone" in window.navigator &&
+        window.navigator.standalone
+      ) {
+        return true;
+      }
+      return false;
+    };
+
     const loginViaLine = () => {
       const stateUr = stateId;
       // alert(stateUr);
       LocalStorage.set("STATE_ID", stateUr);
 
-      const url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}&state=${stateUr}&scope=profile%20openid&nonce=${nonce}`;
+      const url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}&state=${stateUr}&scope=profile%20openid%20email&nonce=${nonce}`;
       window.open(url, "_blank");
     };
 
@@ -365,6 +379,7 @@ export default defineComponent({
       getCode,
       loginViaLine,
       isCheckRmb,
+      isIOS,
     };
   },
 });
