@@ -1618,6 +1618,7 @@ export default {
     11006: 'Site affiliate commission already exist',
     11007: 'Site affiliate commission does not exist',
     11008: 'Affiliate record does not exist',
+    14000: 'The login name already exist',
     14001: 'The telephone already exist',
     14005: 'Affiliate commission must be less than superior affiliate commission: ',
     11009: 'Affiliate commission must be more than child affiliate commission: ',
