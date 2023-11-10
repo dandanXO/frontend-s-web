@@ -852,6 +852,7 @@ onMounted(() => {
   getVersionNo();
   getAppDownloadUrl();
   loadHotGameList();
+  store.getUnreadTotal();
 });
 </script>
 

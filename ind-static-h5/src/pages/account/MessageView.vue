@@ -7,7 +7,10 @@
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
-      <q-card-section class="title">{{ e.title }}</q-card-section>
+      <q-card-section class="title">
+        <div v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1" class="status">New</div>
+        <div>{{ e.title }}</div>
+      </q-card-section>
       <q-card-section class="content">{{ e.content }}</q-card-section>
 
       <q-card-section class="bottom-wrapper">
@@ -51,7 +54,7 @@ const isActiveSlide = (e) => {
 
 const isLoading = ref(true);
 const isNoInfo = ref(true);
-
+const readIdLists= ref([]);
 const mailData = ref([]);
 const mailboxData = ref({
   type: null,
@@ -84,11 +87,14 @@ const loadInbox = () => {
 
 const onDetailsClick = (mailData) => {
   store.setMailData(mailData);
+
+  // NOTE: /session/inbox/read api call inside message-detail page onMounted
   router.push("/account/message-detail");
 };
 
 onMounted(() => {
   loadInbox();
+  store.setReadMsg();
 });
 </script>
 
@@ -102,6 +108,18 @@ onMounted(() => {
   .title {
     font-size: 1rem;
     font-weight: 700;
+    display: flex;
+    gap: 0.5rem;
+
+    .status {
+      border-radius: 12.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0 1rem;
+      min-height: unset;
+      color: $negative;
+    }
   }
 
   .content {

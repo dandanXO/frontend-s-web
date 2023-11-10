@@ -232,7 +232,14 @@
 
   <q-dialog width="100%" v-model="changePasswordDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="bg-yellow text-black popout-close"
+        @click="openChangePasswordDialog()"
+        v-close-popup
+      />
       <div class="popout-dialog-container">
         <div class="txt-title">Change Password</div>
 
@@ -274,7 +281,12 @@
                 ref="passwordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || 'Please insert new password']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) =>
+                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                ]"
               >
                 <template v-slot:append>
                   <q-icon
@@ -288,20 +300,20 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">New Password Again</div>
+            <div class="pc-form-label">Confirm New Password</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter New Password Again"
+                placeholder="Enter Confirm New Password"
                 v-model="updatePwdInfo.confirmNewPwd"
                 ref="confirmPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password again',
-                  (val) => val === updatePwdInfo.password || 'Confimed password does not match with new password'
+                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
                 ]"
               >
                 <template v-slot:append>
@@ -365,7 +377,12 @@
                 ref="passwordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || 'Please insert new password']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) =>
+                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                ]"
               >
                 <template v-slot:append>
                   <q-icon
@@ -379,20 +396,20 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">New Password Again</div>
+            <div class="pc-form-label">Confirm New Password</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter New Password Again"
+                placeholder="Enter Confirm New Password"
                 v-model="updatePwdInfo.confirmNewPwd"
                 ref="confirmPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password again',
-                  (val) => val === updatePwdInfo.password || 'Confimed password does not match with new password'
+                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
                 ]"
               >
                 <template v-slot:append>
@@ -542,6 +559,7 @@ const closePersonalCenterDialog = () => {
 
 const changePasswordDialog = ref(false);
 const openChangePasswordDialog = () => {
+  resetChangePasswordInfo();
   changePasswordDialog.value = !changePasswordDialog.value;
 };
 
@@ -790,59 +808,45 @@ const updateState = () => {
   const updateInfo = {};
   updateInfo.realName = formDetail.realName;
   updateInfo.email = formDetail.email;
+  updateInfo.phone = formDetail.phone;
+  updateInfo.otpCode = formDetail.phoneOtpRef;
+  updateInfo.otpCodeId = verificationCodeID;
 
-  api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
-    if (r.code === 0) {
-      profileFormRef.value.reset();
-
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: "Updated successfully",
-        icon: "check_circle_outline"
-      });
-
-      store.getMemberInfo().then(() => {
-        loadInfo();
-        personalCenterDialog.value = false;
-      });
-
-      btnLoading.value = false;
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: r.message,
-        icon: "report_problem"
-      });
-      btnLoading.value = false;
-    }
-  });
-};
-
-const verifyNUpdatePhone = (callback) => {
   api
-    .post(
-      "/session/verifyAndUpdatePhone",
-      qs.stringify({
-        phone: formDetail.phone,
-        code: formDetail.phoneOtpRef,
-        codeId: verificationCodeID
-      })
-    )
-    .then((res) => {
-      callback && callback();
+    .post("/session/verifyAndUpdateAccount", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          personalCenterDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
     })
-    .catch((e) => {
+    .catch(() => {})
+    .then(() => {
       btnLoading.value = false;
     });
 };
 
 const submitKYC = () => {
   btnLoading.value = true;
-  verifyNUpdatePhone(() => {
-    updateState();
-  });
+  updateState();
 };
 
 const isValidName = () => {
@@ -946,12 +950,17 @@ const updatePwdInfo = reactive({
   confirmNewPwd: ""
 });
 
+const isAlphanumeric = (value, translation) => {
+  const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+  return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+};
+
 const submitUpdatePwd = () => {
   oldPasswordRef.value.validate();
   passwordRef.value.validate();
   confirmPasswordRef.value.validate();
 
-  if (oldPasswordRef.value.hasError || passwordRef.value.hasError) {
+  if (oldPasswordRef.value.hasError || passwordRef.value.hasError || confirmPasswordRef.value.hasError) {
   } else {
     api
       .post(
@@ -970,6 +979,7 @@ const submitUpdatePwd = () => {
             icon: "check_circle_outline"
           });
           // router.go("/account");
+          resetChangePasswordInfo();
           changePasswordDialog.value = false;
         } else {
           $q.notify({
@@ -990,7 +1000,7 @@ const submitUpdateNewPwd = () => {
   passwordRef.value.validate();
   confirmPasswordRef.value.validate();
 
-  if (passwordRef.value.hasError) {
+  if (passwordRef.value.hasError || confirmPasswordRef.value.hasError) {
   } else {
     api
       .post(
@@ -1023,6 +1033,12 @@ const submitUpdateNewPwd = () => {
         console.log("error", error);
       });
   }
+};
+
+const resetChangePasswordInfo = () => {
+  updatePwdInfo.confirmNewPwd = "";
+  updatePwdInfo.oldPassword = "";
+  updatePwdInfo.password = "";
 };
 </script>
 
@@ -1136,6 +1152,10 @@ const submitUpdateNewPwd = () => {
   background-image: url(../assets/images/account/btn-purple-pattern.png);
   color: #ffffff;
   margin: auto;
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
 }
 
 .pc-tip-chg-pwd {

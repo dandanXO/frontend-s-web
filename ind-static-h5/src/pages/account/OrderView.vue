@@ -172,21 +172,16 @@ const searchDepositRecord = () => {
 const getWithdrawStatus = (withdrawStatus) => {
   switch (withdrawStatus) {
     case "APPLY":
-      return "Applying";
+    case "STEP_1":
+    case "STEP_2":
+    case "STEP_3":
+    case "STEP_4":
+      return "Pending";
     case "FAIL":
+    case "STEP_5":
       return "Failed";
     case "SUCCESS":
       return "Success";
-    case "STEP_1":
-      return "Under review";
-    case "STEP_2":
-      return "To be paid";
-    case "STEP_3":
-      return "Payment on going";
-    case "STEP_4":
-      return "Automatic Payment";
-    case "STEP_5":
-      return "Suspend";
     default:
       return withdrawStatus;
   }
