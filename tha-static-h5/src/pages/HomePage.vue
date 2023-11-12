@@ -1011,18 +1011,11 @@
             >
           </div>
         </router-link>
-        <router-link to="/promo?id=75">
-          <div class="popup-item">
-            <span
-              >สมาชิกใหม่ รับฟรี <em>50</em> ถอนสูงสุดถึง <em>1,000</em></span
-            >
-          </div>
-        </router-link>
         <router-link to="/promo?id=76">
           <div class="popup-item">
             <span
-              >เลือกรับ <em>100%-150%</em> รับสูงสุด
-              <em>6,000</em> ถอนไม่อั้น</span
+              >เลือกรับ <em>100%-200%</em> รับสูงสุด
+              <em>10,000</em> ถอนไม่อั้น</span
             >
           </div>
         </router-link>
