@@ -133,11 +133,6 @@ export default route(function (/* { store, ssrContext } */) {
 
       gtag("js", new Date());
       gtag("config", "UA-780462346-6");
-    } else if (location.href.indexOf("https://slot-win.cc") > -1) {
-      console.log("Is Slot-Win");
-
-      fbq("init", "211810688532352");
-      fbq("track", "PageView");
     }
   });
 
