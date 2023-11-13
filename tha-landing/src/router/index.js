@@ -26,5 +26,15 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
+
+  console.log(location.href);
+  if(location.href.indexOf("https://slot-win.cc") > -1){
+    console.log("Is Slot Win");
+
+    fbq("init", "211810688532352");
+    fbq("track", "PageView");
+  }
+
+
   return Router
 })
