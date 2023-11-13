@@ -64,6 +64,8 @@ export default route(function (/* { store, ssrContext } */) {
       next(`/register`);
     }
 
+    console.log(location.href);
+
     if (user.hasToken()) {
       if (to.path === "/login") {
         next({ path: "/" });
@@ -124,12 +126,18 @@ export default route(function (/* { store, ssrContext } */) {
     } else if (affiliateCode && affiliateCode === "0DDC3F") {
       console.log("GA 780-462-3466");
       window.dataLayer = window.dataLayer || [];
+
       function gtag() {
         dataLayer.push(arguments);
       }
 
       gtag("js", new Date());
       gtag("config", "UA-780462346-6");
+    } else if (location.href.indexOf("https://slot-win.cc") > -1) {
+      console.log("Is Slot-Win");
+
+      fbq("init", "211810688532352");
+      fbq("track", "PageView");
     }
   });
 
