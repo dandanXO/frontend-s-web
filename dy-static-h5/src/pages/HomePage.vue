@@ -280,8 +280,20 @@
                         <img class="game-bg"
                              :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
                         <div class="game-title">
-                          <h3>{{ hot.name }}</h3>
+                          <h3>{{ hot.title }}</h3>
                           <span>体育赛事</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else-if="hot.icon=='esport'">
+                      <div class="game-board"
+                           @click="playGame(hot.name, hot.code, hot.gameCode)"
+                      >
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${hot.icon}/slide-${hot.icon}-${hot.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ hot.title }}</h3>
+                          <span>电竞赛事</span>
                         </div>
                       </div>
                     </template>
@@ -382,6 +394,63 @@
 
             </div>
 
+            <div id="id-esport-slide" class="esport-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2>电竞赛事</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(es, i) in esport" :key="i"
+                       class="game-item-div">
+                    <div class="game-board" @click="playGame(es.name, 'platformType', es.code)">
+                      <img class="game-bg"
+                           :src="require(`../assets/index/${es.icon}/slide-${es.icon}-${es.name.toLowerCase()}.png`)"/>
+                      <div class="game-title">
+                        <h3>{{ es.title }}</h3>
+                        <span>电竞赛事</span>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--          <PlatformBlock-->
+              <!--              @click="playGame(es.name, 'platformType', es.code)"-->
+              <!--              dataType="esport"-->
+              <!--              :data="es"-->
+              <!--          />-->
+            </div>
+            <div id="id-sport-slide" class="sport-slides home-swiper-slide">
+
+              <div class="home-game-boards">
+                <h2>体育赛事</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(sp, i) in sport" :key="i"
+                       class="game-item-div">
+
+                    <div class="game-board"
+                         @click="playGame(sp.name, sp.code, sp.gameCode)"
+                    >
+                      <img class="game-bg"
+                           :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>
+                      <div class="game-title">
+                        <h3>{{ sp.title }}</h3>
+                        <span>体育赛事</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!--          <PlatformBlock-->
+              <!--              @click="playGame(sp.name, sp.code, sp.gameCode)"-->
+              <!--              dataType="sport"-->
+              <!--              :data="sp"-->
+              <!--          />-->
+            </div>
 
             <div id="id-live-slide" class="live-slides home-swiper-slide">
 
@@ -414,7 +483,7 @@
                         <img class="game-bg"
                              :src="require(`../assets/index/${live.icon}/slide-${live.icon}-${live.name.toLowerCase()}.png`)"/>
                         <div class="game-title">
-                          <h3>{{ live.title }}</h3>
+                          <h3>DB</h3>
                           <span>真人娱乐</span>
                         </div>
                       </div>
@@ -450,61 +519,8 @@
               </div>
 
             </div>
-            <div id="id-sport-slide" class="sport-slides home-swiper-slide">
 
-              <div class="home-game-boards">
-                <h2>体育赛事</h2>
 
-                <div class="game-list-div">
-                  <div v-for="(sp, i) in sport" :key="i"
-                       class="game-item-div">
-                    <div class="game-board"
-                         @click="playGame(sp.name, sp.code, sp.gameCode)"
-                    >
-                      <img class="game-bg"
-                           :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>
-                      <div class="game-title">
-                        <h3>{{ sp.name }}</h3>
-                        <span>体育赛事</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!--          <PlatformBlock-->
-              <!--              @click="playGame(sp.name, sp.code, sp.gameCode)"-->
-              <!--              dataType="sport"-->
-              <!--              :data="sp"-->
-              <!--          />-->
-            </div>
-            <div id="id-esport-slide" class="esport-slides home-swiper-slide">
-
-              <div class="home-game-boards">
-                <h2>电竞赛事</h2>
-
-                <div class="game-list-div">
-                  <div v-for="(es, i) in esport" :key="i"
-                       class="game-item-div">
-                    <div class="game-board" @click="playGame(es.name, 'platformType', es.code)">
-                      <img class="game-bg"
-                           :src="require(`../assets/index/${es.icon}/slide-${es.icon}-${es.name.toLowerCase()}.png`)"/>
-                      <div class="game-title">
-                        <h3>{{ es.title }}</h3>
-                        <span>电竞赛事</span>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!--          <PlatformBlock-->
-              <!--              @click="playGame(es.name, 'platformType', es.code)"-->
-              <!--              dataType="esport"-->
-              <!--              :data="es"-->
-              <!--          />-->
-            </div>
             <div id="id-slot-slide" class="slot-slides home-swiper-slide">
 
               <div class="home-game-boards">
@@ -617,79 +633,6 @@
 
 
             </div>
-            <div id="id-fish-slide" class="fish-slides home-swiper-slide"
-            >
-
-              <div class="home-game-boards">
-                <h2>捕鱼游戏</h2>
-
-                <div class="game-list-div">
-                  <div v-for="(fish, i) in fishing"
-                       :key="i"
-                       class="game-item-div">
-
-                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
-                      <div class="game-board" @click="playGame(fish.name, fish.code, '7202')">
-
-                        <img class="game-bg"
-                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
-                        <div class="game-title">
-                          <h3>{{ fish.name }}</h3>
-                          <span>捕鱼游戏</span>
-                        </div>
-                      </div>
-                    </template>
-                    <template v-else-if="fish.code === 'AG' && fish.name === 'AG'">
-                      <div class="game-board" @click="playGame(fish.name, fish.code, '6')">
-
-                        <img class="game-bg"
-                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
-                        <div class="game-title">
-                          <h3>{{ fish.name }}</h3>
-                          <span>捕鱼游戏</span>
-                        </div>
-                      </div>
-                    </template>
-                    <template v-else>
-                      <div class="game-board" @click="playGame(fish.name, fish.code, fish.code)">
-
-                        <img class="game-bg"
-                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
-                        <div class="game-title">
-                          <h3>{{ fish.name }}</h3>
-                          <span>捕鱼游戏</span>
-                        </div>
-
-
-                      </div>
-                    </template>
-
-
-                  </div>
-                </div>
-              </div>
-
-              <!--                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">-->
-              <!--                      <PlatformBlock-->
-              <!--                          @click="playGame(fish.name, fish.code, '7202')"-->
-              <!--                          dataType="fish"-->
-              <!--                          :data="fish"-->
-              <!--                      />-->
-              <!--                    </template>-->
-
-              <!--                    <template v-if="fish.code === 'AG' && fish.name === 'AG'">-->
-              <!--                      <PlatformBlock-->
-              <!--                          @click="playGame(fish.name, fish.code, '6')"-->
-              <!--                          dataType="fish"-->
-              <!--                          :data="fish"-->
-              <!--                      />-->
-              <!--                    </template>-->
-              <!--                    <PlatformBlock-->
-              <!--                        @click="playGame(fish.name, fish.code, fish.code)"-->
-              <!--                        dataType="fish"-->
-              <!--                        :data="fish"-->
-              <!--                    />-->
-            </div>
             <div id="id-poker-slide" class="poker-slides home-swiper-slide">
 
               <div class="home-game-boards">
@@ -764,7 +707,7 @@
 
                     </template>
                     <template
-                        v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
+                      v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'"
                     >
                       <div class="game-board" @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')">
 
@@ -796,6 +739,80 @@
               </div>
 
             </div>
+            <div id="id-fish-slide" class="fish-slides home-swiper-slide"
+            >
+
+              <div class="home-game-boards">
+                <h2>捕鱼游戏</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(fish, i) in fishing"
+                       :key="i"
+                       class="game-item-div">
+
+                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
+                      <div class="game-board" @click="playGame(fish.name, fish.code, '7202')">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ fish.name }}</h3>
+                          <span>捕鱼游戏</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else-if="fish.code === 'AG' && fish.name === 'AG'">
+                      <div class="game-board" @click="playGame(fish.name, fish.code, '6')">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ fish.name }}</h3>
+                          <span>捕鱼游戏</span>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div class="game-board" @click="playGame(fish.name, fish.code, fish.code)">
+
+                        <img class="game-bg"
+                             :src="require(`../assets/index/${fish.icon}/slide-${fish.icon}-${fish.name.toLowerCase()}.png`)"/>
+                        <div class="game-title">
+                          <h3>{{ fish.name }}</h3>
+                          <span>捕鱼游戏</span>
+                        </div>
+
+
+                      </div>
+                    </template>
+
+
+                  </div>
+                </div>
+              </div>
+
+              <!--                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">-->
+              <!--                      <PlatformBlock-->
+              <!--                          @click="playGame(fish.name, fish.code, '7202')"-->
+              <!--                          dataType="fish"-->
+              <!--                          :data="fish"-->
+              <!--                      />-->
+              <!--                    </template>-->
+
+              <!--                    <template v-if="fish.code === 'AG' && fish.name === 'AG'">-->
+              <!--                      <PlatformBlock-->
+              <!--                          @click="playGame(fish.name, fish.code, '6')"-->
+              <!--                          dataType="fish"-->
+              <!--                          :data="fish"-->
+              <!--                      />-->
+              <!--                    </template>-->
+              <!--                    <PlatformBlock-->
+              <!--                        @click="playGame(fish.name, fish.code, fish.code)"-->
+              <!--                        dataType="fish"-->
+              <!--                        :data="fish"-->
+              <!--                    />-->
+            </div>
+
           </div>
         </div>
       </div>
@@ -1044,14 +1061,14 @@ export default defineComponent({
         }
       }
     };
-    const selectedTab = ref("live");
+    const selectedTab = ref("esport");
     const game_bg_color = ref([]);
     const tabs = ref([
       {
-        name: "live",
-        icon: "slide-live-svg.svg",
-        label: "真人娱乐",
-        labelact: "真人娱乐",
+        name: "esport",
+        icon: "slide-esport-svg.svg",
+        label: "电竞赛事",
+        labelact: "电竞赛事",
         mb: 0,
         gap: 3
       },
@@ -1064,10 +1081,10 @@ export default defineComponent({
         gap: 3
       },
       {
-        name: "esport",
-        icon: "slide-esport-svg.svg",
-        label: "电竞赛事",
-        labelact: "电竞赛事",
+        name: "live",
+        icon: "slide-live-svg.svg",
+        label: "真人娱乐",
+        labelact: "真人娱乐",
         mb: 0,
         gap: 3
       },
@@ -1078,14 +1095,6 @@ export default defineComponent({
         labelact: "电子",
         mb: 0,
         gap: 3
-      },
-      {
-        name: "fish",
-        icon: "slide-fish-svg.svg",
-        label: "捕鱼",
-        labelact: "捕鱼",
-        mb: 2,
-        gap: 1
       },
       {
         name: "poker",
@@ -1102,7 +1111,15 @@ export default defineComponent({
         labelact: "彩票游戏",
         mb: 0,
         gap: 3
-      }
+      },
+      {
+        name: "fish",
+        icon: "slide-fish-svg.svg",
+        label: "捕鱼",
+        labelact: "捕鱼",
+        mb: 2,
+        gap: 1
+      },
     ]);
     const esport = ref([]);
     const sport = ref([]);
@@ -1201,13 +1218,13 @@ export default defineComponent({
 
       if (!isScrolling.value) {
         var topHeight = document.getElementById("id-sticky-header").offsetHeight + 15;
-        var checkItem1 = document.getElementById("id-live-slide");
+        var checkItem1 = document.getElementById("id-esport-slide");
         var checkItem2 = document.getElementById("id-sport-slide");
-        var checkItem3 = document.getElementById("id-esport-slide");
+        var checkItem3 = document.getElementById("id-live-slide");
         var checkItem4 = document.getElementById("id-slot-slide");
-        var checkItem42 = document.getElementById("id-fish-slide");
-        var checkItem5 = document.getElementById("id-poker-slide");
-        var checkItem6 = document.getElementById("id-lottery-slide");
+        var checkItem42 = document.getElementById("id-poker-slide");
+        var checkItem5 = document.getElementById("id-lottery-slide");
+        var checkItem6 = document.getElementById("id-fish-slide");
 
         var positionTop1 = checkItem1.getBoundingClientRect().top;
         var positionTop2 = checkItem2.getBoundingClientRect().top;
@@ -1223,25 +1240,25 @@ export default defineComponent({
         // console.log(positionTop6 - 40 <= topHeight);
 
         if (positionTop6 - 100 <= topHeight) {
-          selectedTab.value = 'lottery';
+          selectedTab.value = 'fish';
           secondSwiper.value?.slideTo(6, 500);
         } else if (positionTop5 <= topHeight) {
-          selectedTab.value = 'poker';
+          selectedTab.value = 'lottery';
           secondSwiper.value?.slideTo(5, 500);
         } else if (positionTop42 <= topHeight) {
-          selectedTab.value = 'fish';
-          secondSwiper.value?.slideTo(4, 500);
-        }else if (positionTop4 <= topHeight) {
           selectedTab.value = 'slot';
+          secondSwiper.value?.slideTo(4, 500);
+        } else if (positionTop4 <= topHeight) {
+          selectedTab.value = 'poker';
           secondSwiper.value?.slideTo(3, 500);
         } else if (positionTop3 <= topHeight) {
-          selectedTab.value = 'esport';
+          selectedTab.value = 'live';
           secondSwiper.value?.slideTo(2, 500);
         } else if (positionTop2 <= topHeight) {
           selectedTab.value = 'sport';
           secondSwiper.value?.slideTo(1, 500);
         } else if (positionTop1 <= topHeight) {
-          selectedTab.value = 'live';
+          selectedTab.value = 'esport';
           secondSwiper.value?.slideTo(0, 500);
         }
       }
@@ -1249,12 +1266,12 @@ export default defineComponent({
 
     }
 
-    ui.$onAction(({name, args}) => {
-      switch (name) {
-        case "setScrollPosition":
-          scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-      }
-    });
+    // ui.$onAction(({name, args}) => {
+    //   switch (name) {
+    //     case "setScrollPosition":
+    //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
+    //   }
+    // });
     const $q = useQuasar();
     const banners = ref(null);
     const route = useRoute();
@@ -1318,10 +1335,11 @@ export default defineComponent({
     const fishPlatforms = ref([]);
 
     const hotSlots = ref(['PG']);
-    const hotLives = ref(['AG', 'BBIN']);
-    const hotSports = ref(['PM']);
-    const hotPokers = ref(['KY']);
-    const hotLotterys = ref(['TCG']);
+    const hotLives = ref(['AG', ]);
+    const hotEsports = ref(['TFGaming','IMES']);
+    const hotSports = ref(['IM', 'PM']);
+    const hotPokers = ref(['']);
+    const hotLotterys = ref(['']);
 
     var platformApiUrl = (store.hasToken()) ? '/session/loggedInPlatform' : "/platform";
     var platformApiKey = (store.hasToken()) ? 'LOGGEDPLATFORMS' : "PLATFORMS";
@@ -1345,6 +1363,8 @@ export default defineComponent({
 
               if (platTypes.indexOf("ESPORT") > -1) {
                 var espObj = Object.assign({}, element);
+                var esportOrder= 1;
+
                 if (espObj.code === "TFGaming") {
                   espObj.title = "东赢电竞";
                 }
@@ -1353,6 +1373,7 @@ export default defineComponent({
                 }
                 if (espObj.code === "IMES") {
                   espObj.title = "IM电竞";
+                  esportOrder = 2;
                 }
                 if (!espObj.title) {
                   espObj.title = espObj.code + "电竞";
@@ -1360,14 +1381,21 @@ export default defineComponent({
                 espObj.icon = "esport";
                 espObj.subtitle = "电竞赛事";
                 esport.value.push(espObj);
+
+                if (hotEsports.value.indexOf(element.name) > -1) {
+                  espObj.order = esportOrder;
+                  hotgames.value.push(espObj);
+                }
               }
               if (platTypes.indexOf("SPORT") > -1) {
                 var spObj = Object.assign({}, element);
+                var sportOrder= 3;
                 if (spObj.code === "IM") {
                   spObj.title = "IM体育";
                 }
                 if (spObj.code === "PM") {
-                  spObj.title = "PM体育";
+                  spObj.title = "熊猫体育";
+                  sportOrder= 4;
                 }
                 if (spObj.code === "IA") {
                   spObj.title = "小艾体育";
@@ -1383,7 +1411,7 @@ export default defineComponent({
                 sport.value.push(spObj);
 
                 if (hotSports.value.indexOf(element.name) > -1) {
-                  spObj.order = 2;
+                  spObj.order = sportOrder;
                   hotgames.value.push(spObj);
                 }
 
@@ -1396,7 +1424,7 @@ export default defineComponent({
                 livecasino.value.push(liveObj);
 
                 if (hotLives.value.indexOf(element.name) > -1) {
-                  liveObj.order = 1;
+                  liveObj.order = 6;
                   hotgames.value.push(liveObj);
                 }
               }
@@ -1435,11 +1463,11 @@ export default defineComponent({
                 slot.value.push(slotObj);
 
                 if (hotSlots.value.indexOf(element.name) > -1) {
-                  slotObj.order = 4;
+                  slotObj.order = 5;
                   hotgames.value.push(slotObj);
                 }
               }
-              if (platTypes.indexOf("FISH") > -1) {
+              if (platTypes.indexOf("FISH") > -1 && element.code !=='AGF') {
                 var fishObj = Object.assign({}, element);
                 fishObj.title = fishObj.name + " 捕鱼";
                 fishObj.icon = "fish";

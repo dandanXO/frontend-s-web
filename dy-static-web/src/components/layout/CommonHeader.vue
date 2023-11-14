@@ -806,12 +806,9 @@ export default defineComponent({
       {code: "Lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
       {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true},
-      // {code: "Agent", name: "加盟", enName: "Agent", path: "/agent", hasicon: true},
       {code: "Sponsor", name: "赞助", enName: "Sponsor", path: "/sponsor", hasicon: true},
       {code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
-      // { code: "Poker", name: "ป็อกเกอร์", path: "/poker" },
-      // { code: "E-sports", name: "E-sports", path: "/e-sport" },
     ]
   }),
   setup() {
@@ -1535,9 +1532,9 @@ export default defineComponent({
                 codeId: loginForm.codeId,
               })
               .then(() => {
-                const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                 if (store.token) {
-                  router.push(jumpUrl);
+                  // router.push(jumpUrl);
                   loginDialogVisible.value = false;
                   store.loginPageVisible = false;
 
@@ -1583,9 +1580,9 @@ export default defineComponent({
                 smsCodeId: loginForm.smsCodeId,
               })
               .then(() => {
-                const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                 if (store.token) {
-                  router.push(jumpUrl);
+                  // router.push(jumpUrl);
                   loginDialogVisible.value = false;
                   store.loginPageVisible = false;
 
