@@ -949,6 +949,7 @@ export default {
     totalReimburseAmount: '总报销金额',
     totalSuccessDeposit: '存款成功数量',
     totalSuccessDepositAmount: '存款成功总额',
+    totalSuccessDepositPercentage: '成功存款比率',
     totalSuccessWithdraw: '提款成功数量',
     totalSuccessWithdrawAmount: '提款成功总额',
     totalTime: '总时长',

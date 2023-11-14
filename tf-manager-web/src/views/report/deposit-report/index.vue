@@ -225,7 +225,7 @@
       />
       <el-table-column
         prop="totalSuccessPercentage"
-        :label="t('fields.totalSuccessPercentage')"
+        :label="t('fields.totalSuccessDepositPercentage')"
       />
     </el-table>
     <el-pagination
