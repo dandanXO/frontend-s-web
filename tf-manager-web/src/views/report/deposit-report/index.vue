@@ -169,7 +169,6 @@
       <el-table-column
         prop="totalDepositAmount"
         :label="t('fields.totalDepositAmount')"
-        sortable
       >
         <template #default="scope">
           $
@@ -184,6 +183,7 @@
       <el-table-column
         prop="totalSuccessDepositAmount"
         :label="t('fields.totalSuccessDepositAmount')"
+        sortable
       >
         <template #default="scope">
           $
@@ -222,6 +222,10 @@
       <el-table-column
         prop="totalFailDeposit"
         :label="t('fields.totalFailDeposit')"
+      />
+      <el-table-column
+        prop="totalSuccessPercentage"
+        :label="t('fields.totalSuccessPercentage')"
       />
     </el-table>
     <el-pagination
