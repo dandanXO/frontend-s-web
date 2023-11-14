@@ -949,6 +949,7 @@ export default {
     totalReimburseAmount: 'Total Reimburse Amount',
     totalSuccessDeposit: 'Total Success Deposit',
     totalSuccessDepositAmount: 'Total Success Deposit Amount',
+    totalSuccessDepositPercentage: 'Total Success Deposit Percentage',
     totalSuccessWithdraw: 'Total Success Withdraw',
     totalSuccessWithdrawAmount: 'Total Success Withdraw Amount',
     totalTime: 'Total Time',
