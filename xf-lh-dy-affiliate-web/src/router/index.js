@@ -53,7 +53,13 @@ export const constantRoutes = [
         }
       }
     ]
-  }
+  },
+  {
+    path: "/poster",
+    name: "poster",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/poster/index.vue")
+  },
 ]
 
 export const notFound = {
