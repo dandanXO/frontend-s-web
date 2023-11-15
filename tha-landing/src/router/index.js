@@ -39,7 +39,7 @@ export default route(function (/* { store, ssrContext } */) {
 
       fbq("init", "211810688532352");
       fbq("track", "PageView");
-
+      fbq("track", "ViewContent");
 
       //For TESTING.
       // fbq("init", "6757510457678415");
