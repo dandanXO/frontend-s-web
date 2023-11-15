@@ -329,6 +329,7 @@ import {useRoute, useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
 import {api} from "boot/axios";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import {useUI} from "stores/ui";
 
 var qs = require("qs");
 
@@ -363,6 +364,7 @@ const isPwd = ref(true);
 const isCfmPwd = ref(true);
 const isRegPwd = ref(true);
 
+const ui= useUI();
 
 const isLoginModal = ref(false);
 const isRegisterModal = ref(false);
@@ -500,6 +502,12 @@ const onSubmit = () => {
         if (ret.data.code === 0) {
           var loginToken = btoa(ret.data.data);
           console.log(loginToken);
+
+          if(ui.isAffiliateA){
+            fbq("track", "login");
+          }
+
+
           $q.notify({
             color: "positive",
             position: "top",
@@ -579,6 +587,11 @@ const onRegisterSubmit = () => {
           const res = ret.data;
           if (res.code === 0) {
             console.log(res.data);
+
+            if(ui.isAffiliateA){
+              fbq("track", "register");
+            }
+
             $q.notify({
               color: "positive",
               position: "top",
