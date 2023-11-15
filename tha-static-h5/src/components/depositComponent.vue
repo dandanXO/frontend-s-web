@@ -375,11 +375,6 @@ async function confirmDeposit() {
           currency: "THB",
           value: form.localAmount,
         });
-
-        fbq("track", "Purchase", {
-          currency: "THB",
-          value: form.localAmount,
-        });
       }
 
       window.addEventListener(

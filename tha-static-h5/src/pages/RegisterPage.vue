@@ -583,10 +583,6 @@ export default defineComponent({
                     currency: vueI18n.global.locale.value,
                     value: 0.0,
                   });
-                  fbq("track", "Complete Registration", {
-                    currency: vueI18n.global.locale.value,
-                    value: 0.0,
-                  });
                 }
 
                 router.push("/login");
