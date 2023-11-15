@@ -17,6 +17,7 @@ import i18n from "../i18n/index";
 import liff from "@line/liff";
 // import {Preferences} from "@capacitor/preferences";
 import { useRouter } from "vue-router";
+import {userStore} from "src/stores";
 
 const qs = require("qs");
 
@@ -104,8 +105,10 @@ function postMessage(item1, item2) {
 // }
 const $q = useQuasar();
 const router = useRouter();
+const store= userStore();
 
 onMounted(async () => {
+  await store.getMemberInfo();
   $q.loading.show({
     message: "加载中..."
   });

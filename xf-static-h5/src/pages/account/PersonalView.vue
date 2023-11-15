@@ -1,58 +1,68 @@
 <template>
   <div class="personal-account">
-    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
+    <div class="web">
+      推荐链接:
+      <span>{{ referralLink }}</span>
+      <q-btn
+        @click="copyReferralLink"
+        color="brightbtn"
+        label="复制"
+        size="sm"
+      />
+    </div>
+
     <q-form ref="profileFormRef">
       <q-input
-          standout
-          class="q-pb-xs"
-          hide-bottom-space
-          filled
-          v-model="formDetail.nickName"
-          label="账号"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入账号']"
-          label-color="secondary"
-          :readonly="personalState.memberInfo.nickName ? true : false"
+        standout
+        class="q-pb-xs"
+        hide-bottom-space
+        filled
+        v-model="formDetail.nickName"
+        label="账号"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || '请输入账号']"
+        label-color="secondary"
+        :readonly="personalState.memberInfo.nickName ? true : false"
       />
       <q-input
-          standout
-          ref="realNameRef"
-          class="q-pb-xs"
-          hide-bottom-space
-          filled
-          v-model="formDetail.realName"
-          label="姓名"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
-          label-color="secondary"
-          color="secondary"
-          :readonly="personalState.memberInfo.realName ? true : false"
+        standout
+        ref="realNameRef"
+        class="q-pb-xs"
+        hide-bottom-space
+        filled
+        v-model="formDetail.realName"
+        label="姓名"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
+        label-color="secondary"
+        color="secondary"
+        :readonly="personalState.memberInfo.realName ? true : false"
       />
       <q-input
-          ref="birthdayRef"
-          standout
-          label="生日"
-          filled
-          label-color="secondary"
-          color="secondary"
-          lazy-rules
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.birthday"
-          readonly
-          mask="date"
-          :rules="[(val) => (val && val.length > 0) || '请输入生日']"
+        ref="birthdayRef"
+        standout
+        label="生日"
+        filled
+        label-color="secondary"
+        color="secondary"
+        lazy-rules
+        class="q-pb-xs"
+        hide-bottom-space
+        v-model="formDetail.birthday"
+        readonly
+        mask="date"
+        :rules="[(val) => (val && val.length > 0) || '请输入生日']"
       >
         <template v-slot:append>
           <q-icon name="event" color="white" class="cursor-pointer">
             <q-popup-proxy
-                cover
-                transition-show="scale"
-                transition-hide="scale"
+              cover
+              transition-show="scale"
+              transition-hide="scale"
             >
               <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="white" flat/>
+                  <q-btn v-close-popup label="关闭" color="white" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -75,31 +85,30 @@
         :readonly="personalState.memberInfo.birthday ? true : false"
       /> -->
 
-
       <div class="flex items-center no-wrap">
         <q-input
-            standout
-            filled
-            class="q-pb-xs"
-            hide-bottom-space
-            v-model="formDetail.phone"
-            type="tel"
-            label="电话"
-            lazy-rules
-            :rules="[(_) => isValidPhone()]"
-            label-color="secondary"
-            color="secondary"
-            readonly
-            style="width: 100%"
+          standout
+          filled
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.phone"
+          type="tel"
+          label="电话"
+          lazy-rules
+          :rules="[(_) => isValidPhone()]"
+          label-color="secondary"
+          color="secondary"
+          readonly
+          style="width: 100%"
         ></q-input>
         <template v-if="isEditPhone">
           <div class="q-ml-md">
             <q-btn
-                size="sm"
-                color="brightbtn"
-                label="验证"
-                @click="goToPage('/account/verifyTelephone')"
-                style="white-space: nowrap"
+              size="sm"
+              color="brightbtn"
+              label="验证"
+              @click="goToPage('/account/verifyTelephone')"
+              style="white-space: nowrap"
             />
           </div>
         </template>
@@ -107,26 +116,26 @@
 
       <div class="flex items-center no-wrap">
         <q-input
-            standout
-            class="q-pb-xs"
-            hide-bottom-space
-            v-model="formDetail.email"
-            label="邮箱"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
-            label-color="secondary"
-            color="secondary"
-            readonly
-            style="width: 100%"
+          standout
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.email"
+          label="邮箱"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
+          label-color="secondary"
+          color="secondary"
+          readonly
+          style="width: 100%"
         />
         <template v-if="isEditEmail">
           <div class="q-ml-md">
             <q-btn
-                size="sm"
-                color="brightbtn"
-                label="验证"
-                @click="goToPage('/account/verifyEmail')"
-                style="white-space: nowrap"
+              size="sm"
+              color="brightbtn"
+              label="验证"
+              @click="goToPage('/account/verifyEmail')"
+              style="white-space: nowrap"
             />
           </div>
         </template>
@@ -159,31 +168,38 @@
       </q-input> -->
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息"/>
+        <q-btn
+          size="md"
+          color="brightbtn"
+          @click="updateState"
+          label="保存信息"
+        />
       </div>
     </q-form>
   </div>
 
   <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card
-        style="width: 100%; padding: 20px"
-        class="bg-dark text-white text-center"
+      style="width: 100%; padding: 20px"
+      class="bg-dark text-white text-center"
     >
       <q-card-section class="q-mb-md">
         <strong>系统提示</strong>
-        <br/>
-        <br/>
+        <br />
+        <br />
         请登录后再操作
       </q-card-section>
-      <router-link to="/login?redirect=/account"><q-btn label="确认" color="brightbtn"/></router-link>
+      <router-link to="/login?redirect=/account">
+        <q-btn label="确认" color="brightbtn" />
+      </router-link>
     </q-card>
   </q-dialog>
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
       <q-card-section
-          style="padding: 10px 20px"
-          class="q-pa-md bg-dark text-white"
+        style="padding: 10px 20px"
+        class="q-pa-md bg-dark text-white"
       >
         验证码
       </q-card-section>
@@ -192,15 +208,15 @@
           <q-input v-model="captchaRef" label="验证码">
             <template v-slot:append>
               <img
-                  :src="verificationImg"
-                  title="点击刷新验证码"
-                  style="margin-top: 6px; cursor: pointer"
-                  @click="getCode"
+                :src="verificationImg"
+                title="点击刷新验证码"
+                style="margin-top: 6px; cursor: pointer"
+                @click="getCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn"/>
+        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn" />
       </div>
     </q-card>
   </q-dialog>
@@ -213,6 +229,7 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
 import {useRouter} from "vue-router";
+import {useClipboard} from '@vueuse/core';
 
 export default defineComponent({
   name: "PersonalView",
@@ -250,6 +267,8 @@ export default defineComponent({
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
       isEditBirthday.value = (formDetail.birthday == '') ? true : false;
       isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
+
+      getReferralLink();
     };
 
     const canEdit = computed(() => {
@@ -480,6 +499,31 @@ export default defineComponent({
           })
     }
 
+    //copy referral link
+    const referralLink = ref();
+    const getReferralLink = () => {
+      api
+      .get("/session/member/referralCode")
+      .then((response) => {
+        if(response.code === 0) {
+          referralLink.value = `https://${personalState.memberInfo.evip}/refer/${response.data}`;
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    const copyReferralLink = () => {
+      const { copy } = useClipboard();
+      copy(referralLink.value);
+
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "推荐链接已复制",
+        icon: "check_circle_outline"
+      });
+    };
+
     return {
       searchForm,
       personalState,
@@ -518,7 +562,10 @@ export default defineComponent({
       captchaRef,
       showCaptchaDialog,
       openVerificationDialog,
-      onCaptchaSubmit
+      onCaptchaSubmit,
+      referralLink,
+      getReferralLink,
+      copyReferralLink
     };
   }
 });
@@ -532,6 +579,21 @@ export default defineComponent({
     text-align: center;
     padding: 0 0 10px;
     font-weight: bold;
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      display: inline-flex;
+      background: #2c444f;
+      padding: 5px 10px;
+      font-weight: 300;
+      color: #ffffff;
+      margin: 0 5px;
+      border-radius: 4px;
+    }
   }
 }
 </style>

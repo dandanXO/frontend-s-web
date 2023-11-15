@@ -120,7 +120,7 @@
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
-import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
+import { getLoggedInPlatformList, getPlatformGames, getPlatformList } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
 import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
@@ -172,24 +172,46 @@ export default defineComponent({
     }
 
     const getPlatList = () => {
-      getPlatformList().then((data) => {
-        platforms.value = data.filter(element => element.gameType.includes("SLOT"));
-        if (!route.query.plat) {
-          switchPlat(platforms.value[0]);
-        } else {
-          platforms.value.forEach(element => {
-            if (route.query.plat === element.code) {
-              switchPlat(element)
-            }
-          });
-        }
-      }).catch((err) => {
-        console.log(err.message)
-        // message.error(
-        //   err.message,
-        //   4
-        // );
-      });
+      if (store.memberType === "TEST") {
+        getLoggedInPlatformList().then((data) => {
+          platforms.value = data.filter(element => element.gameType.includes("SLOT"));
+          if (!route.query.plat) {
+            switchPlat(platforms.value[0]);
+          } else {
+            platforms.value.forEach(element => {
+              if (route.query.plat === element.code) {
+                switchPlat(element)
+              }
+            });
+          }
+        }).catch((err) => {
+          console.log(err.message)
+          // message.error(
+          //   err.message,
+          //   4
+          // );
+        });
+      } else {
+        getPlatformList().then((data) => {
+          platforms.value = data.filter(element => element.gameType.includes("SLOT"));
+          if (!route.query.plat) {
+            switchPlat(platforms.value[0]);
+          } else {
+            platforms.value.forEach(element => {
+              if (route.query.plat === element.code) {
+                switchPlat(element)
+              }
+            });
+          }
+        }).catch((err) => {
+          console.log(err.message)
+          // message.error(
+          //   err.message,
+          //   4
+          // );
+        });
+      }
+
     };
     const searchList = () => {
       if (gamePage.searchKey) {

@@ -1,14 +1,54 @@
 import axios from "axios";
 import { getRndInteger } from "@/utils/utils";
-import { ElMessage } from 'element-plus'
+import { ElMessage } from "element-plus";
 import { stringify } from "qs";
 import { userStore } from "@/store";
 // import i18n from "../i18n/index";
-import { ResponseCode,SkipErrorCode } from "@/api/response";
+import { ResponseCode, SkipErrorCode } from "@/api/response";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
+
+var rstApi = getInitApi(rstArray, "DY_WEB_RST_URL");
+var crtApi = getInitApi(crArray, "DY_WEB_CRT_URL");
+var evtApi = getInitApi(evtArray, "DY_WEB_EVT_URL");
+
+function getInitApi(apiLinks, urlLsName) {
+  var successRstUrl = localStorage.getItem(urlLsName);
+  if (successRstUrl) {
+    axios.get(successRstUrl + "/ping").then((res) => {
+      console.log(res);
+      if (res.status !== 200) {
+        localStorage.removeItem(urlLsName);
+      }
+    }).catch((err) => {
+      console.log(err);
+      localStorage.removeItem(urlLsName);
+    });
+
+    return successRstUrl;
+  } else {
+    var initApi;
+    if (typeof apiLinks === "string" || apiLinks instanceof String) {
+      initApi = apiLinks;
+    } else {
+      var apiLists = Object.values(apiLinks);
+      initApi = apiLists[getRndInteger(0, apiLists.length)];
+    }
+
+    axios.get(initApi + "/ping").then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem(urlLsName, initApi);
+      } else {
+        localStorage.removeItem(urlLsName);
+      }
+    });
+    return initApi;
+  }
+}
+
 
 const onRequest = (config) => {
   const store = userStore();
@@ -50,8 +90,8 @@ const onResponse = (response) => {
       return response.data;
     }
     if (res.code === ResponseCode.ERROR_AMOUNT_PRIVILEGE_DEPOSIT) {
-      res.message ='优惠存款金额不符合规则'
-      return res
+      res.message = "优惠存款金额不符合规则";
+      return res;
     }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       store.token = null;
@@ -79,8 +119,8 @@ const onResponseError = (error) => {
 
   ElMessage({
     message: error.message,
-    type: 'warning',
-  })
+    type: "warning"
+  });
   return Promise.reject(error);
 };
 
@@ -88,7 +128,7 @@ function initHttp() {
   const host = document.location.host;
   const instance = axios.create({
     headers: {
-      domain: host,
+      domain: host
     },
     timeout: process.env.VUE_APP_TIMEOUT
   });
@@ -103,7 +143,7 @@ export const server = new Proxy(
   {
     REST: null,
     EVENT: null,
-    CASHIER: null,
+    CASHIER: null
   },
   {
     get: (target, propKey) => {
@@ -111,13 +151,13 @@ export const server = new Proxy(
         instance = initHttp();
       }
       if (propKey === "REST") {
-        instance.defaults.baseURL = rstArray[getRndInteger(0, rstArray.length)];
+        instance.defaults.baseURL = rstApi;
       } else if (propKey === "EVENT") {
-        instance.defaults.baseURL = evtArray[getRndInteger(0, evtArray.length)];
+        instance.defaults.baseURL = evtApi;
       } else if (propKey === "CASHIER") {
-        instance.defaults.baseURL = crArray[getRndInteger(0, crArray.length)];
+        instance.defaults.baseURL = crtApi;
       }
       return instance;
-    },
+    }
   }
 );
