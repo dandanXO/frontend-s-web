@@ -3,10 +3,10 @@
     <div class="header-container">
       <div class="search">
         <el-input
-          v-model="request.title"
+          v-model="request.name"
           size="small"
           style="width: 200px;"
-          :placeholder="t('fields.title')"
+          :placeholder="t('fields.name')"
         />
         <el-select
           clearable
@@ -17,7 +17,7 @@
           style="width: 120px;margin-left: 5px"
         >
           <el-option
-            v-for="item in uiControl.announcementState"
+            v-for="item in uiControl.announcementTypeState"
             :key="item.key"
             :label="item.displayName"
             :value="item.value"
@@ -28,7 +28,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadAnnouncement"
+          @click="loadAffAnnouncementType"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -41,14 +41,13 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
-      <div class="btn-group">
+      <div class="btn-group" v-if="!hasRole(['SUB_TENANT'])">
         <el-button
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:annou:add']"
+          v-permission="['sys:annou:type:add']"
           @click="showDialog('CREATE')"
-          v-if="!hasRole(['SUB_TENANT'])"
         >
           {{ t('fields.add') }}
         </el-button>
@@ -56,10 +55,9 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
+          v-permission="['sys:annou:type:update']"
           @click="showEdit()"
-          v-permission="['sys:annou:update']"
           :disabled="uiControl.editBtn"
-          v-if="!hasRole(['SUB_TENANT'])"
         >
           {{ t('fields.edit') }}
         </el-button>
@@ -67,10 +65,9 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:annou:del']"
-          @click="removeAnnouncement()"
+          v-permission="['sys:annou:type:del']"
+          @click="removeAffAnnouncementType()"
           :disabled="uiControl.removeBtn"
-          v-if="!hasRole(['SUB_TENANT'])"
         >
           {{ t('fields.delete') }}
         </el-button>
@@ -83,32 +80,15 @@
       width="580px"
     >
       <el-form
-        ref="announcementForm"
+        ref="announcementTypeForm"
         :model="form"
         :rules="formRules"
         :inline="true"
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.title')" prop="title">
-          <el-input v-model="form.title" style="width: 350px;" maxlength="50" />
-        </el-form-item>
-        <el-form-item :label="t('fields.type')" prop="type">
-          <el-select
-            v-model="form.type"
-            :placeholder="t('fields.announcementType')"
-            style="width: 350px;"
-            filterable
-            default-first-option
-            @focus="loadActiveAnnouncementType"
-          >
-            <el-option
-              v-for="item in announcementTypeList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
+        <el-form-item :label="t('fields.name')" prop="name">
+          <el-input v-model="form.name" style="width: 350px;" maxlength="20" />
         </el-form-item>
         <el-form-item
           v-if="uiControl.dialogType === 'CREATE'"
@@ -118,31 +98,26 @@
           <el-radio v-model="form.status" label="true">active</el-radio>
           <el-radio v-model="form.status" label="false">disable</el-radio>
         </el-form-item>
-        <el-form-item :label="t('fields.endDate')" prop="dueDate">
-          <el-date-picker
-            type="date"
-            value-format="YYYY-MM-DD"
-            v-model="form.dueDate"
-            style="width: 350px;"
-            :disabled-date="disabledDate"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.content')" prop="content">
-          <el-input
-            type="textarea"
-            v-model="form.content"
-            :rows="6"
-            style="width: 350px;"
-            maxlength="500"
-            show-word-limit
-          />
-        </el-form-item>
         <el-form-item :label="t('fields.sequence')" prop="sequence">
           <el-input-number
+            v-if="uiControl.dialogType === 'CREATE'"
             type="number"
             v-model.number="form.sequence"
-            :min="0"
-            style="width: 350px"
+            :min="1"
+            :max="page.records.length + 1"
+            style="width: 350px;"
+            @keyup="checkNumberInput()"
+            @keypress="restrictInput($event)"
+            controls-position="right"
+          />
+          <el-input-number
+            v-if="uiControl.dialogType === 'EDIT'"
+            type="number"
+            v-model.number="form.sequence"
+            :min="1"
+            :max="page.records.length"
+            style="width: 350px;"
+            @keyup="checkNumberInput()"
             @keypress="restrictInput($event)"
             controls-position="right"
           />
@@ -167,47 +142,46 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column
-        type="selection"
-        width="55"
-        v-if="!hasRole(['SUB_TENANT'])"
-      />
-      <el-table-column prop="title" :label="t('fields.title')" width="200" />
-      <el-table-column
-        prop="announcementType"
-        :label="t('fields.announcementType')"
-        width="200"
-      />
+      <el-table-column type="selection" width="55" />
+      <el-table-column prop="name" :label="t('fields.name')" width="400" />
       <el-table-column
         prop="sequence"
         :label="t('fields.sequence')"
         width="200"
       />
-      <el-table-column
-        prop="status"
-        :label="t('fields.state')"
-        width="150"
-        v-if="hasPermission(['sys:annou:update:state'])"
-      >
+      <el-table-column prop="status" :label="t('fields.state')" width="150">
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"
             active-color="#409EFF"
             inactive-color="#F56C6C"
-            @change="changeAnnouncementState(scope.row.id, scope.row.status)"
+            @change="
+              changeAffAnnouncementTypeState(scope.row.id, scope.row.status)
+            "
           />
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column prop="dueDate" :label="t('fields.endDate')" />
       <el-table-column
         :label="t('fields.operate')"
         align="right"
         v-if="
           !hasRole(['SUB_TENANT']) &&
-            (hasPermission(['sys:annou:update']) ||
-              hasPermission(['sys:annou:del']))
+            (hasPermission(['sys:annou:type:update']) ||
+              hasPermission(['sys:annou:type:del']))
         "
       >
         <template #default="scope">
@@ -215,15 +189,15 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:annou:update']"
+            v-permission="['sys:annou:type:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:annou:del']"
-            @click="removeAnnouncement(scope.row)"
+            v-permission="['sys:annou:type:del']"
+            @click="removeAffAnnouncementType(scope.row)"
           />
         </template>
       </el-table-column>
@@ -244,25 +218,27 @@ import { nextTick, onMounted, reactive, ref } from 'vue'
 import { required } from '../../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
-  createAnnouncement,
-  updateAnnouncement,
-  getAnnouncement,
-  updateAnnouncementState,
-  deleteAnnouncement,
-} from '../../../../api/announcement'
-import { getActiveAnnouncementType } from '../../../../api/announcement-type'
+  createAffAnnouncementType,
+  getAffAnnouncementType,
+  updateAffAnnouncementType,
+  updateAffAnnouncementTypeState,
+  deleteAffAnnouncementType,
+} from '../../../../api/affiliate-announcement-type'
 import { hasRole, hasPermission } from '../../../../utils/util'
 import { useI18n } from 'vue-i18n'
+// import { useStore } from '../../../../store'
 
+// const store = useStore()
 const { t } = useI18n()
-const announcementForm = ref(null)
+const announcementTypeForm = ref(null)
+
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'CREATE',
   editBtn: true,
   removeBtn: true,
-  announcementState: [
+  announcementTypeState: [
     { key: 1, displayName: 'active', value: true },
     { key: 2, displayName: 'disable', value: false },
   ],
@@ -276,46 +252,35 @@ const page = reactive({
 const request = reactive({
   size: 30,
   current: 1,
-  title: null,
+  name: null,
   status: null,
 })
 
 const form = reactive({
   id: null,
-  title: null,
-  type: null,
-  status: 'true',
-  dueDate: null,
-  content: null,
+  name: null,
   sequence: null,
+  status: 'true',
 })
 
 const formRules = reactive({
-  title: [required(t('message.validateTitleRequired'))],
-  type: [required(t('message.validateAnnouncementTypeRequired'))],
-  dueDate: [required(t('message.validateEndDateRequired'))],
-  content: [required(t('message.validateContentRequired'))],
+  name: [required(t('message.validateNameRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
 })
 
-let chooseAnnouncement = []
-const announcementTypeList = ref([])
-
-function disabledDate(time) {
-  return time.getTime() <= Date.now()
-}
+let chooseAnnouncementType = []
 
 function resetQuery() {
-  request.title = null
+  request.name = null
   request.status = null
 }
 
 function handleSelectionChange(val) {
-  chooseAnnouncement = val
-  if (chooseAnnouncement.length === 0) {
+  chooseAnnouncementType = val
+  if (chooseAnnouncementType.length === 0) {
     uiControl.editBtn = true
     uiControl.removeBtn = true
-  } else if (chooseAnnouncement.length === 1) {
+  } else if (chooseAnnouncementType.length === 1) {
     uiControl.editBtn = false
     uiControl.removeBtn = false
   } else {
@@ -324,102 +289,94 @@ function handleSelectionChange(val) {
   }
 }
 
-async function loadAnnouncement() {
+async function loadAffAnnouncementType() {
   page.loading = true
-  const { data: ret } = await getAnnouncement(request)
+  const { data: ret } = await getAffAnnouncementType(request)
+  console.log('ret : ', ret)
   page.pages = ret.pages
   page.records = ret.records
   page.loading = false
 }
 
-async function loadActiveAnnouncementType() {
-  const { data: type } = await getActiveAnnouncementType()
-  announcementTypeList.value = type
-}
-
 function changePage(page) {
   request.current = page
-  loadAnnouncement()
+  loadAffAnnouncementType()
 }
 
 function showDialog(type) {
   if (type === 'CREATE') {
-    if (announcementForm.value) {
-      announcementForm.value.resetFields()
-      form.status = 'true'
+    if (announcementTypeForm.value) {
+      announcementTypeForm.value.resetFields()
     }
-    uiControl.dialogTitle = t('fields.addAnnouncement')
+    form.status = 'true'
+    form.sequence = page.records.length + 1
+    uiControl.dialogTitle = t('fields.addAffiliateAnnouncementType')
   } else if (type === 'EDIT') {
-    uiControl.dialogTitle = t('fields.editAnnouncement')
+    uiControl.dialogTitle = t('fields.editAffiliateAnnouncementType')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
 
-function showEdit(announcement) {
+function showEdit(announcementType) {
   showDialog('EDIT')
-  if (!announcement) {
-    announcement = chooseAnnouncement[0]
+  if (!announcementType) {
+    announcementType = chooseAnnouncementType[0]
   }
   nextTick(() => {
-    for (const key in announcement) {
+    for (const key in announcementType) {
       if (Object.keys(form).find(k => k === key)) {
-        if (key === 'dueDate') {
-          form[key] = String(announcement[key]).slice(0, 10)
-        } else {
-          form[key] = announcement[key]
-        }
+        form[key] = announcementType[key]
       }
     }
-    console.log(form)
   })
 }
 
 /**
- * 新增公告
+ * 新增公告类型
  */
 function create() {
-  announcementForm.value.validate(async valid => {
+  announcementTypeForm.value.validate(async valid => {
     form.id = null
     if (valid) {
-      await createAnnouncement(form)
+      await createAffAnnouncementType(form)
       uiControl.dialogVisible = false
-      await loadAnnouncement()
+      await loadAffAnnouncementType()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
   })
 }
 
 /**
- * 编辑公告
+ * 编辑公告类型
  */
 function edit() {
-  announcementForm.value.validate(async valid => {
+  announcementTypeForm.value.validate(async valid => {
     if (valid) {
-      await updateAnnouncement(form)
+      await updateAffAnnouncementType(form)
       uiControl.dialogVisible = false
-      await loadAnnouncement()
+      await loadAffAnnouncementType()
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
 }
 
-async function changeAnnouncementState(id, state) {
-  await updateAnnouncementState(id, state)
+async function changeAffAnnouncementTypeState(id, state) {
+  await updateAffAnnouncementTypeState(id, state)
 }
 
-async function removeAnnouncement(announcement) {
+async function removeAffAnnouncementType(announcementType) {
   ElMessageBox.confirm(t('message.confirmDelete'), {
     confirmButtonText: t('fields.confirm'),
     cancelButtonText: t('fields.cancel'),
     type: 'warning',
   }).then(async () => {
-    if (announcement) {
-      await deleteAnnouncement([announcement.id])
+    if (announcementType) {
+      await deleteAffAnnouncementType([announcementType.id])
     } else {
-      await deleteAnnouncement(chooseAnnouncement.map(a => a.id))
+      await deleteAffAnnouncementType(chooseAnnouncementType.map(a => a.id))
     }
-    await loadAnnouncement()
+    await loadAffAnnouncementType()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
   })
 }
@@ -439,9 +396,24 @@ function restrictInput(event) {
   }
 }
 
+function checkNumberInput() {
+  if (form.sequence < 1) {
+    form.sequence = 1
+  }
+
+  if (uiControl.dialogType === 'CREATE') {
+    if (form.sequence > page.records.length + 1) {
+      form.sequence = page.records.length + 1
+    }
+  } else if (uiControl.dialogType === 'EDIT') {
+    if (form.sequence > page.records.length) {
+      form.sequence = page.records.length
+    }
+  }
+}
+
 onMounted(() => {
-  loadAnnouncement()
-  loadActiveAnnouncementType()
+  loadAffAnnouncementType()
 })
 </script>
 
@@ -464,7 +436,7 @@ onMounted(() => {
   justify-content: flex-end;
 }
 
-.el-table--enabled-row-transition .el-table__body td.el-table__cell {
+.el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
 }
 </style>

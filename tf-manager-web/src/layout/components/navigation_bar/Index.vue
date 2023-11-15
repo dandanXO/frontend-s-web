@@ -6,10 +6,7 @@
       class="hamburger-container"
       @toggle-click="toggleSideBar"
     />
-    <BreadCrumb
-      id="breadcrumb-container"
-      class="breadcrumb-container"
-    />
+    <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
       <el-select
         class="lang-container right-menu-item"
@@ -25,15 +22,12 @@
         trigger="click"
       >
         <div class="avatar-wrapper">
-          <img
-            :src="avatar + '?imageView2/1/w/80/h/80'"
-            class="user-avatar"
-          >
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
         </div>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>
-              <span style="display:block;"> {{ name }}</span>
+              <span style="display:block;">{{ name }}</span>
             </el-dropdown-item>
 
             <ForgetPasswordModal :requireOld="true" @submit="changePassword">
@@ -46,9 +40,7 @@
               {{ $t('google.google_auth_menu') }}
             </el-dropdown-item>
 
-            <el-dropdown-item
-              @click="logout"
-            >
+            <el-dropdown-item @click="logout">
               <span style="display:block;">
                 {{ $t('common.logout') }}
               </span>
@@ -61,61 +53,61 @@
 </template>
 
 <script>
-import BreadCrumb from "@/components/bread-crumb/Index.vue";
-import Hamburger from "@/components/hamburger/Index.vue";
-import ForgetPasswordModal from "@/components/forgetpassword-modal/Index.vue";
+import BreadCrumb from '@/components/bread-crumb/Index.vue'
+import Hamburger from '@/components/hamburger/Index.vue'
+import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
 
-import { computed, reactive, toRefs } from "vue";
-import { useStore } from "@/store";
-import { AppActionTypes } from "@/store/modules/app/action-types";
-import { UserActionTypes } from "@/store/modules/user/action-types";
-import { storeToRefs } from "pinia";
-import { i18nStore } from "@/store/language";
-import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { computed, reactive, toRefs } from 'vue'
+import { useStore } from '@/store'
+import { AppActionTypes } from '@/store/modules/app/action-types'
+import { UserActionTypes } from '@/store/modules/user/action-types'
+import { storeToRefs } from 'pinia'
+import { i18nStore } from '@/store/language'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 export default {
   components: {
     BreadCrumb,
     Hamburger,
-    ForgetPasswordModal
+    ForgetPasswordModal,
   },
   setup() {
     // eslint-disable-next-line
-    const { t } = useI18n();
-    const store = useStore();
-    const router = useRouter();
+    const { t } = useI18n()
+    const store = useStore()
+    const router = useRouter()
     const sidebar = computed(() => {
-      return store.state.app.sidebar;
-    });
+      return store.state.app.sidebar
+    })
     const device = computed(() => {
-      return store.state.app.device.toString();
-    });
+      return store.state.app.device.toString()
+    })
     const avatar = computed(() => {
-      return store.state.user.avatar;
-    });
+      return store.state.user.avatar
+    })
     const name = computed(() => {
-      return store.state.user.name;
-    });
+      return store.state.user.name
+    })
     const state = reactive({
       toggleSideBar: () => {
-        store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false);
+        store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false)
       },
       logout: async () => {
-        await store.dispatch(UserActionTypes.ACTION_LOGOUT);
-        location.reload();
-      }
-    });
-    const i18nStoreLanguage = i18nStore();
-    const { languageVal } = storeToRefs(i18nStoreLanguage);
-    const { setLanguage } = i18nStoreLanguage;
+        await store.dispatch(UserActionTypes.ACTION_LOGOUT)
+        location.reload()
+      },
+    })
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const { setLanguage } = i18nStoreLanguage
 
     const handleLanguage = () => {
-      setLanguage(languageVal.value);
+      setLanguage(languageVal.value)
     }
-    const changePassword = async (formObj) => {
-      await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj);
-    };
+    const changePassword = async formObj => {
+      await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj)
+    }
     const goToGoogleAuth = () => {
       router.push({ path: '/google-auth' }).catch(err => {
         console.warn(err)
@@ -131,10 +123,10 @@ export default {
       handleLanguage,
       ...toRefs(state),
       changePassword,
-      goToGoogleAuth
-    };
-  }
-};
+      goToGoogleAuth,
+    }
+  },
+}
 </script>
 
 <style lang="scss" scoped>

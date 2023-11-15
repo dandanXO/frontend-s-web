@@ -100,12 +100,30 @@
             style="width: 350px;"
             filterable
             default-first-option
-            @focus="loadActiveAnnouncementType"
+            @focus="loadAffActiveAnnouncementType"
           >
             <el-option
               v-for="item in announcementTypeList"
               :key="item.id"
               :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+            @focus="loadSites"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
               :value="item.id"
             />
           </el-select>
@@ -117,15 +135,6 @@
         >
           <el-radio v-model="form.status" label="true">active</el-radio>
           <el-radio v-model="form.status" label="false">disable</el-radio>
-        </el-form-item>
-        <el-form-item :label="t('fields.endDate')" prop="dueDate">
-          <el-date-picker
-            type="date"
-            value-format="YYYY-MM-DD"
-            v-model="form.dueDate"
-            style="width: 350px;"
-            :disabled-date="disabledDate"
-          />
         </el-form-item>
         <el-form-item :label="t('fields.content')" prop="content">
           <el-input
@@ -174,10 +183,11 @@
       />
       <el-table-column prop="title" :label="t('fields.title')" width="200" />
       <el-table-column
-        prop="announcementType"
-        :label="t('fields.announcementType')"
+        prop="affiliateAnnouncementType"
+        :label="t('fields.affiliateAnnouncementType')"
         width="200"
       />
+      <el-table-column prop="site" :label="t('fields.site')" width="200" />
       <el-table-column
         prop="sequence"
         :label="t('fields.sequence')"
@@ -244,18 +254,23 @@ import { nextTick, onMounted, reactive, ref } from 'vue'
 import { required } from '../../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
-  createAnnouncement,
-  updateAnnouncement,
-  getAnnouncement,
-  updateAnnouncementState,
-  deleteAnnouncement,
-} from '../../../../api/announcement'
-import { getActiveAnnouncementType } from '../../../../api/announcement-type'
+  updateAffAnnouncementState,
+  updateAffAnnouncement,
+  getAffAnnouncement,
+  createAffAnnouncement,
+  deleteAffAnnouncement,
+} from '../../../../api/affiliate-announcement'
+import { getSiteListSimple } from '../../../../api/site'
+import { getActiveAffAnnouncementType } from '../../../../api/affiliate-announcement-type'
 import { hasRole, hasPermission } from '../../../../utils/util'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const announcementForm = ref(null)
+const siteList = reactive({
+  list: [],
+})
+
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -283,9 +298,9 @@ const request = reactive({
 const form = reactive({
   id: null,
   title: null,
+  siteId: null,
   type: null,
   status: 'true',
-  dueDate: null,
   content: null,
   sequence: null,
 })
@@ -293,17 +308,13 @@ const form = reactive({
 const formRules = reactive({
   title: [required(t('message.validateTitleRequired'))],
   type: [required(t('message.validateAnnouncementTypeRequired'))],
-  dueDate: [required(t('message.validateEndDateRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
   content: [required(t('message.validateContentRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
 })
 
 let chooseAnnouncement = []
 const announcementTypeList = ref([])
-
-function disabledDate(time) {
-  return time.getTime() <= Date.now()
-}
 
 function resetQuery() {
   request.title = null
@@ -326,14 +337,14 @@ function handleSelectionChange(val) {
 
 async function loadAnnouncement() {
   page.loading = true
-  const { data: ret } = await getAnnouncement(request)
+  const { data: ret } = await getAffAnnouncement(request)
   page.pages = ret.pages
   page.records = ret.records
   page.loading = false
 }
 
-async function loadActiveAnnouncementType() {
-  const { data: type } = await getActiveAnnouncementType()
+async function loadAffActiveAnnouncementType() {
+  const { data: type } = await getActiveAffAnnouncementType()
   announcementTypeList.value = type
 }
 
@@ -348,9 +359,10 @@ function showDialog(type) {
       announcementForm.value.resetFields()
       form.status = 'true'
     }
-    uiControl.dialogTitle = t('fields.addAnnouncement')
+    form.sequence = page.records.length + 1
+    uiControl.dialogTitle = t('fields.addAffiliateAnnouncement')
   } else if (type === 'EDIT') {
-    uiControl.dialogTitle = t('fields.editAnnouncement')
+    uiControl.dialogTitle = t('fields.editAffiliateAnnouncement')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -382,7 +394,7 @@ function create() {
   announcementForm.value.validate(async valid => {
     form.id = null
     if (valid) {
-      await createAnnouncement(form)
+      await createAffAnnouncement(form)
       uiControl.dialogVisible = false
       await loadAnnouncement()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
@@ -396,7 +408,7 @@ function create() {
 function edit() {
   announcementForm.value.validate(async valid => {
     if (valid) {
-      await updateAnnouncement(form)
+      await updateAffAnnouncement(form)
       uiControl.dialogVisible = false
       await loadAnnouncement()
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
@@ -405,7 +417,7 @@ function edit() {
 }
 
 async function changeAnnouncementState(id, state) {
-  await updateAnnouncementState(id, state)
+  await updateAffAnnouncementState(id, state)
 }
 
 async function removeAnnouncement(announcement) {
@@ -415,9 +427,9 @@ async function removeAnnouncement(announcement) {
     type: 'warning',
   }).then(async () => {
     if (announcement) {
-      await deleteAnnouncement([announcement.id])
+      await deleteAffAnnouncement([announcement.id])
     } else {
-      await deleteAnnouncement(chooseAnnouncement.map(a => a.id))
+      await deleteAffAnnouncement(chooseAnnouncement.map(a => a.id))
     }
     await loadAnnouncement()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
@@ -439,9 +451,15 @@ function restrictInput(event) {
   }
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
 onMounted(() => {
   loadAnnouncement()
-  loadActiveAnnouncementType()
+  loadAffActiveAnnouncementType()
+  loadSites()
 })
 </script>
 
