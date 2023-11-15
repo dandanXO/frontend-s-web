@@ -132,7 +132,7 @@ import { useRouter } from "vue-router";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
 import { useI18n } from "vue-i18n";
-import {useUI} from "stores/ui";
+import { useUI } from "stores/ui";
 
 var qs = require("qs");
 const { t } = useI18n();
@@ -184,7 +184,7 @@ const checkAmount = reactive({
 });
 
 const $q = useQuasar();
-const ui= useUI();
+const ui = useUI();
 const calculatedMinDeposit = ref("");
 function initPay() {
   $q.loading.show({
@@ -372,7 +372,12 @@ async function confirmDeposit() {
       if (ui.isAffiliateA) {
         // console.log("Submit Event");
         fbq("track", "InitiateCheckout", {
-          currency: 'THB',
+          currency: "THB",
+          value: form.localAmount,
+        });
+
+        fbq("track", "Purchase", {
+          currency: "THB",
           value: form.localAmount,
         });
       }

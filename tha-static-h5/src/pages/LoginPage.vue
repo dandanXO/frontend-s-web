@@ -342,9 +342,10 @@ export default defineComponent({
 
     const isIOS = () => {
       if (
-        Platform.is.ios &&
-        "standalone" in window.navigator &&
-        window.navigator.standalone
+        (Platform.is.ios &&
+          "standalone" in window.navigator &&
+          window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
       ) {
         return true;
       }
