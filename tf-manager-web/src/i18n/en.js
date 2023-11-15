@@ -217,6 +217,21 @@ export default {
       CANCEL: 'Cancel'
     }
   },
+  rebateLevel: {
+    LEVEL_1: 'Level 1',
+    LEVEL_2: 'Level 2',
+    LEVEL_3: 'Level 3',
+    LEVEL_4: 'Level 4',
+    LEVEL_5: 'Level 5',
+    LEVEL_6: 'Level 6',
+    LEVEL_7: 'Level 7',
+    LEVEL_8: 'Level 8',
+    LEVEL_9: 'Level 9',
+    LEVEL_10: 'Level 10',
+    LEVEL_11: 'Level 11',
+    LEVEL_12: 'Level 12',
+    LEVEL_13: 'Level 13'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -334,6 +349,8 @@ export default {
     betId: 'Bet ID',
     betMoneyChange: 'Member Bet Money Change',
     betMoreThan: 'Bet More Than',
+    betRebateDetails: 'Bet Rebate Record Details',
+    betRebateRecord: 'Bet Rebate Record',
     betRecords: 'Bet Records',
     betStatus: 'Bet Status',
     betTime: 'Bet Time',
@@ -769,6 +786,7 @@ export default {
     reasonTemplate: 'Reason Template',
     rebate: 'Rebate',
     rebateDistributeTime: 'Rebate Distribute Time',
+    rebateLevel: 'Rebate Level',
     rebatePercentage: 'Rebate %',
     maxRebate: 'Max Rebate',
     rebateAmount: 'Rebate Amount',
@@ -1061,6 +1079,15 @@ export default {
     progress: 'Progress',
     download: 'Download',
     updateProgress: 'Update Progress',
+    timeZone: 'Time Zone',
+    image: 'Image',
+    imageName: 'Image Name',
+    addImage: 'Add Image',
+    editImage: 'Edit Image',
+    browse: 'Browse',
+    imageSite: 'Image Site',
+    imageRemark: 'Image Remark',
+    selectedImage: 'Selected Image'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1373,6 +1400,8 @@ export default {
     validateTemplateIdRequired: 'Template ID is required',
     requestExportToExcelDone1: 'Request was sent out successful, please click ',
     requestExportToExcelDone2: ' to check progress and download.',
+    validateImageRequired: 'Image is required',
+    validateImageNameRequired: 'Image Name is required',
   },
   menu: {
     undefined: '',
@@ -1453,6 +1482,7 @@ export default {
     'Lottery Record List': 'Lottery Record List',
     'Lottery Result List': 'Lottery Result List',
     'VIP Rebate Record': 'VIP Rebate Record',
+    'Bet Rebate Record': 'Bet Rebate Record',
     'Refer Friend': 'Refer Friend Record',
     'Site Management': 'Site Management',
     Message: 'Message',
@@ -1521,7 +1551,8 @@ export default {
     'Email Setting': 'Email Setting',
     'SMS Setting': 'SMS Setting',
     DownloadManager: 'Download Manager',
-    GoogleAuth: "Google Auth"
+    GoogleAuth: "Google Auth",
+    'Image Setting': 'Image Setting',
   },
   google: {
     google_auth_menu: "Google Authenticator",
@@ -1645,6 +1676,8 @@ export default {
     12052: 'System bank code already exist',
     12053: 'System bank card identify code exists',
     12054: 'System bank card already exist',
+    12055: 'Site image is being used',
+
     14000: 'The login name already exist',
     14001: 'The telephone already exist',
     14002: 'The email already exist',

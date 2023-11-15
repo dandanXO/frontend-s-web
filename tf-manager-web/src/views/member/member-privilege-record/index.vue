@@ -122,7 +122,20 @@
         prop="recordTime"
         :label="t('fields.recordTime')"
         width="200"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.recordTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.recordTime !== null"
+            v-formatter="{
+              data: scope.row.recordTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="privilegeType"
         :label="t('fields.privilegeType')"
@@ -319,6 +332,7 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+let timeZone = null
 
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -452,6 +466,8 @@ async function loadPrivilegeRecord() {
   } else {
     page.totalAmount = 0
   }
+
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 

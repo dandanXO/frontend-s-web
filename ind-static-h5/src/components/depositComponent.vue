@@ -1,5 +1,37 @@
 <template>
-  <div>
+  <q-dialog v-if="isNewUser" width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+    <div class="popout-dialog">
+      <div class="popout-dialog-container">
+        <div class="txt-title">Tips</div>
+        <div class="txt-content q-mt-md text-center">
+          To ensure the safety of funds, you need to verify your mobile phone number before depositing
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <router-link to="/account?personal">
+            <q-btn label="Verify Mobile Phone" class="bg-yellow text-black" no-caps />
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog v-else-if="isNoBankCard" width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+    <div class="popout-dialog">
+      <div class="popout-dialog-container">
+        <div class="txt-title">Tips</div>
+        <div class="txt-content q-mt-md text-center">
+          To ensure the safety of funds, bind your bank card before depositing
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <router-link to="/account/bank">
+            <q-btn label="Add Bank Card" class="bg-yellow text-black" no-caps />
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <div v-else>
     <div class="q-mb-lg">
       <span class="additional-tips">
         If you encounter deposit problems, please contact online customer service immediately to solve it!
@@ -158,38 +190,6 @@
         </div>
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn @click="clearInfo" label="Understood" class="bg-yellow text-black" no-caps />
-        </div>
-      </div>
-    </div>
-  </q-dialog>
-
-  <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
-    <div class="popout-dialog">
-      <div class="popout-dialog-container">
-        <div class="txt-title">Tips</div>
-        <div class="txt-content q-mt-md text-center">
-          To ensure the safety of funds, you need to verify your mobile phone number before depositing
-        </div>
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <router-link to="/account?personal">
-            <q-btn label="Verify Mobile Phone" class="bg-yellow text-black" no-caps />
-          </router-link>
-        </div>
-      </div>
-    </div>
-  </q-dialog>
-
-  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
-    <div class="popout-dialog">
-      <div class="popout-dialog-container">
-        <div class="txt-title">Tips</div>
-        <div class="txt-content q-mt-md text-center">
-          To ensure the safety of funds, bind your bank card before depositing
-        </div>
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <router-link to="/account/bank">
-            <q-btn label="Add Bank Card" class="bg-yellow text-black" no-caps />
-          </router-link>
         </div>
       </div>
     </div>

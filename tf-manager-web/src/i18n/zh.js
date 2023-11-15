@@ -216,6 +216,21 @@ export default {
       CANCEL: '手动取消'
     }
   },
+  rebateLevel: {
+    LEVEL_1: '等级 1',
+    LEVEL_2: '等级 2',
+    LEVEL_3: '等级 3',
+    LEVEL_4: '等级 4',
+    LEVEL_5: '等级 5',
+    LEVEL_6: '等级 6',
+    LEVEL_7: '等级 7',
+    LEVEL_8: '等级 8',
+    LEVEL_9: '等级 9',
+    LEVEL_10: '等级 10',
+    LEVEL_11: '等级 11',
+    LEVEL_12: '等级 12',
+    LEVEL_13: '等级 13'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -333,6 +348,8 @@ export default {
     betId: '投注单号',
     betMoneyChange: '投注账变',
     betMoreThan: '投注金额大于',
+    betRebateDetails: '投注返水记录明细',
+    betRebateRecord: '投注返水记录',
     betRecords: '投注记录',
     betStatus: '投注状态',
     betTime: '投注时间',
@@ -769,6 +786,7 @@ export default {
     reasonTemplate: '原因模板',
     rebate: '返点',
     rebateDistributeTime: '返水发放时间',
+    rebateLevel: '返水等级',
     rebatePercentage: '返水比例 %',
     maxRebate: '最大返水额',
     rebateAmount: '返水金额',
@@ -1061,6 +1079,15 @@ export default {
     progress: '进度',
     download: '下载',
     updateProgress: '更新进度',
+    timeZone: '时区',
+    image: '图像',
+    imageName: '图像名',
+    addImage: '新增图像',
+    editImage: '编辑图像',
+    browse: '浏览',
+    imageSite: '图像站点',
+    imageRemark: '图像备注',
+    selectedImage: '已选图像'
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1352,6 +1379,8 @@ export default {
     validateTemplateIdRequired: '模板ID必填',
     requestExportToExcelDone1: '请求已经成功发送，请按 ',
     requestExportToExcelDone2: ' 进行查看进度与下载。',
+    validateImageRequired: '图像必填',
+    validateImageNameRequired: '图像名必填',
   },
   menu: {
     undefined: '',
@@ -1433,6 +1462,7 @@ export default {
     'Lottery Result List': '彩票结果',
     'VIP Rebate Record': 'VIP返水记录',
     'Refer Friend': '推荐人记录',
+    'Bet Rebate Record': '投注返水记录',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
@@ -1500,7 +1530,8 @@ export default {
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
     DownloadManager: '下载中心',
-    GoogleAuth: "Google 验证中心"
+    GoogleAuth: "Google 验证中心",
+    'Image Setting': '图片设置',
   },
   google: {
     google_auth_menu: "谷歌验证",
@@ -1627,6 +1658,8 @@ export default {
     12052: '银行代码已存在',
     12053: '银行卡识别码已存在',
     12054: '银行卡已存在',
+    12055: '图片已被使用',
+
     14000: '用户名已经存在',
     14001: '手机号码已经存在',
     14002: '邮箱已经存在',
