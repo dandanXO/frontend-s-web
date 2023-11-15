@@ -80,7 +80,20 @@
         </template>
       </el-table-column>
       <el-table-column prop="reason" :label="t('fields.reason')" width="250" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="250" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" width="250">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.operator')" />
     </el-table>
     <el-pagination class="pagination"
@@ -115,6 +128,7 @@ const startDate = new Date();
 startDate.setDate(startDate.getDate() - 2);
 const defaultStartDate = convertDate(startDate);
 const defaultEndDate = convertDate(new Date());
+let timeZone = null
 
 const request = reactive({
   size: 30,
@@ -174,6 +188,7 @@ async function loadFreezeRecords() {
   const { data: ret } = await getFreezeRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.loading = false;
 }
 

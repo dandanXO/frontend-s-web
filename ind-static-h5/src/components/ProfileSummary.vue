@@ -5,7 +5,7 @@
       <div class="profile-wrapper">
         <div class="profile-pic">
           <q-avatar size="70px">
-            <img src="../assets/images/account/profile-pic.png" />
+            <img :src="profileImagePath" />
           </q-avatar>
           <div class="profile-pic-frame" v-if="!homeProfile"></div>
         </div>
@@ -43,6 +43,7 @@
 
         <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
+          <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div>
       </div>
     </div>
@@ -50,7 +51,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 
@@ -58,6 +59,28 @@ const props = defineProps(["homeProfile"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+
+const profileImg = [
+  {
+    imgPath: ["profile-pic-01", "profile-pic-02", "profile-pic-03", "profile-pic-04", "profile-pic-05"]
+  }
+];
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomProfile = profileImg[0];
+    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+    const imgPath = randomProfile.imgPath[randomIndex];
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+});
 
 const isLoadingBalance = ref(false);
 const refreshBalance = () => {
@@ -72,6 +95,15 @@ const refreshBalance = () => {
 const onVipClick = () => {
   router.push({ path: "/vip", query: { redirect: route.path } });
 };
+
+onMounted(() => {
+  if (!sessionStorage.getItem("PROFILE_IMG")) {
+    const randomProfile = profileImg[0];
+    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+    const imgPath = randomProfile.imgPath[randomIndex];
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -216,6 +248,13 @@ const onVipClick = () => {
     .profile-msg {
       margin-left: auto;
       margin-top: 30px;
+      position: relative;
+
+      .notification {
+        position: absolute;
+        top: -0.25rem;
+        left: -0.5rem;
+      }
     }
   }
 

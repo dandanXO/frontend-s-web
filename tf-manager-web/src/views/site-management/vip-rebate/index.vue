@@ -222,6 +222,11 @@ async function loadVipRebateRules() {
   const requestCopy = { ...request };
   const { data: ret } = await getVipRebateRule(requestCopy);
   page.records = ret;
+  ret.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.loading = false;
 }
 

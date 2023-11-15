@@ -40,6 +40,7 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "",
       currentMailData: {},
       guest: false,
+      readMsgLists: []
     };
   },
   actions: {
@@ -144,6 +145,18 @@ export const userStore = defineStore("userStore", {
         }
       });
     },
+    addReadMsg(id){
+     this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
+     if(this.readMsgLists.length === 0){
+       SessionStorage.set("READ_MAIL_IDS", [id]);
+     }else{
+       this.readMsgLists.push(id);
+       SessionStorage.set("READ_MAIL_IDS", this.readMsgLists);
+     }
+    },
+    setReadMsg(){
+      this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
+    },
     getMemberInfo() {
       api.interceptors.request.use(async (req) => {
         var token;
@@ -245,7 +258,6 @@ export const userStore = defineStore("userStore", {
     getUnreadTotal() {
       if (this.token) {
         return api.get("/session/inbox/getUnreadTotal").then((total) => {
-          console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
           }

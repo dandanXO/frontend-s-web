@@ -13,6 +13,7 @@ export const mutations = {
     state.userType = loginInfo.userType;
     state.siteName = loginInfo.siteName;
     state.siteId = loginInfo.siteId;
+    state.sites = loginInfo.sites;
   },
 
   [UserMutationTypes.SET_AVATAR](state, avatar) {
