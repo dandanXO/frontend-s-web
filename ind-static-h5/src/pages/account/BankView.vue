@@ -131,7 +131,7 @@
           !(
             // isValidBank() === true &&
             (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
-          )
+          ) || isDisableBtn
         "
       ></ConfirmButton>
     </q-card>
@@ -381,6 +381,8 @@ const isValidBank = () => {
   return result;
 };
 
+const isDisableBtn = ref(false);
+
 const isValidCardAccount = () => {
   const { cardAccount } = bankCardField;
 
@@ -406,6 +408,8 @@ const isValidCardAddress = () => {
 };
 
 const addCard = () => {
+  isDisableBtn.value = true;
+
   api
     .post("/session/bankCard", qs.stringify(bankCardField))
     .then((response) => {
@@ -418,10 +422,12 @@ const addCard = () => {
           icon: "check_circle_outline"
         });
         loadCards();
+        isDisableBtn.value = false;
       }
     })
     .catch((error) => {
       console.log("error", error);
+      isDisableBtn.value = false;
     });
 };
 
