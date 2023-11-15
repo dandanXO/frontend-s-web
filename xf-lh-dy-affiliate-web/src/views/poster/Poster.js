@@ -1,25 +1,8 @@
-import QrcodeImage from './QrcodeImage';
-import QRCode from "qrcode";
-
-export const CLICK_INSIDE = 1;
-export const CLICK_TOP_BORDER = 2;
-
-export const CLICK_BOTTOM_BORDER = 3;
-
-export const CLICK_RIGHT_BORDER = 4;
-
-export const CLICK_LEFT_BORDER = 5;
-
-export const CLICK_LEFT_TOP_CORNER = 6;
-
-export const CLICK_RIGHT_TOP_CORNER = 7;
-
-export const CLICK_LEFT_BOTTOM_CORNER = 8;
-
-export const CLICK_RIGHT_BOTTOM_CORNER = 9;
-
-// export const CLICK_ALL_BORDER = 6;
-export const CLICK_OUTSIDE = 0;
+import Qrcode from './Qrcode';
+import TextArea from './TextArea';
+import moment from 'moment'
+import _ from 'lodash';
+import { loadImage, MousePosition, ResizeType } from '@/views/poster/canvasUtil';
 
 class Poster {
   constructor(canvas, maxWidth, maxHeight) {
@@ -33,6 +16,7 @@ class Poster {
     this.resizeEle = null;
     this.maxWidth = maxWidth;
     this.maxHeight = maxHeight;
+    this.eleZindex = 0;
   }
 
   handleMouseMove(event, poster) {
@@ -53,19 +37,34 @@ class Poster {
 
     const e = this.elements
       .filter(e => e.isMouseOverRect(mouseX, mouseY))
-      .sort((a, b) => a.zIndex - b.zIndex).pop();
+      .sort((a, b) => b.zIndex - a.zIndex).pop();
+    this.showCursor(e, poster, mouseX, mouseY)
+  }
+
+  showCursor(e, poster, mouseX, mouseY) {
     if (e) {
       const type = e.isMouseOverRect(mouseX, mouseY);
-      if (type === CLICK_INSIDE) {
+      if (type === MousePosition.CLICK_INSIDE) {
         poster.canvas.style.cursor = "move";
-      } else if (type === CLICK_TOP_BORDER || type === CLICK_BOTTOM_BORDER) {
-        poster.canvas.style.cursor = "ns-resize";
-      } else if (type === CLICK_LEFT_BORDER || type === CLICK_RIGHT_BORDER) {
-        poster.canvas.style.cursor = "ew-resize";
-      } else if (type === CLICK_LEFT_TOP_CORNER || type === CLICK_RIGHT_BOTTOM_CORNER) {
-        poster.canvas.style.cursor = "nwse-resize";
-      } else if (type === CLICK_RIGHT_TOP_CORNER || type === CLICK_LEFT_BOTTOM_CORNER) {
-        poster.canvas.style.cursor = "nesw-resize";
+        return;
+      }
+
+      if (e.getResizeType() === ResizeType.FOUR_CORNER) {
+        if (type === MousePosition.CLICK_LEFT_TOP_CORNER || type === MousePosition.CLICK_RIGHT_BOTTOM_CORNER) {
+          poster.canvas.style.cursor = "nwse-resize";
+        } else if (type === MousePosition.CLICK_RIGHT_TOP_CORNER || type === MousePosition.CLICK_LEFT_BOTTOM_CORNER) {
+          poster.canvas.style.cursor = "nesw-resize";
+        }
+      } else if (e.getResizeType() === ResizeType.EIGHT_DIRECTION) {
+        if (type === MousePosition.CLICK_TOP_BORDER || type === MousePosition.CLICK_BOTTOM_BORDER) {
+          poster.canvas.style.cursor = "ns-resize";
+        } else if (type === MousePosition.CLICK_LEFT_BORDER || type === MousePosition.CLICK_RIGHT_BORDER) {
+          poster.canvas.style.cursor = "ew-resize";
+        } else if (type === MousePosition.CLICK_LEFT_TOP_CORNER || type === MousePosition.CLICK_RIGHT_BOTTOM_CORNER) {
+          poster.canvas.style.cursor = "nwse-resize";
+        } else if (type === MousePosition.CLICK_RIGHT_TOP_CORNER || type === MousePosition.CLICK_LEFT_BOTTOM_CORNER) {
+          poster.canvas.style.cursor = "nesw-resize";
+        }
       }
     } else {
       poster.canvas.style.cursor = "default";
@@ -78,10 +77,10 @@ class Poster {
     const mouseY = event.clientY - rect.top;
     this.elements
       .filter(e => e.isMouseOverRect(mouseX, mouseY))
-      .sort((a, b) => a.zIndex - b.zIndex)
+      .sort((a, b) => b.zIndex - a.zIndex)
       .findLast(e => {
         const type = e.isMouseOverRect(mouseX, mouseY);
-        if (type === CLICK_INSIDE) {
+        if (type === MousePosition.CLICK_INSIDE) {
           this.pickEle = e;
           e.updateOffset(mouseX, mouseY);
         } else {
@@ -91,39 +90,25 @@ class Poster {
       })
   }
 
-  handleMouseUp(event, poster) {
+  async handleMouseUp(event, poster) {
     poster.canvas.style.cursor = "default";
     this.pickEle = null;
     if (this.resizeEle) {
-      this.resizeEle.endResize();
+      await this.resizeEle.endResize();
       this.resizeEle = null;
+      this.draw();
     }
   }
 
-  loadImage(src) {
-    return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.src = src;
-
-      image.onload = () => {
-        resolve(image);
-      };
-
-      image.onerror = (error) => {
-        reject(error);
-      };
-    });
-  }
-
   async background(src) {
-    this.posterBg = await this.loadImage(src);
+    this.posterBg = await loadImage(src);
     const imageWidth = this.posterBg.width;
     const imageHeight = this.posterBg.height;
     const ratio = parseFloat(imageWidth) / parseFloat(imageHeight);
     this.originWidth = imageWidth;
     this.originHeight = imageHeight;
     this.w = imageWidth;
-    this.h = imageWidth;
+    this.h = imageHeight;
     if (imageWidth > this.maxWidth) {
       this.w = this.maxWidth;
       this.h = this.maxWidth / ratio;
@@ -138,47 +123,60 @@ class Poster {
     this.ctx.drawImage(this.posterBg, 0, 0, this.w, this.h);
   }
 
-  async qrcode(qrcodeData, color) {
-    const qrDataURL = await QRCode.toDataURL(qrcodeData, { color: color, width: 100 });
-    const img = new Image();
-    img.src = qrDataURL;
-    img.crossOrigin = "";
-    img.onload = () => {
-      const qrcode = this.elements.filter(e => e.getType() === "qrcode").pop();
-      if (qrcode) {
-        qrcode.replaceImage(img);
-      } else {
-        this.elements.push(new QrcodeImage(img, 0));
-      }
-      this.draw();
-    };
+  async qrcode(data = { data: "", dark: "#000000", light: "#ffffff", radius: 0, margin: 2 }) {
+    const color = { dark: data.dark, light: data.light };
+    let qrcode = this.elements.filter(e => e.getType() === "qrcode").pop();
+    if (qrcode) {
+      await qrcode.generateQrcode(data.data, color, data.radius, data.margin);
+    } else {
+      qrcode = new Qrcode(100, 100, ++this.eleZindex, this.canvas);
+      await qrcode.generateQrcode(data.data, color, data.radius, data.margin);
+      this.elements.push(qrcode);
+    }
+    this.draw();
   }
 
-  draw() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.drawImage(this.posterBg, 0, 0, this.canvas.width, this.canvas.height);
+  async text(data = { text: "", color: "black", fontSize: 20, fontFamily: "Arial", id: "" }) {
+    let textArea;
+    if (data.id) {
+      textArea = this.elements.filter(e => e.getType() === "textArea" && e.id === data.id).pop();
+      if (textArea) {
+        textArea.setText(data.text, data.color, data.fontSize, data.fontFamily)
+      }
+    } else {
+      textArea = new TextArea(100, 100, ++this.eleZindex, this.canvas);
+      textArea.setText(data.text, data.color, data.fontSize, data.fontFamily)
+      this.elements.push(textArea);
+    }
+    await this.draw();
+    return textArea ? textArea.id : "";
+  }
+
+  draw(isDrawForDownload = false) {
+    this.ctx.clearRect(0, 0, this.w, this.h);
+    this.ctx.drawImage(this.posterBg, 0, 0, this.w, this.h);
     this.elements.sort((a, b) => a.zIndex - b.zIndex)
       .forEach(e => {
-        e.draw(this.ctx);
+        e.draw(this.ctx, isDrawForDownload);
       })
   }
 
-  downloadOriginSize() {
+  downloadFullSize() {
     const dataURL = this.canvas.toDataURL('image/jpg');
     const a = document.createElement('a');
     a.href = dataURL;
-    a.download = 'canvas_image.png';
+    a.download = `${moment().format('YYYYMMDDHHmmss')}.jpg`;
     a.click();
   }
 
-  loadElement(elements, resizeX, resizeY) {
-    // const ratioX = parseFloat(this.w) / parseFloat(resizeX)
-    // const ratioY = parseFloat(this.h) / parseFloat(resizeY)
-    this.elements = [...elements]
-    this.elements.forEach(e => {
-
-    })
-    this.draw();
+  async loadElements(elements, resizeX, resizeY) {
+    const ratioX = parseFloat(this.w) / parseFloat(resizeX)
+    const ratioY = parseFloat(this.h) / parseFloat(resizeY)
+    this.elements = _.cloneDeep(elements)
+    for (const e of this.elements) {
+      await e.recovery(ratioX, ratioY);
+    }
+    this.draw(true);
   }
 
   async download() {
@@ -187,8 +185,8 @@ class Poster {
     tempCanvas.style.display = "none";
     const tempPoster = new Poster(tempCanvas, this.originWidth, this.originHeight);
     await tempPoster.background(this.posterBg.src)
-    tempPoster.loadElement(this.elements, this.w, this.h);
-    tempPoster.downloadOriginSize();
+    await tempPoster.loadElements(this.elements, this.w, this.h);
+    tempPoster.downloadFullSize();
     tempCanvas.parentNode.removeChild(tempCanvas);
   }
 }
