@@ -8,10 +8,10 @@
     <div>
 
       <div class="top-icons">
-        <img src="../assets/images/icon1.png"/>
-        <img src="../assets/images/icon2.png"/>
-        <img src="../assets/images/icon3.png"/>
-        <img src="../assets/images/icon4.png"/>
+        <div id="icon1"></div>
+        <div id="icon2"></div>
+        <div id="icon3"></div>
+        <div id="icon4"></div>
 
       </div>
 
@@ -329,6 +329,7 @@ import {useRoute, useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
 import {api} from "boot/axios";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import {useUI} from "stores/ui";
 
 var qs = require("qs");
 
@@ -363,6 +364,7 @@ const isPwd = ref(true);
 const isCfmPwd = ref(true);
 const isRegPwd = ref(true);
 
+const ui = useUI();
 
 const isLoginModal = ref(false);
 const isRegisterModal = ref(false);
@@ -484,7 +486,7 @@ const onSubmit = () => {
         }
       }
 
-      var loginInfo= {
+      var loginInfo = {
         loginName: loginForm.loginName.trim(),
         password: loginForm.password,
         sid: sidParam,
@@ -500,6 +502,16 @@ const onSubmit = () => {
         if (ret.data.code === 0) {
           var loginToken = btoa(ret.data.data);
           console.log(loginToken);
+
+          if (ui.isAffiliateA) {
+            fbq("track", "login");
+            fbq("track", "Purchase", {
+              value: 0.0,
+              currency: 'USD'
+            });
+          }
+
+
           $q.notify({
             color: "positive",
             position: "top",
@@ -507,11 +519,13 @@ const onSubmit = () => {
             icon: "check_circle_outline"
           });
 
-          var redirectLink= process.env.REDIRECT_URL;
-          window.open(redirectLink + '/logintoken/' + loginToken , "_blank");
-          setTimeout(()=>{
-            location.reload();
-          },1000)
+          var redirectLink = process.env.REDIRECT_URL;
+          window.location.href = redirectLink + '/logintoken/' + loginToken;
+
+
+          // setTimeout(()=>{
+          //   location.reload();
+          // },1000)
         } else {
           loginForm.captchaCode = "";
           getCode();
@@ -579,6 +593,16 @@ const onRegisterSubmit = () => {
           const res = ret.data;
           if (res.code === 0) {
             console.log(res.data);
+
+            if (ui.isAffiliateA) {
+              fbq("track", "register");
+              fbq("track", "Complete Registration");
+              fbq("track", "Purchase", {
+                value: 0.0,
+                currency: 'USD'
+              });
+            }
+
             $q.notify({
               color: "positive",
               position: "top",
@@ -587,11 +611,13 @@ const onRegisterSubmit = () => {
             });
             // alert("Success");
             var loginToken = res.data;
-            var redirectLink= process.env.REDIRECT_URL;
-            window.open(redirectLink + '/logintoken/' + btoa(loginToken) , "_this");
-            setTimeout(()=>{
-              location.reload();
-            },1000)
+            var redirectLink = process.env.REDIRECT_URL;
+            // window.open( , "_this");
+
+            window.location.href = redirectLink + '/logintoken/' + btoa(loginToken);
+            // setTimeout(()=>{
+            //   location.reload();
+            // },1000)
           } else {
             $q.notify({
               color: "negative",
@@ -654,10 +680,39 @@ function charType(num) {
   gap: 0px;
   margin-bottom: 10px;
 
-  img {
-    width: 23vw;
+  > div {
+    width: 24vw;
     height: auto;
     margin: auto;
+    aspect-ratio: 1/1;
+  }
+
+  #icon1 {
+    background-image: url("../assets/images/icon1.png");
+    background-size: contain;
+    background-position: 0px -10px;
+    background-repeat: no-repeat;
+  }
+
+  #icon2 {
+    background-image: url("../assets/images/icon2new.png");
+    background-size: contain;
+    background-position: 0px 33px;
+    background-repeat: no-repeat;
+    width: 25vw;
+  }
+
+  #icon3 {
+    background-image: url("../assets/images/icon3.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  #icon4 {
+    background-image: url("../assets/images/icon4.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 0px 8px;
   }
 }
 
@@ -717,14 +772,29 @@ function charType(num) {
   }
 
 
+  .top-icons #icon1 {
+    background-position: 0px 0px;
+  }
+  .top-icons #icon2 {
+    background-position: 0px 20px;
+    width: 25vw;
+  }
+  .top-icons #icon3 {
+    background-position: 0px 0px;
+  }
+  .top-icons #icon4 {
+    background-position: 0px 0px;
+  }
+
+
 }
 
 @media (max-width: 768px) {
 
   .btm-img {
     width: 60vw;
-
   }
+
 
 }
 
@@ -739,8 +809,8 @@ function charType(num) {
     justify-content: center;
     grid-template-columns: repeat(2, 1fr);
 
-    img {
-      width: 39vw;
+    > div {
+      width: 39vw !important;
       height: auto;
       margin: auto;
     }

@@ -64,6 +64,8 @@ export default route(function (/* { store, ssrContext } */) {
       next(`/register`);
     }
 
+    console.log(location.href);
+
     if (user.hasToken()) {
       if (to.path === "/login") {
         next({ path: "/" });
@@ -118,12 +120,14 @@ export default route(function (/* { store, ssrContext } */) {
 
       fbq("init", "1404052756844706");
       fbq("track", "PageView");
+
       //For Testing Only.
       // fbq("init", "6757510457678415");
       // fbq("track", "PageView");
     } else if (affiliateCode && affiliateCode === "0DDC3F") {
       console.log("GA 780-462-3466");
       window.dataLayer = window.dataLayer || [];
+
       function gtag() {
         dataLayer.push(arguments);
       }
