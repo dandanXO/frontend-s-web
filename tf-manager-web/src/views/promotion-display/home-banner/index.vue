@@ -415,7 +415,7 @@ const site = ref(null)
 // const inputDesktop = ref(null)
 // const inputMobile = ref(null)
 const bannerForm = ref(null)
-const promoDir = process.env.VUE_APP_S3_URL + '/promo/'
+const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 const siteList = reactive({
   list: [],
 })

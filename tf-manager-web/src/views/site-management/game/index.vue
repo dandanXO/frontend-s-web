@@ -525,7 +525,7 @@ const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const gameForm = ref(null)
-const gameDir = process.env.VUE_APP_S3_URL + '/game/'
+const gameDir = process.env.VUE_APP_IMAGE + '/game/'
 
 const EXPORT_GAME_LIST_HEADER = [
   'Game Name',

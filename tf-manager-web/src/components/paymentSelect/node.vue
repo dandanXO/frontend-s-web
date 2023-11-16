@@ -369,7 +369,7 @@ export default defineComponent({
     }
     return {
       paymethodicon: process.env.VUE_APP_IMAGE,
-      paymentDir: process.env.VUE_APP_S3_URL + '/payment/',
+      paymentDir: process.env.VUE_APP_IMAGE + '/payment/',
       ruleForm: {
         name: '',
         icon: '',
