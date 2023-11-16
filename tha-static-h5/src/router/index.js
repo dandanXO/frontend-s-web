@@ -64,7 +64,7 @@ export default route(function (/* { store, ssrContext } */) {
       next(`/register`);
     }
 
-    console.log(location.href);
+    // console.log(location.href);
 
     if (user.hasToken()) {
       if (to.path === "/login") {
