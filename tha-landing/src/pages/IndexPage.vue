@@ -593,6 +593,7 @@ const onRegisterSubmit = () => {
             if (ui.isAffiliateA) {
               fbq("track", "register");
               fbq("track", "Complete Registration");
+              fbq("track", "CompleteRegistration");
             }
 
             $q.notify({
