@@ -83,6 +83,7 @@
           </div>
           <template v-if="isSpinWheel">
             <PromoSpinWheel></PromoSpinWheel>
+            <PromoSpinWheelWinner></PromoSpinWheelWinner>
           </template>
           <div
             class="promo-view-container"
@@ -119,12 +120,15 @@ import {useI18n} from "vue-i18n";
 
 import HotPromotion from 'components/HotPromotion'
 import PromoSpinWheel from 'components/PromoSpinWheel.vue'
+import PromoSpinWheelWinner from 'components/PromoSpinWheelWinner.vue'
+
 export default defineComponent({
   name: "PromoView",
   components: {
     RiFunctionLine,
     HotPromotion,
-	PromoSpinWheel
+	PromoSpinWheel,
+	PromoSpinWheelWinner
   },
   setup() {
     const {t} = useI18n()

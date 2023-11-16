@@ -1,5 +1,13 @@
 <template>
   <div class="spinwheel-container">
+    <div class="spin-count-board">
+      <img
+        class="spin-count-board-img"
+        src="../assets/images/promotion/spinwheel/spin_count_board.png"
+      />
+      <span>คุณมี {{ availableSpinCount }} ตั๋วที่หมุนได้</span>
+    </div>
+
     <div :ref="outerWheelConfig.wheelRef" class="outer-wheel">
       <img
         class="outer-wheel-img"
@@ -15,20 +23,20 @@
       <div
         v-for="(e, i) in lockIndex"
         :key="`${e}-${i}`"
-        :ref="setItemRef"
+        :ref="setMaskRef"
         class="prize-lock"
       >
-        <div class="trapezoid"></div>
-        <div class="content">
-          <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
-          <div class="lock-day">day1</div>
-        </div>
+        <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
       </div>
 
-      <img
-        class="inner-frame-img"
-        src="../assets/images/promotion/spinwheel/inner_wheel_frame.png"
-      />
+      <div
+        v-for="(e, i) in lockIndex"
+        :key="`${e}-${i}`"
+        :ref="setMaskDayRef"
+        class="prize-lock-day"
+      >
+        <span>day{{ e / 2 + 1 }}</span>
+      </div>
     </div>
 
     <div class="prize-arrow">
@@ -37,14 +45,22 @@
         src="../assets/images/promotion/spinwheel/prize_arrow.png"
       />
     </div>
+
     <div
       ref="spinButtonRef"
       :class="`spin-button ${bounceAnimationDisable ? 'bounce' : ''}`"
-      @click="spin()"
     >
       <img
         class="spin-button-img"
         src="../assets/images/promotion/spinwheel/spin_button.png"
+        @click="spin()"
+      />
+    </div>
+
+    <div class="infoboard">
+      <img
+        class="infoboard-img"
+        src="../assets/images/promotion/spinwheel/infoboard.png"
       />
     </div>
   </div>
@@ -52,22 +68,27 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { useQuasar } from "quasar";
+import { eventapi } from "boot/axios";
 
+const $q = useQuasar();
+
+// NOTE: 0 index starts from where the arrow pointing
 const outerWheelStopDegree = [
-  { degree: 0 },
-  { degree: 25.5 },
-  { degree: 51.25 },
-  { degree: 77 },
-  { degree: 102.5 },
-  { degree: 128.25 },
-  { degree: 152.25 },
-  { degree: 177.75 },
-  { degree: 203.5 },
-  { degree: 229.75 },
-  { degree: 256 },
-  { degree: 282.5 },
-  { degree: 309 },
-  { degree: 335 },
+  { degree: 0, amount: 588 },
+  { degree: 25.5, amount: 238 },
+  { degree: 51.25, amount: 188 },
+  { degree: 77, amount: 58 },
+  { degree: 102.5, amount: 288 },
+  { degree: 128.25, amount: 28 },
+  { degree: 152.25, amount: 88 },
+  { degree: 177.75, amount: 68 },
+  { degree: 203.5, amount: 388 },
+  { degree: 229.75, amount: 38 },
+  { degree: 256, amount: 88 },
+  { degree: 282.5, amount: 28 },
+  { degree: 309, amount: 880 },
+  { degree: 335, amount: 38 },
 ];
 const innerWheelStopDegree = [
   { degree: 0 },
@@ -85,9 +106,6 @@ const innerWheelStopDegree = [
   { degree: 307 },
   { degree: 333 },
 ];
-
-const spinButtonRef = ref(null);
-const spinButtonDisable = ref(false);
 
 /**
  * NOTE:
@@ -123,8 +141,23 @@ const innerWheelConfig = {
   stopIndex: 2,
 };
 
+const spinButtonRef = ref(null);
+const spinButtonDisable = ref(false);
+
+const availableSpinCount = ref(0);
+
 function spin() {
   if (spinButtonDisable.value === true) return;
+  if (availableSpinCount.value === 0) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "No Spin Count Remaining",
+      icon: "report_problem",
+    });
+    return;
+  }
+  availableSpinCount.value--;
 
   updateSpinButton(true);
   spinButtonBounce();
@@ -135,14 +168,17 @@ function spin() {
   spinWheel(outerWheelConfig); // spin outer wheel
   spinWheel(innerWheelConfig); // spin inner wheel
 
-  // setTimeout written in the func
-  let count = 0;
-  const onStopSpinCb = () => {
-    count++;
-    if (count === 2) updateSpinButton(false);
-  };
-  stopSpin(outerWheelConfig, onStopSpinCb);
-  stopSpin(innerWheelConfig, onStopSpinCb);
+  submitSpinWheelAPI(() => {
+    // setTimeout written in the func
+    let count = 0;
+    const onStopSpinCb = () => {
+      count++;
+      if (count === 2) updateSpinButton(false);
+    };
+
+    stopSpin(outerWheelConfig, onStopSpinCb);
+    stopSpin(innerWheelConfig, onStopSpinCb);
+  });
 }
 
 function spinWheel(config) {
@@ -228,40 +264,99 @@ function updateSpinButton(isDisable) {
   }
 }
 
+const maskRef = ref([]);
+function setMaskRef(el) {
+  if (el) maskRef.value.push(el);
+}
+const maskDayRef = ref([]);
+function setMaskDayRef(el) {
+  if (el) maskDayRef.value.push(el);
+}
+
+function initSpinWheelAPI(callback) {
+  eventapi
+    .get("/multiWheel/init?promoCode=tha-multi-wheel")
+    .then((res) => {
+      const { code, data } = res.data;
+      if (code === 0) {
+        const { leftCount, unlock } = data;
+        availableSpinCount.value = leftCount;
+
+        // 1 - 7 [lockIndex formula: (n - 1) * 2]
+        lockIndex.value = [];
+        for (let i = unlock, l = 7; i < l; i++) {
+          const index = i * 2;
+          lockIndex.value.push(index);
+        }
+
+        callback && callback();
+      }
+    })
+    .catch((e) => {
+      console.log("error", e);
+    });
+}
+
+function submitSpinWheelAPI(callback) {
+  callback && callback();
+
+  //   eventapi
+  //     .post("/multiWheel/submit?promoCode=tha-multi-wheel")
+  //     .then((res) => {
+  //       const { code, data } = res.data;
+  //       if (code === 0) {
+  //         const { leftCount, outer, inner, bonus } = data;
+  //         availableSpinCount.value = leftCount;
+
+  //         // TODO: outer & inner
+
+  //         $q.notify({
+  //           type: "positive",
+  //           position: "top",
+  //           message: `Congratulation, You Acquired A Total Of ${bonus} Amount!`,
+  //           icon: "check_circle_outline",
+  //         });
+
+  //         callback && callback();
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       console.log("error", e);
+  //     });
+}
+
 const innerMaskDegree = [
-  { degree: 63 },
-  { degree: 90 },
-  { degree: 116 },
-  { degree: 141.5 },
-  { degree: 167 },
-  { degree: 193 },
-  { degree: 219 },
-  { degree: 245.5 },
-  { degree: 271 },
-  { degree: 297 },
-  { degree: 322 },
-  { degree: 347 },
-  { degree: 372 },
-  { degree: 398 },
+  { degree: 309.25 },
+  { degree: 335 },
+  { degree: 0 },
+  { degree: 27 },
+  { degree: 52 },
+  { degree: 79 },
+  { degree: 104 },
+  { degree: 130.25 },
+  { degree: 156.25 },
+  { degree: 182.25 },
+  { degree: 208.25 },
+  { degree: 233.25 },
+  { degree: 258.25 },
+  { degree: 283.25 },
 ];
 
-const lockIndex = [1, 2, 3, 5, 7, 9];
+const lockIndex = ref([0, 2, 4, 6, 8, 10, 12]);
 function setupLock() {
-  // call api
-  for (let i = 0, l = lockIndex.length; i < l; i++) {
-    const currIndex = lockIndex[i];
-    const degree = innerMaskDegree[currIndex].degree;
+  for (let i = 0, l = lockIndex.value.length; i < l; i++) {
+    const index = lockIndex.value[i];
+    const degree = innerMaskDegree[index].degree;
+
     maskRef.value[i].style.transform = `rotate(${degree}deg)`;
+    maskDayRef.value[i].style.transform = `rotate(${degree}deg)`;
   }
 }
 
-const maskRef = ref([]);
-function setItemRef(el) {
-  if (el) maskRef.value.push(el);
-}
-
 onMounted(() => {
-  setupLock();
+  initSpinWheelAPI(() => {
+    setupLock();
+  });
 });
 </script>
 
@@ -271,11 +366,44 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  margin: -30rem 0;
-  transform: scale(0.5);
+  background: url(../assets/images/promotion/spinwheel/h5_bg.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  .spin-count-board {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    bottom: 4%;
+
+    .spin-count-board-img {
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    span {
+      position: absolute;
+      bottom: 9%;
+      color: #fff;
+      text-align: center;
+      font-family: FZHanZhenGuangBiaoS-GB;
+      font-size: 4vw;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
 
   .outer-wheel {
+    width: 100%;
+    display: flex;
+    z-index: 1;
+
     .outer-wheel-img {
+      width: 100.5%;
+      margin: 0 auto;
     }
   }
 
@@ -284,73 +412,82 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    z-index: 1;
 
     .inner-wheel-img {
+      width: 50%;
     }
     .inner-frame-img {
       position: absolute;
+      width: 100%;
     }
 
     .prize-lock {
       position: absolute;
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
 
-      .trapezoid {
-        border-top: 130px solid black;
-        border-left: 30px solid transparent;
-        border-right: 30px solid transparent;
-        height: 0;
-        width: 110px;
-        opacity: 0.7;
-        transform: translate(40px, -165px) rotate(15deg);
+      img {
+        width: 13.9%;
+        height: 21.5%;
+        position: relative;
+        top: 1.5%;
+        left: 11.5%;
+        transform: rotate(76.5deg);
       }
+    }
 
-      .mask {
-        width: 30rem;
-        height: unset;
-        opacity: 0.7;
-      }
+    .prize-lock-day {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      .content {
-        position: absolute;
-        transform: translate(40px, -165px) rotate(15deg);
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        backdrop-filter: blur(1px);
-
-        img {
-          width: 3rem;
-          transform: rotate(-15deg);
-        }
-
-        .lock-day {
-          color: #fbff1e;
-          text-align: center;
-          font-family: FZHanZhenGuangBiaoS-GB;
-          font-size: 2.11175rem;
-          font-weight: 400;
-          transform: rotate(-90deg);
-        }
+      span {
+        position: relative;
+        top: 4%;
+        left: 11.5%;
+        color: #fbff1e;
+        text-align: center;
+        font-family: FZHanZhenGuangBiaoS-GB;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 100%; /* 2.11175rem */
       }
     }
   }
 
   .prize-arrow {
     position: absolute;
-    margin: 0 0 8.65rem 40.75rem;
+    top: 33.5%;
+    left: 22.5%;
+    display: flex;
+    width: 100%;
+    z-index: 1;
+
     .prize-arrow-img {
+      width: 35%;
+      margin: 0 auto;
     }
   }
 
   .spin-button {
     position: absolute;
     transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    z-index: 1;
+
     .spin-button-img {
+      width: 17.5%;
     }
 
     &.bounce {
@@ -371,6 +508,21 @@ onMounted(() => {
       100% {
         transform: scale(1);
       }
+    }
+  }
+
+  .infoboard {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    bottom: 12.5%;
+    z-index: 1;
+
+    .infoboard-img {
+      width: 50%;
+      margin: 0 auto;
     }
   }
 }
