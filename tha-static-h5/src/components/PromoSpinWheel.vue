@@ -20,23 +20,68 @@
         src="../assets/images/promotion/spinwheel/inner_wheel.png"
       />
 
-      <div
-        v-for="(e, i) in lockIndex"
-        :key="`${e}-${i}`"
-        :ref="setMaskRef"
-        class="prize-lock"
-      >
-        <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
-      </div>
+      <template v-if="unlockDay < 1 ? true : false">
+        <div class="prize-lock" style="transform: rotate(309.25deg)">
+          <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
+        </div>
+        <div class="prize-lock-day" style="transform: rotate(309.25deg)">
+          <span>day{{ 1 }}</span>
+        </div>
+      </template>
 
-      <div
-        v-for="(e, i) in lockIndex"
-        :key="`${e}-${i}`"
-        :ref="setMaskDayRef"
-        class="prize-lock-day"
-      >
-        <span>day{{ e / 2 + 1 }}</span>
-      </div>
+      <template v-if="unlockDay < 2 ? true : false">
+        <div class="prize-lock" style="transform: rotate(0deg)">
+          <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
+        </div>
+        <div class="prize-lock-day" style="transform: rotate(0deg)">
+          <span>day{{ 2 }}</span>
+        </div>
+      </template>
+
+      <template v-if="unlockDay < 3 ? true : false">
+        <div class="prize-lock" style="transform: rotate(52deg)">
+          <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
+        </div>
+        <div class="prize-lock-day" style="transform: rotate(52deg)">
+          <span>day{{ 3 }}</span>
+        </div>
+      </template>
+
+      <template v-if="unlockDay < 4 ? true : false">
+        <div class="prize-lock" style="transform: rotate(104deg)">
+          <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
+        </div>
+        <div class="prize-lock-day" style="transform: rotate(104deg)">
+          <span>day{{ 4 }}</span>
+        </div>
+      </template>
+
+      <template v-if="unlockDay < 5 ? true : false">
+        <div class="prize-lock" style="transform: rotate(156.25deg)">
+          <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
+        </div>
+        <div class="prize-lock-day" style="transform: rotate(156.25deg)">
+          <span>day{{ 5 }}</span>
+        </div>
+      </template>
+
+      <template v-if="unlockDay < 6 ? true : false">
+        <div class="prize-lock" style="transform: rotate(208.25deg)">
+          <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
+        </div>
+        <div class="prize-lock-day" style="transform: rotate(208.25deg)">
+          <span>day{{ 6 }}</span>
+        </div>
+      </template>
+
+      <template v-if="unlockDay < 7 ? true : false">
+        <div class="prize-lock" style="transform: rotate(258.25deg)">
+          <img src="../assets/images/promotion/spinwheel/prize_lock.png" />
+        </div>
+        <div class="prize-lock-day" style="transform: rotate(258.25deg)">
+          <span>day{{ 7 }}</span>
+        </div>
+      </template>
     </div>
 
     <div class="prize-arrow">
@@ -74,37 +119,37 @@ import { eventapi } from "boot/axios";
 const $q = useQuasar();
 
 // NOTE: 0 index starts from where the arrow pointing
-const outerWheelStopDegree = [
+const outerWheelData = [
   { degree: 0, amount: 588 },
   { degree: 25.5, amount: 238 },
   { degree: 51.25, amount: 188 },
-  { degree: 77, amount: 58 },
+  { degree: 76.5, amount: 58 },
   { degree: 102.5, amount: 288 },
   { degree: 128.25, amount: 28 },
-  { degree: 152.25, amount: 88 },
-  { degree: 177.75, amount: 68 },
-  { degree: 203.5, amount: 388 },
-  { degree: 229.75, amount: 38 },
-  { degree: 256, amount: 88 },
-  { degree: 282.5, amount: 28 },
-  { degree: 309, amount: 880 },
+  { degree: 153.5, amount: 88 },
+  { degree: 178.5, amount: 68 },
+  { degree: 204.5, amount: 388 },
+  { degree: 230.75, amount: 38 },
+  { degree: 256.75, amount: 88 },
+  { degree: 283, amount: 28 },
+  { degree: 309.5, amount: 880 },
   { degree: 335, amount: 38 },
 ];
-const innerWheelStopDegree = [
-  { degree: 0 },
-  { degree: 25 },
-  { degree: 50 },
-  { degree: 76 },
-  { degree: 100 },
-  { degree: 125 },
-  { degree: 151 },
-  { degree: 176 },
-  { degree: 204 },
-  { degree: 231 },
-  { degree: 256 },
-  { degree: 282 },
-  { degree: 307 },
-  { degree: 333 },
+const innerWheelData = [
+  { degree: 0, amount: 130 },
+  { degree: 25, amount: 300 },
+  { degree: 50, amount: 150 },
+  { degree: 76, amount: 250 },
+  { degree: 100, amount: 140 },
+  { degree: 125, amount: 120 },
+  { degree: 151, amount: 160 },
+  { degree: 176, amount: 500 },
+  { degree: 204, amount: 110 },
+  { degree: 231, amount: 200 },
+  { degree: 256, amount: 1000 },
+  { degree: 282, amount: "Grand Prize" },
+  { degree: 307, amount: 200 },
+  { degree: 333, amount: 110 },
 ];
 
 /**
@@ -123,8 +168,8 @@ const outerWheelConfig = {
   isRotateClockwise: true,
   stopTime: 3,
   stopSpinRound: 3 * 360,
-  degreeToStop: outerWheelStopDegree,
-  stopIndex: 1,
+  wheelData: outerWheelData,
+  stopIndex: 0,
 };
 const innerWheelConfig = {
   wheelRef: ref(null),
@@ -137,14 +182,12 @@ const innerWheelConfig = {
   isRotateClockwise: false,
   stopTime: 5,
   stopSpinRound: 3 * 360,
-  degreeToStop: innerWheelStopDegree,
-  stopIndex: 2,
+  wheelData: innerWheelData,
+  stopIndex: 0,
 };
 
 const spinButtonRef = ref(null);
 const spinButtonDisable = ref(false);
-
-const availableSpinCount = ref(0);
 
 function spin() {
   if (spinButtonDisable.value === true) return;
@@ -168,12 +211,15 @@ function spin() {
   spinWheel(outerWheelConfig); // spin outer wheel
   spinWheel(innerWheelConfig); // spin inner wheel
 
-  submitSpinWheelAPI(() => {
+  submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, () => {
     // setTimeout written in the func
     let count = 0;
     const onStopSpinCb = () => {
       count++;
-      if (count === 2) updateSpinButton(false);
+      if (count === 2) {
+        updateSpinButton(false);
+        spinSuccess(finalAmount);
+      }
     };
 
     stopSpin(outerWheelConfig, onStopSpinCb);
@@ -198,13 +244,8 @@ function spinWheel(config) {
 }
 
 function stopSpin(config, callback) {
-  const {
-    isRotateClockwise,
-    stopTime,
-    stopSpinRound,
-    degreeToStop,
-    stopIndex,
-  } = config;
+  const { isRotateClockwise, stopTime, stopSpinRound, wheelData, stopIndex } =
+    config;
 
   let spinTimeEnd = false;
   let isApiReturned = true;
@@ -214,7 +255,7 @@ function stopSpin(config, callback) {
   }, 5000);
 
   const attemptStopSpin = () => {
-    const endDegree = degreeToStop[stopIndex].degree;
+    const endDegree = wheelData[stopIndex].degree;
     if (isRotateClockwise) config.finalDegree = endDegree + stopSpinRound;
     else config.finalDegree = endDegree - stopSpinRound;
 
@@ -264,16 +305,18 @@ function updateSpinButton(isDisable) {
   }
 }
 
-const maskRef = ref([]);
-function setMaskRef(el) {
-  if (el) maskRef.value.push(el);
-}
-const maskDayRef = ref([]);
-function setMaskDayRef(el) {
-  if (el) maskDayRef.value.push(el);
+function spinSuccess(bonus) {
+  $q.notify({
+    type: "positive",
+    position: "top",
+    message: `Congratulation, You Acquired A Total Of ${bonus} Amount!`,
+    icon: "check_circle_outline",
+  });
 }
 
-function initSpinWheelAPI(callback) {
+const availableSpinCount = ref(0);
+const unlockDay = ref(0);
+function initSpinWheelAPI() {
   eventapi
     .get("/multiWheel/init?promoCode=tha-multi-wheel")
     .then((res) => {
@@ -281,15 +324,7 @@ function initSpinWheelAPI(callback) {
       if (code === 0) {
         const { leftCount, unlock } = data;
         availableSpinCount.value = leftCount;
-
-        // 1 - 7 [lockIndex formula: (n - 1) * 2]
-        lockIndex.value = [];
-        for (let i = unlock, l = 7; i < l; i++) {
-          const index = i * 2;
-          lockIndex.value.push(index);
-        }
-
-        callback && callback();
+        unlockDay.value = 7 || unlock;
       }
     })
     .catch((e) => {
@@ -297,70 +332,40 @@ function initSpinWheelAPI(callback) {
     });
 }
 
-function submitSpinWheelAPI(callback) {
-  callback && callback();
+let finalAmount = 0;
+function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
+  eventapi
+    .post("/multiWheel/submit?promoCode=tha-multi-wheel")
+    .then((res) => {
+      const { code, data } = res.data;
+      if (code === 0) {
+        const { leftCount, outer, inner, bonus } = data;
 
-  //   eventapi
-  //     .post("/multiWheel/submit?promoCode=tha-multi-wheel")
-  //     .then((res) => {
-  //       const { code, data } = res.data;
-  //       if (code === 0) {
-  //         const { leftCount, outer, inner, bonus } = data;
-  //         availableSpinCount.value = leftCount;
+        finalAmount = bonus;
+        availableSpinCount.value = leftCount;
 
-  //         // TODO: outer & inner
-
-  //         $q.notify({
-  //           type: "positive",
-  //           position: "top",
-  //           message: `Congratulation, You Acquired A Total Of ${bonus} Amount!`,
-  //           icon: "check_circle_outline",
-  //         });
-
-  //         callback && callback();
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.log("error", e);
-  //     });
-}
-
-const innerMaskDegree = [
-  { degree: 309.25 },
-  { degree: 335 },
-  { degree: 0 },
-  { degree: 27 },
-  { degree: 52 },
-  { degree: 79 },
-  { degree: 104 },
-  { degree: 130.25 },
-  { degree: 156.25 },
-  { degree: 182.25 },
-  { degree: 208.25 },
-  { degree: 233.25 },
-  { degree: 258.25 },
-  { degree: 283.25 },
-];
-
-const lockIndex = ref([0, 2, 4, 6, 8, 10, 12]);
-function setupLock() {
-  for (let i = 0, l = lockIndex.value.length; i < l; i++) {
-    const index = lockIndex.value[i];
-    const degree = innerMaskDegree[index].degree;
-
-    maskRef.value[i].style.transform = `rotate(${degree}deg)`;
-    maskDayRef.value[i].style.transform = `rotate(${degree}deg)`;
-  }
+        outerWheelData.forEach((e, i) => {
+          if (e.amount === outer) outerWheelConfig.stopIndex = i;
+        });
+        innerWheelData.forEach((e, i) => {
+          if (e.amount === inner) innerWheelConfig.stopIndex = i;
+        });
+      }
+    })
+    .catch((e) => {
+      console.log("error", e);
+    })
+    .then(() => {
+      callback && callback();
+    });
 }
 
 onMounted(() => {
-  initSpinWheelAPI(() => {
-    setupLock();
-  });
+  initSpinWheelAPI();
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .spinwheel-container {
   display: flex;
   align-items: center;
@@ -437,7 +442,7 @@ onMounted(() => {
         position: relative;
         top: 1.5%;
         left: 11.5%;
-        transform: rotate(76.5deg);
+        transform: rotate(75.5deg);
       }
     }
 
@@ -465,14 +470,14 @@ onMounted(() => {
 
   .prize-arrow {
     position: absolute;
-    top: 33.5%;
-    left: 22.5%;
+    top: 32.95%;
+    left: 22.75%;
     display: flex;
     width: 100%;
     z-index: 1;
 
     .prize-arrow-img {
-      width: 35%;
+      width: 36%;
       margin: 0 auto;
     }
   }
@@ -525,5 +530,8 @@ onMounted(() => {
       margin: 0 auto;
     }
   }
+}
+
+@media (min-width: 768px) {
 }
 </style>

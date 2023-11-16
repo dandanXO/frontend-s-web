@@ -1,8 +1,8 @@
 <template>
   <div class="spinwheel-winner-container">
-    <div class="winner-table-wrapper">
+    <div class="winner-table-wrapper q-mb-xl">
       <q-table
-        class="winner-table q-mb-xl"
+        class="winner-table"
         no-data-label="ไม่มีข้อมูล"
         loading-label="กำลังโหลด..."
         :loading="loading"
@@ -10,6 +10,19 @@
         :rows="rows"
         :hide-pagination="true"
       >
+        <template v-slot:body-cell="props">
+          <q-td
+            :props="props"
+            :class="props.value === grandPrize ? 'iphone' : ''"
+          >
+            <img
+              v-if="props.value === grandPrize ? true : false"
+              class="iphone-img"
+              src="../assets/images/promotion/spinwheel/iphone.png"
+            />
+            {{ props.value }}
+          </q-td>
+        </template>
       </q-table>
 
       <img
@@ -29,7 +42,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { eventapi } from "boot/axios";
+
+const grandPrize = "IPhone 15 Pro Max";
 
 const columns = ref([
   {
@@ -51,32 +67,49 @@ const columns = ref([
     align: "center",
   },
 ]);
-const rows = ref([
-  {
-    name: "zau****13",
-    prize: "IPhone 15 pro max",
-    date: "2023-11-10 15:30:23",
-  },
-  {
-    name: "zau****13",
-    prize: "180",
-    date: "2023-11-10 15:30:23",
-  },
-  {
-    name: "zau****13",
-    prize: "IPhone 15 pro max",
-    date: "2023-11-10 15:30:23",
-  },
-  {
-    name: "zau****13",
-    prize: "180",
-    date: "2023-11-10 15:30:23",
-  },
-]);
+const rows = ref([]);
+
+function initSpinWheelWinnerAPI() {
+  console.log("initSpinWheelWinnerAPI");
+
+  eventapi
+    .post("/multiWheel/list?promoCode=tha-multi-wheel")
+    .then((res) => {
+      const { code, data } = res.data;
+      if (code === 0) {
+        data.forEach((e) => {
+          const { memberName, bonus, playTime } = e;
+
+          const obj = {
+            name: memberName,
+            prize: bonus || grandPrize,
+            date: playTime,
+          };
+          rows.value.push(obj);
+        });
+      }
+    })
+    .catch((e) => {
+      console.log("error", e);
+    });
+}
+
+onMounted(() => {
+  initSpinWheelWinnerAPI();
+  setInterval(() => {
+    initSpinWheelWinnerAPI();
+  }, 5000);
+});
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .spinwheel-winner-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   .winner-table-wrapper {
     position: relative;
 
@@ -90,24 +123,36 @@ const rows = ref([
         rgba(127, 56, 217, 0.4) 0%,
         rgba(176, 38, 198, 0) 100%
       );
+
+      .iphone {
+        color: #ffa3e0;
+        text-align: center;
+        font-family: Arial;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.14063rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
     }
 
-    .q-table--horizontal-separator tbody tr:not(:last-child) > td {
+    :deep(.q-table--horizontal-separator tbody tr:not(:last-child) > td) {
       border-bottom-width: 0;
     }
 
-    .q-table {
+    :deep(.q-table) {
       tbody {
+        display: block;
+        max-height: 200px;
+        overflow-y: scroll;
+
         tr {
-          th {
-            color: #fff;
-            text-align: center;
-            font-family: Arial;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: normal;
-            letter-spacing: 0.151rem;
-          }
+          display: table;
+          width: 100%;
+          table-layout: fixed;
 
           td {
             color: rgba(255, 255, 255, 0.6);
@@ -117,6 +162,24 @@ const rows = ref([
             font-weight: 400;
             line-height: normal;
             letter-spacing: 0.14063rem;
+          }
+        }
+      }
+
+      thead {
+        tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+
+          th {
+            color: #fff;
+            text-align: center;
+            font-family: Arial;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: normal;
+            letter-spacing: 0.151rem;
           }
         }
       }
