@@ -9,6 +9,7 @@
         :columns="columns"
         :rows="rows"
         :hide-pagination="true"
+        :rows-per-page-options="[0]"
       >
         <template v-slot:body-cell="props">
           <q-td
@@ -78,14 +79,28 @@ function initSpinWheelWinnerAPI() {
       const { code, data } = res.data;
       if (code === 0) {
         data.forEach((e) => {
-          const { memberName, bonus, playTime } = e;
+          const { memberName, bonus, playTime, privilegeKey } = e;
 
           const obj = {
             name: memberName,
             prize: bonus || grandPrize,
             date: playTime,
+            privilegeKey,
           };
-          rows.value.push(obj);
+
+          if (!rows.value.length) {
+            rows.value.unshift(obj);
+          } else {
+            let isNew = true;
+            rows.value.forEach((e) => {
+              if (e.privilegeKey === privilegeKey) isNew = false;
+              if (!privilegeKey) isNew = true;
+            });
+
+            // if new --> scrollTop = 0 w/ smoothBehaviour
+            // or put darker color indicate new
+            if (isNew) rows.value.unshift(obj);
+          }
         });
       }
     })
@@ -98,7 +113,7 @@ onMounted(() => {
   initSpinWheelWinnerAPI();
   setInterval(() => {
     initSpinWheelWinnerAPI();
-  }, 5000);
+  }, 30000);
 });
 </script>
 
