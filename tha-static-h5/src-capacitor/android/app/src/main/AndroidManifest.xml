@@ -28,7 +28,7 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" android:host="jo2.app" />
+            <data android:scheme="https" android:host="p8s1-files.camestible.com" />
           </intent-filter>
 
         </activity>
