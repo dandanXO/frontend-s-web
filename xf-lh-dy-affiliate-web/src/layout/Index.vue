@@ -1,20 +1,15 @@
 <template>
-  <div
-    :class="classObj"
-    class="app-wrapper"
-  >
+  <div :class="classObj" class="app-wrapper">
+    <div class="fixed-header">
+      <Navbar />
+    </div>
     <div
       v-if="classObj.mobile && sidebar.opened"
       class="drawer-bg"
       @click="handleClickOutside"
     />
-    <Sidebar class="sidebar-container" />
-    <div
-      class="main-container"
-    >
-      <div class="fixed-header">
-        <Navbar />
-      </div>
+    <div class="main-container">
+      <Sidebar class="sidebar-container" />
       <AppMain />
     </div>
   </div>
@@ -28,7 +23,7 @@ import {
   onBeforeUnmount,
   onMounted,
   reactive,
-  toRefs
+  toRefs,
 } from 'vue'
 import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
@@ -40,15 +35,22 @@ export default defineComponent({
   components: {
     AppMain,
     Navbar,
-    Sidebar
+    Sidebar,
   },
   setup() {
     const store = useStore()
-    const { sidebar, device, addEventListenerOnResize, resizeMounted, removeEventListenerResize, watchRouter } = resize()
+    const {
+      sidebar,
+      device,
+      addEventListenerOnResize,
+      resizeMounted,
+      removeEventListenerResize,
+      watchRouter,
+    } = resize()
     const state = reactive({
       handleClickOutside: () => {
         store.dispatch(AppActionTypes.ACTION_CLOSE_SIDEBAR, false)
-      }
+      },
     })
 
     const classObj = computed(() => {
@@ -56,7 +58,7 @@ export default defineComponent({
         hideSidebar: !sidebar.value.opened,
         openSidebar: sidebar.value.opened,
         withoutAnimation: sidebar.value.withoutAnimation,
-        mobile: device.value === 'mobile'
+        mobile: device.value === 'mobile',
       }
     })
 
@@ -75,9 +77,9 @@ export default defineComponent({
     return {
       classObj,
       sidebar,
-      ...toRefs(state)
+      ...toRefs(state),
     }
-  }
+  },
 })
 </script>
 
@@ -87,7 +89,6 @@ export default defineComponent({
   position: relative;
   height: 100%;
   width: 100%;
-  background: #e7eaef;
 }
 
 .drawer-bg {
@@ -102,21 +103,20 @@ export default defineComponent({
 
 .main-container {
   min-height: 100%;
-  transition: margin-left .28s;
-  margin-left: $sideBarWidth;
+  transition: margin-left 0.28s;
+  display: flex;
   position: relative;
+  background: #e7eaef;
 }
 
 .sidebar-container {
   transition: width 0.28s;
-  width: $sideBarWidth !important;
   height: 100%;
-  position: fixed;
   font-size: 0px;
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 1001;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -136,7 +136,7 @@ export default defineComponent({
   }
 
   .sidebar-container {
-    transition: transform .28s;
+    transition: transform 0.28s;
     width: $sideBarWidth !important;
   }
 
@@ -164,5 +164,4 @@ export default defineComponent({
     transition: none;
   }
 }
-
 </style>

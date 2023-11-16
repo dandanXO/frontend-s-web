@@ -30,7 +30,7 @@ export default defineComponent({
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding: 3rem !important;
+  padding: 3rem 1rem !important;
 }
 
 .fixed-header + .app-main {
