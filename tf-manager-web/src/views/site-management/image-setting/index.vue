@@ -289,7 +289,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const inputImage = ref(null)
 const imageForm = ref(null)
-const imageDir = process.env.VUE_APP_S3_URL
+const imageDir = process.env.VUE_APP_IMAGE
 const categoryList = ['/promo/', '/game/', '/payment/']
 const siteList = reactive({
   list: [],
