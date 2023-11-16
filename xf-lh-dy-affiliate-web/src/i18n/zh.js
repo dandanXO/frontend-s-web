@@ -246,7 +246,26 @@ export default {
     withdrawPassword: "支付密码",
     withdrawPayoutBonus: '提款/派彩/奖金/调整',
     withdrawalAmount: "提款金额",
-    yesterday: "昨日"
+    yesterday: "昨日",
+    memberTag: "会员标签",
+    memberTagDescription: "请输入10字符内的名称",
+    tagSetting: "标签设置",
+    createTag: "新增标签",
+    editTag: "编辑标签",
+    memberAmount: "会员数量",
+    delete: '删除',
+    sequence: '序号',
+    back: '返回',
+    all: '全部',
+    yes: '有',
+    no: '没有',
+    more: '更多',
+    remark: '会员备注',
+    bonusRecord: '红利记录',
+    ftdTime: '首存时间',
+    validBet: '有效投注',
+    unAssigned: '未分配',
+    batchEditTag: '批量编辑标签',
   },
   message: {
     addSuccess: "新增成功",
@@ -322,7 +341,11 @@ export default {
     understand: "理解",
     DepositCompleted: "已存款",
     depositNotification1: "您将被重定向到您的银行页面以完成存款。",
-    depositNotification2: "如果成功，您将在此页面上收到通知。"
+    depositNotification2: "如果成功，您将在此页面上收到通知。",
+    validateTagDescriptionRequired: "会员标签必填",
+    confirmDelete: '请确认是否要删除这些数据, 此操作不可撤销',
+    remarkMessage: '请输入200字符内的会员备注',
+    validateTagDescriptionLength: '标签必须多于 1 字并少于 10 字'
   },
   menu: {
     undefined: "",
@@ -386,6 +409,8 @@ export default {
     14008: "代理佣金必须多余子代理佣金 : ",
     14009: "代理收入必须多余子代理收入 : ",
     14100: "代理并无此下级会员",
+    14102: "会员标签已存在",
+    14103: "会员标签已达上限",
     15201: "旧密码不正确",
     15202: "新密码不能与旧密码相同"
   }

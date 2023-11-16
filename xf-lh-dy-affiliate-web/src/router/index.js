@@ -36,6 +36,15 @@ export const constantRoutes = [
           title: "member-management",
           icon: "index"
         }
+      },
+      {
+        path: "tag-setting",
+        component: () => import(/* webpackChunkName: "member-management" */"../views/member-info/member-management/tag-setting/index.vue"),
+        name: "Tag Setting",
+        meta: {
+          title: "tag-setting",
+          icon: "settings"
+        }
       }
     ]
   },

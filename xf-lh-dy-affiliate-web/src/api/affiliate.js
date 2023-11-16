@@ -80,3 +80,19 @@ export const checkAnswer = (id, answer) => {
 export const checkWithdrawPassword = (id, siteId, withdrawPassword) => {
   return https().request(`/affiliate/${id}/checkWithdrawPassword`, Method.GET, { siteId: siteId, withdrawPassword: withdrawPassword }, ContentType.form);
 };
+
+export const loadMemberSummary = (id, query) => {
+  return https().request(`/downline/${id}`, Method.GET, query, ContentType.form);
+};
+
+export const loadMemberInfo = (id, memberId, recordTime) => {
+  return https().request(`/downline/${id}/downlineInfo`, Method.GET, { memberId, recordTime }, ContentType.form);
+};
+
+export const assignTag = (affId, memberId, tags) => {
+  return https().request(`/downline/${affId}/assignTag?_method=PUT`, Method.POST, { memberId: memberId, tagIds: tags.length !== 0 ? tags.join(",") : [] }, ContentType.form);
+};
+
+export const assignRemark = (affId, memberId, remark) => {
+  return https().request(`/downline/${affId}/assignRemark/${memberId}?_method=PUT`, Method.POST, { remark: remark }, ContentType.form);
+};

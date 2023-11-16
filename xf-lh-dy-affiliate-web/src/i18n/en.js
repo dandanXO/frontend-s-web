@@ -245,7 +245,26 @@ export default {
     withdrawPassword: "Withdraw Password",
     withdrawPayoutBonus: 'Withdraw Payout Bonus Adjust',
     withdrawalAmount: "Withdrawal Amount",
-    yesterday: "Yesterday"
+    yesterday: "Yesterday",
+    memberTag: "Member Tag",
+    memberTagDescription: "Please enter description within 10 characters",
+    tagSetting: "Tag Setting",
+    createTag: "Create Tag",
+    editTag: "Edit Tag",
+    memberAmount: "Member Amount",
+    delete: 'Delete',
+    sequence: 'S/N',
+    back: 'Back',
+    all: 'All',
+    yes: 'Yes',
+    no: 'No',
+    more: 'More',
+    remark: 'Member Remark',
+    bonusRecord: 'Bonus Record',
+    ftdTime: 'First Deposit Time',
+    validBet: 'Valid Bet',
+    unAssigned: 'Not Assigned',
+    batchEditTag: 'Batch Edit Tag',
   },
   message: {
     adjustSuccess: 'Adjust Success',
@@ -321,7 +340,11 @@ export default {
     understand: "understand",
     DepositCompleted: "Completed",
     depositNotification1: "You will be redirected to your bank's page to complete the deposit.",
-    depositNotification2: "If successful, you will receive a notification on this page."
+    depositNotification2: "If successful, you will receive a notification on this page.",
+    validateTagDescriptionRequired: "Tag Description is required",
+    confirmDelete: 'Confirm that you want to delete these data, the operation cannot be undone',
+    remarkMessage: 'Please enter the member remark within 200 characters.',
+    validateTagDescriptionLength: 'Tag Description length must be 1 to 10'
   },
   menu: {
     undefined: "",
@@ -385,6 +408,8 @@ export default {
     14008: "Affiliate commission must be more than child affiliate commission : ",
     14009: "Affiliate revenue must be more than child affiliate revenue : ",
     14100: "This member is not your downline member",
+    14102: "Member tag already exist",
+    14103: "Member tag limit exceeded",
     15201: "Old password incorrect",
     15202: "New password cannot be the same as your old password"
   }
