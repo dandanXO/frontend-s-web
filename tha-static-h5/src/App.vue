@@ -14,11 +14,13 @@ import { userStore } from "stores/index";
 import * as _ from "lodash";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
+    const ui = useUI();
     const router = useRouter();
     const $q = useQuasar();
     $q.dark.set(true);
@@ -124,10 +126,19 @@ export default defineComponent({
       });
     };
 
+    const checkAgentFrom = () => {
+      var agentB = localStorage.getItem("AGENT_B");
+      if (agentB) {
+        console.log("YES IS B");
+        ui.isAffiliateB = true;
+      }
+    };
+
     onMounted(() => {
       checkSID();
       initCsWeb();
       initStorage();
+      checkAgentFrom();
       // initListenApp();
       // getCSA();
     });

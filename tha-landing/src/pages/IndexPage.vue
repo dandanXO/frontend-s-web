@@ -505,10 +505,6 @@ const onSubmit = () => {
 
           if (ui.isAffiliateA) {
             fbq("track", "login");
-            fbq("track", "Purchase", {
-              value: 0.0,
-              currency: 'USD'
-            });
           }
 
 
@@ -597,10 +593,6 @@ const onRegisterSubmit = () => {
             if (ui.isAffiliateA) {
               fbq("track", "register");
               fbq("track", "Complete Registration");
-              fbq("track", "Purchase", {
-                value: 0.0,
-                currency: 'USD'
-              });
             }
 
             $q.notify({
