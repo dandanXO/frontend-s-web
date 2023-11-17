@@ -65,7 +65,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:game-match:add']"
+          v-permission="['sys:game-quiz:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
