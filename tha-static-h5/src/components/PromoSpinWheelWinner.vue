@@ -71,8 +71,6 @@ const columns = ref([
 const rows = ref([]);
 
 function initSpinWheelWinnerAPI() {
-  console.log("initSpinWheelWinnerAPI");
-
   eventapi
     .post("/multiWheel/list?promoCode=tha-multi-wheel")
     .then((res) => {

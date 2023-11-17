@@ -1,4 +1,20 @@
 <template>
+  <q-dialog v-model="isShowTotalWin" class="total-win-dialog">
+    <div class="total-win">
+      <div class="won">
+        <div>You've Won!</div>
+        <div>
+          <span>{{ outerAmount }}</span> X <span>{{ innerAmount }}</span
+          >% =
+        </div>
+        <div>Total Bonus</div>
+        <div>
+          <span>{{ finalAmount }}</span>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
   <div class="spinwheel-container">
     <div class="spin-count-board">
       <img
@@ -121,35 +137,35 @@ const $q = useQuasar();
 // NOTE: 0 index starts from where the arrow pointing
 const outerWheelData = [
   { degree: 0, amount: 588 },
-  { degree: 25.5, amount: 238 },
-  { degree: 51.25, amount: 188 },
-  { degree: 76.5, amount: 58 },
-  { degree: 102.5, amount: 288 },
-  { degree: 128.25, amount: 28 },
-  { degree: 153.5, amount: 88 },
-  { degree: 178.5, amount: 68 },
-  { degree: 204.5, amount: 388 },
-  { degree: 230.75, amount: 38 },
-  { degree: 256.75, amount: 88 },
-  { degree: 283, amount: 28 },
-  { degree: 309.5, amount: 880 },
-  { degree: 335, amount: 38 },
+  { degree: -25, amount: 238 },
+  { degree: -50.5, amount: 188 },
+  { degree: -77, amount: 58 },
+  { degree: -103, amount: 288 },
+  { degree: -129.25, amount: 28 },
+  { degree: -155.5, amount: 88 },
+  { degree: -181.5, amount: 68 },
+  { degree: -206.5, amount: 388 },
+  { degree: -231.5, amount: 38 },
+  { degree: -257.5, amount: 88 },
+  { degree: -283.5, amount: 28 },
+  { degree: -309, amount: 880 },
+  { degree: -335, amount: 38 },
 ];
 const innerWheelData = [
   { degree: 0, amount: 130 },
-  { degree: 25, amount: 300 },
-  { degree: 50, amount: 150 },
-  { degree: 76, amount: 250 },
-  { degree: 100, amount: 140 },
-  { degree: 125, amount: 120 },
-  { degree: 151, amount: 160 },
-  { degree: 176, amount: 500 },
-  { degree: 204, amount: 110 },
-  { degree: 231, amount: 200 },
-  { degree: 256, amount: 1000 },
-  { degree: 282, amount: "Grand Prize" },
-  { degree: 307, amount: 200 },
-  { degree: 333, amount: 110 },
+  { degree: -26, amount: 300 },
+  { degree: -52, amount: 150 },
+  { degree: -77, amount: 250 },
+  { degree: -102, amount: 140 },
+  { degree: -128, amount: 120 },
+  { degree: -155, amount: 160 },
+  { degree: -182, amount: 500 },
+  { degree: -207, amount: 110 },
+  { degree: -233, amount: 200 },
+  { degree: -258, amount: 1000 },
+  { degree: -283, amount: 0 },
+  { degree: -309, amount: 200 },
+  { degree: -335, amount: 110 },
 ];
 
 /**
@@ -218,7 +234,7 @@ function spin() {
       count++;
       if (count === 2) {
         updateSpinButton(false);
-        spinSuccess(finalAmount);
+        isShowTotalWin.value = true;
       }
     };
 
@@ -305,17 +321,8 @@ function updateSpinButton(isDisable) {
   }
 }
 
-function spinSuccess(bonus) {
-  $q.notify({
-    type: "positive",
-    position: "top",
-    message: `Congratulation, You Acquired A Total Of ${bonus} Amount!`,
-    icon: "check_circle_outline",
-  });
-}
-
 const availableSpinCount = ref(0);
-const unlockDay = ref(0);
+const unlockDay = ref(7);
 function initSpinWheelAPI() {
   eventapi
     .get("/multiWheel/init?promoCode=tha-multi-wheel")
@@ -324,7 +331,7 @@ function initSpinWheelAPI() {
       if (code === 0) {
         const { leftCount, unlock } = data;
         availableSpinCount.value = leftCount;
-        unlockDay.value = 7 || unlock;
+        unlockDay.value = unlock;
       }
     })
     .catch((e) => {
@@ -332,7 +339,10 @@ function initSpinWheelAPI() {
     });
 }
 
-let finalAmount = 0;
+const isShowTotalWin = ref(true);
+const outerAmount = ref(0);
+const innerAmount = ref(0);
+const finalAmount = ref(0);
 function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
   eventapi
     .post("/multiWheel/submit?promoCode=tha-multi-wheel")
@@ -341,14 +351,22 @@ function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
       if (code === 0) {
         const { leftCount, outer, inner, bonus } = data;
 
-        finalAmount = bonus;
+        outerAmount.value = outer;
+        innerAmount.value = inner;
+        finalAmount.value = bonus;
         availableSpinCount.value = leftCount;
 
-        outerWheelData.forEach((e, i) => {
-          if (e.amount === outer) outerWheelConfig.stopIndex = i;
+        outerWheelData.map((e, i) => {
+          if (e.amount === outer) {
+            outerWheelConfig.stopIndex = i;
+            return;
+          }
         });
-        innerWheelData.forEach((e, i) => {
-          if (e.amount === inner) innerWheelConfig.stopIndex = i;
+        innerWheelData.map((e, i) => {
+          if (e.amount === inner) {
+            innerWheelConfig.stopIndex = i;
+            return;
+          }
         });
       }
     })
@@ -366,6 +384,43 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.total-win-dialog {
+  .total-win {
+    background: url(../assets/images/promotion/spinwheel/total_win.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    text-align: center;
+    font-family: Arial Black;
+    font-size: 14px;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: 0.14063rem;
+
+    pointer-events: none;
+
+    span {
+      color: #eda1ff;
+    }
+
+    .won {
+      position: relative;
+      top: 17.5%;
+      left: 1%;
+    }
+  }
+}
+
 .spinwheel-container {
   display: flex;
   align-items: center;
