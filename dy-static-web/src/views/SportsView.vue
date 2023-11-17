@@ -72,14 +72,14 @@ export default defineComponent({
     const store = userStore();
 
     const platforms = ref([
-      // {
-      //   code: "IM",
-      //   name: "IM 体育",
-      //   image: "im",
-      //   message:
-      //     "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
-      //   link: "/games/im-sport.html"
-      // },
+      {
+        code: "IM",
+        name: "IM 体育",
+        image: "im",
+        message:
+          "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
+        link: "/games/im-sport.html"
+      },
       // {
       //   code: "PM",
       //   name: "熊猫体育",
