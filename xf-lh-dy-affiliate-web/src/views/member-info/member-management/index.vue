@@ -270,7 +270,7 @@
                   <el-dropdown-item @click="showMemberInfo(scope.row)">
                     {{ t('fields.memberInfo') }}
                   </el-dropdown-item>
-                  <el-dropdown-item @click="transferRedirect(scope.row.id)">
+                  <el-dropdown-item @click="transferRedirect(scope.row.loginName)">
                     {{ t('menu.Transfer') }}
                   </el-dropdown-item>
                   <el-dropdown-item>
@@ -282,10 +282,10 @@
                   <el-dropdown-item @click="showEditRemark(scope.row)">
                     {{ t('fields.remark') }}
                   </el-dropdown-item>
-                  <el-dropdown-item @click="showDepositRecord(scope.row.id)">
+                  <el-dropdown-item @click="showDepositRecord(scope.row.loginName)">
                     {{ t('fields.depositRecord') }}
                   </el-dropdown-item>
-                  <el-dropdown-item @click="showBetRecord(scope.row.id)">
+                  <el-dropdown-item @click="showGameRecord(scope.row.loginName)">
                     {{ t('fields.betRecord') }}
                   </el-dropdown-item>
                   <el-dropdown-item @click="showBonusRecord(scope.row.id)">
@@ -490,9 +490,39 @@
         />
       </el-form-item>
     </el-form>
-
     <div class="dialog-footer">
       <el-button @click="uiControl.remarkDialogVisible = false">
+        {{ $t('fields.cancel') }}
+      </el-button>
+      <el-button type="primary" @click="submitRemark()">
+        {{ $t('fields.confirm') }}
+      </el-button>
+    </div>
+  </el-dialog>
+
+  <el-dialog
+    :title="t('fields.memberBetRecord')"
+    v-model="uiControl.depositDialogVisible"
+    append-to-body
+  >
+    <el-form
+      @submit.prevent
+    >
+      <el-form-item :label="t('fields.loginName')">
+        <b>{{ selectedMember.loginName }}</b>
+      </el-form-item>
+      <el-form-item :label="t('fields.remark')">
+        <el-input
+          v-model="selectedMember.remark"
+          :rows="2"
+          type="textarea"
+          :placeholder="t('message.remarkMessage')"
+        />
+      </el-form-item>
+    </el-form>
+
+    <div class="dialog-footer">
+      <el-button @click="uiControl.depositDialogVisible = false">
         {{ $t('fields.cancel') }}
       </el-button>
       <el-button type="primary" @click="submitRemark()">
@@ -543,6 +573,7 @@ const uiControl = reactive({
   infoDialogVisible: false,
   tagDialogVisible: false,
   remarkDialogVisible: false,
+  depositDialogVisible: false,
   editBtn: true,
   editType: 'One'
 })
@@ -815,7 +846,19 @@ async function loadAllTags() {
 }
 
 function goToTagSetting() {
-  router.push('/member-management/tag-setting')
+  router.push('/member/tag-setting')
+}
+
+function transferRedirect(name) {
+  router.push(`/affiliate/transfer?user=${name}`);
+}
+
+function showGameRecord(name) {
+  router.push(`/member/game-record?user=${name}`);
+}
+
+function showDepositRecord(name) {
+
 }
 
 function handleCheckAll(val) {

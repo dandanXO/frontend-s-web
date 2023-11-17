@@ -38,7 +38,7 @@
           :key="child.id"
           :class="child.active ? 'active' : ''"
         >
-          <RouterLink :to="child.path" class="route">
+          <RouterLink :to="nav.path + child.path" class="route">
             <div class="route-content">
               <svg-icon
                 :icon-class="child.icon"
@@ -66,9 +66,10 @@ const navigationData = ref([
   {
     title: t('首页'),
     display: false,
+    path: '/dashboard',
     children: [
       {
-        path: '/dashboard',
+        path: '',
         title: '首页',
         active: false,
         icon: 'home',
@@ -78,9 +79,10 @@ const navigationData = ref([
   {
     title: '下级信息',
     display: true,
+    path: '/member',
     children: [
       {
-        path: '/member-management',
+        path: '/manage',
         title: '会员管理',
         active: false,
         icon: 'people',
@@ -96,6 +98,7 @@ const navigationData = ref([
   {
     title: '财务中心',
     display: true,
+    path: '/affiliate',
     children: [
       {
         path: '/withdraw-request',
@@ -144,6 +147,7 @@ const navigationData = ref([
   {
     title: '推广中心',
     display: true,
+    path: '/promotion',
     children: [
       {
         path: '/referral-link',
@@ -168,6 +172,7 @@ const navigationData = ref([
   {
     title: '个人中心',
     display: true,
+    path: '/personal',
     children: [
       {
         path: '/vip',
@@ -179,25 +184,25 @@ const navigationData = ref([
         path: '/overflow',
         title: '溢出申请',
         active: false,
-        icon: 'chart',
+        icon: 'form',
       },
       {
         path: '/announcement',
         title: '系统通告',
         active: false,
-        icon: 'chart',
+        icon: 'gonggao',
       },
       {
         path: '/settlement-info',
         title: '佣金说明',
         active: false,
-        icon: 'chart',
+        icon: 'info',
       },
       {
         path: '/contact-us',
         title: '联系我们',
         active: false,
-        icon: 'chart',
+        icon: 'contact',
       },
     ],
   },

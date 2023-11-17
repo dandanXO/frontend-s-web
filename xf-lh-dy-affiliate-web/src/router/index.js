@@ -6,7 +6,7 @@ export const constantRoutes = [
     name: 'Login',
     meta: { hidden: true },
     component: () =>
-      import(/* webpackChunkName: "login" */ '../views/xf/login/index.vue'),
+      import('../views/xf/login/index.vue'),
   },
   {
     path: "/",
@@ -15,50 +15,186 @@ export const constantRoutes = [
     children: [
       {
         path: "dashboard",
-        component: () => import(/* webpackChunkName: "dashboard" */ "../views/dashboard/index.vue"),
+        component: () => import("../views/dashboard/index.vue"),
         name: "Dashboard",
         meta: {
           title: "dashboard",
-          icon: "index"
         }
       }
     ]
   },
   {
-    path: '/member-management',
+    path: '/member',
     component: Layout,
     children: [
       {
-        path: "",
-        component: () => import(/* webpackChunkName: "member-management" */"../views/member-info/member-management/index.vue"),
+        path: "manage",
+        component: () => import("../views/member-info/member-management/index.vue"),
         name: "Member Management",
         meta: {
           title: "member-management",
-          icon: "index"
         }
       },
       {
         path: "tag-setting",
-        component: () => import(/* webpackChunkName: "member-management" */"../views/member-info/member-management/tag-setting/index.vue"),
+        component: () => import("../views/member-info/member-management/tag-setting/index.vue"),
         name: "Tag Setting",
         meta: {
           title: "tag-setting",
-          icon: "settings"
+        }
+      },
+      {
+        path: "game-record",
+        component: () => import("../views/member-info/game-record/index.vue"),
+        name: "Game Record",
+        meta: {
+          title: "game-record",
         }
       }
     ]
   },
   {
-    path: '/game-record',
+    path: '/affiliate',
+    component: Layout,
+    children: [
+      {
+        path: "withdraw-request",
+        component: () => import("../views/affiliate/withdraw-request/index.vue"),
+        name: "Withdraw Request",
+        meta: {
+          title: "withdraw-request",
+        }
+      },
+      {
+        path: "transfer",
+        component: () => import("../views/affiliate/transfer/index.vue"),
+        name: "Transfer",
+        meta: {
+          title: "transfer",
+        }
+      },
+      {
+        path: "deposit",
+        component: () => import("../views/affiliate/deposit/index.vue"),
+        name: "Deposit",
+        meta: {
+          title: "deposit",
+        }
+      },
+      {
+        path: "finance",
+        component: () => import("../views/affiliate/finance/index.vue"),
+        name: "Finance",
+        meta: {
+          title: "deposit",
+        }
+      },
+      {
+        path: "settlement",
+        component: () => import("../views/affiliate/settlement/index.vue"),
+        name: "Settlement",
+        meta: {
+          title: "Settlement",
+        }
+      },
+      {
+        path: "balance",
+        component: () => import("../views/affiliate/balance/index.vue"),
+        name: "Balance",
+        meta: {
+          title: "balance",
+        }
+      },
+      {
+        path: "bonus",
+        component: () => import("../views/affiliate/bonus/index.vue"),
+        name: "Bonus",
+        meta: {
+          title: "bonus",
+        }
+      }
+    ]
+  },
+  {
+    path: '/promotion',
+    component: Layout,
+    children: [
+      {
+        path: "referral-link",
+        component: () => import("../views/promotion/referral-link/index.vue"),
+        name: "Referral Link",
+        meta: {
+          title: "referral-link",
+        }
+      },
+      {
+        path: "referral-material",
+        component: () => import("../views/promotion/referral-material/index.vue"),
+        name: "Referral Material",
+        meta: {
+          title: "referral-material",
+        }
+      },
+      {
+        path: "channel-pack",
+        component: () => import("../views/promotion/channel-pack/index.vue"),
+        name: "Channel Pack",
+        meta: {
+          title: "channel-pack",
+        }
+      }
+    ]
+  },
+  {
+    path: '/personal',
     component: Layout,
     children: [
       {
         path: "",
-        component: () => import("../views/member-info/game-record/index.vue"),
-        name: "Game Record",
+        component: () => import("../views/personal/index.vue"),
+        name: "Personal Info",
         meta: {
-          title: "game-record",
-          icon: "index"
+          title: "personal",
+        }
+      },
+      {
+        path: "vip",
+        component: () => import("../views/personal/vip/index.vue"),
+        name: "VIP",
+        meta: {
+          title: "vip",
+        }
+      },
+      {
+        path: "overflow",
+        component: () => import("../views/personal/overflow/index.vue"),
+        name: "Overflow",
+        meta: {
+          title: "overflow",
+        }
+      },
+      {
+        path: "announcement",
+        component: () => import("../views/personal/announcement/index.vue"),
+        name: "Announcement",
+        meta: {
+          title: "announcement",
+        }
+      },
+      {
+        path: "settlement-info",
+        component: () => import("../views/personal/settlement-info/index.vue"),
+        name: "Settlement Info",
+        meta: {
+          title: "settlement-info",
+        }
+      },
+      {
+        path: "contact-us",
+        component: () => import("../views/personal/contact-us/index.vue"),
+        name: "Contact Us",
+        meta: {
+          title: "contact-us",
         }
       }
     ]
@@ -80,6 +216,7 @@ export const notFound = {
 const router = createRouter({
   history: createWebHistory(),
   routes: constantRoutes,
+  scrollBehavior: () => ({ top: 0 })
 })
 
 export function resetRouter() {

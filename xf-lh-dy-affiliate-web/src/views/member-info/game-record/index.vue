@@ -261,9 +261,11 @@ import { useStore } from "@/store";
 import moment from 'moment';
 import { getMemberBetRecords, getPlatformsBySite, getVipName, getTotal } from '../../../api/affiliate-bet-record';
 import { useI18n } from "vue-i18n";
+import { useRoute } from 'vue-router'
 
 const store = useStore();
 const { t } = useI18n();
+const route = useRoute();
 const list = reactive({
   platform: [],
   gameType: []
@@ -493,6 +495,9 @@ async function getVip(memberId) {
 }
 
 onMounted(() => {
+  if (route.query.user) {
+    request.loginName = route.query.user
+  }
   loadPlatform();
   loadBetRecords();
   populateGameType();
