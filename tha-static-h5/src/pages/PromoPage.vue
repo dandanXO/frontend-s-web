@@ -1,17 +1,16 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
-
       <div
-          v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
-          class="banner-container"
+        v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
+        class="banner-container"
       >
         <div
-            class="promo-top-bg"
-            :style="
-          (!$q.screen.gt.sm) ?
-            'background-image: url(' + imgURL + banner.mobileImageUrl + ')'
-            :  'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
+          class="promo-top-bg"
+          :style="
+            !$q.screen.gt.sm
+              ? 'background-image: url(' + imgURL + banner.mobileImageUrl + ')'
+              : 'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
           "
         ></div>
       </div>
@@ -20,40 +19,41 @@
         <div class="promo-type-wrapper">
           <div class="type-list">
             <div
-                class="type-item"
-                v-for="p in promoTypes"
-                :class="{ active: p.value === promoTabActive }"
-                :key="p"
-                @click="switchPromoType(p)"
+              class="type-item"
+              v-for="p in promoTypes"
+              :class="{ active: p.value === promoTabActive }"
+              :key="p"
+              @click="switchPromoType(p)"
             >
-              <RiFunctionLine v-if="p && p.value === 'ALL'"/>
+              <RiFunctionLine v-if="p && p.value === 'ALL'" />
               <template v-else>{{ p.label }}</template>
             </div>
           </div>
         </div>
         <div class="promo-list-wrapper">
           <div
-              class="promo-item"
-              v-for="(promo, i) in filteredArray"
-              :key="i"
-              data-aos="zoom-in"
-              data-aos-easing="ease-out"
-              data-aos-duration="1000"
+            class="promo-item"
+            v-for="(promo, i) in filteredArray"
+            :key="i"
+            data-aos="zoom-in"
+            data-aos-easing="ease-out"
+            data-aos-duration="1000"
           >
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-bg">
                   <img
-                      class="promo-content"
-                      :src="
- (!$q.screen.gt.sm) ?
-            imgURL + promo.mobileBannerUrl
-            : imgURL + promo.desktopBannerUrl "
+                    class="promo-content"
+                    :src="
+                      !$q.screen.gt.sm
+                        ? imgURL + promo.mobileBannerUrl
+                        : imgURL + promo.desktopBannerUrl
+                    "
                   />
                 </div>
               </div>
               <div class="promo-info">
-                <span class="viewdetail">{{ $t('lang.view_detail') }}</span>
+                <span class="viewdetail">{{ $t("lang.view_detail") }}</span>
               </div>
             </a>
           </div>
@@ -63,33 +63,41 @@
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
         <div class="banner-container">
-          <div
-              class="promo-banner-img"
-          >
-            <img :src="
- (!$q.screen.gt.sm) ?
-            (selectedPromo.mobileImgUrl ? imgURL + selectedPromo.mobileImgUrl : imgURL + selectedPromo.mobileBannerUrl)
-            : (selectedPromo.desktopImgUrl ? imgURL + selectedPromo.desktopImgUrl : imgURL + selectedPromo.desktopBannerUrl) "
+          <div class="promo-banner-img">
+            <img
+              :src="
+                !$q.screen.gt.sm
+                  ? selectedPromo.mobileImgUrl
+                    ? imgURL + selectedPromo.mobileImgUrl
+                    : imgURL + selectedPromo.mobileBannerUrl
+                  : selectedPromo.desktopImgUrl
+                  ? imgURL + selectedPromo.desktopImgUrl
+                  : imgURL + selectedPromo.desktopBannerUrl
+              "
             />
           </div>
         </div>
         <div class="inner">
           <div v-if="selectedPromo.hasPromo">
-            <HotPromotion :list="selectedPromo"/>
+            <HotPromotion :list="selectedPromo" />
           </div>
+          <template v-if="isSpinWheel">
+            <PromoSpinWheel></PromoSpinWheel>
+            <PromoSpinWheelWinner></PromoSpinWheelWinner>
+          </template>
           <div
-              class="promo-view-container"
-              :class="{
+            class="promo-view-container"
+            :class="{
               welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
               sport: selectedPromo.promoType.toLowerCase() === 'sport',
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino:
                 selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+              slot: selectedPromo.promoType.toLowerCase() === 'slot game',
             }"
           >
-            <div class="menu-title">{{ $t('lang.tnc') }}</div>
+            <div class="menu-title">{{ $t("lang.tnc") }}</div>
             <div v-html="selectedPromo.pageContent"></div>
           </div>
         </div>
@@ -106,16 +114,21 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
+import {useI18n} from "vue-i18n";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
 import HotPromotion from 'components/HotPromotion'
-import {useI18n} from "vue-i18n";
+import PromoSpinWheel from 'components/PromoSpinWheel.vue'
+import PromoSpinWheelWinner from 'components/PromoSpinWheelWinner.vue'
+
 export default defineComponent({
   name: "PromoView",
   components: {
     RiFunctionLine,
-    HotPromotion
+    HotPromotion,
+	PromoSpinWheel,
+	PromoSpinWheelWinner
   },
   setup() {
     const {t} = useI18n()
@@ -141,6 +154,8 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+
+	const isSpinWheel = ref(true);
 
     watch(() => route.query, () => {
       if (route.query === null) {
@@ -207,6 +222,7 @@ export default defineComponent({
     });
 
     return {
+		isSpinWheel,
       promoState,
       promoTypes,
       promoTabActive,
@@ -369,7 +385,7 @@ export default defineComponent({
 
       @keyframes scalein {
         from {
-          transform: scale(.5);
+          transform: scale(0.5);
         }
         to {
           transform: scale(1);
@@ -389,11 +405,10 @@ export default defineComponent({
           transform: scale(1);
           animation-name: scalein;
           animation-duration: 1s;
-          transition: .4s ease-in;
+          transition: 0.4s ease-in;
 
           img {
           }
-
 
           .promo-img-wrapper {
             aspect-ratio: 1000/445;
@@ -528,8 +543,14 @@ export default defineComponent({
   }
 }
 
-@media (max-width: 991px) and (min-width: 768px){
-  .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-info .viewdetail{
+@media (max-width: 991px) and (min-width: 768px) {
+  .promo-container
+    .all-promotions
+    .promo-main-container
+    .promo-list-wrapper
+    .promo-item
+    .promo-info
+    .viewdetail {
     padding: 4px 10px;
   }
 }
@@ -616,9 +637,13 @@ export default defineComponent({
     aspect-ratio: 100/25;
   }
 
-  .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-img-wrapper {
+  .promo-container
+    .all-promotions
+    .promo-main-container
+    .promo-list-wrapper
+    .promo-item
+    .promo-img-wrapper {
     aspect-ratio: 100/25;
   }
-
 }
 </style>
