@@ -466,7 +466,7 @@
         v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game-quiz:update']) || hasPermission(['sys:game-quiz:list']))"
       >
         <template #default="scope">
-          <el-tag
+          <el-button
             size="small"
             type="warning"
             v-permission="['sys:game-quiz:list']"
@@ -474,8 +474,8 @@
             style="cursor: pointer"
           >
             {{ t('fields.view') }}
-          </el-tag>
-          <el-tag
+          </el-button>
+          <el-button
             v-if="scope.row.status === 'ONGOING'"
             size="small"
             type="success"
@@ -484,8 +484,8 @@
             style="cursor: pointer; margin-left: 5px;"
           >
             {{ t('fields.endQuiz') }}
-          </el-tag>
-          <el-tag
+          </el-button>
+          <el-button
             v-if="scope.row.status === 'ONGOING'"
             size="small"
             type="danger"
@@ -494,7 +494,7 @@
             style="cursor: pointer; margin-left: 5px"
           >
             {{ t('fields.cancelQuiz') }}
-          </el-tag>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -178,14 +178,14 @@
       </el-table-column>
       <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:game-quiz-answer:update'])">
         <template #default="scope">
-          <el-tag
+          <el-button
             size="small"
             v-permission="['sys:game-quiz-answer:update']"
             @click="showUpdate(scope.row)"
             style="cursor: pointer"
           >
             {{ t('fields.updateStatus') }}
-          </el-tag>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

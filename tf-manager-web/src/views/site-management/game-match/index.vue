@@ -207,7 +207,7 @@
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
       <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:game-match:update-status'])">
         <template #default="scope">
-          <el-tag
+          <el-button
             v-if="scope.row.status === 'ACTIVE'"
             size="small"
             type="success"
@@ -216,7 +216,7 @@
             style="cursor: pointer"
           >
             {{ t('fields.endMatch') }}
-          </el-tag>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
