@@ -2,9 +2,8 @@ import { ContentType, Method } from 'axios-mapper'
 import https from '../utils/https'
 
 export const getAffAnnouncement = announcement => {
-  console.log('testing Only')
   return https().request(
-    '/affiliateAnnouncement',
+    '/affiliateAnnouncement/list',
     Method.GET,
     announcement,
     ContentType.form

@@ -1,6 +1,15 @@
 import https from '@/utils/https'
 import { ContentType, Method } from 'axios-mapper'
 
+export const getTest = announcementType => {
+  return https().request(
+    '/affiliate/test',
+    Method.GET,
+    announcementType,
+    ContentType.form
+  )
+}
+
 export const getAffAnnouncementType = announcementType => {
   return https().request(
     '/affiliateAnnouncementType',
