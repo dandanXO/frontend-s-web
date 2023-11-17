@@ -383,7 +383,6 @@ onMounted(async () => {
   }
   request.siteId = site.value.id;
   await loadGameQuizTitle();
-  await loadGameQuizAnswer();
 });
 
 </script>
