@@ -97,11 +97,10 @@
           prop="title"
           :label="t('fields.title')"
           align="center"
+          width="200"
         />
 
-        <el-table-column prop="site" :label="t('fields.site')" align="center" />
-
-        <el-table-column :label="t('fields.status')" align="right">
+        <el-table-column :label="t('fields.status')" align="right" width="200">
           <template #default="scope">
             <span v-if="scope.row.isRead">{{ t('fields.readed') }}</span>
             <span v-else>{{ t('fields.unread') }}</span>
@@ -114,7 +113,7 @@
           align="center"
         />
 
-        <el-table-column :label="t('fields.operate')" align="right">
+        <el-table-column :label="t('fields.operate')" align="left">
           <template #default="scope">
             <el-button
               icon="el-icon-view"
@@ -229,7 +228,6 @@ async function readAnnouncement(announcement) {
 
 async function removeAnnouncement(announcement) {
   const requestCopy = { ...request }
-  console.log('requestCopy : ', requestCopy)
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {

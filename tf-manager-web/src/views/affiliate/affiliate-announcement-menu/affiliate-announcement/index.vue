@@ -184,7 +184,7 @@
       <el-table-column prop="title" :label="t('fields.title')" width="200" />
       <el-table-column
         prop="affiliateAnnouncementType"
-        :label="t('fields.affiliateAnnouncementType')"
+        :label="t('fields.announcementType')"
         width="200"
       />
       <el-table-column prop="site" :label="t('fields.site')" width="200" />
