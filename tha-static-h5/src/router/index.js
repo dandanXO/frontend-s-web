@@ -45,7 +45,7 @@ export default route(function (/* { store, ssrContext } */) {
       var logintoken = atob(to.params.loginToken);
       if (logintoken) {
         sessionStorage.setItem("TOKEN", logintoken);
-        next(`/vip`);
+        next(`/`);
       } else {
         next(`/register`);
       }
