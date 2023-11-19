@@ -80,6 +80,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="reason" :label="t('fields.reason')" width="250" />
+      <el-table-column prop="remark" :label="t('fields.remark')" width="250" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="250" />
       <el-table-column prop="createBy" :label="t('fields.operator')" />
     </el-table>
