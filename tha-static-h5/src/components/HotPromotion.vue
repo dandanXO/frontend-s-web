@@ -180,7 +180,7 @@
       class="promo-sjb"
     />
 
-    <template v-if="list.promoCode === 'tha-multi-wheel'">
+    <template v-if="list.promoCode === 'multi-wheel'">
       <template v-if="store.hasToken()">
         <PromoSpinWheel></PromoSpinWheel>
         <PromoSpinWheelWinner></PromoSpinWheelWinner>

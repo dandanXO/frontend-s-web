@@ -71,12 +71,15 @@ const columns = ref([
     align: "center",
   },
 ]);
+
+// mock data
+// { name: "tes****0", prize: 74.8, date: "2023-11-17 18:20" }
 const rows = ref([]);
 
 const loading = ref(false);
 function initSpinWheelWinnerAPI(callback) {
   eventapi
-    .post("/multiWheel/list?promoCode=tha-multi-wheel")
+    .post("/multiWheel/list?promoCode=multi-wheel")
     .then((res) => {
       const { code, data } = res.data;
       if (code === 0) {
@@ -186,6 +189,7 @@ onMounted(() => {
             font-weight: 400;
             line-height: normal;
             letter-spacing: 0.14063rem;
+            text-wrap: wrap;
           }
         }
       }

@@ -161,6 +161,7 @@ const store = userStore();
 
 // NOTE: 0 index starts from where the arrow pointing
 const outerWheelData = [
+  { degree: -335, amount: 38 },
   { degree: 0, amount: 588 },
   { degree: -25, amount: 238 },
   { degree: -50.5, amount: 188 },
@@ -174,9 +175,9 @@ const outerWheelData = [
   { degree: -257.5, amount: 88 },
   { degree: -283.5, amount: 28 },
   { degree: -309, amount: 880 },
-  { degree: -335, amount: 38 },
 ];
 const innerWheelData = [
+  { degree: -335, amount: 110 },
   { degree: 0, amount: 130 },
   { degree: -26, amount: 300 },
   { degree: -52, amount: 150 },
@@ -190,7 +191,6 @@ const innerWheelData = [
   { degree: -258, amount: 1000 },
   { degree: -283, amount: 0 },
   { degree: -309, amount: 200 },
-  { degree: -335, amount: 110 },
 ];
 
 /**
@@ -266,6 +266,9 @@ function spin() {
     stopSpin(outerWheelConfig, onStopSpinCb);
     stopSpin(innerWheelConfig, onStopSpinCb);
   });
+
+  stopSpin(outerWheelConfig, onStopSpinCb);
+  stopSpin(innerWheelConfig, onStopSpinCb);
 }
 
 function spinWheel(config) {
@@ -346,11 +349,16 @@ function updateSpinButton(isDisable) {
   }
 }
 
+function initWheelRotation(config) {
+  const { wheelRef, wheelData } = config;
+  wheelRef.value.style.transform = `rotate(${wheelData[0].degree}deg)`;
+}
+
 const availableSpinCount = ref(0);
 const unlockDay = ref(0);
 function initSpinWheelAPI() {
   eventapi
-    .get("/multiWheel/init?promoCode=tha-multi-wheel")
+    .get("/multiWheel/init?promoCode=multi-wheel")
     .then((res) => {
       const { code, data } = res.data;
       if (code === 0) {
@@ -369,7 +377,7 @@ const innerAmount = ref(0);
 const finalAmount = ref(0);
 function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
   eventapi
-    .post("/multiWheel/submit?promoCode=tha-multi-wheel")
+    .post("/multiWheel/submit?promoCode=multi-wheel")
     .then((res) => {
       const { code, data } = res.data;
       if (code === 0) {
@@ -409,6 +417,9 @@ function onCollectClick() {
 }
 
 onMounted(() => {
+  initWheelRotation(outerWheelConfig);
+  initWheelRotation(innerWheelConfig);
+
   initSpinWheelAPI();
 });
 </script>
@@ -520,11 +531,11 @@ onMounted(() => {
 
     span {
       position: absolute;
-      bottom: 9%;
+      bottom: 10%;
       color: #fff;
       text-align: center;
       font-family: FZHanZhenGuangBiaoS-GB;
-      font-size: 4vw;
+      font-size: 3vw;
       font-weight: 400;
       line-height: normal;
     }
