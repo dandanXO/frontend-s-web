@@ -879,6 +879,8 @@ export default {
     redirect: '域名转址',
     reenterPassword: '重新输入密码',
     referrer: '推荐人',
+    referFriendRebateDetails: '邀请好友投注返水明细',
+    referFriendRebateRecords: '邀请好友投注返水记录',
     registered: '已注册',
     register: '新注册用户',
     registerAddress: '注册地址',

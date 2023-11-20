@@ -879,6 +879,8 @@ export default {
     redirect: 'Redirect',
     reenterPassword: 'Re-Enter Password',
     referrer: 'Referrer',
+    referFriendRebateDetails: 'Refer Friend Rebate Details',
+    referFriendRebateRecords: 'Refer Friend Rebate Records',
     register: 'Register',
     registered: 'Registered',
     registerAddress: 'Register Address',
