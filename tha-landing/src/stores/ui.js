@@ -3,17 +3,9 @@ import { defineStore } from "pinia";
 export const useUI = defineStore("ui-store", {
   state: () => {
     return {
-      footer: true,
-      orientation: "landscape",
-      themeColor: "purple-8",
-      leftDrawerOpen: false,
-      appVersion: "",
-      isCardUpdate: false,
-      //Affiliate A: Came From Affiliate 5D0E5C
       isAffiliateA: false,
-      //Affiliate B: Came From slot-win.cc.
-      isAffiliateB: false
     };
+
   },
   actions: {
     setScrollPosition: (axis = "vertical", offset = 0, duration = 0) => null,
@@ -34,6 +26,6 @@ export const useUI = defineStore("ui-store", {
     },
     setVersion(version) {
       this.appVersion = version;
-    }
-  }
+    },
+  },
 });
