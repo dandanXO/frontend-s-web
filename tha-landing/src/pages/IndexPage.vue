@@ -23,7 +23,7 @@
         </div>
 
         <div @click="registerModal" class="btn-pointer register-btn">
-          <span>Register</span>
+          <span>{{ $t('lang.register') }}</span>
         </div>
 
       </div>
@@ -52,7 +52,7 @@
         <div class="main-card">
           <img src="../assets/images/login-logo.png"/>
 
-          <h3>Log in</h3>
+          <h3>{{ $t("lang.log_in") }}</h3>
 
           <q-form class=" login-form rounded-borders q-pa-md " style="margin: 0px auto;"
           >
@@ -147,7 +147,7 @@
         <div class="main-card">
           <img src="../assets/images/login-logo.png"/>
 
-          <h3>Register</h3>
+          <h3>{{ $t('lang.register') }}</h3>
 
           <q-form
             class=" rounded-borders register-form"
