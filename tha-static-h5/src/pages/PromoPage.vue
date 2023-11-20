@@ -81,7 +81,8 @@
               sport: selectedPromo.promoType.toLowerCase() === 'sport',
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
-              liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
+              liveCasino:
+                selectedPromo.promoType.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
@@ -102,17 +103,19 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
+import {useI18n} from "vue-i18n";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
 import HotPromotion from 'components/HotPromotion'
-import {useI18n} from "vue-i18n";
+
 
 export default defineComponent({
   name: "PromoView",
   components: {
     RiFunctionLine,
-    HotPromotion
+    HotPromotion,
+
   },
   setup() {
     const {t} = useI18n()
@@ -138,6 +141,8 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+
+	const isSpinWheel = ref(true);
 
     watch(() => route.query, () => {
       if (route.query === null) {
@@ -207,6 +212,7 @@ export default defineComponent({
     });
 
     return {
+		isSpinWheel,
       promoState,
       promoTypes,
       promoTabActive,
@@ -528,7 +534,13 @@ export default defineComponent({
 }
 
 @media (max-width: 991px) and (min-width: 768px) {
-  .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-info .viewdetail {
+  .promo-container
+    .all-promotions
+    .promo-main-container
+    .promo-list-wrapper
+    .promo-item
+    .promo-info
+    .viewdetail {
     padding: 4px 10px;
   }
 }
@@ -615,7 +627,12 @@ export default defineComponent({
     aspect-ratio: 100/25;
   }
 
-  .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-img-wrapper {
+  .promo-container
+    .all-promotions
+    .promo-main-container
+    .promo-list-wrapper
+    .promo-item
+    .promo-img-wrapper {
     aspect-ratio: 100/25;
   }
 }
