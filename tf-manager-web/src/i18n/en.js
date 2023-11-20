@@ -564,7 +564,7 @@ export default {
     financePhotos: 'Photos',
     finishDate: 'Finish Date',
     firstDeposit: 'First Deposit',
-    firstTicket: 'First Ticket (Bet/Deposit)',
+    firstTicket: 'First Ticket (Deposit/Bet)',
     firstDepositMemberCount: 'First Deposit Count',
     firstDepositMember: 'First Deposit Member',
     freeze: 'Freeze',

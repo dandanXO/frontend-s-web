@@ -42,7 +42,13 @@
       <el-col :span="12">
         <el-card shadow="never">
           <div class="card-header">
-            <span>{{ t('fields.ticketSetting') }}</span>
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              content="Setup the eligible to get the ticket"
+            >
+              <span>{{ t('fields.ticketSetting') }}</span>
+            </el-tooltip>
           </div>
           <el-divider />
           <div>
@@ -80,7 +86,13 @@
       <el-col :span="12">
         <el-card shadow="never">
           <div class="card-header">
-            <span>{{ t('fields.unlockSetting') }}</span>
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              content="Setup the inner wheel minimum unlock requirement"
+            >
+              <span>{{ t('fields.unlockSetting') }}</span>
+            </el-tooltip>
           </div>
           <el-divider />
           <div>
@@ -113,7 +125,13 @@
       <el-col :span="12" style="margin-top:15px">
         <el-card shadow="never">
           <div class="card-header">
-            <span>{{ t('fields.innerSetting') }}</span>
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              content="Setup the inner wheel percentage of winning"
+            >
+              <span>{{ t('fields.innerSetting') }}</span>
+            </el-tooltip>
           </div>
           <el-divider />
           <div>
@@ -343,7 +361,7 @@ import {
   editMemberMultiWheelSetting,
 } from '../../../../api/member-multi-wheel'
 import { ElMessage } from 'element-plus'
-import { required, numericOnly } from "../../../../utils/validate";
+import { required, numericOnly } from '../../../../utils/validate'
 
 const { t } = useI18n()
 const store = useStore()
@@ -417,49 +435,162 @@ function edit() {
 }
 
 const formRules = reactive({
+  maxTicket: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  unlock1: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  unlock2: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  unlock3: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  unlock4: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  unlock5: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  unlock6: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
 
-  maxTicket: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  unlock1: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  unlock2: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  unlock3: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  unlock4: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  unlock5: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  unlock6: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
+  bet1: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  bet2: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  bet3: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  deposit1: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  deposit2: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  deposit3: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
 
-  bet1: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  bet2: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  bet3: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  deposit1: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  deposit2: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  deposit3: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
+  o1: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o2: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o3: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o4: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o5: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o6: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o7: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o8: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o9: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o10: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  o11: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
 
-  o1: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o2: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o3: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o4: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o5: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o6: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o7: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o8: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o9: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o10: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  o11: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-
-  d1a: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d1b: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d2a: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d2b: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d3a: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d3b: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d4a: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d4b: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d5a: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d5b: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d6a: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d6b: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d7a: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  d7b: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-});
+  d1a: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d1b: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d2a: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d2b: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d3a: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d3b: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d4a: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d4b: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d5a: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d5b: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d6a: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d6b: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d7a: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  d7b: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+})
 
 async function loadSetting() {
   const { data: ref } = await getMemberMultiWheelSetting(request.siteId)
