@@ -180,7 +180,16 @@ export default defineComponent({
       api.get("/promo/page").then((ret) => {
         const res = ret.data
         if (res.code === 0) {
-          promoState.promoList.push(...res.data);
+          res.data.forEach((promo) => {
+            if (promo.privilegeStatus === "TEST") {
+              if (store.hasToken() && store.memberType === 'TEST') {
+                promoState.promoList.push(promo);
+              }
+            } else {
+              promoState.promoList.push(promo);
+            }
+          })
+
 
           if (route.query.id) {
             promoState.promoList.forEach(element => {

@@ -33,6 +33,7 @@
             ? require('../assets/images/index/main-home-banner-mobile.jpg')
             : require('../assets/images/index/main-home-banner-desktop.jpg')
         "
+        @click="gotoPromo(0)"
       >
         <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>
       </q-carousel-slide>
@@ -1614,7 +1615,10 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      if (banner.promoPageId) {
+      if (banner === 0) {
+        router.push(`/promo`);
+        return;
+      } else if (banner.promoPageId) {
         router.push({ path: "/promo", query: { id: banner.promoPageId } });
       } else if (banner.redirectUrl) {
         const redirectPage = "/" + banner.redirectUrl;
