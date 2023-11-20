@@ -1216,6 +1216,7 @@ export default {
     validateCurrencyCodeRequired: '货币代码必填',
     validateCurrencyNameRequired: '货币名称必填',
     validateCustomerSupportAddressFormat: '客服地址JSON字符串格式错误',
+    validateDateRequired: '日期必填',
     validateDayWithdrawCountRequired: '每日提款次数必填',
     validateDepositExchangeRateRequired: '存款兑换率必填',
     validateDesktopImageRequired: '桌面图像必填',

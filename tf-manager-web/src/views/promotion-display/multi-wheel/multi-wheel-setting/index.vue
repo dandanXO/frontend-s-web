@@ -429,7 +429,7 @@ function edit() {
     if (valid) {
       await editMemberMultiWheelSetting(form, request.siteId)
       await loadSetting()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
 }

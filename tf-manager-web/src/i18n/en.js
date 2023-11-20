@@ -1225,6 +1225,7 @@ export default {
     validateCurrencyNameRequired: 'Currency Name is required',
     validateCustomerSupportAddressFormat:
       'Customer Support Address JSON String is invalid',
+    validateDateRequired: 'Date is required',
     validateDayWithdrawCountRequired: 'Daily Withdraw Count is required',
     validateDepositExchangeRateRequired: 'Deposit Exchange Rate is required',
     validateDesktopImageRequired: 'Desktop Image is required',
