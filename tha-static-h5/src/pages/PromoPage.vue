@@ -119,16 +119,12 @@ import {useI18n} from "vue-i18n";
 // import { loadPromoBanner } from "src/api/index/promo";
 
 import HotPromotion from 'components/HotPromotion'
-import PromoSpinWheel from 'components/PromoSpinWheel.vue'
-import PromoSpinWheelWinner from 'components/PromoSpinWheelWinner.vue'
 
 export default defineComponent({
   name: "PromoView",
   components: {
     RiFunctionLine,
     HotPromotion,
-	PromoSpinWheel,
-	PromoSpinWheelWinner
   },
   setup() {
     const {t} = useI18n()

@@ -45,6 +45,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
 
 const grandPrize = "IPhone 15 Pro Max";
 
@@ -52,19 +56,19 @@ const columns = ref([
   {
     name: "name",
     field: "name",
-    label: "Name",
+    label: t("lang.name"),
     align: "center",
   },
   {
     name: "prize",
     field: "prize",
-    label: "Prize",
+    label: t("lang.prize"),
     align: "center",
   },
   {
     name: "date",
     field: "date",
-    label: "Date",
+    label: t("lang.date"),
     align: "center",
   },
 ]);

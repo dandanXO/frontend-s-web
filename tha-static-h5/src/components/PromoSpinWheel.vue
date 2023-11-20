@@ -1,17 +1,20 @@
 <template>
   <q-dialog v-model="isShowTotalWin" class="total-win-dialog">
     <div class="total-win">
-      <div class="won">
-        <div>You've Won!</div>
+      <div class="total-win-content">
+        <div class="title">{{ $t("lang.youWon") }}</div>
         <div>
           <span>{{ outerAmount }}</span> X <span>{{ innerAmount }}</span
           >% =
         </div>
-        <div>Total Bonus</div>
+        <div>{{ $t("lang.totalBonus") }}</div>
         <div>
           <span>{{ finalAmount }}</span>
         </div>
       </div>
+    </div>
+    <div class="collect-btn" @click="onCollectClick">
+      <div class="collect-text">Collect</div>
     </div>
   </q-dialog>
 
@@ -21,7 +24,12 @@
         class="spin-count-board-img"
         src="../assets/images/promotion/spinwheel/spin_count_board.png"
       />
-      <span>คุณมี {{ availableSpinCount }} ตั๋วที่หมุนได้</span>
+      <span>{{
+        $t("lang.spinRemaining", {
+          spinCount: availableSpinCount,
+        })
+      }}</span>
+
     </div>
 
     <div :ref="outerWheelConfig.wheelRef" class="outer-wheel">
@@ -131,8 +139,12 @@
 import { onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { eventapi } from "boot/axios";
+import { useI18n } from "vue-i18n";
+import { userStore } from "stores/index";
 
+const { t } = useI18n();
 const $q = useQuasar();
+const store = userStore();
 
 // NOTE: 0 index starts from where the arrow pointing
 const outerWheelData = [
@@ -322,7 +334,7 @@ function updateSpinButton(isDisable) {
 }
 
 const availableSpinCount = ref(0);
-const unlockDay = ref(7);
+const unlockDay = ref(0);
 function initSpinWheelAPI() {
   eventapi
     .get("/multiWheel/init?promoCode=tha-multi-wheel")
@@ -339,7 +351,6 @@ function initSpinWheelAPI() {
     });
 }
 
-const isShowTotalWin = ref(true);
 const outerAmount = ref(0);
 const innerAmount = ref(0);
 const finalAmount = ref(0);
@@ -378,6 +389,12 @@ function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
     });
 }
 
+const isShowTotalWin = ref(false);
+function onCollectClick() {
+  isShowTotalWin.value = false;
+  store.getBalance();
+}
+
 onMounted(() => {
   initSpinWheelAPI();
 });
@@ -410,13 +427,53 @@ onMounted(() => {
     pointer-events: none;
 
     span {
-      color: #eda1ff;
+      background: linear-gradient(0deg, #ff932f 9.54%, #fffca9 86.08%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .won {
+    .total-win-content {
       position: relative;
       top: 17.5%;
       left: 1%;
+
+      .title {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .collect-btn {
+    background: url(../assets/images/promotion/spinwheel/collect_btn.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30%;
+    height: 10%;
+    margin-top: -175px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .collect-text {
+      text-align: center;
+      font-family: Archivo Black;
+      font-size: 4vw;
+      font-weight: 400;
+      line-height: 3.29344rem;
+      letter-spacing: 0.07319rem;
+      text-transform: uppercase;
+
+      background: linear-gradient(
+        180deg,
+        #fffede 0%,
+        rgba(255, 227, 79, 0.89) 75.52%,
+        #fffede 100%
+      );
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   }
 }
@@ -478,10 +535,6 @@ onMounted(() => {
     .inner-wheel-img {
       width: 50%;
     }
-    .inner-frame-img {
-      position: absolute;
-      width: 100%;
-    }
 
     .prize-lock {
       position: absolute;
@@ -516,7 +569,7 @@ onMounted(() => {
         color: #fbff1e;
         text-align: center;
         font-family: FZHanZhenGuangBiaoS-GB;
-        font-size: 18px;
+        font-size: 2.5vw;
         font-weight: 600;
         line-height: 100%; /* 2.11175rem */
       }
@@ -588,5 +641,69 @@ onMounted(() => {
 }
 
 @media (min-width: 768px) {
+  .spinwheel-container {
+    background: url(../assets/images/promotion/spinwheel/web_bg.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    .spin-count-board {
+      .spin-count-board-img {
+        width: 30%;
+      }
+
+      span {
+        font-size: 2.5vw;
+      }
+    }
+
+    .outer-wheel {
+      .outer-wheel-img {
+        width: 60%;
+      }
+    }
+
+    .inner-wheel {
+      .inner-wheel-img {
+        width: 30%;
+      }
+
+      .prize-lock {
+        img {
+          width: 8.4%;
+          left: 7%;
+        }
+      }
+
+      .prize-lock-day {
+        span {
+          top: 4%;
+          left: 7%;
+          font-size: 1.5vw;
+        }
+      }
+    }
+
+    .prize-arrow {
+      top: 32.5%;
+      left: 13.75%;
+
+      .prize-arrow-img {
+        width: 22%;
+      }
+    }
+
+    .spin-button {
+      .spin-button-img {
+        width: 10.5%;
+      }
+    }
+
+    .infoboard {
+      .infoboard-img {
+        width: 30%;
+      }
+    }
+  }
 }
 </style>
