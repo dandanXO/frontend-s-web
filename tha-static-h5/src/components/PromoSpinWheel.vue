@@ -29,6 +29,7 @@
           spinCount: availableSpinCount,
         })
       }}</span>
+
     </div>
 
     <div :ref="outerWheelConfig.wheelRef" class="outer-wheel">

@@ -100,6 +100,7 @@ import {useUI} from "stores/ui";
 import BacktoTop from "components/backtotop.vue"
 import {scroll, SessionStorage} from 'quasar'
 import {isAndroid} from "boot/utils";
+import {userStore} from "src/stores";
 
 const qs = require("qs");
 export default defineComponent({
@@ -109,7 +110,8 @@ export default defineComponent({
   },
   setup() {
     const $q = useQuasar();
-    const route = useRoute()
+    const route = useRoute();
+    const store = userStore();
     const slotsGame = ref(null);
     const platforms = ref([]);
     const selectedCatId = ref(1);
@@ -237,7 +239,9 @@ export default defineComponent({
     //     ]
 
     const getPlatList = () => {
-      cached.get("PLATFORMS", () => api.get("/platform").then((res) => {
+      var platformApiUrl = (store.hasToken()) ? '/session/loggedInPlatform' : "/platform";
+      var platformKey= (store.hasToken()) ? 'LOGGEDPLATFORMS' : "PLATFORMS";
+      cached.get(platformKey, () => api.get(platformApiUrl).then((res) => {
         return res
       })).then((data) => {
         // platforms.value = data
@@ -251,7 +255,7 @@ export default defineComponent({
           switchPlat(platforms.value[0]);
         } else {
           platforms.value.forEach(element => {
-            if (route.query.platform === element.code) {
+            if (route.query.platform === element.code ) {
               switchPlat(element)
             }
           });

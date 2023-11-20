@@ -15,6 +15,7 @@ export default {
     603: "Token not found",
     604: "Logged in successfully",
     707: "Insufficient balance",
+    710: "Insufficient withdrawable balance",
     800: "Incorrect confirmation code",
     801: "Password captcha has expired",
     900: "Member not found",
@@ -28,6 +29,7 @@ export default {
     1000: "Login name or password error",
     1001: "Account is closed",
     1002: "Account is for affiliates",
+    1004: "Username can only consist of numbers and letters.",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
@@ -57,8 +59,8 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
-    15201: "Incorrect old code",
-    15202: "New code must match old code",
+    15201: "Incorrect old password",
+    15202: "New password must not match with old password",
     21000: "This game is already in your favorite games list.",
     30000: "Member data not found",
     30001: "Member has already received the promotion",
@@ -83,6 +85,6 @@ export default {
     35008: "You do not have this privilege",
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
-    35011: "35011 Member cannot receive this privilege.",
-  },
+    35011: "35011 Member cannot receive this privilege."
+  }
 };

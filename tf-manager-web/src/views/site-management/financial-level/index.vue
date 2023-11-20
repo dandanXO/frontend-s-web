@@ -181,7 +181,15 @@
         width="120"
         v-if="!hasRole(['SUB_TENANT']) && !hasRole(['TENANT'])"
       />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column :label="t('fields.action')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:financial:update']) || hasPermission(['sys:financial:del']))">
         <template #default="scope">
@@ -218,6 +226,7 @@ const financialForm = ref(null);
 const sites = reactive({
   list: []
 });
+let timeZone = null;
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -298,6 +307,9 @@ async function loadFinancial() {
   page.loading = true;
   const { data: ret } = await getFinancialLevelList(request);
   page.records = ret;
+
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone;
+
   page.loading = false;
   list.nextLevel = ret;
 }
