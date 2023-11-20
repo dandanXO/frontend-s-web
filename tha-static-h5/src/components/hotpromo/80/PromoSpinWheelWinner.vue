@@ -19,7 +19,7 @@
             <img
               v-if="props.value === grandPrize ? true : false"
               class="iphone-img"
-              src="../assets/images/promotion/spinwheel/iphone.png"
+              src="../../../assets/images/promotion/spinwheel/iphone.png"
             />
             {{ props.value }}
           </q-td>
@@ -28,7 +28,7 @@
 
       <img
         class="treasure-box-img"
-        src="../assets/images/promotion/spinwheel/treasure_box.png"
+        src="../../../assets/images/promotion/spinwheel/treasure_box.png"
       />
     </div>
 

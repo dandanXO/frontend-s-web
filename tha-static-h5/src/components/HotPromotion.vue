@@ -224,8 +224,8 @@ import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import SJBPromo from "../components/hotpromo/40/shiJieBei.vue";
 import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue";
-import PromoSpinWheel from "components/PromoSpinWheel.vue";
-import PromoSpinWheelWinner from "components/PromoSpinWheelWinner.vue";
+import PromoSpinWheel from "components/hotpromo/80/PromoSpinWheel.vue";
+import PromoSpinWheelWinner from "components/hotpromo/80/PromoSpinWheelWinner.vue";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
