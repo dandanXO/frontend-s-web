@@ -1,31 +1,5 @@
 <template>
   <nav class="sidebar">
-    <!-- <div class="route-wrapper-home">
-      <RouterLink to="/" class="route">
-        <div class="home">
-          <span>首页</span>
-        </div>
-      </RouterLink>
-    </div>
-    <div class="navigation">
-      <div class="route-title">下级信息</div>
-
-      <div
-        v-for="nav in navigationData"
-        :key="nav.id"
-        :class="`route-wrapper ${nav.active ? 'active' : ''}`"
-      >
-        <RouterLink :to="nav.path" class="route">
-          <div class="route-content">
-            <svg-icon
-              :icon-class="nav.icon"
-              :class="nav.active ? 'active' : ''"
-            />
-            <span :class="nav.active ? 'active' : ''">{{ nav.title }}</span>
-          </div>
-        </RouterLink>
-      </div>
-    </div> -->
     <div class="navigation">
       <div
         v-for="nav in navigationData"
@@ -66,10 +40,10 @@ const navigationData = ref([
   {
     title: t('首页'),
     display: false,
-    path: '/dashboard',
+    path: '',
     children: [
       {
-        path: '',
+        path: '/dashboard',
         title: '首页',
         active: false,
         icon: 'home',
@@ -135,13 +109,7 @@ const navigationData = ref([
         title: '账变明细',
         active: false,
         icon: 'notebook',
-      },
-      {
-        path: '/bonus',
-        title: '推广红利',
-        active: false,
-        icon: 'gonggao',
-      },
+      }
     ],
   },
   {
@@ -209,9 +177,10 @@ const navigationData = ref([
 ])
 
 const setActiveNav = () => {
+  const currentPath = route.path.substring(route.path.lastIndexOf('/'))
   navigationData.value.forEach(e => {
     e.children.forEach(c => {
-      if (c.path === route.path) c.active = true
+      if (c.path === currentPath) c.active = true
       else c.active = false
     })
   })

@@ -65,12 +65,16 @@
             </el-col>
             <el-col :span="6">
               <el-form-item :label="t('fields.betRecord')">
-                <el-select
-                  v-model="request.isBet"
-                >
-                  <el-option key="1" value="-1" :label="t('fields.all')">{{ t('fields.all') }}</el-option>
-                  <el-option key="2" value="1" :label="t('fields.yes')">{{ t('fields.yes') }}</el-option>
-                  <el-option key="3" value="0" :label="t('fields.no')">{{ t('fields.no') }}</el-option>
+                <el-select v-model="request.isBet">
+                  <el-option key="1" value="-1" :label="t('fields.all')">
+                    {{ t('fields.all') }}
+                  </el-option>
+                  <el-option key="2" value="1" :label="t('fields.yes')">
+                    {{ t('fields.yes') }}
+                  </el-option>
+                  <el-option key="3" value="0" :label="t('fields.no')">
+                    {{ t('fields.no') }}
+                  </el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -134,7 +138,12 @@
           </el-row>
         </div>
         <div class="inputs-wrap">
-          <el-button size="mini" type="primary" :disabled="uiControl.editBtn" @click="showBatchEditTag()">
+          <el-button
+            size="mini"
+            type="primary"
+            :disabled="uiControl.editBtn"
+            @click="showBatchEditTag()"
+          >
             {{ $t('fields.batchEditTag') }}
           </el-button>
         </div>
@@ -190,7 +199,9 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.totalDeposit, type: 'money'}" />
+            <span
+              v-formatter="{data: scope.row.totalDeposit, type: 'money'}"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -200,7 +211,9 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.totalWithdraw, type: 'money'}" />
+            <span
+              v-formatter="{data: scope.row.totalWithdraw, type: 'money'}"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -256,13 +269,14 @@
             {{ formatTag(scope.row.tags) }}
           </template>
         </el-table-column>
-        <el-table-column
-          :label="t('fields.operate')"
-          align="center"
-        >
+        <el-table-column :label="t('fields.operate')" align="center">
           <template #default="scope">
             <el-dropdown trigger="click">
-              <el-link :underline="false" type="primary" class="el-dropdown-link">
+              <el-link
+                :underline="false"
+                type="primary"
+                class="el-dropdown-link"
+              >
                 {{ t('fields.more') }}
               </el-link>
               <template #dropdown>
@@ -273,23 +287,17 @@
                   <el-dropdown-item @click="transferRedirect(scope.row.loginName)">
                     {{ t('menu.Transfer') }}
                   </el-dropdown-item>
-                  <el-dropdown-item>
-                    {{ t('fields.bonus') }}
-                  </el-dropdown-item>
                   <el-dropdown-item @click="showEditTag(scope.row)">
                     {{ t('fields.editTag') }}
                   </el-dropdown-item>
                   <el-dropdown-item @click="showEditRemark(scope.row)">
                     {{ t('fields.remark') }}
                   </el-dropdown-item>
-                  <el-dropdown-item @click="showDepositRecord(scope.row.loginName)">
+                  <el-dropdown-item @click="showDepositRecord(scope.row)">
                     {{ t('fields.depositRecord') }}
                   </el-dropdown-item>
                   <el-dropdown-item @click="showGameRecord(scope.row.loginName)">
                     {{ t('fields.betRecord') }}
-                  </el-dropdown-item>
-                  <el-dropdown-item @click="showBonusRecord(scope.row.id)">
-                    {{ t('fields.bonusRecord') }}
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -315,7 +323,10 @@
   >
     <el-form>
       <div style="display: flex; gap: 10px;">
-        <el-form-item :label="t('fields.recordTime') + ' :'" style="width: 50%; margin-bottom: 0;">
+        <el-form-item
+          :label="t('fields.recordTime') + ' :'"
+          style="width: 50%; margin-bottom: 0;"
+        >
           <el-date-picker
             v-model="memberRequest.recordTime"
             format="DD/MM/YYYY"
@@ -341,7 +352,6 @@
           {{ $t('fields.search') }}
         </el-button>
       </div>
-
     </el-form>
     <div class="scrollable-container" v-loading="dialog.loading">
       <div class="info-container">
@@ -407,18 +417,12 @@
         :data="memberInfo.memberBetRecordSummaryVOList"
         :empty-text="t('fields.noData')"
       >
-        <el-table-column
-          :label="t('fields.sequence')"
-          align="left"
-        >
+        <el-table-column :label="t('fields.sequence')" align="left">
           <template #default="scope">
             {{ scope.$index + 1 }}
           </template>
         </el-table-column>
-        <el-table-column
-          :label="t('fields.platform')"
-          align="left"
-        >
+        <el-table-column :label="t('fields.platform')" align="left">
           <template #default="scope">
             {{ scope.row.platform + ' - ' + scope.row.gameType }}
           </template>
@@ -441,17 +445,15 @@
     v-model="uiControl.tagDialogVisible"
     append-to-body
   >
-    <el-form
-      @submit.prevent
-    >
+    <el-form @submit.prevent>
       <el-form-item :label="t('fields.loginName')">
-        <b v-if="uiControl.editType==='One'">{{ selectedMember.loginName }}</b>
+        <b v-if="uiControl.editType === 'One'">
+          {{ selectedMember.loginName }}
+        </b>
         <b v-else>{{ selectedMemberList.loginName.join(', ') }}</b>
       </el-form-item>
       <el-form-item :label="t('fields.memberTag')">
-        <el-checkbox-group
-          v-model="tagRequest.tags"
-        >
+        <el-checkbox-group v-model="tagRequest.tags">
           <el-checkbox
             v-for="tag in assignTaglist"
             :key="tag.id"
@@ -475,9 +477,7 @@
     v-model="uiControl.remarkDialogVisible"
     append-to-body
   >
-    <el-form
-      @submit.prevent
-    >
+    <el-form @submit.prevent>
       <el-form-item :label="t('fields.loginName')">
         <b>{{ selectedMember.loginName }}</b>
       </el-form-item>
@@ -501,34 +501,80 @@
   </el-dialog>
 
   <el-dialog
-    :title="t('fields.memberBetRecord')"
+    :title="t('fields.depositRecord')"
     v-model="uiControl.depositDialogVisible"
+    width="900px"
     append-to-body
   >
-    <el-form
-      @submit.prevent
-    >
-      <el-form-item :label="t('fields.loginName')">
-        <b>{{ selectedMember.loginName }}</b>
-      </el-form-item>
-      <el-form-item :label="t('fields.remark')">
-        <el-input
-          v-model="selectedMember.remark"
-          :rows="2"
-          type="textarea"
-          :placeholder="t('message.remarkMessage')"
+    <el-form label-suffix=" : " style="margin-top: -20px;">
+      <div class="info-row-container">
+        <el-form-item :label="t('fields.loginName')">
+          {{ memberDepositInfo.loginName }}
+        </el-form-item>
+        <el-form-item :label="t('fields.realName')">
+          {{ memberDepositInfo.realName }}
+        </el-form-item>
+        <el-form-item :label="t('fields.registerTime')">
+          {{ memberDepositInfo.regTime }}
+        </el-form-item>
+      </div>
+      <el-table
+        :data="memberDepositInfo.page.records"
+        :empty-text="t('fields.noData')"
+        v-loading="memberDepositInfo.page.loading"
+      >
+        <el-table-column :label="t('fields.sequence')" align="left" width="50">
+          <template #default="scope">
+            {{ (depositRequest.current - 1) * 10 + scope.$index + 1 }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="serialNumber"
+          :label="t('fields.serialNumber')"
+          align="left"
         />
-      </el-form-item>
+        <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="left">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.depositAmount,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="depositDate" :label="t('fields.depositDate')" align="left">
+          <template #default="scope">
+            <span v-if="scope.row.depositDate === null">-</span>
+            <span
+              v-if="scope.row.depositDate !== null"
+              v-formatter="{data: scope.row.depositDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column prop="finishDate" :label="t('fields.finishDate')" align="left">
+          <template #default="scope">
+            <span v-if="scope.row.finishDate === null">-</span>
+            <span
+              v-if="scope.row.finishDate !== null"
+              v-formatter="{data: scope.row.finishDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column prop="status" :label="t('fields.status')" align="left">
+          <template #default="scope">
+            <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-else-if="scope.row.status === 'CLOSED'" type="danger" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-else-if="scope.row.status === 'PENDING'" type="warning" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-else type="info" size="mini">-</el-tag>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        class="pagination"
+        @current-change="changeDepositPage"
+        layout="total, prev, pager, next"
+        :total="memberDepositInfo.page.total"
+        :page-size="depositRequest.size"
+        :page-count="memberDepositInfo.page.pages"
+        :current-page="depositRequest.current"
+      />
     </el-form>
-
-    <div class="dialog-footer">
-      <el-button @click="uiControl.depositDialogVisible = false">
-        {{ $t('fields.cancel') }}
-      </el-button>
-      <el-button type="primary" @click="submitRemark()">
-        {{ $t('fields.confirm') }}
-      </el-button>
-    </div>
   </el-dialog>
 </template>
 
@@ -540,12 +586,13 @@ import {
   loadMemberSummary,
   loadMemberInfo,
   assignTag,
-  assignRemark
+  assignRemark,
 } from '../../../api/affiliate'
 import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { ElMessage } from "element-plus";
+import { ElMessage } from 'element-plus'
+import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record';
 
 const store = useStore()
 const { t } = useI18n()
@@ -561,12 +608,12 @@ const defaultStartDate = convertDate(
 const defaultEndDate = convertDate(new Date())
 const tagList = reactive({
   list: [],
-  description: []
+  description: [],
 })
 let assignTaglist = []
 const table = ref(null)
 const selected = reactive({
-  tags: []
+  tags: [],
 })
 
 const uiControl = reactive({
@@ -575,12 +622,13 @@ const uiControl = reactive({
   remarkDialogVisible: false,
   depositDialogVisible: false,
   editBtn: true,
-  editType: 'One'
+  editType: 'One',
 })
 
 const memberInfo = reactive({
-  loginName: "",
-  status: "",
+  loginName: '',
+  realName: '',
+  status: '',
   totalDeposit: 0,
   totalWithdraw: 0,
   totalBonus: 0,
@@ -589,22 +637,41 @@ const memberInfo = reactive({
   totalBet: 0,
   totalAdjustment: 0,
   winLoss: 0,
-  regTime: "",
-  ftdTime: "",
+  regTime: '',
+  ftdTime: '',
   transferRecord: 0,
-  remark: "",
-  memberBetRecordSummaryVOList: []
+  remark: '',
+  memberBetRecordSummaryVOList: [],
 })
 
-const checkAll = ref(false);
-const isIndeterminate = ref(false);
+const memberDepositInfo = reactive({
+  loginName: '',
+  realName: '',
+  regTime: '',
+  page: {
+    pages: 0,
+    records: [],
+    loading: false,
+    total: 0,
+    totalDeposit: 0
+  }
+})
+
+const depositRequest = reactive({
+  size: 10,
+  current: 1,
+  loginName: null,
+});
+
+const checkAll = ref(false)
+const isIndeterminate = ref(false)
 const unAssigned = reactive({
   id: -1,
   description: t('fields.unAssigned'),
 })
 const dialog = reactive({
   loading: false,
-});
+})
 
 const shortcuts = [
   {
@@ -708,12 +775,12 @@ const request = reactive({
   realName: null,
   telephone: null,
   email: null,
-  isBet: "-1",
+  isBet: '-1',
   depositMinAmount: null,
   depositMaxAmount: null,
   size: 20,
   current: 1,
-  memberTags: []
+  memberTags: [],
 })
 
 const memberRequest = reactive({
@@ -722,13 +789,13 @@ const memberRequest = reactive({
 })
 
 const tagRequest = reactive({
-  tags: []
+  tags: [],
 })
 
 const selectedMember = reactive({
   id: null,
   loginName: null,
-  remark: null
+  remark: null,
 })
 
 const selectedMemberList = reactive({
@@ -757,7 +824,7 @@ function resetQuery() {
   request.realName = null
   request.telephone = null
   request.email = null
-  request.isBet = "-1"
+  request.isBet = '-1'
   request.depositMinAmount = null
   request.depositMaxAmount = null
   selected.tags = []
@@ -767,7 +834,7 @@ function resetQuery() {
 async function loadAffiliateMembers() {
   selectedMemberList.id.length = 0
   selectedMemberList.loginName.length = 0
-  table.value.clearSelection();
+  table.value.clearSelection()
   uiControl.editBtn = true
   page.loading = true
   const requestCopy = { ...request }
@@ -792,22 +859,24 @@ async function loadAffiliateMembers() {
   query.siteId = store.state.user.siteId
   query.memberTypes = 'NORMAL,TEST'
   switch (query.isBet) {
-    case "-1":
+    case '-1':
       query.isBet = null
       break
-    case "1":
+    case '1':
       query.isBet = true
       break
-    case "0":
+    case '0':
       query.isBet = false
       break
   }
   query.memberTags = tagList.list.filter(function(obj) {
-    return selected.tags.includes(obj.description);
+    return selected.tags.includes(obj.description)
   })
-  query.memberTags = query.memberTags.map(function(obj) {
-    return obj.id;
-  }).join(',')
+  query.memberTags = query.memberTags
+    .map(function(obj) {
+      return obj.id
+    })
+    .join(',')
   const { data: ret } = await loadMemberSummary(store.state.user.id, query)
 
   page.pages = ret.pages
@@ -822,14 +891,23 @@ function changePage(page) {
   }
 }
 
+function changeDepositPage(page) {
+  if (depositRequest.current >= 1) {
+    depositRequest.current = page
+    loadDepositRecords()
+  }
+}
+
 function formatTag(tags) {
   if (tags.length > 0) {
-    tags = tagList.list.filter(function (obj) {
-      return tags.includes(obj.id);
+    tags = tagList.list.filter(function(obj) {
+      return tags.includes(obj.id)
     })
-    tags = tags.map(function(obj) {
-      return obj.description;
-    }).join(',')
+    tags = tags
+      .map(function(obj) {
+        return obj.description
+      })
+      .join(',')
     return tags
   }
   return '-'
@@ -840,7 +918,7 @@ async function loadAllTags() {
   tagList.list = ret
   assignTaglist = JSON.parse(JSON.stringify(ret))
   tagList.list.push(unAssigned)
-  tagList.description = tagList.list.map(function (obj) {
+  tagList.description = tagList.list.map(function(obj) {
     return obj.description
   })
 }
@@ -850,15 +928,29 @@ function goToTagSetting() {
 }
 
 function transferRedirect(name) {
-  router.push(`/affiliate/transfer?user=${name}`);
+  router.push(`/affiliate/transfer?user=${name}`)
 }
 
 function showGameRecord(name) {
-  router.push(`/member/game-record?user=${name}`);
+  router.push(`/member/game-record?user=${name}`)
 }
 
-function showDepositRecord(name) {
+function showDepositRecord(member) {
+  memberDepositInfo.loginName = member.loginName
+  memberDepositInfo.realName = member.realName
+  memberDepositInfo.regTime = member.regTime
+  uiControl.depositDialogVisible = true
+  depositRequest.current = 1
+  depositRequest.loginName = member.loginName
+  depositRequest.siteId = store.state.user.siteId
+  loadDepositRecords()
+}
 
+async function loadDepositRecords() {
+  memberDepositInfo.page.loading = true
+  const { data: ret } = await getMemberDepositRecords(store.state.user.id, depositRequest)
+  memberDepositInfo.page = ret
+  memberDepositInfo.page.loading = false
 }
 
 function handleCheckAll(val) {
@@ -869,7 +961,8 @@ function handleCheckAll(val) {
 function handleCheckedTags(value) {
   const checkedCount = value.length
   checkAll.value = checkedCount === tagList.description.length
-  isIndeterminate.value = checkedCount > 0 && checkedCount < tagList.description.length
+  isIndeterminate.value =
+    checkedCount > 0 && checkedCount < tagList.description.length
 }
 
 async function showMemberInfo(row) {
@@ -885,7 +978,7 @@ async function showMemberInfo(row) {
     store.state.user.id,
     memberRequest.memberId,
     memberRequest.recordTime.join(',')
-  );
+  )
   Object.entries(ret).forEach(([key, value]) => {
     if (value) {
       memberInfo[key] = value
@@ -900,7 +993,7 @@ function showEditTag(member) {
   selectedMember.id = member.id
   selectedMember.loginName = member.loginName
   tagRequest.tags = assignTaglist.filter(function(obj) {
-    return member.tags.includes(obj.id);
+    return member.tags.includes(obj.id)
   })
   tagRequest.tags = tagRequest.tags.map(function(obj) {
     return obj.description
@@ -917,19 +1010,23 @@ function showBatchEditTag() {
 
 async function submitTag() {
   tagRequest.tags = assignTaglist.filter(function(obj) {
-    return tagRequest.tags.includes(obj.description);
+    return tagRequest.tags.includes(obj.description)
   })
   tagRequest.tags = tagRequest.tags.map(function(obj) {
-    return obj.id;
+    return obj.id
   })
   if (uiControl.editType === 'One') {
-    await assignTag(store.state.user.id, selectedMember.id, tagRequest.tags);
+    await assignTag(store.state.user.id, selectedMember.id, tagRequest.tags)
     selectedMember.id = null
     selectedMember.loginName = null
   } else {
-    await assignTag(store.state.user.id, selectedMemberList.id.join(','), tagRequest.tags);
+    await assignTag(
+      store.state.user.id,
+      selectedMemberList.id.join(','),
+      tagRequest.tags
+    )
   }
-  ElMessage({ message: t('message.editSuccess'), type: 'success' });
+  ElMessage({ message: t('message.editSuccess'), type: 'success' })
   await loadAffiliateMembers()
   uiControl.tagDialogVisible = false
 }
@@ -942,9 +1039,9 @@ function handleSelectionChange(val) {
     return item.id
   })
   if (selectedMemberList.id.length === 0) {
-    uiControl.editBtn = true;
+    uiControl.editBtn = true
   } else {
-    uiControl.editBtn = false;
+    uiControl.editBtn = false
   }
 }
 
@@ -956,8 +1053,12 @@ function showEditRemark(member) {
 }
 
 async function submitRemark() {
-  await assignRemark(store.state.user.id, selectedMember.id, selectedMember.remark);
-  ElMessage({ message: t('message.editSuccess'), type: 'success' });
+  await assignRemark(
+    store.state.user.id,
+    selectedMember.id,
+    selectedMember.remark
+  )
+  ElMessage({ message: t('message.editSuccess'), type: 'success' })
   await loadAffiliateMembers()
   uiControl.remarkDialogVisible = false
 }

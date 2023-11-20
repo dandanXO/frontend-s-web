@@ -272,6 +272,15 @@ export default {
     validBet: '有效投注',
     unAssigned: '未分配',
     batchEditTag: '批量编辑标签',
+    personalReport: '个人报表',
+    platformFeePercentage: '平台費率',
+    rolloverAmount: '流水',
+    privilegeType: '优惠类型',
+    personalCommission: '个人佣金',
+    payTime: '发放时间',
+    payStatus: '发放状态',
+    accountAdjustment: '账户调整',
+    commissionAdjustment: '佣金调整'
   },
   message: {
     addSuccess: '新增成功',
@@ -375,6 +384,8 @@ export default {
     'Affiliate Domain': '专属域名',
     'Personal Center': '个人中心',
     'Settlement Center': '佣金',
+    'Finance Report': '财务报表',
+    'Settlement Report': '佣金报表',
   },
   error: {
     400: '请求无效',

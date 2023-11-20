@@ -104,14 +104,6 @@ export const constantRoutes = [
         meta: {
           title: "balance",
         }
-      },
-      {
-        path: "bonus",
-        component: () => import("../views/affiliate/bonus/index.vue"),
-        name: "Bonus",
-        meta: {
-          title: "bonus",
-        }
       }
     ]
   },
