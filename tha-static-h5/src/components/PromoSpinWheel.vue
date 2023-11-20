@@ -401,6 +401,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .total-win-dialog {
+  .q-dialog__inner--minimized > div {
+    max-width: unset;
+  }
+
   .total-win {
     background: url(../assets/images/promotion/spinwheel/total_win.png);
     background-size: contain;
@@ -640,6 +644,10 @@ onMounted(() => {
 }
 
 @media (min-width: 768px) {
+  .collect-text {
+    font-size: 30px !important;
+  }
+
   .spinwheel-container {
     background: url(../assets/images/promotion/spinwheel/web_bg.png);
     background-size: contain;
