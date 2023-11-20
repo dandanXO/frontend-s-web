@@ -73,7 +73,7 @@
           :placeholder="$t('google.google_auth_code')"
           name="googleCode"
           type="text"
-          tabindex="1"
+          tabindex="3"
           autocomplete="on"
         />
       </el-form-item>
