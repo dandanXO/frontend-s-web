@@ -402,7 +402,7 @@ function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
     });
 }
 
-const isShowTotalWin = ref(true);
+const isShowTotalWin = ref(false);
 function onCollectClick() {
   isShowTotalWin.value = false;
   store.getBalance();

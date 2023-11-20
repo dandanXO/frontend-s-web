@@ -73,7 +73,8 @@ const columns = ref([
 ]);
 const rows = ref([]);
 
-function initSpinWheelWinnerAPI() {
+const loading = ref(false);
+function initSpinWheelWinnerAPI(callback) {
   eventapi
     .post("/multiWheel/list?promoCode=tha-multi-wheel")
     .then((res) => {
@@ -107,11 +108,17 @@ function initSpinWheelWinnerAPI() {
     })
     .catch((e) => {
       console.log("error", e);
+    })
+    .then(() => {
+      callback && callback();
     });
 }
 
 onMounted(() => {
-  initSpinWheelWinnerAPI();
+  loading.value = true;
+  initSpinWheelWinnerAPI(() => {
+    loading.value = false;
+  });
 
   setInterval(() => {
     initSpinWheelWinnerAPI();
