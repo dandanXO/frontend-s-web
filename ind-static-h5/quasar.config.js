@@ -84,7 +84,7 @@ module.exports = configure(function (ctx) {
 
         // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
         framework: {
-            lang: 'zh-CN',
+            lang: 'en-US',
             config: {},
 
             // iconSet: 'material-icons', // Quasar icon set

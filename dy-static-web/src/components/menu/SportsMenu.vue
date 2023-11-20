@@ -54,8 +54,8 @@ export default defineComponent({
       },
       {
         code: "PM",
-        icon: "pm",
-        label: "PM",
+        icon: "db",
+        label: "熊猫",
         slogan: "最强滚球 超高水位",
         percentage: "-960px;"
       }

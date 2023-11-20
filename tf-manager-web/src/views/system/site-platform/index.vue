@@ -183,7 +183,7 @@
             v-if="scope.row.createTime !== null"
             v-formatter="{
               data: scope.row.createTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
+              timeZone: scope.row.timeZone,
               type: 'date',
             }"
           />
@@ -316,6 +316,11 @@ async function loadSitePlatform() {
   page.loading = true
   const { data: ret } = await getSitePlatforms(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
   page.loading = false
 }
