@@ -266,9 +266,6 @@ function spin() {
     stopSpin(outerWheelConfig, onStopSpinCb);
     stopSpin(innerWheelConfig, onStopSpinCb);
   });
-
-  stopSpin(outerWheelConfig, onStopSpinCb);
-  stopSpin(innerWheelConfig, onStopSpinCb);
 }
 
 function spinWheel(config) {
