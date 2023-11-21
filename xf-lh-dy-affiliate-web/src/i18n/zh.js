@@ -45,6 +45,14 @@ export default {
     DEPOSIT: '额度代存',
     COMMISSION: '佣金代存',
   },
+  creditFlowType: {
+    Withdraw: '提款',
+    Transfer: '转账',
+    Dividen: '红利',
+    Deposit: '存款',
+    Agent_Transfer: '代理转账',
+    Agent_Deposit: '代理代存',
+  },
   fields: {
     account: '账号',
     accountInfo: '账号信息',

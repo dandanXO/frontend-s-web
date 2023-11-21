@@ -45,6 +45,14 @@ export default {
     DEPOSIT: 'ฝากเงิน',
     COMMISSION: 'ฝากคอมมิชชัน',
   },
+  creditFlowType: {
+    Withdraw: 'ถอน',
+    Transfer: 'โอนย้าย',
+    Dividen: 'เงินปันผล',
+    Deposit: 'เงินฝาก',
+    Agent_Transfer: 'การโอนตัวแทน',
+    Agent_Deposit: 'ฝากตัวแทน',
+  },
   fields: {
     account: 'บัญชี',
     accountInfo: 'ข้อมูลบัญชี',

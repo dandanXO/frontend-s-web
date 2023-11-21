@@ -45,6 +45,14 @@ export default {
     DEPOSIT: 'Transfer from Balance',
     COMMISSION: 'Transfer from Commission Balance',
   },
+  creditFlowType: {
+    Withdraw: 'Withdraw',
+    Transfer: 'Transfer',
+    Dividen: 'Dividen',
+    Deposit: 'Deposit',
+    Agent_Transfer: 'Agent Transfer',
+    Agent_Deposit: 'Agent Deposit',
+  },
   fields: {
     account: 'Account',
     accountInfo: 'Account Information',

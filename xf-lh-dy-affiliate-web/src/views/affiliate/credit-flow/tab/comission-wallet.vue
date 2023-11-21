@@ -15,7 +15,7 @@
                 :value="item.id"
                 :label="item.title"
               >
-                {{ item.title }}
+                {{ $t(`creditFlowType.${item.title}`) }}
               </el-option>
             </el-select>
           </el-form-item>
@@ -95,11 +95,14 @@
     />
 
     <el-table-column
-      prop="typeName"
+      :prop="typeName"
       :label="t('fields.creditFlowType')"
       align="center"
-    />
-
+    >
+      <template #default="scope">
+        <span>{{ $t(`creditFlowType.${scope.row.typeName}`) }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       prop="amount"
       :label="t('fields.creditFlowAmount')"
