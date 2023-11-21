@@ -1,27 +1,37 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo
-        v-if="isCommonPromo"
-        :promo-id="list.id"
-        :loading-claim="loadingClaim"
-        @daily-slot="handleSlot()"
+      v-if="isCommonPromo"
+      :promo-id="list.id"
+      :loading-claim="loadingClaim"
+      @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'"/>
+    <TigerCardPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'"
+    />
     <GoldenEggPromo
-        v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token"
+      v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token"
     />
     <HongBaoYuPromo
-        v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
+      v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
     />
     <WelcomeTaskPromo
-        v-if="
+      v-if="
         !isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token
       "
     />
     <InviteFriendPromo
-        v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
+      v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
     />
-    <div v-if="list.redirectUrl === 'dy1-lottery' && !isCommonPromo && store.token" class="promo-4">
+
+    <EsportQuiz
+      v-if="list.redirectUrl === 'esport_quiz' && !isCommonPromo"
+    ></EsportQuiz>
+
+    <div
+      v-if="list.redirectUrl === 'dy1-lottery' && !isCommonPromo && store.token"
+      class="promo-4"
+    >
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
           <el-tab-pane key="1" label="选择幸运号码">
@@ -32,19 +42,16 @@
                 <el-form>
                   <el-row gutter="10">
                     <el-col span="12">
-                    <el-input
-                        v-model="luckyNumber"
-                        placeholder="幸运号码"
-                    />
+                      <el-input v-model="luckyNumber" placeholder="幸运号码" />
                     </el-col>
                     <el-col span="12">
-                    <el-button
-                        class="common-btn" 
+                      <el-button
+                        class="common-btn"
                         :loading="btnLoading"
                         @click="chooseLuckyNumber()"
-                    >提交
-                    </el-button
-                    >
+                      >
+                        提交
+                      </el-button>
                     </el-col>
                   </el-row>
                 </el-form>
@@ -56,30 +63,25 @@
               <el-form :model="query" :layout="'inline'">
                 <el-row gutter="20" class="firstrow">
                   <el-col span="6">
-                  <el-date-picker
+                    <el-date-picker
                       key="1"
                       placeholder="选择日期"
                       v-model="query.recordTime"
                       value-format="YYYY-MM-DD"
                       format="YYYY-MM-DD"
-                  />
-                </el-col>
-                <el-col span="6">
-                  <el-form-item label="只显示自己"
-                  >
-                    <el-switch v-model="query.onlyMe"
                     />
-                  </el-form-item>
-                </el-col>
-                <el-col span="6">
-                  <el-form-item
-                  >
-                    <div class="common-btn" @click="retrieveList">
-                      搜索
-                    </div>
-                  </el-form-item
-                  ></el-col>
-                  </el-row>
+                  </el-col>
+                  <el-col span="6">
+                    <el-form-item label="只显示自己">
+                      <el-switch v-model="query.onlyMe" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col span="6">
+                    <el-form-item>
+                      <div class="common-btn" @click="retrieveList">搜索</div>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
               </el-form>
               <div class="table">
                 <!-- <el-table
@@ -92,12 +94,10 @@
                     <span>{{ humanDatetime(text) }}</span>
                   </template>
                 </el-table> -->
-                <el-table
-                  :data="dataSource"
-                >
-                <template #empty>
-                  <p>没有数据</p>
-                </template>
+                <el-table :data="dataSource">
+                  <template #empty>
+                    <p>没有数据</p>
+                  </template>
                   <el-table-column prop="number" label="号码" />
                   <el-table-column prop="loginName" label="登录名" />
                   <el-table-column prop="winStatus" label="获奖状态" />
@@ -115,63 +115,63 @@
               </div>
             </div>
           </el-tab-pane>
-<!--          <el-tab-pane key="3" label="获奖名单">-->
-<!--            <div class="tab3">-->
-<!--              <el-form :model="winnersQuery" :layout="'inline'">-->
-<!--                <el-row gutter="20" class="firstrow">-->
-<!--                  <el-col span="6">-->
-<!--                  <el-date-picker-->
-<!--                      placeholder="选择日期"-->
-<!--                      v-model="winnersQuery.resultTime"-->
-<!--                      value-format="YYYY-MM-DD"-->
-<!--                      format="YYYY-MM-DD"-->
-<!--                      @change="retrieveWinnerList"-->
-<!--                  /></el-col>-->
-<!--                  <el-col span="6">-->
-<!--                  <el-form-item-->
-<!--                  >-->
-<!--                    <div class="common-btn" @click="retrieveWinnerList">-->
-<!--                      搜索-->
-<!--                    </div>-->
-<!--                  </el-form-item-->
-<!--                  >-->
-<!--                  </el-col>-->
-<!--                  </el-row>-->
-<!--              </el-form>-->
-<!--              <div class="table">-->
-<!--                &lt;!&ndash; <el-table-->
-<!--                    :columns="winnerColumns"-->
-<!--                    row-key="loginName"-->
-<!--                    :datel-source="winnerDataSource"-->
-<!--                    :locale="{ emptyText: emptyText }"-->
-<!--                >-->
-<!--                  <template #resultTime="{ text }">-->
-<!--                    <span>{{ humanDatetime(text) }}</span>-->
-<!--                  </template>-->
-<!--                </el-table> &ndash;&gt;-->
-<!--                <el-table-->
-<!--                  :data="winnerDataSource"-->
-<!--                >-->
-<!--                <template #empty>-->
-<!--                  <p>没有数据</p>-->
-<!--                </template>-->
-<!--                  <el-table-column prop="number" label="号码" />-->
-<!--                  <el-table-column prop="loginName" label="登录名" />-->
-<!--                  <el-table-column prop="winStatus" label="获奖状态" />-->
-<!--                  <el-table-column prop="resultTime" label="公告日期" />-->
-<!--                </el-table>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </el-tab-pane>-->
+          <!--          <el-tab-pane key="3" label="获奖名单">-->
+          <!--            <div class="tab3">-->
+          <!--              <el-form :model="winnersQuery" :layout="'inline'">-->
+          <!--                <el-row gutter="20" class="firstrow">-->
+          <!--                  <el-col span="6">-->
+          <!--                  <el-date-picker-->
+          <!--                      placeholder="选择日期"-->
+          <!--                      v-model="winnersQuery.resultTime"-->
+          <!--                      value-format="YYYY-MM-DD"-->
+          <!--                      format="YYYY-MM-DD"-->
+          <!--                      @change="retrieveWinnerList"-->
+          <!--                  /></el-col>-->
+          <!--                  <el-col span="6">-->
+          <!--                  <el-form-item-->
+          <!--                  >-->
+          <!--                    <div class="common-btn" @click="retrieveWinnerList">-->
+          <!--                      搜索-->
+          <!--                    </div>-->
+          <!--                  </el-form-item-->
+          <!--                  >-->
+          <!--                  </el-col>-->
+          <!--                  </el-row>-->
+          <!--              </el-form>-->
+          <!--              <div class="table">-->
+          <!--                &lt;!&ndash; <el-table-->
+          <!--                    :columns="winnerColumns"-->
+          <!--                    row-key="loginName"-->
+          <!--                    :datel-source="winnerDataSource"-->
+          <!--                    :locale="{ emptyText: emptyText }"-->
+          <!--                >-->
+          <!--                  <template #resultTime="{ text }">-->
+          <!--                    <span>{{ humanDatetime(text) }}</span>-->
+          <!--                  </template>-->
+          <!--                </el-table> &ndash;&gt;-->
+          <!--                <el-table-->
+          <!--                  :data="winnerDataSource"-->
+          <!--                >-->
+          <!--                <template #empty>-->
+          <!--                  <p>没有数据</p>-->
+          <!--                </template>-->
+          <!--                  <el-table-column prop="number" label="号码" />-->
+          <!--                  <el-table-column prop="loginName" label="登录名" />-->
+          <!--                  <el-table-column prop="winStatus" label="获奖状态" />-->
+          <!--                  <el-table-column prop="resultTime" label="公告日期" />-->
+          <!--                </el-table>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </el-tab-pane>-->
         </el-tabs>
       </div>
     </div>
 
     <el-dialog
-        class="award-modal"
-        :modal="false"
-        v-model="privilegeClaimedModalVisible"
-        align-center
+      class="award-modal"
+      :modal="false"
+      v-model="privilegeClaimedModalVisible"
+      align-center
     >
       <div class="modal-div">
         <span class="img-item">
@@ -180,28 +180,30 @@
             <div class="bonus">奖金</div>
           </div>
         </span>
-        <img src="../assets/images/index/bonus.svg"/>
+        <img src="../assets/images/index/bonus.svg" />
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {defineComponent} from "vue";
-import {claimBonusItem,
+import { defineComponent } from "vue";
+import {
+  claimBonusItem,
   submitLuckyNumber,
   luckyNumberList,
-  winnerList} from "@/api/index/promo";
+  winnerList
+} from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import {ElMessage} from "element-plus";
-import {userStore} from "@/store";
+import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
+import { ElMessage } from "element-plus";
+import { userStore } from "@/store";
 import moment from "moment";
-
 
 export default defineComponent({
   name: "HotPromo",
@@ -214,6 +216,7 @@ export default defineComponent({
     HongBaoYuPromo,
     InviteFriendPromo,
     WelcomeTaskPromo,
+    EsportQuiz
     // DailyBonus
   },
   props: {
@@ -221,8 +224,8 @@ export default defineComponent({
       type: Object,
       default: function () {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -279,67 +282,67 @@ export default defineComponent({
       selectedHotPromo: {
         id: "",
         bg: "",
-        contents: "",
+        contents: ""
       },
       formState: {
         dateTime: "",
-        onlyMe: false,
+        onlyMe: false
       },
       luckyNumber: null,
       query: {
         winStatus: "",
         recordTime: null,
-        onlyMe: false,
+        onlyMe: false
       },
       winnersQuery: {
-        resultTime: null,
+        resultTime: null
       },
       columns: [
         {
           title: "号码",
           dataIndex: "number",
-          key: "1",
+          key: "1"
         },
         {
           title: "登录名",
           dataIndex: "loginName",
-          key: "2",
+          key: "2"
         },
         {
           title: "获奖状态",
           dataIndex: "winStatus",
-          key: "3",
+          key: "3"
         },
         {
           title: "时间",
           dataIndex: "recordTime",
           key: "recordTime",
-          slots: {customRender: "recordTime"},
-        },
+          slots: { customRender: "recordTime" }
+        }
       ],
       winnerColumns: [
         {
           title: "号码",
           dataIndex: "number",
-          key: "number",
+          key: "number"
         },
         {
           title: "登录名",
           dataIndex: "loginName",
-          key: "loginName",
+          key: "loginName"
         },
         {
           title: "获奖状态",
           dataIndex: "winStatus",
-          key: "winStatus",
+          key: "winStatus"
         },
         {
           title: "公告日期",
           dataIndex: "resultTime",
           key: "4",
-          slots: {customRender: "resultTime"},
-        },
-      ],
+          slots: { customRender: "resultTime" }
+        }
+      ]
     };
   },
   methods: {
@@ -348,44 +351,44 @@ export default defineComponent({
       const bonusItem = this.list.promoCode;
 
       claimBonusItem(bonusItem)
-          .then((res) => {
-            if (res.code === 0) {
-              this.amount = "$" + res.data;
-              this.privilegeClaimedModalVisible = true;
-              this.loadingClaim = false;
-              this.store.getBalance();
-            } else {
-              ElMessage.error(res.message);
-              this.loadingClaim = false;
-            }
-          })
-          .catch((err) => {
-            console.log(err.message);
-            // message.error(err.message, 4);
+        .then((res) => {
+          if (res.code === 0) {
+            this.amount = "$" + res.data;
+            this.privilegeClaimedModalVisible = true;
             this.loadingClaim = false;
-          });
+            this.store.getBalance();
+          } else {
+            ElMessage.error(res.message);
+            this.loadingClaim = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+          // message.error(err.message, 4);
+          this.loadingClaim = false;
+        });
     },
     chooseLuckyNumber() {
       this.btnLoading = true;
       submitLuckyNumber(this.luckyNumber)
-          .then((res) => {
-            if (res.code === 0) {
-              ElMessage.success({
-                type: "success",
-                message: "成功发送号码。"
-              })
-              this.luckyNumber = null;
-              this.btnLoading = false;
-            } else {
-              ElMessage.error(res.message);
-              this.btnLoading = false;
-            }
-          })
-          .catch((err) => {
-            console.log(err.message);
-            // message.error(err.message, 4);
+        .then((res) => {
+          if (res.code === 0) {
+            ElMessage.success({
+              type: "success",
+              message: "成功发送号码。"
+            });
+            this.luckyNumber = null;
             this.btnLoading = false;
-          });
+          } else {
+            ElMessage.error(res.message);
+            this.btnLoading = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+          // message.error(err.message, 4);
+          this.btnLoading = false;
+        });
     },
     retrieveList() {
       if (this.query.onlyMe) {
@@ -394,58 +397,58 @@ export default defineComponent({
         this.memberId = null;
       }
       luckyNumberList(this.query, this.memberId)
-          .then((res) => {
-            if (res.code === 0) {
-              let newArray = [];
-              for (let i = 0; i < res.data.length; i++) {
-                let obj = res.data[i];
-                let status = "";
-                switch (obj.winStatus){
-                  case "BET":
-                    status = "未开奖";
-                    break;
-                  case "WIN":
-                    status = "已中奖";
-                    break;
-                  case "LOSS":
-                    status = "未中奖";
-                    break;
-                }
-                obj.winStatus = status;
-                newArray.push(obj)
+        .then((res) => {
+          if (res.code === 0) {
+            let newArray = [];
+            for (let i = 0; i < res.data.length; i++) {
+              let obj = res.data[i];
+              let status = "";
+              switch (obj.winStatus) {
+                case "BET":
+                  status = "未开奖";
+                  break;
+                case "WIN":
+                  status = "已中奖";
+                  break;
+                case "LOSS":
+                  status = "未中奖";
+                  break;
               }
-              this.dataSource = newArray;
+              obj.winStatus = status;
+              newArray.push(obj);
             }
-          })
-          .catch((err) => {
-            console.log(err.message);
-            // message.error(err.message, 4);
-          });
+            this.dataSource = newArray;
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+          // message.error(err.message, 4);
+        });
     },
     retrieveWinnerList() {
       this.winnerDataSource = [];
       winnerList(this.winnersQuery, this.memberId)
-          .then((res) => {
-            if (res.code === 0) {
-              res.data.forEach((element) => {
-                element.winners.forEach((winner) => {
-                  winner.resultTime = element.resultTime;
-                  this.winnerDataSource.push(winner);
-                });
+        .then((res) => {
+          if (res.code === 0) {
+            res.data.forEach((element) => {
+              element.winners.forEach((winner) => {
+                winner.resultTime = element.resultTime;
+                this.winnerDataSource.push(winner);
               });
-              if (this.winnerDataSource.length === 0) {
-                this.emptyText = "今天没有获奖者。";
-              }
+            });
+            if (this.winnerDataSource.length === 0) {
+              this.emptyText = "今天没有获奖者。";
             }
-          })
-          .catch((err) => {
-            console.log(err.message);
-            // message.error(err.message, 4);
-          });
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+          // message.error(err.message, 4);
+        });
     },
     humanDatetime(ts) {
       return moment(ts).format("YYYY-MM-DD");
-    },
+    }
   },
   mounted() {
     // console.log("Mount");
@@ -453,13 +456,14 @@ export default defineComponent({
 
     // List for non common promo
     if (
-        this.list.redirectUrl === "dy1-tiger-card" ||
-        this.list.redirectUrl === "goldenegg" ||
-        this.list.redirectUrl === "hongbaoyu" ||
-        this.list.redirectUrl === "invitefriend" ||
-        this.list.redirectUrl === "welcomenewuser" ||
-        this.list.redirectUrl === "dy1-lottery" ||
-        this.list.id === 40
+      this.list.redirectUrl === "dy1-tiger-card" ||
+      this.list.redirectUrl === "goldenegg" ||
+      this.list.redirectUrl === "hongbaoyu" ||
+      this.list.redirectUrl === "invitefriend" ||
+      this.list.redirectUrl === "welcomenewuser" ||
+      this.list.redirectUrl === "dy1-lottery" ||
+      this.list.redirectUrl === "esport_quiz" ||
+      this.list.id === 40
     ) {
       this.isCommonPromo = false;
     } else {
@@ -470,7 +474,7 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-  },
+  }
 });
 </script>
 <style lang="scss">
