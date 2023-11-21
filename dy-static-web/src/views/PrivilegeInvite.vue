@@ -183,17 +183,17 @@
           <div class="info-box">
             <div class="info-item">
               <div class="info-top">昨日好友投注总额</div>
-              <div class="info-content yesterday-bet">0.00元</div>
+              <div class="info-content yesterday-bet">{{ `${rebateInfo.yesterdayFriendBet || 0.00} 元` }}</div>
             </div>
 
             <div class="info-item">
               <div class="info-top">累计待派返利</div>
-              <div class="info-content today-bonus">0.00元</div>
+              <div class="info-content today-bonus">{{ `${rebateInfo.pendingRebate || 0.00} 元` }}</div>
             </div>
 
             <div class="info-item">
               <div class="info-top">近15天累计返利</div>
-              <div class="info-content total-bouns">0.00元</div>
+              <div class="info-content total-bouns">{{ `${rebateInfo.fifteenDaysRebate || 0.00} 元` }}</div>
             </div>
           </div>
 
@@ -291,23 +291,26 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, reactive, watch } from "vue";
+import { defineComponent, ref, reactive, onMounted } from "vue";
 import { ElMessageBox } from "element-plus";
 import moment from 'moment';
-import { Navigation } from "vue3-carousel";
 import { useRouter } from "vue-router";
 
-import { getRecommendPrivilegeRecord } from "@/api/privilegeInvite/privilegeInvite";
+import { getRecommendPrivilegeRecord, getRebateInfo } from "@/api/privilegeInvite/privilegeInvite";
 import { userStore } from "@/store/index";
 
 export default defineComponent({
   components: {
-    Navigation
   },
   setup() {
     const store = userStore();
     const activeKey = ref(1);
     const isCheckRecordModalVisible = ref(false);
+    const rebateInfo = ref({
+      fifteenDaysRebate: 0,
+      pendingRebate: 0,
+      yesterdayFriendBet: 0
+    });
     const checkRecordFormData = reactive({
       recordType: 'INVITER',
       privilegeType: 'WeekFirstDeposit',
@@ -351,6 +354,10 @@ export default defineComponent({
       router.push("/center/share");
     }
 
+    onMounted(() => {
+      getRebateInfo().then(({ data }) => rebateInfo.value = data)
+    })
+
     return {
       activeKey,
       changeTab,
@@ -358,7 +365,8 @@ export default defineComponent({
       toggleCheckRecordModal,
       getRecords,
       checkRecordFormData,
-      shareInvite
+      shareInvite,
+      rebateInfo
     }
   }
 });
@@ -389,6 +397,7 @@ $gold: #efcf68;
       height: 118px;
       background-repeat: no-repeat;
       background-position: center center;
+      background-size: contain;
       display: flex;
       text-align: center;
       align-items: center;
@@ -397,6 +406,9 @@ $gold: #efcf68;
 
       &.active {
         background: url(../assets/images/privilege-invite/tab-bg-active.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
       }
 
       h3 {
