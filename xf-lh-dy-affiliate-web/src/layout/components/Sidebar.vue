@@ -105,11 +105,11 @@ const navigationData = ref([
         icon: 'money',
       },
       {
-        path: '/balance',
+        path: '/credit-flow',
         title: '账变明细',
         active: false,
         icon: 'notebook',
-      }
+      },
     ],
   },
   {
