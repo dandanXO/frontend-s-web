@@ -1,123 +1,136 @@
 <template>
-  <div class="roles-main">
+  <el-form @submit.prevent>
     <div class="inputs-wrap">
-      <span>{{ $t('fields.creditFlowType') }} :</span>
-      <el-select
-        v-model="type.selectedType"
-        :placeholder="t('fields.all')"
-        @change="handleSelectChange"
-      >
-        <el-option
-          v-for="item in type.getType"
-          :key="item.id"
-          :value="item.id"
-          :label="item.title"
-        >
-          {{ item.title }}
-        </el-option>
-      </el-select>
-      <span>{{ $t('fields.creditFlowDate') }} :</span>
-      <el-date-picker
-        v-model="request.date"
-        format="DD/MM/YYYY"
-        value-format="YYYY-MM-DD"
-        size="normal"
-        type="daterange"
-        range-separator=":"
-        :start-placeholder="t('fields.startDate')"
-        :end-placeholder="t('fields.endDate')"
-      />
-      <div class="btn-grp">
-        <el-button
-          icon="el-icon-search"
-          type="primary"
-          @click="loadCreditFlow()"
-          size="normal"
-        >
-          {{ $t('fields.search') }}
-        </el-button>
-        <el-button size="normal" type="warning" @click="resetQuery()">
-          {{ $t('fields.reset') }}
-        </el-button>
-      </div>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-form-item :label="t('fields.creditFlowType') + ' :'">
+            <el-select
+              v-model="type.selectedType"
+              :placeholder="t('fields.all')"
+              @change="handleSelectChange"
+            >
+              <el-option
+                v-for="item in type.getType"
+                :key="item.id"
+                :value="item.id"
+                :label="item.title"
+              >
+                {{ item.title }}
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item :label="t('fields.creditFlowDate') + ' :'">
+            <el-date-picker
+              v-model="request.date"
+              format="DD/MM/YYYY"
+              value-format="YYYY-MM-DD"
+              size="normal"
+              type="daterange"
+              range-separator=":"
+              :start-placeholder="t('fields.startDate')"
+              :end-placeholder="t('fields.endDate')"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <div class="btn-grp">
+            <el-button
+              icon="el-icon-search"
+              type="primary"
+              @click="loadCreditFlow()"
+              size="normal"
+            >
+              {{ $t('fields.search') }}
+            </el-button>
+            <el-button size="normal" type="warning" @click="resetQuery()">
+              {{ $t('fields.reset') }}
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
     </div>
-    <el-table
-      :data="page.records"
-      ref="table"
-      row-key="id"
-      size="small"
-      highlight-current-row
-      v-loading="page.loading"
-      style="margin-top: 15px; margin-left: 15px;"
-      :empty-text="t('fields.noData')"
-    >
-      <el-table-column
-        prop="id"
-        :label="t('fields.creditFlowId')"
-        align="center"
-      />
+  </el-form>
 
-      <el-table-column
-        prop="date"
-        :label="t('fields.creditFlowDate')"
-        align="center"
-      >
-        <template #default="scope">
-          <span v-if="scope.row.date === null">-</span>
-          <span
-            v-if="scope.row.date !== null"
-            v-formatter="{
-              data: scope.row.date,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
-              type: 'date',
-            }"
-          />
-        </template>
-      </el-table-column>
-
-      <el-table-column
-        prop="serialNumber"
-        :label="t('fields.serialNumber')"
-        align="center"
-      />
-
-      <el-table-column
-        prop="typeName"
-        :label="t('fields.creditFlowType')"
-        align="center"
-        width="200"
-      />
-
-      <el-table-column
-        prop="amount"
-        :label="t('fields.creditFlowAmount')"
-        align="center"
-      />
-
-      <el-table-column
-        prop="balance"
-        :label="t('fields.creditFlowBalance')"
-        align="center"
-      />
-    </el-table>
-    <el-pagination
-      class="pagination"
-      @current-change="changePage"
-      layout="prev, pager, next"
-      :page-size="request.size"
-      :page-count="page.pages"
-      :current-page="request.current"
+  <el-table
+    :data="page.records"
+    ref="table"
+    row-key="id"
+    size="small"
+    highlight-current-row
+    v-loading="page.loading"
+    style="margin-top: 15px; margin-left: 15px;"
+    :empty-text="t('fields.noData')"
+  >
+    <el-table-column
+      prop="id"
+      :label="t('fields.creditFlowId')"
+      align="center"
+      width="75"
     />
-  </div>
+
+    <el-table-column
+      prop="date"
+      :label="t('fields.creditFlowDate')"
+      align="center"
+    >
+      <template #default="scope">
+        <span v-if="scope.row.date === null">-</span>
+        <span
+          v-if="scope.row.date !== null"
+          v-formatter="{
+            data: scope.row.date,
+            formatter: 'YYYY/MM/DD HH:mm:ss',
+            type: 'date',
+          }"
+        />
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      prop="serialNumber"
+      :label="t('fields.serialNumber')"
+      align="center"
+    />
+
+    <el-table-column
+      prop="typeName"
+      :label="t('fields.creditFlowType')"
+      align="center"
+    />
+
+    <el-table-column
+      prop="amount"
+      :label="t('fields.creditFlowAmount')"
+      align="center"
+    />
+
+    <el-table-column
+      prop="balance"
+      :label="t('fields.creditFlowBalance')"
+      align="center"
+    />
+  </el-table>
+  <el-pagination
+    class="pagination"
+    @current-change="changePage"
+    layout="prev, pager, next"
+    :page-size="request.size"
+    :page-count="page.pages"
+    :current-page="request.current"
+  />
 </template>
 
 <script setup>
 import { reactive, onMounted } from 'vue'
+import { useStore } from '@/store'
 import { useI18n } from 'vue-i18n'
 
 import { getCreditFlowType } from '../../../../api/affiliate-credit-flow-type'
 import { getCreditFlow } from '../../../../api/affiliate-credit-flow'
 
+const store = useStore()
 const { t } = useI18n()
 
 const type = reactive({
@@ -126,6 +139,8 @@ const type = reactive({
 })
 
 const request = reactive({
+  siteId: null,
+  affiliateId: null,
   category: null,
   type: null,
   date: null,
@@ -173,6 +188,8 @@ async function loadCreditFlow() {
     query.date = null
   }
 
+  query.affiliateId = store.state.user.id
+  query.siteId = store.state.user.siteId
   query.category = 'DEPOSIT'
   query.size = 20
 
@@ -208,54 +225,36 @@ onMounted(() => {
 })
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-.header-container {
-  margin: 40px 0 20px;
-  display: flex;
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.box-card {
-  ::v-deep(.el-card__body) {
-    padding: 0;
-  }
+.grid-item {
+  height: 110px;
+  position: relative;
+  border: 1px solid #f2f2f6;
+  border-radius: 8px;
+  padding: 20px;
 }
 
-.inputs-wrap {
-  margin: 20px;
+.grid-item-label {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 10px;
-  .input-small {
-    width: 100%;
-    max-width: 200px;
-    &.el-range-editor--small.el-input__inner {
-      height: 40px;
-      max-width: 300px;
-    }
-  }
-  .btn-grp {
-    display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+
+  span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #afb3c8;
   }
 }
 
-@media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-      &.el-range-editor--small.el-input__inner {
-        max-width: unset;
-      }
-    }
-  }
+.grid-item-value {
+  font-size: 16px;
+  font-weight: 700;
 }
 </style>
