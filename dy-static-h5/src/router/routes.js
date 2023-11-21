@@ -164,6 +164,11 @@ const routes = [
     // component: () => {},
   },
   {
+    path: "/privilege/invite",
+    name: "invite",
+    component: () => import('pages/PrivilegeInvite.vue')
+  },
+  {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
     children: [{path: "", component: () => import("pages/AccountPage.vue")}],
