@@ -140,6 +140,15 @@ export const constantRoutes = [
           title: 'channel-pack',
         },
       },
+      {
+        path: 'referral-material/poster',
+        name: 'poster',
+        meta: { hidden: true },
+        component: () =>
+          import(
+            /* webpackChunkName: "registerAffiliate" */ '../views/promotion/referral-material/poster/index.vue'
+          ),
+      },
     ],
   },
   {
@@ -195,15 +204,6 @@ export const constantRoutes = [
         },
       },
     ],
-  },
-  {
-    path: '/poster',
-    name: 'poster',
-    meta: { hidden: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "registerAffiliate" */ '../views/poster/index.vue'
-      ),
   },
 ]
 

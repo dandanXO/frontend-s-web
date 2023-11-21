@@ -2,7 +2,7 @@ import Qrcode from './Qrcode';
 import TextArea from './TextArea';
 import moment from 'moment'
 import _ from 'lodash';
-import { loadImage, MousePosition, ResizeType } from '@/views/poster/canvasUtil';
+import { loadImage, MousePosition, ResizeType } from './canvasUtil';
 
 class Poster {
   constructor(canvas, maxWidth, maxHeight) {

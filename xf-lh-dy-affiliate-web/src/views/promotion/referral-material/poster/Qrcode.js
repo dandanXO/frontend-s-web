@@ -1,6 +1,6 @@
-import Element from "@/views/poster/Element";
+import Element from "./Element";
 import QRCode from "qrcode";
-import { loadImage, MousePosition, ResizeType } from '@/views/poster/canvasUtil';
+import { loadImage, MousePosition, ResizeType } from './canvasUtil';
 
 class QrcodeElement extends Element {
   constructor(w = 0, h = 0, zIndex = 0, canvas) {

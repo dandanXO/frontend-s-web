@@ -1,5 +1,5 @@
-import Element from "@/views/poster/Element";
-import { ResizeType, generateUniqueId } from '@/views/poster/canvasUtil';
+import Element from "./Element";
+import { ResizeType, generateUniqueId } from './canvasUtil';
 
 class TextArea extends Element {
   constructor(w = 0, h = 0, zIndex = 0, canvas) {

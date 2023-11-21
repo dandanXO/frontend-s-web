@@ -1,4 +1,4 @@
-import { MousePosition, ResizeType } from '@/views/poster/canvasUtil';
+import { MousePosition, ResizeType } from './canvasUtil';
 
 class Element {
   constructor(x, y, w, h, canvasW, canvasH, zIndex) {
