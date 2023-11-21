@@ -105,9 +105,9 @@
         style="width: 300px"
       >
         <template #default="scope">
-          <div v-if="scope.row.labelType === 0" style="color: green;">OPEN</div>
-          <div v-if="scope.row.labelType === 1" style="color:red">CLOSED</div>
-          <div v-if="scope.row.labelType === 2">TEST</div>
+          <div v-if="scope.row.status === 0" style="color: green;">OPEN</div>
+          <div v-if="scope.row.status === 1" style="color:red">CLOSED</div>
+          <div v-if="scope.row.status === 2">TEST</div>
         </template>
       </el-table-column>
       l
