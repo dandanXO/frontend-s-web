@@ -1600,6 +1600,7 @@ export default {
     'VIP Rebate Record': 'VIP Rebate Record',
     'Bet Rebate Record': 'Bet Rebate Record',
     'Refer Friend': 'Refer Friend Record',
+    'Refer Friend Rebate Record': 'Refer Friend Rebate Record',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',

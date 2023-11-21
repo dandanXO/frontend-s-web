@@ -1579,6 +1579,7 @@ export default {
     'VIP Rebate Record': 'VIP返水记录',
     'Refer Friend': '推荐人记录',
     'Bet Rebate Record': '投注返水记录',
+    'Refer Friend Rebate Record': '邀请好友流水返点记录',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
