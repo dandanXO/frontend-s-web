@@ -49,6 +49,7 @@
       highlight-current-row
       v-loading="page.loading"
       style="margin-top: 15px; margin-left: 15px;"
+      :empty-text="t('fields.noData')"
     >
       <el-table-column
         prop="id"
@@ -99,6 +100,14 @@
         align="center"
       />
     </el-table>
+    <el-pagination
+      class="pagination"
+      @current-change="changePage"
+      layout="prev, pager, next"
+      :page-size="request.size"
+      :page-count="page.pages"
+      :current-page="request.current"
+    />
   </div>
 </template>
 
@@ -120,6 +129,8 @@ const request = reactive({
   category: null,
   type: null,
   date: null,
+  size: 20,
+  current: 1,
 })
 
 const page = reactive({
@@ -182,6 +193,13 @@ function resetQuery() {
   request.date = null
   type.selectedType = null
   loadCreditFlow()
+}
+
+function changePage(page) {
+  if (request.current >= 1) {
+    request.current = page
+    loadCreditFlow()
+  }
 }
 
 onMounted(() => {
