@@ -4,8 +4,10 @@
       <div class="total-win-content">
         <div class="title">{{ $t("lang.youWon") }}</div>
         <div>
-          <span>{{ outerAmount }}</span> X <span>{{ innerAmount }}</span
-          >% =
+          <span>{{ outerAmount }}</span>
+          X
+          <span>{{ innerAmount }}</span>
+          % =
         </div>
         <div>{{ $t("lang.totalBonus") }}</div>
         <div>
@@ -20,34 +22,25 @@
 
   <div class="spinwheel-container">
     <div class="spin-count-board">
-      <img
-        class="spin-count-board-img"
-        src="../../../assets/images/promotion/spinwheel/spin_count_board.png"
-      />
-      <span>{{
-        $t("lang.spinRemaining", {
-          spinCount: availableSpinCount,
-        })
-      }}</span>
+      <img class="spin-count-board-img" src="../../../assets/images/promotion/spinwheel/spin_count_board.png" />
+      <span>
+        {{
+          $t("lang.spinRemaining", {
+            spinCount: availableSpinCount
+          })
+        }}
+      </span>
     </div>
 
     <div :ref="outerWheelConfig.wheelRef" class="outer-wheel">
-      <img
-        class="outer-wheel-img"
-        src="../../../assets/images/promotion/spinwheel/outer_wheel.png"
-      />
+      <img class="outer-wheel-img" src="../../../assets/images/promotion/spinwheel/outer_wheel.png" />
     </div>
     <div :ref="innerWheelConfig.wheelRef" class="inner-wheel">
-      <img
-        class="inner-wheel-img"
-        src="../../../assets/images/promotion/spinwheel/inner_wheel.png"
-      />
+      <img class="inner-wheel-img" src="../../../assets/images/promotion/spinwheel/inner_wheel.png" />
 
       <template v-if="unlockDay < 1 ? true : false">
         <div class="prize-lock" style="transform: rotate(309.25deg)">
-          <img
-            src="../../../assets/images/promotion/spinwheel/prize_lock.png"
-          />
+          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(309.25deg)">
           <span>day{{ 1 }}</span>
@@ -56,9 +49,7 @@
 
       <template v-if="unlockDay < 2 ? true : false">
         <div class="prize-lock" style="transform: rotate(0deg)">
-          <img
-            src="../../../assets/images/promotion/spinwheel/prize_lock.png"
-          />
+          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(0deg)">
           <span>day{{ 2 }}</span>
@@ -67,9 +58,7 @@
 
       <template v-if="unlockDay < 3 ? true : false">
         <div class="prize-lock" style="transform: rotate(52deg)">
-          <img
-            src="../../../assets/images/promotion/spinwheel/prize_lock.png"
-          />
+          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(52deg)">
           <span>day{{ 3 }}</span>
@@ -78,9 +67,7 @@
 
       <template v-if="unlockDay < 4 ? true : false">
         <div class="prize-lock" style="transform: rotate(104deg)">
-          <img
-            src="../../../assets/images/promotion/spinwheel/prize_lock.png"
-          />
+          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(104deg)">
           <span>day{{ 4 }}</span>
@@ -89,9 +76,7 @@
 
       <template v-if="unlockDay < 5 ? true : false">
         <div class="prize-lock" style="transform: rotate(156.25deg)">
-          <img
-            src="../../../assets/images/promotion/spinwheel/prize_lock.png"
-          />
+          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(156.25deg)">
           <span>day{{ 5 }}</span>
@@ -100,9 +85,7 @@
 
       <template v-if="unlockDay < 6 ? true : false">
         <div class="prize-lock" style="transform: rotate(208.25deg)">
-          <img
-            src="../../../assets/images/promotion/spinwheel/prize_lock.png"
-          />
+          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(208.25deg)">
           <span>day{{ 6 }}</span>
@@ -111,9 +94,7 @@
 
       <template v-if="unlockDay < 7 ? true : false">
         <div class="prize-lock" style="transform: rotate(258.25deg)">
-          <img
-            src="../../../assets/images/promotion/spinwheel/prize_lock.png"
-          />
+          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(258.25deg)">
           <span>day{{ 7 }}</span>
@@ -122,28 +103,15 @@
     </div>
 
     <div class="prize-arrow">
-      <img
-        class="prize-arrow-img"
-        src="../../../assets/images/promotion/spinwheel/prize_arrow.png"
-      />
+      <img class="prize-arrow-img" src="../../../assets/images/promotion/spinwheel/prize_arrow.png" />
     </div>
 
-    <div
-      ref="spinButtonRef"
-      :class="`spin-button ${bounceAnimationDisable ? 'bounce' : ''}`"
-    >
-      <img
-        class="spin-button-img"
-        src="../../../assets/images/promotion/spinwheel/spin_button.png"
-        @click="spin()"
-      />
+    <div ref="spinButtonRef" :class="`spin-button ${bounceAnimationDisable ? 'bounce' : ''}`">
+      <img class="spin-button-img" src="../../../assets/images/promotion/spinwheel/spin_button.png" @click="spin()" />
     </div>
 
     <div class="infoboard">
-      <img
-        class="infoboard-img"
-        src="../../../assets/images/promotion/spinwheel/infoboard.png"
-      />
+      <img class="infoboard-img" src="../../../assets/images/promotion/spinwheel/infoboard.png" />
     </div>
   </div>
 </template>
@@ -174,7 +142,7 @@ const outerWheelData = [
   { degree: -231.5, amount: 38 },
   { degree: -257.5, amount: 88 },
   { degree: -283.5, amount: 28 },
-  { degree: -309, amount: 880 },
+  { degree: -309, amount: 880 }
 ];
 const innerWheelData = [
   { degree: -335, amount: 110 },
@@ -190,7 +158,7 @@ const innerWheelData = [
   { degree: -233, amount: 200 },
   { degree: -258, amount: 1000 },
   { degree: -283, amount: 0 },
-  { degree: -309, amount: 200 },
+  { degree: -309, amount: 200 }
 ];
 
 /**
@@ -210,7 +178,7 @@ const outerWheelConfig = {
   stopTime: 3,
   stopSpinRound: 3 * 360,
   wheelData: outerWheelData,
-  stopIndex: 0,
+  stopIndex: 0
 };
 const innerWheelConfig = {
   wheelRef: ref(null),
@@ -224,7 +192,7 @@ const innerWheelConfig = {
   stopTime: 5,
   stopSpinRound: 3 * 360,
   wheelData: innerWheelData,
-  stopIndex: 0,
+  stopIndex: 0
 };
 
 const spinButtonRef = ref(null);
@@ -237,7 +205,7 @@ function spin() {
       color: "negative",
       position: "top",
       message: "No Spin Count Remaining",
-      icon: "report_problem",
+      icon: "report_problem"
     });
     return;
   }
@@ -285,8 +253,7 @@ function spinWheel(config) {
 }
 
 function stopSpin(config, callback) {
-  const { isRotateClockwise, stopTime, stopSpinRound, wheelData, stopIndex } =
-    config;
+  const { isRotateClockwise, stopTime, stopSpinRound, wheelData, stopIndex } = config;
 
   let spinTimeEnd = false;
   let isApiReturned = true;
@@ -490,12 +457,7 @@ onMounted(() => {
       letter-spacing: 0.07319rem;
       text-transform: uppercase;
 
-      background: linear-gradient(
-        180deg,
-        #fffede 0%,
-        rgba(255, 227, 79, 0.89) 75.52%,
-        #fffede 100%
-      );
+      background: linear-gradient(180deg, #fffede 0%, rgba(255, 227, 79, 0.89) 75.52%, #fffede 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -682,7 +644,7 @@ onMounted(() => {
       }
 
       span {
-        font-size: 2vw;
+        font-size: 1.1rem;
       }
     }
 
@@ -733,6 +695,18 @@ onMounted(() => {
         width: 30%;
       }
     }
+  }
+}
+
+@media (min-width: 980px) {
+  .spinwheel-container .spin-count-board span {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .spinwheel-container .spin-count-board span {
+    font-size: 1.5rem;
   }
 }
 </style>
