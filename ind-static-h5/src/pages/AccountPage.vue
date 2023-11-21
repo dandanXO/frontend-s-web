@@ -523,7 +523,7 @@ const logout = () => {
 
   store.memberLogout().then(() => {
     loadingLogout.value = false;
-    router.push("/");
+    router.push("/home");
   });
 };
 

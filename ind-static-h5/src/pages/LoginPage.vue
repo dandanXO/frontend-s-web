@@ -49,27 +49,27 @@
             />
           </template>
         </q-input>
-        <q-input
-          ref="verificationRef"
-          hide-bottom-space
-          clearable
-          type="text"
-          v-model="loginForm.captchaCode"
-          label="Verification Code"
-          :rules="[
-            (val) => (val && val.length > 0) || 'Please insert verification code',
-            (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
-          ]"
-          label-color="brand"
-          rounded
-          outlined
-          color="white"
-          class="landing-input"
-        >
-          <template v-slot:append>
-            <img :src="verificationImg" @click="getCode" />
-          </template>
-        </q-input>
+        <!--        <q-input-->
+        <!--          ref="verificationRef"-->
+        <!--          hide-bottom-space-->
+        <!--          clearable-->
+        <!--          type="text"-->
+        <!--          v-model="loginForm.captchaCode"-->
+        <!--          label="Verification Code"-->
+        <!--          :rules="[-->
+        <!--            (val) => (val && val.length > 0) || 'Please insert verification code',-->
+        <!--            (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+        <!--          ]"-->
+        <!--          label-color="brand"-->
+        <!--          rounded-->
+        <!--          outlined-->
+        <!--          color="white"-->
+        <!--          class="landing-input"-->
+        <!--        >-->
+        <!--          <template v-slot:append>-->
+        <!--            <img :src="verificationImg" @click="getCode" />-->
+        <!--          </template>-->
+        <!--        </q-input>-->
       </div>
 
       <div class="row items-center justify-between q-mt-sm">
@@ -145,7 +145,7 @@ export default defineComponent({
     const loginForm = reactive({
       loginName: "",
       password: "",
-      captchaCode: "",
+      captchaCode: "0000",
       codeId: ""
     });
     const phoneLoginForm = reactive({
@@ -280,11 +280,12 @@ export default defineComponent({
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
-          verificationRef.value.validate();
+          // verificationRef.value.validate();
           $q.loading.show({
             message: "Logging in"
           });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+          // || verificationRef.value.hasError
+          if (loginNameRef.value.hasError || passwordRef.value.hasError) {
             $q.loading.hide();
           } else {
             store
@@ -320,7 +321,7 @@ export default defineComponent({
                 }
               })
               .catch((error) => {
-                loginForm.captchaCode = "";
+                loginForm.captchaCode = "0000";
                 getCode();
                 $q.loading.hide();
               });

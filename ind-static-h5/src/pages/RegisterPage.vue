@@ -108,29 +108,29 @@
         </template>
       </q-input>
 
-      <q-input
-        ref="verificationRef"
-        hide-bottom-space
-        clearable
-        type="text"
-        v-model="regForm.captchaCode"
-        label="Verification Code"
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || 'Please insert verification code',
-          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
-        ]"
-        placeholder="Please enter verification Code"
-        label-color="brand"
-        rounded
-        outlined
-        color="white"
-        class="landing-input"
-      >
-        <template v-slot:append>
-          <img :src="verificationImg" @click="getCode()" />
-        </template>
-      </q-input>
+      <!--      <q-input-->
+      <!--        ref="verificationRef"-->
+      <!--        hide-bottom-space-->
+      <!--        clearable-->
+      <!--        type="text"-->
+      <!--        v-model="regForm.captchaCode"-->
+      <!--        label="Verification Code"-->
+      <!--        lazy-rules-->
+      <!--        :rules="[-->
+      <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
+      <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+      <!--        ]"-->
+      <!--        placeholder="Please enter verification Code"-->
+      <!--        label-color="brand"-->
+      <!--        rounded-->
+      <!--        outlined-->
+      <!--        color="white"-->
+      <!--        class="landing-input"-->
+      <!--      >-->
+      <!--        <template v-slot:append>-->
+      <!--          <img :src="verificationImg" @click="getCode()" />-->
+      <!--        </template>-->
+      <!--      </q-input>-->
 
       <q-input
         v-if="!hasAffiliate"
@@ -203,7 +203,7 @@ export default defineComponent({
       confirmPwd: "",
       telephone: "",
       // email: "",
-      captchaCode: "",
+      captchaCode: "0000",
       regHost: location.hostname,
       codeId: "",
       codeAffiliate: "",
@@ -218,7 +218,7 @@ export default defineComponent({
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.codeId = response.data.id;
-            regForm.captchaCode = "";
+            regForm.captchaCode = "0000";
             verificationRef.value.resetValidation();
           }
         })
@@ -290,7 +290,7 @@ export default defineComponent({
     const isValidName = (value, translation) => {
       const namePattern = /^[A-Za-z0-9]+$/;
       return namePattern.test(value) || `${translation} must be alphanumeric`;
-    }
+    };
 
     const isAlphanumeric = (value, translation) => {
       const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
@@ -306,7 +306,7 @@ export default defineComponent({
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
-      verificationRef.value.validate();
+      // verificationRef.value.validate();
 
       $q.loading.show({
         message: "Registering in progress"
@@ -319,7 +319,7 @@ export default defineComponent({
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
-        verificationRef.value.hasError ||
+        // verificationRef.value.hasError ||
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
