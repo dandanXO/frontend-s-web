@@ -79,6 +79,13 @@
           </div>
 
           <div class="header-back">
+            <div class="lang-select-board" v-if="hasLang">
+              <div @click="openAffiliatePage" class="affiliate-btn btn-pointer">
+                <img src="../assets/images/menu/affiliate-icon.png" />
+                <span>{{ $t("lang.affiliate_page") }}</span>
+              </div>
+            </div>
+
             <div class="close-back-btn btn-pointer" @click="closeWindowOrBack()">
               <RiCloseLine />
             </div>
@@ -101,9 +108,11 @@
         </q-route-tab>
 
         <q-route-tab to="/finance/withdraw" name="withdraw">
-          <img class="footer-icon"
-               :src="(tab === 'withdraw') ? footers['withdraw']['active']  : footers['withdraw']['icon'] "/>
-          <span>{{ $t('lang.withdraw_footer') }}</span>
+          <img
+            class="footer-icon"
+            :src="tab === 'withdraw' ? footers['withdraw']['active'] : footers['withdraw']['icon']"
+          />
+          <span>{{ $t("lang.withdraw_footer") }}</span>
         </q-route-tab>
 
         <!-- <q-route-tab to="/finance/deposit" name="deposit">
@@ -133,12 +142,9 @@
                :src="(tab === 'notice') ? footers['notice']['active']  :  footers['notice']['icon'] "/>
           <span>{{ $t('lang.notice_footer') }}</span>
         </q-route-tab> -->
-        <q-route-tab to="/affiliate" name="affiliate">
-          <img
-            class="footer-icon"
-            :src="tab === 'affiliate' ? footers['affiliate']['active'] : footers['affiliate']['icon']"
-          />
-          <span>{{ $t("lang.affiliate_footer") }}</span>
+        <q-route-tab to="/getapp" name="app">
+          <img class="footer-icon" :src="tab === 'app' ? footers['app']['active'] : footers['app']['icon']" />
+          <span>APP</span>
         </q-route-tab>
         <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs">
           <img
@@ -362,6 +368,10 @@ export default defineComponent({
       affiliate: {
         icon: require("../assets/images/menu/affiliate-icon.png"),
         active: require("../assets/images/menu/affiliate-icon-active.png")
+      },
+      app: {
+        icon: require("../assets/images/menu/download-icon.png"),
+        active: require("../assets/images/menu/download-active-icon.png")
       }
     });
 
@@ -400,6 +410,10 @@ export default defineComponent({
       localStorage.setItem("LINE_STICKY_OFF", "true");
     };
 
+    const openAffiliatePage = () => {
+      router.push("/affiliate");
+    };
+
     const mainWalletValue = computed(() => {
       const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
       return balanceWithTwoDecimalPlaces;
@@ -431,7 +445,8 @@ export default defineComponent({
       langOptions,
       showSticky,
       hasLang,
-      mainWalletValue
+      mainWalletValue,
+      openAffiliatePage
     };
   }
 });
@@ -562,6 +577,33 @@ svg path {
   font-size: $normal-size;
 
   line-height: 1rem;
+}
+
+.header-back {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.affiliate-btn {
+  background: $border-color;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  padding: 1px 16px;
+  height: 30px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 30px;
+
+  img {
+    height: 18px;
+    filter: brightness(0) invert(1);
+    width: auto;
+  }
 }
 
 .register-btn {
