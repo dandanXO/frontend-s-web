@@ -451,7 +451,13 @@ export default {
     are_you_sure_want_delete: "คุณแน่ใจหรือไม่ว่าต้องการลบ ",
     delete: "ลบ",
     please_enter_card_num: "กรุณาใส่เลขบัตร",
-    please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร"
+    please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร",
+    prize: "รางวัล",
+    date: "วันที่",
+    youWon: "คุณชนะ",
+    totalBonus: "โบนัสที่ได้ทั้งหมด",
+    spinRemaining: "คุณมี {spinCount} ตั๋วที่หมุนได้",
+    loginToCont: "เข้าสู่ระบบเพื่อดำเนินการต่อ"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

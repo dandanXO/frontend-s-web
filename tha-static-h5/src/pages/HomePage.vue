@@ -1802,7 +1802,7 @@ export default defineComponent({
 
 .grid {
   display: flex;
-  margin: 20px auto -10px;
+  margin: 10px auto -10px;
   align-items: flex-start;
   column-gap: 8px;
   row-gap: 14px;
@@ -1815,15 +1815,13 @@ export default defineComponent({
   .game-board-item {
     border-radius: 8px;
     width: auto;
-    // flex-direction: column;
     gap: 12px;
     height: 100%;
     margin: auto;
-    // background: $linear-bg-3;
     display: flex;
     align-items: center;
     text-align: center;
-    padding: 8px 12px;
+    padding: 12px 12px;
     white-space: nowrap;
 
     &.active-board {
@@ -1842,12 +1840,12 @@ export default defineComponent({
     }
 
     span {
-      font-size: 0.8em;
+      font-size: 0.9em;
     }
 
     img {
       width: auto;
-      max-height: 25px;
+      max-height: 30px;
     }
   }
 }
