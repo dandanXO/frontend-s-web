@@ -82,7 +82,7 @@
             <div class="lang-select-board" v-if="hasLang">
               <div @click="openAffiliatePage" class="affiliate-btn btn-pointer">
                 <img src="../assets/images/menu/affiliate-icon.png" />
-                <span>{{ $t("lang.affiliate_page") }}</span>
+                <span>{{ $t("lang.affiliate_footer") }}</span>
               </div>
             </div>
 
