@@ -1549,6 +1549,7 @@ export default {
     'Lottery Result List': 'Lottery Result List',
     'VIP Rebate Record': 'VIP Rebate Record',
     'Refer Friend': 'Refer Friend Record',
+    'Refer Friend Rebate Record': 'Refer Friend Rebate Record',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
