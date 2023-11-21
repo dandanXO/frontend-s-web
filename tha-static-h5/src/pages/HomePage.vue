@@ -867,11 +867,11 @@
         <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
-              โบนัสสูงสุด
+              โบนัส
               <em>30%</em>
-              รับ
+              สูงสุด
               <em>2,000</em>
-              ทุกวัน ถอนไม่อั้น
+              ถอนไม่อั้น
             </span>
           </div>
         </router-link>
