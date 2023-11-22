@@ -1290,7 +1290,7 @@ export default defineComponent({
               }
             });
 
-            console.log(miniGames);
+            // console.log(miniGames);
 
             games.forEach((game) => {
               let index = _.findIndex(miniGamesMore.value, function (o) {
@@ -1340,7 +1340,7 @@ export default defineComponent({
               return element.status === "OPEN";
             });
           }
-          console.log(data);
+          // console.log(data);
 
           fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
@@ -1362,7 +1362,7 @@ export default defineComponent({
           }
 
           // console.log("After");
-          console.log(platformMinigame.value);
+          // console.log(platformMinigame.value);
           // alert(platformMinigame.value.length);
           // if (!route.query.plat) {
           //   switchPlat(platforms.value[0], "slot");
