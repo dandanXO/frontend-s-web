@@ -19,12 +19,38 @@
               :value="item.id"
             />
           </el-select>
+          <el-date-picker
+            v-model="request.month"
+            format="MM/YYYY"
+            value-format="YYYY-MM"
+            size="small"
+            type="month"
+            style="width: 200px; margin-left: 10px"
+            :editable="false"
+            :clearable="false"
+            :disabled-date="disabledDate"
+          />
           <el-input
             v-model="request.affiliateName"
             size="small"
             style="width: 200px;margin-left: 20px"
             :placeholder="t('fields.loginName')"
           />
+          <el-select
+            multiple
+            v-model="request.status"
+            size="small"
+            :placeholder="t('fields.status')"
+            class="filter-item"
+            style="width: 250px;margin-left: 5px"
+          >
+            <el-option
+              v-for="item in uiControl.status"
+              :key="item.key"
+              :label="t('status.settlement.' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
           <el-button
             style="margin-left: 20px"
             icon="el-icon-search"
@@ -146,7 +172,7 @@
             v-if="hasPermission(['sys:member:detail'])"
           >
             <span style="display: inline-block">
-              {{ t('fields.month') }}: <span v-formatter="{data: scope.row.recordTime, timeZone: siteTimeZone.timeZone, type: 'date'}" />
+              {{ t('fields.month') }}: <span v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}" />
             </span>
           </template>
         </el-table-column>
@@ -259,7 +285,7 @@
             <span v-if="scope.row.recordTime === null">-</span>
             <span
               v-if="scope.row.recordTime !== null"
-              v-formatter="{data: scope.row.recordTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -274,7 +300,23 @@
           :label="t('fields.upperName')"
           align="left"
           min-width="120"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.upperName === null">-</span>
+            <span v-else>{{ scope.row.upperName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          :label="t('fields.status')"
+          align="left"
+          min-width="120"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.status === 'CHECKING'" type="warning">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'CLEARED'" type="success">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column
           :label="t('fields.totalCommissionProfit')"
           align="left"
@@ -354,7 +396,7 @@
             !hasRole(['SUB_TENANT']) &&
               (hasPermission(['sys:affiliate:settle:view']) ||
                 hasPermission(['sys:affiliate:settle:pay']) ||
-                hasPermission(['sys:affiliate:settle:edit']))
+                hasPermission(['sys:affiliate:settle:check-adjust']))
           "
         >
           <template #default="scope">
@@ -371,16 +413,16 @@
               type="danger"
               v-permission="['sys:affiliate:settle:pay']"
               @click="confirmPay(scope.row)"
-              v-if="scope.row.finalProfit > 0"
+              v-if="scope.row.finalProfit > 0 && scope.row.status === 'CHECKING'"
             >
               {{ t('fields.settlePay') }}
             </el-button>
             <el-button
               size="mini"
               type="success"
-              v-permission="['sys:affiliate:settle:edit']"
+              v-permission="['sys:affiliate:settle:check-adjust']"
               @click="showEdit(scope.row)"
-              v-if="scope.row.adjustAmount === null"
+              v-if="scope.row.adjustAmount === null && scope.row.status === 'CHECKING'"
             >
               {{ t('fields.settleEdit') }}
             </el-button>
@@ -417,6 +459,7 @@ import { required } from '../../../utils/validate'
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
+import moment from 'moment'
 
 const { t } = useI18n()
 const store = useStore()
@@ -425,9 +468,8 @@ const adjustForm = ref(null)
 const siteList = reactive({
   list: [],
 })
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null
+
 const uiControl = reactive({
   dialogVisible: false,
   progressBarVisible: false,
@@ -436,7 +478,16 @@ const uiControl = reactive({
     { key: 1, value: 'ADD' },
     { key: 2, value: 'DEDUCT' },
   ],
+  status: [
+    { key: 1, displayName: 'CHECKING', value: 'CHECKING' },
+    { key: 2, displayName: 'CLEARED', value: 'CLEARED' },
+  ]
 })
+const defaultQueryMonth = convertDate(moment(new Date()));
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM');
+}
 
 const uiControl1 = reactive({
   dialogVisible: false,
@@ -450,6 +501,8 @@ const request = reactive({
   current: 1,
   siteId: null,
   affiliateName: null,
+  month: defaultQueryMonth,
+  status: ['CHECKING', 'CLEARED']
 })
 
 const form = reactive({
@@ -487,8 +540,10 @@ async function loadSites() {
 }
 
 function resetQuery() {
+  request.month = defaultQueryMonth
   request.affiliateName = null
   request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.status = ['CHECKING', 'CLEARED']
 }
 
 const page = reactive({
@@ -513,6 +568,13 @@ function checkQuery() {
       query[key] = value
     }
   })
+  if (request.status !== null) {
+    if (request.status.length > 1) {
+      query.status = request.status.join(",");
+    } else {
+      query.status = request.status[0];
+    }
+  }
   return query
 }
 
@@ -536,8 +598,7 @@ async function loadSettlement() {
   page.records = ret.records
   page.total = ret.total
 
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
 
   page.loading = false
 }

@@ -210,7 +210,6 @@
                   @keypress="restrictInput($event)"
                 />
               </span>
-
             </el-form-item>
         <el-form-item :label="t('fields.privilegeRedeemed')" prop="privilegeStatus" v-if="uiControl.dialogType !== 'CREATE'">
           <el-radio-group
@@ -285,7 +284,7 @@
           <span v-if="scope.row.updateTime === null">-</span>
           <span
             v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.siteTimeZone, type: 'date'}"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -440,6 +439,11 @@ async function loadEmails() {
   page.loading = true
   const { data: ret } = await getEmails(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
   page.loading = false
 }

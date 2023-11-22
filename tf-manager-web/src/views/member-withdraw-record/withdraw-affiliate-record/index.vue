@@ -156,6 +156,92 @@
           min-width="110"
         />
         <el-table-column
+          prop="status"
+          :label="t('fields.status')"
+          align="center"
+          width="150"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
+              {{ scope.row.status }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
+              {{ scope.row.status }}
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'APPLY'
+              "
+            >
+              APPLYING
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'STEP_1'
+              "
+            >
+              UNDER REVIEW
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'STEP_2'
+              "
+            >
+              TO BE PAID
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'STEP_3'
+              "
+            >
+              PAYMENT ON GOING
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'AUTOPAY'
+              "
+            >
+              AUTOMATIC PAYMENT
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'PENDING'
+              "
+            >
+              SUSPEND
+            </el-tag>
+            <el-tag v-else>{{ scope.row.status }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="confirm status"
+          :label="t('fields.confirmStatus')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.confirmStatus === '0'" type="danger">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.confirmStatusstatus === '1'" type="success">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else>{{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="vip"
           :label="t('fields.vipLevel')"
           align="center"
@@ -244,7 +330,7 @@
               v-if="scope.row.withdrawDate !== null"
               v-formatter="{
                 data: scope.row.withdrawDate,
-                timeZone: siteTimeZone.timeZone,
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -262,7 +348,7 @@
               v-if="scope.row.checkDate !== null"
               v-formatter="{
                 data: scope.row.checkDate,
-                timeZone: siteTimeZone.timeZone,
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -293,7 +379,7 @@
               v-if="scope.row.paymentDate !== null"
               v-formatter="{
                 data: scope.row.paymentDate,
-                timeZone: siteTimeZone.timeZone,
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -325,92 +411,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="status"
-          :label="t('fields.status')"
-          align="center"
-          width="150"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
-              {{ scope.row.status }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
-              {{ scope.row.status }}
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'APPLY'
-              "
-            >
-              APPLYING
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_1'
-              "
-            >
-              UNDER REVIEW
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_2'
-              "
-            >
-              TO BE PAID
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_3'
-              "
-            >
-              PAYMENT ON GOING
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'AUTOPAY'
-              "
-            >
-              AUTOMATIC PAYMENT
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'PENDING'
-              "
-            >
-              SUSPEND
-            </el-tag>
-            <el-tag v-else>{{ scope.row.status }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="confirm status"
-          :label="t('fields.confirmStatus')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.confirmStatus === '0'" type="danger">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.confirmStatusstatus === '1'" type="success">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-            <el-tag v-else>{{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}</el-tag>
-          </template>
-        </el-table-column>
+
         <el-table-column
           prop="confirmBy"
           :label="t('fields.confirmBy')"
@@ -569,7 +570,7 @@
               v-if="scope.row.operateTime !== null"
               v-formatter="{
                 data: scope.row.operateTime,
-                timeZone: siteTimeZone.timeZone,
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -896,9 +897,7 @@ const cancelTypeList = reactive({
 const siteList = reactive({
   list: [],
 })
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -1256,9 +1255,7 @@ async function loadRecord() {
     page.totalAmount = 0
   }
 
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 

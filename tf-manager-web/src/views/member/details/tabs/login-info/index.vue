@@ -42,8 +42,8 @@
           <span
             v-formatter="{
               data: scope.row.loginTime,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
               type: 'date',
-              timeZone: timeZone
             }"
           />
         </template>
@@ -165,10 +165,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    timeZone: {
-      type: String,
-      required: true,
-    }
   },
   setup(props) {
     const { t } = useI18n()
@@ -195,7 +191,7 @@ export default defineComponent({
       total: 0,
       records: [],
       loading: false,
-      pagingState: ''
+      pagingState: '',
     })
     const formData = reactive({
       loginTime: [defaultStartDate, defaultEndDate],

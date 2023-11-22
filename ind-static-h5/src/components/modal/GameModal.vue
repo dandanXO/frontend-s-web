@@ -35,7 +35,7 @@
         <q-dialog width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
             <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-            <div class="popout-dialog-container">
+            <div class="popout-dialog-container-gold">
               <div class="popout-main-title">
                 <div class="txt-title">Deposit</div>
               </div>
@@ -47,6 +47,19 @@
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
       <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
+    </q-dialog>
+
+    <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
+      <div class="popout-dialog">
+        <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+        <div class="popout-dialog-container">
+          <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
+          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+            <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
+            <q-btn label="Confirm" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
+          </div>
+        </div>
+      </div>
     </q-dialog>
   </q-scroll-area>
 </template>
@@ -116,24 +129,9 @@ function selectPayType(value) {
 }
 
 const drawerVisible = ref(false);
-const exitClickCount = ref(0);
-
+const isExitDialogOpen = ref(false);
 const onExitClick = () => {
-  if (exitClickCount.value === 1) {
-    closeDialog();
-    exitClickCount.value = 0;
-  } else {
-    exitClickCount.value++;
-    Notify.create({
-      timeout: 1000,
-      position: "top",
-      message: "Tap one more time to exit"
-    });
-
-    setTimeout(() => {
-      exitClickCount.value = 0;
-    }, 2000);
-  }
+  isExitDialogOpen.value = true;
 };
 
 const router = useRouter();
@@ -549,7 +547,7 @@ defineExpose({
     top: 80px;
   }
 
-  .popout-dialog-container {
+  .popout-dialog-container-gold {
     background-image: url(../../assets/images/index/popout/deposit-bg.png);
     background-position: bottom center;
     background-size: cover;
@@ -708,6 +706,20 @@ defineExpose({
         }
       }
     }
+  }
+
+  .btn-cancel {
+    background: rgba(21, 0, 37, 0.5);
+    font-weight: 700;
+    color: #ffffff;
+    border-radius: 8px;
+  }
+
+  .btn-confirm {
+    background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+    font-weight: 700;
+    color: #150025;
+    border-radius: 8px;
   }
 }
 .loader-container {

@@ -238,36 +238,7 @@ export default defineComponent({
     ol {
       padding: 0 15px;
     }
-    // table {
-    //   margin: 0 15px 20px;
-    //   width: 98%;
-    //   display: block;
-    //   overflow-x: auto;
-    //   white-space: nowrap;
-    //   border: 0;
-    //   tr {
-    //     td {
-    //       padding: 10px 20px;
-    //       border-bottom: 1px solid #201f29;
-    //       border: 0;
-    //       p {
-    //         margin: 0;
-    //       }
-    //     }
-    //     &:first-child {
-    //       td {
-    //         color: #ffd800;
-    //         white-space: nowrap;
-    //       }
-    //     }
-    //     td:nth-child(odd) {
-    //       background: #2e2e45;
-    //     }
-    //     td:nth-child(even) {
-    //       background: #2e2e45;
-    //     }
-    //   }
-    // }
+
     img {
       display: flex;
       justify-content: center;
@@ -291,6 +262,11 @@ export default defineComponent({
       th,
       td {
         padding: 10px;
+      }
+      tbody{
+        display:table;
+        table-layout: fixed;
+        width: 100%;
       }
       th {
         background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%),

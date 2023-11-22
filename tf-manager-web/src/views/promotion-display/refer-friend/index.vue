@@ -165,7 +165,7 @@
             <span v-if="scope.row.distributeTime === null">-</span>
             <span
               v-if="scope.row.distributeTime !== null"
-              v-formatter="{data: scope.row.distributeTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.distributeTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -223,9 +223,7 @@ const site = ref(null)
 const siteList = reactive({
   list: []
 });
-const siteTimeZone = reactive({
-  timeZone: null,
-});
+let timeZone = null;
 const exportPercentage = ref(0);
 const uiControl = reactive({
   dialogVisible: false,
@@ -317,9 +315,7 @@ async function loadReferFriendRecords() {
   page.records = ret.records;
   page.total = ret.total;
 
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
-
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

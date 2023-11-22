@@ -170,7 +170,7 @@
                 {{ $t("lang.affiliate_example_a_table_6_left") }}
               </div>
               <div class="rw-rgt text-right">
-                【500,000 - 15,000 - (600,000 x 8%) - (500,000 x 8%) 】=433,000
+                【500,000 - 15,000 - (600,000 x 2%) - (500,000 x 8%) 】=433,000
               </div>
             </div>
 

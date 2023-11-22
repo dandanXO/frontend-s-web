@@ -301,7 +301,7 @@
             v-if="scope.row.sendTime !== null"
             v-formatter="{
               data: scope.row.sendTime,
-              timeZone: scope.row.siteTimeZone,
+              timeZone: scope.row.timeZone,
               type: 'date',
             }"
           />
@@ -334,8 +334,10 @@ import {
 import { findLevelByVipName, getVipList } from '../../../../api/vip'
 import { required } from '../../../../utils/validate'
 import { hasRole } from '../../../../utils/util'
+import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 
+const store = useStore();
 const { t } = useI18n();
 const dialogForm = ref(null)
 const importRefForm = ref(null);
@@ -583,6 +585,11 @@ async function loadSystemMessageTemplate() {
   }
   const { data: ret } = await getSystemMessageTemplate(query)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
+      ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
+      : null
+  });
   page.records = ret.records
 }
 

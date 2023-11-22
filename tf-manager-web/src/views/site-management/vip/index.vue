@@ -152,7 +152,7 @@
           <span v-if="scope.row.createTime === null">-</span>
           <span
             v-if="scope.row.createTime !== null"
-            v-formatter="{data: scope.row.createTime, timeZone: siteTimeZone.timeZone, type: 'date'}"
+            v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -224,9 +224,7 @@ const vipForm = ref(null);
 const sites = reactive({
   list: []
 });
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null;
 
 const minCredit = ref(Number(0));
 
@@ -334,8 +332,7 @@ async function loadVip() {
   page.records = ret;
   page.loading = false;
 
-  var siteSelected = sites.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone;
 
   list.previousLevel = ret;
 }

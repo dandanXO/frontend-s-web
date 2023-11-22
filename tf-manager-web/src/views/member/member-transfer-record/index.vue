@@ -122,7 +122,7 @@
             v-if="scope.row.transferDate !== null"
             v-formatter="{
               data: scope.row.transferDate,
-              timeZone: scope.row.siteTimeZone,
+              timeZone: scope.row.timeZone,
               type: 'date',
             }"
           />
@@ -145,7 +145,7 @@
             v-if="scope.row.updateTime !== null"
             v-formatter="{
               data: scope.row.updateTime,
-              timeZone: scope.row.siteTimeZone,
+              timeZone: scope.row.timeZone,
               type: 'date',
             }"
           />
@@ -301,6 +301,11 @@ async function loadTransferRecords() {
   });
   const { data: ret } = await getTransferRecords(query);
   page.pages = ret.pages;
+  ret.records.forEach(data => {
+    data.timeZone = siteList.list.find(e => e.siteName === data.site) !== undefined
+      ? siteList.list.find(e => e.siteName === data.site).timeZone
+      : null
+  });
   page.records = ret.records;
   page.loading = false;
 }

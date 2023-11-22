@@ -1,19 +1,13 @@
 <template>
   <div class="q-pa-md">
     <PanelWrapper>
-      <template #title>{{ $t('lang.select_deposit_method')}}</template>
+      <template #title>{{ $t("lang.select_deposit_method") }}</template>
       <div class="node-wrapper">
-        <Node
-          :level="1"
-          :list="payMethods"
-          ref="paymentNode"
-          @clicked="onSelect"
-          class="platform"
-        />
+        <Node :level="1" :list="payMethods" ref="paymentNode" @clicked="onSelect" class="platform" />
       </div>
       <div class="deposit-container">
         <q-form ref="depositForm" class="q-gutter-y-xs">
-          <p>{{  $t('lang.please_enter_deposit_amount') }}</p>
+          <p>{{ $t("lang.please_enter_deposit_amount") }}</p>
           <q-input
             v-if="amountList.length === 0"
             ref="depositAmtRef"
@@ -44,13 +38,8 @@
             dense
           />
 
-          <div
-            v-if="isUSDT && activeMethod.currencyRate"
-            class="q-pb-md"
-          >
-            <span style="color: #9bffd1"
-              >1.00 USDT ≈ {{ activeMethod.currencyRate }} THB</span
-            >
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md">
+            <span style="color: #9bffd1">1.00 USDT ≈ {{ activeMethod.currencyRate }} THB</span>
           </div>
 
           <BankComponent
@@ -73,30 +62,23 @@
             v-model="selectedPrivilege"
             emit-value
             v-if="hasPrivilege"
-            :display-value="`${
-              selectedPrivilege ? selectedPrivilege.name : ''
-            }`"
+            :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
             color="white"
             @update:model-value="checkMinDepositAmt"
           >
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section>
-                  <q-item-label
-                    style="
-                      text-overflow: ellipsis;
-                      overflow: hidden;
-                      white-space: nowrap;
-                    "
-                    >{{ scope.opt.name }}</q-item-label
-                  >
+                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                    {{ scope.opt.name }}
+                  </q-item-label>
                 </q-item-section>
               </q-item>
             </template>
           </q-select>
           <div class="q-mt-md" v-html="activeMethod.msg"></div>
           <div class="q-mt-md text-brand">
-            {{ $t('lang.to_prevent_enter_amount_notified') }}
+            {{ $t("lang.to_prevent_enter_amount_notified") }}
           </div>
           <div class="q-mt-md">
             <q-btn
@@ -115,8 +97,10 @@
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
-        {{ $t('lang.you_will_redirect_to_bank_page') }}<br /><br />
-        {{ $t('lang.operation_is_successful_will_notified') }}
+        {{ $t("lang.you_will_redirect_to_bank_page") }}
+        <br />
+        <br />
+        {{ $t("lang.operation_is_successful_will_notified") }}
       </q-card-section>
       <q-btn @click="clearInfo" :label="$t('lang.understood')" color="brand" />
     </q-card>
@@ -134,10 +118,11 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
+import { useUI } from "stores/ui";
 
 var qs = require("qs");
-const {t} = useI18n()
+const { t } = useI18n();
 const store = userStore();
 const router = useRouter();
 const formRef = ref();
@@ -158,39 +143,33 @@ const hasPrivilege = ref(false);
 const isOpenFromAccount = ref(false);
 const isUSDT = ref(false);
 const verifyDepositAmount = ref([
-  (val) => !!val || t('lang.please_enter_the_deposit_amount'),
+  (val) => !!val || t("lang.please_enter_the_deposit_amount"),
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
-    t('lang.deposit_amount_in_between') +
-      calculatedMinDeposit.value +
-      " - " +
-      activeMethod.value.depositMax,
+    t("lang.deposit_amount_in_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
-    t('lang.deposit_balance_in_between') +
-      calculatedMinDeposit.value +
-      " - " +
-      activeMethod.value.depositMax,
+    t("lang.deposit_balance_in_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({
   paymentId: null,
   privilegeId: null,
   localAmount: null,
-  bankId: null,
+  bankId: null
 });
 
 const checkAmount = reactive({
   flag: true,
-  errorMessage: "",
+  errorMessage: ""
 });
 
-
 const $q = useQuasar();
+const ui = useUI();
 const calculatedMinDeposit = ref("");
 function initPay() {
   $q.loading.show({
-    message: t('lang.loading') + "...",
+    message: t("lang.loading") + "..."
   });
 
   payMethods.value = [];
@@ -231,29 +210,27 @@ function initPay() {
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
-  await cashier
-    .get(`/session/payment/${val.paymentId}/privileges`)
-    .then((d) => {
-      const res = d.data;
-      if (res.code === 0) {
-        privilegeList.value = res.data.privileges;
-        hasPrivilege.value = true;
-        unselectedPrivileges.value = [];
-        freePrivilege.value = null;
-        privilegeList.value.map((p) => {
-          if (p.payTypes.indexOf(val.payType) >= 0) {
-            if (p.triggerType == "FREE") {
-              freePrivilege.value = p;
-            } else {
-              unselectedPrivileges.value.push(p);
-            }
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((d) => {
+    const res = d.data;
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = null;
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType == "FREE") {
+            freePrivilege.value = p;
+          } else {
+            unselectedPrivileges.value.push(p);
           }
-        });
-      } else {
-        hasPrivilege.value = false;
-        privilegeList.value = [];
-      }
-    });
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
 }
 
 function selectPayType(value) {
@@ -305,10 +282,7 @@ function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(
-      activeMethod.value.depositMin,
-      selectedPrivilege.value.depositMin
-    );
+    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
   }
 }
 
@@ -341,8 +315,7 @@ async function confirmDeposit() {
   } else {
     if (freePrivilege.value) {
       if (selectedPrivilege.value) {
-        form.privilegeId =
-          selectedPrivilege.value.id + "," + freePrivilege.value.id;
+        form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
       } else {
         form.privilegeId = "," + freePrivilege.value.id;
       }
@@ -371,6 +344,20 @@ async function confirmDeposit() {
         router.push({ path: "/depositLoading" });
       }
 
+      if (ui.isAffiliateA) {
+        // console.log("Submit Event");
+        fbq("track", "InitiateCheckout", {
+          currency: "THB",
+          value: form.localAmount
+        });
+      }
+      if (ui.isAffiliateB) {
+        fbq("track", "Purchase", {
+          currency: "THB",
+          value: form.localAmount
+        });
+      }
+
       window.addEventListener(
         "message",
         (event) => {
@@ -383,7 +370,7 @@ async function confirmDeposit() {
                 color: "negative",
                 position: "top",
                 message: event.data.msg,
-                icon: "report_problem",
+                icon: "report_problem"
               });
             }
           }
@@ -462,12 +449,12 @@ async function confirmDeposit() {
 const amountPlaceholder = computed(() => {
   if (calculatedMinDeposit.value && activeMethod.value.depositMax)
     return `(${calculatedMinDeposit.value} - ${activeMethod.value.depositMax})`;
-  else return t('lang.enter_amount_money');
+  else return t("lang.enter_amount_money");
 });
 
 const restrictDecimalInput = (e) => {
   const num = +e.key;
-  if (num !== 0 && !num && !['Backspace', 'Delete'].includes(e.key)) e.preventDefault();
+  if (num !== 0 && !num && !["Backspace", "Delete"].includes(e.key)) e.preventDefault();
 };
 
 onMounted(() => {

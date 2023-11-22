@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.code9.jolly88",
+      "sha256_cert_fingerprints": [
+        "8C:10:B0:EE:EF:C5:6F:95:D0:A7:62:7F:41:B9:40:71:5F:7C:19:E7:D4:AD:AA:2B:A7:C3:D8:07:53:64:11:A1"
+      ]
+    }
+  }
+]

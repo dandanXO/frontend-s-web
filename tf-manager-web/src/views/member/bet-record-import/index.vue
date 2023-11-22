@@ -243,7 +243,7 @@
             v-if="scope.row.createTime !== null"
             v-formatter="{
               data: scope.row.createTime,
-              timeZone: siteTimeZone.timeZone,
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -293,9 +293,7 @@ const gameTypes = reactive({
 const platforms = reactive({
   list: []
 });
-const siteTimeZone = reactive({
-  timeZone: null,
-})
+let timeZone = null;
 
 const EXPORT_BET_RECORD_IMPORT_LIST_HEADER = [
   '用户名',
@@ -403,8 +401,7 @@ async function loadBetRecordImport() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
-  var siteSelected = siteList.list.find(e => e.id === request.siteId)
-  siteTimeZone.timeZone = siteSelected.timeZone;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

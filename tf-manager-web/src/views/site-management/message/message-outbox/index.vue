@@ -121,7 +121,7 @@
           <!-- eslint-disable -->
           <span
             v-if="scope.row.createTime !== null"
-            v-formatter="{ data: scope.row.createTime, timeZone: scope.row.siteTimeZone, type: 'date' }"
+            v-formatter="{ data: scope.row.createTime, timeZone: scope.row.timeZone, type: 'date' }"
           />
         </template>
       </el-table-column>
@@ -273,6 +273,11 @@ async function loadMessageOutbox() {
   }
   const { data: ret } = await getMessageOutbox(query);
   page.pages = ret.pages;
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
+      ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
+      : null
+  });
   page.records = ret.records;
 }
 
