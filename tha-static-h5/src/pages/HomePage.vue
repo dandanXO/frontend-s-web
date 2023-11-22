@@ -2003,8 +2003,9 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  width: calc(100% - 20px);
-  margin: 0px auto 10px;
+  // width: calc(100% - 20px);
+  width: 100%;
+  margin: 6px auto 10px;
   position: relative;
 
   @media (min-width: 769px) {
