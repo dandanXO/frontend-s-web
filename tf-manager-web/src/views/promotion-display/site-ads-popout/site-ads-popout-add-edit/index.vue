@@ -281,7 +281,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
 const site = ref(null)
-const promoDir = process.env.VUE_APP_S3_URL + '/promo/'
+const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 
 const adsPopoutForm = ref(null)
 
