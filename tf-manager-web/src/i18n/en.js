@@ -1061,6 +1061,22 @@ export default {
     progress: 'Progress',
     download: 'Download',
     updateProgress: 'Update Progress',
+    add_new: "New",
+    date_added: "Date Range added.",
+    please_add_at_least_one_date_time: "Please add at least 1 date and 1 time.",
+    multiple_rain_added: "Multiple Daily Rain durations added.",
+    date_already_exists: "Date already exists.",
+    time_already_exists: "Time range already exists.",
+    add_single_daterange: "Add Single DateRange",
+    adde_multiple_daterange: "Add Multiple DateRange",
+    add_single_date_steps: "Step: Select Date & Time range, and then click `Add`.",
+    add_multiple_date_steps: "Steps: Select all combination(s) of date & time range, click \"Add Date\" & \"Add\n" +
+      "          Time\", and then click \"Add\" to add.",
+    pick_date: "Pick a Date",
+    add_date: "Add Date",
+    add_time: "Add Time",
+    dates: "Date(s):",
+    timeranges: "Time Range(s):"
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',

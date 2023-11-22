@@ -156,11 +156,11 @@
               <!--                -->
               <!--              </div>-->
 
-              <el-button class="button-new-tag ml-1 el-button--success" @click="openRangeModal">
-                + New
+              <el-button class="button-new-tag ml-1 el-button--success" @click="openRangeModal(1)">
+                + {{ t('fields.add_new') }}
               </el-button>
             </el-form-item>
-            <el-form-item :label="t('fields.dailyRefreshDuration')" prop="dailyRefreshDuration">
+            <el-form-item :label="t('fields.dailyRefreshDuration')" prop="dailyRefreshDuration" style="width: 650px;">
               <el-tag
                 v-for="item in form.dailyRefreshDurationArray"
                 :key="item"
@@ -170,20 +170,20 @@
               >
                 {{ displayHourMinute(item) }}
               </el-tag>
-              <el-time-picker
-                v-model="refreshRange"
-                v-if="uiControl.refreshRangeVisible"
-                format="HH:mm"
-                value-format="HH:mm"
-                is-range
-                range-separator="-"
-                start-placeholder="Start"
-                end-placeholder="End"
-                @change="addRefreshRange"
-              />
-              <el-button-group v-else>
-                <el-button class="button-new-tag ml-1" size="small" @click="uiControl.refreshRangeVisible = true">
-                  + New
+              <!--              <el-time-picker-->
+              <!--                v-model="refreshRange"-->
+              <!--                v-if="uiControl.refreshRangeVisible"-->
+              <!--                format="HH:mm"-->
+              <!--                value-format="HH:mm"-->
+              <!--                is-range-->
+              <!--                range-separator="-"-->
+              <!--                start-placeholder="Start"-->
+              <!--                end-placeholder="End"-->
+              <!--                @change="addRefreshRange"-->
+              <!--              />-->
+              <el-button-group>
+                <el-button class="button-new-tag ml-1 el-button--success" size="small" @click="openRangeModal(2)">
+                  + {{ t('fields.add_new') }}
                 </el-button>
                 <el-button class="button-new-tag ml-1" size="small" @click="setRefreshDurationSameAsRainDuration">
                   Set Same As Rain Duration
@@ -318,25 +318,25 @@
     </el-dialog>
 
     <el-dialog
-      title="Add Daily Rain Duration"
+      :title="(uiControl.addRangeType===1) ? 'Add Daily Rain Duration' : 'Add Daily Refresh Duration' "
       v-model="uiControl.rainModelVisible"
       append-to-body
       width="650px"
     >
       <el-radio-group v-model="uiControl.dateRangeType" class="ml-4">
-        <el-radio label="1" size="large">Add Single DateRange</el-radio>
-        <el-radio label="2" size="large">Add Multiple DateRange</el-radio>
+        <el-radio label="1" size="large">{{ $t('fields.add_single_daterange') }}</el-radio>
+        <el-radio label="2" size="large">{{ $t('fields.adde_multiple_daterange') }}</el-radio>
       </el-radio-group>
 
       <div v-if="uiControl.dateRangeType==='1'" style="margin:10px 0px 20px;">
 
-        <label class="dialog-label">Step: Select Date & Time range, and then click "Add".</label>
+        <label class="dialog-label">{{ $t('fields.add_single_date_steps') }}</label>
         <br>
 
         <el-date-picker
           v-model="singleRainRangeDate"
           type="datetime"
-          placeholder="Pick a Date"
+          :placeholder="t('fields.pick_date')"
           format="YYYY-MM-DD"
           date-format="MMM DD, YYYY"
         />
@@ -353,15 +353,14 @@
       </div>
 
       <div v-if="uiControl.dateRangeType==='2'" style="margin:10px 0px 20px;">
-        <label class="dialog-label">Steps: Select all combination(s) of date & time range, click "Add Date" & "Add
-          Time", and then click "Add" to add.</label>
+        <label class="dialog-label">{{ $t('fields.add_multiple_date_steps') }}</label>
         <br>
 
         <div class="grid-table">
           <el-date-picker
             v-model="multiRainRangeDate"
             type="datetime"
-            placeholder="Pick a Date"
+            :placeholder="t('fields.pick_date')"
             format="YYYY-MM-DD"
             date-format="MMM DD, YYYY"
           />
@@ -376,29 +375,33 @@
             end-placeholder="End"
           />
 
-          <el-button type="success" style="margin-left: auto;" @click="addMultiRangeDate('date')">Add Date</el-button>
-          <el-button type="success" style="margin-left: auto;" @click="addMultiRangeDate('time')">Add Time</el-button>
+          <el-button type="success" style="margin-left: auto;" @click="addMultiRangeDate('date')">{{ $t('fields.add_date') }}</el-button>
+          <el-button type="success" style="margin-left: auto;" @click="addMultiRangeDate('time')">{{ $t('fields.add_time') }}</el-button>
 
-          <label>Date(s):</label>
-          <label>Time(s):</label>
+          <label>{{ $t('fields.date') }}</label>
+          <label>{{ $t('fields.timeranges') }}</label>
 
-          <div class="multi-lists" :class="isMultiRangeError===true && multiRangeDateLists.length === 0? 'red-box' : ''">
+          <div class="multi-lists"
+               :class="isMultiRangeError===true && multiRangeDateLists.length === 0? 'red-box' : ''"
+          >
             <template v-for="(multiday,index) of multiRangeDateLists" :key="index">
               <div class="multi-item">{{ multiday }}
 
-                <el-icon @click="multiRangeDateLists.splice(index,1)">
-                  <CloseBold />
+                <el-icon class="btn-pointer" @click="multiRangeDateLists.splice(index,1)" color="dark">
+                  X
                 </el-icon>
               </div>
             </template>
 
           </div>
-          <div class="multi-lists" :class="isMultiRangeError===true && multiRangeTimeLists.length === 0? 'red-box' : ''">
+          <div class="multi-lists"
+               :class="isMultiRangeError===true && multiRangeTimeLists.length === 0? 'red-box' : ''"
+          >
             <template v-for="(multitime, index) of multiRangeTimeLists" :key="index">
               <div class="multi-item">{{ multitime }}
 
-                <el-icon @click="multiRangeTimeLists.splice(index,1)">
-                  <CloseBold />
+                <el-icon class="btn-pointer" @click="multiRangeTimeLists.splice(index,1)" color="dark">
+                  X
                 </el-icon>
               </div>
             </template>
@@ -525,6 +528,7 @@ const uiControl = reactive({
   dialogVisible: false,
   rainRangeVisible: false,
   rainModelVisible: false,
+  addRangeType: null,
   refreshRangeVisible: false,
   vipRuleVisible: false,
   lastDigitRuleVisible: false,
@@ -781,7 +785,8 @@ function disabledStartDate(time) {
   return time.getTime() <= moment(Date.now()).subtract(1, 'days')
 }
 
-const openRangeModal = () => {
+const openRangeModal = (type) => {
+  uiControl.addRangeType = type;
   uiControl.rainModelVisible = true;
   isMultiRangeError.value = false;
   singleRainRangeDate.value = null;
@@ -792,44 +797,86 @@ const openRangeModal = () => {
   multiRainRangeTime.value = null;
 }
 
+
 function addRainRangeItem() {
   // console.log(singleRainRangeDate.value);
   // console.log(singleRainRangeTime.value);
   isMultiRangeError.value = false;
 
-  if (uiControl.dateRangeType === "1") {
-    let date = moment(singleRainRangeDate.value).format("YYYY-MM-DD");
-    console.log(date);
+  if (uiControl.addRangeType === 1) {
 
-    if (date && singleRainRangeTime.value[0] && singleRainRangeTime.value[1]) {
-      form.dailyRainDurationArray.push({
-        startTime: date + '-' + singleRainRangeTime.value[0],
-        endTime: date + '-' + singleRainRangeTime.value[1]
-      })
-    }
-    console.log(form.dailyRainDurationArray);
-    ElMessage({message: 'Daily Rain added.', type: 'success'});
-  } else {
-    if (multiRangeDateLists.value.length > 0 && multiRangeTimeLists.value.length > 0) {
-      multiRangeDateLists.value.forEach((date) => {
-        multiRangeTimeLists.value.forEach((time) => {
+    if (uiControl.dateRangeType === "1") {
+      let date = moment(singleRainRangeDate.value).format("YYYY-MM-DD");
+      console.log(date);
 
-          let timerange = time.split("--");
-
-          form.dailyRainDurationArray.push({
-            startTime: date + '-' + timerange[0],
-            endTime: date + '-' + timerange[1]
-          })
-
-        });
-      })
-      ElMessage({message: 'Multiple Daily Rain durations added.', type: 'success'});
+      if (date && singleRainRangeTime.value[0] && singleRainRangeTime.value[1]) {
+        form.dailyRainDurationArray.push({
+          startTime: date + '-' + singleRainRangeTime.value[0],
+          endTime: date + '-' + singleRainRangeTime.value[1]
+        })
+      }
+      console.log(form.dailyRainDurationArray);
+      ElMessage({message: t('fields.date_added') , type: 'success'});
     } else {
-      ElMessage({message: 'Please add at least 1 date and 1 time.', type: 'error'});
-      isMultiRangeError.value = true;
-      return;
+      if (multiRangeDateLists.value.length > 0 && multiRangeTimeLists.value.length > 0) {
+        multiRangeDateLists.value.forEach((date) => {
+          multiRangeTimeLists.value.forEach((time) => {
+
+            let timerange = time.split("--");
+
+            form.dailyRainDurationArray.push({
+              startTime: date + '-' + timerange[0],
+              endTime: date + '-' + timerange[1]
+            })
+
+          });
+        })
+        ElMessage({message: t('fields.multiple_rain_added'), type: 'success'});
+      } else {
+        ElMessage({message: t('fields.please_add_at_least_one_date_time'), type: 'error'});
+        isMultiRangeError.value = true;
+        return;
+      }
     }
+  } else {
+
+    if (uiControl.dateRangeType === "1") {
+      let date = moment(singleRainRangeDate.value).format("YYYY-MM-DD");
+      console.log(date);
+
+      if (date && singleRainRangeTime.value[0] && singleRainRangeTime.value[1]) {
+        form.dailyRefreshDurationArray.push({
+          startTime: date + '-' + singleRainRangeTime.value[0],
+          endTime: date + '-' + singleRainRangeTime.value[1]
+        })
+      }
+      console.log(form.dailyRainDurationArray);
+      ElMessage({message: t('fields.date_added'), type: 'success'});
+    } else {
+      if (multiRangeDateLists.value.length > 0 && multiRangeTimeLists.value.length > 0) {
+        multiRangeDateLists.value.forEach((date) => {
+          multiRangeTimeLists.value.forEach((time) => {
+
+            let timerange = time.split("--");
+
+            form.dailyRefreshDurationArray.push({
+              startTime: date + '-' + timerange[0],
+              endTime: date + '-' + timerange[1]
+            })
+
+          });
+        })
+        ElMessage({message: t('fields.multiple_rain_added'), type: 'success'});
+      } else {
+        ElMessage({message: t('fields.please_add_at_least_one_date_time'), type: 'error'});
+        isMultiRangeError.value = true;
+        return;
+      }
+    }
+
   }
+
+
   uiControl.rainModelVisible = false;
 
 }
@@ -837,9 +884,19 @@ function addRainRangeItem() {
 const addMultiRangeDate = (type) => {
   if (type === 'date' && multiRainRangeDate.value) {
     let date = moment(multiRainRangeDate.value).format("YYYY-MM-DD");
-    multiRangeDateLists.value.push(date)
+    if (multiRangeDateLists.value.indexOf(date) > -1) {
+      ElMessage({message: t('fields.date_already_exists'), type: 'error'});
+    } else {
+      multiRangeDateLists.value.push(date)
+    }
+
   } else if (type === 'time' && multiRainRangeTime.value && multiRainRangeTime.value[0] && multiRainRangeTime.value[1]) {
-    multiRangeTimeLists.value.push(multiRainRangeTime.value[0] + '--' + multiRainRangeTime.value[1])
+    if (multiRangeTimeLists.value.indexOf(multiRainRangeTime.value[0] + '--' + multiRainRangeTime.value[1]) > -1) {
+      ElMessage({message: t('fields.time_already_exists'), type: 'error'});
+    } else {
+      multiRangeTimeLists.value.push(multiRainRangeTime.value[0] + '--' + multiRainRangeTime.value[1])
+    }
+
   }
 }
 
@@ -952,15 +1009,19 @@ onMounted(async () => {
     padding: 8px 4px;
     min-height: 40px;
 
-    &.red-box{
+    &.red-box {
       border: 1px solid #ff0000;
     }
 
-    .multi-item{
-      display:flex;
+    .multi-item {
+      display: flex;
       justify-content: space-between;
       align-items: center;
     }
+  }
+
+  .btn-pointer {
+    cursor: pointer;
   }
 
 }

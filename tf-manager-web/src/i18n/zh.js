@@ -1061,6 +1061,23 @@ export default {
     progress: '进度',
     download: '下载',
     updateProgress: '更新进度',
+    add_new: "新建",
+    date_added: "已添加时间段。",
+    please_add_at_least_one_date_time: "请至少添加1个日期和1个时间。",
+    multiple_rain_added: "已添加多个红包雨时间段。",
+    date_already_exists: "日期已存在。",
+    time_already_exists: "时间范围已存在。",
+    add_single_daterange: "添加单个时间段",
+    adde_multiple_daterange: "添加多个时间段",
+    add_single_date_steps: "步骤：选择日期和时间范围，然后点击“添加”按钮。",
+    add_multiple_date_steps: "步骤：选择所有日期和时间范围的组合，点击“添加日期”和“添加\n" +
+      "          时间”，然后点击“添加”按钮。",
+    pick_date: "选择日期",
+    add_date: "添加日期",
+    add_time: "添加时间",
+    dates: "日期：",
+    timeranges: "时间范围："
+
   },
   message: {
     addRemarkSuccess: '新增备注成功',
