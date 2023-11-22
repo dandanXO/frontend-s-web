@@ -151,7 +151,7 @@
             :key="`page-content-${i}`"
             :id="`page-number-${e}`"
             :class="`page-number page-item ${paginationInfo.pageNumber === e ? 'active' : ''}`"
-            @click="onPaginationClick()"
+            @click="onPaginationClick(e)"
           >
             {{ e }}
           </div>
@@ -275,7 +275,7 @@ function getRecords() {
 function onPrevPageClick() {
   if (paginationInfo.pageNumber === 1) return;
 
-  paginationInfo.pageNumber = paginationInfo.pageNumber--;
+  paginationInfo.pageNumber--;
   getRecordList();
 }
 
