@@ -1178,7 +1178,9 @@ export default {
     browse: '浏览',
     imageSite: '图像站点',
     imageRemark: '图像备注',
-    selectedImage: '已选图像'
+    selectedImage: '已选图像',
+    poster: '海报',
+    posterType: '海报类别',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1694,6 +1696,16 @@ export default {
     added_success: "谷歌验证码成功添加。",
     if_not_google_auth_then: "若未绑定Google Authenticator 则无需填写",
     google_auth_code: "请输入6位数谷歌验证码"
+  },
+  posterType: {
+    overall: "综合推广图",
+    app: "APP推广图",
+    sponsor: "赞助推广图",
+    gift: "赠送推广图",
+    competition: "赛事推广图",
+    event: "活动推广图",
+    crypto: "虚拟币推广图",
+    affiliate: "代理福利图",
   },
   error: {
     400: '请求无效',

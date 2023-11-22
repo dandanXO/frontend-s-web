@@ -1178,7 +1178,9 @@ export default {
     browse: 'Browse',
     imageSite: 'Image Site',
     imageRemark: 'Image Remark',
-    selectedImage: 'Selected Image'
+    selectedImage: 'Selected Image',
+    poster: 'Poster',
+    posterType: 'Poster Type',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1712,6 +1714,16 @@ export default {
     added_success: "Google Authenticator code added successfully",
     if_not_google_auth_then: "If you haven't bound Google Authenticator, there's no need to fill it out.",
     google_auth_code: "Enter 6 digits Google Authenticator Code"
+  },
+  posterType: {
+    overall: "Overall Referral",
+    app: "APP Referral",
+    sponsor: "Sponsor Referral",
+    gift: "Gift Referral",
+    competition: "Competition Referral",
+    event: "Event Referral",
+    crypto: "Crypto Referral",
+    affiliate: "Affiliate Benefit",
   },
   error: {
     400: 'Bad Request',

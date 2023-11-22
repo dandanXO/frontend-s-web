@@ -135,12 +135,13 @@
             class="filter-item"
             style="width: 350px"
             default-first-option
+            @change="checkGamePlatform('CREATE')"
           >
             <el-option
               v-for="item in uiControl.category"
-              :key="item"
-              :label="item"
-              :value="item"
+              :key="item.name"
+              :label="item.display"
+              :value="item.name"
             />
           </el-select>
         </el-form-item>
@@ -153,12 +154,54 @@
             style="width: 350px"
             default-first-option
             @focus="loadSites"
+            @change="checkGamePlatform('CREATE')"
           >
             <el-option
               v-for="item in siteList.list"
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          v-show="form.category && form.siteId && form.category === 'GAME'"
+          :label="t('fields.platform')"
+          prop="platform"
+        >
+          <el-select
+            v-model="form.platform"
+            size="small"
+            :placeholder="t('fields.platform')"
+            class="filter-item"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in platform.list"
+              :key="item.code"
+              :label="item.code"
+              :value="item.code"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          v-show="form.category === 'POSTER'"
+          :label="t('fields.posterType')"
+          prop="posterType"
+        >
+          <el-select
+            v-model="form.posterType"
+            size="small"
+            :placeholder="t('fields.posterType')"
+            class="filter-item"
+            style="width: 350px"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.posterType"
+              :key="item.name"
+              :label="item.display"
+              :value="item.name"
             />
           </el-select>
         </el-form-item>
@@ -282,6 +325,7 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
+import { getPlatformsBySite } from '../../../api/platform'
 
 const { t } = useI18n()
 const store = useStore()
@@ -290,7 +334,7 @@ const site = ref(null)
 const inputImage = ref(null)
 const imageForm = ref(null)
 const imageDir = process.env.VUE_APP_IMAGE
-const categoryList = ['/promo/', '/game/', '/payment/']
+const categoryList = ['/promo/', '/game/', '/payment/', '/poster/']
 const siteList = reactive({
   list: [],
 })
@@ -305,10 +349,29 @@ const uiControl = reactive({
   dialogType: 'CREATE',
   editBtn: true,
   removeBtn: true,
-  category: ['PROMO', 'GAME', 'PAYMENT'],
+  category: [
+    { name: 'PROMO', display: t('fields.promo') },
+    { name: 'GAME', display: t('menu.Game') },
+    { name: 'PAYMENT', display: t('fields.payment') },
+    { name: 'POSTER', display: t('fields.poster') },
+  ],
+  posterType: [
+    { name: 'OVERALL', display: t('posterType.overall') },
+    { name: 'APP', display: t('posterType.app') },
+    { name: 'SPONSOR', display: t('posterType.sponsor') },
+    { name: 'GIFT', display: t('posterType.gift') },
+    { name: 'COMPETITION', display: t('posterType.competition') },
+    { name: 'EVENT', display: t('posterType.event') },
+    { name: 'CRYPTO', display: t('posterType.crypto') },
+    { name: 'AFFILIATE', display: t('posterType.affiliate') },
+  ],
 })
 
 let chooseImage = []
+const platform = reactive({
+  list: [],
+  display: false,
+})
 const request = reactive({
   size: 30,
   current: 1,
@@ -325,6 +388,9 @@ const form = reactive({
   category: null,
   siteId: null,
   remark: null,
+  platform: null,
+  posterType: null,
+  imageDimension: null,
 })
 
 const page = reactive({
@@ -337,6 +403,8 @@ const formRules = reactive({
   name: [required(t('message.validateImageNameRequired'))],
   category: [required(t('message.validateCategoryRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
+  platform: null,
+  posterType: null,
 })
 
 function resetQuery() {
@@ -355,6 +423,7 @@ function showDialog(type) {
       imageForm.value.resetFields()
       uploadedImage.url = null
       form.id = null
+      platform.list = []
     }
     uiControl.dialogTitle = t('fields.addImage')
   } else {
@@ -389,12 +458,24 @@ function showEdit(image) {
         form.siteId = element.id
       }
     })
-    form.path = image.path.substring(image.path.lastIndexOf('/') + 1)
   })
+  checkGamePlatform("EDIT")
 }
 
 async function attachPhoto(event) {
   const files = event.target.files[0]
+
+  // record file dimension
+  var fr = new FileReader()
+  fr.onload = function() {
+    var img = new Image()
+    img.onload = function() {
+      form.imageDimension = img.width + ' * ' + img.height
+    }
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
   const dir = 'temp'
   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
@@ -424,26 +505,34 @@ async function loadSiteImage() {
   ret.records.forEach(e => {
     let categoryDir
     switch (e.category) {
-      case "PROMO":
+      case 'PROMO':
         categoryDir = categoryList[0]
         break
-      case "GAME":
+      case 'GAME':
         categoryDir = categoryList[1]
         break
-      case "PAYMENT":
+      case 'PAYMENT':
         categoryDir = categoryList[2]
         break
+      case 'POSTER':
+        categoryDir = categoryList[3]
+        break
       default:
-        categoryDir = "/temp/"
+        categoryDir = '/temp/'
     }
     e.displayPath = imageDir + categoryDir + e.path
+
+    if (e.category === 'GAME') {
+      e.platform = e.path.substring(e.path.indexOf('/') + 1, e.path.lastIndexOf('/'))
+    }
   })
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone =
       store.state.user.sites.find(e => e.siteName === data.siteName) !==
       undefined
-        ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
+        ? store.state.user.sites.find(e => e.siteName === data.siteName)
+          .timeZone
         : null
   })
   page.records = ret.records
@@ -497,6 +586,24 @@ function submit() {
     create()
   } else {
     edit()
+  }
+}
+
+async function checkGamePlatform(type) {
+  if (form.category && form.siteId && form.category === 'GAME') {
+    const { data: ret } = await getPlatformsBySite(form.siteId)
+    platform.list = ret
+    platform.display = true
+    formRules.platform = [required(t('message.validateSiteRequired'))]
+  } else if (form.category === 'POSTER') {
+    formRules.posterType = [required(t('messsage.validatePosterTypeRequired'))]
+  } else {
+    platform.list = []
+    platform.display = false
+    formRules.platform = null
+  }
+  if (type !== "EDIT") {
+    form.platform = null
   }
 }
 
