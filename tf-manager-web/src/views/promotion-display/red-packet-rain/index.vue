@@ -81,7 +81,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="600px"
+      width="750px"
     >
       <el-form
         ref="bannerForm"
@@ -129,7 +129,7 @@
                 type="date"
                 value-format="YYYY-MM-DD"
                 v-model="form.startTime"
-                style="width: 145px"
+                style="width: 355px"
                 :disabled-date="disabledStartDate"
               />
             </el-form-item>
@@ -138,11 +138,11 @@
                 type="date"
                 value-format="YYYY-MM-DD"
                 v-model="form.endTime"
-                style="width: 145px"
+                style="width: 355px"
                 :disabled-date="disabledEndDate"
               />
             </el-form-item>
-            <el-form-item :label="t('fields.dailyRainDuration')" prop="dailyRainDuration">
+            <el-form-item :label="t('fields.dailyRainDuration')" prop="dailyRainDuration" style="width: 650px;">
               <el-tag
                 v-for="item in form.dailyRainDurationArray"
                 :key="item"
@@ -152,18 +152,11 @@
               >
                 {{ displayHourMinute(item) }}
               </el-tag>
-              <el-time-picker
-                v-model="rainRange"
-                v-if="uiControl.rainRangeVisible"
-                format="HH:mm"
-                value-format="HH:mm"
-                is-range
-                range-separator="-"
-                start-placeholder="Start"
-                end-placeholder="End"
-                @change="addRainRange"
-              />
-              <el-button v-else class="button-new-tag ml-1" size="small" @click="uiControl.rainRangeVisible = true">
+              <!--              <div v-for="(rainRange) of form.dailyRainDurationArray">-->
+              <!--                -->
+              <!--              </div>-->
+
+              <el-button class="button-new-tag ml-1 el-button--success" @click="openRangeModal">
                 + New
               </el-button>
             </el-form-item>
@@ -199,19 +192,21 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item :label="t('fields.amountLimitPerRain')" prop="amountLimitPerRain">
+        <el-form-item :label="t('fields.amountLimitPerRain')" prop="amountLimitPerRain" style="width: 600px;">
           <el-input-number
             v-model="form.amountLimitPerRain"
             :min="0"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.redPacketAmountAfterReachingLimit')" prop="redPacketAmountAfterReachingLimit">
+        <el-form-item :label="t('fields.redPacketAmountAfterReachingLimit')" prop="redPacketAmountAfterReachingLimit"
+                      style="width: 600px;"
+        >
           <el-input-number
             v-model="form.redPacketAmountAfterReachingLimit"
             :min="0"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.vipRules')" prop="vipRuleArray">
+        <el-form-item :label="t('fields.vipRules')" prop="vipRuleArray" style="width: 600px;">
           <el-tag
             v-for="item in form.vipRuleArray"
             :key="item"
@@ -229,7 +224,7 @@
             size="small"
             label-width="50px"
           >
-            <el-form-item :label="t('fields.vipLevel')" prop="vipLevel">
+            <el-form-item :label="t('fields.vipLevel')" prop="vipLevel" style="width: 600px;">
               <el-select
                 clearable
                 v-model="vipRuleForm.vipLevel"
@@ -263,11 +258,13 @@
               <el-button @click="addVipRule">{{ t('fields.add') }}</el-button>
             </div>
           </el-form>
-          <el-button v-else-if="currVipList.list.length > 0" class="button-new-tag ml-1" size="small" @click="uiControl.vipRuleVisible = true">
+          <el-button v-else-if="currVipList.list.length > 0" class="button-new-tag ml-1" size="small"
+                     @click="uiControl.vipRuleVisible = true"
+          >
             + New Rule
           </el-button>
         </el-form-item>
-        <el-form-item :label="t('fields.lastDigitMinDayDeposit')" prop="lastDigitMinDayDeposit">
+        <el-form-item :label="t('fields.lastDigitMinDayDeposit')" prop="lastDigitMinDayDeposit" style="width: 600px;">
           <el-input-number
             v-model="form.lastDigitMinDayDeposit"
             :min="0"
@@ -307,7 +304,9 @@
               <el-button @click="addLastDigitRule">{{ t('fields.add') }}</el-button>
             </div>
           </el-form>
-          <el-button v-else-if="currVipList.list.length > 0" class="button-new-tag ml-1" size="small" @click="uiControl.lastDigitRuleVisible = true">
+          <el-button v-else-if="currVipList.list.length > 0" class="button-new-tag ml-1" size="small"
+                     @click="uiControl.lastDigitRuleVisible = true"
+          >
             + New Rule
           </el-button>
         </el-form-item>
@@ -317,6 +316,100 @@
         </div>
       </el-form>
     </el-dialog>
+
+    <el-dialog
+      title="Add Daily Rain Duration"
+      v-model="uiControl.rainModelVisible"
+      append-to-body
+      width="650px"
+    >
+      <el-radio-group v-model="uiControl.dateRangeType" class="ml-4">
+        <el-radio label="1" size="large">Add Single DateRange</el-radio>
+        <el-radio label="2" size="large">Add Multiple DateRange</el-radio>
+      </el-radio-group>
+
+      <div v-if="uiControl.dateRangeType==='1'" style="margin:10px 0px 20px;">
+
+        <label class="dialog-label">Step: Select Date & Time range, and then click "Add".</label>
+        <br>
+
+        <el-date-picker
+          v-model="singleRainRangeDate"
+          type="datetime"
+          placeholder="Pick a Date"
+          format="YYYY-MM-DD"
+          date-format="MMM DD, YYYY"
+        />
+
+        <el-time-picker
+          v-model="singleRainRangeTime"
+          format="HH:mm"
+          value-format="HH:mm"
+          is-range
+          range-separator="-"
+          start-placeholder="Start"
+          end-placeholder="End"
+        />
+      </div>
+
+      <div v-if="uiControl.dateRangeType==='2'" style="margin:10px 0px 20px;">
+        <label class="dialog-label">Steps: Select all combination(s) of date & time range, click "Add Date" & "Add
+          Time", and then click "Add" to add.</label>
+        <br>
+
+        <div class="grid-table">
+          <el-date-picker
+            v-model="multiRainRangeDate"
+            type="datetime"
+            placeholder="Pick a Date"
+            format="YYYY-MM-DD"
+            date-format="MMM DD, YYYY"
+          />
+
+          <el-time-picker
+            v-model="multiRainRangeTime"
+            format="HH:mm"
+            value-format="HH:mm"
+            is-range
+            range-separator="-"
+            start-placeholder="Start"
+            end-placeholder="End"
+          />
+
+          <el-button type="success" style="margin-left: auto;" @click="addMultiRangeDate('date')">Add Date</el-button>
+          <el-button type="success" style="margin-left: auto;" @click="addMultiRangeDate('time')">Add Time</el-button>
+
+          <label>Date(s):</label>
+          <label>Time(s):</label>
+
+          <div class="multi-lists" :class="isMultiRangeError===true && multiRangeDateLists.length === 0? 'red-box' : ''">
+            <template v-for="(multiday,index) of multiRangeDateLists" :key="index">
+              <div class="multi-item">{{ multiday }}
+
+                <el-icon @click="multiRangeDateLists.splice(index,1)">
+                  <CloseBold />
+                </el-icon>
+              </div>
+            </template>
+
+          </div>
+          <div class="multi-lists" :class="isMultiRangeError===true && multiRangeTimeLists.length === 0? 'red-box' : ''">
+            <template v-for="(multitime, index) of multiRangeTimeLists" :key="index">
+              <div class="multi-item">{{ multitime }}
+
+                <el-icon @click="multiRangeTimeLists.splice(index,1)">
+                  <CloseBold />
+                </el-icon>
+              </div>
+            </template>
+          </div>
+        </div>
+
+      </div>
+
+      <el-button type="primary" @click="addRainRangeItem">{{ t('fields.add') }}</el-button>
+    </el-dialog>
+
     <el-table
       :data="page.records"
       ref="table"
@@ -346,7 +439,9 @@
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
-      <el-table-column type="title" :label="t('fields.action')" v-if="hasPermission(['sys:banner:update'])|| hasPermission(['sys:banner:del'])">
+      <el-table-column type="title" :label="t('fields.action')"
+                       v-if="hasPermission(['sys:banner:update'])|| hasPermission(['sys:banner:del'])"
+      >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -377,21 +472,22 @@
 </template>
 
 <script setup>
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { computed, nextTick, onMounted, reactive, ref } from 'vue'
+/* eslint-disable */
+import {ElMessage, ElMessageBox} from 'element-plus'
+import {computed, nextTick, onMounted, reactive, ref} from 'vue'
 import {
   getRedPacketRains,
 } from '../../../api/privilege-red-packet-rain'
-import { getSiteListSimple } from '../../../api/site'
-import { required } from '../../../utils/validate'
-import { hasPermission } from '../../../utils/util'
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
-import { getVipList } from "@/api/vip";
+import {getSiteListSimple} from '../../../api/site'
+import {required} from '../../../utils/validate'
+import {hasPermission} from '../../../utils/util'
+import {useStore} from '../../../store';
+import {TENANT} from "../../../store/modules/user/action-types";
+import {useI18n} from "vue-i18n";
+import {getVipList} from "@/api/vip";
 import moment from "moment/moment";
 
-const { t } = useI18n();
+const {t} = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
@@ -413,11 +509,22 @@ const currVipList = reactive({
 
 const rainRange = ref(null)
 const refreshRange = ref(null)
+
+const singleRainRangeDate = ref(null);
+const singleRainRangeTime = ref(null);
+
+const multiRainRangeDate = ref(null);
+const multiRainRangeTime = ref(null);
+
+const multiRangeDateLists = ref([]);
+const multiRangeTimeLists = ref([]);
+const isMultiRangeError = ref(false);
 // const vipRule = ref(null)
 
 const uiControl = reactive({
   dialogVisible: false,
   rainRangeVisible: false,
+  rainModelVisible: false,
   refreshRangeVisible: false,
   vipRuleVisible: false,
   lastDigitRuleVisible: false,
@@ -426,20 +533,21 @@ const uiControl = reactive({
   editBtn: true,
   removeBtn: true,
   bannerState: [
-    { key: 1, displayName: 'Open', value: true },
-    { key: 2, displayName: 'Close', value: false },
+    {key: 1, displayName: 'Open', value: true},
+    {key: 2, displayName: 'Close', value: false},
   ],
   category: [
-    { key: 1, displayName: 'HOME', value: 'HOME' },
-    { key: 2, displayName: 'LIVE', value: 'LIVE' },
-    { key: 3, displayName: 'SLOT', value: 'SLOT' },
-    { key: 4, displayName: 'FISH', value: 'FISH' },
-    { key: 5, displayName: 'POKER', value: 'POKER' },
-    { key: 6, displayName: 'PROMO', value: 'PROMO' },
-    { key: 7, displayName: 'HOMEPROMO', value: 'HOMEPROMO' },
-    { key: 8, displayName: 'HOMEPOP', value: 'HOMEPOP' },
-    { key: 9, displayName: 'CENTERPROMO', value: 'CENTERPROMO' }
-  ]
+    {key: 1, displayName: 'HOME', value: 'HOME'},
+    {key: 2, displayName: 'LIVE', value: 'LIVE'},
+    {key: 3, displayName: 'SLOT', value: 'SLOT'},
+    {key: 4, displayName: 'FISH', value: 'FISH'},
+    {key: 5, displayName: 'POKER', value: 'POKER'},
+    {key: 6, displayName: 'PROMO', value: 'PROMO'},
+    {key: 7, displayName: 'HOMEPROMO', value: 'HOMEPROMO'},
+    {key: 8, displayName: 'HOMEPOP', value: 'HOMEPOP'},
+    {key: 9, displayName: 'CENTERPROMO', value: 'CENTERPROMO'}
+  ],
+  dateRangeType: "1"
 })
 
 let chooseBanner = []
@@ -583,13 +691,13 @@ function setRefreshDurationSameAsRainDuration() {
 }
 
 async function loadRedPacketRain() {
-  const { data: ret } = await getRedPacketRains(request)
+  const {data: ret} = await getRedPacketRains(request)
   page.pages = ret.pages
   page.records = ret.records
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
+  const {data: site} = await getSiteListSimple()
   siteList.list = site
 }
 
@@ -608,7 +716,7 @@ async function removeBanner(banner) {
       // await deleteHomeBanner(chooseBanner.map(u => u.id))
     }
     await loadRedPacketRain()
-    ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
+    ElMessage({message: t('message.deleteSuccess'), type: 'success'})
   })
 }
 
@@ -630,7 +738,7 @@ function changeSite(siteId) {
 }
 
 async function loadVips() {
-  const { data: vip } = await getVipList()
+  const {data: vip} = await getVipList()
   totalVipList.list = vip
 }
 
@@ -656,7 +764,7 @@ function create() {
       // await createHomeBanner(form)
       uiControl.dialogVisible = false
       await loadRedPacketRain()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      ElMessage({message: t('message.addSuccess'), type: 'success'})
     }
   })
 }
@@ -673,24 +781,90 @@ function disabledStartDate(time) {
   return time.getTime() <= moment(Date.now()).subtract(1, 'days')
 }
 
-function addRainRange(arr) {
-  if (arr[0] && arr[1]) {
-    form.dailyRainDurationArray.push({ startTime: arr[0], endTime: arr[1] })
-    rainRange.value = null
-  }
-  uiControl.rainRangeVisible = false
+const openRangeModal = () => {
+  uiControl.rainModelVisible = true;
+  isMultiRangeError.value = false;
+  singleRainRangeDate.value = null;
+  singleRainRangeTime.value = null;
+  multiRangeDateLists.value = [];
+  multiRangeTimeLists.value = [];
+  multiRainRangeDate.value = null;
+  multiRainRangeTime.value = null;
 }
+
+function addRainRangeItem() {
+  // console.log(singleRainRangeDate.value);
+  // console.log(singleRainRangeTime.value);
+  isMultiRangeError.value = false;
+
+  if (uiControl.dateRangeType === "1") {
+    let date = moment(singleRainRangeDate.value).format("YYYY-MM-DD");
+    console.log(date);
+
+    if (date && singleRainRangeTime.value[0] && singleRainRangeTime.value[1]) {
+      form.dailyRainDurationArray.push({
+        startTime: date + '-' + singleRainRangeTime.value[0],
+        endTime: date + '-' + singleRainRangeTime.value[1]
+      })
+    }
+    console.log(form.dailyRainDurationArray);
+    ElMessage({message: 'Daily Rain added.', type: 'success'});
+  } else {
+    if (multiRangeDateLists.value.length > 0 && multiRangeTimeLists.value.length > 0) {
+      multiRangeDateLists.value.forEach((date) => {
+        multiRangeTimeLists.value.forEach((time) => {
+
+          let timerange = time.split("--");
+
+          form.dailyRainDurationArray.push({
+            startTime: date + '-' + timerange[0],
+            endTime: date + '-' + timerange[1]
+          })
+
+        });
+      })
+      ElMessage({message: 'Multiple Daily Rain durations added.', type: 'success'});
+    } else {
+      ElMessage({message: 'Please add at least 1 date and 1 time.', type: 'error'});
+      isMultiRangeError.value = true;
+      return;
+    }
+  }
+  uiControl.rainModelVisible = false;
+
+}
+
+const addMultiRangeDate = (type) => {
+  if (type === 'date' && multiRainRangeDate.value) {
+    let date = moment(multiRainRangeDate.value).format("YYYY-MM-DD");
+    multiRangeDateLists.value.push(date)
+  } else if (type === 'time' && multiRainRangeTime.value && multiRainRangeTime.value[0] && multiRainRangeTime.value[1]) {
+    multiRangeTimeLists.value.push(multiRainRangeTime.value[0] + '--' + multiRainRangeTime.value[1])
+  }
+}
+
+// function addRainRange(arr) {
+//   if (arr[0] && arr[1]) {
+//     form.dailyRainDurationArray.push({ startTime: arr[0], endTime: arr[1] })
+//     rainRange.value = null
+//   }
+//   uiControl.rainRangeVisible = false
+// }
 
 function addRefreshRange(arr) {
   if (arr[0] && arr[1]) {
-    form.dailyRefreshDurationArray.push({ startTime: arr[0], endTime: arr[1] })
+    form.dailyRefreshDurationArray.push({startTime: arr[0], endTime: arr[1]})
     refreshRange.value = null
   }
   uiControl.refreshRangeVisible = false
 }
 
 function addVipRule() {
-  form.vipRuleArray.push({ vipLevel: vipRuleForm.vipLevel, minAmount: vipRuleForm.minAmount, maxAmount: vipRuleForm.maxAmount })
+  form.vipRuleArray.push({
+    vipLevel: vipRuleForm.vipLevel,
+    minAmount: vipRuleForm.minAmount,
+    maxAmount: vipRuleForm.maxAmount
+  })
   uiControl.vipRuleVisible = false
   getAvailableVip()
   vipForm.value.resetFields()
@@ -711,7 +885,7 @@ function edit() {
       // await updateHomeBanner(form)
       uiControl.dialogVisible = false
       await loadRedPacketRain()
-      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+      ElMessage({message: t('message.editSuccess'), type: 'success'})
     }
   })
 }
@@ -724,7 +898,7 @@ function submit() {
   }
 }
 
-onMounted(async() => {
+onMounted(async () => {
   await loadSites();
   await loadVips();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -756,5 +930,45 @@ onMounted(async() => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+
+.grid-table {
+  margin: 10px 0px 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  .el-button {
+    width: 120px;
+  }
+
+  .el-input {
+    width: 100%;
+  }
+
+  .multi-lists {
+    border-radius: 4px;
+    border: 1px solid #acacac;
+    padding: 8px 4px;
+    min-height: 40px;
+
+    &.red-box{
+      border: 1px solid #ff0000;
+    }
+
+    .multi-item{
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+}
+
+.dialog-label {
+  color: #EE9230;
+  font-size: 13px;
+  padding-bottom: 5px;
+  display: block;
 }
 </style>
