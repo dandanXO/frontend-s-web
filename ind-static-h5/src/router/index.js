@@ -72,7 +72,7 @@ export default route(function (/* { store, ssrContext } */) {
       }
     } else {
       if (to.meta.requiresAuth) {
-        next(`/`);
+        next(`/login`);
       } else {
         next();
       }

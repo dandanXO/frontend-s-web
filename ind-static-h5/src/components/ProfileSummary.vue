@@ -2,7 +2,7 @@
   <div class="infoboard-container" :class="!homeProfile && 'q-pa-md'">
     <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
-      <div class="profile-wrapper">
+      <div class="profile-wrapper" v-if="store.hasToken()">
         <div class="profile-pic">
           <q-avatar size="70px">
             <img :src="profileImagePath" />
@@ -44,6 +44,11 @@
         <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
+        </div>
+      </div>
+      <div class="profile-wrapper-extra" v-else>
+        <div class="logo-img">
+          <img src="../assets/logo.png" />
         </div>
       </div>
     </div>
@@ -255,6 +260,26 @@ onMounted(() => {
         top: -0.25rem;
         left: -0.5rem;
       }
+    }
+  }
+
+  .profile-wrapper-extra {
+    display: flex;
+    align-items: center;
+    padding-top: 8px;
+    width: 100%;
+  }
+
+  .logo-img {
+    width: 100%;
+
+    margin: 0 auto;
+    text-align: center;
+
+    img {
+      max-width: 200px;
+      width: 100%;
+      text-align: center;
     }
   }
 

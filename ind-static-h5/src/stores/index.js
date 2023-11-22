@@ -145,16 +145,16 @@ export const userStore = defineStore("userStore", {
         }
       });
     },
-    addReadMsg(id){
-     this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
-     if(this.readMsgLists.length === 0){
-       SessionStorage.set("READ_MAIL_IDS", [id]);
-     }else{
-       this.readMsgLists.push(id);
-       SessionStorage.set("READ_MAIL_IDS", this.readMsgLists);
-     }
+    addReadMsg(id) {
+      this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
+      if (this.readMsgLists.length === 0) {
+        SessionStorage.set("READ_MAIL_IDS", [id]);
+      } else {
+        this.readMsgLists.push(id);
+        SessionStorage.set("READ_MAIL_IDS", this.readMsgLists);
+      }
     },
-    setReadMsg(){
+    setReadMsg() {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
@@ -276,7 +276,7 @@ export const userStore = defineStore("userStore", {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
 
-        location.reload();
+        location.href = "/";
       });
     },
     setMailData(mailData) {
