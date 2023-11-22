@@ -9,6 +9,9 @@
     <TigerCardPromo
       v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'"
     />
+    <PrizePoolVotePromo
+      v-if="!isCommonPromo && list.redirectUrl === 's13-festival'"
+    />
     <GoldenEggPromo
       v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token"
     />
@@ -196,6 +199,7 @@ import {
 } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
+import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
@@ -212,6 +216,7 @@ export default defineComponent({
   components: {
     ClaimPromo,
     TigerCardPromo,
+    PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
     InviteFriendPromo,
@@ -457,6 +462,7 @@ export default defineComponent({
     // List for non common promo
     if (
       this.list.redirectUrl === "dy1-tiger-card" ||
+      this.list.redirectUrl === "s13-festival" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||
