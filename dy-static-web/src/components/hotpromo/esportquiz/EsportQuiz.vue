@@ -1,17 +1,10 @@
 <template>
-  <el-dialog
-    width="500px"
-    v-model="isFirstQuestionClicked"
-    :close-on-click-modal="false"
-    title="提交答案"
-  >
+  <el-dialog width="500px" v-model="isFirstQuestionClicked" :close-on-click-modal="false" title="提交答案">
     <div class="question-select-box">
       <div
         v-for="(e, i) in matchInfo.choiceOne"
         :key="`choice-one-${i}`"
-        :class="`question-select-option ${
-          firstChoiceIndex === i ? 'active' : ''
-        }`"
+        :class="`question-select-option ${firstChoiceIndex === i ? 'active' : ''}`"
         :data-value="e"
         @click="onFirstChoiceSelectionClick(e, i)"
       >
@@ -19,25 +12,16 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary" @click="onChoiceSubmit('first')">
-        提交
-      </el-button>
+      <el-button type="primary" @click="onChoiceSubmit('first')">提交</el-button>
     </div>
   </el-dialog>
 
-  <el-dialog
-    width="500px"
-    v-model="isSecondQuestionClicked"
-    :close-on-click-modal="false"
-    title="提交答案"
-  >
+  <el-dialog width="500px" v-model="isSecondQuestionClicked" :close-on-click-modal="false" title="提交答案">
     <div class="question-select-box">
       <div
         v-for="(e, i) in matchInfo.choiceTwo"
         :key="`choice-two-${i}`"
-        :class="`question-select-option ${
-          secondChoiceIndex === i ? 'active' : ''
-        }`"
+        :class="`question-select-option ${secondChoiceIndex === i ? 'active' : ''}`"
         :data-value="e"
         @click="onSecondChoiceSelectionClick(e, i)"
       >
@@ -45,25 +29,16 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary" @click="onChoiceSubmit('second')">
-        提交
-      </el-button>
+      <el-button type="primary" @click="onChoiceSubmit('second')">提交</el-button>
     </div>
   </el-dialog>
 
-  <el-dialog
-    width="500px"
-    v-model="isThirdQuestionClicked"
-    :close-on-click-modal="false"
-    title="提交答案"
-  >
+  <el-dialog width="500px" v-model="isThirdQuestionClicked" :close-on-click-modal="false" title="提交答案">
     <div class="question-select-box">
       <div
         v-for="(e, i) in matchInfo.choiceThree"
         :key="`choice-three-${i}`"
-        :class="`question-select-option ${
-          thirdChoiceIndex === i ? 'active' : ''
-        }`"
+        :class="`question-select-option ${thirdChoiceIndex === i ? 'active' : ''}`"
         :data-value="e"
         @click="onThirdChoiceSelectionClick(e, i)"
       >
@@ -71,9 +46,7 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary" @click="onChoiceSubmit('third')">
-        提交
-      </el-button>
+      <el-button type="primary" @click="onChoiceSubmit('third')">提交</el-button>
     </div>
   </el-dialog>
 
@@ -81,19 +54,13 @@
     <div class="prize-quiz-top-div"></div>
     <div class="prize-quiz-content-container">
       <div class="prize-quiz-jc-container">
-        <div class="prize-quiz-jc-txt" id="pool">
-          $ {{ matchInfo.poolAmount }}
-        </div>
+        <div class="prize-quiz-jc-txt" id="pool">$ {{ matchInfo.poolAmount }}</div>
       </div>
       <div class="prize-quiz-main">
         <div class="title" id="title">
           {{ matchInfo.quizTitle || "答题区" }}
         </div>
-        <div
-          :class="`start-answer-box ${
-            uiIsShowStatus.startAnswerBox ? '' : 'hide'
-          }`"
-        >
+        <div :class="`start-answer-box ${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
           <div class="book-img">
             <img
               src="../../../assets/images/promotion/hotpromo/esportquiz/img_book_7.png"
@@ -102,14 +69,10 @@
           </div>
           <div class="btn-start-answer" @click="onBtnStartAnswerClick()"></div>
         </div>
-        <div
-          :class="`questions-box ${uiIsShowStatus.questionBox ? 'show' : ''}`"
-        >
+        <div :class="`questions-box ${uiIsShowStatus.questionBox ? 'show' : ''}`">
           <div class="questions-container">
             <div class="questions-item-box">
-              <div class="item-question">
-                第一题:{{ matchInfo.questionOne }}
-              </div>
+              <div class="item-question">第一题:{{ matchInfo.questionOne }}</div>
               <div class="question-options-box">
                 答案：
                 <button
@@ -124,9 +87,7 @@
               </div>
             </div>
             <div class="questions-item-box">
-              <div class="item-question">
-                第二题:{{ matchInfo.questionTwo }}
-              </div>
+              <div class="item-question">第二题:{{ matchInfo.questionTwo }}</div>
               <div class="question-options-box">
                 答案：
                 <button
@@ -150,9 +111,7 @@
               </div>
             </div>
             <div class="questions-item-box">
-              <div class="item-question">
-                第三题:{{ matchInfo.questionThree }}
-              </div>
+              <div class="item-question">第三题:{{ matchInfo.questionThree }}</div>
               <div class="question-options-box">
                 答案：
                 <button
@@ -177,29 +136,27 @@
             <th style="width: 25%">答案</th>
             <th style="width: 25%">中奖记录</th>
           </tr>
-          <tr>
-            <td>{{ tableInfo.time }}</td>
-            <td>{{ tableInfo.answer }}</td>
-            <td :class="tableInfo.className">{{ tableInfo.statusText }}</td>
+          <tr v-for="(e, i) in tableInfo" :key="`table-info-${i}`">
+            <td>{{ e.time }}</td>
+            <td>{{ e.answer }}</td>
+            <td :class="e.className">{{ e.statusText }}</td>
           </tr>
         </table>
         <table v-else class="record-table" id="record-table"></table>
 
-        <template v-if="isHasRecord">
+        <div v-if="isHasRecord" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
           <div
             v-for="(e, i) in paginationInfo.pageTotal"
             :key="`page-content-${i}`"
-            :id="`page-number-${e + 1}`"
-            :class="`page-number page-item ${
-              paginationInfo.pageNumber === e ? 'active' : ''
-            }`"
+            :id="`page-number-${e}`"
+            :class="`page-number page-item ${paginationInfo.pageNumber === e ? 'active' : ''}`"
             @click="onPaginationClick()"
           >
-            {{ e + 1 }}
+            {{ e }}
           </div>
           <div class="next page-item" @click="onNextPageClick()">&gt;</div>
-        </template>
+        </div>
         <div v-else class="page-list">暂无记录</div>
       </div>
     </div>
@@ -210,11 +167,7 @@
 import { onMounted, ref, reactive } from "vue";
 import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
-import {
-  getSportMatchQuizInfo,
-  getMemberSportMatchRecord,
-  submitMemberSportMatchQuiz
-} from "@/api/index/promo";
+import { getSportMatchQuizInfo, getMemberSportMatchRecord, submitMemberSportMatchQuiz } from "@/api/index/promo";
 import moment from "moment";
 
 const store = userStore();
@@ -340,12 +293,7 @@ function onPaginationClick(pageIndex) {
   getRecordList();
 }
 
-const tableInfo = reactive({
-  time: "",
-  answer: "",
-  className: "not-got",
-  statusText: ""
-});
+const tableInfo = ref([]);
 function getRecordList() {
   const { pageSize, pageNumber } = paginationInfo;
   const start = (pageNumber - 1) * pageSize;
@@ -354,10 +302,13 @@ function getRecordList() {
     if (i >= start && i < end) {
       const { createTime, answerOne, answerTwo, answerThree, status } = e;
 
-      tableInfo.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
-      tableInfo.answer = answerOne + ", " + answerTwo + ", " + answerThree;
-      tableInfo.statusText = status;
-      if (status == "WIN") tableInfo.className = "got-answer";
+      const newObj = {};
+      newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
+      newObj.answer = answerOne + ", " + answerTwo + ", " + answerThree;
+      newObj.statusText = status;
+      if (status == "WIN") newObj.className = "got-answer";
+
+      tableInfo.value.push(newObj);
     }
   });
 }
@@ -436,8 +387,7 @@ function onChoiceSubmit(key) {
 }
 
 function onSubmitClick() {
-  const { answerOne, answerTwo, answerThree, quizId, quizTitle } =
-    quizSubmitInfo;
+  const { answerOne, answerTwo, answerThree, quizId, quizTitle } = quizSubmitInfo;
   if (answerOne == "" || answerTwo == -1 || answerThree == -1) {
     ElMessage.error("请完成3个答案再提交！");
     return;
@@ -456,13 +406,9 @@ function onSubmitClick() {
     const { code, data, message } = res;
     if (code == 0) {
       if (data.count == 0) {
-        ElMessage.success(
-          "您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次；"
-        );
+        ElMessage.success("您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次；");
       } else {
-        ElMessage.success(
-          "您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!"
-        );
+        ElMessage.success("您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!");
       }
     } else {
       ElMessage.error(message);
@@ -480,8 +426,7 @@ function onSubmitClick() {
 
   .prize-quiz-top-div {
     height: 500px;
-    background: url("../../../assets/images/promotion/hotpromo/esportquiz/banner_7.png")
-      center no-repeat;
+    background: url("../../../assets/images/promotion/hotpromo/esportquiz/banner_7.png") center no-repeat;
   }
 
   .prize-quiz-content-container {
@@ -491,8 +436,7 @@ function onSubmitClick() {
     .prize-quiz-jc-container {
       width: 780px;
       height: 250px;
-      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_7.png")
-        center no-repeat;
+      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_7.png") center no-repeat;
       padding-top: 50px;
       margin: 50px auto;
       display: flex;
@@ -534,8 +478,7 @@ function onSubmitClick() {
         .btn-start-answer {
           width: 264px;
           height: 90px;
-          background: url("../../../assets/images/promotion/hotpromo/esportquiz/btn_start.png")
-            center no-repeat;
+          background: url("../../../assets/images/promotion/hotpromo/esportquiz/btn_start.png") center no-repeat;
           cursor: pointer;
           background-size: 214px;
         }
@@ -598,12 +541,7 @@ function onSubmitClick() {
               cursor: pointer;
               margin: 38px auto 40px;
               border: none;
-              background-image: linear-gradient(
-                  255deg,
-                  #0094ff 0%,
-                  #18c5ff 100%
-                ),
-                linear-gradient(#0084a4, #0084a4);
+              background-image: linear-gradient(255deg, #0094ff 0%, #18c5ff 100%), linear-gradient(#0084a4, #0084a4);
               background-blend-mode: normal, normal;
               border-radius: 4px;
             }
@@ -616,11 +554,7 @@ function onSubmitClick() {
         padding: 20px 0 0 0px;
         text-align: center;
         background: #0297ff;
-        background: -webkit-linear-gradient(
-          to bottom,
-          #0297ff 25%,
-          #15bdff 60%
-        );
+        background: -webkit-linear-gradient(to bottom, #0297ff 25%, #15bdff 60%);
         background: -moz-linear-gradient(to bottom, #0297ff 25%, #15bdff 60%);
         background: linear-gradient(to bottom, #0297ff 25%, #15bdff 60%);
         background-clip: text;
@@ -636,8 +570,7 @@ function onSubmitClick() {
     }
 
     .title-record {
-      background: url("../../../assets/images/promotion/hotpromo/esportquiz/title_record.png")
-        center no-repeat;
+      background: url("../../../assets/images/promotion/hotpromo/esportquiz/title_record.png") center no-repeat;
       margin: 69px auto 22px auto;
     }
 
@@ -651,8 +584,7 @@ function onSubmitClick() {
         color: #fff;
         height: 48px;
         border: solid 1px #dcdce8;
-        background-image: linear-gradient(0deg, #0094ff 0%, #19c6ff 100%),
-          linear-gradient(#1d212e, #1d212e);
+        background-image: linear-gradient(0deg, #0094ff 0%, #19c6ff 100%), linear-gradient(#1d212e, #1d212e);
         background-blend-mode: normal, normal;
       }
 
@@ -687,7 +619,7 @@ function onSubmitClick() {
       cursor: pointer;
       border: 1px solid #dcdce8;
 
-      .active {
+      &.active {
         color: #fff;
         background-color: #0094ff;
       }
