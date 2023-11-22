@@ -1073,6 +1073,9 @@ export default {
     add_multiple_date_steps: "Steps: Select all combination(s) of date & time range, click \"Add Date\" & \"Add\n" +
       "          Time\", and then click \"Add\" to add.",
     pick_date: "Pick a Date",
+    pick_start_date: "Pick Start Date/Time",
+    pick_end_date: "Pick End Date/Time",
+    please_select_datetime: "Please select Date From & Date To",
     add_date: "Add Date",
     add_time: "Add Time",
     dates: "Date(s):",

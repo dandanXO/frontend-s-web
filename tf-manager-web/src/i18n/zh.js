@@ -1073,11 +1073,13 @@ export default {
     add_multiple_date_steps: "步骤：选择所有日期和时间范围的组合，点击“添加日期”和“添加\n" +
       "          时间”，然后点击“添加”按钮。",
     pick_date: "选择日期",
+    pick_start_date: "选择开始日期/时间",
+    pick_end_date: "选择结束日期/时间",
+    please_select_datetime: "请选择开始日期和结束日期",
     add_date: "添加日期",
     add_time: "添加时间",
     dates: "日期：",
     timeranges: "时间范围："
-
   },
   message: {
     addRemarkSuccess: '新增备注成功',
