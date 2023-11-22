@@ -175,7 +175,7 @@
           type="primary"
           @click="linkDiaglogControl.dialogVisible = false"
         >
-          {{ $('fields.cancel') }}
+          {{ $t('fields.cancel') }}
         </el-button>
       </span>
     </el-dialog>
@@ -349,12 +349,13 @@ function handleLinkSelection(linkType, urlType) {
   let pageLongLink = ''
   let shortUrl = ''
   let dialogContent = ''
+  const randomGenerateAlphaNumeric = generateRandomAlphaNumeric()
   if (linkType === 'WEB') {
     pageLongLink = page.webLongLink
-    shortUrl = page.shortLinkPlatform + '/' + generateRandomAlphaNumeric()
+    shortUrl = page.shortLinkPlatform + '/' + randomGenerateAlphaNumeric
   } else if (linkType === 'H5') {
     pageLongLink = page.h5LongLink
-    shortUrl = page.shortLinkPlatform + '/' + generateRandomAlphaNumeric()
+    shortUrl = page.shortLinkPlatform + '/' + randomGenerateAlphaNumeric
   }
 
   if (urlType === 'WX') {
@@ -364,7 +365,7 @@ function handleLinkSelection(linkType, urlType) {
   }
 
   request.longUrl = pageLongLink
-  request.shortUrl = shortUrl
+  request.shortUrl = randomGenerateAlphaNumeric
 
   getShortLink(request)
   linkDiaglogControl.dialogTitle = t('referralLink.copiedLink')
@@ -388,13 +389,14 @@ function handleQrSelection(linkType, urlType) {
   let shortUrl = ''
   let qrImageLink1 = ''
   let qrImageLink2 = ''
+  const randomGenerateAlphaNumeric = generateRandomAlphaNumeric()
 
   if (linkType === 'WEB') {
     pageLongLink = page.webLongLink
 
     if (urlType !== 'NORMAL') {
-      shortUrl = page.shortLinkPlatform + '/' + generateRandomAlphaNumeric()
-      request.shortUrl = shortUrl
+      shortUrl = page.shortLinkPlatform + '/' + randomGenerateAlphaNumeric
+      request.shortUrl = randomGenerateAlphaNumeric
 
       qrImageLink1 = shortUrl
       qrImageLink2 = shortUrl
@@ -403,8 +405,8 @@ function handleQrSelection(linkType, urlType) {
     pageLongLink = page.h5LongLink
 
     if (urlType !== 'NORMAL') {
-      shortUrl = page.shortLinkPlatform + '/' + generateRandomAlphaNumeric()
-      request.shortUrl = shortUrl
+      shortUrl = page.shortLinkPlatform + '/' + randomGenerateAlphaNumeric
+      request.shortUrl = randomGenerateAlphaNumeric
 
       qrImageLink1 = shortUrl
       qrImageLink2 = shortUrl
