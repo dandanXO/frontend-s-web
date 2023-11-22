@@ -313,28 +313,29 @@
                   class="btn-slot-game q-col-gutter-none"
                   @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
                 >
-                  <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="fill"
-                    height="auto"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style="border-radius: 20px; overflow: hidden"
-                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                  >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
                     <div class="slot-name">
                       {{ game.name }}
-                      <!-- --- {{ game.gameClicked }} -->
                     </div>
-                    <template v-slot:loading>
-                      <img
-                        :src="game.default"
-                        style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                      />
-                    </template>
-                  </q-img>
+                  </div>
                 </q-list>
               </transition>
 
@@ -573,25 +574,27 @@
             >
               <transition name="in-view">
                 <q-list class="q-col-gutter-none">
-                  <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="fill"
-                    height="auto"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style="border-radius: 20px; overflow: hidden"
-                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                  >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
                     <div class="slot-name">{{ game.name }}</div>
-                    <template v-slot:loading>
-                      <img
-                        :src="game.default"
-                        style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                      />
-                    </template>
-                  </q-img>
+                  </div>
                 </q-list>
               </transition>
               <!-- <q-img
@@ -1251,7 +1254,7 @@ export default defineComponent({
               params: {
                 platformId: code,
                 gameType: gameType,
-                device: regDevice
+                device: regDevice,
               }
             })
             .then((ret) => {

@@ -1,5 +1,6 @@
 export default {
   lang: {
+    langVal: "th",
     login: "ล็อกอิน",
     register: "สมัคร",
     personal_information: "ข้อมูลส่วนตัว",

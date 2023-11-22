@@ -1,5 +1,6 @@
 export default {
   lang: {
+    langVal: "en",
     login: "Login",
     register: "Register",
     personal_information: "Personal Information",
