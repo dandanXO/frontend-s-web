@@ -2,12 +2,7 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab
-            v-for="(tab, i) in tabItems"
-            :key="i"
-            :name="tab.name"
-            :label="tab.label"
-        />
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -17,28 +12,18 @@
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
                 <div
-                    class="promo-item"
-                    v-for="(promo, i) in filteredArray"
-                    :key="i"
-                    data-aos="zoom-in"
-                    data-aos-easing="ease-out"
-                    data-aos-duration="1000"
+                  class="promo-item"
+                  v-for="(promo, i) in filteredArray"
+                  :key="i"
+                  data-aos="zoom-in"
+                  data-aos-easing="ease-out"
+                  data-aos-duration="1000"
                 >
-                  <template
-                      v-if="
-                      promo.promoType
-                        .toLowerCase()
-                        .split(',')
-                        .includes(tab.name)
-                    "
-                  >
+                  <template v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                              class="promo-content"
-                              :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="promo-info">
@@ -53,10 +38,7 @@
                     <a @click="showPromoDetails(promo)">
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                              class="promo-content"
-                              :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="promo-info">
@@ -89,25 +71,20 @@
                   "
                 ></div> -->
                 <div>
-                  <img
-                      :src="imgURL + selectedPromo.mobileBannerUrl"
-                      style="width: 100%; display: block"
-                  />
+                  <img :src="imgURL + selectedPromo.mobileBannerUrl" style="width: 100%; display: block" />
                 </div>
               </div>
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
-                  <HotPromotion :list="selectedPromo"/>
+                  <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                    :class="{
-                    welcome:
-                      selectedPromo.promoType.toLowerCase() === 'welcome',
+                  :class="{
+                    welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
-                    liveCasino:
-                      selectedPromo.promoType.toLowerCase() === 'livecasino',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
@@ -122,18 +99,16 @@
   </div>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card
-        style="width: 100%; padding: 20px"
-        class="bg-white text-black text-right"
-    >
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-right">
       <q-card-section class="q-mb-md gologin-popup">
         <strong>
-          <RiErrorWarningLine/>
-          系统提示</strong>
+          <RiErrorWarningLine />
+          系统提示
+        </strong>
         请登录后再操作
       </q-card-section>
       <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="dyblue"/>
+        <q-btn label="确认" color="dyblue" />
       </router-link>
     </q-card>
   </q-dialog>
@@ -265,18 +240,14 @@ export default defineComponent({
           var promoItems = res.data;
 
           promoItems.forEach((element) => {
-            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST") || element.privilegeStatus === "CLOSE" || element.privilegeStatus === null) {
-            } else {
+
               promoState.promoList.push(element);
-              // console.log(promoState.promoList);
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element);
               }
-            }
           });
-          // console.log("Final Promos");
-          // console.log(promoState.promoList);
+
           switchPromoType(promoState.active);
         }
       }).catch((e) => {
@@ -323,8 +294,6 @@ export default defineComponent({
       white-space: nowrap;
       border: 0;
 
-
-
       tr {
         td {
           padding: 10px 20px;
@@ -364,7 +333,7 @@ export default defineComponent({
 .promo-container {
   color: #000;
 
-  table{
+  table {
     tbody {
       width: 100%;
       table-layout: fixed;
@@ -646,8 +615,7 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%),
-            linear-gradient(#d0d1d3, #d0d1d3);
+            background-image: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
           }
 
           td {
@@ -699,7 +667,6 @@ export default defineComponent({
   }
 }
 
-
 .pad-label.label-new {
   font-size: 12px;
   color: #ffffff;
@@ -707,7 +674,7 @@ export default defineComponent({
   position: absolute;
   top: 0px;
   left: 10px;
-  background: linear-gradient(180deg, #FF4D42, #CA0C00);
+  background: linear-gradient(180deg, #ff4d42, #ca0c00);
   border-radius: 0 0 10px 10px;
   font-weight: 600;
 }
@@ -739,7 +706,7 @@ export default defineComponent({
   }
 
   .q-tab--active {
-    background: #68BCEC;
+    background: #68bcec;
     color: #ffffff;
   }
 
@@ -799,7 +766,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #6C6C6E;
+  color: #6c6c6e;
   gap: 15px;
 
   strong {
@@ -811,7 +778,7 @@ export default defineComponent({
     font-weight: 700;
 
     svg {
-      fill: #0089ED;
+      fill: #0089ed;
     }
   }
 }
