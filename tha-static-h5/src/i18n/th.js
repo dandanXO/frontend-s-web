@@ -1,5 +1,6 @@
 export default {
   lang: {
+    langVal: "th",
     login: "ล็อกอิน",
     register: "สมัคร",
     personal_information: "ข้อมูลส่วนตัว",
@@ -225,6 +226,7 @@ export default {
     notice_footer: "แจ้ง",
     slot_header: "สล็อต",
     live_header: "คาสิโน",
+    minigame_header: "มินิเกม",
     sport_header: "กีฬา",
     fish_header: "ยิงปลา",
     deposit_header: "วิธีชำระเงิน",

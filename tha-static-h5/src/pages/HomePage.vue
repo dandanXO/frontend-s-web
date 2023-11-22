@@ -85,7 +85,7 @@
           @click="switchMenu('casual')"
         >
           <img src="../assets/images/index/home-esport.png" />
-          <span>Mini Game</span>
+          <span>{{ $t("lang.minigame_header") }}</span>
         </div>
 
         <div
@@ -313,28 +313,29 @@
                   class="btn-slot-game q-col-gutter-none"
                   @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
                 >
-                  <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="fill"
-                    height="auto"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style="border-radius: 20px; overflow: hidden"
-                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                  >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
                     <div class="slot-name">
                       {{ game.name }}
-                      <!-- --- {{ game.gameClicked }} -->
                     </div>
-                    <template v-slot:loading>
-                      <img
-                        :src="game.default"
-                        style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                      />
-                    </template>
-                  </q-img>
+                  </div>
                 </q-list>
               </transition>
 
@@ -411,25 +412,27 @@
                   class="btn-slot-game q-col-gutter-none"
                   @click="openGame(game.name, game.code, selectedPlat.status, game)"
                 >
-                  <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="fill"
-                    height="auto"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style="border-radius: 20px; overflow: hidden"
-                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                  >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
                     <div class="slot-name">{{ game.name }}</div>
-                    <template v-slot:loading>
-                      <img
-                        :src="game.default"
-                        style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                      />
-                    </template>
-                  </q-img>
+                  </div>
                 </q-list>
               </transition>
 
@@ -571,25 +574,27 @@
             >
               <transition name="in-view">
                 <q-list class="q-col-gutter-none">
-                  <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="fill"
-                    height="auto"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style="border-radius: 20px; overflow: hidden"
-                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                  >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
                     <div class="slot-name">{{ game.name }}</div>
-                    <template v-slot:loading>
-                      <img
-                        :src="game.default"
-                        style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                      />
-                    </template>
-                  </q-img>
+                  </div>
                 </q-list>
               </transition>
               <!-- <q-img
@@ -1249,7 +1254,7 @@ export default defineComponent({
               params: {
                 platformId: code,
                 gameType: gameType,
-                device: regDevice
+                device: regDevice,
               }
             })
             .then((ret) => {
@@ -1290,7 +1295,7 @@ export default defineComponent({
               }
             });
 
-            console.log(miniGames);
+            // console.log(miniGames);
 
             games.forEach((game) => {
               let index = _.findIndex(miniGamesMore.value, function (o) {
@@ -1340,7 +1345,7 @@ export default defineComponent({
               return element.status === "OPEN";
             });
           }
-          console.log(data);
+          // console.log(data);
 
           fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
@@ -1362,7 +1367,7 @@ export default defineComponent({
           }
 
           // console.log("After");
-          console.log(platformMinigame.value);
+          // console.log(platformMinigame.value);
           // alert(platformMinigame.value.length);
           // if (!route.query.plat) {
           //   switchPlat(platforms.value[0], "slot");
@@ -1714,7 +1719,11 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 10px;
+  margin: 10px 10px 5px;
+
+  @media (min-width: 769px) {
+    margin: 10px;
+  }
 
   .station-notice-wrapper {
     display: flex;
@@ -1779,13 +1788,21 @@ export default defineComponent({
   }
 
   .slot-name {
-    background: linear-gradient(0deg, #1f2035cf 20%, transparent);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px;
     text-align: center;
+    padding: 5px 2px 0px;
+    font-size: 10px;
+    background: transparent;
+    word-break: break-all;
+
+    @media (min-width: 600px) {
+      font-size: 12px;
+      word-break: normal;
+      padding: 10px 2px;
+    }
+
+    @media (min-width: 769px) {
+      font-size: 14px;
+    }
   }
 }
 
@@ -1797,20 +1814,23 @@ export default defineComponent({
 
 .grid-wrapper {
   overflow: hidden;
-  margin-bottom: 4px;
 }
 
 .grid {
   display: flex;
-  margin: 10px auto -10px;
+  margin: 0px auto 0px;
   align-items: flex-start;
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  background: #0d0a2f;
-  padding: 6px 12px 16px;
+  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 6px 12px 6px;
   border-radius: 12px;
   overflow-x: auto;
+
+  @media (min-width: 769px) {
+    margin: 10px auto;
+  }
 
   .game-board-item {
     border-radius: 8px;
@@ -1826,12 +1846,12 @@ export default defineComponent({
 
     &.active-board {
       // background: $linear-bg-4;
-      background: #2f2f70;
+      background: #5555aa;
     }
 
     &:hover {
       filter: brightness(0.88);
-      background: #2f2f70;
+      background: #5555aa;
     }
 
     &:active {
@@ -1854,13 +1874,18 @@ export default defineComponent({
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: calc(95% - 20px);
-  margin: 12px auto 20px;
+  width: calc(100% - 20px);
+  margin: 6px auto 20px;
   padding-bottom: 30px;
-  padding-top: 15px;
+  // padding-top: 15px;
   column-gap: 15px;
   row-gap: 10px;
   transition: 1s ease-in;
+
+  @media (min-width: 769px) {
+    margin: 12px auto 20px;
+    padding-top: 15px;
+  }
 
   .game-item {
     border-radius: 8px;
@@ -1981,9 +2006,15 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  width: calc(100% - 20px);
-  margin: 20px auto 10px;
+  // width: calc(100% - 20px);
+  width: 100%;
+  margin: 6px auto 10px;
   position: relative;
+
+  @media (min-width: 769px) {
+    margin: 12px auto 20px;
+    padding-top: 15px;
+  }
 
   .bookmarks {
     width: 70px;
