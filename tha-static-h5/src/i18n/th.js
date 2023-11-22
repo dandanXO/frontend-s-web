@@ -80,12 +80,11 @@ export default {
     excellent_service: "บริการดีเยี่ยม",
     apply: "สมัคร",
     contact_us: "ติดต่อเรา",
-    stepdesc_1: "ขั้นตอนแรก เข้าร่วมเป็นเอเจน",
+    stepdesc_1: "ขั้นตอนแรก เข้าร่วมเป็นพันธมิตร",
     stepdesc_2: "ขั้นตอนที่สอง โฆษณา",
     stepdesc_3: "ขั้นตอนที่สาม รับคอมมิชั่น",
     affiliate_tnc_title: "เงื่อนไขและข้อกำหนด",
-    affiliate_tnc_para_1:
-      "หากไม่มีการเคลื่อนไหวหรือหยุดใช้งานเกิน 5 เดือนจะถือว่าหมดสิทธิ์การเป็นพันธมิตร",
+    affiliate_tnc_para_1: "หากไม่มีการเคลื่อนไหวหรือหยุดใช้งานเกิน 5 เดือนจะถือว่าหมดสิทธิ์การเป็นพันธมิตร",
     affiliate_tnc_para_2_1:
       "หากบัญชีมีค่าคอมมิชชั่นติดลบ (กําไรติดลบ: คือจํานวนเงินที่เจ้าของบัญชีค้างชําระกับบริษัท) จํานวนเงินติดลบจะถูกสะสมในเดือนต่อไปนี้จนกว่าค่าคอมมิชชั่นติดลบจะถูกล้าง พันธมิตรทุกท่านมีค่าใช้จ่ายดังนี้",
     affiliate_tnc_para_2_2: "* พันธมิตรทุกท่านมีค่าใช้จ่ายดังนี้",
@@ -96,12 +95,10 @@ export default {
       "ค่าคอมมิชชั่นจะได้รับทุกวันที่ 1 ของเดือน โดยจะได้รับเป็นเงินไทยบาท ( THB ) หลังจากได้รับคอมมิชชั่นแล้วพันธมิตรจึงดําเนินการถอนค่าคอมมิชชั่นได้ตามปกติ",
     affiliate_tnc_para_4:
       "Jolly88 ตรวจสอบผู้ใช้ของพันธมิตรทั้งหมดและมีเกณฑ์ของเราเอง (ระดับความเสี่ยงจํานวนเงินฝากดัชนีการเดิมพัน ... ) เมื่อประเมินผู้ใช้ดังกล่าวหากพวกเขาไม่เป็นไปตามเกณฑ์ของเราเราจะกลับสิทธิ์ที่จะปฏิเสธที่จะปล่อยค่าคอมมิชชั่นให้กับพันธมิตร",
-    affiliate_tnc_para_5:
-      "พันธมิตรหนึ่งรายต้องลงทะเบียนอีเมลหมายเลขโทรศัพท์และชื่อเพียงรายเดียวเท่านั้น",
+    affiliate_tnc_para_5: "พันธมิตรหนึ่งรายต้องลงทะเบียนอีเมลหมายเลขโทรศัพท์และชื่อเพียงรายเดียวเท่านั้น",
     affiliate_tnc_para_6:
       "พันธมิตรมีหลายบัญชี (แกล้งทําบัญชีดาวน์ไลน์รบกวนพฤติกรรมการเดิมพันของดาวน์ไลน์การเข้าสู่ระบบอุปกรณ์หลายเครื่อง ... ) ที่ถูกตรวจพบโดยระบบหรือผู้เชี่ยวชาญของเราจะถูกลงโทษ",
-    affiliate_tnc_para_7:
-      "Jolly88 ขอสงวนสิทธิ์ในการเปลี่ยนแปลงหรือแก้ไขเปอร์เซ็นต์ค่าคอมมิชชั่นที่เราเห็นว่าเหมาะสม",
+    affiliate_tnc_para_7: "Jolly88 ขอสงวนสิทธิ์ในการเปลี่ยนแปลงหรือแก้ไขเปอร์เซ็นต์ค่าคอมมิชชั่นที่เราเห็นว่าเหมาะสม",
     affiliate_tnc_para_8:
       "Jolly88 ขอสงวนสิทธิ์ในการเปลี่ยนแปลงหรือแก้ไขข้อกําหนดข้างต้นหรือเพิ่มข้อกําหนดเพิ่มเติมใด ๆ ตามความจําเป็น",
     affiliate_tnc_para_9:
@@ -112,30 +109,23 @@ export default {
       "กําไรสุทธิ = (ชนะ / ขาดทุนทั้งหมด) - (โบนัสที่ได้รับทั้งหมด) - (ค่าธรรมเนียมธุรกรรมธนาคาร) - (ค่าธรรมเนียมแพลตฟอร์ม) => ในนั้น: ชนะ/แพ้ทั้งหมด = เดิมพันทั้งหมด - การจ่ายเงินทั้งหมด",
     affiliate_calulate_para_1_2: "ค่าธรรมเนียมธุรกรรมธนาคาร:( ฝาก +ถอน) x 8%",
     affiliate_calulate_para_1_3: "คอมมิชชั่น = กำไรสุทธิ x (%)",
-    affiliate_example_1:
-      "ตัวอย่างที่ 1: พันธมิตร A ได้รับกําไรค่าคอมมิชชั่นรายเดือน 30%",
+    affiliate_example_1: "ตัวอย่างที่ 1: พันธมิตร A ได้รับกําไรค่าคอมมิชชั่นรายเดือน 30%",
     affiliate_example_1_table_1_left: "- ลูกค้าเสียทั้งหมด:",
     affiliate_example_1_table_2_left: "- จํานวนเงินฝากทั้งหมดในเดือน:",
     affiliate_example_1_table_3_left: "- จํานวนเงินที่ถอนออกทั้งหมดในเดือน:",
-    affiliate_example_1_table_4_left:
-      "- โปรโมชั่นทั้งหมดที่ลูกค้าได้รับในเดือน:",
-    affiliate_example_1_table_5_left:
-      "- ค่าธรรมเนียมการทําธุรกรรมผ่านธนาคาร ((ฝาก + ถอนออก) * 1%):",
+    affiliate_example_1_table_4_left: "- โปรโมชั่นทั้งหมดที่ลูกค้าได้รับในเดือน:",
+    affiliate_example_1_table_5_left: "- ค่าธรรมเนียมการทําธุรกรรมผ่านธนาคาร ((ฝาก + ถอนออก) * 1%):",
     affiliate_example_1_table_6_left: "=>กําไรสุทธิ =",
     affiliate_example_1_table_7_left: "=>ค่าคอมมิชชั่น =",
-    affiliate_example_2:
-      "ตัวอย่างที่ 2: พันธมิตร B ได้รับกําไรค่าคอมมิชชั่นรายเดือน 55%",
+    affiliate_example_2: "ตัวอย่างที่ 2: พันธมิตร B ได้รับกําไรค่าคอมมิชชั่นรายเดือน 55%",
     affiliate_example_2_table_1_left: "- ลูกค้าเสียทั้งหมด:",
     affiliate_example_2_table_2_left: "- จํานวนเงินฝากทั้งหมดในเดือน:",
     affiliate_example_2_table_3_left: "- จํานวนเงินที่ถอนออกทั้งหมดในเดือน:",
-    affiliate_example_2_table_4_left:
-      "- โปรโมชั่นทั้งหมดที่ลูกค้าได้รับในเดือน:",
-    affiliate_example_2_table_5_left:
-      "- ค่าธรรมเนียมการทําธุรกรรมผ่านธนาคาร ((ฝาก + ถอนออก) * 1%):",
+    affiliate_example_2_table_4_left: "- โปรโมชั่นทั้งหมดที่ลูกค้าได้รับในเดือน:",
+    affiliate_example_2_table_5_left: "- ค่าธรรมเนียมการทําธุรกรรมผ่านธนาคาร ((ฝาก + ถอนออก) * 1%):",
     affiliate_example_2_table_6_left: "=>กําไรสุทธิ =",
     affiliate_example_2_table_7_left: "=>คอมมิชชัน=",
-    affiliate_example_a:
-      "ตัวอย่างที่: พันธมิตร ได้รับกําไรค่าคอมมิชชั่นรายเดือน 30%",
+    affiliate_example_a: "ตัวอย่างที่: พันธมิตร ได้รับกําไรค่าคอมมิชชั่นรายเดือน 30%",
     affiliate_example_a_table_1_left: "- ยอดได้ เสีย ของลูกค้า / เดือน:",
     affiliate_example_a_table_2_left: "- โบนัสที่ได้รับทั้งหมด / เดือน:",
     affiliate_example_a_table_3_left: "- ค่าธรรมเนียมธุรกรรม:",
@@ -143,8 +133,7 @@ export default {
     affiliate_example_a_table_5_left: "- จำนวนเงินที่จ่ายไปทั้งหมด:",
     affiliate_example_a_table_6_left: "=>กําไรสุทธิ =",
     affiliate_example_a_table_7_left: "=>คอมมิชชั่นที่จะได้รับทั้งหมด =",
-    affiliate_example_b:
-      "ตัวอย่างที่: พันธมิตร ได้รับกําไรค่าคอมมิชชั่นรายเดือน 50%",
+    affiliate_example_b: "ตัวอย่างที่: พันธมิตร ได้รับกําไรค่าคอมมิชชั่นรายเดือน 50%",
     affiliate_example_b_table_1_left: "- ยอดได้ เสีย ของลูกค้า / เดือน:",
     affiliate_example_b_table_2_left: "- โบนัสที่ได้รับทั้งหมด / เดือน:",
     affiliate_example_b_table_3_left: "- ค่าธรรมเนียมธุรกรรม:",
@@ -168,12 +157,10 @@ export default {
     affiliate_table_2: "กำไรสุทธิ",
     affiliate_table_3: "อัตราค่าคอมมิชชั่น",
     affiliate_table_title: "รายละเอียด และ ระดับ ค่าคอมมิชชั่น",
-    only_letter_number_allowed:
-      "อนุญาตเฉพาะตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น",
+    only_letter_number_allowed: "อนุญาตเฉพาะตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น",
     only_alphabet_allowed: "อนุญาตให้ใช้เฉพาะตัวอักษรภาษาอังกฤษเท่านั้น",
     password_between_6_12: "ความยาวของรหัสผ่านควรอยู่ระหว่าง 6-12",
-    password_must_at_least_good:
-      "ระดับความปลอดภัยของรหัสผ่านต้องอยู่ในเกณท์ดีเป็นอย่างน้อย",
+    password_must_at_least_good: "ระดับความปลอดภัยของรหัสผ่านต้องอยู่ในเกณท์ดีเป็นอย่างน้อย",
     confirm_pass: "ยืนยันรหัสผ่าน",
     please_confirm_pass: "กรุณายืนยันรหัสผ่าน",
     password_do_not_match: "รหัสผ่านไม่เหมือนกัน",
@@ -195,8 +182,7 @@ export default {
     email_address: "อีเมลล์",
     enter_your_email: "กรุณาใส่ที่อยู่อีเมลล์",
     send: "ส่ง",
-    an_otp_has_been_sent_to_email:
-      "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว กรุณาใส่รหัส OTP และพาสเวิรด์ใหม่",
+    an_otp_has_been_sent_to_email: "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว กรุณาใส่รหัส OTP และพาสเวิรด์ใหม่",
     an_otp_has_been_sent_to_phone: "รหัส OTP ถูกส่งไปยังโทรศัพท์ของคุณแล้ว",
     one_time_otp: "รหัส OTP",
     otp_cannot_be_empty: "ใส่รหัส OTP",
@@ -210,15 +196,14 @@ export default {
       "รับโบนัสทุกวัน โบนัสไม่มีวันหมดอายุ ง่ายๆเพียงแค่แชร์ QR Code หรือลิงค์ให้เพื่อน รับโบนัสไปเลยเมื่อเพื่อนลงทะเบียนหรือดาวน์โหลด",
     copy: "คัดลอก",
     copied: "คัดลอกแล้ว",
-    your_referral_bonus_has_not_been_shared:
-      "หมายเหตุ: โบนัสเชิญของท่านยังไม่มีการแชร์",
+    your_referral_bonus_has_not_been_shared: "หมายเหตุ: โบนัสเชิญของท่านยังไม่มีการแชร์",
     main_account: "บัญชีหลัก",
-    transaction_records: "บันทึกการโอน",
+    transaction_records: "รายการธุรกรรม",
     promo_page: "โปรโมชั่น",
-    withdraw_bank_account: "ถอนไปยังบัญชีธนาคาร",
+    withdraw_bank_account: "เพิ่มบัญชีการถอน",
     affiliate_page: "สมัครพันธมิตร",
     app: "APP",
-    share_page: "แชร์",
+    share_page: "แนะนำเพื่อน",
     logout: "ล็อกเอ้าท์",
     inbox: "ข้อความ",
     outbox: "ข้อความส่งออก",
@@ -236,10 +221,10 @@ export default {
     home_page: "หน้าแรก",
     deposit_footer: "เงินฝาก",
     withdraw_footer: "ถอน",
-    cs_footer: "ไลฟ์แชท",
+    cs_footer: "แชทสด",
     notice_footer: "แจ้ง",
     slot_header: "สล็อต",
-    live_header: "ไลฟ์คาสิโน",
+    live_header: "คาสิโนสด",
     sport_header: "กีฬา",
     fish_header: "ยิงปลา",
     deposit_header: "วิธีชำระเงิน",
@@ -320,8 +305,7 @@ export default {
 
     // WithdrawBankView
     choose_a_card: "เลือกบัตร",
-    register_bank_acc_para:
-      "กรุณาลงทะเบียนบัญชีธนาคารด้านล่างเพื่อรับการอัปเดต",
+    register_bank_acc_para: "กรุณาลงทะเบียนบัญชีธนาคารด้านล่างเพื่อรับการอัปเดต",
     add_a_card: "เพิ่มบัตร",
     bank_card_unbind_record: "บันทึกการผูกบัตรธนาคาร",
     add_a_virtual_currency: "เพิ่มสกุลเงินเสมือน",
@@ -347,13 +331,11 @@ export default {
     enter_ur_id: "ID ว่างเปล่า",
     enter_ur_dob: "กรุณายืนยันวันเกิด",
     close_btn: "ปิด",
-    if_you_wish_to_change_please_contact:
-      "หากต้องการเปลี่ยนแปลงข้อมูลส่วนบุคคล กรุณาติดต่อลูกค้าสัมพันธ์หรือ",
+    if_you_wish_to_change_please_contact: "หากต้องการเปลี่ยนแปลงข้อมูลส่วนบุคคล กรุณาติดต่อลูกค้าสัมพันธ์หรือ",
     live_chat: "ไลฟ์แชท",
     old_password: "รหัสผ่านเดิม",
     confirm_new_password: "ยืนยันรหัสผ่านใหม่",
-    hint_new_password:
-      "ขึ้นอยู่ที่ระหว่าง 6-16 ตัวอักษรและจำเป็นต้องมีการผสมของตัวอักษรและตัวเล",
+    hint_new_password: "ขึ้นอยู่ที่ระหว่าง 6-16 ตัวอักษรและจำเป็นต้องมีการผสมของตัวอักษรและตัวเล",
     enter_veri_code: "รับรหัสยืนยัน",
     request_otp_code: "ส่งรหัสยืนยัน",
     minimum_withdraw_money: "ถอนขั้นต่ำ 100 บาท",
@@ -361,17 +343,16 @@ export default {
     check_your_captcha_code: "ตรวจสอบรหัสแคปต์ชา",
     only_numbers_allowed: "อนุญาตเฉพาะตัวเลขเท่านั้น",
     otp_code_has_been_sent: "รหัส OTP ถูกส่งไปยังอีเมล์ของคุณแล้ว",
-    otp_code_has_been_sent_to_your_mobile_phone:
-      "OTP ถูกส่งไปยังโทรศัพท์มือถือของคุณแล้ว",
+    otp_code_has_been_sent_to_your_mobile_phone: "OTP ถูกส่งไปยังโทรศัพท์มือถือของคุณแล้ว",
     successfully_verified: "ยืนยันสำเร็จ",
     password_updated: "อัพเดทพาสเวิดเรียบร้อยแล้ว.",
     updated_successfully: "อัพเดทเรียบร้อยแล้ว",
     please_enter_old_password: "กรุณารหัสผ่านเดิม",
     password_must_between_6_12: "ความยาวควรเป็น 6 ถึง 12 ตัว",
-    withdraw_process: "กระบวนการถอนเงิน",
+    withdraw_process: "ขั้นตอนการถอนเงิน",
     withdraw_method: "วิธีการถอนเงิน",
     verification_account: "การยืนยันบัญชี",
-    withdraw_money: "เบิกเงิน",
+    withdraw_money: "ถอนเงิน",
     select_bank_account: "เลือกบัญชีธนาคาร",
     please_select_bank_account: "กรุณาเลือกบัญชีธนาคาร",
     no_usable_cards: "ไม่มีบัตรที่ใช้งานได้",
@@ -379,24 +360,20 @@ export default {
     please_enter_the_amount: "กรุณากรอกจำนวนเงินที่คุณต้องการถอน",
     enter_amount_money: "กรอกจำนวนเงิน",
     amount_should_more_than_min: "จำนวนเงินที่ถอนควรมากกว่าจำนวนเงินถอนขั้นต่ำ",
-    amount_should_less_than_max:
-      "จำนวนเงินที่ถอนควรน้อยกว่าจำนวนเงินที่ถอนสูงสุด",
-    min_max_amount: "มิกซ์/แม็กซ์",
-    withdrawal_today: "ถอนเงินวันนี้: ",
-    remaining: "ที่เหลืออยู่: ",
-    attempt_time: "พยายาม",
+    amount_should_less_than_max: "จำนวนเงินที่ถอนควรน้อยกว่าจำนวนเงินที่ถอนสูงสุด",
+    min_max_amount: "ขั้นต่ำ/สูงสุด",
+    withdrawal_today: "จำกัดยอดถอนต่อวัน: ",
+    remaining: "เหลือยอดถอนได้อีก: ",
+    attempt_time: "ครั้ง",
     confirm_withdrawal: "ยืนยัน",
     select_deposit_method: "เลือกวิธีการฝากเงิน",
     please_enter_deposit_amount: "กรุณากรอกจำนวนเงินฝาก",
     enter_deposit_amount: "กรอกจำนวนเงินฝาก",
     choose_promotion: "เลือกโปรโมชั่น",
-    to_prevent_enter_amount_notified:
-      "เพื่อป้องกันการสูญเสียเงิน กรุณากรอกจำนวนเงินตามที่ระบบระบุ",
+    to_prevent_enter_amount_notified: "เพื่อป้องกันการสูญเสียเงิน กรุณากรอกจำนวนเงินตามที่ระบบระบุ",
     confirm_deposit: "ยืนยัน",
-    you_will_redirect_to_bank_page:
-      "คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าธนาคารของคุณเพื่อฝากเงิน",
-    operation_is_successful_will_notified:
-      "หากดำเนินการสำเร็จจะแจ้งให้ทราบในหน้านี้",
+    you_will_redirect_to_bank_page: "คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าธนาคารของคุณเพื่อฝากเงิน",
+    operation_is_successful_will_notified: "หากดำเนินการสำเร็จจะแจ้งให้ทราบในหน้านี้",
     understood: "เข้าใจแล้ว",
     please_enter_the_deposit_amount: "กรุณากรอกจำนวนเงินฝาก",
     deposit_amount_in_between: "จำนวนเงินฝากควรอยู่ระหว่าง ",
@@ -424,19 +401,14 @@ export default {
     bank: "ธนาคาร",
     upload_img: "โหลดรูปภาพ",
     upload_successfully: "อัพโหลดเรียบร้อยแล้ว",
-    failed_upload_size_dont_meet_requirement:
-      "การอัพโหลดล้มเหลว ขนาดภาพไม่ตรงที่กำหนด โปรดอัปโหลดรูปภาพในภายหลัง",
+    failed_upload_size_dont_meet_requirement: "การอัพโหลดล้มเหลว ขนาดภาพไม่ตรงที่กำหนด โปรดอัปโหลดรูปภาพในภายหลัง",
     card_added: "เพิ่มการ์ดแล้ว",
     number_sent: "ส่งหมายเลข",
     urgent_deposit: "ฝากเงินด่วน",
-    bonus_will_be_added_to_u:
-      "โบนัสจะถูกเพิ่มเข้าไปในกระเป๋าเงินของคุณหลังจากทํารายการสําเร็จ",
-    register_bonus_will_be_added_once:
-      "โบนัสจะถูกเพิ่มไปยังกระเป๋าหลักของคุณเมื่อหมายเลขโทรศัพท์ได้รับการยืนยันแล้ว",
-    refer_bonus_will_be_added_once:
-      "โบนัสจะถูกเพิ่มไปในกระเป๋าหลักหลังจากเพื่อนของคุณเติมเงินสำเร็จ",
-    insurance_bonus_will_be_added_once:
-      "โบนัสจะถูกเพิ่มไปในกระเป๋าหลักหลังจากสมาชิกทำตามเงื่อนไขของโปรโมชั่นครบถ้วน",
+    bonus_will_be_added_to_u: "โบนัสจะถูกเพิ่มเข้าไปในกระเป๋าเงินของคุณหลังจากทํารายการสําเร็จ",
+    register_bonus_will_be_added_once: "โบนัสจะถูกเพิ่มไปยังกระเป๋าหลักของคุณเมื่อหมายเลขโทรศัพท์ได้รับการยืนยันแล้ว",
+    refer_bonus_will_be_added_once: "โบนัสจะถูกเพิ่มไปในกระเป๋าหลักหลังจากเพื่อนของคุณเติมเงินสำเร็จ",
+    insurance_bonus_will_be_added_once: "โบนัสจะถูกเพิ่มไปในกระเป๋าหลักหลังจากสมาชิกทำตามเงื่อนไขของโปรโมชั่นครบถ้วน",
     claim_bonus: "เคลมเครดิตฟรี",
     claim_daily_cashback: "เคลมเงินคืนประจำวัน",
     cash_must_wagered_1_tme_before_withdrawal:
@@ -463,16 +435,14 @@ export default {
     fav_game_added: "แอดเกมเข้าหน้ารายการโปรดแล้ว",
     fav_game_removed: "ลบเกมออกจากรายการโปรดแล้ว",
     update_app_title: "อัพเดทเรียบร้อย",
-    detected_new_version:
-      "มีรายการอัพเดทใหม่ ต้องการดาวน์โหลดตอนนี้เลยหรือไม่?",
+    detected_new_version: "มีรายการอัพเดทใหม่ ต้องการดาวน์โหลดตอนนี้เลยหรือไม่?",
     update_now: "อัพเดท",
     usdt_will_be_charged: "บันทึก: มีค่าธรรมเนียมในการถอนเงิน 1.00 USDT/ครั้ง",
     estimate_arrival: "ประมาณการถอน: ",
     phone_verification_code: "รหัสยืนยันโทรศัพท์",
     please_enter_phone_code: "กรุณากรอกรหัสยืนยันทางโทรศัพท์",
     get_code: "รับรหัส",
-    bind_crypto_need_phone_veri:
-      "ในการเชื่อมโยงบัตร eWallet ของคุณ จำเป็นต้องมีการยืนยันทางโทรศัพท์",
+    bind_crypto_need_phone_veri: "ในการเชื่อมโยงบัตร eWallet ของคุณ จำเป็นต้องมีการยืนยันทางโทรศัพท์",
     click_to_refresh_captcha: "คลิกเพื่อรีเฟรช",
     send_veri_code: "ส่ง",
     phone_number_cannot_empty: "หมายเลขโทรศัพท์ไม่สามารถเว้นว่างได้",
@@ -481,16 +451,7 @@ export default {
     are_you_sure_want_delete: "คุณแน่ใจหรือไม่ว่าต้องการลบ ",
     delete: "ลบ",
     please_enter_card_num: "กรุณาใส่เลขบัตร",
-    please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร",
-
-    // spin wheel
-    name: "ชื่อ",
-    prize: "รางวัล",
-    date: "วันที่",
-    youWon: "คุณชนะ",
-    totalBonus: "โบนัสที่ได้ทั้งหมด",
-    spinRemaining: "คุณมี {spinCount} ตั๋วที่หมุนได้",
-    loginToCont: "เข้าสู่ระบบเพื่อดำเนินการต่อ",
+    please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",
@@ -577,6 +538,6 @@ export default {
     35008: "คุณไม่ได้รับสิทธิ์นี้",
     35009: "สิทธิ์พิเศษกำลังจะเป็นผลเร็วๆนี้",
     35010: "35010 สมาชิกไม่สามารถรับสิทธิ์นี้ได้",
-    35011: "35011 สมาชิกไม่สามารถรับสิทธิ์นี้ได้.",
-  },
+    35011: "35011 สมาชิกไม่สามารถรับสิทธิ์นี้ได้."
+  }
 };

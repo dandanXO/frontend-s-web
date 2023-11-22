@@ -180,17 +180,15 @@
       class="promo-sjb"
     />
 
-    <template v-if="list.promoCode === 'tha-multi-wheel'">
+    <template v-if="list.promoCode === 'multi-wheel'">
       <template v-if="store.hasToken()">
         <PromoSpinWheel></PromoSpinWheel>
         <PromoSpinWheelWinner></PromoSpinWheelWinner>
       </template>
-      <div
-        v-else
-        class="row items-center justify-center"
-        @click="redirectToLogin"
-      >
-        <q-btn flat :label="$t('lang.loginToCont')" color="primary" />
+      <div v-else class="row items-center justify-center">
+        <q-btn size="md" class="login-btn" to="/login">{{
+          $t("lang.loginToCont")
+        }}</q-btn>
       </div>
     </template>
 
@@ -218,14 +216,13 @@ import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
 import * as _ from "lodash";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import SJBPromo from "../components/hotpromo/40/shiJieBei.vue";
 import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue";
-import PromoSpinWheel from "components/PromoSpinWheel.vue";
-import PromoSpinWheelWinner from "components/PromoSpinWheelWinner.vue";
+import PromoSpinWheel from "components/hotpromo/80/PromoSpinWheel.vue";
+import PromoSpinWheelWinner from "components/hotpromo/80/PromoSpinWheelWinner.vue";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -313,7 +310,6 @@ export default defineComponent({
     const $q = useQuasar();
 
     const store = userStore();
-    const router = useRouter();
 
     const { t } = useI18n();
     const lucky_number = ref("");
@@ -547,10 +543,6 @@ export default defineComponent({
       }
     };
 
-    const redirectToLogin = () => {
-      router.push("/login");
-    };
-
     return {
       store,
       lucky_number,
@@ -567,7 +559,6 @@ export default defineComponent({
       btnLoading,
       isClaimModal,
       claimMsg,
-      redirectToLogin,
     };
   },
 });
@@ -765,6 +756,15 @@ export default defineComponent({
 .promo-invt {
   background: #2b2b4b;
   padding: 10px;
+}
+
+.login-btn {
+  border: 1px solid #ffa9ab;
+  background: $linear-bg-1;
+  color: $white !important;
+  border-radius: 25px;
+  font-size: $normal-size;
+  line-height: 1rem;
 }
 
 .win-rebate-model {

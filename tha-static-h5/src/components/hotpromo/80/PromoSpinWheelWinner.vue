@@ -19,7 +19,7 @@
             <img
               v-if="props.value === grandPrize ? true : false"
               class="iphone-img"
-              src="../assets/images/promotion/spinwheel/iphone.png"
+              src="../../../assets/images/promotion/spinwheel/iphone.png"
             />
             {{ props.value }}
           </q-td>
@@ -28,7 +28,7 @@
 
       <img
         class="treasure-box-img"
-        src="../assets/images/promotion/spinwheel/treasure_box.png"
+        src="../../../assets/images/promotion/spinwheel/treasure_box.png"
       />
     </div>
 
@@ -72,11 +72,15 @@ const columns = ref([
     align: "center",
   },
 ]);
+
+// mock data
+// { name: "tes****0", prize: 74.8, date: "2023-11-17 18:20" }
 const rows = ref([]);
 
-function initSpinWheelWinnerAPI() {
+const loading = ref(false);
+function initSpinWheelWinnerAPI(callback) {
   eventapi
-    .post("/multiWheel/list?promoCode=tha-multi-wheel")
+    .post("/multiWheel/list?promoCode=multi-wheel")
     .then((res) => {
       const { code, data } = res.data;
       if (code === 0) {
@@ -108,11 +112,17 @@ function initSpinWheelWinnerAPI() {
     })
     .catch((e) => {
       console.log("error", e);
+    })
+    .then(() => {
+      callback && callback();
     });
 }
 
 onMounted(() => {
-  initSpinWheelWinnerAPI();
+  loading.value = true;
+  initSpinWheelWinnerAPI(() => {
+    loading.value = false;
+  });
   setInterval(() => {
     initSpinWheelWinnerAPI();
   }, 30000);
@@ -179,6 +189,7 @@ onMounted(() => {
             font-weight: 400;
             line-height: normal;
             letter-spacing: 0.14063rem;
+            text-wrap: wrap;
           }
         }
       }

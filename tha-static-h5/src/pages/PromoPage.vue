@@ -1,10 +1,7 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
-      <div
-        v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
-        class="banner-container"
-      >
+      <div v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl" class="banner-container">
         <div
           class="promo-top-bg"
           :style="
@@ -44,11 +41,7 @@
                 <div class="promo-bg">
                   <img
                     class="promo-content"
-                    :src="
-                      !$q.screen.gt.sm
-                        ? imgURL + promo.mobileBannerUrl
-                        : imgURL + promo.desktopBannerUrl
-                    "
+                    :src="!$q.screen.gt.sm ? imgURL + promo.mobileBannerUrl : imgURL + promo.desktopBannerUrl"
                   />
                 </div>
               </div>
@@ -94,7 +87,7 @@
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino:
                 selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
             <div class="menu-title">{{ $t("lang.tnc") }}</div>
@@ -163,14 +156,14 @@ export default defineComponent({
     });
     const loadBanner = () => {
       api
-          .get("/promo/banner?category=PROMO")
-          .then((res) => {
-            const ret = res.data
-            if (ret.code === 0) {
-              banner.value = ret.data[0];
-            } else {
-            }
-          })
+        .get("/promo/banner?category=PROMO")
+        .then((res) => {
+          const ret = res.data
+          if (ret.code === 0) {
+            banner.value = ret.data[0];
+          } else {
+          }
+        })
     }
     const showPromoDetails = (promo) => {
       router.push({path: '/promo', query: {id: promo.id}})
@@ -188,7 +181,10 @@ export default defineComponent({
       }
     };
     const loadAll = () => {
-      api.get("/promo/page").then((ret) => {
+      const platformApiUrl = store.hasToken()
+        ? "/session/loggedInPromoPages"
+        : "/promo/page";
+      api.get(platformApiUrl).then((ret) => {
         const res = ret.data
         if (res.code === 0) {
           promoState.promoList.push(...res.data);

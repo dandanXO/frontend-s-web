@@ -77,7 +77,7 @@
             </el-form-item>
 
             <el-form-item :label="t('fields.maxTicket')" prop="siteName">
-              <el-input v-model="form.maxTicket" style="width: 200px;" />
+              <el-input v-model="form.maxTicket" style="width: 200px;display:none" />
             </el-form-item>
           </div>
         </el-card>
@@ -429,7 +429,7 @@ function edit() {
     if (valid) {
       await editMemberMultiWheelSetting(form, request.siteId)
       await loadSetting()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
 }
