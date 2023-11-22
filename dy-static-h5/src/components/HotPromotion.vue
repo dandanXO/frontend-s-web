@@ -150,7 +150,7 @@
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
-
+    <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
     <EsportQuiz v-if="list.redirectUrl === 'esport_quiz' && !isCommonPromo"></EsportQuiz>
@@ -325,6 +325,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 
@@ -337,6 +338,7 @@ export default defineComponent({
     TigerCardPromo,
     GoldenEggPromo,
     HongBaoYuPromo,
+    NbaGamePromo,
     InviteFriendPromo,
     EsportQuiz
   },
@@ -396,6 +398,7 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "dy1-lottery" ||
       this.list.redirectUrl === "esport_quiz" ||
+      this.list.redirectUrl === "nba-game" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

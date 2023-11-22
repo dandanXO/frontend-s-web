@@ -1,27 +1,35 @@
 <template>
   <div>
-    <swiper :slides-per-view="1" :loop="true" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper-wrapper">
+    <swiper
+      :slides-per-view="1"
+      :loop="true"
+      @swiper="onSwiper"
+      :space-between="50"
+      @slideChange="onSlideChange"
+      class="swiper-wrapper"
+    >
       <template v-for="(item, index) in nbaDetails" :key="index">
         <swiper-slide>
           <div class="bet-info-box">
-            <div class="bet-info-date">{{ formatDate(item.matchTime).date }}</div>
+            <div class="bet-info-date">
+              {{ formatDate(item.matchTime) }}
+            </div>
+
+            <div class="bet-info-title" v-html="item.matchTitle" />
+
             <div class="bet-info-details">
               <div class="info-team info-team-one">
                 <div class="info-team-logo">
-                  <img src="https://ipis-cdn.speedy4site.com/TeamImage/29342.png" />
+                  <img :src="item.teamOneLogo" />
                 </div>
                 <div class="info-team-name" v-html="item.teamOne" />
               </div>
 
-              <div class="bet-info-vs">
-                VS
-                <br />
-                {{ formatDate(item.matchTime).time }}
-              </div>
+              <div class="bet-info-vs">VS</div>
 
               <div class="info-team info-team-two">
                 <div class="info-team-logo">
-                  <img src="https://ipis-cdn.speedy4site.com/TeamImage/29610.png" />
+                  <img :src="item.teamTwoLogo" />
                 </div>
                 <div class="info-team-name" v-html="item.teamTwo" />
               </div>
@@ -33,6 +41,7 @@
     <div class="swiper-button-prev" @click="prevSlide"></div>
     <div class="swiper-button-next" @click="nextSlide"></div>
   </div>
+  <!-- <pre>{{ nbaDetails }}~~~~</pre> -->
 </template>
 
 <script setup>
@@ -41,7 +50,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { loadNbaDetails } from "@/api/promotion/nbaGame";
+import { eventapi } from "src/boot/axios";
 
 const nbaDetails = ref([]);
 
@@ -50,40 +59,54 @@ const nbaDetailsData = ref([
     code: 0,
     data: [
       {
-        id: 3,
-        siteId: 6,
-        matchTitle: "洛杉矶湖人 VS 休斯敦火箭",
-        teamOne: "洛杉矶湖人",
-        teamOneIcon: "14c91869-db48-43fe-b7e3-8db4ae7aa7dc.png",
-        teamTwo: "休斯敦火箭",
-        teamTwoIcon: "2ff0117d-4121-4ce4-9e03-104288254147.png",
-        gameType: "NBA",
-        status: "ACTIVE",
-        matchTime: "2023-11-21 22:00:00"
+        id: 291,
+        teamOne: "菲尼克斯太阳",
+        teamOneLogo: "https://ipis-cdn.speedy4site.com/TeamImage/29342.png",
+        teamTwo: "金州勇士",
+        teamTwoLogo: "https://ipis-cdn.speedy4site.com/TeamImage/2439.png",
+        matchTitle: "NBA 美国职业篮球",
+        matchTime: 1700708400000,
+        type: "NBA",
+        endTime: "",
+        award: 0
       },
       {
-        id: 5,
-        siteId: 6,
-        matchTitle: "洛杉矶湖人 VS 休斯敦火箭",
-        teamOne: "洛杉矶湖人2",
-        teamOneIcon: "14c91869-db48-43fe-b7e3-8db4ae7aa7dc.png",
-        teamTwo: "休斯敦火箭2",
-        teamTwoIcon: "2ff0117d-4121-4ce4-9e03-104288254147.png",
-        gameType: "NBA",
-        status: "ACTIVE",
-        matchTime: "2023-11-21 22:00:00"
+        id: 291,
+        teamOne: "菲尼克斯太阳2",
+        teamOneLogo: "https://ipis-cdn.speedy4site.com/TeamImage/29342.png",
+        teamTwo: "金州勇士2",
+        teamTwoLogo: "https://ipis-cdn.speedy4site.com/TeamImage/2439.png",
+        matchTitle: "NBA 美国职业篮球",
+        matchTime: 1700708400000,
+        type: "NBA",
+        endTime: "",
+        award: 0
       }
     ]
   }
 ]);
 
-const formatDate = (dateTimeString) => {
-  const [date, time] = dateTimeString.split(" ");
-  return { date, time };
+const formatDate = (timestamp) => {
+  const dateObject = new Date(timestamp);
+
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false, // Use 24-hour format
+    timeZone: "UTC" // Set the timeZone to UTC to prevent the display of the GMT offset
+  };
+
+  const formattedDate = dateObject.toLocaleString(undefined, options);
+  return formattedDate;
 };
 
 const getNbaDetails = () => {
-  loadNbaDetails()
+  eventapi
+    .get("/game-match/upcoming")
     .then((res) => {
       if (res.code === 0) {
         console.log(res);
@@ -122,22 +145,22 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .swiper-wrapper {
-  max-width: 900px;
+  max-width: 80%;
 }
 
 :deep(.swiper-button-prev) {
-  left: 100px;
+  left: 0px;
   margin-top: -30px;
 }
 :deep(.swiper-button-next) {
-  right: 100px;
+  right: 0px;
   margin-top: -30px;
 }
 
 .bet-info-box {
   border-radius: 12px;
   border: 1px solid #0c9bff;
-  max-width: 800px;
+  max-width: 90%;
   margin: auto;
   overflow: hidden;
 
@@ -146,20 +169,28 @@ onMounted(() => {
     padding: 12px 24px;
     display: flex;
     justify-content: center;
-    font-size: 24px;
+    font-size: 12px;
     line-height: 1;
     color: #ffffff;
+    letter-spacing: 2px;
+  }
+
+  .bet-info-title {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px 10px 5px;
   }
 
   .bet-info-vs {
     font-weight: bolder;
-    font-size: 28px;
+    font-size: 16px;
     line-height: 1.3;
     text-align: center;
   }
 
   .bet-info-details {
-    padding: 12px 20px;
+    padding: 12px 12px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -167,10 +198,10 @@ onMounted(() => {
     .info-team {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 4px;
       align-items: center;
-      width: 280px;
-      padding-bottom: 20px;
+      width: 40%;
+      padding-bottom: 10px;
 
       .info-team-logo {
         img {
@@ -181,7 +212,7 @@ onMounted(() => {
 
       .info-team-name {
         color: #414655;
-        font-size: 18px;
+        font-size: 12px;
         line-height: 1;
         font-weight: bolder;
       }
