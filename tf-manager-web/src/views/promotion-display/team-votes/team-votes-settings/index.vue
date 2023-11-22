@@ -199,18 +199,19 @@ const uiControl = reactive({
 async function attachPhoto(event) {
   const files = event.target.files[0]
   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-  const dirPaymentLabel = 'payment/label'
+  const dirTeamVotes = 'promo/teamvotes/' + form.siteId
 
   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
     ElMessage({ message: t('message.invalidFileType'), type: 'error' })
   } else {
     var formData = new FormData()
     formData.append('files', files)
-    formData.append('dir', dirPaymentLabel)
+    formData.append('dir', dirTeamVotes)
     formData.append('overwrite', false)
     const data = await uploadImage(formData)
     if (data.code === 0) {
-      form.countryImgUrl = data.data[0]
+      const path = data.data;
+      form.countryImgUrl = path.substr(0, path.indexOf("."));
     } else {
       ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
     }
