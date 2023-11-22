@@ -1,7 +1,11 @@
 <template>
   <div>
-    <AcctBal :isTransfer="true" :platforms="platforms" />
-    <div class="q-pa-md bg-dark q-mx-sm q-my-md">
+    <AcctBal
+      :isTransfer="autoTransfer"
+      :platforms="platforms"
+      :updateAutoTransfer="updateAutoTransferState"
+    />
+    <div v-if="!autoTransfer" class="q-pa-md bg-dark q-mx-sm q-my-md">
       <q-form ref="transferFormRef">
         <div class="transferfromto q-mb-md">
           <q-select
@@ -300,11 +304,27 @@ const getPlatBalances = (plat) => {
     });
 };
 const amounts = [100, 500, 1000, 2000, 5000];
+
+const autoTransfer = ref(false);
+const getAutoTransferState = () => {
+  api.get("/session/getAutoTransferState", {}).then((res) => {
+    autoTransfer.value = res.data;
+  });
+};
+
+const updateAutoTransferState = (value) => {
+  api.put(`/session/updateAutoTransferState/${value}`, {}).then((res) => {
+    autoTransfer.value = res.data;
+  });
+};
+
 onMounted(() => {
   store.getBalance();
   getPlatList();
+  getAutoTransferState();
 });
 </script>
+
 <style lang="scss">
 .transferfromto {
   .q-field--auto-height .q-field__native,

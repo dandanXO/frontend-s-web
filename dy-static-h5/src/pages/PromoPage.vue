@@ -203,7 +203,7 @@ export default defineComponent({
         isPromoDetail.value = false;
       } else {
         isPromoDetail.value = route.query.name;
-        ui.setScrollPosition("vertical", 0, 200);
+        // ui.setScrollPosition("vertical", 0, 200);
       }
     });
     const loadBanner = () => {
@@ -323,6 +323,8 @@ export default defineComponent({
       white-space: nowrap;
       border: 0;
 
+
+
       tr {
         td {
           padding: 10px 20px;
@@ -361,6 +363,14 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   color: #000;
+
+  table{
+    tbody {
+      width: 100%;
+      table-layout: fixed;
+      display: table;
+    }
+  }
 
   .all-promotions {
     padding-bottom: 20px;

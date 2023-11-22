@@ -228,11 +228,11 @@ export default defineComponent({
     };
 
     const openGame = (gameName, code, gameCode) => {
-      // if (code === "SGWin") {
-        // router.push("/lottery/SGWin");
-      // } else {
+      if (code === "SGWin") {
+        router.push("/lottery/SGWin");
+      } else {
         liveGame.value.open(gameName, code, gameCode);
-      // }
+      }
     };
 
     onMounted(() => {

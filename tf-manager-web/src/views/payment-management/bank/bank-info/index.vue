@@ -408,7 +408,7 @@ const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const bankForm = ref(null)
-const paymentDir = process.env.VUE_APP_S3_URL + '/payment/'
+const paymentDir = process.env.VUE_APP_IMAGE + '/payment/'
 
 let bankName = ''
 let bankCode = ''
