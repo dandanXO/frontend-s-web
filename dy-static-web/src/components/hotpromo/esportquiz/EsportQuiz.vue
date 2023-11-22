@@ -298,19 +298,18 @@ function getRecordList() {
   const { pageSize, pageNumber } = paginationInfo;
   const start = (pageNumber - 1) * pageSize;
   const end = start + pageSize;
-  records.value.forEach((e, i) => {
-    if (i >= start && i < end) {
-      const { createTime, answerOne, answerTwo, answerThree, status } = e;
 
-      const newObj = {};
-      newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
-      newObj.answer = answerOne + ", " + answerTwo + ", " + answerThree;
-      newObj.statusText = status;
-      if (status == "WIN") newObj.className = "got-answer";
+  for (let i = start, l = end; i < l; i++) {
+    const { createTime, answerOne, answerTwo, answerThree, status } = records[i];
 
-      tableInfo.value.push(newObj);
-    }
-  });
+    const newObj = {};
+    newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
+    newObj.answer = answerOne + ", " + answerTwo + ", " + answerThree;
+    newObj.statusText = status;
+    if (status == "WIN") newObj.className = "got-answer";
+
+    tableInfo.value.push(newObj);
+  }
 }
 
 const isFirstQuestionClicked = ref(false);
