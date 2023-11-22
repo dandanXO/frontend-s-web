@@ -122,6 +122,23 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-select
+            clearable
+            v-model="form.status"
+            size="small"
+            :placeholder="t('fields.status')"
+            class="filter-item"
+            style="width: 120px; margin-left: 5px"
+          >
+            <el-option
+              v-for="item in uiControl.status"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-row>
           <el-col>
             <el-form-item :label="t('fields.startTime')" prop="startTime">
@@ -144,9 +161,9 @@
             </el-form-item>
             <el-form-item :label="t('fields.dailyRainDuration')" prop="dailyRainDuration" style="width: 650px;">
               <el-tag
-                v-for="item in form.dailyRainDurationArray"
+                v-for="item in form.dailyRainDuration"
                 :key="item"
-                class="mx-1"
+                class="ml-1"
                 closable
                 @close="removeDailyRainDuration(item)"
                 :type="isExpiredTime(item) ? 'danger' : ''"
@@ -165,26 +182,15 @@
             </el-form-item>
             <el-form-item :label="t('fields.dailyRefreshDuration')" prop="dailyRefreshDuration" style="width: 650px;">
               <el-tag
-                v-for="item in form.dailyRefreshDurationArray"
+                v-for="item in form.dailyRefreshDuration"
                 :key="item"
-                class="mx-1"
+                class="ml-1"
                 closable
                 @close="removeDailyRefreshDuration(item)"
                 :type="isExpiredTime(item) ? 'danger' : ''"
               >
                 {{ displayHourMinute(item) }}
               </el-tag>
-              <!--              <el-time-picker-->
-              <!--                v-model="refreshRange"-->
-              <!--                v-if="uiControl.refreshRangeVisible"-->
-              <!--                format="HH:mm"-->
-              <!--                value-format="HH:mm"-->
-              <!--                is-range-->
-              <!--                range-separator="-"-->
-              <!--                start-placeholder="Start"-->
-              <!--                end-placeholder="End"-->
-              <!--                @change="addRefreshRange"-->
-              <!--              />-->
               <el-button-group>
                 <el-button class="button-new-tag ml-1 el-button--success" size="small" @click="openRangeModal(2)">
                   + {{ t('fields.add_new') }}
@@ -197,26 +203,32 @@
           </el-col>
         </el-row>
         <el-form-item :label="t('fields.amountLimitPerRain')" prop="amountLimitPerRain" style="width: 600px;">
+          $
           <el-input-number
             v-model="form.amountLimitPerRain"
-            :min="0"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
           />
         </el-form-item>
         <el-form-item :label="t('fields.redPacketAmountAfterReachingLimit')" prop="redPacketAmountAfterReachingLimit"
                       style="width: 600px;"
         >
+          $
           <el-input-number
             v-model="form.redPacketAmountAfterReachingLimit"
-            :min="0"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.vipRules')" prop="vipRuleArray" style="width: 600px;">
+        <el-form-item :label="t('fields.vipRules')" prop="vipRules" style="width: 600px;">
           <el-tag
-            v-for="item in form.vipRuleArray"
+            v-for="item in form.vipRules"
             :key="item"
-            class="mx-1"
+            class="ml-1"
             closable
-            @close="removeDailyRainDuration(item)"
+            @close="removeVipRule(item)"
           >
             {{ displayVipRule(item) }}
           </el-tag>
@@ -224,9 +236,9 @@
             v-if="uiControl.vipRuleVisible"
             ref="vipForm"
             :model="vipRuleForm"
-            :inline="true"
             size="small"
             label-width="50px"
+            style="width:100%"
           >
             <el-form-item :label="t('fields.vipLevel')" prop="vipLevel" style="width: 600px;">
               <el-select
@@ -246,15 +258,21 @@
               </el-select>
             </el-form-item>
             <el-form-item :label="t('fields.minAmount')" prop="minAmount">
+              $
               <el-input-number
                 v-model="vipRuleForm.minAmount"
-                :min="0"
+                style="width: 135px"
+                :controls="false"
+                @keypress="restrictInput($event)"
               />
             </el-form-item>
             <el-form-item :label="t('fields.maxAmount')" prop="maxAmount">
+              $
               <el-input-number
                 v-model="vipRuleForm.maxAmount"
-                :min="0"
+                style="width: 135px"
+                :controls="false"
+                @keypress="restrictInput($event)"
               />
             </el-form-item>
             <div class="dialog-footer">
@@ -262,27 +280,30 @@
               <el-button @click="addVipRule">{{ t('fields.add') }}</el-button>
             </div>
           </el-form>
-          <el-button v-else-if="currVipList.list.length > 0" class="button-new-tag ml-1" size="small"
-                     @click="uiControl.vipRuleVisible = true"
+          <el-button v-else-if="currVipList.list.length > 0" class="button-new-tag ml-1 el-button--success" @click="uiControl.vipRuleVisible = true"
+                     style="display:block;margin-top:4px;"
           >
-            + New Rule
+            + {{ t('fields.add_new') }}
           </el-button>
         </el-form-item>
         <el-form-item :label="t('fields.lastDigitMinDayDeposit')" prop="lastDigitMinDayDeposit" style="width: 600px;">
+          $
           <el-input-number
             v-model="form.lastDigitMinDayDeposit"
-            :min="0"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.lastDigitRules')" prop="lastDigitRuleArray">
+        <el-form-item :label="t('fields.lastDigitRules')" prop="lastDigitRules">
           <el-tag
-            v-for="item in form.lastDigitRuleArray"
+            v-for="item in form.lastDigitRules"
             :key="item.lastDigit"
-            class="mx-1"
+            class="ml-1"
             closable
             @close="removeLastDigitRule(item)"
           >
-            {{ displayVipRule(item) }}
+            {{ displayLastDigitRule(item) }}
           </el-tag>
           <el-form
             v-if="uiControl.lastDigitRuleVisible"
@@ -291,6 +312,7 @@
             :inline="true"
             size="small"
             label-width="50px"
+            style="width:100%"
           >
             <el-form-item :label="t('fields.lastDigit')" prop="lastDigit">
               <el-input
@@ -298,9 +320,12 @@
               />
             </el-form-item>
             <el-form-item :label="t('fields.amount')" prop="amount">
+              $
               <el-input-number
                 v-model="lastDigitRuleForm.amount"
-                :min="0"
+                style="width: 135px"
+                :controls="false"
+                @keypress="restrictInput($event)"
               />
             </el-form-item>
             <div class="dialog-footer">
@@ -308,10 +333,10 @@
               <el-button @click="addLastDigitRule">{{ t('fields.add') }}</el-button>
             </div>
           </el-form>
-          <el-button v-else-if="currVipList.list.length > 0" class="button-new-tag ml-1" size="small"
-                     @click="uiControl.lastDigitRuleVisible = true"
+          <el-button class="button-new-tag ml-1 el-button--success" @click="uiControl.lastDigitRuleVisible = true"
+                     style="display:block;margin-top:4px;"
           >
-            + New Rule
+            + {{ t('fields.add_new') }}
           </el-button>
         </el-form-item>
         <div class="dialog-footer">
@@ -432,16 +457,17 @@
       <el-table-column type="selection" />
       <el-table-column prop="name" :label="t('fields.name')" />
       <el-table-column prop="code" :label="t('fields.code')" />
-      <el-table-column prop="status" :label="t('fields.status')">
+      <el-table-column prop="status" :label="t('fields.status')" width="150">
         <template #default="scope">
-          <el-switch
-            v-model="scope.row.status"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
-            active-value="OPEN"
-            inactive-value="CLOSE"
-            @change="changeBannerState(scope.row.id, scope.row.state)"
-          />
+          <el-tag v-if="scope.row.status === 'OPEN'" type="success">
+            {{ scope.row.status }}
+          </el-tag>
+          <el-tag v-if="scope.row.status === 'CLOSE'" type="danger">
+            {{ scope.row.status }}
+          </el-tag>
+          <el-tag v-if="scope.row.status === 'TEST'">
+            {{ scope.row.status }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="startTime" :label="t('fields.startTime')" />
@@ -488,6 +514,8 @@ import {ElMessage, ElMessageBox} from 'element-plus'
 import {computed, nextTick, onMounted, reactive, ref} from 'vue'
 import {
   getRedPacketRains,
+  createRedPacketRain,
+  updateRedPacketRain
 } from '../../../api/privilege-red-packet-rain'
 import {getSiteListSimple} from '../../../api/site'
 import {required} from '../../../utils/validate'
@@ -518,9 +546,6 @@ const currVipList = reactive({
   list: [],
 })
 
-const rainRange = ref(null)
-const refreshRange = ref(null)
-
 const singleRainRangeFrom = ref(null);
 const singleRainRangeTo = ref(null);
 
@@ -544,22 +569,12 @@ const uiControl = reactive({
   dialogType: 'CREATE',
   editBtn: true,
   removeBtn: true,
-  bannerState: [
-    {key: 1, displayName: 'Open', value: true},
-    {key: 2, displayName: 'Close', value: false},
+  dateRangeType: "1",
+  status: [
+    { key: 1, displayName: 'Open', value: 'OPEN' },
+    { key: 2, displayName: 'Close', value: 'CLOSE' },
+    { key: 3, displayName: 'Test', value: 'TEST' },
   ],
-  category: [
-    {key: 1, displayName: 'HOME', value: 'HOME'},
-    {key: 2, displayName: 'LIVE', value: 'LIVE'},
-    {key: 3, displayName: 'SLOT', value: 'SLOT'},
-    {key: 4, displayName: 'FISH', value: 'FISH'},
-    {key: 5, displayName: 'POKER', value: 'POKER'},
-    {key: 6, displayName: 'PROMO', value: 'PROMO'},
-    {key: 7, displayName: 'HOMEPROMO', value: 'HOMEPROMO'},
-    {key: 8, displayName: 'HOMEPOP', value: 'HOMEPOP'},
-    {key: 9, displayName: 'CENTERPROMO', value: 'CENTERPROMO'}
-  ],
-  dateRangeType: "1"
 })
 
 let chooseBanner = []
@@ -579,14 +594,14 @@ const form = reactive({
   code: null,
   startTime: null,
   endTime: null,
-  dailyRainDurationArray: [],
-  dailyRefreshDurationArray: [],
+  dailyRainDuration: [],
+  dailyRefreshDuration: [],
   amountLimitPerRain: 0,
   redPacketAmountAfterReachingLimit: 0,
-  vipRuleArray: [],
+  vipRules: [],
   lastDigitMinDayDeposit: 0,
-  lastDigitRuleArray: [],
-  state: true,
+  lastDigitRules: [],
+  status: true,
 })
 
 const vipRuleForm = reactive({
@@ -606,13 +621,13 @@ const page = reactive({
 })
 
 const formRules = reactive({
-  title: [required(t('message.validateTitleRequired'))],
-  desktopImageUrl: [required(t('message.validateDesktopImageRequired'))],
-  mobileImageUrl: [required(t('message.validateMobileImageRequired'))],
-  redirectUrl: [required(t('message.validateRedirectRequired'))],
-  sequence: [required(t('message.validateSequenceRequired'))],
-  category: [required(t('message.validateCategoryRequired'))],
-  siteId: [required(t('message.validateSiteRequired'))],
+  // title: [required(t('message.validateTitleRequired'))],
+  // desktopImageUrl: [required(t('message.validateDesktopImageRequired'))],
+  // mobileImageUrl: [required(t('message.validateMobileImageRequired'))],
+  // redirectUrl: [required(t('message.validateRedirectRequired'))],
+  // sequence: [required(t('message.validateSequenceRequired'))],
+  // category: [required(t('message.validateCategoryRequired'))],
+  // siteId: [required(t('message.validateSiteRequired'))],
 })
 
 function resetQuery() {
@@ -630,12 +645,18 @@ function showDialog(type) {
   if (type === 'CREATE') {
     if (bannerForm.value) {
       bannerForm.value.resetFields()
-      form.id = null
+
     }
     uiControl.dialogTitle = t('fields.addBanner')
   } else {
     uiControl.dialogTitle = t('fields.editBanner')
   }
+  // singleRainRangeFrom.value = null
+  // singleRainRangeTo.value = null
+  // multiRainRangeDate.value = null
+  // multiRainRangeTime.value = null
+  // multiRangeDateLists.value = []
+  // multiRangeTimeLists.value = []
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
@@ -660,16 +681,18 @@ function showEdit(banner) {
   }
   nextTick(() => {
     for (const key in banner) {
-      if (Object.keys(form).find(k => k === key)) {
-        form[key] = banner[key]
-      } else if (key === 'dailyRainDuration') {
-        form.dailyRainDurationArray = JSON.parse(banner[key])
+      if (key === 'dailyRainDuration') {
+        form.dailyRainDuration = JSON.parse(banner[key])
       } else if (key === 'dailyRefreshDuration') {
-        form.dailyRefreshDurationArray = JSON.parse(banner[key])
+        form.dailyRefreshDuration = JSON.parse(banner[key])
       } else if (key === 'vipRules') {
-        form.vipRuleArray = JSON.parse(banner[key])
+        form.vipRules = JSON.parse(banner[key])
       } else if (key === 'lastDigitRules') {
-        form.lastDigitRuleArray = JSON.parse(banner[key])
+        form.lastDigitRules = JSON.parse(banner[key])
+      } else if (key === 'startTime' || key === 'endTime') {
+        form[key] = moment(banner[key]).format('YYYY-MM-DD HH:mm:ss')
+      } else if (Object.keys(form).find(k => k === key)) {
+        form[key] = banner[key]
       }
     }
     siteList.list.forEach(element => {
@@ -677,6 +700,10 @@ function showEdit(banner) {
         form.siteId = element.id
       }
     })
+    console.log("===========")
+    console.log(banner)
+    console.log(form)
+    console.log("===========")
   })
 }
 
@@ -690,12 +717,24 @@ function displayVipRule(vipRule) {
   return name + '  $' + vipRule.minAmount + ' - $' + vipRule.maxAmount;
 }
 
+function displayLastDigitRule(lastDigitRule) {
+  return lastDigitRule.lastDigit + ' - $' + lastDigitRule.amount;
+}
+
 function removeDailyRainDuration(item) {
-  form.dailyRainDurationArray.splice(form.dailyRainDurationArray.indexOf(item), 1);
+  form.dailyRainDuration.splice(form.dailyRainDuration.indexOf(item), 1);
 }
 
 function removeDailyRefreshDuration(item) {
-  form.dailyRefreshDurationArray.splice(form.dailyRainDurationArray.indexOf(item), 1);
+  form.dailyRefreshDuration.splice(form.dailyRefreshDuration.indexOf(item), 1);
+}
+
+function removeVipRule(item) {
+  form.vipRules.splice(form.vipRules.indexOf(item), 1);
+}
+
+function removeLastDigitRule(item) {
+  form.lastDigitRules.splice(form.lastDigitRules.indexOf(item), 1);
 }
 
 function isExpiredTime(rangeString) {
@@ -710,7 +749,7 @@ function isExpiredTime(rangeString) {
 }
 
 function setRefreshDurationSameAsRainDuration() {
-  form.dailyRefreshDurationArray = [...form.dailyRainDurationArray]
+  form.dailyRefreshDuration = [...form.dailyRainDuration]
 }
 
 async function loadRedPacketRain() {
@@ -743,8 +782,11 @@ async function removeBanner(banner) {
   })
 }
 
-async function changeBannerState(id, state) {
-  await loadRedPacketRain(id, state)
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if ((charCode < 48 || charCode > 57) && charCode !== 46) {
+    event.preventDefault()
+  }
 }
 
 function changeSite(siteId) {
@@ -755,7 +797,7 @@ function changeSite(siteId) {
   } else {
     form.minBalance = 0
   }
-  form.vipRuleArray = []
+  form.vipRules = []
   getVipBySiteId(siteId)
   getAvailableVip()
 }
@@ -766,7 +808,7 @@ async function loadVips() {
 }
 
 async function getAvailableVip() {
-  const levels = form.vipRuleArray.map(vip => vip.vipLevel)
+  const levels = form.vipRules.map(vip => vip.vipLevel)
   currVipList.list = siteVipList.list.filter(vip => {
     return !levels.includes(vip.level)
   });
@@ -827,11 +869,11 @@ function addRainRangeItem() {
     if (uiControl.dateRangeType === "1") {
 
       if (singleRainRangeFrom.value && singleRainRangeTo.value) {
-        form.dailyRainDurationArray.push({
+        form.dailyRainDuration.push({
           startTime: singleRainRangeFrom.value.replace(" ", "-"),
           endTime: singleRainRangeTo.value.replace(" ", "-")
         })
-        console.log(form.dailyRainDurationArray);
+        console.log(form.dailyRainDuration);
         ElMessage({message: t('fields.date_added'), type: 'success'});
       } else {
         ElMessage({message: t('fields.please_select_datetime'), type: 'error'});
@@ -844,7 +886,7 @@ function addRainRangeItem() {
 
             let timerange = time.split("--");
 
-            form.dailyRainDurationArray.push({
+            form.dailyRainDuration.push({
               startTime: date + '-' + timerange[0],
               endTime: date + '-' + timerange[1]
             })
@@ -862,11 +904,11 @@ function addRainRangeItem() {
 
     if (uiControl.dateRangeType === "1") {
       if (singleRainRangeFrom.value && singleRainRangeTo.value) {
-        form.dailyRainDurationArray.push({
+        form.dailyRainDuration.push({
           startTime: singleRainRangeFrom.value.replace(" ", "-"),
           endTime: singleRainRangeTo.value.replace(" ", "-")
         })
-        console.log(form.dailyRainDurationArray);
+        console.log(form.dailyRainDuration);
         ElMessage({message: t('fields.date_added'), type: 'success'});
       } else {
         ElMessage({message: t('fields.please_select_datetime'), type: 'error'});
@@ -879,7 +921,7 @@ function addRainRangeItem() {
 
             let timerange = time.split("--");
 
-            form.dailyRefreshDurationArray.push({
+            form.dailyRefreshDuration.push({
               startTime: date + '-' + timerange[0],
               endTime: date + '-' + timerange[1]
             })
@@ -928,16 +970,8 @@ const addMultiRangeDate = (type) => {
 //   uiControl.rainRangeVisible = false
 // }
 
-function addRefreshRange(arr) {
-  if (arr[0] && arr[1]) {
-    form.dailyRefreshDurationArray.push({startTime: arr[0], endTime: arr[1]})
-    refreshRange.value = null
-  }
-  uiControl.refreshRangeVisible = false
-}
-
 function addVipRule() {
-  form.vipRuleArray.push({
+  form.vipRules.push({
     vipLevel: vipRuleForm.vipLevel,
     minAmount: vipRuleForm.minAmount,
     maxAmount: vipRuleForm.maxAmount
@@ -945,6 +979,15 @@ function addVipRule() {
   uiControl.vipRuleVisible = false
   getAvailableVip()
   vipForm.value.resetFields()
+}
+
+function addLastDigitRule() {
+  form.lastDigitRules.push({
+    lastDigit: lastDigitRuleForm.lastDigit,
+    amount: lastDigitRuleForm.amount,
+  })
+  uiControl.lastDigitRuleVisible = false
+  digitForm.value.resetFields()
 }
 
 function disabledEndDate(time) {
@@ -959,7 +1002,8 @@ function disabledEndDate(time) {
 function edit() {
   bannerForm.value.validate(async valid => {
     if (valid) {
-      // await updateHomeBanner(form)
+      console.log(form)
+      await updateRedPacketRain(form)
       uiControl.dialogVisible = false
       await loadRedPacketRain()
       ElMessage({message: t('message.editSuccess'), type: 'success'})
