@@ -422,7 +422,7 @@ function handleQrSelection(linkType, urlType) {
 
   const faviconElement = document.querySelector('link[rel="icon"]')
 
-  qrDialogControl.dialogTitle = t('referralLink.下载二维码')
+  qrDialogControl.dialogTitle = t('referralLink.downloadQRCode')
   qrDialogControl.dialogVisible = true
   qrDialogControl.dialogQRIcon1 = faviconElement.href
   qrDialogControl.dialogQRLink1 = qrImageLink1
