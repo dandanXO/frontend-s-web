@@ -1254,7 +1254,7 @@ export default defineComponent({
               params: {
                 platformId: code,
                 gameType: gameType,
-                device: regDevice,
+                device: regDevice
               }
             })
             .then((ret) => {
@@ -1792,12 +1792,18 @@ export default defineComponent({
     padding: 5px 2px 0px;
     font-size: 10px;
     background: transparent;
-    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 75px;
+    margin: auto;
 
     @media (min-width: 600px) {
       font-size: 12px;
       word-break: normal;
       padding: 10px 2px;
+      width: auto;
+      white-space: wrap;
     }
 
     @media (min-width: 769px) {
