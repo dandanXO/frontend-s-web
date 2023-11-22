@@ -1811,17 +1811,16 @@ export default defineComponent({
 
 .grid-wrapper {
   overflow: hidden;
-  margin-bottom: 8px;
 }
 
 .grid {
   display: flex;
-  margin: 0px auto -3px;
+  margin: 0px auto 0px;
   align-items: flex-start;
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  background: #0d0a2f;
+  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
   padding: 6px 12px 6px;
   border-radius: 12px;
   overflow-x: auto;
@@ -1844,12 +1843,12 @@ export default defineComponent({
 
     &.active-board {
       // background: $linear-bg-4;
-      background: #2f2f70;
+      background: #5555aa;
     }
 
     &:hover {
       filter: brightness(0.88);
-      background: #2f2f70;
+      background: #5555aa;
     }
 
     &:active {
