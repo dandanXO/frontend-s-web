@@ -19,7 +19,9 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert username',
-          (val) => (val && val.length >= 6 && val.length <= 11) || 'The characters of username must be between 6 and 11'
+          (val) =>
+            (val && val.length >= 6 && val.length <= 11) || 'The characters of username must be between 6 and 11',
+          () => isValidName(regForm.loginName, 'Username')
         ]"
         placeholder="Please Enter Account"
         color="white"
@@ -38,7 +40,8 @@
         :type="isPwd ? 'password' : 'text'"
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert password',
-          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11'
+          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
+          () => isAlphanumeric(regForm.password, 'Password')
         ]"
         placeholder="Please Enter Password"
         color="white"
@@ -86,8 +89,7 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert password',
-          (val) => val === regForm.password || 'Password does not match',
-          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11'
+          (val) => val === regForm.password || 'Password does not match'
         ]"
         placeholder="Please Enter Password Again"
         color="white"
@@ -106,29 +108,29 @@
         </template>
       </q-input>
 
-      <q-input
-        ref="verificationRef"
-        hide-bottom-space
-        clearable
-        type="text"
-        v-model="regForm.captchaCode"
-        label="Verification Code"
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || 'Please insert verification code',
-          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
-        ]"
-        placeholder="Please enter verification Code"
-        label-color="brand"
-        rounded
-        outlined
-        color="white"
-        class="landing-input"
-      >
-        <template v-slot:append>
-          <img :src="verificationImg" @click="getCode()" />
-        </template>
-      </q-input>
+      <!--      <q-input-->
+      <!--        ref="verificationRef"-->
+      <!--        hide-bottom-space-->
+      <!--        clearable-->
+      <!--        type="text"-->
+      <!--        v-model="regForm.captchaCode"-->
+      <!--        label="Verification Code"-->
+      <!--        lazy-rules-->
+      <!--        :rules="[-->
+      <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
+      <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+      <!--        ]"-->
+      <!--        placeholder="Please enter verification Code"-->
+      <!--        label-color="brand"-->
+      <!--        rounded-->
+      <!--        outlined-->
+      <!--        color="white"-->
+      <!--        class="landing-input"-->
+      <!--      >-->
+      <!--        <template v-slot:append>-->
+      <!--          <img :src="verificationImg" @click="getCode()" />-->
+      <!--        </template>-->
+      <!--      </q-input>-->
 
       <q-input
         v-if="!hasAffiliate"
@@ -201,7 +203,7 @@ export default defineComponent({
       confirmPwd: "",
       telephone: "",
       // email: "",
-      captchaCode: "",
+      captchaCode: "0000",
       regHost: location.hostname,
       codeId: "",
       codeAffiliate: "",
@@ -216,7 +218,7 @@ export default defineComponent({
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.codeId = response.data.id;
-            regForm.captchaCode = "";
+            regForm.captchaCode = "0000";
             verificationRef.value.resetValidation();
           }
         })
@@ -285,6 +287,16 @@ export default defineComponent({
       return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
     };
 
+    const isValidName = (value, translation) => {
+      const namePattern = /^[A-Za-z0-9]+$/;
+      return namePattern.test(value) || `${translation} must be alphanumeric`;
+    };
+
+    const isAlphanumeric = (value, translation) => {
+      const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+      return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+    };
+
     const router = useRouter();
 
     const onSubmit = () => {
@@ -294,7 +306,7 @@ export default defineComponent({
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
-      verificationRef.value.validate();
+      // verificationRef.value.validate();
 
       $q.loading.show({
         message: "Registering in progress"
@@ -307,7 +319,7 @@ export default defineComponent({
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
-        verificationRef.value.hasError ||
+        // verificationRef.value.hasError ||
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
@@ -495,7 +507,9 @@ export default defineComponent({
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
-      isAgreeReg
+      isAgreeReg,
+      isAlphanumeric,
+      isValidName
     };
   }
 });

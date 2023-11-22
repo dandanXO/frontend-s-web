@@ -8,7 +8,12 @@ export const uploadImage = (formData) => {
         token: `${userStore().token}`
     },
   };
-  return fetch(process.env.VUE_APP_RST_API + '/session/image/uploadOrder', requestOptions)
+  var rstUrl = localStorage.getItem("DY_WEB_RST_URL");
+  if(!rstUrl){
+    rstUrl = process.env.VUE_APP_RST_API.split(",")[0];
+  }
+
+  return fetch(rstUrl + '/session/image/uploadOrder', requestOptions)
     .then(response => {
       return response.json()
     })

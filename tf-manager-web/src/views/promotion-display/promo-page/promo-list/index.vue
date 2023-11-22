@@ -110,8 +110,15 @@
           <div v-if="scope.row.status === 2">TEST</div>
         </template>
       </el-table-column>
-      l
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{data: scope.row.createTime, timeZone: scope.row.timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column
         type="title"
@@ -237,6 +244,11 @@ function editPromo(promoPages) {
 async function loadPromoPages() {
   const { data: ret } = await getPromoPagesList(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
 }
 

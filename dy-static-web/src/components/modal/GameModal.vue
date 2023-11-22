@@ -210,6 +210,17 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           src.value = res.data;
           visible.value = true;
         });
+      } else if (platformCode === "SGWin" || platformCode === "TCG" || (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc" )) {
+        launchSessionGame(platformCode, {
+          gameCode: gameCode,
+          isMobile: isMobile()
+        }).then((res) => {
+          window.open(
+            res.data,
+            "popUpWindow",
+            "fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
+          );
+        });
       } else {
         launchSessionGame(platformCode, {
           gameCode: gameCode,

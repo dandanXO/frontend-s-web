@@ -261,7 +261,7 @@
                   <template
                     v-if="
                       scope.row.status === 'SUCCESS' &&
-                      scope.row.currencyName === 'CNY' &&
+                      (scope.row.currencyName === 'CNY' || scope.row.currencyName === 'AliCNY') &&
                       scope.row.confirmStatus === 0
                     "
                   >
