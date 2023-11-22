@@ -212,38 +212,41 @@ const quizSubmitInfo = reactive({
 });
 function getMatchInfo() {
   getSportMatchQuizInfo().then((res) => {
-    const {
-      poolAmount,
-      quizTitle,
-      id,
-      homeTeam,
-      awayTeam,
-      questionOne,
-      questionTwo,
-      questionThree,
-      choiceOne,
-      choiceTwo,
-      choiceThree
-    } = res.data;
+    // sometimes no upcoming match
+    if (res.data) {
+      const {
+        poolAmount,
+        quizTitle,
+        id,
+        homeTeam,
+        awayTeam,
+        questionOne,
+        questionTwo,
+        questionThree,
+        choiceOne,
+        choiceTwo,
+        choiceThree
+      } = res.data;
 
-    // matchInfo
-    if (poolAmount) matchInfo.poolAmount = poolAmount;
-    if (quizTitle) matchInfo.quizTitle = quizTitle;
+      // matchInfo
+      if (poolAmount) matchInfo.poolAmount = poolAmount;
+      if (quizTitle) matchInfo.quizTitle = quizTitle;
 
-    matchInfo.homeTeam = homeTeam;
-    matchInfo.awayTeam = awayTeam;
+      matchInfo.homeTeam = homeTeam;
+      matchInfo.awayTeam = awayTeam;
 
-    matchInfo.questionOne = questionOne;
-    matchInfo.questionTwo = questionTwo;
-    matchInfo.questionThree = questionThree;
+      matchInfo.questionOne = questionOne;
+      matchInfo.questionTwo = questionTwo;
+      matchInfo.questionThree = questionThree;
 
-    matchInfo.choiceOne = JSON.parse(choiceOne);
-    matchInfo.choiceTwo = JSON.parse(choiceTwo);
-    matchInfo.choiceThree = JSON.parse(choiceThree);
+      matchInfo.choiceOne = JSON.parse(choiceOne);
+      matchInfo.choiceTwo = JSON.parse(choiceTwo);
+      matchInfo.choiceThree = JSON.parse(choiceThree);
 
-    // quizSubmitInfo
-    if (id >= 0) quizSubmitInfo.quizId = id;
-    quizSubmitInfo.quizTitle = quizTitle;
+      // quizSubmitInfo
+      if (id >= 0) quizSubmitInfo.quizId = id;
+      quizSubmitInfo.quizTitle = quizTitle;
+    }
   });
 }
 
