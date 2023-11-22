@@ -221,6 +221,7 @@ export default {
     reenterPassword: 'กรอกรหัสผ่านอีกครั้ง',
     referralCode: 'รหัสอ้างอิง',
     referralLink: 'ลิงก์การแนะนำ',
+    regenerate: 'งอกใหม่',
     registerTime: 'เวลาลงทะเบียน',
     reset: 'รีเซ็ต',
     result: 'ผลลัพธ์',

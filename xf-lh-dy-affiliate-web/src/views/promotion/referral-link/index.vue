@@ -158,6 +158,26 @@
       <p style="text-align: center;">
         {{ linkDiaglogControl.dialogShortLink }}
       </p>
+      <!-- Custom footer with a button -->
+      <span style="display: flex; justify-content: center;">
+        <el-button
+          type="primary"
+          @click="
+            handleLinkSelection(
+              linkDiaglogControl.dialogRegenerateLinkType,
+              linkDiaglogControl.dialogRegenerateUrlType
+            )
+          "
+        >
+          {{ $t('fields.regenerate') }}
+        </el-button>
+        <el-button
+          type="primary"
+          @click="linkDiaglogControl.dialogVisible = false"
+        >
+          {{ $('fields.cancel') }}
+        </el-button>
+      </span>
     </el-dialog>
 
     <el-dialog
@@ -228,6 +248,8 @@ const linkDiaglogControl = reactive({
   dialogContent: '',
   dialogTitle: '',
   dialogShortLink: '',
+  dialogRegenerateLinkType: '',
+  dialogRegenerateUrlType: '',
 })
 
 const qrDialogControl = reactive({
@@ -349,6 +371,8 @@ function handleLinkSelection(linkType, urlType) {
   linkDiaglogControl.dialogContent = dialogContent
   linkDiaglogControl.dialogShortLink = shortUrl
   linkDiaglogControl.dialogVisible = true
+  linkDiaglogControl.dialogRegenerateLinkType = linkType
+  linkDiaglogControl.dialogRegenerateUrlType = urlType
 
   navigator.clipboard.writeText(shortUrl)
 }

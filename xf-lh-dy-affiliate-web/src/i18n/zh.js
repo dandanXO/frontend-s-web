@@ -220,6 +220,7 @@ export default {
     reenterPassword: '重新输入密码',
     referralCode: '推荐码',
     referralLink: '推广链接',
+    regenerate: '重新生成',
     registerTime: '注册时间',
     reset: '重置',
     result: '结果',

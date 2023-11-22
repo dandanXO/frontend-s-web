@@ -220,6 +220,7 @@ export default {
     reenterPassword: 'Re-enter Password',
     referralCode: 'Referral Code',
     referralLink: 'Referral Link',
+    regenerate: 'Regenerate',
     registerTime: 'Register Time',
     reset: 'Reset',
     result: 'Result',
