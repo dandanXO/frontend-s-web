@@ -437,10 +437,11 @@
               </transition>
 
               <template v-if="favLists.indexOf(game.id) === -1">
-                <RiStarLine @click="toggleFavGame(game.id, true)" class="favourite-star" />
+                <RiStarLine @click="toggleFavGame(game.id, true)" v-if="store.hasToken()" class="favourite-star" />
               </template>
               <template v-else>
                 <RiStarFill
+                  v-if="store.hasToken()"
                   @click="toggleFavGame(game.id, false)"
                   class="favourite-star"
                   style="fill: #ffd700 !important"
@@ -1953,7 +1954,7 @@ export default defineComponent({
   }
 
   .bottom-footer {
-    background: url("../assets/images/index/footer-desc-bg.png");
+    //background: url("../assets/images/index/footer-desc-bg.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 60px 0px;
@@ -2259,6 +2260,7 @@ export default defineComponent({
   .game-grid-lists {
     padding-top: 15px;
     column-gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .game-scroll-lists {
