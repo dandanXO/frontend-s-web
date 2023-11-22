@@ -65,9 +65,13 @@
       ></q-carousel-slide>
     </q-carousel>
 
-    <div class="top-action">
+    <div class="top-action" v-if="store.hasToken()">
       <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
+    </div>
+    <div v-else class="top-action">
+      <q-btn class="action-btn action-btn--withdrawal" @click="gotoSignIn()" no-caps label="Sign In"></q-btn>
+      <q-btn class="action-btn action-btn--deposit" @click="gotoSignUp()" no-caps label="Sign Up" />
     </div>
 
     <div class="games-selection-wrapper">
@@ -112,12 +116,45 @@
               </div>
             </div>
           </template>
+          <template v-else>
+            <div v-if="isShowAllHotGames">
+              <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+                <div
+                  class="game-platform-item btn-effect"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                >
+                  <div class="game-platform-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                      }"
+                    ></div>
+                  </div>
+
+                  <div class="game-platform-title">{{ item.name }}</div>
+
+                  <div
+                    class="game-platform-label game-platform-label--hot"
+                    v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                  >
+                    <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                  </div>
+                  <div
+                    class="game-platform-label game-platform-label--new"
+                    v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                  >
+                    <img src="../assets/images/index/platform-label-new.png" alt="" />
+                  </div>
+                </div>
+              </transition>
+            </div>
+          </template>
         </template>
       </div>
       <div class="hot-games-pattern-bottom"></div>
-      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">
-        Load More
-      </div>
+      <!--      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">-->
+      <div class="btn-load-more btn-effect" @click="scrollDownHotGames" v-if="!isShowAllHotGames">Load More</div>
       <div v-else class="hot-games-pattern-bottom--filled"></div>
     </div>
 
@@ -623,6 +660,11 @@ const loadHotGameList = () => {
     });
 };
 
+const isShowAllHotGames = ref(false);
+const scrollDownHotGames = () => {
+  isShowAllHotGames.value = true;
+};
+
 const loadGameList = (type, id) => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
   const code = id;
@@ -800,6 +842,14 @@ const gotoPromo = (banner) => {
   // router.push(`${redirectU}`);
 };
 
+const gotoSignIn = () => {
+  router.push("/login");
+};
+
+const gotoSignUp = () => {
+  router.push("/register");
+};
+
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const getVersionNo = async () => {
@@ -900,6 +950,7 @@ onMounted(() => {
       padding: 10px 12px;
       text-align: center;
       color: black;
+
       .contentfonts {
         text-align: center;
         color: #333;
@@ -1371,6 +1422,7 @@ onMounted(() => {
         margin-left: 3px;
         margin-right: 3px;
         transition: all 0.3s;
+
         img {
           display: block;
           width: 70%;
@@ -1437,6 +1489,7 @@ onMounted(() => {
     justify-content: center;
     gap: 30px;
     margin-top: 16px;
+
     .deposit-option-btn {
       color: #cccccc;
       background-color: rgba(21, 0, 37, 0.5) !important;
@@ -1453,6 +1506,7 @@ onMounted(() => {
 
       &.label-on-discount {
         position: relative;
+
         &:after {
           content: "";
           background-image: url(../assets/images/index/popout/label-discount.png);
@@ -1511,6 +1565,7 @@ onMounted(() => {
   display: flex;
   gap: 16px;
   margin-top: 10px;
+
   .action-btn {
     display: flex;
     justify-content: center;
@@ -1528,6 +1583,7 @@ onMounted(() => {
     &--withdrawal {
       background-image: url(../assets/images/index/action-btn-withdrawal.png);
       color: #ffffff;
+
       &:before {
         box-shadow: none;
       }
@@ -1536,6 +1592,7 @@ onMounted(() => {
     &--deposit {
       background-image: url(../assets/images/index/action-btn-deposit.png);
       color: #fae576;
+
       &:before {
         box-shadow: none;
       }
@@ -1550,6 +1607,7 @@ onMounted(() => {
 .games-selection-wrapper {
   margin-top: 10px;
   margin-bottom: 40px;
+
   .hot-games-pattern-top {
     background-image: url(../assets/images/index/hot-games-pattern-top.png);
     background-size: contain;
@@ -1602,6 +1660,7 @@ onMounted(() => {
       width: 270px;
       margin-left: 10px;
       margin-right: 10px;
+
       .txt-style {
         background-color: #f3ec78;
         background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
@@ -1728,6 +1787,7 @@ onMounted(() => {
 
   .game-platform-item {
     position: relative;
+
     &--img {
       background-size: cover;
       background-position: center center;
@@ -1772,6 +1832,7 @@ onMounted(() => {
 
 .floating-btn {
   z-index: 5;
+
   img {
     width: 30px;
   }
