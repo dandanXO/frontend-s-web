@@ -51,7 +51,6 @@
   </el-dialog>
 
   <div class="prize-quiz-container">
-    <div class="prize-quiz-top-div"></div>
     <div class="prize-quiz-content-container">
       <div class="prize-quiz-jc-container">
         <div class="prize-quiz-jc-txt" id="pool">$ {{ matchInfo.poolAmount }}</div>
@@ -424,12 +423,7 @@ function onSubmitClick() {
   background-color: #fcfcfc;
   font-size: 14px;
   color: #87898a;
-  padding: 86px 0 20px;
-
-  .prize-quiz-top-div {
-    height: 500px;
-    background: url("../../../assets/images/promotion/hotpromo/esportquiz/banner_7.png") center no-repeat;
-  }
+  padding: 0 0 20px 0;
 
   .prize-quiz-content-container {
     width: 1154px;

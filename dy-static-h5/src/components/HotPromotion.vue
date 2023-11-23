@@ -153,7 +153,7 @@
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
-    <EsportQuiz v-if="list.redirectUrl === 'esport_quiz' && !isCommonPromo"></EsportQuiz>
+    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
 
     <div v-if="list.redirectUrl === 'dy1-lottery' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -397,7 +397,7 @@ export default defineComponent({
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "dy1-lottery" ||
-      this.list.redirectUrl === "esport_quiz" ||
+      this.list.redirectUrl === "Dongying-quiz" ||
       this.list.redirectUrl === "nba-game" ||
       this.list.id === 40
     ) {
