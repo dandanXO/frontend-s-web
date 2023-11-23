@@ -72,17 +72,14 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <!-- <q-scroll-area
-      ref="scrollPageRef"
-      class="scrollArea"
-    >
-      <q-page-container>
-        <router-view />
-      </q-page-container>
-    </q-scroll-area> -->
 
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <KeepAlive :max="8">
+          <component :is="Component" />
+        </KeepAlive>
+      </router-view>
+      <!-- <router-view /> -->
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-primary" :breakpoint="0" align="justify">
@@ -139,7 +136,7 @@ export default defineComponent({
     const logout = () => {
       store.memberLogout().then(() => {
         // location.reload();
-        router.push("/");
+        router.push("/home");
       });
     };
     watch(
@@ -187,7 +184,7 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = "Personal Center";
-        } else if (route.path === "/earn-money") {
+        } else if (route.path === "/earn-money" || route.path === "/agency-policy") {
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = "Earn Money";
@@ -455,6 +452,7 @@ export default defineComponent({
       },
       logout,
       store,
+      router,
       scrollPageRef,
       pageName,
       hasPage,

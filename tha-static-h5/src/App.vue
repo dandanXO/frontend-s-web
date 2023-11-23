@@ -1,28 +1,30 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
-import {defineComponent, onMounted} from "vue";
-import {Platform, useQuasar} from "quasar";
+import { defineComponent, onMounted } from "vue";
+import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import {api} from "boot/axios";
+import { api } from "boot/axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
 //test-update
-import {userStore} from "stores/index";
+import { userStore } from "stores/index";
 import * as _ from "lodash";
-import {useRouter} from "vue-router";
-import {cached} from "boot/cache";
+import { useRouter } from "vue-router";
+import { App } from "@capacitor/app";
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   name: "App",
   setup() {
-    var qs = require("qs")
+    var qs = require("qs");
+    const ui = useUI();
     const router = useRouter();
     const $q = useQuasar();
     $q.dark.set(true);
-    $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 })
+    $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -30,61 +32,60 @@ export default defineComponent({
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
-        const excludes = {value: ["timezone", "timeZoneOffset"]};
-        const allComponents = {...result.components};
+        const excludes = { value: ["timezone", "timeZoneOffset"] };
+        const allComponents = { ...result.components };
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
         const sidParam = FingerprintJS.hashComponents(allComponents);
         const obj = {
           identifier: sidParam,
-          affiliateCode: affiliateItem,
+          affiliateCode: affiliateItem
         };
-        api.post('/memberAccessLog', qs.stringify(obj)).then((res) => {
+        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
           if (res.code === 0) {
           }
-        })
+        });
       })();
     };
 
     const store = userStore();
 
-    const regDevice = (Platform.is.mobile && Platform.is.capacitor) ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB"
+    const regDevice = Platform.is.mobile && Platform.is.capacitor ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB";
 
     let csclient;
     const initCsWeb = () => {
-      csclient = new CsClient('5', regDevice, 'th', '2', 'prod');
+      csclient = new CsClient("5", regDevice, "th", "2", "prod");
 
-      csclient.set('pageurl', '/liveChat');
+      csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
-      csclient.set('notification-type', {
-        "type": "breathing",
-        "color": "#FB4BFF",
+      csclient.set("notification-type", {
+        type: "breathing",
+        color: "#FB4BFF"
       });
 
       if (store.token) {
-        csclient.set('token', store.token);
+        csclient.set("token", store.token);
       }
 
       //客服初始化。
       csclient.init();
 
-      csclient.receiveListener("message", function(callback){
+      csclient.receiveListener("message", function (callback) {
         //收到新消息。
         // alert(callback);
       });
 
       //CsClient Event Listener.
-      window.addEventListener('message', function (event) {
+      window.addEventListener("message", function (event) {
         // console.log("Message received from the iframe: " + event.data); // Message received from child
         if (_.isString(event.data)) {
-          if (event.data == 'closenotice') {
+          if (event.data == "closenotice") {
             router.go(-1);
           }
         }
       });
-
-    }
+    };
 
     // const getCSA = () => {
     //   cached.get("customerAddress", () => api.get("/config/customerAddress").then((res) => {
@@ -103,15 +104,44 @@ export default defineComponent({
     // };
 
     const initStorage = () => {
-      localStorage.removeItem("LINE_STICKY_OFF")
-    }
+      localStorage.removeItem("LINE_STICKY_OFF");
+    };
+
+    const initListenApp = () => {
+      App.addListener("appUrlOpen", function (event) {
+        // Example url: https://beerswift.app/tabs/tabs2
+        // slug = /tabs/tabs2
+        const slug = event.url.split(".com").pop();
+
+        // alert(slug);
+        console.log(slug);
+        // We only push to the route if there is a slug present
+        if (slug) {
+          // alert("GO");
+          // alert(slug);
+          router.push({
+            path: slug
+          });
+        }
+      });
+    };
+
+    const checkAgentFrom = () => {
+      var agentB = localStorage.getItem("AGENT_B");
+      if (agentB) {
+        console.log("YES IS B");
+        ui.isAffiliateB = true;
+      }
+    };
 
     onMounted(() => {
-      checkSID()
+      checkSID();
       initCsWeb();
       initStorage();
+      checkAgentFrom();
+      // initListenApp();
       // getCSA();
-    })
+    });
   }
 });
 </script>
