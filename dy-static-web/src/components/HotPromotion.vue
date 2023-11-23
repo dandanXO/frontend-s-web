@@ -8,138 +8,8 @@
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
-
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
-
-    <div v-if="list.redirectUrl === 'dy1-lottery' && !isCommonPromo && store.token" class="promo-4">
-      <div class="tabs">
-        <el-tabs v-model="activeKey" type="card">
-          <el-tab-pane key="1" label="选择幸运号码">
-            <div class="tab1">
-              <!--              <img src="../assets/images/promotion/hotpromo/30/icon.png"/>-->
-              <div class="contents">
-                {{ selectedHotPromo.contents.tab1 }}
-                <el-form>
-                  <el-row gutter="10">
-                    <el-col span="12">
-                      <el-input v-model="luckyNumber" placeholder="幸运号码" />
-                    </el-col>
-                    <el-col span="12">
-                      <el-button class="common-btn" :loading="btnLoading" @click="chooseLuckyNumber()">提交</el-button>
-                    </el-col>
-                  </el-row>
-                </el-form>
-              </div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane key="2" label="记录">
-            <div class="tab2">
-              <el-form :model="query" :layout="'inline'">
-                <el-row gutter="20" class="firstrow">
-                  <el-col span="6">
-                    <el-date-picker
-                      key="1"
-                      placeholder="选择日期"
-                      v-model="query.recordTime"
-                      value-format="YYYY-MM-DD"
-                      format="YYYY-MM-DD"
-                    />
-                  </el-col>
-                  <el-col span="6">
-                    <el-form-item label="只显示自己">
-                      <el-switch v-model="query.onlyMe" />
-                    </el-form-item>
-                  </el-col>
-                  <el-col span="6">
-                    <el-form-item>
-                      <div class="common-btn" @click="retrieveList">搜索</div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-              </el-form>
-              <div class="table">
-                <!-- <el-table
-                    :columns="columns"
-                    row-key="loginName"
-                    :datel-source="dataSource"
-                    :locale="{ emptyText: '数据为空' }"
-                >
-                  <template #recordTime="{ text }">
-                    <span>{{ humanDatetime(text) }}</span>
-                  </template>
-                </el-table> -->
-                <el-table :data="dataSource">
-                  <template #empty>
-                    <p>没有数据</p>
-                  </template>
-                  <el-table-column prop="number" label="号码" />
-                  <el-table-column prop="loginName" label="登录名" />
-                  <el-table-column prop="winStatus" label="获奖状态" />
-                  <el-table-column prop="recordTime" label="时间" />
-                </el-table>
-                <!-- <el-pagination
-                  small
-                  hide-on-single-page
-                  layout="prev, pager, next"
-                  @current-change="pageNumChange"
-                  :total="rankingPage.records.length"
-                  :current-page="rankingPage.current"
-                  :page-size="rankingPage.pageSize"
-                /> -->
-              </div>
-            </div>
-          </el-tab-pane>
-          <!--          <el-tab-pane key="3" label="获奖名单">-->
-          <!--            <div class="tab3">-->
-          <!--              <el-form :model="winnersQuery" :layout="'inline'">-->
-          <!--                <el-row gutter="20" class="firstrow">-->
-          <!--                  <el-col span="6">-->
-          <!--                  <el-date-picker-->
-          <!--                      placeholder="选择日期"-->
-          <!--                      v-model="winnersQuery.resultTime"-->
-          <!--                      value-format="YYYY-MM-DD"-->
-          <!--                      format="YYYY-MM-DD"-->
-          <!--                      @change="retrieveWinnerList"-->
-          <!--                  /></el-col>-->
-          <!--                  <el-col span="6">-->
-          <!--                  <el-form-item-->
-          <!--                  >-->
-          <!--                    <div class="common-btn" @click="retrieveWinnerList">-->
-          <!--                      搜索-->
-          <!--                    </div>-->
-          <!--                  </el-form-item-->
-          <!--                  >-->
-          <!--                  </el-col>-->
-          <!--                  </el-row>-->
-          <!--              </el-form>-->
-          <!--              <div class="table">-->
-          <!--                &lt;!&ndash; <el-table-->
-          <!--                    :columns="winnerColumns"-->
-          <!--                    row-key="loginName"-->
-          <!--                    :datel-source="winnerDataSource"-->
-          <!--                    :locale="{ emptyText: emptyText }"-->
-          <!--                >-->
-          <!--                  <template #resultTime="{ text }">-->
-          <!--                    <span>{{ humanDatetime(text) }}</span>-->
-          <!--                  </template>-->
-          <!--                </el-table> &ndash;&gt;-->
-          <!--                <el-table-->
-          <!--                  :data="winnerDataSource"-->
-          <!--                >-->
-          <!--                <template #empty>-->
-          <!--                  <p>没有数据</p>-->
-          <!--                </template>-->
-          <!--                  <el-table-column prop="number" label="号码" />-->
-          <!--                  <el-table-column prop="loginName" label="登录名" />-->
-          <!--                  <el-table-column prop="winStatus" label="获奖状态" />-->
-          <!--                  <el-table-column prop="resultTime" label="公告日期" />-->
-          <!--                </el-table>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </el-tab-pane>-->
-        </el-tabs>
-      </div>
-    </div>
+    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -157,7 +27,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
+import { claimBonusItem } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
@@ -167,9 +37,9 @@ import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
+import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
-import moment from "moment";
 
 export default defineComponent({
   name: "HotPromo",
@@ -184,7 +54,8 @@ export default defineComponent({
     HongBaoYuPromo,
     InviteFriendPromo,
     WelcomeTaskPromo,
-    EsportQuiz
+    EsportQuiz,
+    LotteryPromo
     // DailyBonus
   },
   props: {
@@ -200,11 +71,7 @@ export default defineComponent({
       isCommonPromo: null,
       emptyText: "今天没有获奖者。",
       privilegeClaimedModalVisible: false,
-      dataSource: [],
-      winnerDataSource: [],
-      activeKey: "1",
       store: userStore(),
-      btnLoading: false,
       loadingClaim: false,
       memberId: null,
       amount: "$0",
@@ -257,14 +124,7 @@ export default defineComponent({
         onlyMe: false
       },
       luckyNumber: null,
-      query: {
-        winStatus: "",
-        recordTime: null,
-        onlyMe: false
-      },
-      winnersQuery: {
-        resultTime: null
-      },
+
       columns: [
         {
           title: "号码",
@@ -286,29 +146,6 @@ export default defineComponent({
           dataIndex: "recordTime",
           key: "recordTime",
           slots: { customRender: "recordTime" }
-        }
-      ],
-      winnerColumns: [
-        {
-          title: "号码",
-          dataIndex: "number",
-          key: "number"
-        },
-        {
-          title: "登录名",
-          dataIndex: "loginName",
-          key: "loginName"
-        },
-        {
-          title: "获奖状态",
-          dataIndex: "winStatus",
-          key: "winStatus"
-        },
-        {
-          title: "公告日期",
-          dataIndex: "resultTime",
-          key: "4",
-          slots: { customRender: "resultTime" }
         }
       ]
     };
@@ -335,87 +172,6 @@ export default defineComponent({
           // message.error(err.message, 4);
           this.loadingClaim = false;
         });
-    },
-    chooseLuckyNumber() {
-      this.btnLoading = true;
-      submitLuckyNumber(this.luckyNumber)
-        .then((res) => {
-          if (res.code === 0) {
-            ElMessage.success({
-              type: "success",
-              message: "成功发送号码。"
-            });
-            this.luckyNumber = null;
-            this.btnLoading = false;
-          } else {
-            ElMessage.error(res.message);
-            this.btnLoading = false;
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-          // message.error(err.message, 4);
-          this.btnLoading = false;
-        });
-    },
-    retrieveList() {
-      if (this.query.onlyMe) {
-        this.memberId = this.store.id;
-      } else {
-        this.memberId = null;
-      }
-      luckyNumberList(this.query, this.memberId)
-        .then((res) => {
-          if (res.code === 0) {
-            let newArray = [];
-            for (let i = 0; i < res.data.length; i++) {
-              let obj = res.data[i];
-              let status = "";
-              switch (obj.winStatus) {
-                case "BET":
-                  status = "未开奖";
-                  break;
-                case "WIN":
-                  status = "已中奖";
-                  break;
-                case "LOSS":
-                  status = "未中奖";
-                  break;
-              }
-              obj.winStatus = status;
-              newArray.push(obj);
-            }
-            this.dataSource = newArray;
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-          // message.error(err.message, 4);
-        });
-    },
-    retrieveWinnerList() {
-      this.winnerDataSource = [];
-      winnerList(this.winnersQuery, this.memberId)
-        .then((res) => {
-          if (res.code === 0) {
-            res.data.forEach((element) => {
-              element.winners.forEach((winner) => {
-                winner.resultTime = element.resultTime;
-                this.winnerDataSource.push(winner);
-              });
-            });
-            if (this.winnerDataSource.length === 0) {
-              this.emptyText = "今天没有获奖者。";
-            }
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-          // message.error(err.message, 4);
-        });
-    },
-    humanDatetime(ts) {
-      return moment(ts).format("YYYY-MM-DD");
     }
   },
   mounted() {
@@ -431,7 +187,7 @@ export default defineComponent({
       this.list.redirectUrl === "hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
-      this.list.redirectUrl === "dy1-lottery" ||
+      this.list.redirectUrl === "dy2-lottery" ||
       this.list.redirectUrl === "Dongying-quiz" ||
       this.list.id === 40
     ) {
@@ -577,126 +333,6 @@ export default defineComponent({
       }
     }
   }
-
-  .promo-4 {
-    .ant-tabs-bar {
-      border-bottom: 0px solid #201f29;
-      margin-bottom: 0;
-      display: flex;
-      justify-content: center;
-      background: #212137;
-    }
-
-    .ant-tabs-nav .ant-tabs-tab {
-      padding: 10px 48px;
-      margin: 10px 5px 20px;
-      color: #ffffff;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 1px solid #ffd800;
-      box-shadow: rgb(0 0 0 / 100%) 0px 6px 12px 0px;
-      width: 400px;
-      text-align: center;
-
-      &-active {
-        background-image: linear-gradient(to right, #de4545, #ffd800);
-      }
-    }
-
-    .ant-tabs-nav-container {
-    }
-
-    .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,
-    .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
-      background: #201f29;
-    }
-
-    .ant-tabs-ink-bar {
-      height: 0px;
-      background-color: #201f29;
-    }
-
-    .table {
-      padding: 20px;
-    }
-
-    .ant-table {
-      background-color: transparent;
-    }
-
-    .ant-table-thead > tr > th,
-    .ant-table-placeholder {
-      color: #ffffff;
-      background-color: #201f29;
-      border: 0;
-    }
-
-    .ant-table-placeholder {
-      border: 0;
-    }
-
-    .tabs {
-      .tab1 {
-        display: flex;
-        max-width: 900px;
-        margin: 0 auto;
-        gap: 20px;
-        justify-content: space-evenly;
-        align-items: center;
-        padding: 20px;
-
-        .contents {
-          display: flex;
-          justify-content: center;
-          form {
-            margin-top: 20px;
-
-            input {
-              max-width: 250px;
-              width: 90%;
-            }
-
-            .common-btn {
-              display: inline-block;
-            }
-          }
-
-          flex: 1;
-          color: #ffffff;
-          text-align: center;
-        }
-      }
-
-      .tab2 {
-        .ant-form {
-          display: flex;
-          justify-content: space-between;
-          gap: 10px;
-          padding: 20px;
-          align-items: center;
-
-          .firstrow {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-          }
-        }
-
-        .ant-form-item {
-          margin: 0;
-        }
-
-        .ant-form-item-label > label {
-          color: #ffffff;
-        }
-
-        .ant-switch-checked {
-          background: #ffd800;
-        }
-      }
-    }
-  }
 }
 
 @media (max-width: 768px) {
@@ -723,29 +359,6 @@ export default defineComponent({
 
         .contents {
           gap: 20px;
-        }
-      }
-    }
-
-    .promo-4 {
-      .ant-tabs-nav .ant-tabs-tab {
-        width: unset;
-        padding: 10px;
-      }
-
-      .tabs {
-        .tab1 {
-          flex-direction: column;
-        }
-
-        .tab2 {
-          .ant-form {
-            align-items: flex-start;
-
-            .firstrow {
-              flex-direction: column;
-            }
-          }
         }
       }
     }

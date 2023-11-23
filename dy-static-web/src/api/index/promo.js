@@ -26,7 +26,7 @@ export function welcomeTaskClaimBonus(item) {
 export function submitLuckyNumber(item) {
   return server.EVENT.post(`/privi/lotteryNumber`, {
     number: item,
-    promoCode: "dy1-lottery"
+    promoCode: "dy2-lottery"
   });
 }
 
