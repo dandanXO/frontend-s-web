@@ -148,7 +148,7 @@
       @daily-slot="handleSlot()"
     />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'" />
-    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 's13-festival'" />
+    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
@@ -395,7 +395,7 @@ export default defineComponent({
     });
     if (
       this.list.redirectUrl === "dy1-tiger-card" ||
-      this.list.redirectUrl === "s13-festival" ||
+      this.list.redirectUrl === "Dongying-team-vote" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||

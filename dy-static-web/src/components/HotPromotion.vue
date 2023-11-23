@@ -2,7 +2,7 @@
   <div class="hot-promo">
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
-    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 's13-festival'" />
+    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
@@ -425,7 +425,7 @@ export default defineComponent({
     // List for non common promo
     if (
       this.list.redirectUrl === "dy2-tiger-card" ||
-      this.list.redirectUrl === "s13-festival" ||
+      this.list.redirectUrl === "Dongying-team-vote" ||
       this.list.redirectUrl === "nba-game" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||

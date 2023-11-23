@@ -30,7 +30,7 @@
                         <span class="viewdetail">{{ promo.title }}</span>
                         <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">{{ getPromoLabel(promo.labelType) }}</div>
                     </a>
                   </template>
 
@@ -45,7 +45,7 @@
                         <span class="viewdetail">{{ promo.title }}</span>
                         <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">{{ getPromoLabel(promo.labelType) }}</div>
                     </a>
                   </template>
 
@@ -148,6 +148,24 @@ export default defineComponent({
       {code: "LIVE CASINO", img: "live", label: "真人娱乐"},
       {code: "FISH", img: "game", label: "老虎机/捕鱼"}
     ]);
+    const getPromoLabel = (labelType) => {
+      switch(labelType) {
+        case 0:
+          return '最新';
+        case 1: 
+          return '热门';
+        case 3: 
+          return '推荐';
+        case 4: 
+          return '日常';
+        case 5: 
+          return '新人';
+        case 6: 
+          return '限时';
+        default:
+          return '';
+      }
+    }
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
@@ -278,7 +296,8 @@ export default defineComponent({
       store,
       tab,
       tabItems,
-      isDisplayLogin
+      isDisplayLogin,
+      getPromoLabel
     };
   }
 });
