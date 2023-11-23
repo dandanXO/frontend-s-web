@@ -17,9 +17,9 @@
         >
           <el-option
             v-for="item in uiControl.category"
-            :key="item"
-            :label="item"
-            :value="item"
+            :key="item.name"
+            :label="item.display"
+            :value="item.name"
           />
         </el-select>
 
@@ -403,8 +403,8 @@ const formRules = reactive({
   name: [required(t('message.validateImageNameRequired'))],
   category: [required(t('message.validateCategoryRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
-  platform: null,
-  posterType: null,
+  platform: [required(t('message.validatePlatformRequired'))],
+  posterType: [required(t('messsage.validatePosterTypeRequired'))],
 })
 
 function resetQuery() {
@@ -523,7 +523,7 @@ async function loadSiteImage() {
     e.displayPath = imageDir + categoryDir + e.path
 
     if (e.category === 'GAME') {
-      e.platform = e.path.substring(e.path.indexOf('/') + 1, e.path.lastIndexOf('/'))
+      e.platform = e.path.substring(e.path.indexOf('/') + 1, e.path.lastIndexOf('/')) === '/' ? null : e.path.substring(e.path.indexOf('/') + 1, e.path.lastIndexOf('/'))
     }
   })
   page.pages = ret.pages
@@ -594,12 +594,15 @@ async function checkGamePlatform(type) {
     const { data: ret } = await getPlatformsBySite(form.siteId)
     platform.list = ret
     platform.display = true
-    formRules.platform = [required(t('message.validateSiteRequired'))]
+    formRules.posterType = null
+    formRules.platform = [required(t('message.validatePlatformRequired'))]
   } else if (form.category === 'POSTER') {
-    formRules.posterType = [required(t('messsage.validatePosterTypeRequired'))]
+    formRules.platform = null
+    formRules.posterType = [required(t('message.validatePosterTypeRequired'))]
   } else {
     platform.list = []
     platform.display = false
+    formRules.posterType = null
     formRules.platform = null
   }
   if (type !== "EDIT") {
