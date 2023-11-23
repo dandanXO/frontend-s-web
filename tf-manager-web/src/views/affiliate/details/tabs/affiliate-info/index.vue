@@ -217,7 +217,23 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" />
+        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
+          <template #label>
+            <div>
+              <svg-icon icon-class="monitor" style="height: 16px;width: 16px;" />
+              {{ t('fields.securityQuestion') }}
+            </div>
+          </template>
+          <el-tag v-if="memberDetail.hasSecurityQuestion" size="mini" type="success">
+            {{ t('fields.binded') }}
+          </el-tag>
+          <el-tag v-else size="mini" type="danger">
+            {{ t('fields.notBinded') }}
+          </el-tag>
+          <el-button v-if="hasPermission(['sys:affiliate:update:security-question']) && memberDetail.hasSecurityQuestion" type="info" size="mini" style="float: right;" v-permission="['sys:affiliate:update:security-question']" @click="resetSecurityQuestion">
+            {{ t('fields.reset') }}
+          </el-button>
+        </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" />
       </el-descriptions>
     </el-card>
@@ -613,13 +629,13 @@
 import { computed, defineProps, nextTick, onMounted, reactive, ref } from "vue";
 import { useRoute } from 'vue-router'
 import { hasPermission } from "../../../../../utils/util";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { required, size } from "../../../../../utils/validate";
 import { getAffiliateInfo, getMemberBalance, getMemberEmail, getMemberRealName, getMemberTelephone } from "../../../../../api/member";
 import { getFinancialLevels } from "../../../../../api/financial-level";
 import { getAffiliateRecord } from "../../../../../api/affiliate-record";
 import {
-  addAffiliateRemark, approveAffiliate, changeNewAffilaite, deleteAffiliateRemark, disableAffiliate,
+  addAffiliateRemark, approveAffiliate, changeNewAffilaite, deleteAffiliateRemark, deleteSecurityQuestion, disableAffiliate,
   editAffiliateRemark, getAffiliateDetails, getAffiliateRemark, updateAffiliateFinancial,
   updateAffiliatePassword, updateCommissionModel, updateCommissionRate, updateTimeType
 } from "../../../../../api/member-affiliate";
@@ -1130,6 +1146,24 @@ async function changeAffiliate() {
     superiorAffiliateDetail[detailField] = aff[detailField];
   });
   loading.superiorAffiliateInfo = false;
+}
+
+async function resetSecurityQuestion() {
+  ElMessageBox.confirm(
+    t('message.confirmReset'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    await deleteSecurityQuestion(props.affId);
+    const data = await getAffiliateDetails(props.affId, site.id);
+    Object.keys({ ...data.data }).forEach(detailField => {
+      memberDetail[detailField] = data.data[detailField];
+    });
+    ElMessage({ message: t('message.resetSuccess'), type: "success" });
+  });
 }
 
 onMounted(async () => {

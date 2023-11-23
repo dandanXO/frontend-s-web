@@ -37,16 +37,19 @@
                   {{ store.state.user.realName }}
                 </span>
                 <span v-if="store.state.user.realName === 'null' || store.state.user.realName === 'undefined' || !store.state.user.realName" class="card-panel-num">
-                  <el-form ref="editForm" :model="eForm" :inline="true" size="mini">
+                  <el-form ref="editForm" :model="eForm" :rules="eFormRules" :inline="true" size="mini">
                     <el-form-item prop="realName">
                       <el-row>
-                        <el-input v-model="eForm.realName" maxlength="50" size="mini" />
+                        <el-input v-model="eForm.realName" style="width: 200px" maxlength="50" size="mini" />
                         <el-button type="primary" @click="editRealName()" size="mini" style="margin-left: 10px">{{ $t('fields.confirm') }}</el-button>
                       </el-row>
                     </el-form-item>
                   </el-form>
                 </span>
               </el-form-item>
+            </el-row>
+            <el-row v-if="store.state.user.siteId === 3" style="color: red; margin-left: 230px; font-size: 14px;">
+              {{ t('message.inputEnglishRealName') }}
             </el-row>
             <el-row class="info">
               <el-icon color="#1fdbb0">
@@ -445,6 +448,27 @@ const affInfo = reactive({
 
 const eForm = reactive({
   realName: null
+});
+
+const validateRealName = (rule, value, callback) => {
+  if (store.state.user.siteId === 3) {
+    if (value === "" || value === null) {
+      callback(new Error(' '));
+    } else {
+      if (value !== "") {
+        if (/^[A-Za-z]*$/.test(value) === false) {
+          callback(new Error(' '));
+        }
+      }
+      callback();
+    }
+  } else {
+    callback();
+  }
+};
+
+const eFormRules = reactive({
+  realName: [{ validator: validateRealName, trigger: blur }]
 });
 
 const pwForm = reactive({

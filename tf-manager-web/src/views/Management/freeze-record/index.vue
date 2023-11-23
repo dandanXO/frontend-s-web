@@ -94,6 +94,7 @@
           />
         </template>
       </el-table-column>
+      <el-table-column prop="remark" :label="t('fields.remark')" width="250" />
       <el-table-column prop="createBy" :label="t('fields.operator')" />
     </el-table>
     <el-pagination class="pagination"

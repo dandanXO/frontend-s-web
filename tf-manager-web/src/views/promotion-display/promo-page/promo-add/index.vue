@@ -180,6 +180,18 @@
             inactive-color="#F56C6C"
           />
         </el-form-item>
+
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="mini"
+            style="width: 300px"
+          >
+            <el-radio-button label="0">Open</el-radio-button>
+            <el-radio-button label="1">Close</el-radio-button>
+            <el-radio-button label="2">Test</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
       </el-col>
     </el-row>
 
