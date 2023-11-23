@@ -105,7 +105,10 @@
               <template v-if="item.platformCode === 'JOKER'">
                 <div
                   class="game-platform-label game-platform-label--hot"
-                  v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                  v-if="
+                    (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                    (item.gameLabel && item.gameLabel.includes('HOT'))
+                  "
                 >
                   <img src="../assets/images/index/platform-label-hot.png" alt="" />
                 </div>
@@ -139,7 +142,10 @@
                   <template v-if="item.platformCode === 'JOKER'">
                     <div
                       class="game-platform-label game-platform-label--hot"
-                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                      v-if="
+                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                        (item.gameLabel && item.gameLabel.includes('HOT'))
+                      "
                     >
                       <img src="../assets/images/index/platform-label-hot.png" alt="" />
                     </div>
@@ -465,7 +471,10 @@
 
                     <div
                       class="game-platform-label game-platform-label--hot"
-                      v-if="item.gameLabel && item.gameLabel.includes('LISTHOT')"
+                      v-if="
+                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                        (item.gameLabel && item.gameLabel.includes('HOT'))
+                      "
                     >
                       <img src="../assets/images/index/platform-label-hot.png" alt="" />
                     </div>
@@ -1885,6 +1894,6 @@ onMounted(() => {
   position: absolute;
   top: 0;
   right: 0;
-  width: 40px;
+  width: 35%;
 }
 </style>
