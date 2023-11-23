@@ -118,7 +118,7 @@ export default defineComponent({
         const submit = async (elForm) => {
             if (!elForm) return
 
-            await elForm.validate((valid) => {
+            await elForm.validate(async (valid) => {
                 if (Number(castVoteFormData.votes) > votesData.value.myVotes) {
                     ElMessage.error({
                         type: "error",
@@ -132,15 +132,15 @@ export default defineComponent({
                         teamId: castVoteFormData.teamId,
                         votes: Number(castVoteFormData.votes)
                     }
-                    poolPrizeCastVote(params).then((res) => {
-                        if (res.code === 0) {
-                            ElMessage.success({
-                                type: "success",
-                                message: "success"
-                            })
-                            isSubmitting.value = false;
-                        }
-                    })
+                    const res = await poolPrizeCastVote(params);
+
+                    if (res.code === 0) {
+                        ElMessage.success({
+                            type: "success",
+                            message: "success"
+                        })
+                    }
+
                     isSubmitting.value = false;
                 }
             })
