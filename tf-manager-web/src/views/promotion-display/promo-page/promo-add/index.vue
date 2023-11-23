@@ -438,9 +438,13 @@ const selectedImage = reactive({
 
 const labelType = reactive({
   list: [
-    { key: 1, displayName: 'New', value: 0 },
-    { key: 2, displayName: 'Hot', value: 1 },
-    { key: 3, displayName: 'Normal', value: 2 },
+    { key: 1, displayName: t('promoLabel.new'), value: 0 },
+    { key: 2, displayName: t('promoLabel.hot'), value: 1 },
+    { key: 3, displayName: t('promoLabel.normal'), value: 2 },
+    { key: 4, displayName: t('promoLabel.recommend'), value: 3 },
+    { key: 5, displayName: t('promoLabel.daily'), value: 4 },
+    { key: 6, displayName: t('promoLabel.newbie'), value: 5 },
+    { key: 7, displayName: t('promoLabel.limit'), value: 6 },
   ],
 })
 const promoTypes = [
