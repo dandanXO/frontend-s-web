@@ -95,25 +95,30 @@
                 <div
                   class="game--bg"
                   :style="{
-                    backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                    backgroundImage: `url(${imgURLGame}${item.icon})`
                   }"
                 ></div>
               </div>
 
-              <div class="game-platform-title">{{ item.name }}</div>
+              <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
 
-              <div
-                class="game-platform-label game-platform-label--hot"
-                v-if="item.gameLabel && item.gameLabel.includes('HOT')"
-              >
-                <img src="../assets/images/index/platform-label-hot.png" alt="" />
-              </div>
-              <div
-                class="game-platform-label game-platform-label--new"
-                v-if="item.gameLabel && item.gameLabel.includes('NEW')"
-              >
-                <img src="../assets/images/index/platform-label-new.png" alt="" />
-              </div>
+              <template v-if="item.platformCode === 'JOKER'">
+                <div
+                  class="game-platform-label game-platform-label--hot"
+                  v-if="
+                    (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                    (item.gameLabel && item.gameLabel.includes('HOT'))
+                  "
+                >
+                  <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                </div>
+                <div
+                  class="game-platform-label game-platform-label--new"
+                  v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                >
+                  <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                </div>
+              </template>
             </div>
           </template>
           <template v-else>
@@ -127,25 +132,30 @@
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                        backgroundImage: `url(${imgURLGame}${item.icon})`
                       }"
                     ></div>
                   </div>
 
-                  <div class="game-platform-title">{{ item.name }}</div>
+                  <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
 
-                  <div
-                    class="game-platform-label game-platform-label--hot"
-                    v-if="item.gameLabel && item.gameLabel.includes('HOT')"
-                  >
-                    <img src="../assets/images/index/platform-label-hot.png" alt="" />
-                  </div>
-                  <div
-                    class="game-platform-label game-platform-label--new"
-                    v-if="item.gameLabel && item.gameLabel.includes('NEW')"
-                  >
-                    <img src="../assets/images/index/platform-label-new.png" alt="" />
-                  </div>
+                  <template v-if="item.platformCode === 'JOKER'">
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="
+                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                        (item.gameLabel && item.gameLabel.includes('HOT'))
+                      "
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                    >
+                      <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                    </div>
+                  </template>
                 </div>
               </transition>
             </div>
@@ -308,7 +318,7 @@
     </div>
   </div>
 
-  <GameModal ref="allGames"></GameModal>
+  <GameModal ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
 
   <q-dialog
     width="100%"
@@ -421,11 +431,11 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ item.name }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
 
                     <div
                       class="game-platform-label game-platform-label--hot"
@@ -453,15 +463,18 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ item.name }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
 
                     <div
                       class="game-platform-label game-platform-label--hot"
-                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                      v-if="
+                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                        (item.gameLabel && item.gameLabel.includes('HOT'))
+                      "
                     >
                       <img src="../assets/images/index/platform-label-hot.png" alt="" />
                     </div>
@@ -605,6 +618,10 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
   hotGameOn.value = false;
 };
 
+const closeFullGameDialog = () => {
+  fullGameDialog.value = false;
+};
+
 const hotGameOn = ref(false);
 const subGameList = ref([]);
 const filteredSubGameList = computed(() => {
@@ -696,7 +713,7 @@ const loadGameList = (type, id) => {
 };
 
 const imgURL = process.env.IMAGE_CDN;
-const imgURLGame = imgURL + "/game/5/";
+const imgURLGame = imgURL + "/game/";
 const imgURLPromo = imgURL + "/promo/";
 
 // Pop out ads banner
@@ -892,6 +909,14 @@ const getAppDownloadUrl = () => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+const truncateText = (text, maxLength) => {
+  if (window.innerWidth <= 450) {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  } else {
+    return text;
+  }
 };
 
 onMounted(() => {
@@ -1724,7 +1749,7 @@ onMounted(() => {
     .game-platform-label {
       position: absolute;
       top: 0;
-      width: 36px;
+      width: 45%;
 
       &--hot {
         left: 0;
@@ -1869,6 +1894,6 @@ onMounted(() => {
   position: absolute;
   top: 0;
   right: 0;
-  width: 40px;
+  width: 35%;
 }
 </style>
