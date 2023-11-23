@@ -14,8 +14,8 @@ class Poster {
     this.elements = [];
     this.pickEle = null
     this.resizeEle = null;
-    this.maxWidth = maxWidth;
-    this.maxHeight = maxHeight;
+    this.canvas.width = maxWidth;
+    this.canvas.height = maxHeight;
     this.eleZindex = 0;
   }
 
@@ -23,7 +23,6 @@ class Poster {
     const rect = poster.canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
-
     if (this.pickEle) {
       this.pickEle.move(mouseX, mouseY);
       this.draw();
@@ -104,22 +103,11 @@ class Poster {
     this.posterBg = await loadImage(src);
     const imageWidth = this.posterBg.width;
     const imageHeight = this.posterBg.height;
-    const ratio = parseFloat(imageWidth) / parseFloat(imageHeight);
+    // const ratio = parseFloat(imageWidth) / parseFloat(imageHeight);
     this.originWidth = imageWidth;
     this.originHeight = imageHeight;
-    this.w = imageWidth;
-    this.h = imageHeight;
-    if (imageWidth > this.maxWidth) {
-      this.w = this.maxWidth;
-      this.h = this.maxWidth / ratio;
-    }
-
-    if (imageHeight > this.maxHeight) {
-      this.w = this.maxHeight * ratio;
-      this.h = this.maxHeight;
-    }
-    this.canvas.width = this.w;
-    this.canvas.height = this.h;
+    this.w = this.canvas.width;
+    this.h = this.canvas.height;
     this.ctx.drawImage(this.posterBg, 0, 0, this.w, this.h);
   }
 

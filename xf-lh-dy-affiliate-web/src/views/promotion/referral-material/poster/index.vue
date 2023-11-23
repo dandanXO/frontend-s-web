@@ -226,9 +226,9 @@
         <div class="image-container">
           <div>
             <span> {{ $t('fields.preview') }} </span>
-            <el-button type="primary" size="small" @click="download()"> {{ $t('fields.download') }} </el-button>
+            <el-button type="primary" size="small" @click="download()"> {{ $t('fields.download') }}</el-button>
           </div>
-          <canvas ref="myCanvas" style="width: 100%" />
+          <canvas ref="myCanvas" />
         </div>
       </div>
       <!-- <el-card class="box-card">
@@ -400,7 +400,7 @@ function download() {
 }
 
 function initCanvas() {
-  poster.background("https://dummyimage.com/600x400/000/fff&text=test")
+  poster.background("https://file.rd7etvkrgt.com/promo/c9974e9e-7aaf-4afc-b2b4-a55c7bbdbedd.jpg")
   generateQrcode()
 }
 
@@ -483,6 +483,7 @@ onMounted(async () => {
   height: 20px;
   border: 2px solid #e4e6ed;
 }
+
 #poster {
   border: 1px solid rgb(199, 198, 198);
 }
