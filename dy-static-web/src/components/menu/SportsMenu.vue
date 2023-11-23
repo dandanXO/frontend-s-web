@@ -9,10 +9,7 @@
         <div class="platform-box">
           <!-- <img :src="require('../../assets/sports/sport_logo_'+ nav.icon + '.png')">
                      -->
-          <div
-            class="imgbox"
-            :style="`background-position-x: ${nav.percentage}`"
-          ></div>
+          <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
           <div class="contents">
             <p class="platform-title">{{ nav.label }}体育</p>
             <p class="platform-slogan">{{ nav.slogan }}</p>
@@ -36,10 +33,7 @@
 
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -58,8 +52,8 @@ export default defineComponent({
         label: "熊猫",
         slogan: "最强滚球 超高水位",
         percentage: "-960px;"
-      }
-      // { code: "SABA", icon: "saba", label: "沙巴", slogan: "最佳水位 最强赛事", percentage: "-270px;" },
+      },
+      { code: "SABA", icon: "saba", label: "沙巴", slogan: "最佳水位 最强赛事", percentage: "-270px;" }
       // { code: "CR", icon: "xf", label: "CR", slogan: "崭新玩法 感受精彩", percentage: "-560px;" },
     ];
 
@@ -70,25 +64,17 @@ export default defineComponent({
       if (store.memberType === "TEST") {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("SPORT")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("SPORT")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
         });
       }
     };
     const filteredNavigations = computed(() => {
-      return navigations.filter((nav) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === nav.code
-        )
-      );
+      return navigations.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
     });
 
     onMounted(() => {

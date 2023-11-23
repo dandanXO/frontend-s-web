@@ -100,6 +100,11 @@ const routes = [
                 }
             },
             {
+                path: "/privilege/invite",
+                name: "invite",
+                component: () => import('../views/PrivilegeInvite.vue')
+            },
+            {
                 path: "/center",
                 name: "center",
                 component: PersonalLayoutView,
