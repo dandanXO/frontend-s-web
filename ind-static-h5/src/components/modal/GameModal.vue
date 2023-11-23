@@ -78,6 +78,8 @@ import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
+const props = defineProps(["closeFullGameDialog"]);
+
 const $q = useQuasar();
 
 const store = userStore();
@@ -235,17 +237,16 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //   console.log(iframe)
   title.value = gameName;
   const store = userStore();
+
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
       visible.value = true;
       var way = null;
-      if (Platform.is.android) {
-        way = "ANDROID";
-      } else if (Platform.is.ios) {
-        way = "IOS";
-      }
+      if (Platform.is.android) way = "ANDROID";
+      else if (Platform.is.ios) way = "IOS";
+
       api
         .get(`/session/launch?_time=${new Date().getTime()}`, {
           params: {
@@ -255,11 +256,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             way: way
           }
         })
-        .then((ret) => {
-          const res = ret;
-          src.value = res.data;
+        .then((res) => {
+          if (platformCode === "PG") cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
+          else src.value = res.data;
         });
     } else {
+      props.closeFullGameDialog();
       router.push({ path: "/login", query: { redirect: route.path } });
     }
   }

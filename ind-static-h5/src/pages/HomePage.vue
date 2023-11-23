@@ -95,7 +95,7 @@
                 <div
                   class="game--bg"
                   :style="{
-                    backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                    backgroundImage: `url(${imgURLGame}${item.icon})`
                   }"
                 ></div>
               </div>
@@ -127,7 +127,7 @@
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                        backgroundImage: `url(${imgURLGame}${item.icon})`
                       }"
                     ></div>
                   </div>
@@ -308,7 +308,7 @@
     </div>
   </div>
 
-  <GameModal ref="allGames"></GameModal>
+  <GameModal ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
 
   <q-dialog
     width="100%"
@@ -421,7 +421,7 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
                       ></div>
                     </div>
@@ -453,7 +453,7 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
                       ></div>
                     </div>
@@ -605,6 +605,10 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
   hotGameOn.value = false;
 };
 
+const closeFullGameDialog = () => {
+  fullGameDialog.value = false;
+};
+
 const hotGameOn = ref(false);
 const subGameList = ref([]);
 const filteredSubGameList = computed(() => {
@@ -696,7 +700,7 @@ const loadGameList = (type, id) => {
 };
 
 const imgURL = process.env.IMAGE_CDN;
-const imgURLGame = imgURL + "/game/5/";
+const imgURLGame = imgURL + "/game/";
 const imgURLPromo = imgURL + "/promo/";
 
 // Pop out ads banner
