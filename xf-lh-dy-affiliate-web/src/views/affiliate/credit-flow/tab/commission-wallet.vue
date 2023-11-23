@@ -140,6 +140,7 @@ const type = reactive({
   getType: [
     'COMMISSION_WALLET_WITHDRAWAL',
     'COMMISSION_WALLET_AFFILIATE_DEPOSIT',
+    'COMMISSION_WALLET_SETTLEMENT',
   ],
 })
 

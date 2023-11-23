@@ -54,8 +54,10 @@ export default {
     Agent_Deposit: 'Agent Deposit',
     COMMISSION_WALLET_WITHDRAWAL: 'Withdraw',
     COMMISSION_WALLET_AFFILIATE_DEPOSIT: 'Affiliate Deposit',
+    COMMISSION_WALLET_SETTLEMENT: 'Comission Settlement',
     DEPOSIT_WALLET_DEPOSIT: 'Deposit',
     DEPOSIT_WALLET_AFFILIATE_DEPOSIT: 'Affiliate Deposit',
+    DEPOSIT_WALLET_AMOUNT_ADJUST: 'Manual Adjust',
   },
   referralLink: {
     affiliateWebPlatformLink: 'PC Platform Affiliate Link',

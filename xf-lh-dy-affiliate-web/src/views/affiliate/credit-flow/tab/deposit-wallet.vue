@@ -137,7 +137,11 @@ const { t } = useI18n()
 
 const type = reactive({
   selectedType: null,
-  getType: ['DEPOSIT_WALLET_DEPOSIT', 'DEPOSIT_WALLET_AFFILIATE_DEPOSIT'],
+  getType: [
+    'DEPOSIT_WALLET_DEPOSIT',
+    'DEPOSIT_WALLET_AFFILIATE_DEPOSIT',
+    'DEPOSIT_WALLET_AMOUNT_ADJUST',
+  ],
 })
 
 const request = reactive({

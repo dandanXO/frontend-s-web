@@ -54,8 +54,10 @@ export default {
     Agent_Deposit: 'ฝากตัวแทน',
     COMMISSION_WALLET_WITHDRAWAL: 'ถอน',
     COMMISSION_WALLET_AFFILIATE_DEPOSIT: 'ฝากตัวแทน',
+    COMMISSION_WALLET_SETTLEMENT: 'การชำระค่าคอมมิชชั่น',
     DEPOSIT_WALLET_DEPOSIT: 'เงินฝาก',
     DEPOSIT_WALLET_AFFILIATE_DEPOSIT: 'ฝากตัวแทน',
+    DEPOSIT_WALLET_AMOUNT_ADJUST: 'การปรับด้วยตนเอง',
   },
   referralLink: {
     affiliateWebPlatformLink: 'ลิงค์พันธมิตรแพลตฟอร์มพีซี',
