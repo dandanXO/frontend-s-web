@@ -138,8 +138,8 @@ const { t } = useI18n()
 const type = reactive({
   selectedType: null,
   getType: [
-    'COMISSION_WALLET_WITHDRAWAL',
-    'COMISSION_WALLET_AFFILIATE_DEPOSIT',
+    'COMMISSION_WALLET_WITHDRAWAL',
+    'COMMISSION_WALLET_AFFILIATE_DEPOSIT',
   ],
 })
 
@@ -178,7 +178,7 @@ async function loadCreditFlow() {
 
   query.affiliateId = store.state.user.id
   query.siteId = store.state.user.siteId
-  query.category = 'COMISSION'
+  query.category = 'COMMISSION'
   query.size = 20
 
   const { data: ret } = await getCreditFlow(query)

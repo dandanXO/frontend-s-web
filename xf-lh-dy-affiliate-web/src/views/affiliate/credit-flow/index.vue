@@ -8,10 +8,10 @@
       </template>
       <el-tabs v-model="activeName" style="margin-left: 20px">
         <el-tab-pane
-          :label="t('fields.comissionWallet')"
-          name="comission-wallet"
+          :label="t('fields.commissionWallet')"
+          name="commission-wallet"
         >
-          <comissionWalletTab />
+          <commissionWalletTab />
         </el-tab-pane>
         <el-tab-pane :label="t('fields.depositWallet')" name="deposit-wallet">
           <depositWalletTab />
@@ -24,9 +24,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import comissionWalletTab from './tab/comission-wallet.vue'
+import commissionWalletTab from './tab/commission-wallet.vue'
 import depositWalletTab from './tab/deposit-wallet.vue'
 
 const { t } = useI18n()
-const activeName = ref('comission-wallet')
+const activeName = ref('commission-wallet')
 </script>
