@@ -3,21 +3,21 @@
     <div class="header-container">
       <div class="search">
         <el-input
-          v-model="request.title"
+          v-model="request.name"
           size="small"
           style="width: 200px"
           :placeholder="t('fields.title')"
         />
         <el-select
           clearable
-          v-model="request.state"
+          v-model="request.status"
           size="small"
           :placeholder="t('fields.state')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
         >
           <el-option
-            v-for="item in uiControl.bannerState"
+            v-for="item in uiControl.status"
             :key="item.key"
             :label="item.displayName"
             :value="item.value"
@@ -60,20 +60,10 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:banner:add']"
+          v-permission="['sys:red-packet-rain:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
-        </el-button>
-        <el-button
-          icon="el-icon-remove"
-          size="mini"
-          type="danger"
-          v-permission="['sys:banner:del']"
-          @click="removeBanner()"
-          :disabled="uiControl.removeBtn"
-        >
-          {{ t('fields.delete') }}
         </el-button>
       </div>
     </div>
@@ -109,7 +99,7 @@
             size="small"
             :placeholder="t('fields.site')"
             class="filter-item"
-            style="width: 450px"
+            style="width: 350px"
             default-first-option
             @focus="loadSites"
             @change="changeSite"
@@ -129,7 +119,7 @@
             size="small"
             :placeholder="t('fields.status')"
             class="filter-item"
-            style="width: 120px; margin-left: 5px"
+            style="width: 120px;"
           >
             <el-option
               v-for="item in uiControl.status"
@@ -157,6 +147,20 @@
                 v-model="form.endTime"
                 style="width: 355px"
                 :disabled-date="disabledEndDate"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.maxMemberClaimCountPerRain')" prop="maxMemberClaimCountPerRain">
+              <el-input-number
+                v-model="form.maxMemberClaimCountPerRain"
+                style="width: 135px"
+                :min="1"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.maxMemberClaimCountPerDay')" prop="maxMemberClaimCountPerDay">
+              <el-input-number
+                v-model="form.maxMemberClaimCountPerDay"
+                style="width: 135px"
+                :min="1"
               />
             </el-form-item>
             <el-form-item :label="t('fields.dailyRainDuration')" prop="dailyRainDuration" style="width: 650px;">
@@ -452,7 +456,6 @@
       row-key="id"
       size="small"
       highlight-current-row
-      @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" />
       <el-table-column prop="name" :label="t('fields.name')" />
@@ -484,15 +487,8 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:banner:update']"
+            v-permission="['sys:red-packet-rain:update']"
             @click="showEdit(scope.row)"
-          />
-          <el-button
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            v-permission="['sys:banner:del']"
-            @click="removeBanner(scope.row)"
           />
         </template>
       </el-table-column>
@@ -577,13 +573,11 @@ const uiControl = reactive({
   ],
 })
 
-let chooseBanner = []
-
 const request = reactive({
   size: 30,
   current: 1,
-  title: null,
-  state: null,
+  name: null,
+  status: null,
   siteId: null,
 })
 
@@ -596,12 +590,14 @@ const form = reactive({
   endTime: null,
   dailyRainDuration: [],
   dailyRefreshDuration: [],
+  maxMemberClaimCountPerRain: 1,
+  maxMemberClaimCountPerDay: 1,
   amountLimitPerRain: 0,
   redPacketAmountAfterReachingLimit: 0,
   vipRules: [],
   lastDigitMinDayDeposit: 0,
   lastDigitRules: [],
-  status: true,
+  status: null,
 })
 
 const vipRuleForm = reactive({
@@ -621,18 +617,20 @@ const page = reactive({
 })
 
 const formRules = reactive({
-  // title: [required(t('message.validateTitleRequired'))],
-  // desktopImageUrl: [required(t('message.validateDesktopImageRequired'))],
-  // mobileImageUrl: [required(t('message.validateMobileImageRequired'))],
-  // redirectUrl: [required(t('message.validateRedirectRequired'))],
-  // sequence: [required(t('message.validateSequenceRequired'))],
-  // category: [required(t('message.validateCategoryRequired'))],
-  // siteId: [required(t('message.validateSiteRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
+  name: [required(t('message.validateNameRequired'))],
+  code: [required(t('message.validateCodeRequired'))],
+  startTime: [required(t('message.validateStartTimeRequired'))],
+  endTime: [required(t('message.validateEndTimeRequired'))],
+  dailyRainDuration: [required(t('message.validateDailyRainDurationRequired'))],
+  dailyRefreshDuration: [required(t('message.validateDailyRefreshDurationRequired'))],
+  vipRules: [required(t('message.validateVipRulesRequired'))],
+  status: [required(t('message.validateStatusRequired'))],
 })
 
 function resetQuery() {
-  request.title = null
-  request.state = null
+  request.name = null
+  request.status = null
   request.siteId = site.value ? site.value.id : null;
 }
 
@@ -659,17 +657,6 @@ function showDialog(type) {
   // multiRangeTimeLists.value = []
   uiControl.dialogType = type
   uiControl.dialogVisible = true
-}
-
-function handleSelectionChange(val) {
-  chooseBanner = val
-  if (chooseBanner.length === 0) {
-    uiControl.removeBtn = true
-  } else if (chooseBanner.length === 1) {
-    uiControl.removeBtn = false
-  } else {
-    uiControl.removeBtn = false
-  }
 }
 
 function showEdit(banner) {
@@ -826,7 +813,7 @@ async function getVipBySiteId(siteId) {
 function create() {
   bannerForm.value.validate(async valid => {
     if (valid) {
-      // await createHomeBanner(form)
+      await createRedPacketRain(form)
       uiControl.dialogVisible = false
       await loadRedPacketRain()
       ElMessage({message: t('message.addSuccess'), type: 'success'})
