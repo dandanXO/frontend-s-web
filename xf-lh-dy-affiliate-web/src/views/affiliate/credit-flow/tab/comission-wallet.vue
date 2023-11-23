@@ -11,11 +11,11 @@
             >
               <el-option
                 v-for="item in type.getType"
-                :key="item.id"
-                :value="item.id"
-                :label="item.title"
+                :key="item"
+                :value="item"
+                :label="t(`creditFlowType.${item}`)"
               >
-                {{ $t(`creditFlowType.${item.title}`) }}
+                {{ $t(`creditFlowType.${item}`) }}
               </el-option>
             </el-select>
           </el-form-item>
@@ -95,12 +95,12 @@
     />
 
     <el-table-column
-      :prop="typeName"
+      :prop="type"
       :label="t('fields.creditFlowType')"
       align="center"
     >
       <template #default="scope">
-        <span>{{ $t(`creditFlowType.${scope.row.typeName}`) }}</span>
+        <span>{{ $t(`creditFlowType.${scope.row.type}`) }}</span>
       </template>
     </el-table-column>
     <el-table-column
@@ -130,7 +130,6 @@ import { reactive, onMounted } from 'vue'
 import { useStore } from '@/store'
 import { useI18n } from 'vue-i18n'
 
-import { getCreditFlowType } from '../../../../api/affiliate-credit-flow-type'
 import { getCreditFlow } from '../../../../api/affiliate-credit-flow'
 
 const store = useStore()
@@ -138,7 +137,10 @@ const { t } = useI18n()
 
 const type = reactive({
   selectedType: null,
-  getType: [],
+  getType: [
+    'COMISSION_WALLET_WITHDRAWAL',
+    'COMISSION_WALLET_AFFILIATE_DEPOSIT',
+  ],
 })
 
 const request = reactive({
@@ -156,23 +158,6 @@ const page = reactive({
   records: [],
   loading: false,
 })
-
-async function loadCreditFlowType() {
-  const requestCopy = { ...request }
-  const query = {}
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
-    }
-  })
-
-  query.category = 'COMISSION'
-  query.size = 50
-  const { data: ret } = await getCreditFlowType(query)
-  type.getType = ret.records
-
-  loadCreditFlow()
-}
 
 async function loadCreditFlow() {
   const requestCopy = { ...request }
@@ -223,7 +208,6 @@ function changePage(page) {
 }
 
 onMounted(() => {
-  loadCreditFlowType()
   loadCreditFlow()
 })
 </script>

@@ -52,6 +52,10 @@ export default {
     Deposit: '存款',
     Agent_Transfer: '代理转账',
     Agent_Deposit: '代理代存',
+    COMISSION_WALLET_WITHDRAWAL: '提款',
+    COMISSION_WALLET_AFFILIATE_DEPOSIT: '代理代存',
+    DEPOSIT_WALLET_DEPOSIT: '存款',
+    DEPOSIT_WALLET_AFFILIATE_DEPOSIT: '代理代存',
   },
   referralLink: {
     affiliateWebPlatformLink: 'PC端代理链接',
