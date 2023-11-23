@@ -1133,16 +1133,11 @@ export default {
     confirmCopyTo: ' to ',
     confirmDelete:
       'Confirm that you want to delete these data, the operation cannot be undone',
-<<<<<<< HEAD
     confirmRebate:
       'Confirm that you want to distribute all rebate, the operation cannot be undone',
     confirmRefer:
       'Confirm that you want to distribute all refer friend promo, the operation cannot be undone',
-=======
-    confirmRebate: 'Confirm that you want to distribute all rebate, the operation cannot be undone',
-    confirmRefer: 'Confirm that you want to distribute all refer friend promo, the operation cannot be undone',
     confirmReset: 'Confirm that you want to reset these data, the operation cannot be undone',
->>>>>>> 104fee6c4c32e5a47d2050622fadbcd9fcd92d62
     confirmSettlement: 'Confirm that you want to proceed with the settlement?',
     confirmToChecking:
       'Confirm that you want revert the settlement to checking?',
