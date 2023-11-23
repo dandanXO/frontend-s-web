@@ -148,6 +148,7 @@
       @daily-slot="handleSlot()"
     />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'" />
+    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 's13-festival'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
@@ -323,6 +324,7 @@ import * as _ from "lodash";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
+import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
@@ -336,6 +338,7 @@ export default defineComponent({
   components: {
     ClaimPromo,
     TigerCardPromo,
+    PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
     NbaGamePromo,
@@ -392,6 +395,7 @@ export default defineComponent({
     });
     if (
       this.list.redirectUrl === "dy1-tiger-card" ||
+      this.list.redirectUrl === "s13-festival" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||
