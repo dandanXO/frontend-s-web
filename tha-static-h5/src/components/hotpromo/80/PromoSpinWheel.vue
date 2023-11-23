@@ -127,38 +127,42 @@ const { t } = useI18n();
 const $q = useQuasar();
 const store = userStore();
 
-// NOTE: 0 index starts from where the arrow pointing
+/**
+ * NOTE:
+ * -. 0 index starts from where the arrow pointing
+ * -. since it wasn't perfect square, readjust arrow means readjust the entire degree.
+ */
 const outerWheelData = [
-  { degree: -335, amount: 38 },
-  { degree: 0, amount: 588 },
-  { degree: -25, amount: 238 },
-  { degree: -50.5, amount: 188 },
-  { degree: -77, amount: 58 },
-  { degree: -103, amount: 288 },
-  { degree: -129.25, amount: 28 },
-  { degree: -155.5, amount: 88 },
-  { degree: -181.5, amount: 68 },
-  { degree: -206.5, amount: 388 },
-  { degree: -231.5, amount: 38 },
-  { degree: -257.5, amount: 88 },
-  { degree: -283.5, amount: 28 },
-  { degree: -309, amount: 880 }
+  { degree: -52.25, amount: 38 },
+  { degree: -78, amount: 588 },
+  { degree: -102, amount: 238 },
+  { degree: -128, amount: 188 },
+  { degree: -154.5, amount: 58 },
+  { degree: -180.5, amount: 288 },
+  { degree: -206.75, amount: 28 },
+  { degree: -233, amount: 88 },
+  { degree: -259, amount: 68 },
+  { degree: -284, amount: 388 },
+  { degree: -309, amount: 38 },
+  { degree: -335, amount: 88 },
+  { degree: -361, amount: 28 },
+  { degree: -386.25, amount: 880 }
 ];
 const innerWheelData = [
-  { degree: -335, amount: 110 },
-  { degree: 0, amount: 130 },
-  { degree: -26, amount: 300 },
-  { degree: -52, amount: 150 },
-  { degree: -77, amount: 250 },
-  { degree: -102, amount: 140 },
-  { degree: -128, amount: 120 },
-  { degree: -155, amount: 160 },
-  { degree: -182, amount: 500 },
-  { degree: -207, amount: 110 },
-  { degree: -233, amount: 200 },
-  { degree: -258, amount: 1000 },
-  { degree: -283, amount: 0 },
-  { degree: -309, amount: 200 }
+  { degree: -52, amount: 110 },
+  { degree: -77, amount: 130 },
+  { degree: -104, amount: 300 },
+  { degree: -130, amount: 150 },
+  { degree: -156, amount: 250 },
+  { degree: -181, amount: 140 },
+  { degree: -205, amount: 120 },
+  { degree: -232, amount: 160 },
+  { degree: -259, amount: 500 },
+  { degree: -284, amount: 110 },
+  { degree: -310, amount: 200 },
+  { degree: -336, amount: 1000 },
+  { degree: -361, amount: 0 },
+  { degree: -387, amount: 200 }
 ];
 
 /**
@@ -565,11 +569,14 @@ onMounted(() => {
 
   .prize-arrow {
     position: absolute;
-    top: 32.95%;
-    left: 22.75%;
+    // top: 32.95%;
+    // left: 22.75%;
     display: flex;
     width: 100%;
     z-index: 1;
+    top: 14.5%;
+    left: 0.25%;
+    transform: rotate(-78deg);
 
     .prize-arrow-img {
       width: 36%;
