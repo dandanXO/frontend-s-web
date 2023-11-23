@@ -260,6 +260,15 @@ export default {
       }
     }
   },
+  promoLabel: {
+    new: 'New',
+    hot: 'Hot',
+    normal: 'Normal',
+    recommend: 'Recomend',
+    daily: 'Daily',
+    newbie: 'Newbie',
+    limit: 'Limit',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',

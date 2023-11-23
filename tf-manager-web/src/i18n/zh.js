@@ -259,6 +259,15 @@ export default {
       }
     }
   },
+  promoLabel: {
+    new: '最新',
+    hot: '热门',
+    normal: '正常',
+    recommend: '推荐',
+    daily: '日常',
+    newbie: '新人',
+    limit: '限时',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',

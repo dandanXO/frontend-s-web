@@ -93,9 +93,13 @@
       <el-table-column prop="siteName" :label="t('fields.site')" />
       <el-table-column prop="labelType" :label="t('fields.label')">
         <template #default="scope">
-          <div v-if="scope.row.labelType === 0">New</div>
-          <div v-if="scope.row.labelType === 1">Hot</div>
-          <div v-if="scope.row.labelType === 2">Normal</div>
+          <div v-if="scope.row.labelType === 0">{{ t('promoLabel.new') }}</div>
+          <div v-if="scope.row.labelType === 1">{{ t('promoLabel.hot') }}</div>
+          <div v-if="scope.row.labelType === 2">{{ t('promoLabel.normal') }}</div>
+          <div v-if="scope.row.labelType === 3">{{ t('promoLabel.recomend') }}</div>
+          <div v-if="scope.row.labelType === 4">{{ t('promoLabel.daily') }}</div>
+          <div v-if="scope.row.labelType === 5">{{ t('promoLabel.newbie') }}</div>
+          <div v-if="scope.row.labelType === 6">{{ t('promoLabel.limit') }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:promp:page:update:state'])">
