@@ -100,20 +100,22 @@
                 ></div>
               </div>
 
-              <div class="game-platform-title">{{ item.name }}</div>
+              <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
 
-              <div
-                class="game-platform-label game-platform-label--hot"
-                v-if="item.gameLabel && item.gameLabel.includes('HOT')"
-              >
-                <img src="../assets/images/index/platform-label-hot.png" alt="" />
-              </div>
-              <div
-                class="game-platform-label game-platform-label--new"
-                v-if="item.gameLabel && item.gameLabel.includes('NEW')"
-              >
-                <img src="../assets/images/index/platform-label-new.png" alt="" />
-              </div>
+              <template v-if="item.platformCode === 'JOKER'">
+                <div
+                  class="game-platform-label game-platform-label--hot"
+                  v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                >
+                  <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                </div>
+                <div
+                  class="game-platform-label game-platform-label--new"
+                  v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                >
+                  <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                </div>
+              </template>
             </div>
           </template>
           <template v-else>
@@ -132,20 +134,22 @@
                     ></div>
                   </div>
 
-                  <div class="game-platform-title">{{ item.name }}</div>
+                  <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
 
-                  <div
-                    class="game-platform-label game-platform-label--hot"
-                    v-if="item.gameLabel && item.gameLabel.includes('HOT')"
-                  >
-                    <img src="../assets/images/index/platform-label-hot.png" alt="" />
-                  </div>
-                  <div
-                    class="game-platform-label game-platform-label--new"
-                    v-if="item.gameLabel && item.gameLabel.includes('NEW')"
-                  >
-                    <img src="../assets/images/index/platform-label-new.png" alt="" />
-                  </div>
+                  <template v-if="item.platformCode === 'JOKER'">
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                    >
+                      <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                    </div>
+                  </template>
                 </div>
               </transition>
             </div>
@@ -425,7 +429,7 @@
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ item.name }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
 
                     <div
                       class="game-platform-label game-platform-label--hot"
@@ -457,11 +461,11 @@
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ item.name }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
 
                     <div
                       class="game-platform-label game-platform-label--hot"
-                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                      v-if="item.gameLabel && item.gameLabel.includes('LISTHOT')"
                     >
                       <img src="../assets/images/index/platform-label-hot.png" alt="" />
                     </div>
@@ -896,6 +900,14 @@ const getAppDownloadUrl = () => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+const truncateText = (text, maxLength) => {
+  if (window.innerWidth <= 450) {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  } else {
+    return text;
+  }
 };
 
 onMounted(() => {
@@ -1728,7 +1740,7 @@ onMounted(() => {
     .game-platform-label {
       position: absolute;
       top: 0;
-      width: 36px;
+      width: 45%;
 
       &--hot {
         left: 0;
