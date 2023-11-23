@@ -1497,6 +1497,7 @@ export default {
     requestExportToExcelDone2: ' 进行查看进度与下载。',
     validateImageRequired: '图像必填',
     validateImageNameRequired: '图像名必填',
+    validatePosterTypeRequired: '海报类别必填',
   },
   menu: {
     undefined: '',

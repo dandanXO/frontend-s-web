@@ -1518,6 +1518,7 @@ export default {
     requestExportToExcelDone2: ' to check progress and download.',
     validateImageRequired: 'Image is required',
     validateImageNameRequired: 'Image Name is required',
+    validatePosterTypeRequired: 'Poster Type is required',
   },
   menu: {
     undefined: '',
