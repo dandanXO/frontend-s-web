@@ -189,7 +189,8 @@ export default defineComponent({
             castVoteFormRef,
             castVote,
             submit,
-            voteRef
+            voteRef,
+            toggleCastVoteModal
         }
     }
 });
