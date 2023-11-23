@@ -6,7 +6,7 @@
         :loading-claim="loadingClaim"
         @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'"/>
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'"/>
     <GoldenEggPromo
         v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token"
     />
@@ -21,7 +21,7 @@
     <InviteFriendPromo
         v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
     />
-    <div v-if="list.redirectUrl === 'dy1-lottery' && !isCommonPromo && store.token" class="promo-4">
+    <div v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
           <el-tab-pane key="1" label="选择幸运号码">
@@ -453,12 +453,12 @@ export default defineComponent({
 
     // List for non common promo
     if (
-        this.list.redirectUrl === "dy1-tiger-card" ||
+        this.list.redirectUrl === "dy2-tiger-card" ||
         this.list.redirectUrl === "goldenegg" ||
         this.list.redirectUrl === "hongbaoyu" ||
         this.list.redirectUrl === "invitefriend" ||
         this.list.redirectUrl === "welcomenewuser" ||
-        this.list.redirectUrl === "dy1-lottery" ||
+        this.list.redirectUrl === "dy2-lottery" ||
         this.list.id === 40
     ) {
       this.isCommonPromo = false;

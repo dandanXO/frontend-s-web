@@ -147,7 +147,7 @@
         :loading-claim="btnLoading"
         @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'"/>
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'"/>
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'"/>
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'"/>
 
@@ -156,7 +156,7 @@
     />
 
     <div
-        v-if="list.redirectUrl === 'dy1-lottery' && store.hasToken()"
+        v-if="list.redirectUrl === 'dy2-lottery' && store.hasToken()"
         class="promo-4"
     >
       <div class="tabs">
@@ -420,12 +420,12 @@ export default defineComponent({
       }
     });
     if (
-        this.list.redirectUrl === "dy1-tiger-card" ||
+        this.list.redirectUrl === "dy2-tiger-card" ||
         this.list.redirectUrl === "goldenegg" ||
         this.list.redirectUrl === "hongbaoyu" ||
         this.list.redirectUrl === "invitefriend" ||
         this.list.redirectUrl === "welcomenewuser" ||
-        this.list.redirectUrl === "dy1-lottery" ||
+        this.list.redirectUrl === "dy2-lottery" ||
         this.list.id === 40
     ) {
       this.isCommonPromo = false;
@@ -640,7 +640,7 @@ export default defineComponent({
 
         var postData = {};
         postData.number = submit_number;
-        postData.promoCode = "dy1-lottery";
+        postData.promoCode = "dy2-lottery";
 
         var luckyNumberUrl = "/privi/lotteryNumber";
         btnLoading.value = true;
