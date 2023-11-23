@@ -18,7 +18,10 @@
                     </div>
                     <div class="c-name">{{ votesListItem.teamNameEn }}</div>
                     <div class="c-price">{{ votesListItem.totalVotes }} 票</div>
-                    <div class="c-button">投票</div>
+                    <div class="c-button" @click="castVote({
+                        teamId: votesListItem.id,
+                        teamName: votesListItem.teamNameEn
+                    })">投票</div>
                 </div>
             </div>
         </div>
@@ -50,23 +53,98 @@
                 </div>
             </div>
         </div>
+
+        <el-dialog align-center v-model="isCastVoteModalVisible" :title="castVoteFormData.teamName" width="500">
+            <el-form :rules="castVoteFormValidationRules" ref="castVoteFormRef" style="padding: 20px;"
+                :model="castVoteFormData">
+                <el-form-item prop="votes" label="投票数量" :label-width="formLabelWidth">
+                    <el-input v-model="castVoteFormData.votes" type="number" min="1" max="10" />
+                </el-form-item>
+                <div style="text-align: center">
+                    <el-button class="common-btn grey" color="#ff0000" @click="castVoteFormData.votes = '1'">
+                        重置
+                    </el-button>
+                    <el-button :loading="isSubmitting" class="common-btn" @click.prevent="submit(castVoteFormRef)">
+                        提交
+                    </el-button>
+                </div>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 <script>
-import { onMounted, ref, defineComponent } from "vue";
-import { poolPrizeVoteInit } from "@/api/promotion/poolPrizeVote";
+import { onMounted, ref, defineComponent, reactive } from "vue";
+import { poolPrizeVoteInit, poolPrizeCastVote } from "@/api/promotion/poolPrizeVote";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
     name: "PrizePoolVotePromo",
     components: {
     },
     setup() {
+        const castVoteFormValidationRules = {
+            votes: [
+                {
+                    required: true,
+                    message: "请输入投票数量",
+                    trigger: "blur",
+                },
+                {
+                    pattern: "^([1-9]|1[0])$",
+                    message: "投票数量只能输入1-10之内的数字",
+                    trigger: "blur",
+                },
+            ],
+        }
+        const castVoteFormRef = ref();
+        const isSubmitting = ref(false);
+        const isCastVoteModalVisible = ref(false);
+        const castVoteFormData = reactive({
+            teamId: undefined,
+            teamName: '',
+            votes: '1'
+        })
         const votesData = ref({
             award: 0,
             myVotes: 0,
             votesList: [],
             votesRecord: [],
         });
+        const castVote = ({ teamId, teamName }) => {
+            isCastVoteModalVisible.value = true;
+            castVoteFormData.teamId = teamId
+            castVoteFormData.teamName = teamName
+        }
+        const submit = async (elForm) => {
+            if (!elForm) return
+
+            await elForm.validate((valid) => {
+                if (Number(castVoteFormData.votes) > votesData.value.myVotes) {
+                    ElMessage.error({
+                        type: "error",
+                        message: "选票数量不足"
+                    })
+                    return;
+                }
+                if (valid) {
+                    isSubmitting.value = true;
+                    const params = {
+                        teamId: castVoteFormData.teamId,
+                        votes: Number(castVoteFormData.votes)
+                    }
+                    poolPrizeCastVote(params).then((res) => {
+                        if (res.code === 0) {
+                            ElMessage.success({
+                                type: "success",
+                                message: "success"
+                            })
+                            isSubmitting.value = false;
+                        }
+                    })
+                    isSubmitting.value = false;
+                }
+            })
+        }
 
         onMounted(() => {
             poolPrizeVoteInit().then((res) => {
@@ -75,8 +153,15 @@ export default defineComponent({
         })
 
 
+
         return {
-            votesData
+            votesData,
+            isCastVoteModalVisible,
+            castVoteFormData,
+            castVoteFormValidationRules,
+            castVoteFormRef,
+            castVote,
+            submit
         }
     }
 });
@@ -272,7 +357,6 @@ export default defineComponent({
     color: #11131F;
     font-size: 14px;
     font-weight: normal;
-    padding: 0 5px;
     border-left: 2px solid #53ABFF;
     border-right: 2px solid #53ABFF;
     width: 100%;
@@ -281,7 +365,7 @@ export default defineComponent({
 
 .countries-wrapper .country-list .country-item .c-button {
     border: 2px solid #22578b;
-    padding: 2px 10px;
+    padding: 2px 0px;
     border-radius: 20px;
     display: block;
     margin-top: 10px;
