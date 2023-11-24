@@ -41,6 +41,7 @@
               <div class="promo-info">
                 <span class="viewdetail">{{ promo.title }}</span>
               </div>
+              <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">{{ getPromoLabel(promo.labelType) }}</div>
             </a>
           </div>
         </div>
@@ -178,6 +179,24 @@ export default defineComponent({
         filteredArray.value = promoState.promoList
       }
     };
+    const getPromoLabel = (labelType) => {
+      switch(labelType) {
+        case 0:
+          return '最新';
+        case 1: 
+          return '热门';
+        case 3: 
+          return '推荐';
+        case 4: 
+          return '日常';
+        case 5: 
+          return '新人';
+        case 6: 
+          return '限时';
+        default:
+          return '';
+      }
+    }
     const loadAll = () => {
       loadPromo().then((res) => {
         if(res.code === 0) {
@@ -216,7 +235,8 @@ export default defineComponent({
       showPromoDetails,
       selectedPromo,
       banner,
-      imgURL
+      imgURL,
+      getPromoLabel
     }
   },
 });
@@ -238,36 +258,7 @@ export default defineComponent({
     ol {
       padding: 0 15px;
     }
-    // table {
-    //   margin: 0 15px 20px;
-    //   width: 98%;
-    //   display: block;
-    //   overflow-x: auto;
-    //   white-space: nowrap;
-    //   border: 0;
-    //   tr {
-    //     td {
-    //       padding: 10px 20px;
-    //       border-bottom: 1px solid #201f29;
-    //       border: 0;
-    //       p {
-    //         margin: 0;
-    //       }
-    //     }
-    //     &:first-child {
-    //       td {
-    //         color: #ffd800;
-    //         white-space: nowrap;
-    //       }
-    //     }
-    //     td:nth-child(odd) {
-    //       background: #2e2e45;
-    //     }
-    //     td:nth-child(even) {
-    //       background: #2e2e45;
-    //     }
-    //   }
-    // }
+
     img {
       display: flex;
       justify-content: center;
@@ -291,6 +282,11 @@ export default defineComponent({
       th,
       td {
         padding: 10px;
+      }
+      tbody{
+        display:table;
+        table-layout: fixed;
+        width: 100%;
       }
       th {
         background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%),
@@ -502,6 +498,25 @@ export default defineComponent({
               margin-right: 20px;
               height: 100%;
             }
+          }
+
+          .pad-label.label-new {
+            font-size: 12px;
+            color: #ffffff;
+            padding: 5px;
+            position: absolute;
+            top: 0px;
+            left: 10px;
+            background: url("../assets/images/promotion/hotpromo/common/promo-label-ribbon.png") no-repeat center;
+            background-size: contain;
+            font-weight: 600;
+            text-orientation: upright;
+            writing-mode: vertical-rl;
+            height: 38px;
+            width: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
           }
         }
       }

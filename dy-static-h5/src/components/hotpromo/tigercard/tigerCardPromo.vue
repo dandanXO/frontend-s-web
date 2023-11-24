@@ -223,7 +223,7 @@ const pageNumChange = (i) => {
 
 const pageInit = () => {
   eventapi
-    .post("/tigerCard/init", qs.stringify({ promoCode: "dy1-tiger-card" }))
+    .post("/tigerCard/init", qs.stringify({ promoCode: "dy2-tiger-card" }))
     .then((res) => {
       if (res.code === 0) {
         cardInfo.cardDetail = res.data;
@@ -246,7 +246,7 @@ const getNewTigerCard = () => {
   eventapi
     .post(
       "/tigerCard/getMemberCard",
-      qs.stringify({ promoCode: "dy1-tiger-card" })
+      qs.stringify({ promoCode: "dy2-tiger-card" })
     )
     .then((res) => {
       if (res.code === 0) {
@@ -271,7 +271,7 @@ const compoundCard = () => {
   eventapi
     .post(
       "/tigerCard/synthesisCard",
-      qs.stringify({ promoCode: "dy1-tiger-card" })
+      qs.stringify({ promoCode: "dy2-tiger-card" })
     )
     .then((res) => {
       if (res.code === 0) {
@@ -389,7 +389,7 @@ const submitRegisterForm = async () => {
     // form has error
   } else {
     isSubmitting.value = true;
-    form.promoCode = "dy1-tiger-card";
+    form.promoCode = "dy2-tiger-card";
     eventapi
       .post("/tigerCard/giveCardToFriend", qs.stringify(form))
       .then((res) => {

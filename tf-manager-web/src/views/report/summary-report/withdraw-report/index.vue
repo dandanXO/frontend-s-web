@@ -43,8 +43,24 @@
       <el-table-column prop="member" :label="t('fields.member')" width="120" fixed />
       <el-table-column prop="source" :label="t('fields.sourceType')" width="120" />
       <el-table-column prop="txnId" :label="t('fields.txnId')" width="220" />
-      <el-table-column prop="txnTime" :label="t('fields.txnTime')" width="150" />
-      <el-table-column prop="auditTime" :label="t('fields.auditTime')" width="150" />
+      <el-table-column prop="txnTime" :label="t('fields.txnTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.txnTime === null">-</span>
+          <span
+            v-if="scope.row.txnTime !== null"
+            v-formatter="{data: scope.row.txnTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="auditTime" :label="t('fields.auditTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.auditTime === null">-</span>
+          <span
+            v-if="scope.row.auditTime !== null"
+            v-formatter="{data: scope.row.auditTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="amount" :label="t('fields.amount')" width="120">
         <template #default="scope1">
           $
@@ -106,6 +122,7 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
+let timeZone = null;
 var date = new URL(location.href).searchParams.get('date')
 var siteIdFromParam = new URL(location.href).searchParams.get('site')
 
@@ -146,6 +163,7 @@ async function loadSummaryWithdrawRecord() {
   page.pages = ret.pages
   page.records = ret.records
 
+  timeZone = siteList.list.find(e => e.id === parseInt(request.siteId)).timeZone;
   page.loading = false
 }
 

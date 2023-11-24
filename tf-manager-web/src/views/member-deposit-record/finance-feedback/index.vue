@@ -246,19 +246,43 @@
         prop="commitTime"
         :label="t('fields.commitTime')"
         width="120"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.commitTime === null">-</span>
+          <span
+            v-if="scope.row.commitTime !== null"
+            v-formatter="{data: scope.row.commitTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
 
       <el-table-column
         prop="feedbackTime"
         :label="t('fields.feedbackTime')"
         width="120"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.feedbackTime === null">-</span>
+          <span
+            v-if="scope.row.feedbackTime !== null"
+            v-formatter="{data: scope.row.feedbackTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
 
       <el-table-column
         prop="updateTime"
         :label="t('fields.updateTime')"
         width="120"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{data: scope.row.updateTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
 
       <el-table-column
         prop="updateBy"
@@ -360,6 +384,7 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
+let timeZone = null;
 const typeList = reactive({
   list: [
     { label: t('fields.feedbackTypeAll'), value: '0' },
@@ -467,6 +492,9 @@ async function loadFinanceFeedback() {
 
   page.pages = ret.pages
   page.records = ret.records
+
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+
   page.loading = false
 }
 

@@ -31,19 +31,19 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
 
     const ui = useUI();
-    console.log(window.location.href);
-  // || window.location.href.indexOf("http://localhost:") > -1
-    if(window.location.href.indexOf("https://slot-win.cc") > -1 ){
+    // console.log(window.location.href);
+  //
+    if(window.location.href.indexOf("https://slot-win.cc") > -1 || window.location.href.indexOf("http://localhost:") > -1){
       console.log("Is Slot Win");
       ui.isAffiliateA= true;
 
       fbq("init", "211810688532352");
-      fbq("track", "PageView");
-      fbq("track", "ViewContent");
+
 
       //For TESTING.
-      // fbq("init", "6757510457678415");
-      // fbq("track", "PageView");
+      fbq("init", "241650862263360");
+      fbq("track", "PageView");
+      fbq("track", "ViewContent");
 
 
        var isFirstTime =   sessionStorage.getItem("FIRST_TIME_LOG");

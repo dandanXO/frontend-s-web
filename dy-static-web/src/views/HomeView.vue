@@ -791,6 +791,7 @@ export default defineComponent({
         }
       });
     };
+    const isFirstView= ref(false);
     const isImpt = getWithExpiry("isImpt");
     const homePopupImg = ref("");
     const checkShowImgTop = () => {

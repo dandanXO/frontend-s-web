@@ -185,7 +185,7 @@ export default defineComponent({
     const platforms = reactive([]);
     const autoTransfer = ref(false);
     const mainWallet = computed(() => {
-      return store.balance;
+      return store.balance.toFixed(2);
     });
     onMounted(() => {
       loadPlatform();
@@ -482,7 +482,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
         }
         .balance-wrapper {
           display: flex;
-          width: 15%;
+          width: 18%;
           justify-content: flex-start;
           gap: 10px;
           align-items: center;
@@ -491,6 +491,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
           color: #30a73b;
           .currency {
             color: #a0bcd6;
+            white-space: normal;
           }
         }
         .balance-transfer-button {

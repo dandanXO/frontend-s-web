@@ -222,3 +222,35 @@ build-image-tha-landing:
     PROJECT: tha-landing
   needs:
     - build-tha-landing
+
+#===============================================================================================
+
+build-dy-static-web:
+  extends:
+    - .build-projects
+    - .build-web
+  variables:
+    PROJECT: dy-static-web
+
+build-image-dy-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: dy-static-web
+  needs:
+    - build-dy-static-web
+
+#===============================================================================================
+
+build-dy-static-h5:
+  extends:
+    - .build-projects
+    - .build-h5
+  variables:
+    PROJECT: dy-static-h5
+
+build-image-dy-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: dy-static-h5
+  needs:
+    - build-dy-static-h5
