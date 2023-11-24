@@ -1,37 +1,37 @@
 <template>
   <div>
-    <swiper :slides-per-view="1" :loop="true" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper-wrapper">
-      <template v-for="(item, index) in nbaDetails" :key="index">
-        <swiper-slide>
-          <div class="bet-info-box">
-            <div class="bet-info-date">{{ formatDate(item.matchTime).date }}</div>
-            <div class="bet-info-details">
-              <div class="info-team info-team-one">
-                <div class="info-team-logo">
-                  <img src="https://ipis-cdn.speedy4site.com/TeamImage/29342.png" />
-                </div>
-                <div class="info-team-name" v-html="item.teamOne" />
+    <swiper :slides-per-view="1" :loop="false" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper-wrapper">
+      <!-- <template v-for="(detail, index) in nbaDetails" :key="index"> -->
+      <swiper-slide>
+        <div class="bet-info-box">
+          <div class="bet-info-date">{{ formatDate(nbaDetails.matchTime).date }}</div>
+          <div class="bet-info-details">
+            <div class="info-team info-team-one">
+              <div class="info-team-logo">
+                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamOneIcon" />
               </div>
+              <div class="info-team-name" v-html="nbaDetails.teamOne" />
+            </div>
 
-              <div class="bet-info-vs">
-                VS
-                <br />
-                {{ formatDate(item.matchTime).time }}
-              </div>
+            <div class="bet-info-vs">
+              VS
+              <br />
+              {{ formatDate(nbaDetails.matchTime).time }}
+            </div>
 
-              <div class="info-team info-team-two">
-                <div class="info-team-logo">
-                  <img src="https://ipis-cdn.speedy4site.com/TeamImage/29610.png" />
-                </div>
-                <div class="info-team-name" v-html="item.teamTwo" />
+            <div class="info-team info-team-two">
+              <div class="info-team-logo">
+                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamTwoIcon" />
               </div>
+              <div class="info-team-name" v-html="nbaDetails.teamTwo" />
             </div>
           </div>
-        </swiper-slide>
-      </template>
+        </div>
+      </swiper-slide>
+      <!-- </template> -->
     </swiper>
-    <div class="swiper-button-prev" @click="prevSlide"></div>
-    <div class="swiper-button-next" @click="nextSlide"></div>
+    <!-- <div class="swiper-button-prev" @click="prevSlide"></div> -->
+    <!-- <div class="swiper-button-next" @click="nextSlide"></div> -->
   </div>
 </template>
 
@@ -44,40 +44,13 @@ import "swiper/css/navigation";
 import { loadNbaDetails } from "@/api/promotion/nbaGame";
 
 const nbaDetails = ref([]);
-
-const nbaDetailsData = ref([
-  {
-    code: 0,
-    data: [
-      {
-        id: 3,
-        siteId: 6,
-        matchTitle: "洛杉矶湖人 VS 休斯敦火箭",
-        teamOne: "洛杉矶湖人",
-        teamOneIcon: "14c91869-db48-43fe-b7e3-8db4ae7aa7dc.png",
-        teamTwo: "休斯敦火箭",
-        teamTwoIcon: "2ff0117d-4121-4ce4-9e03-104288254147.png",
-        gameType: "NBA",
-        status: "ACTIVE",
-        matchTime: "2023-11-21 22:00:00"
-      },
-      {
-        id: 5,
-        siteId: 6,
-        matchTitle: "洛杉矶湖人 VS 休斯敦火箭",
-        teamOne: "洛杉矶湖人2",
-        teamOneIcon: "14c91869-db48-43fe-b7e3-8db4ae7aa7dc.png",
-        teamTwo: "休斯敦火箭2",
-        teamTwoIcon: "2ff0117d-4121-4ce4-9e03-104288254147.png",
-        gameType: "NBA",
-        status: "ACTIVE",
-        matchTime: "2023-11-21 22:00:00"
-      }
-    ]
-  }
-]);
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/game-match/";
 
 const formatDate = (dateTimeString) => {
+  if (dateTimeString === undefined) {
+    return { date: null, time: null };
+  }
+
   const [date, time] = dateTimeString.split(" ");
   return { date, time };
 };
@@ -88,11 +61,7 @@ const getNbaDetails = () => {
       if (res.code === 0) {
         console.log(res);
 
-        if (!res.data) {
-          nbaDetails.value = nbaDetailsData.value[0].data;
-        } else {
-          nbaDetails.value = res.data;
-        }
+        nbaDetails.value = res.data;
       }
     })
     .catch((err) => {
@@ -107,13 +76,13 @@ const onSwiper = (swiper) => {
   console.log(swiper);
 };
 
-const prevSlide = () => {
-  $swiper.value.slidePrev();
-};
+// const prevSlide = () => {
+//   $swiper.value.slidePrev();
+// };
 
-const nextSlide = () => {
-  $swiper.value.slideNext();
-};
+// const nextSlide = () => {
+//   $swiper.value.slideNext();
+// };
 
 onMounted(() => {
   getNbaDetails();
@@ -123,6 +92,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .swiper-wrapper {
   max-width: 900px;
+  margin-top: 20px;
 }
 
 :deep(.swiper-button-prev) {

@@ -2,44 +2,42 @@
   <div>
     <swiper
       :slides-per-view="1"
-      :loop="true"
+      :loop="false"
       @swiper="onSwiper"
       :space-between="50"
       @slideChange="onSlideChange"
       class="swiper-wrapper"
     >
-      <template v-for="(item, index) in nbaDetails" :key="index">
-        <swiper-slide>
-          <div class="bet-info-box">
-            <div class="bet-info-date">
-              {{ formatDate(item.matchTime) }}
+      <!-- <template v-for="(item, index) in nbaDetails" :key="index"> -->
+      <swiper-slide>
+        <div class="bet-info-box">
+          <div class="bet-info-date">{{ nbaDetails.matchTime }}</div>
+
+          <div class="bet-info-title" v-html="nbaDetails.matchTitle" />
+
+          <div class="bet-info-details">
+            <div class="info-team info-team-one">
+              <div class="info-team-logo">
+                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamOneIcon" />
+              </div>
+              <div class="info-team-name" v-html="nbaDetails.teamOne" />
             </div>
 
-            <div class="bet-info-title" v-html="item.matchTitle" />
+            <div class="bet-info-vs">VS</div>
 
-            <div class="bet-info-details">
-              <div class="info-team info-team-one">
-                <div class="info-team-logo">
-                  <img :src="item.teamOneLogo" />
-                </div>
-                <div class="info-team-name" v-html="item.teamOne" />
+            <div class="info-team info-team-two">
+              <div class="info-team-logo">
+                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamTwoIcon" />
               </div>
-
-              <div class="bet-info-vs">VS</div>
-
-              <div class="info-team info-team-two">
-                <div class="info-team-logo">
-                  <img :src="item.teamTwoLogo" />
-                </div>
-                <div class="info-team-name" v-html="item.teamTwo" />
-              </div>
+              <div class="info-team-name" v-html="nbaDetails.teamTwo" />
             </div>
           </div>
-        </swiper-slide>
-      </template>
+        </div>
+      </swiper-slide>
+      <!-- </template> -->
     </swiper>
-    <div class="swiper-button-prev" @click="prevSlide"></div>
-    <div class="swiper-button-next" @click="nextSlide"></div>
+    <!-- <div class="swiper-button-prev" @click="prevSlide"></div> -->
+    <!-- <div class="swiper-button-next" @click="nextSlide"></div> -->
   </div>
   <!-- <pre>{{ nbaDetails }}~~~~</pre> -->
 </template>
@@ -53,69 +51,23 @@ import "swiper/css/navigation";
 import { eventapi } from "src/boot/axios";
 
 const nbaDetails = ref([]);
+const imgURL = process.env.IMAGE_CDN + "/game-match/";
 
-const nbaDetailsData = ref([
-  {
-    code: 0,
-    data: [
-      {
-        id: 291,
-        teamOne: "菲尼克斯太阳",
-        teamOneLogo: "https://ipis-cdn.speedy4site.com/TeamImage/29342.png",
-        teamTwo: "金州勇士",
-        teamTwoLogo: "https://ipis-cdn.speedy4site.com/TeamImage/2439.png",
-        matchTitle: "NBA 美国职业篮球",
-        matchTime: 1700708400000,
-        type: "NBA",
-        endTime: "",
-        award: 0
-      },
-      {
-        id: 291,
-        teamOne: "菲尼克斯太阳2",
-        teamOneLogo: "https://ipis-cdn.speedy4site.com/TeamImage/29342.png",
-        teamTwo: "金州勇士2",
-        teamTwoLogo: "https://ipis-cdn.speedy4site.com/TeamImage/2439.png",
-        matchTitle: "NBA 美国职业篮球",
-        matchTime: 1700708400000,
-        type: "NBA",
-        endTime: "",
-        award: 0
-      }
-    ]
+const formatDate = (dateTimeString) => {
+  if (dateTimeString === undefined) {
+    return { date: null, time: null };
   }
-]);
 
-const formatDate = (timestamp) => {
-  const dateObject = new Date(timestamp);
-
-  const options = {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: false, // Use 24-hour format
-    timeZone: "UTC" // Set the timeZone to UTC to prevent the display of the GMT offset
-  };
-
-  const formattedDate = dateObject.toLocaleString(undefined, options);
-  return formattedDate;
+  const [date, time] = dateTimeString.split(" ");
+  return { date, time };
 };
 
 const getNbaDetails = () => {
   eventapi
-    .get("/game-match/upcoming")
+    .get("/game-match/upcoming/NBA")
     .then((res) => {
       if (res.code === 0) {
-        console.log(res);
-
-        if (!res.data) {
-          nbaDetails.value = nbaDetailsData.value[0].data;
-        } else {
-          nbaDetails.value = res.data;
-        }
+        nbaDetails.value = res.data;
       }
     })
     .catch((err) => {
@@ -130,13 +82,13 @@ const onSwiper = (swiper) => {
   console.log(swiper);
 };
 
-const prevSlide = () => {
-  $swiper.value.slidePrev();
-};
+// const prevSlide = () => {
+//   $swiper.value.slidePrev();
+// };
 
-const nextSlide = () => {
-  $swiper.value.slideNext();
-};
+// const nextSlide = () => {
+//   $swiper.value.slideNext();
+// };
 
 onMounted(() => {
   getNbaDetails();
@@ -145,7 +97,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .swiper-wrapper {
-  max-width: 80%;
+  max-width: 100%;
 }
 
 :deep(.swiper-button-prev) {
