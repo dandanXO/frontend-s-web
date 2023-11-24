@@ -43,7 +43,7 @@
                     ref="eSportInsuranceFormRef" :model="eSportInsuranceFormData">
                     <el-form-item prop="platform" name="platform" label="投注平台: ">
                         <el-select v-model="eSportInsuranceFormData.platform" placeholder="投注平台"
-                            @select="selectESportPlatform" @focus="loadESportPlatformOptions()" clearable>
+                            @focus="loadESportPlatformOptions()" clearable>
                             <el-option v-for="platform in eSportPlatformOptions" :key="platform" :value="platform"
                                 :label="platform">
                                 {{ platform }}
@@ -128,10 +128,6 @@ const loadESportPlatformOptions = () => {
     })
 }
 
-const selectESportPlatform = () => {
-
-}
-
 const applyESportInsurance = () => {
     toggleESportInsuranceModal(true);
 }
@@ -142,6 +138,10 @@ const toggleESportInsuranceModal = (status) => {
             ElMessage.error("请登录后操作");
             return;
         }
+    }
+
+    if (status === false) {
+        eSportInsuranceFormRef.value.resetFields();
     }
 
     isESportInsuranceModalVisible.value = status
@@ -179,7 +179,7 @@ const submitForm = async (elForm) => {
             if (res.code === 0) {
                 ElMessage.success({
                     type: "success",
-                    message: "success"
+                    message: "成功"
                 })
             }
 
