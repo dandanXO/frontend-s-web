@@ -151,17 +151,49 @@
             </el-form-item>
             <el-form-item :label="t('fields.maxMemberClaimCountPerRain')" prop="maxMemberClaimCountPerRain">
               <el-input-number
+                v-if="form.maxMemberClaimCountPerRain >= 0"
                 v-model="form.maxMemberClaimCountPerRain"
                 style="width: 135px"
                 :min="1"
               />
+              <el-tag
+                v-else
+              >
+                {{ t('fields.noLimit') }}
+              </el-tag>
+              <el-button v-if="form.maxMemberClaimCountPerRain >= 0" type="warning" class="button-new-tag ml-1 el-button--success" @click="form.maxMemberClaimCountPerRain = -1"
+                         style="display:block;margin-top:4px;"
+              >
+                {{ t('fields.noLimit') }}
+              </el-button>
+              <el-button v-else type="success" class="button-new-tag ml-1 el-button--success" @click="form.maxMemberClaimCountPerRain = 0"
+                         style="display:block;margin-top:4px;"
+              >
+                {{ t('fields.addLimit') }}
+              </el-button>
             </el-form-item>
             <el-form-item :label="t('fields.maxMemberClaimCountPerDay')" prop="maxMemberClaimCountPerDay">
               <el-input-number
+                v-if="form.maxMemberClaimCountPerDay >= 0"
                 v-model="form.maxMemberClaimCountPerDay"
                 style="width: 135px"
                 :min="1"
               />
+              <el-tag
+                v-else
+              >
+                {{ t('fields.noLimit') }}
+              </el-tag>
+              <el-button v-if="form.maxMemberClaimCountPerDay >= 0" type="warning" class="button-new-tag ml-1 el-button--success" @click="form.maxMemberClaimCountPerDay = -1"
+                         style="display:block;margin-top:4px;"
+              >
+                {{ t('fields.noLimit') }}
+              </el-button>
+              <el-button v-else type="success" class="button-new-tag ml-1 el-button--success" @click="form.maxMemberClaimCountPerDay = 0"
+                         style="display:block;margin-top:4px;"
+              >
+                {{ t('fields.addLimit') }}
+              </el-button>
             </el-form-item>
             <el-form-item :label="t('fields.dailyRainDuration')" prop="dailyRainDuration" style="width: 650px;">
               <el-tag
