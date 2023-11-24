@@ -159,6 +159,7 @@ const init = () => {
             }
         })
         .catch((err) => {
+            ElMessage.error(err.message);
             console.log(err.message);
         });
 };
