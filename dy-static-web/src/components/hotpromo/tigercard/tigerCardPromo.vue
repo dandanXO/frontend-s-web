@@ -4,11 +4,11 @@
       <div v-loading.fullscreen.lock="isPageLoading" :element-loading-text="pageLoadingText"></div>
       <div class="acc-pool-wrap">
         <div class="acc-pool">
-          <div class="acc-pool-number">¥{{ cardInfo.cardDetail.setting.sumAward }}</div>
+          <div class="acc-pool-number">¥{{ cardInfo.cardDetail.sumAward }}</div>
         </div>
       </div>
       <div class="text-center card-tips">
-        已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
+        已有{{ cardInfo.cardDetail.cardCount }}人集齐,{{ cardInfo.cardDetail.openStr }}开奖
       </div>
       <div class="text-center">
         <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取虎卡</div>
@@ -17,7 +17,7 @@
       <div class="content">
         <div class="huka-wrap">
           <div class="huka-title">
-            <img src="../../../assets/images/promotion/hotpromo/tigercard/my-huka.png" alt="" />
+            <img src="../../../assets/images/promotion/hotpromo/tigercard/my_huka.png" alt="" />
           </div>
           <div class="huka-container">
             <div class="huka-list">
@@ -29,13 +29,13 @@
                 @click="selectHuka(huka)"
               >
                 <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" alt="" />
-                <div class="huka-own-count">{{ cardInfo.cardDetail[huka.code] }}</div>
+                <div class="huka-own-count">{{ cardInfo.cardDetail.cardNum[huka.code] }}</div>
               </div>
             </div>
             <div class="huka-gold">
               <div class="goldhu" style="position: relative">
                 <img src="../../../assets/images/promotion/hotpromo/tigercard/bonus.png" alt="" />
-                <div class="huka-own-count" style="right: 4px; top: 8px">{{ cardInfo.cardDetail.goldhu }}</div>
+                <div class="huka-own-count" style="right: 4px; top: 8px">{{ cardInfo.cardDetail.cardNum.goldhu }}</div>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@
         </div>
         <div class="huka-ranking-wrap">
           <div class="huka-ranking-title">
-            <img src="../../../assets/images/promotion/hotpromo/tigercard/huka-ranking.png" alt="" />
+            <img src="../../../assets/images/promotion/hotpromo/tigercard/huka_ranking.png" alt="" />
           </div>
 
           <el-table :data="rankingRecord()" :loading="rankingPage.loading">
@@ -117,7 +117,13 @@ import { useRouter } from "vue-router";
 
 const cardInfo = reactive({
   cardDetail: {
-    setting: {}
+    cardCount: 0,
+    cardNum: { goldhu: 0, hongyunhu: 0, jilihu: 0, pinganhu: 0, ruyihu: 0, xinyunhu: 0 },
+    count: 0,
+    lotteryStr: "",
+    openStr: "",
+    periodStr: "",
+    sumAward: 0
   }
 });
 
@@ -140,6 +146,15 @@ const pageNumChange = (i) => {
 };
 
 const pageInit = () => {
+  //   cardInfo.cardDetail = {
+  //     cardCount: 0,
+  //     cardNum: { goldhu: 0, hongyunhu: 0, jilihu: 0, pinganhu: 0, ruyihu: 0, xinyunhu: 0 },
+  //     count: 0,
+  //     lotteryStr: "12月17,18,19日",
+  //     openStr: "12月20日15:00",
+  //     periodStr: "第二十一期",
+  //     sumAward: 500000
+  //   };
   tigerCardInit({ promoCode: "dy2-tiger-card" }).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
@@ -308,29 +323,29 @@ const submitRegisterForm = async (elForm) => {
 .tigercard-container {
   .el-table {
     &__empty-text p {
-      color: #ffd97f;
+      color: #8a6b28;
     }
     max-width: 650px;
     margin: 0 auto;
 
-    background: #1d212e;
+    background: white;
     border-radius: 10px;
     border: 0;
     th {
       text-align: center;
       line-height: 32px;
       &.el-table__cell {
-        color: #ffd683;
-        border-bottom: 1px solid #ffd97f;
-        background-color: #1d212e;
+        color: #8a6b28;
+        border-bottom: 1px solid #8a6b28;
+        background-color: white;
         &.is-leaf {
-          border-bottom: 1px solid #ffd97f;
+          border-bottom: 1px solid #8a6b28;
         }
       }
     }
     td {
       &.el-table__cell {
-        color: #ffd683;
+        color: #8a6b28;
         text-align: center;
         border: 0;
       }
@@ -339,12 +354,14 @@ const submitRegisterForm = async (elForm) => {
   .el-pagination {
     margin: 10px auto;
     justify-content: center;
+
     .el-pager {
       pointer-events: none;
     }
     .el-pager li {
-      color: #ffd97f;
+      color: #8a6b28;
       min-width: unset;
+
       &.btn-quicknext {
         svg {
           display: none;
@@ -352,16 +369,16 @@ const submitRegisterForm = async (elForm) => {
       }
       &.is-active,
       &:hover {
-        &:after {
-          content: "/";
-          display: inline-block;
-          margin-left: 8px;
-        }
-        color: #ffd87f;
+        // &:after {
+        //   content: "/";
+        //   display: inline-block;
+        //   margin-left: 8px;
+        // }
+        color: #8a6b28;
       }
     }
-    button:hover {
-      color: #ffd87f;
+    button {
+      color: #8a6b28;
     }
   }
 }
@@ -441,7 +458,7 @@ body {
 }
 
 .acc-pool {
-  background: url(https://eqwp2f.sdwukong.com/resource/es/img/bg_acc_pool.fbe0afb3.png) top no-repeat;
+  background: url(../../../assets/images/promotion/hotpromo/tigercard/bg_acc_pool.png) top no-repeat;
   width: 930px;
   height: 262px;
   margin: 0 auto;
@@ -462,7 +479,7 @@ body {
 .huka-wrap {
   display: inline-block;
   padding: 1.5rem;
-  background-color: #1d212e;
+  background-color: white;
 }
 
 .huka-wrap .huka-title {
@@ -483,14 +500,14 @@ body {
 .card-tips {
   font-size: 15px;
   margin-top: 20px;
-  color: #a19100;
+  color: #87898a;
   text-align: center;
 }
 
 .huka-list {
   display: flex;
   flex-direction: row;
-  background: #11141c;
+  background: #fffbce;
   border: 1px solid #3b435c;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -508,7 +525,7 @@ body {
 }
 
 .huka-btn {
-  background: transparent url(https://eqwp2f.sdwukong.com/resource/es/img/btn_bg.906067a0.png) 50% no-repeat;
+  background: transparent url(../../../assets/images/promotion/hotpromo/tigercard/btn_bg.png) 50% no-repeat;
   background-size: cover;
   width: 217px;
   height: 55px;
@@ -526,6 +543,8 @@ body {
 
 .huka-list > div {
   position: relative;
+  border: 3px solid #d72f2f;
+  border-radius: 6px;
 }
 
 .huka-own-count {
@@ -546,13 +565,12 @@ body {
 }
 
 .huka-list > div img {
-  border: 3px solid transparent;
   width: 100%;
   max-width: 100%;
 }
 
-.huka-list > div.huka-selected img {
-  border: 3px solid #ffd200;
+.huka-list > div.huka-selected {
+  border: 3px solid #810203;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -562,6 +580,7 @@ body {
   width: 29.5%;
   margin-left: 1.5rem;
   padding: 0.5rem;
+  background: #ffcf6f;
   border: 1px solid #ffd97f;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
