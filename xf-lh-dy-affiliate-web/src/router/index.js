@@ -188,11 +188,11 @@ export const constantRoutes = [
         },
       },
       {
-        path: 'settlement-info',
-        component: () => import('../views/personal/settlement-info/index.vue'),
-        name: 'Settlement Info',
+        path: 'commission-info',
+        component: () => import('../views/personal/commission-info/index.vue'),
+        name: 'Comission Info',
         meta: {
-          title: 'settlement-info',
+          title: 'commission-info',
         },
       },
       {

@@ -75,6 +75,29 @@ export default {
     copiedLink: 'Copied Successfully',
     downloadQRCode: 'Download QR Code',
   },
+  commissionInfo: {
+    commissionInfo: 'Commission Info',
+    affiliateCommissionInfo: 'Affiliate Commission Info',
+    commissionCalculator: 'Commission Calculator',
+    monthlyTotalEffectiveTurnover: 'Total Monthly Winloss',
+    pleaseInsertMonthlyTotalEffectiveTurnover:
+      'Please Enter Total Monthly Winloss',
+    monthlySettlement: 'Monthly Settlement',
+    pleaseInsertMonthlySettlement: 'Please Enter Montly Settlement',
+    monthlyDividen: 'Monthly Bonuse',
+    pleaseInsertMonthlyDividen: 'Please Enter Monthly Bonus',
+    platformFee: 'Platform Fee',
+    monthlyTotalDeposit: 'Total Member Monthly Deposit',
+    pleaseInsertMonthlyTotalDeposit:
+      'Please Enter Total Member Monthly Deposit',
+    monthlyTotalWithdrawal: 'Total Member Monthly Withdrawal',
+    pleaseInsertMonthlyTotalWithdrawal:
+      'Please Enter Member Monthly Withdrawal',
+    totalCommissionAbleClaim: 'Total Monthly Commission Able Claim',
+    calculate: 'Calculate',
+    commissionCalculatorNote:
+      'Note: The simulator calculates based on the average rebate and bonus estimates, and the venue selection defaults to the situation where all members participate in the game at the same venue. The results are for reference only.',
+  },
   fields: {
     account: 'Account',
     accountInfo: 'Account Information',

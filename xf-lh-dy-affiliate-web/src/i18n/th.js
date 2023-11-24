@@ -75,6 +75,28 @@ export default {
     copiedLink: 'คัดลอกสำเร็จ',
     downloadQRCode: 'ดาวน์โหลดรหัส QR',
   },
+  commissionInfo: {
+    commissionInfo: 'ข้อมูลคอมมิชชั่น',
+    affiliateCommissionInfo: 'ข้อมูลค่าคอมมิชชั่นพันธมิตร',
+    commissionCalculator: 'เครื่องคำนวณค่าคอมมิชชั่น',
+    monthlyTotalEffectiveTurnover: 'Winloss รายเดือนทั้งหมด',
+    pleaseInsertMonthlyTotalEffectiveTurnover:
+      'กรุณากรอก Winloss รายเดือนทั้งหมด',
+    monthlySettlement: 'การชำระบัญชีรายเดือน',
+    pleaseInsertMonthlySettlement: 'กรุณากรอกการชำระบัญชีแบบรายเดือน',
+    monthlyDividen: 'โบนัสรายเดือน',
+    pleaseInsertMonthlyDividen: 'กรุณากรอกโบนัสรายเดือน',
+    platformFee: 'ค่าธรรมเนียมแพลตฟอร์ม',
+    monthlyTotalDeposit: 'ยอดเงินฝากรายเดือนของสมาชิกทั้งหมด',
+    pleaseInsertMonthlyTotalDeposit:
+      'กรุณากรอกยอดเงินฝากรายเดือนของสมาชิกทั้งหมด',
+    monthlyTotalWithdrawal: 'การถอนสมาชิกรายเดือนทั้งหมด',
+    pleaseInsertMonthlyTotalWithdrawal: 'กรุณากรอกการถอนเงินรายเดือนของสมาชิก',
+    totalCommissionAbleClaim: 'การเรียกร้องค่าคอมมิชชั่นรายเดือนทั้งหมด',
+    calculate: 'คำนวณ',
+    commissionCalculatorNote:
+      'หมายเหตุ: เครื่องจำลองจะคำนวณตามการประมาณการเงินคืนและโบนัสโดยเฉลี่ย และการเลือกสถานที่จะมีค่าเริ่มต้นตามสถานการณ์ที่สมาชิกทุกคนเข้าร่วมในเกมในสถานที่เดียวกัน ผลลัพธ์มีไว้เพื่อการอ้างอิงเท่านั้น',
+  },
   fields: {
     account: 'บัญชี',
     accountInfo: 'ข้อมูลบัญชี',

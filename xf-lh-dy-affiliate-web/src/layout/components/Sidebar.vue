@@ -161,7 +161,7 @@ const navigationData = ref([
         icon: 'gonggao',
       },
       {
-        path: '/settlement-info',
+        path: '/commission-info',
         title: '佣金说明',
         active: false,
         icon: 'info',
