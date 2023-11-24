@@ -4,11 +4,11 @@
       <div v-loading.fullscreen.lock="isPageLoading" :element-loading-text="pageLoadingText"></div>
       <div class="acc-pool-wrap">
         <div class="acc-pool">
-          <div class="acc-pool-number">¥{{ cardInfo.cardDetail.sumAward }}</div>
+          <div class="acc-pool-number">¥{{ cardInfo.cardDetail.setting.sumAward }}</div>
         </div>
       </div>
       <div class="text-center card-tips">
-        已有{{ cardInfo.cardDetail.cardCount }}人集齐,{{ cardInfo.cardDetail.openStr }}开奖
+        已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
       </div>
       <div class="text-center">
         <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取虎卡</div>
@@ -29,13 +29,13 @@
                 @click="selectHuka(huka)"
               >
                 <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" alt="" />
-                <div class="huka-own-count">{{ cardInfo.cardDetail.cardNum[huka.code] }}</div>
+                <div class="huka-own-count">{{ cardInfo.cardDetail[huka.code] }}</div>
               </div>
             </div>
             <div class="huka-gold">
               <div class="goldhu" style="position: relative">
                 <img src="../../../assets/images/promotion/hotpromo/tigercard/bonus.png" alt="" />
-                <div class="huka-own-count" style="right: 4px; top: 8px">{{ cardInfo.cardDetail.cardNum.goldhu }}</div>
+                <div class="huka-own-count" style="right: 4px; top: 8px">{{ cardInfo.cardDetail.goldhu }}</div>
               </div>
             </div>
           </div>
@@ -117,13 +117,22 @@ import { useRouter } from "vue-router";
 
 const cardInfo = reactive({
   cardDetail: {
-    cardCount: 0,
-    cardNum: { goldhu: 0, hongyunhu: 0, jilihu: 0, pinganhu: 0, ruyihu: 0, xinyunhu: 0 },
-    count: 0,
-    lotteryStr: "",
-    openStr: "",
-    periodStr: "",
-    sumAward: 0
+    goldhu: 0,
+    hongyunhu: 0,
+    jilihu: 0,
+    pinganhu: 0,
+    ruyihu: 0,
+    xinyunhu: 0,
+    leftCount: 0,
+    setting: {
+      cardCount: 0,
+      lotteryStr: "",
+      openStr: "",
+      periodStr: "",
+      sumAward: 0,
+      cardNum: {},
+      count: 0
+    }
   }
 });
 
