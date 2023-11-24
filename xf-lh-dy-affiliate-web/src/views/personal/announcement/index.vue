@@ -165,7 +165,7 @@ const activeName = ref('announcement-type')
 const request = reactive({
   siteId: null,
   type: null,
-  size: 2,
+  size: 20,
   current: 1,
 })
 
