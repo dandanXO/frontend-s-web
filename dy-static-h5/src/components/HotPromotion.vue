@@ -17,7 +17,7 @@
         (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
         (!isCommonPromo && list.redirectUrl === 'sport-safety')
       "
-      :platformType="selectedPromo.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
+      :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
     <InsuranceSubmitPromo
@@ -25,7 +25,7 @@
         (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
         (!isCommonPromo && list.redirectUrl === 'sport-safety')
       "
-      :platformType="selectedPromo.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
+      :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
