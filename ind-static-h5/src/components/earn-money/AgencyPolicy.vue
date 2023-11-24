@@ -120,7 +120,7 @@
         <li>How to develop your referrals into affiliates?</li>
         <ul>
           <li class="dot-style">
-            Log in to the xxxx, share your referral link with your friends on the agent page, guide them to register
+            Log in to the IndWin7, share your referral link with your friends on the agent page, guide them to register
             from the link, and they can become your direct affiliates.
           </li>
           <li class="dot-style">
