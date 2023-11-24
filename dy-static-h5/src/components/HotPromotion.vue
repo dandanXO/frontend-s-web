@@ -6,7 +6,7 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'" />
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
@@ -132,7 +132,7 @@ export default defineComponent({
       }
     });
     if (
-      this.list.redirectUrl === "dy1-tiger-card" ||
+      this.list.redirectUrl === "dy2-tiger-card" ||
       this.list.redirectUrl === "Dongying-team-vote" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
