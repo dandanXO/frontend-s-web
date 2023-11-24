@@ -12,3 +12,15 @@ export const createGameMatch = (gameMatch) => {
 export const updateGameMatch = (id) => {
   return https().request(`/game-match/${id}?_method=PUT`, Method.POST);
 };
+
+export const getGameMatchRecord = (query) => {
+  return https().request("/game-match-record", Method.GET, query, ContentType.form);
+};
+
+export const settleRecord = (record) => {
+  return https().request(`/game-match-record/${record.id}/settle?_method=PUT`, Method.POST, { amount: record.amount }, ContentType.form);
+};
+
+export const cancelRecord = (record) => {
+  return https().request(`/game-match-record/${record.id}/cancel?_method=PUT`, Method.POST, { remark: record.remark }, ContentType.form);
+};

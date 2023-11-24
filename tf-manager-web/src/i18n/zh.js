@@ -145,6 +145,12 @@ export default {
       ACTIVE: '进行中',
       ENDED: '已结束'
     },
+    gameMatchRecord: {
+      PENDING_MATCH: '待赛事结束',
+      PENDING_SETTLE: '待审核',
+      SETTLED: '已发放',
+      CANCEL: '已取消'
+    },
     gameQuiz: {
       ONGOING: '进行中',
       CANCEL: '已取消',
@@ -429,6 +435,7 @@ export default {
     callbackUrl: '回调地址',
     cancel: '取消',
     cancelDeposit: '取消存款',
+    cancelGameMatch: '取消赛事',
     cancelQuiz: '取消赛事问答',
     cancelRemark: '取消备注',
     cancelRolloverRecord: '取消流水记录',
@@ -665,6 +672,8 @@ export default {
     fundingInfo: '资金信息',
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
+    gameMatch: '赛事',
+    gameMatchRecord: '赛事记录',
     gameName: '游戏名称',
     gameQuiz: '赛事问答',
     gameQuizAnswer: '赛事问答玩家答案',
@@ -961,6 +970,8 @@ export default {
     send: '发送',
     sequence: '排序',
     serialNo: '流水号',
+    settle: '结算',
+    settleGameMatch: '结算赛事',
     settlement: '结算',
     settleTime: '结算时间',
     settleView: '查看',
@@ -1879,7 +1890,7 @@ export default {
     15063: '提款记录不存在',
     15064: '提款平台不存在',
     15065: '提款卡不存在',
-    16000: '开彩三位数号码必填',
+    16000: '优惠不存在',
     16001: '开彩号码必须为三位数',
     16002: '该日期已有开彩结果',
     16010: '团队英文名称已存在',
@@ -1902,6 +1913,7 @@ export default {
     20206: '请输入 ’测试‘ / ’普通‘ / ’三方‘ / ’代理‘',
     20400: '无法查询流水记录',
     21000: '此游戏不存在',
+    22001: '会员VIP等级最高奖金为 $',
     30000: 'PG注单设置失败',
   },
 }
