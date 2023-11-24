@@ -23,3 +23,28 @@ export function submitMemberSportMatchQuiz(param) {
     answerThree
   });
 }
+
+export function submitLuckyNumber(item) {
+  return eventapi.post(`/privi/lotteryNumber`, {
+    number: item,
+    promoCode: "dy2-lottery"
+  });
+}
+
+export function luckyNumberList(queryItems, memberId) {
+  return eventapi.get(`/privi/selectedNumbers`, {
+    params: {
+      winStatus: queryItems.winStatus,
+      recordTime: queryItems.recordTime,
+      memberId: memberId
+    }
+  });
+}
+
+export function winnerList(queryItems) {
+  return eventapi.get(`/privi/winners`, {
+    params: {
+      resultTime: queryItems.resultTime
+    }
+  });
+}
