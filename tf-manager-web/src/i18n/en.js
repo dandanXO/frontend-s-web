@@ -145,6 +145,12 @@ export default {
       ACTIVE: 'Active',
       ENDED: 'Ended'
     },
+    gameMatchRecord: {
+      PENDING_MATCH: 'Pending Match End',
+      PENDING_SETTLE: 'Pending Settle',
+      SETTLED: 'Settled',
+      CANCEL: 'Cancel'
+    },
     gameQuiz: {
       ONGOING: 'Ongoing',
       CANCEL: 'Cancel',
@@ -411,6 +417,7 @@ export default {
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
     cancelDeposit: 'Cancel Deposit',
+    cancelGameMatch: 'Cancel Game Match',
     cancelQuiz: 'Cancel Quiz',
     cancelRemark: 'Cancel Remark',
     cancelRolloverRecord: 'Cancel Rollover Record',
@@ -636,6 +643,8 @@ export default {
     fundingInfo: 'Funding Information',
     gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
+    gameMatch: 'Game Match',
+    gameMatchRecord: 'Game Match Record',
     gameName: 'Game Name',
     gameQuiz: 'Game Quiz',
     gameQuizAnswer: 'Game Quiz Answers',
@@ -920,6 +929,8 @@ export default {
     send: 'Send',
     sequence: 'Sequence',
     serialNo: 'Serial Number',
+    settle: 'Settle',
+    settleGameMatch: 'Settle Game Match',
     settlement: 'Settlement',
     settleTime: 'Settle Time',
     settleView: 'View',
@@ -1798,7 +1809,7 @@ export default {
     15063: 'Withdraw record does not exist',
     15064: 'Withdraw platform does not exist',
     15065: 'Withdraw card does not exist',
-    16000: '3 digit number is required',
+    16000: 'System privilege info does not exists',
     16001: 'Number should be 3 digits',
     16002: 'Lottery result has been announced for the selected date',
     16010: 'English team name exists',
@@ -1821,6 +1832,7 @@ export default {
     20206: 'Please insert ’测试‘ / ’普通‘ / ’三方‘ / ’代理‘',
     20400: 'Rollover record does not exists',
     21000: 'Game does not exists',
+    22001: 'Member VIP Level max bonus is $',
     30000: 'PG update transaction status failed',
   },
 }
