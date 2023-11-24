@@ -357,6 +357,7 @@ export default {
     textBgColor: '文字背景颜色',
     textPreview: '文字预览',
     preview: '预览',
+    custom: '自定义',
   },
   message: {
     addSuccess: '新增成功',
@@ -463,6 +464,16 @@ export default {
     'Settlement Center': '佣金',
     'Finance Report': '财务报表',
     'Settlement Report': '佣金报表',
+  },
+  posterType: {
+    overall: "综合推广图",
+    app: "APP推广图",
+    sponsor: "赞助推广图",
+    gift: "赠送推广图",
+    competition: "赛事推广图",
+    event: "活动推广图",
+    crypto: "虚拟币推广图",
+    affiliate: "代理福利图",
   },
   error: {
     400: '请求无效',

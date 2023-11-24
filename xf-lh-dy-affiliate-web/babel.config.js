@@ -9,7 +9,7 @@ module.exports = {
       // https://panjiachen.github.io/vue-element-admin-site/guide/advanced/lazy-loading.html
       plugins: [
         'dynamic-import-node',
-        '@babel/plugin-proposal-nullish-coalescing-operator', 
+        '@babel/plugin-proposal-nullish-coalescing-operator',
         '@babel/plugin-proposal-optional-chaining'
         // [
         //   'component',

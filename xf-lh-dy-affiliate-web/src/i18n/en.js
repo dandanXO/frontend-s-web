@@ -360,6 +360,7 @@ export default {
     textBgColor: 'Text Background Color',
     textPreview: 'Text Preview',
     preview: 'Preview',
+    custom: 'Custom',
   },
   message: {
     adjustSuccess: 'Adjust Success',
@@ -471,6 +472,16 @@ export default {
     'Settlement Center': 'Settlement Center',
     'Finance Report': 'Finance Report',
     'Settlement Report': 'Settlement Report',
+  },
+  posterType: {
+    overall: "Overall Referral",
+    app: "APP Referral",
+    sponsor: "Sponsor Referral",
+    gift: "Gift Referral",
+    competition: "Competition Referral",
+    event: "Event Referral",
+    crypto: "Crypto Referral",
+    affiliate: "Affiliate Benefit",
   },
   error: {
     400: 'Bad Request',
