@@ -155,15 +155,6 @@ const pageNumChange = (i) => {
 };
 
 const pageInit = () => {
-  //   cardInfo.cardDetail = {
-  //     cardCount: 0,
-  //     cardNum: { goldhu: 0, hongyunhu: 0, jilihu: 0, pinganhu: 0, ruyihu: 0, xinyunhu: 0 },
-  //     count: 0,
-  //     lotteryStr: "12月17,18,19日",
-  //     openStr: "12月20日15:00",
-  //     periodStr: "第二十一期",
-  //     sumAward: 500000
-  //   };
   tigerCardInit({ promoCode: "dy2-tiger-card" }).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
