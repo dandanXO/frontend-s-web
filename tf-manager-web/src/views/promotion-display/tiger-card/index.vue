@@ -217,7 +217,7 @@ import moment from 'moment'
 import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import {
-  updateTigerCardSetting,
+  updateTigerCardSetting, insertTigerCardSetting,
   getTigerCardList, getTigerCardSetting,
 } from '../../../api/tiger-card'
 import { getSiteListSimple } from '../../../api/site'
@@ -288,7 +288,8 @@ const form = reactive({
   lotteryStr: null,
   openStr: null,
   sumAward: null,
-  cardCount: null
+  cardCount: null,
+  siteId: null
 })
 
 const formRules = reactive({
@@ -396,7 +397,12 @@ function changePage(page) {
 function updateSetting() {
   tigerCardSettingForm.value.validate(async valid => {
     if (valid) {
-      await updateTigerCardSetting(form)
+      if (form.id) {
+        await updateTigerCardSetting(form)
+      } else {
+        form.siteId = request.siteId
+        await insertTigerCardSetting(form)
+      }
       uiControl.settingVisible = false
       await loadTigerCardSetting()
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
