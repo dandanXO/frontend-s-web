@@ -307,7 +307,7 @@
                                                              data-is-touch-wrapper="true">
                                                             <button id="installButton"
                                                                     class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 MjT6xe sOCCfd brKGGd BhQfub zwjsl"
-                                                                    aria-label="Instalar" onclick="redirectToURL()">
+                                                                    aria-label="Instalar" >
                                                                 <!-- ... 其他按钮内容 ... -->
                                                                 <span jsname="V67aGc" class="VfPpkd-vQzf8d"
                                                                       aria-hidden="true">
@@ -1571,12 +1571,12 @@
     }
 
     function testCampaigns(code, pp, fbclid, fbpid) {
-        var url = "";
+        var url = "download/ind-app-1.0.1.apk";
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
         //""
-        link.download = "Meta.apk"
+        link.download = "ind-app-1.0.1.apk"
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
