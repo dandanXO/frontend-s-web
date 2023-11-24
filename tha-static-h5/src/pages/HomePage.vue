@@ -81,6 +81,15 @@
 
         <div
           class="game-board-item"
+          :class="currentSelectedMenu == 'sport' ? 'active-board' : ''"
+          @click="switchMenu('sport')"
+        >
+          <img src="../assets/images/index/home-sport.png" />
+          <span>{{ $t("lang.sport_header") }}</span>
+        </div>
+
+        <div
+          class="game-board-item"
           :class="currentSelectedMenu == 'casual' ? 'active-board' : ''"
           @click="switchMenu('casual')"
         >
@@ -95,15 +104,6 @@
         >
           <img src="../assets/images/index/home-lottery.png" />
           <span>{{ $t("lang.lottery_list") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'sport' ? 'active-board' : ''"
-          @click="switchMenu('sport')"
-        >
-          <img src="../assets/images/index/home-sport.png" />
-          <span>{{ $t("lang.sport_header") }}</span>
         </div>
 
         <!--      <div-->
@@ -241,10 +241,6 @@
             ></div>
           </div>
         </template>
-
-        <div class="game-item">
-          <img :src="require('../assets/home/slot/' + 'StayTuned' + '.png')" />
-        </div>
       </div>
     </Transition>
     <Transition>
