@@ -360,7 +360,7 @@ export default defineComponent({
     tbody {
       width: 100%;
       table-layout: fixed;
-      display: table;
+      //display: table;
     }
   }
 
