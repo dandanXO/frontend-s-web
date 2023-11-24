@@ -4,6 +4,7 @@
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <ESportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'" />
+    <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
@@ -33,6 +34,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import ESportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
+import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
@@ -52,6 +54,7 @@ export default defineComponent({
     TigerCardPromo,
     PrizePoolVotePromo,
     ESportSafetyPromo,
+    SportSafetyPromo,
     NbaGamePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
@@ -186,6 +189,7 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-tiger-card" ||
       this.list.redirectUrl === "Dongying-team-vote" ||
       this.list.redirectUrl === 'dy2-esport-safety' ||
+      this.list.redirectUrl === 'sport-safety' ||
       this.list.redirectUrl === "nba-game" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
