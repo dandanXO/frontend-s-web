@@ -8,28 +8,28 @@
       @slideChange="onSlideChange"
       class="swiper-wrapper"
     >
-      <!-- <template v-for="(item, index) in nbaDetails" :key="index"> -->
+      <!-- <template v-for="(item, index) in upcomingMatchDetails" :key="index"> -->
       <swiper-slide>
         <div class="bet-info-box">
-          <div class="bet-info-date">{{ nbaDetails.matchTime }}</div>
+          <div class="bet-info-date">{{ upcomingMatchDetails.matchTime }}</div>
 
-          <div class="bet-info-title" v-html="nbaDetails.matchTitle" />
+          <div class="bet-info-title" v-html="upcomingMatchDetails.matchTitle" />
 
           <div class="bet-info-details">
             <div class="info-team info-team-one">
               <div class="info-team-logo">
-                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamOneIcon" />
+                <img :src="imgURL + upcomingMatchDetails.siteId + '/' + upcomingMatchDetails.teamOneIcon" />
               </div>
-              <div class="info-team-name" v-html="nbaDetails.teamOne" />
+              <div class="info-team-name" v-html="upcomingMatchDetails.teamOne" />
             </div>
 
             <div class="bet-info-vs">VS</div>
 
             <div class="info-team info-team-two">
               <div class="info-team-logo">
-                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamTwoIcon" />
+                <img :src="imgURL + upcomingMatchDetails.siteId + '/' + upcomingMatchDetails.teamTwoIcon" />
               </div>
-              <div class="info-team-name" v-html="nbaDetails.teamTwo" />
+              <div class="info-team-name" v-html="upcomingMatchDetails.teamTwo" />
             </div>
           </div>
         </div>
@@ -39,35 +39,29 @@
     <!-- <div class="swiper-button-prev" @click="prevSlide"></div> -->
     <!-- <div class="swiper-button-next" @click="nextSlide"></div> -->
   </div>
-  <!-- <pre>{{ nbaDetails }}~~~~</pre> -->
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 
 import { eventapi } from "src/boot/axios";
 
-const nbaDetails = ref([]);
+const props = defineProps({
+  platformType: String
+});
+
+const upcomingMatchDetails = ref([]);
 const imgURL = process.env.IMAGE_CDN + "/game-match/";
 
-const formatDate = (dateTimeString) => {
-  if (dateTimeString === undefined) {
-    return { date: null, time: null };
-  }
-
-  const [date, time] = dateTimeString.split(" ");
-  return { date, time };
-};
-
-const getNbaDetails = () => {
+const getupcomingMatchDetails = () => {
   eventapi
-    .get("/game-match/upcoming/NBA")
+    .get(`/game-match/upcoming/${props.platformType}`)
     .then((res) => {
       if (res.code === 0) {
-        nbaDetails.value = res.data;
+        upcomingMatchDetails.value = res.data;
       }
     })
     .catch((err) => {
@@ -91,13 +85,14 @@ const onSwiper = (swiper) => {
 // };
 
 onMounted(() => {
-  getNbaDetails();
+  getupcomingMatchDetails();
 });
 </script>
 
 <style scoped lang="scss">
 .swiper-wrapper {
   max-width: 100%;
+  margin-top: 20px;
 }
 
 :deep(.swiper-button-prev) {
@@ -172,3 +167,4 @@ onMounted(() => {
   }
 }
 </style>
+>

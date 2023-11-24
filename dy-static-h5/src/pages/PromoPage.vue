@@ -30,7 +30,9 @@
                         <span class="viewdetail">{{ promo.title }}</span>
                         <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
-                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">{{ getPromoLabel(promo.labelType) }}</div>
+                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
+                        {{ getPromoLabel(promo.labelType) }}
+                      </div>
                     </a>
                   </template>
 
@@ -45,7 +47,9 @@
                         <span class="viewdetail">{{ promo.title }}</span>
                         <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
-                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">{{ getPromoLabel(promo.labelType) }}</div>
+                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
+                        {{ getPromoLabel(promo.labelType) }}
+                      </div>
                     </a>
                   </template>
 
@@ -130,7 +134,7 @@ import HotPromotion from "components/HotPromotion";
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion, RiErrorWarningLine
+    HotPromotion, RiErrorWarningLine,
   },
   setup() {
     const store = userStore();

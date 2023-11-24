@@ -10,7 +10,24 @@
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
-    <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
+    <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
+
+    <UpcomingMatchPromo
+      v-if="
+        (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
+        (!isCommonPromo && list.redirectUrl === 'sport-safety')
+      "
+      :platformType="selectedPromo.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
+    />
+
+    <InsuranceSubmitPromo
+      v-if="
+        (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
+        (!isCommonPromo && list.redirectUrl === 'sport-safety')
+      "
+      :platformType="selectedPromo.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
+    />
+
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
@@ -44,7 +61,8 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
-import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
+import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
+import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
@@ -59,7 +77,8 @@ export default defineComponent({
     PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
-    NbaGamePromo,
+    UpcomingMatchPromo,
+    InsuranceSubmitPromo,
     InviteFriendPromo,
     EsportQuiz,
     LotteryPromo
@@ -122,6 +141,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-lottery" ||
       this.list.redirectUrl === "Dongying-quiz" ||
       this.list.redirectUrl === "nba-game" ||
+      this.list.redirectUrl === "dy2-esport-safety" ||
+      this.list.redirectUrl === "sport-safety" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
