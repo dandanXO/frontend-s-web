@@ -150,10 +150,42 @@
       <div class="notice">
         <div class="title">Notice</div>
         <ul>
-          <div class="desc">You level V8 Betting amount 972000rs Team members 49 people</div>
-          <div class="desc">A Level V8 Betting amount 760000rs Team members 35 people</div>
-          <div class="desc">B Level V6 Betting amount 210000rs Team members 13 people</div>
-          <div class="desc">C Level V1 Betting amount 2000rs Team members 1 person</div>
+          <div class="desc">
+            You level
+            <em>V8</em>
+            . Betting amount
+            <em>972000rs</em>
+            . Team members
+            <em>49</em>
+            people.
+          </div>
+          <div class="desc">
+            A Level
+            <em>V8</em>
+            . Betting amount
+            <em>760000rs</em>
+            . Team members
+            <em>35</em>
+            people.
+          </div>
+          <div class="desc">
+            B Level
+            <em>V6</em>
+            . Betting amount
+            <em>210000rs</em>
+            . Team members
+            <em>13</em>
+            people.
+          </div>
+          <div class="desc">
+            C Level
+            <em>V1</em>
+            . Betting amount
+            <em>2000rs</em>
+            . Team members
+            <em>1</em>
+            person.
+          </div>
           <li>You can't get A's betting rebate</li>
           <li>You can get 0.2% commission on the bet amount of B's entire team</li>
           <li>You can get 0.7% commission on the bet amount of C the entire team</li>
