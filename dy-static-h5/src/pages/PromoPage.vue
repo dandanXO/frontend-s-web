@@ -152,15 +152,15 @@ export default defineComponent({
       switch(labelType) {
         case 0:
           return '最新';
-        case 1: 
+        case 1:
           return '热门';
-        case 3: 
+        case 3:
           return '推荐';
-        case 4: 
+        case 4:
           return '日常';
-        case 5: 
+        case 5:
           return '新人';
-        case 6: 
+        case 6:
           return '限时';
         default:
           return '';
@@ -258,7 +258,7 @@ export default defineComponent({
           var promoItems = res.data;
 
           promoItems.forEach((element) => {
-            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST") || element.privilegeStatus === "CLOSE" || element.privilegeStatus === null) {
+            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST")) {
             } else {
               promoState.promoList.push(element);
               // console.log(promoState.promoList);
