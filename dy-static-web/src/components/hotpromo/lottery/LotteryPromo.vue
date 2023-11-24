@@ -134,7 +134,7 @@ const query = reactive({
   onlyMe: false
 });
 
-const dataSource = ref([{ loginName: "test*****3", recordTime: "12-12-2023 18:00", recordNumber: 234 }]);
+const dataSource = ref([]);
 function retrieveList() {
   if (query.onlyMe) memberId = store.id;
   else memberId = null;
@@ -176,7 +176,7 @@ function retrieveList() {
 const winnersQuery = reactive({
   resultTime: null
 });
-const winnerDataSource = ref([{ loginName: "test*****3", resultTime: "12-12-2023 18:00", resultNumber: 234 }]);
+const winnerDataSource = ref([]);
 function retrieveWinnerList() {
   winnerDataSource.value = [];
 
