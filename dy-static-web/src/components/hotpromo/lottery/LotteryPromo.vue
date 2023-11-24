@@ -10,11 +10,7 @@
             <div class="right-container">
               <div class="desc">玩家达到存款500元后即可选号，可直接输入号码一天只能参加一次</div>
               <el-form>
-                <el-row gutter="10">
-                  <el-col span="12">
-                    <el-input v-model="luckyNumber" placeholder="请输入选号" />
-                  </el-col>
-                </el-row>
+                <el-input v-model="luckyNumber" placeholder="请输入选号" />
               </el-form>
               <el-button class="common-btn" :loading="luckyNumberBtnLoading" @click="chooseLuckyNumber()">
                 提交选号
@@ -138,7 +134,7 @@ const query = reactive({
   onlyMe: false
 });
 
-const dataSource = ref([{ loginName: "test*****3", recordTime: "12-12-2023 18:00", recordNumber: 234 }]);
+const dataSource = ref([]);
 function retrieveList() {
   if (query.onlyMe) memberId = store.id;
   else memberId = null;
@@ -177,35 +173,10 @@ function retrieveList() {
 }
 
 // tab 3
-const winnerColumns = [
-  {
-    title: "号码",
-    dataIndex: "number",
-    key: "number"
-  },
-  {
-    title: "登录名",
-    dataIndex: "loginName",
-    key: "loginName"
-  },
-  {
-    title: "获奖状态",
-    dataIndex: "winStatus",
-    key: "winStatus"
-  },
-  {
-    title: "公告日期",
-    dataIndex: "resultTime",
-    key: "4",
-    slots: { customRender: "resultTime" }
-  }
-];
-
 const winnersQuery = reactive({
   resultTime: null
 });
-
-const winnerDataSource = ref([{ loginName: "test*****3", resultTime: "12-12-2023 18:00", resultNumber: 234 }]);
+const winnerDataSource = ref([]);
 function retrieveWinnerList() {
   winnerDataSource.value = [];
 

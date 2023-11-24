@@ -12,7 +12,7 @@
               @click="switchPromoType(p.code)"
             >
               <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-              <span class="label"> {{ p.label }}</span>
+              <span class="label">{{ p.label }}</span>
             </div>
           </div>
         </div>
@@ -28,20 +28,16 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-bg">
-                  <img
-                    class="promo-content isDesktop"
-                    :src="imgURL + promo.desktopImgUrl"
-                  />
-                  <img
-                    class="promo-content isMobile"
-                    :src="imgURL + promo.mobileImgUrl"
-                  />
+                  <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
+                  <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
                 </div>
               </div>
               <div class="promo-info">
                 <span class="viewdetail">{{ promo.title }}</span>
               </div>
-              <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">{{ getPromoLabel(promo.labelType) }}</div>
+              <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
+                {{ getPromoLabel(promo.labelType) }}
+              </div>
             </a>
           </div>
         </div>
@@ -80,8 +76,7 @@
               sport: selectedPromo.promoType.toLowerCase() === 'sport',
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
-              liveCasino:
-                selectedPromo.promoType.toLowerCase() === 'livecasino',
+              liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
@@ -101,7 +96,8 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 
-import HotPromotion from '@/components/HotPromotion'
+import HotPromotion from "@/components/HotPromotion";
+
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -109,19 +105,19 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",
-      promoList: [],
+      promoList: []
     });
     const promoTypes = ref([
-      { code:"ALL", img: 'all', label: '所有优惠' },
-      { code: "ESPORT", img: 'esport', label: '电竞'},
-      { code: "SPORT", img: 'sport', label: '体育'},
+      { code: "ALL", img: "all", label: "所有优惠" },
+      { code: "ESPORT", img: "esport", label: "电竞" },
+      { code: "SPORT", img: "sport", label: "体育" },
       // { code: "POKER", img: 'poker', label: '棋牌'},
-      { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
-      { code: "FISH", img: 'game', label: '老虎机/捕鱼'},
+      { code: "LIVE CASINO", img: "live", label: "真人娱乐" },
+      { code: "FISH", img: "game", label: "老虎机/捕鱼" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -131,9 +127,9 @@ export default defineComponent({
     const router = useRouter();
     watch(() => route.query, () => {
       if (route.query === null) {
-       isPromoDetail.value = false
+        isPromoDetail.value = false;
       } else {
-        isPromoDetail.value = route.query.name
+        isPromoDetail.value = route.query.name;
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
@@ -141,79 +137,82 @@ export default defineComponent({
     const loadBanner = () => {
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
-            banner.value = res.data[0]
+          banner.value = res.data[0];
         }
-      })
-    }
+      });
+    };
     const showPromoDetails = (promo) => {
 
       if (!store.token) {
-          ElMessageBox.alert('请登录后再操作', '系统提示', {
-              // if you want to disable its autofocus
-              // autofocus: false,
-              center: true,
-              confirmButtonText: '确认',
-              showClose: false,
-              buttonSize: 'large'
-          }).then(() => {
-              store.loginPageVisible = true
-          })
-          return
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
+          // if you want to disable its autofocus
+          // autofocus: false,
+          center: true,
+          confirmButtonText: "确认",
+          showClose: false,
+          buttonSize: "large"
+        }).then(() => {
+          store.loginPageVisible = true;
+        });
+        return;
       } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else {
-          router.push({name: 'promotion', query: {name: promo.redirectUrl}})
-          isPromoDetail.value = true
-          selectedPromo.value = promo
+          router.push({ name: "promotion", query: { name: promo.redirectUrl } });
+          isPromoDetail.value = true;
+          selectedPromo.value = promo;
         }
       }
-    }
+    };
     const switchPromoType = (type) => {
       promoTabActive.value = type;
       if (type !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function(promo) {
-          return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
+          return promo.promoType.toLowerCase().split(",").includes(type.toLowerCase());
         });
       } else {
-        filteredArray.value = promoState.promoList
+        filteredArray.value = promoState.promoList;
       }
     };
     const getPromoLabel = (labelType) => {
-      switch(labelType) {
+      switch (labelType) {
         case 0:
-          return '最新';
-        case 1: 
-          return '热门';
-        case 3: 
-          return '推荐';
-        case 4: 
-          return '日常';
-        case 5: 
-          return '新人';
-        case 6: 
-          return '限时';
+          return "最新";
+        case 1:
+          return "热门";
+        case 3:
+          return "推荐";
+        case 4:
+          return "日常";
+        case 5:
+          return "新人";
+        case 6:
+          return "限时";
         default:
-          return '';
+          return "";
       }
-    }
+    };
     const loadAll = () => {
-      loadPromo().then((res) => {
-        if(res.code === 0) {
+      const isLogin = !!store.hasToken();
+      loadPromo(isLogin).then((res) => {
+        if (res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
             if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             } else {
               if (element.redirectUrl === route.query.name) {
-                showPromoDetails(element)
+                showPromoDetails(element);
               }
             }
           });
         }
-      }).catch((e) => { console.log("error", e); });
-      switchPromoType(promoState.active)
-    }
+      }).catch((e) => {
+        console.log("error", e);
+      });
+      switchPromoType(promoState.active);
+    };
     onMounted(() => {
       loadBanner();
       loadAll();
@@ -221,7 +220,7 @@ export default defineComponent({
 
     watch(() => route.query.name, () => {
       if (!route.query.name) {
-        isPromoDetail.value = false
+        isPromoDetail.value = false;
       }
     });
 
@@ -237,8 +236,8 @@ export default defineComponent({
       banner,
       imgURL,
       getPromoLabel
-    }
-  },
+    };
+  }
 });
 </script>
 <style lang="scss">
@@ -253,8 +252,10 @@ export default defineComponent({
     background-color: #f0f1f6;
     background-repeat: no-repeat;
   }
+
   .promo-view-container {
     line-height: 30px;
+
     ol {
       padding: 0 15px;
     }
@@ -264,40 +265,47 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       margin: 10px auto;
+
       &:nth-child(1) {
         padding-top: 20px;
       }
     }
+
     table {
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
+
       tr:first-child td {
-        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%),
-          linear-gradient(#2e3039, #2e3039);
+        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
         color: #ffffff;
         border: 0;
       }
+
       border-collapse: collapse;
+
       th,
       td {
         padding: 10px;
       }
-      tbody{
-        display:table;
+
+      tbody {
+        display: table;
         table-layout: fixed;
         width: 100%;
       }
+
       th {
-        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%),
-          linear-gradient(#d0d1d3, #d0d1d3);
+        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
       }
+
       td {
         // background-color: #202228;
         border: 1px solid #dcdce8;
       }
     }
   }
+
   a {
   }
 }
@@ -311,6 +319,7 @@ export default defineComponent({
   .banner-container {
     min-height: 500px;
   }
+
   .all-promotions {
     @keyframes fadein {
       100% {
@@ -322,22 +331,26 @@ export default defineComponent({
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
+
       &.isDesktop {
         display: block;
         height: 500px;
       }
+
       &.isMobile {
         display: none;
         // height: 220px;
         min-height: 60vw;
       }
     }
+
     .promo-main-container {
       width: 100%;
       max-width: $maxwidth;
       background-color: #ffffff;
       margin: 0 auto;
       padding: 10px 0;
+
       .promo-type-wrapper {
         display: flex;
         justify-content: center;
@@ -348,6 +361,7 @@ export default defineComponent({
           height: 0px;
           // display: none;
         }
+
         .type-list {
           display: flex;
           justify-content: center;
@@ -357,6 +371,7 @@ export default defineComponent({
           width: 90%;
           border-bottom: 1px solid #9ca5b9;
           margin-bottom: 20px;
+
           .type-item {
             padding: 5px 10px;
             cursor: pointer;
@@ -373,10 +388,12 @@ export default defineComponent({
             padding: 12px 30px;
             position: relative;
             width: 100%;
+
             .label {
               z-index: 0;
               color: #626a7d;
             }
+
             &:before {
               content: "";
               position: absolute;
@@ -387,10 +404,12 @@ export default defineComponent({
               transform: skewX(15deg);
               border-radius: 4px 15px;
             }
+
             img {
               max-height: 30px;
               filter: grayscale(0);
             }
+
             &.active,
             &:hover {
               // background: #4b4e66;
@@ -401,13 +420,9 @@ export default defineComponent({
               }
 
               &:before {
-                background-image: linear-gradient(
-                    90deg,
-                    #2d74f6 0,
-                    #7abdfc 100%
-                  ),
-                  linear-gradient(#3077f6, #3077f6);
+                background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
               }
+
               img {
                 filter: grayscale(1) brightness(100);
               }
@@ -415,6 +430,7 @@ export default defineComponent({
           }
         }
       }
+
       .promo-list-wrapper {
         width: 90%;
         margin: 0 auto;
@@ -422,27 +438,32 @@ export default defineComponent({
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 15px;
+
         .promo-item {
           position: relative;
           overflow: hidden;
           cursor: pointer;
           background-color: #f2f6ff;
           box-shadow: 0 3px 9px 0 rgba(112, 122, 143, 0.4);
+
           a {
             display: block;
           }
+
           &:hover {
             .promo-info {
-              background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-                linear-gradient(#3077f6, #3077f6);
+              background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
               background-blend-mode: normal, normal;
+
               .viewdetail {
                 color: #fefefe;
               }
             }
           }
+
           img {
           }
+
           cursor: pointer;
 
           .promo-img-wrapper {
@@ -453,28 +474,35 @@ export default defineComponent({
               transition: all 0.5s ease;
               background-size: cover;
               background-position: center center;
+
               &:hover {
                 transform: scale(1.2);
               }
+
               display: flex;
               justify-content: center;
               align-items: center;
               gap: 30px;
               height: 180px;
+
               .promo-content {
                 height: 100%;
+
                 &.isDesktop {
                   display: block;
                 }
+
                 &.isMobile {
                   display: none;
                 }
               }
+
               .promo-img {
                 height: 200px;
               }
             }
           }
+
           .promo-info {
             // position: absolute;
             text-align: right;
@@ -486,6 +514,7 @@ export default defineComponent({
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             .viewdetail {
               color: #232323;
               padding: 20px 10px;
@@ -494,6 +523,7 @@ export default defineComponent({
               text-align: center;
               width: 100%;
             }
+
             .detail-arrow {
               margin-right: 20px;
               height: 100%;
@@ -522,25 +552,31 @@ export default defineComponent({
       }
     }
   }
+
   .selected-promo {
     width: 100%;
+
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
+
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center center;
+
           &.isDesktop {
             display: block;
             height: 500px;
           }
+
           &.isMobile {
             display: none;
             height: 220px;
           }
         }
       }
+
       .inner {
         max-width: 1400px;
         width: 95%;
@@ -548,21 +584,25 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 20px;
+
         .hot-promo {
           // background: #201f29;
           border-radius: 10px;
         }
+
         .promo-view-container {
           margin: 0 auto;
           max-width: $maxwidth;
           width: 95%;
           text-align: left;
           padding: 20px;
+
           ol {
             li {
               margin: 20px 0;
             }
           }
+
           // background: #201f29;
           // background-repeat: no-repeat;
           // background-position: 95% 90%;
@@ -607,6 +647,7 @@ export default defineComponent({
           &.isDesktop {
             display: none;
           }
+
           &.isMobile {
             display: block;
           }
@@ -615,43 +656,54 @@ export default defineComponent({
     }
   }
 }
+
 @media (max-width: 768px) {
   .promo-container {
     padding-bottom: 60px;
     min-height: 100vh;
+
     .all-promotions {
       .web-only-box {
         display: none;
       }
+
       .promo-main-container {
         width: 95%;
+
         .promo-type-wrapper {
           .type-list {
             justify-content: flex-start;
             font-size: 14px;
+
             .type-item {
             }
           }
         }
+
         .promo-list-wrapper {
           margin-top: 20px;
           grid-template-columns: 1fr;
+
           .promo-item {
             width: 100%;
+
             .promo-info {
               height: 40px;
               padding-left: 40px;
               line-height: 40px;
+
               .viewdetail {
                 padding: 5px 10px;
               }
             }
+
             .promo-img-wrapper {
               .promo-bg {
                 .promo-content {
                   &.isDesktop {
                     display: none;
                   }
+
                   &.isMobile {
                     display: block;
                   }
@@ -662,14 +714,17 @@ export default defineComponent({
         }
       }
     }
+
     .selected-promo {
       overflow: hidden;
+
       .selected-promo-wrapper {
         .banner-container {
           .promo-bg {
             &.isDesktop {
               display: none;
             }
+
             &.isMobile {
               display: block;
             }

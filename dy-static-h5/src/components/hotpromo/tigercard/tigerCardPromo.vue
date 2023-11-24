@@ -3,32 +3,20 @@
     <div class="tigercard-container">
       <div class="acc-pool-wrap">
         <div class="acc-pool">
-          <div class="acc-pool-number">
-            ¥{{ cardInfo.cardDetail.setting.sumAward }}
-          </div>
+          <div class="acc-pool-number">¥{{ cardInfo.cardDetail.setting.sumAward }}</div>
         </div>
       </div>
       <div class="text-center card-tips">
-        已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{
-          cardInfo.cardDetail.setting.openStr
-        }}开奖
+        已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
       </div>
       <div class="text-center">
-        <div
-          class="huka-btn huka-take-btn waves-effect"
-          @click="getNewTigerCard"
-        >
-          领取虎卡
-        </div>
+        <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取虎卡</div>
       </div>
 
       <div class="content">
         <div class="huka-wrap">
           <div class="huka-title">
-            <img
-              src="../../../assets/images/promotion/hotpromo/tigercard/my-huka.png"
-              alt=""
-            />
+            <img src="../../../assets/images/promotion/hotpromo/tigercard/my_huka.png" alt="" />
           </div>
           <div class="huka-container">
             <div class="huka-list">
@@ -39,12 +27,7 @@
                 class="huka"
                 @click="selectHuka(huka)"
               >
-                <img
-                  :src="
-                    require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)
-                  "
-                  alt=""
-                />
+                <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" alt="" />
                 <div class="huka-own-count">
                   {{ cardInfo.cardDetail[huka.code] }}
                 </div>
@@ -52,10 +35,7 @@
             </div>
             <div class="huka-gold">
               <div class="goldhu" style="position: relative">
-                <img
-                  src="../../../assets/images/promotion/hotpromo/tigercard/bonus.png"
-                  alt=""
-                />
+                <img src="../../../assets/images/promotion/hotpromo/tigercard/bonus.png" alt="" />
                 <div class="huka-own-count" style="right: 4px; top: 8px">
                   {{ cardInfo.cardDetail.goldhu }}
                 </div>
@@ -63,30 +43,16 @@
             </div>
           </div>
           <div class="huka-footer">
-            <div
-              class="huka-btn waves-effect give-btn"
-              @click="isGiftModal = true"
-            >
-              赠送虎卡
-            </div>
-            <div class="huka-btn waves-effect combo-btn" @click="compoundCard">
-              合成大奖卡
-            </div>
+            <div class="huka-btn waves-effect give-btn" @click="isGiftModal = true">赠送虎卡</div>
+            <div class="huka-btn waves-effect combo-btn" @click="compoundCard">合成大奖卡</div>
           </div>
         </div>
         <div class="huka-ranking-wrap">
           <div class="huka-ranking-title">
-            <img
-              src="../../../assets/images/promotion/hotpromo/tigercard/huka-ranking.png"
-              alt=""
-            />
+            <img src="../../../assets/images/promotion/hotpromo/tigercard/huka_ranking.png" alt="" />
           </div>
 
-          <q-table
-            :loading="rankingPage.loading"
-            :columns="columns"
-            :rows="rankingRecord()"
-          ></q-table>
+          <q-table :loading="rankingPage.loading" :columns="columns" :rows="rankingRecord()" square></q-table>
           <!-- <q-table
               :data="rankingRecord()"
               :loading="rankingPage.loading"
@@ -112,11 +78,7 @@
     </div>
     <q-dialog align-center v-model="isGiftModal" title="赠送虎卡" width="500">
       <q-card class="q-pa-md" style="width: 100%">
-        <q-form
-          @submit="submitRegisterForm"
-          @reset="resetRegForm"
-          class="q-gutter-md"
-        >
+        <q-form @submit="submitRegisterForm" @reset="resetRegForm" class="q-gutter-md">
           <q-select
             hide-bottom-space
             color=""
@@ -159,12 +121,8 @@
             :rules="[(val) => (val && val.length > 0) || '请输入好友真实姓名']"
           />
           <div style="text-align: center">
-            <q-btn type="reset" class="common-btn q-mr-md" >
-              重置
-            </q-btn>
-            <q-btn type="submit" :loading="isSubmitting" class="bg-dyblue">
-              提交
-            </q-btn>
+            <q-btn type="reset" class="common-btn q-mr-md">重置</q-btn>
+            <q-btn type="submit" :loading="isSubmitting" class="bg-dyblue">提交</q-btn>
           </div>
         </q-form>
       </q-card>
@@ -198,7 +156,22 @@ import { eventapi } from "boot/axios";
 
 const cardInfo = reactive({
   cardDetail: {
-    setting: {}
+    goldhu: 0,
+    hongyunhu: 0,
+    jilihu: 0,
+    pinganhu: 0,
+    ruyihu: 0,
+    xinyunhu: 0,
+    leftCount: 0,
+    setting: {
+      cardCount: 0,
+      lotteryStr: "",
+      openStr: "",
+      periodStr: "",
+      sumAward: 0,
+      cardNum: {},
+      count: 0
+    }
   }
 });
 
@@ -212,8 +185,7 @@ const rankingPage = reactive({
 const rankingRecord = () => {
   return rankingPage.records.filter(
     (item, index) =>
-      index < rankingPage.current * rankingPage.pageSize &&
-      index >= rankingPage.pageSize * (rankingPage.current - 1)
+      index < rankingPage.current * rankingPage.pageSize && index >= rankingPage.pageSize * (rankingPage.current - 1)
   );
 };
 
@@ -222,13 +194,11 @@ const pageNumChange = (i) => {
 };
 
 const pageInit = () => {
-  eventapi
-    .post("/tigerCard/init", qs.stringify({ promoCode: "dy2-tiger-card" }))
-    .then((res) => {
-      if (res.code === 0) {
-        cardInfo.cardDetail = res.data;
-      }
-    });
+  eventapi.post("/tigerCard/init", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+    if (res.code === 0) {
+      cardInfo.cardDetail = res.data;
+    }
+  });
 };
 
 const loadRanking = () => {
@@ -243,47 +213,36 @@ const pageLoadingText = ref("");
 const getNewTigerCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正领取虎卡";
-  eventapi
-    .post(
-      "/tigerCard/getMemberCard",
-      qs.stringify({ promoCode: "dy2-tiger-card" })
-    )
-    .then((res) => {
-      if (res.code === 0) {
-        cardInfo.cardDetail[res.data.cardType] =
-          cardInfo.cardDetail[res.data.cardType] + 1;
-        isCardModal.value = true;
-        cardWon.value = res.data.cardType;
-        isPageLoading.value = false;
-      } else {
-        ElMessage.error({
-          type: "error",
-          message: res.message
-        });
-      }
+  eventapi.post("/tigerCard/getMemberCard", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+    if (res.code === 0) {
+      cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1;
+      isCardModal.value = true;
+      cardWon.value = res.data.cardType;
       isPageLoading.value = false;
-    });
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
+    }
+    isPageLoading.value = false;
+  });
 };
 
 const compoundCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
-  eventapi
-    .post(
-      "/tigerCard/synthesisCard",
-      qs.stringify({ promoCode: "dy2-tiger-card" })
-    )
-    .then((res) => {
-      if (res.code === 0) {
-        pageInit();
-        ElMessage.success({
-          type: "success",
-          message: "success"
-        });
-        isPageLoading.value = false;
-      }
+  eventapi.post("/tigerCard/synthesisCard", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+    if (res.code === 0) {
+      pageInit();
+      ElMessage.success({
+        type: "success",
+        message: "success"
+      });
       isPageLoading.value = false;
-    });
+    }
+    isPageLoading.value = false;
+  });
 };
 
 const hukaList = ref([
@@ -381,35 +340,29 @@ const submitRegisterForm = async () => {
   friendLoginNameRef.value.validate();
   realNameRef.value.validate();
 
-  if (
-    typeRef.value.hasError ||
-    friendLoginNameRef.value.hasError ||
-    realNameRef.value.hasError
-  ) {
+  if (typeRef.value.hasError || friendLoginNameRef.value.hasError || realNameRef.value.hasError) {
     // form has error
   } else {
     isSubmitting.value = true;
     form.promoCode = "dy2-tiger-card";
-    eventapi
-      .post("/tigerCard/giveCardToFriend", qs.stringify(form))
-      .then((res) => {
-        if (res.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: "成功",
-            icon: "check_circle_outline"
-          });
-          isSubmitting.value = false;
-        } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: res.message,
-            icon: "report_problem"
-          });
-        }
-      });
+    eventapi.post("/tigerCard/giveCardToFriend", qs.stringify(form)).then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "成功",
+          icon: "check_circle_outline"
+        });
+        isSubmitting.value = false;
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+      }
+    });
     isSubmitting.value = false;
   }
 };
@@ -432,34 +385,48 @@ const columns = [
 .tigercard-container {
   .q-table {
     &__empty-text p {
-      color: #ffd97f;
+      color: #8a6b28;
     }
     max-width: 650px;
     margin: 0 auto;
 
-    background: #1d212e;
+    background: white;
     border-radius: 10px;
     border: 0;
+    color: #8a6b28;
     th {
       text-align: center;
       line-height: 32px;
+      background: white !important;
+      border: 1px solid #8a6b28;
       &.q-table__cell {
-        color: #ffd683;
-        border-bottom: 1px solid #ffd97f;
-        background-color: #1d212e;
+        color: #8a6b28;
+        border-bottom: 1px solid #8a6b28;
+        background-color: white;
         &.is-leaf {
-          border-bottom: 1px solid #ffd97f;
+          border-bottom: 1px solid #8a6b28;
         }
       }
     }
     td {
+      border: 1px solid #8a6b28 !important;
       &.q-table__cell {
-        color: #ffd683;
+        color: #8a6b28;
         text-align: center;
         border: 0;
       }
     }
   }
+  .q-table__bottom {
+    color: #8a6b28;
+    .q-field__native {
+      color: #8a6b28;
+    }
+    .q-field__append {
+      color: #8a6b28;
+    }
+  }
+
   .q-pagination {
     margin: 10px auto;
     justify-content: center;
@@ -467,7 +434,7 @@ const columns = [
       pointer-events: none;
     }
     .q-pager li {
-      color: #ffd97f;
+      color: #8a6b28;
       min-width: unset;
       &.btn-quicknext {
         svg {
@@ -548,9 +515,7 @@ body {
   width: 100%;
 }
 .banner {
-  background: #000
-    url(https://eqwp2f.sdwukong.com/resource/es/img/banner.b26099dc.png) top
-    no-repeat;
+  background: #000 url(https://eqwp2f.sdwukong.com/resource/es/img/banner.b26099dc.png) top no-repeat;
   max-width: 1920px;
   height: 500px;
 }
@@ -560,8 +525,7 @@ body {
 }
 
 .acc-pool {
-  background: url(https://eqwp2f.sdwukong.com/resource/es/img/bg_acc_pool.fbe0afb3.png)
-    top no-repeat;
+  background: url(../../../assets/images/promotion/hotpromo/tigercard/bg_acc_pool.png) top no-repeat;
   background-size: contain;
   width: 100%;
   margin: 0 auto;
@@ -586,7 +550,7 @@ body {
   display: inline-block;
   padding: 1.5rem;
   width: 100%;
-  background-color: #1d212e;
+  background-color: white;
 }
 
 .huka-wrap .huka-title {
@@ -622,8 +586,8 @@ body {
 .huka-list {
   display: flex;
   flex-direction: row;
-  background: #11141c;
-  border: 1px solid #3b435c;
+  background: #fffbce;
+  border: 1px solid #e3b457;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
@@ -643,9 +607,7 @@ body {
 }
 
 .huka-btn {
-  background: transparent
-    url(https://eqwp2f.sdwukong.com/resource/es/img/btn_bg.906067a0.png) 50%
-    no-repeat;
+  background: transparent url(../../../assets/images/promotion/hotpromo/tigercard/btn_bg.png) 50% no-repeat;
   background-size: cover;
   width: 140px;
   height: 35px;
@@ -685,7 +647,7 @@ body {
 }
 
 .huka-list > div.huka-selected img {
-  border: 2px solid #ffd200;
+  border: 2px solid #810203;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -698,9 +660,10 @@ body {
   display: flex;
   flex-direction: column;
   width: 60%;
+  background: #ffcf6f;
 }
 .huka-gold-inner {
-  border: 1px solid #ffd97f;
+  border: 1px solid #8a6b28;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
@@ -725,7 +688,7 @@ body {
 .huka-ranking-table {
   background-color: #1d212e;
   margin: 0 auto;
-  color: #ffd97f;
+  color: #8a6b28;
   text-align: center;
   width: 50%;
   -webkit-border-radius: 8px;
@@ -735,7 +698,7 @@ body {
 }
 
 .huka-ranking-table th {
-  border-bottom: 1px solid #ffd97f;
+  border-bottom: 1px solid #8a6b28;
   line-height: 32px;
 }
 
@@ -746,7 +709,7 @@ body {
 .huka-ranking-pagination {
   margin: 0 auto;
   padding-top: 0.5rem;
-  color: #ffd97f;
+  color: #8a6b28;
 }
 
 .huka-ranking-pagination .next-page,

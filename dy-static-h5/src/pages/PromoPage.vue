@@ -30,7 +30,9 @@
                         <span class="viewdetail">{{ promo.title }}</span>
                         <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
-                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">{{ getPromoLabel(promo.labelType) }}</div>
+                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
+                        {{ getPromoLabel(promo.labelType) }}
+                      </div>
                     </a>
                   </template>
 
@@ -45,7 +47,9 @@
                         <span class="viewdetail">{{ promo.title }}</span>
                         <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
-                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">{{ getPromoLabel(promo.labelType) }}</div>
+                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
+                        {{ getPromoLabel(promo.labelType) }}
+                      </div>
                     </a>
                   </template>
 
@@ -130,7 +134,7 @@ import HotPromotion from "components/HotPromotion";
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion, RiErrorWarningLine
+    HotPromotion, RiErrorWarningLine,
   },
   setup() {
     const store = userStore();
@@ -152,15 +156,15 @@ export default defineComponent({
       switch(labelType) {
         case 0:
           return '最新';
-        case 1: 
+        case 1:
           return '热门';
-        case 3: 
+        case 3:
           return '推荐';
-        case 4: 
+        case 4:
           return '日常';
-        case 5: 
+        case 5:
           return '新人';
-        case 6: 
+        case 6:
           return '限时';
         default:
           return '';
@@ -252,13 +256,15 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      api.get("/promo/page").then((res) => {
+      const platformApiUrl = store.hasToken() ? "/session/loggedInPromoPages" : "/promo/page";
+
+      api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
 
           promoItems.forEach((element) => {
-            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST") || element.privilegeStatus === "CLOSE" || element.privilegeStatus === null) {
+            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST")) {
             } else {
               promoState.promoList.push(element);
               // console.log(promoState.promoList);
@@ -360,7 +366,7 @@ export default defineComponent({
     tbody {
       width: 100%;
       table-layout: fixed;
-      display: table;
+      //display: table;
     }
   }
 
@@ -638,7 +644,7 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            background: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
           }
 
           td {
