@@ -1,29 +1,35 @@
 <template>
   <div>
-    <swiper :slides-per-view="1" :loop="false" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper-wrapper">
-      <!-- <template v-for="(detail, index) in nbaDetails" :key="index"> -->
+    <swiper
+      :slides-per-view="1"
+      :loop="false"
+      @swiper="onSwiper"
+      :space-between="50"
+      @slideChange="onSlideChange"
+      class="swiper-wrapper"
+    >
+      <!-- <template v-for="(item, index) in upcomingMatchDetails" :key="index"> -->
       <swiper-slide>
         <div class="bet-info-box">
-          <div class="bet-info-date">{{ formatDate(nbaDetails.matchTime).date }}</div>
+          <div class="bet-info-date">{{ upcomingMatchDetails.matchTime }}</div>
+
+          <div class="bet-info-title" v-html="upcomingMatchDetails.matchTitle" />
+
           <div class="bet-info-details">
             <div class="info-team info-team-one">
               <div class="info-team-logo">
-                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamOneIcon" />
+                <img :src="imgURL + upcomingMatchDetails.siteId + '/' + upcomingMatchDetails.teamOneIcon" />
               </div>
-              <div class="info-team-name" v-html="nbaDetails.teamOne" />
+              <div class="info-team-name" v-html="upcomingMatchDetails.teamOne" />
             </div>
 
-            <div class="bet-info-vs">
-              VS
-              <br />
-              {{ formatDate(nbaDetails.matchTime).time }}
-            </div>
+            <div class="bet-info-vs">VS</div>
 
             <div class="info-team info-team-two">
               <div class="info-team-logo">
-                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamTwoIcon" />
+                <img :src="imgURL + upcomingMatchDetails.siteId + '/' + upcomingMatchDetails.teamTwoIcon" />
               </div>
-              <div class="info-team-name" v-html="nbaDetails.teamTwo" />
+              <div class="info-team-name" v-html="upcomingMatchDetails.teamTwo" />
             </div>
           </div>
         </div>
@@ -36,32 +42,26 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { loadNbaDetails } from "@/api/promotion/nbaGame";
+import { eventapi } from "src/boot/axios";
 
-const nbaDetails = ref([]);
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/game-match/";
+const props = defineProps({
+  platformType: String
+});
 
-const formatDate = (dateTimeString) => {
-  if (dateTimeString === undefined) {
-    return { date: null, time: null };
-  }
+const upcomingMatchDetails = ref([]);
+const imgURL = process.env.IMAGE_CDN + "/game-match/";
 
-  const [date, time] = dateTimeString.split(" ");
-  return { date, time };
-};
-
-const getNbaDetails = () => {
-  loadNbaDetails()
+const getupcomingMatchDetails = () => {
+  eventapi
+    .get(`/game-match/upcoming/${props.platformType}`)
     .then((res) => {
       if (res.code === 0) {
-        console.log(res);
-
-        nbaDetails.value = res.data;
+        upcomingMatchDetails.value = res.data;
       }
     })
     .catch((err) => {
@@ -85,29 +85,29 @@ const onSwiper = (swiper) => {
 // };
 
 onMounted(() => {
-  getNbaDetails();
+  getupcomingMatchDetails();
 });
 </script>
 
 <style scoped lang="scss">
 .swiper-wrapper {
-  max-width: 900px;
+  max-width: 100%;
   margin-top: 20px;
 }
 
 :deep(.swiper-button-prev) {
-  left: 100px;
+  left: 0px;
   margin-top: -30px;
 }
 :deep(.swiper-button-next) {
-  right: 100px;
+  right: 0px;
   margin-top: -30px;
 }
 
 .bet-info-box {
   border-radius: 12px;
   border: 1px solid #0c9bff;
-  max-width: 800px;
+  max-width: 90%;
   margin: auto;
   overflow: hidden;
 
@@ -116,20 +116,28 @@ onMounted(() => {
     padding: 12px 24px;
     display: flex;
     justify-content: center;
-    font-size: 24px;
+    font-size: 12px;
     line-height: 1;
     color: #ffffff;
+    letter-spacing: 2px;
+  }
+
+  .bet-info-title {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px 10px 5px;
   }
 
   .bet-info-vs {
     font-weight: bolder;
-    font-size: 28px;
+    font-size: 16px;
     line-height: 1.3;
     text-align: center;
   }
 
   .bet-info-details {
-    padding: 12px 20px;
+    padding: 12px 12px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -137,10 +145,10 @@ onMounted(() => {
     .info-team {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 4px;
       align-items: center;
-      width: 280px;
-      padding-bottom: 20px;
+      width: 40%;
+      padding-bottom: 10px;
 
       .info-team-logo {
         img {
@@ -151,7 +159,7 @@ onMounted(() => {
 
       .info-team-name {
         color: #414655;
-        font-size: 18px;
+        font-size: 12px;
         line-height: 1;
         font-weight: bolder;
       }
@@ -159,3 +167,4 @@ onMounted(() => {
   }
 }
 </style>
+>
