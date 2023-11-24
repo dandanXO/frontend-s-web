@@ -256,7 +256,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      api.get("/promo/page").then((res) => {
+      const platformApiUrl = store.hasToken() ? "/session/loggedInPromoPages" : "/promo/page";
+
+      api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
