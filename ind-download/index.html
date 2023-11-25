@@ -307,7 +307,7 @@
                                                              data-is-touch-wrapper="true">
                                                             <button id="installButton"
                                                                     class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 MjT6xe sOCCfd brKGGd BhQfub zwjsl"
-                                                                    aria-label="Instalar" onclick="redirectToURL()">
+                                                                    aria-label="Instalar" >
                                                                 <!-- ... 其他按钮内容 ... -->
                                                                 <span jsname="V67aGc" class="VfPpkd-vQzf8d"
                                                                       aria-hidden="true">
@@ -1570,13 +1570,13 @@
         document.body.removeChild(aux)
     }
 
-    function testCampaigns(code, pp, fbclid, fbpid) {
-        var url = "";
+    function downloadApk(code, pp, fbclid, fbpid) {
+        var url = "https://ind-download.psna-dev.com/ind-app-1.0.1.apk";
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
         //""
-        link.download = "Meta.apk"
+        link.download = "ind-app-1.0.1.apk"
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -1591,49 +1591,49 @@
 
     button = document.getElementById("installButton");
     button.onclick = function () {
-        testCampaigns(code, pp, fbclid, fbpid)
+        downloadApk(code, pp, fbclid, fbpid)
         return false;
     }
 
     downloadbtn = document.getElementById("downloadbtn");
     downloadbtn.onclick = function () {
-        testCampaigns(code, pp, fbclid, fbpid);
+        downloadApk(code, pp, fbclid, fbpid);
         return false;
     }
 
     installbtn = document.getElementById("installbtn");
     installbtn.onclick = function () {
-        testCampaigns(code, pp, fbclid, fbpid)
+        downloadApk(code, pp, fbclid, fbpid)
         return false;
     }
 
     test = document.getElementById("film1button");
     test.onclick = function () {
-        testCampaigns(code, pp, fbclid, fbpid)
+        downloadApk(code, pp, fbclid, fbpid)
         return false;
     }
 
     test1 = document.getElementById("film2button");
     test1.onclick = function () {
-        testCampaigns(code, pp, fbclid, fbpid)
+        downloadApk(code, pp, fbclid, fbpid)
         return false;
     }
 
     test2 = document.getElementById("film3button");
     test2.onclick = function () {
-        testCampaigns(code, pp, fbclid, fbpid)
+        downloadApk(code, pp, fbclid, fbpid)
         return false;
     }
 
     test3 = document.getElementById("film4button");
     test3.onclick = function () {
-        testCampaigns(code, pp, fbclid, fbpid)
+        downloadApk(code, pp, fbclid, fbpid)
         return false;
     }
 
     test4 = document.getElementById("film5button");
     test4.onclick = function () {
-        testCampaigns(code, pp, fbclid, fbpid)
+        downloadApk(code, pp, fbclid, fbpid)
         return false;
     }
 </script>
