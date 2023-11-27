@@ -1,81 +1,6 @@
 <template>
   <div class="roles-main">
     <div class="header-container">
-      <el-form
-        ref="summaryForm"
-        :model="form"
-        :inline="false"
-        size="small"
-        label-width="150px"
-        style="margin-bottom:30px"
-      >
-        <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select
-            v-model="request.siteId"
-            size="small"
-            :placeholder="t('fields.site')"
-            class="filter-item"
-            style="width: 120px; margin-left: 5px"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.memberId')" prop="memberId">
-          <el-input
-            v-model="request.memberId"
-            size="small"
-            style="width: 200px"
-            :placeholder="t('fields.memberId')"
-          />
-
-          <el-button
-            style="margin-left: 20px"
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="loadMember"
-          >
-            {{ t('fields.search') }}
-          </el-button>
-        </el-form-item>
-
-        <el-divider content-position="right" v-if="uiControl.show">
-          {{ t('fields.accountInfo') }}
-        </el-divider>
-        <el-form-item
-          :label="t('fields.memberName')"
-          prop="memberName"
-          v-if="uiControl.show"
-        >
-          {{ request.memberName }}
-        </el-form-item>
-        <el-form-item
-          :label="t('fields.vipLevel')"
-          prop="vip"
-          v-if="uiControl.show"
-        >
-          {{ request.vip }}
-        </el-form-item>
-        <el-form-item
-          :label="t('fields.riskLevel')"
-          prop="risk"
-          v-if="uiControl.show"
-        >
-          {{ request.risk }}
-        </el-form-item>
-      </el-form>
-    </div>
-
-    <el-divider content-position="right" v-if="uiControl.show">
-      {{ t('fields.additionalTicketDetail') }}
-    </el-divider>
-
-    <div class="btn-group" v-if="uiControl.show">
       <el-date-picker
         v-model="request.recordTime"
         format="DD/MM/YYYY"
@@ -85,11 +10,34 @@
         range-separator=":"
         :start-placeholder="t('fields.startDate')"
         :end-placeholder="t('fields.endDate')"
-        style="width: 300px; margin-left: 5px;margin-right:10px"
+        style="width: 300px; margin-left: 5px;"
         :shortcuts="shortcuts"
         :editable="false"
         :clearable="false"
       />
+
+      <el-select
+        v-model="request.siteId"
+        size="small"
+        :placeholder="t('fields.site')"
+        class="filter-item"
+        style="width: 120px; margin-left: 5px"
+      >
+        <el-option
+          v-for="item in siteList.list"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
+
+      <el-input
+        v-model="request.loginName"
+        size="small"
+        style="width: 200px; margin-left: 5px"
+        :placeholder="t('fields.loginName')"
+      />
+
       <el-button
         style="margin-left: 20px"
         icon="el-icon-search"
@@ -100,6 +48,17 @@
         {{ t('fields.search') }}
       </el-button>
 
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        type="warning"
+        @click="resetQuery()"
+      >
+        {{ t('fields.reset') }}
+      </el-button>
+    </div>
+
+    <div class="btn-group">
       <el-button
         icon="el-icon-plus"
         size="mini"
@@ -112,7 +71,6 @@
     </div>
 
     <el-table
-      v-if="uiControl.show"
       :data="page.records"
       ref="table"
       row-key="id"
@@ -120,6 +78,7 @@
       highlight-current-row
       :empty-text="t('fields.noData')"
     >
+      <el-table-column prop="loginName" :label="t('fields.loginName')" />
       <el-table-column prop="date" :label="t('fields.date')" />
       <el-table-column prop="reason" :label="t('fields.reason')" />
       <el-table-column type="title" :label="t('fields.action')">
@@ -135,7 +94,6 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      v-if="uiControl.show"
       class="pagination"
       @current-change="changePage"
       layout="prev, pager, next"
@@ -159,6 +117,9 @@
       size="small"
       label-width="150px"
     >
+      <el-form-item :label="t('fields.loginName')" prop="loginName">
+        <el-input v-model="form.loginName" style="width: 350px" />
+      </el-form-item>
       <el-form-item :label="t('fields.reason')" prop="prize">
         <el-input
           v-model="form.reason"
@@ -186,7 +147,6 @@ import {
   deleteMemberMultiWheelAdd,
   addMemberMultiWheelAdd,
 } from '../../../../api/member-multi-wheel-add'
-import { getMemberDetails } from '../../../../api/member'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
@@ -214,7 +174,7 @@ const defaultEndDate = convertDate(new Date())
 const memberMultiWheelAddForm = ref(null)
 const form = reactive({
   siteId: null,
-  memberId: null,
+  loginName: null,
   reason: null,
 })
 
@@ -226,11 +186,8 @@ const request = reactive({
   size: 10,
   current: 1,
   recordTime: [defaultStartDate, defaultEndDate],
-  memberId: null,
+  loginName: null,
   siteId: null,
-  memberName: null,
-  vip: null,
-  risk: null,
 })
 
 const page = reactive({
@@ -241,7 +198,6 @@ const page = reactive({
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: t('fields.add'),
-  show: false,
 })
 
 async function showDialog() {
@@ -249,6 +205,8 @@ async function showDialog() {
     memberMultiWheelAddForm.value.resetFields()
   }
   uiControl.dialogVisible = true
+  form.loginName = null
+  form.reason = null
 }
 
 function changePage(page) {
@@ -296,34 +254,12 @@ function createMemberMultiWheelAdd() {
   memberMultiWheelAddForm.value.validate(async valid => {
     if (valid) {
       form.siteId = request.siteId
-      form.memberId = request.memberId
       await addMemberMultiWheelAdd(form)
       uiControl.dialogVisible = false
       await loadMemberMultiWheelAdd()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
   })
-}
-
-async function loadMember() {
-  uiControl.show = false
-  if (request.memberId === null) {
-    ElMessage({
-      message: t('message.validateMemberIdRequired'),
-      type: 'success',
-    })
-  } else {
-    const { data: ret } = await getMemberDetails(
-      request.memberId,
-      request.siteId
-    )
-
-    uiControl.show = true
-    request.memberName = ret.realName
-    request.vip = ret.vip
-    request.risk = ret.risk
-    loadMemberMultiWheelAdd()
-  }
 }
 
 async function loadSites() {
