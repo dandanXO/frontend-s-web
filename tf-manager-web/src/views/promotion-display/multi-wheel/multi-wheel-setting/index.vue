@@ -77,7 +77,7 @@
             </el-form-item>
 
             <el-form-item :label="t('fields.maxTicket')" prop="siteName">
-              <el-input v-model="form.maxTicket" style="width: 200px;display:none" />
+              <el-input v-model="form.maxTicket" style="width: 200px" />
             </el-form-item>
           </div>
         </el-card>
