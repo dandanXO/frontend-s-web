@@ -750,6 +750,7 @@ function removeDailyRefreshDuration(item) {
 
 function removeVipRule(item) {
   form.vipRules.splice(form.vipRules.indexOf(item), 1);
+  getAvailableVip()
 }
 
 function removeLastDigitRule(item) {
