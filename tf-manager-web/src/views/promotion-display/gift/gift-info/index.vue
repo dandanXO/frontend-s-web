@@ -238,7 +238,7 @@
       <el-table-column prop="limitNumber" :label="t('fields.limitNumber')" width="120" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="120" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:sys:gift:update'])" fixed="right">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:gift:update'])" fixed="right">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)"
                      v-permission="['sys:gift:update']"
