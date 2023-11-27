@@ -209,6 +209,12 @@ async function showDialog() {
   form.reason = null
 }
 
+function resetQuery() {
+  request.recordTime = [defaultStartDate, defaultEndDate]
+  request.siteId = siteList.list[0].id
+  request.loginName = null
+}
+
 function changePage(page) {
   request.current = page
   loadMemberMultiWheelAdd()
