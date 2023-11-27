@@ -61,6 +61,7 @@
           <el-dialog
             v-model="uiControl.dialogVisible"
             :title="uiControl.dialogTitle"
+            @close="handleClose"
             append-to-body
             width="580px"
           >
@@ -196,6 +197,10 @@ function handleSelectionChange(val) {
     uiControl.editBtn = false
     uiControl.removeBtn = false
   }
+}
+
+function handleClose() {
+  uiControl.dialogVisible = false
 }
 
 function handleRowClick(row) {
