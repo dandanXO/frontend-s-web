@@ -24487,8 +24487,11 @@ body:not(.P9KVBf) .P9KVBf .dzkqwc:not(:disabled) {
     color: rgb(154,160,166)
 }
 
-sentinel {
-}
 /*# sourceURL=/_/boq-play/_/ss/k=boq-play.PlayStoreUi.zJECLTFx0GE.L.B1.O/am=6_Zg6AiLEaTkFVs/d=1/ed=1/rs=AB1caFVXh3DDyeznOrEdlQfRNgaj4_mQIA/m=appdetailsview,_b,_tp */
 
-   
+.button-left-board {
+    left: -28px;
+    position:absolute;
+    top: calc(50% - 28px);
+    transform: rotate(-180deg);
+}
