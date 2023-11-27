@@ -2444,7 +2444,7 @@ export default defineComponent({
     }
 
     .popup-list {
-      margin-top: -40px;
+      margin-top: -50px;
     }
 
     a,
