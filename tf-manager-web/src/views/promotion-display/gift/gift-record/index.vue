@@ -9,7 +9,6 @@
           class="filter-item"
           style="width: 200px;"
           @focus="loadSites"
-          @change="siteChanged"
         >
           <el-option
             v-for="item in sites.list"
@@ -18,20 +17,6 @@
             :value="item.id"
           />
         </el-select>
-        <el-date-picker
-          v-model="request.createTime"
-          format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
-          size="small"
-          type="daterange"
-          :start-placeholder="t('fields.startDate')"
-          :end-placeholder="t('fields.endDate')"
-          style="width: 280px; margin-left: 10px;"
-          :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
-          :editable="false"
-          :clearable="false"
-        />
         <el-input
           v-model="request.loginName"
           size="small"
@@ -39,57 +24,40 @@
           :placeholder="t('fields.loginName')"
         />
         <el-input
-          v-model="request.transactionId"
+          v-model="request.code"
           size="small"
           style="width: 200px; margin-left: 10px;"
-          :placeholder="t('fields.transactionId')"
+          :placeholder="t('fields.code')"
         />
         <el-select
-          v-model="request.vipId"
+          v-model="request.type"
           size="small"
-          :placeholder="t('fields.vipLevel')"
+          :placeholder="t('fields.type')"
           class="filter-item"
           style="width: 200px; margin-left: 10px;"
-          @focus="loadVips"
         >
           <el-option
-            v-for="item in vipList.list"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
+            v-for="item in uiControl.type"
+            :key="item.key"
+            :label="t('giftType.' + item.displayName)"
+            :value="item.value"
           />
         </el-select>
-      </div>
-      <div class="btn-group">
         <el-select
           v-model="request.status"
           size="small"
           :placeholder="t('fields.status')"
           class="filter-item"
-          style="width: 200px;"
+          style="width: 200px; margin-left: 10px;"
         >
           <el-option
             v-for="item in uiControl.status"
             :key="item.key"
-            :label="t('status.gameMatchRecord.' + item.displayName)"
+            :label="t('status.giftRecord.' + item.displayName)"
             :value="item.value"
           />
         </el-select>
-        <el-select
-          v-model="request.gameType"
-          size="small"
-          :placeholder="t('fields.gameType')"
-          class="filter-item"
-          style="width: 200px; margin-left: 10px;"
-        >
-          <el-option
-            v-for="item in uiControl.gameType"
-            :key="item.key"
-            :label="t('gameType.' + item.displayName)"
-            :value="item.value"
-          />
-        </el-select>
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadGameMatchRecord">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadGiftRecord">
           {{ t('fields.search') }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
@@ -111,8 +79,8 @@
         size="small"
         label-width="200px"
       >
-        <el-form-item v-if="uiControl.dialogType === 'SETTLE'" :label="t('fields.amount')" prop="amount">
-          <el-input v-model="form.amount" style="width: 350px;" maxlength="50" />
+        <el-form-item v-if="uiControl.dialogType === 'REDEEM'" :label="t('fields.amount')" prop="amount">
+          <el-input v-model="form.amount" style="width: 350px;" maxlength="50" disabled />
         </el-form-item>
         <el-form-item v-if="uiControl.dialogType === 'CANCEL'" :label="t('fields.remark')" prop="remark">
           <el-input type="textarea" v-model="form.remark" :rows="6" style="width: 350px;" maxlength="500" show-word-limit />
@@ -132,36 +100,34 @@
       highlight-current-row
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="siteName" :label="t('fields.site')" width="120" />
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="150" />
-      <el-table-column prop="vipName" :label="t('fields.vipLevel')" width="120" />
-      <el-table-column prop="matchTitle" :label="t('fields.matchTitle')" width="280" />
-      <el-table-column prop="gameType" :label="t('fields.gameType')" width="140">
+      <el-table-column prop="giftCode" :label="t('fields.giftCode')" width="150" />
+      <el-table-column prop="giftName" :label="t('fields.giftName')" width="150" />
+      <el-table-column prop="giftType" :label="t('fields.type')" width="140">
         <template #default="scope">
-          <span>{{ t('gameType.' + scope.row.gameType) }}</span>
+          <el-tag v-if="scope.row.giftType === 'ENTITY'" size="mini">{{ t('giftType.' + scope.row.giftType) }}</el-tag>
+          <el-tag v-if="scope.row.giftType === 'VIRTUAL'" type="warning" size="mini">{{ t('giftType.' + scope.row.giftType) }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="transactionId" :label="t('fields.transactionId')" width="180" />
       <el-table-column prop="status" :label="t('fields.status')" width="140">
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 'PENDING_MATCH'" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'PENDING_SETTLE'" type="warning" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'SETTLED'" type="success" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'CANCEL'" type="danger" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'PENDING'" size="mini">{{ t('status.giftRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'PROCESSING'" type="warning" size="mini">{{ t('status.giftRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'COMPLETE'" type="success" size="mini">{{ t('status.giftRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'EXPIRED' || scope.row.status === 'FAILED'" type="danger" size="mini">{{ t('status.giftRecord.' + scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="200" />
-      <el-table-column prop="amount" :label="t('fields.amount')" width="140">
+      <el-table-column prop="redeemPoints" :label="t('fields.redeemPoints')" width="140">
         <template #default="scope">
-          $ <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+          $ <span v-formatter="{data: scope.row.redeemPoints, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="remark" :label="t('fields.remark')" width="150">
+      <el-table-column prop="giftCashRedeem" :label="t('fields.giftCashRedeem')" width="160">
         <template #default="scope">
-          <span v-if="scope.row.remark === null">-</span>
-          <span v-else>{{ scope.row.remark }}</span>
+          $ <span v-formatter="{data: scope.row.giftCashRedeem, type: 'money'}" />
         </template>
       </el-table-column>
+      <el-table-column prop="remark" :label="t('fields.remark')" width="200" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150">
         <template #default="scope">
@@ -176,29 +142,29 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:game-match-record:update'])"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:gift-record:cancel']) || hasPermission(['sys:gift-record:redeem-cash']))"
         :label="t('fields.operate')"
         align="center"
         fixed="right"
-        width="200"
+        width="250"
       >
         <template #default="scope">
           <el-button
-            v-if="scope.row.status === 'PENDING_SETTLE'"
+            v-if="scope.row.status === 'PENDING'"
             size="small"
             type="success"
-            v-permission="['sys:game-match-record:update']"
-            @click="showDialog('SETTLE', scope.row.id)"
+            v-permission="['sys:gift-record:redeem-cash']"
+            @click="showDialog('REDEEM', scope.row)"
             style="cursor: pointer"
           >
-            {{ t('fields.settle') }}
+            {{ t('fields.redeemCash') }}
           </el-button>
           <el-button
-            v-if="scope.row.status === 'PENDING_SETTLE'"
+            v-if="scope.row.status === 'PENDING'"
             size="small"
             type="danger"
-            v-permission="['sys:game-match-record:update']"
-            @click="showDialog('CANCEL', scope.row.id)"
+            v-permission="['sys:gift-record:cancel']"
+            @click="showDialog('CANCEL', scope.row)"
             style="cursor: pointer"
           >
             {{ t('fields.cancel') }}
@@ -214,8 +180,8 @@
       v-model:page-size="request.size"
       v-model:page-count="page.pages"
       v-model:current-page="request.current"
-      @current-change="loadGameMatchRecord"
-      @size-change="loadGameMatchRecord"
+      @current-change="loadGiftRecord"
+      @size-change="loadGiftRecord"
     />
   </div>
 </template>
@@ -226,29 +192,17 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getGameMatchRecord, settleRecord, cancelRecord } from "@/api/game-match";
+import { getGiftRecord, redeemGiftRecordCash, cancelGiftRecord } from "@/api/gift";
 import { hasRole, hasPermission } from "@/utils/util";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import moment from "moment";
-import { getShortcuts } from "@/utils/datetime";
-import { getVipList } from "../../../../api/vip";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
-const shortcuts = getShortcuts(t);
-
-function convertDate(date) {
-  return moment(date).endOf('day').format('YYYY-MM-DD');
-}
-
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
-}
 
 const request = reactive({
   size: 20,
@@ -257,33 +211,29 @@ const request = reactive({
   loginName: null,
   transactionId: null,
   status: null,
-  createTime: [convertDate(new Date()), convertDate(new Date())],
-  gameType: null,
-  vipId: null
+  type: null
 });
 
 const recordForm = ref(null);
 const sites = reactive({
   list: []
 });
-const vipList = reactive({
-  list: []
-});
 
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",
-  dialogType: "CREATE",
+  dialogType: "REDEEM",
   removeBtn: true,
   status: [
-    { key: 1, displayName: 'PENDING_MATCH', value: 'PENDING_MATCH' },
-    { key: 2, displayName: 'PENDING_SETTLE', value: 'PENDING_SETTLE' },
-    { key: 3, displayName: 'SETTLED', value: 'SETTLED' },
-    { key: 4, displayName: 'CANCEL', value: 'CANCEL' }
+    { key: 1, displayName: 'PENDING', value: 'PENDING' },
+    { key: 2, displayName: 'PROCESSING', value: 'PROCESSING' },
+    { key: 3, displayName: 'COMPLETE', value: 'COMPLETE' },
+    { key: 4, displayName: 'EXPIRED', value: 'EXPIRED' },
+    { key: 5, displayName: 'FAILED', value: 'FAILED' }
   ],
-  gameType: [
-    { key: 1, displayName: 'SPORT', value: 'SPORT' },
-    { key: 2, displayName: 'ESPORT', value: 'ESPORT' },
+  type: [
+    { key: 1, displayName: 'ENTITY', value: 'ENTITY' },
+    { key: 2, displayName: 'VIRTUAL', value: 'VIRTUAL' }
   ]
 });
 const page = reactive({
@@ -304,7 +254,7 @@ const formRules = reactive({
   remark: [required(t('message.validateRemarkRequired'))]
 });
 
-async function loadGameMatchRecord() {
+async function loadGiftRecord() {
   page.loading = true;
   const requestCopy = { ...request };
   const query = {};
@@ -313,48 +263,48 @@ async function loadGameMatchRecord() {
       query[key] = value;
     }
   });
-  if (request.createTime !== null) {
-    if (request.createTime.length === 2) {
-      query.createTime = request.createTime.join(",");
-    }
-  }
-  const { data: ret } = await getGameMatchRecord(query);
+  const { data: ret } = await getGiftRecord(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
   page.loading = false;
 }
 
-function showDialog(type, id) {
+function showDialog(type, row) {
   if (recordForm.value) {
     recordForm.value.resetFields();
   }
-  if (type === 'SETTLE') {
-    uiControl.dialogTitle = t('fields.settleGameMatch');
+  if (type === 'REDEEM') {
+    uiControl.dialogTitle = t('fields.redeemCash');
+    form.amount = row.giftCashRedeem
   } else if (type === 'CANCEL') {
-    uiControl.dialogTitle = t('fields.cancelGameMatch');
+    uiControl.dialogTitle = t('fields.cancelGift');
   }
-  form.id = id;
+  form.id = row.id;
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
 }
 
 function submit() {
-  if (uiControl.dialogType === 'SETTLE') {
-    settle()
+  if (uiControl.dialogType === 'REDEEM') {
+    redeem()
   }
   if (uiControl.dialogType === 'CANCEL') {
     cancel()
   }
 }
 
-function settle() {
+function redeem() {
   recordForm.value.validate(async(valid) => {
     if (valid) {
-      await settleRecord(form);
-      uiControl.dialogVisible = false;
-      await loadGameMatchRecord();
-      ElMessage({ message: t('message.gameMatchEnded'), type: "success" });
+      if (form.amount === 0) {
+        ElMessage({ message: t('message.giftNoCashRedeemAmount'), type: "error" });
+      } else {
+        await redeemGiftRecordCash(form.id);
+        uiControl.dialogVisible = false;
+        await loadGiftRecord();
+        ElMessage({ message: t('message.redeemCashSuccess'), type: "success" });
+      }
     }
   })
 }
@@ -362,9 +312,9 @@ function settle() {
 function cancel() {
   recordForm.value.validate(async (valid) => {
     if (valid) {
-      await cancelRecord(form);
+      await cancelGiftRecord(form);
       uiControl.dialogVisible = false;
-      await loadGameMatchRecord();
+      await loadGiftRecord();
       ElMessage({ message: t('message.cancelSuccess'), type: "success" });
     }
   });
@@ -375,24 +325,12 @@ async function loadSites() {
   sites.list = site;
 }
 
-async function loadVips() {
-  const { data: vip } = await getVipList({ siteId: request.siteId });
-  vipList.list = vip;
-};
-
-async function siteChanged() {
-  request.vipId = null;
-  await loadVips();
-}
-
 function resetQuery() {
   request.siteId = site.value.id;
   request.loginName = null;
   request.transactionId = null;
   request.status = null;
-  request.createTime = [convertDate(new Date()), convertDate(new Date())];
-  request.gameType = null;
-  request.vipId = null;
+  request.type = null;
 }
 
 onMounted(async () => {
@@ -403,8 +341,7 @@ onMounted(async () => {
     site.value = sites.list[0];
   }
   request.siteId = site.value.id;
-  await loadVips();
-  await loadGameMatchRecord();
+  await loadGiftRecord();
 });
 
 </script>
