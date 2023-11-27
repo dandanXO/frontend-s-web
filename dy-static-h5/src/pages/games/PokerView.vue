@@ -89,8 +89,8 @@ onMounted(() => {
 
     cached.get("POKER_IFRAME_URL", () => api.get(`/session/launch?_time=${new Date().getTime()}`, {
           params: {
-            platform: "KYDY",
-            gameCode: "ky_lobby",
+            platform: "KY",
+            gameCode: "",
             isMobile: Platform.is.mobile ? true : false,
             way: way
           }
