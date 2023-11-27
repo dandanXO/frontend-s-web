@@ -1,27 +1,46 @@
 <template>
   <div>
     <div class="">
-      <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>
+<!--      <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>-->
       <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
         <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/icon.png`)" />
-        <div class="contents">
+        <div class="contents" v-if="!bonusOpened">
           <q-btn class="claim-btn"  :loading="loadingClaim" @click="getPromotion">
             点击领取
           </q-btn>
         </div>
       </div>
-      <p v-if="bonusOpened" class="money-account"><span>{{ winAmount }}</span>元</p>
-      <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>
+<!--      <p v-if="bonusOpened" class="money-account"><span>{{ winAmount }}</span>元</p>-->
+<!--      <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>-->
     </div>
   </div>
+
+  <q-dialog v-model="isClaimModal" persistent>
+    <q-card class="win-rebate-model">
+      <q-card-section class="row items-center">
+        <div class="bonus-svg-div">
+          <span class="bonus-text">恭喜获得奖金</span>
+          <span class="claim-amt">{{ winAmount }}</span>
+        </div>
+      </q-card-section>
+
+      <q-card-actions align="center">
+        <q-btn flat label="确定" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 <script setup>
 import {eventapi} from "src/boot/axios";
 import {ref} from "vue";
+import {userStore} from "src/stores";
 
+const store = userStore();
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
-const winAmount = ref(100);
+const winAmount = ref(0);
+const isClaimModal= ref(false);
 const loadingClaim = ref(false);
 
 const getPromotion = () => {
@@ -29,10 +48,13 @@ const getPromotion = () => {
   eventapi.get("/redPacketVip/claim?promoCode=dy-red-packet-rain")
     .then((res) => {
       if (res.code === 0) {
-        winAmount.value = res.data;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
         loadingClaim.value= false;
 
+        isClaimModal.value= true;
+
         bonusOpened.value = true;
+        store.getBalance();
       } else {
         // ElMessage.error(res.message)
         bonusOpened.value = false;
@@ -42,6 +64,7 @@ const getPromotion = () => {
       console.log(err.message);
       // message.error(err.message, 4);
       loadingClaim.value= false;
+      // isClaimModal.value= true;
       bonusOpened.value = false;
     });
 }

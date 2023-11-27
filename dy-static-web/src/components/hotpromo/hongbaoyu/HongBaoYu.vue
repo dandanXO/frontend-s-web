@@ -1,25 +1,35 @@
 <template>
   <div>
-    <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>
+    <!--    <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>-->
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/icon.png`)" />
-      <div class="contents">
+      <div class="contents" v-if="!bonusOpened">
         <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion">
           点击领取
         </el-button>
       </div>
     </div>
-    <p v-if="bonusOpened" class="money-account">
-      <span>{{ winAmount }}</span>
-      元
-    </p>
-    <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>
   </div>
+
+  <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
+    <div class="modal-div">
+      <span class="img-item">
+        <div class="inner-contents">
+          <div class="amount">{{ winAmount }}</div>
+          <div class="bonus">奖金</div>
+        </div>
+      </span>
+      <img src="../../../assets/images/index/bonus.svg" />
+    </div>
+  </el-dialog>
 </template>
 <script setup>
 import { ref } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
+import { userStore } from "@/store";
 
+const store = userStore();
+const privilegeClaimedModalVisible = ref(false);
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
@@ -30,15 +40,13 @@ const getPromotion = () => {
     .then((res) => {
       loadingClaim.value = false;
       if (res.code === 0) {
-        winAmount.value = res.data;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
 
+        privilegeClaimedModalVisible.value = true;
         // lastDigitAmount:0
         // redPacketSequence:1
         // vipAmount:0.6
-
-        // this.privilegeClaimedModalVisible = true;
-        // this.loadingClaim = false;
-        // this.store.getBalance();
+        store.getBalance();
 
         bonusOpened.value = true;
       } else {
