@@ -207,7 +207,7 @@
       </el-form-item>
 
       <el-form-item :label="t('fields.mallName')" prop="mall">
-        <el-input v-model="copyForm.mall" style="width: 350px" />
+        <el-input v-model="copyForm.mallName" style="width: 350px" />
       </el-form-item>
 
       <div class="dialog-footer">
@@ -403,7 +403,7 @@ onMounted(async() => {
 function showDialogCopy(withdrawPlatform) {
   console.log(withdrawPlatform);
   copyForm.id = withdrawPlatform.id;
-  copyForm.mall = "";
+  copyForm.mallName = "";
   copyForm.name = "";
   uiControl.dialogTitle = t('fields.copyPayment') + " -  " + withdrawPlatform.name;
   uiControl.dialogCopyVisible = true
@@ -412,7 +412,7 @@ function showDialogCopy(withdrawPlatform) {
 async function copySubmit() {
   if (copyForm.name === null || copyForm.name === "") {
     ElMessage({ message: t('message.validateWithdrawPlatformNameRequired'), type: 'error' });
-  } else if (copyForm.mall === null || copyForm.mall === "") {
+  } else if (copyForm.mallName === null || copyForm.mallName === "") {
     ElMessage({ message: t('message.validateMallNameRequired'), type: 'error' });
   } else {
     uiControl.dialogCopyVisible = false;
