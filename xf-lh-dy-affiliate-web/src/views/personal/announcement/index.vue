@@ -118,12 +118,6 @@
             <el-table-column :label="t('fields.operate')" align="left">
               <template #default="scope">
                 <el-button
-                  icon="el-icon-view"
-                  size="mini"
-                  type="success"
-                  @click.stop="readAnnouncement(scope.row)"
-                />
-                <el-button
                   icon="el-icon-delete"
                   size="mini"
                   type="delete"
@@ -211,13 +205,6 @@ function handleRowClick(row) {
  * 读公告
  */
 async function readAnnouncement(announcement) {
-  const requestCopy = { ...request }
-  const query = {}
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
-    }
-  })
   const userId = store.state.user.id
   if (announcement) {
     const { data: ret } = await readAffAnnouncementDetails(
