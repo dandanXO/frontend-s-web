@@ -1105,6 +1105,7 @@ export default {
     confirmUpdate: '请确认是否更新?',
     confirmUpdatePayment: '请确认是否更新支付?',
     copyToClipboard: '已复制到剪贴板中',
+    copySuccess: '成功复制',
     deleteSuccess: '删除成功',
     depositSuccess: '存款成功',
     editAmountSuccess: '编辑金额成功',
