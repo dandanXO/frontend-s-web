@@ -1,5 +1,6 @@
 export default {
   lang: {
+    langVal: "en",
     login: "Login",
     register: "Register",
     personal_information: "Personal Information",
@@ -241,6 +242,7 @@ export default {
     notice_footer: "MailBox",
     slot_header: "Slot",
     live_header: "Casino",
+    minigame_header: "Mini Game",
     sport_header: "Sports",
     fish_header: "Fish",
     deposit_header: "Deposit Methods",

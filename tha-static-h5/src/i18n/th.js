@@ -1,5 +1,6 @@
 export default {
   lang: {
+    langVal: "th",
     login: "ล็อกอิน",
     register: "สมัคร",
     personal_information: "ข้อมูลส่วนตัว",
@@ -224,7 +225,8 @@ export default {
     cs_footer: "แชทสด",
     notice_footer: "แจ้ง",
     slot_header: "สล็อต",
-    live_header: "คาสิโนสด",
+    live_header: "คาสิโน",
+    minigame_header: "มินิเกม",
     sport_header: "กีฬา",
     fish_header: "ยิงปลา",
     deposit_header: "วิธีชำระเงิน",
@@ -304,9 +306,9 @@ export default {
     supplement_success: "เสริมความสำเร็จ",
 
     // WithdrawBankView
-    choose_a_card: "เลือกบัตร",
+    choose_a_card: "เลือกบัญชี",
     register_bank_acc_para: "กรุณาลงทะเบียนบัญชีธนาคารด้านล่างเพื่อรับการอัปเดต",
-    add_a_card: "เพิ่มบัตร",
+    add_a_card: "เพิ่มบัญชี",
     bank_card_unbind_record: "บันทึกการผูกบัตรธนาคาร",
     add_a_virtual_currency: "เพิ่มสกุลเงินเสมือน",
     select_account_add_different_banks: "เลือกบัญชี (เพิ่มธนาคารต่างๆเข้าไป)",
@@ -380,7 +382,7 @@ export default {
     deposit_balance_in_between: "จำนวนเงินฝากควรอยู่ระหว่าง ",
     view_detail: "ดูรายละเอียด",
     all: "ทั้งหมด",
-    welcome: "ยินดีต้อนรับ",
+    welcome: "สมาชิกใหม่",
     tnc: "ข้อกำหนดและเงื่อนไข",
     agree: "เห็นด้วย",
     claim: "รับโบนัส",
@@ -451,7 +453,13 @@ export default {
     are_you_sure_want_delete: "คุณแน่ใจหรือไม่ว่าต้องการลบ ",
     delete: "ลบ",
     please_enter_card_num: "กรุณาใส่เลขบัตร",
-    please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร"
+    please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร",
+    prize: "รางวัล",
+    date: "วันที่",
+    youWon: "คุณชนะ",
+    totalBonus: "โบนัสที่ได้ทั้งหมด",
+    spinRemaining: "คุณมี {spinCount} ตั๋วที่หมุนได้",
+    loginToCont: "เข้าสู่ระบบเพื่อดำเนินการต่อ"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",

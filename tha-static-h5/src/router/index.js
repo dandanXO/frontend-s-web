@@ -129,6 +129,13 @@ export default route(function (/* { store, ssrContext } */) {
 
       gtag("js", new Date());
       gtag("config", "UA-780462346-6");
+    } else if (window.location.href.indexOf("jo88.cc")) {
+      ui.isAffiliateB = true;
+      console.log("jo88.cc");
+
+      fbq("init", "241650862263360");
+      fbq("track", "PageView");
+      fbq("track", "ViewContent");
     } else if (ui.isAffiliateB) {
       console.log("Slot-Win .cc");
 
