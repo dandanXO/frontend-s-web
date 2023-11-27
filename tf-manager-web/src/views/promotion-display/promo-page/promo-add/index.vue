@@ -78,7 +78,7 @@
         </el-row>
       </el-form-item>
     </el-row>
-	<el-row>
+    <el-row>
       <el-form-item :label="t('fields.desktopBanner')" prop="desktopBannerUrl">
         <el-row :gutter="5">
           <el-col :span="20">
@@ -208,6 +208,18 @@
             inactive-color="#F56C6C"
           />
         </el-form-item>
+
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="mini"
+            style="width: 300px"
+          >
+            <el-radio-button label="0">Open</el-radio-button>
+            <el-radio-button label="1">Close</el-radio-button>
+            <el-radio-button label="2">Test</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
       </el-col>
     </el-row>
 
@@ -336,7 +348,7 @@ const promoTypes = [
   { typeName: 'FISH', value: 4 },
   { typeName: 'LIVE CASINO', value: 5 },
   { typeName: 'SLOT GAME', value: 6 },
-  { typeName: 'POKER', value: 7 }
+  { typeName: 'POKER', value: 7 },
 ]
 
 function handleCheckedChangePromoType() {
@@ -471,7 +483,7 @@ async function attachMobileBanner(event) {
 }
 
 onMounted(() => {
-  console.log("new page ")
+  console.log('new page ')
   loadSites()
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true

@@ -129,7 +129,6 @@ export default defineComponent({
     const checkAgentFrom = () => {
       var agentB = localStorage.getItem("AGENT_B");
       if (agentB) {
-        console.log("YES IS B");
         ui.isAffiliateB = true;
       }
     };

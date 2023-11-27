@@ -102,20 +102,29 @@
           <div v-if="scope.row.labelType === 6">{{ t('promoLabel.limit') }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:promp:page:update:state'])">
+      <el-table-column
+        prop="status"
+        :label="t('fields.status')"
+        v-if="hasPermission(['sys:promp:page:update:state'])"
+        style="width: 300px"
+      >
         <template #default="scope">
-          <el-switch
-            v-model="scope.row.status"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
-            @change="changePromoPagesState(scope.row.id, scope.row.status)"
-          />
+          <div v-if="scope.row.status === 0" style="color: green;">OPEN</div>
+          <div v-if="scope.row.status === 1" style="color:red">CLOSED</div>
+          <div v-if="scope.row.status === 2">TEST</div>
         </template>
       </el-table-column>
       l
       <el-table-column prop="createTime" :label="t('fields.createTime')" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column type="title" :label="t('fields.action')" v-if="hasPermission(['sys:promp:page:update'])|| hasPermission(['sys:promp:page:del'])">
+      <el-table-column
+        type="title"
+        :label="t('fields.action')"
+        v-if="
+          hasPermission(['sys:promp:page:update']) ||
+            hasPermission(['sys:promp:page:del'])
+        "
+      >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -150,20 +159,19 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import {
   getPromoPagesList,
-  updatePromoPagesState,
   deletePromoPages,
 } from '../../../../api/promoPages'
 import { useRoute, useRouter } from 'vue-router'
 import { getSiteListSimple } from '../../../../api/site'
 import { hasPermission } from '../../../../utils/util'
-import { useStore } from '../../../../store';
-import { TENANT } from "../../../../store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
+import { useStore } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
-const store = useStore();
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const site = ref(null);
+const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 let choosePromo = []
 const siteList = reactive({
   list: [],
@@ -181,7 +189,7 @@ const request = reactive({
   current: 1,
   title: null,
   status: null,
-  siteId: null
+  siteId: null,
 })
 
 const page = reactive({
@@ -192,7 +200,7 @@ const page = reactive({
 function resetQuery() {
   request.title = null
   request.status = null
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : null
 }
 
 function changePage(page) {
@@ -242,14 +250,11 @@ async function loadSites() {
 }
 
 async function removePromo(promoPages) {
-  ElMessageBox.confirm(
-    t('message.confirmDelete'),
-    {
-      confirmButtonText: t('fields.confirm'),
-      cancelButtonText: t('fields.cancel'),
-      type: 'warning',
-    }
-  ).then(async () => {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
     if (promoPages) {
       await deletePromoPages([promoPages.id])
     } else {
@@ -260,9 +265,9 @@ async function removePromo(promoPages) {
   })
 }
 
-async function changePromoPagesState(id, status) {
-  await updatePromoPagesState(id, status)
-}
+// async function changePromoPagesState(id, status) {
+//   await updatePromoPagesState(id, status)
+// }
 
 const route = useRoute()
 
@@ -270,12 +275,14 @@ onMounted(async () => {
   if (route.query.current != null) {
     request.current = Number(route.query.current)
   }
-  await loadSites();
+  await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
-    request.siteId = site.value.id;
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
   }
-  await loadPromoPages();
+  await loadPromoPages()
 })
 </script>
 
