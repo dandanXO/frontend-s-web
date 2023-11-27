@@ -43,7 +43,6 @@
         </q-btn>
         <div class="sticky-container">
           <div class="line-title">LINE</div>
-          <div class="line-2">7x24</div>
           <img src="../assets/home/line-bg.png" class="line-img" />
           <div class="line-bottom">line ID:@jolly88</div>
         </div>
