@@ -21,6 +21,7 @@
 import { ref, defineComponent, watch } from "vue";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
+import {api} from "boot/axios";
 
 export default defineComponent({
   emits: ["photoResponse"],
@@ -34,12 +35,16 @@ export default defineComponent({
       uploadFile(newValue);
     });
     const uploadFile = async (uploadedItem) => {
+      var rstUrl = localStorage.getItem("DY_H5_RST_URL");
+      if(!rstUrl){
+        rstUrl = process.env.RST_API.split(",")[0];
+      }
       if (uploadedItem) {
         const formData = new FormData();
         formData.append("files", file.value);
         try {
           const response = await fetch(
-            `${process.env.RST_API}/session/image/uploadOrder`,
+            `${rstUrl}/session/image/uploadOrder`,
             {
               method: "POST",
               body: formData,
@@ -49,7 +54,7 @@ export default defineComponent({
             }
           );
           const data = await response.json();
-          if (data.status === 0) {
+          if (data.code === 0) {
             emit("photoResponse", data.data);
             $q.notify({
               type: "positive",

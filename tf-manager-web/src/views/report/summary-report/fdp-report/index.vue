@@ -42,8 +42,24 @@
     >
       <el-table-column prop="member" :label="t('fields.member')" width="120" fixed />
       <el-table-column prop="source" :label="t('fields.sourceType')" width="120" />
-      <el-table-column prop="registerTime" :label="t('fields.registerTime')" width="150" />
-      <el-table-column prop="ftdTime" :label="t('fields.ftdTime')" width="150" />
+      <el-table-column prop="registerTime" :label="t('fields.registerTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.registerTime === null">-</span>
+          <span
+            v-if="scope.row.registerTime !== null"
+            v-formatter="{data: scope.row.registerTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="ftdTime" :label="t('fields.ftdTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.ftdTime === null">-</span>
+          <span
+            v-if="scope.row.ftdTime !== null"
+            v-formatter="{data: scope.row.ftdTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="ftdAmount" :label="t('fields.ftdAmount')" width="120">
         <template #default="scope1">
           $
@@ -104,6 +120,7 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
+let timeZone = null;
 var date = new URL(location.href).searchParams.get('date')
 var siteIdFromParam = new URL(location.href).searchParams.get('site')
 
@@ -144,6 +161,7 @@ async function loadSummaryFdpRecord() {
   page.pages = ret.pages
   page.records = ret.records
 
+  timeZone = siteList.list.find(e => e.id === parseInt(request.siteId)).timeZone;
   page.loading = false
 }
 

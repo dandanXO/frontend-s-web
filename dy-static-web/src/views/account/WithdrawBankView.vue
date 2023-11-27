@@ -235,7 +235,7 @@
               :placeholder="numAddress()"
           />
         </el-form-item>
-        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET">
+        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET && !isALIPAY">
           <el-input
               v-model="bankCardInfo.cardAddress"
               placeholder="开户行地址"
@@ -397,11 +397,23 @@ export default defineComponent({
       var min = 6;
       var max = 12;
       if (selectedBankType.value === 'Bank') {
-        min = 16;
-        max = 19;
-        if (!/^\d+$/.test(v)) {
-          return Promise.reject('请输入数字');
+        var selectedBankCode = null
+        banksList.value.forEach(bank => {
+          if (bank.id === bankCardInfo.bankId) {
+            selectedBankCode = bank.code
+          }
+        });
+        if (selectedBankCode === 'alipay') {
+          min = 11;
+          max = 20;
+        } else {
+          if (!/^\d+$/.test(v)) {
+            return Promise.reject('请输入数字');
+          }
+          min = 16;
+          max = 19;
         }
+
       } else if (selectedBankType.value === 'Crypto') {
         min = 34;
         max = 36;
@@ -442,6 +454,7 @@ export default defineComponent({
     const isCardActive = ref();
     const isUSDT = ref(false);
     const isEWALLET = ref(false);
+    const isALIPAY = ref(false);
     const store = userStore();
     const searchForm = reactive({
       startDate: "",
@@ -604,7 +617,11 @@ export default defineComponent({
       personalState.bankCardList = [];
       loadBankCards().then((response) => {
         if (response.code === 0) {
-          personalState.bankCardList.push(...response.data);
+          response.data.forEach(element => {
+            if (element){
+              personalState.bankCardList.push(element);
+            }
+          });
         }
       }).catch((error) => {
         console.log("error", error);
@@ -891,11 +908,19 @@ export default defineComponent({
     }
 
     const chooseCard = () => {
+      isALIPAY.value = false;
       if (isUSDT.value) {
         return '虚拟币'
       } else if (isEWALLET.value) {
         return '电子钱包'
       } else {
+        banksList.value.forEach(bank => {
+            if (bank.id === bankCardInfo.bankId) {
+              if(bank.code === 'alipay'){
+                isALIPAY.value = true;
+              }
+            }
+          });
         return '银行'
       }
     }
@@ -931,6 +956,7 @@ export default defineComponent({
       isCardActive,
       isUSDT,
       isEWALLET,
+      isALIPAY,
       bankName,
       bankTypes,
       selectBankType,

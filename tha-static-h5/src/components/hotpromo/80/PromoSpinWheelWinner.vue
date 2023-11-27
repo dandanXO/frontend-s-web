@@ -49,6 +49,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
+
 const grandPrize = "IPhone 15 Pro Max";
 
 const columns = ref([
@@ -122,7 +123,6 @@ onMounted(() => {
   initSpinWheelWinnerAPI(() => {
     loading.value = false;
   });
-
   setInterval(() => {
     initSpinWheelWinnerAPI();
   }, 30000);

@@ -1,14 +1,16 @@
 import { server } from "@/utils/request";
 
-export function loadPromo() {
-  return server.REST.get("/promo/page");
+export function loadPromo(isLogin = false) {
+  const platformApiUrl = isLogin ? "/session/loggedInPromoPages" : "/promo/page";
+
+  return server.REST.get(platformApiUrl);
 }
 
 export function loadPromoBanner(category) {
   return server.REST.get("/promo/banner", {
     params: {
-      category: category,
-    },
+      category: category
+    }
   });
 }
 export function claimBonusItem(item) {
@@ -26,7 +28,7 @@ export function welcomeTaskClaimBonus(item) {
 export function submitLuckyNumber(item) {
   return server.EVENT.post(`/privi/lotteryNumber`, {
     number: item,
-    promoCode: "dy1-lottery",
+    promoCode: "dy2-lottery"
   });
 }
 
@@ -35,16 +37,16 @@ export function luckyNumberList(queryItems, memberId) {
     params: {
       winStatus: queryItems.winStatus,
       recordTime: queryItems.recordTime,
-      memberId: memberId,
-    },
+      memberId: memberId
+    }
   });
 }
 
 export function winnerList(queryItems) {
   return server.EVENT.get(`/privi/winners`, {
     params: {
-      resultTime: queryItems.resultTime,
-    },
+      resultTime: queryItems.resultTime
+    }
   });
 }
 
@@ -54,7 +56,7 @@ export function getSJBList() {
 export function postVote(item) {
   return server.EVENT.post(`/privi/team-votes/vote`, {
     teamId: item.teamId,
-    votes: item.voteCount,
+    votes: item.voteCount
   });
 }
 export function getInviteFriendList(item) {
@@ -63,7 +65,26 @@ export function getInviteFriendList(item) {
       memberId: item.memberId,
       loginName: item.loginName,
       regTime: item.regTime,
-      current: item.current,
-    },
+      current: item.current
+    }
+  });
+}
+
+export function getSportMatchQuizInfo() {
+  return server.EVENT.get(`/quiz/upcoming`, {});
+}
+
+export function getMemberSportMatchRecord() {
+  return server.EVENT.get(`/quiz/answeredRecords`, {});
+}
+
+export function submitMemberSportMatchQuiz(param) {
+  const { quizId, quizTitle, answerOne, answerTwo, answerThree } = param;
+  return server.EVENT.post(`/quiz/submit`, {
+    quizId,
+    quizTitle,
+    answerOne,
+    answerTwo,
+    answerThree
   });
 }

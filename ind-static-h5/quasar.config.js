@@ -84,7 +84,7 @@ module.exports = configure(function (ctx) {
 
         // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
         framework: {
-            lang: 'zh-CN',
+            lang: 'en-US',
             config: {},
 
             // iconSet: 'material-icons', // Quasar icon set
@@ -104,7 +104,7 @@ module.exports = configure(function (ctx) {
 
         // animations: 'all', // --- includes all animations
         // https://quasar.dev/options/animations
-        animations: [],
+        animations: 'all',
 
         // https://v2.quasar.dev/quasar-cli-webpack/developing-ssr/configuring-ssr
         ssr: {
