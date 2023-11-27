@@ -183,13 +183,12 @@ export default defineComponent({
   mounted() {
     // console.log("Mount");
     // console.log(this.list);
-
     // List for non common promo
     if (
       this.list.redirectUrl === "dy2-tiger-card" ||
       this.list.redirectUrl === "Dongying-team-vote" ||
-      this.list.redirectUrl === 'dy2-esport-safety' ||
-      this.list.redirectUrl === 'sport-safety' ||
+      this.list.redirectUrl === "dy2-esport-safety" ||
+      this.list.redirectUrl === "sport-safety" ||
       this.list.redirectUrl === "nba-game" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||

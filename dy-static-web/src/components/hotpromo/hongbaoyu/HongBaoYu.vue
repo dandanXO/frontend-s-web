@@ -1,37 +1,40 @@
 <template>
   <div>
-    <div class="receive-container">
-      <button v-if="promoNotReady && bonusOpened" class="check-tip">
-        活动未开启
-      </button>
-      <div
-        @click="getPromotion"
-        v-if="!promoNotReady && !bonusOpened"
-        class="receive-btn"
-      >
-        <img
-          src="../../../assets/images/promotion/hotpromo/hongbaoyu/package_light.png"
-        />
+    <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>
+    <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
+      <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/icon.png`)" />
+      <div class="contents">
+        <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion">
+          点击领取
+        </el-button>
       </div>
-      <p v-if="bonusOpened" class="money-account">
-        <span>{{ winAmount }}</span
-        >元
-      </p>
-      <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>
     </div>
+    <p v-if="bonusOpened" class="money-account">
+      <span>{{ winAmount }}</span>
+      元
+    </p>
+    <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
-import { claimBonusItem } from "@/api/index/promo";
+import { claimDailyRainItem } from "@/api/index/promo";
+
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
+const loadingClaim = ref(false);
 const getPromotion = () => {
-  claimBonusItem("red-packet-rain")
+  loadingClaim.value = true;
+  claimDailyRainItem("dy-red-packet-rain")
     .then((res) => {
+      loadingClaim.value = false;
       if (res.code === 0) {
         winAmount.value = res.data;
+
+        // lastDigitAmount:0
+        // redPacketSequence:1
+        // vipAmount:0.6
 
         // this.privilegeClaimedModalVisible = true;
         // this.loadingClaim = false;
@@ -44,6 +47,7 @@ const getPromotion = () => {
       }
     })
     .catch((err) => {
+      loadingClaim.value = false;
       console.log(err.message);
       // message.error(err.message, 4);
       bonusOpened.value = false;
@@ -56,29 +60,27 @@ const getPromotion = () => {
   margin: 0.55rem auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  flex-direction: column;
   position: relative;
   width: 100%;
-  height: 200px;
-  background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/hongbaoyu.png)
-    no-repeat center center;
-  background-size: contain;
-  .red-packet {
-    width: 50%;
-    height: 200px;
-    margin: 0 auto;
-    background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/package_red.png)
-      no-repeat center center;
-    background-size: contain;
-    &.open {
-      background-image: url(../../../assets/images/promotion/hotpromo/hongbaoyu/img_repacket_open.png);
-    }
-  }
+  //background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/hongbaoyu.png) no-repeat center center;
+  //background-size: contain;
+
+  //.red-packet {
+  //  width: 50%;
+  //  height: 200px;
+  //  margin: 0 auto;
+  //  background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/package_red.png) no-repeat center center;
+  //  background-size: contain;
+  //}
+
   .check-tip,
   .money-account,
   .receive-btn {
     position: absolute;
   }
+
   .check-tip {
     color: #ccc;
     background-color: grey;
@@ -94,6 +96,7 @@ const getPromotion = () => {
     margin: auto;
     width: 90px;
   }
+
   .money-account {
     left: 0;
     right: 0;
@@ -101,6 +104,7 @@ const getPromotion = () => {
     margin: auto;
     text-align: center;
     font-size: 1.5rem;
+
     span {
       font-size: 2.5rem;
     }
@@ -117,6 +121,7 @@ const getPromotion = () => {
     right: 0;
     bottom: -15px;
     cursor: pointer;
+
     img {
       width: 100%;
     }
