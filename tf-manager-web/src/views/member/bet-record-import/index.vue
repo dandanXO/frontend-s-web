@@ -235,7 +235,20 @@
       </el-table-column>
       <el-table-column prop="recordTime" :label="t('fields.recordTime')" min-width="150" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" min-width="120" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="150" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="150" >
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       :total="page.total"
@@ -280,6 +293,7 @@ const gameTypes = reactive({
 const platforms = reactive({
   list: []
 });
+let timeZone = null;
 
 const EXPORT_BET_RECORD_IMPORT_LIST_HEADER = [
   '用户名',
@@ -387,6 +401,7 @@ async function loadBetRecordImport() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

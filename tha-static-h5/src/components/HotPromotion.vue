@@ -1,6 +1,5 @@
 <template>
   <div class="hot-promo">
-
     <div v-if="list.id === 30 && store.hasToken()" class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -13,29 +12,38 @@
             align="justify"
             narrow-indicator
           >
-            <q-tab name="1" label="เลือกเลขนำโชค"/>
-            <q-tab name="2" label="บันทึก"/>
-            <q-tab name="3" label="รายชื่อผู้ชนะ"/>
+            <q-tab name="1" label="เลือกเลขนำโชค" />
+            <q-tab name="2" label="บันทึก" />
+            <q-tab name="3" label="รายชื่อผู้ชนะ" />
           </q-tabs>
 
-          <q-separator/>
+          <q-separator />
 
           <q-tab-panels v-model="activeKey" animated>
-            <q-tab-panel name="1"
-            >
+            <q-tab-panel name="1">
               <div class="tab1">
-                <img src="../assets/images/promotion/hotpromo/22/icon.png"/>
+                <img src="../assets/images/promotion/hotpromo/22/icon.png" />
                 <div class="contents">
                   <q-form class="q-gutter-md">
                     <div class="q-mb-md">
                       {{ selectedHotPromo.contents.tab1 }}
                     </div>
-                    <q-input v-model="lucky_number" filled color="white" type="number"
-                             :rules="[
-  (val) => (val && val.length === 3) || 'ขีดสุด 3 ตัวเลข'
-]"
-                             label="เลขนำโชค"/>
-                    <q-btn :loading="btnLoading" @click="submitLuckyNumber()" color="brand" label="ส่ง"/>
+                    <q-input
+                      v-model="lucky_number"
+                      filled
+                      color="white"
+                      type="number"
+                      :rules="[
+                        (val) => (val && val.length === 3) || 'ขีดสุด 3 ตัวเลข',
+                      ]"
+                      label="เลขนำโชค"
+                    />
+                    <q-btn
+                      :loading="btnLoading"
+                      @click="submitLuckyNumber()"
+                      color="brand"
+                      label="ส่ง"
+                    />
                   </q-form>
                 </div>
               </div>
@@ -82,20 +90,28 @@
                     />
                   </template>
                 </q-input>
-                <q-btn @click="filterLuckyNumber()" :loading="loading"
-                       class="full-width q-mt-md"
-                       color="brand"
-                       label="คัดกรอง"
+                <q-btn
+                  @click="filterLuckyNumber()"
+                  :loading="loading"
+                  class="full-width q-mt-md"
+                  color="brand"
+                  label="คัดกรอง"
                 />
               </q-form>
-              <q-table title="เลขนำโชคบันทึกรา" no-data-label="ไม่มีข้อมูล" loading-label="กำลังโหลด..."
-                       rows-per-page-label=" " :loading="loading" class="q-mt-md" :columns="filterColumn"
-                       :rows="dataSource">
+              <q-table
+                title="เลขนำโชคบันทึกรา"
+                no-data-label="ไม่มีข้อมูล"
+                loading-label="กำลังโหลด..."
+                rows-per-page-label=" "
+                :loading="loading"
+                class="q-mt-md"
+                :columns="filterColumn"
+                :rows="dataSource"
+              >
               </q-table>
             </q-tab-panel>
 
             <q-tab-panel name="3">
-
               <q-form>
                 <q-input
                   filled
@@ -111,7 +127,10 @@
                         transition-show="scale"
                         transition-hide="scale"
                       >
-                        <q-date v-model="formState.resultTime" mask="YYYY-MM-DD">
+                        <q-date
+                          v-model="formState.resultTime"
+                          mask="YYYY-MM-DD"
+                        >
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
@@ -125,59 +144,86 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-btn @click="filterWinnerLists()" :loading="loading"
-                       class="full-width q-mt-md"
-                       color="brand"
-                       label="คัดกรอง"
+                <q-btn
+                  @click="filterWinnerLists()"
+                  :loading="loading"
+                  class="full-width q-mt-md"
+                  color="brand"
+                  label="คัดกรอง"
                 />
               </q-form>
 
-
-              <q-table class="q-mt-md" no-data-label="ไม่มีผู้ชนะรางวัลในวันนี้" loading-label="กำลังโหลด..." rows-per-page-label=" "
-                       :loading="loading"
-                       :columns="winnerColumn" :rows="winnerDataSource"/>
+              <q-table
+                class="q-mt-md"
+                no-data-label="ไม่มีผู้ชนะรางวัลในวันนี้"
+                loading-label="กำลังโหลด..."
+                rows-per-page-label=" "
+                :loading="loading"
+                :columns="winnerColumn"
+                :rows="winnerDataSource"
+              />
             </q-tab-panel>
           </q-tab-panels>
         </q-card-section>
-
       </div>
     </div>
-    <ClaimPromo v-if="isCommonPromo && store.hasToken()" :promo-id="list.id"
-                :loading-claim="btnLoading" @daily-slot="handleSlot()" />
-    <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" />
-<!--    <InviteFriendPromo v-if="list.id === 80 && !isCommonPromo" class="promo-invt" />-->
+
+    <ClaimPromo
+      v-if="isCommonPromo && store.hasToken()"
+      :promo-id="list.id"
+      :loading-claim="btnLoading"
+      @daily-slot="handleSlot()"
+    />
+
+    <SJBPromo
+      v-if="list.id === 40 && !isCommonPromo && store.hasToken()"
+      class="promo-sjb"
+    />
+
+    <template v-if="list.promoCode === 'multi-wheel'">
+      <template v-if="store.hasToken()">
+        <PromoSpinWheel></PromoSpinWheel>
+        <PromoSpinWheelWinner></PromoSpinWheelWinner>
+      </template>
+      <div v-else class="row items-center justify-center">
+        <q-btn size="md" class="login-btn" to="/login">{{
+          $t("lang.loginToCont")
+        }}</q-btn>
+      </div>
+    </template>
+
+    <!--    <InviteFriendPromo v-if="list.id === 80 && !isCommonPromo" class="promo-invt" />-->
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
       <q-card-section class="row items-center">
         <div class="bonus-svg-div">
-
           <span class="claim-amt">{{ claimMsg }}</span>
-          <span class="bonus-text">{{ $t('lang.claim') }}</span>
+          <span class="bonus-text">{{ $t("lang.claim") }}</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat :label="$t('lang.agree')" color="primary" v-close-popup/>
+        <q-btn flat :label="$t('lang.agree')" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
-
-
 </template>
 
 <script>
-import {defineComponent, onMounted, ref} from "vue";
-import {userStore} from "stores/index";
-import {eventapi} from "boot/axios"
-import {useQuasar} from "quasar";
+import { defineComponent, onMounted, ref } from "vue";
+import { userStore } from "stores/index";
+import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
 import * as _ from "lodash";
-import moment from "moment"
-import ClaimPromo from "../components/hotpromo/claimPromo.vue"
-import SJBPromo from "../components/hotpromo/40/shiJieBei.vue"
-import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue"
-import {useI18n} from "vue-i18n";
+import moment from "moment";
+import ClaimPromo from "../components/hotpromo/claimPromo.vue";
+import SJBPromo from "../components/hotpromo/40/shiJieBei.vue";
+import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue";
+import PromoSpinWheel from "components/hotpromo/80/PromoSpinWheel.vue";
+import PromoSpinWheelWinner from "components/hotpromo/80/PromoSpinWheelWinner.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "HotPromo",
@@ -186,6 +232,8 @@ export default defineComponent({
   components: {
     ClaimPromo,
     SJBPromo,
+    PromoSpinWheel,
+    PromoSpinWheelWinner,
     // InviteFriendPromo
   },
   props: {
@@ -193,19 +241,18 @@ export default defineComponent({
       type: Object,
       default: function () {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       isCommonPromo: null,
       activeKey: "1",
-      hotPromoList: [
-      ],
+      hotPromoList: [],
       selectedHotPromo: {
         id: "",
         bg: "",
-        contents: ""
+        contents: "",
       },
     };
   },
@@ -213,24 +260,24 @@ export default defineComponent({
     handleSlot() {
       const bonusItem = this.list.promoCode;
       const eventUrl = "/bonus/claim/" + bonusItem;
-        this.btnLoading = true;
-        eventapi
-          .put(eventUrl)
-          .then((res) => {
+      this.btnLoading = true;
+      eventapi
+        .put(eventUrl)
+        .then((res) => {
+          this.btnLoading = false;
+          var responseCode = res.data;
+          if (responseCode.code === 0) {
+            var rebatePoint = responseCode.data;
+            this.claimMsg = "$" + rebatePoint;
+            this.isClaimModal = true;
+          } else {
             this.btnLoading = false;
-            var responseCode = res.data;
-            if (responseCode.code === 0) {
-              var rebatePoint = responseCode.data;
-              this.claimMsg = "$" + rebatePoint;
-              this.isClaimModal = true;
-            } else {
-             this.btnLoading = false
-            }
-          })
-          .catch((error) => {
-            this.btnLoading = false;
-          });
-      }
+          }
+        })
+        .catch((error) => {
+          this.btnLoading = false;
+        });
+    },
   },
   mounted() {
     this.hotPromoList.forEach((element) => {
@@ -238,10 +285,15 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (this.list.id === 30 || this.list.id === 40 || this.list.id === 35) {
-      this.isCommonPromo = false
+    if (
+      this.list.id === 30 ||
+      this.list.id === 40 ||
+      this.list.id === 35 ||
+      this.list.id === 81
+    ) {
+      this.isCommonPromo = false;
     } else {
-      this.isCommonPromo = true
+      this.isCommonPromo = true;
     }
     const store = userStore();
 
@@ -254,36 +306,85 @@ export default defineComponent({
     }
   },
   setup() {
-    const $q = useQuasar();
-    const store = userStore();
     var qs = require("qs");
+    const $q = useQuasar();
 
-    const {t} = useI18n();
-    const lucky_number = ref('');
+    const store = userStore();
+
+    const { t } = useI18n();
+    const lucky_number = ref("");
     const loading = ref(false);
     const btnLoading = ref(false);
     const isClaimModal = ref(false);
-    const claimMsg = ref('');
+    const claimMsg = ref("");
     const formState = ref({
       dateTime: "",
       onlyMe: false,
-      resultTime: ""
-    })
+      resultTime: "",
+    });
     const filterColumn = ref([
-      {name: 'number', label: 'เบอร์', field: 'number', align: 'left', sortable: true},
-      {name: 'name', label: 'ชื่อ', field: 'loginName', align: 'left', sortable: true},
-      {name: 'status', label: 'สถานะ', field: 'winStatus', align: 'left', sortable: true},
-      {name: 'date', label: 'วันที่', field: 'date', align: 'left', sortable: true}
+      {
+        name: "number",
+        label: "เบอร์",
+        field: "number",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "name",
+        label: "ชื่อ",
+        field: "loginName",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "status",
+        label: "สถานะ",
+        field: "winStatus",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "date",
+        label: "วันที่",
+        field: "date",
+        align: "left",
+        sortable: true,
+      },
     ]);
     const dataSource = ref([]);
     const winnerDataSource = ref([]);
 
     const winnerColumn = [
-      {name: 'number', label: 'เบอร์', field: 'number', align: 'left', sortable: true},
-      {name: 'name', label: 'ชื่อ', field: 'loginName', align: 'left', sortable: true},
-      {name: 'status', label: 'สถานะ', field: 'winStatus', align: 'left', sortable: true},
-      {name: 'date', label: 'วันที่', field: 'date', align: 'left', sortable: true}
-    ]
+      {
+        name: "number",
+        label: "เบอร์",
+        field: "number",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "name",
+        label: "ชื่อ",
+        field: "loginName",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "status",
+        label: "สถานะ",
+        field: "winStatus",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "date",
+        label: "วันที่",
+        field: "date",
+        align: "left",
+        sortable: true,
+      },
+    ];
 
     const filterWinnerLists = () => {
       var resultTime = formState.value.resultTime;
@@ -296,23 +397,19 @@ export default defineComponent({
 
       winnerDataSource.value = [];
       loading.value = true;
-      eventapi
-        .get(winnerUrl)
-        .then((res) => {
-          loading.value = false;
-          var data = res.data.data;
+      eventapi.get(winnerUrl).then((res) => {
+        loading.value = false;
+        var data = res.data.data;
 
-          for (let i in data) {
-            _.each(data[i].winners, function (winner, index) {
+        for (let i in data) {
+          _.each(data[i].winners, function (winner, index) {
+            winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
 
-              winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
-
-              winnerDataSource.value.push(winner);
-            })
-          }
-        });
-
-    }
+            winnerDataSource.value.push(winner);
+          });
+        }
+      });
+    };
 
     // const loadLNWinnerList = () => {
     //   const winnerUrl = "/privi/winners";
@@ -337,7 +434,6 @@ export default defineComponent({
     // }
 
     const filterLuckyNumber = () => {
-
       loading.value = true;
       dataSource.value = [];
 
@@ -349,22 +445,21 @@ export default defineComponent({
         onlyMeParam = "&memberId=" + user_id;
       }
 
-      var filterUrl = "/privi/selectedNumbers?recordTime=" + filterDate + onlyMeParam;
+      var filterUrl =
+        "/privi/selectedNumbers?recordTime=" + filterDate + onlyMeParam;
 
       // console.log(filterDate);
-      eventapi.get(filterUrl)
+      eventapi
+        .get(filterUrl)
         .then((res) => {
           loading.value = false;
           var data = res.data.data;
           _.each(data, function (item, index) {
-
             item.date = moment(item.recordTime).format("DD/MM/YYYY");
             dataSource.value.push(item);
-
           });
 
           console.log(dataSource.value);
-
         })
         .catch((error) => {
           loading.value = false;
@@ -374,9 +469,8 @@ export default defineComponent({
           //   message: error.message,
           //   icon: "report_problem"
           // });
-        })
-
-    }
+        });
+    };
     // const ClaimDailyRebate = (id) => {
     //   if (!store.hasToken()) {
     //   } else {
@@ -411,7 +505,7 @@ export default defineComponent({
 
         var postData = {};
         postData.number = submit_number;
-        postData.promoCode = 'jolly88-iphone';
+        postData.promoCode = "jolly88-iphone";
 
         var luckyNumberUrl = "/privi/lotteryNumber";
         btnLoading.value = true;
@@ -425,10 +519,9 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: t('lang.number_sent'),
-                icon: "check_circle_outline"
+                message: t("lang.number_sent"),
+                icon: "check_circle_outline",
               });
-
             } else {
               // $q.notify({
               //   color: "negative",
@@ -446,12 +539,9 @@ export default defineComponent({
             //   message: error.message,
             //   icon: "report_problem"
             // });
-          })
-
+          });
       }
-
-
-    }
+    };
 
     return {
       store,
@@ -468,11 +558,9 @@ export default defineComponent({
       loading,
       btnLoading,
       isClaimModal,
-      claimMsg
-    }
-
-  }
-
+      claimMsg,
+    };
+  },
 });
 </script>
 <style lang="scss">
@@ -493,7 +581,7 @@ export default defineComponent({
     text-align: center;
     padding: 20px;
 
-    > img{
+    > img {
       max-width: 250px;
       margin: auto;
     }
@@ -664,9 +752,19 @@ export default defineComponent({
     }
   }
 }
-.promo-sjb, .promo-invt {
+.promo-sjb,
+.promo-invt {
   background: #2b2b4b;
   padding: 10px;
+}
+
+.login-btn {
+  border: 1px solid #ffa9ab;
+  background: $linear-bg-1;
+  color: $white !important;
+  border-radius: 25px;
+  font-size: $normal-size;
+  line-height: 1rem;
 }
 
 .win-rebate-model {

@@ -26,11 +26,11 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{path: "", component: () => import("pages/ForgotPwdPage.vue")}]
   },
-  // {
-  //   path: "/home",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [{ path: "", component: () => import("pages/HomePage.vue") }]
-  // },
+  {
+    path: "/home",
+    component: () => import("layouts/MainLayout.vue"),
+    redirect: "/"
+  },
   {
     path: "/promo",
     component: () => import("layouts/MainLayout.vue"),
@@ -162,6 +162,11 @@ const routes = [
     component: () => {
     }
     // component: () => {},
+  },
+  {
+    path: "/privilege/invite",
+    name: "invite",
+    component: () => import('pages/PrivilegeInvite.vue')
   },
   {
     path: "/account",

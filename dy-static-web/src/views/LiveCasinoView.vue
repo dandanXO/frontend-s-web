@@ -13,6 +13,18 @@
                 require('../assets/live/left_person_' + det.image + '.webp')
               "
             />
+            <template v-if="det.code === 'PMLIVE'">
+              <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp" />
+              <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp" />
+              <img
+                class="imgabs img-down-up fag1"
+                src="../assets/live/left_float_ag_1.webp"
+              />
+              <img
+                class="imgabs img-down-up fag2"
+                src="../assets/live/left_float_ag_2.webp"
+              />
+            </template>
             <template v-if="det.code === 'AG'">
               <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp" />
               <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp" />
@@ -83,18 +95,6 @@
               <img
                 class="imgabs img-right-left fbbin7"
                 src="../assets/live/left_float_bbin_7.webp"
-              />
-            </template>
-            <template v-if="det.code === 'PMLIVE'">
-              <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp" />
-              <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp" />
-              <img
-                class="imgabs img-down-up fag1"
-                src="../assets/live/left_float_ag_1.webp"
-              />
-              <img
-                class="imgabs img-down-up fag2"
-                src="../assets/live/left_float_ag_2.webp"
               />
             </template>
             <template v-if="det.code === 'SEXY'">
@@ -223,20 +223,18 @@ export default defineComponent({
 
     const platforms = ref([
       {
-        code: "AG",
-        name: "AG",
-        image: "ag",
-        message:
-          "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
-        gameCode: ""
+        code: "PMLIVE",
+        name: "DB",
+        image: "db",
+        gameCode: "",
+        message: ""
       },
       {
-        code: "BBINDY",
-        name: "BBIN",
-        image: "bbin",
-        gameCode: "bblive_lobby_pc",
-        message:
-          "20余年来倾力于技术及系统研发，屡获业界国际大奖入围或得奖殊荣予肯定。 近年来，BBIN积极参与国际活动，并赞助多项全球知名赛事，包含方程式赛车、球类赛事等，也主动号召大力支持慈善团体，不遗余力投入各项国际事务，提供业界更开阔多元的视野。"
+        code: "BG",
+        name: "BG",
+        image: "bg",
+        gameCode: "",
+        message: ""
       },
       {
         code: "ALLBET",
@@ -247,26 +245,28 @@ export default defineComponent({
           "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。"
       },
       {
-        code: "PMLIVE",
-        name: "PM",
-        image: "pm",
+        code: "BBINDY",
+        name: "BBIN",
+        image: "bbin",
+        gameCode: "bblive_lobby_pc",
+        message:
+          "20余年来倾力于技术及系统研发，屡获业界国际大奖入围或得奖殊荣予肯定。 近年来，BBIN积极参与国际活动，并赞助多项全球知名赛事，包含方程式赛车、球类赛事等，也主动号召大力支持慈善团体，不遗余力投入各项国际事务，提供业界更开阔多元的视野。"
+      },
+      {
+        code: "AG",
+        name: "AG",
+        image: "ag",
+        message:
+          "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+        gameCode: ""
+      },
+      {
+        code: "SEXY",
+        name: "Sexy",
+        image: "sexy",
         gameCode: "",
         message: ""
-      },
-      {
-        code: 'BG',
-        name: 'BG',
-        image: 'bg',
-        gameCode: '',
-        message: ''
-      },
-      {
-        code: 'SEXY',
-        name: 'Sexy',
-        image: 'sexy',
-        gameCode: '',
-        message: ''
-      },
+      }
     ]);
 
     const filteredPlatforms = ref([]);

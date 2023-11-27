@@ -109,7 +109,11 @@
     </q-scroll-area> -->
 
     <q-page-container>
-      <router-view/>
+      <router-view v-slot="{Component}">
+        <KeepAlive :max="8">
+          <component :is="Component" />
+        </KeepAlive>
+      </router-view>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs
@@ -127,29 +131,29 @@
           />
           首页
         </q-route-tab>
-        <q-route-tab to="/sport" name="sport">
-          <img
-              class="inactive"
-              src="../assets/images/index/menu/ft-sport.svg"
-          />
-          <img
-              class="hover"
-              src="../assets/images/index/menu/ft-sport-active.svg"
-          />
-          体育
-        </q-route-tab>
+<!--        <q-route-tab to="/sport" name="sport">-->
+<!--          <img-->
+<!--              class="inactive"-->
+<!--              src="../assets/images/index/menu/ft-sport.svg"-->
+<!--          />-->
+<!--          <img-->
+<!--              class="hover"-->
+<!--              src="../assets/images/index/menu/ft-sport-active.svg"-->
+<!--          />-->
+<!--          体育-->
+<!--        </q-route-tab>-->
 
-        <q-route-tab to="/poker" name="poker">
-          <img
-              class="inactive"
-              src="../assets/images/index/menu/ft-poker.png"
-          />
-          <img
-              class="hover"
-              src="../assets/images/index/menu/ft-poker-active.png"
-          />
-          棋牌
-        </q-route-tab>
+<!--        <q-route-tab to="/poker" name="poker">-->
+<!--          <img-->
+<!--              class="inactive"-->
+<!--              src="../assets/images/index/menu/ft-poker.png"-->
+<!--          />-->
+<!--          <img-->
+<!--              class="hover"-->
+<!--              src="../assets/images/index/menu/ft-poker-active.png"-->
+<!--          />-->
+<!--          棋牌-->
+<!--        </q-route-tab>-->
         <q-route-tab to="/promo" name="promo">
           <img
               class="inactive"
@@ -161,6 +165,19 @@
           />
           优惠
         </q-route-tab>
+
+        <q-route-tab to="/liveChat" name="chat">
+          <img
+            class="inactive"
+            src="../assets/images/index/livechat-icon.svg"
+          />
+          <img
+            class="hover filtericon"
+            src="../assets/images/index/livechat-icon.svg"
+          />
+          客服
+        </q-route-tab>
+
         <q-route-tab to="/account" name="account">
           <img class="inactive" src="../assets/images/index/menu/ft-me.svg"/>
           <img
@@ -662,7 +679,7 @@ export default defineComponent({
         icon: 'bbin',
       },
       {
-        id: '21',
+        id: '79',
         code: 'PG',
         icon: 'PG',
       },
@@ -672,32 +689,22 @@ export default defineComponent({
         icon: 'MG',
       },
       {
-        id: '27',
-        code: 'TTG',
-        icon: 'ttg',
+        id: '26',
+        code: 'AG',
+        icon: 'ag',
       },
       {
-        id: '28',
-        code: 'SG',
-        icon: 'sg',
-      },
-      {
-        id: '46',
+        id: '22',
         code: 'PP',
         icon: 'pp',
       },
       {
-        id: '64',
+        id: '31',
         code: 'JDB',
         icon: 'jdb',
       },
       {
-        id: '70',
-        code: 'AMEBA',
-        icon: 'AMEBA',
-      },
-      {
-        id: '54',
+        id: '78',
         code: 'PT',
         icon: 'pt',
       },

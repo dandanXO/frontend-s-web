@@ -65,9 +65,13 @@
       ></q-carousel-slide>
     </q-carousel>
 
-    <div class="top-action">
+    <div class="top-action" v-if="store.hasToken()">
       <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
+    </div>
+    <div v-else class="top-action">
+      <q-btn class="action-btn action-btn--withdrawal" @click="gotoSignIn()" no-caps label="Sign In"></q-btn>
+      <q-btn class="action-btn action-btn--deposit" @click="gotoSignUp()" no-caps label="Sign Up" />
     </div>
 
     <div class="games-selection-wrapper">
@@ -91,20 +95,76 @@
                 <div
                   class="game--bg"
                   :style="{
-                    backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                    backgroundImage: `url(${imgURLGame}${item.icon})`
                   }"
                 ></div>
               </div>
 
-              <div class="game-platform-title">{{ item.name }}</div>
+              <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
+
+              <template v-if="item.platformCode === 'JOKER'">
+                <div
+                  class="game-platform-label game-platform-label--hot"
+                  v-if="
+                    (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                    (item.gameLabel && item.gameLabel.includes('HOT'))
+                  "
+                >
+                  <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                </div>
+                <div
+                  class="game-platform-label game-platform-label--new"
+                  v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                >
+                  <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                </div>
+              </template>
+            </div>
+          </template>
+          <template v-else>
+            <div v-if="isShowAllHotGames">
+              <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+                <div
+                  class="game-platform-item btn-effect"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                >
+                  <div class="game-platform-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: `url(${imgURLGame}${item.icon})`
+                      }"
+                    ></div>
+                  </div>
+
+                  <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
+
+                  <template v-if="item.platformCode === 'JOKER'">
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="
+                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                        (item.gameLabel && item.gameLabel.includes('HOT'))
+                      "
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                    >
+                      <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                    </div>
+                  </template>
+                </div>
+              </transition>
             </div>
           </template>
         </template>
       </div>
       <div class="hot-games-pattern-bottom"></div>
-      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">
-        Load More
-      </div>
+      <!--      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">-->
+      <div class="btn-load-more btn-effect" @click="scrollDownHotGames" v-if="!isShowAllHotGames">Load More</div>
       <div v-else class="hot-games-pattern-bottom--filled"></div>
     </div>
 
@@ -133,6 +193,10 @@
                 })()
               }"
             ></div>
+
+            <div v-if="item.name === 'JOKER'" class="burning-hot">
+              <img src="../assets/images/index/hot.png" />
+            </div>
           </div>
         </template>
         <!-- coming soon placeholder // start -->
@@ -254,7 +318,7 @@
     </div>
   </div>
 
-  <GameModal ref="allGames"></GameModal>
+  <GameModal ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
 
   <q-dialog
     width="100%"
@@ -279,6 +343,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
+    <q-btn dense rounded icon="close" class="bg-yellow text-black announcement-close" v-close-popup />
     <q-card style="width: 100%" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
         <q-tabs
@@ -366,11 +431,24 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ item.name }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
+
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                    >
+                      <img src="../assets/images/index/platform-label-new.png" alt="" />
+                    </div>
                   </div>
                 </template>
               </template>
@@ -385,11 +463,27 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ item.name }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
+
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="
+                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                        (item.gameLabel && item.gameLabel.includes('HOT'))
+                      "
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                    >
+                      <img src="../assets/images/index/platform-label-new.png" alt="" />
+                    </div>
                   </div>
                 </template>
               </template>
@@ -475,30 +569,6 @@ const depositItems = reactive([
   { amount: 50000, hotLabel: 2500, isActive: false }
 ]);
 
-const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
-    item.isActive = i === index;
-    if (i === index) {
-      depositAmountInput.value = item.amount;
-    }
-  });
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
-};
-
-const depositAmountInput = ref("");
-
 const esport = ref([]);
 const sport = ref([]);
 const livecasino = ref([]);
@@ -546,6 +616,10 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
   loadGameList(gameType, gameId);
   fullGameDialog.value = true;
   hotGameOn.value = false;
+};
+
+const closeFullGameDialog = () => {
+  fullGameDialog.value = false;
 };
 
 const hotGameOn = ref(false);
@@ -603,6 +677,11 @@ const loadHotGameList = () => {
     });
 };
 
+const isShowAllHotGames = ref(false);
+const scrollDownHotGames = () => {
+  isShowAllHotGames.value = true;
+};
+
 const loadGameList = (type, id) => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
   const code = id;
@@ -634,7 +713,7 @@ const loadGameList = (type, id) => {
 };
 
 const imgURL = process.env.IMAGE_CDN;
-const imgURLGame = imgURL + "/game/5/";
+const imgURLGame = imgURL + "/game/";
 const imgURLPromo = imgURL + "/promo/";
 
 // Pop out ads banner
@@ -704,100 +783,46 @@ const getPlatList = () => {
       var pf = data;
       ui.slotLists = [];
       pf.forEach((element) => {
+        const { status } = element;
+        if (status === "TEST" && store.memberType !== "TEST") return;
+
         const platTypes = element.gameType.split(",");
-        // console.log(platTypes);
         if (platTypes.indexOf("ESPORT") > -1) {
           var espObj = Object.assign({}, element);
-          // console.log(espObj);
-
           esport.value.push(espObj);
-
           //Add 1 More Casual minigame.
-          // if (platTypes.indexOf("CASUAL") > -1) {
           var casualObj = Object.assign({}, element);
-          casualObj.gameCode = "casual";
-          casualObj.title = casualObj.name + " 小游戏";
-          casualObj.icon = "casual";
-          casualObj.subtitle = "小游戏";
           casuals.value.push(casualObj);
-          // }
         }
         if (platTypes.indexOf("SPORT") > -1) {
           var spObj = Object.assign({}, element);
-          if (spObj.code === "IM") {
-            spObj.title = "IM体育";
-          }
-          if (spObj.code === "IA") {
-            spObj.title = "小艾体育";
-          }
-          if (spObj.code === "PM") {
-            spObj.title = "熊猫体育";
-          }
-          if (spObj.code === "CR") {
-            spObj.title = "CR体育";
-          }
-          if (spObj.code === "SABA") {
-            spObj.title = spObj.code + "体育";
-          }
-          spObj.icon = "sport";
-          spObj.subtitle = "体育赛事";
           sport.value.push(spObj);
         }
         if (platTypes.indexOf("LIVE") > -1) {
           var liveObj = Object.assign({}, element);
-          if (liveObj.code === "PMLIVE") {
-            liveObj.title = "DB 真人";
-          } else if (liveObj.code === "EBET") {
-            liveObj.title = "WE 真人";
-          } else {
-            liveObj.title = liveObj.name + " 真人";
-          }
-          liveObj.icon = "live";
-          liveObj.subtitle = "真人娱乐";
           livecasino.value.push(liveObj);
         }
         if (platTypes.indexOf("SLOT") > -1) {
-          // console.log(element)
           var slotObj = Object.assign({}, element);
-          slotObj.title = translateRecord(slotObj.name) + " 电子";
-          slotObj.icon = "slot";
-          slotObj.subtitle = "电子游戏";
-          // console.log(slotObj);
-          if (slotObj.code === "AG") {
-          } else {
-            let slotItem = {
-              id: slotObj.id,
-              code: slotObj.code,
-              icon: slotObj.name
-            };
-            // console.log(slotItem);
-            ui.slotLists.push(slotItem);
-            slot.value.push(slotObj);
-          }
+          let slotItem = {
+            id: slotObj.id,
+            code: slotObj.code,
+            icon: slotObj.name
+          };
+          ui.slotLists.push(slotItem);
+          slot.value.push(slotObj);
         }
         if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
           var fishObj = Object.assign({}, element);
-          fishObj.title = fishObj.name + " 捕鱼";
-          fishObj.icon = "fish";
-          fishObj.subtitle = "捕鱼游戏";
           fishing.value.push(fishObj);
         }
         if (platTypes.indexOf("POKER") > -1) {
           var pokerObj = Object.assign({}, element);
-          pokerObj.title = translateRecord(pokerObj.name);
-          pokerObj.icon = "poker";
-          pokerObj.subtitle = "棋牌娱乐";
           poker.value.push(pokerObj);
         }
         if (platTypes.indexOf("LOTTERY") > -1) {
           var lottObj = Object.assign({}, element);
-          lottObj.title = lottObj.name + " 彩票";
-          lottObj.icon = "lottery";
-          lottObj.subtitle = "彩票游戏";
-          //HArdCode hid BBIN
-          if (lottObj.code !== "BBINDY") {
-            lottery.value.push(lottObj);
-          }
+          lottery.value.push(lottObj);
         }
       });
     })
@@ -832,6 +857,14 @@ const openPopup = (noticeType) => {
 const gotoPromo = (banner) => {
   const redirectU = "/promo?name=" + banner.redirectUrl;
   // router.push(`${redirectU}`);
+};
+
+const gotoSignIn = () => {
+  router.push("/login");
+};
+
+const gotoSignUp = () => {
+  router.push("/register");
 };
 
 const download_url = ref("");
@@ -878,6 +911,14 @@ const getAppDownloadUrl = () => {
     });
 };
 
+const truncateText = (text, maxLength) => {
+  if (window.innerWidth <= 450) {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  } else {
+    return text;
+  }
+};
+
 onMounted(() => {
   getPlatList();
   loadData();
@@ -886,6 +927,7 @@ onMounted(() => {
   getVersionNo();
   getAppDownloadUrl();
   loadHotGameList();
+  store.getUnreadTotal();
 });
 </script>
 
@@ -933,6 +975,7 @@ onMounted(() => {
       padding: 10px 12px;
       text-align: center;
       color: black;
+
       .contentfonts {
         text-align: center;
         color: #333;
@@ -1320,6 +1363,13 @@ onMounted(() => {
   font-weight: bold;
 }
 
+.announcement-close {
+  position: absolute;
+  right: 4px;
+  top: 80px;
+  z-index: 3;
+}
+
 .popout-dialog {
   width: 90%;
 
@@ -1397,6 +1447,7 @@ onMounted(() => {
         margin-left: 3px;
         margin-right: 3px;
         transition: all 0.3s;
+
         img {
           display: block;
           width: 70%;
@@ -1463,6 +1514,7 @@ onMounted(() => {
     justify-content: center;
     gap: 30px;
     margin-top: 16px;
+
     .deposit-option-btn {
       color: #cccccc;
       background-color: rgba(21, 0, 37, 0.5) !important;
@@ -1479,6 +1531,7 @@ onMounted(() => {
 
       &.label-on-discount {
         position: relative;
+
         &:after {
           content: "";
           background-image: url(../assets/images/index/popout/label-discount.png);
@@ -1537,6 +1590,7 @@ onMounted(() => {
   display: flex;
   gap: 16px;
   margin-top: 10px;
+
   .action-btn {
     display: flex;
     justify-content: center;
@@ -1554,6 +1608,7 @@ onMounted(() => {
     &--withdrawal {
       background-image: url(../assets/images/index/action-btn-withdrawal.png);
       color: #ffffff;
+
       &:before {
         box-shadow: none;
       }
@@ -1562,6 +1617,7 @@ onMounted(() => {
     &--deposit {
       background-image: url(../assets/images/index/action-btn-deposit.png);
       color: #fae576;
+
       &:before {
         box-shadow: none;
       }
@@ -1629,6 +1685,7 @@ onMounted(() => {
       width: 270px;
       margin-left: 10px;
       margin-right: 10px;
+
       .txt-style {
         background-color: #f3ec78;
         background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
@@ -1687,6 +1744,26 @@ onMounted(() => {
     border: 3px solid #ffc027;
     border-radius: 15px;
     overflow: hidden;
+    position: relative;
+
+    .game-platform-label {
+      position: absolute;
+      top: 0;
+      width: 45%;
+
+      &--hot {
+        left: 0;
+      }
+
+      &--new {
+        right: 0;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
 
     .game-platform-img {
       background-color: #cccccc;
@@ -1735,6 +1812,7 @@ onMounted(() => {
 
   .game-platform-item {
     position: relative;
+
     &--img {
       background-size: cover;
       background-position: center center;
@@ -1779,6 +1857,7 @@ onMounted(() => {
 
 .floating-btn {
   z-index: 5;
+
   img {
     width: 30px;
   }
@@ -1809,5 +1888,12 @@ onMounted(() => {
   .fullgame-search {
     padding-top: 90px;
   }
+}
+
+.burning-hot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35%;
 }
 </style>

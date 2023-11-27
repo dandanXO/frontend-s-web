@@ -314,7 +314,7 @@ svg {
 
   .logo {
     margin: 0 auto;
-    padding: 25px 0 30px;
+    padding: 25px 0 10px;
     display: flex;
     width: 150px;
 
@@ -324,11 +324,12 @@ svg {
   }
 
   .landing-img {
+    margin-top: 20px;
     img {
       display: block;
       width: 95%;
       margin: auto;
-      max-width: 400px;
+      max-width: 300px;
     }
   }
 

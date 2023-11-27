@@ -40,7 +40,7 @@
                 v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
                 :src="paymethodicon + '/000/fff.png&text=payment'"
               />
-              <img v-else :src="paymethodicon + '/payment/' + item.icon" />
+              <img v-else :src="paymentDir + item.icon" />
             </el-col>
             <el-col :span="12">
               <div class="node-text">
@@ -98,7 +98,12 @@
         /> ->
       </div> -->
     </div>
-    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="45%">
+    <el-dialog
+      v-model="dialogVisible"
+      :title="dialogTitle"
+      width="45%"
+      :close-on-press-escape="false"
+    >
       <el-form
         ref="addFormRef"
         :model="ruleForm"
@@ -116,31 +121,22 @@
         </el-form-item>
         <el-form-item :label="$t('fields.icon')" prop="icon" required>
           <el-row :gutter="24">
-            <el-col :span="16">
-              <el-input
-                :readonly="true"
-                v-model.number="ruleForm.icon"
-                autocomplete="off"
+            <el-col v-if="ruleForm.icon" :span="18" style="width: 250px">
+              <el-image
+                v-if="ruleForm.icon"
+                :src="paymentDir + ruleForm.icon"
+                fit="contain"
+                class="preview"
               />
             </el-col>
-            <el-col :span="8">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="input"
-                style="display: none"
-                accept="image/*"
-                @change="attachPhoto($event, 'payment')"
-              />
+            <el-col :span="6">
               <el-button
-                style="display: block"
-                icon="el-icon-upload"
+                icon="el-icon-search"
                 size="mini"
                 type="success"
-                @click="$refs.input.click()"
+                @click="browseImage('ICON')"
               >
-                {{ $t('fields.upload') }}
+                {{ $t('fields.browse') }}
               </el-button>
             </el-col>
           </el-row>
@@ -151,39 +147,22 @@
         </div>
         <el-form-item :label="$t('fields.icon')" prop="promoIcon">
           <el-row :gutter="24">
-            <el-col :span="16">
-              <el-input
-                :readonly="true"
-                v-model="ruleForm.promoIcon"
-                autocomplete="off"
+            <el-col v-if="ruleForm.promoIcon" :span="18" style="width: 250px">
+              <el-image
+                v-if="ruleForm.promoIcon"
+                :src="paymentDir + ruleForm.promoIcon"
+                fit="contain"
+                class="preview"
               />
             </el-col>
-            <el-col :span="8">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFileL"
-                type="file"
-                ref="input1"
-                style="display: none"
-                accept="image/*"
-                @change="attachPhoto($event, 'paymentLabel')"
-              />
+            <el-col :span="6">
               <el-button
-                v-if="ruleForm.promoIcon"
-                style="display: inline-block"
-                icon="el-icon-close"
-                size="mini"
-                type="danger"
-                @click="removePromoIcon"
-              />
-              <el-button
-                style="display: inline-block"
-                icon="el-icon-upload"
+                icon="el-icon-search"
                 size="mini"
                 type="success"
-                @click="$refs.input1.click()"
+                @click="browseImage('PROMO')"
               >
-                {{ $t('fields.upload') }}
+                {{ $t('fields.browse') }}
               </el-button>
             </el-col>
           </el-row>
@@ -198,22 +177,136 @@
           <el-button @click="dialogVisible = false">
             {{ $t('fields.cancel') }}
           </el-button>
-          <el-button type="primary" @click="isEdit ? confirmEdit() : confirmAddNode(list, level, name)">
+          <el-button
+            type="primary"
+            @click="isEdit ? confirmEdit() : confirmAddNode(list, level, name)"
+          >
             {{ $t('fields.confirm') }}
           </el-button>
         </span>
       </template>
     </el-dialog>
-    </div>
+
+    <el-dialog
+      :title="uiControl.imageDialogTitle"
+      v-model="uiControl.imageDialogVisible"
+      append-to-body
+      width="50%"
+      :close-on-press-escape="false"
+    >
+      <div class="search">
+        <el-input
+          v-model="imageRequest.name"
+          size="small"
+          style="width: 200px"
+          :placeholder="$t('fields.imageName')"
+        />
+        <el-select
+          v-model="imageRequest.siteId"
+          size="small"
+          :placeholder="$t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          ref="searchImage"
+          @click="loadSiteImage"
+        >
+          {{ $t('fields.search') }}
+        </el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="warning"
+          @click="resetImageQuery()"
+        >
+          {{ $t('fields.reset') }}
+        </el-button>
+      </div>
+      <div class="grid-container">
+        <div
+          v-for="item in imageList.list"
+          :key="item"
+          class="grid-item"
+          :class="item.id === selectedImage.id ? 'selected' : ''"
+        >
+          <el-image
+            :src="paymentDir + item.path"
+            fit="contain"
+            style="aspect-ratio: 1/1"
+            @click="selectImage(item)"
+          />
+        </div>
+      </div>
+      <el-pagination
+        class="pagination"
+        @current-change="changeImagePage"
+        layout="prev, pager, next"
+        :page-size="imageRequest.size"
+        :page-count="imageList.pages"
+        :current-page="imageRequest.current"
+      />
+      <div class="image-info" v-if="selectedImage.id !== 0">
+        <el-row>
+          <el-col :span="4">
+            <h3>{{ $t('fields.selectedImage') }}</h3>
+          </el-col>
+          <el-col :span="20">
+            <el-image
+              :src="paymentDir + selectedImage.path"
+              fit="contain"
+              class="smallPreview"
+              :preview-src-list="[paymentDir + selectedImage.path]"
+            />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">{{ $t('fields.imageSite') }} :</el-col>
+          <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">{{ $t('fields.imageName') }} :</el-col>
+          <el-col :span="20">{{ selectedImage.name }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">{{ $t('fields.imageRemark') }} :</el-col>
+          <el-col :span="20">{{ selectedImage.remark }}</el-col>
+        </el-row>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.imageSelectionVisible = false">
+            {{ $t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submitImage">
+            {{ $t('fields.confirm') }}
+          </el-button>
+        </div>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
 import { ElMessage } from 'element-plus'
 import $ from 'jquery'
-import { reactive, defineComponent } from 'vue'
+import { computed, reactive, defineComponent } from 'vue'
 import { uploadImage } from '../../api/image'
 import bus from '../../utils/bus'
 import i18n from '../../i18n/index'
+import { getSiteImage } from '../../api/site-image'
+import { getSiteListSimple } from '../../api/site'
+import { useStore } from '../../store'
+import { TENANT } from '../../store/modules/user/action-types'
 // import { getSystemPaymentShowBySiteIdGroupByNodeName } from '../../api/payment-display'
 // import { addPaymentShow, updatePaymentShow } from '../../api/payment-display'
 
@@ -253,27 +346,30 @@ export default defineComponent({
   data() {
     var checkCode = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('Code is required'));
+        return callback(new Error('Code is required'))
       }
-      const codes = [];
+      const codes = []
       this.list.forEach(item => {
         if (item.code) {
-          codes.push(item.code);
+          codes.push(item.code)
         }
-      });
+      })
       codes.forEach(element => {
         if (element.toLowerCase() === value.toLowerCase()) {
           if (this.isEdit) {
             callback()
           } else {
-            return callback(new Error('Code exists, please input a different code'));
+            return callback(
+              new Error('Code exists, please input a different code')
+            )
           }
         }
-      });
-      callback();
-    };
+      })
+      callback()
+    }
     return {
       paymethodicon: process.env.VUE_APP_IMAGE,
+      paymentDir: process.env.VUE_APP_IMAGE + '/payment/',
       ruleForm: {
         name: '',
         icon: '',
@@ -284,15 +380,9 @@ export default defineComponent({
         code: '',
       },
       rules: {
-        code: [
-          { validator: checkCode, trigger: 'blur' }
-        ],
-        name: [
-          { required: true, message: 'Name is required' }
-        ],
-        icon: [
-          { required: true, message: 'Icon is required' }
-        ]
+        code: [{ validator: checkCode, trigger: 'blur' }],
+        name: [{ required: true, message: 'Name is required' }],
+        icon: [{ required: true, message: 'Icon is required' }],
       },
       snoteList: reactive({
         list: [],
@@ -306,13 +396,40 @@ export default defineComponent({
         type: null,
       },
       isEdit: false,
-      inputKey: 0
+      inputKey: 0,
+      LOGIN_USER_TYPE: computed(() => useStore().state.user.userType),
+      uiControl: reactive({
+        imageDialogVisible: false,
+        imageDialogTitle: '',
+        imageDialogType: '',
+      }),
+      siteList: reactive({
+        list: [],
+      }),
+      imageList: reactive({
+        dataList: [],
+        pages: 0,
+      }),
+      selectedImage: reactive({
+        id: 0,
+        name: '',
+        siteName: '',
+        remark: '',
+        path: '',
+      }),
+      imageRequest: reactive({
+        size: 10,
+        current: 1,
+        name: null,
+        siteId: null,
+        category: 'PAYMENT',
+      }),
     }
   },
   methods: {
     removePromoIcon() {
-      this.ruleForm.promoIcon = "";
-      $('#uploadFileL').val(null);
+      this.ruleForm.promoIcon = ''
+      $('#uploadFileL').val(null)
     },
     // 编辑
     editHandle(node, parentIdx, idx) {
@@ -323,31 +440,31 @@ export default defineComponent({
       this.dialogVisible = true
     },
     addHandle() {
-      $('#uploadFile').val(null);
-      $('#uploadFileL').val(null);
+      $('#uploadFile').val(null)
+      $('#uploadFileL').val(null)
       this.ruleForm = { id: 0, icon: null, code: null, name: null }
       this.isEdit = false
       this.dialogTitle = 'Add'
       this.dialogVisible = true
     },
     confirmAddNode() {
-      this.$refs.addFormRef.validate((valid) => {
+      this.$refs.addFormRef.validate(valid => {
         if (valid) {
           this.ruleForm.siteId = this.pageList.siteId
           this.ruleForm.children = []
           // eslint-disable-next-line vue/no-mutating-props
           this.list.push(this.ruleForm)
-          this.dialogVisible = false;
+          this.dialogVisible = false
           bus.emit('exportNodes')
-          $('#uploadFile').val(null);
-          $('#uploadFileL').val(null);
+          $('#uploadFile').val(null)
+          $('#uploadFileL').val(null)
         }
       })
     },
     deleteItem(item, index) {
       // eslint-disable-next-line vue/no-mutating-props
       this.list.splice(index, 1)
-      bus.emit('exportNodes');
+      bus.emit('exportNodes')
       if (item) {
         bus.emit('deleteChildItem', item)
       } else {
@@ -355,8 +472,8 @@ export default defineComponent({
           bus.emit('deleteChildItem', 'isGroup')
         }
       }
-      $('#uploadFile').val(null);
-      $('#uploadFileL').val(null);
+      $('#uploadFile').val(null)
+      $('#uploadFileL').val(null)
     },
     clickItem(item) {
       this.selectItem = item
@@ -371,15 +488,15 @@ export default defineComponent({
       this.dialogVisible = true
     },
     confirmEdit() {
-      this.$refs.addFormRef.validate((valid) => {
+      this.$refs.addFormRef.validate(valid => {
         if (valid) {
           Object.assign(this.item, this.ruleForm)
           console.log(this.list)
 
           this.dialogVisible = false
           bus.emit('exportNodes')
-          $('#uploadFile').val(null);
-          $('#uploadFileL').val(null);
+          $('#uploadFile').val(null)
+          $('#uploadFileL').val(null)
         }
       })
     },
@@ -558,6 +675,56 @@ export default defineComponent({
             type: 'error',
           })
         }
+      }
+    },
+
+    resetImageQuery() {
+      this.imageRequest.name = null
+      this.imageRequest.siteId =
+        this.siteList.list.length === 1 ? this.siteList.list[0] : null
+    },
+    async changeImagePage(page) {
+      this.imageRequest.current = page
+      const { data: ret } = await getSiteImage(this.imageRequest)
+      this.imageList.list = ret.records
+      this.imageList.pages = ret.pages
+    },
+    selectImage(item) {
+      this.selectedImage.id = item.id
+      this.selectedImage.name = item.name
+      this.selectedImage.siteName = item.siteName
+      this.selectedImage.path = item.path
+      this.selectedImage.remark = item.remark
+    },
+
+    async browseImage(type) {
+      this.loadSites()
+      this.loadSiteImage()
+      this.uiControl.imageDialogTitle = i18n.global.t('fields.icon')
+      this.uiControl.imageDialogType = type
+      this.uiControl.imageDialogVisible = true
+    },
+    async loadSiteImage() {
+      this.selectedImage.id = 0
+      const { data: ret } = await getSiteImage(this.imageRequest)
+      this.imageList.list = ret.records
+      this.imageList.pages = ret.pages
+    },
+    submitImage() {
+      if (this.uiControl.imageDialogType === 'ICON') {
+        this.ruleForm.icon = this.selectedImage.path
+      } else {
+        this.ruleForm.promoIcon = this.selectedImage.path
+      }
+      this.uiControl.imageDialogVisible = false
+    },
+    async loadSites() {
+      const { data: site } = await getSiteListSimple()
+      this.siteList.list = site
+      if (this.LOGIN_USER_TYPE.value === TENANT.value) {
+        this.siteList.list = this.siteList.list.find(
+          s => s.siteName === useStore().state.user.siteName
+        )
       }
     },
     // async loadNote() {
@@ -828,5 +995,53 @@ $node-color: #309799;
   .iconPromo {
     width: 55px;
   }
+}
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+.grid-container {
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  border-radius: 5px;
+  transition: transform 0.5s;
+}
+
+.grid-item .el-image:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.grid-item.selected {
+  box-shadow: 0 4px 8px rgba(12, 20, 242, 0.12), 0 0 6px rgba(12, 20, 242, 0.12);
+  border: 1px solid blue;
+}
+
+.image-info {
+  margin: 10px;
+}
+
+.image-info .el-row {
+  margin-top: 10px;
+}
+
+.preview {
+  width: 200px;
+  height: 200px;
+}
+
+.smallPreview {
+  width: 100px;
+  height: 100px;
 }
 </style>
