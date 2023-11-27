@@ -274,6 +274,7 @@ export default {
     status: 'สถานะ',
     subtotal: 'ยอดรวมย่อย',
     systemAlert: 'แจ้งเตือนระบบ',
+    systemAnnouncement: 'ประกาศระบบ',
     telephone: 'หมายเลขโทรศัพท์',
     thirdLevelAffiliateCommission: 'คอมมิชชันตัวแทนระดับ 3',
     thisMonth: 'เดือนนี้',
@@ -326,6 +327,7 @@ export default {
     confirmToAdjust:
       'โปรดยืนยันว่าคุณต้องการปรับเปลี่ยน? เมื่อทำการปรับเปลี่ยนแล้วจะไม่สามารถเปลี่ยนแปลงได้อีก',
     confirmToPay: 'โปรดยืนยันว่าคุณต้องการจ่ายคอมมิชชัน?',
+    deleteSuccess: 'ลบสำเร็จ',
     domainAppCopied: 'ระบบคัดลอกโดเมนสำหรับแอปพลิเคชันบนมือถือลงคลิปบอร์ดแล้ว',
     domainWebCopied: 'ระบบคัดลอกโดเมนสำหรับ PC ลงคลิปบอร์ดแล้ว',
     editSuccess: 'แก้ไขสำเร็จ',

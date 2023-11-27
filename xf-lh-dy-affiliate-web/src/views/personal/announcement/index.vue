@@ -3,7 +3,7 @@
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
         <div class="clearfix">
-          <span class="role-span">{{ $t('fields.creditFlow') }}</span>
+          <span class="role-span">{{ $t('fields.systemAnnouncement') }}</span>
         </div>
       </template>
       <el-tabs
@@ -121,7 +121,7 @@
                   icon="el-icon-view"
                   size="mini"
                   type="success"
-                  @click="readAnnouncement(scope.row)"
+                  @click.stop="readAnnouncement(scope.row)"
                 />
                 <el-button
                   icon="el-icon-delete"
