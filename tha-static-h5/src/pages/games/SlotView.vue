@@ -1,10 +1,7 @@
 <template>
   <q-page>
     <div class="loading-div" v-if="isLoading">
-      <q-spinner-hourglass
-        color="deep-orange"
-        size="8em"
-      />
+      <q-spinner-hourglass color="deep-orange" size="8em" />
     </div>
     <div class="pageitem">
       <div class="topbar">
@@ -17,47 +14,66 @@
               :key="p"
               @click="switchPlat(p)"
             >
-              <img :src="require('../../assets/logo/' + p.code + '.png')">
+              <img :src="require('../../assets/logo/' + p.code + '.png')" />
             </div>
           </div>
           <q-scroll-observer axis="horizontal" @scroll="onScroll" />
         </q-scroll-area>
-        <div class="slideProgress" style="width: 30px; height: 3px; border-radius: 30px; position:relative; background: #000422; margin: 0 auto 10px; overflow: hidden; position:relative;">
-          <div class="position" :style="'width: 8px; position: absolute; height: 100%; background: #ffffff; left: ' + scrollInfo + '%;'"></div>
+        <div
+          class="slideProgress"
+          style="
+            width: 30px;
+            height: 3px;
+            border-radius: 30px;
+            position: relative;
+            background: #000422;
+            margin: 0 auto 10px;
+            overflow: hidden;
+            position: relative;
+          "
+        >
+          <div
+            class="position"
+            :style="'width: 8px; position: absolute; height: 100%; background: #ffffff; left: ' + scrollInfo + '%;'"
+          ></div>
         </div>
       </div>
-       <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px);">
-      <div class="grid" style="padding-bottom: 20px;">
-        <div
+      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px)">
+        <div class="grid" style="padding-bottom: 20px">
+          <div
             v-for="(game, index) in gamePage.gameList"
             :key="index"
             :data-id="index"
             v-intersection="onIntersection"
             @click="openGame(game.name, game.code, selectedPlat.status)"
-            style="height: 140px;"
+            style="height: 140px"
           >
-
-        <transition name="in-view">
-          <q-list class="q-col-gutter-none">
-            <q-img
-                  loading="lazy"
-                  :src="game.icon"
-                  :placeholder-src="game.default"
-                  fit="cover"
-                  height="140px"
-                  spinner-color="white"
-                  position="50% 20%"
-                  style=" border-radius: 20px; overflow: hidden"
-                  :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-              >
-            <div class="slot-name"> {{ game.name }}</div>
-                <template v-slot:loading>
-                  <img :src="game.default" style="width: 100%; height: 140px; border-radius: 15px; overflow:hidden;">
-                </template>
-              </q-img>
-          </q-list>
-        </transition>
-              <!-- <q-img
+            <transition name="in-view">
+              <q-list class="q-col-gutter-none">
+                <div>
+                  <q-img
+                    loading="lazy"
+                    :src="game.icon"
+                    :placeholder-src="game.default"
+                    fit="cover"
+                    height="140px"
+                    spinner-color="white"
+                    position="50% 20%"
+                    style="border-radius: 20px; overflow: hidden"
+                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                  >
+                    <template v-slot:loading>
+                      <img
+                        :src="game.default"
+                        style="width: 100%; height: 140px; border-radius: 15px; overflow: hidden"
+                      />
+                    </template>
+                  </q-img>
+                  <div class="slot-name">{{ game.name }}</div>
+                </div>
+              </q-list>
+            </transition>
+            <!-- <q-img
                   loading="lazy"
                   :src="game.icon"
                   :placeholder-src="defaultImg"
@@ -69,13 +85,12 @@
                   <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
                 </template>
               </q-img> -->
-                <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
-
+            <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
+          </div>
         </div>
-      </div>
         <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
         <q-scroll-observer @scroll="scrolling" />
-       </q-scroll-area>
+      </q-scroll-area>
     </div>
     <GameModal ref="slotsGame"></GameModal>
   </q-page>
@@ -328,108 +343,107 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-  .pageitem {
-    // border: 1px solid #ffffff;
-    position: absolute;
+.pageitem {
+  // border: 1px solid #ffffff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  .topbar {
+    position: sticky;
+    z-index: 99;
+    background: #23263c;
+    padding-bottom: 10px;
     top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: auto;
-    .topbar {
-      position: sticky;
-      z-index: 99;
-      background: #23263c;
-      padding-bottom: 10px;
-      top: 0;
-      .bookmarks {
-        cursor: pointer;
+    .bookmarks {
+      cursor: pointer;
+      display: flex;
+      grid-gap: 20px;
+      max-width: 1400px;
+      width: 100%;
+      margin: 10px auto 0;
+      // overflow: auto;
+      padding: 10px 20px 20px;
+      justify-content: flex-start;
+      // flex-wrap: wrap;
+      .plat-item {
         display: flex;
-        grid-gap: 20px;
-        max-width: 1400px;
-        width: 100%;
-        margin: 10px auto 0;
-        // overflow: auto;
-        padding: 10px 20px 20px;
-        justify-content: flex-start;
-        // flex-wrap: wrap;
-        .plat-item {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #23263c;
+        justify-content: center;
+        align-items: center;
+        background: #23263c;
+        img {
+          max-height: 15px;
+          filter: grayscale(1);
+        }
+        span {
+          color: rgba(200, 200, 200, 0.5);
+          font-size: 20px;
+          font-weight: bold;
+        }
+        &.active {
+          background: #2b2b4b;
+          box-shadow: inset 0 0 5px #ffffff;
           img {
-            max-height: 15px;
-            filter: grayscale(1);
+            filter: grayscale(0);
           }
           span {
-            color: rgba(200, 200, 200, 0.5);
-            font-size: 20px;
-            font-weight: bold;
-          }
-          &.active {
-            background: #2b2b4b;
-            box-shadow: inset 0 0 5px #ffffff;
-            img {
-              filter: grayscale(0);
-            }
-            span {
-              color: #ffffff;
-            }
-          }
-        }
-        div {
-          padding: 10px;
-          text-align: center;
-          background: #2b2b4b;
-          border-radius: 10px;
-          box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
-          &:hover {
-            // transform: scale(1.01274) translate(0px, -4px);
+            color: #ffffff;
           }
         }
       }
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      width: 90%;
-      margin: 0 auto;
-      :deep(.zoomin) {
-        transform: scale(1.3);
-      }
-      .inner-img {
-        border-radius: 20px;
-        overflow: hidden;
-        position: relative;
-      }
-      .slot-name {
-        background: linear-gradient(0deg, #1f2035cf 20%, transparent);
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
+      div {
         padding: 10px;
         text-align: center;
+        background: #2b2b4b;
+        border-radius: 10px;
+        box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
+        &:hover {
+          // transform: scale(1.01274) translate(0px, -4px);
+        }
       }
     }
-
   }
-  .loading-div{
-    z-index: 99;
-    position:absolute;
-    top: 0;
-    background: rgba(35,38,60,0.6);
-    text-align:center;
-    width: 100%;
-    height: 100%;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    svg{
-      color: #db7e42;
-      width:48px;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 90%;
+    margin: 0 auto;
+    :deep(.zoomin) {
+      transform: scale(1.3);
+    }
+    .inner-img {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .slot-name {
+      background: linear-gradient(0deg, #1f2035cf 20%, transparent);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      text-align: center;
     }
   }
+}
+.loading-div {
+  z-index: 99;
+  position: absolute;
+  top: 0;
+  background: rgba(35, 38, 60, 0.6);
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    color: #db7e42;
+    width: 48px;
+  }
+}
 </style>

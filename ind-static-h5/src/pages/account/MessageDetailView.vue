@@ -17,20 +17,42 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { api } from "boot/axios";
 import moment from "moment";
 import ContentView from "../../components/ContentView.vue";
 
 const router = useRouter();
 const store = userStore();
+const qs = require("qs");
 
 const mailDataRef = ref(store.currentMailData);
 
 const onCloseBtnClick = () => {
   router.push("/account/message");
 };
+
+const updateMailReadStatus = () => {
+  api
+    .post(
+      "/session/inbox/read",
+      qs.stringify({
+        id: mailDataRef.value.id
+      })
+    )
+    .then((response) => {
+      store.addReadMsg(mailDataRef.value.id);
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
+onMounted(() => {
+  updateMailReadStatus();
+});
 </script>
 
 <style lang="scss" scoped>
