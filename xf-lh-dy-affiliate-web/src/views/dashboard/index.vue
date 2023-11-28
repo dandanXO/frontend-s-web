@@ -1,6 +1,6 @@
 <template>
   <div class="roles-main">
-    <el-card style="margin-top: 20px;" v-loading="uiControl.profitLoading">
+    <el-card v-loading="uiControl.profitLoading">
       <template #header>
         <div class="clearfix">
           <span class="role-span">

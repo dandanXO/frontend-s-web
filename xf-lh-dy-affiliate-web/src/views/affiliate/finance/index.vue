@@ -1,6 +1,6 @@
 <template>
   <div class="roles-main">
-    <el-card class="box-card" shadow="never" style="margin-top: 20px">
+    <el-card class="box-card" shadow="never">
       <template #header>
         <div class="clearfix">
           <span class="role-span">{{ $t('menu.Finance Report') }}</span>

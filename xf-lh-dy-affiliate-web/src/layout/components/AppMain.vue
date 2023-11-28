@@ -36,3 +36,13 @@ export default defineComponent({
   overflow: auto;
 }
 </style>
+
+<style lang="scss">
+.el-card {
+  border-radius: 20px !important;
+}
+
+.el-card__header {
+  border: none !important;
+}
+</style>

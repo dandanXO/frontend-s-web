@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card" shadow="never" style="margin-top: 20px">
+  <el-card class="box-card" shadow="never">
     <template #header>
       <div class="clearfix">
         <span class="role-span">{{ $t('menu.Bank Withdrawal') }}</span>
