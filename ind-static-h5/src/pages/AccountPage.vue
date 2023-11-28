@@ -657,6 +657,7 @@ const intervals = ref(null);
 
 const startRefresh = async () => {
   loadingUpdated.value = true;
+  loadInfo();
 
   store.getMemberInfo().then(() => {
     setTimeout(() => {

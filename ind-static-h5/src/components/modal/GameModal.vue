@@ -140,8 +140,6 @@ const handleDrawerVisible = () => {
   if (!store.realName) {
     closeDialog();
     props.closeFullGameDialog();
-
-    console.log("ASD");
   } else {
     drawerVisible.value = !drawerVisible.value;
   }
