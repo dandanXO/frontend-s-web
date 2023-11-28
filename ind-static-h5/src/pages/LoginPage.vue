@@ -100,7 +100,7 @@
           no-caps
           class="btn-purple"
           label="Play As Guest"
-          v-if="!Platform.is.capacitor"
+          v-if="Platform.is.capacitor"
         />
       </div>
     </q-form>
