@@ -100,6 +100,7 @@
       <el-form
         ref="appForm"
         :model="form"
+        :rules="formRules"
         :inline="true"
         size="small"
         label-width="180px"
@@ -122,11 +123,11 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.os')" prop="os">
+        <el-form-item :label="t('siteAppVersion.os')" prop="os">
           <el-select
             v-model="form.os"
             size="small"
-            :placeholder="t('fields.os')"
+            :placeholder="t('siteAppVersion.os')"
             class="filter-item"
             style="width: 350px"
             default-first-option
@@ -157,7 +158,11 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item :label="t('siteAppVersion.apkType')" prop="apkType">
+        <el-form-item
+          :label="t('siteAppVersion.apkType')"
+          prop="apkType"
+          v-if="form.os === 'ANDROID'"
+        >
           <el-select
             v-model="form.apkType"
             size="small"
@@ -202,7 +207,7 @@
             </el-col>
             <el-col :span="1">
               <el-button icon="el-icon-files" v-if="uploadedApp.filePath">
-                File Upload Successfully
+                {{ t('siteAppVersion.fileUploadedSuccessfully') }}
               </el-button>
             </el-col>
           </el-row>
@@ -228,11 +233,10 @@
     >
       <el-table-column type="selection" />
       <el-table-column prop="site" :label="t('fields.site')" />
-      <el-table-column prop="os" :label="t('fields.os')" />
-      <el-table-column prop="appType" :label="t('fields.appType')" />
-      <el-table-column prop="apkType" :label="t('fields.apkType')" />
-      <el-table-column prop="version" :label="t('fields.version')" />
-      <el-table-column prop="status" :label="t('fields.status')" />
+      <el-table-column prop="os" :label="t('siteAppVersion.os')" />
+      <el-table-column prop="appType" :label="t('siteAppVersion.appType')" />
+      <el-table-column prop="apkType" :label="t('siteAppVersion.apkType')" />
+      <el-table-column prop="version" :label="t('siteAppVersion.version')" />
       <el-table-column type="title" :label="t('fields.action')">
         <template #default="scope">
           <el-button
@@ -266,7 +270,6 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useStore } from '../../../store'
 import {
   getSiteAppVersion,
   getSiteList,
@@ -277,9 +280,10 @@ import {
 } from '../../../api/site-app-version'
 import { nextTick } from 'process'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { required } from '../../../utils/validate'
 
 const { t } = useI18n()
-const store = useStore()
+
 const site = ref(null)
 
 let chooseImage = []
@@ -327,6 +331,13 @@ const form = reactive({
   apkType: null,
   version: null,
   filePath: null,
+})
+
+const formRules = reactive({
+  os: [required(t('message.validateOsRequired'))],
+  appType: [required(t('message.validateAppTypeRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
+  filePath: [required(t('message.validateFileRequired'))],
 })
 
 const inputApp = ref(null)
@@ -384,7 +395,6 @@ function handleSelectionChange(val) {
 
 function showEdit(app) {
   showDialog('EDIT')
-  console.log('app : ', app)
   uploadedApp.filePath = app.filePath
   nextTick(() => {
     for (const key in app) {
@@ -405,6 +415,9 @@ function showEdit(app) {
 function create() {
   appForm.value.validate(async valid => {
     if (valid) {
+      if (form.os === 'IOS') {
+        form.apkType = 'NORMAL'
+      }
       await createSiteAppVersion(form)
       uiControl.dialogVisible = false
       await loadAppVersion()
@@ -416,6 +429,9 @@ function create() {
 function edit() {
   appForm.value.validate(async valid => {
     if (valid) {
+      if (form.os === 'IOS') {
+        form.apkType = 'NORMAL'
+      }
       await updateSiteAppVersion(form)
       uiControl.dialogVisible = false
       await loadAppVersion()
@@ -452,11 +468,11 @@ async function attachApp(event) {
   const data = await attachFile(event)
   if (data.code === 0) {
     form.filePath = data.data
+    inputApp.value.value = ''
   } else {
     uploadedApp.filePath = null
     ElMessage({ message: t('message.failedToUploadApp'), type: 'error' })
   }
-  console.log('data : ', data)
 }
 
 async function attachFile(event) {
@@ -484,7 +500,6 @@ async function attachFile(event) {
     formData.append('appType', form.appType)
     formData.append('extension', fileExtension)
     uploadedApp.filePath = URL.createObjectURL(files)
-    console.log('uploadedApp.filePath : ', uploadedApp.filePath)
     return await uploadApp(formData, fileExtension)
   }
 }
@@ -492,7 +507,6 @@ async function attachFile(event) {
 async function loadSites() {
   const { data: ret } = await getSiteList()
   siteList.list = ret
-  console.log('ret : ', ret)
 }
 
 async function loadAppVersion() {
@@ -500,8 +514,6 @@ async function loadAppVersion() {
 
   page.pages = ret.pages
   page.records = ret.records
-  console.log('ret : ', ret)
-  console.log('store.state.user : ', store.state.user)
 }
 
 onMounted(async () => {
