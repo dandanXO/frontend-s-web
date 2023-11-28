@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrapper">
     <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
-      <q-btn fab class="bg-yellow text-black btn-effect" @click="router.push('/liveChat')">
+      <q-btn fab class="bg-yellow text-black btn-effect" @click="openCSInNewTab('https://direct.lc.chat/14154051/')">
         <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
@@ -100,7 +100,7 @@
                 ></div>
               </div>
 
-              <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
+              <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
 
               <template v-if="item.platformCode === 'JOKER'">
                 <div
@@ -137,7 +137,7 @@
                     ></div>
                   </div>
 
-                  <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
+                  <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
 
                   <template v-if="item.platformCode === 'JOKER'">
                     <div
@@ -171,7 +171,7 @@
     <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
-        <span class="txt-style">Slot / Fish Games</span>
+        <span class="txt-style">Slot &amp; Fishing Games</span>
       </div>
 
       <div class="game-platform-container">
@@ -455,7 +455,7 @@
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
 
                     <div
                       class="game-platform-label game-platform-label--hot"
@@ -487,7 +487,7 @@
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ truncateText(item.name, 25) }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
 
                     <div
                       class="game-platform-label game-platform-label--hot"
@@ -984,6 +984,11 @@ const closeDepositDialog = () => {
   depositDialog.value = false;
 };
 
+const openCSInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+};
+
 onMounted(() => {
   getPlatList();
   loadData();
@@ -1450,7 +1455,7 @@ onMounted(() => {
   }
 
   .popout-dialog-container--yel {
-    background-image: url(../assets/images/index/popout/deposit-bg.png);
+    background-image: url(../assets/images/index/popout/deposit-bg.png) !important;
     background-position: bottom center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1616,6 +1621,10 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
+.q-dialog__inner--maximized > div {
+  overflow-x: hidden;
+}
+
 .q-card__section {
   background: rgba(0, 0, 0, 0.1);
 }
@@ -1640,7 +1649,7 @@ onMounted(() => {
 }
 
 .home-wrapper {
-  width: calc(100% - 4px);
+  width: calc(100% - 16px);
   margin: auto;
 }
 
@@ -1665,9 +1674,10 @@ onMounted(() => {
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
-    font-weight: 700;
+    font-weight: 600;
     width: 50%;
     height: 55px;
+    text-shadow: 2px 2px 2px #882f00;
     transition: 0.3s all;
 
     &--withdrawal {
@@ -1701,11 +1711,11 @@ onMounted(() => {
     background-image: url(../assets/images/index/hot-games-pattern-top.png);
     background-size: cover;
     background-repeat: no-repeat;
-    // margin-left: -2.5%;
-    // margin-right: -2.5%;
+    // margin-left: -6px;
+    // margin-right: -6px;
     height: 100px;
     background-position: top center;
-    margin-top: 5px;
+    margin-top: 8px;
     // margin-top: -20px;
   }
 
@@ -1756,18 +1766,26 @@ onMounted(() => {
       margin-right: 10px;
 
       .txt-style {
-        background-color: #f3ec78;
-        background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-        background-size: 100%;
-        -webkit-background-clip: text;
-        -moz-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -moz-text-fill-color: transparent;
-        line-height: 1;
-        font-size: 20px;
+        // background-color: #f3ec78;
+        // background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+        // color: #e7e051;
+        // background-size: 100%;
+        // text-shadow: 1px 1px 1px #882f00;
+        // line-height: 1;
+        // font-size: 20px;
+        // font-weight: 600;
+        // margin-top: 1px;
+
+        font-family: Poppins;
+        font-size: 21px;
         font-weight: 800;
+        letter-spacing: -1px;
+        background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+
+        -webkit-background-clip: text;
+        color: transparent;
         -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: #db0011;
+        -webkit-text-stroke-color: #a94700;
       }
     }
   }
@@ -1779,19 +1797,14 @@ onMounted(() => {
     align-items: center;
 
     .txt-style {
-      font-family: Wave;
-      background-color: #f3ec78;
-      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-size: 100%;
+      font-family: Poppins;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+
       -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-      line-height: 1;
-      letter-spacing: 2px;
-      font-size: 30px;
-      font-weight: 400;
-      // font-weight: bold;
+      color: transparent;
       -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color: #a94700;
     }
@@ -1808,6 +1821,8 @@ onMounted(() => {
   column-gap: 8px;
   row-gap: 12px;
   margin-top: 10px;
+  // margin-left: -6px;
+  // margin-right: -6px;
 
   .game-platform-item {
     border: 3px solid #ffc027;
@@ -1873,6 +1888,8 @@ onMounted(() => {
   column-gap: 8px;
   row-gap: 16px;
   margin-top: 10px;
+  // margin-left: -6px;
+  // margin-right: -6px;
 
   &.sport-platform {
     grid-template-columns: 1fr;
@@ -1910,7 +1927,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
   background-size: contain;
   background-position: center center;
@@ -1922,6 +1939,8 @@ onMounted(() => {
   background-image: url(../assets/images/index/btn-load-more.png);
   color: #ffffff;
   margin: auto;
+
+  text-shadow: 1px 1px 2px #882f00;
 }
 
 .floating-btn {

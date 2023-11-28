@@ -8,7 +8,7 @@ html {
 }
 // app global css in SCSS form
 body {
-  //font-family: "Jura";
+  font-family: Poppins;
   background: #ffffff;
 }
 #q-app {
@@ -91,7 +91,7 @@ body.platform-ios .q-dialog__inner--minimized > div {
   max-height: calc(100% - 108px);
 }
 .game-title {
-  font-family: "Wave";
+  font-family: "Poppins";
   font-size: 50px;
   line-height: 60px;
   color: #db7e42;
@@ -248,7 +248,7 @@ svg {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  font-family: Poppins;
   padding: 15px;
   display: flex;
   gap: 20px;
@@ -261,7 +261,7 @@ svg {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  font-family: Poppins;
   padding: 10px;
   display: flex;
   gap: 20px;
