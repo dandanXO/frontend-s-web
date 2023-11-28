@@ -14,16 +14,15 @@
       <q-input
         ref="loginNameRef"
         hide-bottom-space
+        type="number"
         v-model="regForm.loginName"
-        label="Username"
+        label="Phone Number"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || 'Please insert username',
-          (val) =>
-            (val && val.length >= 6 && val.length <= 11) || 'The characters of username must be between 6 and 11',
-          () => isValidName(regForm.loginName, 'Username')
+          (val) => (val && val.length > 0) || 'Please insert Phone number',
+          (val) => (val.length >= 7 && val.length <= 12) || 'The phone number must be between 7 and 12'
         ]"
-        placeholder="Please Enter Account"
+        placeholder="Please Phone Number"
         color="white"
         class="landing-input"
         rounded
@@ -353,7 +352,7 @@ export default defineComponent({
           }
 
           api
-            .post("/member/fbRegister", qs.stringify(regForm))
+            .post("/member/indRegister", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
               // console.log("RET");
@@ -482,6 +481,19 @@ export default defineComponent({
         });
     };
 
+    const isValidPhone = () => {
+      const { phone } = formDetail;
+
+      if (!phone) {
+        return "Please Enter Phone Number";
+      }
+
+      const phoneRegex = /^\d{7,12}$/;
+      const isValid = phoneRegex.test(phone);
+
+      return isValid ? true : "Phone Number must be between 7 and 12 digits";
+    };
+
     return {
       header: "Register Account",
       regForm,
@@ -509,7 +521,8 @@ export default defineComponent({
       hasAffiliate,
       isAgreeReg,
       isAlphanumeric,
-      isValidName
+      isValidName,
+      isValidPhone
     };
   }
 });

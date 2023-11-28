@@ -277,7 +277,7 @@ onMounted(() => {
     text-align: center;
 
     img {
-      max-width: 200px;
+      max-width: 100px;
       width: 100%;
       text-align: center;
     }

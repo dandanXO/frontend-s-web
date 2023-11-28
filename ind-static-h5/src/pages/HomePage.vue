@@ -497,7 +497,7 @@
   <q-dialog width="100%" v-model="withdrawalDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-      <div class="popout-dialog-container">
+      <div class="popout-dialog-container popout-dialog-container--yel">
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
         </div>
@@ -508,13 +508,27 @@
 
   <q-dialog width="100%" v-model="depositDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-      <div class="popout-dialog-container">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeDepositDialog" />
+      <div class="popout-dialog-container popout-dialog-container--yel">
         <div class="popout-main-title">
           <div class="txt-title">Deposit</div>
         </div>
         <DepositComponent />
       </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 </template>
@@ -535,6 +549,8 @@ import { translateRecord } from "src/directives/translate";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalComponent from "../components/WithdrawalComponent.vue";
 import DepositComponent from "../components/depositComponent.vue";
+import KYCGuestForm from "../components/KYCGuestForm.vue";
+import KYCUserForm from "../components/KYCUserForm.vue";
 
 const slide = ref(0);
 
@@ -552,9 +568,28 @@ const onWithdrawalClick = () => {
   withdrawalDialog.value = true;
 };
 
+const userKYCDialog = ref(false);
+const guestKYCDialog = ref(false);
 const depositDialog = ref(false);
 const openDepositDialog = () => {
-  depositDialog.value = true;
+  if (!store.realName & !store.guest) {
+    userKYCDialog.value = true;
+  } else if (!store.realName & store.guest) {
+    guestKYCDialog.value = true;
+  } else {
+    depositDialog.value = true;
+  }
+};
+
+const closeGuestKYCDialog = () => {
+  guestKYCDialog.value = false;
+  store.getMemberInfo();
+  loadData();
+};
+const closeUserKYCDialog = () => {
+  userKYCDialog.value = false;
+  store.getMemberInfo();
+  loadData();
 };
 
 const depositItems = reactive([
@@ -620,6 +655,12 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 
 const closeFullGameDialog = () => {
   fullGameDialog.value = false;
+
+  if(store.guest && !store.realName) {
+    guestKYCDialog.value = true;
+  } else if(!store.guest && !store.realName){
+    userKYCDialog.value = true;
+  }
 };
 
 const hotGameOn = ref(false);
@@ -918,6 +959,11 @@ const truncateText = (text, maxLength) => {
     return text;
   }
 };
+
+const closeDepositDialog = () => {
+  depositDialog.value = false;
+};
+
 
 onMounted(() => {
   getPlatList();
@@ -1384,7 +1430,7 @@ onMounted(() => {
     top: 80px;
   }
 
-  .popout-dialog-container {
+  .popout-dialog-container--yel {
     background-image: url(../assets/images/index/popout/deposit-bg.png);
     background-position: bottom center;
     background-size: cover;
@@ -1589,7 +1635,7 @@ onMounted(() => {
 .top-action {
   display: flex;
   gap: 16px;
-  margin-top: 10px;
+  margin-top: 5px;
 
   .action-btn {
     display: flex;
@@ -1602,7 +1648,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     font-weight: 700;
     width: 50%;
-    height: 60px;
+    height: 55px;
     transition: 0.3s all;
 
     &--withdrawal {
@@ -1630,17 +1676,18 @@ onMounted(() => {
 }
 
 .games-selection-wrapper {
-  margin-top: 10px;
-  margin-bottom: 40px;
+  padding-bottom: 20px;
 
   .hot-games-pattern-top {
     background-image: url(../assets/images/index/hot-games-pattern-top.png);
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     margin-left: -2.5%;
     margin-right: -2.5%;
-    height: 140px;
-    background-position: center center;
+    height: 100px;
+    background-position: top center;
+    margin-top: 5px;
+    // margin-top: -20px;
   }
 
   .hot-games-pattern-bottom {
@@ -1648,7 +1695,6 @@ onMounted(() => {
     background-size: contain;
     background-repeat: no-repeat;
     height: 50px;
-    margin-top: 20px;
     margin-bottom: -40px;
     background-position: center center;
 
@@ -1665,12 +1711,16 @@ onMounted(() => {
 
   .hot-games-container {
     // padding-top: 60px;
-    margin-top: -30px;
+    margin-top: -50px;
     display: flex;
     justify-content: center;
 
+    @media (min-width: 420px) {
+      // margin-top: -70px;
+    }
+
     img {
-      width: 50px;
+      width: 30px;
     }
 
     .title-hot-games {
@@ -1682,7 +1732,7 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 270px;
+      width: 170px;
       margin-left: 10px;
       margin-right: 10px;
 
@@ -1695,7 +1745,7 @@ onMounted(() => {
         -webkit-text-fill-color: transparent;
         -moz-text-fill-color: transparent;
         line-height: 1;
-        font-size: 28px;
+        font-size: 20px;
         font-weight: 800;
         -webkit-text-stroke-width: 1px;
         -webkit-text-stroke-color: #db0011;
@@ -1705,7 +1755,7 @@ onMounted(() => {
 
   .title-game {
     display: flex;
-    margin-top: 30px;
+    // margin-top: 10px;
     gap: 8px;
     align-items: center;
 
@@ -1801,9 +1851,9 @@ onMounted(() => {
 .game-platform-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 16px;
-  row-gap: 24px;
-  margin-top: 20px;
+  column-gap: 8px;
+  row-gap: 16px;
+  margin-top: 10px;
 
   &.sport-platform {
     grid-template-columns: 1fr;

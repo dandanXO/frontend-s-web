@@ -13,7 +13,7 @@
             rounded
             icon="add"
             class="bg-yellow text-black"
-            @click="drawerVisible = !drawerVisible"
+            @click="handleDrawerVisible"
           />
         </div>
 
@@ -134,6 +134,17 @@ const drawerVisible = ref(false);
 const isExitDialogOpen = ref(false);
 const onExitClick = () => {
   isExitDialogOpen.value = true;
+};
+
+const handleDrawerVisible = () => {
+  if (!store.realName) {
+    closeDialog();
+    props.closeFullGameDialog();
+
+    console.log("ASD");
+  } else {
+    drawerVisible.value = !drawerVisible.value;
+  }
 };
 
 const router = useRouter();
