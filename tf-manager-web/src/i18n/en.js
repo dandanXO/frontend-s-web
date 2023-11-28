@@ -775,6 +775,7 @@ export default {
     queryNumber: 'Query Number',
     queryOption: 'Query Option',
     queryRestriction: 'Query Restriction',
+    randomMember: 'Random Member',
     rate: 'Rate',
     realName: 'Real Name',
     englishName: 'English Name',
