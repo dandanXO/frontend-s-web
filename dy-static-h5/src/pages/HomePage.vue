@@ -366,8 +366,8 @@
                       </div>
                     </template>
                     <template v-else-if="hot.icon=='poker'">
-                      <template v-if="hot.code === 'KYDY' && hot.name === 'KY'">
-                        <div class="game-board" @click="playGame(hot.name, hot.code, 'ky_lobby')">
+                      <template v-if="hot.code === 'KY' && hot.name === 'KY'">
+                        <div class="game-board" @click="playGame(hot.name, hot.code, '')">
 
 
                           <div class="game-bg"
@@ -851,8 +851,8 @@
                   <div v-for="(poke, i) in poker" :key="i"
                        class="game-item-div">
 
-                    <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
-                      <div class="game-board" @click="playGame(poke.name, poke.code, 'ky_lobby')">
+                    <template v-if="poke.code === 'KY' && poke.name === 'KY'">
+                      <div class="game-board" @click="playGame(poke.name, poke.code, '')">
 
 
                         <div class="game-bg"
@@ -902,18 +902,6 @@
                 </div>
               </div>
 
-              <!--                    <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">-->
-              <!--                      <PlatformBlock-->
-              <!--                          @click="playGame(poke.name, poke.code, 'ky_lobby')"-->
-              <!--                          dataType="poker"-->
-              <!--                          :data="poke"-->
-              <!--                      />-->
-              <!--                    </template>-->
-              <!--                    <PlatformBlock-->
-              <!--                        @click="playGame(poke.name, poke.code, poke.gameCode)"-->
-              <!--                        dataType="poker"-->
-              <!--                        :data="poke"-->
-              <!--                    />-->
             </div>
             <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
 

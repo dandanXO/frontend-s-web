@@ -30,14 +30,8 @@
           <div class="plat-type-container">
             <div class="plat-list">
               <template v-for="p in platforms" :key="p">
-                <div
-                  class="plat-item"
-                  :class="{ active: p === activePlat }"
-                  @click="switchPlat(p)"
-                >
-                  <img
-                    :src="require(`../assets/game/${p.code.toLowerCase()}.png`)"
-                  />
+                <div class="plat-item" :class="{ active: p === activePlat }" @click="switchPlat(p)">
+                  <img :src="require(`../assets/game/${p.code.toLowerCase()}.png`)" />
                   {{ getGameLabel(p.name) }}
                 </div>
               </template>
@@ -45,9 +39,7 @@
           </div>
         </div>
         <div class="right">
-          <div
-            class="grid-items flex-box flex-align-center search-container web-only-box"
-          >
+          <div class="grid-items flex-box flex-align-center search-container web-only-box">
             <el-input
               class="search-input"
               v-model="gamePage.searchKey"
@@ -93,9 +85,7 @@
               background
               layout="prev, pager, next"
               :total="gamePage.total"
-              @current-change="
-                changePage(gamePage.currentPage, gamePage.pageSize)
-              "
+              @current-change="changePage(gamePage.currentPage, gamePage.pageSize)"
               v-model:current-page="gamePage.currentPage"
               v-model:pageSize="gamePage.pageSize"
               default-page-size="30"
@@ -224,7 +214,7 @@ export default defineComponent({
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
         });
         gameListData.value = data;
         gamePage.total = data.length;

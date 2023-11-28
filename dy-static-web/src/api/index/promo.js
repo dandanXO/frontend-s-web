@@ -17,6 +17,9 @@ export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }
 
+export function claimDailyRainItem(item) {
+  return server.EVENT.get(`/redPacketVip/claim?promoCode=${item}`);
+}
 export function welcomeTaskInit() {
   return server.EVENT.post(`/welcomeTask/init`);
 }

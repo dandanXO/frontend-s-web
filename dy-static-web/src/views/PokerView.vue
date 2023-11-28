@@ -1,14 +1,20 @@
 <template>
   <div class="poker-container">
-      <div class="poker-container-list">
-          <div class="platform-list-box">
-            <span class="platform-list-item platform" v-for="(plat, i) in filteredPlatforms" :key="i" @click="clickPlat(plat)" :class="{active: selectedPlat === plat.code}">
-              {{plat.name}}棋牌
-            </span>
-          </div>
-          <template v-for="(det, idx) in filteredPlatforms" :key="idx">
-            <div class="poker-container-inner" v-if="selectedPlat === det.code" :class="det.style">
-              <!-- <div class="poker-left" data-aos="fade-right" data-aos-duration="4000">
+    <div class="poker-container-list">
+      <div class="platform-list-box">
+        <span
+          class="platform-list-item platform"
+          v-for="(plat, i) in filteredPlatforms"
+          :key="i"
+          @click="clickPlat(plat)"
+          :class="{ active: selectedPlat === plat.code }"
+        >
+          {{ plat.name }}棋牌
+        </span>
+      </div>
+      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
+        <div class="poker-container-inner" v-if="selectedPlat === det.code" :class="det.style">
+          <!-- <div class="poker-left" data-aos="fade-right" data-aos-duration="4000">
                   <img :src="require('../assets/poker/title_poker_' + det.image + '.png')" style="margin-bottom: 54px;">
                   <div class="platform-txt-box">
                       <div>
@@ -22,37 +28,37 @@
                 <img class="absolute" src="../assets/poker/poker_right.png">
                 <img :src="require('../assets/poker/poker_right_' + det.image + '.png')">
               </div> -->
-              <div class="platform-left-box">
-                <template v-if="det.code === 'DT'">
-                  <img class="imgabs tx1" src="../assets/poker/bg_left_tx.webp">
-                  <img class="imgabs tx2" src="../assets/poker/girl_tx_left.webp">
-                  <img class="imgabs tx3" src="../assets/poker/center_btn_bg_tx.webp">
-                  <div class="imgabs tx3text" v-html="det.message"></div>
-                  <img class="imgabs tx4" src="../assets/poker/img_float_tx.webp">
-                  <img class="imgabs tx5" src="../assets/poker/bg_right_tx.webp">
-                  <div class="imgabs play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即游戏</div>
-                  <img class="imgabs tx6" src="../assets/poker/girl_tx_right.webp">
-                  <img class="imgabs tx7" src="../assets/poker/txt_tx.webp">
-                </template>
-                <template v-if="det.code === 'KYDY'">
-                  <img class="imgabs ky1" src="../assets/poker/img_bg_ky_left.webp">
-                  <img class="imgabs ky2" src="../assets/poker/girl_ky_left.webp">
-                  <img class="imgabs kydice" src="../assets/poker/img_ky_left_top.webp">
-                  <img class="imgabs ky3" src="../assets/poker/center_btn_bg_ky.webp">
-                  <div class="imgabs ky3text" v-html="det.message"></div>
-                  <img class="imgabs ky4" src="../assets/poker/txt_ky.webp">
-                  <img class="imgabs ky5" src="../assets/poker/txt_ky_tip.webp">
-                  <div class="imgabs play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即游戏</div>
-                  <img class="imgabs ky6" src="../assets/poker/girl_ky_right.webp">
-                  <img class="imgabs ky7" src="../assets/poker/img_float_ky_1.webp">
-                  <img class="imgabs ky8" src="../assets/poker/img_float_ky_2.webp">
-                  <img class="imgabs ky9" src="../assets/poker/img_float_ky_3.webp">
-                  <img class="imgabs ky10" src="../assets/poker/img_float_ky_4.webp">
-                  <img class="imgabs ky11" src="../assets/poker/img_bg_ky_right.webp">
-                </template>
-              </div>
-            </div>
-        </template>
+          <div class="platform-left-box">
+            <template v-if="det.code === 'DT'">
+              <img class="imgabs tx1" src="../assets/poker/bg_left_tx.webp" />
+              <img class="imgabs tx2" src="../assets/poker/girl_tx_left.webp" />
+              <img class="imgabs tx3" src="../assets/poker/center_btn_bg_tx.webp" />
+              <div class="imgabs tx3text" v-html="det.message"></div>
+              <img class="imgabs tx4" src="../assets/poker/img_float_tx.webp" />
+              <img class="imgabs tx5" src="../assets/poker/bg_right_tx.webp" />
+              <div class="imgabs play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即游戏</div>
+              <img class="imgabs tx6" src="../assets/poker/girl_tx_right.webp" />
+              <img class="imgabs tx7" src="../assets/poker/txt_tx.webp" />
+            </template>
+            <template v-if="det.code === 'KY'">
+              <img class="imgabs ky1" src="../assets/poker/img_bg_ky_left.webp" />
+              <img class="imgabs ky2" src="../assets/poker/girl_ky_left.webp" />
+              <img class="imgabs kydice" src="../assets/poker/img_ky_left_top.webp" />
+              <img class="imgabs ky3" src="../assets/poker/center_btn_bg_ky.webp" />
+              <div class="imgabs ky3text" v-html="det.message"></div>
+              <img class="imgabs ky4" src="../assets/poker/txt_ky.webp" />
+              <img class="imgabs ky5" src="../assets/poker/txt_ky_tip.webp" />
+              <div class="imgabs play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即游戏</div>
+              <img class="imgabs ky6" src="../assets/poker/girl_ky_right.webp" />
+              <img class="imgabs ky7" src="../assets/poker/img_float_ky_1.webp" />
+              <img class="imgabs ky8" src="../assets/poker/img_float_ky_2.webp" />
+              <img class="imgabs ky9" src="../assets/poker/img_float_ky_3.webp" />
+              <img class="imgabs ky10" src="../assets/poker/img_float_ky_4.webp" />
+              <img class="imgabs ky11" src="../assets/poker/img_bg_ky_right.webp" />
+            </template>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
   <GameModal ref="pokerGame"></GameModal>
@@ -63,10 +69,7 @@ import { defineComponent, ref, onMounted, watch } from "vue";
 import GameModal from "@/components/modal/GameModal";
 import { useRoute, useRouter } from "vue-router";
 import aos from "aos";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -80,22 +83,22 @@ export default defineComponent({
     const store = userStore();
 
     const platforms = ref([
-    {
-        code: 'DT',
-        name: '大唐',
-        image: 'tx',
-        gameCode: '',
-        style: 'DT',
-        message: '抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活'
+      {
+        code: "DT",
+        name: "大唐",
+        image: "tx",
+        gameCode: "",
+        style: "DT",
+        message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活"
       },
       {
-        code: 'KYDY',
-        name: '开元',
-        image: 'ky',
-        style: 'KY',
-        gameCode: 'ky_lobby',
-        message: '双赢棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！'
-      },
+        code: "KY",
+        name: "开元",
+        image: "ky",
+        style: "KY",
+        gameCode: "",
+        message: "双赢棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！"
+      }
     ]);
 
     const filteredPlatforms = ref([]);
@@ -105,17 +108,13 @@ export default defineComponent({
       if (store.memberType === "TEST") {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("POKER")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("POKER"));
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("POKER")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("POKER"));
           setFilteredPlatforms();
         });
       }
@@ -123,9 +122,7 @@ export default defineComponent({
 
     const setFilteredPlatforms = () => {
       filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === displayPlatform.code
-        )
+        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
 
       filteredPlatforms.value.forEach((element) => {
@@ -188,316 +185,318 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-  .poker-container {
-    // background-image: url(../assets/poker/bg_poker_platforms.jpg);
-    // background-repeat: no-repeat;
-    // background-position: top center;
+.poker-container {
+  // background-image: url(../assets/poker/bg_poker_platforms.jpg);
+  // background-repeat: no-repeat;
+  // background-position: top center;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0;
+  font-size: 14px;
+  gap: 15px;
+  z-index: 1;
+  min-width: $maxwidth;
+  .poker-container-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // max-width: $maxwidth;
     width: 100%;
-    position: relative;
-    overflow: hidden;
-    letter-spacing: 0;
-    font-size: 14px;
-    gap: 15px;
-    z-index: 1;
-    min-width: $maxwidth;
-    .poker-container-list {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      // max-width: $maxwidth;
-      width: 100%;
-      margin: 0 auto;
-    }
-    .poker-container-inner {
-      // max-width: $maxwidth;
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 790px;
-      gap: 100px;
-      // .poker-left {
-      //   text-align: left;
-      //   flex: 1;
-      //   display: flex;
-      //   flex-direction: column;
-      //   align-items: center;
-      //   .platform-txt-list-content {
-      //     line-height: 26px;
-      //     letter-spacing: 1px;
-      //     color: #959dab;
-      //   }
-      //   .play-btn {
-      //     cursor: pointer;
-      //     background: url(../assets/common/start-btn.png)no-repeat center center;
-      //     width: 300px;
-      //     height: 100px;
-      //     margin: 0 auto;
-      //     &:hover {
-      //       background-image: url(../assets/common/start-hover-btn.png);
-      //     }
-      //   }
-      // }
-      // .poker-right {
-      //   position: relative;
-      //   .absolute {
-      //     position: absolute;
-      //     top: 0;
-      //     left: 0;
-      //     right: 0;
-      //     bottom: 0;
-      //     width: unset;
-      //     height: 95%;
-      //   }
-      //   flex: 2;
-      //   img {
-      //     width: unset;
-      //     height: 75vh;
-      //   }
-      // }
-      &.DT {
-        background: url(../assets/poker/bg_tx.webp);
-        .imgabs {
-          position: absolute;
-          &.tx1 {
-            left: 0;
-            top: 0;
-            z-index: 4;
-          }
-          &.tx2 {
-            left: 15%;
-            top: 6%;
-            z-index: 3;
-            animation: 2s ease 0s 1 normal none running poker-circle-ani;
-          }
-          &.tx3 {
-            left: 0;
-            right: 0;
-            top: 35%;
-            margin: auto;
-            z-index: 5;
-            &text {
-              left: 0;
-              right: 0;
-              margin: auto;
-              top: 55%;
-              margin: auto;
-              z-index: 999;
-              color: #ffffff;
-              text-align: center;
-              width: 30%;
-              font-size: 18px;
-              line-height: 32px;
-              text-align: center;
-              color: #fff;
-            }
-          }
-          &.tx4 {
-            right: 5%;
-            bottom: 4%;
-            z-index: 7;
-            animation: 4s ease 2s infinite normal both running poker-circle-ani;
-          }
-          &.tx5 {
-            right: 0;
-            bottom: 15%;
-            z-index: 6;
-          }
-          &.play-btn {
-            top: 67%;
-            left:0;
-            right: 0;
-            z-index: 7;
-          }
-          &.tx6 {
-            right: 12%;
-            bottom: 25%;
-            z-index: 5;
-            animation: 2s ease 0s 1 normal none running poker-circle-ani;
-          }
-          &.tx7 {
-            left:0%;
-            right: 0;
-            margin: auto;
-            top: 20%;
-          }
-
-        }
-      }
-      &.KY {
-        background: url(../assets/poker/bg_ky.webp);
-        .imgabs {
-          position: absolute;
-          &.ky1 {
-            left: 6%;
-            bottom: 15%;
-            z-index: 0;
-          }
-          &.ky2 {
-            left: 15%;
-            bottom: 10%;
-            z-index: 3;
-            animation: 2s ease 0s 1 normal none running poker-circle-ani;
-          }
-          &.kydice {
-            left: 14%;
-            top: 5%;
-          }
-          &.ky3 {
-            left: 0;
-            right: 0;
-            top: 45%;
-            margin: auto;
-            &text {
-              left: 0;
-              right: 0;
-              margin: auto;
-              top: 60%;
-              margin: auto;
-              z-index: 999;
-              color: #ffffff;
-              text-align: center;
-              width: 30%;
-              font-size: 18px;
-              line-height: 32px;
-              text-align: center;
-              color: #fff;
-            }
-          }
-          &.ky4 {
-            left: 0;
-            right: 0;
-            bottom: 68%;
-            margin: auto;
-            z-index: 7;
-          }
-          &.ky5 {
-            left: 0;
-            right: 0;
-            bottom: 63%;
-            margin: auto;
-            z-index: 6;
-          }
-          &.play-btn {
-            top: 70%;
-            left:0;
-            right: 0;
-          }
-          &.ky6 {
-            right: 13%;
-            bottom: 12%;
-            z-index: 5;
-            animation: 2s ease 0s 1 normal none running poker-circle-ani;
-          }
-          &.ky7 {
-            left: 17%;
-            bottom: 3%;
-            z-index: 5;
-            animation: 4s ease 2s infinite normal both running up-down-ani;
-          }
-          &.ky8 {
-            left: 27%;
-            bottom: 3%;
-            z-index: 5;
-            animation: 4s ease 2s infinite normal both running down-up-ani;
-          }
-          &.ky9 {
-            right: 21%;
-            bottom: 3%;
-            z-index: 5;
-            animation: 4s ease 2s infinite normal both running up-down-ani;
-          }
-          &.ky10 {
-            right: 11%;
-            bottom: 3%;
-            z-index: 5;
-            animation: 4s ease 2s infinite normal both running down-up-ani;
-          }
-          &.ky11 {
-            right: 7%;
-            top: 13%;
-          }
-        }
-      }
-      .play-btn {
-        cursor: pointer;
-        display: block;
-        width: 198px;
-        height: 52px;
-        background-image: linear-gradient(90deg,#2d74f6 0,#7abdfc 100%),linear-gradient(#000,#000);
-        background-blend-mode: normal,normal;
-        border-radius: 26px;
-        color: #fff;
-        font-size: 16px;
-        margin: 0 auto;
-        text-align: center;
-        line-height: 52px;
-        border: none;
-      }
-    }
-    .platform-list-box {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 30px;
-      margin: 30px;
-      position: absolute;
-      top: 0;
-      z-index: 99;
-      .platform-list-item {
-        cursor: pointer;
-        width: 181px;
-        height: 50px;
-        background-image: linear-gradient(0deg,#f2f2f2 0,#fefefe 100%),linear-gradient(#000,#000);
-        background-blend-mode: normal,normal;
-        box-shadow: 0 6px 20px 2px rgba(103,204,255,.75);
-        border-radius: 6px;
-        text-align: center;
-        line-height: 50px;
-        cursor: pointer;
-        font-size: 16px;
-        color: #222;
-    //     &::before{
-    //       content: "";
-    //       background: url(../assets/common/xf-grey.png)no-repeat center center;
-    //       padding: 15px;
+    margin: 0 auto;
+  }
+  .poker-container-inner {
+    // max-width: $maxwidth;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 790px;
+    gap: 100px;
+    // .poker-left {
+    //   text-align: left;
+    //   flex: 1;
+    //   display: flex;
+    //   flex-direction: column;
+    //   align-items: center;
+    //   .platform-txt-list-content {
+    //     line-height: 26px;
+    //     letter-spacing: 1px;
+    //     color: #959dab;
+    //   }
+    //   .play-btn {
+    //     cursor: pointer;
+    //     background: url(../assets/common/start-btn.png)no-repeat center center;
+    //     width: 300px;
+    //     height: 100px;
+    //     margin: 0 auto;
+    //     &:hover {
+    //       background-image: url(../assets/common/start-hover-btn.png);
     //     }
-        &.active {
-          color: #fff;
-          background-image: linear-gradient(90deg,#2d74f6 0,#7abdfc 100%),linear-gradient(#000,#000);
+    //   }
+    // }
+    // .poker-right {
+    //   position: relative;
+    //   .absolute {
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     width: unset;
+    //     height: 95%;
+    //   }
+    //   flex: 2;
+    //   img {
+    //     width: unset;
+    //     height: 75vh;
+    //   }
+    // }
+    &.DT {
+      background: url(../assets/poker/bg_tx.webp);
+      .imgabs {
+        position: absolute;
+        &.tx1 {
+          left: 0;
+          top: 0;
+          z-index: 4;
         }
+        &.tx2 {
+          left: 15%;
+          top: 6%;
+          z-index: 3;
+          animation: 2s ease 0s 1 normal none running poker-circle-ani;
+        }
+        &.tx3 {
+          left: 0;
+          right: 0;
+          top: 35%;
+          margin: auto;
+          z-index: 5;
+          &text {
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 55%;
+            margin: auto;
+            z-index: 999;
+            color: #ffffff;
+            text-align: center;
+            width: 30%;
+            font-size: 18px;
+            line-height: 32px;
+            text-align: center;
+            color: #fff;
+          }
+        }
+        &.tx4 {
+          right: 5%;
+          bottom: 4%;
+          z-index: 7;
+          animation: 4s ease 2s infinite normal both running poker-circle-ani;
+        }
+        &.tx5 {
+          right: 0;
+          bottom: 15%;
+          z-index: 6;
+        }
+        &.play-btn {
+          top: 67%;
+          left: 0;
+          right: 0;
+          z-index: 7;
+        }
+        &.tx6 {
+          right: 12%;
+          bottom: 25%;
+          z-index: 5;
+          animation: 2s ease 0s 1 normal none running poker-circle-ani;
+        }
+        &.tx7 {
+          left: 0%;
+          right: 0;
+          margin: auto;
+          top: 20%;
+        }
+      }
+    }
+    &.KY {
+      background: url(../assets/poker/bg_ky.webp);
+      .imgabs {
+        position: absolute;
+        &.ky1 {
+          left: 6%;
+          bottom: 15%;
+          z-index: 0;
+        }
+        &.ky2 {
+          left: 15%;
+          bottom: 10%;
+          z-index: 3;
+          animation: 2s ease 0s 1 normal none running poker-circle-ani;
+        }
+        &.kydice {
+          left: 14%;
+          top: 5%;
+        }
+        &.ky3 {
+          left: 0;
+          right: 0;
+          top: 45%;
+          margin: auto;
+          &text {
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 60%;
+            margin: auto;
+            z-index: 999;
+            color: #ffffff;
+            text-align: center;
+            width: 30%;
+            font-size: 18px;
+            line-height: 32px;
+            text-align: center;
+            color: #fff;
+          }
+        }
+        &.ky4 {
+          left: 0;
+          right: 0;
+          bottom: 68%;
+          margin: auto;
+          z-index: 7;
+        }
+        &.ky5 {
+          left: 0;
+          right: 0;
+          bottom: 63%;
+          margin: auto;
+          z-index: 6;
+        }
+        &.play-btn {
+          top: 70%;
+          left: 0;
+          right: 0;
+        }
+        &.ky6 {
+          right: 13%;
+          bottom: 12%;
+          z-index: 5;
+          animation: 2s ease 0s 1 normal none running poker-circle-ani;
+        }
+        &.ky7 {
+          left: 17%;
+          bottom: 3%;
+          z-index: 5;
+          animation: 4s ease 2s infinite normal both running up-down-ani;
+        }
+        &.ky8 {
+          left: 27%;
+          bottom: 3%;
+          z-index: 5;
+          animation: 4s ease 2s infinite normal both running down-up-ani;
+        }
+        &.ky9 {
+          right: 21%;
+          bottom: 3%;
+          z-index: 5;
+          animation: 4s ease 2s infinite normal both running up-down-ani;
+        }
+        &.ky10 {
+          right: 11%;
+          bottom: 3%;
+          z-index: 5;
+          animation: 4s ease 2s infinite normal both running down-up-ani;
+        }
+        &.ky11 {
+          right: 7%;
+          top: 13%;
+        }
+      }
+    }
+    .play-btn {
+      cursor: pointer;
+      display: block;
+      width: 198px;
+      height: 52px;
+      background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
+      background-blend-mode: normal, normal;
+      border-radius: 26px;
+      color: #fff;
+      font-size: 16px;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 52px;
+      border: none;
+    }
+  }
+  .platform-list-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 30px;
+    position: absolute;
+    top: 0;
+    z-index: 99;
+    .platform-list-item {
+      cursor: pointer;
+      width: 181px;
+      height: 50px;
+      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%), linear-gradient(#000, #000);
+      background-blend-mode: normal, normal;
+      box-shadow: 0 6px 20px 2px rgba(103, 204, 255, 0.75);
+      border-radius: 6px;
+      text-align: center;
+      line-height: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      color: #222;
+      //     &::before{
+      //       content: "";
+      //       background: url(../assets/common/xf-grey.png)no-repeat center center;
+      //       padding: 15px;
+      //     }
+      &.active {
+        color: #fff;
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
       }
     }
   }
+}
 
 @keyframes poker-circle-ani {
-    0%,100% {
-        transform: scaleX(1)
-    }
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
 
-    50% {
-        transform: scale3d(1.05,1.05,1.05)
-    }
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
 }
 
 @keyframes up-down-ani {
-    0%,100% {
-        transform: translateY(0)
-    }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
 
-    50% {
-        transform: translateY(10px)
-    }
+  50% {
+    transform: translateY(10px);
+  }
 }
 
 @keyframes down-up-ani {
-    0%,100% {
-        transform: translateY(0)
-    }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
 
-    50% {
-        transform: translateY(-10px)
-    }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 </style>

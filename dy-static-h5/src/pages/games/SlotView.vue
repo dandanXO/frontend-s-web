@@ -304,7 +304,7 @@ export default defineComponent({
       })).then((res) => {
         res.forEach(element => {
           element.default = require("../../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.IMAGE_CDN}/game/${selectedPlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
         });
         gameListData.value = res;
         isLoading.value = false;

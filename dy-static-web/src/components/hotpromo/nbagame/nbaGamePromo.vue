@@ -3,7 +3,7 @@
     <swiper :slides-per-view="1" :loop="false" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper-wrapper">
       <!-- <template v-for="(detail, index) in nbaDetails" :key="index"> -->
       <swiper-slide>
-        <div class="bet-info-box">
+        <div class="bet-info-box" v-if="nbaDetails">
           <div class="bet-info-date">{{ formatDate(nbaDetails.matchTime).date }}</div>
           <div class="bet-info-details">
             <div class="info-team info-team-one">

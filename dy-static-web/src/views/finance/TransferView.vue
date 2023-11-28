@@ -10,22 +10,8 @@
           <!-- <span class="menu-title">快速转账</span>
             </el-col> -->
           <el-col :span="4">
-            <el-button
-              type="success"
-              size="small"
-              class="common-btn"
-              @click="transferOutAllModal"
-            >
-              一键转出
-            </el-button>
-            <el-button
-              type="success"
-              size="small"
-              class="common-btn"
-              @click="refreshAllModal"
-            >
-              一键刷新
-            </el-button>
+            <el-button type="success" size="small" class="common-btn" @click="transferOutAllModal">一键转出</el-button>
+            <el-button type="success" size="small" class="common-btn" @click="refreshAllModal">一键刷新</el-button>
           </el-col>
         </el-row>
       </div>
@@ -68,23 +54,9 @@
               <el-icon><Refresh /></el-icon>
             </div>
           </div>
-          <div
-            class="flex-box flex-justify-space flex-wrap transfer-action-box"
-          >
-            <el-button
-              size="small"
-              class="outline transfer-btn in"
-              @click="transferModal(0, p)"
-            >
-              转进
-            </el-button>
-            <el-button
-              size="small"
-              class="transfer-btn out"
-              @click="transferModal(1, p)"
-            >
-              转出
-            </el-button>
+          <div class="flex-box flex-justify-space flex-wrap transfer-action-box">
+            <el-button size="small" class="outline transfer-btn in" @click="transferModal(0, p)">转进</el-button>
+            <el-button size="small" class="transfer-btn out" @click="transferModal(1, p)">转出</el-button>
           </div>
         </div>
       </div>
@@ -102,9 +74,7 @@
       <template #header>
         <div
           :style="
-            transferTypeIndex === 0
-              ? 'flex-direction: row'
-              : 'flex-direction: row-reverse; justify-content: flex-end;'
+            transferTypeIndex === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse; justify-content: flex-end;'
           "
           class="el-dialog__title"
         >
@@ -115,19 +85,9 @@
           </el-tag>
         </div>
       </template>
-      <el-form
-        ref="formRef"
-        :hideRequiredMark="true"
-        :model="transferInfo"
-        :rules="rules"
-        :label-col="{ span: 4 }"
-      >
+      <el-form ref="formRef" :hideRequiredMark="true" :model="transferInfo" :rules="rules" :label-col="{ span: 4 }">
         <el-form-item ref="amount" prop="amount">
-          <el-input
-            v-model="transferInfo.amount"
-            placeholder="金额"
-            @keyup.enter="submitTransfer"
-          />
+          <el-input v-model="transferInfo.amount" placeholder="金额" @keyup.enter="submitTransfer" />
         </el-form-item>
         <el-form-item class="txt-center">
           <!-- <button
@@ -137,24 +97,12 @@
           >
             {{ "common.confirm" }}
           </button> -->
-          <el-button
-            class="common-btn"
-            :loading="loadingTransfer"
-            @click="submitTransfer"
-          >
-            确定
-          </el-button>
+          <el-button class="common-btn" :loading="loadingTransfer" @click="submitTransfer">确定</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
 
-    <el-dialog
-      v-model="transferAllModalVisible"
-      title="转账金额"
-      :maskClosable="false"
-      :footer="null"
-      width="500px"
-    >
+    <el-dialog v-model="transferAllModalVisible" title="转账金额" :maskClosable="false" :footer="null" width="500px">
       <div class="transfer-all-list">
         <div class="transfer-item" v-for="(p, indx) in platforms" :key="indx">
           <div>
@@ -211,7 +159,7 @@ export default defineComponent({
       amount: ""
     });
 
-    const platNames = {"KYDY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "SGWin": "双赢彩票", };
+    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "SGWin": "双赢彩票", };
 
     const transferOutAllModal = () => {
       transferAllModalVisible.value = true
@@ -508,8 +456,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
       // gap: 10px;
       .transfer-plat-item {
         // display: flex;
-        background: url(../../assets/images/account/transfer_item_bg.png)
-          no-repeat center center;
+        background: url(../../assets/images/account/transfer_item_bg.png) no-repeat center center;
         background-size: contain;
         width: 238px;
         height: 128px;
@@ -541,8 +488,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
             cursor: pointer;
 
             &.outline {
-              background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%),
-                linear-gradient(#5b80e7, #5b80e7);
+              background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%), linear-gradient(#5b80e7, #5b80e7);
             }
           }
         }
@@ -591,8 +537,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
 
             &::after {
               content: " ";
-              background: url(../../assets/images/account/transfer_item_bg.png)
-                no-repeat center center;
+              background: url(../../assets/images/account/transfer_item_bg.png) no-repeat center center;
               background-position: -2px -33px;
               background-size: 1400%;
               display: block;

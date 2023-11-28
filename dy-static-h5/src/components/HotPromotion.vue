@@ -342,19 +342,17 @@ export default defineComponent({
     margin: auto;
 
     .claim-amt {
-      font-size: 33px;
+      font-size: 30px;
       color: var(--q-primary);
-      font-family: "Wave";
       text-align: center;
     }
 
     .bonus-text {
-      font-size: 24px;
+      font-size: 22px;
       // color: #ff3131;
-      color: #ceab26;
+      color: var(--q-primary);
       text-align: center;
       font-weight: 700;
-      font-family: "Jura";
       white-space: nowrap;
     }
   }
@@ -365,7 +363,7 @@ export default defineComponent({
 
   .q-btn__content {
     color: #fff;
-    background-image: linear-gradient(to right, #de4545, #db7e42) !important;
+    background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%) !important;
     width: 80px;
     border-radius: 5px;
     -moz-border-radius: 5px;
