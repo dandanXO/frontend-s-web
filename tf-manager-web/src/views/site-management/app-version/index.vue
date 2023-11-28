@@ -100,41 +100,10 @@
       <el-form
         ref="appForm"
         :model="form"
-        :rules="formRules"
         :inline="true"
         size="small"
         label-width="180px"
       >
-        <!-- <div id="preview" icon="el-icon-android" @focus="handleFilePreview">
-          <el-button type="primary" class="common-btn" icon="el-icon-android">
-            {{ $t('google.android_download') }}
-          </el-button>
-          123
-        </div> -->
-        <el-form-item :label="t('fields.image')" prop="path">
-          <el-row :gutter="10">
-            <el-col :span="2">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="inputApp"
-                style="display: none"
-                accept=".ipa, .apk, application/vnd.android.package-archive, application/octet-stream, application/x-ios-app"
-                @change="attachApp"
-              />
-              <el-button
-                icon="el-icon-upload"
-                size="mini"
-                type="success"
-                @click="$refs.inputApp.click()"
-              >
-                {{ t('fields.upload') }}
-              </el-button>
-            </el-col>
-            <el-col :span="1" />
-          </el-row>
-        </el-form-item>
         <el-form-item :label="t('fields.site')" prop="siteId">
           <el-select
             v-model="form.siteId"
@@ -187,10 +156,57 @@
             />
           </el-select>
         </el-form-item>
+
+        <el-form-item :label="t('siteAppVersion.apkType')" prop="apkType">
+          <el-select
+            v-model="form.apkType"
+            size="small"
+            :placeholder="t('siteAppVersion.apkType')"
+            class="filter-item"
+            style="width: 350px"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.apkType"
+              :key="item.name"
+              :label="item.display"
+              :value="item.name"
+            />
+          </el-select>
+        </el-form-item>
+
         <el-form-item :label="t('siteAppVersion.version')" prop="version">
           <el-input v-model="form.version" style="width: 350px" />
         </el-form-item>
 
+        <el-form-item :label="t('siteAppVersion.appUpload')" prop="filePath">
+          <el-row :gutter="10">
+            <el-col :span="8">
+              <!-- eslint-disable -->
+              <input
+                id="uploadFile"
+                type="file"
+                ref="inputApp"
+                style="display: none"
+                accept=".ipa, .apk, application/vnd.android.package-archive, application/octet-stream, application/x-ios-app"
+                @change="attachApp"
+              />
+              <el-button
+                icon="el-icon-upload"
+                size="mini"
+                type="success"
+                @click="$refs.inputApp.click()"
+              >
+                {{ t('fields.upload') }}
+              </el-button>
+            </el-col>
+            <el-col :span="1">
+              <el-button icon="el-icon-files" v-if="uploadedApp.filePath">
+                File Upload Successfully
+              </el-button>
+            </el-col>
+          </el-row>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
             {{ t('fields.cancel') }}
@@ -214,6 +230,7 @@
       <el-table-column prop="site" :label="t('fields.site')" />
       <el-table-column prop="os" :label="t('fields.os')" />
       <el-table-column prop="appType" :label="t('fields.appType')" />
+      <el-table-column prop="apkType" :label="t('fields.apkType')" />
       <el-table-column prop="version" :label="t('fields.version')" />
       <el-table-column prop="status" :label="t('fields.status')" />
       <el-table-column type="title" :label="t('fields.action')">
@@ -296,6 +313,10 @@ const uiControl = reactive({
     { name: 'SPORT', display: t('siteAppVersion.SPORT') },
     { name: 'ESPORT', display: t('siteAppVersion.ESPORT') },
   ],
+  apkType: [
+    { name: 'NORMAL', display: t('siteAppVersion.NORMAL') },
+    { name: 'NEW_KEY', display: t('siteAppVersion.NEW_KEY') },
+  ],
 })
 
 const form = reactive({
@@ -303,6 +324,7 @@ const form = reactive({
   siteId: null,
   os: null,
   appType: null,
+  apkType: null,
   version: null,
   filePath: null,
 })
@@ -311,21 +333,12 @@ const inputApp = ref(null)
 
 const appForm = ref(null)
 
-const formRules = reactive({
-  // path: [required(t('message.validateImageRequired'))],
-  // name: [required(t('message.validateImageNameRequired'))],
-  // category: [required(t('message.validateCategoryRequired'))],
-  // siteId: [required(t('message.validateSiteRequired'))],
-  // platform: null,
-  // posterType: null,
-})
-
 const siteList = reactive({
   list: [],
 })
 
 const uploadedApp = reactive({
-  url: null,
+  filePath: null,
   isAndroid: null,
   isIOS: null,
 })
@@ -347,9 +360,8 @@ function showDialog(type) {
   if (type === 'CREATE') {
     if (appForm.value) {
       appForm.value.resetFields()
-      uploadedApp.url = null
+      uploadedApp.filePath = null
       form.id = null
-      // platform.list = []
     }
     uiControl.dialogTitle = t('siteAppVersion.appUpload')
   } else {
@@ -372,7 +384,8 @@ function handleSelectionChange(val) {
 
 function showEdit(app) {
   showDialog('EDIT')
-  uploadedApp.url = app.filePath
+  console.log('app : ', app)
+  uploadedApp.filePath = app.filePath
   nextTick(() => {
     for (const key in app) {
       if (Object.keys(form).find(k => k === key)) {
@@ -439,8 +452,8 @@ async function attachApp(event) {
   const data = await attachFile(event)
   if (data.code === 0) {
     form.filePath = data.data
-    inputApp.value.value = ''
   } else {
+    uploadedApp.filePath = null
     ElMessage({ message: t('message.failedToUploadApp'), type: 'error' })
   }
   console.log('data : ', data)
@@ -470,7 +483,8 @@ async function attachFile(event) {
     formData.append('os', form.os)
     formData.append('appType', form.appType)
     formData.append('extension', fileExtension)
-    uploadedApp.url = URL.createObjectURL(files)
+    uploadedApp.filePath = URL.createObjectURL(files)
+    console.log('uploadedApp.filePath : ', uploadedApp.filePath)
     return await uploadApp(formData, fileExtension)
   }
 }
