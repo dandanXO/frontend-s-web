@@ -25,12 +25,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .app-main {
-  /* 50= navbar  50  */
-  min-height: calc(100vh - 50px);
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding: 3rem 1rem !important;
 }
 
 .fixed-header + .app-main {

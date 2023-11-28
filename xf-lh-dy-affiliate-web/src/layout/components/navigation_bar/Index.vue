@@ -1,48 +1,38 @@
 <template>
   <div class="navbar">
+    <div class="logo-container">
+      <img class="logo" src="../../../assets/images/home/logo_w_text.png">
+    </div>
     <div class="right-menu">
-      <el-space>
-        <el-select
-          class="lang-container right-menu-item"
-          placeholder=""
-          v-model="languageVal"
-          @change="handleLanguage"
-        >
-          <el-option key="1" value="en">en</el-option>
-          <el-option key="2" value="zh">zh</el-option>
-          <el-option key="3" value="th">th</el-option>
-        </el-select>
-        <el-dropdown
-          class="avatar-container right-menu-item hover-effect"
-          trigger="click"
-        >
-          <div class="avatar-wrapper">
-            <img
-              :src="avatar + '?imageView2/1/w/80/h/80'"
-              class="user-avatar"
-            >
-          </div>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>
-                <span style="display:block;"> {{ name }}</span>
+      <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
+        <el-option key="1" value="en">en</el-option>
+        <el-option key="2" value="zh">zh</el-option>
+        <el-option key="3" value="th">th</el-option>
+      </el-select>
+      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+        <div class="avatar-wrapper">
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
+          <span style="display:inline-block;"> {{ name }}</span>
+        </div>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item>
+              <span style="display:block;"> {{ name }}</span>
+            </el-dropdown-item>
+            <ForgetPasswordModal :requireOld="true" @submit="changePassword">
+              <el-dropdown-item divided>
+                {{ $t('common.changePassword') }}
               </el-dropdown-item>
-              <ForgetPasswordModal :requireOld="true" @submit="changePassword">
-                <el-dropdown-item divided>
-                  {{ $t('common.changePassword') }}
-                </el-dropdown-item>
-              </ForgetPasswordModal>
-              <el-dropdown-item
-                @click="logout"
-              >
-                <span style="display:block;">
-                  {{ $t('common.logout') }}
-                </span>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </el-space>
+            </ForgetPasswordModal>
+            <el-dropdown-item @click="logout">
+              <span style="display:block;">
+                {{ $t('common.logout') }}
+              </span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+      <svg-icon :class="'logout-btn-container'" :icon-class="'logout'" style="height: 40px;width: 40px;" :title="$t('common.logout')" @click="logout" />
     </div>
   </div>
 </template>
@@ -147,10 +137,30 @@ export default {
     vertical-align: top;
   }
 
+  .logo-container {
+    float: left;
+    height: 100%;
+    width: auto;
+    margin-left: 2em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    img.logo {
+      height: 40px;
+      width: auto;
+    }
+  }
+
   .right-menu {
     float: right;
     height: 100%;
     line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px 20px;
 
     &:focus {
       outline: none;
@@ -176,16 +186,19 @@ export default {
 
     .avatar-container {
       .avatar-wrapper {
-        margin-top: 5px;
-        margin-right: 16px;
-        margin-left: 16px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
         position: relative;
+        padding: 5px 12px;
+        gap: 8px;
 
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
+          width: 32px;
+          height: 32px;
+          border-radius: 25px;
         }
 
         .el-icon-caret-bottom {
@@ -199,10 +212,34 @@ export default {
     }
 
     .lang-container {
-      margin-top: 5px;
       width: 100px;
       position: relative;
     }
+
+    .logout-btn-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
+}
+</style>
+<style lang="scss">
+.navbar {
+
+  .lang-container,
+  .avatar-container,
+  .logout-btn-container {
+    background: #F3F8FC;
+    border-radius: 10px;
+  }
+}
+
+.lang-container {
+  .el-input__inner {
+    background: none;
+    border: none;
   }
 }
 </style>

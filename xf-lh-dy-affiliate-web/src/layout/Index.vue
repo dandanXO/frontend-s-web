@@ -106,7 +106,11 @@ export default defineComponent({
   transition: margin-left 0.28s;
   display: flex;
   position: relative;
-  background: #e7eaef;
+  background: #F3F8FC;
+  // navbar height = 50px;
+  margin-top: 50px;
+  padding: 20px;
+  gap: 20px;
 }
 
 .sidebar-container {
@@ -118,6 +122,7 @@ export default defineComponent({
   left: 0;
   z-index: 1;
   overflow: hidden;
+  padding: 5px 0px;
 }
 
 .fixed-header {

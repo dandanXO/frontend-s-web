@@ -10,13 +10,14 @@
         <div
           v-for="child in nav.children"
           :key="child.id"
-          :class="child.active ? 'active' : ''"
+          :class="`route-container ${child.active ? 'active' : ''}`"
         >
           <RouterLink :to="nav.path + child.path" class="route">
             <div class="route-content">
               <svg-icon
-                :icon-class="child.icon"
+                :icon-class="`${child.icon}`"
                 :style="child.active ? 'color: #179cff' : ''"
+                :className="child.active ? 'active-icon' : ''"
               />
               <span :class="child.active ? 'active' : ''">
                 {{ child.title }}
@@ -59,13 +60,13 @@ const navigationData = ref([
         path: '/manage',
         title: '会员管理',
         active: false,
-        icon: 'people',
+        icon: 'squares',
       },
       {
         path: '/game-record',
         title: '游戏记录',
         active: false,
-        icon: 'chart',
+        icon: 'clock',
       },
     ],
   },
@@ -78,25 +79,25 @@ const navigationData = ref([
         path: '/withdraw-request',
         title: '提款申请',
         active: false,
-        icon: 'bankcard',
+        icon: 'form-w-pencil',
       },
       {
         path: '/transfer',
         title: '代理代存',
         active: false,
-        icon: 'backup',
+        icon: 'users',
       },
       {
         path: '/deposit',
         title: '额度充值',
         active: false,
-        icon: 'bankcard',
+        icon: 'wallet',
       },
       {
         path: '/finance',
         title: '财务报表',
         active: false,
-        icon: 'money',
+        icon: 'report',
       },
       {
         path: '/settlement',
@@ -108,7 +109,7 @@ const navigationData = ref([
         path: '/credit-flow',
         title: '账变明细',
         active: false,
-        icon: 'notebook',
+        icon: 'ledger',
       },
     ],
   },
@@ -127,13 +128,13 @@ const navigationData = ref([
         path: '/referral-material',
         title: '推广素材',
         active: false,
-        icon: 'education',
+        icon: 'photo',
       },
       {
         path: '/channel-pack',
         title: '渠道打包',
         active: false,
-        icon: 'sys-tools',
+        icon: 'folder',
       },
     ],
   },
@@ -158,19 +159,19 @@ const navigationData = ref([
         path: '/announcement',
         title: '系统通告',
         active: false,
-        icon: 'gonggao',
+        icon: 'speaker',
       },
       {
         path: '/commission-info',
         title: '佣金说明',
         active: false,
-        icon: 'info',
+        icon: 'money-bag',
       },
       {
         path: '/contact-us',
         title: '联系我们',
         active: false,
-        icon: 'contact',
+        icon: 'speech-bubbles',
       },
     ],
   },
@@ -180,8 +181,19 @@ const setActiveNav = () => {
   const currentPath = route.path.substring(route.path.lastIndexOf('/'))
   navigationData.value.forEach(e => {
     e.children.forEach(c => {
-      if (c.path === currentPath) c.active = true
-      else c.active = false
+      // due to the usage of <use> mechanism and svg-sprite-loader
+      // referred icon is out of component scope
+      // thus unable to style within component directly
+      const iconEl = document.querySelector(`symbol#icon-${c.icon} > path`);
+      const activeIconColor = '#3f8cff';
+      const defaultIconColor = '#7D8592';
+      if (c.path === currentPath) {
+        c.active = true
+        iconEl.style.fill = activeIconColor
+      } else {
+        c.active = false
+        iconEl.style.fill = defaultIconColor
+      }
     })
   })
 }
@@ -202,10 +214,8 @@ onMounted(() => {
   background: white;
   display: flex;
   flex-direction: column;
-  padding: 2rem 0;
   border-radius: 1rem;
   width: 250px;
-  margin: 4rem 0 2rem 2rem;
 
   .home {
     display: flex;
@@ -234,8 +244,12 @@ onMounted(() => {
     font-size: 1rem;
 
     .route-title {
-      margin: 1rem 0 1rem 2rem;
+      margin: 1rem 0 1rem 1rem;
       font-weight: bold;
+    }
+
+    .route-title:has(~.active) {
+      color: #3F8CFF;
     }
 
     .route-wrapper {
@@ -249,28 +263,24 @@ onMounted(() => {
       .route-content {
         display: flex;
         gap: 0.5rem;
-        padding: 0.5rem 0 0.5rem 2rem;
+        padding: 0.5rem 2rem 0.5rem 0.5rem;
+        margin: 0px 10px;
 
         svg {
           width: 2rem;
-        }
-
-        span {
-          &.active {
-            color: #00a1fd;
-          }
-        }
-
-        &:hover {
-          background: #e8f5ff;
         }
       }
     }
   }
 
-  div.active {
-    background-color: #e8f5ff;
-    border-left: 5px solid rgb(71, 71, 255);
+  .route-container.active {
+    border-right: 5px solid #3f8cff;
+  }
+
+  .route-container.active .route-content {
+    background-color: #ecf3ff;
+    border-radius: 0.5rem;
+    color: #3F8CFF;
   }
 }
 </style>
