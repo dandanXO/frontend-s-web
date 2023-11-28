@@ -683,8 +683,8 @@ onMounted(() => {
     }
 
     .prize-arrow {
-      top: 32.5%;
-      left: 13.75%;
+      //top: 32.5%;
+      //left: 13.75%;
 
       .prize-arrow-img {
         width: 22%;
