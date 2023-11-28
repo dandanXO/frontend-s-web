@@ -158,6 +158,15 @@ const updateNewGuestState = () => {
         } else {
           SessionStorage.set("TOKEN", r.data);
         }
+
+        localStorage.setItem(
+          "userpass",
+          JSON.stringify({
+            loginName: updateInfo.phone,
+            password: updateInfo.password
+          })
+        );
+
         emits("closeGuestKYCDialog");
       } else {
         $q.notify({
