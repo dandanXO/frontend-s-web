@@ -20,7 +20,7 @@
           class="landing-input"
         ></q-input> -->
 
-        <q-input
+        <!-- <q-input
           ref="loginNameRef"
           hide-bottom-space
           v-model="passwordForm.loginName"
@@ -32,7 +32,7 @@
           label-color="brand"
           color="white"
           class="landing-input"
-        ></q-input>
+        ></q-input> -->
 
         <q-input
           ref="phoneRef"
@@ -84,8 +84,7 @@
           label-color="brand"
           color="white"
           class="landing-input"
-        >
-        </q-input>
+        ></q-input>
 
         <q-input
           ref="newPwdRef"
@@ -275,7 +274,7 @@ const isRequestSent = ref(false);
 // };
 
 const onSubmitForgotPwd = () => {
-  loginNameRef.value.validate();
+  // loginNameRef.value.validate();
   phoneRef.value.validate();
   ftCaptchaRef.value.validate();
 
@@ -283,7 +282,11 @@ const onSubmitForgotPwd = () => {
     message: "Sending verification code..."
   });
 
-  if (loginNameRef.value.hasError || phoneRef.value.hasError || ftCaptchaRef.value.hasError) {
+  if (
+    // loginNameRef.value.hasError ||
+    phoneRef.value.hasError ||
+    ftCaptchaRef.value.hasError
+  ) {
     $q.loading.hide();
   } else {
     api

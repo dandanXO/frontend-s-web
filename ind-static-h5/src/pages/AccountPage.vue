@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
+      <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
         <div class="pc-form-label">Email</div>
         <div class="pc-form-input">
           <q-input
@@ -51,7 +51,7 @@
             readonly
           ></q-input>
         </div>
-      </div>
+      </div> -->
 
       <div class="pc-tip">
         <div>
@@ -432,6 +432,20 @@
     </div>
   </q-dialog>
 
+  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeGuestKYCDialog" />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeUserKYCDialog" />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
+
   <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
@@ -497,6 +511,8 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
+import KYCGuestForm from "../components/KYCGuestForm.vue";
+import KYCUserForm from "../components/KYCUserForm.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -535,6 +551,7 @@ const intervals = ref(null);
 
 const startRefresh = async () => {
   loadingUpdated.value = true;
+  loadInfo();
 
   store.getMemberInfo().then(() => {
     setTimeout(() => {
@@ -545,15 +562,21 @@ const startRefresh = async () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  if (store.guest) {
-    openNewChangePasswordDialog();
-  } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
-    personalCenterDialog.value = true;
+  if (store.guest && !personalState.memberInfo.realName) {
+    // openNewChangePasswordDialog();
+    openGuestKYCDialog();
+  } else if (!store.guest && !personalState.memberInfo.realName) {
+    openUserKYCDialog();
+  } else {
+    return false;
   }
+  // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
+  //   personalCenterDialog.value = true;
+  // }
 };
 
 const closePersonalCenterDialog = () => {
-  loadInfo();
+  // loadInfo();
   personalCenterDialog.value = false;
 };
 
@@ -561,6 +584,32 @@ const changePasswordDialog = ref(false);
 const openChangePasswordDialog = () => {
   resetChangePasswordInfo();
   changePasswordDialog.value = !changePasswordDialog.value;
+};
+
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const guestKYCDialog = ref(false);
+const openGuestKYCDialog = () => {
+  guestKYCDialog.value = true;
+};
+const closeGuestKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    guestKYCDialog.value = false;
+  });
+
+  // formDetail.realName = "";
+  // formDetail.phone = "";
+  // formDetail.password = "";
 };
 
 const changeNewPasswordDialog = ref(false);
@@ -622,11 +671,13 @@ const loadInfo = () => {
   personalState.memberInfo = userStore();
 
   if (store.guest && personalState.memberInfo.realName === null) {
-    openNewChangePasswordDialog();
+    // openNewChangePasswordDialog();
+    openGuestKYCDialog();
   }
 
   if (!store.guest && personalState.memberInfo.realName === null) {
-    openPersonalCenterDialog();
+    // openPersonalCenterDialog();
+    openUserKYCDialog();
   }
 
   // console.log(personalState.memberInfo);
@@ -844,10 +895,94 @@ const updateState = () => {
     });
 };
 
+const updateNewUserState = () => {
+  const updateInfo = {};
+  updateInfo.realName = formDetail.realName;
+
+  api
+    .post("/session/account", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          userKYCDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+    });
+};
+
+// const updateNewGuestState = () => {
+//   const updateInfo = {};
+//   updateInfo.realName = formDetail.realName;
+//   updateInfo.phone = formDetail.phone;
+//   updateInfo.password = formDetail.password;
+
+//   api
+//     .post("/session/guest-password", qs.stringify(updateInfo))
+//     .then((r) => {
+//       if (r.code === 0) {
+//         profileFormRef.value.reset();
+
+//         $q.notify({
+//           color: "positive",
+//           position: "top",
+//           message: "Updated successfully",
+//           icon: "check_circle_outline"
+//         });
+
+//         store.getMemberInfo().then(() => {
+//           loadInfo();
+//           guestKYCDialog.value = false;
+//         });
+//       } else {
+//         $q.notify({
+//           color: "negative",
+//           position: "top",
+//           message: r.message,
+//           icon: "report_problem"
+//         });
+//       }
+//     })
+//     .catch(() => {})
+//     .then(() => {
+//       btnLoading.value = false;
+//     });
+// };
+
 const submitKYC = () => {
   btnLoading.value = true;
   updateState();
 };
+
+const submitKYCNewUser = () => {
+  btnLoading.value = true;
+  updateNewUserState();
+};
+
+// const submitKYCNewGuest = () => {
+//   btnLoading.value = true;
+//   updateNewGuestState();
+// };
 
 const isValidName = () => {
   const { realName } = formDetail;
@@ -864,8 +999,14 @@ const isValidName = () => {
 const isValidPhone = () => {
   const { phone } = formDetail;
 
-  const result = !phone ? "Please Enter Phone Number" : true;
-  return result;
+  if (!phone) {
+    return "Please Enter Phone Number";
+  }
+
+  const phoneRegex = /^\d{7,12}$/;
+  const isValid = phoneRegex.test(phone);
+
+  return isValid ? true : "Phone Number must be between 7 and 12 digits";
 };
 
 const isValidOTP = () => {
