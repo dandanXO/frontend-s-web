@@ -356,7 +356,20 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" min-width="150" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="150" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="150">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       :total="page.total"
@@ -459,6 +472,7 @@ const startDate = new Date();
 startDate.setDate(startDate.getDate() - 2);
 const defaultStartDate = convertDate(startDate);
 const defaultEndDate = convertDate(new Date());
+let timeZone = null;
 
 const page = reactive({
   pages: 0,
@@ -628,6 +642,7 @@ async function loadMemberAmountAdjust() {
       page.totalDeduct = deductAmount;
     }
   }
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

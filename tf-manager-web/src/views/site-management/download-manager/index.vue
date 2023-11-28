@@ -79,7 +79,7 @@
             <span v-if="scope.row.requestTime === null">-</span>
             <span
               v-if="scope.row.requestTime !== null"
-              v-formatter="{data: scope.row.requestTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.requestTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -127,6 +127,7 @@ let selectedDate = "";
 const siteList = reactive({
   list: []
 });
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -219,6 +220,8 @@ async function loadRecords() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
+
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

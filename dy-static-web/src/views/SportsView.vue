@@ -25,7 +25,7 @@
                 @click="clickPlat(plat)"
                 :class="{ active: selectedPlat === plat.code }"
               >
-                {{ plat.code }} 体育
+                {{ plat.name }}
               </span>
             </div>
             <div class="" data-aos="fade-left" data-aos-duration="4000">
@@ -74,27 +74,27 @@ export default defineComponent({
     const platforms = ref([
       {
         code: "IM",
-        name: "IM",
+        name: "IM 体育",
         image: "im",
         message:
           "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
         link: "/games/im-sport.html"
       },
-      {
-        code: "PM",
-        name: "PM",
-        image: "pm",
-        message:
-          "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
-        link: "/games/pm-sport.html"
-      }
       // {
-      //   code: 'SABA',
-      //   name: 'SABA',
-      //   image: 'saba',
-      //   message: '覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 不会让您错过任何自己最喜爱的体育赛事',
-      //   link: '/games/cr-sport.html'
-      // },
+      //   code: "PM",
+      //   name: "熊猫体育",
+      //   image: "db",
+      //   message:
+      //     "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
+      //   link: "/games/pm-sport.html"
+      // }
+      {
+        code: 'SABA',
+        name: 'SABA',
+        image: 'saba',
+        message: '覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 不会让您错过任何自己最喜爱的体育赛事',
+        link: '/games/cr-sport.html'
+      },
       // {
       //   code: 'CR',
       //   name: 'CR',

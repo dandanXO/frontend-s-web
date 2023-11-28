@@ -1,24 +1,17 @@
 <template>
   <div class="main-section">
-    <q-form
-      class="login-form q-gutter-y-md rounded-borders q-pa-md"
-      style="margin: 0px auto"
-    >
+    <q-form class="login-form q-gutter-y-md rounded-borders q-pa-md" style="margin: 0px auto">
       <q-input
         class="login-input text-main"
         ref="loginNameRef"
         filled
         v-model="loginForm.loginName"
         :label="$t('lang.input_username')"
-        :rules="[
-          (val) =>
-            (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
-        ]"
+        :rules="[(val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty')]"
         color="white"
         autocomplete="username"
         clearable
-      >
-      </q-input>
+      ></q-input>
       <q-input
         class="login-input text-main"
         ref="passwordRef"
@@ -26,19 +19,13 @@
         v-model="loginForm.password"
         :label="$t('lang.password')"
         :type="isPwd ? 'password' : 'text'"
-        :rules="[
-          (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
-        ]"
+        :rules="[(val) => (val && val.length > 0) || $t('lang.input_password_empty')]"
         color="white"
         autocomplete="current-password"
         clearable
       >
         <template v-slot:append>
-          <q-icon
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
-          />
+          <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
         </template>
       </q-input>
 
@@ -49,9 +36,7 @@
         type="text"
         v-model="loginForm.captchaCode"
         :label="$t('lang.verification_code')"
-        :rules="[
-          (val) => (val && val.length > 3) || $t('lang.input_code_empty'),
-        ]"
+        :rules="[(val) => (val && val.length > 3) || $t('lang.input_code_empty')]"
         color="white"
         @keyup.enter="onSubmit"
       >
@@ -78,9 +63,7 @@
       </div>
 
       <div class="row justify-between items-center">
-        <router-link class="forget-pwd-tip" to="/forgot-password">
-          {{ $t("lang.forgot_password") }}?
-        </router-link>
+        <router-link class="forget-pwd-tip" to="/forgot-password">{{ $t("lang.forgot_password") }}?</router-link>
 
         <router-link class="forget-pwd-tip" to="/register">
           {{ $t("lang.signup_now") }}
@@ -98,18 +81,18 @@
         size="md"
       />
 
-      <!--      <q-btn-->
-      <!--        v-if="isMobile()"-->
-      <!--        class="common-large-btn line-login-btn"-->
-      <!--        @click="loginViaLine"-->
-      <!--        type="submit"-->
-      <!--        color="brand"-->
-      <!--        rounded-->
-      <!--        size="md"-->
-      <!--      >-->
-      <!--        <img src="../assets/images/common/line-official.svg"/>-->
-      <!--        <span>LINE Login</span>-->
-      <!--      </q-btn>-->
+      <q-btn
+        v-if="!isIOS()"
+        class="common-large-btn line-login-btn"
+        @click="loginViaLine"
+        type="submit"
+        color="brand"
+        rounded
+        size="md"
+      >
+        <img src="../assets/images/common/line-official.svg" />
+        <span>LINE Login</span>
+      </q-btn>
     </div>
   </div>
 </template>
@@ -118,25 +101,18 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import {
-  Loading,
-  LocalStorage,
-  Platform,
-  SessionStorage,
-  useQuasar,
-} from "quasar";
+import { Loading, LocalStorage, Platform, SessionStorage, useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
-import liff from "@line/liff";
 import qs from "qs";
-import { isMobile } from "boot/utils";
+import { isMobile, isH5 } from "boot/utils";
 import { uuid } from "vue-uuid";
 import axios from "axios";
 
 export default defineComponent({
   name: "LoginPage",
-  methods: { isMobile },
+  methods: { isMobile, isH5 },
   setup() {
     const { t } = useI18n();
     const store = userStore();
@@ -148,7 +124,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       captchaCode: "",
-      codeId: "",
+      codeId: ""
     });
     const $q = useQuasar();
     const loginNameRef = ref();
@@ -158,10 +134,12 @@ export default defineComponent({
     const route = useRoute();
 
     //LINE.
-    const clientId = 2001411735;
-    const clientSecret = "4e90ef3551da974394de3486261f0b7f";
-    // const redirectUrl = encodeURI(`https://jolly88.com/login`);
-    const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
+    const clientId = isH5() ? 2001537318 : 2001411735;
+    const clientSecret = isH5() ? "6625f545954c947d95864a7c9cc144d9" : "4e90ef3551da974394de3486261f0b7f";
+    const redirectUrl = isH5()
+      ? encodeURI(`https://p8s1-files.camestible.com/login`)
+      : encodeURI(`https://jolly88.com/login`);
+    // const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
     const nonce = `jolly88`;
     const stateId = uuid.v1();
     const checkIp = ref("");
@@ -172,8 +150,7 @@ export default defineComponent({
         .then((res) => {
           const response = res.data;
           if (response.code === 0) {
-            verificationImg.value =
-              "data:image/png;base64," + response.data.img;
+            verificationImg.value = "data:image/png;base64," + response.data.img;
             loginForm.codeId = response.data.id;
           }
         })
@@ -214,7 +191,7 @@ export default defineComponent({
         passwordRef.value.validate();
         // verificationRef.value.validate();
         $q.loading.show({
-          message: t("lang.loading"),
+          message: t("lang.loading")
         });
         if (loginNameRef.value.hasError || passwordRef.value.hasError) {
           $q.loading.hide();
@@ -225,7 +202,7 @@ export default defineComponent({
               password: loginForm.password,
               sid: sidParam,
               captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId,
+              codeId: loginForm.codeId
             })
             .then(() => {
               $q.loading.hide();
@@ -235,7 +212,7 @@ export default defineComponent({
                   "userpass",
                   JSON.stringify({
                     loginName: loginForm.loginName.trim(),
-                    password: loginForm.password,
+                    password: loginForm.password
                   })
                 );
               } else {
@@ -244,9 +221,7 @@ export default defineComponent({
 
               getCode();
               if (store.hasToken()) {
-                const jumpUrl = route.query.redirect
-                  ? route.query.redirect
-                  : "/";
+                const jumpUrl = route.query.redirect ? route.query.redirect : "/";
                 router.go(jumpUrl);
                 if (Platform.is.capacitor && Platform.is.ios) {
                   location.reload();
@@ -267,10 +242,11 @@ export default defineComponent({
       const state = route.query.state;
 
       const localState = LocalStorage.getItem("STATE_ID");
-      // alert(state);
+      // alert(codeId);
       // alert(localState);
 
-      if (codeId && state && state === localState) {
+      // && state === localState
+      if (codeId && state) {
         axios
           .post(
             "https://api.line.me/oauth2/v2.1/token",
@@ -279,7 +255,7 @@ export default defineComponent({
               grant_type: "authorization_code",
               client_id: clientId,
               client_secret: clientSecret,
-              redirect_uri: redirectUrl,
+              redirect_uri: redirectUrl
             })
           )
           .then((res) => {
@@ -298,31 +274,26 @@ export default defineComponent({
                 });
                 const sidParam = FingerprintJS.hashComponents(allComponents);
                 var regDevice = Platform.is.mobile ? "H5" : "WEB";
-                if (
-                  "standalone" in window.navigator &&
-                  window.navigator.standalone
-                ) {
+                if ("standalone" in window.navigator && window.navigator.standalone) {
                   regDevice = "IOS";
                 } else {
                   regDevice = Platform.is.mobile ? "H5" : "WEB";
-                  if (Platform.is.capacitor) {
-                    if (Platform.is.android) {
-                      regDevice = "ANDROID";
-                    }
+                  if (Platform.is.capacitor && Platform.is.android) {
+                    regDevice = "ANDROID";
                   }
                 }
                 const loginInfo = {
                   siteId: siteId,
                   way: regDevice,
                   sid: sidParam,
-                  accessToken: accessToken,
+                  accessToken: accessToken
                 };
                 var string = qs.stringify(loginInfo);
 
                 LocalStorage.remove("STATE_ID");
 
                 Loading.show({
-                  message: "Logging in",
+                  message: "Logging in"
                 });
                 api.post("/member/lineLogin", string).then((res) => {
                   // alert(res);
@@ -337,12 +308,22 @@ export default defineComponent({
       }
     };
 
+    const isIOS = () => {
+      if (
+        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
+      ) {
+        return true;
+      }
+      return false;
+    };
+
     const loginViaLine = () => {
       const stateUr = stateId;
       // alert(stateUr);
       LocalStorage.set("STATE_ID", stateUr);
 
-      const url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}&state=${stateUr}&scope=profile%20openid&nonce=${nonce}`;
+      const url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}&state=${stateUr}&scope=profile%20openid%20email&nonce=${nonce}`;
       window.open(url, "_blank");
     };
 
@@ -365,8 +346,9 @@ export default defineComponent({
       getCode,
       loginViaLine,
       isCheckRmb,
+      isIOS
     };
-  },
+  }
 });
 </script>
 <style scoped lang="scss">

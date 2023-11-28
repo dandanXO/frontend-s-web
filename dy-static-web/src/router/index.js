@@ -49,6 +49,11 @@ const routes = [
                 component: () => import(/* webpackChunkName: "Game" */ '../views/LotteryView.vue')
             },
             {
+                path: "/lottery/SGWin",
+                name: "SGWin",
+                component: () => import(/* webpackChunkName: "Game" */ '../views/lottery/SgwinView.vue')
+            },
+            {
                 path: "/poker",
                 name: "poker",
                 component: () => import(/* webpackChunkName: "Game" */ '../views/PokerView.vue')
@@ -93,6 +98,11 @@ const routes = [
                 name: "referCode",
                 component: () => {
                 }
+            },
+            {
+                path: "/privilege/invite",
+                name: "invite",
+                component: () => import('../views/PrivilegeInvite.vue')
             },
             {
                 path: "/center",

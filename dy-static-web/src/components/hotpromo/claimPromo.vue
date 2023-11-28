@@ -1,18 +1,10 @@
 <template>
   <div class="common-promo">
-    <img
-      :src="
-        require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)
-      "
-    />
+    <img :src="require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)" />
     <div class="contents">
-      <el-button
-        class="common-btn"
-        size="large"
-        :loading="loadingClaim"
-        @click="$emit('daily-slot')"
-        >领取</el-button
-      >
+      <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="$emit('daily-slot')">
+        点击领取
+      </el-button>
     </div>
   </div>
 </template>
@@ -23,18 +15,18 @@ export default defineComponent({
   props: {
     loadingClaim: {
       type: Boolean,
-      default: false,
+      default: false
     },
     promoId: {
       type: Number,
-      default: null,
-    },
+      default: null
+    }
   },
   emits: ["daily-slot"],
   setup() {
     onMounted(() => {});
     return {};
-  },
+  }
 });
 </script>
 <style scoped lang="scss">
@@ -55,6 +47,24 @@ export default defineComponent({
       color: #ffffff;
       background: #db7e42;
       border: 0;
+    }
+  }
+
+  .promo-common-btn {
+    padding: 3px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #19c6ff 0, #0094ff 100%), linear-gradient(#0094ff, #0094ff);
+    height: 57px;
+    font-size: 25px;
+    line-height: 57px;
+    width: 225px;
+
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
     }
   }
 }

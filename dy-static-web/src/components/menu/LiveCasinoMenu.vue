@@ -40,9 +40,16 @@ export default defineComponent({
   setup() {
     const navigations = [
       {
-        code: "AG",
-        icon: "ag",
-        label: "AG",
+        code: "PMLIVE",
+        icon: "pm",
+        label: "DB",
+        slogan: "全球顶尖, 尊享娱乐",
+        gameCode: ""
+      },
+      {
+        code: "BG",
+        icon: "bg",
+        label: "BG",
         slogan: "全球顶尖, 尊享娱乐",
         gameCode: ""
       },
@@ -61,16 +68,9 @@ export default defineComponent({
         gameCode: "bblive_lobby_pc"
       },
       {
-        code: "PMLIVE",
-        icon: "pm",
-        label: "PM",
-        slogan: "全球顶尖, 尊享娱乐",
-        gameCode: ""
-      },
-      {
-        code: "BG",
-        icon: "bg",
-        label: "BG",
+        code: "AG",
+        icon: "ag",
+        label: "AG",
         slogan: "全球顶尖, 尊享娱乐",
         gameCode: ""
       },

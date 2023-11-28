@@ -172,7 +172,7 @@
             v-if="hasPermission(['sys:member:detail'])"
           >
             <span style="display: inline-block">
-              {{ t('fields.month') }}: {{ scope.row.recordTime }}
+              {{ t('fields.month') }}: <span v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}" />
             </span>
           </template>
         </el-table-column>
@@ -282,7 +282,11 @@
           min-width="120"
         >
           <template #default="scope">
-            {{ scope.row.recordTime }}
+            <span v-if="scope.row.recordTime === null">-</span>
+            <span
+              v-if="scope.row.recordTime !== null"
+              v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -418,7 +422,7 @@
               type="success"
               v-permission="['sys:affiliate:settle:check-adjust']"
               @click="showEdit(scope.row)"
-              v-if="scope.row.adjustAmount === null"
+              v-if="scope.row.adjustAmount === null && scope.row.status === 'CHECKING'"
             >
               {{ t('fields.settleEdit') }}
             </el-button>
@@ -464,6 +468,8 @@ const adjustForm = ref(null)
 const siteList = reactive({
   list: [],
 })
+let timeZone = null
+
 const uiControl = reactive({
   dialogVisible: false,
   progressBarVisible: false,
@@ -591,6 +597,9 @@ async function loadSettlement() {
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
+
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+
   page.loading = false
 }
 

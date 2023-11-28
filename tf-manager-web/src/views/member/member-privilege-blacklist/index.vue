@@ -103,7 +103,7 @@
         <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="160">
           <template #default="scope">
             <span v-if="scope.row.createTime === null">-</span>
-            <span v-if="scope.row.createTime !== null" v-formatter="{data: scope.row.createTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+            <span v-if="scope.row.createTime !== null" v-formatter="{data: scope.row.createTime,timeZone: timeZone,type: 'date'}" />
           </template>
         </el-table-column>
         <el-table-column prop="createBy" :label="t('fields.createBy')" min-width="160">
@@ -342,6 +342,7 @@ const site = ref(null);
 const blacklistForm = ref(null);
 const dialogWidth = ref("580px");
 
+let timeZone = null;
 const siteList = reactive({
   list: []
 });
@@ -413,6 +414,7 @@ async function loadBlacklist() {
   const { data: ret } = await getBlacklist(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 
