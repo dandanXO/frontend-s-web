@@ -233,9 +233,21 @@
     >
       <el-table-column type="selection" />
       <el-table-column prop="site" :label="t('fields.site')" />
-      <el-table-column prop="os" :label="t('siteAppVersion.os')" />
-      <el-table-column prop="appType" :label="t('siteAppVersion.appType')" />
-      <el-table-column prop="apkType" :label="t('siteAppVersion.apkType')" />
+      <el-table-column prop="os" :label="t('siteAppVersion.os')">
+        <template #default="scope">
+          <span>{{ t(`siteAppVersion.${scope.row.os}`) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="appType" :label="t('siteAppVersion.appType')">
+        <template #default="scope">
+          <span>{{ t(`siteAppVersion.${scope.row.appType}`) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="apkType" :label="t('siteAppVersion.apkType')">
+        <template #default="scope">
+          <span>{{ t(`siteAppVersion.${scope.row.apkType}`) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="version" :label="t('siteAppVersion.version')" />
       <el-table-column type="title" :label="t('fields.action')">
         <template #default="scope">
