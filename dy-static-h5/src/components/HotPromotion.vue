@@ -31,6 +31,7 @@
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
+    <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -66,6 +67,7 @@ import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuran
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
+import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -81,7 +83,8 @@ export default defineComponent({
     InsuranceSubmitPromo,
     InviteFriendPromo,
     EsportQuiz,
-    LotteryPromo
+    LotteryPromo,
+    GiftPromo
   },
   props: {
     list: {
@@ -143,6 +146,7 @@ export default defineComponent({
       this.list.redirectUrl === "nba-game" ||
       this.list.redirectUrl === "dy2-esport-safety" ||
       this.list.redirectUrl === "sport-safety" ||
+      this.list.redirectUrl === "dy2-gift" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
