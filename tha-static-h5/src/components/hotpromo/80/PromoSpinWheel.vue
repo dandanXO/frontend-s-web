@@ -594,6 +594,7 @@ onMounted(() => {
     z-index: 1;
 
     .spin-button-img {
+      cursor: pointer;
       width: 17.5%;
     }
 

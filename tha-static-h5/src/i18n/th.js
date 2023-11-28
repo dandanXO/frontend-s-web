@@ -459,7 +459,9 @@ export default {
     youWon: "คุณชนะ",
     totalBonus: "โบนัสที่ได้ทั้งหมด",
     spinRemaining: "คุณมี {spinCount} ตั๋วที่หมุนได้",
-    loginToCont: "เข้าสู่ระบบเพื่อดำเนินการต่อ"
+    loginToCont: "เข้าสู่ระบบเพื่อดำเนินการต่อ",
+    you_got_new_spin_wheel_spin: "ขอแสดงความยินดีด้วย ! คุณได้รับตั๋วหมุนวงล้อ",
+    go_now: "หมุนเดี๋ยวนี้"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",
