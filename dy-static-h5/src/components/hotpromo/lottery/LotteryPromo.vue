@@ -250,6 +250,8 @@ const winnerDataSource = ref([]);
 function retrieveWinnerList() {
   winnerDataSource.value = [];
 
+  winnersQuery.resultTime = moment(winnersQuery.resultTime).format("YYYY-MM-DD");
+
   winnerList(winnersQuery, memberId)
     .then((res) => {
       const { code, data } = res;

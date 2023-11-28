@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="upcomingMatchDetails">
     <swiper
       :slides-per-view="1"
       :loop="false"
@@ -10,7 +10,7 @@
     >
       <!-- <template v-for="(item, index) in upcomingMatchDetails" :key="index"> -->
       <swiper-slide>
-        <div class="bet-info-box">
+        <div class="bet-info-box" >
           <div class="bet-info-date">{{ upcomingMatchDetails.matchTime }}</div>
 
           <div class="bet-info-title" v-html="upcomingMatchDetails.matchTitle" />
@@ -75,6 +75,10 @@ const onSwiper = (swiper) => {
   $swiper.value = swiper;
   console.log(swiper);
 };
+
+const onSlideChange = () => {
+
+}
 
 // const prevSlide = () => {
 //   $swiper.value.slidePrev();
