@@ -425,7 +425,7 @@
                                    >
                                     <div class="UbmABe">
                                         <div class="bewvKb KUSTKe">
-                                            <div class="aoJE7e qwPPwf" role="list">
+                                            <div class="aoJE7e qwPPwf" id="scroll-list" role="list">
                                                 <div class="ULeU3b Utde2e" role="listitem">
                                                     <div class="Atcj9b">
                                                         <img src="style/images/banner1.png" class="T75of B5GQxf"
@@ -462,7 +462,20 @@
                                             </div>
                                             <div class="hWUu9 COriJb n1lOjd">
                                                 <button class="VfPpkd-BIzmGd SaBhMc NNFoTc zI3eKe N7pe4e PcY7Ff DpB3re"
-                                                        data-idom-class="SaBhMc NNFoTc zI3eKe N7pe4e PcY7Ff DpB3re"
+                                                        id="scroll-btn"
+                                                        aria-label="Rolar para o próximo"
+                                                        style="--mdc-ripple-fg-size: 33px; --mdc-ripple-fg-scale: 2.7027058037661855; --mdc-ripple-fg-translate-start: 19.79241943359375px, 6.5px; --mdc-ripple-fg-translate-end: 11.497642517089844px, 11.497642517089844px;">
+                                                    <span aria-hidden="true" class="VfPpkd-BFbNVe-bF1uUb NZp2ef"></span>
+                                                    <div class="VfPpkd-wbSZ0b"></div>
+                                                    <div class="VfPpkd-kLizxb-LhBDec"></div>
+                                                    <span class="VfPpkd-Q0XOV">
+                                                            <img src="./style/images/right.png">
+                                                        </span>
+                                                </button>
+                                            </div>
+                                            <div class="button-left-board" style="display:none;" id="scroll-left-board">
+                                                <button class="VfPpkd-BIzmGd SaBhMc NNFoTc zI3eKe N7pe4e PcY7Ff DpB3re"
+                                                        id="scroll-left-btn"
                                                         aria-label="Rolar para o próximo"
                                                         style="--mdc-ripple-fg-size: 33px; --mdc-ripple-fg-scale: 2.7027058037661855; --mdc-ripple-fg-translate-start: 19.79241943359375px, 6.5px; --mdc-ripple-fg-translate-end: 11.497642517089844px, 11.497642517089844px;">
                                                     <span aria-hidden="true" class="VfPpkd-BFbNVe-bF1uUb NZp2ef"></span>
@@ -1636,6 +1649,27 @@
         downloadApk(code, pp, fbclid, fbpid)
         return false;
     }
+
+    thelist = document.getElementById("scroll-list");
+    thebtn = document.getElementById("scroll-btn");
+
+
+    boardleft = document.getElementById("scroll-left-board");
+    theleftbtn = document.getElementById("scroll-left-btn");
+
+    thebtn.onclick = function() {
+        // alert("YES");
+        thelist.scrollLeft = thelist.scrollLeft + 500;
+        boardleft.style.display = "initial";
+    }
+
+    theleftbtn.onclick= function(){
+        thelist.scrollLeft = thelist.scrollLeft - 500;
+        if(thelist.scrollLeft < 0){
+            thelist.scrollLeft = 0;
+        }
+    }
+
 </script>
 
 

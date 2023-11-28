@@ -16,8 +16,11 @@
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"
-          label="Login Name"
-          :rules="[(val) => (val && val.length > 0) || 'Please insert login name']"
+          label="Phone Number"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert Phone number',
+            (val) => (val.length >= 7 && val.length <= 12) || 'The phone number must be between 7 and 12'
+          ]"
           label-color="brand"
           autocomplete="username"
           rounded
@@ -85,7 +88,21 @@
         </div>
       </div>
 
-      <q-btn @click.prevent="onSubmit" type="submit" class="btn-yellow" label="Login" rounded no-caps />
+      <div>
+        <q-btn @click.prevent="onSubmit" type="submit" class="btn-yellow" label="Login" rounded no-caps />
+      </div>
+
+      <div class="q-mt-sm">
+        <q-btn
+          @click="guestLogin()"
+          rounded
+          flat
+          no-caps
+          class="btn-purple"
+          label="Play As Guest"
+          v-if="Platform.is.capacitor"
+        />
+      </div>
     </q-form>
 
     <div class="tip-container">
@@ -126,6 +143,7 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
+import { Device } from "@capacitor/device";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 // import RegisterPage from "../pages/RegisterPage.vue";
@@ -373,7 +391,71 @@ export default defineComponent({
       router.push("/");
     };
 
+    const guestLoginInfo = reactive({
+      sid: "",
+      way: "ANDROID"
+    });
+
+    const guestLogin = () => {
+      $q.loading.show({
+        message: "Playing as guest"
+      });
+
+      (async () => {
+        guestLoginInfo.sid = guestDeviceInfo.value;
+
+        api
+          .post("/member/quickRegister", qs.stringify(guestLoginInfo))
+          .then((ret) => {
+            const res = ret;
+            console.log("res:", res);
+
+            if (res.code === 0) {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "Quick registered successfully",
+                icon: "check_circle_outline"
+              });
+              store.autoLogin(res.data);
+              sessionStorage.removeItem("REFERRAL_CODE");
+              if (store.hasToken()) {
+                router.push("/home");
+              }
+            } else if (res.code === 1010) {
+              $q.notify({
+                color: "warning",
+                position: "top",
+                message: "Please login with password to continue",
+                icon: "report_problem"
+              });
+              router.push("/login");
+            } else {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: res.message,
+                icon: "report_problem"
+              });
+            }
+            $q.loading.hide();
+          })
+          .catch((error) => {
+            $q.loading.hide();
+          });
+        // getCode();
+      })();
+    };
+
+    const guestDeviceInfo = ref("");
+
+    const getAppInfo = async () => {
+      const info = await Device.getId();
+      guestDeviceInfo.value = info.identifier;
+    };
+
     onMounted(() => {
+      getAppInfo();
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -407,7 +489,12 @@ export default defineComponent({
       phoneVerificationImg,
       getInnerCode,
       isValidCnPhone,
-      telephoneRef
+      telephoneRef,
+      guestLoginInfo,
+      guestLogin,
+      guestDeviceInfo,
+      getAppInfo,
+      Platform
     };
   }
 });
