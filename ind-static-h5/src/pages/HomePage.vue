@@ -162,10 +162,10 @@
           </template>
         </template>
       </div>
-      <div class="hot-games-pattern-bottom"></div>
+      <!-- <div class="hot-games-pattern-bottom"></div> -->
       <!--      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">-->
       <div class="btn-load-more btn-effect" @click="scrollDownHotGames" v-if="!isShowAllHotGames">Load More</div>
-      <div v-else class="hot-games-pattern-bottom--filled"></div>
+      <!-- <div v-else class="hot-games-pattern-bottom--filled"></div> -->
     </div>
 
     <div class="games-selection-wrapper">
@@ -1708,23 +1708,23 @@ onMounted(() => {
   padding-bottom: 20px;
 
   .hot-games-pattern-top {
-    background-image: url(../assets/images/index/hot-games-pattern-top.png);
+    // background-image: url(../assets/images/index/hot-games-pattern-top.png);
     background-size: cover;
     background-repeat: no-repeat;
     // margin-left: -6px;
     // margin-right: -6px;
-    height: 100px;
+    // height: 100px;
     background-position: top center;
     margin-top: 8px;
     // margin-top: -20px;
   }
 
   .hot-games-pattern-bottom {
-    background-image: url(../assets/images/index/hot-games-pattern-bottom.png);
+    // background-image: url(../assets/images/index/hot-games-pattern-bottom.png);
     background-size: contain;
     background-repeat: no-repeat;
     height: 50px;
-    margin-bottom: -40px;
+    // margin-bottom: -40px;
     background-position: center center;
 
     &--filled {
@@ -1740,7 +1740,7 @@ onMounted(() => {
 
   .hot-games-container {
     // padding-top: 60px;
-    margin-top: -50px;
+    // margin-top: -50px;
     display: flex;
     justify-content: center;
 
@@ -1818,14 +1818,14 @@ onMounted(() => {
 .game-platform-wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 8px;
-  row-gap: 12px;
+  column-gap: 4px;
+  row-gap: 6px;
   margin-top: 10px;
   // margin-left: -6px;
   // margin-right: -6px;
 
   .game-platform-item {
-    border: 3px solid #ffc027;
+    border: 2px solid #ffc027;
     border-radius: 15px;
     overflow: hidden;
     position: relative;
@@ -1938,7 +1938,7 @@ onMounted(() => {
   transition: 0.3s all;
   background-image: url(../assets/images/index/btn-load-more.png);
   color: #ffffff;
-  margin: auto;
+  margin: 10px auto 0;
 
   text-shadow: 1px 1px 2px #882f00;
 }
