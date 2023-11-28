@@ -7,7 +7,7 @@
         <a
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerId=6&lang=en&way=${regDevice}&token=${store.token}`,
+              `https://direct.lc.chat/14154051/?partnerId=6&lang=en&way=${regDevice}&token=${store.token}`,
               'Chat Server',
               350,
               650

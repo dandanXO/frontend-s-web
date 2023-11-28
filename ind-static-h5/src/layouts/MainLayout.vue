@@ -535,20 +535,20 @@ svg path {
     width: 14rem;
     margin: 0 0.5rem;
 
-    .title {
-      background-color: #f3ec78;
-      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-      line-height: 1.25;
-      font-size: 1.25rem;
-      font-weight: 800;
-      -webkit-text-stroke-width: 1px;
-      -webkit-text-stroke-color: #a94700;
-    }
+    // .title {
+    //   background-color: #f3ec78;
+    //   background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+    //   background-size: 100%;
+    //   -webkit-background-clip: text;
+    //   -moz-background-clip: text;
+    //   -webkit-text-fill-color: transparent;
+    //   -moz-text-fill-color: transparent;
+    //   line-height: 1.25;
+    //   font-size: 1.25rem;
+    //   font-weight: 800;
+    //   -webkit-text-stroke-width: 1px;
+    //   -webkit-text-stroke-color: #a94700;
+    // }
   }
 
   svg {

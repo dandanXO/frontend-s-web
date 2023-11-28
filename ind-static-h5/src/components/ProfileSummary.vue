@@ -4,7 +4,7 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper" v-if="store.hasToken()">
         <div class="profile-pic">
-          <q-avatar size="70px">
+          <q-avatar size="60px">
             <img :src="profileImagePath" />
           </q-avatar>
           <div class="profile-pic-frame" v-if="!homeProfile"></div>
@@ -153,8 +153,8 @@ onMounted(() => {
     }
     .profile-pic-frame {
       background-image: url(../assets/images/common/profile-frame.png);
-      width: 90px;
-      height: 90px;
+      width: 70px;
+      height: 70px;
       background-size: 100%;
       position: absolute;
       top: -12px;
@@ -164,7 +164,7 @@ onMounted(() => {
     .profile-details-container {
       display: flex;
       flex-direction: column;
-      font-size: 18px;
+      font-size: 16px;
     }
     .profile-name {
       display: flex;
@@ -174,27 +174,27 @@ onMounted(() => {
 
       .vip-details {
         position: relative;
-        margin-left: 25px;
-        margin-bottom: 10px;
+        margin-left: 20px;
+        margin-bottom: 5px;
         img {
           display: block;
-          width: 40px;
+          width: 30px;
           position: absolute;
-          top: -6px;
-          left: -26px;
+          top:-3px;
+          left: -21px;
         }
 
         .vip-level {
           background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
             linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
           border-radius: 0px 2px 5px 0px;
-          width: 45px;
-          height: 15px;
+          width: 38px;
+          height: 13px;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 10px;
-          line-height: 1;
+          line-height: 1.1;
           padding-top: 2px;
           padding-bottom: 4px;
         }
@@ -224,9 +224,9 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       margin-top: 10px;
-      padding-top: 3px;
-      padding-bottom: 3px;
-      width: 130px;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      width: 100px;
       font-size: 14px;
       &:active {
         filter: brightness(0.75);
@@ -235,15 +235,15 @@ onMounted(() => {
       &:before {
         content: "";
         position: absolute;
-        top: -9px;
+        top: -4px;
         left: -3px;
         background-image: url(../assets/images/index/icon-balance.png);
         background-position: center center;
         background-repeat: no-repeat;
-        background-size: 40px 40px;
+        background-size: 30px 30px;
         display: block;
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
       }
 
       .balance-amount {
@@ -252,7 +252,6 @@ onMounted(() => {
     }
     .profile-msg {
       margin-left: auto;
-      margin-top: 30px;
       position: relative;
 
       .notification {
