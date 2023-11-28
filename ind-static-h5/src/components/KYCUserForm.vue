@@ -100,10 +100,7 @@ const updateNewUserState = () => {
           message: "Updated successfully",
           icon: "check_circle_outline"
         });
-
-        // store.getMemberInfo().then(() => {
         emits("closeUserKYCDialog");
-        // });
       } else {
         $q.notify({
           color: "negative",

@@ -171,7 +171,7 @@
     <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
-        <span class="txt-style">Slot Games</span>
+        <span class="txt-style">Slot / Fish Games</span>
       </div>
 
       <div class="game-platform-container">
@@ -197,6 +197,26 @@
             <div v-if="item.name === 'JOKER'" class="burning-hot">
               <img src="../assets/images/index/hot.png" />
             </div>
+          </div>
+        </template>
+        <template v-for="(item, index) in fishing" :key="index">
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
+          >
+            <img src="../assets/images/index/fish/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
         <!-- coming soon placeholder // start -->
@@ -258,7 +278,7 @@
       </div>
     </div> -->
 
-    <div class="games-selection-wrapper">
+    <!-- <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt="" />
         <span class="txt-style">Fishing</span>
@@ -286,7 +306,7 @@
           </div>
         </template>
       </div>
-    </div>
+    </div> -->
 
     <div class="games-selection-wrapper">
       <div class="title-game">
@@ -656,9 +676,9 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 const closeFullGameDialog = () => {
   fullGameDialog.value = false;
 
-  if(store.guest && !store.realName) {
+  if (store.guest && !store.realName) {
     guestKYCDialog.value = true;
-  } else if(!store.guest && !store.realName){
+  } else if (!store.guest && !store.realName) {
     userKYCDialog.value = true;
   }
 };
@@ -963,7 +983,6 @@ const truncateText = (text, maxLength) => {
 const closeDepositDialog = () => {
   depositDialog.value = false;
 };
-
 
 onMounted(() => {
   getPlatList();
@@ -1621,15 +1640,15 @@ onMounted(() => {
 }
 
 .home-wrapper {
-  width: 95%;
+  width: calc(100% - 4px);
   margin: auto;
 }
 
 .home-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   height: 1px;
-  width: 105%;
-  margin: 0 -2.5%;
+  width: 100%;
+  // margin: 0 -2.5%;
 }
 
 .top-action {
@@ -1682,8 +1701,8 @@ onMounted(() => {
     background-image: url(../assets/images/index/hot-games-pattern-top.png);
     background-size: cover;
     background-repeat: no-repeat;
-    margin-left: -2.5%;
-    margin-right: -2.5%;
+    // margin-left: -2.5%;
+    // margin-right: -2.5%;
     height: 100px;
     background-position: top center;
     margin-top: 5px;

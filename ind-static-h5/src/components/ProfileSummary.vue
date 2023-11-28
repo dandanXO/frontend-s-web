@@ -143,8 +143,8 @@ onMounted(() => {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 100%;
 
     .profile-pic {

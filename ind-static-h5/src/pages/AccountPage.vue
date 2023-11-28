@@ -435,122 +435,14 @@
   <q-dialog width="100%" v-model="guestKYCDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeGuestKYCDialog" />
-      <div class="popout-dialog-container">
-        <div class="txt-title">Please Complete KYC</div>
-        <div class="pc-form">
-          <div class="pc-form-item">
-            <div class="pc-form-label">Full Name</div>
-            <div class="pc-form-input">
-              <q-input
-                filled
-                dense
-                clearable
-                placeholder="Enter Your Full Name"
-                v-model="formDetail.realName"
-                :rules="[(_) => isValidName()]"
-              />
-            </div>
-          </div>
-
-          <div class="pc-form-item">
-            <div class="pc-form-label">Phone</div>
-            <div class="pc-form-input">
-              <q-input
-                type="number"
-                filled
-                dense
-                clearable
-                placeholder="Enter Your Phone"
-                v-model="formDetail.phone"
-                :rules="[(_) => isValidPhone()]"
-              ></q-input>
-            </div>
-          </div>
-
-          <div class="pc-form-item">
-            <div class="pc-form-label">New Password</div>
-            <div class="pc-form-input">
-              <q-input
-                filled
-                dense
-                clearable
-                placeholder="Enter New Password"
-                v-model="formDetail.password"
-                ref="passwordRef"
-                hide-bottom-space
-                :type="isPwd ? 'password' : 'text'"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password',
-                  (val) =>
-                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
-                  () => isAlphanumeric(formDetail.password, 'New password')
-                ]"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    color="yellow-7"
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
-                </template>
-              </q-input>
-            </div>
-          </div>
-        </div>
-
-        <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn
-            :loading="btnLoading"
-            rounded
-            flat
-            no-caps
-            class="btn-purple-pattern"
-            :disable="!(isValidName() === true && isValidPhone() === true)"
-            @click="submitKYCNewGuest"
-          >
-            Submit
-          </q-btn>
-        </div>
-      </div>
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeUserKYCDialog" />
-      <div class="popout-dialog-container">
-        <div class="txt-title">Please Complete KYC</div>
-        <div class="pc-form">
-          <div class="pc-form-item">
-            <div class="pc-form-label">Full Name</div>
-            <div class="pc-form-input">
-              <q-input
-                filled
-                dense
-                clearable
-                placeholder="Enter Your Full Name"
-                v-model="formDetail.realName"
-                :rules="[(_) => isValidName()]"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn
-            :loading="btnLoading"
-            rounded
-            flat
-            no-caps
-            class="btn-purple-pattern"
-            :disable="!(isValidName() === true)"
-            @click="submitKYCNewUser"
-          >
-            Submit
-          </q-btn>
-        </div>
-      </div>
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
@@ -619,6 +511,8 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
+import KYCGuestForm from "../components/KYCGuestForm.vue";
+import KYCUserForm from "../components/KYCUserForm.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -697,8 +591,10 @@ const openUserKYCDialog = () => {
   userKYCDialog.value = true;
 };
 const closeUserKYCDialog = () => {
-  userKYCDialog.value = false;
-  formDetail.realName = "";
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
 };
 
 const guestKYCDialog = ref(false);
@@ -706,10 +602,14 @@ const openGuestKYCDialog = () => {
   guestKYCDialog.value = true;
 };
 const closeGuestKYCDialog = () => {
-  guestKYCDialog.value = false;
-  formDetail.realName = "";
-  formDetail.phone = "";
-  formDetail.password = "";
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    guestKYCDialog.value = false;
+  });
+
+  // formDetail.realName = "";
+  // formDetail.phone = "";
+  // formDetail.password = "";
 };
 
 const changeNewPasswordDialog = ref(false);
@@ -1031,43 +931,43 @@ const updateNewUserState = () => {
     });
 };
 
-const updateNewGuestState = () => {
-  const updateInfo = {};
-  updateInfo.realName = formDetail.realName;
-  updateInfo.phone = formDetail.phone;
-  updateInfo.password = formDetail.password;
+// const updateNewGuestState = () => {
+//   const updateInfo = {};
+//   updateInfo.realName = formDetail.realName;
+//   updateInfo.phone = formDetail.phone;
+//   updateInfo.password = formDetail.password;
 
-  api
-    .post("/session/guest-password", qs.stringify(updateInfo))
-    .then((r) => {
-      if (r.code === 0) {
-        profileFormRef.value.reset();
+//   api
+//     .post("/session/guest-password", qs.stringify(updateInfo))
+//     .then((r) => {
+//       if (r.code === 0) {
+//         profileFormRef.value.reset();
 
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "Updated successfully",
-          icon: "check_circle_outline"
-        });
+//         $q.notify({
+//           color: "positive",
+//           position: "top",
+//           message: "Updated successfully",
+//           icon: "check_circle_outline"
+//         });
 
-        store.getMemberInfo().then(() => {
-          loadInfo();
-          guestKYCDialog.value = false;
-        });
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: r.message,
-          icon: "report_problem"
-        });
-      }
-    })
-    .catch(() => {})
-    .then(() => {
-      btnLoading.value = false;
-    });
-};
+//         store.getMemberInfo().then(() => {
+//           loadInfo();
+//           guestKYCDialog.value = false;
+//         });
+//       } else {
+//         $q.notify({
+//           color: "negative",
+//           position: "top",
+//           message: r.message,
+//           icon: "report_problem"
+//         });
+//       }
+//     })
+//     .catch(() => {})
+//     .then(() => {
+//       btnLoading.value = false;
+//     });
+// };
 
 const submitKYC = () => {
   btnLoading.value = true;
@@ -1079,10 +979,10 @@ const submitKYCNewUser = () => {
   updateNewUserState();
 };
 
-const submitKYCNewGuest = () => {
-  btnLoading.value = true;
-  updateNewGuestState();
-};
+// const submitKYCNewGuest = () => {
+//   btnLoading.value = true;
+//   updateNewGuestState();
+// };
 
 const isValidName = () => {
   const { realName } = formDetail;

@@ -86,6 +86,10 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 
+import { SessionStorage } from "quasar";
+import LocalStorage from "boot/local-storage";
+import { isAndroid } from "boot/utils";
+
 const emits = defineEmits(["test"]);
 
 const qs = require("qs");
@@ -149,9 +153,12 @@ const updateNewGuestState = () => {
           icon: "check_circle_outline"
         });
 
-        // store.getMemberInfo().then(() => {
+        if (isAndroid()) {
+          LocalStorage.set("TOKEN", r.data, 86400);
+        } else {
+          SessionStorage.set("TOKEN", r.data);
+        }
         emits("closeGuestKYCDialog");
-        // });
       } else {
         $q.notify({
           color: "negative",
