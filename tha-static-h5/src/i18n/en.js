@@ -65,8 +65,7 @@ export default {
       "Equal bets, canceled bets, double bets, European Handicap under 1.75, Asian Handicap under 0.75, number games, fantasy sports, progressive RNG jackpots, and progressive RNG slot games are not counted in this promotion.",
     vip_tnc_para_7:
       "Jolly88 reserves the right to modify, reject, or cancel this VIP member program at any time without prior notice.",
-    vip_tnc_para_8:
-      "This program can be applied for simultaneously with all Jolly88 promotions.",
+    vip_tnc_para_8: "This program can be applied for simultaneously with all Jolly88 promotions.",
 
     // getApp
     jolly88_app: "Jolly88 APP",
@@ -86,12 +85,10 @@ export default {
     stepdesc_2: "Second step, advertisement",
     stepdesc_3: "Step three Get commission",
     affiliate_tnc_title: "Terms and conditions",
-    affiliate_tnc_para_1:
-      "If there is no movement or stop using for more than 5 months, there will be no commission",
+    affiliate_tnc_para_1: "If there is no movement or stop using for more than 5 months, there will be no commission",
     affiliate_tnc_para_2_1:
       "If an account has negative commissions (negative profit: this is the amount the account owner owes the company), the negative amount will be accumulated in the following months until the negative commission is cleared.",
-    affiliate_tnc_para_2_2:
-      "* All affiliates are required to pay a fee when using our platform.",
+    affiliate_tnc_para_2_2: "* All affiliates are required to pay a fee when using our platform.",
     affiliate_tnc_para_2_3: "+ Bank deposit and withdrawal fees 2%",
     affiliate_tnc_para_2_4: "+ Bonus already claimed by the account owner",
     affiliate_tnc_para_2_5: "+ Platform Fee 8%",
@@ -99,8 +96,7 @@ export default {
       "Commissions are paid on the 1st of each month in Thai Baht (THB). After receiving the commission, The affiliate can then proceed with withdrawing commission as normal",
     affiliate_tnc_para_4:
       "Jolly88 reviews all affiliate users and has our own criteria. (risk level, deposit amount, betting index...) when evaluating such users If they do not meet our criteria, we will reverse the right to refuse to release commission to the affiliate",
-    affiliate_tnc_para_5:
-      "One affiliate must register with only one email address, phone number, and name.",
+    affiliate_tnc_para_5: "One affiliate must register with only one email address, phone number, and name.",
     affiliate_tnc_para_6:
       "Affiliate has multiple accounts. (Fake downline accounts, disrupt your downline's betting behavior, login to multiple devices...) that are detected by our system or experts will be punished.",
     affiliate_tnc_para_7:
@@ -113,33 +109,25 @@ export default {
     how_to_calculate_commission: "How to calculate commission",
     affiliate_calulate_para_1_1:
       "Affiliate Net Profit = (Total Win/Loss) - (Total Bonus) - (Payment Method Fee) - (Platform Fee) => In it: Total Win/Loss = Total Bets - Total Payouts",
-    affiliate_calulate_para_1_2:
-      "Payment Method Fee:( Deposit + Withdrawal) x 8%",
+    affiliate_calulate_para_1_2: "Payment Method Fee:( Deposit + Withdrawal) x 8%",
     affiliate_calulate_para_1_3: "Commission = [Net Profit] x [%]",
-    affiliate_example_1:
-      "Example 1: Affiliate A earns 30% monthly commission profit",
+    affiliate_example_1: "Example 1: Affiliate A earns 30% monthly commission profit",
     affiliate_example_1_table_1_left: "- All customers lost:",
     affiliate_example_1_table_2_left: "- Total amount of deposits in month:",
     affiliate_example_1_table_3_left: "- Total withdrawal amount in month:",
-    affiliate_example_1_table_4_left:
-      "- Total promotions received by the customer in the month:",
-    affiliate_example_1_table_5_left:
-      "- Bank transaction fee ((Deposit + Withdrawal) * 1%):",
+    affiliate_example_1_table_4_left: "- Total promotions received by the customer in the month:",
+    affiliate_example_1_table_5_left: "- Bank transaction fee ((Deposit + Withdrawal) * 1%):",
     affiliate_example_1_table_6_left: "=>Net profit =",
     affiliate_example_1_table_7_left: "=>Commission =",
-    affiliate_example_2:
-      "Example 2: Affiliate B earns 55% monthly commission profit",
+    affiliate_example_2: "Example 2: Affiliate B earns 55% monthly commission profit",
     affiliate_example_2_table_1_left: "- All customers lost:",
     affiliate_example_2_table_2_left: "- Total amount of deposits in month:",
     affiliate_example_2_table_3_left: "- Total withdrawal amount in month:",
-    affiliate_example_2_table_4_left:
-      "- Total promotions received by the customer in the month:",
-    affiliate_example_2_table_5_left:
-      "- Bank transaction fee ((Deposit + Withdrawal) * 1%):",
+    affiliate_example_2_table_4_left: "- Total promotions received by the customer in the month:",
+    affiliate_example_2_table_5_left: "- Bank transaction fee ((Deposit + Withdrawal) * 1%):",
     affiliate_example_2_table_6_left: "=>Net profit =",
     affiliate_example_2_table_7_left: "=>Commission=",
-    affiliate_example_a:
-      "Example: Affiliate earns 30% monthly commission profit",
+    affiliate_example_a: "Example: Affiliate earns 30% monthly commission profit",
     affiliate_example_a_table_1_left: "- Total customers Win/Lose /month:",
     affiliate_example_a_table_2_left: "- Total received Bonus /month:",
     affiliate_example_a_table_3_left: "- Payment Method Fee:",
@@ -147,8 +135,7 @@ export default {
     affiliate_example_a_table_5_left: "- Total Payment Amount:",
     affiliate_example_a_table_6_left: "=>Net profit =",
     affiliate_example_a_table_7_left: "=>Commission =",
-    affiliate_example_b:
-      "Example: Affiliate earns 50% monthly commission profit",
+    affiliate_example_b: "Example: Affiliate earns 50% monthly commission profit",
     affiliate_example_b_table_1_left: "- Total customers Win/Lose /month:",
     affiliate_example_b_table_2_left: "- Total received bonus /month:",
     affiliate_example_b_table_3_left: "- Payment Method Fee::",
@@ -175,8 +162,7 @@ export default {
     only_letter_number_allowed: "Only English letters and numbers are allowed",
     only_alphabet_allowed: "Only English letters are allowed",
     password_between_6_12: "Password length must be between 6-12 characters",
-    password_must_at_least_good:
-      "The password security level must be at least good",
+    password_must_at_least_good: "The password security level must be at least good",
     confirm_pass: "Confirm Password",
     please_confirm_pass: "Please enter confirm password",
     password_do_not_match: "Passwords do not match",
@@ -212,8 +198,7 @@ export default {
       "Receive a daily bonus. The bonus has no expiration date. Simply share the QR code or link with friends. Get the bonus when your friends register or download.",
     copy: "Copy",
     copied: "Copied",
-    your_referral_bonus_has_not_been_shared:
-      "Note: Your referral bonus has not been shared yet",
+    your_referral_bonus_has_not_been_shared: "Note: Your referral bonus has not been shared yet",
     main_account: "Main Account",
     transaction_records: "Transaction Records",
     promo_page: "Promotions",
@@ -259,8 +244,7 @@ export default {
     basic_information: "Basic Information",
     change_password: "Change Password",
     withdraw_account: "Bank Account",
-    please_edit_your_personal_information:
-      "Please edit your personal information.",
+    please_edit_your_personal_information: "Please edit your personal information.",
     affiliate_footer: "Affiliate",
 
     // TransitRecordView
@@ -324,15 +308,13 @@ export default {
 
     // WithdrawBankView
     choose_a_card: "Choose a card",
-    register_bank_acc_para:
-      "Please register your bank account below to receive updates",
+    register_bank_acc_para: "Please register your bank account below to receive updates",
     add_a_card: "Add card",
     bank_card_unbind_record: "Bank card binding record",
     add_a_virtual_currency: "Add virtual currency",
     select_account_add_different_banks: "Select account (add different banks)",
     please_select_a_bank_account: "Please select a bank account",
-    account_name_with_desc:
-      "Account name (name matches the account used for deposit)",
+    account_name_with_desc: "Account name (name matches the account used for deposit)",
     please_enter_bank_account: "Please enter bank account",
     branch_not_required: "Branch (not required)",
     cancel: "Cancel",
@@ -352,13 +334,11 @@ export default {
     enter_ur_id: "ID is required.",
     enter_ur_dob: "Please confirm your DOB.",
     close_btn: "Close",
-    if_you_wish_to_change_please_contact:
-      "If you wish to change your personal information, please contact our ",
+    if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact our ",
     live_chat: "Live Chat",
     old_password: "Old Password",
     confirm_new_password: "Confirm New Password",
-    hint_new_password:
-      "Must include 6-16 characters with a combination of letters and numbers.",
+    hint_new_password: "Must include 6-16 characters with a combination of letters and numbers.",
     enter_veri_code: "Enter Verification Code",
     request_otp_code: "Send OTP Code",
     minimum_withdraw_money: "Minimum withdrawal amount is 100 baht",
@@ -366,8 +346,7 @@ export default {
     check_your_captcha_code: "Captcha Code Check",
     only_numbers_allowed: "Only numbers are allowed.",
     otp_code_has_been_sent: "OTP has been sent to your email.",
-    otp_code_has_been_sent_to_your_mobile_phone:
-      "OTP has been sent to your mobile phone.",
+    otp_code_has_been_sent_to_your_mobile_phone: "OTP has been sent to your mobile phone.",
     successfully_verified: "Successfully Verified",
     password_updated: "Password successfully updated.",
     updated_successfully: "Updated successfully",
@@ -383,10 +362,8 @@ export default {
     add_card: "Add Card",
     please_enter_the_amount: "Enter the amount you wish to withdraw",
     enter_amount_money: "Enter the amount of money",
-    amount_should_more_than_min:
-      "Withdraw amount should more than minimum withdraw amount.",
-    amount_should_less_than_max:
-      "Withdraw amount should less than maximum withdraw amount.",
+    amount_should_more_than_min: "Withdraw amount should more than minimum withdraw amount.",
+    amount_should_less_than_max: "Withdraw amount should less than maximum withdraw amount.",
     min_max_amount: "Mix - Max withdraw amount",
     withdrawal_today: "Withdrawal Today: ",
     remaining: "Remaining: ",
@@ -396,13 +373,10 @@ export default {
     please_enter_deposit_amount: "Please Enter Deposit Amount",
     enter_deposit_amount: "Enter Deposit Amount",
     choose_promotion: "Choose Promotion",
-    to_prevent_enter_amount_notified:
-      "To prevent loss of funds, please enter the amount as indicated by the system.",
+    to_prevent_enter_amount_notified: "To prevent loss of funds, please enter the amount as indicated by the system.",
     confirm_deposit: "Confirm",
-    you_will_redirect_to_bank_page:
-      "You will be redirect to your bank's page to deposit money.",
-    operation_is_successful_will_notified:
-      "If the operation is successful, it will be notified on this page.",
+    you_will_redirect_to_bank_page: "You will be redirect to your bank's page to deposit money.",
+    operation_is_successful_will_notified: "If the operation is successful, it will be notified on this page.",
     understood: "Understood",
     please_enter_the_deposit_amount: "Please enter the deposit amount",
     deposit_amount_in_between: "Deposit amount should between ",
@@ -432,8 +406,7 @@ export default {
     card_added: "Card added.",
     number_sent: "Number Sent.",
     urgent_deposit: "Quick Deposit",
-    bonus_will_be_added_to_u:
-      "Bonus will be added to your wallet once the transaction is completed.",
+    bonus_will_be_added_to_u: "Bonus will be added to your wallet once the transaction is completed.",
     register_bonus_will_be_added_once:
       "Claim your Bonus and it will be added to your wallet once the phone number is verified.",
     refer_bonus_will_be_added_once:
@@ -466,15 +439,13 @@ export default {
     fav_game_added: "Game has been added to your favorite games list.",
     fav_game_removed: "Game has been removed from your favorite games list.",
     update_app_title: "Update App",
-    detected_new_version:
-      "New Update Available. Do you wish to download it now?",
+    detected_new_version: "New Update Available. Do you wish to download it now?",
     update_now: "Update Now",
     usdt_will_be_charged: "1.00 USDT will be charged for each transaction!",
     phone_verification_code: "Phone Verification Code",
     please_enter_phone_code: "Please enter the phone verification code",
     get_code: "Get Code",
-    bind_crypto_need_phone_veri:
-      "To link your eWallet card, phone verification is required.",
+    bind_crypto_need_phone_veri: "To link your eWallet card, phone verification is required.",
     click_to_refresh_captcha: "Click to refresh",
     send_veri_code: "Send",
     phone_number_cannot_empty: "Phone number cannot be empty",
@@ -487,13 +458,14 @@ export default {
     estimate_arrival: "Estimate Withdraw: ",
 
     // spin wheel
-    name: "Name",
     prize: "Prize",
     date: "Date",
     youWon: "You have won!",
     totalBonus: "Total Bonus",
     spinRemaining: "You have {spinCount} spins remaining",
     loginToCont: "Login to Continue",
+    you_got_new_spin_wheel_spin: "Congratulation! You 've earned a Lucky Draw Spin!",
+    go_now: "Go Now"
   },
   error: {
     101: "Platform not found",
@@ -563,8 +535,7 @@ export default {
     30003: "Member balance does not meet the requirements",
     30004: "Member deposit does not meet the requirements",
     30005: "Turnover has not reached the requirements",
-    30006:
-      "Members listed as account holders are prohibited from receiving this privilege",
+    30006: "Members listed as account holders are prohibited from receiving this privilege",
     31000: "Promotion not found",
     32000: "VIP level not found",
     33000: "Must use a 3-digit number",
@@ -581,6 +552,6 @@ export default {
     35008: "You do not have this privilege",
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
-    35011: "35011 Member cannot receive this privilege.",
-  },
+    35011: "35011 Member cannot receive this privilege."
+  }
 };

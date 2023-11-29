@@ -13,18 +13,18 @@
         <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
       </template>
 
-      <q-carousel-slide
-        name="mainSlide"
-        class="column no-wrap flex-center"
-        :img-src="
-          !$q.screen.gt.sm
-            ? require('../assets/images/index/main-home-banner-mobile.jpg')
-            : require('../assets/images/index/main-home-banner-desktop.jpg')
-        "
-        @click="gotoPromo(0)"
-      >
-        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>
-      </q-carousel-slide>
+      <!--      <q-carousel-slide-->
+      <!--        name="mainSlide"-->
+      <!--        class="column no-wrap flex-center"-->
+      <!--        :img-src="-->
+      <!--          !$q.screen.gt.sm-->
+      <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
+      <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
+      <!--        "-->
+      <!--        @click="gotoPromo(0)"-->
+      <!--      >-->
+      <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
+      <!--      </q-carousel-slide>-->
 
       <q-carousel-slide
         v-for="(banner, i) in banners"
@@ -901,13 +901,31 @@
       </div>
     </div>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="isSpinWheelPromo" class="modal-update-div">
+    <q-card style="width: 100%; padding: 0px 20px 20px" class="bg-primary text-white text-center">
+      <q-card-section class="q-mb-md">
+        <div class="menu-title flex justify-between items-center">
+          <div style="margin-right: auto">&nbsp;</div>
+          <div>{{ $t("lang.announcement") }}</div>
+          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />
+        </div>
+
+        <div class="">
+          {{ $t("lang.you_got_new_spin_wheel_spin") }}
+          <br />
+        </div>
+      </q-card-section>
+      <q-btn @click="gotoPromoSpinWheel" :label="$t('lang.go_now')" color="brand" />
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
 /* eslint-disable */
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+import { defineComponent, onMounted, ref, reactive, computed, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
@@ -1567,7 +1585,47 @@ export default defineComponent({
       loadHomeData();
       getAppDownloadUrl();
       getVersionNo();
+
+      checkSpinWheelPromo();
     });
+
+    const popupInterval = ref(null);
+    const isSpinWheelPromo = ref(false);
+    const checkSpinWheelPromo = () => {
+      if (store.hasToken()) {
+        setTimeout(() => {
+          console.log("Check Spin Wheel.");
+          getSpinWheelCount();
+          popupInterval.value = setInterval(() => {
+            // alert("YEs");
+            getSpinWheelCount();
+          }, 3600000);
+        }, 60000);
+      }
+    };
+
+    const getSpinWheelCount = () => {
+      eventapi.get("/multiWheel/init?promoCode=multi-wheel").then((res) => {
+        const { code, data } = res.data;
+        if (code === 0) {
+          console.log(data);
+          const { leftCount, unlock } = data;
+          if (leftCount > 0) {
+            isSpinWheelPromo.value = true;
+          }
+        }
+      });
+    };
+
+    const gotoPromoSpinWheel = () => {
+      isSpinWheelPromo.value = false;
+      router.push(`/promo?id=81`);
+    };
+
+    onUnmounted(() => {
+      clearInterval(popupInterval.value);
+    });
+
     const loadHomeData = async () => {
       if (store.hasToken()) {
         await store.getMemberInfo();
@@ -1635,7 +1693,7 @@ export default defineComponent({
 
     return {
       imageLoading,
-      slide: ref("mainSlide"),
+      slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
       store,
@@ -1695,7 +1753,9 @@ export default defineComponent({
       announcementTypes,
       activeKey,
       getLength,
+      isSpinWheelPromo,
       gotoPromo,
+      gotoPromoSpinWheel,
       router,
       isAppUpdateModal,
       isH5,
@@ -2332,6 +2392,16 @@ export default defineComponent({
 }
 
 .modal-update-div {
+  .menu-title {
+    > div:first-child {
+      width: 32px;
+    }
+  }
+
+  .description {
+    color: $border-color;
+  }
+
   .modalcontent {
     background: #fff;
     height: 232px;
