@@ -11,7 +11,7 @@
           <thead>
             <tr>
               <th>兑换时间</th>
-              <th width="290">礼品名称</th>
+              <th width="240">礼品名称</th>
               <th>当前状态</th>
             </tr>
           </thead>

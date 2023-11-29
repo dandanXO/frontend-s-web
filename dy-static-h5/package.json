@@ -36,6 +36,7 @@
     "csweb-client": "^1.4.0",
     "es6-promise-plugin": "^4.2.2",
     "gsap": "^3.12.1",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "pinia": "^2.0.17",
     "qs": "^6.11.0",
