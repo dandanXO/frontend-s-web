@@ -35,6 +35,9 @@
       transition-prev="slide-right"
       animated
       infinite
+      data-aos="fade-in"
+      data-aos-duration="1200"
+      data-aos-once="true"
     >
       <template v-slot:navigation-icon="{ active, onClick }">
         <q-btn
@@ -488,78 +491,86 @@
               <div class="game-platform-wrapper">
                 <template v-if="hotGameOn">
                   <template v-for="(item, index) in filteredHotGameList" :key="index">
-                    <div
-                      class="game-platform-item"
-                      @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                      data-aos="zoom-in"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#fullgame"
-                    >
-                      <div class="game-platform-img">
-                        <div
-                          class="game--bg"
-                          :style="{
-                            backgroundImage: `url(${imgURLGame}${item.icon})`
-                          }"
-                        ></div>
-                      </div>
-                      <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+                    <template v-if="index < showValue">
+                      <div
+                        class="game-platform-item"
+                        @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                        data-aos="zoom-in"
+                        data-aos-duration="1200"
+                        data-aos-once="true"
+                        data-aos-anchor="#fullgame"
+                      >
+                        <div class="game-platform-img">
+                          <div
+                            class="game--bg"
+                            :style="{
+                              backgroundImage: `url(${imgURLGame}${item.icon})`
+                            }"
+                          ></div>
+                        </div>
+                        <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
 
-                      <div
-                        class="game-platform-label game-platform-label--hot"
-                        v-if="item.gameLabel && item.gameLabel.includes('HOT')"
-                      >
-                        <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                        <div
+                          class="game-platform-label game-platform-label--hot"
+                          v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                        >
+                          <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                        </div>
+                        <div
+                          class="game-platform-label game-platform-label--new"
+                          v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                        >
+                          <img src="../assets/images/index/platform-label-new.png" alt="" />
+                        </div>
                       </div>
-                      <div
-                        class="game-platform-label game-platform-label--new"
-                        v-if="item.gameLabel && item.gameLabel.includes('NEW')"
-                      >
-                        <img src="../assets/images/index/platform-label-new.png" alt="" />
-                      </div>
-                    </div>
+                    </template>
                   </template>
                 </template>
 
                 <template v-else>
                   <template v-for="(item, index) in filteredSubGameList" :key="index">
-                    <div
-                      class="game-platform-item"
-                      @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
-                      data-aos="zoom-in"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#fullgame"
-                    >
-                      <div class="game-platform-img">
-                        <div
-                          class="game--bg"
-                          :style="{
-                            backgroundImage: `url(${imgURLGame}${item.icon})`
-                          }"
-                        ></div>
-                      </div>
-                      <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+                    <template v-if="index < showValue">
+                      <div
+                        class="game-platform-item"
+                        @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                        data-aos="zoom-in"
+                        data-aos-duration="1200"
+                        data-aos-once="true"
+                        data-aos-anchor="#fullgame"
+                      >
+                        <div class="game-platform-img">
+                          <div
+                            class="game--bg"
+                            :style="{
+                              backgroundImage: `url(${imgURLGame}${item.icon})`
+                            }"
+                          ></div>
+                        </div>
+                        <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
 
-                      <div
-                        class="game-platform-label game-platform-label--hot"
-                        v-if="
-                          (item.gameLabel && item.gameLabel.includes('LIST')) ||
-                          (item.gameLabel && item.gameLabel.includes('HOT'))
-                        "
-                      >
-                        <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                        <div
+                          class="game-platform-label game-platform-label--hot"
+                          v-if="
+                            (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                            (item.gameLabel && item.gameLabel.includes('HOT'))
+                          "
+                        >
+                          <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                        </div>
+                        <div
+                          class="game-platform-label game-platform-label--new"
+                          v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                        >
+                          <img src="../assets/images/index/platform-label-new.png" alt="" />
+                        </div>
                       </div>
-                      <div
-                        class="game-platform-label game-platform-label--new"
-                        v-if="item.gameLabel && item.gameLabel.includes('NEW')"
-                      >
-                        <img src="../assets/images/index/platform-label-new.png" alt="" />
-                      </div>
-                    </div>
+                    </template>
                   </template>
                 </template>
+              </div>
+
+              <div class="btn-load-more btn-effect" @click="scrollDownFullGames" v-if="!isShowAllFullGames">
+                Load More
               </div>
             </div>
           </template>
@@ -724,6 +735,7 @@ const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 
 const isGameLoading = ref(true);
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  isShowAllFullGames.value = false;
   isGameLoading.value = true;
   subGameCode.value = platformCode;
   loadGameList(gameType, gameId);
@@ -800,6 +812,19 @@ const isShowAllHotGames = ref(false);
 const scrollDownHotGames = () => {
   isShowAllHotGames.value = true;
 };
+
+const isShowAllFullGames = ref(false);
+const scrollDownFullGames = () => {
+  isShowAllFullGames.value = true;
+};
+
+const showValue = computed(() => {
+  if (!isShowAllFullGames.value) {
+    return 12;
+  } else {
+    return 600;
+  }
+});
 
 const loadGameList = (type, id) => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
