@@ -3,7 +3,7 @@
     <div class="total-win">
       <div class="total-win-content">
         <div class="title">{{ $t("lang.youWon") }}</div>
-        <div>
+        <div v-if="outerAmount !== finalAmount">
           <span>{{ outerAmount }}</span>
           X
           <span>{{ innerAmount }}</span>
@@ -349,7 +349,7 @@ function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
     .then((res) => {
       const { code, data } = res.data;
       if (code === 0) {
-        const { leftCount, outer, inner, bonus } = data;
+        const { leftCount, outer, inner, innerDays, bonus } = data;
 
         outerAmount.value = outer;
         innerAmount.value = inner;
@@ -362,10 +362,15 @@ function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
             return;
           }
         });
+
         innerWheelData.map((e, i) => {
           if (e.amount === inner) {
-            innerWheelConfig.stopIndex = i;
-            return;
+            const minusValue = i % 2 === 0 ? 2 : 1;
+            const innerDaysIndex = innerDays * 2 - minusValue;
+            if (innerDaysIndex === i) {
+              innerWheelConfig.stopIndex = innerDaysIndex;
+              return;
+            }
           }
         });
       }
