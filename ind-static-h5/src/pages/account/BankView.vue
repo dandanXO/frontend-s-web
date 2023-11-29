@@ -131,7 +131,7 @@
           !(
             // isValidBank() === true &&
             (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
-          )
+          ) || isDisableBtn
         "
       ></ConfirmButton>
     </q-card>
@@ -139,7 +139,7 @@
 
   <ProfileSummary></ProfileSummary>
 
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
 
   <!-- bank card -->
   <ContentView contentTopStatus="solid">
@@ -156,7 +156,7 @@
           </div>
           <div class="card-label">{{ bc.bankName }}</div>
           <div class="card-num-wrapper">
-            <div class="card-num">{{ bc.cardNumber }}</div>
+            <div class="card-num">{{ maskCardNumber(bc.cardNumber) }}</div>
             <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
           </div>
           <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
@@ -210,16 +210,14 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
-};
-
 let isCardShown = ref([]);
 const handleBankCardClick = (index) => {
   if (!isCardShown.value[index]) isCardShown.value[index] = true;
   else isCardShown.value[index] = false;
+};
+
+const maskCardNumber = (cardNumber) => {
+  return `*******${cardNumber.slice(-4)}`;
 };
 
 const copy = (val) => {
@@ -228,7 +226,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${val} copied to clipboard`,
+        message: `${maskCardNumber(val)} copied to clipboard`,
         icon: "check_circle_outline"
       });
     })
@@ -308,7 +306,6 @@ const onAddCardClick = () => {
       });
       router.push("/account");
     } else {
-      clearField();
       isAddCardDialogOpen.value = true;
 
       // NOTE: fire once
@@ -324,11 +321,15 @@ const onAddCardClick = () => {
                 else if (bankType === "EWALLET") ewalletList.push(e);
               });
               selectBankType();
+              bankCardField.bankId = currBankList.value[0].id;
             }
           })
           .catch((e) => {
             console.log("error", e);
           });
+      } else {
+        clearField();
+        bankCardField.bankId = currBankList.value[0].id;
       }
     }
   });
@@ -350,9 +351,6 @@ const selectBankType = () => {
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
-
-    // NOTE: temp write here, since no other card type.
-    bankCardField.bankId = currBankList.value[0].id;
   } else if (currentCardType.value === "Crypto") {
     currBankList.value = cryptoList;
     dialogDisplays.title = "Add Crypto Wallet";
@@ -383,6 +381,8 @@ const isValidBank = () => {
   return result;
 };
 
+const isDisableBtn = ref(false);
+
 const isValidCardAccount = () => {
   const { cardAccount } = bankCardField;
 
@@ -408,6 +408,8 @@ const isValidCardAddress = () => {
 };
 
 const addCard = () => {
+  isDisableBtn.value = true;
+
   api
     .post("/session/bankCard", qs.stringify(bankCardField))
     .then((response) => {
@@ -420,10 +422,12 @@ const addCard = () => {
           icon: "check_circle_outline"
         });
         loadCards();
+        isDisableBtn.value = false;
       }
     })
     .catch((error) => {
       console.log("error", error);
+      isDisableBtn.value = false;
     });
 };
 
@@ -444,6 +448,7 @@ const loadCards = () => {
 
 onMounted(() => {
   loadCards();
+  clearField();
 });
 </script>
 

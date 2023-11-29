@@ -1,334 +1,36 @@
 <template>
   <div class="hot-promo">
-    <!-- <div v-if="list.id === 22 && store.hasToken()" class="promo-4">
-      <div class="tabs">
-        <q-card-section>
-          <q-tabs
-            v-model="activeKey"
-            dense
-            class="text-grey"
-            active-color="brand"
-            indicator-color="black"
-            align="justify"
-            narrow-indicator
-          >
-            <q-tab name="1" label="Choose lucky number" />
-            <q-tab name="2" label="Lucky number record" />
-            <q-tab name="3" label="Winner List" />
-          </q-tabs>
-
-          <q-separator/>
-
-          <q-tab-panels v-model="activeKey" animated>
-            <q-tab-panel name="1"
-            >
-              <div class="tab1">
-                <img src="../assets/images/promotion/hotpromo/22/icon.png"/>
-                <div class="contents">
-                  <q-form class="q-gutter-md">
-                    <div class="q-mb-md">
-                      {{ selectedHotPromo.contents.tab1 }}
-                    </div>
-                    <q-input v-model="lucky_number" filled color="white" type="number"
-                             :rules="[
-  (val) => (val && val.length === 3) || 'Maximum 3 numbers'
-]"
-                             label="Lucky Number"/>
-                    <q-btn :loading="btnLoading" @click="submitLuckyNumber()" color="brand" label="Submit"/>
-                  </q-form>
-                </div>
-              </div>
-            </q-tab-panel>
-
-            <q-tab-panel name="2">
-              <q-form>
-                <q-input
-                  filled
-                  v-model="formState.dateTime"
-                  label="Date"
-                  readonly
-                  color="white"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date v-model="formState.dateTime" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                  <template v-slot:after>
-                    <q-toggle
-                      style="font-size: 12px"
-                      v-model="formState.onlyMe"
-                      color="red"
-                      label="Only Me"
-                      left-label
-                      size="xs"
-                      val="xs"
-                    />
-                  </template>
-                </q-input>
-                <q-btn @click="filterLuckyNumber()" :loading="loading"
-                       class="full-width q-mt-md"
-                       color="brand"
-                       label="Filter"
-                />
-              </q-form>
-              <q-table title="Lucky number record" no-data-label="No information" loading-label="Loading..."
-                       rows-per-page-label=" " :loading="loading" class="q-mt-md" :columns="filterColumn"
-                       :rows="dataSource">
-              </q-table>
-            </q-tab-panel>
-
-            <q-tab-panel name="3">
-
-              <q-form>
-                <q-input
-                  filled
-                  v-model="formState.resultTime"
-                  label="Date"
-                  readonly
-                  color="white"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date v-model="formState.resultTime" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-btn @click="filterWinnerLists()" :loading="loading"
-                       class="full-width q-mt-md"
-                       color="brand"
-                       label="Filter"
-                />
-              </q-form>
-
-
-              <q-table class="q-mt-md" no-data-label="There are no prize winners today" loading-label="Loading..." rows-per-page-label=" "
-                       :loading="loading"
-                       :columns="winnerColumn" :rows="winnerDataSource"/>
-            </q-tab-panel>
-          </q-tab-panels>
-        </q-card-section>
-
-      </div>
-    </div> -->
     <ClaimPromo
-        v-if="isCommonPromo && store.hasToken()"
-        :promo-id="list.id"
-        :loading-claim="btnLoading"
-        @daily-slot="handleSlot()"
+      v-if="isCommonPromo && store.hasToken()"
+      :promo-id="list.id"
+      :loading-claim="btnLoading"
+      @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'"/>
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'"/>
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'"/>
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
+    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
+    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
+    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
+    <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
 
-    <InviteFriendPromo
-        v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
+    <UpcomingMatchPromo
+      v-if="
+        (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
+        (!isCommonPromo && list.redirectUrl === 'sport-safety')
+      "
+      :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
-    <div
-        v-if="list.redirectUrl === 'dy2-lottery' && store.hasToken()"
-        class="promo-4"
-    >
-      <div class="tabs">
-        <q-card-section>
-          <q-tabs
-              v-model="activeKey"
-              dense
-              color="black"
+    <InsuranceSubmitPromo
+      v-if="
+        (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
+        (!isCommonPromo && list.redirectUrl === 'sport-safety')
+      "
+      :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
+    />
 
-              indicator-color="black"
-              align="justify"
-              narrow-indicator
-          >
-            <q-tab name="1" label="选择幸运号码"/>
-            <q-tab name="2" label="记录"/>
-            <!--            <q-tab-->
-            <!--              name="3"-->
-            <!--              label="获奖名单-->
-            <!--"-->
-            <!--            />-->
-          </q-tabs>
-
-          <q-separator/>
-
-          <q-tab-panels v-model="activeKey" animated>
-            <q-tab-panel name="1">
-              <div class="tab1">
-                <!--                <img src="../assets/images/promotion/hotpromo/22/icon.png"/>-->
-                <div class="contents">
-                  <q-form class="q-gutter-md">
-                    <div class="q-mb-md">
-                      {{ selectedHotPromo.contents.tab1 }}
-                    </div>
-                    <q-input
-                        v-model="lucky_number"
-                        filled
-                        bg-color="white"
-                        color="black"
-                        type="number"
-                        :rules="[
-                        (val) => (val && val.length === 3) || '号码长度应为3'
-                      ]"
-                        label="幸运号码"
-                    />
-                    <q-btn
-                        :loading="btnLoading"
-                        @click="submitLuckyNumber()"
-                        color="brand"
-                        label="确定"
-                    />
-                  </q-form>
-                </div>
-              </div>
-            </q-tab-panel>
-
-            <q-tab-panel name="2">
-              <q-form>
-                <q-input
-                    filled
-                    v-model="formState.dateTime"
-                    label="选择日期"
-                    readonly
-                    color="white"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                          cover
-                          transition-show="scale"
-                          transition-hide="scale"
-                      >
-                        <q-date v-model="formState.dateTime" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn
-                                v-close-popup
-                                label="关闭"
-                                color="white"
-                                flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                  <template v-slot:after>
-                    <q-toggle
-                        style="font-size: 12px"
-                        v-model="formState.onlyMe"
-                        color="red"
-                        label="我自己"
-                        left-label
-                        size="xs"
-                        val="xs"
-                    />
-                  </template>
-                </q-input>
-                <q-btn
-                    @click="filterLuckyNumber()"
-                    :loading="loading"
-                    class="full-width q-mt-md"
-                    color="brand"
-                    label="搜索"
-                />
-              </q-form>
-              <q-table
-                  title="幸运号码记录"
-                  no-data-label="没有数据"
-                  loading-label="加载中..."
-                  rows-per-page-label=" "
-                  :loading="loading"
-                  class="q-mt-md"
-                  :columns="filterColumn"
-                  :rows="dataSource"
-              ></q-table>
-            </q-tab-panel>
-
-            <!--            <q-tab-panel name="3">-->
-            <!--              <q-form>-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  v-model="formState.resultTime"-->
-            <!--                  label="选择日期"-->
-            <!--                  readonly-->
-            <!--                  color="white"-->
-            <!--                >-->
-            <!--                  <template v-slot:append>-->
-            <!--                    <q-icon name="event" class="cursor-pointer">-->
-            <!--                      <q-popup-proxy-->
-            <!--                        cover-->
-            <!--                        transition-show="scale"-->
-            <!--                        transition-hide="scale"-->
-            <!--                      >-->
-            <!--                        <q-date-->
-            <!--                          v-model="formState.resultTime"-->
-            <!--                          mask="YYYY-MM-DD"-->
-            <!--                        >-->
-            <!--                          <div class="row items-center justify-end">-->
-            <!--                            <q-btn-->
-            <!--                              v-close-popup-->
-            <!--                              label="关闭"-->
-            <!--                              color="white"-->
-            <!--                              flat-->
-            <!--                            />-->
-            <!--                          </div>-->
-            <!--                        </q-date>-->
-            <!--                      </q-popup-proxy>-->
-            <!--                    </q-icon>-->
-            <!--                  </template>-->
-            <!--                </q-input>-->
-            <!--                <q-btn-->
-            <!--                  @click="filterWinnerLists()"-->
-            <!--                  :loading="loading"-->
-            <!--                  class="full-width q-mt-md"-->
-            <!--                  color="brand"-->
-            <!--                  label="搜索"-->
-            <!--                />-->
-            <!--              </q-form>-->
-
-            <!--              <q-table-->
-            <!--                class="q-mt-md"-->
-            <!--                no-data-label="没有数据"-->
-            <!--                loading-label="加载中..."-->
-            <!--                rows-per-page-label=" "-->
-            <!--                :loading="loading"-->
-            <!--                :columns="winnerColumn"-->
-            <!--                :rows="winnerDataSource"-->
-            <!--              />-->
-            <!--            </q-tab-panel>-->
-          </q-tab-panels>
-        </q-card-section>
-      </div>
-    </div>
+    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
+    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
+    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -341,24 +43,29 @@
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="确定" color="primary" v-close-popup/>
+        <q-btn flat label="确定" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import {defineComponent, onMounted, ref} from "vue";
-import {userStore} from "stores/index";
-import {eventapi} from "boot/axios";
-import {useQuasar} from "quasar";
+import { defineComponent, onMounted, ref } from "vue";
+import { userStore } from "stores/index";
+import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
+import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
+import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
+import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
+import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -367,9 +74,14 @@ export default defineComponent({
   components: {
     ClaimPromo,
     TigerCardPromo,
+    PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
-    InviteFriendPromo
+    UpcomingMatchPromo,
+    InsuranceSubmitPromo,
+    InviteFriendPromo,
+    EsportQuiz,
+    LotteryPromo
   },
   props: {
     list: {
@@ -397,20 +109,20 @@ export default defineComponent({
       const eventUrl = "/bonus/claim/" + bonusItem;
       this.btnLoading = true;
       eventapi
-          .put(eventUrl)
-          .then((res) => {
+        .put(eventUrl)
+        .then((res) => {
+          this.btnLoading = false;
+          if (res.code === 0) {
+            var rebatePoint = res.data;
+            this.claimMsg = "￥" + rebatePoint;
+            this.isClaimModal = true;
+          } else {
             this.btnLoading = false;
-            if (res.code === 0) {
-              var rebatePoint = res.data;
-              this.claimMsg = "￥" + rebatePoint;
-              this.isClaimModal = true;
-            } else {
-              this.btnLoading = false;
-            }
-          })
-          .catch((error) => {
-            this.btnLoading = false;
-          });
+          }
+        })
+        .catch((error) => {
+          this.btnLoading = false;
+        });
     }
   },
   mounted() {
@@ -420,13 +132,18 @@ export default defineComponent({
       }
     });
     if (
-        this.list.redirectUrl === "dy2-tiger-card" ||
-        this.list.redirectUrl === "goldenegg" ||
-        this.list.redirectUrl === "hongbaoyu" ||
-        this.list.redirectUrl === "invitefriend" ||
-        this.list.redirectUrl === "welcomenewuser" ||
-        this.list.redirectUrl === "dy2-lottery" ||
-        this.list.id === 40
+      this.list.redirectUrl === "dy2-tiger-card" ||
+      this.list.redirectUrl === "Dongying-team-vote" ||
+      this.list.redirectUrl === "goldenegg" ||
+      this.list.redirectUrl === "hongbaoyu" ||
+      this.list.redirectUrl === "invitefriend" ||
+      this.list.redirectUrl === "welcomenewuser" ||
+      this.list.redirectUrl === "dy2-lottery" ||
+      this.list.redirectUrl === "Dongying-quiz" ||
+      this.list.redirectUrl === "nba-game" ||
+      this.list.redirectUrl === "dy2-esport-safety" ||
+      this.list.redirectUrl === "sport-safety" ||
+      this.list.id === 40
     ) {
       this.isCommonPromo = false;
     } else {
@@ -447,7 +164,6 @@ export default defineComponent({
     const store = userStore();
     var qs = require("qs");
 
-    const lucky_number = ref("");
     const loading = ref(false);
     const btnLoading = ref(false);
     const isClaimModal = ref(false);
@@ -457,70 +173,8 @@ export default defineComponent({
       onlyMe: false,
       resultTime: ""
     });
-    const filterColumn = ref([
-      {
-        name: "number",
-        label: "号码",
-        field: "number",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "name",
-        label: "名字",
-        field: "loginName",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "status",
-        label: "状态",
-        field: "winStatus",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "date",
-        label: "日期",
-        field: "date",
-        align: "left",
-        sortable: true
-      }
-    ]);
-    const dataSource = ref([]);
+
     const winnerDataSource = ref([]);
-
-    const winnerColumn = [
-      {
-        name: "number",
-        label: "号码",
-        field: "number",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "name",
-        label: "名字",
-        field: "loginName",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "status",
-        label: "状态",
-        field: "winStatus",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "date",
-        label: "日期",
-        field: "date",
-        align: "left",
-        sortable: true
-      }
-    ];
-
     const filterWinnerLists = () => {
       var resultTime = formState.value.resultTime;
       var winnerUrl = "/privi/winners";
@@ -568,44 +222,6 @@ export default defineComponent({
     //     });
     // }
 
-    const filterLuckyNumber = () => {
-      loading.value = true;
-      dataSource.value = [];
-
-      var filterDate = formState.value.dateTime;
-      var onlyMe = formState.value.onlyMe;
-      var onlyMeParam = "";
-      if (onlyMe) {
-        var user_id = store.id;
-        onlyMeParam = "&memberId=" + user_id;
-      }
-
-      var filterUrl =
-          "/privi/selectedNumbers?recordTime=" + filterDate + onlyMeParam;
-
-      // console.log(filterDate);
-      eventapi
-          .get(filterUrl)
-          .then((res) => {
-            loading.value = false;
-            var data = res.data;
-            _.each(data, function (item, index) {
-              item.date = moment(item.recordTime).format("DD/MM/YYYY");
-              dataSource.value.push(item);
-            });
-
-            console.log(dataSource.value);
-          })
-          .catch((error) => {
-            loading.value = false;
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: error.message,
-            //   icon: "report_problem"
-            // });
-          });
-    };
     // const ClaimDailyRebate = (id) => {
     //   if (!store.hasToken()) {
     //   } else {
@@ -624,71 +240,11 @@ export default defineComponent({
     // }
     // }
 
-    const submitLuckyNumber = () => {
-      console.log(lucky_number.value);
-      var submit_number = lucky_number.value.toString();
-
-      if (submit_number.length !== 3) {
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: "ขีดสุด 3 ตัวเลข",
-        //   icon: "report_problem"
-        // });
-      } else {
-        var user_id = store.id;
-
-        var postData = {};
-        postData.number = submit_number;
-        postData.promoCode = "dy2-lottery";
-
-        var luckyNumberUrl = "/privi/lotteryNumber";
-        btnLoading.value = true;
-        eventapi
-            .post(luckyNumberUrl, qs.stringify(postData))
-            .then((res) => {
-              btnLoading.value = false;
-              var responseCode = res.data;
-              console.log(responseCode);
-              if (responseCode.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: "发送成功",
-                  icon: "check_circle_outline"
-                });
-              } else {
-                // $q.notify({
-                //   color: "negative",
-                //   position: "top",
-                //   message: responseCode.message,
-                //   icon: "report_problem"
-                // });
-              }
-            })
-            .catch((error) => {
-              btnLoading.value = false;
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: error.message,
-              //   icon: "report_problem"
-              // });
-            });
-      }
-    };
-
     return {
       store,
-      lucky_number,
-      submitLuckyNumber,
-      filterLuckyNumber,
       filterWinnerLists,
       formState,
-      dataSource,
       winnerDataSource,
-      winnerColumn,
-      filterColumn,
       loading,
       btnLoading,
       isClaimModal,
@@ -763,125 +319,6 @@ export default defineComponent({
       }
     }
   }
-
-  .promo-4 {
-    .ant-tabs-bar {
-      border-bottom: 0px solid #2b2b4b;
-      margin-bottom: 0;
-      display: flex;
-      justify-content: center;
-      background: #212137;
-    }
-
-    .ant-tabs-nav .ant-tabs-tab {
-      padding: 10px 48px;
-      margin: 10px 5px 20px;
-      color: #ffffff;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 1px solid #db7e42;
-      box-shadow: rgb(0 0 0 / 100%) 0px 6px 12px 0px;
-      width: 400px;
-      text-align: center;
-
-      &-active {
-        background-image: linear-gradient(to right, #de4545, #db7e42);
-      }
-    }
-
-    .ant-tabs-nav-container {
-    }
-
-    .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,
-    .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
-      background: #2b2b4b;
-    }
-
-    .ant-tabs-ink-bar {
-      height: 0px;
-      background-color: #2b2b4b;
-    }
-
-    .table {
-      padding: 20px;
-    }
-
-    .ant-table {
-      background-color: transparent;
-    }
-
-    .ant-table-thead > tr > th,
-    .ant-table-placeholder {
-      color: #ffffff;
-      background-color: #212534;
-      border: 0;
-    }
-
-    .ant-table-placeholder {
-      border: 0;
-    }
-
-    .tabs {
-      .tab1 {
-        display: flex;
-        max-width: 900px;
-        margin: 0 auto;
-        background: #e3e3e3;
-        gap: 20px;
-        justify-content: space-evenly;
-        align-items: center;
-        padding: 20px;
-
-        .contents {
-          form {
-            margin-top: 20px;
-
-            input {
-              max-width: 250px;
-              width: 90%;
-            }
-
-            .common-btn {
-              display: inline-block;
-            }
-          }
-
-          flex: 1;
-          color: #ffffff;
-          text-align: center;
-        }
-      }
-
-      .tab2 {
-        .ant-form {
-          display: flex;
-          justify-content: space-between;
-          gap: 10px;
-          padding: 20px;
-          align-items: center;
-
-          .firstrow {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-          }
-        }
-
-        .ant-form-item {
-          margin: 0;
-        }
-
-        .ant-form-item-label > label {
-          color: #ffffff;
-        }
-
-        .ant-switch-checked {
-          background: #db7e42;
-        }
-      }
-    }
-  }
 }
 
 .promo-sjb,
@@ -905,19 +342,17 @@ export default defineComponent({
     margin: auto;
 
     .claim-amt {
-      font-size: 33px;
+      font-size: 30px;
       color: var(--q-primary);
-      font-family: "Wave";
       text-align: center;
     }
 
     .bonus-text {
-      font-size: 24px;
+      font-size: 22px;
       // color: #ff3131;
-      color: #ceab26;
+      color: var(--q-primary);
       text-align: center;
       font-weight: 700;
-      font-family: "Jura";
       white-space: nowrap;
     }
   }
@@ -928,7 +363,7 @@ export default defineComponent({
 
   .q-btn__content {
     color: #fff;
-    background-image: linear-gradient(to right, #de4545, #db7e42) !important;
+    background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%) !important;
     width: 80px;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -959,29 +394,6 @@ export default defineComponent({
 
         .contents {
           gap: 20px;
-        }
-      }
-    }
-
-    .promo-4 {
-      .ant-tabs-nav .ant-tabs-tab {
-        width: unset;
-        padding: 10px;
-      }
-
-      .tabs {
-        .tab1 {
-          flex-direction: column;
-        }
-
-        .tab2 {
-          .ant-form {
-            align-items: flex-start;
-
-            .firstrow {
-              flex-direction: column;
-            }
-          }
         }
       }
     }

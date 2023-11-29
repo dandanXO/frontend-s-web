@@ -1,7 +1,7 @@
 <template>
   <ProfileSummary />
 
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
 
   <ContentView contentTopStatus="solid">
     <q-tabs
@@ -108,12 +108,6 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
-};
-
 const isLoading = reactive({ withdrawal: true, recharge: true });
 const isNoInfo = reactive({ withdrawal: true, recharge: true });
 
@@ -178,21 +172,16 @@ const searchDepositRecord = () => {
 const getWithdrawStatus = (withdrawStatus) => {
   switch (withdrawStatus) {
     case "APPLY":
-      return "Applying";
+    case "STEP_1":
+    case "STEP_2":
+    case "STEP_3":
+    case "STEP_4":
+      return "Pending";
     case "FAIL":
+    case "STEP_5":
       return "Failed";
     case "SUCCESS":
       return "Success";
-    case "STEP_1":
-      return "Under review";
-    case "STEP_2":
-      return "To be paid";
-    case "STEP_3":
-      return "Payment on going";
-    case "STEP_4":
-      return "Automatic Payment";
-    case "STEP_5":
-      return "Suspend";
     default:
       return withdrawStatus;
   }
@@ -205,7 +194,7 @@ const getDepositStatus = (depositStatus) => {
     case "SUCCESS":
       return "Success";
     case "SUPPLEMENT_SUCCESS":
-      return "Supplement Success";
+      return "Success";
     case "CLOSED":
       return "Closed";
     default:

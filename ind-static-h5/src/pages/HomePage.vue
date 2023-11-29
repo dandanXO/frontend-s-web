@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrapper">
     <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
-      <q-btn fab class="bg-yellow text-black btn-effect" @click="router.push('/liveChat')">
+      <q-btn fab class="bg-yellow text-black btn-effect" @click="openCSInNewTab('https://direct.lc.chat/14154051/')">
         <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
@@ -65,9 +65,13 @@
       ></q-carousel-slide>
     </q-carousel>
 
-    <div class="top-action">
+    <div class="top-action" v-if="store.hasToken()">
       <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
+    </div>
+    <div v-else class="top-action">
+      <q-btn class="action-btn action-btn--withdrawal" @click="gotoSignIn()" no-caps label="Sign In"></q-btn>
+      <q-btn class="action-btn action-btn--deposit" @click="gotoSignUp()" no-caps label="Sign Up" />
     </div>
 
     <div class="games-selection-wrapper">
@@ -91,27 +95,83 @@
                 <div
                   class="game--bg"
                   :style="{
-                    backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                    backgroundImage: `url(${imgURLGame}${item.icon})`
                   }"
                 ></div>
               </div>
 
-              <div class="game-platform-title">{{ item.name }}</div>
+              <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+
+              <template v-if="item.platformCode === 'JOKER'">
+                <div
+                  class="game-platform-label game-platform-label--hot"
+                  v-if="
+                    (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                    (item.gameLabel && item.gameLabel.includes('HOT'))
+                  "
+                >
+                  <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                </div>
+                <div
+                  class="game-platform-label game-platform-label--new"
+                  v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                >
+                  <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                </div>
+              </template>
+            </div>
+          </template>
+          <template v-else>
+            <div v-if="isShowAllHotGames">
+              <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+                <div
+                  class="game-platform-item btn-effect"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                >
+                  <div class="game-platform-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: `url(${imgURLGame}${item.icon})`
+                      }"
+                    ></div>
+                  </div>
+
+                  <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+
+                  <template v-if="item.platformCode === 'JOKER'">
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="
+                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                        (item.gameLabel && item.gameLabel.includes('HOT'))
+                      "
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                    >
+                      <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                    </div>
+                  </template>
+                </div>
+              </transition>
             </div>
           </template>
         </template>
       </div>
-      <div class="hot-games-pattern-bottom"></div>
-      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">
-        Load More
-      </div>
-      <div v-else class="hot-games-pattern-bottom--filled"></div>
+      <!-- <div class="hot-games-pattern-bottom"></div> -->
+      <!--      <div class="btn-load-more btn-effect" @click="openHotGame(hotGameList)" v-if="hotGameList.length > 8">-->
+      <div class="btn-load-more btn-effect" @click="scrollDownHotGames" v-if="!isShowAllHotGames">Load More</div>
+      <!-- <div v-else class="hot-games-pattern-bottom--filled"></div> -->
     </div>
 
     <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
-        <span class="txt-style">Slot Games</span>
+        <span class="txt-style">Slot &amp; Fishing Games</span>
       </div>
 
       <div class="game-platform-container">
@@ -127,6 +187,30 @@
                 backgroundImage: (() => {
                   try {
                     return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
+
+            <div v-if="item.name === 'JOKER'" class="burning-hot">
+              <img src="../assets/images/index/hot.png" />
+            </div>
+          </div>
+        </template>
+        <template v-for="(item, index) in fishing" :key="index">
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
+          >
+            <img src="../assets/images/index/fish/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
                   } catch (e) {
                     return '';
                   }
@@ -194,7 +278,7 @@
       </div>
     </div> -->
 
-    <div class="games-selection-wrapper">
+    <!-- <div class="games-selection-wrapper">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-fishing.png" alt="" />
         <span class="txt-style">Fishing</span>
@@ -222,7 +306,7 @@
           </div>
         </template>
       </div>
-    </div>
+    </div> -->
 
     <div class="games-selection-wrapper">
       <div class="title-game">
@@ -254,7 +338,7 @@
     </div>
   </div>
 
-  <GameModal ref="allGames"></GameModal>
+  <GameModal ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
 
   <q-dialog
     width="100%"
@@ -279,6 +363,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
+    <q-btn dense rounded icon="close" class="bg-yellow text-black announcement-close" v-close-popup />
     <q-card style="width: 100%" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
         <q-tabs
@@ -366,11 +451,24 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.platformCode.toLowerCase()}/${item.code}.png)`
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ item.name }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                    >
+                      <img src="../assets/images/index/platform-label-new.png" alt="" />
+                    </div>
                   </div>
                 </template>
               </template>
@@ -385,11 +483,27 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${subGameCode.toLowerCase()}/${item.icon}.png)`
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
                       ></div>
                     </div>
-                    <div class="game-platform-title">{{ item.name }}</div>
+                    <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+
+                    <div
+                      class="game-platform-label game-platform-label--hot"
+                      v-if="
+                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                        (item.gameLabel && item.gameLabel.includes('HOT'))
+                      "
+                    >
+                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                    </div>
+                    <div
+                      class="game-platform-label game-platform-label--new"
+                      v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                    >
+                      <img src="../assets/images/index/platform-label-new.png" alt="" />
+                    </div>
                   </div>
                 </template>
               </template>
@@ -403,7 +517,7 @@
   <q-dialog width="100%" v-model="withdrawalDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-      <div class="popout-dialog-container">
+      <div class="popout-dialog-container popout-dialog-container--yel">
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
         </div>
@@ -414,13 +528,27 @@
 
   <q-dialog width="100%" v-model="depositDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-      <div class="popout-dialog-container">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeDepositDialog" />
+      <div class="popout-dialog-container popout-dialog-container--yel">
         <div class="popout-main-title">
           <div class="txt-title">Deposit</div>
         </div>
         <DepositComponent />
       </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 </template>
@@ -441,6 +569,8 @@ import { translateRecord } from "src/directives/translate";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalComponent from "../components/WithdrawalComponent.vue";
 import DepositComponent from "../components/depositComponent.vue";
+import KYCGuestForm from "../components/KYCGuestForm.vue";
+import KYCUserForm from "../components/KYCUserForm.vue";
 
 const slide = ref(0);
 
@@ -458,9 +588,28 @@ const onWithdrawalClick = () => {
   withdrawalDialog.value = true;
 };
 
+const userKYCDialog = ref(false);
+const guestKYCDialog = ref(false);
 const depositDialog = ref(false);
 const openDepositDialog = () => {
-  depositDialog.value = true;
+  if (!store.realName & !store.guest) {
+    userKYCDialog.value = true;
+  } else if (!store.realName & store.guest) {
+    guestKYCDialog.value = true;
+  } else {
+    depositDialog.value = true;
+  }
+};
+
+const closeGuestKYCDialog = () => {
+  guestKYCDialog.value = false;
+  store.getMemberInfo();
+  loadData();
+};
+const closeUserKYCDialog = () => {
+  userKYCDialog.value = false;
+  store.getMemberInfo();
+  loadData();
 };
 
 const depositItems = reactive([
@@ -474,30 +623,6 @@ const depositItems = reactive([
   { amount: 30000, hotLabel: 1500, isActive: false },
   { amount: 50000, hotLabel: 2500, isActive: false }
 ]);
-
-const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
-    item.isActive = i === index;
-    if (i === index) {
-      depositAmountInput.value = item.amount;
-    }
-  });
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
-};
-
-const depositAmountInput = ref("");
 
 const esport = ref([]);
 const sport = ref([]);
@@ -546,6 +671,16 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
   loadGameList(gameType, gameId);
   fullGameDialog.value = true;
   hotGameOn.value = false;
+};
+
+const closeFullGameDialog = () => {
+  fullGameDialog.value = false;
+
+  if (store.guest && !store.realName) {
+    guestKYCDialog.value = true;
+  } else if (!store.guest && !store.realName) {
+    userKYCDialog.value = true;
+  }
 };
 
 const hotGameOn = ref(false);
@@ -603,6 +738,11 @@ const loadHotGameList = () => {
     });
 };
 
+const isShowAllHotGames = ref(false);
+const scrollDownHotGames = () => {
+  isShowAllHotGames.value = true;
+};
+
 const loadGameList = (type, id) => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
   const code = id;
@@ -634,7 +774,7 @@ const loadGameList = (type, id) => {
 };
 
 const imgURL = process.env.IMAGE_CDN;
-const imgURLGame = imgURL + "/game/5/";
+const imgURLGame = imgURL + "/game/";
 const imgURLPromo = imgURL + "/promo/";
 
 // Pop out ads banner
@@ -704,100 +844,46 @@ const getPlatList = () => {
       var pf = data;
       ui.slotLists = [];
       pf.forEach((element) => {
+        const { status } = element;
+        if (status === "TEST" && store.memberType !== "TEST") return;
+
         const platTypes = element.gameType.split(",");
-        // console.log(platTypes);
         if (platTypes.indexOf("ESPORT") > -1) {
           var espObj = Object.assign({}, element);
-          // console.log(espObj);
-
           esport.value.push(espObj);
-
           //Add 1 More Casual minigame.
-          // if (platTypes.indexOf("CASUAL") > -1) {
           var casualObj = Object.assign({}, element);
-          casualObj.gameCode = "casual";
-          casualObj.title = casualObj.name + " 小游戏";
-          casualObj.icon = "casual";
-          casualObj.subtitle = "小游戏";
           casuals.value.push(casualObj);
-          // }
         }
         if (platTypes.indexOf("SPORT") > -1) {
           var spObj = Object.assign({}, element);
-          if (spObj.code === "IM") {
-            spObj.title = "IM体育";
-          }
-          if (spObj.code === "IA") {
-            spObj.title = "小艾体育";
-          }
-          if (spObj.code === "PM") {
-            spObj.title = "熊猫体育";
-          }
-          if (spObj.code === "CR") {
-            spObj.title = "CR体育";
-          }
-          if (spObj.code === "SABA") {
-            spObj.title = spObj.code + "体育";
-          }
-          spObj.icon = "sport";
-          spObj.subtitle = "体育赛事";
           sport.value.push(spObj);
         }
         if (platTypes.indexOf("LIVE") > -1) {
           var liveObj = Object.assign({}, element);
-          if (liveObj.code === "PMLIVE") {
-            liveObj.title = "DB 真人";
-          } else if (liveObj.code === "EBET") {
-            liveObj.title = "WE 真人";
-          } else {
-            liveObj.title = liveObj.name + " 真人";
-          }
-          liveObj.icon = "live";
-          liveObj.subtitle = "真人娱乐";
           livecasino.value.push(liveObj);
         }
         if (platTypes.indexOf("SLOT") > -1) {
-          // console.log(element)
           var slotObj = Object.assign({}, element);
-          slotObj.title = translateRecord(slotObj.name) + " 电子";
-          slotObj.icon = "slot";
-          slotObj.subtitle = "电子游戏";
-          // console.log(slotObj);
-          if (slotObj.code === "AG") {
-          } else {
-            let slotItem = {
-              id: slotObj.id,
-              code: slotObj.code,
-              icon: slotObj.name
-            };
-            // console.log(slotItem);
-            ui.slotLists.push(slotItem);
-            slot.value.push(slotObj);
-          }
+          let slotItem = {
+            id: slotObj.id,
+            code: slotObj.code,
+            icon: slotObj.name
+          };
+          ui.slotLists.push(slotItem);
+          slot.value.push(slotObj);
         }
         if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
           var fishObj = Object.assign({}, element);
-          fishObj.title = fishObj.name + " 捕鱼";
-          fishObj.icon = "fish";
-          fishObj.subtitle = "捕鱼游戏";
           fishing.value.push(fishObj);
         }
         if (platTypes.indexOf("POKER") > -1) {
           var pokerObj = Object.assign({}, element);
-          pokerObj.title = translateRecord(pokerObj.name);
-          pokerObj.icon = "poker";
-          pokerObj.subtitle = "棋牌娱乐";
           poker.value.push(pokerObj);
         }
         if (platTypes.indexOf("LOTTERY") > -1) {
           var lottObj = Object.assign({}, element);
-          lottObj.title = lottObj.name + " 彩票";
-          lottObj.icon = "lottery";
-          lottObj.subtitle = "彩票游戏";
-          //HArdCode hid BBIN
-          if (lottObj.code !== "BBINDY") {
-            lottery.value.push(lottObj);
-          }
+          lottery.value.push(lottObj);
         }
       });
     })
@@ -832,6 +918,14 @@ const openPopup = (noticeType) => {
 const gotoPromo = (banner) => {
   const redirectU = "/promo?name=" + banner.redirectUrl;
   // router.push(`${redirectU}`);
+};
+
+const gotoSignIn = () => {
+  router.push("/login");
+};
+
+const gotoSignUp = () => {
+  router.push("/register");
 };
 
 const download_url = ref("");
@@ -878,6 +972,23 @@ const getAppDownloadUrl = () => {
     });
 };
 
+const truncateText = (text, maxLength) => {
+  if (window.innerWidth <= 450) {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  } else {
+    return text;
+  }
+};
+
+const closeDepositDialog = () => {
+  depositDialog.value = false;
+};
+
+const openCSInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+};
+
 onMounted(() => {
   getPlatList();
   loadData();
@@ -886,6 +997,7 @@ onMounted(() => {
   getVersionNo();
   getAppDownloadUrl();
   loadHotGameList();
+  store.getUnreadTotal();
 });
 </script>
 
@@ -933,6 +1045,7 @@ onMounted(() => {
       padding: 10px 12px;
       text-align: center;
       color: black;
+
       .contentfonts {
         text-align: center;
         color: #333;
@@ -1320,6 +1433,13 @@ onMounted(() => {
   font-weight: bold;
 }
 
+.announcement-close {
+  position: absolute;
+  right: 4px;
+  top: 80px;
+  z-index: 3;
+}
+
 .popout-dialog {
   width: 90%;
 
@@ -1334,8 +1454,8 @@ onMounted(() => {
     top: 80px;
   }
 
-  .popout-dialog-container {
-    background-image: url(../assets/images/index/popout/deposit-bg.png);
+  .popout-dialog-container--yel {
+    background-image: url(../assets/images/index/popout/deposit-bg.png) !important;
     background-position: bottom center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1397,6 +1517,7 @@ onMounted(() => {
         margin-left: 3px;
         margin-right: 3px;
         transition: all 0.3s;
+
         img {
           display: block;
           width: 70%;
@@ -1463,6 +1584,7 @@ onMounted(() => {
     justify-content: center;
     gap: 30px;
     margin-top: 16px;
+
     .deposit-option-btn {
       color: #cccccc;
       background-color: rgba(21, 0, 37, 0.5) !important;
@@ -1479,6 +1601,7 @@ onMounted(() => {
 
       &.label-on-discount {
         position: relative;
+
         &:after {
           content: "";
           background-image: url(../assets/images/index/popout/label-discount.png);
@@ -1498,6 +1621,10 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
+.q-dialog__inner--maximized > div {
+  overflow-x: hidden;
+}
+
 .q-card__section {
   background: rgba(0, 0, 0, 0.1);
 }
@@ -1522,21 +1649,22 @@ onMounted(() => {
 }
 
 .home-wrapper {
-  width: 95%;
+  width: calc(100% - 16px);
   margin: auto;
 }
 
 .home-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   height: 1px;
-  width: 105%;
-  margin: 0 -2.5%;
+  width: 100%;
+  // margin: 0 -2.5%;
 }
 
 .top-action {
   display: flex;
   gap: 16px;
-  margin-top: 10px;
+  margin-top: 5px;
+
   .action-btn {
     display: flex;
     justify-content: center;
@@ -1546,14 +1674,16 @@ onMounted(() => {
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
-    font-weight: 700;
+    font-weight: 600;
     width: 50%;
-    height: 60px;
+    height: 55px;
+    text-shadow: 2px 2px 2px #882f00;
     transition: 0.3s all;
 
     &--withdrawal {
       background-image: url(../assets/images/index/action-btn-withdrawal.png);
       color: #ffffff;
+
       &:before {
         box-shadow: none;
       }
@@ -1562,6 +1692,7 @@ onMounted(() => {
     &--deposit {
       background-image: url(../assets/images/index/action-btn-deposit.png);
       color: #fae576;
+
       &:before {
         box-shadow: none;
       }
@@ -1574,26 +1705,26 @@ onMounted(() => {
 }
 
 .games-selection-wrapper {
-  margin-top: 10px;
-  margin-bottom: 40px;
+  padding-bottom: 20px;
 
   .hot-games-pattern-top {
-    background-image: url(../assets/images/index/hot-games-pattern-top.png);
-    background-size: contain;
+    // background-image: url(../assets/images/index/hot-games-pattern-top.png);
+    background-size: cover;
     background-repeat: no-repeat;
-    margin-left: -2.5%;
-    margin-right: -2.5%;
-    height: 140px;
-    background-position: center center;
+    // margin-left: -6px;
+    // margin-right: -6px;
+    // height: 100px;
+    background-position: top center;
+    margin-top: 8px;
+    // margin-top: -20px;
   }
 
   .hot-games-pattern-bottom {
-    background-image: url(../assets/images/index/hot-games-pattern-bottom.png);
+    // background-image: url(../assets/images/index/hot-games-pattern-bottom.png);
     background-size: contain;
     background-repeat: no-repeat;
     height: 50px;
-    margin-top: 20px;
-    margin-bottom: -40px;
+    // margin-bottom: -40px;
     background-position: center center;
 
     &--filled {
@@ -1609,12 +1740,16 @@ onMounted(() => {
 
   .hot-games-container {
     // padding-top: 60px;
-    margin-top: -30px;
+    // margin-top: -50px;
     display: flex;
     justify-content: center;
 
+    @media (min-width: 420px) {
+      // margin-top: -70px;
+    }
+
     img {
-      width: 50px;
+      width: 30px;
     }
 
     .title-hot-games {
@@ -1626,46 +1761,50 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 270px;
+      width: 170px;
       margin-left: 10px;
       margin-right: 10px;
+
       .txt-style {
-        background-color: #f3ec78;
-        background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-        background-size: 100%;
-        -webkit-background-clip: text;
-        -moz-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -moz-text-fill-color: transparent;
-        line-height: 1;
-        font-size: 28px;
+        // background-color: #f3ec78;
+        // background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+        // color: #e7e051;
+        // background-size: 100%;
+        // text-shadow: 1px 1px 1px #882f00;
+        // line-height: 1;
+        // font-size: 20px;
+        // font-weight: 600;
+        // margin-top: 1px;
+
+        font-family: Poppins;
+        font-size: 21px;
         font-weight: 800;
+        letter-spacing: -1px;
+        background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+
+        -webkit-background-clip: text;
+        color: transparent;
         -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: #db0011;
+        -webkit-text-stroke-color: #a94700;
       }
     }
   }
 
   .title-game {
     display: flex;
-    margin-top: 30px;
+    // margin-top: 10px;
     gap: 8px;
     align-items: center;
 
     .txt-style {
-      font-family: Wave;
-      background-color: #f3ec78;
-      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-size: 100%;
+      font-family: Poppins;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+
       -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-      line-height: 1;
-      letter-spacing: 2px;
-      font-size: 30px;
-      font-weight: 400;
-      // font-weight: bold;
+      color: transparent;
       -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color: #a94700;
     }
@@ -1679,14 +1818,36 @@ onMounted(() => {
 .game-platform-wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 8px;
-  row-gap: 12px;
+  column-gap: 4px;
+  row-gap: 6px;
   margin-top: 10px;
+  // margin-left: -6px;
+  // margin-right: -6px;
 
   .game-platform-item {
-    border: 3px solid #ffc027;
+    border: 2px solid #ffc027;
     border-radius: 15px;
     overflow: hidden;
+    position: relative;
+
+    .game-platform-label {
+      position: absolute;
+      top: 0;
+      width: 45%;
+
+      &--hot {
+        left: 0;
+      }
+
+      &--new {
+        right: 0;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
 
     .game-platform-img {
       background-color: #cccccc;
@@ -1724,9 +1885,11 @@ onMounted(() => {
 .game-platform-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 16px;
-  row-gap: 24px;
-  margin-top: 20px;
+  column-gap: 8px;
+  row-gap: 16px;
+  margin-top: 10px;
+  // margin-left: -6px;
+  // margin-right: -6px;
 
   &.sport-platform {
     grid-template-columns: 1fr;
@@ -1735,6 +1898,7 @@ onMounted(() => {
 
   .game-platform-item {
     position: relative;
+
     &--img {
       background-size: cover;
       background-position: center center;
@@ -1763,7 +1927,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
   background-size: contain;
   background-position: center center;
@@ -1774,11 +1938,14 @@ onMounted(() => {
   transition: 0.3s all;
   background-image: url(../assets/images/index/btn-load-more.png);
   color: #ffffff;
-  margin: auto;
+  margin: 10px auto 0;
+
+  text-shadow: 1px 1px 2px #882f00;
 }
 
 .floating-btn {
   z-index: 5;
+
   img {
     width: 30px;
   }
@@ -1809,5 +1976,12 @@ onMounted(() => {
   .fullgame-search {
     padding-top: 90px;
   }
+}
+
+.burning-hot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35%;
 }
 </style>
