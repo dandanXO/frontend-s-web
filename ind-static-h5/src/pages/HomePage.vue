@@ -76,7 +76,7 @@
 
     <div class="games-selection-wrapper">
       <div class="hot-games-pattern-top"></div>
-      <div class="hot-games-container">
+      <div class="hot-games-container" data-aos="fade-in" data-aos-duration="1200" data-aos-once="true">
         <img src="../assets/images/index/hot-elephant-left.png" alt="" />
         <div class="title-hot-games">
           <span class="txt-style">HOT GAMES</span>
@@ -90,6 +90,10 @@
             <div
               class="game-platform-item btn-effect"
               @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+              data-aos="zoom-in"
+              :data-aos-delay="100 * index"
+              data-aos-duration="1200"
+              data-aos-once="true"
             >
               <div class="game-platform-img">
                 <div
@@ -123,41 +127,43 @@
           </template>
           <template v-else>
             <div v-if="isShowAllHotGames">
-              <transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-                <div
-                  class="game-platform-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                >
-                  <div class="game-platform-img">
-                    <div
-                      class="game--bg"
-                      :style="{
-                        backgroundImage: `url(${imgURLGame}${item.icon})`
-                      }"
-                    ></div>
-                  </div>
-
-                  <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
-
-                  <template v-if="item.platformCode === 'JOKER'">
-                    <div
-                      class="game-platform-label game-platform-label--hot"
-                      v-if="
-                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
-                        (item.gameLabel && item.gameLabel.includes('HOT'))
-                      "
-                    >
-                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
-                    </div>
-                    <div
-                      class="game-platform-label game-platform-label--new"
-                      v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
-                    >
-                      <img src="../assets/images/index/platform-label-recommend.png" alt="" />
-                    </div>
-                  </template>
+              <div
+                class="game-platform-item btn-effect"
+                @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                data-aos="zoom-in"
+                :data-aos-delay="100 * (index - 8)"
+                data-aos-duration="1200"
+                data-aos-once="true"
+              >
+                <div class="game-platform-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: `url(${imgURLGame}${item.icon})`
+                    }"
+                  ></div>
                 </div>
-              </transition>
+
+                <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+
+                <template v-if="item.platformCode === 'JOKER'">
+                  <div
+                    class="game-platform-label game-platform-label--hot"
+                    v-if="
+                      (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                      (item.gameLabel && item.gameLabel.includes('HOT'))
+                    "
+                  >
+                    <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                  </div>
+                  <div
+                    class="game-platform-label game-platform-label--new"
+                    v-if="item.gameLabel && item.gameLabel.includes('RECOMMEND')"
+                  >
+                    <img src="../assets/images/index/platform-label-recommend.png" alt="" />
+                  </div>
+                </template>
+              </div>
             </div>
           </template>
         </template>
@@ -168,7 +174,7 @@
       <!-- <div v-else class="hot-games-pattern-bottom--filled"></div> -->
     </div>
 
-    <div class="games-selection-wrapper">
+    <div class="games-selection-wrapper" id="slot">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
         <span class="txt-style">Slot &amp; Fishing Games</span>
@@ -179,6 +185,12 @@
           <div
             class="game-platform-item btn-effect"
             @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+            data-aos="zoom-in"
+            :data-aos-delay="100 * index"
+            data-aos-duration="1200"
+            data-aos-once="true"
+            data-aos-anchor="#slot"
+            data-aos-offset="300"
           >
             <img src="../assets/images/index/slot/item-game-maintenance.png" />
             <div
@@ -203,6 +215,12 @@
           <div
             class="game-platform-item btn-effect"
             @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
+            data-aos="zoom-in"
+            :data-aos-delay="100 * index"
+            data-aos-duration="1200"
+            data-aos-once="true"
+            data-aos-anchor="#slot"
+            data-aos-offset="300"
           >
             <img src="../assets/images/index/fish/item-game-maintenance.png" />
             <div
@@ -227,7 +245,7 @@
       </div>
     </div>
 
-    <div class="games-selection-wrapper">
+    <div class="games-selection-wrapper" id="live">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-livecasino.png" alt="" />
         <span class="txt-style">Live Casino</span>
@@ -237,6 +255,12 @@
           <div
             class="game-platform-item btn-effect"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+            data-aos="zoom-in"
+            :data-aos-delay="100 * index"
+            data-aos-duration="1200"
+            data-aos-once="true"
+            data-aos-anchor="#live"
+            data-aos-offset="300"
           >
             <img src="../assets/images/index/live/item-game-maintenance.png" />
             <div
@@ -254,7 +278,15 @@
           </div>
         </template>
         <!-- coming soon placeholder // start -->
-        <div class="game-platform-item">
+        <div
+          class="game-platform-item"
+          data-aos="zoom-in"
+          data-aos-delay="1000"
+          data-aos-duration="1200"
+          data-aos-once="true"
+          data-aos-anchor="#live"
+          data-aos-offset="300"
+        >
           <img src="../assets/images/index/live/item-game-comingsoon.png" alt="" />
         </div>
         <!-- coming soon placeholder // end -->
@@ -308,7 +340,7 @@
       </div>
     </div> -->
 
-    <div class="games-selection-wrapper">
+    <div class="games-selection-wrapper" id="sports">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-sports.png" alt="" />
         <span class="txt-style">Sports</span>
@@ -318,6 +350,12 @@
           <div
             class="game-platform-item btn-effect"
             @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+            data-aos="zoom-in"
+            :data-aos-delay="100 * index"
+            data-aos-duration="1200"
+            data-aos-once="true"
+            data-aos-anchor="#sports"
+            data-aos-offset="300"
           >
             <img src="../assets/images/index/sport/item-game-maintenance.png" />
             <div
@@ -424,7 +462,7 @@
   </q-dialog>
 
   <q-dialog v-model="fullGameDialog" persistent maximized transition-show="slide-up" transition-hide="slide-down">
-    <q-card class="fullgame-card">
+    <q-card class="fullgame-card" id="fullgame">
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
@@ -439,76 +477,92 @@
             </div>
           </div>
 
-          <div class="games-selection-wrapper">
-            <div class="game-platform-wrapper">
-              <template v-if="hotGameOn">
-                <template v-for="(item, index) in filteredHotGameList" :key="index">
-                  <div
-                    class="game-platform-item"
-                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                  >
-                    <div class="game-platform-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
-                        }"
-                      ></div>
-                    </div>
-                    <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
-
-                    <div
-                      class="game-platform-label game-platform-label--hot"
-                      v-if="item.gameLabel && item.gameLabel.includes('HOT')"
-                    >
-                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
-                    </div>
-                    <div
-                      class="game-platform-label game-platform-label--new"
-                      v-if="item.gameLabel && item.gameLabel.includes('NEW')"
-                    >
-                      <img src="../assets/images/index/platform-label-new.png" alt="" />
-                    </div>
-                  </div>
-                </template>
-              </template>
-
-              <template v-else>
-                <template v-for="(item, index) in filteredSubGameList" :key="index">
-                  <div
-                    class="game-platform-item"
-                    @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
-                  >
-                    <div class="game-platform-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
-                        }"
-                      ></div>
-                    </div>
-                    <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
-
-                    <div
-                      class="game-platform-label game-platform-label--hot"
-                      v-if="
-                        (item.gameLabel && item.gameLabel.includes('LIST')) ||
-                        (item.gameLabel && item.gameLabel.includes('HOT'))
-                      "
-                    >
-                      <img src="../assets/images/index/platform-label-hot.png" alt="" />
-                    </div>
-                    <div
-                      class="game-platform-label game-platform-label--new"
-                      v-if="item.gameLabel && item.gameLabel.includes('NEW')"
-                    >
-                      <img src="../assets/images/index/platform-label-new.png" alt="" />
-                    </div>
-                  </div>
-                </template>
-              </template>
+          <template v-if="isGameLoading">
+            <div class="loading-spinner">
+              <q-spinner-cube color="orange" size="100px" />
             </div>
-          </div>
+          </template>
+
+          <template v-else>
+            <div class="games-selection-wrapper">
+              <div class="game-platform-wrapper">
+                <template v-if="hotGameOn">
+                  <template v-for="(item, index) in filteredHotGameList" :key="index">
+                    <div
+                      class="game-platform-item"
+                      @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                      data-aos="zoom-in"
+                      data-aos-duration="1200"
+                      data-aos-once="true"
+                      data-aos-anchor="#fullgame"
+                    >
+                      <div class="game-platform-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: `url(${imgURLGame}${item.icon})`
+                          }"
+                        ></div>
+                      </div>
+                      <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+
+                      <div
+                        class="game-platform-label game-platform-label--hot"
+                        v-if="item.gameLabel && item.gameLabel.includes('HOT')"
+                      >
+                        <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                      </div>
+                      <div
+                        class="game-platform-label game-platform-label--new"
+                        v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                      >
+                        <img src="../assets/images/index/platform-label-new.png" alt="" />
+                      </div>
+                    </div>
+                  </template>
+                </template>
+
+                <template v-else>
+                  <template v-for="(item, index) in filteredSubGameList" :key="index">
+                    <div
+                      class="game-platform-item"
+                      @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                      data-aos="zoom-in"
+                      data-aos-duration="1200"
+                      data-aos-once="true"
+                      data-aos-anchor="#fullgame"
+                    >
+                      <div class="game-platform-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: `url(${imgURLGame}${item.icon})`
+                          }"
+                        ></div>
+                      </div>
+                      <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+
+                      <div
+                        class="game-platform-label game-platform-label--hot"
+                        v-if="
+                          (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                          (item.gameLabel && item.gameLabel.includes('HOT'))
+                        "
+                      >
+                        <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                      </div>
+                      <div
+                        class="game-platform-label game-platform-label--new"
+                        v-if="item.gameLabel && item.gameLabel.includes('NEW')"
+                      >
+                        <img src="../assets/images/index/platform-label-new.png" alt="" />
+                      </div>
+                    </div>
+                  </template>
+                </template>
+              </div>
+            </div>
+          </template>
         </div>
       </q-card-section>
     </q-card>
@@ -571,6 +625,8 @@ import WithdrawalComponent from "../components/WithdrawalComponent.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const slide = ref(0);
 
@@ -666,7 +722,9 @@ const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
   allGames.value.open(gameName, platformCode, gameCode, gameType);
 };
 
+const isGameLoading = ref(true);
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  isGameLoading.value = true;
   subGameCode.value = platformCode;
   loadGameList(gameType, gameId);
   fullGameDialog.value = true;
@@ -765,11 +823,13 @@ const loadGameList = (type, id) => {
           if (res.code === 0) {
             return res;
           }
+          isGameLoading.value = false;
         })
         .catch((err) => {})
     )
     .then((res) => {
       subGameList.value = res;
+      isGameLoading.value = false;
     });
 };
 
@@ -998,6 +1058,7 @@ onMounted(() => {
   getAppDownloadUrl();
   loadHotGameList();
   store.getUnreadTotal();
+  AOS.init();
 });
 </script>
 
@@ -1983,5 +2044,12 @@ onMounted(() => {
   top: 0;
   right: 0;
   width: 35%;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 </style>
