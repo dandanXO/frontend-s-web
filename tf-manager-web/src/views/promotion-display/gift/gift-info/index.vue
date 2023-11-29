@@ -136,10 +136,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item :label="t('fields.redeemPoints')" prop="redeemPoints">
-          <el-input v-model="form.redeemPoints" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event, 'POINTS')" />
-        </el-form-item>
-        <el-form-item :label="t('fields.giftCashRedeem')" prop="giftCashRedeem">
-          <el-input v-model="form.giftCashRedeem" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event, 'CASH')" />
+          <el-input v-model="form.redeemPoints" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event)" />
         </el-form-item>
         <el-form-item :label="t('fields.limitNumber')" prop="limitNumber">
           <el-input v-model="form.limitNumber" style="width: 350px" maxlength="11" @keypress="restrictInput($event)" />
@@ -230,11 +227,6 @@
           $ <span v-formatter="{data: scope.row.redeemPoints,type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="giftCashRedeem" :label="t('fields.giftCashRedeem')" width="150">
-        <template #default="scope">
-          $ <span v-formatter="{data: scope.row.giftCashRedeem,type: 'money'}" />
-        </template>
-      </el-table-column>
       <el-table-column prop="limitNumber" :label="t('fields.limitNumber')" width="120" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="120" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
@@ -323,7 +315,6 @@ const form = reactive({
   code: null,
   type: null,
   redeemPoints: null,
-  giftCashRedeem: null,
   limitNumber: null,
   desktopImgUrl: null,
   mobileImgUrl: null,
@@ -349,7 +340,7 @@ function restrictInput(event) {
   }
 }
 
-function restrictDecimalInput(event, field) {
+function restrictDecimalInput(event) {
   var charCode = event.which ? event.which : event.keyCode
   if (
     (charCode < 48 || charCode > 57) && charCode !== 46
@@ -357,23 +348,12 @@ function restrictDecimalInput(event, field) {
     event.preventDefault();
   }
 
-  if (field === 'POINTS') {
-    if (
-      form.redeemPoints !== null &&
-      form.redeemPoints.toString().indexOf('.') > -1
-    ) {
-      if (charCode === 46) {
-        event.preventDefault();
-      }
-    }
-  } else if (field === 'CASH') {
-    if (
-      form.giftCashRedeem !== null &&
-      form.giftCashRedeem.toString().indexOf('.') > -1
-    ) {
-      if (charCode === 46) {
-        event.preventDefault();
-      }
+  if (
+    form.redeemPoints !== null &&
+    form.redeemPoints.toString().indexOf('.') > -1
+  ) {
+    if (charCode === 46) {
+      event.preventDefault();
     }
   }
 }

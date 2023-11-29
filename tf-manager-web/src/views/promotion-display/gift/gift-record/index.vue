@@ -53,7 +53,7 @@
           <el-option
             v-for="item in uiControl.status"
             :key="item.key"
-            :label="t('status.giftRecord.' + item.displayName)"
+            :label="t('status.giftOrderRecord.' + item.displayName)"
             :value="item.value"
           />
         </el-select>
@@ -79,8 +79,11 @@
         size="small"
         label-width="200px"
       >
-        <el-form-item v-if="uiControl.dialogType === 'REDEEM'" :label="t('fields.amount')" prop="amount">
-          <el-input v-model="form.amount" style="width: 350px;" maxlength="50" disabled />
+        <el-form-item v-if="uiControl.dialogType === 'DELIVER'" :label="t('fields.orderTrackingNo')" prop="orderTrackingNo">
+          <el-input v-model="form.orderTrackingNo" style="width: 350px;" maxlength="50" />
+        </el-form-item>
+        <el-form-item v-if="uiControl.dialogType === 'DELIVER'" :label="t('fields.expressCompany')" prop="expressCompany">
+          <el-input v-model="form.expressCompany" style="width: 350px;" maxlength="50" />
         </el-form-item>
         <el-form-item v-if="uiControl.dialogType === 'CANCEL'" :label="t('fields.remark')" prop="remark">
           <el-input type="textarea" v-model="form.remark" :rows="6" style="width: 350px;" maxlength="500" show-word-limit />
@@ -109,22 +112,20 @@
           <el-tag v-if="scope.row.giftType === 'VIRTUAL'" type="warning" size="mini">{{ t('giftType.' + scope.row.giftType) }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="recipient" :label="t('fields.recipient')" width="150" />
+      <el-table-column prop="address" :label="t('fields.address')" width="150" />
+      <el-table-column prop="recipientTelephone" :label="t('fields.recipientTelephone')" width="150" />
       <el-table-column prop="status" :label="t('fields.status')" width="140">
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 'PENDING'" size="mini">{{ t('status.giftRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'PROCESSING'" type="warning" size="mini">{{ t('status.giftRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'COMPLETE'" type="success" size="mini">{{ t('status.giftRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'EXPIRED' || scope.row.status === 'FAILED'" type="danger" size="mini">{{ t('status.giftRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'PROCESSING'" size="mini">{{ t('status.giftOrderRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'DELIVERING'" type="warning" size="mini">{{ t('status.giftOrderRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'CASH' || scope.row.status === 'DELIVERED'" type="success" size="mini">{{ t('status.giftOrderRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'CANCEL'" type="danger" size="mini">{{ t('status.giftOrderRecord.' + scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="redeemPoints" :label="t('fields.redeemPoints')" width="140">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.redeemPoints, type: 'money'}" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="giftCashRedeem" :label="t('fields.giftCashRedeem')" width="160">
-        <template #default="scope">
-          $ <span v-formatter="{data: scope.row.giftCashRedeem, type: 'money'}" />
         </template>
       </el-table-column>
       <el-table-column prop="remark" :label="t('fields.remark')" width="200" />
@@ -142,25 +143,35 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:gift-record:cancel']) || hasPermission(['sys:gift-record:redeem-cash']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:gift-record:cancel']) || hasPermission(['sys:gift-record:redeem-cash']) || hasPermission(['sys:gift-record:deliver']))"
         :label="t('fields.operate')"
         align="center"
         fixed="right"
-        width="250"
+        width="300"
       >
         <template #default="scope">
           <el-button
-            v-if="scope.row.status === 'PENDING'"
+            v-if="scope.row.status === 'PROCESSING'"
             size="small"
             type="success"
             v-permission="['sys:gift-record:redeem-cash']"
-            @click="showDialog('REDEEM', scope.row)"
+            @click="showMessageBox('REDEEM', scope.row.id)"
             style="cursor: pointer"
           >
             {{ t('fields.redeemCash') }}
           </el-button>
           <el-button
-            v-if="scope.row.status === 'PENDING'"
+            v-if="scope.row.status === 'PROCESSING'"
+            size="small"
+            type="warning"
+            v-permission="['sys:gift-record:deliver']"
+            @click="showDialog('DELIVER', scope.row)"
+            style="cursor: pointer"
+          >
+            {{ t('fields.deliver') }}
+          </el-button>
+          <el-button
+            v-if="scope.row.status === 'PROCESSING'"
             size="small"
             type="danger"
             v-permission="['sys:gift-record:cancel']"
@@ -168,6 +179,16 @@
             style="cursor: pointer"
           >
             {{ t('fields.cancel') }}
+          </el-button>
+          <el-button
+            v-if="scope.row.status === 'DELIVERING'"
+            size="small"
+            type="success"
+            v-permission="['sys:gift-record:deliver']"
+            @click="showMessageBox('DELIVERED', scope.row.id)"
+            style="cursor: pointer"
+          >
+            {{ t('fields.delivered') }}
           </el-button>
         </template>
       </el-table-column>
@@ -190,9 +211,9 @@
 
 import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getGiftRecord, redeemGiftRecordCash, cancelGiftRecord } from "@/api/gift";
+import { getGiftRecord, redeemGiftRecordCash, cancelGiftRecord, deliverGift, giftDelivered } from "@/api/gift";
 import { hasRole, hasPermission } from "@/utils/util";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -245,13 +266,15 @@ const page = reactive({
 
 const form = reactive({
   id: null,
-  amount: null,
-  remark: null
+  remark: null,
+  orderTrackingNo: null,
+  expressCompany: null
 });
 
 const formRules = reactive({
-  amount: [required(t('message.validateAmountRequired'))],
-  remark: [required(t('message.validateRemarkRequired'))]
+  remark: [required(t('message.validateRemarkRequired'))],
+  orderTrackingNo: [required(t('message.validateOrderTrackingNoRequired'))],
+  expressCompany: [required(t('message.validateExpressCompanyRequired'))]
 });
 
 async function loadGiftRecord() {
@@ -270,15 +293,44 @@ async function loadGiftRecord() {
   page.loading = false;
 }
 
+function showMessageBox(type, id) {
+  if (type === 'REDEEM') {
+    ElMessageBox.confirm(
+      t('message.confirmRedeem'),
+      {
+        confirmButtonText: t('fields.confirm'),
+        cancelButtonText: t('fields.cancel'),
+        type: "warning"
+      }
+    ).then(async () => {
+      await redeemGiftRecordCash(id);
+      await loadGiftRecord();
+      ElMessage({ message: t('message.redeemCashSuccess'), type: "success" });
+    });
+  } else if (type === 'DELIVERED') {
+    ElMessageBox.confirm(
+      t('message.confirmDelivered'),
+      {
+        confirmButtonText: t('fields.confirm'),
+        cancelButtonText: t('fields.cancel'),
+        type: "warning"
+      }
+    ).then(async () => {
+      await giftDelivered(id);
+      await loadGiftRecord();
+      ElMessage({ message: t('message.giftDelivered'), type: "success" });
+    });
+  }
+}
+
 function showDialog(type, row) {
   if (recordForm.value) {
     recordForm.value.resetFields();
   }
-  if (type === 'REDEEM') {
-    uiControl.dialogTitle = t('fields.redeemCash');
-    form.amount = row.giftCashRedeem
-  } else if (type === 'CANCEL') {
+  if (type === 'CANCEL') {
     uiControl.dialogTitle = t('fields.cancelGift');
+  } else if (type === 'DELIVER') {
+    uiControl.dialogTitle = t('fields.deliverGift');
   }
   form.id = row.id;
   uiControl.dialogType = type;
@@ -286,27 +338,23 @@ function showDialog(type, row) {
 }
 
 function submit() {
-  if (uiControl.dialogType === 'REDEEM') {
-    redeem()
+  if (uiControl.dialogType === 'DELIVER') {
+    deliver()
   }
   if (uiControl.dialogType === 'CANCEL') {
     cancel()
   }
 }
 
-function redeem() {
-  recordForm.value.validate(async(valid) => {
+function deliver() {
+  recordForm.value.validate(async (valid) => {
     if (valid) {
-      if (form.amount === 0) {
-        ElMessage({ message: t('message.giftNoCashRedeemAmount'), type: "error" });
-      } else {
-        await redeemGiftRecordCash(form.id);
-        uiControl.dialogVisible = false;
-        await loadGiftRecord();
-        ElMessage({ message: t('message.redeemCashSuccess'), type: "success" });
-      }
+      await deliverGift(form);
+      uiControl.dialogVisible = false;
+      await loadGiftRecord();
+      ElMessage({ message: t('message.giftOutForDelivery'), type: "success" });
     }
-  })
+  });
 }
 
 function cancel() {
