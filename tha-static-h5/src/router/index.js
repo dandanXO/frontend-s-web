@@ -4,12 +4,7 @@ import { Platform, Loading } from "quasar";
 import liff from "@line/liff";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
-import {
-  createRouter,
-  createMemoryHistory,
-  createWebHistory,
-  createWebHashHistory,
-} from "vue-router";
+import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
 import { useUI } from "stores/ui";
 import { api } from "src/boot/axios";
@@ -39,18 +34,18 @@ export default route(function (/* { store, ssrContext } */) {
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
-    history: createHistory(
-      process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
-    ),
+    history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
     if (to.name === "loginToken") {
+      ui.isAffiliateB = true;
+      localStorage.setItem("AGENT_B", "1");
       var logintoken = atob(to.params.loginToken);
       if (logintoken) {
         sessionStorage.setItem("TOKEN", logintoken);
-        next(`/vip`);
+        next(`/`);
       } else {
         next(`/register`);
       }
@@ -64,7 +59,7 @@ export default route(function (/* { store, ssrContext } */) {
       next(`/register`);
     }
 
-    console.log(location.href);
+    // console.log(location.href);
 
     if (user.hasToken()) {
       if (to.path === "/login") {
@@ -120,6 +115,7 @@ export default route(function (/* { store, ssrContext } */) {
 
       fbq("init", "1404052756844706");
       fbq("track", "PageView");
+
       //For Testing Only.
       // fbq("init", "6757510457678415");
       // fbq("track", "PageView");
@@ -133,6 +129,21 @@ export default route(function (/* { store, ssrContext } */) {
 
       gtag("js", new Date());
       gtag("config", "UA-780462346-6");
+    } else if (window.location.href.indexOf("jo88.cc")) {
+      ui.isAffiliateB = true;
+      console.log("jo88.cc");
+
+      fbq("init", "241650862263360");
+      fbq("track", "PageView");
+      fbq("track", "ViewContent");
+    } else if (ui.isAffiliateB) {
+      console.log("Slot-Win .cc");
+
+      fbq("init", "211810688532352");
+
+      fbq("init", "241650862263360");
+      fbq("track", "PageView");
+      fbq("track", "ViewContent");
     }
   });
 

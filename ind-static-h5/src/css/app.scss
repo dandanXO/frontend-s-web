@@ -8,7 +8,7 @@ html {
 }
 // app global css in SCSS form
 body {
-  //font-family: "Jura";
+  font-family: Poppins;
   background: #ffffff;
 }
 #q-app {
@@ -91,7 +91,7 @@ body.platform-ios .q-dialog__inner--minimized > div {
   max-height: calc(100% - 108px);
 }
 .game-title {
-  font-family: "Wave";
+  font-family: "Poppins";
   font-size: 50px;
   line-height: 60px;
   color: #db7e42;
@@ -140,10 +140,10 @@ body.body--dark .q-footer {
   // border-radius: 15px 15px 0 0;
   overflow: hidden;
 }
-svg {
-  width: 25px;
-  fill: #ffffff;
-}
+// svg {
+//   width: 25px;
+//   fill: #ffffff;
+// }
 .q-carousel.vip {
   height: auto;
   text-align: center;
@@ -248,7 +248,7 @@ svg {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  font-family: Poppins;
   padding: 15px;
   display: flex;
   gap: 20px;
@@ -261,7 +261,7 @@ svg {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  font-family: Poppins;
   padding: 10px;
   display: flex;
   gap: 20px;
@@ -307,14 +307,14 @@ svg {
 
 .login-container {
   position: relative;
-  background: url(../assets/images/login/landing-bg.png) no-repeat center center;
+  background: url(../assets/images/login/landing-bg.jpg) no-repeat center center;
   background-size: cover;
   min-height: 100vh;
   padding: 16px;
 
   .logo {
     margin: 0 auto;
-    padding: 25px 0 30px;
+    padding: 25px 0 10px;
     display: flex;
     width: 150px;
 
@@ -324,11 +324,12 @@ svg {
   }
 
   .landing-img {
+    margin-top: 20px;
     img {
       display: block;
       width: 95%;
       margin: auto;
-      max-width: 400px;
+      max-width: 300px;
     }
   }
 
@@ -412,7 +413,7 @@ svg {
   }
 
   .popout-dialog-container {
-    background-image: url(../assets/images/account/kyc-bg.png);
+    background-image: url(../assets/images/account/kyc-bg.jpg);
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;

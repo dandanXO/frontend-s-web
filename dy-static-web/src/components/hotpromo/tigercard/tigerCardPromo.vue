@@ -191,6 +191,7 @@ const getNewTigerCard = () => {
 };
 
 const compoundCard = () => {
+
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
   synthesisCard({ promoCode: "dy2-tiger-card" }).then((res) => {

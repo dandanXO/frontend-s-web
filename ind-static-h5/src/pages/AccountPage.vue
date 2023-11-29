@@ -1,7 +1,7 @@
 <template>
   <ProfileSummary />
 
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
 
   <ContentView contentTopStatus="faded">
     <q-form ref="profileFormRef" class="pc-form">
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
+      <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
         <div class="pc-form-label">Email</div>
         <div class="pc-form-input">
           <q-input
@@ -51,7 +51,7 @@
             readonly
           ></q-input>
         </div>
-      </div>
+      </div> -->
 
       <div class="pc-tip">
         <div>
@@ -232,7 +232,14 @@
 
   <q-dialog width="100%" v-model="changePasswordDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="bg-yellow text-black popout-close"
+        @click="openChangePasswordDialog()"
+        v-close-popup
+      />
       <div class="popout-dialog-container">
         <div class="txt-title">Change Password</div>
 
@@ -274,7 +281,12 @@
                 ref="passwordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || 'Please insert new password']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) =>
+                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                ]"
               >
                 <template v-slot:append>
                   <q-icon
@@ -288,20 +300,20 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">New Password Again</div>
+            <div class="pc-form-label">Confirm New Password</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter New Password Again"
+                placeholder="Enter Confirm New Password"
                 v-model="updatePwdInfo.confirmNewPwd"
                 ref="confirmPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password again',
-                  (val) => val === updatePwdInfo.password || 'Confimed password does not match with new password'
+                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
                 ]"
               >
                 <template v-slot:append>
@@ -365,7 +377,12 @@
                 ref="passwordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || 'Please insert new password']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) =>
+                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                ]"
               >
                 <template v-slot:append>
                   <q-icon
@@ -379,20 +396,20 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">New Password Again</div>
+            <div class="pc-form-label">Confirm New Password</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter New Password Again"
+                placeholder="Enter Confirm New Password"
                 v-model="updatePwdInfo.confirmNewPwd"
                 ref="confirmPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password again',
-                  (val) => val === updatePwdInfo.password || 'Confimed password does not match with new password'
+                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
                 ]"
               >
                 <template v-slot:append>
@@ -412,6 +429,20 @@
           <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdateNewPwd">Confirm</q-btn>
         </div>
       </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeGuestKYCDialog" />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeUserKYCDialog" />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
@@ -480,6 +511,8 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
+import KYCGuestForm from "../components/KYCGuestForm.vue";
+import KYCUserForm from "../components/KYCUserForm.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -506,7 +539,7 @@ const logout = () => {
 
   store.memberLogout().then(() => {
     loadingLogout.value = false;
-    router.push("/");
+    router.push("/home");
   });
 };
 
@@ -518,6 +551,7 @@ const intervals = ref(null);
 
 const startRefresh = async () => {
   loadingUpdated.value = true;
+  loadInfo();
 
   store.getMemberInfo().then(() => {
     setTimeout(() => {
@@ -528,21 +562,54 @@ const startRefresh = async () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  if (store.guest) {
-    openNewChangePasswordDialog();
-  } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
-    personalCenterDialog.value = true;
+  if (store.guest && !personalState.memberInfo.realName) {
+    // openNewChangePasswordDialog();
+    openGuestKYCDialog();
+  } else if (!store.guest && !personalState.memberInfo.realName) {
+    openUserKYCDialog();
+  } else {
+    return false;
   }
+  // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
+  //   personalCenterDialog.value = true;
+  // }
 };
 
 const closePersonalCenterDialog = () => {
-  loadInfo();
+  // loadInfo();
   personalCenterDialog.value = false;
 };
 
 const changePasswordDialog = ref(false);
 const openChangePasswordDialog = () => {
+  resetChangePasswordInfo();
   changePasswordDialog.value = !changePasswordDialog.value;
+};
+
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const guestKYCDialog = ref(false);
+const openGuestKYCDialog = () => {
+  guestKYCDialog.value = true;
+};
+const closeGuestKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    guestKYCDialog.value = false;
+  });
+
+  // formDetail.realName = "";
+  // formDetail.phone = "";
+  // formDetail.password = "";
 };
 
 const changeNewPasswordDialog = ref(false);
@@ -579,12 +646,6 @@ const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
 
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
-};
-
 const myMemberList = ref([]);
 
 let isNoInfoRef = ref(true);
@@ -610,11 +671,13 @@ const loadInfo = () => {
   personalState.memberInfo = userStore();
 
   if (store.guest && personalState.memberInfo.realName === null) {
-    openNewChangePasswordDialog();
+    // openNewChangePasswordDialog();
+    openGuestKYCDialog();
   }
 
   if (!store.guest && personalState.memberInfo.realName === null) {
-    openPersonalCenterDialog();
+    // openPersonalCenterDialog();
+    openUserKYCDialog();
   }
 
   // console.log(personalState.memberInfo);
@@ -796,60 +859,130 @@ const updateState = () => {
   const updateInfo = {};
   updateInfo.realName = formDetail.realName;
   updateInfo.email = formDetail.email;
+  updateInfo.phone = formDetail.phone;
+  updateInfo.otpCode = formDetail.phoneOtpRef;
+  updateInfo.otpCodeId = verificationCodeID;
 
-  api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
-    if (r.code === 0) {
-      profileFormRef.value.reset();
-
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: "Updated successfully",
-        icon: "check_circle_outline"
-      });
-
-      store.getMemberInfo().then(() => {
-        loadInfo();
-        personalCenterDialog.value = false;
-      });
-
-      btnLoading.value = false;
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: r.message,
-        icon: "report_problem"
-      });
-      btnLoading.value = false;
-    }
-  });
-};
-
-const verifyNUpdatePhone = (callback) => {
   api
-    .post(
-      "/session/verifyAndUpdatePhone",
-      qs.stringify({
-        phone: formDetail.phone,
-        code: formDetail.phoneOtpRef,
-        codeId: verificationCodeID
-      })
-    )
-    .then((res) => {
-      callback && callback();
+    .post("/session/verifyAndUpdateAccount", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          personalCenterDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
     })
-    .catch((e) => {
+    .catch(() => {})
+    .then(() => {
       btnLoading.value = false;
     });
 };
 
+const updateNewUserState = () => {
+  const updateInfo = {};
+  updateInfo.realName = formDetail.realName;
+
+  api
+    .post("/session/account", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          userKYCDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+    });
+};
+
+// const updateNewGuestState = () => {
+//   const updateInfo = {};
+//   updateInfo.realName = formDetail.realName;
+//   updateInfo.phone = formDetail.phone;
+//   updateInfo.password = formDetail.password;
+
+//   api
+//     .post("/session/guest-password", qs.stringify(updateInfo))
+//     .then((r) => {
+//       if (r.code === 0) {
+//         profileFormRef.value.reset();
+
+//         $q.notify({
+//           color: "positive",
+//           position: "top",
+//           message: "Updated successfully",
+//           icon: "check_circle_outline"
+//         });
+
+//         store.getMemberInfo().then(() => {
+//           loadInfo();
+//           guestKYCDialog.value = false;
+//         });
+//       } else {
+//         $q.notify({
+//           color: "negative",
+//           position: "top",
+//           message: r.message,
+//           icon: "report_problem"
+//         });
+//       }
+//     })
+//     .catch(() => {})
+//     .then(() => {
+//       btnLoading.value = false;
+//     });
+// };
+
 const submitKYC = () => {
   btnLoading.value = true;
-  verifyNUpdatePhone(() => {
-    updateState();
-  });
+  updateState();
 };
+
+const submitKYCNewUser = () => {
+  btnLoading.value = true;
+  updateNewUserState();
+};
+
+// const submitKYCNewGuest = () => {
+//   btnLoading.value = true;
+//   updateNewGuestState();
+// };
 
 const isValidName = () => {
   const { realName } = formDetail;
@@ -866,8 +999,14 @@ const isValidName = () => {
 const isValidPhone = () => {
   const { phone } = formDetail;
 
-  const result = !phone ? "Please Enter Phone Number" : true;
-  return result;
+  if (!phone) {
+    return "Please Enter Phone Number";
+  }
+
+  const phoneRegex = /^\d{7,12}$/;
+  const isValid = phoneRegex.test(phone);
+
+  return isValid ? true : "Phone Number must be between 7 and 12 digits";
 };
 
 const isValidOTP = () => {
@@ -952,12 +1091,17 @@ const updatePwdInfo = reactive({
   confirmNewPwd: ""
 });
 
+const isAlphanumeric = (value, translation) => {
+  const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+  return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+};
+
 const submitUpdatePwd = () => {
   oldPasswordRef.value.validate();
   passwordRef.value.validate();
   confirmPasswordRef.value.validate();
 
-  if (oldPasswordRef.value.hasError || passwordRef.value.hasError) {
+  if (oldPasswordRef.value.hasError || passwordRef.value.hasError || confirmPasswordRef.value.hasError) {
   } else {
     api
       .post(
@@ -976,6 +1120,7 @@ const submitUpdatePwd = () => {
             icon: "check_circle_outline"
           });
           // router.go("/account");
+          resetChangePasswordInfo();
           changePasswordDialog.value = false;
         } else {
           $q.notify({
@@ -996,7 +1141,7 @@ const submitUpdateNewPwd = () => {
   passwordRef.value.validate();
   confirmPasswordRef.value.validate();
 
-  if (passwordRef.value.hasError) {
+  if (passwordRef.value.hasError || confirmPasswordRef.value.hasError) {
   } else {
     api
       .post(
@@ -1029,6 +1174,12 @@ const submitUpdateNewPwd = () => {
         console.log("error", error);
       });
   }
+};
+
+const resetChangePasswordInfo = () => {
+  updatePwdInfo.confirmNewPwd = "";
+  updatePwdInfo.oldPassword = "";
+  updatePwdInfo.password = "";
 };
 </script>
 
@@ -1142,6 +1293,10 @@ const submitUpdateNewPwd = () => {
   background-image: url(../assets/images/account/btn-purple-pattern.png);
   color: #ffffff;
   margin: auto;
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
 }
 
 .pc-tip-chg-pwd {

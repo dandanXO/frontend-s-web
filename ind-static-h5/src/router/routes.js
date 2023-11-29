@@ -3,13 +3,13 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    children: [{ path: "", component: () => import("pages/LandingPage.vue") }]
+    redirect: "/home"
+    // children: [{ path: "", component: () => import("pages/LandingPage.vue") }],
   },
   {
     path: "/home",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/HomePage.vue") }],
-    meta: { requiresAuth: true }
+    children: [{ path: "", component: () => import("pages/HomePage.vue") }]
   },
   {
     path: "/login",
@@ -40,7 +40,13 @@ const routes = [
   {
     path: "/earn-money",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/EarnMoneyPage.vue") }]
+    children: [{ path: "", component: () => import("pages/EarnMoneyPage.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/agency-policy",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/AgencyPolicyPage.vue") }]
   },
   {
     path: "/liveChat",
@@ -50,7 +56,8 @@ const routes = [
   {
     path: "/bonus",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/BonusPage.vue") }]
+    children: [{ path: "", component: () => import("pages/BonusPage.vue") }],
+    meta: { requiresAuth: true }
   },
   // {
   //   path: "/maintenance",
@@ -164,7 +171,8 @@ const routes = [
         name: "vip",
         component: () => import("pages/games/VIPView.vue")
       }
-    ]
+    ],
+    meta: { requiresAuth: true }
   },
   // {
   //   path: "/affiliate",
