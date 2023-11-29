@@ -251,10 +251,21 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
+      if (platformCode !== "PG") {
+        visible.value = true;
+      }
+
       var way = null;
-      if (Platform.is.android) way = "ANDROID";
-      else if (Platform.is.ios) way = "IOS";
+      if ("standalone" in window.navigator && window.navigator.standalone) {
+        way = "IOS";
+      } else {
+        way = Platform.is.mobile ? "H5" : "WEB";
+        if (Platform.is.capacitor) {
+          if (Platform.is.android) {
+            way = "ANDROID";
+          }
+        }
+      }
 
       api
         .get(`/session/launch?_time=${new Date().getTime()}`, {
@@ -266,8 +277,15 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           }
         })
         .then((res) => {
-          if (platformCode === "PG") cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
-          else src.value = res.data;
+          if (platformCode === "PG") {
+            if (way === "ANDROID") {
+              cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
+            } else {
+              window.location.href = res.data;
+            }
+          } else {
+            src.value = res.data;
+          }
         });
     } else {
       props.closeFullGameDialog();
