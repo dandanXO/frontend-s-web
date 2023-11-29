@@ -91,3 +91,23 @@ export function submitMemberSportMatchQuiz(param) {
     answerThree
   });
 }
+
+export function getGiftList() {
+  return server.EVENT.get(`/gift/list`, {});
+}
+
+export function getGiftBet() {
+  return server.EVENT.get(`/gift/monthBet`, {});
+}
+
+export function redeemGift(param) {
+  const { giftId, recipient, recipientTelephone, address } = param;
+  return server.EVENT.post(
+    `/gift/redeem?giftId=${giftId}&recipient=${recipient}&recipientTelephone=${recipientTelephone}&address=${address}`,
+    {}
+  );
+}
+
+export function getGiftRecord() {
+  return server.EVENT.get(`/gift/record`, {});
+}

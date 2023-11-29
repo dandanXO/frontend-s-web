@@ -1,20 +1,55 @@
 <template>
   <div class="hot-promo">
-
-    <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
-    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
-    <ESportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'" />
-    <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
+    <ClaimPromo
+      v-if="isCommonPromo"
+      :promo-id="list.id"
+      :promo-code="list.promoCode"
+      :loading-claim="loadingClaim"
+      @daily-slot="handleSlot()"
+    />
+    <TigerCardPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'"
+    />
+    <PrizePoolVotePromo
+      v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'"
+    />
+    <ESportSafetyPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'"
+    />
+    <SportSafetyPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'"
+    />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
-    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
-    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
+    <GoldenEggPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token"
+    />
+    <HongBaoYuPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
+    />
+    <WelcomeTaskPromo
+      v-if="
+        !isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token
+      "
+    />
+    <InviteFriendPromo
+      v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
+    />
+    <EsportQuiz
+      v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"
+    ></EsportQuiz>
+    <LotteryPromo
+      v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"
+    ></LotteryPromo>
+    <GiftPromo
+      v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"
+    ></GiftPromo>
 
-    <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
+    <el-dialog
+      class="award-modal"
+      :modal="false"
+      v-model="privilegeClaimedModalVisible"
+      align-center
+    >
       <div class="modal-div">
         <span class="img-item">
           <div class="inner-contents">
@@ -43,6 +78,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
+import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 
@@ -62,7 +98,8 @@ export default defineComponent({
     InviteFriendPromo,
     WelcomeTaskPromo,
     EsportQuiz,
-    LotteryPromo
+    LotteryPromo,
+    GiftPromo
     // DailyBonus
   },
   props: {
@@ -185,6 +222,7 @@ export default defineComponent({
     // console.log("Mount");
     // console.log(this.list);
     // List for non common promo
+
     if (
       this.list.redirectUrl === "dy2-tiger-card" ||
       this.list.redirectUrl === "Dongying-team-vote" ||
@@ -197,6 +235,7 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "dy2-lottery" ||
       this.list.redirectUrl === "Dongying-quiz" ||
+      this.list.redirectUrl === "dy2-gift" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

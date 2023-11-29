@@ -140,10 +140,10 @@ body.body--dark .q-footer {
   // border-radius: 15px 15px 0 0;
   overflow: hidden;
 }
-svg {
-  width: 25px;
-  fill: #ffffff;
-}
+// svg {
+//   width: 25px;
+//   fill: #ffffff;
+// }
 .q-carousel.vip {
   height: auto;
   text-align: center;
@@ -307,7 +307,7 @@ svg {
 
 .login-container {
   position: relative;
-  background: url(../assets/images/login/landing-bg.png) no-repeat center center;
+  background: url(../assets/images/login/landing-bg.jpg) no-repeat center center;
   background-size: cover;
   min-height: 100vh;
   padding: 16px;
@@ -413,7 +413,7 @@ svg {
   }
 
   .popout-dialog-container {
-    background-image: url(../assets/images/account/kyc-bg.png);
+    background-image: url(../assets/images/account/kyc-bg.jpg);
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
