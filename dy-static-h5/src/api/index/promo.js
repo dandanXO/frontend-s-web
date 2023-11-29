@@ -48,3 +48,23 @@ export function winnerList(queryItems) {
     }
   });
 }
+
+export function getGiftList() {
+  return eventapi.get(`/gift/list`, {});
+}
+
+export function getGiftBet() {
+  return eventapi.get(`/gift/monthBet`, {});
+}
+
+export function redeemGift(param) {
+  const { giftId, recipient, recipientTelephone, address } = param;
+  return eventapi.post(
+    `/gift/redeem?giftId=${giftId}&recipient=${recipient}&recipientTelephone=${recipientTelephone}&address=${address}`,
+    {}
+  );
+}
+
+export function getGiftRecord() {
+  return eventapi.get(`/gift/record`, {});
+}

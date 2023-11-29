@@ -1,6 +1,6 @@
 <template>
   <div class="common-promo">
-    <img :src="require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)" />
+    <img :src="require(`../../assets/images/promotion/hotpromo/${promoCode}/icon.png`)" />
     <div class="contents">
       <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="$emit('daily-slot')">
         点击领取
@@ -19,6 +19,10 @@ export default defineComponent({
     },
     promoId: {
       type: Number,
+      default: null
+    },
+    promoCode: {
+      type: String,
       default: null
     }
   },

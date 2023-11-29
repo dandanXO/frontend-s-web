@@ -276,10 +276,12 @@ export default defineComponent({
       min-width: 80%;
       text-align: center;
 
-      tr:first-child td {
-        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
-        color: #ffffff;
-        border: 0;
+      &:not(:has(thead)) {
+        tr:first-child td {
+          background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
+          color: #ffffff;
+          border: 0;
+        }
       }
 
       border-collapse: collapse;
@@ -290,7 +292,7 @@ export default defineComponent({
       }
 
       tbody {
-        display: table;
+        //display: table;
         table-layout: fixed;
         width: 100%;
       }
