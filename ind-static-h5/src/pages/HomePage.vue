@@ -2050,7 +2050,7 @@ onMounted(() => {
   padding: 0;
 
   .fullgame-header {
-    background-image: url(../assets/images/index/fullgame-banner.png);
+    background-image: url(../assets/images/index/fullgame-banner.jpg);
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
