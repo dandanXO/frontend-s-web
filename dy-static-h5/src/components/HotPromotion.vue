@@ -3,6 +3,7 @@
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
+      :promo-code="list.promoCode"
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
