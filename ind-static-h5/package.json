@@ -28,6 +28,7 @@
     "@line/liff": "^2.21.4",
     "@quasar/extras": "^1.0.0",
     "@vueuse/core": "^9.2.0",
+    "aos": "^2.3.4",
     "axios": "^0.27.2",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-screen-orientation": "^3.0.3",

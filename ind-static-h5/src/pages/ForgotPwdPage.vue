@@ -282,6 +282,8 @@ const onSubmitForgotPwd = () => {
     message: "Sending verification code..."
   });
 
+  passwordForm.loginName = passwordForm.phone;
+
   if (
     // loginNameRef.value.hasError ||
     phoneRef.value.hasError ||
