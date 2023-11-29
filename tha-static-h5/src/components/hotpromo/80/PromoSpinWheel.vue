@@ -14,9 +14,9 @@
           <span>{{ finalAmount }}</span>
         </div>
       </div>
-    </div>
-    <div class="collect-btn" @click="onCollectClick">
-      <div class="collect-text">Collect</div>
+      <div class="collect-btn" @click="onCollectClick">
+        <div class="collect-text">Collect</div>
+      </div>
     </div>
   </q-dialog>
 
@@ -410,7 +410,9 @@ onMounted(() => {
     background-position: center;
 
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -420,7 +422,7 @@ onMounted(() => {
     color: white;
     text-align: center;
     font-family: Arial Black;
-    font-size: 14px;
+    font-size: 3vw;
     font-weight: 900;
     line-height: normal;
     letter-spacing: 0.14063rem;
@@ -437,39 +439,41 @@ onMounted(() => {
     .total-win-content {
       position: relative;
       top: 17.5%;
-      left: 1%;
+      left: 2%;
 
       .title {
-        font-size: 1.5rem;
+        font-size: 6vw;
       }
     }
-  }
 
-  .collect-btn {
-    background: url(../../../assets/images/promotion/spinwheel/collect_btn.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 30%;
-    height: 10%;
-    margin-top: -175px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .collect-btn {
+      background: url(../../../assets/images/promotion/spinwheel/collect_btn.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 30%;
+      height: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 0;
+      margin: 0 0 0 2%;
 
-    .collect-text {
-      text-align: center;
-      font-family: Archivo Black;
-      font-size: 4vw;
-      font-weight: 400;
-      line-height: 3.29344rem;
-      letter-spacing: 0.07319rem;
-      text-transform: uppercase;
+      .collect-text {
+        text-align: center;
+        font-family: Archivo Black;
+        font-size: 4vw;
+        font-weight: 400;
+        line-height: 3.29344rem;
+        letter-spacing: 0.07319rem;
+        text-transform: uppercase;
 
-      background: linear-gradient(180deg, #fffede 0%, rgba(255, 227, 79, 0.89) 75.52%, #fffede 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+        background: linear-gradient(180deg, #fffede 0%, rgba(255, 227, 79, 0.89) 75.52%, #fffede 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
     }
   }
 }
@@ -641,8 +645,24 @@ onMounted(() => {
 }
 
 @media (min-width: 768px) {
-  .collect-text {
-    font-size: 30px !important;
+  .total-win {
+    font-size: 2vw !important;
+
+    .total-win-content {
+      left: 1% !important;
+
+      .title {
+        font-size: 2.5vw !important;
+      }
+    }
+
+    .collect-btn {
+      margin: 0 0 0 1% !important;
+
+      .collect-text {
+        font-size: 30px !important;
+      }
+    }
   }
 
   .spinwheel-container {
