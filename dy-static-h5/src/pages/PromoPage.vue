@@ -310,18 +310,24 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
-  .promo-view-container {
+  .selected-promo {
     ol {
       padding: 0 15px;
     }
-
     table {
-      margin: 0 15px 20px;
+      margin: 10px auto 20px;
       width: 98%;
-      display: block;
       overflow-x: auto;
       white-space: nowrap;
       border: 0;
+
+      &:not(:has(thead)) {
+        tr:first-child td {
+          background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
+          color: #ffffff;
+          border: 0;
+        }
+      }
 
       tr {
         td {
@@ -332,24 +338,22 @@ export default defineComponent({
             margin: 0;
           }
         }
+      }
 
-        &:first-child {
-          td {
-            color: #db7e42;
-            white-space: nowrap;
-          }
-        }
+      tbody {
+        //display: table;
+        table-layout: fixed;
+        width: 100%;
+      }
 
-        td:nth-child(odd) {
-          background: #3c3c6a;
-        }
-
-        td:nth-child(even) {
-          background: #3c3c6a;
-        }
+      th {
+        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
       }
     }
+
+
   }
+
 
   a {
     color: #000000;
