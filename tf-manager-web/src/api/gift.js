@@ -24,3 +24,11 @@ export const redeemGiftRecordCash = (id) => {
 export const cancelGiftRecord = (record) => {
   return https().request(`/gift-record/${record.id}/cancel?_method=PUT`, Method.POST, { remark: record.remark }, ContentType.form);
 };
+
+export const deliverGift = (gift) => {
+  return https().request(`/gift-record/${gift.id}/deliver?_method=PUT`, Method.POST, gift, ContentType.form);
+};
+
+export const giftDelivered = (id) => {
+  return https().request(`/gift-record/${id}/delivered?_method=PUT`, Method.POST);
+};
