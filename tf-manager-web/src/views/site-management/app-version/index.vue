@@ -50,6 +50,20 @@
             :value="item.name"
           />
         </el-select>
+        <el-select
+          v-model="request.apkType"
+          size="small"
+          :placeholder="t('siteAppVersion.apkType')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in uiControl.apkType"
+            :key="item.name"
+            :label="item.display"
+            :value="item.name"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -312,6 +326,7 @@ const request = reactive({
   siteId: null,
   os: null,
   appType: null,
+  apkType: null,
 })
 
 const uiControl = reactive({
@@ -370,6 +385,7 @@ function resetQuery() {
   request.version = null
   request.os = null
   request.appType = null
+  request.apkType = null
   request.siteId = site.value ? site.value.id : null
   loadAppVersion()
 }
