@@ -263,3 +263,21 @@ build-image-dy-static-h5:
     PROJECT: dy-static-h5
   needs:
     - build-dy-static-h5
+
+#===============================================================================================
+
+build-xf-lh-dy-affiliate-web:
+  extends:
+    - .build-projects
+    - .build-web
+  variables:
+    PROJECT: xf-lh-dy-affiliate-web
+
+build-image-xf-lh-dy-affiliate-web:
+  extends: .docker-build
+  variables:
+    PROJECT: xf-lh-dy-affiliate-web
+  needs:
+    - build-xf-lh-dy-affiliate-web
+
+#===============================================================================================
