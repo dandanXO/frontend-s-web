@@ -18,60 +18,40 @@
       </div> -->
       <div class="flex-box flex-wrap bank-card-list">
         <div
-            class="bank-card-item"
-            :class="{
+          class="bank-card-item"
+          :class="{
             active: index === isCardActive,
             inactive: index > isCardActive,
             USDT: bc.bankName === 'GCASH'
           }"
-            @click="showCard(bc, index)"
-            v-for="(bc, index) in personalState.bankCardList"
-            :key="bc.id"
+          @click="showCard(bc, index)"
+          v-for="(bc, index) in personalState.bankCardList"
+          :key="bc.id"
         >
           <div class="cardname">
             <div class="txt-center">
-              <strong>{{ bc.bankName === 'USDTTRC' ? 'USDTTRC20' : bc.bankName }}</strong>
+              <strong>{{ bc.bankName === "USDTTRC" ? "USDTTRC20" : bc.bankName }}</strong>
               <!-- <div>Bank Account Number</div> -->
             </div>
           </div>
           <div class="unlink-btn" @click="unbindBankCard(bc)">
             <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
-            <RiLinkUnlink/>
+            <RiLinkUnlink />
           </div>
 
           <div class="flex-box cards">
-            <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-            >
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
               {{ b.slice(0, 4) }}
             </div>
-            <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-            >
-              ****
-            </div>
-            <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-            >
-              ****
-            </div>
-            <div
-                v-for="b in bc.cardNumber.split()"
-                :key="b"
-                class="card-num-box"
-            >
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">****</div>
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">****</div>
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
               {{ b.slice(b.length - 4, b.length) }}
             </div>
           </div>
         </div>
         <div class="bank-card-item" @click="bankCardModal('bank')">
-          <RiLink/>
+          <RiLink />
           绑卡
         </div>
       </div>
@@ -85,28 +65,26 @@
           <div class="left">
             <el-form-item label="开始日期">
               <el-date-picker
-                  v-model="searchForm.startDate"
-                  show-time
-                  type="date"
-                  placeholder="开始日期"
-                  valueFormat="YYYY-MM-DD"
-                  format="YYYY-MM-DD"
+                v-model="searchForm.startDate"
+                show-time
+                type="date"
+                placeholder="开始日期"
+                valueFormat="YYYY-MM-DD"
+                format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item label="结束日期">
               <el-date-picker
-                  v-model="searchForm.endDate"
-                  show-time
-                  type="date"
-                  placeholder="结束日期"
-                  valueFormat="YYYY-MM-DD"
-                  format="YYYY-MM-DD"
+                v-model="searchForm.endDate"
+                show-time
+                type="date"
+                placeholder="结束日期"
+                valueFormat="YYYY-MM-DD"
+                format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item>
-              <el-button class="common-btn" @click="searchRecord()">
-                搜索
-              </el-button>
+              <el-button class="common-btn" @click="searchRecord()">搜索</el-button>
             </el-form-item>
           </div>
         </el-form>
@@ -118,18 +96,8 @@
           :row-key="(record) => record.bankName"
         ></el-table> -->
 
-        <el-table
-            :data="dataSource"
-            style="width: 100%"
-            empty-text="暂无数据"
-            v-loading="tblLoading"
-        >
-          <el-table-column
-              v-for="tbl in columns"
-              :key="tbl.key"
-              :prop="tbl.dataIndex"
-              :label="tbl.title"
-          >
+        <el-table :data="dataSource" style="width: 100%" empty-text="暂无数据" v-loading="tblLoading">
+          <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
             <template #default="scope">
               <template v-if="tbl.dataIndex === 'bankName'">
                 {{ getOptionLabel(scope.row.bankName) }}
@@ -149,73 +117,38 @@
  -->
           </el-table-column>
         </el-table>
-        <el-divider/>
+        <el-divider />
         <el-pagination
-            @current-change="handleCurrentChange"
-            :total="pagination.totalPage"
-            :current-page="pagination.currentPage"
-            :page-size="pagination.pageSize"
-            :page-count="pagination.pageCount"
+          @current-change="handleCurrentChange"
+          :total="pagination.totalPage"
+          :current-page="pagination.currentPage"
+          :page-size="pagination.pageSize"
+          :page-count="pagination.pageCount"
         />
       </div>
     </div>
-    <el-dialog
-        class="bankModal"
-        width="500"
-        v-model="bankCardModalState.visible"
-        :footer="null"
-        title="绑定银行卡"
-    >
-      <el-form
-          ref="bankCardFormRef"
-          :model="bankCardInfo"
-          :rules="bankCardRules"
-      >
-        <el-form-item
-            prop="bankId"
-            :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
-        >
+    <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
+      <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
+        <el-form-item prop="bankId" :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-select
-                  placeholder="类型"
-                  v-model="selectedBankType"
-                  style="width: 100%"
-                  @change="selectBankType"
-              >
-                <el-option
-                    v-for="bank in bankTypes"
-                    :key="bank.value"
-                    :value="bank.value"
-                    :label="bank.text"
-                >
+              <el-select placeholder="类型" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
+                <el-option v-for="bank in bankTypes" :key="bank.value" :value="bank.value" :label="bank.text">
                   {{ bank.text }}
                 </el-option>
               </el-select>
             </el-col>
             <el-col :span="18">
               <el-select
-                  class="select"
-                  v-model="bankCardInfo.bankId"
-                  :placeholder="'选择' + chooseCard()"
-                  style="width: 100%"
+                class="select"
+                v-model="bankCardInfo.bankId"
+                :placeholder="'选择' + chooseCard()"
+                style="width: 100%"
               >
-                <el-option
-                    v-for="b in banksList"
-                    :key="b.id"
-                    :label="getOptionLabel(b.name)"
-                    :value="b.id"
-                >
-                  <el-row
-                      style="align-items: center"
-                      v-if="b.bankIcon"
-                      :gutter="10"
-                  >
+                <el-option v-for="b in banksList" :key="b.id" :label="getOptionLabel(b.name)" :value="b.id">
+                  <el-row style="align-items: center" v-if="b.bankIcon" :gutter="10">
                     <el-col :span="3">
-                      <img
-                          style="max-height: 25px; display: block; margin: 5px"
-                          :src="imgURL + b.bankIcon"
-                      />
+                      <img style="max-height: 25px; display: block; margin: 5px" :src="imgURL + b.bankIcon" />
                     </el-col>
                     <el-col :span="21">
                       {{ getOptionLabel(b.name) }}
@@ -227,116 +160,72 @@
           </el-row>
         </el-form-item>
         <el-form-item>
-          <el-input disabled v-model="bankCardInfo.cardAccount"/>
+          <el-input disabled v-model="bankCardInfo.cardAccount" />
         </el-form-item>
         <el-form-item prop="cardNumber" name="cardNumber">
-          <el-input
-              v-model="bankCardInfo.cardNumber"
-              :placeholder="numAddress()"
-          />
+          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET && !isALIPAY">
           <el-input
-              v-model="bankCardInfo.cardAddress"
-              placeholder="开户行地址"
-              :rules="[
-              { required: true, message: '请输入开户行地址', trigger: 'blur' }
-            ]"
+            v-model="bankCardInfo.cardAddress"
+            placeholder="开户行地址"
+            :rules="[{ required: true, message: '请输入开户行地址', trigger: 'blur' }]"
           />
         </el-form-item>
         <el-form-item>
           <el-space>
-          <el-input
+            <el-input
               class="half"
               v-model="bankCardInfo.telephone"
               placeholder="输入电话号码"
               readonly
               :value="personalState.memberInfo.telephone"
-          />
-          <el-button class="common-btn" @click="openCaptchaForm()">
-            获取验证码
-          </el-button></el-space>
+            />
+            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>
+          </el-space>
         </el-form-item>
 
         <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
           <el-input
-              class="half"
-              v-model="bankCardInfo.smsCode"
-              placeholder="输入电话验证码"
-              @keyup.enter="submitBankCard"
+            class="half"
+            v-model="bankCardInfo.smsCode"
+            placeholder="输入电话验证码"
+            @keyup.enter="submitBankCard"
           />
         </el-form-item>
 
         <el-form-item class="txt-center" v-if="isSendOtp">
-          <el-button class="txt-center common-btn" @click="submitBankCard">
-            提交
-          </el-button>
+          <el-button class="txt-center common-btn" @click="submitBankCard">提交</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog
-        v-model="phoneCaptchaDialogVisible"
-        title="验证码"
-        width="50%"
-        align-center
-        style="max-width: 500px"
-    >
-      <el-button
-          size="large"
-          color="#3bafda"
-          class="common-btn"
-          style="margin-left: 100px"
-          @click="sendOtp"
-      >
+    <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
+      <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
         提交
       </el-button>
     </el-dialog>
 
     <el-dialog
-        v-model="captchaDialogVisible"
-        title="验证码"
-        width="50%"
-        align-center
-        style="max-width: 500px"
-        :close-on-click-modal="false"
-        @keydown.enter.prevent
+      v-model="captchaDialogVisible"
+      title="验证码"
+      width="50%"
+      align-center
+      style="max-width: 500px"
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
     >
-      <el-form
-          ref="captchaRef"
-          :rules="captchaRules"
-          :model="captchaForm"
-          label-width="100"
-          label-suffix=":"
-      >
+      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
         <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-          <el-row
-              :gutter="10"
-              style="justify-content: center; align-items: center"
-          >
+          <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input
-                  v-model="captchaForm.captchaCode"
-                  label="验证码"
-                  placeholder="验证码"
-                  @keyup.enter="sendOtp"
-              />
+              <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
             </el-col>
             <el-col :span="12">
-              <img
-                  style="width: 50%; margin-top: 6px"
-                  :src="verificationImg"
-                  @click="getCode"
-              />
+              <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-button
-            size="large"
-            color="#3bafda"
-            class="common-btn"
-            style="margin-left: 100px"
-            @click="sendOtp"
-        >
+        <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
           发送
         </el-button>
       </el-form>
@@ -649,6 +538,9 @@ export default defineComponent({
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
           ElMessage.error('真实姓名不可为空');
+          router.push("/center/personal");
+        } else if (!store.phone || store.phone == "") {
+          ElMessage.error('电话不可为空');
           router.push("/center/personal");
         } else {
           bankCardInfo.bankId = undefined;
@@ -1065,11 +957,7 @@ body {
 :deep(.ant-form-item.select .ant-form-item-control-input) {
   width: 100%;
 }
-:deep(
-    .ant-select-single:not(.ant-select-customize-input)
-      .ant-select-selector
-      .ant-select-selection-search-input
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
   height: 40px;
 }
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
@@ -1215,11 +1103,7 @@ body {
       content: "";
       width: 50%;
       height: 100%;
-      background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 100%
-      );
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
       border-radius: 10px;
       transform: skewX(320deg);
     }
