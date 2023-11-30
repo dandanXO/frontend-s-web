@@ -2013,7 +2013,6 @@ export default {
     15063: 'Withdraw record does not exist',
     15064: 'Withdraw platform does not exist',
     15065: 'Withdraw card does not exist',
-    16000: 'System privilege info does not exists',
     15066: 'Withdraw platform name already exist',
     16000: '3 digit number is required',
     16001: 'Number should be 3 digits',
