@@ -1822,6 +1822,8 @@ export default {
     20206: 'Please insert ’测试‘ / ’普通‘ / ’三方‘ / ’代理‘',
     20400: 'Rollover record does not exists',
     21000: 'Game does not exists',
+    21005: 'App exists with same site, OS, App Type & Apk Type',
+    21006: 'File and os that choosing not the same',
     30000: 'PG update transaction status failed',
   },
 }
