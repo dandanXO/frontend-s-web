@@ -60,7 +60,7 @@ export default {
     withdrawDate: 'Withdraw Date',
     paymentDate: 'Payment Date',
     regTime: 'Register Time',
-    recordTime: 'Record Time'
+    recordTime: 'Record Time',
   },
   depositStatus: {
     SUCCESS: 'Success',
@@ -143,36 +143,36 @@ export default {
     },
     gameMatch: {
       ACTIVE: 'Active',
-      ENDED: 'Ended'
+      ENDED: 'Ended',
     },
     gameMatchRecord: {
       PENDING_MATCH: 'Pending Match End',
       PENDING_SETTLE: 'Pending Settle',
       SETTLED: 'Settled',
-      CANCEL: 'Cancel'
+      CANCEL: 'Cancel',
     },
     gameQuiz: {
       ONGOING: 'Ongoing',
       CANCEL: 'Cancel',
-      ENDED: 'Ended'
+      ENDED: 'Ended',
     },
     gameQuizAnswer: {
       PENDING: 'Pending',
       CANCEL: 'Cancel',
       WIN: 'Win',
-      LOSE: 'Lose'
+      LOSE: 'Lose',
     },
     gift: {
       OPEN: 'Open',
-      CLOSE: 'Close'
+      CLOSE: 'Close',
     },
     giftRecord: {
       PENDING: 'Pending',
       PROCESSING: 'Processing',
       COMPLETE: 'Complete',
       EXPIRED: 'Expired',
-      FAILED: 'Failed'
-    }
+      FAILED: 'Failed',
+    },
   },
   betStatus: {
     UNSETTLED: 'UNSETTLED',
@@ -181,7 +181,7 @@ export default {
   },
   giftType: {
     ENTITY: 'Entity',
-    VIRTUAL: 'Virtual'
+    VIRTUAL: 'Virtual',
   },
   dashboard: {
     memberCount: 'Member Count',
@@ -238,20 +238,20 @@ export default {
   },
   distributeStatus: {
     PENDING: 'Pending',
-    DISTRIBUTED: 'Distributed'
+    DISTRIBUTED: 'Distributed',
   },
   referFriendEvent: {
     INFO: 'Complete Info',
     FIRST: 'First Deposit',
-    SECOND: 'Second Deposit'
+    SECOND: 'Second Deposit',
   },
   rollover: {
     recordStatus: {
       ONGOING: 'Ongoing',
       COMPLETED: 'Completed',
       VOID: 'Void',
-      CANCEL: 'Cancel'
-    }
+      CANCEL: 'Cancel',
+    },
   },
   rebateLevel: {
     LEVEL_1: 'Level 1',
@@ -266,35 +266,34 @@ export default {
     LEVEL_10: 'Level 10',
     LEVEL_11: 'Level 11',
     LEVEL_12: 'Level 12',
-    LEVEL_13: 'Level 13'
+    LEVEL_13: 'Level 13',
   },
   gameQuiz: {
     questions: {
       1: 'Which team won?',
       2: 'Handicap (Including Overtime)',
-      3: 'Total Number of Kills in Total Rounds (Including Overtime)'
+      3: 'Total Number of Kills in Total Rounds (Including Overtime)',
     },
     answers: {
       CSGO: {
         handicapAbove: '-4.5 Or Above',
         handicapBelow: '+4.5 Or Below',
         killBig: 'Total Rounds Big 21.5',
-        killSmall: 'Total Rounds Small 21.5'
-
+        killSmall: 'Total Rounds Small 21.5',
       },
       LOL: {
         handicapAbove: '-4.5 Or Above',
         handicapBelow: '+4.5 Or Below',
         killBig: 'Total Kills Big 25.5',
-        killSmall: 'Total Kills Small 25.5'
+        killSmall: 'Total Kills Small 25.5',
       },
       DOTA2: {
         handicapAbove: '-10.5 Or Above',
         handicapBelow: '+10.5 Or Below',
         killBig: 'Total Kills Big 49.5',
-        killSmall: 'Total Kills Small 49.5'
-      }
-    }
+        killSmall: 'Total Kills Small 49.5',
+      },
+    },
   },
   promoLabel: {
     new: 'New',
@@ -321,6 +320,8 @@ export default {
     addAffiliate: 'Add Affiliate',
     addAffiliateCommission: 'Add Affiliate Commission',
     addAffiliateDomain: 'Add Affiliate Domain',
+    addAffiliateAnnouncement: 'Add Affiliate Announcement',
+    addAffiliateAnnouncementType: 'Add Affiliate Announcement Type',
     addAnnouncement: 'Add Announcement',
     addAnnouncementType: 'Add Announcement Type',
     addBank: 'Add Bank',
@@ -381,14 +382,17 @@ export default {
     affiliateBankCardRecord: 'Affiliate Bank Card Record',
     affiliateCode: 'Affiliate Code',
     affiliateDomainList: 'Affiliate Domain List',
+    affiliateH5Link: 'Affiliate H5 Link',
     affiliateInfo: 'Affiliate Information',
     affiliateLevel: 'Affiliate Level',
     affiliateLink: 'Affiliate Link',
     affiliateList: 'Affiliate List',
     affiliateName: 'Affiliate Name',
-    affiliateStatus: 'AffiliateStatus',
+    affiliateShortUrlPlatform: 'Affiliate Short Url Platform',
+    affiliateStatus: 'Affiliate Status',
     affiliateTransferAmount: 'Transfer Amount',
     affiliateTransferRecord: 'Transfer Record',
+    affiliateWebLink: 'Affiliate Web Link',
     advancedSearch: 'Advanced Search',
     afterAmount: 'After Amount',
     afterBalance: 'After Balance',
@@ -609,6 +613,8 @@ export default {
     editAds: 'Edit Ads Popout',
     editAffiliateCommission: 'Edit Affiliate Commission',
     editAffiliateDomain: 'Edit Affiliate Domain',
+    editAffiliateAnnouncement: 'Edit Affiliate Announcement',
+    editAffiliateAnnouncementType: 'Edit Affiliate Announcement Type',
     editAmount: 'Edit Amount',
     editAnnouncement: 'Edit Announcement',
     editAnnouncementType: 'Edit Announcement Type',
@@ -1176,8 +1182,8 @@ export default {
     view: 'View',
     viewLog: 'View Log',
     vipLevel: 'VIP Level',
-    vipRebateDetails: "VIP Rebate Record Details",
-    vipRebateRecord: "VIP Rebate Record",
+    vipRebateDetails: 'VIP Rebate Record Details',
+    vipRebateRecord: 'VIP Rebate Record',
     vipRules: 'VIP Rules',
     virtualVotes: 'Virtual Votes',
     visitNumber: 'Visit Number',
@@ -1238,25 +1244,27 @@ export default {
     progress: 'Progress',
     download: 'Download',
     updateProgress: 'Update Progress',
-    add_new: "New",
-    date_added: "Date Range added.",
-    please_add_at_least_one_date_time: "Please add at least 1 date and 1 time.",
-    multiple_rain_added: "Multiple Daily Rain durations added.",
-    date_already_exists: "Date already exists.",
-    time_already_exists: "Time range already exists.",
-    add_single_daterange: "Add Single DateRange",
-    adde_multiple_daterange: "Add Multiple DateRange",
-    add_single_date_steps: "Step: Select Date & Time range, and then click `Add`.",
-    add_multiple_date_steps: "Steps: Select all combination(s) of date & time range, click \"Add Date\" & \"Add\n" +
-      "          Time\", and then click \"Add\" to add.",
-    pick_date: "Pick a Date",
-    pick_start_date: "Pick Start Date/Time",
-    pick_end_date: "Pick End Date/Time",
-    please_select_datetime: "Please select Date From & Date To",
-    add_date: "Add Date",
-    add_time: "Add Time",
-    dates: "Date(s):",
-    timeranges: "Time Range(s):",
+    add_new: 'New',
+    date_added: 'Date Range added.',
+    please_add_at_least_one_date_time: 'Please add at least 1 date and 1 time.',
+    multiple_rain_added: 'Multiple Daily Rain durations added.',
+    date_already_exists: 'Date already exists.',
+    time_already_exists: 'Time range already exists.',
+    add_single_daterange: 'Add Single DateRange',
+    adde_multiple_daterange: 'Add Multiple DateRange',
+    add_single_date_steps:
+      'Step: Select Date & Time range, and then click `Add`.',
+    add_multiple_date_steps:
+      'Steps: Select all combination(s) of date & time range, click "Add Date" & "Add\n' +
+      '          Time", and then click "Add" to add.',
+    pick_date: 'Pick a Date',
+    pick_start_date: 'Pick Start Date/Time',
+    pick_end_date: 'Pick End Date/Time',
+    please_select_datetime: 'Please select Date From & Date To',
+    add_date: 'Add Date',
+    add_time: 'Add Time',
+    dates: 'Date(s):',
+    timeranges: 'Time Range(s):',
     timeZone: 'Time Zone',
     image: 'Image',
     imageName: 'Image Name',
@@ -1285,17 +1293,24 @@ export default {
     commissionPaySuccess: 'Commission Pay Success',
     confirmToAdjust:
       'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
-    confirmCancelQuiz: 'Confirm that you want to cancel this quiz, the operation cannot be undone',
+    confirmCancelQuiz:
+      'Confirm that you want to cancel this quiz, the operation cannot be undone',
     confirmCopy: 'Do you want to copy from ',
     confirmCopyTo: ' to ',
     confirmDelete:
       'Confirm that you want to delete these data, the operation cannot be undone',
-    confirmDelivered: 'Confirm that this gift is delivered, the operation cannot be undone',
-    confirmEndMatch: 'Confirm that this match is ended, the operation cannot be undone',
-    confirmRebate: 'Confirm that you want to distribute all rebate, the operation cannot be undone',
-    confirmRedeem: 'Confirm that you want to redeem this gift as cash, the operation cannot be undone',
-    confirmRefer: 'Confirm that you want to distribute all refer friend promo, the operation cannot be undone',
-    confirmReset: 'Confirm that you want to reset these data, the operation cannot be undone',
+    confirmDelivered:
+      'Confirm that this gift is delivered, the operation cannot be undone',
+    confirmEndMatch:
+      'Confirm that this match is ended, the operation cannot be undone',
+    confirmRebate:
+      'Confirm that you want to distribute all rebate, the operation cannot be undone',
+    confirmRedeem:
+      'Confirm that you want to redeem this gift as cash, the operation cannot be undone',
+    confirmRefer:
+      'Confirm that you want to distribute all refer friend promo, the operation cannot be undone',
+    confirmReset:
+      'Confirm that you want to reset these data, the operation cannot be undone',
     confirmSettlement: 'Confirm that you want to proceed with the settlement?',
     confirmToChecking:
       'Confirm that you want revert the settlement to checking?',
@@ -1312,11 +1327,13 @@ export default {
     editMemberDetail: 'Edit Member Detail',
     enterMemberDetails: 'Enter Member Details',
     failedToUploadImage: 'Failed to upload image',
+    failedToUploadApp: 'Failed to upload app',
     freezeMemberSuccess: 'Freeze Member Success',
     found: 'Found ',
     gameMatchEnded: 'Game Match Ended',
     giftDelivered: 'Gift Delivered',
-    giftNoCashRedeemAmount: 'Gift does not have cash redeem amount, please set the cash redeem amount of the gift first',
+    giftNoCashRedeemAmount:
+      'Gift does not have cash redeem amount, please set the cash redeem amount of the gift first',
     giftOutForDelivery: 'Gift is out for delivery',
     importSuccess: 'Import Success',
     inputDigits: 'Please input digits',
@@ -1396,6 +1413,7 @@ export default {
     validateAnswerOneRequired: 'Question One Answer is required',
     validateAnswerTwoRequired: 'Question Two Answer is required',
     validateAnswerThreeRequired: 'Question Three Answer is required',
+    validateAppTypeRequired: 'App type is required',
     validateAtLeastSixChar: 'Please enter at least 6 characters',
     validateAwayTeamRequired: 'Away Team is required',
     validateBankRequired: 'Bank is required',
@@ -1450,6 +1468,7 @@ export default {
     validateFeeRateRequired: 'Fee Rate is required',
     validateFreezeTypeRequired: 'Freeze type is required',
     validateFinancialLevelRequired: 'Financial level is required',
+    validateFileRequired: 'App file is required',
     validateFrequencyRequired: 'Frequency is required',
     validateGameCodeRequired: 'Game Code is required',
     validateGameNameRequired: 'Game Name is required',
@@ -1515,6 +1534,7 @@ export default {
       'Please enter number greater than 0 and only 4 decimal places',
     validateOnlyThreeChar: 'Please enter 3 characters',
     validateOrderTrackingNoRequired: 'Order Tracking No is required',
+    validateOsRequired: 'Please select at least one Operating System',
     validateParamRequired: 'Parameter is required',
     validatePasswordRequired: 'Password is required',
     validatePasswordSize: 'Password has to be 6-12 characters',
@@ -1651,6 +1671,10 @@ export default {
     'Affiliate List': 'Affiliate List',
     'Affiliate Details': 'Affiliate Details',
     'Site Affiliate Commission': 'Site Affiliate Commission',
+    'Aff Announcement Management': 'Affiliate Announcement Management',
+    'Affiliate Announcement': 'Affiliate Announcement',
+    'Affiliate Announcement Type': 'Affiliate Announcement Type',
+    'App Version': 'App Version Control',
     'Deposit Management': 'Deposit Management',
     'Online Deposit': 'Online Deposit',
     'Deposit Record': 'Deposit Record',
@@ -1779,57 +1803,81 @@ export default {
     'Email Setting': 'Email Setting',
     'SMS Setting': 'SMS Setting',
     DownloadManager: 'Download Manager',
-    GoogleAuth: "Google Auth",
+    GoogleAuth: 'Google Auth',
     'Image Setting': 'Image Setting',
   },
   google: {
-    google_auth_menu: "Google Authenticator",
-    download_install: "Download App",
-    add_key: "Add Security Key",
-    bind_verify: "Bind Google Auth",
-    popup_title: "Google Authenticator",
-    popup_msg: "A Google Authenticator is a dynamic password tool that automatically refreshes every 30 seconds. When performing sensitive actions such as transferring funds, making withdrawals, or adjusting security settings in the proxy's backend, you need to input this 6-digit identity verification code for authentication.",
-    popup_hint: "The identity authenticator must be used in conjunction with the proxy account.",
-    i_know: "I Know",
-    download_way: "Way to Download：",
-    download_through_way: "1.Via Download Link：",
-    ios_download: "iOS Download",
-    android_download: "Android Download",
-    ios_scan_download: "Scan IOS Download",
-    android_scan_download: "Scan Android Download",
-    if_cannot_download_you_can: "2.If you cannot download it, you can search for it on the Apple App Store.\"",
-    or_search_in_google: "\", or search on the Android App Store.",
-    download_and_install: "\" to download & install。",
-    next_step: "Next",
-    keyin_pass: "Key In Password & Next",
-    keyin_your_password: "Enter Login Password",
-    tips_installed: "Quick tip: Once it's downloaded and installed, simply click \"Next\" to proceed.",
-    qr_code: "QR Code",
-    secret_key: "Secret Key",
-    add_step: "Steps to add",
-    add_step_desc: "Open Google Authenticator, click on the bottom right corner's \"+\" sign, select \"Manually enter the key,\" and enter any account to bind it with the above-mentioned secret key.  (Scanning the QR code can automatically add it.)",
-    check_example: "View Example",
-    back: "Back",
-    small_tips: "Quick tip:",
-    small_tips_info_1: "1. If you lose your phone or uninstall the authentication app, the key can help you recover the authenticator. Please keep it safe.",
-    small_tips_info_2: "2.For the security of your account, please do not mark the proxy account and proxy backend address during the binding process.",
-    keyin_6_digit_google: "Please key in Google 6 digits Auth Code.",
-    auth_code: "Google Authenticator",
-    bind_now: "Bind Now",
-    please_enter_password: "Please enter your password",
-    added_success: "Google Authenticator code added successfully",
-    if_not_google_auth_then: "If you haven't bound Google Authenticator, there's no need to fill it out.",
-    google_auth_code: "Enter 6 digits Google Authenticator Code"
+    google_auth_menu: 'Google Authenticator',
+    download_install: 'Download App',
+    add_key: 'Add Security Key',
+    bind_verify: 'Bind Google Auth',
+    popup_title: 'Google Authenticator',
+    popup_msg:
+      "A Google Authenticator is a dynamic password tool that automatically refreshes every 30 seconds. When performing sensitive actions such as transferring funds, making withdrawals, or adjusting security settings in the proxy's backend, you need to input this 6-digit identity verification code for authentication.",
+    popup_hint:
+      'The identity authenticator must be used in conjunction with the proxy account.',
+    i_know: 'I Know',
+    download_way: 'Way to Download：',
+    download_through_way: '1.Via Download Link：',
+    ios_download: 'iOS Download',
+    android_download: 'Android Download',
+    ios_scan_download: 'Scan IOS Download',
+    android_scan_download: 'Scan Android Download',
+    if_cannot_download_you_can:
+      '2.If you cannot download it, you can search for it on the Apple App Store."',
+    or_search_in_google: '", or search on the Android App Store.',
+    download_and_install: '" to download & install。',
+    next_step: 'Next',
+    keyin_pass: 'Key In Password & Next',
+    keyin_your_password: 'Enter Login Password',
+    tips_installed:
+      'Quick tip: Once it\'s downloaded and installed, simply click "Next" to proceed.',
+    qr_code: 'QR Code',
+    secret_key: 'Secret Key',
+    add_step: 'Steps to add',
+    add_step_desc:
+      'Open Google Authenticator, click on the bottom right corner\'s "+" sign, select "Manually enter the key," and enter any account to bind it with the above-mentioned secret key.  (Scanning the QR code can automatically add it.)',
+    check_example: 'View Example',
+    back: 'Back',
+    small_tips: 'Quick tip:',
+    small_tips_info_1:
+      '1. If you lose your phone or uninstall the authentication app, the key can help you recover the authenticator. Please keep it safe.',
+    small_tips_info_2:
+      '2.For the security of your account, please do not mark the proxy account and proxy backend address during the binding process.',
+    keyin_6_digit_google: 'Please key in Google 6 digits Auth Code.',
+    auth_code: 'Google Authenticator',
+    bind_now: 'Bind Now',
+    please_enter_password: 'Please enter your password',
+    added_success: 'Google Authenticator code added successfully',
+    if_not_google_auth_then:
+      "If you haven't bound Google Authenticator, there's no need to fill it out.",
+    google_auth_code: 'Enter 6 digits Google Authenticator Code',
   },
   posterType: {
-    overall: "Overall Referral",
-    app: "APP Referral",
-    sponsor: "Sponsor Referral",
-    gift: "Gift Referral",
-    competition: "Competition Referral",
-    event: "Event Referral",
-    crypto: "Crypto Referral",
-    affiliate: "Affiliate Benefit",
+    overall: 'Overall Referral',
+    app: 'APP Referral',
+    sponsor: 'Sponsor Referral',
+    gift: 'Gift Referral',
+    competition: 'Competition Referral',
+    event: 'Event Referral',
+    crypto: 'Crypto Referral',
+    affiliate: 'Affiliate Benefit',
+  },
+  siteAppVersion: {
+    version: 'Version',
+    os: 'Operating System',
+    appType: 'App Type',
+    apkType: 'App Secret Key',
+    fileUploadedSuccessfully: 'File Upload Successfully',
+    IOS: 'IOS',
+    ANDROID: 'Android',
+    ALL_SITE: 'All Sites',
+    SPORT: 'Sport App',
+    ESPORT: 'Esport App',
+    NORMAL: 'Normal',
+    NEW_KEY: 'New Key',
+    appUpload: 'App Upload',
+    editAppUpload: 'Edit App Upload',
   },
   error: {
     400: 'Bad Request',
@@ -1860,8 +1908,8 @@ export default {
     1005: 'Login failed, account has been locked, please try again tomorrow',
     1006: 'Login failed, account does not exists',
     1007: 'The withdrawal order has been submitted, please try again in 20 minutes',
-    1008: "You have already bound Google Authenticator, please enter the Google verification code.",
-    1009: "The Google verification code was entered incorrectly.",
+    1008: 'You have already bound Google Authenticator, please enter the Google verification code.',
+    1009: 'The Google verification code was entered incorrectly.',
     9000: 'Failed to create scheduled job',
     9001: 'Failed to update scheduled job',
     9002: 'Failed to delete scheduled job',
@@ -1877,7 +1925,7 @@ export default {
     10032: 'Invalid file type for image',
     10033: 'Image banner upload failed',
     10034: 'Image promo upload failed',
-    1004: "You have added Google Authenticator. Please key in your Google Auth Code.",
+    1004: 'You have added Google Authenticator. Please key in your Google Auth Code.',
     10040: 'System risk level name already exist',
     10041: 'System risk level color already exist',
     10050: 'System ip label already exist',
@@ -1915,7 +1963,6 @@ export default {
     12053: 'System bank card identify code exists',
     12054: 'System bank card already exist',
     12055: 'Site image is being used',
-
     14000: 'The login name already exist',
     14001: 'The telephone already exist',
     14002: 'The email already exist',
@@ -1991,6 +2038,8 @@ export default {
     21100: 'The ticket for this member is reach max ticket limit',
     21101: 'Multi wheel not found for this site',
     22001: 'Member VIP Level max bonus is $',
+    21005: 'App exists with same site, OS, App Type & Apk Type',
+    21006: 'File and os that choosing not the same',
     30000: 'PG update transaction status failed',
   },
 }
