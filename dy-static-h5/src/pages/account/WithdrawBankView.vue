@@ -6,17 +6,10 @@
     <div class="widthdrawBankView--content">
       <div class="account-content text-center">
         <div class="flex-box flex-wrap bank-card-list">
-          <template
-              v-for="(bc, index) in personalState.bankCardList"
-              :key="bc.id"
-          >
-            <q-card
-                v-if="bc.bankName"
-                @click="showCard(bc, index)"
-                class="q-pa-sm text-left row items-center"
-            >
+          <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
+            <q-card v-if="bc.bankName" @click="showCard(bc, index)" class="q-pa-sm text-left row items-center">
               <div class="bank-icon-div">
-                <img src="../../assets/account/bank-icon.png"/>
+                <img src="../../assets/account/bank-icon.png" />
               </div>
               <div class="bank-card-info">
                 <div class="cardname q-pa-xs">
@@ -27,35 +20,24 @@
                 </div>
                 <div class="bottom q-pa-xs">
                   <div class="flex-box cards">
-                    <div
-                        v-for="b in bc.cardNumber.split()"
-                        :key="b"
-                        class="card-num-box"
-                    >
+                    <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
                       ****{{ b.slice(b.length - 4, b.length) }}
                     </div>
                   </div>
                 </div>
               </div>
               <div class="unbind-card-div">
-                <q-btn
-                    @click="confirmUnbindCard(bc)"
-                    class="unbind-btn"
-                    rounded
-                    color="secondary"
-                >
-                  解绑
-                </q-btn>
+                <q-btn @click="confirmUnbindCard(bc)" class="unbind-btn" rounded color="secondary">解绑</q-btn>
               </div>
             </q-card>
           </template>
           <div class="q-pa-sm widthdrawBankView--content-cta">
             <q-btn
-                color="dyblue"
-                style="width: 100%"
-                label="绑定"
-                icon="add_circle_outline"
-                @click="bankCardModal('bank')"
+              color="dyblue"
+              style="width: 100%"
+              label="绑定"
+              icon="add_circle_outline"
+              @click="bankCardModal('bank')"
             />
           </div>
         </div>
@@ -70,27 +52,22 @@
         <q-form>
           <div>
             <q-input
-                filled
-                clearable
-                ref="unbindCardNoRef"
-                class="q-mb-md"
-                v-model="unbindCardNo"
-                :label="unbindCardLabel()"
-                color="dyblue"
-                :rules="[
-                        (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || unbindCardLabel() + '不正确'
-                      ]"
+              filled
+              clearable
+              ref="unbindCardNoRef"
+              class="q-mb-md"
+              v-model="unbindCardNo"
+              :label="unbindCardLabel()"
+              color="dyblue"
+              :rules="[
+                (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || unbindCardLabel() + '不正确'
+              ]"
             />
           </div>
 
           <div class="flex flex-center">
-            <q-btn
-                class="q-mr-md"
-                label="取消"
-                @click="isUnbindCardModal = false"
-            />
-            <q-btn color="dyblue"
-                   label="提交" @click="unbindBankCard(unbindcarddetail)"/>
+            <q-btn class="q-mr-md" label="取消" @click="isUnbindCardModal = false" />
+            <q-btn color="dyblue" label="提交" @click="unbindBankCard(unbindcarddetail)" />
           </div>
         </q-form>
       </q-card>
@@ -109,58 +86,48 @@
             <div class="row q-col-gutter-xs">
               <div class="col-12">
                 <q-select
-                    v-model="selectedBankType"
-                    filled
-                    :options="[{ name: '银行卡' }, { name: '数字货币' }, { name: '电子钱包' }]"
-                    label="类型"
-                    color="blue"
-                    label-color="dyblue"
-                    option-label="name"
-                    option-value="name"
-                    @update:model-value="selectBankType(opt)"
-                    emit-value
-                    map-options
+                  v-model="selectedBankType"
+                  filled
+                  :options="[{ name: '银行卡' }, { name: '数字货币' }, { name: '电子钱包' }]"
+                  label="类型"
+                  color="blue"
+                  label-color="dyblue"
+                  option-label="name"
+                  option-value="name"
+                  @update:model-value="selectBankType(opt)"
+                  emit-value
+                  map-options
                 />
               </div>
               <div class="col-12">
                 <q-select
-                    ref="bankCardRef"
-                    class=""
-                    color="dyblue"
-                    filled
-                    label-color="dyblue"
-                    v-model="bankCardInfo.bankId"
-                    :options="banksList"
-                    option-value="id"
-                    option-label="name"
-                    :label="'选择' + chooseCard()"
-                    @update:model-value="selectCard()"
-                    :rules="[(val) => !!val || '请选择' + chooseCard()]"
-                    lazy-rules
-                    emit-value
-                    map-options
+                  ref="bankCardRef"
+                  class=""
+                  color="dyblue"
+                  filled
+                  label-color="dyblue"
+                  v-model="bankCardInfo.bankId"
+                  :options="banksList"
+                  option-value="id"
+                  option-label="name"
+                  :label="'选择' + chooseCard()"
+                  @update:model-value="selectCard()"
+                  :rules="[(val) => !!val || '请选择' + chooseCard()]"
+                  lazy-rules
+                  emit-value
+                  map-options
                 >
                   <template v-slot:selected-item="scope">
                     <q-item-section avatar>
                       <img
-                          v-if="scope.opt.bankIcon"
-                          style="
-                          width: 30px;
-                          margin-top: 10px;
-                          margin-bottom: 10px;
-                        "
-                          :src="imgURL + scope.opt.bankIcon"
+                        v-if="scope.opt.bankIcon"
+                        style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                        :src="imgURL + scope.opt.bankIcon"
                       />
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label
-                          style="
-                          text-overflow: ellipsis;
-                          overflow: hidden;
-                          white-space: nowrap;
-                        "
-                      >
-                        {{ scope.opt.name === 'USDTTRC' ? 'USDTTRC20' : scope.opt.name }}
+                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                        {{ scope.opt.name === "USDTTRC" ? "USDTTRC20" : scope.opt.name }}
                       </q-item-label>
                     </q-item-section>
                   </template>
@@ -168,17 +135,13 @@
                     <q-item v-bind="scope.itemProps">
                       <q-item-section avatar>
                         <img
-                            v-if="scope.opt.bankIcon"
-                            style="
-                            width: 30px;
-                            margin-top: 10px;
-                            margin-bottom: 10px;
-                          "
-                            :src="imgURL + scope.opt.bankIcon"
+                          v-if="scope.opt.bankIcon"
+                          style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                          :src="imgURL + scope.opt.bankIcon"
                         />
                       </q-item-section>
                       <q-item-section>
-                        <q-item-label>{{ scope.opt.name === 'USDTTRC' ? 'USDTTRC20' : scope.opt.name }}</q-item-label>
+                        <q-item-label>{{ scope.opt.name === "USDTTRC" ? "USDTTRC20" : scope.opt.name }}</q-item-label>
                       </q-item-section>
                     </q-item>
                   </template>
@@ -189,149 +152,136 @@
 
           <div v-if="isVirtual">
             <q-input
-                filled
-                ref="bankCardRef"
-                class=""
-                v-model="bankName"
-                disable
-                readonly
-                label="银行名城"
-                color="dyblue"
+              filled
+              ref="bankCardRef"
+              class=""
+              v-model="bankName"
+              disable
+              readonly
+              label="银行名城"
+              color="dyblue"
             />
           </div>
           <q-input
-              class=""
-              filled
-              v-model="bankCardInfo.cardAccount"
-              label="特卡人姓名"
-              :rules="cardAccountRules"
-              lazy-rules
-              :readonly="true"
-              ref="cardAccountRef"
-              color="dyblue"
+            class=""
+            filled
+            v-model="bankCardInfo.cardAccount"
+            label="特卡人姓名"
+            :rules="cardAccountRules"
+            lazy-rules
+            :readonly="true"
+            ref="cardAccountRef"
+            color="dyblue"
           />
           <q-input
-              filled
-              class=""
-              v-model="bankCardInfo.cardNumber"
-              :label="cardLabel()"
-              :rules="isCrypto || isEWALLET ? cardCryptoRules : cardNumberRules"
-              ref="cardNumberRef"
-              color="dyblue"
+            filled
+            class=""
+            v-model="bankCardInfo.cardNumber"
+            :label="cardLabel()"
+            :rules="isCrypto || isEWALLET ? cardCryptoRules : cardNumberRules"
+            ref="cardNumberRef"
+            color="dyblue"
+          />
+
+          <q-input
+            v-show="!isCrypto && !isEWALLET && !isALIPAY"
+            class="q-mb-md"
+            filled
+            v-model="bankCardInfo.cardAddress"
+            label="开户行地址"
+            :rules="cardAddressRules"
+            ref="cardAddressRef"
+            color="dyblue"
           />
 
           <q-input
-              v-show="!isCrypto && !isEWALLET && !isALIPAY"
-              class="q-mb-md"
-              filled
-              v-model="bankCardInfo.cardAddress"
-              label="开户行地址"
-              :rules="cardAddressRules"
-              ref="cardAddressRef"
-              color="dyblue"
-          />
-
-
-          <q-input
-              filled
-              ref="telRef"
-              v-model="bankCardInfo.telephone"
-              label="电话号码"
-              lazy-rules
-              readonly
-              clearable
-              :rules="[
-            (val) => (val && val.length > 7) || '请输入有效的电话号码',
-            isValidCnPhone
-          ]"
-              color="dyblue"
+            filled
+            ref="telRef"
+            v-model="bankCardInfo.telephone"
+            label="电话号码"
+            lazy-rules
+            readonly
+            clearable
+            :rules="[(val) => (val && val.length > 7) || '请输入有效的电话号码', isValidCnPhone]"
+            color="dyblue"
           >
             <template v-slot:prepend>
-              <q-icon color="dark" name="smartphone"/>
+              <q-icon color="dark" name="smartphone" />
             </template>
             <template v-slot:append>
-              <q-btn label="获取验证码" color="brightbtn" @click="openPhoneVeriDialog()"/>
+              <q-btn label="获取验证码" color="brightbtn" @click="openPhoneVeriDialog()" />
             </template>
           </q-input>
 
-          <q-input v-if="isSendOtp"
-              filled
-              class="q-mb-md"
-              v-show="bankCardInfo.smsCodeId"
-              ref="phoneVerificationRef"
-              type="text"
-              v-model="bankCardInfo.smsCode"
-              label="手机验证码"
-              lazy-rules
-              color="dyblue"
-              maxlength="6"
-              :rules="[
-        (val) => (val && val.length > 3) || '请输入手机验证码'
-      ]"
+          <q-input
+            v-if="isSendOtp"
+            filled
+            class="q-mb-md"
+            v-show="bankCardInfo.smsCodeId"
+            ref="phoneVerificationRef"
+            type="text"
+            v-model="bankCardInfo.smsCode"
+            label="手机验证码"
+            lazy-rules
+            color="dyblue"
+            maxlength="6"
+            :rules="[(val) => (val && val.length > 3) || '请输入手机验证码']"
           >
             <template v-slot:prepend>
-              <q-icon color="dark" name="shield"/>
+              <q-icon color="dark" name="shield" />
             </template>
           </q-input>
 
-
           <div class="flex flex-center">
-            <q-btn
-                class="q-mr-md"
-                label="取消"
-                color="warning"
-                @click="bankCardModalState.visible = false"
-            />
-            <q-btn v-if="isSendOtp" color="dyblue" label="提交" @click="submitBankCard"/>
+            <q-btn class="q-mr-md" label="取消" color="warning" @click="bankCardModalState.visible = false" />
+            <q-btn v-if="isSendOtp" color="dyblue" label="提交" @click="submitBankCard" />
           </div>
         </q-form>
       </q-card>
     </q-dialog>
 
-
     <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
       <q-card width="100%">
-        <q-card-section
-            style="padding: 10px 5px"
-            class="q-pa-md bg-dyblue text-white"
-        >
+        <q-card-section style="padding: 10px 5px" class="q-pa-md bg-dyblue text-white">
           <q-toolbar>
             <q-toolbar-title>验证码</q-toolbar-title>
-            <q-btn flat v-close-popup round dense icon="close"/>
+            <q-btn flat v-close-popup round dense icon="close" />
           </q-toolbar>
-
         </q-card-section>
         <div style="padding: 20px">
           <q-card-section class="q-mb-md q-pa-md">
             <q-input
-                ref="refInnerCaptcha"
-                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
-                v-model="innerCaptchaRef" placeholder="验证码">
+              ref="refInnerCaptcha"
+              :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+              v-model="innerCaptchaRef"
+              placeholder="验证码"
+            >
               <template v-slot:append>
                 <img
-                    :src="phoneVerificationImg"
-                    title="点击刷新验证码"
-                    style="margin-top: 6px; cursor: pointer"
-                    @click="getInnerCode"
+                  :src="phoneVerificationImg"
+                  title="点击刷新验证码"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
                 />
               </template>
             </q-input>
           </q-card-section>
-          <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue"/>
+          <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue" />
         </div>
       </q-card>
     </q-dialog>
 
     <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
-      <q-card style="width: 100%; padding: 20px;" class="text-black">
-        <q-card-section class="q-mb-md text-center" style="flex-direction:column;">
+      <q-card style="width: 100%; padding: 20px" class="text-black">
+        <q-card-section class="q-mb-md text-center" style="flex-direction: column">
           <strong>温馨提示</strong>
-          <br/><br/>
+          <br />
+          <br />
           为保证资金安全，绑卡前需先验证手机号
         </q-card-section>
         <q-card-actions align="right">
           <router-link to="/account/verifyTelephone">
-            <q-btn label="前往验证" color="dyblue"/>
+            <q-btn label="前往验证" color="dyblue" />
           </router-link>
         </q-card-actions>
       </q-card>
@@ -545,6 +495,14 @@ export default defineComponent({
             color: "negative",
             position: "top",
             message: "请输入您的真实姓名",
+            icon: "report_problem"
+          });
+          router.push("/account/personal");
+        } else if (!store.phone || store.phone == "" || store.phone == null) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "请输入您的电话",
             icon: "report_problem"
           });
           router.push("/account/personal");

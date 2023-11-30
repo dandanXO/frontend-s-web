@@ -139,6 +139,7 @@ const destroyGame = () => {
   // // iframe.parentNode.removeChild(iframe)
   // logoShow.value = true;
   // src.value = "";
+  src.value = "";
 };
 // const router = useRouter();
 // const route = useRoute();
@@ -186,6 +187,18 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     if (store.token) {
       console.log(gameCode);
       console.log(platformCode);
+
+      //Straight open Dialog Before Loading.
+      if (
+        !(
+          platformCode === "SGWin" ||
+          platformCode === "TCG" ||
+          (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
+        )
+      ) {
+        visible.value = true;
+      }
+
       if (gameCode === "bbkeno_lobby_pc") {
         iframeScroll.value = true;
       }
