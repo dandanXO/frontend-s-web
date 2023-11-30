@@ -214,7 +214,6 @@
                 icon="el-icon-upload"
                 size="mini"
                 type="success"
-                :disabled="isFormDataFilled()"
                 @click="$refs.inputApp.click()"
               >
                 {{ t('fields.upload') }}
@@ -389,14 +388,6 @@ function resetQuery() {
   request.apkType = null
   request.siteId = site.value ? site.value.id : null
   loadAppVersion()
-}
-
-function isFormDataFilled() {
-  if (form.os && form.siteId && form.appType) {
-    return false
-  } else {
-    return true
-  }
 }
 
 function changePage(page) {
