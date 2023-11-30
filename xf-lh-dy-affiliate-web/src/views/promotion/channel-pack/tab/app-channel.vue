@@ -177,12 +177,12 @@ async function submitCreatePack() {
 
 function resetForm() {
   form.appType = 'ALL_SITE'
-  form.os = 'Android'
+  form.os = 'ANDROID'
   form.apkType = 'NORMAL'
-  form.version = '1.1.1'
   form.name = ''
   form.icon = ''
   uploadedImage.url = ''
+  loadVersion()
 }
 
 async function loadVersion() {

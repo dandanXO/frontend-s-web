@@ -6,12 +6,12 @@
           <span class="role-span">{{ $t('menu.Channel Pack') }}</span>
         </div>
       </template>
-      <el-tabs v-model="activeName" style="margin-left: 20px">
+      <el-tabs v-model="activeName" style="margin-left: 20px" :tab-change="checkHistory(activeName)">
         <el-tab-pane label="APP" name="app-channel">
-          <AppChannelTan />
+          <AppChannelTab />
         </el-tab-pane>
         <el-tab-pane :label="t('fields.packHistory')" name="pack-history">
-          <PackHistoryTab />
+          <PackHistoryTab ref="packTab" />
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -21,9 +21,15 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import AppChannelTan from './tab/app-channel.vue'
+import AppChannelTab from './tab/app-channel.vue'
 import PackHistoryTab from './tab/pack-history.vue'
 
 const { t } = useI18n()
 const activeName = ref('app-channel')
+const packTab = ref()
+function checkHistory(val) {
+  if (val === 'pack-history') {
+    packTab.value.loadHistory()
+  }
+}
 </script>

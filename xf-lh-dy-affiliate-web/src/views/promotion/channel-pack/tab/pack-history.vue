@@ -154,7 +154,15 @@
               {{ channelPackInfo.downloadCount }}
             </el-form-item>
             <el-form-item :label="t('fields.packDate')">
-              {{ channelPackInfo.finishTime }}
+              <span v-if="channelPackInfo.finishTime === null">-</span>
+              <span
+                v-if="channelPackInfo.finishTime !== null"
+                v-formatter="{
+                  data: channelPackInfo.finishTime,
+                  formatter: 'YYYY/MM/DD HH:mm:ss',
+                  type: 'date',
+                }"
+              />
             </el-form-item>
           </div>
           <div class="info-row-container">
@@ -173,7 +181,7 @@
                 :underline="false"
                 :href="channelPackInfo.downloadUrl"
                 type="primary"
-                style="line-height: 20px; vertical-align: baseline;"
+                id="download-url"
               >
                 {{ channelPackInfo.downloadUrl }}
               </el-link>
@@ -189,14 +197,18 @@
                 margin="2"
               />
               <div class="btn-group">
-                <el-dropdown trigger="click">
-                  <el-button type="primary" style="width:200px">
-                    <span>{{ $t('fields.copy') }}</span>
-                    <el-icon class="el-icon--right">
-                      <arrow-down-bold />
-                    </el-icon>
-                  </el-button>
-                  <template #dropdown>
+                <!-- <el-dropdown trigger="click"> -->
+                <el-button
+                  type="primary"
+                  style="width:200px"
+                  @click="copy(channelPackInfo.downloadUrl)"
+                >
+                  <span>{{ $t('fields.copy') }}</span>
+                  <!-- <el-icon class="el-icon--right">
+                    <arrow-down-bold />
+                  </el-icon> -->
+                </el-button>
+                <!-- <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="handleLinkSelection('WX')">
                         {{ $t('referralLink.affiliateWXShortLink') }}
@@ -211,16 +223,20 @@
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
-                </el-dropdown>
+                </el-dropdown> -->
 
-                <el-dropdown trigger="click">
-                  <el-button type="primary" style="width:200px">
-                    <span>{{ $t('fields.download') }}</span>
-                    <el-icon class="el-icon--right">
+                <!-- <el-dropdown trigger="click"> -->
+                <el-button
+                  type="primary"
+                  style="width:200px"
+                  @click="download()"
+                >
+                  <span>{{ $t('fields.download') }}</span>
+                  <!-- <el-icon class="el-icon--right">
                       <arrow-down-bold />
-                    </el-icon>
-                  </el-button>
-                  <template #dropdown>
+                    </el-icon> -->
+                </el-button>
+                <!-- <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="handleQrSelection('WX')">
                         {{ $t('referralLink.affiliateWXQRLink') }}
@@ -233,7 +249,7 @@
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
-                </el-dropdown>
+                </el-dropdown> -->
               </div>
             </el-form-item>
           </div>
@@ -244,7 +260,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, defineExpose } from 'vue'
 import { useStore } from '@/store'
 import moment from 'moment'
 import { useI18n } from 'vue-i18n'
@@ -254,10 +270,14 @@ import {
 } from '../../../../api/channel-pack'
 import { ElMessage } from 'element-plus'
 import QrcodeVue from 'qrcode.vue'
-import { ArrowDownBold } from '@element-plus/icons-vue'
+// import { ArrowDownBold } from '@element-plus/icons-vue'
 import { getConfigs } from '../../../../api/system-config'
-import { getShortLink } from '../../../../api/affiliate-short-link'
-import { generateRandomAlphaNumeric } from '@/utils/utils'
+// import { getShortLink } from '../../../../api/affiliate-short-link'
+// import { generateRandomAlphaNumeric } from '@/utils/utils'
+
+defineExpose({
+  loadHistory,
+})
 
 const store = useStore()
 const { t } = useI18n()
@@ -385,14 +405,14 @@ const page = reactive({
   loading: false,
 })
 
-const shortLinkRequest = reactive({
-  siteId: null,
-  affiliateId: null,
-  linkType: 'H5',
-  urlType: null,
-  longUrl: null,
-  shortUrl: null,
-})
+// const shortLinkRequest = reactive({
+//   siteId: null,
+//   affiliateId: null,
+//   linkType: 'H5',
+//   urlType: null,
+//   longUrl: null,
+//   shortUrl: null,
+// })
 
 const channelPackInfo = reactive({
   channelValue: '',
@@ -506,45 +526,45 @@ async function loadConfig() {
   ).value
 }
 
-async function handleLinkSelection(urlType) {
-  shortLinkRequest.siteId = store.state.user.siteId
-  shortLinkRequest.affiliateId = store.state.user.id
-  shortLinkRequest.urlType = urlType
-  const randomGenerateAlphaNumeric = generateRandomAlphaNumeric()
-  shortLinkRequest.shortUrl = randomGenerateAlphaNumeric
-  shortLinkRequest.longUrl = channelPackInfo.downloadUrl
+// async function handleLinkSelection(urlType) {
+//   shortLinkRequest.siteId = store.state.user.siteId
+//   shortLinkRequest.affiliateId = store.state.user.id
+//   shortLinkRequest.urlType = urlType
+//   const randomGenerateAlphaNumeric = generateRandomAlphaNumeric()
+//   shortLinkRequest.shortUrl = randomGenerateAlphaNumeric
+//   shortLinkRequest.longUrl = channelPackInfo.downloadUrl
 
-  await getShortLink(shortLinkRequest)
-  copy(config.shortLinkPlatform + '/' + randomGenerateAlphaNumeric)
-}
+//   await getShortLink(shortLinkRequest)
+//   copy(config.shortLinkPlatform + '/' + randomGenerateAlphaNumeric)
+// }
 
-async function handleQrSelection(urlType) {
-  shortLinkRequest.siteId = store.state.user.siteId
-  shortLinkRequest.affiliateId = store.state.user.id
-  shortLinkRequest.urlType = urlType
-  const randomGenerateAlphaNumeric = generateRandomAlphaNumeric()
-  shortLinkRequest.shortUrl = randomGenerateAlphaNumeric
-  shortLinkRequest.longUrl = channelPackInfo.downloadUrl
-  channelPackInfo.hiddenDownloadUrl =
-    config.shortLinkPlatform + '/' + randomGenerateAlphaNumeric
+// async function handleQrSelection(urlType) {
+//   shortLinkRequest.siteId = store.state.user.siteId
+//   shortLinkRequest.affiliateId = store.state.user.id
+//   shortLinkRequest.urlType = urlType
+//   const randomGenerateAlphaNumeric = generateRandomAlphaNumeric()
+//   shortLinkRequest.shortUrl = randomGenerateAlphaNumeric
+//   shortLinkRequest.longUrl = channelPackInfo.downloadUrl
+//   channelPackInfo.hiddenDownloadUrl =
+//     config.shortLinkPlatform + '/' + randomGenerateAlphaNumeric
 
-  await getShortLink(shortLinkRequest)
+//   await getShortLink(shortLinkRequest)
 
-  const canvas = document.getElementById('hiddenQrCode').toDataURL('image/png')
-  const xhr = new XMLHttpRequest()
-  xhr.responseType = 'blob'
-  xhr.onload = function() {
-    const a = document.createElement('a')
-    a.href = window.URL.createObjectURL(xhr.response)
-    a.download = `${t('fields.packDownloadUrl')}` + '.png'
-    a.style.display = 'none'
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-  }
-  xhr.open('GET', canvas)
-  xhr.send()
-}
+//   const canvas = document.getElementById('hiddenQrCode').toDataURL('image/png')
+//   const xhr = new XMLHttpRequest()
+//   xhr.responseType = 'blob'
+//   xhr.onload = function() {
+//     const a = document.createElement('a')
+//     a.href = window.URL.createObjectURL(xhr.response)
+//     a.download = `${t('fields.packDownloadUrl')}` + '.png'
+//     a.style.display = 'none'
+//     document.body.appendChild(a)
+//     a.click()
+//     a.remove()
+//   }
+//   xhr.open('GET', canvas)
+//   xhr.send()
+// }
 
 onMounted(() => {
   loadHistory()
@@ -613,6 +633,13 @@ onMounted(() => {
   width: 100%;
   display: flex;
   gap: 15px;
+}
+
+#download-url {
+  line-height: 20px;
+  vertical-align: baseline;
+  width: 100%;
+  justify-content: left;
 }
 
 @media (max-width: 768px) {
