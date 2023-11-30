@@ -149,6 +149,7 @@ const outerWheelData = [
   { degree: -386.25, amount: 880 }
 ];
 const innerWheelData = [
+  { degree: -27, amount: 200 },
   { degree: -52, amount: 110 },
   { degree: -77, amount: 130 },
   { degree: -104, amount: 300 },
@@ -161,8 +162,7 @@ const innerWheelData = [
   { degree: -284, amount: 110 },
   { degree: -310, amount: 200 },
   { degree: -336, amount: 1000 },
-  { degree: -361, amount: 0 },
-  { degree: -387, amount: 200 }
+  { degree: -361, amount: 0 }
 ];
 
 /**
@@ -317,9 +317,9 @@ function updateSpinButton(isDisable) {
   }
 }
 
-function initWheelRotation(config) {
+function initWheelRotation(config, defaultIndex = 0) {
   const { wheelRef, wheelData } = config;
-  wheelRef.value.style.transform = `rotate(${wheelData[0].degree}deg)`;
+  wheelRef.value.style.transform = `rotate(${wheelData[defaultIndex].degree}deg)`;
 }
 
 const availableSpinCount = ref(0);
@@ -391,7 +391,7 @@ function onCollectClick() {
 
 onMounted(() => {
   initWheelRotation(outerWheelConfig);
-  initWheelRotation(innerWheelConfig);
+  initWheelRotation(innerWheelConfig, 1);
 
   initSpinWheelAPI();
 });
