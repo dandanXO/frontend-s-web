@@ -1674,6 +1674,13 @@ body {
         width: 1.3em;
         height: 1.3em;
       }
+
+      &:hover {
+        opacity: 0.9;
+      }
+      &:active {
+        filter: brightness(0.9);
+      }
     }
   }
 
@@ -2393,5 +2400,12 @@ body {
 .mailbox-notify {
   position: relative;
   margin-right: 20px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    filter: brightness(0.9);
+  }
 }
 </style>
