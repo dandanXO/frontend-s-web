@@ -775,6 +775,7 @@ export default {
     queryNumber: '搜索数量',
     queryOption: '搜索选项',
     queryRestriction: '搜索限制',
+    randomMember: '随机玩家',
     rate: '比率',
     realName: '真实姓名',
     englishName: '英文姓名',
