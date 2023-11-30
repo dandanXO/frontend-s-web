@@ -1,57 +1,58 @@
 <template>
   <div>
     <div class="">
-<!--      <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>-->
+      <!--      <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>-->
       <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
         <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/icon.png`)" />
         <div class="contents" v-if="!bonusOpened">
-          <q-btn class="claim-btn"  :loading="loadingClaim" @click="getPromotion">
-            点击领取
-          </q-btn>
+          <q-btn class="claim-btn" :loading="loadingClaim" @click="getPromotion">点击领取</q-btn>
         </div>
       </div>
-<!--      <p v-if="bonusOpened" class="money-account"><span>{{ winAmount }}</span>元</p>-->
-<!--      <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>-->
+      <!--      <p v-if="bonusOpened" class="money-account"><span>{{ winAmount }}</span>元</p>-->
+      <!--      <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>-->
     </div>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
       <q-card-section class="row items-center">
-        <div class="bonus-svg-div">
-          <span class="bonus-text">恭喜获得奖金</span>
-          <span class="claim-amt">{{ winAmount }}</span>
+        <div class="red-packet-opened">
+          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />
+
+          <span class="grats">恭喜获得奖金</span>
+          <span class="amount">{{ winAmount }}</span>
+          <div class="get-btn" @click="getPromotionPrize">点击领取</div>
         </div>
       </q-card-section>
 
-      <q-card-actions align="center">
+      <!-- <q-card-actions align="center">
         <q-btn flat label="确定" color="primary" v-close-popup />
-      </q-card-actions>
+      </q-card-actions> -->
     </q-card>
   </q-dialog>
-
 </template>
 <script setup>
-import {eventapi} from "src/boot/axios";
-import {ref} from "vue";
-import {userStore} from "src/stores";
+import { eventapi } from "src/boot/axios";
+import { ref } from "vue";
+import { userStore } from "src/stores";
 
 const store = userStore();
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
-const isClaimModal= ref(false);
+const isClaimModal = ref(false);
 const loadingClaim = ref(false);
 
 const getPromotion = () => {
-  loadingClaim.value= true;
-  eventapi.get("/redPacketVip/claim?promoCode=dy-red-packet-rain")
+  loadingClaim.value = true;
+  eventapi
+    .get("/redPacketVip/claim?promoCode=dy-red-packet-rain")
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
-        loadingClaim.value= false;
+        loadingClaim.value = false;
 
-        isClaimModal.value= true;
+        isClaimModal.value = true;
 
         bonusOpened.value = true;
         store.getBalance();
@@ -63,16 +64,21 @@ const getPromotion = () => {
     .catch((err) => {
       console.log(err.message);
       // message.error(err.message, 4);
-      loadingClaim.value= false;
+      loadingClaim.value = false;
       // isClaimModal.value= true;
       bonusOpened.value = false;
     });
-}
+};
+
+const getPromotionPrize = () => {
+  store.getBalance();
+  isClaimModal.value = false;
+};
 </script>
 
 <style scoped lang="scss">
 .receive-container {
-  margin: .55rem auto;
+  margin: 0.55rem auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,7 +87,7 @@ const getPromotion = () => {
   width: 100%;
   //background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/hongbaoyu.png) no-repeat center center;
 
-  img{
+  img {
     width: 65% !important;
     margin: 0 auto;
   }
@@ -117,7 +123,9 @@ const getPromotion = () => {
     //}
   }
 
-  .check-tip, .money-account, .receive-btn {
+  .check-tip,
+  .money-account,
+  .receive-btn {
     position: absolute;
   }
 
@@ -149,7 +157,67 @@ const getPromotion = () => {
       font-size: 30px;
     }
   }
-
 }
 
+.red-packet-opened {
+  position: relative;
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  .grats {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 20%;
+    color: #fffbfb;
+    text-align: center;
+    font-family: PingFang SC;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-right: 10px;
+  }
+
+  .amount {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 45%;
+    // left: -15px;
+    color: #f23b1d;
+    font-size: 36px;
+    font-weight: bold;
+    padding-right: 15px;
+  }
+
+  .get-btn {
+    color: #f23b1d;
+    border-radius: 30px;
+    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
+    position: absolute;
+
+    font-size: 16px;
+    padding: 4px 16px;
+    bottom: 17%;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    width: 100px;
+    left: 0;
+    right: 10px;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+}
 </style>

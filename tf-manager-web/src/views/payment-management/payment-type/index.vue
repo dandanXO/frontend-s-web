@@ -77,6 +77,28 @@
             style="width: 350px"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.currency')" prop="currencyIds">
+          <el-select
+            multiple
+            filterable
+            allow-create
+            default-first-option
+            :reserve-keyword="false"
+            v-model="selected.currency"
+            size="small"
+            :placeholder="t('fields.pleaseChoose')"
+            class="filter-item"
+            style="width: 200px; margin-bottom: 16px"
+            @change="handleChangeCurrencies()"
+          >
+            <el-option
+              v-for="item in list.currencies"
+              :key="item.id"
+              :label="item.currencyCode"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -97,6 +119,7 @@
       <el-table-column prop="code" :label="t('fields.payTypeCode')" width="200" />
       <el-table-column prop="tipsWeb" :label="t('fields.webMessage')" width="200" />
       <el-table-column prop="tipsMobile" :label="t('fields.mobileMessage')" width="200" />
+      <el-table-column prop="currencyCodes" :label="t('fields.currencyCode')" width="200" />
       <el-table-column prop="status" :label="t('fields.status')" width="200" v-if="hasPermission(['sys:payment:type:update:state'])">
         <template #default="scope">
           <el-switch
@@ -139,6 +162,7 @@ import {
   updatePaymentType,
   updatePaymentTypeStatus,
 } from '../../../api/payment-type'
+import { getCurrencyCodes } from '../../../api/currency'
 import { hasPermission } from '../../../utils/util'
 import { useI18n } from "vue-i18n";
 
@@ -168,7 +192,12 @@ const form = reactive({
   tipsWeb: null,
   tipsMobile: null,
   status: true,
+  currencyIds: null,
 })
+const list = reactive({
+  currencies: [],
+})
+const selected = reactive({ currency: [] })
 const validateAlphaNumeric = (rule, value, callback) => {
   if (!isAlphaNumeric(value)) {
     callback(new Error(t('message.validateAlphaNumericOnly')))
@@ -221,8 +250,12 @@ async function loadPaymentType() {
   page.pages = ret.pages
   page.records = ret.records
   page.loading = false
+  getAllCurrencyCode()
 }
-
+async function loadCurrency() {
+  const { data: ret } = await getCurrencyCodes(request)
+  list.currencies = ret
+}
 function changePage(page) {
   request.current = page
   loadPaymentType()
@@ -239,6 +272,7 @@ function showDialog(type) {
     uiControl.dialogTitle = t('fields.editPayType')
   }
   uiControl.dialogType = type
+  selected.currency = []
   uiControl.dialogVisible = true
 }
 
@@ -249,6 +283,12 @@ function showEdit(paymentType) {
       if (Object.keys(form).find(k => k === key)) {
         form[key] = paymentType[key]
       }
+    }
+    if (form.currencyIds !== null) {
+      const currencyIdList = form.currencyIds.split(',')
+      currencyIdList.forEach(element => {
+        selected.currency.push(Number(element))
+      })
     }
   })
 }
@@ -279,6 +319,26 @@ async function changePaymentTypeStatus(id, status) {
   await updatePaymentTypeStatus(id, status)
 }
 
+function handleChangeCurrencies() {
+  form.currencyIds = selected.currency.join(',')
+}
+
+function getAllCurrencyCode() {
+  page.records.forEach(records => {
+    records.currencyCodes = getCurrencyCodesByIds(records.currencyIds)
+  })
+}
+
+function getCurrencyCodesByIds(currencyIds) {
+  if (!currencyIds) {
+    return '';
+  }
+  return currencyIds.split(',').map(currencyId => {
+    const currency = list.currencies.find(c => c.id === parseInt(currencyId));
+    return currency ? currency.currencyCode : '';
+  }).filter(Boolean).join(', ');
+}
+
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
     create()
@@ -289,6 +349,7 @@ function submit() {
 
 onMounted(() => {
   loadPaymentType()
+  loadCurrency()
 })
 </script>
 

@@ -19,7 +19,12 @@
             :value="item.id"
           />
         </el-select>
-        <el-input v-model="request.memberName" size="small" style="width: 150px;" :placeholder="t('fields.memberName')" />
+        <el-input
+          v-model="request.memberName"
+          size="small"
+          style="width: 150px;"
+          :placeholder="t('fields.memberName')"
+        />
         <el-select
           clearable
           v-model="request.freezeType"
@@ -35,7 +40,12 @@
             :value="item.value"
           />
         </el-select>
-        <el-input v-model="request.createBy" size="small" style="width: 150px;margin-left: 5px" :placeholder="t('fields.operator')" />
+        <el-input
+          v-model="request.createBy"
+          size="small"
+          style="width: 150px;margin-left: 5px"
+          :placeholder="t('fields.operator')"
+        />
         <el-date-picker
           style="margin-left: 5px"
           format="DD/MM/YYYY"
@@ -51,10 +61,21 @@
           :editable="false"
           :clearable="false"
         />
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadFreezeRecords">
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          @click="loadFreezeRecords"
+        >
           {{ t('fields.search') }}
         </el-button>
-        <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="warning"
+          @click="resetQuery()"
+        >
           {{ t('fields.reset') }}
         </el-button>
       </div>
@@ -69,53 +90,76 @@
       style="width: 100%;margin: 20px;"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="memberName" :label="t('fields.memberName')" width="250" />
-      <el-table-column prop="freezeType" :label="t('fields.freezeType')" width="250">
+      <el-table-column
+        prop="memberName"
+        :label="t('fields.memberName')"
+        width="250"
+      />
+      <el-table-column
+        prop="freezeType"
+        :label="t('fields.freezeType')"
+        width="250"
+      >
         <template #default="scope">
-          <span v-for="f in freezeType.list"
-                :key="f.key"
-          >
+          <span v-for="f in freezeType.list" :key="f.key">
             <span v-if="scope.row.freezeType === f.value">{{ f.name }}</span>
           </span>
         </template>
       </el-table-column>
       <el-table-column prop="reason" :label="t('fields.reason')" width="250" />
+      <el-table-column
+        prop="createTime"
+        :label="t('fields.createTime')"
+        width="250"
+      >
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="remark" :label="t('fields.remark')" width="250" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="250" />
       <el-table-column prop="createBy" :label="t('fields.operator')" />
     </el-table>
-    <el-pagination class="pagination"
-                   @current-change="changePage"
-                   layout="prev, pager, next"
-                   :page-size="request.size"
-                   :page-count="page.pages"
-                   :current-page="request.current"
+    <el-pagination
+      class="pagination"
+      @current-change="changePage"
+      layout="prev, pager, next"
+      :page-size="request.size"
+      :page-count="page.pages"
+      :current-page="request.current"
     />
   </div>
 </template>
 
 <script setup>
+import moment from 'moment'
+import { onMounted, reactive } from 'vue'
+import { getFreezeRecords } from '../../../api/freeze'
+import { useI18n } from 'vue-i18n'
+import { getSiteListSimple } from '../../../api/site'
+import { getShortcuts } from '@/utils/datetime'
 
-import moment from "moment";
-import { onMounted, reactive } from "vue";
-import { getFreezeRecords } from "../../../api/freeze";
-import { useI18n } from "vue-i18n";
-import { getSiteListSimple } from "../../../api/site";
-import { getShortcuts } from "@/utils/datetime"
-
-const { t } = useI18n();
+const { t } = useI18n()
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
-});
+  loading: false,
+})
 
-const shortcuts = getShortcuts(t);
+const shortcuts = getShortcuts(t)
 
-const startDate = new Date();
-startDate.setDate(startDate.getDate() - 2);
-const defaultStartDate = convertDate(startDate);
-const defaultEndDate = convertDate(new Date());
+const startDate = new Date()
+startDate.setDate(startDate.getDate() - 2)
+const defaultStartDate = convertDate(startDate)
+const defaultEndDate = convertDate(new Date())
 let timeZone = null
 
 const request = reactive({
@@ -125,72 +169,77 @@ const request = reactive({
   freezeType: null,
   createBy: null,
   siteId: 0,
-  createTime: [defaultStartDate, defaultEndDate]
-});
+  createTime: [defaultStartDate, defaultEndDate],
+})
 
 const siteList = reactive({
-  list: []
-});
+  list: [],
+})
 
 const freezeType = reactive({
   list: [
-    { key: 1, name: "NORMAL", value: "NORMAL" },
-    { key: 2, name: "TEMPORARY", value: "TEMPORARY" },
-    { key: 3, name: "PERMANENT", value: "PERMANENT" }
-  ]
+    { key: 1, name: 'NORMAL', value: 'NORMAL' },
+    { key: 2, name: 'TEMPORARY', value: 'TEMPORARY' },
+    { key: 3, name: 'PERMANENT', value: 'PERMANENT' },
+  ],
 })
 
 function resetQuery() {
-  request.memberName = null;
-  request.freezeType = null;
-  request.createBy = null;
-  request.createTime = [];
-  request.siteId = siteList.list[0].id;
+  request.memberName = null
+  request.freezeType = null
+  request.createBy = null
+  request.createTime = []
+  request.siteId = siteList.list[0].id
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
 }
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).format('YYYY-MM-DD')
 }
 
 function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+  return (
+    time.getTime() <
+      moment(new Date())
+        .subtract(2, 'months')
+        .startOf('month')
+        .format('x') || time.getTime() > new Date().getTime()
+  )
 }
 
 async function loadFreezeRecords() {
-  page.loading = true;
-  const requestCopy = { ...request };
-  const query = {};
+  page.loading = true
+  const requestCopy = { ...request }
+  const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
-      query[key] = value;
+      query[key] = value
     }
-  });
+  })
   if (request.createTime.length === 2) {
-    query.createTime = request.createTime.join(",");
+    query.createTime = request.createTime.join(',')
   }
-  const { data: ret } = await getFreezeRecords(query);
-  page.pages = ret.pages;
-  page.records = ret.records;
+  const { data: ret } = await getFreezeRecords(query)
+  page.pages = ret.pages
+  page.records = ret.records
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
-  page.loading = false;
+  page.loading = false
 }
 
 function changePage(page) {
-  request.current = page;
-  loadFreezeRecords();
+  request.current = page
+  loadFreezeRecords()
 }
 
-onMounted(async() => {
-  await loadSites();
+onMounted(async () => {
+  await loadSites()
   request.siteId = siteList.list[0].id
-  loadFreezeRecords();
-});
-
+  loadFreezeRecords()
+})
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -211,5 +260,4 @@ onMounted(async() => {
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
 }
-
 </style>

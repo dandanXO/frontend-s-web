@@ -20,3 +20,7 @@ export const getMemberMultiWheelSetting = (site) => {
 export const editMemberMultiWheelSetting = (row, siteId) => {
   return https().request("/member-multi-wheel/edit?siteId=" + siteId, Method.POST, row, ContentType.form);
 };
+
+export const randomMember = (site) => {
+  return https().request("/member-multi-wheel/random?siteId=" + site, Method.GET);
+};

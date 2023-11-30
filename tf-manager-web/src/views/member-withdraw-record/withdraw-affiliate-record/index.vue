@@ -617,7 +617,7 @@
       >
         <el-form-item :label="t('fields.withdrawDate')" prop="withdrawDate">
           <el-date-picker
-            v-model="request.withdrawDate"
+            v-model="searchRequest.date"
             format="DD/MM/YYYY HH:mm:ss"
             value-format="YYYY-MM-DD HH:mm:ss"
             size="small"
@@ -1012,9 +1012,10 @@ function disabledDate(time) {
 }
 
 function resetQuery() {
+  // debugger;
   searchForm.value.resetFields()
   searchRequest.selectedDateType = uiControl.selectedDateType[0].value
-  searchRequest.date = [defaultStartDate, defaultEndDate]
+  // searchRequest.date = [defaultStartDate, defaultEndDate]
   request.withdrawDate = []
   request.paymentDate = []
   request.serialNumber = null
