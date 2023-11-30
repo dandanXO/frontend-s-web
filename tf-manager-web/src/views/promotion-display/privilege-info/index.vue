@@ -264,6 +264,11 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="VIP" prop="vips">
+          <el-checkbox
+            v-model="vipCheckAll"
+            :indeterminate="isVIPIndeterminate"
+            @change="handleVIPCheckAllChange"
+          >{{ t('fields.checkall') }}</el-checkbox>
           <el-checkbox-group
             v-model="selectedVIPs.vipChecked"
             @change="handleCheckedChange('VIP')"
@@ -275,6 +280,11 @@
           </el-checkbox-group>
         </el-form-item>
         <el-form-item :label="t('fields.paymentType')" prop="payTypes">
+          <el-checkbox
+            v-model="paymentTypeCheckAll"
+            :indeterminate="isPaymentTypeIndeterminate"
+            @change="handlePaymentTypeCheckAllChange"
+          >{{ t('fields.checkall') }}</el-checkbox>
           <el-checkbox-group
             v-model="selectedPayTypes.payTypeChecked"
             @change="handleCheckedChange('PAYTYPE')"
@@ -450,6 +460,10 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const rollover = ref([]);
 const privilegeInfoForm = ref(null)
+const paymentTypeCheckAll = ref(false)
+const isPaymentTypeIndeterminate = ref(false)
+const vipCheckAll = ref(false)
+const isVIPIndeterminate = ref(false)
 const siteList = reactive({
   list: [],
 })
@@ -593,6 +607,28 @@ function handleCheckedChange(type) {
   } else if (type === 'PAYTYPE') {
     form.payTypes = JSON.stringify(selectedPayTypes.payTypeChecked.join(','))
   }
+}
+
+const handleVIPCheckAllChange = (val) => {
+  if (val) {
+    vipList.list.forEach(vip => {
+      selectedVIPs.vipChecked.push(vip.id)
+    })
+  } else {
+    selectedVIPs.vipChecked = []
+  }
+  handleCheckedChange('VIP')
+}
+
+const handlePaymentTypeCheckAllChange = (val) => {
+  if (val) {
+    paymentTypeList.list.forEach(paymentType => {
+      selectedPayTypes.payTypeChecked.push(paymentType.code)
+    })
+  } else {
+    selectedPayTypes.payTypeChecked = []
+  }
+  handleCheckedChange('PAYTYPE')
 }
 
 function changeSite(siteId) {

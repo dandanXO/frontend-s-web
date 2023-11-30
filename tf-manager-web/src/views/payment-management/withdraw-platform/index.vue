@@ -170,6 +170,12 @@
       <el-table-column :label="t('fields.operate')" align="right" v-if="hasPermission(['sys:payment-withdraw:update'])">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
+          <el-button
+            icon="el-icon-copy-document"
+            size="mini"
+            type="warning"
+            @click="showDialogCopy(scope.row)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -182,6 +188,34 @@
       :current-page="request.current"
     />
   </div>
+  <el-dialog
+    :title="uiControl.dialogTitle"
+    v-model="uiControl.dialogCopyVisible"
+    append-to-body
+    width="600px"
+  >
+    <el-form
+      ref="copyWithdrawPlatformForm"
+      v-loading="uiControl.dialogCopyLoading"
+      :model="copyForm"
+      :inline="true"
+      size="small"
+      label-width="160px"
+    >
+      <el-form-item :label="t('fields.name')" prop="name">
+        <el-input v-model="copyForm.name" style="width: 350px" />
+      </el-form-item>
+
+      <el-form-item :label="t('fields.mallName')" prop="mall">
+        <el-input v-model="copyForm.mallName" style="width: 350px" />
+      </el-form-item>
+
+      <div class="dialog-footer">
+        <el-button @click="uiControl.dialogCopyVisible = false">{{ t('fields.cancel') }}</el-button>
+        <el-button type="primary" @click="copySubmit">{{ t('fields.confirm') }}</el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -189,7 +223,7 @@
 import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { required } from "../../../utils/validate";
 import { ElMessage } from "element-plus";
-import { createWithdrawPlatform, getWithdrawPlatforms, updateWithdrawPlatform, updateWithdrawPlatformStatus } from "../../../api/withdraw-platform";
+import { createWithdrawPlatform, getWithdrawPlatforms, updateWithdrawPlatform, updateWithdrawPlatformStatus, copyWithdrawPlatform } from "../../../api/withdraw-platform";
 import { getCurrencyNames } from "../../../api/currency";
 import { hasPermission } from '../../../utils/util'
 import { useStore } from '@/store';
@@ -199,6 +233,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const store = useStore();
+const copyWithdrawPlatformForm = ref(null)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 
 const site = ref(null);
@@ -209,9 +244,11 @@ const siteList = reactive({
 });
 const uiControl = reactive({
   dialogVisible: false,
+  dialogCopyVisible: false,
   dialogTitle: "",
   dialogType: "CREATE",
   dialogLoading: false,
+  dialogCopyLoading: false,
   status: [
     { key: 1, displayName: "Open", value: true },
     { key: 2, displayName: "Close", value: false }
@@ -228,6 +265,12 @@ const request = reactive({
   name: null,
   status: null
 });
+const copyForm = reactive({
+  name: null,
+  mall: null,
+  id: null,
+  paymentName: null
+})
 const form = reactive({
   id: null,
   siteId: null,
@@ -357,6 +400,27 @@ onMounted(async() => {
   await loadCurrencyNames();
 });
 
+function showDialogCopy(withdrawPlatform) {
+  console.log(withdrawPlatform);
+  copyForm.id = withdrawPlatform.id;
+  copyForm.mallName = "";
+  copyForm.name = "";
+  uiControl.dialogTitle = t('fields.copyPayment') + " -  " + withdrawPlatform.name;
+  uiControl.dialogCopyVisible = true
+}
+
+async function copySubmit() {
+  if (copyForm.name === null || copyForm.name === "") {
+    ElMessage({ message: t('message.validateWithdrawPlatformNameRequired'), type: 'error' });
+  } else if (copyForm.mallName === null || copyForm.mallName === "") {
+    ElMessage({ message: t('message.validateMallNameRequired'), type: 'error' });
+  } else {
+    uiControl.dialogCopyVisible = false;
+    await copyWithdrawPlatform(copyForm);
+    loadWithdrawPlatform();
+    ElMessage({ message: t('message.copySuccess'), type: 'success' });
+  }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
