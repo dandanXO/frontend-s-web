@@ -1606,7 +1606,10 @@ export default defineComponent({
               fishObj.title = fishObj.name + " 捕鱼";
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
-              fishing.value.push(fishObj);
+
+              if (fishObj.code !== "AG") {
+                fishing.value.push(fishObj);
+              }
             }
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
