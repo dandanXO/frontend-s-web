@@ -26,7 +26,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import commissionWalletTab from './tab/commission-wallet.vue'
 import depositWalletTab from './tab/deposit-wallet.vue'
-
+console.log('')
 const { t } = useI18n()
 const activeName = ref('commission-wallet')
 </script>
