@@ -845,6 +845,16 @@
       <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
+        <router-link to="/promo?id=81">
+          <div class="popup-item">
+            <span>
+              คลิกเพื่อหมุน รางวัลสูงสุด
+              <em>8,880</em>
+              และ
+              <em>IPHONE</em>
+            </span>
+          </div>
+        </router-link>
         <router-link to="/promo?id=80">
           <div class="popup-item">
             <span>
