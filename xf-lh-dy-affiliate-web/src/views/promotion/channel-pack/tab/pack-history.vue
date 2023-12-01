@@ -53,7 +53,7 @@
           {{ (request.current - 1) * 10 + scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="channelValue" :label="t('fields.packType')" />
+      <el-table-column prop="appType" :label="t('fields.packType')" />
       <el-table-column prop="osType" :label="t('fields.osType')" />
       <el-table-column prop="appName" :label="t('fields.appName')" />
       <el-table-column prop="appIcon" :label="t('fields.appIcon')">
