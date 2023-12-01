@@ -6,7 +6,7 @@
           <span style="font-size: 20px">
             {{ $t('referralLink.affiliateWebPlatformLink') }}
           </span>
-          <a :href="link" target="_blank" style="color: #1fa8db">
+          <a :href="page.webLongLink" target="_blank" style="color: #1fa8db">
             {{ page.webLongLink }}
           </a>
         </div>
@@ -77,7 +77,7 @@
           <span style="font-size: 20px">
             {{ $t('referralLink.affiliateH5PlatformLink') }}
           </span>
-          <a :href="link" target="_blank" style="color: #1fa8db">
+          <a :href="page.h5LongLink" target="_blank" style="color: #1fa8db">
             {{ page.h5LongLink }}
           </a>
         </div>
@@ -194,7 +194,7 @@
               :src="qrDialogControl.dialogQRIcon1"
               alt="Icon"
               class="center-icon"
-            >
+            />
           </div>
         </div>
         <div>

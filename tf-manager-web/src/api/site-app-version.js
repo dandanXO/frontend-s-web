@@ -53,6 +53,8 @@ export const uploadApp = async (formData, fileType) => {
   const requestOptions = {
     method: 'POST',
     body: formData,
+    ContentType: 'multipart/form-data',
+    boundary: '—-WebKitFormBoundaryfgtsKTYLsT7PNUVD',
   }
 
   return fetch(baseApi + '/siteAppVersion/uploadApp', requestOptions)
