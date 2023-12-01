@@ -90,7 +90,7 @@ export const constantRoutes = [
         component: () => import('../views/affiliate/finance/index.vue'),
         name: 'Finance',
         meta: {
-          title: 'deposit',
+          title: 'finance',
         },
       },
       {
@@ -107,6 +107,14 @@ export const constantRoutes = [
         name: 'Credit Flow',
         meta: {
           title: 'credit flow',
+        },
+      },
+      {
+        path: 'bank-card',
+        component: () => import('../views/affiliate/bank-card/index.vue'),
+        name: 'Bank Card',
+        meta: {
+          title: 'Bank Card',
         },
       },
     ],
