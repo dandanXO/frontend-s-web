@@ -1,20 +1,21 @@
 <template>
-  <div class="poker-container">
-    <div class="poker-container-list">
-      <div class="platform-list-box">
-        <span
-          class="platform-list-item platform"
-          v-for="(plat, i) in filteredPlatforms"
-          :key="i"
-          @click="clickPlat(plat)"
-          :class="{ active: selectedPlat === plat.code }"
-        >
-          {{ plat.name }}棋牌
-        </span>
-      </div>
-      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
-        <div class="poker-container-inner" v-if="selectedPlat === det.code" :class="det.style">
-          <!-- <div class="poker-left" data-aos="fade-right" data-aos-duration="4000">
+  <div class="platform__wrap">
+    <div class="poker-container">
+      <div class="poker-container-list">
+        <div class="platform-list-box">
+          <span
+            class="platform-list-item platform"
+            v-for="(plat, i) in filteredPlatforms"
+            :key="i"
+            @click="clickPlat(plat)"
+            :class="{ active: selectedPlat === plat.code }"
+          >
+            {{ plat.name }}棋牌
+          </span>
+        </div>
+        <template v-for="(det, idx) in filteredPlatforms" :key="idx">
+          <div class="poker-container-inner" v-if="selectedPlat === det.code" :class="det.style">
+            <!-- <div class="poker-left" data-aos="fade-right" data-aos-duration="4000">
                   <img :src="require('../assets/poker/title_poker_' + det.image + '.png')" style="margin-bottom: 54px;">
                   <div class="platform-txt-box">
                       <div>
@@ -28,39 +29,117 @@
                 <img class="absolute" src="../assets/poker/poker_right.png">
                 <img :src="require('../assets/poker/poker_right_' + det.image + '.png')">
               </div> -->
-          <div class="platform-left-box">
-            <template v-if="det.code === 'DT'">
-              <img class="imgabs tx1" src="../assets/poker/bg_left_tx.webp" />
-              <img class="imgabs tx2" src="../assets/poker/girl_tx_left.webp" />
-              <img class="imgabs tx3" src="../assets/poker/center_btn_bg_tx.webp" />
-              <div class="imgabs tx3text" v-html="det.message"></div>
-              <img class="imgabs tx4" src="../assets/poker/img_float_tx.webp" />
-              <img class="imgabs tx5" src="../assets/poker/bg_right_tx.webp" />
-              <div class="imgabs play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即游戏</div>
-              <img class="imgabs tx6" src="../assets/poker/girl_tx_right.webp" />
-              <img class="imgabs tx7" src="../assets/poker/txt_tx.webp" />
-            </template>
-            <template v-if="det.code === 'KY'">
-              <img class="imgabs ky1" src="../assets/poker/img_bg_ky_left.webp" />
-              <img class="imgabs ky2" src="../assets/poker/girl_ky_left.webp" />
-              <img class="imgabs kydice" src="../assets/poker/img_ky_left_top.webp" />
-              <img class="imgabs ky3" src="../assets/poker/center_btn_bg_ky.webp" />
-              <div class="imgabs ky3text" v-html="det.message"></div>
-              <img class="imgabs ky4" src="../assets/poker/txt_ky.webp" />
-              <img class="imgabs ky5" src="../assets/poker/txt_ky_tip.webp" />
-              <div class="imgabs play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即游戏</div>
-              <img class="imgabs ky6" src="../assets/poker/girl_ky_right.webp" />
-              <img class="imgabs ky7" src="../assets/poker/img_float_ky_1.webp" />
-              <img class="imgabs ky8" src="../assets/poker/img_float_ky_2.webp" />
-              <img class="imgabs ky9" src="../assets/poker/img_float_ky_3.webp" />
-              <img class="imgabs ky10" src="../assets/poker/img_float_ky_4.webp" />
-              <img class="imgabs ky11" src="../assets/poker/img_bg_ky_right.webp" />
-            </template>
+            <div class="platform-left-box">
+              <template v-if="det.code === 'DT'">
+                <img
+                  class="imgabs tx1"
+                  data-aos="zoom-out"
+                  data-aos-duration="500"
+                  src="../assets/poker/bg_left_tx.webp"
+                />
+                <img
+                  class="imgabs tx2"
+                  data-aos="fade-right"
+                  data-aos-duration="1000"
+                  src="../assets/poker/girl_tx_left.webp"
+                />
+                <img
+                  class="imgabs tx3"
+                  data-aos="fade-down"
+                  data-aos-duration="700"
+                  src="../assets/poker/center_btn_bg_tx.webp"
+                />
+                <div class="imgabs tx3text" data-aos="fade-down" data-aos-duration="900" v-html="det.message"></div>
+                <img class="imgabs tx4" src="../assets/poker/img_float_tx.webp" />
+                <img class="imgabs tx5" src="../assets/poker/bg_right_tx.webp" />
+                <div
+                  class="imgabs play-btn"
+                  data-aos="fade-down"
+                  data-aos-duration="1100"
+                  @click="openGame(det.name, det.code, det.gameCode)"
+                >
+                  立即游戏
+                </div>
+                <img
+                  class="imgabs tx6"
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                  src="../assets/poker/girl_tx_right.webp"
+                />
+                <img
+                  class="imgabs tx7"
+                  data-aos="fade-down"
+                  data-aos-duration="500"
+                  src="../assets/poker/txt_tx.webp"
+                />
+              </template>
+              <template v-if="det.code === 'KY'">
+                <img
+                  class="imgabs ky1"
+                  data-aos="zoom-out"
+                  data-aos-duration="1000"
+                  src="../assets/poker/img_bg_ky_left.webp"
+                />
+                <img
+                  class="imgabs ky2"
+                  data-aos="fade-right"
+                  data-aos-duration="1000"
+                  src="../assets/poker/girl_ky_left.webp"
+                />
+                <img class="imgabs kydice" src="../assets/poker/img_ky_left_top.webp" />
+                <img
+                  class="imgabs ky3"
+                  data-aos="fade-down"
+                  data-aos-duration="700"
+                  src="../assets/poker/center_btn_bg_ky.webp"
+                />
+                <div class="imgabs ky3text" data-aos="fade-down" data-aos-duration="900" v-html="det.message"></div>
+                <img
+                  class="imgabs ky4"
+                  data-aos="fade-down"
+                  data-aos-duration="500"
+                  src="../assets/poker/txt_ky.webp"
+                />
+                <img
+                  class="imgabs ky6"
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                  src="../assets/poker/girl_ky_right.webp"
+                />
+                <img
+                  class="imgabs ky5"
+                  data-aos="fade-down"
+                  data-aos-duration="500"
+                  data-aos-once="true"
+                  src="../assets/poker/txt_ky_tip.webp"
+                />
+                <div
+                  class="imgabs play-btn"
+                  data-aos="fade-down"
+                  data-aos-duration="1100"
+                  @click="openGame(det.name, det.code, det.gameCode)"
+                >
+                  立即游戏
+                </div>
+
+                <img class="imgabs ky7" src="../assets/poker/img_float_ky_1.webp" />
+                <img class="imgabs ky8" src="../assets/poker/img_float_ky_2.webp" />
+                <img class="imgabs ky9" src="../assets/poker/img_float_ky_3.webp" />
+                <img class="imgabs ky10" src="../assets/poker/img_float_ky_4.webp" />
+                <img
+                  class="imgabs ky11"
+                  data-aos="zoom-out"
+                  data-aos-duration="1000"
+                  src="../assets/poker/img_bg_ky_right.webp"
+                />
+              </template>
+            </div>
           </div>
-        </div>
-      </template>
+        </template>
+      </div>
     </div>
   </div>
+
   <GameModal ref="pokerGame"></GameModal>
 </template>
 
@@ -266,7 +345,7 @@ export default defineComponent({
           left: 15%;
           top: 6%;
           z-index: 3;
-          animation: 2s ease 0s 1 normal none running poker-circle-ani;
+          // animation: 2s ease 0s 1 normal none running poker-circle-ani;
         }
         &.tx3 {
           left: 0;
@@ -283,7 +362,7 @@ export default defineComponent({
             z-index: 999;
             color: #ffffff;
             text-align: center;
-            width: 30%;
+            width: 490px;
             font-size: 18px;
             line-height: 32px;
             text-align: center;
@@ -309,9 +388,9 @@ export default defineComponent({
         }
         &.tx6 {
           right: 12%;
-          bottom: 25%;
+          top: 13%;
           z-index: 5;
-          animation: 2s ease 0s 1 normal none running poker-circle-ani;
+          // animation: 2s ease 0s 1 normal none running poker-circle-ani;
         }
         &.tx7 {
           left: 0%;
@@ -332,9 +411,9 @@ export default defineComponent({
         }
         &.ky2 {
           left: 15%;
-          bottom: 10%;
-          z-index: 3;
-          animation: 2s ease 0s 1 normal none running poker-circle-ani;
+          top: 6%;
+          z-index: 0;
+          // animation: 2s ease 0s 1 normal none running poker-circle-ani;
         }
         &.kydice {
           left: 14%;
@@ -343,18 +422,18 @@ export default defineComponent({
         &.ky3 {
           left: 0;
           right: 0;
-          top: 45%;
+          top: 38%;
           margin: auto;
           &text {
             left: 0;
             right: 0;
             margin: auto;
-            top: 60%;
+            top: 52%;
             margin: auto;
             z-index: 999;
             color: #ffffff;
             text-align: center;
-            width: 30%;
+            width: 490px;
             font-size: 18px;
             line-height: 32px;
             text-align: center;
@@ -364,27 +443,29 @@ export default defineComponent({
         &.ky4 {
           left: 0;
           right: 0;
-          bottom: 68%;
+          top: 20%;
           margin: auto;
           z-index: 7;
         }
         &.ky5 {
           left: 0;
           right: 0;
-          bottom: 63%;
+          top: 32%;
           margin: auto;
           z-index: 6;
         }
         &.play-btn {
-          top: 70%;
+          top: 65%;
           left: 0;
           right: 0;
         }
         &.ky6 {
           right: 13%;
-          bottom: 12%;
+          top: 13%;
           z-index: 5;
-          animation: 2s ease 0s 1 normal none running poker-circle-ani;
+          // animation: 2s ease 0s 1 normal none running poker-circle-ani;
+        }
+        &.ky6a {
         }
         &.ky7 {
           left: 17%;

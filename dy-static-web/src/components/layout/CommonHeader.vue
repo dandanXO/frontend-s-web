@@ -135,103 +135,123 @@
     </div>
 
     <el-dialog
+      class="noPadding login-dialog"
       v-model="loginDialogVisible"
-      title="会员登录"
-      width="50%"
       align-center
-      style="max-width: 800px"
+      width="1280px"
+      style="max-width: 1200px"
       @close="store.loginPageVisible = false"
     >
-      <span>
-        <el-tabs>
-          <el-tab-pane label="账户登录">
-            <el-form
-              ref="loginRef"
-              :rules="loginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="用户名" prop="loginName">
-                <el-input v-model="loginForm.loginName" placeholder="输入用户名" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="密码" prop="password">
-                <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
-              </el-form-item>
-              <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input
-                      v-model="loginForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
-                      @keyup.enter="submitLogin"
-                    />
-                  </el-col>
-                  <el-col :span="12">
-                    <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="submitLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-          <el-tab-pane label="手机登录">
-            <el-form
-              ref="mobileLoginRef"
-              :rules="mobileLoginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
-                <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="code">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input v-model="loginForm.code" label="验证码" placeholder="验证码" @keyup.enter="phoneLogin" />
-                  </el-col>
-                  <el-col :span="12">
-                    <el-button
-                      v-if="loginCountdown === 0"
-                      @click="openCaptchaForm('LOGIN')"
-                      size="small"
-                      color="#3bafda"
-                    >
-                      发送验证码
-                    </el-button>
-                    <el-button v-else disabled size="small" class="common-btn">
-                      已发送（倒数{{ loginCountdown }}秒）
-                    </el-button>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="phoneLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-        </el-tabs>
-      </span>
+      <div class="login-container">
+        <div class="login-left">
+          <span>
+            <el-tabs>
+              <el-tab-pane label="账户登录">
+                <el-form
+                  ref="loginRef"
+                  :rules="loginRules"
+                  :model="loginForm"
+                  label-width="100"
+                  label-suffix=":"
+                  style="width: 100%; max-width: 400px; margin: 50px auto"
+                >
+                  <!-- <el-row>
+                    <el-col>
+                      <span class="title">会员登录</span>
+                    </el-col>
+                  </el-row> -->
+                  <el-form-item tabindex="1" label="用户名" prop="loginName">
+                    <el-input v-model="loginForm.loginName" placeholder="输入用户名" />
+                  </el-form-item>
+                  <el-form-item tabindex="2" label="密码" prop="password">
+                    <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
+                  </el-form-item>
+                  <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+                    <el-row :gutter="10" style="justify-content: center; align-items: center">
+                      <el-col :span="12">
+                        <el-input
+                          v-model="loginForm.captchaCode"
+                          label="验证码"
+                          placeholder="验证码"
+                          @keyup.enter="submitLogin"
+                        />
+                      </el-col>
+                      <el-col :span="12">
+                        <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                  <el-button
+                    :loading="loadingBtn"
+                    size="large"
+                    color="#3bafda"
+                    class="common-btn"
+                    style="margin-left: 100px"
+                    @click="submitLogin"
+                  >
+                    登录
+                  </el-button>
+                </el-form>
+              </el-tab-pane>
+              <el-tab-pane label="手机登录">
+                <el-form
+                  ref="mobileLoginRef"
+                  :rules="mobileLoginRules"
+                  :model="loginForm"
+                  label-width="100"
+                  label-suffix=":"
+                  style="width: 100%; max-width: 400px; margin: 50px auto"
+                >
+                  <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
+                    <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
+                  </el-form-item>
+                  <el-form-item tabindex="2" label="验证码" prop="code">
+                    <el-row :gutter="10" style="justify-content: center; align-items: center">
+                      <el-col :span="12">
+                        <el-input
+                          v-model="loginForm.code"
+                          label="验证码"
+                          placeholder="验证码"
+                          @keyup.enter="phoneLogin"
+                        />
+                      </el-col>
+                      <el-col :span="12">
+                        <el-button
+                          v-if="loginCountdown === 0"
+                          @click="openCaptchaForm('LOGIN')"
+                          size="small"
+                          color="#3bafda"
+                        >
+                          发送验证码
+                        </el-button>
+                        <el-button v-else disabled size="small" class="common-btn">
+                          已发送（倒数{{ loginCountdown }}秒）
+                        </el-button>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                  <el-button
+                    :loading="loadingBtn"
+                    size="large"
+                    color="#3bafda"
+                    class="common-btn"
+                    style="margin-left: 100px"
+                    @click="phoneLogin"
+                  >
+                    登录
+                  </el-button>
+                </el-form>
+              </el-tab-pane>
+            </el-tabs>
+          </span>
+        </div>
+        <div class="login-right">
+          <div class="title"></div>
+          <ul class="tips">
+            <li>注册立即畅游，精彩赛事尽在东赢电竞！</li>
+          </ul>
+        </div>
+      </div>
     </el-dialog>
 
     <el-dialog
@@ -1895,7 +1915,7 @@ body {
 
 .register-container {
   display: flex;
-  min-height: 90vh;
+  min-height: 70vh;
 
   .registered-left {
     background-image: url(../../assets/home/zc.jpg);
@@ -1929,6 +1949,67 @@ body {
     padding: 73px 44px;
     background: url(../../assets/images/index/reg-bg.jpg) no-repeat center center;
     background-size: cover;
+    .el-row {
+      width: 100%;
+    }
+    form .title {
+      height: 18px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #5075ad;
+      margin: 0 auto 30px;
+      width: 100%;
+      text-align: left;
+      display: block;
+      &.account {
+        margin-top: 52px;
+      }
+    }
+  }
+}
+
+.login-container {
+  display: flex;
+  min-height: 70vh;
+
+  .login-right {
+    background-image: url(../../assets/home/zc.jpg);
+    background-size: cover;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    flex: 1;
+    padding: 80px 30px;
+
+    ul {
+      text-align: left;
+      padding-left: 15px;
+      font-size: 16px;
+      line-height: 30px;
+      color: #ffffff;
+
+      li {
+        // list-style-type: decimal;
+      }
+    }
+
+    .title {
+      background-image: url(../../assets/home/right-title.png);
+      background-position: 100% 100%;
+      width: 107px;
+      height: 35px;
+    }
+  }
+  .login-left {
+    flex: 2;
+    padding: 73px 44px;
+    max-width: 600px;
+    background: url(../../assets/images/index/reg-bg.jpg) no-repeat center center;
+    background-size: cover;
+
+    .el-tabs {
+      // max-width: 500px;
+    }
     .el-row {
       width: 100%;
     }

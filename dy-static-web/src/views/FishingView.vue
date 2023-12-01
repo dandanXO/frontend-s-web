@@ -1,29 +1,32 @@
 <template>
-  <div class="game-container">
-    <canvas id="bubbleCanvas" class="bubble-wrapper"></canvas>
-    <div class="fish-box fish-box-1">
-      <div class="swim-fish swim-fish-1"></div>
-    </div>
-    <div class="fish-box fish-box-2">
-      <div class="swim-fish swim-fish-2"></div>
-    </div>
-    <div class="fish-box fish-box-3">
-      <div class="swim-fish swim-fish-3"></div>
-    </div>
-    <div class="fish-box fish-box-4">
-      <div class="swim-fish swim-fish-4"></div>
-    </div>
-    <div class="play-box" data-aos="zoom-in" data-aos-duration="700">
-      <div class="game-content">
-        <div class="fish5"></div>
-        <!--        <div class="fish1"></div>-->
+  <div class="platform__wrap">
+    <div class="game-container">
+      <canvas id="bubbleCanvas" class="bubble-wrapper"></canvas>
+      <div class="fish-box fish-box-1">
+        <div class="swim-fish swim-fish-1"></div>
       </div>
-      <div class="game-btn">
-        <button class="btn fish-begin" @click="openGame('GPS捕鱼', 'GPS', '7202')"></button>
-        <!--        <button class="btn fish-begin" @click="openGame('AG捕鱼', 'AG', '6')"></button>-->
+      <div class="fish-box fish-box-2">
+        <div class="swim-fish swim-fish-2"></div>
+      </div>
+      <div class="fish-box fish-box-3">
+        <div class="swim-fish swim-fish-3"></div>
+      </div>
+      <div class="fish-box fish-box-4">
+        <div class="swim-fish swim-fish-4"></div>
+      </div>
+      <div class="play-box">
+        <div class="game-content" data-aos="zoom-in" data-aos-duration="700">
+          <div class="fish5"></div>
+          <!--        <div class="fish1"></div>-->
+        </div>
+        <div class="game-btn" data-aos="zoom-in" data-aos-duration="700">
+          <button class="btn fish-begin" @click="openGame('GPS捕鱼', 'GPS', '7202')"></button>
+          <!--        <button class="btn fish-begin" @click="openGame('AG捕鱼', 'AG', '6')"></button>-->
+        </div>
       </div>
     </div>
   </div>
+
   <GameModal ref="fishingGame"></GameModal>
 </template>
 <script>
@@ -144,7 +147,8 @@ export default defineComponent({
 <style scoped lang="scss">
 // dy-fish
 .game-container {
-  height: 902px;
+  // height: 902px;
+  height: 85vh;
   // padding-top: 120px;
   z-index: 2;
   width: 100%;
@@ -154,12 +158,15 @@ export default defineComponent({
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .game-container .play-box {
-  position: absolute;
-  left: 10%;
+  // position: absolute;
+  // left: 10%;
   z-index: 3;
+  margin: auto;
 }
 
 .game-content {
@@ -170,6 +177,8 @@ export default defineComponent({
   justify-content: space-around;
   align-items: flex-end;
   z-index: 1;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .fish1 {
@@ -262,6 +271,9 @@ export default defineComponent({
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-end;
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .bubble-wrapper {
