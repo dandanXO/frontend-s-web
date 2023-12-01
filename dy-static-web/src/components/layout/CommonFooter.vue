@@ -346,13 +346,17 @@ export default defineComponent({
             padding: 10px 10px;
             color: $footer-link;
             text-decoration: none;
+          }
 
-            &:hover {
-              opacity: 0.9;
+          &:hover {
+            a {
+              color: #fff;
+              opacity: 0.8;
             }
-            &:active {
-              filter: brightness(0.9);
-            }
+          }
+          &:active {
+            filter: brightness(0.9);
+            transform: translate(0px, 1px);
           }
         }
       }

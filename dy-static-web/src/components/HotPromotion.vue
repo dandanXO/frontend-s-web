@@ -7,49 +7,20 @@
       :loading-claim="loadingClaim"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'"
-    />
-    <PrizePoolVotePromo
-      v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'"
-    />
-    <ESportSafetyPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'"
-    />
-    <SportSafetyPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'"
-    />
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
+    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
+    <ESportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'" />
+    <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
-    <GoldenEggPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token"
-    />
-    <HongBaoYuPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
-    />
-    <WelcomeTaskPromo
-      v-if="
-        !isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token
-      "
-    />
-    <InviteFriendPromo
-      v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
-    />
-    <EsportQuiz
-      v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"
-    ></EsportQuiz>
-    <LotteryPromo
-      v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"
-    ></LotteryPromo>
-    <GiftPromo
-      v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"
-    ></GiftPromo>
+    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
+    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
+    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
+    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
+    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
+    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
+    <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
 
-    <el-dialog
-      class="award-modal"
-      :modal="false"
-      v-model="privilegeClaimedModalVisible"
-      align-center
-    >
+    <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
           <div class="inner-contents">
@@ -235,8 +206,7 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "dy2-lottery" ||
       this.list.redirectUrl === "Dongying-quiz" ||
-      this.list.redirectUrl === "dy2-gift" ||
-      this.list.id === 40
+      this.list.redirectUrl === "dy2-gift"
     ) {
       this.isCommonPromo = false;
     } else {

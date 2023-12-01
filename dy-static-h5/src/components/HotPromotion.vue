@@ -12,7 +12,6 @@
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
-
     <UpcomingMatchPromo
       v-if="
         (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
@@ -147,8 +146,7 @@ export default defineComponent({
       this.list.redirectUrl === "nba-game" ||
       this.list.redirectUrl === "dy2-esport-safety" ||
       this.list.redirectUrl === "sport-safety" ||
-      this.list.redirectUrl === "dy2-gift" ||
-      this.list.id === 40
+      this.list.redirectUrl === "dy2-gift"
     ) {
       this.isCommonPromo = false;
     } else {

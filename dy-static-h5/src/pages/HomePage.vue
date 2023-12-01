@@ -154,7 +154,7 @@
         </q-carousel>
       </div>
 
-      <div class="midd">
+      <div class="midd" v-if="announcementList.length > 0">
         <div class="station-notice-wrapper">
           <div class="notice">
             <img src="../assets/index/home-announce-icon.png" width="18px" />

@@ -1,80 +1,66 @@
 <template>
-  <div class="game-container">
-    <div class="game-tab-content">
-      <div class="pane-bg"></div>
+  <div class="platform__wrap">
+    <div class="game-container">
+      <div class="game-tab-content">
+        <div class="pane-bg"></div>
 
-      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
-        <template v-if="selectedPlat === det.code">
-          <div
-            :class="'lottery-pane-bg lottery-pane-' + det.image + '-bg'"
-            data-aos="zoom-in"
-            data-aos-duration="700"
-          >
-            <div :class="det.image + '-effect-left'"></div>
-            <div :class="det.image + '-effect-right'"></div>
-          </div>
-          <div
-            class="lottery-pane-right"
-            data-aos="fade-down"
-            data-aos-duration="700"
-          >
-            <img
-              class="title"
-              :src="require('../assets/lottery/' + det.image + '-title.webp')"
-            />
-            <p class="context">
-              {{ det.message }}
-            </p>
-            <div class="type-icon">
-              <template v-if="det.code === 'TCG'">
-                <img src="../assets/lottery/img_1.5.webp" />
-                <img src="../assets/lottery/img_five.webp" />
-                <img src="../assets/lottery/img_eleven.webp" />
-                <img src="../assets/lottery/img_bjpk.webp" />
-                <img src="../assets/lottery/img_time.webp" />
-              </template>
-              <template v-if="det.code === 'BBINDY'">
-                <img src="../assets/lottery/img_3d.webp" />
-                <img src="../assets/lottery/img_bbpk10.webp" />
-                <img src="../assets/lottery/img_cq.webp" />
-                <img src="../assets/lottery/img_k3.webp" />
-                <img src="../assets/lottery/img_pink11.webp" />
-              </template>
-              <template v-if="det.code === 'SGWin'">
-                <img src="../assets/lottery/img_sgwin-004.png" />
-                <img src="../assets/lottery/img_sgwin-001.png" />
-                <img src="../assets/lottery/img_sgwin-002.png" />
-                <img src="../assets/lottery/img_sgwin-003.png" />
-              </template>
-            </div>
-            <button
-              class="btn linear-blue"
-              @click="openGame(det.name, det.code, det.gameCode)"
+        <template v-for="(det, idx) in filteredPlatforms" :key="idx">
+          <template v-if="selectedPlat === det.code">
+            <div
+              :class="'lottery-pane-bg lottery-pane-' + det.image + '-bg'"
+              data-aos="zoom-in"
+              data-aos-duration="700"
             >
-              进入游戏
-            </button>
-          </div>
+              <div :class="det.image + '-effect-left'"></div>
+              <div :class="det.image + '-effect-right'"></div>
+            </div>
+            <div class="lottery-pane-right" data-aos="fade-down" data-aos-duration="700">
+              <img class="title" :src="require('../assets/lottery/' + det.image + '-title.webp')" />
+              <p class="context">
+                {{ det.message }}
+              </p>
+              <div class="type-icon">
+                <template v-if="det.code === 'TCG'">
+                  <img src="../assets/lottery/img_1.5.webp" />
+                  <img src="../assets/lottery/img_five.webp" />
+                  <img src="../assets/lottery/img_eleven.webp" />
+                  <img src="../assets/lottery/img_bjpk.webp" />
+                  <img src="../assets/lottery/img_time.webp" />
+                </template>
+                <template v-if="det.code === 'BBINDY'">
+                  <img src="../assets/lottery/img_3d.webp" />
+                  <img src="../assets/lottery/img_bbpk10.webp" />
+                  <img src="../assets/lottery/img_cq.webp" />
+                  <img src="../assets/lottery/img_k3.webp" />
+                  <img src="../assets/lottery/img_pink11.webp" />
+                </template>
+                <template v-if="det.code === 'SGWin'">
+                  <img src="../assets/lottery/img_sgwin-004.png" />
+                  <img src="../assets/lottery/img_sgwin-001.png" />
+                  <img src="../assets/lottery/img_sgwin-002.png" />
+                  <img src="../assets/lottery/img_sgwin-003.png" />
+                </template>
+              </div>
+              <button class="btn linear-blue" @click="openGame(det.name, det.code, det.gameCode)">进入游戏</button>
+            </div>
+          </template>
         </template>
-      </template>
+      </div>
+      <ul class="nav nav-tabs lottery-tabs" id="myTab" role="tablist">
+        <template v-for="(det, idx) in filteredPlatforms" :key="idx">
+          <li class="nav-item custom-nav-item">
+            <a
+              :class="['nav-link', 'custom-nav-link', det.image + '-nav-link', { active: selectedPlat === det.code }]"
+              @click="selectedPlat !== det.code && clickPlat(det.code)"
+            >
+              {{ det.name }}彩票
+            </a>
+          </li>
+        </template>
+      </ul>
     </div>
-    <ul class="nav nav-tabs lottery-tabs" id="myTab" role="tablist">
-      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
-        <li class="nav-item custom-nav-item">
-          <a
-            :class="[
-              'nav-link',
-              'custom-nav-link',
-              det.image + '-nav-link',
-              { active: selectedPlat === det.code }
-            ]"
-            @click="selectedPlat !== det.code && clickPlat(det.code)"
-          >
-            {{ det.name }}彩票
-          </a>
-        </li>
-      </template>
-    </ul>
   </div>
+
   <GameModal ref="liveGame"></GameModal>
 </template>
 
@@ -84,10 +70,7 @@ import aos from "aos";
 import GameModal from "@/components/modal/GameModal";
 import { useRoute, useRouter } from "vue-router";
 import { TweenMax } from "gsap";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -134,17 +117,13 @@ export default defineComponent({
       if (store.memberType === "TEST") {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LOTTERY")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LOTTERY"));
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LOTTERY")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LOTTERY"));
           setFilteredPlatforms();
         });
       }
@@ -152,9 +131,7 @@ export default defineComponent({
 
     const setFilteredPlatforms = () => {
       filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === displayPlatform.code
-        )
+        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
 
       filteredPlatforms.value.forEach((element) => {
@@ -296,11 +273,11 @@ export default defineComponent({
 .lottery-tabs {
   position: relative;
   padding: 0 0 70px 10px;
-  justify-content: flex-start;
+  justify-content: center;
   border: none;
   display: flex;
   gap: 34px;
-  // max-width: 500px;
+  max-width: 720px;
 
   li {
     list-style-type: none;
@@ -316,8 +293,7 @@ export default defineComponent({
   cursor: pointer;
   width: 222px;
   height: 75px;
-  background-image: linear-gradient(0deg, #f2f2f2 0%, #fefefe 100%),
-    linear-gradient(#000000, #000000);
+  background-image: linear-gradient(0deg, #f2f2f2 0%, #fefefe 100%), linear-gradient(#000000, #000000);
   background-blend-mode: normal, normal;
   box-shadow: 0px 6px 20px 2px rgba(103, 204, 255, 0.75);
   border-radius: 6px !important;
@@ -389,8 +365,7 @@ export default defineComponent({
 }
 
 .custom-nav-link:hover {
-  background-image: linear-gradient(90deg, #2d74f6 0%, #7abdfc 100%),
-    linear-gradient(#000000, #000000);
+  background-image: linear-gradient(90deg, #2d74f6 0%, #7abdfc 100%), linear-gradient(#000000, #000000);
   background-blend-mode: normal, normal;
   box-shadow: 0px 6px 20px 2px rgba(103, 204, 255, 0.75);
 }
@@ -398,8 +373,7 @@ export default defineComponent({
 .custom-nav-link:hover,
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .custom-nav-link.active {
-  background-image: linear-gradient(90deg, #2d74f6 0%, #7abdfc 100%),
-    linear-gradient(#000000, #000000);
+  background-image: linear-gradient(90deg, #2d74f6 0%, #7abdfc 100%), linear-gradient(#000000, #000000);
   background-blend-mode: normal, normal;
   box-shadow: 0px 6px 20px 2px rgba(103, 204, 255, 0.75);
 }
@@ -540,8 +514,7 @@ export default defineComponent({
 }
 
 .linear-blue {
-  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-    linear-gradient(#000, #000);
+  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
   background-blend-mode: normal, normal;
   border-radius: 26px;
   border: none;

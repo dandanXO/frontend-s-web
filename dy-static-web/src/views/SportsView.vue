@@ -1,53 +1,42 @@
 <template>
-  <div class="sports-container">
-    <div class="sport-platform-bg bg-circle"></div>
-    <div class="sport-platform-bg bg-wave"></div>
-    <div class="sports-container-inner">
-      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
-        <template v-if="selectedPlat === det.code">
-          <div
-            class="sports-right"
-            data-aos="fade-right"
-            data-aos-duration="4000"
-          >
-            <img
-              :src="
-                require('../assets/sports/sport_left_' + det.image + '.webp')
-              "
-            />
-          </div>
-          <div class="sports-left">
-            <div class="platform-list-box">
-              <span
-                class="platform-list-item platform"
-                v-for="(plat, i) in filteredPlatforms"
-                :key="i"
-                @click="clickPlat(plat)"
-                :class="{ active: selectedPlat === plat.code }"
-              >
-                {{ plat.name }}
-              </span>
+  <div class="platform__wrap">
+    <div class="sports-container">
+      <div class="sport-platform-bg bg-circle"></div>
+      <div class="sport-platform-bg bg-wave"></div>
+      <div class="sports-container-inner">
+        <template v-for="(det, idx) in filteredPlatforms" :key="idx">
+          <template v-if="selectedPlat === det.code">
+            <div class="sports-right" data-aos="fade-right" data-aos-duration="4000">
+              <img :src="require('../assets/sports/sport_left_' + det.image + '.webp')" />
             </div>
-            <div class="" data-aos="fade-left" data-aos-duration="4000">
-              <img
-                :src="
-                  require('../assets/sports/txt_' + det.image + '_sport.png')
-                "
-              />
-              <div class="platform-txt-box">
-                <div>
-                  <div class="platform-txt-list-content">{{ det.message }}</div>
+            <div class="sports-left">
+              <div class="platform-list-box">
+                <span
+                  class="platform-list-item platform"
+                  v-for="(plat, i) in filteredPlatforms"
+                  :key="i"
+                  @click="clickPlat(plat)"
+                  :class="{ active: selectedPlat === plat.code }"
+                >
+                  {{ plat.name }}
+                </span>
+              </div>
+              <div class="" data-aos="fade-left" data-aos-duration="4000">
+                <img :src="require('../assets/sports/txt_' + det.image + '_sport.png')" />
+                <div class="platform-txt-box">
+                  <div>
+                    <div class="platform-txt-list-content">{{ det.message }}</div>
+                  </div>
                 </div>
-              </div>
-              <div class="play-btn" @click="openGame(det.name, det.code)">
-                立即投注
+                <div class="play-btn" @click="openGame(det.name, det.code)">立即投注</div>
               </div>
             </div>
-          </div>
+          </template>
         </template>
-      </template>
+      </div>
     </div>
   </div>
+
   <GameModal ref="sportsGame"></GameModal>
 </template>
 
@@ -55,10 +44,7 @@
 import { defineComponent, ref, onMounted, watch } from "vue";
 import GameModal from "@/components/modal/GameModal";
 import { useRoute, useRouter } from "vue-router";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -89,12 +75,13 @@ export default defineComponent({
       //   link: "/games/pm-sport.html"
       // }
       {
-        code: 'SABA',
-        name: 'SABA',
-        image: 'saba',
-        message: '覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 不会让您错过任何自己最喜爱的体育赛事',
-        link: '/games/cr-sport.html'
-      },
+        code: "SABA",
+        name: "SABA",
+        image: "saba",
+        message:
+          "覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 不会让您错过任何自己最喜爱的体育赛事",
+        link: "/games/cr-sport.html"
+      }
       // {
       //   code: 'CR',
       //   name: 'CR',
@@ -111,17 +98,13 @@ export default defineComponent({
       if (store.memberType === "TEST") {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("SPORT")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("SPORT")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
           setFilteredPlatforms();
         });
       }
@@ -129,9 +112,7 @@ export default defineComponent({
 
     const setFilteredPlatforms = () => {
       filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === displayPlatform.code
-        )
+        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
 
       filteredPlatforms.value.forEach((element) => {
@@ -195,9 +176,11 @@ export default defineComponent({
 <style scoped lang="scss">
 .sports-container {
   background-image: url(../assets/sports/sport_bg.webp);
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: top center;
   width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
   letter-spacing: 0;
@@ -249,8 +232,7 @@ export default defineComponent({
         display: block;
         width: 198px;
         height: 52px;
-        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-          linear-gradient(#000, #000);
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
         background-blend-mode: normal, normal;
         border-radius: 26px;
         color: #fff;
@@ -279,8 +261,7 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%),
-        linear-gradient(#000, #000);
+      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%), linear-gradient(#000, #000);
       border: none;
       font-size: 16px;
       font-weight: 400;
@@ -293,8 +274,7 @@ export default defineComponent({
       border-radius: 26px;
       &.active,
       &:hover {
-        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-          linear-gradient(#000, #000);
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
         box-shadow: 0 6px 20px 2px rgba(103, 204, 255, 0.75);
         border: none;
         color: #fff;
