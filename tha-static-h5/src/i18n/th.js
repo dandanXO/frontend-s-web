@@ -461,7 +461,23 @@ export default {
     spinRemaining: "คุณมี {spinCount} ตั๋วที่หมุนได้",
     loginToCont: "เข้าสู่ระบบเพื่อดำเนินการต่อ",
     you_got_new_spin_wheel_spin: "ขอแสดงความยินดีด้วย ! คุณได้รับตั๋วหมุนวงล้อ",
-    go_now: "หมุนเดี๋ยวนี้"
+    go_now: "หมุนเดี๋ยวนี้",
+    step_to_download_android: "ขั้นตอนการดาวน์โหลดแอพ สำหรับแอนดรอยด์",
+    step_to_download_ios: "ขั้นตอนการดาวน์โหลดแอพ สำหรับ IOS",
+    goto_webpage: "เข้าไปที่หน้าเว็บ",
+    goto_apppage_then_press_download_or_scan_qr:
+      "กดทีหน้า <em>apps</em> จากนั้นกด <em>download</em> หรือสแกน <em>Qr Code</em>",
+    click_download: "คลิก <em>download</em>",
+    click_download_anyway: "คลิก <em>download anyway</em>",
+    after_download_goto_file_manager: "หลังจาก ดาวน์โหลดแล้ว ให้เข้าไปที่การ ตัวจัดการไฟว์ เพื่อทำการติดตั้ง.",
+    after_click_into_file_select_proceed: "หลังคลิกเข้าไฟว์มาแล้ว ให้เลือกที่ แอพ เพื่อทำการติดตั้ง.",
+    please_install_to_proceed: "กดติดตั้ง เพื่อทำการติดตั้งแอพ.",
+    after_install_success_on_member_wallpaper_page:
+      "หลังจากที่การติดตั้งสำเร็จ แอพพลิเคชั่นจะอยู่ที่หน้าวอลเปเปอร์สมาชิกสมาชิก สามารถสนุกกับ <em>Jolly88</em> ได้ตลอด <em>24</em> ชม.",
+    click_continue_and_allow: "คลิก 'ดำเนินการต่อ', แล้วคลิก 'อนุญาต'",
+    after_success_go_to_setting: "หลังจากดาวน์โหลด สำเร็จให้เข้าไปที่การตั้งค่า เพื่อติดตั้งแอพ.",
+    press_install: "กด 'โปรไฟล์ดาวน์โหลด' แล้วกด 'ติดตั้ง.",
+    after_success_you_click_join_and_have_fun: "หลังจากติดตั้งสำเร็จ สามารถคลิกเพื่อ \n" + "ร่วมสนุกกับเราได้ทันทีค่ะ"
   },
   error: {
     101: "ไม่พบแพลตฟอร์ม",
