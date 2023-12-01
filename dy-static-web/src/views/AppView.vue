@@ -7,25 +7,13 @@
             <!-- <img class="bgimg" :class="det.image" :src="require('../assets/app/left_person_' + det.image + '.webp')"> -->
             <div class="app-item-box">
               <img v-if="det.code === 'QZ'" src="../assets/app/all_left.png" />
-              <img
-                v-if="det.code === 'DJ'"
-                src="../assets/app/esport_left.png"
-              />
-              <img
-                v-if="det.code === 'TY'"
-                src="../assets/app/sport_left.png"
-              />
+              <img v-if="det.code === 'DJ'" src="../assets/app/esport_left.png" />
+              <img v-if="det.code === 'TY'" src="../assets/app/sport_left.png" />
             </div>
             <div class="app-item-box">
               <img v-if="det.code === 'QZ'" src="../assets/app/all_right.png" />
-              <img
-                v-if="det.code === 'DJ'"
-                src="../assets/app/esport_right.png"
-              />
-              <img
-                v-if="det.code === 'TY'"
-                src="../assets/app/sport_right.png"
-              />
+              <img v-if="det.code === 'DJ'" src="../assets/app/esport_right.png" />
+              <img v-if="det.code === 'TY'" src="../assets/app/sport_right.png" />
             </div>
           </div>
           <div class="app-left">
@@ -63,10 +51,7 @@
                     <br />
                     安卓纯原生手机客户端
                   </div>
-                  <a
-                    class="app-url"
-                    :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"
-                  >
+                  <a class="app-url" :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`">
                     {{ downloadUrl }}
                   </a>
                 </div>
@@ -79,10 +64,7 @@
                     <br />
                     免下载访问
                   </div>
-                  <a
-                    class="app-url"
-                    :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"
-                  >
+                  <a class="app-url" :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`">
                     {{ downloadUrl }}
                   </a>
                 </div>
@@ -389,8 +371,7 @@ export default defineComponent({
         display: block;
         width: 198px;
         height: 52px;
-        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-          linear-gradient(#000, #000);
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
         background-blend-mode: normal, normal;
         border-radius: 26px;
         color: #fff;
@@ -627,8 +608,7 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%),
-        linear-gradient(#000, #000);
+      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%), linear-gradient(#000, #000);
       border: none;
       font-size: 16px;
       font-weight: 400;
@@ -641,8 +621,7 @@ export default defineComponent({
       border-radius: 26px;
       &.active,
       &:hover {
-        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-          linear-gradient(#000, #000);
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
         box-shadow: 0 6px 20px 2px rgba(103, 204, 255, 0.75);
         border: none;
         color: #fff;
