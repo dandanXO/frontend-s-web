@@ -194,7 +194,7 @@
               :src="qrDialogControl.dialogQRIcon1"
               alt="Icon"
               class="center-icon"
-            />
+            >
           </div>
         </div>
         <div>
@@ -219,7 +219,7 @@
 </template>
 <script setup>
 import { useStore } from '@/store'
-import { nextTick, onMounted, reactive, ref } from '@vue/runtime-core'
+import { nextTick, onMounted, reactive } from '@vue/runtime-core'
 import { getAffiliateInfo } from '../../../../api/affiliate'
 import { getConfigs } from '../../../../api/system-config'
 import { getShortLink } from '../../../../api/affiliate-short-link'
@@ -232,8 +232,6 @@ import { generateRandomAlphaNumeric } from '@/utils/utils'
 const store = useStore()
 // eslint-disable-next-line
 const { t } = useI18n()
-const link = ref('')
-// const appLink = ref('')
 
 const linkDiaglogControl = reactive({
   dialogVisible: false,
