@@ -1,28 +1,34 @@
 export default {
   common: {
-    title: 'TF Dashboard',
-    logout: 'Logout',
-    changePassword: 'Change Password',
+    title: 'TF แดชบอร์ด',
+    logout: 'ออกจากระบบ',
+    changePassword: 'เปลี่ยนรหัสผ่าน',
   },
   affiliate: {
     commissionModel: {
-      NORMAL: 'Nomal',
-      SIMPLE: 'Simple',
+      NORMAL: 'ปกติ',
+      SIMPLE: 'ทั่วไป',
     },
     level: {
-      AFFILIATE: 'Affiliate',
+      AFFILIATE: 'พันธมิตร',
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
-      CHIEF_AFFILIATE: 'Chief Affiliate',
+      CHIEF_AFFILIATE: 'หัวหน้าพันธมิตร', // 这里添加了 Chief Affiliate 的泰语翻译
     },
     timeType: {
-      MONTHLY: 'Monthly',
-      WEEKLY: 'Weekly',
+      MONTHLY: 'รายเดือน',
+      WEEKLY: 'รายสัปดาห์',
     },
     status: {
       APPLY: 'Apply',
-      NORMAL: 'Normal',
-      DISABLE: 'Disable',
+      DISABLE: 'ปิดการใช้งาน',
+      TEMPORARY: 'ชั่วคราว',
+      PERMANENT: 'ถาวร',
+      GAME_VIOLATION: 'การละเมิดเกม',
+      MEMBER_REQUEST: 'คำขอเป็นสมาชิก',
+      OTHERS: 'อื่นๆ',
+      TEST: 'ทดสอบ',
+      OUTSIDE: 'ด้านนอก',
     },
   },
   types: {
