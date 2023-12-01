@@ -371,6 +371,7 @@ export default {
     cause: 'Cause',
     changeAffiliate: 'Change Affiliate',
     check: 'REVIEW',
+    checkall: 'Check All',
     checkBy: 'Check By',
     checkDate: 'Check Date',
     checkExclusiveUrl: 'Check Exclusive Url',
