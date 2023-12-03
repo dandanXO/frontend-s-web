@@ -834,7 +834,7 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=77">
+<!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
               โบนัส
@@ -844,7 +844,7 @@
               ถอนไม่อั้น
             </span>
           </div>
-        </router-link>
+        </router-link>-->
         <router-link to="/promo?id=78">
           <div class="popup-item">
             <span>
@@ -856,14 +856,14 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=79">
+<!--        <router-link to="/promo?id=79">
           <div class="popup-item">
             <span>
               ประกันยอดเสีย
               <em>10,000</em>
             </span>
           </div>
-        </router-link>
+        </router-link>-->
       </div>
     </div>
   </q-dialog>
