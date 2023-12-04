@@ -537,6 +537,10 @@ async function attachFile(event) {
     formData.append('appType', form.appType)
     formData.append('extension', fileExtension)
     uploadedApp.filePath = URL.createObjectURL(files)
+    ElMessage({
+      message: t('siteAppVersion.fileUploadedSuccessfully'),
+      type: 'success',
+    })
     return await uploadApp(formData, fileExtension)
   }
 }
