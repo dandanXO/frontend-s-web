@@ -1,200 +1,91 @@
 <template>
-  <div class="live-container">
-    <div class="live-bg bg-circle"></div>
-    <div class="live-bg bg-wave"></div>
-    <div class="live-container-inner">
-      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
-        <template :class="active" v-if="selectedPlat === det.code">
-          <div class="live-right fade-right">
-            <img
-              class="bgimg"
-              :class="det.image"
-              :src="
-                require('../assets/live/left_person_' + det.image + '.webp')
-              "
-            />
-            <template v-if="det.code === 'PMLIVE'">
-              <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp" />
-              <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp" />
+  <div class="platofrm__wrap">
+    <div class="live-container">
+      <div class="live-bg bg-circle"></div>
+      <div class="live-bg bg-wave"></div>
+      <div class="live-container-inner">
+        <template v-for="(det, idx) in filteredPlatforms" :key="idx">
+          <template :class="active" v-if="selectedPlat === det.code">
+            <div class="live-right fade-right">
               <img
-                class="imgabs img-down-up fag1"
-                src="../assets/live/left_float_ag_1.webp"
+                class="bgimg"
+                :class="det.image"
+                :src="require('../assets/live/left_person_' + det.image + '.webp')"
               />
-              <img
-                class="imgabs img-down-up fag2"
-                src="../assets/live/left_float_ag_2.webp"
-              />
-            </template>
-            <template v-if="det.code === 'AG'">
-              <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp" />
-              <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp" />
-              <img
-                class="imgabs img-down-up fag1"
-                src="../assets/live/left_float_ag_1.webp"
-              />
-              <img
-                class="imgabs img-down-up fag2"
-                src="../assets/live/left_float_ag_2.webp"
-              />
-            </template>
-            <template v-if="det.code === 'ALLBET'">
-              <img
-                class="imgabs allbet1"
-                src="../assets/live/left_bg_allbet_1.webp"
-              />
-              <img
-                class="imgabs allbet2"
-                src="../assets/live/left_bg_allbet_2.webp"
-              />
-              <img
-                class="imgabs allbet3"
-                src="../assets/live/left_bg_allbet_3.webp"
-              />
-              <img
-                class="imgabs img-down-up fallbet1"
-                src="../assets/live/left_float_allbet_1.webp"
-              />
-              <img
-                class="imgabs img-down-up fallbet2"
-                src="../assets/live/left_float_allbet_2.webp"
-              />
-            </template>
-            <template v-if="det.code === 'BBINDY'">
-              <img
-                class="imgabs bbin1"
-                src="../assets/live/left_bg_bbin_1.webp"
-              />
-              <img
-                class="imgabs bbin2"
-                src="../assets/live/left_bg_bbin_2.webp"
-              />
-              <img
-                class="imgabs img-right-left fbbin5"
-                src="../assets/live/left_float_bbin_5.webp"
-              />
-              <img
-                class="imgabs img-down-up fbbin4"
-                src="../assets/live/left_float_bbin_4.webp"
-              />
-              <img
-                class="imgabs img-right-left fbbin3"
-                src="../assets/live/left_float_bbin_3.webp"
-              />
-              <img
-                class="imgabs img-left-right fbbin2"
-                src="../assets/live/left_float_bbin_2.webp"
-              />
-              <img
-                class="imgabs img-right-left fbbin1"
-                src="../assets/live/left_float_bbin_1.webp"
-              />
-              <img
-                class="imgabs img-left-right fbbin6"
-                src="../assets/live/left_float_bbin_6.webp"
-              />
-              <img
-                class="imgabs img-right-left fbbin7"
-                src="../assets/live/left_float_bbin_7.webp"
-              />
-            </template>
-            <template v-if="det.code === 'SEXY'">
-              <img
-                class="imgabs allbet1"
-                src="../assets/live/left_bg_allbet_1.webp"
-              />
-              <img
-                class="imgabs allbet2"
-                src="../assets/live/left_bg_allbet_2.webp"
-              />
-              <img
-                class="imgabs allbet3"
-                src="../assets/live/left_bg_allbet_3.webp"
-              />
-              <img
-                class="imgabs img-down-up fallbet1"
-                src="../assets/live/left_float_allbet_1.webp"
-              />
-              <img
-                class="imgabs img-down-up fallbet2"
-                src="../assets/live/left_float_allbet_2.webp"
-              />
-            </template>
-            <template v-if="det.code === 'BG'">
-              <img
-                class="imgabs bbin1"
-                src="../assets/live/left_bg_bbin_1.webp"
-              />
-              <img
-                class="imgabs bbin2"
-                src="../assets/live/left_bg_bbin_2.webp"
-              />
-              <img
-                class="imgabs img-right-left fbbin5"
-                src="../assets/live/left_float_bbin_5.webp"
-              />
-              <img
-                class="imgabs img-down-up fbbin4"
-                src="../assets/live/left_float_bbin_4.webp"
-              />
-              <img
-                class="imgabs img-right-left fbbin3"
-                src="../assets/live/left_float_bbin_3.webp"
-              />
-              <img
-                class="imgabs img-left-right fbbin2"
-                src="../assets/live/left_float_bbin_2.webp"
-              />
-              <img
-                class="imgabs img-right-left fbbin1"
-                src="../assets/live/left_float_bbin_1.webp"
-              />
-              <img
-                class="imgabs img-left-right fbbin6"
-                src="../assets/live/left_float_bbin_6.webp"
-              />
-              <img
-                class="imgabs img-right-left fbbin7"
-                src="../assets/live/left_float_bbin_7.webp"
-              />
-            </template>
-          </div>
-          <div class="live-left">
-            <div class="platform-list-box">
-              <span
-                class="platform-list-item platform"
-                v-for="(plat, i) in filteredPlatforms"
-                :key="i"
-                @click="clickPlat(plat)"
-                :class="{ active: selectedPlat === plat.code }"
-              >
-                {{ plat.name }}平台
-              </span>
+              <template v-if="det.code === 'PMLIVE'">
+                <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp" />
+                <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp" />
+                <img class="imgabs img-down-up fag1" src="../assets/live/left_float_ag_1.webp" />
+                <img class="imgabs img-down-up fag2" src="../assets/live/left_float_ag_2.webp" />
+              </template>
+              <template v-if="det.code === 'AG'">
+                <img class="imgabs ag1" src="../assets/live/left_bg_ag_1.webp" />
+                <img class="imgabs ag2" src="../assets/live/left_bg_ag_2.webp" />
+                <img class="imgabs img-down-up fag1" src="../assets/live/left_float_ag_1.webp" />
+                <img class="imgabs img-down-up fag2" src="../assets/live/left_float_ag_2.webp" />
+              </template>
+              <template v-if="det.code === 'ALLBET'">
+                <img class="imgabs allbet1" src="../assets/live/left_bg_allbet_1.webp" />
+                <img class="imgabs allbet2" src="../assets/live/left_bg_allbet_2.webp" />
+                <img class="imgabs allbet3" src="../assets/live/left_bg_allbet_3.webp" />
+                <img class="imgabs img-down-up fallbet1" src="../assets/live/left_float_allbet_1.webp" />
+                <img class="imgabs img-down-up fallbet2" src="../assets/live/left_float_allbet_2.webp" />
+              </template>
+              <template v-if="det.code === 'BBINDY'">
+                <img class="imgabs bbin1" src="../assets/live/left_bg_bbin_1.webp" />
+                <img class="imgabs bbin2" src="../assets/live/left_bg_bbin_2.webp" />
+                <img class="imgabs img-right-left fbbin5" src="../assets/live/left_float_bbin_5.webp" />
+                <img class="imgabs img-down-up fbbin4" src="../assets/live/left_float_bbin_4.webp" />
+                <img class="imgabs img-right-left fbbin3" src="../assets/live/left_float_bbin_3.webp" />
+                <img class="imgabs img-left-right fbbin2" src="../assets/live/left_float_bbin_2.webp" />
+                <img class="imgabs img-right-left fbbin1" src="../assets/live/left_float_bbin_1.webp" />
+                <img class="imgabs img-left-right fbbin6" src="../assets/live/left_float_bbin_6.webp" />
+                <img class="imgabs img-right-left fbbin7" src="../assets/live/left_float_bbin_7.webp" />
+              </template>
+              <template v-if="det.code === 'SEXY'">
+                <img class="imgabs allbet1" src="../assets/live/left_bg_allbet_1.webp" />
+                <img class="imgabs allbet2" src="../assets/live/left_bg_allbet_2.webp" />
+                <img class="imgabs allbet3" src="../assets/live/left_bg_allbet_3.webp" />
+                <img class="imgabs img-down-up fallbet1" src="../assets/live/left_float_allbet_1.webp" />
+                <img class="imgabs img-down-up fallbet2" src="../assets/live/left_float_allbet_2.webp" />
+              </template>
+              <template v-if="det.code === 'BG'">
+                <img class="imgabs bbin1" src="../assets/live/left_bg_bbin_1.webp" />
+                <img class="imgabs bbin2" src="../assets/live/left_bg_bbin_2.webp" />
+                <img class="imgabs img-right-left fbbin5" src="../assets/live/left_float_bbin_5.webp" />
+                <img class="imgabs img-down-up fbbin4" src="../assets/live/left_float_bbin_4.webp" />
+                <img class="imgabs img-right-left fbbin3" src="../assets/live/left_float_bbin_3.webp" />
+                <img class="imgabs img-left-right fbbin2" src="../assets/live/left_float_bbin_2.webp" />
+                <img class="imgabs img-right-left fbbin1" src="../assets/live/left_float_bbin_1.webp" />
+                <img class="imgabs img-left-right fbbin6" src="../assets/live/left_float_bbin_6.webp" />
+                <img class="imgabs img-right-left fbbin7" src="../assets/live/left_float_bbin_7.webp" />
+              </template>
             </div>
-            <div class="fade-left">
-              <img
-                :src="require('../assets/live/txt_desc_' + det.image + '.webp')"
-              />
-              <div class="platform-txt-box">
-                <div>
-                  <img
-                    :src="
-                      require('../assets/live/live_' +
-                        det.image +
-                        '_icons.webp')
-                    "
-                  />
+            <div class="live-left">
+              <div class="platform-list-box">
+                <span
+                  class="platform-list-item platform"
+                  v-for="(plat, i) in filteredPlatforms"
+                  :key="i"
+                  @click="clickPlat(plat)"
+                  :class="{ active: selectedPlat === plat.code }"
+                >
+                  {{ plat.name }}平台
+                </span>
+              </div>
+              <div class="fade-left">
+                <img :src="require('../assets/live/txt_desc_' + det.image + '.webp')" />
+                <div class="platform-txt-box">
+                  <div>
+                    <img :src="require('../assets/live/live_' + det.image + '_icons.webp')" />
+                  </div>
                 </div>
-              </div>
-              <div
-                class="play-btn"
-                @click="openGame(det.name, det.code, det.gameCode)"
-              >
-                立即投注
+                <div class="play-btn" @click="openGame(det.name, det.code, det.gameCode)">立即投注</div>
               </div>
             </div>
-          </div>
+          </template>
         </template>
-      </template>
+      </div>
     </div>
   </div>
   <GameModal ref="liveGame"></GameModal>
@@ -205,10 +96,7 @@ import { defineComponent, ref, onMounted, watch } from "vue";
 import GameModal from "@/components/modal/GameModal";
 import aos from "aos";
 import { useRoute, useRouter } from "vue-router";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -276,17 +164,13 @@ export default defineComponent({
       if (store.memberType === "TEST") {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LIVE")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LIVE")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
           setFilteredPlatforms();
         });
       }
@@ -294,9 +178,7 @@ export default defineComponent({
 
     const setFilteredPlatforms = () => {
       filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === displayPlatform.code
-        )
+        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
 
       filteredPlatforms.value.forEach((element) => {
@@ -485,6 +367,7 @@ export default defineComponent({
   background-position: top center;
   background-size: cover;
   width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
   letter-spacing: 0;
@@ -545,8 +428,7 @@ export default defineComponent({
         display: block;
         width: 198px;
         height: 52px;
-        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-          linear-gradient(#000, #000);
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
         background-blend-mode: normal, normal;
         border-radius: 26px;
         color: #fff;
@@ -579,18 +461,25 @@ export default defineComponent({
         display: block;
         position: relative;
         z-index: 1;
+        margin-top: 60px;
+        margin-right: 50px;
+        height: 750px;
 
         &.allbet,
         &.bbin {
-          margin-top: 50px;
+          // margin-top: 50px;
         }
 
         &.allbet {
-          margin-right: 40px;
+          // margin-right: 40px;
         }
 
         &.bbin {
-          margin-right: 100px;
+          // margin-right: 100px;
+        }
+
+        &.ag {
+          margin-right: 20px;
         }
       }
 
@@ -606,7 +495,7 @@ export default defineComponent({
 
       .ag2 {
         bottom: 4%;
-        right: -5%;
+        right: 0%;
       }
 
       .fag1 {
@@ -626,7 +515,7 @@ export default defineComponent({
 
       .allbet2 {
         bottom: 10%;
-        right: -18%;
+        right: -10%;
       }
 
       .allbet3 {
@@ -650,8 +539,8 @@ export default defineComponent({
       }
 
       .bbin2 {
-        bottom: 16%;
-        right: -20%;
+        bottom: 10%;
+        right: -14%;
       }
 
       .fbbin1 {
@@ -766,8 +655,7 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%),
-        linear-gradient(#000, #000);
+      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%), linear-gradient(#000, #000);
       border: none;
       font-size: 16px;
       font-weight: 400;
@@ -781,8 +669,7 @@ export default defineComponent({
 
       &.active,
       &:hover {
-        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-          linear-gradient(#000, #000);
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
         box-shadow: 0 6px 20px 2px rgba(103, 204, 255, 0.75);
         border: none;
         color: #fff;

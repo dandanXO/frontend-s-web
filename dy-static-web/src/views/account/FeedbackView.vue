@@ -5,40 +5,63 @@
     </div> -->
     <div class="account-content mail">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
-          <div v-if="mailboxState.mailboxList.inbox.list.length > 0">
-            <div>
-              <el-button type="primary" @click="readAllMsg">
-                <el-icon><MessageBox /></el-icon>
-                全部已读
-              </el-button>
-              <el-button color="grey" @click="deleteAllMsg">
-                <el-icon><Delete /></el-icon>
-                全部删除
-              </el-button>
-            </div>
+        <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
+          <div v-if="mailboxState.mailboxList.sent.list.length > 0">
             <div class="mailbox-list">
-              <template v-for="m in mailboxState.mailboxList.inbox.list" :key="m.id">
+              <template v-for="m in mailboxState.mailboxList.sent.list" :key="m.id">
                 <div class="mailbox-item" @click="openMsg(m)">
                   <div class="mailbox-title">{{ m.title }}</div>
                   <div class="mailbox-content" v-html="m.content"></div>
                   <div class="mailbox-date">
                     <el-icon><Calendar /></el-icon>
-                    <div>{{ m.sendTime }}</div>
+                    <div>{{ new Date(m.createTime).toLocaleString("zh-CN") }}</div>
                   </div>
                 </div>
               </template>
             </div>
-            <div class="pagination-wrapper">
+            <div class="pagination-wrapper" :class="{ hidden: mailOpened }">
               <el-pagination
                 @current-change="changePage"
-                :total="mailboxState.mailboxList.inbox.total"
-                :current-page="mailboxState.mailboxList.inbox.pageNum"
-                :page-size="mailboxState.mailboxList.inbox.pageSize"
+                :total="mailboxState.mailboxList[mailboxState.active].total"
+                :current-page="mailboxState.mailboxList[mailboxState.active].pageNum"
+                :page-size="mailboxState.mailboxList[mailboxState.active].pageSize"
               />
             </div>
           </div>
           <div style="display: flex; justify-content: center; align-items: center; height: 300px" v-else>暂无记录</div>
+        </el-tab-pane>
+        <el-tab-pane name="write" :label="'意见反馈'">
+          <div>
+            <el-form
+              ref="formRef"
+              hideRequiredMark="true"
+              :model="mailboxState.mailboxList.write"
+              :rules="rules"
+              :colon="false"
+              :label-col="{ span: 2 }"
+              label-width="100"
+            >
+              <el-form-item ref="title" prop="title" label="标题" :wrapperCol="{ span: 6 }">
+                <el-input v-model="mailboxState.mailboxList.write.title" placeholder="请输入标题" />
+              </el-form-item>
+              <el-form-item ref="content" prop="content" label="内容">
+                <el-input
+                  type="textarea"
+                  :autosize="{ minRows: 8 }"
+                  v-model="mailboxState.mailboxList.write.content"
+                  placeholder="请输入内容"
+                  show-word-limit
+                  maxlength="500"
+                />
+              </el-form-item>
+              <el-form-item>
+                <template #label></template>
+                <el-button :loading="loadingBtn" size="large" class="common-btn" type="submit" @click="onSubmit">
+                  提交
+                </el-button>
+              </el-form-item>
+            </el-form>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -62,7 +85,7 @@
 
     <div class="msg-date">
       <el-icon><Calendar /></el-icon>
-      <div>{{ m.sendTime }}</div>
+      <div>{{ msgDateTxt }}</div>
     </div>
 
     <div class="msg-button">
@@ -76,21 +99,19 @@ import { ref, defineComponent, reactive, onMounted } from "vue";
 import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
-import { Calendar, Delete, MessageBox } from "@element-plus/icons-vue";
+import { Calendar } from "@element-plus/icons-vue";
 
 
 export default defineComponent({
   name: "MailboxView",
   components: {
-    Calendar,
-    Delete,
-    MessageBox
+    Calendar
   },
   setup() {
     const loadingBtn = ref(false)
     const mailboxData = ref([])
     const mailboxState = reactive({
-      active: "inbox",
+      active: "write",
       mailboxList: {
         inbox: {
           list: [],
@@ -167,20 +188,13 @@ export default defineComponent({
     const msgModalVisible = ref(false);
     const msgTitleTxt = ref()
     const msgContentTxt = ref()
-    const msgDateTxt = ref();
+    const msgDateTxt = ref()
 
     const openMsg = (m) => {
       msgModalVisible.value = true;
       msgTitleTxt.value = m.title;
       msgContentTxt.value = m.content;
-      msgDateTxt.value = m.sendTime;
-    }
-
-    const readAllMsg = () => {
-      console.log("readAllMsg~");
-    }
-    const deleteAllMsg = () => {
-      console.log("deleteAllMsg~");
+      msgDateTxt.value = new Date(m.createTime).toLocaleString("zh-CN")
     }
 
     onMounted(() => {
@@ -257,11 +271,10 @@ export default defineComponent({
       onSubmit,
       loadingBtn,
       msgModalVisible,
+      openMsg,
       msgTitleTxt,
       msgContentTxt,
-      openMsg,
-      readAllMsg,
-      deleteAllMsg
+      msgDateTxt
     }
   },
 });
@@ -303,6 +316,8 @@ export default defineComponent({
         margin-bottom: 15px;
         padding: 24px;
         text-align: left;
+        transition: all 0.3s;
+        cursor: pointer;
         // &:before {
         //   content: "";
         //   background: #ffffff;
@@ -312,6 +327,11 @@ export default defineComponent({
         //   height: 40px;
         //   width: 6px;
         // }
+
+        &:hover {
+          background: #eeeeee;
+        }
+
         &.read,
         &.unread {
           &::after {
