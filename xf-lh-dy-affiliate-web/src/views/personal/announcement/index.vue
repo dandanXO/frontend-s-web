@@ -226,7 +226,9 @@ async function readAnnouncement(announcement) {
       readAffAnnouncementDetails(userId, a.id)
     })
   }
-  loadAffiliateAnnouncement(type.getCurrentTab)
+  await loadAffiliateAnnouncement(type.getCurrentTab)
+
+  ElMessage({ message: t('fields.bulk_read'), type: 'success' })
 }
 
 async function removeAnnouncement(announcement) {
