@@ -340,7 +340,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .el-image {
-  min-height: 120px;
+  height: 130px;
   display: block;
   width: 100%;
   cursor: pointer;
