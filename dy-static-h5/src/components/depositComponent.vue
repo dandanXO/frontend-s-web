@@ -192,7 +192,7 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -641,6 +641,10 @@ async function pDepo(deposit) {
 
 onMounted(() => {
   initPay();
+  // checkNewUser();
+});
+
+onActivated(() => {
   checkNewUser();
 });
 </script>
