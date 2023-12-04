@@ -102,20 +102,26 @@
           <div v-if="scope.row.labelType === 6">{{ t('promoLabel.limit') }}</div>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="status"
-        :label="t('fields.status')"
-        v-if="hasPermission(['sys:promp:page:update:state'])"
-        style="width: 300px"
-      >
+      <el-table-column prop="status" :label="t('fields.status')" min-width="200">
         <template #default="scope">
-          <div v-if="scope.row.status === 0" style="color: green;">OPEN</div>
-          <div v-if="scope.row.status === 1" style="color:red">CLOSED</div>
-          <div v-if="scope.row.status === 2">TEST</div>
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            v-if="hasPermission(['sys:promp:page:update:state'])"
+            @change="changePromoPagesState(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="0">OPEN</el-radio-button>
+            <el-radio-button label="1">CLOSE</el-radio-button>
+            <el-radio-button label="2">TEST</el-radio-button>
+          </el-radio-group>
+          <div v-else>
+            <div v-if="scope.row.status === 0" style="color: green;">OPEN</div>
+            <div v-if="scope.row.status === 1" style="color:red">CLOSED</div>
+            <div v-if="scope.row.status === 2">TEST</div>
+          </div>
         </template>
       </el-table-column>
-      l
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="200" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column
         type="title"
@@ -124,6 +130,7 @@
           hasPermission(['sys:promp:page:update']) ||
             hasPermission(['sys:promp:page:del'])
         "
+        min-width="200"
       >
         <template #default="scope">
           <el-button
@@ -160,6 +167,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import {
   getPromoPagesList,
   deletePromoPages,
+  updatePromoPagesState
 } from '../../../../api/promoPages'
 import { useRoute, useRouter } from 'vue-router'
 import { getSiteListSimple } from '../../../../api/site'
@@ -265,9 +273,11 @@ async function removePromo(promoPages) {
   })
 }
 
-// async function changePromoPagesState(id, status) {
-//   await updatePromoPagesState(id, status)
-// }
+async function changePromoPagesState(id, status) {
+  await updatePromoPagesState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadPromoPages()
+}
 
 const route = useRoute()
 
