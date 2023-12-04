@@ -38,15 +38,6 @@
     <div :ref="innerWheelConfig.wheelRef" class="inner-wheel">
       <img class="inner-wheel-img" src="../../../assets/images/promotion/spinwheel/inner_wheel.png" />
 
-      <template v-if="unlockDay < 1 ? true : false">
-        <div class="prize-lock" style="transform: rotate(309.25deg)">
-          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
-        </div>
-        <div class="prize-lock-day" style="transform: rotate(309.25deg)">
-          <span>day{{ 1 }}</span>
-        </div>
-      </template>
-
       <template v-if="unlockDay < 2 ? true : false">
         <div class="prize-lock" style="transform: rotate(0deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
