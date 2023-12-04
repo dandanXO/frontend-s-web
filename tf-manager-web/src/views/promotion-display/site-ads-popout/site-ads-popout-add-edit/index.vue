@@ -515,10 +515,7 @@ watch(
 onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
-      s => s.siteName === store.state.user.siteName
-    )
-    imageRequest.siteId = site.value.id
+    imageRequest.siteId = store.state.user.siteId
   }
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
