@@ -94,10 +94,7 @@
             {{ $t('fields.detail') }}
           </el-button>
           <el-button
-            v-if="
-              scope.row.status === 'IN_QUEUE' ||
-                scope.row.status === 'IN_PROGRESS'
-            "
+            v-if="scope.row.status === 'IN_QUEUE'"
             icon="el-icon-remove"
             size="mini"
             type="danger"
