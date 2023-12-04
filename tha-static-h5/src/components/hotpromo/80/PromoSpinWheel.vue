@@ -43,7 +43,7 @@
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(0deg)">
-          <span>day{{ 2 }}</span>
+          <span>day{{ 1 }}</span>
         </div>
       </template>
 
@@ -52,7 +52,7 @@
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(52deg)">
-          <span>day{{ 3 }}</span>
+          <span>day{{ 2 }}</span>
         </div>
       </template>
 
@@ -61,7 +61,7 @@
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(104deg)">
-          <span>day{{ 4 }}</span>
+          <span>day{{ 3 }}</span>
         </div>
       </template>
 
@@ -70,7 +70,7 @@
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(156.25deg)">
-          <span>day{{ 5 }}</span>
+          <span>day{{ 4 }}</span>
         </div>
       </template>
 
@@ -79,7 +79,7 @@
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(208.25deg)">
-          <span>day{{ 6 }}</span>
+          <span>day{{ 5 }}</span>
         </div>
       </template>
 
@@ -88,7 +88,7 @@
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(258.25deg)">
-          <span>day{{ 7 }}</span>
+          <span>day{{ 6 }}</span>
         </div>
       </template>
     </div>
