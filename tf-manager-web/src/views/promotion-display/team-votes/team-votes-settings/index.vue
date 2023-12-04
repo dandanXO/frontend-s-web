@@ -1,6 +1,31 @@
 <template>
   <div class="roles-main">
     <div class="header-container">
+      <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          @click="loadTeamVotesSettings"
+        >
+          {{ t('fields.search') }}
+        </el-button>
+      </div>
       <div class="btn-group">
         <el-button
           icon="el-icon-plus"
@@ -27,6 +52,22 @@
         size="small"
         label-width="180px"
       >
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.teamNameEn')" prop="teamNameEn">
           <el-input v-model="form.teamNameEn" style="width: 350px" />
         </el-form-item>
@@ -126,37 +167,57 @@ import {
   deleteTeamVotes
 } from '../../../../api/team-votes'
 import { ElMessage, ElMessageBox } from "element-plus";
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { hasPermission } from '../../../../utils/util'
 import { uploadImage } from '../../../../api/image'
 import { required } from "../../../../utils/validate";
-// import { useStore } from '../../../../store';
+import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
+import { getSiteListSimple } from '../../../../api/site';
+import { TENANT } from '../../../../store/modules/user/action-types';
 
 const { t } = useI18n();
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
 const votesForm = ref(null)
+const totalVirtualVote = ref()
+const siteList = reactive({
+  list: [],
+})
+const route = useRoute()
+
+const uiControl = reactive({
+  dialogVisible: false,
+  dialogTitle: '',
+  dialogType: 'CREATE',
+  editBtn: true,
+  removeBtn: true,
+})
 
 async function attachPhoto(event) {
   const files = event.target.files[0]
   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-  const dirPaymentLabel = 'payment/label'
+  const dirTeamVotes = 'promo/teamvotes/' + form.siteId
 
   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
     ElMessage({ message: t('message.invalidFileType'), type: 'error' })
   } else {
     var formData = new FormData()
     formData.append('files', files)
-    formData.append('dir', dirPaymentLabel)
+    formData.append('dir', dirTeamVotes)
     formData.append('overwrite', false)
     const data = await uploadImage(formData)
     if (data.code === 0) {
-      form.countryImgUrl = data.data[0]
+      const path = data.data;
+      form.countryImgUrl = path.substr(0, path.indexOf("."));
     } else {
       ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
     }
   }
 };
+
 async function loadTeamVotesSettings() {
   const { data: ret } = await getTeamVotesSettings(request)
   page.pages = ret.pages
@@ -165,6 +226,7 @@ async function loadTeamVotesSettings() {
     reco.totalVotesRealVirtual = getTotalAndVirtual(reco)
   });
 };
+
 const request = reactive({
   size: 30,
   current: 1,
@@ -174,12 +236,14 @@ const request = reactive({
 })
 
 const form = reactive({
+  siteId: null,
   teamNameEn: "",
   teamNameLocal: "",
   countryImgUrl: null,
 })
 
 const formRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
   teamNameEn: [required(t('message.validateTeamNameEnRequired'))],
   teamNameLocal: [required(t('message.validateTeamNameLocalRequired'))],
   countryImgUrl: [required(t('message.validateCountryImageRequired'))],
@@ -194,11 +258,12 @@ function changePage(page) {
   request.current = page
   loadTeamVotesSettings()
 }
-const totalVirtualVote = ref()
+
 function getTotalAndVirtual(row) {
   totalVirtualVote.value = Number(row.totalVotesReal) + Number(row.totalVotesVirtual)
   return totalVirtualVote.value
 }
+
 function create() {
   votesForm.value.validate(async valid => {
     if (valid) {
@@ -209,6 +274,7 @@ function create() {
     }
   })
 }
+
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
     create()
@@ -236,6 +302,7 @@ function deleteVoteRecord(value) {
     }
   });
 }
+
 function editVoteRecord(value) {
   if (value.totalVotesVirtual) {
     updateVotes(value).then((res) => {
@@ -254,25 +321,28 @@ function showDialog(type) {
       votesForm.value.resetFields()
       form.id = null
     }
+    form.siteId = request.siteId
     uiControl.dialogTitle = t('fields.createVote')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
 
-const route = useRoute()
-// const router = useRouter()
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
 
-const uiControl = reactive({
-  dialogVisible: false,
-  dialogTitle: '',
-  dialogType: 'CREATE',
-  editBtn: true,
-  removeBtn: true,
-})
 onMounted(async () => {
   if (route.query.current != null) {
     request.current = Number(route.query.current)
+  }
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  } else {
+    request.siteId = siteList.list[0].id
   }
   await loadTeamVotesSettings();
 })

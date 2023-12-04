@@ -1,3 +1,7 @@
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -250,6 +254,7 @@ body {
   padding: 3px;
   background: #4e5efb;
 }
+
 .el-button>span {
   color: #ffffff;
 }
@@ -261,6 +266,11 @@ body {
 }
 .noPadding .el-dialog__body {
   padding: 0;
+}
+
+.platform__wrap {
+  height: 85vh;
+  position: relative;
 }
 
 /* Defaults */

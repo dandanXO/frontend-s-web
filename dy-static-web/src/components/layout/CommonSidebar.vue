@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="customer-right"
-    :style="!customerHovered ? 'right: -170px;' : 'right: 0;'"
-  >
+  <div class="customer-right" :style="!customerHovered ? 'right: -170px;' : 'right: 0;'">
     <div class="customer-right-logo">
       <div class="hot-activity customer-div">
         <router-link to="/promotion">
@@ -18,10 +15,7 @@
         <RiCustomerServiceLine />
         <div style="margin-top: 15px">客服中心</div>
         <div class="customer-right-content">
-          <div
-            class="customer-content"
-            @click.stop.prevent="store.openLiveChat()"
-          >
+          <div class="customer-content" @click.stop.prevent="store.openLiveChat()">
             <RiCustomerServiceFill />
             <span>24小时在线客服</span>
           </div>
@@ -38,9 +32,7 @@
           <div class="content-line"></div>
           <div class="customer-num">
             <RiPhoneFill />
-            <span style="margin-left: 5px"
-              ><span class="customer_phone">852-81932110</span></span
-            >
+            <span style="margin-left: 5px"><span class="customer_phone">852-81932110</span></span>
           </div>
         </div>
       </div>
@@ -100,7 +92,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .customer-right {
   position: fixed;
-  top: 520px;
+  bottom: 8%;
   width: 240px;
   z-index: 99999;
   display: flex;
@@ -160,8 +152,7 @@ export default defineComponent({
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-image: linear-gradient(36deg, #2f76f6 1%, #68b4fc 100%),
-    linear-gradient(#000, #000);
+  background-image: linear-gradient(36deg, #2f76f6 1%, #68b4fc 100%), linear-gradient(#000, #000);
   background-blend-mode: normal, normal;
   border-radius: 6px;
   cursor: pointer;

@@ -64,7 +64,7 @@
                         class="vip-btn-get vip-receive-btn"
                         data-bonu-type="month"
                         data-vip-lev="10"
-                        @click="onVIPButtonClick('dy1-vip-monthly')"
+                        @click="onVIPButtonClick('dy2-vip-monthly')"
                         :disabled="btnIsDisabled"
                       >
                         领取
@@ -84,7 +84,7 @@
                         class="vip-btn-get vip-receive-btn"
                         data-bonu-type="birth"
                         data-vip-lev="10"
-                        @click="onVIPButtonClick('dy1-vip-birthday')"
+                        @click="onVIPButtonClick('dy2-vip-birthday')"
                         :disabled="btnIsDisabled"
                       >
                         领取

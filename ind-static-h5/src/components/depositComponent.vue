@@ -1,4 +1,166 @@
 <template>
+  <!-- <q-dialog v-if="isNewUser" width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+    <div class="popout-dialog">
+      <div class="popout-dialog-container">
+        <div class="txt-title">Tips</div>
+        <div class="txt-content q-mt-md text-center">
+          To ensure the safety of funds, you need to verify your mobile phone number before depositing
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <router-link to="/account?personal">
+            <q-btn label="Verify Mobile Phone" class="bg-yellow text-black" no-caps />
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </q-dialog> -->
+
+  <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Captcha Code Check</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Captcha Code</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                hide-bottom-space
+                dense
+                clearable
+                placeholder="Enter Captcha Code"
+                v-model="captchaRef"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert captcha code',
+                  (val) => (val && val.length > 3 && val.length < 5) || 'Captcha code length is 4 characters'
+                ]"
+              >
+                <template v-slot:append>
+                  <img :src="verificationImg" @click="getCode" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <!-- <q-dialog v-if="isNewUser" width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="goToMine" />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Please complete KYC</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Full Name</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Full Name"
+                v-model="formDetail.realName"
+                :rules="[(_) => isValidName()]"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn
+            :loading="btnLoading"
+            rounded
+            flat
+            no-caps
+            class="btn-purple-pattern"
+            :disable="!(isValidName() === true)"
+            @click="submitKYC"
+          >
+            Submit
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog> -->
+
+  <!-- <q-dialog v-else-if="isNewGuest" width="100%" v-model="isNewGuest" no-backdrop-dismiss no-esc-dismiss>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="goToMine" />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Please complete KYC</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Full Name</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Full Name"
+                v-model="formDetail.realName"
+                :rules="[(_) => isValidName()]"
+              />
+            </div>
+          </div>
+
+          <div class="pc-form-item">
+            <div class="pc-form-label">Phone</div>
+            <div class="pc-form-input">
+              <q-input
+                type="number"
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Phone"
+                v-model="formDetail.phone"
+                :rules="[(_) => isValidPhone()]"
+              ></q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn
+            :loading="btnLoading"
+            rounded
+            flat
+            no-caps
+            class="btn-purple-pattern"
+            :disable="!(isValidName() === true)"
+            @click="submitKYC"
+          >
+            Submit
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog> -->
+
+  <!-- <q-dialog v-else-if="isNoBankCard" width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+    <div class="popout-dialog">
+      <div class="popout-dialog-container">
+        <div class="txt-title">Tips</div>
+        <div class="txt-content q-mt-md text-center">
+          To ensure the safety of funds, bind your bank card before depositing
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <router-link to="/account/bank">
+            <q-btn label="Add Bank Card" class="bg-yellow text-black" no-caps />
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </q-dialog> -->
+
   <div>
     <div class="q-mb-lg">
       <span class="additional-tips">
@@ -162,38 +324,6 @@
       </div>
     </div>
   </q-dialog>
-
-  <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
-    <div class="popout-dialog">
-      <div class="popout-dialog-container">
-        <div class="txt-title">Tips</div>
-        <div class="txt-content q-mt-md text-center">
-          To ensure the safety of funds, you need to verify your mobile phone number before depositing
-        </div>
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <router-link to="/account?personal">
-            <q-btn label="Verify Mobile Phone" class="bg-yellow text-black" no-caps />
-          </router-link>
-        </div>
-      </div>
-    </div>
-  </q-dialog>
-
-  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
-    <div class="popout-dialog">
-      <div class="popout-dialog-container">
-        <div class="txt-title">Tips</div>
-        <div class="txt-content q-mt-md text-center">
-          To ensure the safety of funds, bind your bank card before depositing
-        </div>
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <router-link to="/account/bank">
-            <q-btn label="Add Bank Card" class="bg-yellow text-black" no-caps />
-          </router-link>
-        </div>
-      </div>
-    </div>
-  </q-dialog>
 </template>
 
 <script setup id="DepositComponent">
@@ -214,10 +344,14 @@ const store = userStore();
 const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
+const isNewGuest = ref(false);
 const isNoBankCard = ref(false);
 const checkNewUser = () => {
-  if (store.phone == "") {
-    isNewUser.value = true;
+  if ((store.realName == "" || store.realName == null) && !store.guest) {
+    // isNewUser.value = true;
+    goToMine();
+  } else if ((store.realName == "" || store.realName == null) && store.guest) {
+    goToMine();
   } else {
     api.get("/session/bankCard").then((response) => {
       if (response.code === 0) {
@@ -643,6 +777,173 @@ async function pDepo(deposit) {
     });
 }
 
+// name & phone form pop out
+
+const captchaRef = ref();
+const showCaptchaDialog = ref(false);
+const showVerificationTokenInput = ref(false);
+
+const updateState = () => {
+  const updateInfo = {};
+  updateInfo.realName = formDetail.realName;
+  updateInfo.email = formDetail.email;
+  updateInfo.phone = formDetail.phone;
+  updateInfo.otpCode = formDetail.phoneOtpRef;
+  updateInfo.otpCodeId = verificationCodeID;
+
+  api
+    .post("/session/verifyAndUpdateAccount", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          personalCenterDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+    });
+};
+
+const formDetail = reactive([]);
+const isValidName = () => {
+  const { realName } = formDetail;
+  const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
+
+  const result = !realName
+    ? "Please Enter Your Full Name"
+    : !namePattern.test(realName)
+    ? "Please Enter A Valid Full Name"
+    : true;
+  return result;
+};
+
+const isValidPhone = () => {
+  const { phone } = formDetail;
+
+  if (!phone) {
+    return "Please Enter Phone Number";
+  }
+
+  const phoneRegex = /^\d{7,12}$/;
+  const isValid = phoneRegex.test(phone);
+
+  return isValid ? true : "Phone Number must be between 7 and 12 digits";
+};
+
+const isValidOTP = () => {
+  const { phoneOtpRef } = formDetail;
+
+  const result = !phoneOtpRef ? "Please Enter Verification Code" : true;
+  return result;
+};
+
+let verificationCodeID = "";
+const startCountdownResendOTP = ref(false);
+const countdownOTP = ref();
+const updateSecurityVerified = reactive({
+  mobileNumber: "",
+  verificationCode: ""
+});
+const onCaptchaSubmit = () => {
+  api
+    .post(
+      `/otp/sendSms`,
+      qs.stringify({
+        telephone: formDetail.phone,
+        captchaCode: captchaRef.value,
+        codeId: updateSecurityVerified.codeId
+      })
+    )
+    .then((res) => {
+      let message = res.message,
+        color = "positive";
+
+      if (res.code === 0) {
+        showCaptchaDialog.value = false;
+        showVerificationTokenInput.value = true;
+        verificationCodeID = res.data.codeId;
+
+        startCountdownResendOTP.value = true;
+
+        countdownOTP.value = 59;
+        let timer = setInterval(() => {
+          countdownOTP.value -= 1;
+          if (countdownOTP.value === 0) {
+            clearInterval(timer);
+            startCountdownResendOTP.value = false;
+          }
+        }, 1000);
+      } else color = "negative";
+
+      if (message) $q.notify({ message, color });
+
+      console.log("onCaptchaSubmit", res);
+    });
+};
+
+const verificationCodeDialog = ref(false);
+const openVerificationCodeDialog = () => {
+  captchaRef.value = "";
+  getCode();
+
+  verificationCodeDialog.value = !verificationCodeDialog.value;
+  getCode();
+};
+
+const verificationImg = ref("");
+const getCode = () => {
+  api
+    .get("/member/verificationCode")
+    .then((response) => {
+      if (response.code === 0) {
+        verificationImg.value = "data:image/png;base64," + response.data.img;
+        updateSecurityVerified.codeId = response.data.id;
+      }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+};
+
+const submitKYC = () => {
+  btnLoading.value = true;
+  updateState();
+};
+
+const goToMine = () => {
+  $q.notify({
+    color: "negative",
+    position: "top",
+    message: "Please fill in your personal details",
+    icon: "report_problem"
+  });
+  router.push(`/account`);
+};
+
 onMounted(() => {
   initPay();
   checkNewUser();
@@ -786,6 +1087,68 @@ onMounted(() => {
     background-color: rgba(21, 0, 37, 0.5);
     border-radius: 5px;
     width: 100%;
+  }
+}
+
+.pc-form {
+  margin-top: 20px;
+  .pc-form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+  }
+  .pc-form-label {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .pc-form-input {
+    border-radius: 5px;
+    position: relative;
+
+    :deep(.q-field__control) {
+      background-color: rgba(21, 0, 37, 0.7) !important;
+    }
+
+    :deep(.q-field__native) {
+      color: #ffffff;
+    }
+  }
+
+  .pc-form-side-btn {
+    position: relative;
+    right: -12px;
+
+    :deep(.q-btn-item) {
+      height: 38px;
+    }
+
+    &.copy-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}
+
+.btn-purple-pattern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 1;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  width: 100%;
+  height: 48px;
+  transition: 0.3s all;
+  background-image: url(../assets/images/account/btn-purple-pattern.png);
+  color: #ffffff;
+  margin: auto;
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 </style>
