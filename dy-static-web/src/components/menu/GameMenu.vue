@@ -30,7 +30,7 @@ import { userStore } from "@/store";
 export default defineComponent({
   setup() {
     const navigations = [
-      { code: "PGDY", icon: "pg", label: "PG" },
+      { code: "PG", icon: "pg", label: "PG" },
       { code: "SW", icon: "sw", label: "SW" },
       { code: "PTDY", icon: "pt", label: "PT" },
       { code: "AG", icon: "ag", label: "AG" },
