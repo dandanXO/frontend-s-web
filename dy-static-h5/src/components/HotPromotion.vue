@@ -335,6 +335,29 @@ export default defineComponent({
   max-width: 450px;
   min-width: 300px;
   padding: 10px;
+  background: transparent;
+  position: relative;
+  box-shadow: none;
+
+  .close-btn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 5;
+
+    .q-btn,
+    .q-btn__content {
+      margin-top: 0px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .q-btn__content {
+      color: #000;
+      width: 8px;
+      background-image: none !important;
+    }
+  }
 
   .bonus-svg-div {
     position: relative;
