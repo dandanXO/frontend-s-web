@@ -1,180 +1,8 @@
 <template>
   <div class="main-section">
     <q-form class="q-gutter-y-md rounded-borders q-pa-md q-ma-md register-form" @submit="onSubmit">
-      <!--      <q-stepper-->
-      <!--          v-model="step"-->
-      <!--          ref="stepper"-->
-      <!--          alternative-labels-->
-      <!--          color="primary"-->
-      <!--          animated-->
-      <!--      >-->
-      <!--        <q-step-->
-      <!--            :name="1"-->
-      <!--            :title="$t('lang.bank_information')"-->
-      <!--            icon="account_balance"-->
-      <!--            :done="done1"-->
-      <!--            color="white"-->
-      <!--        >-->
-      <!--        <span class="q-gutter-y-md">-->
-      <!--          <q-input-->
-      <!--              ref="cardAccountNameRef"-->
-      <!--              filled-->
-      <!--              v-model="regForm.cardAccountName"-->
-      <!--              :label="$t('lang.bank_account_name')"-->
-      <!--              lazy-rules-->
-      <!--              :rules="[-->
-      <!--              (val) => (val && val.length > 0) || $t('lang.enter_bank_account_name')-->
-      <!--            ]"-->
-      <!--              color="white"-->
-      <!--              clearable-->
-      <!--          >-->
-      <!--            <template v-slot:prepend>-->
-      <!--              <q-icon name="web"/>-->
-      <!--            </template>-->
-      <!--          </q-input>-->
-      <!--          <q-input-->
-      <!--              ref="cardAccountSurnameRef"-->
-      <!--              filled-->
-      <!--              v-model="regForm.cardAccountSurname"-->
-      <!--              :label="$t('lang.bank_account_surname')"-->
-      <!--              lazy-rules-->
-      <!--              :rules="[-->
-      <!--              (val) =>-->
-      <!--                (val && val.length > 0) ||-->
-      <!--                $t('lang.enter_bank_account_surname')-->
-      <!--            ]"-->
-      <!--              color="white"-->
-      <!--              clearable-->
-      <!--          >-->
-      <!--            <template v-slot:prepend>-->
-      <!--              <q-icon name="web"/>-->
-      <!--            </template>-->
-      <!--          </q-input>-->
-      <!--          <q-input-->
-      <!--              ref="cardNumberRef"-->
-      <!--              filled-->
-      <!--              v-model="regForm.cardNumber"-->
-      <!--              :label="$t('lang.card_number')"-->
-      <!--              lazy-rules-->
-      <!--              :rules="[-->
-      <!--              (val) => (val && val.length > 0) || $t('lang.enter_account_number'),-->
-      <!--              (val) => validateBankLength(val)-->
-      <!--            ]"-->
-      <!--              color="white"-->
-      <!--              clearable-->
-      <!--          >-->
-      <!--            <template v-slot:prepend>-->
-      <!--              <q-icon name="credit_card"/>-->
-      <!--            </template>-->
-      <!--          </q-input>-->
-      <!--          <q-select-->
-      <!--              v-model="selectedBankType"-->
-      <!--              filled-->
-      <!--              :options="[{ name: 'Bank' }, { name: 'Crypto' }]"-->
-      <!--              :label="$t('lang.withdraw_methods')"-->
-      <!--              color="white"-->
-      <!--              label-color="grey"-->
-      <!--              option-label="name"-->
-      <!--              option-value="name"-->
-      <!--              @update:model-value="selectBankType(opt)"-->
-      <!--              emit-value-->
-      <!--              map-options-->
-      <!--              label-slot-->
-      <!--          />-->
-      <!--          <q-select-->
-      <!--              ref="bankCardRef"-->
-      <!--              class="q-mb-md"-->
-      <!--              color="white"-->
-      <!--              filled-->
-      <!--              label-color="grey"-->
-      <!--              v-model="regForm.bankId"-->
-      <!--              :options="banksList"-->
-      <!--              option-value="id"-->
-      <!--              option-label="name"-->
-      <!--              :label="$t('lang.choose_a_bank')"-->
-      <!--              :rules="[(val) => !!val || $t('lang.please_select_bank')]"-->
-      <!--              lazy-rules-->
-      <!--              emit-value-->
-      <!--              map-options-->
-      <!--              hide-dropdown-icon-->
-      <!--              clearable-->
-      <!--          >-->
-      <!--            <template v-slot:selected-item="scope">-->
-      <!--              <q-item-section avatar>-->
-      <!--                <img-->
-      <!--                    v-if="scope.opt.bankIcon"-->
-      <!--                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"-->
-      <!--                    :src="imgURL + scope.opt.bankIcon"-->
-      <!--                />-->
-      <!--              </q-item-section>-->
-      <!--              <q-item-section>-->
-      <!--                <q-item-label-->
-      <!--                    style="-->
-      <!--                    text-overflow: ellipsis;-->
-      <!--                    overflow: hidden;-->
-      <!--                    white-space: nowrap;-->
-      <!--                  "-->
-      <!--                >{{ scope.opt.name }}</q-item-label-->
-      <!--                >-->
-      <!--              </q-item-section>-->
-
-      <!--              &lt;!&ndash; <q-item-section avatar>-->
-      <!--                <img-->
-      <!--                    v-if="scope.opt.bankIcon"-->
-      <!--                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"-->
-      <!--                    :src="imgURL + scope.opt.bankIcon"-->
-      <!--                />-->
-      <!--              </q-item-section> &ndash;&gt;-->
-      <!--              &lt;!&ndash; <q-item-section>-->
-      <!--                <q-item-label-->
-      <!--                    style="-->
-      <!--                    text-overflow: ellipsis;-->
-      <!--                    overflow: hidden;-->
-      <!--                    white-space: nowrap;-->
-      <!--                  "-->
-      <!--                >{{ scope.opt.name }}</q-item-label-->
-      <!--                >-->
-      <!--              </q-item-section> &ndash;&gt;-->
-
-      <!--            </template>-->
-      <!--            <template v-slot:option="scope">-->
-      <!--              <q-item v-bind="scope.itemProps">-->
-      <!--                <q-item-section avatar>-->
-      <!--                  <img-->
-      <!--                      v-if="scope.opt.bankIcon"-->
-      <!--                      style="width: 30px"-->
-      <!--                      :src="imgURL + scope.opt.bankIcon"-->
-      <!--                  />-->
-      <!--                </q-item-section>-->
-      <!--                <q-item-section>-->
-      <!--                  <q-item-label>{{ scope.opt.name }}</q-item-label>-->
-      <!--                </q-item-section>-->
-      <!--              </q-item>-->
-      <!--            </template>-->
-      <!--          </q-select>-->
-
-      <!--          <div class="row justify-center items-center">-->
-      <!--            <q-btn-->
-      <!--                @click.prevent="onSubmit"-->
-      <!--                :label="$t('lang.next_page')"-->
-      <!--                type="text"-->
-      <!--                color="brand"-->
-      <!--                class="common-large-btn"-->
-      <!--                rounded-->
-      <!--            />-->
-      <!--          </div>-->
-      <!--        </span>-->
-      <!--        </q-step>-->
-
       <h5>{{ $t("lang.register") }}</h5>
 
-      <!--        <q-step-->
-      <!--            :name="2"-->
-      <!--            :title="$t('lang.personal_information')"-->
-      <!--            icon="person"-->
-      <!--            :done="done2"-->
-      <!--            color="white"-->
-      <!--        >-->
       <div class="q-gutter-y-md">
         <q-input
           ref="loginNameRef"
@@ -199,9 +27,9 @@
           ref="pwdRef"
           filled
           v-model="regForm.password"
+          :type="isPwd ? 'password' : 'text'"
           :label="$t('lang.password')"
           lazy-rules
-          :type="isPwd ? 'password' : 'text'"
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12'),
@@ -588,11 +416,12 @@ export default defineComponent({
       () => regForm.password,
       () => {
         pwdStrength.value = "";
-
         var pwd = regForm.password;
         var result = 0;
-        for (var i = 0, len = pwd.length; i < len; ++i) {
-          result |= charType(pwd.charCodeAt(i));
+        if (pwd) {
+          for (var i = 0, len = pwd.length; i < len; ++i) {
+            result |= charType(pwd.charCodeAt(i));
+          }
         }
 
         var level = 0;
@@ -602,7 +431,7 @@ export default defineComponent({
           }
           result = result >>> 1;
         }
-        if (pwd.length >= 6) {
+        if (pwd && pwd.length >= 6) {
           switch (level) {
             case 1:
               pwdStrength.value = "weak";

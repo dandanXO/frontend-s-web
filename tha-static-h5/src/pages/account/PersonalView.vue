@@ -5,11 +5,7 @@
         <div class="personal-top-tabs">
           <div
             class="top-tab-btn btn-pointer"
-            :class="
-              select_menu === 'personal' || select_menu === 'verify'
-                ? 'is-active'
-                : ''
-            "
+            :class="select_menu === 'personal' || select_menu === 'verify' ? 'is-active' : ''"
             @click="selectTab('personal')"
           >
             {{ $t("lang.basic_information") }}
@@ -56,10 +52,7 @@
                 <q-btn outline @click="updateState">ยืนยัน</q-btn>
               </span> -->
             </div>
-            <div
-              v-if="personalState.memberInfo.profilePicture"
-              class="info-picture"
-            >
+            <div v-if="personalState.memberInfo.profilePicture" class="info-picture">
               <img :src="personalState.memberInfo.profilePicture" />
             </div>
             <!-- <div class="info-name">
@@ -74,12 +67,7 @@
             </div> -->
             <div class="info-email" v-if="personalState.memberInfo.email">
               {{ personalState.memberInfo.email }}
-              <q-icon
-                size="xs"
-                color="white"
-                name="mark_email_read"
-                v-if="personalState.memberInfo.emailVerified"
-              />
+              <q-icon size="xs" color="white" name="mark_email_read" v-if="personalState.memberInfo.emailVerified" />
             </div>
             <!-- <div v-if="isEdit && !personalState.memberInfo.email">
               <q-input
@@ -105,10 +93,7 @@
                   <RiFileUserLine />
                   ID
                 </div>
-                <div
-                  class="basic-info-cell content"
-                  v-if="personalState.memberInfo.nickName"
-                >
+                <div class="basic-info-cell content" v-if="personalState.memberInfo.nickName">
                   {{ personalState.memberInfo.nickName }}
                 </div>
                 <div v-if="isEdit && !personalState.memberInfo.nickName">
@@ -118,12 +103,8 @@
                     filled
                     v-model="formDetail.nickName"
                     placeholder="ID"
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) || $t('lang.enter_ur_id'),
-                    ]"
-                  >
-                  </q-input>
+                    :rules="[(val) => (val && val.length > 0) || $t('lang.enter_ur_id')]"
+                  ></q-input>
                 </div>
               </div>
 
@@ -132,10 +113,7 @@
                   <RiFileUserLine />
                   {{ $t("lang.name") }}
                 </div>
-                <div
-                  class="basic-info-cell content"
-                  v-if="personalState.memberInfo.realName"
-                >
+                <div class="basic-info-cell content" v-if="personalState.memberInfo.realName">
                   {{ personalState.memberInfo.realName }}
                 </div>
 
@@ -156,13 +134,8 @@
                     clearable
                     v-model="formDetail.realName"
                     :placeholder="$t('lang.name')"
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) || $t('lang.enter_lastname'),
-                      isValidName,
-                    ]"
-                  >
-                  </q-input>
+                    :rules="[(val) => (val && val.length > 0) || $t('lang.enter_lastname'), isValidName]"
+                  ></q-input>
                 </div>
               </div>
 
@@ -207,10 +180,7 @@
                   <RiCake2Line />
                   {{ $t("lang.dob") }}
                 </div>
-                <div
-                  class="basic-info-cell content"
-                  v-if="personalState.memberInfo.birthday"
-                >
+                <div class="basic-info-cell content" v-if="personalState.memberInfo.birthday">
                   {{ displayBirthday }}
                 </div>
                 <div
@@ -227,30 +197,14 @@
                     filled
                     v-model="formDetail.birthday"
                     :placeholder="$t('lang.dob')"
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) || $t('lang.enter_ur_dob'),
-                    ]"
+                    :rules="[(val) => (val && val.length > 0) || $t('lang.enter_ur_dob')]"
                   >
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
-                        <q-popup-proxy
-                          cover
-                          transition-show="scale"
-                          transition-hide="scale"
-                        >
-                          <q-date
-                            v-model="formDetail.birthday"
-                            mask="YYYY-MM-DD"
-                            @update:model-value="updateBirthday"
-                          >
+                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                          <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD" @update:model-value="updateBirthday">
                             <div class="row items-center justify-end">
-                              <q-btn
-                                v-close-popup
-                                :label="$t('lang.close_btn')"
-                                color="primary"
-                                flat
-                              />
+                              <q-btn v-close-popup :label="$t('lang.close_btn')" color="primary" flat />
                             </div>
                           </q-date>
                         </q-popup-proxy>
@@ -281,10 +235,7 @@
                 <div
                   style="margin-left: 10px"
                   class="basic-info-cell content flex items-center edit-div btn-pointer"
-                  v-if="
-                    !personalState.memberInfo.phoneVerified ||
-                    !personalState.memberInfo.telephone
-                  "
+                  v-if="!personalState.memberInfo.phoneVerified || !personalState.memberInfo.telephone"
                 >
                   <span @click="verifyPhone">{{ $t("lang.verify") }}</span>
                   <RiEditBoxLine />
@@ -323,30 +274,18 @@
               </div> -->
             </div>
 
-            <div
-              v-if="isEdit"
-              class="flex items-center justify-center q-mt-md gap-10"
-            >
-              <q-btn
-                color="brand"
-                class="login-btn common-large-btn"
-                @click="updateState"
-                >{{ $t("lang.confirm") }}
+            <div v-if="isEdit" class="flex items-center justify-center q-mt-md gap-10">
+              <q-btn color="brand" class="login-btn common-large-btn" @click="updateState">
+                {{ $t("lang.confirm") }}
               </q-btn>
 
-              <q-btn
-                class="common-large-btn close-btn"
-                @click="isEdit = !isEdit"
-                >{{ $t("lang.cancel") }}
-              </q-btn>
+              <q-btn class="common-large-btn close-btn" @click="isEdit = !isEdit">{{ $t("lang.cancel") }}</q-btn>
             </div>
           </div>
           <div class="account-tip danger">
             <div>
               {{ $t("lang.if_you_wish_to_change_please_contact") }}
-              <router-link to="/liveChat">{{
-                $t("lang.live_chat")
-              }}</router-link>
+              <a @click="openLiveChat($event, router)">{{ $t("lang.live_chat") }}</a>
               {{ $t("lang.or") }}
               <RiLineLine style="width: 18px" />
               Line.
@@ -396,26 +335,14 @@
             stack-label
           />
           <div class="flex flex-center gap-10">
-            <q-btn
-              class="common-large-btn"
-              :label="$t('lang.confirm')"
-              color="brand"
-              @click="submitUpdatePwd"
-            />
-            <q-btn
-              class="common-large-btn close-btn"
-              :label="$t('lang.cancel')"
-              v-close-popup
-            />
+            <q-btn class="common-large-btn" :label="$t('lang.confirm')" color="brand" @click="submitUpdatePwd" />
+            <q-btn class="common-large-btn close-btn" :label="$t('lang.cancel')" v-close-popup />
           </div>
         </q-form>
       </div>
 
       <div class="personal-container" v-if="select_menu === 'verify'">
-        <q-form
-          class="q-gutter-sm q-mt-lg form-verification"
-          autocomplete="off"
-        >
+        <q-form class="q-gutter-sm q-mt-lg form-verification" autocomplete="off">
           <q-input
             ref="phoneNumberRef"
             v-model="updateSecurityVerified.phone"
@@ -424,12 +351,7 @@
             autocomplete="off"
             clearable
             filled
-            :rules="[
-              (val) =>
-                (val && val.length > 0) ||
-                $t('lang.please_confirm_phone_number'),
-              isValidPhone,
-            ]"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'), isValidPhone]"
           />
           <div class="half">
             <q-input
@@ -449,21 +371,12 @@
             />
           </div>
           <div class="flex flex-center gap-10 q-mt-md">
-            <q-btn
-              :label="$t('lang.confirm')"
-              class="common-large-btn"
-              color="brand"
-              @click="submitUpdateSecurity"
-            />
+            <q-btn :label="$t('lang.confirm')" class="common-large-btn" color="brand" @click="submitUpdateSecurity" />
           </div>
         </q-form>
       </div>
 
-      <q-dialog
-        v-model="verificationModalVisible"
-        transition-show="slide-up"
-        transition-hide="slide-down"
-      >
+      <q-dialog v-model="verificationModalVisible" transition-show="slide-up" transition-hide="slide-down">
         <q-card class="q-pa-md">
           <div class="modal-head-title q-pb-md">
             {{ $t("lang.check_your_captcha_code") }}
@@ -477,10 +390,7 @@
               maxlength="4"
               v-model="updateSecurityVerified.captchaCode"
               :label="$t('lang.captcha_code')"
-              :rules="[
-                (val) =>
-                  (val && val.length > 3) || $t('lang.enter_captcha_code'),
-              ]"
+              :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]"
               color="white"
             >
               <template v-slot:append>
@@ -496,11 +406,7 @@
               class="common-btn verification-btn"
               @click.prevent="verifyVerificationCode"
             >
-              {{
-                isEmailSending
-                  ? $t("lang.verifying")
-                  : $t("lang.confirm_button")
-              }}
+              {{ isEmailSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
             </q-btn>
           </q-form>
         </q-card>
@@ -521,7 +427,8 @@ import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores"
 import {useI18n} from "vue-i18n";
-
+import { useRouter } from "vue-router";
+import { openLiveChat } from "boot/utils";
 
 export default defineComponent({
   name: "PersonalView",
@@ -532,6 +439,7 @@ export default defineComponent({
     RiLineLine
   },
   setup() {
+	const router = useRouter();
     const store = userStore()
     const {t} = useI18n();
     const qs = require("qs");
@@ -866,7 +774,9 @@ export default defineComponent({
       phoneRef,
       moment,
       selectTab,
-      select_menu
+      select_menu,
+	  openLiveChat,
+	  router
     };
   }
 });
@@ -946,11 +856,7 @@ export default defineComponent({
   border-radius: 10px;
 }
 
-:deep(
-    .ant-select-single:not(.ant-select-customize-input)
-      .ant-select-selector
-      .ant-select-selection-search-input
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
   height: 40px;
 }
 
