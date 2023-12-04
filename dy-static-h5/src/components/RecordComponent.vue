@@ -495,7 +495,7 @@ export default defineComponent({
               });
               reminderDialog.value = false;
               reminderForm.value = {};
-              uploadFileRef.value.clear();
+              uploadFileRef.value = {};
             }
           });
     };
