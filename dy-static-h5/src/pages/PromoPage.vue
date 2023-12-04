@@ -119,7 +119,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {ref, defineComponent, onActivated, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -283,7 +283,7 @@ export default defineComponent({
       });
 
     };
-    onMounted(() => {
+    onActivated(() => {
       loadBanner();
       loadAll();
     });
