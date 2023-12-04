@@ -76,6 +76,12 @@ const navigationData = ref([
     path: '/affiliate',
     children: [
       {
+        path: '/bank-card',
+        title: '绑定银行卡',
+        active: false,
+        icon: 'money-bag',
+      },
+      {
         path: '/withdraw-request',
         title: '提款申请',
         active: false,

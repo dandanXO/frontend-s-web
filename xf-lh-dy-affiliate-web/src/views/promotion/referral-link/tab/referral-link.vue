@@ -6,7 +6,7 @@
           <span style="font-size: 20px">
             {{ $t('referralLink.affiliateWebPlatformLink') }}
           </span>
-          <a :href="link" target="_blank" style="color: #1fa8db">
+          <a :href="page.webLongLink" target="_blank" style="color: #1fa8db">
             {{ page.webLongLink }}
           </a>
         </div>
@@ -77,7 +77,7 @@
           <span style="font-size: 20px">
             {{ $t('referralLink.affiliateH5PlatformLink') }}
           </span>
-          <a :href="link" target="_blank" style="color: #1fa8db">
+          <a :href="page.h5LongLink" target="_blank" style="color: #1fa8db">
             {{ page.h5LongLink }}
           </a>
         </div>
@@ -219,7 +219,7 @@
 </template>
 <script setup>
 import { useStore } from '@/store'
-import { nextTick, onMounted, reactive, ref } from '@vue/runtime-core'
+import { nextTick, onMounted, reactive } from '@vue/runtime-core'
 import { getAffiliateInfo } from '../../../../api/affiliate'
 import { getConfigs } from '../../../../api/system-config'
 import { getShortLink } from '../../../../api/affiliate-short-link'
@@ -232,8 +232,6 @@ import { generateRandomAlphaNumeric } from '@/utils/utils'
 const store = useStore()
 // eslint-disable-next-line
 const { t } = useI18n()
-const link = ref('')
-// const appLink = ref('')
 
 const linkDiaglogControl = reactive({
   dialogVisible: false,

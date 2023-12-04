@@ -32,7 +32,7 @@
       />
     </el-form-item>
     <el-form-item :label="t('commissionInfo.platformFee')">
-      <div>{{ calculator.platformFeeByPercentage }}</div>
+      <div>{{ calculator.platformFeeByPercentage }} %</div>
     </el-form-item>
     <el-form-item :label="t('commissionInfo.monthlyTotalDeposit')">
       <el-input

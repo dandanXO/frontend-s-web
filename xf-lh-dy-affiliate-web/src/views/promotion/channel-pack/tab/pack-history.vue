@@ -53,7 +53,7 @@
           {{ (request.current - 1) * 10 + scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="channelValue" :label="t('fields.packType')" />
+      <el-table-column prop="appType" :label="t('fields.packType')" />
       <el-table-column prop="osType" :label="t('fields.osType')" />
       <el-table-column prop="appName" :label="t('fields.appName')" />
       <el-table-column prop="appIcon" :label="t('fields.appIcon')">
@@ -94,10 +94,7 @@
             {{ $t('fields.detail') }}
           </el-button>
           <el-button
-            v-if="
-              scope.row.status === 'IN_QUEUE' ||
-                scope.row.status === 'IN_PROGRESS'
-            "
+            v-if="scope.row.status === 'IN_QUEUE'"
             icon="el-icon-remove"
             size="mini"
             type="danger"
