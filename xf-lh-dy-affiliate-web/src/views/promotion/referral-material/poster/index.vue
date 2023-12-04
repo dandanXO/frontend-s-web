@@ -656,8 +656,8 @@ function download() {
   poster.download()
 }
 
-function initCanvas() {
-  poster.background(posterDir + posterInfo.path)
+async function initCanvas() {
+  await poster.background(posterDir + posterInfo.path)
   // poster.background(
   //   'https://file.rd7etvkrgt.com/promo/c9974e9e-7aaf-4afc-b2b4-a55c7bbdbedd.jpg'
   // )
