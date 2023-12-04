@@ -145,7 +145,7 @@
           <img class="footer-icon" :src="tab === 'app' ? footers['app']['active'] : footers['app']['icon']" />
           <span>APP</span>
         </q-route-tab>
-        <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs">
+        <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs" @click="openLiveChat($event, router)">
           <img
             class="footer-icon"
             :class="tab != 'cs' ? 'breathing-icon' : ''"
@@ -169,6 +169,7 @@ import AccountPage from "pages/AccountPage.vue";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
+import { openLiveChat } from "src/boot/utils";
 
 export default defineComponent({
   name: "MainLayout",
@@ -423,6 +424,7 @@ export default defineComponent({
       store.getBalance();
       checkSticky();
     });
+
     return {
       tab: ref("home"),
       toggleLeftDrawer,
@@ -445,7 +447,9 @@ export default defineComponent({
       showSticky,
       hasLang,
       mainWalletValue,
-      openAffiliatePage
+      openAffiliatePage,
+      openLiveChat,
+      router
     };
   }
 });
