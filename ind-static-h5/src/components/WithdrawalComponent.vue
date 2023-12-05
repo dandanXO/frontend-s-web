@@ -225,7 +225,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, watch, computed } from "vue";
+import { onMounted, ref, reactive, watch, computed, defineEmits } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -306,7 +306,7 @@ const loadCards = () => {
       isLoadingBankCard.value = false;
     });
 };
-const emits = defineEmits(["closeModal"]);
+const emits = defineEmits(["closeWithdraw"]);
 
 const cardRef = ref();
 const amountRef = ref();
@@ -398,7 +398,7 @@ const submitWithdraw = async () => {
           refreshBalance();
           getWithdrawalMethods();
 
-          emits("closeModal");
+          emits("closeWithdraw");
         }
       })
       .catch((error) => {
@@ -437,7 +437,7 @@ const withdrawGo = async () => {
         refreshBalance();
         getWithdrawalMethods();
 
-        emits("closeModal");
+        emits("closeWithdraw");
       } else {
         $q.notify({
           color: "negative",

@@ -586,7 +586,7 @@
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
         </div>
-        <WithdrawalComponent :close-modal="closeWithDrawModal"></WithdrawalComponent>
+        <WithdrawalComponent @close-withdraw="closeWithDrawModal"></WithdrawalComponent>
       </div>
     </div>
   </q-dialog>
