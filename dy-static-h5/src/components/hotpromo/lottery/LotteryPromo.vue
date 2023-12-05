@@ -37,7 +37,7 @@
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="query.recordTime">
+                          <q-date v-model="query.recordTime" @update:model-value="closePopup">
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
                             </div>
@@ -76,7 +76,7 @@
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="winnersQuery.resultTime">
+                          <q-date v-model="winnersQuery.resultTime" @update:model-value="closePopup">
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
                             </div>
@@ -165,9 +165,9 @@ const recordColumns = [
     sortable: true
   },
   {
-    name: "recordNumber",
+    name: "number",
     label: "玩家选号",
-    field: "recordNumber",
+    field: "number",
     align: "center",
     sortable: true
   }
@@ -286,6 +286,12 @@ function retrieveWinnerList() {
     });
   }
 }
+
+const resultTime = ref("");
+
+const closePopup = () => {
+  this.$refs.hide();
+};
 </script>
 
 <style scoped lang="scss">
@@ -397,6 +403,7 @@ function retrieveWinnerList() {
           background-image: linear-gradient(-41deg, #0094ff 0, #19c6ff 100%), linear-gradient(#10111a, #10111a);
           border-radius: 30px;
           font-weight: 600;
+          margin-left: auto;
         }
       }
 

@@ -696,11 +696,12 @@ function onSubmitClick() {
 }
 
 .question-select-box {
-  width: 360px;
+  max-width: 360px;
   margin: 40px auto;
   font-size: 14px;
   color: #bacef1;
   display: flex;
+  gap:20px;
   justify-content: space-between;
   flex-wrap: wrap;
 
