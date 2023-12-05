@@ -1,85 +1,85 @@
 <template>
-  <AddBankCardModal ref="addBankCardModalRef" :loadCards="loadCards"></AddBankCardModal>
+  <!--  <AddBankCardModal ref="addBankCardModalRef" :loadCards="loadCards"></AddBankCardModal>-->
 
-  <q-tabs
-    v-model="withdrawalDialogTab"
-    dense
-    no-caps
-    class="withdrawal-tab"
-    indicator-color="transparent"
-    align="justify"
-  >
-    <q-tab name="BANK" label="Bankcard" />
-    <!-- <q-tab name="UPI" label="UPI" /> -->
-  </q-tabs>
+  <!--  <q-tabs-->
+  <!--    v-model="withdrawalDialogTab"-->
+  <!--    dense-->
+  <!--    no-caps-->
+  <!--    class="withdrawal-tab"-->
+  <!--    indicator-color="transparent"-->
+  <!--    align="justify"-->
+  <!--  >-->
+  <!--    <q-tab name="BANK" label="Bankcard" />-->
+  <!--    &lt;!&ndash; <q-tab name="UPI" label="UPI" /> &ndash;&gt;-->
+  <!--  </q-tabs>-->
 
-  <q-tab-panels
-    class="withdrawal-tab-panel"
-    v-model="withdrawalDialogTab"
-    animated
-    transition-prev="fade"
-    transition-next="fade"
-  >
-    <q-tab-panel name="BANK">
-      <div class="withdrawal-table">
-        <LoadingComponent v-if="isLoadingBankCard"></LoadingComponent>
-        <div v-else-if="isNoBankCard" class="w-tbl-row">
-          <div class="bank-card-item" @click="onAddCardClick()">
-            <div class="bank-card-add">
-              <div class="card-icon">
-                <q-icon key="md" size="md" name="add" />
-              </div>
-              <div class="card-label">Add Bank Card</div>
-            </div>
-          </div>
-        </div>
-        <template v-else>
-          <div class="w-tbl-row">
-            <div class="w-tbl-col">Cash Balance:</div>
-            <div class="w-tbl-col">
-              <span class="w-txt-red">{{ store.balance }}</span>
-            </div>
-          </div>
-          <div class="w-tbl-row">
-            <div class="w-tbl-col">Withdrawable:</div>
-            <div class="w-tbl-col">
-              {{
-                `${withdrawalMethods[withdrawalDialogTab].withdrawMin || 0} - ${
-                  withdrawalMethods[withdrawalDialogTab].withdrawMax || 0
-                }`
-              }}
-            </div>
-          </div>
-          <div class="w-tbl-row">
-            <div class="w-tbl-col">Remaining Wager:</div>
-            <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount || 0 }}</div>
-          </div>
-        </template>
-      </div>
-    </q-tab-panel>
-    <!-- <q-tab-panel name="UPI">
-      <div class="withdrawal-table">
-        <div class="w-tbl-row">
-          <div class="w-tbl-col">Cash Balance:</div>
-          <div class="w-tbl-col">
-            <span class="w-txt-red">{{ store.balance }}</span>
-          </div>
-        </div>
-        <div class="w-tbl-row">
-          <div class="w-tbl-col">Withdrawable:</div>
-          <div class="w-tbl-col">
-            {{
-              `${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
-            }}
-          </div>
-        </div>
-        <div class="w-tbl-row">
-          <div class="w-tbl-col">Remaining Wager:</div>
-          <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount }}</div>
-        </div>
-      </div>
-    </q-tab-panel> -->
-  </q-tab-panels>
+  <!--  <q-tab-panels-->
+  <!--    class="withdrawal-tab-panel"-->
+  <!--    v-model="withdrawalDialogTab"-->
+  <!--    animated-->
+  <!--    transition-prev="fade"-->
+  <!--    transition-next="fade"-->
+  <!--  >-->
+  <!--    <q-tab-panel name="BANK">-->
+  <!--      <div class="withdrawal-table">-->
+  <!--        <LoadingComponent v-if="isLoadingBankCard"></LoadingComponent>-->
+  <!--        <div v-else-if="isNoBankCard" class="w-tbl-row">-->
+  <!--          <div class="bank-card-item" @click="onAddCardClick()">-->
+  <!--            <div class="bank-card-add">-->
+  <!--              <div class="card-icon">-->
+  <!--                <q-icon key="md" size="md" name="add" />-->
+  <!--              </div>-->
+  <!--              <div class="card-label">Add Bank Card</div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <template v-else>-->
+  <!--          <div class="w-tbl-row">-->
+  <!--            <div class="w-tbl-col">Cash Balance:</div>-->
+  <!--            <div class="w-tbl-col">-->
+  <!--              <span class="w-txt-red">{{ store.balance }}</span>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          <div class="w-tbl-row">-->
+  <!--            <div class="w-tbl-col">Withdrawable:</div>-->
+  <!--            <div class="w-tbl-col">-->
+  <!--              {{-->
+  <!--                `${withdrawalMethods[withdrawalDialogTab].withdrawMin || 0} - ${-->
+  <!--                  withdrawalMethods[withdrawalDialogTab].withdrawMax || 0-->
+  <!--                }`-->
+  <!--              }}-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          <div class="w-tbl-row">-->
+  <!--            <div class="w-tbl-col">Remaining Wager:</div>-->
+  <!--            <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount || 0 }}</div>-->
+  <!--          </div>-->
+  <!--        </template>-->
+  <!--      </div>-->
+  <!--    </q-tab-panel>-->
+  <!--    &lt;!&ndash; <q-tab-panel name="UPI">-->
+  <!--      <div class="withdrawal-table">-->
+  <!--        <div class="w-tbl-row">-->
+  <!--          <div class="w-tbl-col">Cash Balance:</div>-->
+  <!--          <div class="w-tbl-col">-->
+  <!--            <span class="w-txt-red">{{ store.balance }}</span>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <div class="w-tbl-row">-->
+  <!--          <div class="w-tbl-col">Withdrawable:</div>-->
+  <!--          <div class="w-tbl-col">-->
+  <!--            {{-->
+  <!--              `${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`-->
+  <!--            }}-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <div class="w-tbl-row">-->
+  <!--          <div class="w-tbl-col">Remaining Wager:</div>-->
+  <!--          <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount }}</div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </q-tab-panel> &ndash;&gt;-->
+  <!--  </q-tab-panels>-->
 
   <div class="withdrawal-form" v-if="withdrawalDialogTab === 'BANK'">
     <div class="w-form-item w-form-item--bankcard">
@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <div class="w-form-item w-form-item--bankcard">
+    <div class="w-form-item w-form-item--bankcard" v-if="bankCardList.length > 0">
       <div class="w-form-label">Bank Card</div>
       <div class="w-form-input">
         <q-select
@@ -164,35 +164,42 @@
           filled
           dense
           clearable
+          lazy-rules
           placeholder="Enter Account Holder Name"
           v-model="withdrawReadOnlyInfo.cardAccount"
           readonly
         ></q-input>
       </div>
     </div>
-    <div class="w-form-item w-form-item--bankcard">
-      <div class="w-form-label">Account Number</div>
+    <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
+      <div class="w-form-label">Bank Account Number</div>
       <div class="w-form-input">
         <q-input
           filled
           dense
           clearable
+          lazy-rules
+          ref="bankNumberRef"
           placeholder="Enter Account Number"
           v-model="withdrawReadOnlyInfo.cardNumber"
-          readonly
+          :rules="[(_) => isValidCardNumber()]"
+          :readonly="bankCardList.length > 0 ? true : false"
         ></q-input>
       </div>
     </div>
-    <div class="w-form-item w-form-item--bankcard">
+    <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
       <div class="w-form-label">Bank IFSC Code</div>
       <div class="w-form-input">
         <q-input
           filled
           dense
           clearable
+          lazy-rules
+          ref="bankAddressRef"
           placeholder="Enter Bank IFSC Code"
           v-model="withdrawReadOnlyInfo.cardAddress"
-          readonly
+          :rules="[(_) => isValidCardAddress()]"
+          :readonly="bankCardList.length > 0 ? true : false"
         ></q-input>
       </div>
     </div>
@@ -253,6 +260,21 @@ const getWithdrawalMethods = () => {
       });
     }
   });
+
+  if (bankCardList.value.length === 0) {
+    api
+      .get("/session/withdraw/card")
+      .then((res) => {
+        if (res.code === 0) {
+          res.data.forEach((e) => {
+            bankCardField.bankId = e.id;
+          });
+        }
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
 };
 
 const isLoadingBankCard = ref(false);
@@ -269,6 +291,10 @@ const loadCards = () => {
       if (res.code === 0) {
         bankCardList.value = [];
         bankCardList.value.push(...res.data);
+
+        if (bankCardList.value.length > 0) {
+          withdrawInfo.cardId = bankCardList.value[0].id;
+        }
       }
     })
     .catch((error) => {
@@ -279,13 +305,28 @@ const loadCards = () => {
       isLoadingBankCard.value = false;
     });
 };
-
+const cardRef = ref();
+const amountRef = ref();
+const bankAddressRef = ref();
+const bankNumberRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
   withdrawCode: ""
 });
-const withdrawReadOnlyInfo = reactive({ cardAccount: "", cardNumber: "", cardAddress: "" });
+const withdrawReadOnlyInfo = reactive({
+  cardAccount: store.realName,
+  cardNumber: "",
+  cardAddress: ""
+});
+const bankCardField = reactive({
+  bankId: undefined,
+  cardAccount: store.realName,
+  cardNumber: "",
+  cardAddress: "",
+  withdrawCode: "",
+  amount: ""
+});
 watch(withdrawalDialogTab, () => {
   withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
 
@@ -307,22 +348,41 @@ const onCardChanged = () => {
   });
 };
 
-const cardRef = ref();
-const amountRef = ref();
-const submitWithdraw = () => {
-  cardRef.value.validate();
-  amountRef.value.validate();
+const isValidCardNumber = () => {
+  const { cardNumber } = withdrawReadOnlyInfo;
 
-  $q.loading.show({
-    message: "Withdrawing..."
-  });
+  const result = !cardNumber ? "Please Enter Card Number" : true;
+  return result;
+};
 
-  if (cardRef.value.hasError || amountRef.value.hasError) {
-    $q.loading.hide();
-  } else {
-    withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
+const isValidCardAddress = () => {
+  const { cardAddress } = withdrawReadOnlyInfo;
+  const result = !cardAddress
+    ? "Please Enter Bank Ifsc Code"
+    : cardAddress.length !== 11
+    ? "Bank IFSC Code Must Be 11 Character"
+    : true;
+  return result;
+};
+
+const submitWithdraw = async () => {
+  if (bankCardList.value.length === 0) {
+    amountRef.value.validate();
+    bankAddressRef.value.validate();
+    bankNumberRef.value.validate();
+
+    if (amountRef.value.hasError || bankAddressRef.value.hasError || bankNumberRef.value.hasError) {
+      $q.loading.hide();
+      return;
+    }
+
+    bankCardField.cardNumber = withdrawReadOnlyInfo.cardNumber;
+    bankCardField.cardAddress = withdrawReadOnlyInfo.cardAddress;
+    bankCardField.amount = withdrawInfo.amount;
+    bankCardField.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
+
     api
-      .post("/session/withdraw/", qs.stringify(withdrawInfo))
+      .post(" /withdrawAndBankCard", qs.stringify(bankCardField))
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
@@ -331,25 +391,61 @@ const submitWithdraw = () => {
             message: "Withdrawal Submit Succeed",
             icon: "check_circle_outline"
           });
-
+          // props.loadCards();
           refreshBalance();
           getWithdrawalMethods();
-        } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: response.message,
-            icon: "report_problem"
-          });
         }
       })
       .catch((error) => {
         console.log("error", error);
-      })
-      .then(() => {
-        $q.loading.hide();
       });
+  } else {
+    // cardRef.value.validate();
+    amountRef.value.validate();
+
+    $q.loading.show({
+      message: "Withdrawing..."
+    });
+
+    // cardRef.value.hasError ||
+    if (amountRef.value.hasError) {
+      $q.loading.hide();
+    } else {
+      await withdrawGo();
+    }
   }
+};
+
+const withdrawGo = async () => {
+  withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
+  api
+    .post("/session/withdraw/", qs.stringify(withdrawInfo))
+    .then((response) => {
+      if (response.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Withdrawal Submit Succeed",
+          icon: "check_circle_outline"
+        });
+
+        refreshBalance();
+        getWithdrawalMethods();
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: response.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    })
+    .then(() => {
+      $q.loading.hide();
+    });
 };
 
 const addBankCardModalRef = ref();
@@ -359,7 +455,6 @@ const onAddCardClick = () => {
 
 onMounted(() => {
   refreshBalance();
-
   getWithdrawalMethods();
   loadCards();
 });
@@ -379,6 +474,15 @@ onMounted(() => {
     color: #000000;
     background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
   }
+}
+
+.q-field--with-bottom {
+  padding-bottom: 0px;
+}
+
+.q-field--error .q-field__bottom {
+  color: #ff0000;
+  padding-bottom: 5px;
 }
 
 .withdrawal-tab-panel {
@@ -453,6 +557,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 5px;
     margin-bottom: 12px;
+    padding-top: 10px;
   }
 
   .w-form-input {
@@ -477,6 +582,7 @@ onMounted(() => {
   background-image: url(../assets/images/index/popout/btn-go.png);
   color: #ffffff;
   margin: auto;
+
   &:before {
     box-shadow: none;
   }
