@@ -99,7 +99,16 @@
             </el-tab-pane>
             <el-tab-pane :label="$t('fields.textInfo')">
               <div style="padding: 20px">
-                <div class="label-row">{{ $t('fields.text') }} 1</div>
+                <div class="label-row">
+                  {{ $t('fields.text') }} 1
+                  <el-input-number
+                    size="small"
+                    v-model="data.text1Size"
+                    :min="10"
+                    :max="100"
+                    @change="handleText1SizeChange"
+                  />
+                </div>
                 <div class="label-row">
                   <el-input
                     v-model="data.text1"
@@ -118,7 +127,7 @@
                       show-alpha
                       @close-picker="onText1ColorClose"
                     />
-                    <b style="margin-left:5px"> {{ data.text1Color }}</b>
+                    <b style="margin-left:5px">{{ data.text1Color }}</b>
                   </div>
                 </div>
                 <div class="label-row">
@@ -150,7 +159,7 @@
                       show-alpha
                       @close-picker="onText1BgColorClose"
                     />
-                    <b style="margin-left:5px"> {{ data.text1BgColor }}</b>
+                    <b style="margin-left:5px">{{ data.text1BgColor }}</b>
                   </div>
                 </div>
                 <div class="label-row">
@@ -172,7 +181,16 @@
                     @close-picker="onText1BgColorClose"
                   />
                 </div>
-                <div class="label-row">{{ $t('fields.text') }} 2</div>
+                <div class="label-row">
+                  {{ $t('fields.text') }} 2
+                  <el-input-number
+                    size="small"
+                    v-model="data.text2Size"
+                    :min="10"
+                    :max="100"
+                    @change="handleText2SizeChange"
+                  />
+                </div>
                 <div class="label-row">
                   <el-input
                     v-model="data.text2"
@@ -191,7 +209,7 @@
                       show-alpha
                       @close-picker="onText2ColorClose"
                     />
-                    <b style="margin-left:5px"> {{ data.text2Color }}</b>
+                    <b style="margin-left:5px">{{ data.text2Color }}</b>
                   </div>
                 </div>
                 <div class="label-row">
@@ -223,7 +241,7 @@
                       show-alpha
                       @close-picker="onText2BgColorClose"
                     />
-                    <b style="margin-left:5px"> {{ data.text2BgColor }}</b>
+                    <b style="margin-left:5px">{{ data.text2BgColor }}</b>
                   </div>
                 </div>
                 <div class="label-row">
@@ -245,7 +263,16 @@
                     @close-picker="onText2BgColorClose"
                   />
                 </div>
-                <div class="label-row">{{ $t('fields.text') }} 3</div>
+                <div class="label-row">
+                  {{ $t('fields.text') }} 3
+                  <el-input-number
+                    size="small"
+                    v-model="data.text3Size"
+                    :min="10"
+                    :max="100"
+                    @change="handleText3SizeChange"
+                  />
+                </div>
                 <div class="label-row">
                   <el-input
                     v-model="data.text3"
@@ -264,7 +291,7 @@
                       show-alpha
                       @close-picker="onText3ColorClose"
                     />
-                    <b style="margin-left:5px"> {{ data.text3Color }}</b>
+                    <b style="margin-left:5px">{{ data.text3Color }}</b>
                   </div>
                 </div>
                 <div class="label-row">
@@ -296,7 +323,7 @@
                       show-alpha
                       @close-picker="onText3BgColorClose"
                     />
-                    <b style="margin-left:5px"> {{ data.text3BgColor }}</b>
+                    <b style="margin-left:5px">{{ data.text3BgColor }}</b>
                   </div>
                 </div>
                 <div class="label-row">
@@ -342,57 +369,6 @@
           </div>
         </div>
       </div>
-      <!-- <el-card class="box-card">
-        <el-input
-          v-model="qrcodeData"
-          size="small"
-          style="width: 200px;margin:2px"
-          placeholder="qrcode Data"
-        />
-        <el-input
-          v-model="radius"
-          size="small"
-          style="width: 200px;margin:2px"
-          placeholder="radius"
-        />
-        <pick-colors
-          v-model="darkColor"
-          format="hex"
-          show-alpha
-          @close-picker="pickDark"
-        />
-        <pick-colors
-          v-model="lightColor"
-          format="hex"
-          show-alpha
-          @close-picker="pickLight"
-        />
-        <el-button size="small" @click="generateQrcode" type="primary">
-          generate
-        </el-button>
-      </el-card>
-      <el-card>
-        <el-input
-          v-model="text1"
-          size="small"
-          style="width: 200px;margin:2px"
-          placeholder="text"
-        />
-        <pick-colors
-          v-model="text1Color"
-          format="hex"
-          show-alpha
-          @close-picker="pickText1"
-        />
-        <el-button size="small" @click="addText1" type="primary">
-          add
-        </el-button>
-      </el-card>
-      <el-button size="small" @click="download" type="primary">
-        download
-      </el-button>
-
-      <canvas ref="myCanvas" id="poster" /> -->
     </el-card>
   </div>
 </template>
@@ -448,12 +424,15 @@ const data = reactive({
   qrBgColor: '#FFFFFF',
   qrData: '',
   text1: null,
+  text1Size: 30,
   text1Color: '#000000',
   text1BgColor: '#FFFFFF',
   text2: null,
+  text2Size: 30,
   text2Color: '#000000',
   text2BgColor: '#FFFFFF',
   text3: null,
+  text3Size: 30,
   text3Color: '#000000',
   text3BgColor: '#FFFFFF',
 })
@@ -566,6 +545,21 @@ function onText3BgColorPresetChange(value) {
   generateText3()
 }
 
+function handleText1SizeChange(value) {
+  data.text1Size = value
+  generateText1()
+}
+
+function handleText2SizeChange(value) {
+  data.text2Size = value
+  generateText2()
+}
+
+function handleText3SizeChange(value) {
+  data.text3Size = value
+  generateText3()
+}
+
 function onQrDataChange() {
   if (data.qrData === '') {
     poster.clearQR()
@@ -575,7 +569,7 @@ function onQrDataChange() {
 }
 
 function onText1DataChange() {
-  if (data.text1 === "") {
+  if (data.text1 === '') {
     poster.removeTextById(1)
   } else {
     generateText1()
@@ -583,7 +577,7 @@ function onText1DataChange() {
 }
 
 function onText2DataChange() {
-  if (data.text2 === "") {
+  if (data.text2 === '') {
     poster.removeTextById(2)
   } else {
     generateText2()
@@ -591,7 +585,7 @@ function onText2DataChange() {
 }
 
 function onText3DataChange() {
-  if (data.text3 === "") {
+  if (data.text3 === '') {
     poster.removeTextById(3)
   } else {
     generateText3()
@@ -604,7 +598,7 @@ async function generateText1() {
     text: data.text1,
     color: data.text1Color,
     id: textId1,
-    fontSize: 30,
+    fontSize: data.text1Size,
     fontFamily: 'Courier New',
     backgroundColor: data.text1BgColor,
   })
@@ -616,7 +610,7 @@ async function generateText2() {
     text: data.text2,
     color: data.text2Color,
     id: textId2,
-    fontSize: 30,
+    fontSize: data.text2Size,
     fontFamily: 'Courier New',
     backgroundColor: data.text2BgColor,
   })
@@ -628,7 +622,7 @@ async function generateText3() {
     text: data.text3,
     color: data.text3Color,
     id: textId3,
-    fontSize: 30,
+    fontSize: data.text3Size,
     fontFamily: 'Courier New',
     backgroundColor: data.text3BgColor,
   })
@@ -659,7 +653,7 @@ async function download() {
 
 async function initCanvas() {
   await poster.background(posterDir + posterInfo.path)
-  // poster.background(
+  // await poster.background(
   //   'https://file.rd7etvkrgt.com/promo/c9974e9e-7aaf-4afc-b2b4-a55c7bbdbedd.jpg'
   // )
   generateQrcode()
