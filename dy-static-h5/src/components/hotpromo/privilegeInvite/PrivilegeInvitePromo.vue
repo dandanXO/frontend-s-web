@@ -421,7 +421,7 @@ $gold: #efcf68;
           }
 
           h3 {
-              font-size: 17px;
+              font-size: 13px;
               color: #11131f;
               font-family: "Microsoft YaHei";
               font-weight: 800;
