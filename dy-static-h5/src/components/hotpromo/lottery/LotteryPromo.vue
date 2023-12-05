@@ -244,9 +244,9 @@ const winnerColumns = [
     align: "center"
   },
   {
-    name: "resultNumber",
+    name: "number",
     label: "中奖号码",
-    field: "resultNumber",
+    field: "number",
     align: "center"
   }
 ];
