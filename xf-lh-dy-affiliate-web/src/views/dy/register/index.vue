@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="affiliate">
-      <div class="game-title sub"><img :src="xfLogo"></div>
+      <div class="game-title sub"><img :src="dyLogo"></div>
       <div class="affiliate-login">
         <el-form
           ref="loginFormRef"
@@ -21,7 +21,7 @@
                 tabindex="1"
                 autocomplete="off"
               >
-                <template #prepend><i><img src="../../../assets/images/xf/icon_name.png"></i></template>
+                <template #prepend><i><img src="../../../assets/images/dy/icon_name.png"></i></template>
               </el-input>
             </el-form-item>
             <el-tooltip
@@ -43,7 +43,7 @@
                   @keyup="checkCapslock"
                   @blur="capsTooltip = false"
                 >
-                  <template #prepend><i><img src="../../../assets/images/xf/icon_pwd.png"></i></template>
+                  <template #prepend><i><img src="../../../assets/images/dy/icon_pwd.png"></i></template>
                 </el-input>
               </el-form-item>
             </el-tooltip>
@@ -66,7 +66,7 @@
                   @keyup="checkCapslock"
                   @blur="capsTooltip = false"
                 >
-                  <template #prepend><i><img src="../../../assets/images/xf/icon_pwd.png"></i></template>
+                  <template #prepend><i><img src="../../../assets/images/dy/icon_pwd.png"></i></template>
                 </el-input>
               </el-form-item>
             </el-tooltip>
@@ -79,7 +79,7 @@
             >
               下一步
             </el-button>
-            <router-link to="/xf/login" class="signlog">已经有帐号?请登录</router-link>
+            <router-link to="/dy/login" class="signlog">已经有帐号?请登录</router-link>
           </div>
           <div v-if="step === 2">
             <el-form-item prop="realName">
@@ -92,7 +92,7 @@
                 tabindex="4"
                 autocomplete="on"
               >
-                <template #prepend><i><img src="../../../assets/images/xf/icon_name.png"></i></template>
+                <template #prepend><i><img src="../../../assets/images/dy/icon_name.png"></i></template>
               </el-input>
             </el-form-item>
             <el-form-item prop="telephone">
@@ -105,7 +105,7 @@
                 tabindex="4"
                 autocomplete="on"
               >
-                <template #prepend><i><img src="../../../assets/images/xf/icon_phone.png"></i></template>
+                <template #prepend><i><img src="../../../assets/images/dy/icon_phone.png"></i></template>
               </el-input>
             </el-form-item>
             <el-form-item prop="email">
@@ -118,7 +118,7 @@
                 tabindex="5"
                 autocomplete="on"
               >
-                <template #prepend><i><img src="../../../assets/images/xf/icon_mail.png"></i></template>
+                <template #prepend><i><img src="../../../assets/images/dy/icon_mail.png"></i></template>
               </el-input>
             </el-form-item>
             <!-- <el-form-item prop="birthday">
@@ -198,7 +198,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import { getVerificationCode } from '../../../api/user';
-import xfLogo from "@/assets/images/xf/logo.png";
+import dyLogo from "@/assets/images/dy/logo.png";
 import { ElNotification } from 'element-plus';
 
 export default defineComponent({
@@ -390,7 +390,7 @@ export default defineComponent({
         });
       },
       handleRegister: () => {
-        state.loginForm.siteId = 1;
+        state.loginForm.siteId = 6;
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             if (step.value === 1) {
@@ -419,7 +419,7 @@ export default defineComponent({
               return;
             }
             router.push({
-              path: state.redirect || "/xf/login",
+              path: state.redirect || "/dy/login",
               query: state.otherQuery
             }).catch(err => {
               console.warn(err);
@@ -472,7 +472,7 @@ export default defineComponent({
       loginFormRef,
       verificationImg,
       disabledDate,
-      xfLogo,
+      dyLogo,
       ...toRefs(state),
       ...toRefs(methods),
       getCode,
@@ -578,7 +578,7 @@ export default defineComponent({
   border-radius: 0;
 }
 .wrapper {
-  background: url("../../../assets/images/xf/main.jpg") no-repeat center top;
+  background: url("../../../assets/images/dy/main.jpg") no-repeat center top;
   background-size: cover;
 
   .affiliate {

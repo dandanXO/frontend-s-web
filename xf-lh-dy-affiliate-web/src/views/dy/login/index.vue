@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="affiliate">
-      <div class="game-title sub"><img :src="xfLogo"></div>
+      <div class="game-title sub"><img :src="dyLogo"></div>
       <div class="affiliate-login">
         <el-form
           ref="loginFormRef"
@@ -21,7 +21,7 @@
               tabindex="1"
               autocomplete="no-fill"
             >
-              <template style="background-color: #2144c6;" #prepend><i><img src="../../../assets/images/xf/icon_name.png"></i></template>
+              <template style="background-color: #2144c6;" #prepend><i><img src="../../../assets/images/dy/icon_name.png"></i></template>
             </el-input>
           </el-form-item>
 
@@ -46,7 +46,7 @@
                 @keyup.enter="handleLogin"
               >
                 <template style="background-color: #2144c6;" #prepend>
-                  <i><img src="../../../assets/images/xf/icon_pwd.png"></i>
+                  <i><img src="../../../assets/images/dy/icon_pwd.png"></i>
                 </template>
               </el-input>
             </el-form-item>
@@ -61,7 +61,7 @@
           >
             登录
           </el-button>
-          <router-link to="/xf/register" class="signlog">申请账号</router-link>
+          <router-link to="/dy/register" class="signlog">申请账号</router-link>
         </el-form>
       </div>
     </div>
@@ -80,7 +80,7 @@ import {
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { UserActionTypes } from "@/store/modules/user/action-types";
-import xfLogo from "@/assets/images/xf/logo.png";
+import dyLogo from "@/assets/images/dy/logo.png";
 
 export default defineComponent({
   setup() {
@@ -195,7 +195,7 @@ export default defineComponent({
       userNameRef,
       passwordRef,
       loginFormRef,
-      xfLogo,
+      dyLogo,
       ...toRefs(state),
       ...toRefs(methods)
     };
@@ -244,7 +244,7 @@ export default defineComponent({
   border-radius: 0;
 }
 .wrapper {
-  background: url("../../../assets/images/xf/main.jpg") no-repeat center top;
+  background: url("../../../assets/images/dy/main.jpg") no-repeat center top;
   background-size: cover;
 
   .affiliate {
