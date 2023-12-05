@@ -58,30 +58,30 @@
   <!--      </div>-->
   <!--    </q-tab-panel>-->
   <!--    &lt;!&ndash; <q-tab-panel name="UPI">-->
-  <!--      <div class="withdrawal-table">-->
-  <!--        <div class="w-tbl-row">-->
-  <!--          <div class="w-tbl-col">Cash Balance:</div>-->
-  <!--          <div class="w-tbl-col">-->
-  <!--            <span class="w-txt-red">{{ store.balance }}</span>-->
+  <!--        <div class="withdrawal-table">-->
+  <!--          <div class="w-tbl-row">-->
+  <!--            <div class="w-tbl-col">Cash Balance:</div>-->
+  <!--            <div class="w-tbl-col">-->
+  <!--              <span class="w-txt-red">{{ store.balance }}</span>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          <div class="w-tbl-row">-->
+  <!--            <div class="w-tbl-col">Withdrawable:</div>-->
+  <!--            <div class="w-tbl-col">-->
+  <!--              {{-->
+  <!--                `${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`-->
+  <!--              }}-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          <div class="w-tbl-row">-->
+  <!--            <div class="w-tbl-col">Remaining Wager:</div>-->
+  <!--            <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount }}</div>-->
   <!--          </div>-->
   <!--        </div>-->
-  <!--        <div class="w-tbl-row">-->
-  <!--          <div class="w-tbl-col">Withdrawable:</div>-->
-  <!--          <div class="w-tbl-col">-->
-  <!--            {{-->
-  <!--              `${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`-->
-  <!--            }}-->
-  <!--          </div>-->
-  <!--        </div>-->
-  <!--        <div class="w-tbl-row">-->
-  <!--          <div class="w-tbl-col">Remaining Wager:</div>-->
-  <!--          <div class="w-tbl-col">{{ withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount }}</div>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </q-tab-panel> &ndash;&gt;-->
+  <!--      </q-tab-panel> &ndash;&gt;-->
   <!--  </q-tab-panels>-->
 
-  <div class="withdrawal-form" v-if="withdrawalDialogTab === 'BANK'">
+  <div class="withdrawal-form" v-if="withdrawalDialogTab === 'UPI'">
     <div class="w-form-item w-form-item--bankcard">
       <div class="w-form-label">Withdraw Amount</div>
       <div class="w-form-input">
@@ -205,20 +205,20 @@
     </div>
   </div>
 
-  <div class="withdrawal-form" v-if="withdrawalDialogTab === 'UPI'">
-    <div class="w-form-item w-form-item--UPI">
-      <div class="w-form-label">Withdraw Amount</div>
-      <div class="w-form-input">
-        <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>
-      </div>
-    </div>
-    <div class="w-form-item w-form-item--UPI">
-      <div class="w-form-label">VPA</div>
-      <div class="w-form-input">
-        <q-input filled dense clearable placeholder="Enter VPA"></q-input>
-      </div>
-    </div>
-  </div>
+  <!--  <div class="withdrawal-form" v-if="withdrawalDialogTab === 'UPI'">-->
+  <!--    <div class="w-form-item w-form-item&#45;&#45;UPI">-->
+  <!--      <div class="w-form-label">Withdraw Amount</div>-->
+  <!--      <div class="w-form-input">-->
+  <!--        <q-input filled dense clearable placeholder="Enter Withdraw Amount"></q-input>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="w-form-item w-form-item&#45;&#45;UPI">-->
+  <!--      <div class="w-form-label">VPA</div>-->
+  <!--      <div class="w-form-input">-->
+  <!--        <q-input filled dense clearable placeholder="Enter VPA"></q-input>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
   <div class="btn-go" @click="submitWithdraw">Go</div>
   <div class="bottom-tnc">3%+6Rs of the withdrawal amount would be deducted as bank commission</div>
@@ -242,10 +242,11 @@ const refreshBalance = () => {
   if (store.token) store.getBalance();
 };
 
-const withdrawalDialogTab = ref("BANK");
+const withdrawalDialogTab = ref("UPI");
 const withdrawalMethods = reactive({ BANK: {}, UPI: {} });
 const getWithdrawalMethods = () => {
   api.get("/session/withdraw/entrance").then((response) => {
+    // debugger;
     if (response.code === 0) {
       for (let i = 0, l = response.data.length; i < l; i++) {
         const currentData = response.data[i];
@@ -305,6 +306,8 @@ const loadCards = () => {
       isLoadingBankCard.value = false;
     });
 };
+const emits = defineEmits(["closeModal"]);
+
 const cardRef = ref();
 const amountRef = ref();
 const bankAddressRef = ref();
@@ -382,7 +385,7 @@ const submitWithdraw = async () => {
     bankCardField.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
 
     api
-      .post(" /withdrawAndBankCard", qs.stringify(bankCardField))
+      .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
@@ -394,6 +397,8 @@ const submitWithdraw = async () => {
           // props.loadCards();
           refreshBalance();
           getWithdrawalMethods();
+
+          emits("closeModal");
         }
       })
       .catch((error) => {
@@ -431,6 +436,8 @@ const withdrawGo = async () => {
 
         refreshBalance();
         getWithdrawalMethods();
+
+        emits("closeModal");
       } else {
         $q.notify({
           color: "negative",
