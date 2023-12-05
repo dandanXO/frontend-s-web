@@ -1347,10 +1347,10 @@ export default defineComponent({
       })
     }
 
+    const imgURL = process.env.VUE_APP_IMAGE_CDN
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
+      reminderForm.photos = imgURL + '/' + linkId
     }
-
     const getTurnoverType = (turnoverType) => {
       if (!turnoverType) {
         return ''
