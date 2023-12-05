@@ -450,55 +450,64 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
-  if (store.phone === "" || store.phone === null) {
-    isNewUser.value = true;
-  } else {
-    btnLoading.value = true;
-    depositAmtRef.value.validate();
-    if (depositAmtRef.value.hasError) {
-      btnLoading.value = false;
+  if (form.bankId !== null) {
+    if (store.phone === "" || store.phone === null) {
+      isNewUser.value = true;
     } else {
-      await cashier
-        .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
-        .then((d) => {
-          if (d.code === 11002) {
-            if (d.data && d.data.suggestion) {
-              form.localAmount = d.data.suggestion;
-              btnLoading.value = false;
-            }
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: d.message,
-              icon: "report_problem"
-            });
-          } else {
-            if (freePrivilege.value) {
-              if (selectedPrivilege.value) {
-                form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
-              } else {
-                form.privilegeId = "," + freePrivilege.value.id;
+      btnLoading.value = true;
+      depositAmtRef.value.validate();
+      if (depositAmtRef.value.hasError) {
+        btnLoading.value = false;
+      } else {
+        await cashier
+          .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+          .then((d) => {
+            if (d.code === 11002) {
+              if (d.data && d.data.suggestion) {
+                form.localAmount = d.data.suggestion;
+                btnLoading.value = false;
               }
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: d.message,
+                icon: "report_problem"
+              });
             } else {
-              if (selectedPrivilege.value) {
-                form.privilegeId = selectedPrivilege.value.id;
+              if (freePrivilege.value) {
+                if (selectedPrivilege.value) {
+                  form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+                } else {
+                  form.privilegeId = "," + freePrivilege.value.id;
+                }
               } else {
-                form.privilegeId = null;
+                if (selectedPrivilege.value) {
+                  form.privilegeId = selectedPrivilege.value.id;
+                } else {
+                  form.privilegeId = null;
+                }
               }
+              form.paymentId = activeMethod.value.paymentId;
+              const copy = { ...form };
+              const data = {};
+              Object.entries(copy).forEach(([key, value]) => {
+                if (value) {
+                  data[key] = value;
+                }
+              });
+              data.bankCardId = 0;
+              pDepo(data);
             }
-            form.paymentId = activeMethod.value.paymentId;
-            const copy = { ...form };
-            const data = {};
-            Object.entries(copy).forEach(([key, value]) => {
-              if (value) {
-                data[key] = value;
-              }
-            });
-            data.bankCardId = 0;
-            pDepo(data);
-          }
-        });
+          });
+      }
     }
+  } else {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "请选择银行",
+      icon: "report_problem"
+    });
   }
 }
 
