@@ -109,6 +109,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import ConfirmButton from "../../atoms/ConfirmButton.vue";
+import { useRouter } from "vue-router";
 
 const props = defineProps(["loadCards"]);
 
@@ -134,6 +135,7 @@ const bankCardField = reactive({
   cardNumber: "",
   cardAddress: ""
 });
+const router = useRouter();
 
 const isAddCardDialogOpen = ref(false);
 const onAddCardClick = () => {

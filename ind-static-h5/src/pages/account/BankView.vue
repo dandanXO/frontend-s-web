@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onActivated } from "vue";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
@@ -190,7 +190,7 @@ const loadCards = () => {
     });
 };
 
-onMounted(() => {
+onActivated(() => {
   loadCards();
 });
 </script>

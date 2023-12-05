@@ -29,7 +29,7 @@
               <div class="card-icon">
                 <q-icon key="md" size="md" name="add" />
               </div>
-              <div class="card-label">Add Card</div>
+              <div class="card-label">Add Bank Card</div>
             </div>
           </div>
         </div>
@@ -218,7 +218,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, watch } from "vue";
+import { onMounted, ref, reactive, watch, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -257,7 +257,9 @@ const getWithdrawalMethods = () => {
 
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
-const isNoBankCard = ref(false);
+const isNoBankCard = computed(() => {
+  return bankCardList.value.length === 0;
+});
 const loadCards = () => {
   isLoadingBankCard.value = true;
 
@@ -273,7 +275,7 @@ const loadCards = () => {
       console.log("error", error);
     })
     .then(() => {
-      if (bankCardList.value.length === 0) isNoBankCard.value = true;
+      // if (bankCardList.value.length === 0) isNoBankCard.value = true;
       isLoadingBankCard.value = false;
     });
 };
