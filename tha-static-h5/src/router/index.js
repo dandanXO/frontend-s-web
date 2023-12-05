@@ -1,8 +1,6 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { Platform, Loading } from "quasar";
-import liff from "@line/liff";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
@@ -39,6 +37,7 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
+
     if (to.name === "loginToken") {
       ui.isAffiliateB = true;
       localStorage.setItem("AGENT_B", "1");
