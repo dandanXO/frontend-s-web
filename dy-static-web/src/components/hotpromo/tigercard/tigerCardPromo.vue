@@ -174,37 +174,48 @@ const pageLoadingText = ref("");
 const getNewTigerCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正领取虎卡";
-  getMemberCard({ promoCode: "dy2-tiger-card" }).then((res) => {
-    if (res.code === 0) {
-      cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1;
-      isCardModal.value = true;
-      cardWon.value = res.data.cardType;
+  getMemberCard({ promoCode: "dy2-tiger-card" })
+    .then((res) => {
+      if (res.code === 0) {
+        cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1;
+        isCardModal.value = true;
+        cardWon.value = res.data.cardType;
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
       isPageLoading.value = false;
-    } else {
-      ElMessage.error({
-        type: "error",
-        message: res.message
-      });
-    }
-    isPageLoading.value = false;
-  });
+    });
 };
 
 const compoundCard = () => {
 
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
-  synthesisCard({ promoCode: "dy2-tiger-card" }).then((res) => {
-    if (res.code === 0) {
-      pageInit();
-      ElMessage.success({
-        type: "success",
-        message: "success"
-      });
+  synthesisCard({ promoCode: "dy2-tiger-card" })
+    .then((res) => {
+      if (res.code === 0) {
+        pageInit();
+        ElMessage.success({
+          type: "success",
+          message: "success"
+        });
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
       isPageLoading.value = false;
-    }
-    isPageLoading.value = false;
-  });
+    });
 };
 
 const hukaList = ref([

@@ -46,7 +46,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:annou:add']"
+          v-permission="['sys:affannou:add']"
           @click="showDialog('CREATE')"
           v-if="!hasRole(['SUB_TENANT'])"
         >
@@ -57,7 +57,7 @@
           size="mini"
           type="success"
           @click="showEdit()"
-          v-permission="['sys:annou:update']"
+          v-permission="['sys:affannou:update']"
           :disabled="uiControl.editBtn"
           v-if="!hasRole(['SUB_TENANT'])"
         >
@@ -67,7 +67,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:annou:del']"
+          v-permission="['sys:affannou:del']"
           @click="removeAnnouncement()"
           :disabled="uiControl.removeBtn"
           v-if="!hasRole(['SUB_TENANT'])"
@@ -197,7 +197,7 @@
         prop="status"
         :label="t('fields.state')"
         width="150"
-        v-if="hasPermission(['sys:annou:update:state'])"
+        v-if="hasPermission(['sys:affannou:update:state'])"
       >
         <template #default="scope">
           <el-switch
@@ -216,8 +216,8 @@
         align="right"
         v-if="
           !hasRole(['SUB_TENANT']) &&
-            (hasPermission(['sys:annou:update']) ||
-              hasPermission(['sys:annou:del']))
+            (hasPermission(['sys:affannou:update']) ||
+              hasPermission(['sys:affannou:del']))
         "
       >
         <template #default="scope">
@@ -225,14 +225,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:annou:update']"
+            v-permission="['sys:affannou:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:annou:del']"
+            v-permission="['sys:affannou:del']"
             @click="removeAnnouncement(scope.row)"
           />
         </template>

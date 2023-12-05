@@ -51,59 +51,17 @@
       </div>
     </div>
     <div class="grid-wrapper">
-      <div class="items-center grid">
+      <div class="items-center grid" ref="gameBoardRef">
         <div
+          v-for="(e, i) in gameBoardItemData"
+          :key="`gbi-${i}`"
+          ref="gameBoardItemRef"
           class="game-board-item"
-          :class="currentSelectedMenu == 'slots' ? 'active-board' : ''"
-          @click="switchMenu('slots')"
+          :class="currentSelectedMenu == e.name ? 'active-board' : ''"
+          @click="switchMenu(e.name, i)"
         >
-          <img src="../assets/images/index/home-slot.png" />
-          <span>{{ $t("lang.slot_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'fish' ? 'active-board' : ''"
-          @click="switchMenu('fish')"
-        >
-          <img src="../assets/images/index/home-fish.png" />
-          <span>{{ $t("lang.fish_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'live' ? 'active-board' : ''"
-          @click="switchMenu('live')"
-        >
-          <img src="../assets/images/index/home-live.png" />
-          <span>{{ $t("lang.live_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'sport' ? 'active-board' : ''"
-          @click="switchMenu('sport')"
-        >
-          <img src="../assets/images/index/home-sport.png" />
-          <span>{{ $t("lang.sport_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'casual' ? 'active-board' : ''"
-          @click="switchMenu('casual')"
-        >
-          <img src="../assets/images/index/home-esport.png" />
-          <span>{{ $t("lang.minigame_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'lottery' ? 'active-board' : ''"
-          @click="switchMenu('lottery')"
-        >
-          <img src="../assets/images/index/home-lottery.png" />
-          <span>{{ $t("lang.lottery_list") }}</span>
+          <img :src="require(`../assets/images/index/${e.imgName}`)" />
+          <span>{{ e.label }}</span>
         </div>
 
         <!--      <div-->
@@ -847,6 +805,16 @@
       <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
+        <router-link to="/promo?id=81">
+          <div class="popup-item">
+            <span>
+              คลิกเพื่อหมุน รางวัลสูงสุด
+              <em>8,880</em>
+              และ
+              <em>IPHONE</em>
+            </span>
+          </div>
+        </router-link>
         <router-link to="/promo?id=80">
           <div class="popup-item">
             <span>
@@ -868,7 +836,7 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=77">
+<!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
               โบนัส
@@ -878,7 +846,7 @@
               ถอนไม่อั้น
             </span>
           </div>
-        </router-link>
+        </router-link>-->
         <router-link to="/promo?id=78">
           <div class="popup-item">
             <span>
@@ -890,14 +858,14 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=79">
+<!--        <router-link to="/promo?id=79">
           <div class="popup-item">
             <span>
               ประกันยอดเสีย
               <em>10,000</em>
             </span>
           </div>
-        </router-link>
+        </router-link>-->
       </div>
     </div>
   </q-dialog>
@@ -969,6 +937,10 @@ export default defineComponent({
     //   }
     // });
     const banners = ref([]);
+
+    const gameBoardRef = ref();
+    const gameBoardItemRef = ref();
+
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
@@ -1181,8 +1153,17 @@ export default defineComponent({
     const fishPlatforms = ref([]);
     const lotteryGames = ref([]);
 
+    const gameBoardItemData = [
+      { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
+      { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
+      { name: "live", imgName: "home-live.png", label: t("lang.live_header") },
+      { name: "sport", imgName: "home-sport.png", label: t("lang.sport_header") },
+      { name: "casual", imgName: "home-esport.png", label: t("lang.minigame_header") },
+      { name: "lottery", imgName: "home-lottery.png", label: t("lang.lottery_list") }
+    ];
+
     const currentSelectedMenu = ref("slots");
-    const switchMenu = (menu) => {
+    const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
       isShow.value = false;
       if (menu === "slots") {
@@ -1201,6 +1182,36 @@ export default defineComponent({
       } else if (menu === "lottery") {
       } else if (menu === "esport") {
       }
+
+      const containerWidth = gameBoardRef.value.clientWidth;
+
+      const item = gameBoardItemRef.value[index];
+      const itemLeft = item.offsetLeft;
+      const itemWidth = item.clientWidth;
+
+      const scrollPosition = gameBoardRef.value.scrollLeft;
+
+      /**
+       * scrollLeft (scrollPosition) & offsetLeft (itemLeft) originated from left
+       * no complex calculation for left is normal
+       */
+      let toLeft = 0;
+      let isEdgeItem = false;
+
+      const moveAmount = containerWidth / 2;
+      const leftOffset = 30;
+
+      const rightCal = itemLeft - scrollPosition;
+      const rightEdge = containerWidth - itemWidth;
+      if (rightCal >= rightEdge) {
+        isEdgeItem = true;
+        toLeft = scrollPosition + moveAmount;
+      } else if (itemLeft <= scrollPosition + leftOffset) {
+        isEdgeItem = true;
+        toLeft = scrollPosition - moveAmount;
+      }
+
+      if (isEdgeItem) gameBoardRef.value.scrollTo({ left: toLeft, behavior: "smooth" });
     };
     const liveTabs = ref("");
     const switchPlat = (plat, menuType) => {
@@ -1696,6 +1707,9 @@ export default defineComponent({
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
+      gameBoardRef,
+      gameBoardItemRef,
+      gameBoardItemData,
       store,
       ui,
       platforms,

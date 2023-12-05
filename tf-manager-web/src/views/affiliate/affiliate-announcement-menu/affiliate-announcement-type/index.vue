@@ -46,7 +46,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:annou:type:add']"
+          v-permission="['sys:affannou:type:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -55,7 +55,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:annou:type:update']"
+          v-permission="['sys:affannou:type:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -65,7 +65,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:annou:type:del']"
+          v-permission="['sys:affannou:type:del']"
           @click="removeAffAnnouncementType()"
           :disabled="uiControl.removeBtn"
         >
@@ -180,8 +180,8 @@
         align="right"
         v-if="
           !hasRole(['SUB_TENANT']) &&
-            (hasPermission(['sys:annou:type:update']) ||
-              hasPermission(['sys:annou:type:del']))
+            (hasPermission(['sys:affannou:type:update']) ||
+              hasPermission(['sys:affannou:type:del']))
         "
       >
         <template #default="scope">
@@ -189,14 +189,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:annou:type:update']"
+            v-permission="['sys:affannou:type:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:annou:type:del']"
+            v-permission="['sys:affannou:type:del']"
             @click="removeAffAnnouncementType(scope.row)"
           />
         </template>
