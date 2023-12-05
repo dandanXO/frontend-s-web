@@ -17,13 +17,16 @@ export function getMemberSportMatchRecord() {
 
 export function submitMemberSportMatchQuiz(param) {
   const { quizId, quizTitle, answerOne, answerTwo, answerThree } = param;
-  return eventapi.post(`/quiz/submit`, {
-    quizId,
-    quizTitle,
-    answerOne,
-    answerTwo,
-    answerThree
-  });
+  return eventapi.post(
+    `/quiz/submit`,
+    qs.stringify({
+      quizId,
+      quizTitle,
+      answerOne,
+      answerTwo,
+      answerThree
+    })
+  );
 }
 
 export function submitLuckyNumber(item) {
