@@ -39,65 +39,56 @@
       <img class="inner-wheel-img" src="../../../assets/images/promotion/spinwheel/inner_wheel.png" />
 
       <template v-if="unlockDay < 1 ? true : false">
-        <div class="prize-lock" style="transform: rotate(309.25deg)">
+        <div class="prize-lock" style="transform: rotate(0deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(309.25deg)">
+        <div class="prize-lock-day" style="transform: rotate(0deg)">
           <span>day{{ 1 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 2 ? true : false">
-        <div class="prize-lock" style="transform: rotate(0deg)">
+        <div class="prize-lock" style="transform: rotate(52deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(0deg)">
+        <div class="prize-lock-day" style="transform: rotate(52deg)">
           <span>day{{ 2 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 3 ? true : false">
-        <div class="prize-lock" style="transform: rotate(52deg)">
+        <div class="prize-lock" style="transform: rotate(104deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(52deg)">
+        <div class="prize-lock-day" style="transform: rotate(104deg)">
           <span>day{{ 3 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 4 ? true : false">
-        <div class="prize-lock" style="transform: rotate(104deg)">
+        <div class="prize-lock" style="transform: rotate(156.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(104deg)">
+        <div class="prize-lock-day" style="transform: rotate(156.25deg)">
           <span>day{{ 4 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 5 ? true : false">
-        <div class="prize-lock" style="transform: rotate(156.25deg)">
+        <div class="prize-lock" style="transform: rotate(208.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(156.25deg)">
+        <div class="prize-lock-day" style="transform: rotate(208.25deg)">
           <span>day{{ 5 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 6 ? true : false">
-        <div class="prize-lock" style="transform: rotate(208.25deg)">
-          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
-        </div>
-        <div class="prize-lock-day" style="transform: rotate(208.25deg)">
-          <span>day{{ 6 }}</span>
-        </div>
-      </template>
-
-      <template v-if="unlockDay < 7 ? true : false">
         <div class="prize-lock" style="transform: rotate(258.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(258.25deg)">
-          <span>day{{ 7 }}</span>
+          <span>day{{ 6 }}</span>
         </div>
       </template>
     </div>
