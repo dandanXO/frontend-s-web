@@ -586,7 +586,7 @@
         <div class="popout-main-title">
           <div class="txt-title">Withdrawal</div>
         </div>
-        <WithdrawalComponent></WithdrawalComponent>
+        <WithdrawalComponent @close-withdraw="closeWithDrawModal"></WithdrawalComponent>
       </div>
     </div>
   </q-dialog>
@@ -652,7 +652,18 @@ const searchText = ref("");
 
 const withdrawalDialog = ref(false);
 const onWithdrawalClick = () => {
-  withdrawalDialog.value = true;
+  // withdrawalDialog.value = true;
+  if (!store.realName & !store.guest) {
+    userKYCDialog.value = true;
+  } else if (!store.realName & store.guest) {
+    guestKYCDialog.value = true;
+  } else {
+    withdrawalDialog.value = true;
+  }
+};
+
+const closeWithDrawModal = () => {
+  withdrawalDialog.value = false;
 };
 
 const userKYCDialog = ref(false);
