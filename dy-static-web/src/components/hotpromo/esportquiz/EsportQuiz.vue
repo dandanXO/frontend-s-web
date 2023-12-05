@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary" @click="onChoiceSubmit('third')">提交</el-button>
+      <el-button type="primary" class="common-btn" @click="onChoiceSubmit('third')">提交</el-button>
     </div>
   </el-dialog>
 
@@ -634,7 +634,6 @@ function onSubmitClick() {
 
   .question-select-type {
     border-radius: 6px;
-    margin-bottom: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
