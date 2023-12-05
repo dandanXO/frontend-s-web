@@ -460,7 +460,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           .then((response) => {
             $q.loading.hide();
 
-            if (platformCode === "MGP") {
+            if (platformCode === "MGP" || platformCode === "PT") {
               window.open(response.data, "_blank");
             } else {
               // newWin.location.href = response.data;
