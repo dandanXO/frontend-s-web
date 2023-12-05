@@ -404,7 +404,7 @@ import Poster from './Poster'
 import PickColors from 'vue-pick-colors'
 import { ArrowLeftBold } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getPathById } from '../../../../api/poster'
+import { getPathById, increaseDownloadCount } from '../../../../api/poster'
 import { useStore } from '@/store'
 import { getAffiliateInfo } from '../../../../api/affiliate'
 
@@ -652,7 +652,8 @@ function textPreviewCheck() {
   }
 }
 
-function download() {
+async function download() {
+  await increaseDownloadCount(route.query.id)
   poster.download()
 }
 
