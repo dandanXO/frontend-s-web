@@ -1647,7 +1647,8 @@ export default defineComponent({
       clearItems,
       formRef,
       getTransferChangeType,
-      getPlatform
+      getPlatform,
+      imgURL
     };
   }
 });
