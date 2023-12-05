@@ -52,7 +52,7 @@ const store = userStore();
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
-const isClaimModal = ref(true);
+const isClaimModal = ref(false);
 const loadingClaim = ref(false);
 
 const getPromotion = () => {

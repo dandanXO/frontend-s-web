@@ -7,6 +7,7 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
+    <PrivilegeInvitePromo v-if="!isCommonPromo && store.token && list.redirectUrl === 'Dongying-refer'" />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
@@ -68,6 +69,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
+import PrivilegeInvitePromo from "../components/hotpromo/privilegeInvite/PrivilegeInvitePromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -84,7 +86,8 @@ export default defineComponent({
     InviteFriendPromo,
     EsportQuiz,
     LotteryPromo,
-    GiftPromo
+    GiftPromo,
+    PrivilegeInvitePromo
   },
   props: {
     list: {
@@ -146,7 +149,8 @@ export default defineComponent({
       this.list.redirectUrl === "nba-game" ||
       this.list.redirectUrl === "dy2-esport-safety" ||
       this.list.redirectUrl === "sport-safety" ||
-      this.list.redirectUrl === "dy2-gift"
+      this.list.redirectUrl === "dy2-gift" ||
+      this.list.redirectUrl === "Dongying-refer"
     ) {
       this.isCommonPromo = false;
     } else {
