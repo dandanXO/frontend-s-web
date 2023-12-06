@@ -103,7 +103,7 @@ import { ElMessage } from "element-plus";
 
 const store = userStore();
 
-const activeKey = ref("1");
+const activeKey = ref("0");
 
 // tab 1
 const luckyNumber = ref(null);
