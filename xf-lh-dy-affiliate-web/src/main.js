@@ -14,12 +14,14 @@ import SvgIcon from "@/components/SvgIcon/index.vue";
 import ElementPlus from 'element-plus'
 import { createPinia } from "pinia";
 import dayjs from 'dayjs';
+import SlideVerify from "@/components/slider/index.vue";
 
 dayjs.Ls.en.weekStart = 1;
 const app = createApp(App);
 app.use(ElementPlus)
 
 app.component("SvgIcon", SvgIcon);
+app.component("SlideVerify", SlideVerify);
 
 Object.keys(directives).forEach(key => {
   app.directive(key, directives[key]);
