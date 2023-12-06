@@ -20,7 +20,7 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert Phone number',
-          (val) => (val.length >= 7 && val.length <= 12) || 'The phone number must be between 7 and 12'
+          (val) => (val.length === 10) || 'The phone number must be 10 digits'
         ]"
         placeholder="Please Phone Number"
         color="white"
@@ -488,10 +488,10 @@ export default defineComponent({
         return "Please Enter Phone Number";
       }
 
-      const phoneRegex = /^\d{7,12}$/;
+      const phoneRegex = /^\d{10}$/;
       const isValid = phoneRegex.test(phone);
 
-      return isValid ? true : "Phone Number must be between 7 and 12 digits";
+      return isValid ? true : "Phone Number must be 10 digits";
     };
 
     return {

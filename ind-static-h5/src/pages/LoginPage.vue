@@ -19,7 +19,7 @@
           label="Phone Number"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val.length >= 7 && val.length <= 12) || 'The phone number must be between 7 and 12'
+            (val) => (val.length === 10) || 'The phone number must be 10 digits'
           ]"
           label-color="brand"
           autocomplete="username"
