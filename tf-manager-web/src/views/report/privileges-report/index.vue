@@ -133,7 +133,7 @@
         <template #default="scope">
           <router-link
             :to="
-              `/report/privilege/privilegememberdetail?id=${scope.row.id}&site=${request.siteId}&date=${request.recordTime}`
+              `/report/privilege/privilegememberdetail?id=${scope.row.privilegeId}&site=${request.siteId}&date=${request.recordTime}`
             "
           >
             <el-link type="primary">
