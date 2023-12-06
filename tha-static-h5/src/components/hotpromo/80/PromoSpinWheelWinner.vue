@@ -26,10 +26,10 @@
       <img class="treasure-box-img" src="../../../assets/images/promotion/spinwheel/treasure_box.png" />
     </div>
 
-    <div class="note">
+    <!-- <div class="note">
       Come back daily to complete the multiwheel !
       <div>Come back daily to unlock the inside wheel and more chance to get bigger price and Iphone15 pro max !</div>
-    </div>
+    </div> -->
   </div>
 </template>
 
