@@ -330,7 +330,7 @@
               v-if="scope.row.withdrawDate !== null"
               v-formatter="{
                 data: scope.row.withdrawDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -348,7 +348,7 @@
               v-if="scope.row.checkDate !== null"
               v-formatter="{
                 data: scope.row.checkDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -379,7 +379,7 @@
               v-if="scope.row.paymentDate !== null"
               v-formatter="{
                 data: scope.row.paymentDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -570,7 +570,7 @@
               v-if="scope.row.operateTime !== null"
               v-formatter="{
                 data: scope.row.operateTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -617,7 +617,7 @@
       >
         <el-form-item :label="t('fields.withdrawDate')" prop="withdrawDate">
           <el-date-picker
-            v-model="request.withdrawDate"
+            v-model="searchRequest.date"
             format="DD/MM/YYYY HH:mm:ss"
             value-format="YYYY-MM-DD HH:mm:ss"
             size="small"
@@ -897,6 +897,7 @@ const cancelTypeList = reactive({
 const siteList = reactive({
   list: [],
 })
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -1011,9 +1012,10 @@ function disabledDate(time) {
 }
 
 function resetQuery() {
+  // debugger;
   searchForm.value.resetFields()
   searchRequest.selectedDateType = uiControl.selectedDateType[0].value
-  searchRequest.date = [defaultStartDate, defaultEndDate]
+  // searchRequest.date = [defaultStartDate, defaultEndDate]
   request.withdrawDate = []
   request.paymentDate = []
   request.serialNumber = null
@@ -1253,6 +1255,8 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 

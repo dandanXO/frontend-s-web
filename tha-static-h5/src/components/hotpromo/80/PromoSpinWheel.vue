@@ -3,7 +3,7 @@
     <div class="total-win">
       <div class="total-win-content">
         <div class="title">{{ $t("lang.youWon") }}</div>
-        <div>
+        <div v-if="outerAmount !== finalAmount">
           <span>{{ outerAmount }}</span>
           X
           <span>{{ innerAmount }}</span>
@@ -14,22 +14,23 @@
           <span>{{ finalAmount }}</span>
         </div>
       </div>
-    </div>
-    <div class="collect-btn" @click="onCollectClick">
-      <div class="collect-text">Collect</div>
+      <div class="collect-btn" @click="onCollectClick">
+        <div class="collect-text">Collect</div>
+      </div>
     </div>
   </q-dialog>
 
   <div class="spinwheel-container">
     <div class="spin-count-board">
-      <img class="spin-count-board-img" src="../../../assets/images/promotion/spinwheel/spin_count_board.png" />
-      <span>
-        {{
-          $t("lang.spinRemaining", {
-            spinCount: availableSpinCount
-          })
-        }}
-      </span>
+      <img
+        class="spin-count-board-img"
+        src="../../../assets/images/promotion/spinwheel/spin_count_board.png"
+      />
+      <span>{{
+        $t("lang.spinRemaining", {
+          spinCount: availableSpinCount,
+        })
+      }}</span>
     </div>
 
     <div :ref="outerWheelConfig.wheelRef" class="outer-wheel">
@@ -39,65 +40,56 @@
       <img class="inner-wheel-img" src="../../../assets/images/promotion/spinwheel/inner_wheel.png" />
 
       <template v-if="unlockDay < 1 ? true : false">
-        <div class="prize-lock" style="transform: rotate(309.25deg)">
+        <div class="prize-lock" style="transform: rotate(0deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(309.25deg)">
+        <div class="prize-lock-day" style="transform: rotate(0deg)">
           <span>day{{ 1 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 2 ? true : false">
-        <div class="prize-lock" style="transform: rotate(0deg)">
+        <div class="prize-lock" style="transform: rotate(52deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(0deg)">
+        <div class="prize-lock-day" style="transform: rotate(52deg)">
           <span>day{{ 2 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 3 ? true : false">
-        <div class="prize-lock" style="transform: rotate(52deg)">
+        <div class="prize-lock" style="transform: rotate(104deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(52deg)">
+        <div class="prize-lock-day" style="transform: rotate(104deg)">
           <span>day{{ 3 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 4 ? true : false">
-        <div class="prize-lock" style="transform: rotate(104deg)">
+        <div class="prize-lock" style="transform: rotate(156.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(104deg)">
+        <div class="prize-lock-day" style="transform: rotate(156.25deg)">
           <span>day{{ 4 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 5 ? true : false">
-        <div class="prize-lock" style="transform: rotate(156.25deg)">
+        <div class="prize-lock" style="transform: rotate(208.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(156.25deg)">
+        <div class="prize-lock-day" style="transform: rotate(208.25deg)">
           <span>day{{ 5 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 6 ? true : false">
-        <div class="prize-lock" style="transform: rotate(208.25deg)">
-          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
-        </div>
-        <div class="prize-lock-day" style="transform: rotate(208.25deg)">
-          <span>day{{ 6 }}</span>
-        </div>
-      </template>
-
-      <template v-if="unlockDay < 7 ? true : false">
         <div class="prize-lock" style="transform: rotate(258.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(258.25deg)">
-          <span>day{{ 7 }}</span>
+          <span>day{{ 6 }}</span>
         </div>
       </template>
     </div>
@@ -149,6 +141,7 @@ const outerWheelData = [
   { degree: -386.25, amount: 880 }
 ];
 const innerWheelData = [
+  { degree: -27, amount: 200 },
   { degree: -52, amount: 110 },
   { degree: -77, amount: 130 },
   { degree: -104, amount: 300 },
@@ -161,8 +154,7 @@ const innerWheelData = [
   { degree: -284, amount: 110 },
   { degree: -310, amount: 200 },
   { degree: -336, amount: 1000 },
-  { degree: -361, amount: 0 },
-  { degree: -387, amount: 200 }
+  { degree: -361, amount: 0 }
 ];
 
 /**
@@ -317,9 +309,9 @@ function updateSpinButton(isDisable) {
   }
 }
 
-function initWheelRotation(config) {
+function initWheelRotation(config, defaultIndex = 0) {
   const { wheelRef, wheelData } = config;
-  wheelRef.value.style.transform = `rotate(${wheelData[0].degree}deg)`;
+  wheelRef.value.style.transform = `rotate(${wheelData[defaultIndex].degree}deg)`;
 }
 
 const availableSpinCount = ref(0);
@@ -349,7 +341,7 @@ function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
     .then((res) => {
       const { code, data } = res.data;
       if (code === 0) {
-        const { leftCount, outer, inner, bonus } = data;
+        const { leftCount, outer, inner, innerDays, bonus } = data;
 
         outerAmount.value = outer;
         innerAmount.value = inner;
@@ -362,10 +354,15 @@ function submitSpinWheelAPI(outerWheelConfig, innerWheelConfig, callback) {
             return;
           }
         });
+
         innerWheelData.map((e, i) => {
           if (e.amount === inner) {
-            innerWheelConfig.stopIndex = i;
-            return;
+            const minusValue = i % 2 === 0 ? 2 : 1;
+            const innerDaysIndex = innerDays * 2 - minusValue;
+            if (innerDaysIndex === i) {
+              innerWheelConfig.stopIndex = innerDaysIndex;
+              return;
+            }
           }
         });
       }
@@ -386,7 +383,7 @@ function onCollectClick() {
 
 onMounted(() => {
   initWheelRotation(outerWheelConfig);
-  initWheelRotation(innerWheelConfig);
+  initWheelRotation(innerWheelConfig, 1);
 
   initSpinWheelAPI();
 });
@@ -405,7 +402,9 @@ onMounted(() => {
     background-position: center;
 
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -415,7 +414,7 @@ onMounted(() => {
     color: white;
     text-align: center;
     font-family: Arial Black;
-    font-size: 14px;
+    font-size: 3vw;
     font-weight: 900;
     line-height: normal;
     letter-spacing: 0.14063rem;
@@ -432,39 +431,41 @@ onMounted(() => {
     .total-win-content {
       position: relative;
       top: 17.5%;
-      left: 1%;
+      left: 2%;
 
       .title {
-        font-size: 1.5rem;
+        font-size: 6vw;
       }
     }
-  }
 
-  .collect-btn {
-    background: url(../../../assets/images/promotion/spinwheel/collect_btn.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 30%;
-    height: 10%;
-    margin-top: -175px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .collect-btn {
+      background: url(../../../assets/images/promotion/spinwheel/collect_btn.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 30%;
+      height: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 0;
+      margin: 0 0 0 2%;
 
-    .collect-text {
-      text-align: center;
-      font-family: Archivo Black;
-      font-size: 4vw;
-      font-weight: 400;
-      line-height: 3.29344rem;
-      letter-spacing: 0.07319rem;
-      text-transform: uppercase;
+      .collect-text {
+        text-align: center;
+        font-family: Archivo Black;
+        font-size: 4vw;
+        font-weight: 400;
+        line-height: 3.29344rem;
+        letter-spacing: 0.07319rem;
+        text-transform: uppercase;
 
-      background: linear-gradient(180deg, #fffede 0%, rgba(255, 227, 79, 0.89) 75.52%, #fffede 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+        background: linear-gradient(180deg, #fffede 0%, rgba(255, 227, 79, 0.89) 75.52%, #fffede 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
     }
   }
 }
@@ -594,6 +595,7 @@ onMounted(() => {
     z-index: 1;
 
     .spin-button-img {
+      cursor: pointer;
       width: 17.5%;
     }
 
@@ -635,8 +637,24 @@ onMounted(() => {
 }
 
 @media (min-width: 768px) {
-  .collect-text {
-    font-size: 30px !important;
+  .total-win {
+    font-size: 2vw !important;
+
+    .total-win-content {
+      left: 1% !important;
+
+      .title {
+        font-size: 2.5vw !important;
+      }
+    }
+
+    .collect-btn {
+      margin: 0 0 0 1% !important;
+
+      .collect-text {
+        font-size: 30px !important;
+      }
+    }
   }
 
   .spinwheel-container {
@@ -683,8 +701,8 @@ onMounted(() => {
     }
 
     .prize-arrow {
-      top: 32.5%;
-      left: 13.75%;
+      //top: 32.5%;
+      //left: 13.75%;
 
       .prize-arrow-img {
         width: 22%;

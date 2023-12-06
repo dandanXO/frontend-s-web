@@ -13,18 +13,18 @@
         <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
       </template>
 
-      <q-carousel-slide
-        name="mainSlide"
-        class="column no-wrap flex-center"
-        :img-src="
-          !$q.screen.gt.sm
-            ? require('../assets/images/index/main-home-banner-mobile.jpg')
-            : require('../assets/images/index/main-home-banner-desktop.jpg')
-        "
-        @click="gotoPromo(0)"
-      >
-        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>
-      </q-carousel-slide>
+      <!--      <q-carousel-slide-->
+      <!--        name="mainSlide"-->
+      <!--        class="column no-wrap flex-center"-->
+      <!--        :img-src="-->
+      <!--          !$q.screen.gt.sm-->
+      <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
+      <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
+      <!--        "-->
+      <!--        @click="gotoPromo(0)"-->
+      <!--      >-->
+      <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
+      <!--      </q-carousel-slide>-->
 
       <q-carousel-slide
         v-for="(banner, i) in banners"
@@ -51,59 +51,17 @@
       </div>
     </div>
     <div class="grid-wrapper">
-      <div class="items-center grid">
+      <div class="items-center grid" ref="gameBoardRef">
         <div
+          v-for="(e, i) in gameBoardItemData"
+          :key="`gbi-${i}`"
+          ref="gameBoardItemRef"
           class="game-board-item"
-          :class="currentSelectedMenu == 'slots' ? 'active-board' : ''"
-          @click="switchMenu('slots')"
+          :class="currentSelectedMenu == e.name ? 'active-board' : ''"
+          @click="switchMenu(e.name, i)"
         >
-          <img src="../assets/images/index/home-slot.png" />
-          <span>{{ $t("lang.slot_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'fish' ? 'active-board' : ''"
-          @click="switchMenu('fish')"
-        >
-          <img src="../assets/images/index/home-fish.png" />
-          <span>{{ $t("lang.fish_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'live' ? 'active-board' : ''"
-          @click="switchMenu('live')"
-        >
-          <img src="../assets/images/index/home-live.png" />
-          <span>{{ $t("lang.live_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'sport' ? 'active-board' : ''"
-          @click="switchMenu('sport')"
-        >
-          <img src="../assets/images/index/home-sport.png" />
-          <span>{{ $t("lang.sport_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'casual' ? 'active-board' : ''"
-          @click="switchMenu('casual')"
-        >
-          <img src="../assets/images/index/home-esport.png" />
-          <span>{{ $t("lang.minigame_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'lottery' ? 'active-board' : ''"
-          @click="switchMenu('lottery')"
-        >
-          <img src="../assets/images/index/home-lottery.png" />
-          <span>{{ $t("lang.lottery_list") }}</span>
+          <img :src="require(`../assets/images/index/${e.imgName}`)" />
+          <span>{{ e.label }}</span>
         </div>
 
         <!--      <div-->
@@ -208,6 +166,8 @@
             }"
           ></div>
         </div>
+
+
       </div>
     </Transition>
     <Transition>
@@ -845,6 +805,16 @@
       <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
+        <router-link to="/promo?id=81">
+          <div class="popup-item">
+            <span>
+              คลิกเพื่อหมุน รางวัลสูงสุด
+              <em>8,880</em>
+              และ
+              <em>IPHONE</em>
+            </span>
+          </div>
+        </router-link>
         <router-link to="/promo?id=80">
           <div class="popup-item">
             <span>
@@ -866,7 +836,7 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=77">
+<!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
               โบนัส
@@ -876,7 +846,7 @@
               ถอนไม่อั้น
             </span>
           </div>
-        </router-link>
+        </router-link>-->
         <router-link to="/promo?id=78">
           <div class="popup-item">
             <span>
@@ -888,24 +858,42 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=79">
+<!--        <router-link to="/promo?id=79">
           <div class="popup-item">
             <span>
               ประกันยอดเสีย
               <em>10,000</em>
             </span>
           </div>
-        </router-link>
+        </router-link>-->
       </div>
     </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isSpinWheelPromo" class="modal-update-div">
+    <q-card style="width: 100%; padding: 0px 20px 20px" class="bg-primary text-white text-center">
+      <q-card-section class="q-mb-md">
+        <div class="menu-title flex justify-between items-center">
+          <div style="margin-right: auto">&nbsp;</div>
+          <div>{{ $t("lang.announcement") }}</div>
+          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />
+        </div>
+
+        <div class="">
+          {{ $t("lang.you_got_new_spin_wheel_spin") }}
+          <br />
+        </div>
+      </q-card-section>
+      <q-btn @click="gotoPromoSpinWheel" :label="$t('lang.go_now')" color="brand" />
+    </q-card>
   </q-dialog>
 </template>
 
 <script>
 /* eslint-disable */
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+import { defineComponent, onMounted, ref, reactive, computed, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
@@ -949,6 +937,10 @@ export default defineComponent({
     //   }
     // });
     const banners = ref([]);
+
+    const gameBoardRef = ref();
+    const gameBoardItemRef = ref();
+
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
@@ -1161,8 +1153,17 @@ export default defineComponent({
     const fishPlatforms = ref([]);
     const lotteryGames = ref([]);
 
+    const gameBoardItemData = [
+      { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
+      { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
+      { name: "live", imgName: "home-live.png", label: t("lang.live_header") },
+      { name: "sport", imgName: "home-sport.png", label: t("lang.sport_header") },
+      { name: "casual", imgName: "home-esport.png", label: t("lang.minigame_header") },
+      { name: "lottery", imgName: "home-lottery.png", label: t("lang.lottery_list") }
+    ];
+
     const currentSelectedMenu = ref("slots");
-    const switchMenu = (menu) => {
+    const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
       isShow.value = false;
       if (menu === "slots") {
@@ -1181,6 +1182,36 @@ export default defineComponent({
       } else if (menu === "lottery") {
       } else if (menu === "esport") {
       }
+
+      const containerWidth = gameBoardRef.value.clientWidth;
+
+      const item = gameBoardItemRef.value[index];
+      const itemLeft = item.offsetLeft;
+      const itemWidth = item.clientWidth;
+
+      const scrollPosition = gameBoardRef.value.scrollLeft;
+
+      /**
+       * scrollLeft (scrollPosition) & offsetLeft (itemLeft) originated from left
+       * no complex calculation for left is normal
+       */
+      let toLeft = 0;
+      let isEdgeItem = false;
+
+      const moveAmount = containerWidth / 2;
+      const leftOffset = 30;
+
+      const rightCal = itemLeft - scrollPosition;
+      const rightEdge = containerWidth - itemWidth;
+      if (rightCal >= rightEdge) {
+        isEdgeItem = true;
+        toLeft = scrollPosition + moveAmount;
+      } else if (itemLeft <= scrollPosition + leftOffset) {
+        isEdgeItem = true;
+        toLeft = scrollPosition - moveAmount;
+      }
+
+      if (isEdgeItem) gameBoardRef.value.scrollTo({ left: toLeft, behavior: "smooth" });
     };
     const liveTabs = ref("");
     const switchPlat = (plat, menuType) => {
@@ -1565,7 +1596,47 @@ export default defineComponent({
       loadHomeData();
       getAppDownloadUrl();
       getVersionNo();
+
+      checkSpinWheelPromo();
     });
+
+    const popupInterval = ref(null);
+    const isSpinWheelPromo = ref(false);
+    const checkSpinWheelPromo = () => {
+      if (store.hasToken()) {
+        setTimeout(() => {
+          console.log("Check Spin Wheel.");
+          getSpinWheelCount();
+          popupInterval.value = setInterval(() => {
+            // alert("YEs");
+            getSpinWheelCount();
+          }, 3600000);
+        }, 60000);
+      }
+    };
+
+    const getSpinWheelCount = () => {
+      eventapi.get("/multiWheel/init?promoCode=multi-wheel").then((res) => {
+        const { code, data } = res.data;
+        if (code === 0) {
+          console.log(data);
+          const { leftCount, unlock } = data;
+          if (leftCount > 0) {
+            isSpinWheelPromo.value = true;
+          }
+        }
+      });
+    };
+
+    const gotoPromoSpinWheel = () => {
+      isSpinWheelPromo.value = false;
+      router.push(`/promo?id=81`);
+    };
+
+    onUnmounted(() => {
+      clearInterval(popupInterval.value);
+    });
+
     const loadHomeData = async () => {
       if (store.hasToken()) {
         await store.getMemberInfo();
@@ -1633,9 +1704,12 @@ export default defineComponent({
 
     return {
       imageLoading,
-      slide: ref("mainSlide"),
+      slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
+      gameBoardRef,
+      gameBoardItemRef,
+      gameBoardItemData,
       store,
       ui,
       platforms,
@@ -1693,7 +1767,9 @@ export default defineComponent({
       announcementTypes,
       activeKey,
       getLength,
+      isSpinWheelPromo,
       gotoPromo,
+      gotoPromoSpinWheel,
       router,
       isAppUpdateModal,
       isH5,
@@ -2330,6 +2406,16 @@ export default defineComponent({
 }
 
 .modal-update-div {
+  .menu-title {
+    > div:first-child {
+      width: 32px;
+    }
+  }
+
+  .description {
+    color: $border-color;
+  }
+
   .modalcontent {
     background: #fff;
     height: 232px;

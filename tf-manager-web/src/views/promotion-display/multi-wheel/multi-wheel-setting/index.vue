@@ -77,7 +77,7 @@
             </el-form-item>
 
             <el-form-item :label="t('fields.maxTicket')" prop="siteName">
-              <el-input v-model="form.maxTicket" style="width: 200px;display:none" />
+              <el-input v-model="form.maxTicket" style="width: 200px" />
             </el-form-item>
           </div>
         </el-card>
@@ -96,27 +96,27 @@
           </div>
           <el-divider />
           <div>
-            <el-form-item :label="t('fields.day2')" prop="siteName">
+            <el-form-item :label="t('fields.day1')" prop="siteName">
               <el-input v-model="form.unlock1" style="width: 200px;" />
             </el-form-item>
 
-            <el-form-item :label="t('fields.day3')" prop="siteName">
+            <el-form-item :label="t('fields.day2')" prop="siteName">
               <el-input v-model="form.unlock2" style="width: 200px;" />
             </el-form-item>
 
-            <el-form-item :label="t('fields.day4')" prop="siteName">
+            <el-form-item :label="t('fields.day3')" prop="siteName">
               <el-input v-model="form.unlock3" style="width: 200px;" />
             </el-form-item>
 
-            <el-form-item :label="t('fields.day5')" prop="siteName">
+            <el-form-item :label="t('fields.day4')" prop="siteName">
               <el-input v-model="form.unlock4" style="width: 200px;" />
             </el-form-item>
 
-            <el-form-item :label="t('fields.day6')" prop="siteName">
+            <el-form-item :label="t('fields.day5')" prop="siteName">
               <el-input v-model="form.unlock5" style="width: 200px;" />
             </el-form-item>
 
-            <el-form-item :label="t('fields.day7')" prop="siteName">
+            <el-form-item :label="t('fields.day6')" prop="siteName">
               <el-input v-model="form.unlock6" style="width: 200px;" />
             </el-form-item>
           </div>
@@ -599,12 +599,12 @@ async function loadSetting() {
 
   form.maxTicket = json.setting.maxTicket
 
-  form.unlock1 = json.unlock.day2
-  form.unlock2 = json.unlock.day3
-  form.unlock3 = json.unlock.day4
-  form.unlock4 = json.unlock.day5
-  form.unlock5 = json.unlock.day6
-  form.unlock6 = json.unlock.day7
+  form.unlock1 = json.unlock.day1
+  form.unlock2 = json.unlock.day2
+  form.unlock3 = json.unlock.day3
+  form.unlock4 = json.unlock.day4
+  form.unlock5 = json.unlock.day5
+  form.unlock6 = json.unlock.day6
 
   form.bet1 = json.countRule[0].bet
   form.bet2 = json.countRule[1].bet

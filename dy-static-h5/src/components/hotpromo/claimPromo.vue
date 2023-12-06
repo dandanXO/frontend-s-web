@@ -1,6 +1,6 @@
 <template>
   <div class="common-promo">
-    <img :src="require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)" />
+    <img :src="require(`../../assets/images/promotion/hotpromo/${promoCode}/icon.png`)" />
     <div class="contents">
       <!-- The daily reload bonus will be automatically created to the member's
         main wallet once the deposit is successful. -->
@@ -9,15 +9,8 @@
         class="claim-btn"
         :loading="loadingClaim"
         @click="$emit('daily-slot')"
-        >领取</q-btn
+        >点击领取</q-btn
       >
-    <div v-if="promoId === 19" class="orange">
-     <!-- *The rebate bonus needs 1 times rollover before withdrawing and will be returned if not used within 30 days. -->
-     <!-- *返利红利需要1倍流水后才能提现，30天内未使用将退回。 -->
-    </div>
-    <div v-if="promoId === 27" class="extra-img">
-      <img src="../../assets/images/promotion/hotpromo/common/extra.png" />
-    </div>
     </div>
   </div>
 </template>
@@ -32,6 +25,10 @@ export default defineComponent({
     },
     promoId: {
       type: Number,
+      default: null
+    },
+    promoCode: {
+      type: String,
       default: null
     }
   },

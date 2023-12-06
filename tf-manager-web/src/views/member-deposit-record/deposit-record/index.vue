@@ -277,13 +277,29 @@
           :label="t('fields.depositDate')"
           align="center"
           min-width="150"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.depositDate === null">-</span>
+            <span
+              v-if="scope.row.depositDate !== null"
+              v-formatter="{data: scope.row.depositDate, timeZone: timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="finishDate"
           :label="t('fields.finishDate')"
           align="center"
           min-width="150"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.finishDate === null">-</span>
+            <span
+              v-if="scope.row.finishDate !== null"
+              v-formatter="{data: scope.row.finishDate, timeZone: timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="status"
           :label="t('fields.status')"
@@ -655,6 +671,7 @@ const priviList = reactive({
 const siteList = reactive({
   list: [],
 })
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -909,6 +926,8 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 

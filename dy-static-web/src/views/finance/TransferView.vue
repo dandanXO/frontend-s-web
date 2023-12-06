@@ -10,25 +10,27 @@
           <!-- <span class="menu-title">快速转账</span>
             </el-col> -->
           <el-col :span="4">
-            <el-button
-              type="success"
-              size="small"
-              class="common-btn"
-              @click="transferOutAllModal"
-            >
-              一键转出
-            </el-button>
-            <el-button
-              type="success"
-              size="small"
-              class="common-btn"
-              @click="refreshAllModal"
-            >
-              一键刷新
-            </el-button>
+            <el-button type="success" size="small" class="common-btn" @click="transferOutAllModal">一键转出</el-button>
+            <el-button type="success" size="small" class="common-btn" @click="refreshAllModal">一键刷新</el-button>
+          </el-col>
+
+          <el-col :span="20">
+            <div class="balance-transfer-button">
+              <span>自动平台转账:</span>
+              <el-switch
+                v-model="autoTransfer"
+                class="ml-2"
+                inline-prompt
+                style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+                active-text="已开启"
+                inactive-text="已关闭"
+                @change="updateAutoTransfer($event)"
+              />
+            </div>
           </el-col>
         </el-row>
       </div>
+
       <!-- <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
@@ -68,21 +70,11 @@
               <el-icon><Refresh /></el-icon>
             </div>
           </div>
-          <div
-            class="flex-box flex-justify-space flex-wrap transfer-action-box"
-          >
-            <el-button
-              size="small"
-              class="outline transfer-btn in"
-              @click="transferModal(0, p)"
-            >
+          <div class="flex-box flex-justify-space flex-wrap transfer-action-box">
+            <el-button v-if="!autoTransfer" size="small" class="outline transfer-btn in" @click="transferModal(0, p)">
               转进
             </el-button>
-            <el-button
-              size="small"
-              class="transfer-btn out"
-              @click="transferModal(1, p)"
-            >
+            <el-button v-if="!autoTransfer" size="small" class="transfer-btn out" @click="transferModal(1, p)">
               转出
             </el-button>
           </div>
@@ -102,9 +94,7 @@
       <template #header>
         <div
           :style="
-            transferTypeIndex === 0
-              ? 'flex-direction: row'
-              : 'flex-direction: row-reverse; justify-content: flex-end;'
+            transferTypeIndex === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse; justify-content: flex-end;'
           "
           class="el-dialog__title"
         >
@@ -115,19 +105,9 @@
           </el-tag>
         </div>
       </template>
-      <el-form
-        ref="formRef"
-        :hideRequiredMark="true"
-        :model="transferInfo"
-        :rules="rules"
-        :label-col="{ span: 4 }"
-      >
+      <el-form ref="formRef" :hideRequiredMark="true" :model="transferInfo" :rules="rules" :label-col="{ span: 4 }">
         <el-form-item ref="amount" prop="amount">
-          <el-input
-            v-model="transferInfo.amount"
-            placeholder="金额"
-            @keyup.enter="submitTransfer"
-          />
+          <el-input v-model="transferInfo.amount" placeholder="金额" @keyup.enter="submitTransfer" />
         </el-form-item>
         <el-form-item class="txt-center">
           <!-- <button
@@ -137,24 +117,12 @@
           >
             {{ "common.confirm" }}
           </button> -->
-          <el-button
-            class="common-btn"
-            :loading="loadingTransfer"
-            @click="submitTransfer"
-          >
-            确定
-          </el-button>
+          <el-button class="common-btn" :loading="loadingTransfer" @click="submitTransfer">确定</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
 
-    <el-dialog
-      v-model="transferAllModalVisible"
-      title="转账金额"
-      :maskClosable="false"
-      :footer="null"
-      width="500px"
-    >
+    <el-dialog v-model="transferAllModalVisible" title="转账金额" :maskClosable="false" :footer="null" width="500px">
       <div class="transfer-all-list">
         <div class="transfer-item" v-for="(p, indx) in platforms" :key="indx">
           <div>
@@ -172,7 +140,7 @@
 <script lang="js">
 import { defineComponent, ref, reactive, computed, onMounted } from "vue";
 import { loadBalance } from "@/api/personal/personal";
-import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList } from "@/api/personal/transfer";
+import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList, updateAutoTransferState, getAutoTransferState } from "@/api/personal/transfer";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
@@ -192,11 +160,13 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const platforms = reactive([]);
+    const autoTransfer = ref(false);
     const mainWallet = computed(() => {
-      return store.balance;
+      return store.balance.toFixed(2);
     });
     onMounted(() => {
       loadPlatform();
+      getAutoTransfer();
     });
     // const { t } = useI18n();
     const transferModalVisible = ref(false);
@@ -211,7 +181,7 @@ export default defineComponent({
       amount: ""
     });
 
-    const platNames = {"KYDY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "SGWin": "双赢彩票", };
+    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "SGWin": "双赢彩票", };
 
     const transferOutAllModal = () => {
       transferAllModalVisible.value = true
@@ -281,6 +251,23 @@ export default defineComponent({
         }
       }, 1000);
     };
+
+    const updateAutoTransfer = async(state) => {
+      updateAutoTransferState(state).then(res => {
+        autoTransfer.value = res.data;
+      }).catch(e => {
+        console.log(e)
+      });
+    };
+
+    const getAutoTransfer = () => {
+      getAutoTransferState().then(res => {
+        autoTransfer.value = res.data;
+      }).catch(e => {
+          console.log(e)
+      });
+    };
+
     const loadPlatform = () => {
       if(store.memberType === 'TEST') {
         getLoggedInPlatformList().then((response) => {
@@ -386,6 +373,9 @@ export default defineComponent({
       cancelTransfer,
       submitTransfer,
       mainWallet,
+      autoTransfer,
+      updateAutoTransfer,
+      getAutoTransfer,
       refreshBalance,
       formRef,
       MAIN,
@@ -475,6 +465,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
             color: #000000;
           }
         }
+
         .balance-refresh {
           cursor: pointer;
           margin-left: 10px;
@@ -496,6 +487,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
       display: grid;
       padding-top: 30px;
       margin: 0 auto;
+      gap: 20px;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       // grid-gap: 20px 24px;
       // display: grid;
@@ -508,16 +500,19 @@ body .transferinout .el-dialog__header .el-dialog__title {
       // gap: 10px;
       .transfer-plat-item {
         // display: flex;
-        background: url(../../assets/images/account/transfer_item_bg.png)
-          no-repeat center center;
-        background-size: contain;
-        width: 238px;
-        height: 128px;
+        background: url(../../assets/images/account/transfer_box_bg.png) no-repeat top left;
+        background-size: cover;
+        // width: 238px;
+        // height: auto;
+        // height: 128px;
         // border-radius: 2px;
         // margin: 0 0 23px 14px;
         // padding: 10px 20px 30px;
         // flex-direction: column;
+        border-radius: 8px;
         position: relative;
+        // background-color: #e6ffff;
+        box-shadow: 0 2px 5px 2px rgba(167, 167, 167, 0.2);
         // width: 28%;
         .transfer-balance-box {
           align-items: center;
@@ -528,6 +523,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
           justify-content: flex-end;
           gap: 15px;
           width: 78%;
+
           .transfer-btn {
             background-color: #3bafda;
             box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
@@ -539,10 +535,10 @@ body .transferinout .el-dialog__header .el-dialog__title {
             font-size: 12px;
             line-height: 14px;
             cursor: pointer;
+            margin-bottom: 20px;
 
             &.outline {
-              background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%),
-                linear-gradient(#5b80e7, #5b80e7);
+              background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%), linear-gradient(#5b80e7, #5b80e7);
             }
           }
         }
@@ -591,8 +587,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
 
             &::after {
               content: " ";
-              background: url(../../assets/images/account/transfer_item_bg.png)
-                no-repeat center center;
+              background: url(../../assets/images/account/transfer_item_bg.png) no-repeat center center;
               background-position: -2px -33px;
               background-size: 1400%;
               display: block;
@@ -744,5 +739,14 @@ body .transferinout .el-dialog__header .el-dialog__title {
       // }
     }
   }
+}
+
+.balance-transfer-button {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+  font-size: 14px;
 }
 </style>

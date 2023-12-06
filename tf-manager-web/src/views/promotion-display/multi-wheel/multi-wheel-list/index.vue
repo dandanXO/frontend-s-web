@@ -80,6 +80,16 @@
         >
           {{ t('fields.add') }}
         </el-button>
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-refresh"
+          size="mini"
+          type="primary"
+          v-permission="['sys:member:multi:wheel:random']"
+          @click="random"
+        >
+          {{ t('fields.randomMember') }}
+        </el-button>
       </div>
     </div>
     <el-table
@@ -181,6 +191,7 @@ import {
   getMemberMultiWheel,
   deleteMemberMultiWheel,
   addMemberMultiWheel,
+  randomMember
 } from '../../../../api/member-multi-wheel'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
@@ -320,6 +331,11 @@ function createMemberMultiWheel() {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+}
+
+async function random() {
+  await randomMember(request.siteId)
+  await loadMemberMultiWheel()
 }
 
 onMounted(async () => {

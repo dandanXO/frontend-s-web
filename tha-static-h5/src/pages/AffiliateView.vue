@@ -15,26 +15,15 @@
       </div>
       <div class="buttons">
         <!-- Action Required - Contact Us Link -->
-        <a
-          :href="
-            'https://affiliate-web.monemental.com/th/register?agent=' +
-            (affCode ? affCode : '')
-          "
-        >
-          <q-btn :color="ui.themeColor" align="around" class="full-width">{{
-            $t("lang.apply")
-          }}</q-btn>
+        <a :href="'https://affiliate-web.monemental.com/th/register?agent=' + (affCode ? affCode : '')">
+          <q-btn :color="ui.themeColor" align="around" class="full-width">{{ $t("lang.apply") }}</q-btn>
         </a>
         <a href="https://affiliate-web.monemental.com/th/login">
-          <q-btn :color="ui.themeColor" align="around" class="full-width">{{
-            $t("lang.login")
-          }}</q-btn>
+          <q-btn :color="ui.themeColor" align="around" class="full-width">{{ $t("lang.login") }}</q-btn>
         </a>
-        <router-link to="/liveChat" name="live">
-          <q-btn :color="ui.themeColor" align="around" class="full-width">{{
-            $t("lang.contact_us")
-          }}</q-btn>
-        </router-link>
+        <a name="live" @click="openLiveChat($event, router)">
+          <q-btn :color="ui.themeColor" align="around" class="full-width">{{ $t("lang.contact_us") }}</q-btn>
+        </a>
       </div>
       <div class="steps">
         <div class="step">
@@ -70,8 +59,10 @@
               <br />
               {{ $t("lang.affiliate_tnc_para_2_2") }}
               <br />
-              {{ $t("lang.affiliate_tnc_para_2_3") }} <br />
-              {{ $t("lang.affiliate_tnc_para_2_4") }} <br />
+              {{ $t("lang.affiliate_tnc_para_2_3") }}
+              <br />
+              {{ $t("lang.affiliate_tnc_para_2_4") }}
+              <br />
               {{ $t("lang.affiliate_tnc_para_2_5") }}
             </p>
           </li>
@@ -113,12 +104,7 @@
         </ol>
         <div class="table">
           <div class="game-title sub">{{ $t("lang.commission_table") }}</div>
-          <a-table
-            :pagination="false"
-            :columns="columns"
-            row-key="activeUser"
-            :data-source="dataSource"
-          />
+          <a-table :pagination="false" :columns="columns" row-key="activeUser" :data-source="dataSource" />
         </div>
         <div class="game-title sub">
           {{ $t("lang.how_to_calculate_commission") }}
@@ -169,9 +155,7 @@
               <div class="rw-left" style="white-space: nowrap">
                 {{ $t("lang.affiliate_example_a_table_6_left") }}
               </div>
-              <div class="rw-rgt text-right">
-                【500,000 - 15,000 - (600,000 x 2%) - (500,000 x 8%) 】=433,000
-              </div>
+              <div class="rw-rgt text-right">【500,000 - 15,000 - (600,000 x 2%) - (500,000 x 8%) 】=433,000</div>
             </div>
 
             <div class="bx-table">
@@ -223,9 +207,7 @@
               <div class="rw-left" style="white-space: nowrap">
                 {{ $t("lang.affiliate_example_b_table_6_left") }}
               </div>
-              <div class="rw-rgt text-right">
-                【500,000 - 15,000 - (600,000 x 2%) - (500,000 x 8%) 】=433,000
-              </div>
+              <div class="rw-rgt text-right">【500,000 - 15,000 - (600,000 x 2%) - (500,000 x 8%) 】=433,000</div>
             </div>
 
             <div class="bx-table">
@@ -240,37 +222,37 @@
             <p>{{ $t("lang.affiliate_table_title") }}</p>
             <table class="table-div">
               <tbody>
-              <tr>
-                <td>{{ $t('lang.affiliate_table_1')}}</td>
-                <td>{{ $t('lang.affiliate_table_2')}}</td>
-                <td>{{ $t('lang.affiliate_table_3')}}</td>
-              </tr>
+                <tr>
+                  <td>{{ $t("lang.affiliate_table_1") }}</td>
+                  <td>{{ $t("lang.affiliate_table_2") }}</td>
+                  <td>{{ $t("lang.affiliate_table_3") }}</td>
+                </tr>
 
-              <tr>
-                <td>≥5</td>
-                <td>101k-500k</td>
-                <td>30%</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>101k-500k</td>
-                <td>35%</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>501k-999k</td>
-                <td>40%</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>1M-1.9M</td>
-                <td>45%</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>2M-3M</td>
-                <td>50%</td>
-              </tr>
+                <tr>
+                  <td>≥5</td>
+                  <td>101k-500k</td>
+                  <td>30%</td>
+                </tr>
+                <tr>
+                  <td>≥5</td>
+                  <td>101k-500k</td>
+                  <td>35%</td>
+                </tr>
+                <tr>
+                  <td>≥5</td>
+                  <td>501k-999k</td>
+                  <td>40%</td>
+                </tr>
+                <tr>
+                  <td>≥5</td>
+                  <td>1M-1.9M</td>
+                  <td>45%</td>
+                </tr>
+                <tr>
+                  <td>≥5</td>
+                  <td>2M-3M</td>
+                  <td>50%</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -399,59 +381,62 @@
 <script>
 import { defineComponent } from "vue";
 import { useUI } from "stores/ui";
+import { useRouter } from "vue-router";
+import { openLiveChat } from "boot/utils";
 
 export default defineComponent({
   setup() {
+    const router = useRouter();
     const ui = useUI();
     const affCode = sessionStorage.getItem("AFFILIATE_CODE");
     const columns = [
       {
         title: "ยูสเซอร์ที่เปิดใช้งาน",
         dataIndex: "activeUser",
-        key: "activeUser",
+        key: "activeUser"
       },
       {
         title: "ผลกำไรจริง",
         dataIndex: "realProfit",
-        key: "realProfit",
+        key: "realProfit"
       },
       {
         title: "คอมมิชชั่น",
         dataIndex: "commission",
-        key: "commission",
-      },
+        key: "commission"
+      }
     ];
     const dataSource = [
       {
         activeUser: "5",
         realProfit: "1-250,000",
-        commission: "30%",
+        commission: "30%"
       },
       {
         activeUser: "10",
         realProfit: "250,001-750,000",
-        commission: "35%",
+        commission: "35%"
       },
       {
         activeUser: "15",
         realProfit: "750,001-1,500,000",
-        commission: "40%",
+        commission: "40%"
       },
       {
         activeUser: "25",
         realProfit: "1,500,001-2,500,000",
-        commission: "45%",
+        commission: "45%"
       },
       {
         activeUser: "35",
         realProfit: "2,500,001-5,000,000",
-        commission: "50%",
+        commission: "50%"
       },
       {
         activeUser: "50",
         realProfit: ">=5,000,001",
-        commission: "55%",
-      },
+        commission: "55%"
+      }
     ];
 
     return {
@@ -459,8 +444,10 @@ export default defineComponent({
       dataSource,
       affCode,
       ui,
+      openLiveChat,
+      router
     };
-  },
+  }
 });
 </script>
 
@@ -581,21 +568,21 @@ export default defineComponent({
 
   .table-div {
     display: table;
-    width:100%;
+    width: 100%;
     max-width: 500px;
     margin: 0px auto 10px;
     text-align: center;
     table-layout: fixed;
 
-    tr{
-      &:nth-child(1){
+    tr {
+      &:nth-child(1) {
         font-weight: 700;
         font-size: 16px;
         line-height: 18px;
       }
     }
 
-    td{
+    td {
       border: 1px solid #fff;
       padding: 4px;
     }

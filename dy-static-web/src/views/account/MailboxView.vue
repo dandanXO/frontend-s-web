@@ -1,22 +1,33 @@
 <template>
   <div>
-    <div class="menu-title-container">
+    <!-- <div class="menu-title-container">
       <span class="menu-title">收发信息</span>
-    </div>
+    </div> -->
     <div class="account-content mail">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-        <el-tab-pane key="inbox" name="inbox" :label="'收件箱'">
+        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
           <div v-if="mailboxState.mailboxList.inbox.list.length > 0">
+            <div>
+              <el-button type="primary" @click="readAllMsg">
+                <el-icon><MessageBox /></el-icon>
+                全部已读
+              </el-button>
+              <el-button color="grey" @click="deleteAllMsg">
+                <el-icon><Delete /></el-icon>
+                全部删除
+              </el-button>
+            </div>
             <div class="mailbox-list">
-              <div
-                class="mailbox-item"
-                v-for="m in mailboxState.mailboxList.inbox.list"
-                :key="m.id"
-              >
-                <div class="mailbox-title">{{ m.title }}</div>
-                <div class="mailbox-content" v-html="m.content"></div>
-                <div class="mailbox-date"><el-icon><Calendar /></el-icon>{{ m.sendTime }}</div>
-              </div>
+              <template v-for="m in mailboxState.mailboxList.inbox.list" :key="m.id">
+                <div class="mailbox-item" @click="openMsg(m)">
+                  <div class="mailbox-title">{{ m.title }}</div>
+                  <div class="mailbox-content" v-html="m.content"></div>
+                  <div class="mailbox-date">
+                    <el-icon><Calendar /></el-icon>
+                    <div>{{ m.sendTime }}</div>
+                  </div>
+                </div>
+              </template>
             </div>
             <div class="pagination-wrapper">
               <el-pagination
@@ -27,113 +38,37 @@
               />
             </div>
           </div>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-            v-else
-          >
-            暂无记录
-          </div>
-        </el-tab-pane>
-        <el-tab-pane key="sent" name="sent" :label="'已发送'">
-          <div v-if="mailboxState.mailboxList.sent.list.length > 0">
-            <div class="mailbox-list">
-              <div
-                class="mailbox-item"
-                v-for="m in mailboxState.mailboxList.sent.list"
-                :key="m.id"
-              >
-                <div class="mailbox-title">{{ m.title }}</div>
-                <div class="mailbox-content" v-html="m.content"></div>
-              </div>
-            </div>
-            <div class="pagination-wrapper" :class="{ hidden: mailOpened }">
-              <!-- <el-pagination
-                v-model:current="
-                  mailboxState.mailboxList[mailboxState.active].pageNum
-                "
-                :total="mailboxState.mailboxList[mailboxState.active].total"
-                show-less-items
-                hideOnSinglePage
-                :defaultPageSize="2"
-                :pageSize="
-                  mailboxState.mailboxList[mailboxState.active].pageSize
-                "
-                @change="changePage(mailboxState.active)"
-              /> -->
-
-              <el-pagination
-                @current-change="changePage"
-                :total="mailboxState.mailboxList[mailboxState.active].total"
-                :current-page="mailboxState.mailboxList[mailboxState.active].pageNum"
-                :page-size="mailboxState.mailboxList[mailboxState.active].pageSize"
-              />
-            </div>
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-            v-else
-          >
-            暂无记录
-          </div>
-        </el-tab-pane>
-        <el-tab-pane name="write" :label="'写信'">
-          <div>
-            <el-form
-              ref="formRef"
-              hideRequiredMark="true"
-              :model="mailboxState.mailboxList.write"
-              :rules="rules"
-              :colon="false"
-              :label-col="{ span: 2 }"
-              label-width="100"
-            >
-              <el-form-item
-                ref="title"
-                prop="title"
-                label="标题"
-                :wrapperCol="{ span: 6 }"
-              >
-                <el-input
-                  v-model="mailboxState.mailboxList.write.title"
-                  placeholder="请输入标题"
-                />
-              </el-form-item>
-              <el-form-item
-                ref="content"
-                prop="content"
-                label="内容"
-              >
-                <el-input
-                  type="textarea"
-                  :autosize="{ minRows: 4 }"
-                  v-model="mailboxState.mailboxList.write.content"
-                  placeholder="请输入内容"
-                  show-word-limit
-                  maxlength="500"
-                />
-              </el-form-item>
-              <el-form-item>
-                <template #label></template>
-                <el-button :loading="loadingBtn" size="large" class="common-btn" type="submit" @click="onSubmit">
-                  提交
-                </el-button>
-              </el-form-item>
-            </el-form>
-          </div>
+          <div style="display: flex; justify-content: center; align-items: center; height: 300px" v-else>暂无记录</div>
         </el-tab-pane>
       </el-tabs>
     </div>
   </div>
+
+  <el-dialog
+    v-model="msgModalVisible"
+    :footer="null"
+    width="600px"
+    :title="'标题: ' + msgTitleTxt"
+    align-center
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
+    <div class="msg-content">
+      <div class="content-title">内容:</div>
+      <div class="content-txt">
+        {{ msgContentTxt }}
+      </div>
+    </div>
+
+    <div class="msg-date">
+      <el-icon><Calendar /></el-icon>
+      <div>{{ m.sendTime }}</div>
+    </div>
+
+    <div class="msg-button">
+      <el-button type="primary" @click="msgModalVisible = false">确认</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script lang="js">
@@ -141,13 +76,15 @@ import { ref, defineComponent, reactive, onMounted } from "vue";
 import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
-import { Calendar } from "@element-plus/icons-vue";
+import { Calendar, Delete, MessageBox } from "@element-plus/icons-vue";
 
 
 export default defineComponent({
   name: "MailboxView",
   components: {
-    Calendar
+    Calendar,
+    Delete,
+    MessageBox
   },
   setup() {
     const loadingBtn = ref(false)
@@ -227,6 +164,25 @@ export default defineComponent({
       }
     };
 
+    const msgModalVisible = ref(false);
+    const msgTitleTxt = ref()
+    const msgContentTxt = ref()
+    const msgDateTxt = ref();
+
+    const openMsg = (m) => {
+      msgModalVisible.value = true;
+      msgTitleTxt.value = m.title;
+      msgContentTxt.value = m.content;
+      msgDateTxt.value = m.sendTime;
+    }
+
+    const readAllMsg = () => {
+      console.log("readAllMsg~");
+    }
+    const deleteAllMsg = () => {
+      console.log("deleteAllMsg~");
+    }
+
     onMounted(() => {
       loadPersonalMailbox();
       // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
@@ -299,7 +255,13 @@ export default defineComponent({
       formRef,
       rules,
       onSubmit,
-      loadingBtn
+      loadingBtn,
+      msgModalVisible,
+      msgTitleTxt,
+      msgContentTxt,
+      openMsg,
+      readAllMsg,
+      deleteAllMsg
     }
   },
 });
@@ -312,10 +274,7 @@ export default defineComponent({
       min-height: 740px;
       margin-bottom: 0;
       padding: 0;
-      .ant-form.ant-form-horizontal
-        .ant-form-item
-        .ant-form-item-control-input-content
-        .ant-input {
+      .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
         background: #16151c;
       }
       :deep(.ant-form-horizontal .ant-form-item-label) {
@@ -337,7 +296,7 @@ export default defineComponent({
     }
     .mailbox-list {
       min-height: 450px;
-    font-size: 14px;
+      font-size: 14px;
       .mailbox-item {
         box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 3px;
@@ -393,6 +352,7 @@ export default defineComponent({
           width: 100%;
           margin-bottom: 20px;
           overflow: hidden;
+          color:#838383;
         }
 
         .mailbox-date {
@@ -401,6 +361,9 @@ export default defineComponent({
           display: flex;
           justify-content: flex-end;
           align-items: center;
+          font-size: 12px;
+          gap: 6px;
+          color: #a1a1a1;
         }
       }
     }
@@ -417,5 +380,30 @@ export default defineComponent({
       cursor: pointer;
     }
   }
+}
+.msg-content {
+  display: flex;
+  gap: 20px;
+}
+.msg-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.content-title {
+  min-width: 40px;
+  font-size: 16px;
+}
+.content-txt {
+  font-size: 16px;
+}
+.msg-date {
+  margin-top: 20px;
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  color: #a1a1a1;
 }
 </style>
