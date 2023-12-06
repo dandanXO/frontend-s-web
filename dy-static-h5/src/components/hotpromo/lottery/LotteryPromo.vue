@@ -37,7 +37,13 @@
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="query.recordTime" @update:model-value="closePopup">
+                          <q-date
+                            v-model="query.recordTime"
+                            v-close-popup="dateClosePopup"
+                            @navigation="dateClosePopup = false"
+                            @update:model-value="dateClosePopup = true"
+                          >
+                            <!-- <q-date v-model="query.recordTime" @update:model-value="v-close-popup" > -->
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
                             </div>
@@ -76,7 +82,12 @@
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="winnersQuery.resultTime" @update:model-value="closePopup">
+                          <q-date
+                            v-model="winnersQuery.resultTime"
+                            v-close-popup="dateClosePopup"
+                            @navigation="dateClosePopup = false"
+                            @update:model-value="dateClosePopup = true"
+                          >
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
                             </div>
@@ -287,11 +298,8 @@ function retrieveWinnerList() {
   }
 }
 
-const resultTime = ref("");
-
-const closePopup = () => {
-  this.$refs.hide();
-};
+const closePopup = ref(true);
+const dateClosePopup = ref(true);
 </script>
 
 <style scoped lang="scss">

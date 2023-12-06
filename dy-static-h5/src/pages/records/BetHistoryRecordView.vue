@@ -32,37 +32,20 @@ export default defineComponent({
 
     var apiUrl= "/session/member/gameBetRecord";
 
-
     var endDate = moment().format("YYYY-MM-DD");
     var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
 
-    // const loadNewData = () => {
-    //   startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
-    //   console.log(startDate);
-
-    //   endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-    //   console.log(endDate);
-
-    //   if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
-    //     console.log("mor than 3 months");
-    //     isEnded.value = true;
-    //     return;
-    //   }
-    //   loadDepositTable(false);
-    // };
-
     const loadNewData = () => {
-      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
-      // console.log(startDate);
-
-      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-      // console.log(endDate);
-
-      if (moment(startDate).format("YYYY-MM") !== moment(endDate).format("YYYY-MM")) {
-        endDate = moment(startDate).endOf("month").format("YYYY-MM-DD");
-        // console.log(endDate);
+      const startMonth = moment(startDate).format("MM");
+      const endMonth = moment(endDate).format("MM");
+      if (startMonth !== endMonth) {
+        // If startDate and endDate are in the same month, take the latest month's data
+        const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+        startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+      } else {
+        startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
+        endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
       }
-
       if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
         console.log("mor than 3 months");
         isEnded.value = true;
@@ -70,8 +53,6 @@ export default defineComponent({
       }
       loadDepositTable(false);
     };
-
-
 
     const loadDepositTable = (isNew = true) => {
       if (isNew) {
