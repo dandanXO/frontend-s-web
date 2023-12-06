@@ -348,12 +348,16 @@ export default defineComponent({
       if (!value) {
         return callback(new Error('Code is required'))
       }
-      const codes = []
-      this.list.forEach(item => {
+      const extractCodes = (item, codes) => {
         if (item.code) {
           codes.push(item.code)
         }
-      })
+      if (item.children && item.children.length > 0) {
+          item.children.forEach(child => extractCodes(child, codes))
+        }
+      }
+      const codes = []
+      this.list.forEach(item => extractCodes(item, codes))
       codes.forEach(element => {
         if (element.toLowerCase() === value.toLowerCase()) {
           if (this.isEdit) {

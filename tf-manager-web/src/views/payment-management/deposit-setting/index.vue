@@ -301,10 +301,10 @@ async function loadCurrency() {
 
 function filterPayTypeByCurrency() {
   site.value = siteList.list.find(s => s.id === form.siteId)
-  const currencyCodeList = site.value.currency.split(',').map(currencyName => currencyName.toUpperCase())
+  const currencyCodeList = site.value.currency.split(',').map(currencyName => currencyName)
   siteCurrencyId.list = [
     ...currencyCodeList.map(currencyName => {
-      const currency = currencyList.list.find(c => c.currencyCode === currencyName)
+      const currency = currencyList.list.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
       return currency ? currency.id : null;
     }).filter(Boolean)
   ]
