@@ -173,7 +173,7 @@
         </table>
         <table v-else class="record-table" id="record-table"></table>
 
-        <div v-if="isHasRecord" class="page-list">
+        <div v-if="isHasRecord && tableInfo.length > 1" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
           <div
             v-for="(e, i) in paginationInfo.pageTotal"
