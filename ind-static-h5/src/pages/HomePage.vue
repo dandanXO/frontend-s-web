@@ -579,7 +579,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="withdrawalDialog" presistent>
+  <!-- <q-dialog width="100%" v-model="withdrawalDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container popout-dialog-container--yel">
@@ -589,7 +589,8 @@
         <WithdrawalComponent @close-withdraw="closeWithDrawModal"></WithdrawalComponent>
       </div>
     </div>
-  </q-dialog>
+  </q-dialog> -->
+  <WithdrawalModal ref="withdrawalModalRef"></WithdrawalModal>
 
   <q-dialog width="100%" v-model="depositDialog" presistent>
     <div class="popout-dialog">
@@ -633,6 +634,7 @@ import { useUI } from "stores/ui";
 import { translateRecord } from "src/directives/translate";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalComponent from "../components/WithdrawalComponent.vue";
+import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
@@ -650,7 +652,7 @@ const closeAlert = () => {
 const fullGameDialog = ref(false);
 const searchText = ref("");
 
-const withdrawalDialog = ref(false);
+const withdrawalModalRef = ref();
 const onWithdrawalClick = () => {
   // withdrawalDialog.value = true;
   if (!store.realName & !store.guest) {
@@ -658,12 +660,8 @@ const onWithdrawalClick = () => {
   } else if (!store.realName & store.guest) {
     guestKYCDialog.value = true;
   } else {
-    withdrawalDialog.value = true;
+    withdrawalModalRef.value.open();
   }
-};
-
-const closeWithDrawModal = () => {
-  withdrawalDialog.value = false;
 };
 
 const userKYCDialog = ref(false);
