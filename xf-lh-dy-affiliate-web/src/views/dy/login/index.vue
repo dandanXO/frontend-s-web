@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="affiliate">
-      <div class="game-title sub"><img :src="xfLogo"></div>
+      <div class="game-title sub"><img :src="dyLogo"></div>
       <div class="affiliate-login">
         <el-form
           ref="loginFormRef"
@@ -10,7 +10,6 @@
           class="login-form"
           autocomplete="no-fill"
         >
-
           <el-form-item prop="userName">
             <el-input
               ref="userNameRef"
@@ -21,7 +20,9 @@
               tabindex="1"
               autocomplete="no-fill"
             >
-              <template style="background-color: #2144c6;" #prepend><i><img src="../../../assets/images/xf/icon_name.png"></i></template>
+              <template style="background-color: #2144c6;" #prepend>
+                <i><img src="../../../assets/images/dy/icon_name.png"></i>
+              </template>
             </el-input>
           </el-form-item>
 
@@ -46,12 +47,11 @@
                 @keyup.enter="handleLogin"
               >
                 <template style="background-color: #2144c6;" #prepend>
-                  <i><img src="../../../assets/images/xf/icon_pwd.png"></i>
+                  <i><img src="../../../assets/images/dy/icon_pwd.png"></i>
                 </template>
               </el-input>
             </el-form-item>
           </el-tooltip>
-
           <el-button
             class="common-btn"
             :loading="loading"
@@ -61,11 +61,23 @@
           >
             登录
           </el-button>
-          <router-link to="/xf/register" class="signlog">申请账号</router-link>
+          <router-link to="/dy/register" class="signlog">申请账号</router-link>
         </el-form>
       </div>
     </div>
   </div>
+
+  <el-dialog v-model="showDialog" width="fit-content">
+    <slide-verify
+      ref="slideRef"
+      @success="onSuccess"
+      @fail="onFail"
+      slider-text="向右拖动"
+      :imgs="imgs"
+      style="margin-bottom: 20px;"
+    />
+    <span :style="{color: msgColor}"> {{ msg }} </span>
+  </el-dialog>
 </template>
 <script>
 import {
@@ -75,166 +87,191 @@ import {
   watch,
   ref,
   nextTick,
-  toRefs
-} from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useStore } from "@/store";
-import { UserActionTypes } from "@/store/modules/user/action-types";
-import xfLogo from "@/assets/images/xf/logo.png";
+  toRefs,
+} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { UserActionTypes } from '@/store/modules/user/action-types'
+import dyLogo from '@/assets/images/dy/logo.png'
+import img0 from '@/components/slider/assets/img.jpg'
+import img1 from '@/components/slider/assets/img1.jpg'
 
 export default defineComponent({
   setup() {
-    const userNameRef = ref(null);
-    const passwordRef = ref(null);
-    const loginFormRef = ref(null);
-    const router = useRouter();
-    const route = useRoute();
-    const store = useStore();
+    const userNameRef = ref(null)
+    const passwordRef = ref(null)
+    const loginFormRef = ref(null)
+    const slideRef = ref(null)
+    const router = useRouter()
+    const route = useRoute()
+    const store = useStore()
     const state = reactive({
       loginForm: {
-        userName: "",
-        password: "",
-        site: "DY2"
+        userName: '',
+        password: '',
+        site: 'DY2',
       },
       loginRules: {
         userName: [
           {
             required: true,
-            message: "请输入用户名",
-            trigger: "blur",
-          }
+            message: '请输入用户名',
+            trigger: 'blur',
+          },
         ],
         password: [
           {
             required: true,
-            message: "请输入密码",
-            trigger: "blur",
-          }
-        ]
+            message: '请输入密码',
+            trigger: 'blur',
+          },
+        ],
       },
-      passwordType: "password",
+      passwordType: 'password',
       loading: false,
       showDialog: false,
       capsTooltip: false,
-      redirect: "",
-      otherQuery: {}
-    });
+      redirect: '',
+      otherQuery: {},
+      imgs: [img0, img1],
+      msg: '',
+      msgColor: 'black',
+    })
 
     const methods = reactive({
       validatePasswordLength: (rule, value, callback) => {
         if (value.length < 6 || value.length > 12) {
-          callback(new Error("密码长度为6-12"));
+          callback(new Error('密码长度为6-12'))
         } else {
-          callback();
+          callback()
         }
       },
-      checkCapslock: (e) => {
-        const { key } = e;
+      checkCapslock: e => {
+        const { key } = e
         if (key) {
           state.capsTooltip =
-            key !== null && key.length === 1 && key >= "A" && key <= "Z";
+            key !== null && key.length === 1 && key >= 'A' && key <= 'Z'
         }
       },
       showPwd: () => {
-        if (state.passwordType === "password") {
-          state.passwordType = "";
+        if (state.passwordType === 'password') {
+          state.passwordType = ''
         } else {
-          state.passwordType = "password";
+          state.passwordType = 'password'
         }
         nextTick(() => {
-          (passwordRef.value).focus();
-        });
+          passwordRef.value.focus()
+        })
       },
       handleLogin: () => {
-        (loginFormRef.value).validate(async (valid) => {
+        loginFormRef.value.validate(async valid => {
           if (valid) {
-            state.loading = true;
-            try {
-              await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm);
-            } catch (e) {
-              console.error(e);
-              state.loading = false;
-              return;
-            }
-            router.push({
-              path: state.redirect || "/",
-              query: state.otherQuery
-            }).catch(err => {
-              console.warn(err);
-            });
+            state.msg = ''
+            state.showDialog = true
           }
-        });
-      }
-    });
+        })
+      },
+      onFail: () => {
+        state.msg = "验证失败，请重试"
+        state.msgColor = 'red'
+      },
+      onSuccess: async (times) => {
+        state.msg = "验证通过， 耗时 " + (times / 1000).toFixed(1) + " 秒";
+        state.msgColor = 'green'
+        state.loading = true
+        try {
+          await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)
+        } catch (e) {
+          console.error(e)
+          slideRef.value.reset()
+          state.msg = ''
+          state.showDialog = false
+          state.loading = false
+          return
+        }
+        router
+          .push({
+            path: state.redirect || '/',
+            query: state.otherQuery,
+          })
+          .catch(err => {
+            console.warn(err)
+          })
+      },
+    })
 
     function getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== "redirect") {
-          acc[cur] = query[cur];
+        if (cur !== 'redirect') {
+          acc[cur] = query[cur]
         }
-        return acc;
-      }, {});
+        return acc
+      }, {})
     }
 
-    watch(() => route.query, query => {
-      if (query) {
-        state.redirect = query.redirect?.toString() ?? "";
-        state.otherQuery = getOtherQuery(query);
+    watch(
+      () => route.query,
+      query => {
+        if (query) {
+          state.redirect = query.redirect?.toString() ?? ''
+          state.otherQuery = getOtherQuery(query)
+        }
       }
-    });
+    )
 
     onMounted(() => {
-      if (state.loginForm.userName === "") {
-        userNameRef.value.focus();
-      } else if (state.loginForm.password === "") {
-        passwordRef.value.focus();
+      if (state.loginForm.userName === '') {
+        userNameRef.value.focus()
+      } else if (state.loginForm.password === '') {
+        passwordRef.value.focus()
       }
-    });
+    })
 
     return {
       userNameRef,
       passwordRef,
       loginFormRef,
-      xfLogo,
+      dyLogo,
+      slideRef,
       ...toRefs(state),
-      ...toRefs(methods)
-    };
-  }
-});
+      ...toRefs(methods),
+    }
+  },
+})
 </script>
 
 <style scoped lang="scss">
 .common-btn {
-      font-family: Jura;
-    transition: all .8s,color .3s .3s;
-    min-width: 120px;
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    background-color: #2144c6;
-    font-size: 14px;
-    color: #ffffff;
-    border: 1px solid transparent;
-    border-radius: 0;
-    opacity: .9;
-    &:hover {
-      opacity: 1;
-    }
+  font-family: Jura;
+  transition: all 0.8s, color 0.3s 0.3s;
+  min-width: 120px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #2144c6;
+  font-size: 14px;
+  color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 0;
+  opacity: 0.9;
+  &:hover {
+    opacity: 1;
+  }
 }
 :deep(.el-input-group__prepend) {
-    background-color: #2144c6;
-    border: 0;
-    padding: 0;
-    border-radius: 0;
-    i {
-      display: flex;
-      justify-content: center;
-      img {
-        height: 40px;
-      }
+  background-color: #2144c6;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  i {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 40px;
     }
+  }
 }
 :deep(.el-input__inner) {
   background: #24222e;
@@ -244,7 +281,7 @@ export default defineComponent({
   border-radius: 0;
 }
 .wrapper {
-  background: url("../../../assets/images/xf/main.jpg") no-repeat center top;
+  background: url('../../../assets/images/dy/main.jpg') no-repeat center top;
   background-size: cover;
 
   .affiliate {
@@ -272,7 +309,7 @@ export default defineComponent({
         text-align: center;
         margin-bottom: 40px;
         &:after {
-          content: "";
+          content: '';
           width: 60px;
           height: 5px;
           background: linear-gradient(to right, #de4545, #db7e42);

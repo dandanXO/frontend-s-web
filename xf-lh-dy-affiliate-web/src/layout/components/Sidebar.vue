@@ -149,18 +149,18 @@ const navigationData = ref([
     display: true,
     path: '/personal',
     children: [
-      {
-        path: '/vip',
-        title: 'VIP专享',
-        active: false,
-        icon: 'link',
-      },
-      {
-        path: '/overflow',
-        title: '溢出申请',
-        active: false,
-        icon: 'form',
-      },
+      // {
+      //   path: '/vip',
+      //   title: 'VIP专享',
+      //   active: false,
+      //   icon: 'link',
+      // },
+      // {
+      //   path: '/overflow',
+      //   title: '溢出申请',
+      //   active: false,
+      //   icon: 'form',
+      // },
       {
         path: '/announcement',
         title: '系统通告',
