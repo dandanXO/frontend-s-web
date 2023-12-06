@@ -124,27 +124,24 @@
           <el-input v-model="form.teamOne" style="width: 350px;" maxlength="50" />
         </el-form-item>
         <el-form-item :label="t('fields.teamOneIcon')" prop="teamOneIcon">
-          <el-row :gutter="22">
-            <el-col :span="22">
-              <el-input :readonly="true" v-model="form.teamOneIcon" />
-            </el-col>
-            <el-col :span="2">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="inputTeamOne"
-                style="display: none"
-                accept="image/*"
-                @change="attachTeamOneIcon"
+          <el-row :gutter="5">
+            <el-col v-if="form.teamOneIcon" :span="18" style="width: 250px">
+              <el-image
+                v-if="form.teamOneIcon"
+                :src="promoDir + form.teamOneIcon"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[promoDir + form.teamOneIcon]"
               />
+            </el-col>
+            <el-col :span="6">
               <el-button
-                icon="el-icon-upload"
+                icon="el-icon-search"
                 size="mini"
                 type="success"
-                @click="$refs.inputTeamOne.click()"
+                @click="browseImage('TEAM_ONE_ICON')"
               >
-                {{ t('fields.upload') }}
+                {{ t('fields.browse') }}
               </el-button>
             </el-col>
           </el-row>
@@ -153,46 +150,43 @@
           <el-input v-model="form.teamTwo" style="width: 350px;" maxlength="50" />
         </el-form-item>
         <el-form-item :label="t('fields.teamTwoIcon')" prop="teamTwoIcon">
-          <el-row :gutter="22">
-            <el-col :span="22">
-              <el-input :readonly="true" v-model="form.teamTwoIcon" />
-            </el-col>
-            <el-col :span="2">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="inputTeamTwo"
-                style="display: none"
-                accept="image/*"
-                @change="attachTeamTwoIcon"
+          <el-row :gutter="5">
+            <el-col v-if="form.teamTwoIcon" :span="18" style="width: 250px">
+              <el-image
+                v-if="form.teamTwoIcon"
+                :src="promoDir + form.teamTwoIcon"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[promoDir + form.teamTwoIcon]"
               />
+            </el-col>
+            <el-col :span="6">
               <el-button
-                icon="el-icon-upload"
+                icon="el-icon-search"
                 size="mini"
                 type="success"
-                @click="$refs.inputTeamTwo.click()"
+                @click="browseImage('TEAM_TWO_ICON')"
               >
-                {{ t('fields.upload') }}
+                {{ t('fields.browse') }}
               </el-button>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item :label="t('fields.gameType')" prop="gameType">
           <el-select
-          v-model="form.gameType"
-          size="small"
-          :placeholder="t('fields.gameType')"
-          class="filter-item"
-          style="width: 350px;"
-        >
-          <el-option
-            v-for="item in uiControl.gameType"
-            :key="item.key"
-            :label="item.displayName === 'NBA' ? 'NBA' : t('gameType.' + item.displayName)"
-            :value="item.value"
-          />
-        </el-select>
+            v-model="form.gameType"
+            size="small"
+            :placeholder="t('fields.gameType')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in uiControl.gameType"
+              :key="item.key"
+              :label="item.displayName === 'NBA' ? 'NBA' : t('gameType.' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.matchTime')" prop="matchTime">
           <el-date-picker
@@ -264,6 +258,113 @@
       @size-change="loadGameMatch"
     />
   </div>
+
+  <el-dialog
+    :title="uiControl.imageSelectionTitle"
+    v-model="uiControl.imageSelectionVisible"
+    append-to-body
+    width="50%"
+    :close-on-press-escape="false"
+  >
+    <div class="search">
+      <el-input
+        v-model="imageRequest.name"
+        size="small"
+        style="width: 200px"
+        :placeholder="t('fields.imageName')"
+      />
+      <el-select
+        v-model="imageRequest.siteId"
+        size="small"
+        :placeholder="t('fields.site')"
+        class="filter-item"
+        style="width: 120px; margin-left: 5px"
+      >
+        <el-option
+          v-for="item in sites.list"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        icon="el-icon-search"
+        size="mini"
+        type="success"
+        ref="searchImage"
+        @click="loadSiteImage"
+      >
+        {{ t('fields.search') }}
+      </el-button>
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        type="warning"
+        @click="resetImageQuery()"
+      >
+        {{ t('fields.reset') }}
+      </el-button>
+    </div>
+    <div class="grid-container">
+      <div
+        v-for="item in imageList.list"
+        :key="item"
+        class="grid-item"
+        :class="item.id === selectedImage.id ? 'selected' : ''"
+      >
+        <el-image
+          :src="promoDir + item.path"
+          fit="contain"
+          style="aspect-ratio: 1/1"
+          @click="selectImage(item)"
+        />
+      </div>
+    </div>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImagePage"
+      layout="prev, pager, next"
+      :page-size="imageRequest.size"
+      :page-count="imageList.pages"
+      :current-page="imageRequest.current"
+    />
+    <div class="image-info" v-if="selectedImage.id !== 0">
+      <el-row>
+        <el-col :span="4">
+          <h3>{{ t('fields.selectedImage') }}</h3>
+        </el-col>
+        <el-col :span="20">
+          <el-image
+            :src="promoDir + selectedImage.path"
+            fit="contain"
+            class="smallPreview"
+            :preview-src-list="[promoDir + selectedImage.path]"
+          />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageSite') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageName') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageRemark') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.remark }}</el-col>
+      </el-row>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.imageSelectionVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImage">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -279,14 +380,15 @@ import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
-import { uploadImage } from "@/api/image";
 import { getShortcuts } from "@/utils/datetime";
+import { getSiteImage } from "@/api/site-image";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const shortcuts = getShortcuts(t);
+const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
@@ -314,6 +416,18 @@ const gameMatchForm = ref(null);
 const sites = reactive({
   list: []
 });
+const imageList = reactive({
+  dataList: [],
+  pages: 0,
+})
+
+const selectedImage = reactive({
+  id: 0,
+  name: '',
+  siteName: '',
+  remark: '',
+  path: '',
+})
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -328,8 +442,20 @@ const uiControl = reactive({
     { key: 1, displayName: 'NBA', value: 'NBA' },
     { key: 2, displayName: 'SPORT', value: 'SPORT' },
     { key: 3, displayName: 'ESPORT', value: 'ESPORT' },
-  ]
+  ],
+  imageSelectionTitle: '',
+  imageSelectionType: '',
+  imageSelectionVisible: false
 });
+
+const imageRequest = reactive({
+  size: 10,
+  current: 1,
+  name: null,
+  siteId: null,
+  category: 'PROMO',
+})
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -392,6 +518,40 @@ function showDialog(type) {
   uiControl.dialogVisible = true;
 }
 
+function resetImageQuery() {
+  imageRequest.name = null
+  imageRequest.siteId = site.value ? site.value.id : null
+}
+
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function selectImage(item) {
+  selectedImage.id = item.id
+  selectedImage.name = item.name
+  selectedImage.siteName = item.siteName
+  selectedImage.path = item.path
+  selectedImage.remark = item.remark
+}
+
+async function browseImage(type) {
+  await loadSiteImage()
+  switch (type) {
+    case 'TEAM_ONE_ICON':
+      uiControl.imageSelectionTitle = t('fields.teamOneIcon')
+      break
+    case 'TEAM_TWO_ICON':
+      uiControl.imageSelectionTitle = t('fields.teamTwoIcon')
+      break
+  }
+  uiControl.imageSelectionType = type
+  uiControl.imageSelectionVisible = true
+}
+
 function updateStatus(id) {
   ElMessageBox.confirm(
     t('message.confirmEndMatch'),
@@ -423,45 +583,31 @@ async function loadSites() {
   sites.list = site;
 }
 
+async function loadSiteImage() {
+  selectedImage.id = 0
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function submitImage() {
+  switch (uiControl.imageSelectionType) {
+    case 'TEAM_ONE_ICON':
+      form.teamOneIcon = selectedImage.path
+      break
+    case 'TEAM_TWO_ICON':
+      form.teamTwoIcon = selectedImage.path
+      break
+  }
+  uiControl.imageSelectionVisible = false
+}
+
 function resetQuery() {
   request.siteId = site.value.id;
   request.status = null;
   request.matchTitle = null;
   request.createTime = [convertDate(new Date()), convertDate(new Date())];
   request.gameType = null;
-}
-
-async function attachTeamOneIcon(event) {
-  const data = await attachPhoto(event)
-  if (data.code === 0) {
-    form.teamOneIcon = data.data
-  } else {
-    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-  }
-}
-
-async function attachTeamTwoIcon(event) {
-  const data = await attachPhoto(event)
-  if (data.code === 0) {
-    form.teamTwoIcon = data.data
-  } else {
-    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-  }
-}
-
-async function attachPhoto(event) {
-  const files = event.target.files[0]
-  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-
-  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
-  } else {
-    var formData = new FormData()
-    formData.append('files', files)
-    formData.append('dir', 'game-match/' + form.siteId);
-    formData.append('overwrite', false)
-    return await uploadImage(formData)
-  }
 }
 
 onMounted(async () => {
@@ -472,6 +618,7 @@ onMounted(async () => {
     site.value = sites.list[0];
   }
   request.siteId = site.value.id;
+  imageRequest.siteId = site.value.id;
   await loadGameMatch();
 });
 
