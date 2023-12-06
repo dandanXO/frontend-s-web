@@ -242,7 +242,7 @@ const refreshBalance = () => {
   if (store.token) store.getBalance();
 };
 
-const withdrawalDialogTab = ref("UPI");
+const withdrawalDialogTab = ref("BANK");
 const withdrawalMethods = reactive({ BANK: {}, UPI: {} });
 const getWithdrawalMethods = () => {
   api.get("/session/withdraw/entrance").then((response) => {
