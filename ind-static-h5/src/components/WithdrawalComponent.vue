@@ -81,7 +81,7 @@
   <!--      </q-tab-panel> &ndash;&gt;-->
   <!--  </q-tab-panels>-->
 
-  <div class="withdrawal-form" v-if="withdrawalDialogTab === 'UPI'">
+  <div class="withdrawal-form" v-if="withdrawalDialogTab === 'BANK'">
     <div class="w-form-item w-form-item--bankcard">
       <div class="w-form-label">Withdraw Amount</div>
       <div class="w-form-input">
@@ -172,7 +172,7 @@
       </div>
     </div>
     <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
-      <div class="w-form-label">Bank Account Number</div>
+      <div class="w-form-label">Account Number</div>
       <div class="w-form-input">
         <q-input
           filled
@@ -362,8 +362,8 @@ const isValidCardAddress = () => {
   const { cardAddress } = withdrawReadOnlyInfo;
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length !== 11
-    ? "Bank IFSC Code Must Be 11 Character"
+    : cardAddress.length < 3
+    ? "Bank IFSC Code Must Be More Than 3 Characters"
     : true;
   return result;
 };

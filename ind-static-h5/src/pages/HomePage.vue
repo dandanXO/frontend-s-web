@@ -77,7 +77,7 @@
       <q-btn class="action-btn action-btn--deposit" @click="gotoSignUp()" no-caps label="Sign Up" />
     </div>
 
-    <div class="games-selection-wrapper">
+    <div class="games-selection-wrapper" id="hotgame">
       <div class="hot-games-pattern-top"></div>
       <div class="hot-games-container" data-aos="fade-in" data-aos-duration="1200" data-aos-once="true">
         <img src="../assets/images/index/hot-elephant-left.png" alt="" />
@@ -177,77 +177,6 @@
       <!-- <div v-else class="hot-games-pattern-bottom--filled"></div> -->
     </div>
 
-    <div class="games-selection-wrapper" id="slot">
-      <div class="title-game">
-        <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
-        <span class="txt-style">Slot &amp; Fishing Games</span>
-      </div>
-
-      <div class="game-platform-container">
-        <template v-for="(item, index) in slot" :key="index">
-          <div
-            class="game-platform-item btn-effect"
-            @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
-            data-aos="zoom-in"
-            :data-aos-delay="100 * index"
-            data-aos-duration="1200"
-            data-aos-once="true"
-            data-aos-anchor="#slot"
-            data-aos-offset="300"
-          >
-            <img src="../assets/images/index/slot/item-game-maintenance.png" />
-            <div
-              class="game-platform-item--img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return '';
-                  }
-                })()
-              }"
-            ></div>
-
-            <div v-if="item.name === 'JOKER'" class="burning-hot">
-              <img src="../assets/images/index/hot.png" />
-            </div>
-          </div>
-        </template>
-        <template v-for="(item, index) in fishing" :key="index">
-          <div
-            class="game-platform-item btn-effect"
-            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
-            data-aos="zoom-in"
-            :data-aos-delay="100 * index"
-            data-aos-duration="1200"
-            data-aos-once="true"
-            data-aos-anchor="#slot"
-            data-aos-offset="300"
-          >
-            <img src="../assets/images/index/fish/item-game-maintenance.png" />
-            <div
-              class="game-platform-item--img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return '';
-                  }
-                })()
-              }"
-            ></div>
-          </div>
-        </template>
-        <!-- coming soon placeholder // start -->
-        <!-- <div class="game-platform-item">
-          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
-        </div> -->
-        <!-- coming soon placeholder // end -->
-      </div>
-    </div>
-
     <div class="games-selection-wrapper" id="live">
       <div class="title-game">
         <img class="title-game-icon" src="../assets/images/index/title-icon-livecasino.png" alt="" />
@@ -262,7 +191,7 @@
             :data-aos-delay="100 * index"
             data-aos-duration="1200"
             data-aos-once="true"
-            data-aos-anchor="#live"
+            data-aos-anchor="#hotgame"
             data-aos-offset="300"
           >
             <img src="../assets/images/index/live/item-game-maintenance.png" />
@@ -342,6 +271,77 @@
         </template>
       </div>
     </div> -->
+
+    <div class="games-selection-wrapper" id="slot">
+      <div class="title-game">
+        <img class="title-game-icon" src="../assets/images/index/title-icon-slotgames.png" alt="" />
+        <span class="txt-style">Slot &amp; Fishing Games</span>
+      </div>
+
+      <div class="game-platform-container">
+        <template v-for="(item, index) in slot" :key="index">
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+            data-aos="zoom-in"
+            :data-aos-delay="100 * index"
+            data-aos-duration="1200"
+            data-aos-once="true"
+            data-aos-anchor="#slot"
+            data-aos-offset="300"
+          >
+            <img src="../assets/images/index/slot/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
+
+            <div v-if="item.name === 'JOKER'" class="burning-hot">
+              <img src="../assets/images/index/hot.png" />
+            </div>
+          </div>
+        </template>
+        <template v-for="(item, index) in fishing" :key="index">
+          <div
+            class="game-platform-item btn-effect"
+            @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
+            data-aos="zoom-in"
+            :data-aos-delay="100 * index"
+            data-aos-duration="1200"
+            data-aos-once="true"
+            data-aos-anchor="#slot"
+            data-aos-offset="300"
+          >
+            <img src="../assets/images/index/fish/item-game-maintenance.png" />
+            <div
+              class="game-platform-item--img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            ></div>
+          </div>
+        </template>
+        <!-- coming soon placeholder // start -->
+        <!-- <div class="game-platform-item">
+          <img src="../assets/images/index/slot/item-game-comingsoon.png" alt="" />
+        </div> -->
+        <!-- coming soon placeholder // end -->
+      </div>
+    </div>
 
     <div class="games-selection-wrapper" id="sports">
       <div class="title-game">
