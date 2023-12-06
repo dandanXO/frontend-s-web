@@ -51,7 +51,7 @@
                 </template>
                 <el-table-column prop="loginName" label="玩家账号" />
                 <el-table-column prop="recordTime" label="选号时间" />
-                <el-table-column prop="recordNumber" label="玩家选号" />
+                <el-table-column prop="number" label="玩家选号" />
               </el-table>
             </div>
           </div>

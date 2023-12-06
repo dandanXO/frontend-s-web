@@ -1003,10 +1003,10 @@ const isValidPhone = () => {
     return "Please Enter Phone Number";
   }
 
-  const phoneRegex = /^\d{7,12}$/;
+  const phoneRegex = /^\d{10}$/;
   const isValid = phoneRegex.test(phone);
 
-  return isValid ? true : "Phone Number must be between 7 and 12 digits";
+  return isValid ? true : "Phone Number must be 10 digits";
 };
 
 const isValidOTP = () => {

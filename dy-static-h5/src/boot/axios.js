@@ -104,7 +104,7 @@ export default boot(({app, router}) => {
             if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
                 location.reload();
             } else {
-                if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
+                if (res.code === ResponseCode.ERROR_TOKEN_MISSED && window.location.pathname !== "/promotion") {
                     return Dialog.create({
                         class: "login-card",
                         title: '请登录',

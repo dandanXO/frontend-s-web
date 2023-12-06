@@ -142,9 +142,9 @@ export const translateRecord = (rec, type = "") => {
     return "TCG彩票"; // TCG
   } else if (rec === "SGWin") {
     return "双赢彩票"; // SGWin
-  } else if (rec === "PTDY") {
+  } else if (rec === "PT") {
     return "PT电子"; // PTDY
-  } else if (rec === "PGDY") {
+  } else if (rec === "PG") {
     return "PG电子"; // PGDY
   } else {
     return rec;

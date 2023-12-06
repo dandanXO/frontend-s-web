@@ -41,7 +41,7 @@
 
                 <span>累计注册</span>
                 <div class="total-info-div">
-                  <span class="total-span" id="total-signup-no">0</span>
+                  <span class="total-span" id="total-signup-no">{{ totalSignUp }}</span>
                   人
                 </div>
               </div>
@@ -57,7 +57,7 @@
 
                 <span>累计充值</span>
                 <div class="total-info-div">
-                  <span class="total-span" id="total-topup-no">0</span>
+                  <span class="total-span" id="total-topup-no">{{ totalTopUp }}</span>
                   人
                 </div>
               </div>
@@ -147,6 +147,9 @@ export default defineComponent({
       }
     }
 
+    const totalSignUp = ref(0)
+    const totalTopUp = ref(0)
+
     onMounted(() => {
       api.get("/session/member/referralCode").then((res) => {
         // console.log(reminderForm)
@@ -156,12 +159,23 @@ export default defineComponent({
         }
       });
 
+      api.get("/session/referred/count").then((res) => {
+        console.log(res)
+        if(res.code === 0){
+          totalSignUp.value = res.data.referredMember;
+          totalTopUp.value = res.data.depositMember;
+        }
+
+      })
+
     });
 
     return {
       selfTgurl,
       qrCode,
-      copyText
+      copyText,
+      totalSignUp,
+      totalTopUp
     }
   }
 });

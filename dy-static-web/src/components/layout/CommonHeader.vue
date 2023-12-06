@@ -97,16 +97,20 @@
         </router-link>
         <div class="navigations">
           <div class="header-menu-item" v-for="nav in navigations" :key="nav.name">
+            <a v-if="nav.code === 'Agent'" :class="{ icon: nav.hasicon }" :href="nav.path" target="_blank">
+              <RiVipDiamondLine />
+                <span>{{ nav.name }}</span>
+            </a>
             <router-link
               @mouseover="showSubMenu(nav)"
               @mouseup="selectedMenu = ''"
               :to="nav.path"
               :class="{ icon: nav.hasicon }"
+              v-if="nav.code !== 'Agent'"
             >
               <template v-if="nav.hasicon">
                 <span>
                   <RiCoupon2Line v-if="nav.code === 'Promotion'" />
-                  <RiVipDiamondLine v-if="nav.code === 'Agent'" />
                   <RiStarLine v-if="nav.code === 'Sponsor'" />
                   <RiSmartphoneLine v-if="nav.code === 'App'" />
                   <RiVipCrownLine v-if="nav.code === 'VIP'" />
@@ -656,6 +660,7 @@ export default defineComponent({
       {code: "Lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
       {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true},
+      {code: "Agent", name: "加盟", enName: "Affiliate", path: "https://partner.dyvip90.com/", hasicon: true},
       {code: "Sponsor", name: "赞助", enName: "Sponsor", path: "/sponsor", hasicon: true},
       {code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
@@ -1541,6 +1546,9 @@ export default defineComponent({
     const todayDate = () => {
       return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
+    const jumpOut = (path) => {
+      window.location.href=path
+    }
 
 
     return {
@@ -1608,7 +1616,8 @@ export default defineComponent({
       hasAffiliate,
       countdownTimer,
       regCountdown,
-      loginCountdown
+      loginCountdown,
+      jumpOut
     }
   }
 });
