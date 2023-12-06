@@ -215,6 +215,21 @@
         </div>
       </div>
     </el-form-item>
+    <el-form-item :label="t('fields.feedbackType')" size="mini">
+      <div class="withdrawal_failure_type">
+        <div class="adjust_type" style="margin-bottom: 5px" v-for="(item,index) in feedbackType" :key="index">
+          <el-input v-model="item.value" />
+          <el-button v-if="index === 0" icon="el-icon-plus" type="primary" style="margin-left: 20px"
+                     @click="addFeedbackType()" plain
+          >{{ t('fields.add') }}
+          </el-button>
+          <el-button v-else icon="el-icon-remove" type="danger" style="margin-left: 20px" @click="delConfig(item.id)"
+                     plain
+          >{{ t('fields.delete') }}
+          </el-button>
+        </div>
+      </div>
+    </el-form-item>
     <el-divider />
     <el-form-item :label="t('fields.platformFee')" size="mini">
       <div class="withdrawal_failure_type">
@@ -426,7 +441,9 @@ const withdrawFailCause = computed(() => getter('cancel_cause'))
 
 const adjustType = computed(() => getter('adjust_type'))
 
-const platformFee = computed(() => getter('platform_fee'))
+const feedbackType = computed(() => getter("feedback_type"))
+
+const platformFee = computed(() => getter("platform_fee"))
 
 const paymentFee = computed(() => getter('payment_fee'))
 
@@ -463,6 +480,10 @@ function addWithdrawFailCause() {
 
 function addAdjustType() {
   addConfigs('adjust_type')
+}
+
+function addFeedbackType() {
+  addConfigs("feedback_type");
 }
 
 function addConfigs(code) {
