@@ -18,7 +18,7 @@
           />
         </el-select>
         <el-date-picker
-          v-model="request.matchTime"
+          v-model="request.startTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
@@ -249,7 +249,7 @@ const request = reactive({
   quizId: null,
   loginName: null,
   status: null,
-  matchTime: [convertStartDate(new Date()), convertDate(new Date())]
+  startTime: [convertStartDate(new Date()), convertDate(new Date())]
 });
 
 const gameQuizAnswerForm = ref(null);
@@ -304,9 +304,9 @@ async function loadGameQuizAnswer() {
       query[key] = value;
     }
   });
-  if (request.matchTime !== null) {
-    if (request.matchTime.length === 2) {
-      query.matchTime = request.matchTime.join(",");
+  if (request.startTime !== null) {
+    if (request.startTime.length === 2) {
+      query.startTime = request.startTime.join(",");
     }
   }
   const { data: ret } = await getGameQuizAnswers(query);
@@ -362,12 +362,12 @@ function resetQuery() {
   request.quizId = null;
   request.status = null;
   request.loginName = null;
-  request.matchTime = [convertStartDate(new Date()), convertDate(new Date())];
+  request.startTime = [convertStartDate(new Date()), convertDate(new Date())];
 }
 
 async function loadGameQuizTitle() {
   const { data: quizTitle } = await getGameQuizTitle(request.siteId);
-  quizTitles.list = quizTitle.filter(title => title.matchTime >= request.matchTime[0] && title.matchTime <= request.matchTime[1]);
+  quizTitles.list = quizTitle.filter(title => title.startTime >= request.startTime[0] && title.startTime <= request.startTime[1]);
   const quizId = quizTitles.list.find(title => title.id === request.quizId)
   if (!quizId) {
     request.quizId = null;

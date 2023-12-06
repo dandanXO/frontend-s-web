@@ -1329,6 +1329,7 @@ export default {
     editRemarkSuccess: 'Edit Remark Success',
     editSuccess: 'Edit Success',
     editMemberDetail: 'Edit Member Detail',
+    endMustAfterStart: 'End time must be later than start time',
     enterMemberDetails: 'Enter Member Details',
     failedToUploadImage: 'Failed to upload image',
     failedToUploadApp: 'Failed to upload app',
@@ -1376,6 +1377,7 @@ export default {
     settlementToChecking: 'Updated to checking',
     settlementToPay: 'Updated to payment',
     settled: 'Successfully settled',
+    startMustBeforeEnd: 'Start time must be ealier than end time',
     success: 'Success',
     summarySuccess:
       'Summary for the input period will be generated, please kindly wait',
