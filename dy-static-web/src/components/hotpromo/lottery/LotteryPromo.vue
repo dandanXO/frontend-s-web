@@ -85,7 +85,7 @@
                 </template>
                 <el-table-column prop="resultTime" label="中奖时间" />
                 <el-table-column prop="loginName" label="中奖名单" />
-                <el-table-column prop="resultNumber" label="中奖号码" />
+                <el-table-column prop="number" label="中奖号码" />
               </el-table>
             </div>
           </div>
