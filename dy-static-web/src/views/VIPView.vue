@@ -655,8 +655,8 @@ export default defineComponent({
               } else if (bonusItem === 'dy2-vip-birthday') {
                 btnIsRedeemBirthday.value = true;
               }
-              
-              
+
+
               // location.href = `/center/deposit`;
             }
           })

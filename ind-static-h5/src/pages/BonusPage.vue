@@ -61,7 +61,7 @@
     <div class="countdown-container">
       <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" />
       <div class="right-container">
-        <div class="countdown">
+        <!-- <div class="countdown">
           <div class="common-text">
             Ready To
             <br />
@@ -71,7 +71,7 @@
             <img class="countdown-btn" src="../assets/images/bonus/countdown-btn.png" alt="" />
             <span class="countdown-text">{{ timeRef }}</span>
           </div>
-        </div>
+        </div> -->
         <div class="noticeboard">
           You Can Get
           <span>0.3%</span>

@@ -22,7 +22,7 @@
       <div class="btn-group">
         <el-radio-group v-model="form.payType">
           <el-radio
-            v-for="p in payTypeList.list"
+            v-for="p in filteredPayTypeList.list"
             :key="p.id"
             :label="p.code"
             size="small"
@@ -32,7 +32,7 @@
         </el-radio-group>
       </div>
     </div>
-    <el-row>
+    <el-row v-show="isShow">
       <el-col :span="4">
         <div class="form-border">
           <div class="form-header">{{ t('fields.web') }}</div>
@@ -135,6 +135,7 @@ import { getDepositSetting, insertOrUpdate } from "../../../api/deposit-setting"
 import { getFinancialLevels } from "../../../api/financial-level";
 import { getSiteListSimple } from "../../../api/site";
 import { getActivePaymentTypes } from "../../../api/payment-type";
+import { getCurrencyCodes } from '../../../api/currency'
 import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
@@ -151,6 +152,7 @@ const checkAll = ref(false)
 const isIndeterminate = ref(false)
 const checkAllMobile = ref(false)
 const mobileIsIndeterminate = ref(false)
+const isShow = ref(true)
 const siteList = reactive({
   list: []
 });
@@ -160,7 +162,15 @@ const financialList = reactive({
 const payTypeList = reactive({
   list: []
 });
-
+const filteredPayTypeList = reactive({
+  list: []
+});
+const currencyList = reactive({
+  list: []
+});
+const siteCurrencyId = reactive({
+  list: []
+});
 const page = reactive({
   pages: 0,
   records: [],
@@ -181,6 +191,11 @@ const form = reactive({
     financialLevels: []
   }
 });
+const request = reactive({
+  size: 30,
+  current: 1,
+  name: null,
+})
 
 const validateWebDepositAmount = (rule, value, callback) => {
   if (form.web.depositMax !== null && form.web.depositMax - form.web.depositMin < 0) {
@@ -253,7 +268,7 @@ async function loadFinancialLevels() {
 
 async function handleSiteNameCheckedChange() {
   await loadPayTypes()
-  form.payType = payTypeList.list[0].code;
+  form.payType = filteredPayTypeList.list[0].code;
   await loadFinancialLevels()
   await loadDepositSetting()
 }
@@ -266,6 +281,7 @@ async function loadSites() {
 async function loadPayTypes() {
   const { data: payType } = await getActivePaymentTypes();
   payTypeList.list = payType;
+  filterPayTypeByCurrency()
 };
 
 async function loadDepositSetting() {
@@ -276,6 +292,31 @@ async function loadDepositSetting() {
   const { data: ret } = await getDepositSetting(query);
   page.records = ret;
   page.loading = false;
+}
+
+async function loadCurrency() {
+  const { data: ret } = await getCurrencyCodes(request)
+  currencyList.list = ret
+}
+
+function filterPayTypeByCurrency() {
+  site.value = siteList.list.find(s => s.id === form.siteId)
+  const currencyCodeList = site.value.currency.split(',').map(currencyName => currencyName)
+  siteCurrencyId.list = [
+    ...currencyCodeList.map(currencyName => {
+      const currency = currencyList.list.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
+      return currency ? currency.id : null;
+    }).filter(Boolean)
+  ]
+  filteredPayTypeList.list = payTypeList.list.filter(payTypeByCurrencyID)
+  isShow.value = filteredPayTypeList.list.length > 0
+}
+
+function payTypeByCurrencyID (record) {
+  if (record.currencyIds) {
+    const currencyIdsList = record.currencyIds.split(',')
+    return currencyIdsList.filter(currencyId => siteCurrencyId.list.includes(parseInt(currencyId))).length > 0
+  }
 }
 
 async function submit() {
@@ -353,6 +394,7 @@ onMounted(async() => {
     site.value = siteList.list[0];
     form.siteId = site.value.id;
   }
+  await loadCurrency()
   await loadFinancialLevels();
   await loadPayTypes();
   form.payType = payTypeList.list[0].code;
