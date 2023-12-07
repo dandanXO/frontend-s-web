@@ -36,70 +36,68 @@
           </div>
         </q-card>
 
-        <q-card class="bank-account-container">
-          <template v-if="bankCardList.length > 0">
-            <div class="top-wrapper">
-              <div class="title">Choose Bank Account</div>
-            </div>
+        <q-card class="bank-account-container" v-if="bankCardList.length > 0">
+          <div class="top-wrapper">
+            <div class="title">Choose Bank Account</div>
+          </div>
 
-            <q-card-section class="mid-wrapper">
-              <div class="w-form-item w-form-item--bankcard">
-                <div class="w-form-input">
-                  <q-select
-                    ref="cardRef"
-                    filled
-                    dense
-                    clearable
-                    v-model="withdrawInfo.cardId"
-                    @update:model-value="onCardChanged"
-                    :options="bankCardList"
-                    option-value="id"
-                    emit-value
-                    map-options
-                    :rules="[(val) => !!val || 'Please Select A Bank Card']"
-                    lazy-rules
-                    hide-bottom-space
-                  >
-                    <template v-slot:option="scope">
-                      <q-item v-bind="scope.itemProps">
-                        <q-item-section avatar v-if="scope.opt.bankIcon">
-                          <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label>
-                            Acc No. ****{{
-                              scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
-                            }}
-                          </q-item-label>
-                          <q-item-label>
-                            IFSC
-                            {{ scope.opt.cardAddress }}
-                          </q-item-label>
-                        </q-item-section>
-                      </q-item>
-                    </template>
-                    <template v-slot:selected-item="scope">
+          <q-card-section class="mid-wrapper">
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="w-form-input">
+                <q-select
+                  ref="cardRef"
+                  filled
+                  dense
+                  clearable
+                  v-model="withdrawInfo.cardId"
+                  @update:model-value="onCardChanged"
+                  :options="bankCardList"
+                  option-value="id"
+                  emit-value
+                  map-options
+                  :rules="[(val) => !!val || 'Please Select A Bank Card']"
+                  lazy-rules
+                  hide-bottom-space
+                >
+                  <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps">
                       <q-item-section avatar v-if="scope.opt.bankIcon">
-                        <img
-                          style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                          :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                        />
+                        <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
                       </q-item-section>
                       <q-item-section>
-                        <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                          Acc No. {{ scope.opt.cardNumber }}
+                        <q-item-label>
+                          Acc No. ****{{
+                            scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                          }}
                         </q-item-label>
                         <q-item-label>
                           IFSC
                           {{ scope.opt.cardAddress }}
                         </q-item-label>
                       </q-item-section>
-                    </template>
-                  </q-select>
-                </div>
+                    </q-item>
+                  </template>
+                  <template v-slot:selected-item="scope">
+                    <q-item-section avatar v-if="scope.opt.bankIcon">
+                      <img
+                        style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                        :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                      />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                        Acc No. {{ scope.opt.cardNumber }}
+                      </q-item-label>
+                      <q-item-label>
+                        IFSC
+                        {{ scope.opt.cardAddress }}
+                      </q-item-label>
+                    </q-item-section>
+                  </template>
+                </q-select>
               </div>
-            </q-card-section>
-          </template>
+            </div>
+          </q-card-section>
 
           <div class="bot-wrapper">
             <div class="bank-card-item" @click="goToBank()">
@@ -112,6 +110,47 @@
         </q-card>
 
         <q-card class="withdrawal-amount-container">
+          <template v-if="bankCardList.length === 0">
+            <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
+              <div class="top-wrapper">
+                <div class="title">Account Number</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  lazy-rules
+                  ref="bankNumberRef"
+                  placeholder="Enter Account Number"
+                  v-model="withdrawReadOnlyInfo.cardNumber"
+                  :rules="[(_) => isValidCardNumber()]"
+                  :readonly="bankCardList.length > 0 ? true : false"
+                  hide-bottom-space
+                ></q-input>
+              </div>
+            </div>
+            <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
+              <div class="top-wrapper">
+                <div class="title">Bank IFSC Code</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  lazy-rules
+                  ref="bankAddressRef"
+                  placeholder="Enter Bank IFSC Code"
+                  v-model="withdrawReadOnlyInfo.cardAddress"
+                  :rules="[(_) => isValidCardAddress()]"
+                  :readonly="bankCardList.length > 0 ? true : false"
+                  hide-bottom-space
+                ></q-input>
+              </div>
+            </div>
+          </template>
+
           <div class="top-wrapper">
             <div class="title">Withdrawal Amount (200 - 20,000RS)</div>
           </div>
@@ -128,6 +167,8 @@
               :rules="[
                 (val) => !!val || 'Please Enter Withdraw Amount',
                 (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
+                (val) =>
+                  val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
                 (val) =>
                   (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                     val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
@@ -168,7 +209,12 @@
           </div>
         </q-card>
 
-        <ConfirmButton label="Submit" :confirmFunc="submitWithdraw"></ConfirmButton>
+        <template v-if="bankCardList.length > 0">
+          <ConfirmButton label="Submit" :confirmFunc="submitWithdraw"></ConfirmButton>
+        </template>
+        <template v-else>
+          <ConfirmButton label="Submit" :confirmFunc="submitWithdrawBank"></ConfirmButton>
+        </template>
 
         <div class="bottom-tnc">
           <div class="note-title">Note:</div>
@@ -196,7 +242,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, watch } from "vue";
+import { onMounted, ref, reactive, watch, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -266,6 +312,9 @@ const getWithdrawalMethods = () => {
 
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
+const isNoBankCard = computed(() => {
+  return bankCardList.value.length === 0;
+});
 const loadCards = () => {
   isLoadingBankCard.value = true;
 
@@ -353,6 +402,73 @@ const submitWithdraw = () => {
   }
 };
 
+const submitWithdrawBank = async () => {
+  if (bankCardList.value.length === 0) {
+    amountRef.value.validate();
+    bankAddressRef.value.validate();
+    bankNumberRef.value.validate();
+
+    if (amountRef.value.hasError || bankAddressRef.value.hasError || bankNumberRef.value.hasError) {
+      $q.loading.hide();
+      return;
+    }
+
+    bankCardField.cardNumber = withdrawReadOnlyInfo.cardNumber;
+    bankCardField.cardAddress = withdrawReadOnlyInfo.cardAddress;
+    bankCardField.amount = withdrawInfo.amount;
+    bankCardField.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
+
+    // console.log(withdrawalMethods[withdrawalDialogTab.value].withdrawableBalance,'sss')
+
+    // console.log(withdrawalMethods[withdrawalDialogTab].withdrawableBalance, "...");
+    // console.log(withdrawableAmt);
+
+    // if (withdrawInfo.amount > withdrawalMethods[withdrawalDialogTab.value].withdrawableBalance) {
+    // $q.notify({
+    //   color: "negative",
+    //   position: "top",
+    //   message: "Insufficient amount",
+    //   icon: "report_problem"
+    // });
+    // } else {
+    api
+      .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "Withdrawal Submit Succeed",
+            icon: "check_circle_outline"
+          });
+          // props.loadCards();
+          refreshBalance();
+          getWithdrawalMethods();
+
+          emits("closeWithdraw");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+    // }
+  } else {
+    // cardRef.value.validate();
+    amountRef.value.validate();
+
+    $q.loading.show({
+      message: "Withdrawing..."
+    });
+
+    // cardRef.value.hasError ||
+    if (amountRef.value.hasError) {
+      $q.loading.hide();
+    } else {
+      await withdrawGo();
+    }
+  }
+};
+
 const withdrawGo = () => {
   withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
   api
@@ -397,6 +513,23 @@ const goToBank = () => {
 //   getWithdrawalMethods();
 //   loadCards();
 // });
+
+const isValidCardNumber = () => {
+  const { cardNumber } = withdrawReadOnlyInfo;
+
+  const result = !cardNumber ? "Please Enter Card Number" : true;
+  return result;
+};
+
+const isValidCardAddress = () => {
+  const { cardAddress } = withdrawReadOnlyInfo;
+  const result = !cardAddress
+    ? "Please Enter Bank Ifsc Code"
+    : cardAddress.length < 3
+    ? "Bank IFSC Code Must Be More Than 3 Characters"
+    : true;
+  return result;
+};
 </script>
 
 <style lang="scss">
