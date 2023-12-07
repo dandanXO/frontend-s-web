@@ -36,7 +36,7 @@
         </div>
 
         <div class="platform-field">
-          <q-select
+          <!-- <q-select
             class="platform"
             v-model="searchForm.platform"
             filled
@@ -46,7 +46,7 @@
             option-value="name"
             emit-value
             map-options
-          />
+          /> -->
           <q-btn class="search-btn" label="Search" @click="searchRecord(true)" />
         </div>
       </q-form>
@@ -82,9 +82,9 @@
       </q-card>
 
       <q-card class="pagination-container">
-        <q-btn class="common-btn" @click="onPrevPageClick()">&lt;</q-btn>
-        <div>{{ pagination.current }} / {{ pagination.pages }}</div>
-        <q-btn class="common-btn" @click="onNextPageClick()">></q-btn>
+        <q-btn class="pagination-btn" @click="onPrevPageClick()">&lt;</q-btn>
+        <!-- <div>{{ pagination.current }} / {{ pagination.pages }}</div> -->
+        <q-btn class="pagination-btn" @click="onNextPageClick()">></q-btn>
       </q-card>
     </template>
   </ContentView>
@@ -175,8 +175,6 @@ const searchRecord = (isNewSearch) => {
       }
     })
     .then((response) => {
-
-
       const { code, data } = response;
       if (code === 0) {
         const records = data.records;
@@ -256,6 +254,8 @@ onMounted(() => {
   .platform-field {
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-top: 10px;
 
     .platform {
       width: 50%;
@@ -375,6 +375,15 @@ onMounted(() => {
 .pagination-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  background: transparent;
+  border-bottom: 0;
+
+  .pagination-btn {
+    background: #7c28bd;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+  }
 }
 </style>
