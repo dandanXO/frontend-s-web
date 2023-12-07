@@ -45,6 +45,7 @@
           <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/profit.svg"></el-icon>
                 <span class="role-span">{{ $t('fields.profit') }}</span>
               </div>
             </template>
@@ -63,6 +64,7 @@
           <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/netprofit.svg"></el-icon>
                 <span class="role-span">{{ $t('fields.netProfit') }}</span>
               </div>
             </template>
@@ -81,6 +83,7 @@
           <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/bonus.svg"></el-icon>
                 <span class="role-span">{{ $t('fields.bonus') }}</span>
               </div>
             </template>
@@ -100,6 +103,7 @@
           <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/money.svg"></el-icon>
                 <span class="role-span">
                   {{ $t('fields.estimatedMemberCommission') }}
                 </span>
@@ -121,6 +125,7 @@
           <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/money.svg"></el-icon>
                 <span class="role-span">{{ $t('fields.platformFee') }}</span>
               </div>
             </template>
@@ -140,6 +145,7 @@
           <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/payment.svg"></el-icon>
                 <span class="role-span">{{ $t('fields.paymentFee') }}</span>
               </div>
             </template>
@@ -159,6 +165,7 @@
           <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/rebate.svg"></el-icon>
                 <span class="role-span">{{ $t('fields.rebate') }}</span>
               </div>
             </template>
@@ -190,6 +197,7 @@
           <el-card class="box-card">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/money.svg"></el-icon>
                 <span class="role-span">
                   {{ $t('fields.estimatedAffiliateCommission') }}
                 </span>
@@ -219,6 +227,7 @@
           >
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/money.svg"></el-icon>
                 <span
                   v-if="affiliateLevel === 'MASTER_AFFILIATE'"
                   class="role-span"
@@ -254,6 +263,7 @@
           <el-card v-if="affiliateLevel === 'MASTER_AFFILIATE'" class="box-card">
             <template #header>
               <div class="clearfix">
+                <el-icon><img src="../../assets/images/home/money.svg"></el-icon>
                 <span class="role-span">
                   {{ $t('fields.thirdLevelAffiliateCommission') }}
                 </span>
@@ -677,11 +687,24 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 50px;
+  /* font-size: 50px;
   border-radius: 5px;
   padding: 10px;
   width: 80px;
-  height: 80px;
+  height: 80px; */
+}
+.box-card .el-card__header .clearfix {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.box-card .el-card__header .clearfix .el-icon {
+  width: 20px;
+  height: 20px;
+}
+.box-card .el-icon img {
+  width: 100%;
+  display: block;
 }
 
 .card-panel-description {

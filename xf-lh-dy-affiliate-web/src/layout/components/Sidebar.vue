@@ -11,15 +11,17 @@
         :key="nav.id"
         :class="`route-wrapper ${nav.active ? 'active' : ''}`"
       >
-        <div v-if="nav.display && isExpanded" class="route-title">{{ nav.title }}</div>
+        <div v-if="nav.display && isExpanded" class="route-title" @click="checkMenu(nav)">{{ nav.title }}
+          <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
+          <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" /></div>
         <div
           v-for="child in nav.children"
           :key="child.id"
           :class="`route-container ${child.active ? 'active' : ''}`"
-          :style="isChildrenActive ? 'height: auto;' : 'height: 0'"
+          :style="child.isMenuShow ? 'height: auto;' : 'height: 0px; overflow:hidden'"
         >
           <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
-            <div class="route-content">
+            <div class="route-content" :style="!isExpanded && child.icon === 'speech-bubbles' ? 'margin-top: 50px': ''">
               <svg-icon
                 :icon-class="`${child.icon}`"
                 :style="child.active ? 'color: #179cff' : ''"
@@ -40,7 +42,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { ArrowLeftBold, ArrowRightBold } from '@element-plus/icons-vue'
+import { ArrowLeftBold, ArrowRightBold, ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -205,13 +207,13 @@ const navigationData = ref([
     ],
   },
 ])
-const isChildrenActive = ref(true)
-const mainNavigationData = ['首页', '代理代存', "佣金报表", "佣金说明", "联系我们"];
+const mainNavigationData = ['首页', '代理代存', "佣金报表", "佣金说明", "推广链接", "联系我们"];
 const isExpanded = ref(true)
 
 const setActiveNav = () => {
   const currentPath = route.path.substring(route.path.lastIndexOf('/'))
   navigationData.value.forEach(e => {
+    e.menuShown = true
     e.children.forEach(c => {
       // due to the usage of <use> mechanism and svg-sprite-loader
       // referred icon is out of component scope
@@ -219,6 +221,7 @@ const setActiveNav = () => {
       const iconEl = document.querySelector(`symbol#icon-${c.icon} > path`);
       const activeIconColor = '#3f8cff';
       const defaultIconColor = '#7D8592';
+      c.isMenuShow = true
       if (c.path === currentPath) {
         c.active = true
         iconEl.style.fill = activeIconColor
@@ -255,6 +258,7 @@ const toggleExpansion = () => {
   if (!isExpanded.value) {
     navigationData.value.forEach((item) => {
       item.children.forEach((childItem) => {
+        childItem.isMenuShow = true
         childItem.isMainNav = false;
         mainNavigationData.forEach((matchingItem) => {
           if (matchingItem === childItem.title) {
@@ -271,6 +275,12 @@ const toggleExpansion = () => {
       });
     });
   }
+}
+const checkMenu = (nav) => {
+  nav.menuShown = !nav.menuShown
+  nav.children.forEach(child => {
+    child.isMenuShow = !child.isMenuShow
+  });
 }
 onMounted(() => {
   watch(
@@ -363,8 +373,10 @@ onMounted(() => {
     font-size: 1rem;
 
     .route-title {
-      margin: 1rem 0 1rem 1rem;
+      margin: 1rem;
       font-weight: bold;
+      display: flex;
+      justify-content: space-between;
     }
 
     .route-title:has(~.active) {
