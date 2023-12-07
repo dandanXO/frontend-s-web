@@ -129,7 +129,19 @@
         prop="totalCount"
         :label="t('fields.totalRedeem')"
         width="120"
-      />
+      >
+        <template #default="scope">
+          <router-link
+            :to="
+              `/report/privilege/privilegememberdetail?id=${scope.row.privilegeId}&site=${request.siteId}&date=${request.recordTime}`
+            "
+          >
+            <el-link type="primary">
+              {{ scope.row.totalCount }}
+            </el-link>
+          </router-link>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       class="pagination"
@@ -279,11 +291,11 @@ function patchRecord(records) {
   if (records.length > 0) {
     records.forEach((item, index) => {
       if (item.alias !== null) {
-        item.name = item.alias;
+        item.name = item.alias
       }
     })
   }
-  return records;
+  return records
 }
 
 async function loadSites() {

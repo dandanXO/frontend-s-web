@@ -67,7 +67,7 @@
                         @click="onVIPButtonClick('dy2-vip-monthly')"
                         :disabled="btnIsDisabled"
                       >
-                        领取
+                      <span v-if="btnIsDisabled"></span>领取
                       </button>
                     </template>
                   </div>
@@ -87,7 +87,7 @@
                         @click="onVIPButtonClick('dy2-vip-birthday')"
                         :disabled="btnIsDisabled"
                       >
-                        领取
+                      <span v-if="btnIsDisabled"></span>领取
                       </button>
                     </template>
                   </div>

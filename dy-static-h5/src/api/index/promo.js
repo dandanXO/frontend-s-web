@@ -1,6 +1,8 @@
 import { cached } from "boot/cache";
 import { eventapi } from "boot/axios";
 
+const qs = require("qs");
+
 export function claimBonusItem(item) {
   return cached.put(`/bonus/claim/${item}`);
 }
@@ -15,20 +17,26 @@ export function getMemberSportMatchRecord() {
 
 export function submitMemberSportMatchQuiz(param) {
   const { quizId, quizTitle, answerOne, answerTwo, answerThree } = param;
-  return eventapi.post(`/quiz/submit`, {
-    quizId,
-    quizTitle,
-    answerOne,
-    answerTwo,
-    answerThree
-  });
+  return eventapi.post(
+    `/quiz/submit`,
+    qs.stringify({
+      quizId,
+      quizTitle,
+      answerOne,
+      answerTwo,
+      answerThree
+    })
+  );
 }
 
 export function submitLuckyNumber(item) {
-  return eventapi.post(`/privi/lotteryNumber`, {
-    number: item,
-    promoCode: "dy2-lottery"
-  });
+  return eventapi.post(
+    `/privi/lotteryNumber`,
+    qs.stringify({
+      number: item,
+      promoCode: "dy2-lottery"
+    })
+  );
 }
 
 export function luckyNumberList(queryItems, memberId) {

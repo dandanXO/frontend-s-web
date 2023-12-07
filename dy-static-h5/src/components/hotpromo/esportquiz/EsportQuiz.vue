@@ -126,15 +126,6 @@
                   {{ secondChoiceRef || "选择答案" }}
                 </button>
               </div>
-              <div
-                class="btn-answer"
-                data-question-id="1"
-                data-question-type="select"
-                id="submitBtn"
-                @click="onSubmitClick()"
-              >
-                提交答案
-              </div>
             </div>
             <div class="questions-item-box">
               <div class="item-question">第三题:{{ matchInfo.questionThree }}</div>
@@ -149,6 +140,18 @@
                 >
                   {{ thirdChoiceRef || "选择答案" }}
                 </button>
+              </div>
+            </div>
+
+            <div class="questions-item-box">
+              <div
+                class="btn-answer"
+                data-question-id="1"
+                data-question-type="select"
+                id="submitBtn"
+                @click="onSubmitClick()"
+              >
+                提交答案
               </div>
             </div>
           </div>
@@ -170,7 +173,7 @@
         </table>
         <table v-else class="record-table" id="record-table"></table>
 
-        <div v-if="isHasRecord" class="page-list">
+        <div v-if="isHasRecord && tableInfo.length > 1" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
           <div
             v-for="(e, i) in paginationInfo.pageTotal"
@@ -562,6 +565,8 @@ function onSubmitClick() {
         .questions-container {
           display: flex;
           justify-content: space-between;
+          flex-wrap: wrap;
+          padding: 16px;
 
           &::before,
           &::after {
@@ -570,12 +575,12 @@ function onSubmitClick() {
           }
 
           .questions-item-box {
-            width: 33%;
+            width: 100%;
             letter-spacing: 0;
 
             .item-question {
               margin-bottom: 10px;
-              height: 42px;
+              // height: 42px;
             }
 
             .question-options-box {
@@ -602,7 +607,7 @@ function onSubmitClick() {
               line-height: 40px;
               text-align: center;
               cursor: pointer;
-              margin: 38px auto 40px;
+              margin: 0 auto 40px;
               border: none;
               background-image: linear-gradient(255deg, #0094ff 0%, #18c5ff 100%), linear-gradient(#0084a4, #0084a4);
               background-blend-mode: normal, normal;
@@ -691,11 +696,12 @@ function onSubmitClick() {
 }
 
 .question-select-box {
-  width: 360px;
+  max-width: 360px;
   margin: 40px auto;
   font-size: 14px;
   color: #bacef1;
   display: flex;
+  gap:20px;
   justify-content: space-between;
   flex-wrap: wrap;
 

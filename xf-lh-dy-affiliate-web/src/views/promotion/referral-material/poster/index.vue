@@ -1,6 +1,6 @@
 <template>
   <div class="roles-main">
-    <el-card class="box-card" shadow="never" style="margin-top: 20px">
+    <el-card class="box-card" shadow="never">
       <div class="back-container" @click="router.go(-1)">
         <el-icon class="el-icon--left">
           <arrow-left-bold />
@@ -375,7 +375,7 @@
 
 <script setup>
 import { ref } from '@vue/runtime-core'
-import { onMounted, reactive } from 'vue'
+import { nextTick, onMounted, reactive } from 'vue'
 import Poster from './Poster'
 import PickColors from 'vue-pick-colors'
 import { ArrowLeftBold } from '@element-plus/icons-vue'
@@ -383,6 +383,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getPathById, increaseDownloadCount } from '../../../../api/poster'
 import { useStore } from '@/store'
 import { getAffiliateInfo } from '../../../../api/affiliate'
+import { getConfigs } from '../../../../api/system-config'
 
 const store = useStore()
 const route = useRoute()
@@ -683,15 +684,18 @@ async function loadQrData() {
   Object.keys({ ...aff }).forEach(field => {
     affInfo[field] = aff[field]
   })
-  if (store.state.user.siteId === 1 || store.state.user.siteId === '1') {
-    data.qrData = 'https://xf1869.com/app/agent/' + affInfo.affiliateCode
-  } else if (store.state.user.siteId === 2 || store.state.user.siteId === '2') {
-    data.qrData = 'https://www.dy1698.com/app/agent/' + affInfo.affiliateCode
-  } else if (store.state.user.siteId === 3 || store.state.user.siteId === '3') {
-    data.qrData = 'https://www.jolly8858.com/agent/' + affInfo.affiliateCode
-  } else {
-    data.qrData = ''
-  }
+  await loadReferralLink()
+}
+
+async function loadReferralLink() {
+  const query = {}
+  query.siteId = store.state.user.siteId
+  const { data: ret } = await getConfigs(query)
+
+  const temWebLongLink = ret.find(obj => obj.code === 'affiliate_web_link')
+    .value
+  data.qrData = temWebLongLink + '/agent/' + affInfo.affiliateCode
+  await nextTick()
 }
 
 onMounted(async () => {

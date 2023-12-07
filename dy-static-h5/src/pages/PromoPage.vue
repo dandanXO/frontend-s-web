@@ -1,4 +1,8 @@
 <template>
+  <!-- <pre>token: {{ extensionToken }}</pre>
+  <pre>state: {{ extensionState }}</pre>
+  <pre>path: {{ currentPath }}</pre>
+  <pre>store: {{ store }}</pre> -->
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
@@ -79,7 +83,7 @@
                 </div>
               </div>
               <div class="inner">
-                <div v-if="selectedPromo.hasPromo">
+                <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
@@ -92,7 +96,7 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-html="selectedPromo.pageContent"></div>
+                  <div v-if="selectedPromo.id !== 259" v-html="selectedPromo.pageContent"></div>
                 </div>
               </div>
             </div>
@@ -119,13 +123,16 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {ref, defineComponent, onActivated, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
 import {RiErrorWarningLine} from "vue-remix-icons";
+import {isAndroid} from "boot/utils";
+import {SessionStorage} from "quasar";
+import LocalStorage from "boot/local-storage";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
@@ -176,7 +183,7 @@ export default defineComponent({
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
-    const $q = useQuasar();
+        const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
@@ -226,23 +233,39 @@ export default defineComponent({
           });
     };
     const showPromoDetails = (promo) => {
-      if (!store.token) {
-        isDisplayLogin.value = true;
-      } else {
-
-        if (promo.redirectUrl.includes("page-vip")) {
-          router.push({path: "/account/vip"});
+      // extension
+      if(extensionState.value) {
+        router.push({path: currentPath.value, query: {name: promo.redirectUrl, token: extensionToken.value}});
+        isPromoDetail.value = true;
+        selectedPromo.value = promo;
+        if (isAndroid()) {
+            LocalStorage.set("TOKEN", extensionToken.value, 86400);
         } else {
-          if (route.query.fromAccount) {
-            router.push({path: "/promo", query: {name: promo.redirectUrl, fromAccount: true}});
+            SessionStorage.set("TOKEN", extensionToken.value);
+        }
+        store.token = extensionToken.value;
+
+      } else {
+        // non extension
+        if (!store.token) {
+          isDisplayLogin.value = true;
+        } else {
+
+          if (promo.redirectUrl.includes("page-vip")) {
+            router.push({path: "/account/vip"});
           } else {
-            router.push({path: "/promo", query: {name: promo.redirectUrl}});
+            if (route.query.fromAccount) {
+              router.push({path: "/promo", query: {name: promo.redirectUrl, fromAccount: true}});
+            } else {
+              router.push({path: "/promo", query: {name: promo.redirectUrl}});
+            }
+            isPromoDetail.value = true;
+            selectedPromo.value = promo;
           }
-          isPromoDetail.value = true;
-          selectedPromo.value = promo;
         }
       }
     };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
@@ -256,7 +279,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.hasToken() ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken() && window.location.pathname !== "/promotion") ? "/session/loggedInPromoPages" : "/promo/page";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -281,11 +304,29 @@ export default defineComponent({
       }).catch((e) => {
         console.log("error", e);
       });
-
     };
-    onMounted(() => {
+
+    // extension
+    const currentPath = ref(route.path);
+    const extensionState = ref(false)
+    const extensionToken = ref('')
+
+
+    const checkExtension = () => {
+      if (currentPath.value === "/promotion"){
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+
+    }
+
+
+    onActivated(() => {
+      checkExtension();
       loadBanner();
       loadAll();
+
     });
 
     return {
@@ -303,7 +344,12 @@ export default defineComponent({
       tab,
       tabItems,
       isDisplayLogin,
-      getPromoLabel
+      getPromoLabel,
+
+      checkExtension,
+      currentPath,
+      extensionState,
+      extensionToken
     };
   }
 });
@@ -350,10 +396,7 @@ export default defineComponent({
         background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
       }
     }
-
-
   }
-
 
   a {
     color: #000000;

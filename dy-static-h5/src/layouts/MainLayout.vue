@@ -478,6 +478,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "存款";
+        } else if (route.path === "/promotion") {
+          hasPage.value = false;
+          pageName.value = "优惠活动";
+          prevPage.value = "";
         } else if (route.path === "/promo") {
           hasPage.value = true;
           pageName.value = "优惠活动";
