@@ -1624,15 +1624,17 @@ export default defineComponent({
     };
 
     const checkRedeemSpecialInviteBonusEligiblity = () => {
-      eventapi.get('/privi/telephone/canRedeem', {
-        params: {
-          promoCode: "special-invitation-bonus"
-        }
-      }).then((res) => {
-        if(res.data === true) {
-          specialInviteBonusEligible.value = true;
-        }
-      })
+      if (store.hasToken()) {
+        eventapi.get('/privi/telephone/canRedeem', {
+          params: {
+            promoCode: "special-invitation-bonus"
+          }
+        }).then((res) => {
+          if(res.data === true) {
+            specialInviteBonusEligible.value = true;
+          }
+        })
+      }
     }
 
     const redeemSpecialInviteBonus = () => {
