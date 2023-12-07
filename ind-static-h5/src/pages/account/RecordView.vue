@@ -35,7 +35,7 @@
           </q-input>
         </div>
 
-        <div class="platform-field">
+        <!-- <div class="platform-field">
           <q-select
             class="platform"
             v-model="searchForm.platform"
@@ -48,7 +48,7 @@
             map-options
           />
           <q-btn class="search-btn" label="Search" @click="searchRecord" />
-        </div>
+        </div> -->
       </q-form>
     </q-card>
 
@@ -134,8 +134,8 @@ const searchRecord = () => {
 
   const { startDate, endDate, platform } = searchForm;
   api
-    .get("/session/member/gameBetRecord", {
-      params: { startDate, endDate, platform, memberId: store.id, current: 1, size: 10 }
+    .get("/session/member/cassandraBetRecord", {
+      params: { startDate, endDate, platform, memberId: store.id, current: 1, size: 10}
     })
     .then((response) => {
       if (response.code === 0) {

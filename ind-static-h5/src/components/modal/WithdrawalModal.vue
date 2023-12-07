@@ -4,7 +4,7 @@
       <div class="withdrawal-modal-view-top">
         <div class="withdrawal-modal-view-top--title">Withdrawal</div>
         <div class="withdrawal-modal-view-top--img">
-          <img class="top-bg" src="../../assets/images/common/content-frame-top.png" />
+          <img class="top-bg" src="../../assets/images/common/content-frame-top-short.png" />
         </div>
 
         <q-btn
@@ -163,7 +163,7 @@
                 <div class="yel-dot"></div>
                 <div class="desc">Remain Wagers</div>
               </div>
-              <div class="desc">RS:100</div>
+              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
             </div>
           </div>
         </q-card>
@@ -405,7 +405,7 @@ const goToBank = () => {
   margin: auto;
 
   .withdrawal-modal-view-top {
-    background: url(../../assets/images/common/content-frame-top.png) no-repeat center/contain;
+    background: url(../../assets/images/common/content-frame-top-short.png) no-repeat top center/contain;
     position: relative;
     margin-top: 40px;
 

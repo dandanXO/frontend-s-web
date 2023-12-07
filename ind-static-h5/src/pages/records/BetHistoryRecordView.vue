@@ -61,7 +61,8 @@ export default defineComponent({
 
     const isEnded = ref(false);
 
-    var apiUrl = "/session/member/gameBetRecord";
+    // var apiUrl = "/session/member/gameBetRecord";
+    var apiUrl = "/session/member/cassandraBetRecord";
 
 
     var endDate = moment().format("YYYY-MM-DD");
@@ -102,7 +103,8 @@ export default defineComponent({
         "startDate": startDate,
         "endDate": endDate,
         "platform": platformName,
-        "memberId": store.id
+        "memberId": store.id,
+        "pagingState": pagingState
       };
 
       api.get(apiUrl, {

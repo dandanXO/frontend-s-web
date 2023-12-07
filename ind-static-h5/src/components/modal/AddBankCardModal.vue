@@ -244,8 +244,8 @@ const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length !== 11
-    ? "Bank IFSC Code Must Be 11 Character"
+    : cardAddress.length < 3
+    ? "Bank IFSC Code Must Be More Than 3 Characters"
     : true;
   return result;
 };
