@@ -335,6 +335,7 @@ async function loadSites() {
 
 async function random() {
   await randomMember(request.siteId)
+  ElMessage({ message: t('message.addSuccess'), type: 'success' })
   await loadMemberMultiWheel()
 }
 
