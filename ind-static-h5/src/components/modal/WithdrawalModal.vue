@@ -446,7 +446,7 @@ const goToBank = () => {
 
   .withdrawal-modal-view-middle {
     position: relative;
-    background: url(../../assets/images/common/content-frame-middle.png) round top/100% auto;
+    background: url(../../assets/images/common/content-frame-middle-short.png) round top/100% auto;
     min-height: 435px;
     padding: 16px;
     margin-top: -1px;
@@ -640,7 +640,7 @@ const goToBank = () => {
   }
 
   .withdrawal-modal-view-bottom {
-    background: url(../../assets/images/common/content-frame-bottom.png) round top/100% auto;
+    background: url(../../assets/images/common/content-frame-bottom-short.png) round top/100% auto;
     min-height: 50px;
     position: relative;
     margin-bottom: 60px;

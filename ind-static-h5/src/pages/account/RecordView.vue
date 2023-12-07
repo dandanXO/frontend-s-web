@@ -137,7 +137,7 @@ const pagination = reactive({
   total: 0,
   pages: 1,
   current: 1,
-  pagingState: ""
+  pagingState: null
 });
 
 const onPrevPageClick = () => {
@@ -155,7 +155,7 @@ const onNextPageClick = () => {
 const searchRecord = (isNewSearch) => {
   if (isNewSearch) {
     pagination.current = 1;
-    pagination.pagingState = "";
+    pagination.pagingState = null;
   }
 
   isLoading.value = true;
@@ -175,11 +175,14 @@ const searchRecord = (isNewSearch) => {
       }
     })
     .then((response) => {
+
+
       const { code, data } = response;
       if (code === 0) {
         const records = data.records;
         pagination.total = data.length;
         pagination.pages = data.pages;
+        pagination.pagingState = data.pagingState;
 
         gameBetRecordData.value.push(...records);
 
