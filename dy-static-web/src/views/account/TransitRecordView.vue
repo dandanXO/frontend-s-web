@@ -1349,7 +1349,7 @@ export default defineComponent({
 
     const imgURL = process.env.VUE_APP_IMAGE_CDN
     const getImageLink = (linkId) => {
-      reminderForm.photos = imgURL + '/' + linkId
+      reminderForm.photos = imgURL + '/order/' + store.siteId + '/' + linkId
     }
     const getTurnoverType = (turnoverType) => {
       if (!turnoverType) {
