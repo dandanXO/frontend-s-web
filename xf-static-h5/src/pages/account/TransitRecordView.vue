@@ -548,8 +548,8 @@
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
-          >          
-            
+          >
+
             <!-- <template v-slot:body-cell-actions="props">
               <q-td :props="props">
                 <q-btn color="deep-orange" @click="betDetails(props.row)" label="บันทึกการเดิมพัน"></q-btn>
@@ -566,7 +566,7 @@
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
-          >          
+          >
           </q-table>
       </q-dialog>
     </div>
@@ -925,6 +925,12 @@ export default defineComponent({
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
+          if(v === "gameBetRecord") {
+            // 结束时间如果不跟开始时间一个月，则从当月1号开始
+            if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
+              searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
+            }
+          }
         }
       });
       searchRecord();
@@ -1013,7 +1019,7 @@ export default defineComponent({
         }
       })
     }
-    
+
     return {
       recordActive,
       searchForm,
