@@ -1,25 +1,31 @@
 <template>
-  <nav class="sidebar">
+  <nav class="sidebar" :class="isExpanded ? 'expanded': ''" style="position: relative;">
+
+    <el-button type="primary" class="expansionbtn" circle @click="toggleExpansion">
+      <ArrowLeftBold style="width: 10px" v-if="isExpanded" />
+      <ArrowRightBold style="width: 10px" v-if="!isExpanded" />
+    </el-button>
     <div class="navigation">
       <div
         v-for="nav in navigationData"
         :key="nav.id"
         :class="`route-wrapper ${nav.active ? 'active' : ''}`"
       >
-        <div v-if="nav.display" class="route-title">{{ nav.title }}</div>
+        <div v-if="nav.display && isExpanded" class="route-title">{{ nav.title }}</div>
         <div
           v-for="child in nav.children"
           :key="child.id"
           :class="`route-container ${child.active ? 'active' : ''}`"
+          :style="isChildrenActive ? 'height: auto;' : 'height: 0'"
         >
-          <RouterLink :to="nav.path + child.path" class="route">
+          <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
             <div class="route-content">
               <svg-icon
                 :icon-class="`${child.icon}`"
                 :style="child.active ? 'color: #179cff' : ''"
                 :className="child.active ? 'active-icon' : ''"
               />
-              <span :class="child.active ? 'active' : ''">
+              <span :class="child.active ? 'active' : ''" v-if="isExpanded">
                 {{ child.title }}
               </span>
             </div>
@@ -34,6 +40,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { ArrowLeftBold, ArrowRightBold } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -47,6 +54,7 @@ const navigationData = ref([
         path: '/dashboard',
         title: '首页',
         active: false,
+        isMainNav: true,
         icon: 'home',
       },
     ],
@@ -60,12 +68,14 @@ const navigationData = ref([
         path: '/manage',
         title: '会员管理',
         active: false,
+        isMainNav: true,
         icon: 'squares',
       },
       {
         path: '/game-record',
         title: '游戏记录',
         active: false,
+        isMainNav: true,
         icon: 'clock',
       },
     ],
@@ -79,42 +89,49 @@ const navigationData = ref([
         path: '/bank-card',
         title: '绑定银行卡',
         active: false,
+        isMainNav: true,
         icon: 'money-bag',
       },
       {
         path: '/withdraw-request',
         title: '提款申请',
         active: false,
+        isMainNav: true,
         icon: 'form-w-pencil',
       },
       {
         path: '/transfer',
         title: '代理代存',
         active: false,
+        isMainNav: true,
         icon: 'users',
       },
       {
         path: '/deposit',
         title: '额度充值',
         active: false,
+        isMainNav: true,
         icon: 'wallet',
       },
       {
         path: '/finance',
         title: '财务报表',
         active: false,
+        isMainNav: true,
         icon: 'report',
       },
       {
         path: '/settlement',
         title: '佣金报表',
         active: false,
+        isMainNav: true,
         icon: 'money',
       },
       {
         path: '/credit-flow',
         title: '账变明细',
         active: false,
+        isMainNav: true,
         icon: 'ledger',
       },
     ],
@@ -128,18 +145,21 @@ const navigationData = ref([
         path: '/referral-link',
         title: '推广链接',
         active: false,
+        isMainNav: true,
         icon: 'link',
       },
       {
         path: '/referral-material',
         title: '推广素材',
         active: false,
+        isMainNav: true,
         icon: 'photo',
       },
       {
         path: '/channel-pack',
         title: '渠道打包',
         active: false,
+        isMainNav: true,
         icon: 'folder',
       },
     ],
@@ -165,23 +185,29 @@ const navigationData = ref([
         path: '/announcement',
         title: '系统通告',
         active: false,
+        isMainNav: true,
         icon: 'speaker',
       },
       {
         path: '/commission-info',
         title: '佣金说明',
         active: false,
+        isMainNav: true,
         icon: 'money-bag',
       },
       {
         path: '/contact-us',
         title: '联系我们',
         active: false,
+        isMainNav: true,
         icon: 'speech-bubbles',
       },
     ],
   },
 ])
+const isChildrenActive = ref(true)
+const mainNavigationData = ['首页', '代理代存', "佣金报表", "佣金说明", "联系我们"];
+const isExpanded = ref(true)
 
 const setActiveNav = () => {
   const currentPath = route.path.substring(route.path.lastIndexOf('/'))
@@ -203,7 +229,49 @@ const setActiveNav = () => {
     })
   })
 }
-
+// const toggleExpansion = () => {
+//   isExpanded.value = !isExpanded.value
+//   if (mainNavigationData && navigationData.value) {
+//     navigationData.value.forEach((navItem, i) => {
+//       navItem.children[i].isMainNav = true
+//     })
+//     mainNavigationData.forEach((item) => {
+//     // Assuming navigationData is an array of objects with a 'title' property
+//       const foundItem = navigationData.value.find((navItem) => navItem.title === item);
+//       if (foundItem && !isExpanded.value) {
+//         foundItem.value = foundItem
+//         navigationData.value.forEach((navItem, i) => {
+//           navItem.children[i].isMainNav = false
+//           if (navItem.children[i].title === foundItem.children[i].title) {
+//             navItem.children[i].isMainNav = true
+//           }
+//         })
+//       }
+//     });
+//   }
+// }
+const toggleExpansion = () => {
+  isExpanded.value = !isExpanded.value
+  if (!isExpanded.value) {
+    navigationData.value.forEach((item) => {
+      item.children.forEach((childItem) => {
+        childItem.isMainNav = false;
+        mainNavigationData.forEach((matchingItem) => {
+          if (matchingItem === childItem.title) {
+            childItem.isMainNav = true;
+            console.log('we got a hit');
+          }
+        });
+      });
+    });
+  } else {
+    navigationData.value.forEach((item) => {
+      item.children.forEach((childItem) => {
+        childItem.isMainNav = true;
+      });
+    });
+  }
+}
 onMounted(() => {
   watch(
     () => route.path,
@@ -211,8 +279,28 @@ onMounted(() => {
       setActiveNav()
     }
   )
+  // watch(isExpanded, () => {
+  //   if (mainNavigationData && navigationData.value) {
+  //     mainNavigationData.forEach((item) => {
+  //     // Assuming navigationData is an array of objects with a 'title' property
+  //       const foundItem = navigationData.value.find((navItem) => navItem.title === item);
+  //       if (foundItem && !isExpanded.value) {
+  //         foundItem.value = foundItem
+  //         navigationData.value.forEach((navItem, i) => {
+  //           navItem.children[i].isMainNav = false
+  //           console.log(navItem.children[i].title)
+  //           console.log(foundItem.children)
+  //           if (navItem.children[i].title === foundItem.children[i].title) {
+  //             navItem.children[i].isMainNav = true
+  //           }
+  //         })
+  //       }
+  //     });
+  //   }
+  // })
   setActiveNav()
 })
+
 </script>
 
 <style scoped lang="scss">
@@ -221,8 +309,33 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
+  &.expanded {
   width: 250px;
+  .route-wrapper {
 
+    padding: 0.5rem 0 0.5rem 0;
+      .route-container.active {
+
+    border-right: 5px solid #3f8cff;
+  }
+    .route-content {
+
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.5rem 2rem 0.5rem 0.5rem;
+        margin: 0px 10px;
+    }
+
+  }
+  }
+  .expansionbtn {
+     position:absolute;
+    right: -10px;
+    width: 30px;
+    min-height: 30px;
+    padding: 5px;
+    top: -10px;
+  }
   .home {
     display: flex;
     gap: 0.5rem;
@@ -259,7 +372,8 @@ onMounted(() => {
     }
 
     .route-wrapper {
-      padding: 0.5rem 0 0.5rem 0;
+      // padding: 0.5rem 0 0.5rem 0;
+      padding: 0;
 
       .route {
         color: black;
@@ -268,9 +382,8 @@ onMounted(() => {
 
       .route-content {
         display: flex;
-        gap: 0.5rem;
-        padding: 0.5rem 2rem 0.5rem 0.5rem;
-        margin: 0px 10px;
+        padding: 10px;
+        margin: 0 10px;
 
         svg {
           width: 2rem;
@@ -280,7 +393,6 @@ onMounted(() => {
   }
 
   .route-container.active {
-    border-right: 5px solid #3f8cff;
   }
 
   .route-container.active .route-content {
