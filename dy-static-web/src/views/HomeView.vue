@@ -120,36 +120,6 @@
       </div>
       <div class="index-platform-container">
         <div class="flip-container">
-          <div class="flipper platform-live">
-            <div class="front">
-              <div>真人娱乐</div>
-              <div class="platform-title-sub">LIVE CASINO</div>
-            </div>
-            <div class="back">
-              <div
-                class="game-platform"
-                @click="openGame('AG真人', 'AG', '')"
-                style="margin-top: 48px; margin-left: 46px"
-              >
-                <img src="../assets/home/ag.png" />
-                <div>AG真人</div>
-              </div>
-              <div class="game-platform" @click="openGame('欧博真人', 'ALLBET', '')" style="margin-left: 30px">
-                <img src="../assets/home/allbet.png" />
-                <div>欧博真人</div>
-              </div>
-              <div
-                class="game-platform"
-                @click="openGame('BBIN真人', 'BBINDY', 'bblive_lobby_pc')"
-                style="margin-left: 14px"
-              >
-                <img src="../assets/home/bbin.png" />
-                <div>BBIN真人</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-container">
           <div class="flipper platform-esports">
             <div class="front">
               <div>电竞</div>
@@ -210,6 +180,36 @@
                 <img src="../assets/home/dy.png" />
                 <div>CR体育</div>
               </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="flip-container">
+          <div class="flipper platform-live">
+            <div class="front">
+              <div>真人娱乐</div>
+              <div class="platform-title-sub">LIVE CASINO</div>
+            </div>
+            <div class="back">
+              <div
+                class="game-platform"
+                @click="openGame('AG真人', 'AG', '')"
+                style="margin-top: 48px; margin-left: 46px"
+              >
+                <img src="../assets/home/ag.png" />
+                <div>AG真人</div>
+              </div>
+              <div class="game-platform" @click="openGame('欧博真人', 'ALLBET', '')" style="margin-left: 30px">
+                <img src="../assets/home/allbet.png" />
+                <div>欧博真人</div>
+              </div>
+              <div
+                class="game-platform"
+                @click="openGame('BBIN真人', 'BBINDY', 'bblive_lobby_pc')"
+                style="margin-left: 14px"
+              >
+                <img src="../assets/home/bbin.png" />
+                <div>BBIN真人</div>
+              </div>
             </div>
           </div>
         </div>

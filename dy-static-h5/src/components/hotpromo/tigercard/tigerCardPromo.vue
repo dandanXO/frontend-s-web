@@ -12,6 +12,9 @@
       <div class="text-center">
         <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取虎卡</div>
       </div>
+      <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">
+        剩下 {{ cardInfo.cardDetail.leftCount }} 次机会领取
+      </div>
 
       <div class="content">
         <div class="huka-wrap">
@@ -127,25 +130,16 @@
         </q-form>
       </q-card>
     </q-dialog>
-    <!-- <q-dialog
-      align-center
-      class="wonHukaBox"
-      v-model="isCardModal"
-      :show-close="false"
-    >
+    <q-dialog align-center class="wonHukaBox" v-model="isCardModal" :show-close="false">
       <span v-for="(huka, i) in hukaList" :key="i">
         <div v-if="cardWon === huka.code" class="wincontents">
           <div class="message">恭喜您获得一张: {{ huka.label }}</div>
           <div class="amount">
-            <img
-              :src="
-                require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)
-              "
-            />
+            <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" />
           </div>
         </div>
       </span>
-    </q-dialog> -->
+    </q-dialog>
   </div>
 </template>
 <script setup>
@@ -153,6 +147,9 @@ import { onMounted, ref, reactive } from "vue";
 import { eventapi } from "boot/axios";
 // import { tigerCardInit, getLeaderboard, getMemberCard, giveCardToFriend, synthesisCard } from "@/api/promotion/tigerCard";
 // import { ElMessage } from "element-plus";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 const cardInfo = reactive({
   cardDetail: {
@@ -219,10 +216,19 @@ const getNewTigerCard = () => {
       isCardModal.value = true;
       cardWon.value = res.data.cardType;
       isPageLoading.value = false;
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "已领取虎卡",
+        icon: "check_circle_outline"
+      });
+      pageInit();
     } else {
-      ElMessage.error({
-        type: "error",
-        message: res.message
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: res.message,
+        icon: "check_circle_outline"
       });
     }
     isPageLoading.value = false;
@@ -283,7 +289,7 @@ const selectHuka = (huka) => {
 };
 
 const isGiftModal = ref(false);
-const isCardModal = ref(true);
+const isCardModal = ref(false);
 const cardWon = ref("");
 onMounted(() => {
   pageInit();
@@ -581,6 +587,16 @@ body {
   font-size: 15px;
   margin-top: 20px;
   // color: #fed985;
+}
+
+.redeem-tips {
+  display: flex;
+  justify-content: center;
+  padding-left: 70px;
+  margin-top: -10px;
+  color: #87898a;
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 
 .huka-list {

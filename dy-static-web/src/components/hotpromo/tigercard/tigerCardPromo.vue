@@ -7,11 +7,14 @@
           <div class="acc-pool-number">¥{{ cardInfo.cardDetail.setting.sumAward }}</div>
         </div>
       </div>
+
       <div class="text-center card-tips">
         已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
       </div>
-      <div class="text-center">
+      <div class="text-center position-relative">
         <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取虎卡</div>
+
+        <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">剩下 {{ cardInfo.cardDetail.leftCount }} 次机会领取</div>
       </div>
 
       <div class="content">
@@ -190,6 +193,7 @@ const getNewTigerCard = () => {
     .catch(() => {})
     .then(() => {
       isPageLoading.value = false;
+      pageInit()
     });
 };
 
@@ -514,6 +518,16 @@ body {
   margin-top: 20px;
   color: #87898a;
   text-align: center;
+}
+
+.redeem-tips {
+  display: flex;
+  justify-content: center;
+  padding-left: 70px;
+  margin-top: -10px;
+  color: #87898a;
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 
 .huka-list {

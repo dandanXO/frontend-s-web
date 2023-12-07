@@ -337,7 +337,7 @@ function getRecordList() {
   const end = start + pageSize;
 
   for (let i = start, l = end; i < l; i++) {
-    const { createTime, answerOne, answerTwo, answerThree, status } = records[i];
+    const { createTime, answerOne, answerTwo, answerThree, status } = records.value[i];
 
     const newObj = {};
     newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
@@ -499,6 +499,7 @@ function onSubmitClick() {
   font-size: 14px;
   color: #87898a;
   padding: 0 0 20px 0;
+  position: relative;
 
   .prize-quiz-content-container {
     margin: 0 auto;
@@ -643,9 +644,10 @@ function onSubmitClick() {
     }
 
     .record-table {
-      width: 100%;
+      // width: 100px !important;
       border-collapse: collapse;
       margin: 20px auto;
+      // overflow-x: scroll;
 
       th {
         text-align: center;
