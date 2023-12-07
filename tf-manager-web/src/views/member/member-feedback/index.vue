@@ -29,7 +29,7 @@
           clearable
           v-model="request.feedbackType"
           size="small"
-          :placeholder="t('fields.feedbackType')"
+          :placeholder="t('fields.memberFeedbackType')"
           class="filter-item"
           style="width: 120px;margin-left: 5px"
         >
@@ -40,8 +40,8 @@
             :value="item.value"
           />
         </el-select>
-        <el-checkbox v-model="request.isNotRead" :true-label="true" :false-label="false" style="margin-left:10px;">Not Read</el-checkbox>
-        <el-checkbox v-model="request.isNotReplied" :true-label="true" :false-label="false">Not Replied</el-checkbox>
+        <el-checkbox v-model="request.isNotRead" :true-label="true" :false-label="false" style="margin-left:10px;">{{ t('fields.notRead') }}</el-checkbox>
+        <el-checkbox v-model="request.isNotReplied" :true-label="true" :false-label="false">{{ t('fields.notReplied') }}</el-checkbox>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -75,7 +75,7 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.feedbackType')" prop="feedbackType">
+        <el-form-item :label="t('fields.memberFeedbackType')" prop="feedbackType">
           <el-input disabled style="width: 350px" v-model="form.feedbackType" />
         </el-form-item>
         <el-form-item :label="t('fields.title')" prop="title">
@@ -114,7 +114,7 @@
       />
       <el-table-column
         prop="feedbackType"
-        :label="t('fields.feedbackType')"
+        :label="t('fields.memberFeedbackType')"
         min-width="140"
       />
       <el-table-column
