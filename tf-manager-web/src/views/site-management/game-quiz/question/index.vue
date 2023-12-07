@@ -18,7 +18,7 @@
           />
         </el-select>
         <el-date-picker
-          v-model="request.matchTime"
+          v-model="request.startTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
@@ -203,6 +203,26 @@
             style="width: 350px;"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.startTime')" prop="startTime">
+          <el-date-picker
+            type="datetime"
+            format="YYYY-MM-DD HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.startTime"
+            :disabled-date="disabledStartDate"
+            style="width: 350px;"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.endTime')" prop="endTime">
+          <el-date-picker
+            type="datetime"
+            format="YYYY-MM-DD HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.endTime"
+            :disabled-date="disabledStartDate"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="create">{{ t('fields.confirm') }}</el-button>
@@ -300,6 +320,16 @@
         <el-row>
           <el-form-item :label="t('fields.matchTime')" prop="matchTime">
             <span>{{ endForm.matchTime }}</span>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.startTime')" prop="startTime">
+            <span>{{ endForm.startTime }}</span>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.endTime')" prop="endTime">
+            <span>{{ endForm.endTime }}</span>
           </el-form-item>
         </el-row>
         <div class="dialog-footer">
@@ -563,7 +593,7 @@ const request = reactive({
   siteId: null,
   quizTitle: null,
   status: null,
-  matchTime: [convertStartDate(new Date()), convertDate(new Date())]
+  startTime: [convertStartDate(new Date()), convertDate(new Date())]
 });
 
 const gameQuizForm = ref(null);
@@ -613,7 +643,9 @@ const form = reactive({
   choiceTwo: null,
   questionThree: null,
   choiceThree: null,
-  matchTime: null
+  matchTime: null,
+  startTime: null,
+  endTime: null
 });
 
 const endForm = reactive({
@@ -634,7 +666,9 @@ const endForm = reactive({
   questionThree: null,
   choiceThree: null,
   answerThree: null,
-  matchTime: null
+  matchTime: null,
+  startTime: null,
+  endTime: null
 })
 
 const viewForm = reactive({
@@ -684,6 +718,22 @@ const validateChoiceThree = (rule, value, callback) => {
   }
 };
 
+const validateStartTime = (rule, value, callback) => {
+  if (form.endTime && form.endTime < form.startTime) {
+    callback(new Error(t('message.startMustBeforeEnd')));
+  } else {
+    callback();
+  }
+};
+
+const validateEndTime = (rule, value, callback) => {
+  if (form.startTime && form.startTime > form.endTime) {
+    callback(new Error(t('message.endMustAfterStart')));
+  } else {
+    callback();
+  }
+};
+
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   quizTitle: [required(t('message.validateQuizTitleRequired'))],
@@ -695,7 +745,9 @@ const formRules = reactive({
   choiceOne: [required(t('message.validateChoiceOneRequired')), { validator: validateChoiceOne, trigger: "blur" }],
   choiceTwo: [{ validator: validateChoiceTwo, trigger: "blur" }],
   choiceThree: [{ validator: validateChoiceThree, trigger: "blur" }],
-  matchTime: [required(t('message.validateMatchTimeRequired'))]
+  matchTime: [required(t('message.validateMatchTimeRequired'))],
+  startTime: [required(t('message.validateStartTimeRequired')), { validator: validateStartTime, trigger: "blur" }],
+  endTime: [required(t('message.validateEndTimeRequired')), { validator: validateEndTime, trigger: "blur" }]
 });
 
 const validateAnswerOne = (rule, value, callback) => {
@@ -753,9 +805,9 @@ async function loadGameQuiz() {
       query[key] = value;
     }
   });
-  if (request.matchTime !== null) {
-    if (request.matchTime.length === 2) {
-      query.matchTime = request.matchTime.join(",");
+  if (request.startTime !== null) {
+    if (request.startTime.length === 2) {
+      query.startTime = request.startTime.join(",");
     }
   }
   const { data: ret } = await getGameQuiz(query);
@@ -837,7 +889,7 @@ function resetQuery() {
   request.siteId = site.value.id;
   request.status = null;
   request.quizTitle = null;
-  request.matchTime = [convertStartDate(new Date()), convertDate(new Date())];
+  request.startTime = [convertStartDate(new Date()), convertDate(new Date())];
 }
 
 function addChoice() {
