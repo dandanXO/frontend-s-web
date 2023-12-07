@@ -4,7 +4,7 @@
       <h5>{{ $t("lang.register") }}</h5>
 
       <div class="q-gutter-y-md">
-        <q-input
+        <q-input v-if="select_menu != 'verify'"
           ref="loginNameRef"
           filled
           v-model="regForm.loginName"
@@ -23,7 +23,7 @@
           </template>
         </q-input>
 
-        <q-input
+        <q-input v-if="select_menu != 'verify'"
           ref="pwdRef"
           filled
           v-model="regForm.password"
@@ -67,7 +67,7 @@
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>
         </div>
 
-        <q-input
+        <q-input v-if="select_menu != 'verify'"
           ref="confirmPwdRef"
           filled
           :type="isCfmPwd ? 'password' : 'text'"
@@ -94,61 +94,93 @@
           </template>
         </q-input>
 
-        <!--        <q-input-->
-        <!--            ref="telRef"-->
-        <!--            filled-->
-        <!--            v-model="regForm.telephone"-->
-        <!--            :label="$t('lang.phone_number')"-->
-        <!--            lazy-rules-->
-        <!--            :rules="[-->
-        <!--              (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),-->
-        <!--              (val) =>-->
-        <!--                (val && val.length > 7) ||-->
-        <!--                $t('lang.please_enter_valid_phone'),-->
-        <!--              isValidPhone-->
-        <!--            ]"-->
-        <!--            color="white"-->
-        <!--            clearable-->
-        <!--        >-->
-        <!--          <template v-slot:prepend>-->
-        <!--            <q-icon name="smartphone"/>-->
-        <!--          </template>-->
-        <!--        </q-input>-->
+        <q-input
+            ref="telRef"
+            filled
+            v-model="regForm.telephone"
+            :label="$t('lang.phone_number')"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+              (val) =>
+                (val && val.length > 7) ||
+                $t('lang.please_enter_valid_phone'),
+              isValidPhone
+            ]"
+            :disable="select_menu === 'isVerified'"
+            color="white"
+            clearable
+        >
+          <template v-slot:prepend>
+            <q-icon name="smartphone"/>
+          </template>
+          <template v-slot:append>
+          <q-btn @click="verifyPhone" v-if="select_menu !== 'isVerified' && select_menu !== 'verify'">{{ $t("lang.verify") }}</q-btn>
+          <q-icon v-if="select_menu === 'isVerified'" name="done" color="green"></q-icon>
+          </template>
+        </q-input>
+      <div class="personal-container" v-if="select_menu === 'verify'">
+        <q-form class="q-gutter-sm q-mt-lg form-verification" autocomplete="off">
+          <div class="half">
+            <q-input
+              ref="verificationCodeRef"
+              v-model="updateSecurityVerified.verificationCode"
+              :placeholder="$t('lang.one_time_otp')"
+              :label="$t('lang.one_time_otp')"
+              stack-label
+              clearable
+              autocomplete="off"
+              filled
+              color="white"
+            />
+            <q-btn
+              class="common-large-btn third-btn"
+              :label="$t('lang.request_otp_code')"
+              @click="openVerificationModal"
+            />
+          </div>
+          <div class="flex flex-center gap-10 q-mt-md">
+            <q-btn :label="$t('lang.back')" class="common-large-btn third-btn" @click="select_menu = ''" />
+            <q-btn :label="$t('lang.confirm')" class="common-large-btn" color="brand" @click="submitUpdateSecurity" />
+          </div>
+        </q-form>
+      </div>
+               
 
-        <!--        <q-input-->
-        <!--            ref="birthdayRef"-->
-        <!--            filled-->
-        <!--            v-model="regForm.birthday"-->
-        <!--            :placeholder="$t('lang.dob')"-->
-        <!--            color="white"-->
-        <!--        >-->
-        <!--          <template v-slot:prepend>-->
-        <!--            <q-icon name="cake"/>-->
-        <!--          </template>-->
-        <!--          <template v-slot:append>-->
-        <!--            <q-icon name="event" class="cursor-pointer">-->
-        <!--              <q-popup-proxy-->
-        <!--                  cover-->
-        <!--                  transition-show="scale"-->
-        <!--                  transition-hide="scale"-->
-        <!--              >-->
-        <!--                <q-date-->
-        <!--                    v-model="regForm.birthday"-->
-        <!--                    mask="YYYY-MM-DD"-->
-        <!--                >-->
-        <!--                  <div class="row items-center justify-end">-->
-        <!--                    <q-btn-->
-        <!--                        v-close-popup-->
-        <!--                        :label="$t('lang.close_btn')"-->
-        <!--                        color="primary"-->
-        <!--                        flat-->
-        <!--                    />-->
-        <!--                  </div>-->
-        <!--                </q-date>-->
-        <!--              </q-popup-proxy>-->
-        <!--            </q-icon>-->
-        <!--          </template>-->
-        <!--        </q-input>-->
+               <!-- <q-input
+                   ref="birthdayRef"
+                   filled
+                   v-model="regForm.birthday"
+                   :placeholder="$t('lang.dob')"
+                   color="white"
+               >
+                 <template v-slot:prepend>
+                   <q-icon name="cake"/>
+                 </template>
+                 <template v-slot:append>
+                   <q-icon name="event" class="cursor-pointer">
+                     <q-popup-proxy
+                         cover
+                         transition-show="scale"
+                         transition-hide="scale"
+                     >
+                       <q-date
+                           v-model="regForm.birthday"
+                           mask="YYYY-MM-DD"
+                       >
+                         <div class="row items-center justify-end">
+                           <q-btn
+                               v-close-popup
+                               :label="$t('lang.close_btn')"
+                               color="primary"
+                               flat
+                           />
+                         </div>
+                       </q-date>
+                     </q-popup-proxy>
+                   </q-icon>
+                 </template>
+               </q-input> -->
 
         <!-- <q-input
           ref="emailRef"
@@ -168,7 +200,7 @@
           </template>
         </q-input> -->
 
-        <q-input
+        <q-input v-if="select_menu != 'verify'"
           ref="verificationRef"
           filled
           class="verification-input"
@@ -187,7 +219,7 @@
           </template>
         </q-input>
 
-        <q-input
+        <q-input v-if="select_menu != 'verify'"
           ref="codeAffiliate"
           filled
           v-model="regForm.codeAffiliate"
@@ -202,7 +234,7 @@
           </template>
         </q-input>
 
-        <div class="row justify-center items-center gap-8" style="margin-top: 35px">
+        <div v-if="select_menu != 'verify'" class="row justify-center items-center gap-8" style="margin-top: 35px">
           <!--          <q-btn @click="step == 1" color="warning" class="common-large-btn" rounded-->
           <!--                 :label="$t('lang.back')"/>-->
           <q-btn
@@ -217,8 +249,44 @@
       </div>
       <!--        </q-step>-->
       <!--      </q-stepper>-->
+
+      <q-dialog color="light" v-model="verificationModalVisible" transition-show="slide-up" transition-hide="slide-down">
+        <q-card class="q-pa-md">
+          <div class="modal-head-title q-pb-md">
+            {{ $t("lang.check_your_captcha_code") }}
+          </div>
+          <q-form class="q-gutter-sm">
+            <q-input
+              class="verification-input"
+              ref="captchaCodeRef"
+              filled
+              type="text"
+              maxlength="4"
+              v-model="updateSecurityVerified.captchaCode"
+              :label="$t('lang.captcha_code')"
+              :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]"
+              color="white"
+            >
+              <template v-slot:append>
+                <img :src="verificationImg" @click="getCode()" />
+              </template>
+              <template v-slot:prepend>
+                <q-icon name="security" />
+              </template>
+            </q-input>
+            <q-btn
+              :disabled="isEmailSending"
+              :style="isEmailSending ? 'opacity: .6' : ''"
+              class="common-btn verification-btn"
+              @click.prevent="verifyVerificationCode"
+            >
+              {{ isEmailSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
+            </q-btn>
+          </q-form>
+        </q-card>
+      </q-dialog>
     </q-form>
-    <div class="text-center q-mb-md">
+    <div v-if="select_menu != 'verify'" class="text-center q-mb-md">
       <router-link class="forget-pwd-tip" to="/login">
         {{ $t("lang.already_a_member_signin_now") }}
       </router-link>
@@ -236,6 +304,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
 import vueI18n from "src/i18n";
+import { RiMarkPenFill } from "vue-remix-icons";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -269,7 +338,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      // telephone: "",
+      telephone: "",
       // email: "",
       codeAffiliate: "",
       // cardAccountName: "",
@@ -288,6 +357,8 @@ export default defineComponent({
             verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.captchaCode = "";
             regForm.codeId = response.data.id;
+            updateSecurityVerified.captchaCode = "";
+            updateSecurityVerified.codeId = response.data.id;
             verificationRef.value.resetValidation();
           }
         })
@@ -300,12 +371,26 @@ export default defineComponent({
           // });
         });
     };
+    const select_menu = ref('');
+    const verifyPhone = () => {
+      telRef.value.validate();
+      if (
+        telRef.value.hasError
+      ) {
+        } else {
+        if (regForm.telephone) {
+          select_menu.value = 'verify';
+          updateSecurityVerified.phone = regForm.telephone
+        }
+      }
+    }
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    // const telRef = ref();
+    const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
+    const verificationCodeRef = ref();
     const cardAccountNameRef = ref();
     const cardAccountSurnameRef = ref();
     // const birthdayRef = ref();
@@ -314,6 +399,7 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const pwdStrength = ref("");
+    var qs = require("qs");
 
     const isValidEmail = () => {
       const emailPattern =
@@ -330,18 +416,17 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      // telRef.value.validate();
+      telRef.value.validate();
       // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: t("lang.loading")
       });
-      var qs = require("qs");
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
-        // telRef.value.hasError ||
+        telRef.value.hasError ||
         // emailRef.value.hasError ||
         verificationRef.value.hasError
       ) {
@@ -496,16 +581,91 @@ export default defineComponent({
         regForm.referrer = refCode;
       }
     };
+    const submitUpdateSecurity = () => {
+      telRef.value.validate()
+      verificationCodeRef.value.validate()
+      if (telRef.value.hasError || verificationCodeRef.value.hasError) {
+      } else {
+        api.post("/session/verifyAndUpdatePhone", qs.stringify({
+          phone: updateSecurityVerified.phone,
+          code: updateSecurityVerified.verificationCode,
+          codeId: verificationDetails.memberInfo.codeId
+        })).then((res) => {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t('lang.successfully_verified'),
+            icon: "check_circle_outline"
+          });
+          select_menu.value = 'isVerified';
+        }).catch((e) => {
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: e.message,
+          //   icon: "report_problem"
+          // });
+        });
+      }
+    }
 
+    const verificationDetails = reactive({
+      memberInfo: {}
+    });
+    const verificationModalVisible = ref(false)
+    const verifyVerificationCode = () => {
+      isEmailSending.value = true;
+      const phoneDetails = {
+        telephone: updateSecurityVerified.phone,
+        captchaCode: updateSecurityVerified.captchaCode,
+        codeId: updateSecurityVerified.codeId
+      }
+      api.post("/otp/sendSms", qs.stringify(phoneDetails)).then((res) => {
+        const ret = res.data
+        if (ret.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
+            icon: "check_circle_outline"
+          });
+          verificationDetails.memberInfo.codeId = ret.data.codeId
+          verificationModalVisible.value = false;
+          isEmailSending.value = false
+        } else {
+          isEmailSending.value = false
+          getCode()
+        }
+      })
+          .catch((e) => {
+            getCode()
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: e.message,
+            //   icon: "report_problem"
+            // });
+          });
+    }
+    const isEmailSending = ref(false)
+    const updateSecurityVerified = reactive({
+      phone: "",
+      verificationCode: ""
+    });
+    const openVerificationModal = () => {
+      getCode();
+      verificationModalVisible.value = true;
+    }
     return {
       regForm,
       verificationImg,
       loginNameRef,
       pwdRef,
       confirmPwdRef,
-      // telRef,
+      telRef,
       emailRef,
       verificationRef,
+      verificationCodeRef,
       cardNumberRef,
       cardAccountNameRef,
       cardAccountSurnameRef,
@@ -527,7 +687,15 @@ export default defineComponent({
       done2,
       hasAffiliate,
       getAffiliateCode,
-      getReferralCode
+      getReferralCode,
+      verifyPhone,
+      verifyVerificationCode,
+      select_menu,
+      updateSecurityVerified,
+      verificationModalVisible,
+      submitUpdateSecurity,
+      openVerificationModal,
+      verificationDetails
       // birthdayRef
     };
   }
@@ -552,6 +720,13 @@ function charType(num) {
   padding: 10px;
 }
 
+.half {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 10px;
+}
 .space-between {
   display: flex;
   justify-content: space-between;
@@ -561,6 +736,15 @@ function charType(num) {
 .txt-center {
   text-align: center;
   padding: 0 10px;
+}
+.common-btn {
+  &.verification-btn {
+    flex: 1;
+    display: block;
+    width: 95%;
+    padding: 8px;
+    background: $linear-bg-2;
+  }
 }
 
 .password-str-div {
