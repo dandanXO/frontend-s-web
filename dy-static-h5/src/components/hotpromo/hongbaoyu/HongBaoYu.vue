@@ -15,6 +15,18 @@
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
+      <div class="close-btn">
+        <q-btn
+          @click="isClaimModal = false"
+          v-close-popup
+          rounded
+          icon="close"
+          color="white"
+          height="40"
+          width="40"
+        ></q-btn>
+      </div>
+
       <q-card-section class="row items-center">
         <div class="red-packet-opened">
           <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />

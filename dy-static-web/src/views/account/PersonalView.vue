@@ -496,7 +496,7 @@ export default defineComponent({
       updateSecurityVerified.emailAddress = cachedEmail;
       updateSecurityVerified.verificationCode = "";
       updateSecurityModalVisible.value = true;
-    };
+    };    
     const openVerificationModal = () => {
       updateSecurityFormRef.value.validateField('emailAddress').then((resp) => {
           // captchaForm.captchaCode = "";
@@ -558,8 +558,17 @@ export default defineComponent({
     })
     }
     const submitUpdateSecurity = () => {
-      loadingSecurityBtn.value = true
-      updateSecurityFormRef.value
+      loadingSecurityBtn.value = true;
+
+      if (!updateSecurityVerified.emailAddress || !updateSecurityVerified.verificationCode || !updateSecurityVerified.captchaCode){
+        ElMessage({
+          message: '请输入有效的验证码',
+          type: 'error',
+          })
+
+        loadingSecurityBtn.value = false;
+      } else {
+        updateSecurityFormRef.value
         .validate()
         .then(() => {
           verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode
@@ -584,6 +593,8 @@ export default defineComponent({
         console.log("error", error);
       });
       loadingSecurityBtn.value = false
+      }
+
     };
     // Phone
 

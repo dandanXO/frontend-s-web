@@ -66,6 +66,18 @@
       </div>
     </div>
   </div>
+
+  <el-dialog v-model="showDialog" width="fit-content">
+    <slide-verify
+      ref="slideRef"
+      @success="onSuccess"
+      @fail="onFail"
+      slider-text="向右拖动"
+      :imgs="imgs"
+      style="margin-bottom: 20px;"
+    />
+    <span :style="{color: msgColor}"> {{ msg }} </span>
+  </el-dialog>
 </template>
 <script>
 import {
@@ -81,12 +93,15 @@ import { useRoute, useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import xfLogo from "@/assets/images/xf/logo.png";
+import img0 from '@/components/slider/assets/img.jpg'
+import img1 from '@/components/slider/assets/img1.jpg'
 
 export default defineComponent({
   setup() {
     const userNameRef = ref(null);
     const passwordRef = ref(null);
     const loginFormRef = ref(null);
+    const slideRef = ref(null)
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
@@ -117,7 +132,10 @@ export default defineComponent({
       showDialog: false,
       capsTooltip: false,
       redirect: "",
-      otherQuery: {}
+      otherQuery: {},
+      imgs: [img0, img1],
+      msg: '',
+      msgColor: 'black',
     });
 
     const methods = reactive({
@@ -148,23 +166,38 @@ export default defineComponent({
       handleLogin: () => {
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
-            state.loading = true;
-            try {
-              await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm);
-            } catch (e) {
-              console.error(e);
-              state.loading = false;
-              return;
-            }
-            router.push({
-              path: state.redirect || "/",
-              query: state.otherQuery
-            }).catch(err => {
-              console.warn(err);
-            });
+            state.msg = ''
+            state.showDialog = true
           }
         });
-      }
+      },
+      onFail: () => {
+        state.msg = "验证失败，请重试"
+        state.msgColor = 'red'
+      },
+      onSuccess: async (times) => {
+        state.msg = "验证通过， 耗时 " + (times / 1000).toFixed(1) + " 秒";
+        state.msgColor = 'green'
+        state.loading = true
+        try {
+          await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)
+        } catch (e) {
+          console.error(e)
+          slideRef.value.reset()
+          state.msg = ''
+          state.showDialog = false
+          state.loading = false
+          return
+        }
+        router
+          .push({
+            path: state.redirect || '/',
+            query: state.otherQuery,
+          })
+          .catch(err => {
+            console.warn(err)
+          })
+      },
     });
 
     function getOtherQuery(query) {
@@ -196,6 +229,7 @@ export default defineComponent({
       passwordRef,
       loginFormRef,
       xfLogo,
+      slideRef,
       ...toRefs(state),
       ...toRefs(methods)
     };

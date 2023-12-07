@@ -8,6 +8,30 @@ export const constantRoutes = [
     component: () => import('../views/dy/login/index.vue'),
   },
   {
+    path: "/xf/login",
+    name: "XF Login",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/xf/login/index.vue")
+  },
+  {
+    path: "/xf/register",
+    name: "XF Register",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/xf/register/index.vue")
+  },
+  {
+    path: "/dy/login",
+    name: "DY Login",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/dy/login/index.vue")
+  },
+  {
+    path: "/dy/register",
+    name: "DY Register",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/dy/register/index.vue")
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',

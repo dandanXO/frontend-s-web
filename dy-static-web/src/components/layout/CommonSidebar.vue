@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="app-download customer-div">
-        <a href="https://dy9367.app/" target="_blank">
+        <a :href="downloadUrl" target="_blank">
           <RiDownloadCloudLine />
           <div class="remixicon-download-cloud-line"></div>
           <div style="margin-top: 15px">APP下载</div>
@@ -52,7 +52,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import {
   RiPaletteLine,
   RiCustomerServiceLine,
@@ -63,6 +63,7 @@ import {
   RiRocketLine
 } from "vue-remix-icons";
 import { userStore } from "@/store";
+import { getAppDownloadUrlFromServer } from "@/api/index/site";
 
 export default defineComponent({
   components: {
@@ -80,10 +81,27 @@ export default defineComponent({
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
     const store = userStore();
+
+    const downloadUrl = ref("");
+    const getAppDownloadUrl = () => {
+      getAppDownloadUrlFromServer()
+        .then((res) => {
+          downloadUrl.value = res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    onMounted(() => {
+      getAppDownloadUrl();
+    });
+
     return {
       store,
       customerHovered,
-      scrollToTop
+      scrollToTop,
+      downloadUrl
     };
   }
 });

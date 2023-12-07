@@ -28,6 +28,15 @@ onMounted(() => {
   }else{
     link.href = '/favicon.ico';
   }
+  
+  // change path according to hostname
+  if (window.location.pathname === '/login') {
+    if (window.location.host.indexOf('xf') > -1) {
+      window.location.pathname = '/xf/login'
+    } else {
+      window.location.pathname = '/dy/login'
+    }
+  }
 
 });
 

@@ -1439,6 +1439,7 @@ export default {
     validateChoiceThreeRequired: 'Please select game type',
     validateClassNameRequired: 'Class Name is required',
     validateCodeRequired: 'Code is required',
+    validateCodeExist: 'Code exists, please input a different code. - Existing Code : ',
     validateColorRequired: 'Color is required',
     validateCommissionRequired: 'Commission is required',
     validateCommissionFormat: 'Commission must be between 0 to 1',

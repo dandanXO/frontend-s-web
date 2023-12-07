@@ -47,7 +47,7 @@
               <el-icon><UserFilled /></el-icon>
               <span>累计注册</span>
               <div class="total-info-div">
-                <span class="total-span" id="total-signup-no">0</span>
+                <span class="total-span" id="total-signup-no">{{ referredMember }}</span>
                 人
               </div>
             </div>
@@ -57,7 +57,7 @@
               <el-icon><Money /></el-icon>
               <span>累计充值</span>
               <div class="total-info-div">
-                <span class="total-span" id="total-topup-no">0</span>
+                <span class="total-span" id="total-topup-no">{{ depositMember }}</span>
                 人
               </div>
             </div>
@@ -92,7 +92,7 @@
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted } from "vue";
-import { getReferralLink } from "@/api/personal/share"
+import { getReferralLink, getInviteFriendListCount } from "@/api/personal/share"
 import { RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine,
 } from "vue-remix-icons"
 import { UserFilled, Money } from "@element-plus/icons-vue";
@@ -111,6 +111,8 @@ export default defineComponent({
       date: moment('2022-03-03', 'YYYY-MM-DD'),
     });
     const referralLink = ref('');
+    const referredMember = ref(0);
+    const depositMember = ref(0);
     const copybtntxt = ref("复制");
     const copyinput = ref(null);
     const copyCode = () => {
@@ -143,8 +145,20 @@ export default defineComponent({
         console.log(err)
       })
     };
+    
+    const getInviteCount = () => {
+      getInviteFriendListCount().then((res) => {
+        if(res.code === 0) {
+          referredMember.value = res.data.referredMember;
+          depositMember.value = res.data.depositMember;
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    };
     onMounted(() => {
       getReferral()
+      getInviteCount()
     })
     return {
       searchForm,
@@ -154,7 +168,9 @@ export default defineComponent({
       blurCode,
       referralLink,
       VueQRCodeComponent,
-      router
+      router,
+      referredMember,
+      depositMember
     };
   },
 });
