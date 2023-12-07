@@ -144,14 +144,19 @@
                 <div class="yel-dot"></div>
                 <div class="desc">Withdrew Amount</div>
               </div>
-              <div class="desc">RS:100</div>
+              <div class="desc">
+                RS:{{
+                  withdrawalMethods[withdrawalDialogTab].withdrawMax -
+                  withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
+                }}
+              </div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
-                <div class="desc">VIP0 Daily Limit</div>
+                <div class="desc">{{ store.vip }} Daily Limit</div>
               </div>
-              <div class="desc">RS:100</div>
+              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
