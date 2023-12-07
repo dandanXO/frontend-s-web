@@ -154,7 +154,7 @@
           <div style="position: absolute; right: 0; top: 27px; transform: translateX(50%)">5000000</div>
         </div>
         <div style="margin: 15px 0 25px 15px; color: #596281">
-          注：流水只统计东赢电竞，CR体育，IM电竞/体育，沙巴体育，小艾电竞总流水。
+          注：流水只统计东赢电竞，IM电竞/体育，沙巴体育，小艾电竞总流水。
           <div class="exchange-btn exchange-record-btn active" @click="loadMemberRecords()">兑换记录</div>
         </div>
       </div>

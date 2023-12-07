@@ -185,8 +185,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.token) {
-      console.log(gameCode);
-      console.log(platformCode);
+      console.log('gameCode',gameCode);
+      console.log('platformCode',platformCode);
 
       //Straight open Dialog Before Loading.
       if (
@@ -194,10 +194,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           platformCode === "SGWin" ||
           platformCode === "TCG" ||
           platformCode === "PT" ||
+          (platformCode === "onlyPlatform" && gameCode === "IMES") ||
           (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
         )
       ) {
         visible.value = true;
+        
       }
 
       if (gameCode === "bbkeno_lobby_pc") {
@@ -205,6 +207,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       }
 
       if (platformCode === "onlyPlatform") {
+        
         launchSessionGame(gameCode, {
           isMobile: isMobile()
         }).then((res) => {
@@ -215,6 +218,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         platformCode === "SGWin" ||
         platformCode === "TCG" ||
         platformCode === "PT" ||
+        (platformCode === "onlyPlatform" && gameCode === "IMES") ||
         (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
       ) {
         launchSessionGame(platformCode, {
