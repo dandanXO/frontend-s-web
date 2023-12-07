@@ -101,6 +101,7 @@
               </div>
               <div
                 class="btn-answer"
+                :class="submittedFormStatus && 'submitted-ans'"
                 data-question-id="1"
                 data-question-type="select"
                 id="submitBtn"
@@ -434,12 +435,13 @@ function onSubmitClick() {
     const { code, data, message } = res;
     if (code == 0) {
       // submittedFormStatus
-      if (data.count == 0) {
-        ElMessage.success("您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次；");
-      } else {
-        ElMessage.success("您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!");
-      }
+      // if (res.count == 0) {
+      //   ElMessage.success("您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次；");
+      // } else {
+      //   ElMessage.success("您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!");
+      // }
 
+      ElMessage.success("您好，您已成功提交本场竞猜答案");
       submittedFormStatus.value = true;
     } else {
       ElMessage.error(message);
@@ -572,6 +574,11 @@ const submittedFormStatus = ref(false);
               background-image: linear-gradient(255deg, #0094ff 0%, #18c5ff 100%), linear-gradient(#0084a4, #0084a4);
               background-blend-mode: normal, normal;
               border-radius: 4px;
+              &.submitted-ans {
+                filter: brightness(0.8);
+                cursor: not-allowed;
+                pointer-events: all !important;
+              }
             }
           }
         }
