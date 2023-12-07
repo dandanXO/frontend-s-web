@@ -85,6 +85,7 @@ const getPromotion = () => {
 const getPromotionPrize = () => {
   store.getBalance();
   isClaimModal.value = false;
+  bonusOpened.value = false;
 };
 </script>
 
