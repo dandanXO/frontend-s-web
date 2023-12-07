@@ -4,7 +4,7 @@
       <div class="withdrawal-modal-view-top">
         <div class="withdrawal-modal-view-top--title">Withdrawal</div>
         <div class="withdrawal-modal-view-top--img">
-          <img class="top-bg" src="../../assets/images/common/content-frame-top.png" />
+          <img class="top-bg" src="../../assets/images/common/content-frame-top-short.png" />
         </div>
 
         <q-btn
@@ -144,21 +144,26 @@
                 <div class="yel-dot"></div>
                 <div class="desc">Withdrew Amount</div>
               </div>
-              <div class="desc">RS:100</div>
+              <div class="desc">
+                RS:{{
+                  withdrawalMethods[withdrawalDialogTab].withdrawMax -
+                  withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
+                }}
+              </div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
-                <div class="desc">VIP0 Daily Limit</div>
+                <div class="desc">{{ store.vip }} Daily Limit</div>
               </div>
-              <div class="desc">RS:100</div>
+              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
                 <div class="desc">Remain Wagers</div>
               </div>
-              <div class="desc">RS:100</div>
+              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
             </div>
           </div>
         </q-card>
@@ -400,7 +405,7 @@ const goToBank = () => {
   margin: auto;
 
   .withdrawal-modal-view-top {
-    background: url(../../assets/images/common/content-frame-top.png) no-repeat center/contain;
+    background: url(../../assets/images/common/content-frame-top-short.png) no-repeat top center/contain;
     position: relative;
     margin-top: 40px;
 
@@ -441,7 +446,7 @@ const goToBank = () => {
 
   .withdrawal-modal-view-middle {
     position: relative;
-    background: url(../../assets/images/common/content-frame-middle.png) round top/100% auto;
+    background: url(../../assets/images/common/content-frame-middle-short.png) round top/100% auto;
     min-height: 435px;
     padding: 16px;
     margin-top: -1px;
@@ -635,7 +640,7 @@ const goToBank = () => {
   }
 
   .withdrawal-modal-view-bottom {
-    background: url(../../assets/images/common/content-frame-bottom.png) round top/100% auto;
+    background: url(../../assets/images/common/content-frame-bottom-short.png) round top/100% auto;
     min-height: 50px;
     position: relative;
     margin-bottom: 60px;
