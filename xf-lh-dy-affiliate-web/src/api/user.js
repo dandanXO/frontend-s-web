@@ -2,7 +2,7 @@ import https from "@/utils/https";
 import { ContentType, Method } from "axios-mapper";
 
 export const loginRequest = (userInfo) => {
-  return https().request("/auth/login", Method.POST, userInfo, ContentType.form);
+  return https().request("/auth/affLogin", Method.POST, userInfo, ContentType.form);
 };
 export const registerRequest = (userInfo) => {
   return https().request("/auth/register", Method.POST, userInfo, ContentType.form);
