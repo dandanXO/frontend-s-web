@@ -2,7 +2,6 @@
   <ProfileSummary></ProfileSummary>
 
   <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
-
   <ContentView :contentTopStatus="`solid`">
     <q-card class="search-container">
       <q-form layout="inline" :model="searchForm">
@@ -57,7 +56,7 @@
     <template v-else>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
-          <div class="date">{{ moment(e.betTime).format("YYYY-MM-DD HH:mm") }}</div>
+          <div class="date">{{ adjustTimeToGMT55(e.betTime).format("YYYY-MM-DD HH:mm") }}</div>
           <q-btn
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
             :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
@@ -205,12 +204,15 @@ const totalBetRecord = reactive({
   totalBet: 0,
   totalPayout: 0
 });
+const convertToGMT8 = (dateTime) => {
+  return moment(dateTime).utcOffset('+08:00').toISOString();
+};
 const getGameBetRecordTotal = () => {
   const obj = {
     memberId: store.id,
     platform: searchForm.platform,
-    startDate: searchForm.startDate,
-    endDate: searchForm.endDate
+    startDate: convertToGMT8(searchForm.startDate),
+    endDate: convertToGMT8(searchForm.endDate)
   };
   api.get("/session/member/gameBetRecordTotal", { params: obj }).then((res) => {
     if (res.code === 0) {
@@ -220,7 +222,9 @@ const getGameBetRecordTotal = () => {
     }
   });
 };
-
+const adjustTimeToGMT55 = (dateTime) => {
+  return moment(dateTime).utcOffset('+05:30');
+};
 onMounted(() => {
   setTime();
   getPlatformList();

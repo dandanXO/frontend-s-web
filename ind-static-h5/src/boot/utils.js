@@ -81,6 +81,11 @@ export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
 export const updateDate = (val) => {
   const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
   const oldDate = new Date(gapDate);
+
+  // Adjust the time to GMT+5.5
+  oldDate.setHours(oldDate.getHours() + 5);
+  oldDate.setMinutes(oldDate.getMinutes() + 30);
+
   const newDate = {
     Y: oldDate.getFullYear() + "-",
     M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
