@@ -99,7 +99,7 @@
           <div class="header-menu-item" v-for="nav in navigations" :key="nav.name">
             <a v-if="nav.code === 'Agent'" :class="{ icon: nav.hasicon }" :href="nav.path" target="_blank">
               <RiVipDiamondLine />
-                <span>{{ nav.name }}</span>
+              <span>{{ nav.name }}</span>
             </a>
             <router-link
               @mouseover="showSubMenu(nav)"
@@ -147,7 +147,8 @@
       @close="store.loginPageVisible = false"
     >
       <div class="login-container">
-        <div class="login-left">
+        <div class="content-form">
+          <div class="dialog-title">登录</div>
           <span>
             <el-tabs>
               <el-tab-pane label="账户登录">
@@ -157,7 +158,7 @@
                   :model="loginForm"
                   label-width="100"
                   label-suffix=":"
-                  style="width: 100%; max-width: 400px; margin: 50px auto"
+                  class="form-content"
                 >
                   <!-- <el-row>
                     <el-col>
@@ -204,7 +205,7 @@
                   :model="loginForm"
                   label-width="100"
                   label-suffix=":"
-                  style="width: 100%; max-width: 400px; margin: 50px auto"
+                  class="form-content"
                 >
                   <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
                     <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
@@ -249,11 +250,21 @@
             </el-tabs>
           </span>
         </div>
-        <div class="login-right">
+        <div class="details-form">
           <div class="title"></div>
           <ul class="tips">
             <li>注册立即畅游，精彩赛事尽在东赢电竞！</li>
           </ul>
+
+          <div
+            class="toggle-side toggle-side--reg"
+            @click="
+              registerDialogVisible = true;
+              loginDialogVisible = false;
+            "
+          >
+            开设账户
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -266,22 +277,28 @@
       style="max-width: 1200px"
       @close="store.regPageVisible = false"
     >
-      <div class="register-container">
-        <div class="registered-left">
-          <div class="title"></div>
+      <div class="login-container">
+        <div class="details-form">
+          <div class="title-reg"></div>
           <ul class="tips">
             <li>标记有 * 者为必填项目。</li>
             <li>手机号码为找回密码的重要凭证，请务必填写真实信息。</li>
             <li>若公司有其他活动会邮件通知您，请您务必填写真实有效的邮箱。"</li>
           </ul>
+
+          <div
+            class="toggle-side toggle-side--login"
+            @click="
+              loginDialogVisible = true;
+              registerDialogVisible = false;
+            "
+          >
+            登录
+          </div>
         </div>
-        <div class="registered-right">
-          <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="100">
-            <el-row>
-              <el-col>
-                <span class="title">注册账号</span>
-              </el-col>
-            </el-row>
+        <div class="content-form">
+          <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="100" class="form-content-reg">
+            <div class="dialog-title">注册账号</div>
 
             <el-form-item label="姓名" prop="realName">
               <el-space>
@@ -426,8 +443,30 @@
               </el-space>
             </el-form-item>
           </el-form>
-          <el-button class="common-btn" color="#3bafda" @click="resetRegForm(registerRef)">重新填写</el-button>
-          <el-button class="common-btn" @click="submitRegisterForm(registerRef)" color="#3bafda">确认注册</el-button>
+
+          <div style="margin-top: 40px">
+            <el-button
+              :loading="loadingBtn"
+              size="large"
+              color="#3bafda"
+              class="common-btn"
+              style="margin-left: 100px"
+              @click="resetRegForm(registerRef)"
+            >
+              重新填写
+            </el-button>
+
+            <el-button
+              :loading="loadingBtn"
+              size="large"
+              color="#3bafda"
+              class="common-btn"
+              style="margin-left: 30px"
+              @click="submitRegisterForm(registerRef)"
+            >
+              确认注册
+            </el-button>
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -611,7 +650,7 @@ import PromotionMenu from '@/components/menu/PromotionMenu.vue'
 import AppMenu from '@/components/menu/AppMenu.vue'
 import 'vue3-marquee/dist/style.css'
 import {useElementSize} from '@vueuse/core'
-import {ArrowDown, Refresh} from '@element-plus/icons-vue'
+import {ArrowDown, Refresh, ArrowRight, ArrowLeft} from '@element-plus/icons-vue'
 import {storeToRefs} from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -633,6 +672,8 @@ export default defineComponent({
     AppMenu,
     RiVolumeUpFill,
     ArrowDown,
+    ArrowRight,
+    ArrowLeft,
     Refresh,
     RiAccountCircleLine,
     RiMoneyCnyCircleLine,
@@ -1982,7 +2023,26 @@ body {
   display: flex;
   min-height: 70vh;
 
-  .login-right {
+  .dialog-title {
+    color: #5075ad;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #cecece;
+  }
+
+  .form-content {
+    max-width: 400px;
+    margin: 50px auto;
+  }
+
+  .form-content-reg {
+    max-width: 600px;
+    margin: 50px auto;
+  }
+
+  .details-form {
     background-image: url(../../assets/home/zc.jpg);
     background-size: cover;
     background-position: 100% 100%;
@@ -2008,11 +2068,20 @@ body {
       width: 107px;
       height: 35px;
     }
+
+    .title-reg {
+      background-image: url(../../assets/home/download.png);
+      background-position: 100% 100%;
+      width: 143px;
+      height: 35px;
+    }
   }
-  .login-left {
+  .content-form {
     flex: 2;
-    padding: 73px 44px;
-    max-width: 600px;
+    // padding: 73px 44px;
+    padding: 16px;
+    width: 100%;
+    max-width: 700px;
     background: url(../../assets/images/index/reg-bg.jpg) no-repeat center center;
     background-size: cover;
 
@@ -2036,6 +2105,38 @@ body {
         margin-top: 52px;
       }
     }
+  }
+}
+
+.toggle-side {
+  position: absolute;
+  bottom: 220px;
+  color: #ffffff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  line-height: 1;
+
+  min-width: 185px;
+  overflow: hidden;
+  z-index: 100;
+  font-weight: 500;
+  letter-spacing: 2px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border: 2px solid #45fdfb;
+  border-radius: 24px;
+  transition: 0.3s;
+
+  &--reg {
+    right: 120px;
+  }
+
+  &--login {
+    left: 120px;
   }
 }
 
