@@ -2598,7 +2598,6 @@ export default defineComponent({
   position: absolute;
   top: 10%;
   right: 0;
-  box-shadow: 0px 4.5px 5.4px 0px #00000040;
 }
 
 .special-invite-bonus-container {
