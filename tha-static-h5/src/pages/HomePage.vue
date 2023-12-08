@@ -789,7 +789,9 @@
     </q-card>
   </q-dialog>
 
-  <div class="special-invite-bonus-sticky" v-if="specialInviteBonusEligible" @click="redeemSpecialInviteBonus" />
+  <q-page-sticky v-if="specialInviteBonusEligible" position="right" :offset="[0, 0]">
+    <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+  </q-page-sticky>
 
   <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
     <div class="special-invite-bonus-container">
@@ -2598,7 +2600,6 @@ export default defineComponent({
   position: absolute;
   top: 10%;
   right: 0;
-  box-shadow: 0px 4.5px 5.4px 0px #00000040;
 }
 
 .special-invite-bonus-container {

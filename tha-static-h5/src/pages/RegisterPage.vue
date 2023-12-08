@@ -239,7 +239,7 @@
               <q-icon name="security" />
             </template>
           </q-input>
-          <q-btn :disabled="isOtpSending" :style="isOtpSending ? 'opacity: .6' : ''" class="common-btn verification-btn"
+          <q-btn :disabled="isOtpSending" :style="isOtpSending ? 'opacity: .6' : ''" class="common-btn verification-btn third-btn"
             @click.prevent="getOtpCode">
             {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
           </q-btn>
