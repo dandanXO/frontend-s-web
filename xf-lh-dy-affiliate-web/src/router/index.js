@@ -47,11 +47,11 @@ export const constantRoutes = [
     ],
   },
   {
-    path: '/member',
+    path: '/downline',
     component: Layout,
     children: [
       {
-        path: 'manage',
+        path: 'member',
         component: () =>
           import('../views/member-info/member-management/index.vue'),
         name: 'Member Management',
@@ -68,6 +68,14 @@ export const constantRoutes = [
         name: 'Tag Setting',
         meta: {
           title: 'tag-setting',
+        },
+      },
+      {
+        path: 'affiliate',
+        component: () => import('../views/member-info/affiliate-management/index.vue'),
+        name: 'Affiliate Management',
+        meta: {
+          title: 'affiliate-management',
         },
       },
       {

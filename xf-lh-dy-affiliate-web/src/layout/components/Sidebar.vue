@@ -64,11 +64,18 @@ const navigationData = ref([
   {
     title: '下级信息',
     display: true,
-    path: '/member',
+    path: '/downline',
     children: [
       {
-        path: '/manage',
+        path: '/member',
         title: '会员管理',
+        active: false,
+        isMainNav: true,
+        icon: 'squares',
+      },
+      {
+        path: '/affiliate',
+        title: '代理管理',
         active: false,
         isMainNav: true,
         icon: 'squares',
