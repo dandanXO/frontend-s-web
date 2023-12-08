@@ -924,7 +924,7 @@ async function loadAllTags() {
 }
 
 function goToTagSetting() {
-  router.push('/member/tag-setting')
+  router.push('/downline/tag-setting')
 }
 
 function transferRedirect(name) {
@@ -932,7 +932,7 @@ function transferRedirect(name) {
 }
 
 function showGameRecord(name) {
-  router.push(`/member/game-record?user=${name}`)
+  router.push(`/downline/game-record?user=${name}`)
 }
 
 function showDepositRecord(member) {
