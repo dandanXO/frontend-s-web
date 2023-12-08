@@ -840,7 +840,7 @@
         <router-link to="/promo?id=81">
           <div class="popup-item">
             <span>
-              คลิกเพื่อหมุน รางวัลสูงสุด
+              คลิกเพื่อหมุนวงล้อ รางวัลสูงสุด
               <em>8,880</em>
               และ
               <em>IPHONE</em>
@@ -2621,7 +2621,7 @@ export default defineComponent({
       }
     }
   }
-  
+
 
   .special-invite-bonus-content {
     background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
