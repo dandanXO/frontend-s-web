@@ -69,22 +69,22 @@
 
   <el-dialog
     v-model="showDialog"
-    width="30%"
+    width="25%"
     @close="onCloseDialog"
     :title="'安全验证, 请依次点击：' + words.join(' , ')"
   >
     <template #header>
       test
     </template>
-    <div style="display: flex; flex-direction: column; gap: 20px" v-loading="dialogLoading">
+    <div style="display: flex; flex-direction: column; gap: 20px">
       <el-image
+        v-loading="dialogLoading"
         style="cursor: pointer"
         id="imageRef"
         fit="contain"
         :src="img"
         @click="onClickImage"
       />
-      <span :style="{color: msgColor}">{{ msg }}</span>
     </div>
     <div>
       <el-button
@@ -170,8 +170,6 @@ export default defineComponent({
       capsTooltip: false,
       redirect: "",
       otherQuery: {},
-      msg: '',
-      msgColor: 'black',
       words: [],
       codeId: '',
       img: '',
@@ -208,14 +206,11 @@ export default defineComponent({
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             methods.onGetImage()
-            state.msg = ''
             state.showDialog = true
           }
         });
       },
       onFail: () => {
-        state.msg = '验证失败，请重试'
-        state.msgColor = 'red'
         methods.onGetImage()
         state.coordinates.splice(0)
       },
@@ -281,15 +276,12 @@ export default defineComponent({
           }
           state.loginForm.coordinates = coordinatesString.join('-')
           await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)
-          state.msg = '验证通过'
-          state.msgColor = 'green'
           state.loading = true
           methods.onSuccess()
         } catch (e) {
           if (e.message === '验证失败') {
             methods.onFail()
           } else {
-            state.msg = ''
             state.showDialog = false
           }
           state.loading = false
@@ -468,6 +460,10 @@ export default defineComponent({
 :deep(.el-image__inner) {
   max-height: 100% !important;
   max-width: 100% !important;
+}
+
+:deep(.el-image) {
+  margin-top: -30px;
 }
 
 @media (max-width: 768px) {
