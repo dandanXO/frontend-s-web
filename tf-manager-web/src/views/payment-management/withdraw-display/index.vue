@@ -203,7 +203,23 @@
           <el-input v-model="ruleForm.name" autocomplete="off" />
         </el-form-item>
         <el-form-item :label="t('fields.code')" prop="code" required>
-          <el-input v-model="ruleForm.code" autocomplete="off" />
+          <!-- <el-input v-model="ruleForm.code" autocomplete="off" /> -->
+          <el-select
+            filterable
+            clearable
+            v-model="ruleForm.code"
+            size="small"
+            :placeholder="t('fields.pleaseChoose')"
+            class="filter-item"
+            style="width: 200px; margin-bottom: 16px"
+          >
+            <el-option
+              v-for="item in list.filteredPayTypes"
+              :key="item.id"
+              :label="item.code"
+              :value="item.code"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.icon')" prop="icon" required>
           <el-row :gutter="24">
@@ -280,6 +296,7 @@ import {
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getSiteListSimple } from '../../../api/site'
 import { getFinancialLevels } from '../../../api/financial-level'
+import { getActivePaymentTypes } from '../../../api/payment-type'
 import { uploadImage } from '../../../api/image'
 import { required } from '../../../utils/validate'
 import { getCurrencyNames } from '../../../api/currency'
@@ -338,6 +355,9 @@ const copy = reactive({
 
 const list = reactive({
   currencies: [],
+  payTypes: [],
+  filteredPayTypes: [],
+  siteCurrencyIds: [],
 })
 
 const paymentNameFilter = ref(null)
@@ -562,6 +582,7 @@ async function loadSearchConditionSite() {
   const { data: ret } = await getSiteListSimple()
   page.sites = ret
   getSelectedSearchCondition()
+  loadPayTypes()
 }
 
 async function loadSearchConditionFinancial() {
@@ -572,8 +593,34 @@ async function loadSearchConditionFinancial() {
   getSelectedSearchCondition()
 }
 
+async function loadPayTypes() {
+  const { data: payType } = await getActivePaymentTypes()
+  list.payTypes = payType
+  filterPayTypeByCurrency()
+}
+
+function filterPayTypeByCurrency() {
+  const currentSite = page.sites.find(s => s.id === searchCondition.siteId)
+  const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
+  list.siteCurrencyIds = [
+    ...currencyCodeList.map(currencyName => {
+      const currency = list.currencies.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
+      return currency ? currency.id : null;
+    }).filter(Boolean)
+  ]
+  list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
+}
+
+function payTypeByCurrencyID (record) {
+  if (record.currencyIds) {
+    const currencyIdsList = record.currencyIds.split(',')
+    return currencyIdsList.filter(currencyId => list.siteCurrencyIds.includes(parseInt(currencyId))).length > 0
+  }
+}
+
 function handleSiteNameCheckedChange() {
   loadSearchConditionFinancial()
+  filterPayTypeByCurrency()
 }
 
 onMounted(() => {
