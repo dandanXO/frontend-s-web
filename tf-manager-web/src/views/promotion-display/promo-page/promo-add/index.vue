@@ -250,7 +250,7 @@
         size="mini"
         type="success"
         ref="searchImage"
-        @click="loadSiteImage"
+        @click="loadSiteImage(uiControl.imageSelectionType)"
       >
         {{ t('fields.search') }}
       </el-button>
@@ -466,7 +466,7 @@ function selectImage(item) {
 }
 
 function browseImage(type) {
-  loadSiteImage()
+  loadSiteImage(type)
   switch (type) {
     case 'DESKTOP_IMAGE':
       uiControl.imageSelectionTitle = t('fields.desktopImage')
@@ -554,8 +554,9 @@ async function loadForm(id, siteId) {
   })
 }
 
-async function loadSiteImage() {
+async function loadSiteImage(type) {
   selectedImage.id = 0
+  imageRequest.promoType = type
   const { data: ret } = await getSiteImage(imageRequest)
   imageList.list = ret.records
   imageList.pages = ret.pages
