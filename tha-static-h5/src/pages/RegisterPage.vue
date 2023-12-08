@@ -46,7 +46,7 @@
             <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
           </template>
         </q-input>
-        <div v-if="regForm.password && select_menu != 'verify'" class="password-str-div">
+        <div v-if="regForm.password" class="password-str-div">
           <span
             :class="{
               'weak-pwd': pwdStrength == 'weak',
@@ -94,94 +94,65 @@
           </template>
         </q-input>
 
-        <q-input
-            ref="telRef"
-            filled
-            v-model="regForm.telephone"
-            :label="$t('lang.phone_number')"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
-              (val) =>
-                (val && val.length > 7) ||
-                $t('lang.please_enter_valid_phone'),
-              isValidPhone
-            ]"
-            :disable="select_menu === 'isVerified'"
-            color="white"
-            clearable
-        >
+        <q-input ref="telRef" filled v-model="regForm.telephone" :label="$t('lang.phone_number')" lazy-rules :rules="[
+          (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+          (val) =>
+            (val && val.length > 7) ||
+            $t('lang.please_enter_valid_phone'),
+          isValidPhone
+        ]" color="white" clearable>
           <template v-slot:prepend>
-            <q-icon name="smartphone"/>
-          </template>
-          <template v-slot:append>
-          <q-btn @click="verifyPhone" v-if="select_menu !== 'isVerified' && select_menu !== 'verify'">{{ $t("lang.verify") }}</q-btn>
-          <q-icon v-if="select_menu === 'isVerified'" name="done" color="green"></q-icon>
+            <q-icon name="smartphone" />
           </template>
         </q-input>
-      <div class="personal-container" v-if="select_menu === 'verify'">
-        <q-form class="q-gutter-sm q-mt-lg form-verification" autocomplete="off">
-          <div class="half">
-            <q-input
-              ref="verificationCodeRef"
-              v-model="regForm.smsCode"
-              :placeholder="$t('lang.one_time_otp')"
-              :label="$t('lang.one_time_otp')"
-              stack-label
-              clearable
-              autocomplete="off"
-              filled
-              color="white"
-              style="width: 100%;"
-            />
-            <q-btn
-              class="common-large-btn third-btn"
-              :label="$t('lang.request_otp_code')"
-              @click="openVerificationModal"
-            />
-          </div>
-          <!-- <div class="flex flex-center gap-10 q-mt-md">
-            <q-btn :label="$t('lang.back')" class="common-large-btn third-btn" @click="select_menu = ''" />
-            <q-btn :label="$t('lang.confirm')" class="common-large-btn" color="brand" @click="submitUpdateSecurity" />
-          </div> -->
-        </q-form>
-      </div>
-               
 
-               <!-- <q-input
-                   ref="birthdayRef"
-                   filled
-                   v-model="regForm.birthday"
-                   :placeholder="$t('lang.dob')"
-                   color="white"
-               >
-                 <template v-slot:prepend>
-                   <q-icon name="cake"/>
-                 </template>
-                 <template v-slot:append>
-                   <q-icon name="event" class="cursor-pointer">
-                     <q-popup-proxy
-                         cover
-                         transition-show="scale"
-                         transition-hide="scale"
-                     >
-                       <q-date
-                           v-model="regForm.birthday"
-                           mask="YYYY-MM-DD"
-                       >
-                         <div class="row items-center justify-end">
-                           <q-btn
-                               v-close-popup
-                               :label="$t('lang.close_btn')"
-                               color="primary"
-                               flat
-                           />
-                         </div>
-                       </q-date>
-                     </q-popup-proxy>
-                   </q-icon>
-                 </template>
-               </q-input> -->
+        <div class="telephone-otp-row">
+          <q-input ref="telOtpCodeRef" v-model="regForm.otpCode" :placeholder="$t('lang.one_time_otp')"
+            :label="$t('lang.one_time_otp')" stack-label clearable autocomplete="off" filled  lazy-rules 
+            :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]">
+            <template v-slot:prepend>
+              <q-icon name="security" />
+            </template>
+          </q-input>
+
+          <q-btn class="common-large-btn third-btn" :label="$t('lang.request_otp_code')"
+            @click="openTelephoneVerificationModal" />
+        </div>
+
+        <!--        <q-input-->
+        <!--            ref="birthdayRef"-->
+        <!--            filled-->
+        <!--            v-model="regForm.birthday"-->
+        <!--            :placeholder="$t('lang.dob')"-->
+        <!--            color="white"-->
+        <!--        >-->
+        <!--          <template v-slot:prepend>-->
+        <!--            <q-icon name="cake"/>-->
+        <!--          </template>-->
+        <!--          <template v-slot:append>-->
+        <!--            <q-icon name="event" class="cursor-pointer">-->
+        <!--              <q-popup-proxy-->
+        <!--                  cover-->
+        <!--                  transition-show="scale"-->
+        <!--                  transition-hide="scale"-->
+        <!--              >-->
+        <!--                <q-date-->
+        <!--                    v-model="regForm.birthday"-->
+        <!--                    mask="YYYY-MM-DD"-->
+        <!--                >-->
+        <!--                  <div class="row items-center justify-end">-->
+        <!--                    <q-btn-->
+        <!--                        v-close-popup-->
+        <!--                        :label="$t('lang.close_btn')"-->
+        <!--                        color="primary"-->
+        <!--                        flat-->
+        <!--                    />-->
+        <!--                  </div>-->
+        <!--                </q-date>-->
+        <!--              </q-popup-proxy>-->
+        <!--            </q-icon>-->
+        <!--          </template>-->
+        <!--        </q-input>-->
 
         <!-- <q-input
           ref="emailRef"
@@ -250,43 +221,32 @@
       </div>
       <!--        </q-step>-->
       <!--      </q-stepper>-->
-
-      <q-dialog color="light" v-model="verificationModalVisible" transition-show="slide-up" transition-hide="slide-down">
-        <q-card class="q-pa-md">
-          <div class="modal-head-title q-pb-md">
-            {{ $t("lang.check_your_captcha_code") }}
-          </div>
-          <q-form class="q-gutter-sm">
-            <q-input
-              class="verification-input"
-              ref="captchaCodeRef"
-              filled
-              type="text"
-              maxlength="4"
-              v-model="updateSecurityVerified.captchaCode"
-              :label="$t('lang.captcha_code')"
-              :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]"
-              color="white"
-            >
-              <template v-slot:append>
-                <img :src="verificationImgSMS" @click="getSMSCode()" />
-              </template>
-              <template v-slot:prepend>
-                <q-icon name="security" />
-              </template>
-            </q-input>
-            <q-btn
-              :disabled="isEmailSending"
-              :style="isEmailSending ? 'opacity: .6' : ''"
-              class="common-btn verification-btn"
-              @click.prevent="verifyVerificationCode"
-            >
-              {{ isEmailSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
-            </q-btn>
-          </q-form>
-        </q-card>
-      </q-dialog>
     </q-form>
+
+    <q-dialog v-model="isTelephoneVerificationModalVisible" transition-show="slide-up" transition-hide="slide-down">
+      <q-card class="q-pa-md">
+        <div class="modal-head-title q-pb-md">
+          {{ $t("lang.check_your_captcha_code") }}
+        </div>
+        <q-form class="q-gutter-sm">
+          <q-input class="verification-input" ref="telephoneVerifyCaptchaCodeRef" filled type="text" maxlength="4"
+            v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode" :label="$t('lang.captcha_code')"
+            :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]" color="white">
+            <template v-slot:append>
+              <img :src="telephoneVerificationCaptchaImg" @click="getTelephoneVerificationImgCode()" />
+            </template>
+            <template v-slot:prepend>
+              <q-icon name="security" />
+            </template>
+          </q-input>
+          <q-btn :disabled="isOtpSending" :style="isOtpSending ? 'opacity: .6' : ''" class="common-btn verification-btn"
+            @click.prevent="getOtpCode">
+            {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
+          </q-btn>
+        </q-form>
+      </q-card>
+    </q-dialog>
+
     <div class="text-center q-mb-md">
       <router-link class="forget-pwd-tip" to="/login">
         {{ $t("lang.already_a_member_signin_now") }}
@@ -305,7 +265,6 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
 import vueI18n from "src/i18n";
-import { RiMarkPenFill } from "vue-remix-icons";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -313,6 +272,8 @@ export default defineComponent({
     const { t } = useI18n();
     const store = userStore();
     const siteId = process.env.SITEID;
+    const qs = require("qs");
+
     onMounted(() => {
       getCode();
       getAffiliateCode();
@@ -335,23 +296,29 @@ export default defineComponent({
     const done2 = ref(false);
     const imgURL = process.env.IMAGE_CDN + "/payment/";
     const verificationImg = ref("");
-    const verificationImgSMS = ref("");
     const regForm = reactive({
       loginName: "",
       password: "",
       confirmPwd: "",
       telephone: "",
+      otpCode: "",
+      otpCodeId: "",
       // email: "",
       codeAffiliate: "",
       // cardAccountName: "",
       // cardAccountSurname: "",
       regHost: location.hostname,
       codeId: "",
-      captchaCode: "",
-      smsCode: "",
-      smsCodeId:"",
+      captchaCode: ""
       // birthday: ""
     });
+
+    const verifyTelephoneForm = reactive({
+      telephone: "",
+      telephoneVerifyCaptchaCode: "",
+      telephoneVerificationCaptchaCodeId: "",
+    });
+
     const getCode = () => {
       api
         .get("/member/verificationCode")
@@ -373,48 +340,85 @@ export default defineComponent({
           // });
         });
     };
-    const getSMSCode = () => {
+    const telephoneVerificationCaptchaImg = ref("");
+    const isOtpSending = ref(false);
+
+    const isTelephoneVerificationModalVisible = ref(false);
+    const openTelephoneVerificationModal = () => {
+      telRef.value.validate();
+      
+      if(telRef.value.hasError) {
+        return;
+      }
+
+      getTelephoneVerificationImgCode();
+      isTelephoneVerificationModalVisible.value = true
+    }
+
+
+    const getTelephoneVerificationImgCode = () => {
       api
         .get("/member/verificationCode")
         .then((res) => {
           const response = res.data;
           if (response.code === 0) {
-            verificationImgSMS.value = "data:image/png;base64," + response.data.img;
-            updateSecurityVerified.captchaCode = "";
-            updateSecurityVerified.codeId = response.data.id;
-            captchaCodeRef.value.resetValidation();
-            alert
+            telephoneVerificationCaptchaImg.value = "data:image/png;base64," + response.data.img;
+            verifyTelephoneForm.telephoneVerificationCaptchaCodeId = response.data.id;
+            verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: e.message,
-          //   icon: "report_problem"
-          // });
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          });
         });
-    }
-    const select_menu = ref('');
-    const verifyPhone = () => {
-      telRef.value.validate();
-      if (
-        telRef.value.hasError
-      ) {
-        } else {
-        if (regForm.telephone) {
-          select_menu.value = 'verify';
-          updateSecurityVerified.phone = regForm.telephone
-        }
+    };
+
+    const getOtpCode = () => {
+      const isTelephoneVerifyCaptchaCodeValid = telephoneVerifyCaptchaCodeRef.value.validate();
+      
+      if(!isTelephoneVerifyCaptchaCodeValid) {
+        return;
       }
+
+      isOtpSending.value = true;
+      regForm.otpCode = '';
+      regForm.otpCodeId = '';
+      const telephoneDetails = {
+        telephone: regForm.telephone,
+        codeId: verifyTelephoneForm.telephoneVerificationCaptchaCodeId,
+        captchaCode: verifyTelephoneForm.telephoneVerifyCaptchaCode
+      }
+      api.post("/otp/sendSms", qs.stringify(telephoneDetails)).then((res) => {
+        const ret = res.data
+        if (ret.code === 0) {
+          regForm.otpCodeId = ret.data.codeId;
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
+            icon: "check_circle_outline"
+          });
+          isTelephoneVerificationModalVisible.value = false;
+        }
+
+        isOtpSending.value = false
+      }).catch((e) => {
+        isOtpSending.value = false
+      });
     }
+
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
     const telRef = ref();
+    const telOtpCodeRef = ref();
+    const telephoneVerifyCaptchaCodeRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
-    const verificationCodeRef = ref();
     const cardAccountNameRef = ref();
     const cardAccountSurnameRef = ref();
     // const birthdayRef = ref();
@@ -423,7 +427,6 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const pwdStrength = ref("");
-    var qs = require("qs");
 
     const isValidEmail = () => {
       const emailPattern =
@@ -441,16 +444,19 @@ export default defineComponent({
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
       telRef.value.validate();
+      telOtpCodeRef.value.validate();
       // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: t("lang.loading")
       });
+      var qs = require("qs");
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
         telRef.value.hasError ||
+        telOtpCodeRef.value.hasError ||
         // emailRef.value.hasError ||
         verificationRef.value.hasError
       ) {
@@ -605,72 +611,18 @@ export default defineComponent({
         regForm.referrer = refCode;
       }
     };
-    const submitUpdateSecurity = () => {
-      telRef.value.validate()
-      verificationCodeRef.value.validate()
-      if (telRef.value.hasError || verificationCodeRef.value.hasError) {
-      }
-      select_menu.value = 'isVerified';
-    }
 
-    const verificationDetails = reactive({
-      memberInfo: {}
-    });
-    const verificationModalVisible = ref(false) 
-    const verifyVerificationCode = () => {
-      isEmailSending.value = true;
-      const phoneDetails = {
-        telephone: updateSecurityVerified.phone,
-        captchaCode: updateSecurityVerified.captchaCode,
-        codeId: updateSecurityVerified.codeId
-      }
-      api.post("/otp/sendSms", qs.stringify(phoneDetails)).then((res) => {
-        const ret = res.data
-        if (ret.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
-            icon: "check_circle_outline"
-          });
-          regForm.smsCodeId = ret.data.codeId
-          verificationModalVisible.value = false;
-          isEmailSending.value = false
-        } else {
-          isEmailSending.value = false
-          getSMSCode()
-        }
-      })
-          .catch((e) => {
-            getSMSCode()
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: e.message,
-            //   icon: "report_problem"
-            // });
-          });
-    }
-    const isEmailSending = ref(false)
-    const updateSecurityVerified = reactive({
-      phone: "",
-      verificationCode: ""
-    });
-    const openVerificationModal = () => {
-      getSMSCode();
-      verificationModalVisible.value = true;
-    }
     return {
       regForm,
       verificationImg,
-      verificationImgSMS,
       loginNameRef,
       pwdRef,
       confirmPwdRef,
       telRef,
+      telOtpCodeRef,
+      telephoneVerifyCaptchaCodeRef,
       emailRef,
       verificationRef,
-      verificationCodeRef,
       cardNumberRef,
       cardAccountNameRef,
       cardAccountSurnameRef,
@@ -681,7 +633,6 @@ export default defineComponent({
       isPwd: ref(true),
       isCfmPwd: ref(true),
       getCode,
-      getSMSCode,
       pwdStrength,
       selectBankType,
       selectedBankType,
@@ -694,14 +645,13 @@ export default defineComponent({
       hasAffiliate,
       getAffiliateCode,
       getReferralCode,
-      verifyPhone,
-      verifyVerificationCode,
-      select_menu,
-      updateSecurityVerified,
-      verificationModalVisible,
-      submitUpdateSecurity,
-      openVerificationModal,
-      verificationDetails
+      telephoneVerificationCaptchaImg,
+      isTelephoneVerificationModalVisible,
+      openTelephoneVerificationModal,
+      getTelephoneVerificationImgCode,
+      isOtpSending,
+      getOtpCode,
+      verifyTelephoneForm
       // birthdayRef
     };
   }
@@ -726,13 +676,6 @@ function charType(num) {
   padding: 10px;
 }
 
-.half {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin: 10px;
-}
 .space-between {
   display: flex;
   justify-content: space-between;
@@ -742,15 +685,6 @@ function charType(num) {
 .txt-center {
   text-align: center;
   padding: 0 10px;
-}
-.common-btn {
-  &.verification-btn {
-    flex: 1;
-    display: block;
-    width: 95%;
-    padding: 8px;
-    background: $linear-bg-2;
-  }
 }
 
 .password-str-div {
@@ -802,6 +736,17 @@ function charType(num) {
 
   .q-field--filled .q-field__control {
     border-radius: 8px;
+  }
+
+  .telephone-otp-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    .q-input {
+      width: 100%;
+    }
   }
 }
 
