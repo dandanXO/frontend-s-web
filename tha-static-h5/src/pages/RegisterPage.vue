@@ -46,7 +46,7 @@
             <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
           </template>
         </q-input>
-        <div v-if="regForm.password" class="password-str-div">
+        <div v-if="regForm.password && select_menu != 'verify'" class="password-str-div">
           <span
             :class="{
               'weak-pwd': pwdStrength == 'weak',
