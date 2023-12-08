@@ -64,7 +64,7 @@
             </div>
             <div class="order-subrow">
               <div class="order-col">
-                <span class="txt-gray">{{ e.depositDate }}</span>
+                <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
               </div>
               <div class="order-col">
                 <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
