@@ -39,7 +39,7 @@
             </div>
             <div class="order-subrow">
               <div class="order-col">
-                <span class="txt-gray">{{ e.withdrawDate }}</span>
+                <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
               </div>
               <div class="order-col">
                 <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
@@ -83,7 +83,7 @@
 import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate, convertToGMT8 } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
