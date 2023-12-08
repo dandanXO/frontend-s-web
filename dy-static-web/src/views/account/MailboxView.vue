@@ -352,7 +352,7 @@ export default defineComponent({
           width: 100%;
           margin-bottom: 20px;
           overflow: hidden;
-          color:#838383;
+          color: #838383;
         }
 
         .mailbox-date {
