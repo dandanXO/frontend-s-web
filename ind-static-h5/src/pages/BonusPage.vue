@@ -196,7 +196,7 @@ let scheduler;
 scheduler = setInterval(() => {
   const curDate = new Date();
   const endDate = date.endOfDate(curDate, "day");
-  const offset = 7 * 60 * 60 * 1000; // GMT+7
+  const offset = 5.5 * 60 * 60 * 1000; // GMT+5.5
   const difference = endDate - curDate - offset;
 
   if (difference <= 0) {
