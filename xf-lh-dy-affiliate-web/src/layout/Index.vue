@@ -121,8 +121,8 @@ export default defineComponent({
   bottom: 0;
   left: 0;
   z-index: 1;
-  overflow: hidden;
-  padding: 5px 0px;
+  // overflow: hidden;
+  padding: 30px 0px 5px;
 }
 
 .fixed-header {
