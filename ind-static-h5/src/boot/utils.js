@@ -1,4 +1,5 @@
 import { Platform } from "quasar";
+import moment from "moment/moment";
 
 export const MAIN = "MAIN";
 
@@ -95,8 +96,8 @@ export const updateDate = (val) => {
 };
 
 export const convertToGMT55 = (dateTime) => {
-  return moment(dateTime).utcOffset('+05:30').toISOString();
+  return moment(dateTime).utcOffset('+05:30').format('YYYY-MM-DD');
 };
 export const convertToGMT8 = (dateTime) => {
-  return moment(dateTime).utcOffset('+08:00').toISOString();
+  return moment(dateTime).utcOffset('+08:00').format('YYYY-MM-DD');
 };
