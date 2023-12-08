@@ -7,7 +7,8 @@
       <PanelWrapper>
         <template #title>
           <div class="text-white text-left flex column gap-0.35">
-            {{ $t("lang.withdraw_process") }}: <br />
+            {{ $t("lang.withdraw_process") }}:
+            <br />
             <div class="flex justify-between">
               <div class="hue-purple">1.{{ $t("lang.withdraw_method") }}</div>
               <div>2.{{ $t("lang.verification_account") }}</div>
@@ -15,75 +16,15 @@
             </div>
           </div>
         </template>
-        <!-- <div class="account-content withdrawal q-gutter-md q-pa-md">
-          <div class="text-h6">รายการที่รอดำเนินการชำระเงิน</div>
-          <q-stepper
-            v-model="step"
-            vertical
-            active-color="white"
-            inactive-color="white"
-          >
-            <q-step
-              :done="true"
-              prefix="1"
-              :name="1"
-              status="process"
-              title="ยื่นคำขอ"
-              icon=""
-            >
-            </q-step>
-            <q-step
-              :done="true"
-              prefix="2"
-              :name="2"
-              status="process"
-              title="ดำเนินการ"
-            >
-            </q-step>
-            <q-step
-              :done="true"
-              prefix="3"
-              :name="3"
-              status="process"
-              title="จ่าย"
-            >
-            </q-step>
-            <q-step
-              :done="true"
-              prefix="4"
-              :name="4"
-              status="process"
-              title="สำเร็จ"
-            >
-            </q-step>
-          </q-stepper>
-          <ul>
-            <li>
-              หลังจบเกม ระบบจะตรวจสอบคะแนนและประสานการจ่ายเงิน โปรดอดทนรอสักครู่
-            </li>
-            <li>
-              หากการถอนล้มเหลว โปรดตรวจสอบสาเหตุที่ระบุไว้ในประกาศบนเว็บไซต์!
-            </li>
-          </ul>
-        </div> -->
         <div class="flex column gap-1.2 overflow-hidden">
           <div class="full-width">
             <div class="q-mb-xs">{{ $t("lang.withdraw_method") }}</div>
             <q-select filled :options="withdrawalMethods" dense>
               <template v-slot:selected>
-                <PlatformItem
-                  directory="/withdraw/"
-                  dense
-                  :scope="selectedPlatform"
-                  class="q-pl-xs"
-                />
+                <PlatformItem directory="/withdraw/" dense :scope="selectedPlatform" class="q-pl-xs" />
               </template>
               <template v-slot:option="scope">
-                <PlatformItem
-                  directory="/withdraw/"
-                  :scope="scope"
-                  @click="selectMethod(scope.opt, scope.index)"
-                />
+                <PlatformItem directory="/withdraw/" :scope="scope" @click="selectMethod(scope.opt, scope.index)" />
               </template>
             </q-select>
           </div>
@@ -98,43 +39,31 @@
               color="white"
               emit-value
               map-options
+              behavior="menu"
               dense
               :options="withdrawState.bankCardList"
               class="q-py-none"
             >
               <template v-slot:no-option>
                 <q-item dense>
-                  <q-item-section class="text-grey"
-                    >{{ $t("lang.no_usable_cards") }}
-                    <router-link to="/account/withdraw"
-                      >{{ $t("lang.add_card") }}
-                    </router-link>
+                  <q-item-section class="text-grey">
+                    {{ $t("lang.no_usable_cards") }}
+                    <router-link to="/account/withdraw">{{ $t("lang.add_card") }}</router-link>
                   </q-item-section>
                 </q-item>
               </template>
               <template v-slot:option="scope">
                 <q-item v-bind="scope.itemProps" dense>
                   <q-item-section avatar>
-                    <img
-                      v-if="scope.opt.bankIcon"
-                      style="width: 30px"
-                      :src="imgURL + scope.opt.bankIcon"
-                    />
+                    <img v-if="scope.opt.bankIcon" style="width: 30px" :src="imgURL + scope.opt.bankIcon" />
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label
-                      >{{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
-                    </q-item-label>
+                    <q-item-label>{{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </template>
               <template v-slot:selected-item="scope">
-                <PlatformItem
-                  directory="/payment/"
-                  dense
-                  :scope="scope"
-                  class="q-pl-xs"
-                />
+                <PlatformItem directory="/payment/" dense :scope="scope" class="q-pl-xs" />
               </template>
             </q-select>
           </div>
@@ -150,14 +79,9 @@
               mask="######"
               color="white"
               :rules="[
-                (val) =>
-                  (val && val.length > 0) || $t('lang.enter_amount_money'),
-                (val) =>
-                  val >= selectedWithdrawalMethod.withdrawMin ||
-                  $t('lang.amount_should_more_than_min'),
-                (val) =>
-                  val <= selectedWithdrawalMethod.withdrawMax ||
-                  $t('lang.amount_should_less_than_max'),
+                (val) => (val && val.length > 0) || $t('lang.enter_amount_money'),
+                (val) => val >= selectedWithdrawalMethod.withdrawMin || $t('lang.amount_should_more_than_min'),
+                (val) => val <= selectedWithdrawalMethod.withdrawMax || $t('lang.amount_should_less_than_max')
               ]"
               @keydown="restrictDecimalInput"
               clearable
@@ -170,16 +94,8 @@
 
           <div class="account-content last">
             <q-form class="flex column items-center gap-8">
-              <div
-                class="text-left full-width"
-                v-show="selectedWithdrawalMethod"
-              >
-                <template
-                  v-if="
-                    selectedWithdrawalMethod.withdrawMin &&
-                    selectedWithdrawalMethod.withdrawMin
-                  "
-                >
+              <div class="text-left full-width" v-show="selectedWithdrawalMethod">
+                <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
                   {{
                     $t("lang.min_max_amount") +
                     ": " +
@@ -190,10 +106,7 @@
                   <br />
                 </template>
                 <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-                  {{
-                    $t("lang.withdrawal_today") +
-                    selectedWithdrawalMethod.withdrawMaxAmount
-                  }}
+                  {{ $t("lang.withdrawal_today") + selectedWithdrawalMethod.withdrawMaxAmount }}
                 </template>
                 <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
                   {{
@@ -206,42 +119,26 @@
                   }}
                 </template>
               </div>
-              <div
-                class="text-left full-width"
-                v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-              >
-                <span style="color: #9bffd1"
-                  >1.00 USDT ≈
-                  {{ selectedWithdrawalMethod.exchangeRate }} THB</span
-                >
+              <div class="text-left full-width" v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
+                <span style="color: #9bffd1">1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} THB</span>
               </div>
 
-              <div
-                v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-                class="text-left full-width"
-              >
-                <span style="color: #9bffd1"
-                  >{{ $t('lang.estimate_arrival')}} {{
+              <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="text-left full-width">
+                <span style="color: #9bffd1">
+                  {{ $t("lang.estimate_arrival") }}
+                  {{
                     selectedWithdrawalMethod &&
-                    (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount /
-                      selectedWithdrawalMethod.exchangeRate -
-                      1) < 0)
+                    (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
+                      withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1 < 0)
                       ? "0.00"
-                      : (
-                          withdrawInfo.amount /
-                            selectedWithdrawalMethod.exchangeRate -
-                          1
-                        ).toFixed(2)
+                      : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
                   }}
-                  USDT</span
-                >
+                  USDT
+                </span>
               </div>
 
-              <div
-                v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-                class="text-left full-width"
-              >
-                <span style="color: #9bffd1;">({{ $t("lang.usdt_will_be_charged") }})</span>
+              <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="text-left full-width">
+                <span style="color: #9bffd1">({{ $t("lang.usdt_will_be_charged") }})</span>
               </div>
 
               <!-- <a-form-item
@@ -280,7 +177,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, onUpdated} from "vue";
 // import { loadBankCards, confirmWithdraw, withdrawEntrance
 // //  } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
@@ -290,6 +187,8 @@ import {userStore} from "stores/index";
 
 import PanelWrapper from "src/components/PanelWrapper.vue";
 import PlatformItem from "src/components/PlatformItem.vue";
+import {useUI} from "stores/ui";
+import {isH5} from "boot/utils"
 
 export default defineComponent({
   name: "WithdrawView",
@@ -303,6 +202,7 @@ export default defineComponent({
     const amountRef = ref();
     const cardRef = ref();
     const store = userStore();
+    const ui = useUI()
     const activeItem = ref(0);
     const withdrawState = reactive({
       bankCardList: [],
@@ -317,6 +217,12 @@ export default defineComponent({
     onMounted(() => {
       getWithdrawalMethods()
     });
+    onUpdated(() => {
+      if (ui.isCardUpdate === true) {
+        ui.isCardUpdate = false;
+        getWithdrawalMethods()
+      }
+    })
     const submitWithdraw = () => {
       cardRef.value.validate();
       amountRef.value.validate();
@@ -374,7 +280,7 @@ export default defineComponent({
         if (response.code === 0) {
           // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
           response.data.forEach(element => {
-            if (element.bankType === 'BANK') {
+            if (element && element.bankType === 'BANK') {
               if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
                 withdrawState.bankCardList.push({
                   ...element,
@@ -382,7 +288,7 @@ export default defineComponent({
                   icon: element.bankIcon
                 })
               }
-            } else if(element.bankType === 'CRYPTO'){
+            } else if (element.bankType === 'CRYPTO') {
               if (element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
                 withdrawState.bankCardList.push({
                   ...element,
@@ -407,7 +313,7 @@ export default defineComponent({
         if (response.code === 0) {
           withdrawalMethods.value = response.data
           //Remove this for real data
-      if (withdrawalMethods.value.length > 0) {
+          if (withdrawalMethods.value.length > 0) {
             selectMethod(withdrawalMethods.value[0], 0)
           }
         } else {
@@ -442,6 +348,7 @@ export default defineComponent({
       isUSDT,
       store,
       restrictDecimalInput,
+      isH5
     };
   },
   computed: {
@@ -504,11 +411,7 @@ export default defineComponent({
   max-width: 280px;
 }
 
-:deep(
-    .ant-select-single:not(.ant-select-customize-input)
-      .ant-select-selector
-      .ant-select-selection-search-input
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
   height: 40px;
 }
 
@@ -559,21 +462,11 @@ export default defineComponent({
     }
   }
 
-  :deep(
-      .ant-steps-item-finish
-        > .ant-steps-item-container
-        > .ant-steps-item-content
-        > .ant-steps-item-title
-    ) {
+  :deep(.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title) {
     color: #db7e42;
   }
 
-  :deep(
-      .ant-steps-item-process
-        > .ant-steps-item-container
-        > .ant-steps-item-content
-        > .ant-steps-item-title
-    ) {
+  :deep(.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title) {
     color: #ffffff;
   }
 

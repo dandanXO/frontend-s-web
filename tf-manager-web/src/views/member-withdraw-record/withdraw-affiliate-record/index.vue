@@ -156,6 +156,92 @@
           min-width="110"
         />
         <el-table-column
+          prop="status"
+          :label="t('fields.status')"
+          align="center"
+          width="150"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
+              {{ scope.row.status }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
+              {{ scope.row.status }}
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'APPLY'
+              "
+            >
+              APPLYING
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'STEP_1'
+              "
+            >
+              UNDER REVIEW
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'STEP_2'
+              "
+            >
+              TO BE PAID
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'STEP_3'
+              "
+            >
+              PAYMENT ON GOING
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'AUTOPAY'
+              "
+            >
+              AUTOMATIC PAYMENT
+            </el-tag>
+            <el-tag
+              v-else-if="
+                scope.row.status !== 'FAIL' &&
+                  scope.row.status !== 'SUCCESS' &&
+                  scope.row.status === 'PENDING'
+              "
+            >
+              SUSPEND
+            </el-tag>
+            <el-tag v-else>{{ scope.row.status }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="confirm status"
+          :label="t('fields.confirmStatus')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.confirmStatus === '0'" type="danger">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.confirmStatusstatus === '1'" type="success">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else>{{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="vip"
           :label="t('fields.vipLevel')"
           align="center"
@@ -325,92 +411,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="status"
-          :label="t('fields.status')"
-          align="center"
-          width="150"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
-              {{ scope.row.status }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
-              {{ scope.row.status }}
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'APPLY'
-              "
-            >
-              APPLYING
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_1'
-              "
-            >
-              UNDER REVIEW
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_2'
-              "
-            >
-              TO BE PAID
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'STEP_3'
-              "
-            >
-              PAYMENT ON GOING
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'AUTOPAY'
-              "
-            >
-              AUTOMATIC PAYMENT
-            </el-tag>
-            <el-tag
-              v-else-if="
-                scope.row.status !== 'FAIL' &&
-                  scope.row.status !== 'SUCCESS' &&
-                  scope.row.status === 'PENDING'
-              "
-            >
-              SUSPEND
-            </el-tag>
-            <el-tag v-else>{{ scope.row.status }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="confirm status"
-          :label="t('fields.confirmStatus')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.confirmStatus === '0'" type="danger">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.confirmStatusstatus === '1'" type="success">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-            <el-tag v-else>{{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}</el-tag>
-          </template>
-        </el-table-column>
+
         <el-table-column
           prop="confirmBy"
           :label="t('fields.confirmBy')"
@@ -616,7 +617,7 @@
       >
         <el-form-item :label="t('fields.withdrawDate')" prop="withdrawDate">
           <el-date-picker
-            v-model="request.withdrawDate"
+            v-model="searchRequest.date"
             format="DD/MM/YYYY HH:mm:ss"
             value-format="YYYY-MM-DD HH:mm:ss"
             size="small"
@@ -1011,9 +1012,10 @@ function disabledDate(time) {
 }
 
 function resetQuery() {
+  // debugger;
   searchForm.value.resetFields()
   searchRequest.selectedDateType = uiControl.selectedDateType[0].value
-  searchRequest.date = [defaultStartDate, defaultEndDate]
+  // searchRequest.date = [defaultStartDate, defaultEndDate]
   request.withdrawDate = []
   request.paymentDate = []
   request.serialNumber = null

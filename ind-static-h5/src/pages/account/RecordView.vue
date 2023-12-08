@@ -1,0 +1,332 @@
+<template>
+  <ProfileSummary></ProfileSummary>
+
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
+
+  <ContentView :contentTopStatus="`solid`">
+    <q-card class="search-container">
+      <q-form layout="inline" :model="searchForm">
+        <div class="date-field">
+          <q-input filled v-model="searchForm.startDate" readonly>
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-date v-model="searchForm.startDate" mask="YYYY-MM-DD">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="white" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+          <q-input filled v-model="searchForm.endDate" readonly>
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-date v-model="searchForm.endDate" mask="YYYY-MM-DD">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="white" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </div>
+
+        <div class="platform-field">
+          <q-select
+            class="platform"
+            v-model="searchForm.platform"
+            filled
+            :options="platformList"
+            label="Platforms"
+            option-label="name"
+            option-value="name"
+            emit-value
+            map-options
+          />
+          <q-btn class="search-btn" label="Search" @click="searchRecord" />
+        </div>
+      </q-form>
+    </q-card>
+
+    <LoadingComponent v-if="isLoading"></LoadingComponent>
+    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <q-card v-else v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
+      <q-card-section class="top-wrapper">
+        <div class="date">{{ moment(e.betTime).format("YYYY-MM-DD HH:mm") }}</div>
+        <q-btn
+          :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
+          :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
+        ></q-btn>
+      </q-card-section>
+
+      <q-card-section class="mid-wrapper">
+        RS
+        <span>{{ e.payout }}</span>
+      </q-card-section>
+
+      <q-card-section class="bot-wrapper">
+        <div class="origin">
+          <div class="bet">Bet</div>
+          <div class="game-platform">Game Platform</div>
+        </div>
+        <div class="origin-val">
+          <div class="bet-val">{{ e.bet }}</div>
+          <div class="game-platform-val">{{ e.platform }}</div>
+        </div>
+      </q-card-section>
+    </q-card>
+  </ContentView>
+</template>
+
+<script setup>
+import { onMounted, reactive, ref } from "vue";
+import { api } from "boot/axios";
+import { useRouter } from "vue-router";
+import { userStore } from "stores/index";
+import { updateDate } from "src/boot/utils";
+import moment from "moment";
+import SwiperNav from "../../components/SwiperNav.vue";
+import ContentView from "../../components/ContentView.vue";
+import ProfileSummary from "../../components/ProfileSummary.vue";
+import LoadingComponent from "../../components/LoadingComponent.vue";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
+
+const router = useRouter();
+const store = userStore();
+
+let slideList = ref(["Record", "Order", "Bank", "Message", "Personal Center", "Discount"]);
+let slideListPath = ref([
+  "/account/record",
+  "/account/order",
+  "/account/bank",
+  "/account/message",
+  "/account",
+  "/account/discount"
+]);
+let currentSlide = ref(slideList.value[0]);
+
+const isActiveSlide = (e) => {
+  if (e === currentSlide.value) return true;
+  return false;
+};
+
+const isLoading = ref(true);
+const isNoInfo = ref(true);
+
+const searchForm = reactive({ startDate: "", endDate: "", platform: "", memberId: store.id });
+const setTime = () => {
+  searchForm.startDate = updateDate(7);
+  searchForm.endDate = updateDate(0);
+};
+
+const gameBetRecordData = ref([]);
+const pagination = reactive({
+  pageSize: 10,
+  total: 0
+});
+const searchRecord = () => {
+  isLoading.value = true;
+  gameBetRecordData.value = [];
+
+  const { startDate, endDate, platform } = searchForm;
+  api
+    .get("/session/member/gameBetRecord", {
+      params: { startDate, endDate, platform, memberId: store.id, current: 1, size: 10 }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        pagination.total = data.length;
+
+        gameBetRecordData.value.push(...data);
+
+        if (data.length === 0) isNoInfo.value = true;
+        else isNoInfo.value = false;
+      }
+    })
+    .catch((error) => {})
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+const platformList = ref([]);
+const getPlatformList = () => {
+  api.get("/platform").then((res) => {
+    if (res.code === 0) platformList.value = res.data;
+  });
+};
+
+const totalBetRecord = reactive({
+  totalBet: 0,
+  totalPayout: 0
+});
+const getGameBetRecordTotal = () => {
+  const obj = {
+    memberId: store.id,
+    platform: searchForm.platform,
+    startDate: searchForm.startDate,
+    endDate: searchForm.endDate
+  };
+  api.get("/session/member/gameBetRecordTotal", { params: obj }).then((res) => {
+    if (res.code === 0) {
+      const { totalBet, totalPayout } = res.data;
+      totalBetRecord.totalBet = totalBet;
+      totalBetRecord.totalPayout = totalPayout;
+    }
+  });
+};
+
+onMounted(() => {
+  setTime();
+  getPlatformList();
+
+  // NOTE: fire together on search
+  searchRecord();
+  //   getGameBetRecordTotal();
+});
+</script>
+
+<style lang="scss">
+.search-container {
+  border-radius: 0.5rem;
+  background: rgba(21, 0, 37, 0.2);
+  padding: 1rem;
+  margin-top: 0;
+
+  .date-field {
+    display: flex;
+
+    .q-field__control,
+    .q-field__marginal {
+      height: unset;
+    }
+
+    .q-field__native {
+      padding: 0;
+    }
+  }
+
+  .platform-field {
+    display: flex;
+    align-items: center;
+
+    .platform {
+      width: 50%;
+    }
+
+    .search-btn {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      border-radius: 12.5rem;
+      background: rgba(21, 0, 37, 0.5);
+      padding: 0 1rem;
+      min-height: unset;
+      width: 50%;
+      height: 2rem;
+    }
+  }
+}
+.record-container {
+  border-radius: 0.5rem;
+  background: rgba(21, 0, 37, 0.2);
+  padding: 1rem;
+  margin-top: 0;
+
+  .top-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 0.5rem 0;
+    .date {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.825rem;
+      font-weight: 700;
+    }
+
+    .bet-btn {
+      color: #fae576;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      border-radius: 12.5rem;
+      background: rgba(250, 229, 118, 0.2);
+      padding: 0 1rem;
+      min-height: unset;
+    }
+
+    .loss-btn {
+      color: #bc66ff;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      border-radius: 12.5rem;
+      background: rgba(188, 102, 255, 0.2);
+      padding: 0 1rem;
+      min-height: unset;
+    }
+  }
+
+  .mid-wrapper {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 2.25rem;
+    background: rgba(21, 0, 37, 0.5);
+    margin: 0 -1rem;
+    padding: 0 1rem;
+
+    span {
+      background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .bot-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.5rem 0 0 0;
+
+    .origin {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.5);
+
+      .bet {
+        font-size: 0.825rem;
+        font-weight: 700;
+      }
+
+      .game-platform {
+        font-size: 0.825rem;
+        font-weight: 700;
+      }
+    }
+
+    .origin-val {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      .bet-val {
+        font-size: 0.825rem;
+        font-weight: 700;
+      }
+
+      .game-platform-val {
+        font-size: 0.825rem;
+        font-weight: 700;
+      }
+    }
+  }
+}
+</style>

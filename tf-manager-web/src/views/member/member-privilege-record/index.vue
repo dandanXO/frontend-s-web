@@ -68,9 +68,18 @@
           size="mini"
           type="primary"
           v-permission="['sys:member-privilege:distribute']"
-          @click="showPromo()"
+          @click="openDialog('DISTRIBUTE')"
         >
           {{ t('fields.distributePrivilege') }}
+        </el-button>
+        <el-button
+          icon="el-icon-upload"
+          size="mini"
+          type="success"
+          v-permission="['sys:member-privilege:import']"
+          @click="openDialog('IMPORT')"
+        >
+          {{ t('fields.massImport') }}
         </el-button>
       </div>
     </div>
@@ -142,7 +151,7 @@
       :current-page="request.current"
     />
   </div>
-  <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
+  <el-dialog v-if="uiControl.dialogType === 'DISTRIBUTE'" :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
     <el-form ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
       <el-row>
         <el-form-item :label="t('fields.site')" prop="siteId">
@@ -177,7 +186,7 @@
             <el-option
               v-for="item in privilegeInfoList.list"
               :key="item.id"
-              :label="item.name"
+              :label="item.alias !== null ? item.alias : item.name"
               :value="item.id"
             />
           </el-select>
@@ -207,10 +216,100 @@
       </span>
     </el-form>
   </el-dialog>
+  <el-dialog v-if="uiControl.dialogType === 'IMPORT'" :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="900px">
+    <el-form
+      ref="importRefForm"
+      :model="importForm"
+      :rules="importRules"
+      :inline="true"
+      size="small"
+      label-width="150px"
+      style="float: right;"
+    >
+      <el-form-item :label="t('fields.site')" prop="siteId">
+        <el-select
+          v-model="importForm.siteId"
+          :placeholder="t('fields.site')"
+          style="width: 350px;"
+          filterable
+          default-first-option
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <el-button
+      icon="el-icon-download"
+      size="mini"
+      type="primary"
+      @click="downloadTemplate"
+    >
+      {{ t('fields.downloadTemplate') }}
+    </el-button>
+    <el-button
+      icon="el-icon-upload"
+      size="mini"
+      type="success"
+      @click="chooseFile"
+    >
+      {{ t('fields.import') }}
+    </el-button>
+    <!-- eslint-disable -->
+    <input
+      id="importFile"
+      type="file"
+      accept=".xlsx, .xls"
+      @change="importToTable"
+      hidden
+    />
+    <el-table
+      :data="
+        importedPage.records.slice(
+          importedPage.size * (importedPage.current - 1),
+          importedPage.size * importedPage.current
+        )
+      "
+      v-loading="importedPage.loading"
+      ref="table"
+      row-key="id"
+      size="small"
+      :empty-text="t('fields.noData')"
+    >
+      <el-table-column prop="memberId" :label="t('fields.memberId')" width="200" />
+      <el-table-column prop="loginName" :label="t('fields.loginName')" width="230" />
+      <el-table-column prop="privilegeId" :label="t('fields.privilegeId')" width="200" />
+      <el-table-column prop="amount" :label="t('fields.amount')" width="230" />
+    </el-table>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImportedPage"
+      layout="prev, pager, next"
+      :page-size="importedPage.size"
+      :page-count="importedPage.pages"
+      :current-page="importedPage.current"
+    />
+    <div class="dialog-footer">
+      <el-button
+        type="primary"
+        :disabled="importedPage.records.length === 0"
+        @click="confirmImport"
+        :loading="importedPage.buttonLoading"
+      >
+        {{ t('fields.confirmAndImport') }}
+      </el-button>
+      <el-button @click="clearImport(); uiControl.dialogVisible = false;">{{ t('fields.cancel') }}</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
+import * as XLSX from 'xlsx';
 import moment from 'moment'
 import {
   getPrivilegeRecord,
@@ -224,8 +323,9 @@ import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
 import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
-import { getActivePrivilegeInfoBySiteId } from '../../../api/privilege-info'
-import { distributePrivilege } from '../../../api/member-privilege'
+import { getActivePrivilegeInfoBySiteId, getPrivilegeExcelMapping } from '../../../api/privilege-info'
+import { createBatchPrivilege, distributePrivilege } from '../../../api/member-privilege'
+import { findIdByLoginName } from '../../../api/member'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -246,6 +346,24 @@ const siteList = reactive({
 })
 const selectedPrivilege = ref(null);
 
+const EXPORT_MEMBER_PRIVILEGE_LIST_HEADER = [
+  'Login Name',
+  'Privilege ID',
+  'Amount'
+]
+
+const EXPORT_MAPPING_PRIVI_HEADER = [
+  'Privilege ID',
+  'Privilege Name',
+  'Privilege Code',
+]
+
+const IMPORT_MEMBER_PRIVILEGE_LIST_JSON = [
+  'loginName',
+  'privilegeId',
+  'amount'
+]
+
 const uiControl = reactive({
   dialogTitle: t('fields.distributePrivilege'),
   dialogVisible: false,
@@ -259,6 +377,15 @@ const page = reactive({
   loading: false,
   total: 0,
   totalAmount: 0,
+})
+
+const importedPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  size: 10,
+  current: 1,
+  buttonLoading: false,
 })
 
 const request = reactive({
@@ -278,10 +405,18 @@ const form = reactive({
   loginName: []
 })
 
+const importForm = reactive({
+  siteId: null
+});
+
 const formRules = reactive({
   privilegeId: [required(t('message.validatePrivilegeRequired'))],
   amount: [required(t('message.validateAmountRequired'))],
   loginName: [required(t('message.validateLoginNameRequired'))]
+});
+
+const importRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))]
 });
 
 const shortcuts = getShortcuts(t)
@@ -381,12 +516,23 @@ function changePage(page) {
   loadPrivilegeRecord()
 }
 
+function openDialog(type) {
+  uiControl.dialogType = type;
+  if (type === 'DISTRIBUTE') {
+    uiControl.dialogTitle = t('fields.distributePrivilege');
+    uiControl.dialogVisible = true;
+    showPromo();
+  } else if (type === 'IMPORT') {
+    uiControl.dialogTitle = t('fields.massImport');
+    uiControl.dialogVisible = true;
+    clearImport();
+  }
+}
+
 async function showPromo() {
   form.siteId = request.siteId;
   await changeSite(form.siteId);
   if (privilegeInfoList.list.length !== 0) {
-    uiControl.dialogTitle = t('fields.distributePrivilege');
-    uiControl.dialogVisible = true;
     form.privilegeId = privilegeInfoList.list[0].id;
     form.loginName = [];
     selectPrivilege(privilegeInfoList.list[0].id);
@@ -440,6 +586,162 @@ async function changeSite(siteId) {
   }
 }
 
+async function downloadTemplate() {
+  const exportMemberPrivilege = [EXPORT_MEMBER_PRIVILEGE_LIST_HEADER];
+  const maxLengthMemberPrivilege = [];
+  const wsMemberPrivilege = XLSX.utils.aoa_to_sheet(exportMemberPrivilege);
+  setWidth(exportMemberPrivilege, maxLengthMemberPrivilege);
+  const wsMemberPrivilegeCols = maxLengthMemberPrivilege.map(w => {
+    return { width: w };
+  });
+  wsMemberPrivilege['!cols'] = wsMemberPrivilegeCols;
+  let privilegeMapping = {};
+
+  if (site.value && site.value.id) {
+    const { data: ret } = await getPrivilegeExcelMapping(site.value.id);
+    privilegeMapping = ret;
+  } else {
+    const { data: ret } = await getPrivilegeExcelMapping();
+    privilegeMapping = ret;
+  }
+  const exportMapping = [EXPORT_MAPPING_PRIVI_HEADER];
+  const maxLengthMapping = [];
+  pushRecordToData(privilegeMapping, exportMapping);
+  const wsMapping = XLSX.utils.aoa_to_sheet(exportMapping);
+  setWidth(exportMapping, maxLengthMapping);
+  const wsMappingCols = maxLengthMapping.map(w => {
+    return { width: w }
+  });
+  wsMapping['!cols'] = wsMappingCols;
+
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push('Member_Privileges');
+  wb.Sheets.Member_Privileges = wsMemberPrivilege;
+  wb.SheetNames.push('Mapping');
+  wb.Sheets.Mapping = wsMapping;
+  XLSX.writeFile(wb, 'member_privilege.xlsx');
+}
+
+function pushRecordToData(records, exportData) {
+  const data = records.map(record =>
+    Object.values(record).map(item => (!item || item === '' ? '-' : item))
+  )
+  exportData.push(...data)
+}
+
+function setWidth(exportData, maxLength) {
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] =
+        typeof value === 'number'
+          ? maxLength[key] >= 10
+            ? maxLength[key]
+            : 10
+          : maxLength[key] >= value.length + 2
+            ? maxLength[key]
+            : value.length + 2
+    });
+  });
+}
+
+function chooseFile() {
+  document.getElementById('importFile').click();
+}
+
+function importToTable(file) {
+  if (importForm.siteId === null) {
+    document.getElementById('importFile').value = '';
+    ElMessage({ message: t('message.selectSiteFirst'), type: 'error' });
+  } else {
+    importedPage.loading = true;
+    importedPage.buttonLoading = false;
+    const files = file.target.files[0];
+    const allowFileType = [
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-excel',
+    ];
+    if (allowFileType.find(ftype => ftype.includes(files.type))) {
+      const fileReader = new FileReader();
+
+      fileReader.onload = async event => {
+        const { result } = event.target;
+        const workbook = XLSX.read(result, { type: 'binary' });
+        let data = [];
+        for (const sheet in workbook.Sheets) {
+          data = data.concat(
+            XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
+              header: IMPORT_MEMBER_PRIVILEGE_LIST_JSON,
+              range: 1,
+            })
+          );
+          for (const d of data) {
+            const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
+            d.memberId = id;
+          }
+          break;
+        }
+        importedPage.records = data;
+        importedPage.pages = Math.ceil(
+          importedPage.records.length / importedPage.size
+        );
+      }
+      fileReader.readAsBinaryString(files);
+      document.getElementById('importFile').value = '';
+    } else {
+      ElMessage({ message: t('message.invalidFileType'), type: 'error' });
+    }
+    importedPage.loading = false;
+  }
+}
+
+function changeImportedPage(page) {
+  importedPage.current = page;
+}
+
+function clearImport() {
+  importedPage.buttonLoading = false;
+  importedPage.loading = false;
+  importedPage.records = [];
+  importedPage.pages = 0;
+  importedPage.current = 1;
+}
+
+async function confirmImport() {
+  importedPage.buttonLoading = true;
+  const recordCopy = { ...importedPage.records };
+  const data = [];
+  Object.entries(recordCopy).forEach(([key, value]) => {
+    const item = {};
+    if (value) {
+      item.siteId = importForm.siteId;
+      Object.entries(value).forEach(([k, v]) => {
+        if (k !== "loginName") {
+          item[k] = v;
+        }
+      });
+    }
+    data.push(item);
+  });
+
+  const records = [...data];
+  do {
+    if (records.length > 10000) {
+      await createBatchPrivilege(records.slice(0, 10000));
+      records.splice(0, 10000);
+    } else {
+      await createBatchPrivilege(records);
+      records.splice(0, records.length);
+    }
+  } while (records.length > 0)
+  importedPage.buttonLoading = false;
+  uiControl.dialogVisible = false;
+  ElMessage({ message: t('message.importSuccess'), type: 'success' });
+  clearImport();
+  loadPrivilegeRecord();
+}
+
 onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -447,8 +749,10 @@ onMounted(async () => {
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
+    importForm.siteId = site.value.id
   } else {
     request.siteId = 1
+    importForm.siteId = 1
   }
   await loadPrivilegeRecord()
 })

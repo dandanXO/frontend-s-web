@@ -296,6 +296,24 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.label')" prop="gameLabel">
+          <el-select
+            filterable
+            clearable
+            multiple
+            v-model="selected.gameLabels"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+            @change="handleChangeLabel()"
+          >
+            <el-option
+              v-for="item in gameLabel.list"
+              :key="item.key"
+              :label="item.value"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.device')" prop="device">
           <el-radio-group v-model="form.device">
             <el-radio
@@ -324,7 +342,7 @@
         </div>
       </el-form>
     </el-dialog>
-    
+
     <el-dialog
       :title="t('fields.icon')"
       v-model="uiControl.imageSelectionVisible"
@@ -612,6 +630,7 @@ const form = reactive({
   platformName: null,
   siteName: null,
   siteId: null,
+  gameLabel: null,
   device: 'WEB',
   sequence: null,
 })
@@ -664,9 +683,19 @@ const devices = reactive({
   ],
 })
 
+const gameLabel = reactive({
+  list: [
+    { key: 1, displayName: 'NEW', value: 'NEW' },
+    { key: 2, displayName: 'HOT', value: 'HOT' },
+    { key: 3, displayName: 'RECOMMEND', value: 'RECOMMEND' },
+    { key: 4, displayName: 'LIST', value: 'LIST' },
+  ],
+})
+
 let chooseGame = []
 
 const platformCode = ref('')
+const selected = reactive({ gameLabels: [] });
 
 function resetQuery() {
   request.name = null
@@ -754,8 +783,10 @@ function showDialog(type) {
     form.status = 'OPEN'
     form.platformName = null
     form.siteName = null
+    selected.gameLabels = []
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editGame')
+    selected.gameLabels = []
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -767,6 +798,7 @@ function showEdit(game) {
   }
   const selectedPlatform = platforms.list.find(item => item.id === game.platformId)
   platformCode.value = selectedPlatform.code
+
   showDialog('EDIT')
 
   nextTick(() => {
@@ -774,7 +806,15 @@ function showEdit(game) {
       if (Object.keys(form).find(k => k === key)) {
       }
       form[key] = game[key]
+      form.siteId = selectedPlatform.siteId
     }
+    if (form.gameLabel !== null) {
+      const arr = form.gameLabel.split(",")
+      arr.forEach(element => {
+        selected.gameLabels.push(element);
+      })
+    }
+    loadPlatformNames()
   })
 }
 
@@ -968,14 +1008,14 @@ async function confirmImport() {
 }
 
 function handleChangePlatform(value) {
-  const selectedPlatform = platforms.list.find(item => item.id === value)
+  const selectedPlatform = dialogPlats.list.find(item => item.id === value)
   form.platformId = value
   platformCode.value = selectedPlatform.code
 }
 
 function handleChangeSite(value) {
   form.siteId = value
-  loadPlatformNames(value, false)
+  loadPlatformNames()
 }
 
 // function validateClick(ref) {
@@ -1004,6 +1044,10 @@ function selectImage(item) {
   selectedImage.siteName = item.siteName
   selectedImage.path = item.path
   selectedImage.remark = item.remark
+}
+
+function handleChangeLabel() {
+  form.gameLabel = selected.gameLabels.join(",");
 }
 
 async function browseImage() {

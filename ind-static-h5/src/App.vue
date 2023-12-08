@@ -9,6 +9,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
+import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 
 export default defineComponent({
@@ -65,18 +66,12 @@ export default defineComponent({
 
       // 'XFCS' / 2
       // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient(
-        "XFCS",
-        regDevice,
-        "zh-CN",
-        "2",
-        "prod",
-        `https://${CSAUrl}`
-      );
+      csclient = new CsClient("INDWINCS", regDevice, "en", "2", "prod", `https://${CSAUrl}`);
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
       csclient.set("openanimation", false);
+      csclient.set("bottom", "73");
 
       csclient.set("notification-type", {
         type: "none"
@@ -95,7 +90,7 @@ export default defineComponent({
       });
 
       //CsClient Event Listener.
-      window.addEventListener('message', function (event) {
+      window.addEventListener("message", function (event) {
         // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
         if (_.isString(event.data)) {
           // if (event.data == 'sess_timeout') {
@@ -104,10 +99,18 @@ export default defineComponent({
         }
       });
     };
+
+    const getAppInfo = async () => {
+      const info = await Device.getId();
+      console.log("Device ID");
+      console.log(info);
+      console.log(info.identifier);
+    };
     onMounted(() => {
       checkSID();
       // initCsWeb();
       getCSA();
+      getAppInfo();
     });
   }
 });

@@ -1,5 +1,14 @@
 {
-  "prettier.singleQuote": true,
-  "trailingComma" : "none",
+  "singleQuote": false,
+  "printWidth": 120,
+  "editor.formatOnSave": true,
+  "proseWrap": "always",
+  "tabWidth": 2,
+  "requireConfig": false,
+  "useTabs": false,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "semi": true,
   "htmlWhitespaceSensitivity": "ignore"
 }

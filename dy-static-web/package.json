@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "cross-env NODE_ENV=development dotenv -e .env.development vue-cli-service serve",
-    "build": "cross-env NODE_ENV=production  dotenv -e .env.production vue-cli-service build",
+    "serve:test": "cross-env NODE_ENV=development dotenv -e .env.test vue-cli-service serve",
+    "build:dev": "cross-env NODE_ENV=development  dotenv -e .env.development vue-cli-service build",
+    "build:test": "cross-env NODE_ENV=development  dotenv -e .env.test vue-cli-service build",
+    "build:staging": "cross-env NODE_ENV=production  dotenv -e .env.staging vue-cli-service build",
+    "build:prod": "cross-env NODE_ENV=production  dotenv -e .env.production vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -20,6 +24,7 @@
     "moment": "^2.29.4",
     "pinia": "^2.0.30",
     "sweetalert2": "^11.7.12",
+    "swiper": "^11.0.4",
     "vue": "^3.2.13",
     "vue-qrcode-component": "^2.1.1",
     "vue-qrious": "^3.1.0",
@@ -39,6 +44,7 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "prettier": "^2.5.1",
     "sass": "^1.58.0",
     "sass-loader": "^13.2.0"
   },

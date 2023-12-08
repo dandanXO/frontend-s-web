@@ -8,7 +8,7 @@ html {
 }
 // app global css in SCSS form
 body {
-  //font-family: "Jura";
+  font-family: Poppins;
   background: #ffffff;
 }
 #q-app {
@@ -75,8 +75,13 @@ body.body--dark .q-header {
   background: transparent;
   background-size: cover;
 }
+
 .q-dialog__inner--minimized {
   padding: 0;
+}
+
+.q-item--active {
+  color: #fdd835;
 }
 // body.platform-ios .q-dialog__inner--minimized > div, body.platform-android:not(.native-mobile) .q-dialog__inner--minimized > div {
 //   max-height: unset;
@@ -86,7 +91,7 @@ body.platform-ios .q-dialog__inner--minimized > div {
   max-height: calc(100% - 108px);
 }
 .game-title {
-  font-family: "Wave";
+  font-family: "Poppins";
   font-size: 50px;
   line-height: 60px;
   color: #db7e42;
@@ -135,23 +140,25 @@ body.body--dark .q-footer {
   // border-radius: 15px 15px 0 0;
   overflow: hidden;
 }
-svg {
-  width: 25px;
-  fill: #ffffff;
-}
+// svg {
+//   width: 25px;
+//   fill: #ffffff;
+// }
 .q-carousel.vip {
   height: auto;
   text-align: center;
 }
 .q-carousel.home {
-  height: 50vw;
+  // height: 50vw;
+  width: 100%;
   border-radius: 10px;
-  // margin: 10px;
-  max-height: 240px;
+  height: auto;
+
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    aspect-ratio: 20 / 9;
   }
   .q-carousel__navigation--bottom {
     bottom: 30px;
@@ -173,6 +180,8 @@ svg {
   padding: 5px 0 5px;
   background: #3f1e5e;
   color: #7f828b;
+  flex: 1;
+
   img {
     // width: 25px;
     height: 25px;
@@ -218,7 +227,7 @@ svg {
   color: #13f129;
 }
 .text-bright {
-  color: #33bcd4;
+  color: #f1be43;
 }
 .bg-bright {
   background: #063c50;
@@ -239,7 +248,7 @@ svg {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  font-family: Poppins;
   padding: 15px;
   display: flex;
   gap: 20px;
@@ -252,7 +261,7 @@ svg {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  font-family: Poppins;
   padding: 10px;
   display: flex;
   gap: 20px;
@@ -281,8 +290,140 @@ svg {
   color: #bacef1;
 }
 
+.q-field--filled.q-field--dark .q-field__control,
+.q-field--filled.q-field--dark .q-field__control:before {
+  background: transparent !important;
+}
+
 @media (min-width: 501px) {
   html {
     font-size: 16px;
   }
+}
+
+.bg-yellow {
+  background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%) !important;
+}
+
+.login-container {
+  position: relative;
+  background: url(../assets/images/login/landing-bg.jpg) no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 16px;
+
+  .logo {
+    margin: 0 auto;
+    padding: 25px 0 10px;
+    display: flex;
+    width: 150px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .landing-img {
+    margin-top: 20px;
+    img {
+      display: block;
+      width: 95%;
+      margin: auto;
+      max-width: 300px;
+    }
+  }
+
+  .back-left {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+  }
+
+  .landing-btns {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+  }
+
+  .btn-yellow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    line-height: 1;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    font-weight: 700;
+    width: 100%;
+    height: 48px;
+    transition: 0.3s all;
+    background-image: url(../assets/images/login/btn-yellow.png);
+    color: #ffffff;
+    margin: auto;
+  }
+
+  .btn-purple {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    line-height: 1;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    font-weight: 700;
+    width: 100%;
+    height: 48px;
+    transition: 0.3s all;
+    background-image: url(../assets/images/login/btn-purple.png);
+    color: #ffffff;
+    margin: auto;
+  }
+}
+
+.q-dialog__backdrop {
+  backdrop-filter: blur(4px);
+}
+
+.btn-effect {
+  &:hover {
+    filter: brightness(0.8);
+  }
+}
+
+.popout-dialog {
+  width: 90%;
+
+  max-width: 500px;
+  position: relative;
+  padding-top: 90px;
+  padding-right: 10px;
+
+  .popout-close {
+    position: absolute;
+    right: 0px;
+    top: 80px;
+  }
+
+  .txt-title {
+    font-size: 28px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .popout-dialog-container {
+    background-image: url(../assets/images/account/kyc-bg.jpg);
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30px 20px 20px;
+    border-radius: 30px !important;
+  }
+}
+
+.y-n-container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
 }

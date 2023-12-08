@@ -353,11 +353,7 @@
                 :empty-text="t('fields.noData')"
       >
         <el-table-column prop="remark" :label="t('fields.remark')" />
-        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200px">
-          <template #default="scope">
-            <span v-formatter="{data: scope.row.createTime, type: 'date', timeZone: timeZone}" />
-          </template>
-        </el-table-column>
+        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200px" />
         <el-table-column prop="createBy" :label="t('fields.createBy')" width="200px" />
         <el-table-column align="right" fixed="right">
           <template #default="scope">
@@ -403,7 +399,7 @@
                               class-name="member-context"
         >
           <span v-if="memberDetail.regTime !== null"
-                v-formatter="{data: memberDetail.regTime,timeZone: timeZone,type: 'date'}"
+                v-formatter="{data: memberDetail.regTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}"
           />
           <span v-if="memberDetail.regTime === null">-</span>
         </el-descriptions-item>
@@ -440,7 +436,7 @@
                               class-name="member-context"
         >
           <span v-if="memberDetail.lastLoginTime !== null"
-                v-formatter="{data: memberDetail.lastLoginTime,timeZone: timeZone,type: 'date'}"
+                v-formatter="{data: memberDetail.lastLoginTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}"
           />
           <span v-if="memberDetail.lastLoginTime === null">-</span>
         </el-descriptions-item>
@@ -477,10 +473,17 @@
       </template>
       <div v-loading="loading.fundingInfo">
         <el-descriptions>
-          <el-descriptions-item :label="t('fields.totalBalance')">
+          <el-descriptions-item :label="t('fields.totalBalance')" width="20%">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
                 $ <span v-formatter="{data: memberDetail.balance,type: 'money'}" />
+              </div>
+            </div>
+          </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.withdrawableBalance')">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $ <span v-formatter="{data: memberDetail.withdrawableBalance,type: 'money'}" />
               </div>
             </div>
             <el-button class="refresh-btn" icon="el-icon-refresh" size="mini" @click="refreshAllBalance" />
@@ -809,10 +812,6 @@ export default defineComponent({
     mbrId: {
       type: String,
       required: true
-    },
-    timeZone: {
-      type: String,
-      required: true,
     }
   },
   setup(props) {
@@ -903,6 +902,7 @@ export default defineComponent({
       superiorAffName: "",
       regTime: "",
       balance: 0,
+      withdrawableBalance: 0,
       totalDeposit: 0,
       totalWithdraw: 0,
       lastLoginTime: "",
@@ -1348,6 +1348,7 @@ export default defineComponent({
 
       const { data: balance } = await refreshBalance(props.mbrId, site.id);
       memberDetail.balance = balance.balance;
+      memberDetail.withdrawableBalance = balance.withdrawableBalance;
       memberDetail.totalDeposit = balance.totalDeposit;
       memberDetail.totalWithdraw = balance.totalWithdraw;
       memberDetail.totalBonus = balance.totalBonus;

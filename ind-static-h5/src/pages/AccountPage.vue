@@ -1,525 +1,1344 @@
 <template>
-  <q-page>
-    <div class="profile">
-      <div class="avatar">
-        <img src="../assets/images/account/profile-img.png" />
-      </div>
-      <div class="pro-details">
-        <span class="nickname-span">{{ store.nickName }}</span>
-        <q-badge
-          class="vip-badge-item"
-          color="orange"
-          text-color="black"
-          :label="store.vip"
-        />
+  <ProfileSummary />
 
-        <!--        <span v-if="vipLevel === 1"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_1.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 2"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_2.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 3"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_3.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 4"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_4.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 5"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_5.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 6"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_6.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 7"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_7.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 8"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_8.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 9"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_9.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 10"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_10.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 11"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_11.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 12"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_12.png"-->
-        <!--        /></span>-->
-        <br />
-        专属网址: <a style="text-decoration: none; color: #fff; font-size: 15px;"
-                     :href="selfTgurl" target="_blank">{{ store.evip }}</a>
-        <br />
-        <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
+
+  <ContentView contentTopStatus="faded">
+    <q-form ref="profileFormRef" class="pc-form">
+      <div class="pc-form-item" @click="openPersonalCenterDialog">
+        <div class="pc-form-label">Full Name</div>
+        <div class="pc-form-input">
+          <q-input
+            v-model="formDetail.realName"
+            filled
+            dense
+            clearable
+            borderless
+            standout
+            hide-bottom-space
+            readonly
+          ></q-input>
+        </div>
       </div>
-    </div>
-    <div class="vipcard">
-      <q-card-section class="top-section">
-        <!-- <div class="vip-badge">
-          <img
-            v-if="vip === 'VIP0'"
-            src="../assets/vip/badge/badge-0.png"
-          />
-          <img
-            v-if="vip === 'VIP1'"
-            src="../assets/vip/badge/badge-1.png"
-          />
-          <img
-            v-if="vip === 'VIP2'"
-            src="../assets/vip/badge/badge-2.png"
-          />
-          <img
-            v-if="vip === 'VIP3'"
-            src="../assets/vip/badge/badge-3.png"
-          />
-          <img
-            v-if="vip === 'VIP4'"
-            src="../assets/vip/badge/badge-4.png"
-          />
-          <img
-            v-if="vip === 'VIP5'"
-            src="../assets/vip/badge/badge-5.png"
-          />
-          <img
-            v-if="vip === 'VIP6'"
-            src="../assets/vip/badge/badge-6.png"
-          />
-          <img
-            v-if="vip === 'VIP7'"
-            src="../assets/vip/badge/badge-7.png"
-          />
-        </div> -->
-        <!-- <div class="name">{{ header }}</div> -->
-        <q-card-section class="acct-section">
-          <div class="label">中心钱包:</div>
-          <div class="amt">{{ mainWallet }}</div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section class="bot-section">
-          <router-link to="/" @click="openDeposit" class="button">
-            <img src="../assets/images/index/deposit_icon.png" />
-            存款
-          </router-link>
-          <router-link to="finance/withdraw" class="button">
-            <img src="../assets/images/index/withdrawal_icon.png" />
-            提款
-          </router-link>
-          <router-link to="account/transfer" class="button">
-            <img src="../assets/images/index/transfer_icon.png" />
-            转账
-          </router-link>
-          <router-link to="vip" class="button">
-            <img src="../assets/images/account/vip_icon.png" />
-            VIP
-          </router-link>
-        </q-card-section>
+
+      <div class="pc-form-item" @click="openPersonalCenterDialog">
+        <div class="pc-form-label">Phone</div>
+        <div class="pc-form-input">
+          <q-input
+            v-model="formDetail.phone"
+            filled
+            dense
+            clearable
+            borderless
+            standout
+            hide-bottom-space
+            readonly
+          ></q-input>
+        </div>
+      </div>
+
+      <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
+        <div class="pc-form-label">Email</div>
+        <div class="pc-form-input">
+          <q-input
+            v-model="formDetail.email"
+            filled
+            dense
+            clearable
+            borderless
+            standout
+            hide-bottom-space
+            readonly
+          ></q-input>
+        </div>
+      </div> -->
+
+      <div class="pc-tip">
+        <div>
+          <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
+
+          <div class="pc-ver" v-if="appVersionNo">
+            Version:
+            <span>{{ appVersionNo }}</span>
+          </div>
+        </div>
+
+        <div>
+          <q-btn
+            class="btn-refresh"
+            no-caps
+            text-color="white"
+            icon="refresh"
+            label="Updated"
+            :loading="loadingUpdated"
+            @click="startRefresh"
+          >
+            <template v-slot:loading>
+              <q-spinner class="on-left" style="color: #fed87d" />
+              Updating...
+            </template>
+          </q-btn>
+        </div>
+      </div>
+
+      <div class="q-mt-md q-pl-lg q-pr-lg">
+        <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+      </div>
+
+      <!-- <div class="text-center q-mt-md" v-if="canEdit">
+        <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
+      </div> -->
+    </q-form>
+  </ContentView>
+
+  <q-dialog width="100%" v-model="showCaptchaDialog">
+    <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
+      <q-card-section class="q-mb-md">
+        <strong>Tips</strong>
+        <br />
+        <br />
+        Please login to proceed
       </q-card-section>
+      <router-link to="/login?redirect=/account"><q-btn label="Confirm" color="brightbtn" /></router-link>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog v-model="showCaptchaDialog" width="100%">
+    <q-card width="100%">
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">OTP</q-card-section>
+      <div style="padding: 20px">
+        <q-card-section class="q-mb-md q-pa-md">
+          <q-input v-model="captchaRef" label="OTP">
+            <template v-slot:append>
+              <img
+                :src="verificationImg"
+                title="Click to Refresh OTP"
+                style="margin-top: 6px; cursor: pointer"
+                @click="getCode"
+              />
+            </template>
+          </q-input>
+        </q-card-section>
+        <q-btn @click="onCaptchaSubmit" label="Send OTP" color="brightbtn" />
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="personalCenterDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="bg-yellow text-black popout-close"
+        @click="closePersonalCenterDialog()"
+      />
+      <div class="popout-dialog-container">
+        <div class="txt-title">KYC Info</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Full Name</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Full Name"
+                v-model="formDetail.realName"
+                :rules="[(_) => isValidName()]"
+              />
+            </div>
+          </div>
+
+          <div class="pc-form-item">
+            <div class="pc-form-label">Phone</div>
+            <div class="pc-form-input">
+              <q-input
+                type="number"
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Phone"
+                v-model="formDetail.phone"
+                :rules="[(_) => isValidPhone()]"
+                :disable="startCountdownResendOTP"
+              >
+                <template v-slot:append>
+                  <div class="pc-form-side-btn">
+                    <q-btn
+                      no-caps
+                      dense
+                      class="bg-yellow text-black"
+                      :label="!startCountdownResendOTP && 'Get Code'"
+                      :disable="!formDetail.phone || startCountdownResendOTP"
+                      @click="openVerificationCodeDialog"
+                    />
+                  </div>
+                </template>
+              </q-input>
+            </div>
+          </div>
+
+          <div v-if="showVerificationTokenInput" class="pc-form-item">
+            <div class="pc-form-label">Verification Code</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Verification Code"
+                v-model="formDetail.phoneOtpRef"
+                :rules="[(_) => isValidOTP()]"
+              >
+                <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+              </q-input>
+            </div>
+          </div>
+
+          <div class="pc-form-item">
+            <div class="pc-form-label">Email</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Your Email"
+                v-model="formDetail.email"
+                :rules="[(_) => isValidEmail()]"
+              ></q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn
+            :loading="btnLoading"
+            rounded
+            flat
+            no-caps
+            class="btn-purple-pattern"
+            :disable="
+              !(isValidName() === true && isValidPhone() === true && isValidOTP() === true && isValidEmail() === true)
+            "
+            @click="submitKYC"
+          >
+            Submit
+          </q-btn>
+        </div>
+      </div>
     </div>
-    <q-item-section class="acct-nav">
-      <div class="acct-title">
-        <div class="acct-title-1">我的功能</div>
-        <div id="vipDomain" class="vipurl">专属网址：<a style="text-decoration: none; color: #fff; font-size: 16px;"
-                                                       :href="selfTgurl" target="_blank">{{ store.evip }}</a></div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="changePasswordDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="bg-yellow text-black popout-close"
+        @click="openChangePasswordDialog()"
+        v-close-popup
+      />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Change Password</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Password</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Current Password"
+                v-model="updatePwdInfo.oldPassword"
+                ref="oldPasswordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[(val) => (val && val.length > 0) || 'Please insert old password']"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
+          </div>
+          <div class="pc-form-item">
+            <div class="pc-form-label">New Password</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter New Password"
+                v-model="updatePwdInfo.password"
+                ref="passwordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) =>
+                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                ]"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
+          </div>
+          <div class="pc-form-item">
+            <div class="pc-form-label">Confirm New Password</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Confirm New Password"
+                v-model="updatePwdInfo.confirmNewPwd"
+                ref="confirmPasswordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
+                ]"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn>
+        </div>
       </div>
-      <div class="acct-menu">
-        <router-link to="/account/records">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_record.png" />
-            <div class="acct-nav-label">交易记录</div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="changeNewPasswordDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Change New Password</div>
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Login Name</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                v-model="newLoginName"
+                disable
+                hint="Please remember the login name"
+              ></q-input>
+              <div class="pc-form-side-btn copy-btn">
+                <q-btn
+                  no-caps
+                  dense
+                  class="bg-yellow text-black"
+                  @click="copyLoginName"
+                  :label="copyActive ? 'Copied' : 'Copy'"
+                />
+              </div>
+            </div>
           </div>
-        </router-link>
-<!--        <router-link to="/account/invite">-->
-<!--          <div class="acct-nav-item">-->
-<!--            <img src="../assets/images/account/menu_share.png" />-->
-<!--            <div class="acct-nav-label">分享好友</div>-->
-<!--          </div>-->
-<!--        </router-link>-->
-        <router-link to="/promo">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_promo.png" />
-            <div class="acct-nav-label">优惠领取</div>
+
+          <div class="pc-form-item">
+            <div class="pc-form-label">New Password</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter New Password"
+                v-model="updatePwdInfo.password"
+                ref="passwordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) =>
+                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                ]"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
           </div>
-        </router-link>
-        <router-link to="/account/personal">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_personal.png" />
-            <div class="acct-nav-label">个人信息</div>
+          <div class="pc-form-item">
+            <div class="pc-form-label">Confirm New Password</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                placeholder="Enter Confirm New Password"
+                v-model="updatePwdInfo.confirmNewPwd"
+                ref="confirmPasswordRef"
+                hide-bottom-space
+                :type="isPwd ? 'password' : 'text'"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
+                ]"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    color="yellow-7"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
           </div>
-        </router-link>
-        <router-link to="/account/changePwd">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_changePwd.png" />
-            <div class="acct-nav-label">密码</div>
-          </div>
-        </router-link>
-        <router-link to="/account/withdraw">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_bank.png" />
-            <div class="acct-nav-label">银行信息</div>
-          </div>
-        </router-link>
-        <router-link v-if="!store.isApp() && isH5" to="/account/download">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_download.png" />
-            <div class="acct-nav-label">下载中心</div>
-          </div>
-        </router-link>
-        <router-link to="/account/announcement">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_announcement.png" />
-            <div class="acct-nav-label">系统公告</div>
-          </div>
-        </router-link>
-        <router-link to="/account/mail">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.png" />
-            <div class="acct-nav-label">站内信</div>
-            <!--          ({{ store.unreadInboxMail }})-->
-          </div>
-        </router-link>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdateNewPwd">Confirm</q-btn>
+        </div>
       </div>
-    </q-item-section>
-    <a @click="logout">
-      <div class="acct-logout">
-        <div class="acct-nav-label">退出登录</div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeGuestKYCDialog" />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeUserKYCDialog" />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Captcha Code Check</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">Captcha Code</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                hide-bottom-space
+                dense
+                clearable
+                placeholder="Enter Captcha Code"
+                v-model="captchaRef"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert captcha code',
+                  (val) => (val && val.length > 3 && val.length < 5) || 'Captcha code length is 4 characters'
+                ]"
+              >
+                <template v-slot:append>
+                  <img :src="verificationImg" @click="getCode" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-pl-lg q-pr-lg">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn>
+        </div>
       </div>
-    </a>
-  </q-page>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Sign Out</div>
+
+        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
+
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
+          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
-<script>
-import {
-  defineComponent,
-  ref,
-  computed,
-  onMounted,
-  onBeforeUnmount
-} from "vue";
-import { userStore } from "stores/index";
+<script setup>
+import SwiperNav from "../components/SwiperNav.vue";
+import ContentView from "../components/ContentView.vue";
+import ProfileSummary from "../components/ProfileSummary.vue";
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import moment from "moment";
+import { api } from "boot/axios";
+import { useQuasar, copyToClipboard } from "quasar";
+import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
-import { Platform } from "quasar";
+import KYCGuestForm from "../components/KYCGuestForm.vue";
+import KYCUserForm from "../components/KYCUserForm.vue";
 
-export default defineComponent({
-  name: "AccountPage",
-  setup() {
-    const router = useRouter();
-    const store = userStore();
-    const logout = () => {
-      store.memberLogout().then(() => {
-        router.push("/");
-      });
-    };
+let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
+let slideListPath = ref([
+  "/account",
+  "/account/discount",
+  "/account/record",
+  "/account/order",
+  "/account/bank",
+  "/account/message"
+]);
+let currentSlide = ref(slideList.value[0]);
 
-    const appVersionNo = ref(null);
+const isActiveSlide = (e) => {
+  if (e === currentSlide.value) return true;
+  return false;
+};
 
-    const vipLevel = computed(() => {
-      if (store.vip == "VIP1") {
-        return 1;
-      } else if (store.vip == "VIP2") {
-        return 2;
-      } else if (store.vip == "VIP3") {
-        return 3;
-      } else if (store.vip == "VIP4") {
-        return 4;
-      } else if (store.vip == "VIP5") {
-        return 5;
-      } else if (store.vip == "VIP6") {
-        return 6;
-      } else if (store.vip == "VIP7") {
-        return 7;
-      } else if (store.vip == "VIP8") {
-        return 8;
-      } else if (store.vip == "VIP9") {
-        return 9;
-      } else if (store.vip == "VIP10") {
-        return 10;
-      } else if (store.vip == "VIP11") {
-        return 11;
-      } else if (store.vip == "VIP12") {
-        return 12;
-      }
-      return store.vip;
-    });
+const logout = () => {
+  loadingLogout.value = true;
 
-    const timerBalance = ref();
+  $q.loading.show({
+    message: "Logging out..."
+  });
 
-    const vip = computed(() => {
-      return store.vip;
-    });
-    const selfTgurl = ref('https://' + store.evip);
+  store.memberLogout().then(() => {
+    loadingLogout.value = false;
+    router.push("/home");
+  });
+};
 
-    const getVersionNo = async () => {
-      if (store.getDeviceType() == "ANDROID") {
-        const info = await App.getInfo();
-        var current_version = info.version + "." + info.build;
-        appVersionNo.value = current_version;
-      } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.3";
-      } else {
+const btnLoading = ref(false);
 
-      }
-    };
+const loadingUpdated = ref(false);
 
-    const mainWallet = computed(() => {
-      return store.balance.toFixed(2);
-    });
-    onMounted(() => {
-      getBalance();
-      // store.getUnreadTotal();
-      store.getBalance();
-      getVersionNo();
-      checkPlatform();
-    });
+const intervals = ref(null);
 
-    onBeforeUnmount(() => {
-      clearInterval(timerBalance.value);
+const startRefresh = async () => {
+  loadingUpdated.value = true;
+  loadInfo();
 
-    });
+  store.getMemberInfo().then(() => {
+    setTimeout(() => {
+      loadingUpdated.value = false;
+    }, 2000);
+  });
+};
 
-    const openDeposit = () => {
-      // to="finance/deposit"
-      localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
-      router.push("finance/deposit");
-    };
-
-    const getBalance = () => {
-      timerBalance.value = setInterval(function () {
-        if (store.hasToken()) {
-          store.getBalance();
-        }
-      }, 20000);
-    };
-
-    const isH5 = ref(false);
-    const checkPlatform = () => {
-      //Is iOS Webclip App || Is Android Apk
-      if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
-      ) {
-        isH5.value = false;
-      } else {
-        isH5.value = true;
-      }
-    };
-
-    return {
-      header: "Account",
-      logout,
-      mainWallet,
-      getBalance,
-      store,
-      openDeposit,
-      vipLevel,
-      appVersionNo,
-      isH5,
-      checkPlatform,
-      selfTgurl
-    };
+const personalCenterDialog = ref(false);
+const openPersonalCenterDialog = () => {
+  if (store.guest && !personalState.memberInfo.realName) {
+    // openNewChangePasswordDialog();
+    openGuestKYCDialog();
+  } else if (!store.guest && !personalState.memberInfo.realName) {
+    openUserKYCDialog();
+  } else {
+    return false;
   }
+  // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
+  //   personalCenterDialog.value = true;
+  // }
+};
+
+const closePersonalCenterDialog = () => {
+  // loadInfo();
+  personalCenterDialog.value = false;
+};
+
+const changePasswordDialog = ref(false);
+const openChangePasswordDialog = () => {
+  resetChangePasswordInfo();
+  changePasswordDialog.value = !changePasswordDialog.value;
+};
+
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const guestKYCDialog = ref(false);
+const openGuestKYCDialog = () => {
+  guestKYCDialog.value = true;
+};
+const closeGuestKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    guestKYCDialog.value = false;
+  });
+
+  // formDetail.realName = "";
+  // formDetail.phone = "";
+  // formDetail.password = "";
+};
+
+const changeNewPasswordDialog = ref(false);
+const openNewChangePasswordDialog = () => {
+  changeNewPasswordDialog.value = true;
+  newLoginName.value = store.nickName;
+};
+
+const copyActive = ref(false);
+const copyLoginName = () => {
+  const el = document.createElement("textarea");
+  el.value = newLoginName.value;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+  copyActive.value = true;
+  setTimeout(() => {
+    copyActive.value = false;
+  }, 2000);
+};
+
+const verificationCodeDialog = ref(false);
+const openVerificationCodeDialog = () => {
+  captchaRef.value = "";
+  getCode();
+
+  verificationCodeDialog.value = !verificationCodeDialog.value;
+  getCode();
+};
+
+const confirmSignOutDialog = ref(false);
+const openConfirmSignOutDialog = () => {
+  confirmSignOutDialog.value = !confirmSignOutDialog.value;
+};
+
+const myMemberList = ref([]);
+
+let isNoInfoRef = ref(true);
+if (myMemberList.value.length) isNoInfoRef.value = true;
+
+// const isCardActive = ref();
+const qs = require("qs");
+const $q = useQuasar();
+const searchForm = reactive({
+  start: "",
+  end: ""
 });
-</script>
-<style scoped lang="scss">
-.profile {
-  background: url(../assets/images/account/account-bg.png) no-repeat center
-    center;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 30px 10px;
-  gap: 10px;
 
-  .avatar {
-    width: 60px;
+const profileFormRef = ref();
 
-    img {
-      width: 100%;
-    }
+const store = userStore();
+const router = useRouter();
+
+const isEditEmail = ref(false);
+const isEditPhone = ref(false);
+const isEditBirthday = ref(false);
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+
+  if (store.guest && personalState.memberInfo.realName === null) {
+    // openNewChangePasswordDialog();
+    openGuestKYCDialog();
   }
 
-  .pro-details {
-    font-size: 12px;
-    line-height: 15px;
-    margin-top: 5px;
-    margin-bottom: 3px;
-
-    .vip-badge-item {
-      margin-left: 12px;
-    }
-  }
-}
-
-.vipcard {
-  margin: -20px auto 0;
-  border-radius: 15px;
-  width: 95%;
-  background: url(../assets/images/account/personal_details_bg.png) no-repeat
-    center center;
-  background-size: cover;
-
-  .q-card__section--vert {
-    padding: 0;
-
-    > div {
-      flex: 1;
-    }
+  if (!store.guest && personalState.memberInfo.realName === null) {
+    // openPersonalCenterDialog();
+    openUserKYCDialog();
   }
 
-  .q-card__actions .q-btn {
-    min-width: 60px;
+  // console.log(personalState.memberInfo);
+  if (personalState.memberInfo.birthday > 0) {
+    personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
   }
+  formDetail.nickName = personalState.memberInfo.nickName;
+  formDetail.realName = personalState.memberInfo.realName;
+  formDetail.birthday = personalState.memberInfo.birthday;
+  formDetail.email = personalState.memberInfo.email;
+  formDetail.phone = personalState.memberInfo.phone;
+  formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
+  formDetail.emailVerified = personalState.memberInfo.emailVerified;
 
-  .top-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
+  isEditEmail.value = formDetail.emailVerified === false ? true : false;
+  isEditBirthday.value = formDetail.birthday == "" ? true : false;
+  isEditPhone.value = formDetail.phoneVerified === false ? true : false;
+};
+
+const canEdit = computed(() => {
+  if (personalState.memberInfo && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)) {
+    return true;
   }
+  return false;
+});
 
-  .acct-section {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    justify-content: space-evenly;
-    padding: 10px 20px;
-    border-bottom: 1px solid #2e3445;
-    width: 100%;
-    color: #bacef1;
+const personalState = reactive({
+  memberInfo: {}
+});
+const verificationDetails = reactive({
+  memberInfo: {}
+});
 
-    .label {
-      font-size: 11px;
-      line-height: 12px;
-    }
-
-    .amt {
-      font-size: 18px;
-    }
+const appVersionNo = ref(null);
+const getVersionNo = async () => {
+  if (store.getDeviceType() == "ANDROID") {
+    const info = await App.getInfo();
+    var current_version = info.version + "." + info.build;
+    appVersionNo.value = current_version;
+  } else if (store.getDeviceType() == "IOS") {
+    appVersionNo.value = "iOS v0.3";
+  } else {
   }
+};
 
-  .bot-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0px 20px 10px;
+const loadingLogout = ref(false);
 
-    .button {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 5px;
-      font-size: 11px;
-      line-height: 25px;
-      text-decoration: none;
-      color: #bacef1;
+onMounted(() => {
+  loadInfo();
+  getCode();
+  getVersionNo();
 
-      img {
-        height: 30px;
+  window.location.search.includes("personal") && openPersonalCenterDialog();
+});
+
+const verificationImg = ref("");
+const getCode = () => {
+  api
+    .get("/member/verificationCode")
+    .then((response) => {
+      if (response.code === 0) {
+        verificationImg.value = "data:image/png;base64," + response.data.img;
+        updateSecurityVerified.codeId = response.data.id;
       }
-    }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+};
+//update security
 
-    .q-btn__content {
-      font-size: 12px;
-      color: #bacef1;
-      display: flex;
-      flex-direction: column;
-
-      svg {
-        fill: #ffffff;
-        width: 25px;
-        display: block;
-        padding: 0;
+const isEmailSending = ref(false);
+const updateSecurityModalVisible = ref(false);
+const updateSecurityFormRef = ref();
+const updateSecurityVerified = reactive({
+  mobileNumber: "",
+  verificationCode: ""
+});
+const verificationModalVisible = ref(false);
+const updateSecurityModal = () => {
+  updateSecurityVerified.emailAddress = "";
+  updateSecurityVerified.verificationCode = "";
+  updateSecurityModalVisible.value = true;
+};
+const openVerificationModal = () => {
+  getCode();
+  verificationModalVisible.value = true;
+};
+const verifyVerificationCode = () => {
+  isEmailSending.value = true;
+  verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress;
+  const emailDetails = {
+    email: updateSecurityVerified.emailAddress,
+    captchaCode: updateSecurityVerified.captchaCode,
+    codeId: updateSecurityVerified.codeId
+  };
+  api
+    .post("/otp/sendEmail", qs.stringify(emailDetails))
+    .then((ret) => {
+      if (ret.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "OTP验证码已发送至您的邮箱",
+          icon: "check_circle_outline"
+        });
+        verificationDetails.memberInfo.codeId = ret.data.codeId;
+        verificationModalVisible.value = false;
+        isEmailSending.value = false;
+      } else {
+        // $q.notify({
+        //   color: "negative",
+        //   position: "top",
+        //   message: ret.message,
+        //   icon: "report_problem"
+        // });
+        isEmailSending.value = false;
+        getCode();
       }
-    }
-  }
-}
-
-.acct-nav {
-  background: #212534;
-  width: 95%;
-  margin: 10px auto;
-  padding: 5px;
-  gap: 10px;
-
-  .acct-title {
-    display: flex;
-    margin-top: 4px;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    color: #bacef1;
-    // .acct-header-icon
-
-    .acct-title-1 {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-
-      &:before {
-        content: "";
-        // background: #33bcd4;
-        height: 19px;
-        width: 10px;
-        background-size: 100%;
-        display: inline-block;
-        margin-left: -5px;
-      }
-    }
-  }
-
-  .acct-menu {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-
-    a {
-      width: 33.33%;
-      text-decoration: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 10px;
-      height: 80px;
-
-      .acct-nav-item {
-        gap: 5px;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        color: #bacef1;
-        text-decoration: none;
-        padding: 10px;
-
-        img {
-          height: 40px;
-          fill: white;
-          padding: 0;
+    })
+    .catch((e) => {
+      getCode();
+      isEmailSending.value = false;
+    });
+};
+const emailAddressRef = ref();
+const verificationCodeRef = ref();
+const submitUpdateSecurity = () => {
+  emailAddressRef.value.validate();
+  verificationCodeRef.value.validate();
+  if (emailAddressRef.value.hasError || verificationCodeRef.value.hasError) {
+  } else {
+    verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode;
+    api
+      .post("/otp/verifyEmail", qs.stringify(verificationDetails.memberInfo))
+      .then((res) => {
+        if (res.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "验证成功",
+            icon: "check_circle_outline"
+          });
+          updateSecurityModalVisible.value = false;
+          loadInfo();
         }
+      })
+      .catch((e) => {
+        // $q.notify({
+        //   color: "negative",
+        //   position: "top",
+        //   message: e.message,
+        //   icon: "report_problem"
+        // });
+      });
+  }
+};
+
+const isEditRealName = ref(false);
+
+const isEdit = ref(false);
+
+const formDetail = reactive([]);
+const realNameRef = ref();
+const birthdayRef = ref();
+const emailRef = ref();
+const phoneOtpRef = ref();
+
+const captchaRef = ref();
+const showCaptchaDialog = ref(false);
+const showVerificationTokenInput = ref(false);
+
+const updateState = () => {
+  const updateInfo = {};
+  updateInfo.realName = formDetail.realName;
+  updateInfo.email = formDetail.email;
+  updateInfo.phone = formDetail.phone;
+  updateInfo.otpCode = formDetail.phoneOtpRef;
+  updateInfo.otpCodeId = verificationCodeID;
+
+  api
+    .post("/session/verifyAndUpdateAccount", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          personalCenterDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
       }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+    });
+};
+
+const updateNewUserState = () => {
+  const updateInfo = {};
+  updateInfo.realName = formDetail.realName;
+
+  api
+    .post("/session/account", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          userKYCDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+    });
+};
+
+// const updateNewGuestState = () => {
+//   const updateInfo = {};
+//   updateInfo.realName = formDetail.realName;
+//   updateInfo.phone = formDetail.phone;
+//   updateInfo.password = formDetail.password;
+
+//   api
+//     .post("/session/guest-password", qs.stringify(updateInfo))
+//     .then((r) => {
+//       if (r.code === 0) {
+//         profileFormRef.value.reset();
+
+//         $q.notify({
+//           color: "positive",
+//           position: "top",
+//           message: "Updated successfully",
+//           icon: "check_circle_outline"
+//         });
+
+//         store.getMemberInfo().then(() => {
+//           loadInfo();
+//           guestKYCDialog.value = false;
+//         });
+//       } else {
+//         $q.notify({
+//           color: "negative",
+//           position: "top",
+//           message: r.message,
+//           icon: "report_problem"
+//         });
+//       }
+//     })
+//     .catch(() => {})
+//     .then(() => {
+//       btnLoading.value = false;
+//     });
+// };
+
+const submitKYC = () => {
+  btnLoading.value = true;
+  updateState();
+};
+
+const submitKYCNewUser = () => {
+  btnLoading.value = true;
+  updateNewUserState();
+};
+
+// const submitKYCNewGuest = () => {
+//   btnLoading.value = true;
+//   updateNewGuestState();
+// };
+
+const isValidName = () => {
+  const { realName } = formDetail;
+  const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
+
+  const result = !realName
+    ? "Please Enter Your Full Name"
+    : !namePattern.test(realName)
+    ? "Please Enter A Valid Full Name"
+    : true;
+  return result;
+};
+
+const isValidPhone = () => {
+  const { phone } = formDetail;
+
+  if (!phone) {
+    return "Please Enter Phone Number";
+  }
+
+  const phoneRegex = /^\d{7,12}$/;
+  const isValid = phoneRegex.test(phone);
+
+  return isValid ? true : "Phone Number must be between 7 and 12 digits";
+};
+
+const isValidOTP = () => {
+  const { phoneOtpRef } = formDetail;
+
+  const result = !phoneOtpRef ? "Please Enter Verification Code" : true;
+  return result;
+};
+
+const isValidEmail = () => {
+  const { email } = formDetail;
+  const emailPattern =
+    /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+
+  const result = !email
+    ? "Please Enter Your Email Address"
+    : !emailPattern.test(email)
+    ? "Please Enter A Valid Email Address"
+    : true;
+  return result;
+};
+
+const openVerificationDialog = () => {
+  getCode();
+
+  showCaptchaDialog.value = true;
+};
+
+const goToPage = (page) => {
+  router.push(page);
+};
+
+let verificationCodeID = "";
+const startCountdownResendOTP = ref(false);
+const countdownOTP = ref();
+
+const onCaptchaSubmit = () => {
+  api
+    .post(
+      `/otp/sendSms`,
+      qs.stringify({
+        telephone: formDetail.phone,
+        captchaCode: captchaRef.value,
+        codeId: updateSecurityVerified.codeId
+      })
+    )
+    .then((res) => {
+      let message = res.message,
+        color = "positive";
+
+      if (res.code === 0) {
+        showCaptchaDialog.value = false;
+        showVerificationTokenInput.value = true;
+        verificationCodeID = res.data.codeId;
+
+        startCountdownResendOTP.value = true;
+
+        countdownOTP.value = 59;
+        let timer = setInterval(() => {
+          countdownOTP.value -= 1;
+          if (countdownOTP.value === 0) {
+            clearInterval(timer);
+            startCountdownResendOTP.value = false;
+          }
+        }, 1000);
+      } else color = "negative";
+
+      if (message) $q.notify({ message, color });
+
+      console.log("onCaptchaSubmit", res);
+    });
+};
+
+const isPwd = ref(true);
+const oldPasswordRef = ref();
+const passwordRef = ref();
+const confirmPasswordRef = ref();
+const newLoginName = ref();
+const updatePwdInfo = reactive({
+  oldPassword: "",
+  password: "",
+  confirmNewPwd: ""
+});
+
+const isAlphanumeric = (value, translation) => {
+  const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+  return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+};
+
+const submitUpdatePwd = () => {
+  oldPasswordRef.value.validate();
+  passwordRef.value.validate();
+  confirmPasswordRef.value.validate();
+
+  if (oldPasswordRef.value.hasError || passwordRef.value.hasError || confirmPasswordRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/password",
+        qs.stringify({
+          oldPassword: updatePwdInfo.oldPassword,
+          password: updatePwdInfo.password
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "New password updated successfully",
+            icon: "check_circle_outline"
+          });
+          // router.go("/account");
+          resetChangePasswordInfo();
+          changePasswordDialog.value = false;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+};
+
+const submitUpdateNewPwd = () => {
+  passwordRef.value.validate();
+  confirmPasswordRef.value.validate();
+
+  if (passwordRef.value.hasError || confirmPasswordRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/guest-password",
+        qs.stringify({
+          password: updatePwdInfo.password
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "New password updated successfully",
+            icon: "check_circle_outline"
+          });
+          // router.go("/account");
+          changeNewPasswordDialog.value = false;
+          store.getMemberInfo();
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+};
+
+const resetChangePasswordInfo = () => {
+  updatePwdInfo.confirmNewPwd = "";
+  updatePwdInfo.oldPassword = "";
+  updatePwdInfo.password = "";
+};
+</script>
+
+<style lang="scss" scoped>
+.infoboard-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .infoboard-wrapper {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 22rem;
+    margin: 0;
+
+    .left-container {
+      width: 100%;
+
+      .infoboard {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
+        margin: 1rem 0;
+
+        font-family: Helvetica;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        text-transform: capitalize;
+      }
+    }
+
+    .right-container {
+      img {
+        width: 1.75rem;
+      }
+    }
+  }
+
+  img {
+    width: 30rem;
+  }
+}
+
+.bank-card-add {
+  position: absolute;
+  padding: 0 2rem;
+  height: 37rem;
+  overflow: auto;
+  top: 15rem;
+}
+
+.pc-form {
+  margin-top: 20px;
+  .pc-form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+  }
+  .pc-form-label {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .pc-form-input {
+    border-radius: 5px;
+    position: relative;
+
+    :deep(.q-field__control) {
+      background-color: rgba(21, 0, 37, 0.7) !important;
+    }
+
+    :deep(.q-field__native) {
+      color: #ffffff;
+    }
+  }
+
+  .pc-form-side-btn {
+    position: relative;
+    right: -12px;
+
+    :deep(.q-btn-item) {
+      height: 38px;
+    }
+
+    &.copy-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   }
 }
 
-.acct-logout {
-  padding: 10px;
-  margin: 5px 10px;
-  background-color: #33bcd4;
-  text-align: center;
+.btn-purple-pattern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 1;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  width: 100%;
+  height: 48px;
+  transition: 0.3s all;
+  background-image: url(../assets/images/account/btn-purple-pattern.png);
+  color: #ffffff;
+  margin: auto;
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
 }
 
-.vip-badge {
-  position: absolute;
-  left: 10px;
-  top: -40px;
+.pc-tip-chg-pwd {
+  color: #fae576;
+}
+
+.pc-tip {
+  display: flex;
+  justify-content: space-between;
+  // flex-direction: column;
+  // align-items: flex-end;
+}
+.pc-ver {
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 8px;
+
+  span {
+    color: #fae576;
+  }
+}
+
+.btn-refresh {
+  background: rgba(21, 0, 37, 0.7);
+  border-radius: 8px;
+  font-weight: 700;
+  margin-top: auto;
+
+  :deep(.q-icon) {
+    color: #fed87d;
+  }
+}
+
+.btn-cancel {
+  background: rgba(21, 0, 37, 0.5);
+  font-weight: 700;
+  color: #ffffff;
+  border-radius: 8px;
+}
+.btn-confirm {
+  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  font-weight: 700;
+  color: #150025;
+  border-radius: 8px;
 }
 </style>

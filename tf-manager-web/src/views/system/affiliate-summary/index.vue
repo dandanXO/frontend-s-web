@@ -8,6 +8,23 @@
         size="small"
         label-width="150px"
       >
+        <el-form-item :label="t('fields.site')" prop="siteId" v-if="hasRole(['ADMIN'])">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 120px;margin-left: 5px"
+            @focus="loadSites"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.date')" prop="date" v-if="hasRole(['ADMIN'])">
           <el-date-picker
             v-model="form.date"
@@ -41,19 +58,23 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { generateAffiliateSummary } from "../../../api/summary";
 import { hasRole } from "../../../utils/util";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import { getSiteListSimple } from "../../../api/site";
 
 const { t } = useI18n();
 const summaryForm = ref(null);
 const form = reactive({
-  date: []
+  date: [],
+  siteId: null
 });
-
+const siteList = reactive({
+  list: []
+});
 function disabledDate(time) {
   return (
     time.getTime() <
@@ -75,6 +96,16 @@ function summary() {
     }
   });
 }
+
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+}
+
+onMounted(async() => {
+  await loadSites();
+  form.siteId = siteList.list[0].id;
+})
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

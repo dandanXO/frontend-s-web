@@ -1,8 +1,8 @@
 {
   "name": "tha-static-h5",
-  "version": "1.0.12",
-  "description": "APP",
-  "productName": "Jolly88 App",
+  "version": "1.0.22",
+  "description": "Jolly88เป็นคาสิโนสดและปัจจุบันเป็นคาสิโนออนไลน์ที่น่าเชื่อถือที่สุดพร้อมด้วยเกมออนไลน์และเกมสล็อตออนไลน์ยอดนิยมที่สุด",
+  "productName": "Jolly88 - สล็อตออนไลน์|เกมออนไลน์ที่ดีทีสุด|ออนไลน์คาสิโนที่ไว้ใจได้",
   "author": "Mika <mika@eagrp.net>",
   "private": true,
   "scripts": {
@@ -29,6 +29,7 @@
     "@line/liff": "^2.21.3",
     "@quasar/extras": "^1.0.0",
     "@vueuse/core": "^9.2.0",
+    "aos": "^2.3.4",
     "axios": "^0.27.2",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
@@ -36,6 +37,7 @@
     "dotenv-cli": "^7.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "pinia": "^2.0.17",
     "process": "^0.11.10",
     "qs": "^6.11.0",

@@ -1,42 +1,71 @@
 <template>
   <div>
-    <div class="menu-title-container">
-      <span class="menu-title">分享</span>
+    <div class="share-title-container">
+      <span class="share-title">推广分享</span>
     </div>
 
-    <div class="share-wrapper">
-      <div class="sharing-container">
-        <div class="qr-container">
-          <VueQRCodeComponent :size="150" :text="referralLink" />
-          <!-- <qr-code :text="referralLink" error-level="L"></qr-code> -->
-          <!-- <img src="../../assets/images/account/share/qr_code.png" /> -->
-        </div>
+    <div class="sharing-content">
+      <p>
+        您通过推广链接邀请的用户注册并存款，您将获得最高累计
+        <span class="prize-span">2,000</span>
+        元的奖励。
+        <span class="link" @click="router.push('/privilege/invite')">活动详情</span>
+      </p>
+    </div>
+
+    <hr class="divider-style" />
+
+    <div class="share-title-container">
+      <span class="share-title">推广链接</span>
+
+      <div class="sharing-content">
         <div class="right-container">
-          <div class="share-content">
-            每天领取奖金，奖金没有过期日期，只需将 QR 码或链接分享给朋友即可。当朋友注册或下载后，您将立即获得奖金。
-          </div>
           <div class="share-link-wrapper">
             <input @blur="blurCode" ref="copyinput" v-model="referralLink" />
-            <el-button
-                class="common-btn copy-btn"
-                @blur="blurCode"
-                @click="copyCode"
-            >
+            <el-button class="common-btn copy-btn" @blur="blurCode" @click="copyCode">
               {{ copybtntxt }}
             </el-button>
           </div>
         </div>
       </div>
-      <div class="otherlinks">
-        <span class="note">备注：您的邀请奖励还未被分享。</span>
+    </div>
 
-        <div class="links">
-          <RiFacebookCircleLine /><RiWhatsappLine />
-          <RiTelegramLine /><RiTwitterLine />
-          <RiInstagramLine />
+    <hr class="divider-style" />
+
+    <div class="share-title-container">
+      <span class="share-title">推广二维码</span>
+
+      <div class="sharing-content">
+        <div class="right-container">
+          <div class="share-link-wrapper">
+            <VueQRCodeComponent :size="150" :text="referralLink" />
+          </div>
+
+          <div class="share-info-div">
+            <div class="share-info-box">
+              <!-- <i class="remixicon-user-3-fill"></i> -->
+              <el-icon><UserFilled /></el-icon>
+              <span>累计注册</span>
+              <div class="total-info-div">
+                <span class="total-span" id="total-signup-no">0</span>
+                人
+              </div>
+            </div>
+
+            <div class="share-info-box">
+              <!-- <i class="remixicon-money-cny-circle-fill money-sign"></i> -->
+              <el-icon><Money /></el-icon>
+              <span>累计充值</span>
+              <div class="total-info-div">
+                <span class="total-span" id="total-topup-no">0</span>
+                人
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <div>
       <!-- <div class="account-title-container">
         <span class="account-title">ข้อมูลอ้างอิง</span>
@@ -64,16 +93,20 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted } from "vue";
 import { getReferralLink } from "@/api/personal/share"
-import { RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine
+import { RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine,
 } from "vue-remix-icons"
+import { UserFilled, Money } from "@element-plus/icons-vue";
 import moment from 'moment'
 import VueQRCodeComponent from 'vue-qrcode-component'
+import {useRouter} from "vue-router";
+
 export default defineComponent({
   name: "ShareView",
   components: {
-    RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent
+    RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent, UserFilled, Money
   },
   setup() {
+    const router = useRouter()
     const searchForm = reactive({
       date: moment('2022-03-03', 'YYYY-MM-DD'),
     });
@@ -120,7 +153,8 @@ export default defineComponent({
       copyCode,
       blurCode,
       referralLink,
-      VueQRCodeComponent
+      VueQRCodeComponent,
+      router
     };
   },
 });
@@ -129,84 +163,69 @@ export default defineComponent({
 <style scoped lang="scss">
 .account-container {
   .account-content-wrapper {
-    .share-wrapper {
+    .qr-container {
+      background: #ffffff;
+      padding: 30px;
       display: flex;
-      justify-content: center;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      color: #ffffff;
-      gap: 20px;
-      .sharing-container {
-        box-shadow: 0px 0px 20px 1px #10101c;
-        width: 100%;
-        margin: 10px auto;
-        display: flex;
-        justify-content: center;
-        border-radius: 20px;
-        overflow: hidden;
-        flex: 2;
-
-        .qr-container {
-          background: #ffffff;
-          padding: 30px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          img {
-            width: 120px;
-            margin: 0 auto;
-          }
-        }
-        .right-container {    
-          // background: #34cfe5;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          color: #000000;
-          padding: 10px;
-          background: #ebebeb;
-          .share-content {
-            // padding: 10px 30px;
-          }
-          .share-link-wrapper {
-            padding: 10px 30px;
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: calc(100% - 30px);
-            gap: 20px;
-            input {
-              width: 100%;
-              border: none;
-              border: 1px solid #c7c7c7;
-              padding: 10px;
-            }
-          }
-        }
+      img {
+        width: 120px;
+        margin: 0 auto;
       }
-      .otherlinks {
+    }
+    .right-container {
+      // background: #34cfe5;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #000000;
+      // padding: 10px;
+      // background: #ebebeb;
+      .share-content {
+        // padding: 10px 30px;
+      }
+      .share-link-wrapper {
+        // padding: 10px 30px;
+        position: relative;
         display: flex;
-        gap: 10px;
-        flex-direction: column;
-        .links {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 20px;
-          svg {
-            width: 30px;
-            fill: #ffffff;
-          }
-        }
-        .note {
-          font-size: 12px;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        // width: calc(100% - 30px);
+        gap: 20px;
+        input {
+          // width: 100%;
+          width: 400px;
+          border: none;
+          border: 1px solid #c7c7c7;
+          padding: 10px;
         }
       }
     }
+
+    .otherlinks {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      .links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        svg {
+          width: 30px;
+          fill: #ffffff;
+        }
+      }
+      .note {
+        font-size: 12px;
+      }
+    }
+
     .preferred {
       display: flex;
       justify-content: space-between;
@@ -234,5 +253,96 @@ export default defineComponent({
       }
     }
   }
+}
+
+.share-title-container {
+  display: flex;
+  gap: 20px;
+  // align-items: center;
+
+  .share-title {
+    font-size: 18px;
+    min-width: 110px;
+  }
+}
+
+.sharing-content {
+  // padding: 10px 0;
+
+  span.prize-span {
+    color: #32afda;
+    font-size: 20px;
+  }
+
+  span.link {
+    color: #32afda;
+    cursor: pointer;
+  }
+}
+
+.divider-style {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.share-info-div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 22px;
+  gap: 15px;
+
+  .el-icon {
+    border-radius: 50%;
+    width: 70px;
+    min-height: 70px;
+    background: #466aeb;
+    color: #638bf0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+
+    svg {
+      font-size: 40px;
+      color: #638bf0;
+    }
+  }
+}
+
+.share-info-box {
+  width: 140px;
+  height: 80px;
+  background-image: linear-gradient(-37deg, #597ceb 0, #83bcfe 100%), linear-gradient(#fff, #fff);
+  background-blend-mode: normal, normal;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  padding-left: 14px;
+  padding-top: 6px;
+}
+
+.total-info-div {
+  font-size: 14px;
+  color: #fff;
+}
+
+.share-info-box > span {
+  position: absolute;
+  top: 14px;
+  z-index: 3;
+  color: #fff;
+  font-size: 18px;
+}
+.share-info-box .total-span {
+  font-size: 24px;
+  color: #fff;
+  padding-right: 4px;
+  font-weight: 700;
 }
 </style>

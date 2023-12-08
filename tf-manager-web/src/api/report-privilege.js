@@ -12,3 +12,11 @@ export const getDailyReport = (data) => {
 export const getTotalPrivilegeAmount = (data) => {
   return https().request("/report/getTotalPrivilegeReport", Method.GET, data, ContentType.form);
 };
+
+export const getPrivilegeMemberDetailReport = (data) => {
+  return https().request("/report/privilegeMemberDetail", Method.GET, data, ContentType.form);
+};
+
+export const getExportPrivilegeMemberDetailReport = (data) => {
+  return https().request("/report/requestPrivilegeMemberDetailExport", Method.GET, data, ContentType.form);
+};

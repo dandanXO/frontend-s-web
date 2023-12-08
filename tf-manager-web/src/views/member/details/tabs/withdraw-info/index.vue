@@ -104,7 +104,7 @@
             <span
               v-formatter="{
                 data: scope.row.withdrawDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -121,7 +121,7 @@
             <span
               v-formatter="{
                 data: scope.row.checkDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -138,7 +138,7 @@
             <span
               v-formatter="{
                 data: scope.row.paymentDate,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -288,7 +288,7 @@
               v-if="scope.row.operateTime !== null"
               v-formatter="{
                 data: scope.row.operateTime,
-                timeZone: timeZone,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
               }"
             />
@@ -343,10 +343,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  timeZone: {
-    type: String,
-    required: true,
-  }
 })
 
 const { t } = useI18n();
