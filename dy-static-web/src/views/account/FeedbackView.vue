@@ -19,13 +19,19 @@
             </div>
 
             <div class="mailbox-list">
-              <template v-for="m in mailboxState.mailboxList.sent.list" :key="m.id">
-                <div :class="`mailbox-item ${m.readTime ? 'read' : 'unread'}`" @click="openMsg(m)">
-                  <div class="mailbox-title">{{ m.title }}</div>
-                  <!-- <div class="mailbox-content" v-html="m.content"></div> -->
+              <template v-for="(m, mi) in mailboxState.mailboxList.sent.list" :key="m.id">
+                <div :class="`mailbox-item`" @click="openMsg(m)">
+                  <div class="mailbox-preview">
+                    <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">{{ m.title }}</div>
+                    <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
+                  </div>
+                </div>
+                <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
+                  <div class="mailbox-content" v-html="m.content || '加载中...'"></div>
                   <div class="mailbox-date">
                     <el-icon><Calendar /></el-icon>
                     <div>{{ new Date(m.sendTime).toLocaleString("zh-CN") }}</div>
+                    <el-icon class="delete-btn"><Delete @click="deleteMsg(m.id, mi)" /></el-icon>
                   </div>
                 </div>
               </template>
@@ -68,7 +74,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              
+
               <el-form-item ref="title" prop="title" label="标题" :wrapperCol="{ span: 6 }">
                 <el-input v-model="mailboxState.mailboxList.write.title" placeholder="请输入标题" />
               </el-form-item>
@@ -94,33 +100,6 @@
       </el-tabs>
     </div>
   </div>
-
-  <el-dialog
-    v-model="msgModalVisible"
-    :footer="null"
-    width="600px"
-    :title="'标题: ' + msgTitleTxt"
-    align-center
-    :close-on-click-modal="false"
-    :close-on-press-escape="false"
-  >
-    <div class="msg-content">
-      <div class="content-title">内容:</div>
-      <div class="content-txt">
-        {{ msgContentTxt }}
-      </div>
-    </div>
-
-    <div class="msg-date">
-      <el-icon><Calendar /></el-icon>
-      <div>{{ msgDateTxt }}</div>
-    </div>
-
-    <div class="msg-button">
-      <el-button type="danger" @click="deleteMsg(msgId)">删除</el-button>
-      <el-button type="primary" @click="msgModalVisible = false">确认</el-button>
-    </div>
-  </el-dialog>
 </template>
 
 <script setup>
@@ -134,6 +113,7 @@ import {
 } from "@/api/personal/mailbox";
 import { ElMessage } from "element-plus";
 import { Calendar, Delete, MessageBox } from "@element-plus/icons-vue";
+import { ArrowDown } from "@element-plus/icons-vue";
 
 const feedbackTypes = ref("");
 const loadFeedbackType = () => {
@@ -148,7 +128,7 @@ const loadFeedbackType = () => {
 };
 
 const mailboxState = reactive({
-  active: "write",
+  active: "sent",
   mailboxList: {
     sent: {
       list: [],
@@ -193,31 +173,23 @@ const mailTabChange = (nk) => {
   }
 };
 
-const msgModalVisible = ref(false);
-const msgId = ref();
-const msgTitleTxt = ref();
-const msgContentTxt = ref();
-const msgDateTxt = ref();
 const openMsg = (m) => {
-  const { id, title, content, sendTime } = m;
+  const { id } = m;
 
-  msgModalVisible.value = true;
-  msgId.value = id;
-  msgTitleTxt.value = title;
-  msgContentTxt.value = content;
-  msgDateTxt.value = new Date(sendTime).toLocaleString("zh-CN");
+  if (m.isOpen === undefined) m.isOpen = false;
+  m.isOpen = !m.isOpen;
+  m.readTime = true;
 
-  readFeedback({ id })
-    .then((res) => {
-      const { code, data } = res;
-      if (code === 0) {
-        msgContentTxt.value = data.content;
-        loadFeedbackReplies();
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  if (!m.content) {
+    readFeedback({ id })
+      .then((res) => {
+        const { code, data } = res;
+        if (code === 0) m.content = data.content;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 };
 
 const formRef = ref();
@@ -284,7 +256,7 @@ const onSubmit = () => {
 
 const readAllMsg = () => {};
 
-const deleteMsg = (ids) => {
+const deleteMsg = (ids, spliceIndex, callback) => {
   deleteFeedback({ ids })
     .then((res) => {
       const { code } = res;
@@ -294,8 +266,8 @@ const deleteMsg = (ids) => {
           type: "success"
         });
 
-        if (msgModalVisible.value) msgModalVisible.value = false;
-        loadFeedbackReplies();
+        if (spliceIndex !== null) mailboxState.mailboxList[mailboxState.active].list.splice(spliceIndex, 1); // fake delete
+        callback && callback();
       }
     })
     .catch((error) => {
@@ -311,7 +283,9 @@ const deleteAllMsg = () => {
     else ids += `,${id}`;
   });
 
-  deleteMsg(ids);
+  deleteMsg(ids, null, () => {
+    loadFeedbackReplies();
+  });
 };
 
 onMounted(() => {
@@ -362,59 +336,71 @@ onMounted(() => {
     .mailbox-list {
       min-height: 450px;
       font-size: 14px;
+
+      .mailbox-item,
+      .mailbox-content-wrapper {
+        margin-bottom: 10px;
+        padding: 0 15px;
+      }
+
       .mailbox-item {
         position: relative;
         overflow: visible;
-        box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
-        border-radius: 3px;
-        margin-bottom: 15px;
-        padding: 24px;
+        padding: 10px 15px;
         text-align: left;
         transition: all 0.3s;
+        background: #f7f8fb;
         cursor: pointer;
 
         &:hover {
           background: #eeeeee;
         }
 
-        &.read,
-        &.unread {
-          &::after {
-            position: absolute;
-            right: -7.5px;
-            top: -7.5px;
+        .mailbox-preview {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .mailbox-title {
+            font-size: 14px;
+            line-height: 14px;
+            color: #7a80a1;
+
+            &.read {
+            }
+
+            &.unread {
+              font-weight: bold;
+            }
+          }
+
+          .mailbox-accordion {
             width: 15px;
-            height: 15px;
-            border-radius: 50%;
+            transform: rotate(-90deg);
+            transition: 0.3s;
+
+            &.open {
+              transform: rotate(0);
+            }
           }
         }
+      }
 
-        &.read {
-          &::after {
-            content: "";
-            background-color: #7cfc00;
-          }
-        }
+      .mailbox-content-wrapper {
+        max-height: 0;
+        overflow: hidden;
+        transition: 0.5s;
+        color: #7a80a1;
 
-        &.unread {
-          &::after {
-            content: "";
-            background-color: #ee3537;
-          }
-        }
-
-        .mailbox-title {
-          font-size: 12px;
-          line-height: 16px;
-          margin-bottom: 20px;
-          color: #16151c;
+        &.open {
+          max-height: 100px;
         }
 
         .mailbox-content {
           width: 100%;
           margin-bottom: 20px;
           overflow: hidden;
-          color: #838383;
+          word-break: break-word;
         }
 
         .mailbox-date {
@@ -423,9 +409,12 @@ onMounted(() => {
           display: flex;
           justify-content: flex-end;
           align-items: center;
-          font-size: 12px;
           gap: 6px;
-          color: #a1a1a1;
+
+          .delete-btn {
+            margin: 0 0 0 10px;
+            cursor: pointer;
+          }
         }
       }
     }
