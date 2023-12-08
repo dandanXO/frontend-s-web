@@ -4,7 +4,7 @@
       <h5>{{ $t("lang.register") }}</h5>
 
       <div class="q-gutter-y-md">
-        <q-input v-if="select_menu != 'verify'"
+        <q-input
           ref="loginNameRef"
           filled
           v-model="regForm.loginName"
@@ -23,7 +23,7 @@
           </template>
         </q-input>
 
-        <q-input v-if="select_menu != 'verify'"
+        <q-input
           ref="pwdRef"
           filled
           v-model="regForm.password"
@@ -67,7 +67,7 @@
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>
         </div>
 
-        <q-input v-if="select_menu != 'verify'"
+        <q-input
           ref="confirmPwdRef"
           filled
           :type="isCfmPwd ? 'password' : 'text'"
@@ -124,7 +124,7 @@
           <div class="half">
             <q-input
               ref="verificationCodeRef"
-              v-model="updateSecurityVerified.verificationCode"
+              v-model="regForm.smsCode"
               :placeholder="$t('lang.one_time_otp')"
               :label="$t('lang.one_time_otp')"
               stack-label
@@ -132,6 +132,7 @@
               autocomplete="off"
               filled
               color="white"
+              style="width: 100%;"
             />
             <q-btn
               class="common-large-btn third-btn"
@@ -139,10 +140,10 @@
               @click="openVerificationModal"
             />
           </div>
-          <div class="flex flex-center gap-10 q-mt-md">
+          <!-- <div class="flex flex-center gap-10 q-mt-md">
             <q-btn :label="$t('lang.back')" class="common-large-btn third-btn" @click="select_menu = ''" />
             <q-btn :label="$t('lang.confirm')" class="common-large-btn" color="brand" @click="submitUpdateSecurity" />
-          </div>
+          </div> -->
         </q-form>
       </div>
                
@@ -200,7 +201,7 @@
           </template>
         </q-input> -->
 
-        <q-input v-if="select_menu != 'verify'"
+        <q-input
           ref="verificationRef"
           filled
           class="verification-input"
@@ -219,7 +220,7 @@
           </template>
         </q-input>
 
-        <q-input v-if="select_menu != 'verify'"
+        <q-input
           ref="codeAffiliate"
           filled
           v-model="regForm.codeAffiliate"
@@ -234,7 +235,7 @@
           </template>
         </q-input>
 
-        <div v-if="select_menu != 'verify'" class="row justify-center items-center gap-8" style="margin-top: 35px">
+        <div class="row justify-center items-center gap-8" style="margin-top: 35px">
           <!--          <q-btn @click="step == 1" color="warning" class="common-large-btn" rounded-->
           <!--                 :label="$t('lang.back')"/>-->
           <q-btn
@@ -268,7 +269,7 @@
               color="white"
             >
               <template v-slot:append>
-                <img :src="verificationImg" @click="getCode()" />
+                <img :src="verificationImgSMS" @click="getSMSCode()" />
               </template>
               <template v-slot:prepend>
                 <q-icon name="security" />
@@ -286,7 +287,7 @@
         </q-card>
       </q-dialog>
     </q-form>
-    <div v-if="select_menu != 'verify'" class="text-center q-mb-md">
+    <div class="text-center q-mb-md">
       <router-link class="forget-pwd-tip" to="/login">
         {{ $t("lang.already_a_member_signin_now") }}
       </router-link>
@@ -334,6 +335,7 @@ export default defineComponent({
     const done2 = ref(false);
     const imgURL = process.env.IMAGE_CDN + "/payment/";
     const verificationImg = ref("");
+    const verificationImgSMS = ref("");
     const regForm = reactive({
       loginName: "",
       password: "",
@@ -345,7 +347,9 @@ export default defineComponent({
       // cardAccountSurname: "",
       regHost: location.hostname,
       codeId: "",
-      captchaCode: ""
+      captchaCode: "",
+      smsCode: "",
+      smsCodeId:"",
       // birthday: ""
     });
     const getCode = () => {
@@ -357,8 +361,6 @@ export default defineComponent({
             verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.captchaCode = "";
             regForm.codeId = response.data.id;
-            updateSecurityVerified.captchaCode = "";
-            updateSecurityVerified.codeId = response.data.id;
             verificationRef.value.resetValidation();
           }
         })
@@ -371,6 +373,28 @@ export default defineComponent({
           // });
         });
     };
+    const getSMSCode = () => {
+      api
+        .get("/member/verificationCode")
+        .then((res) => {
+          const response = res.data;
+          if (response.code === 0) {
+            verificationImgSMS.value = "data:image/png;base64," + response.data.img;
+            updateSecurityVerified.captchaCode = "";
+            updateSecurityVerified.codeId = response.data.id;
+            captchaCodeRef.value.resetValidation();
+            alert
+          }
+        })
+        .catch((e) => {
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: e.message,
+          //   icon: "report_problem"
+          // });
+        });
+    }
     const select_menu = ref('');
     const verifyPhone = () => {
       telRef.value.validate();
@@ -585,34 +609,14 @@ export default defineComponent({
       telRef.value.validate()
       verificationCodeRef.value.validate()
       if (telRef.value.hasError || verificationCodeRef.value.hasError) {
-      } else {
-        api.post("/session/verifyAndUpdatePhone", qs.stringify({
-          phone: updateSecurityVerified.phone,
-          code: updateSecurityVerified.verificationCode,
-          codeId: verificationDetails.memberInfo.codeId
-        })).then((res) => {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t('lang.successfully_verified'),
-            icon: "check_circle_outline"
-          });
-          select_menu.value = 'isVerified';
-        }).catch((e) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: e.message,
-          //   icon: "report_problem"
-          // });
-        });
       }
+      select_menu.value = 'isVerified';
     }
 
     const verificationDetails = reactive({
       memberInfo: {}
     });
-    const verificationModalVisible = ref(false)
+    const verificationModalVisible = ref(false) 
     const verifyVerificationCode = () => {
       isEmailSending.value = true;
       const phoneDetails = {
@@ -629,16 +633,16 @@ export default defineComponent({
             message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
             icon: "check_circle_outline"
           });
-          verificationDetails.memberInfo.codeId = ret.data.codeId
+          regForm.smsCodeId = ret.data.codeId
           verificationModalVisible.value = false;
           isEmailSending.value = false
         } else {
           isEmailSending.value = false
-          getCode()
+          getSMSCode()
         }
       })
           .catch((e) => {
-            getCode()
+            getSMSCode()
             // $q.notify({
             //   color: "negative",
             //   position: "top",
@@ -653,12 +657,13 @@ export default defineComponent({
       verificationCode: ""
     });
     const openVerificationModal = () => {
-      getCode();
+      getSMSCode();
       verificationModalVisible.value = true;
     }
     return {
       regForm,
       verificationImg,
+      verificationImgSMS,
       loginNameRef,
       pwdRef,
       confirmPwdRef,
@@ -676,6 +681,7 @@ export default defineComponent({
       isPwd: ref(true),
       isCfmPwd: ref(true),
       getCode,
+      getSMSCode,
       pwdStrength,
       selectBankType,
       selectedBankType,
