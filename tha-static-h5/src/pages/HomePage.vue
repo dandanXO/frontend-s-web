@@ -1632,7 +1632,7 @@ export default defineComponent({
             promoCode: "special-invitation-bonus"
           }
         }).then((res) => {
-          if(res.data === true) {
+          if(res.data.data === true) {
             specialInviteBonusEligible.value = true;
           }
         })
@@ -1652,7 +1652,7 @@ export default defineComponent({
           icon: "check_circle_outline"
         });
 
-        specialInviteBonusAmt.value = res.data
+        specialInviteBonusAmt.value = res.data.data
         toggleSpecialInviteBonusPopup(true);
       })
     }
