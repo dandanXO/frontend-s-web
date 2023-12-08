@@ -450,7 +450,7 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
-  if (form.bankId !== null) {
+  if (form.bankId !== null || isUSDT.value) {
     if (store.phone === "" || store.phone === null) {
       isNewUser.value = true;
     } else {

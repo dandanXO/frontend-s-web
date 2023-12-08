@@ -566,7 +566,7 @@ export default defineComponent({
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
-          background-position: center center;
+          background-position: top center;
 
           &.isDesktop {
             display: block;

@@ -265,8 +265,8 @@
         </el-form-item>
         <el-form-item label="VIP" prop="vips">
           <el-checkbox
-            v-model="vipCheckAll"
-            :indeterminate="isVIPIndeterminate"
+            v-model="checkboxes.vip.checkAll"
+            :indeterminate="checkboxes.vip.isIndeterminate"
             @change="handleVIPCheckAllChange"
           >{{ t('fields.checkall') }}</el-checkbox>
           <el-checkbox-group
@@ -281,8 +281,8 @@
         </el-form-item>
         <el-form-item :label="t('fields.paymentType')" prop="payTypes">
           <el-checkbox
-            v-model="paymentTypeCheckAll"
-            :indeterminate="isPaymentTypeIndeterminate"
+            v-model="checkboxes.paymentType.checkAll"
+            :indeterminate="checkboxes.paymentType.isIndeterminate"
             @change="handlePaymentTypeCheckAllChange"
           >{{ t('fields.checkall') }}</el-checkbox>
           <el-checkbox-group
@@ -460,10 +460,6 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const rollover = ref([]);
 const privilegeInfoForm = ref(null)
-const paymentTypeCheckAll = ref(false)
-const isPaymentTypeIndeterminate = ref(false)
-const vipCheckAll = ref(false)
-const isVIPIndeterminate = ref(false)
 const siteList = reactive({
   list: [],
 })
@@ -573,6 +569,17 @@ const paymentTypeList = reactive({
 const selectedVIPs = reactive({ vipChecked: [] })
 const selectedPayTypes = reactive({ payTypeChecked: [] })
 
+const checkboxes = reactive({
+  paymentType: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  },
+  vip: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  },
+})
+
 function disabledStartDate(time) {
   if (form.endTime !== null) {
     const changedDate = form.endTime.replace(/(..)\/(..)\/(....)/, '$3-$2-$1')
@@ -607,26 +614,25 @@ function handleCheckedChange(type) {
   } else if (type === 'PAYTYPE') {
     form.payTypes = JSON.stringify(selectedPayTypes.payTypeChecked.join(','))
   }
+  handleIndividualCheckChange()
 }
 
 const handleVIPCheckAllChange = (val) => {
+  selectedVIPs.vipChecked = []
   if (val) {
     vipList.list.forEach(vip => {
       selectedVIPs.vipChecked.push(vip.id)
     })
-  } else {
-    selectedVIPs.vipChecked = []
   }
   handleCheckedChange('VIP')
 }
 
 const handlePaymentTypeCheckAllChange = (val) => {
+  selectedPayTypes.payTypeChecked = []
   if (val) {
     paymentTypeList.list.forEach(paymentType => {
       selectedPayTypes.payTypeChecked.push(paymentType.code)
     })
-  } else {
-    selectedPayTypes.payTypeChecked = []
   }
   handleCheckedChange('PAYTYPE')
 }
@@ -681,6 +687,7 @@ function changePage(page) {
 }
 
 function showDialog(type) {
+  clearCheckAll()
   if (type === 'CREATE') {
     if (privilegeInfoForm.value) {
       privilegeInfoForm.value.resetFields()
@@ -746,7 +753,7 @@ async function showEdit(privilegeInfo) {
     payTypeArr.forEach(element => {
       selectedPayTypes.payTypeChecked.push(element)
     })
-
+    handleIndividualCheckChange()
     rollover.value = [];
     if (form.gameTypeRollover) {
       Object.entries(JSON.parse(form.gameTypeRollover)).forEach(([key, value]) => {
@@ -761,6 +768,28 @@ async function showEdit(privilegeInfo) {
     }
   })
 }
+
+function handleCategoryChange(selectedList, checkboxData, dataList) {
+  const selectedCount = selectedList.filter(el => dataList.includes(el)).length
+  const listCount = dataList.length
+  checkboxData.checkAll = selectedCount === listCount
+  checkboxData.isIndeterminate = selectedCount > 0 && selectedCount < listCount
+}
+
+function handleIndividualCheckChange() {
+  const vipIds = [...new Set(vipList.list.map(el => el.id))];
+  handleCategoryChange(selectedVIPs.vipChecked, checkboxes.vip, vipIds)
+  const paymentCodes = [...new Set(paymentTypeList.list.map(el => el.code))];
+  handleCategoryChange(selectedPayTypes.payTypeChecked, checkboxes.paymentType, paymentCodes)
+}
+
+function clearCheckAll() {
+  checkboxes.vip.checkAll = false
+  checkboxes.vip.isIndeterminate = false
+  checkboxes.paymentType.checkAll = false
+  checkboxes.paymentType.isIndeterminate = false
+}
+
 
 /**
  * 新增公告

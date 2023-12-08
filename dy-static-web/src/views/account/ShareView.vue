@@ -139,13 +139,13 @@ export default defineComponent({
     const getReferral = () => {
       getReferralLink().then((res) => {
         if(res.code === 0) {
-          referralLink.value = `https://www.dy9367.com/refer/${res.data}`;
+          referralLink.value = `https://dy-web.test-psna.com/refer/${res.data}`;
         }
       }).catch((err) => {
         console.log(err)
       })
     };
-    
+
     const getInviteCount = () => {
       getInviteFriendListCount().then((res) => {
         if(res.code === 0) {

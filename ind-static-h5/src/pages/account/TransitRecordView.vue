@@ -548,8 +548,8 @@
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
-          >          
-            
+          >
+
             <!-- <template v-slot:body-cell-actions="props">
               <q-td :props="props">
                 <q-btn color="deep-orange" @click="betDetails(props.row)" label="บันทึกการเดิมพัน"></q-btn>
@@ -566,7 +566,7 @@
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
-          >          
+          >
           </q-table>
       </q-dialog>
     </div>
@@ -864,7 +864,8 @@ export default defineComponent({
       turnover: "/session/member/moneyChange",
       withdraw: "/session/member/withdraw",
       rebates: "/session/member/privilege",
-      gameBetRecord: "/session/member/gameBetRecord",
+      // gameBetRecord: "/session/member/gameBetRecord",
+      gameBetRecord: "/session/member/cassandraBetRecord",
     };
 
     const searchRecord = () => {
@@ -1013,7 +1014,7 @@ export default defineComponent({
         }
       })
     }
-    
+
     return {
       recordActive,
       searchForm,

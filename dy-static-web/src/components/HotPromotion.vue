@@ -306,6 +306,7 @@ export default defineComponent({
     gap: 30px;
     text-align: center;
     padding: 20px;
+    align-items: center;
 
     .extrel-img {
       position: absolute;
