@@ -352,7 +352,7 @@ export default defineComponent({
         if (item.code) {
           codes.push(item.code)
         }
-      if (item.children && item.children.length > 0) {
+        if (item.children && item.children.length > 0) {
           item.children.forEach(child => extractCodes(child, codes))
         }
       }

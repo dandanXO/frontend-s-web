@@ -790,7 +790,6 @@ function clearCheckAll() {
   checkboxes.paymentType.isIndeterminate = false
 }
 
-
 /**
  * 新增公告
  */
