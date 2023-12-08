@@ -53,19 +53,22 @@
               :label-col="{ span: 2 }"
               label-width="100"
             >
-              <el-select
-                class="feedback-select"
-                placeholder="意见类型选择"
-                v-model="mailboxState.mailboxList.write.feedbackType"
-              >
-                <el-option
-                  v-for="(feedback, feedbackIndex) in feedbackTypes"
-                  :key="`feedback-${feedbackIndex}`"
-                  :value="feedback"
+              <el-form-item ref="feedbackType" prop="feedbackType" label="意见类型" :wrapperCol="{ span: 6 }">
+                <el-select
+                  class="feedback-select"
+                  placeholder="意见类型选择"
+                  v-model="mailboxState.mailboxList.write.feedbackType"
                 >
-                  {{ feedback }}
-                </el-option>
-              </el-select>
+                  <el-option
+                    v-for="(feedback, feedbackIndex) in feedbackTypes"
+                    :key="`feedback-${feedbackIndex}`"
+                    :value="feedback"
+                  >
+                    {{ feedback }}
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              
               <el-form-item ref="title" prop="title" label="标题" :wrapperCol="{ span: 6 }">
                 <el-input v-model="mailboxState.mailboxList.write.title" placeholder="请输入标题" />
               </el-form-item>
@@ -219,6 +222,7 @@ const openMsg = (m) => {
 
 const formRef = ref();
 const rules = {
+  feedbackType: [{ required: true, message: "请选择意见类型" }],
   title: [
     {
       required: true,
@@ -439,8 +443,8 @@ onMounted(() => {
     }
 
     .feedback-select {
-      width: 89.8%;
-      margin: 0 0 18px 100px;
+      width: 100%;
+      margin: 0;
     }
   }
 }
