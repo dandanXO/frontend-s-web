@@ -167,7 +167,7 @@
             <el-option
               v-for="item in uiControl.category"
               :key="item.key"
-              :label="item.displayName"
+              :label="t('homeBannerType.' + item.displayName)"
               :value="item.value"
             />
           </el-select>
@@ -326,7 +326,11 @@
     >
       <el-table-column type="selection" />
       <el-table-column prop="title" :label="t('fields.title')" />
-      <el-table-column prop="category" :label="t('fields.category')" />
+      <el-table-column prop="category" :label="t('fields.category')">
+        <template #default="scope">
+          <span>{{ t('homeBannerType.' + scope.row.category) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="siteName" :label="t('fields.site')" />
       <el-table-column prop="state" :label="t('fields.state')">
         <template #default="scope">
