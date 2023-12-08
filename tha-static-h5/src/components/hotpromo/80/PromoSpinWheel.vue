@@ -1,19 +1,24 @@
 <template>
   <q-dialog v-model="isShowTotalWin" class="total-win-dialog">
     <div class="total-win">
-      <div class="total-win-content">
-        <div class="title">{{ $t("lang.youWon") }}</div>
-        <div v-if="outerAmount !== finalAmount">
-          <span>{{ outerAmount }}</span>
-          X
-          <span>{{ innerAmount }}</span>
-          % =
-        </div>
-        <div>{{ $t("lang.totalBonus") }}</div>
-        <div>
-          <span>{{ finalAmount }}</span>
+      <img src="../../../assets/images/promotion/spinwheel/total_win_text.png" />
+      <div class="total-win-content-container">
+        <img src="../../../assets/images/promotion/spinwheel/total_win_board.png" />
+        <div class="total-win-content">
+          <div class="title">{{ $t("lang.youWon") }}</div>
+          <div v-if="outerAmount !== finalAmount">
+            <span>{{ outerAmount }}</span>
+            X
+            <span>{{ innerAmount }}</span>
+            % =
+          </div>
+          <div>{{ $t("lang.totalBonus") }}</div>
+          <div>
+            <span>{{ finalAmount }}</span>
+          </div>
         </div>
       </div>
+
       <div class="collect-btn" @click="onCollectClick">
         <div class="collect-text">Collect</div>
       </div>
@@ -396,13 +401,11 @@ onMounted(() => {
   }
 
   .total-win {
-    background: url(../../../assets/images/promotion/spinwheel/total_win.png);
+    background: url(../../../assets/images/promotion/spinwheel/total_win_bg.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 
-    width: 100%;
-    height: auto;
     aspect-ratio: 1;
     position: relative;
 
@@ -411,15 +414,11 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
 
-    color: white;
-    text-align: center;
-    font-family: Arial Black;
-    font-size: 3vw;
-    font-weight: 900;
-    line-height: normal;
-    letter-spacing: 0.14063rem;
-
     pointer-events: none;
+
+    img {
+      width: 90%;
+    }
 
     span {
       background: linear-gradient(0deg, #ff932f 9.54%, #fffca9 86.08%);
@@ -428,13 +427,27 @@ onMounted(() => {
       -webkit-text-fill-color: transparent;
     }
 
-    .total-win-content {
+    .total-win-content-container {
       position: relative;
-      top: 17.5%;
-      left: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
 
-      .title {
-        font-size: 6vw;
+      .total-win-content {
+        position: absolute;
+        margin: 0 0 0 2%;
+        color: white;
+        text-align: center;
+        font-size: 3vw;
+        font-family: Arial Black;
+        font-weight: 900;
+        line-height: normal;
+        letter-spacing: 0.14063rem;
+
+        .title {
+          font-size: 6vw;
+        }
       }
     }
 
@@ -638,10 +651,8 @@ onMounted(() => {
 
 @media (min-width: 768px) {
   .total-win {
-    font-size: 2vw !important;
-
     .total-win-content {
-      left: 1% !important;
+      font-size: 2vw !important;
 
       .title {
         font-size: 2.5vw !important;
