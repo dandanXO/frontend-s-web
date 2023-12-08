@@ -112,8 +112,7 @@ import {
   submitFeedback
 } from "@/api/personal/mailbox";
 import { ElMessage } from "element-plus";
-import { Calendar, Delete, MessageBox } from "@element-plus/icons-vue";
-import { ArrowDown } from "@element-plus/icons-vue";
+import { Calendar, Delete, MessageBox, ArrowDown } from "@element-plus/icons-vue";
 
 const feedbackTypes = ref("");
 const loadFeedbackType = () => {
@@ -128,7 +127,7 @@ const loadFeedbackType = () => {
 };
 
 const mailboxState = reactive({
-  active: "sent",
+  active: "write",
   mailboxList: {
     sent: {
       list: [],
