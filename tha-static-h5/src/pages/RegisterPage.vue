@@ -109,7 +109,11 @@
         <div class="telephone-otp-row">
           <q-input ref="telOtpCodeRef" v-model="regForm.otpCode" :placeholder="$t('lang.one_time_otp')"
             :label="$t('lang.one_time_otp')" stack-label clearable autocomplete="off" filled  lazy-rules 
-            :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]" />
+            :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]">
+            <template v-slot:prepend>
+              <q-icon name="security" />
+            </template>
+          </q-input>
 
           <q-btn class="common-large-btn third-btn" :label="$t('lang.request_otp_code')"
             @click="openTelephoneVerificationModal" />
