@@ -56,7 +56,7 @@
     <template v-else>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
-          <div class="date">{{ adjustTimeToGMT55(e.betTime).format("YYYY-MM-DD HH:mm") }}</div>
+          <div class="date">{{ convertToGMT55(e.betTime).format("YYYY-MM-DD HH:mm") }}</div>
           <q-btn
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
             :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
@@ -94,7 +94,7 @@ import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import moment from "moment";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
@@ -204,9 +204,6 @@ const totalBetRecord = reactive({
   totalBet: 0,
   totalPayout: 0
 });
-const convertToGMT8 = (dateTime) => {
-  return moment(dateTime).utcOffset('+08:00').toISOString();
-};
 const getGameBetRecordTotal = () => {
   const obj = {
     memberId: store.id,
@@ -221,9 +218,6 @@ const getGameBetRecordTotal = () => {
       totalBetRecord.totalPayout = totalPayout;
     }
   });
-};
-const adjustTimeToGMT55 = (dateTime) => {
-  return moment(dateTime).utcOffset('+05:30');
 };
 onMounted(() => {
   setTime();

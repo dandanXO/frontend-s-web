@@ -93,3 +93,10 @@ export const updateDate = (val) => {
   };
   return newDate.Y + newDate.M + newDate.D;
 };
+
+export const convertToGMT55 = (dateTime) => {
+  return moment(dateTime).utcOffset('+05:30').toISOString();
+};
+export const convertToGMT8 = (dateTime) => {
+  return moment(dateTime).utcOffset('+08:00').toISOString();
+};

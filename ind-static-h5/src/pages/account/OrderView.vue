@@ -83,7 +83,7 @@
 import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate } from "src/boot/utils";
+import { updateDate, convertToGMT8 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
@@ -125,9 +125,12 @@ const searchWithdrawalRecord = () => {
   withdrawalData.value = [];
 
   const { startDate, endDate } = searchForm;
+  
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/withdraw", {
-      params: { startDate, endDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
     })
     .then((response) => {
       if (response.code === 0) {
@@ -150,9 +153,11 @@ const searchDepositRecord = () => {
   depositData.value = [];
 
   const { startDate, endDate } = searchForm;
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/deposit", {
-      params: { startDate, endDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
     })
     .then((response) => {
       if (response.code === 0) {
