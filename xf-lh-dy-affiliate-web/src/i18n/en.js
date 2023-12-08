@@ -564,5 +564,6 @@ export default {
     14103: 'Member tag limit exceeded',
     15201: 'Old password incorrect',
     15202: 'New password cannot be the same as your old password',
+    24000: 'Verification Failed'
   },
 }

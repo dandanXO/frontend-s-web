@@ -67,17 +67,54 @@
     </div>
   </div>
 
-  <el-dialog v-model="showDialog" width="fit-content">
-    <slide-verify
-      ref="slideRef"
-      @success="onSuccess"
-      @fail="onFail"
-      slider-text="向右拖动"
-      :imgs="imgs"
-      style="margin-bottom: 20px;"
-    />
-    <span :style="{color: msgColor}"> {{ msg }} </span>
+  <el-dialog
+    v-model="showDialog"
+    width="30%"
+    @close="onCloseDialog"
+    :title="'安全验证, 请依次点击：' + words.join(' , ')"
+  >
+    <template #header>
+      test
+    </template>
+    <div style="display: flex; flex-direction: column; gap: 20px" v-loading="dialogLoading">
+      <el-image
+        style="cursor: pointer"
+        id="imageRef"
+        fit="contain"
+        :src="img"
+        @click="onClickImage"
+      />
+      <span :style="{color: msgColor}">{{ msg }}</span>
+    </div>
+    <div>
+      <el-button
+        type="info"
+        icon="el-icon-refresh"
+        style="margin-top: 20px;"
+        @click="onGetImage()"
+      >
+        刷新
+      </el-button>
+      <el-button
+        type="success"
+        icon="el-icon-check"
+        style="margin-top: 20px;"
+        @click="userLogin()"
+        :disabled="coordinates.length === 0"
+      >
+        提交
+      </el-button>
+    </div>
   </el-dialog>
+  <div v-for="(point, index) in coordinates" :key="index">
+    <div
+      class="image-number-point"
+      :style="{left: point.displayLeft + 'px', top: point.displayTop + 'px'}"
+      @click="onClickNumber(index)"
+    >
+      {{ index + 1 }}
+    </div>
+  </div>
 </template>
 <script>
 import {
@@ -93,15 +130,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { UserActionTypes } from '@/store/modules/user/action-types'
 import dyLogo from '@/assets/images/dy/logo.png'
-import img0 from '@/components/slider/assets/img.jpg'
-import img1 from '@/components/slider/assets/img1.jpg'
+import { getVerificationImage } from '@/api/verification'
 
 export default defineComponent({
   setup() {
     const userNameRef = ref(null)
     const passwordRef = ref(null)
     const loginFormRef = ref(null)
-    const slideRef = ref(null)
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
@@ -110,6 +145,8 @@ export default defineComponent({
         userName: '',
         password: '',
         site: 'DY2',
+        key: '',
+        coordinates: '',
       },
       loginRules: {
         userName: [
@@ -133,9 +170,13 @@ export default defineComponent({
       capsTooltip: false,
       redirect: '',
       otherQuery: {},
-      imgs: [img0, img1],
       msg: '',
       msgColor: 'black',
+      words: [],
+      codeId: '',
+      img: '',
+      coordinates: [],
+      dialogLoading: false,
     })
 
     const methods = reactive({
@@ -166,29 +207,19 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
+            methods.onGetImage()
             state.msg = ''
             state.showDialog = true
           }
         })
       },
       onFail: () => {
-        state.msg = "验证失败，请重试"
+        state.msg = '验证失败，请重试'
         state.msgColor = 'red'
+        methods.onGetImage()
+        state.coordinates.splice(0)
       },
-      onSuccess: async (times) => {
-        state.msg = "验证通过， 耗时 " + (times / 1000).toFixed(1) + " 秒";
-        state.msgColor = 'green'
-        state.loading = true
-        try {
-          await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)
-        } catch (e) {
-          console.error(e)
-          slideRef.value.reset()
-          state.msg = ''
-          state.showDialog = false
-          state.loading = false
-          return
-        }
+      onSuccess: async () => {
         router
           .push({
             path: state.redirect || '/',
@@ -197,6 +228,83 @@ export default defineComponent({
           .catch(err => {
             console.warn(err)
           })
+      },
+      onClickImage: e => {
+        if (state.coordinates.length < 5) {
+          var image = document.getElementById('imageRef')
+          var x = e.pageX - image.getBoundingClientRect().x
+          var y = e.pageY - image.getBoundingClientRect().y
+          var storeX = x
+          var storeY = y
+          if (image.getBoundingClientRect().x !== 200) {
+            storeX = (x / image.offsetWidth) * 200
+            storeY = (y / image.offsetHeight) * 100
+          }
+          state.coordinates.push({
+            displayLeft: image.getBoundingClientRect().x + x - 12,
+            displayTop: image.getBoundingClientRect().y + y - 12,
+            left: x,
+            top: y,
+            x: storeX,
+            y: storeY,
+          })
+        }
+      },
+      onClickNumber: index => {
+        state.coordinates.splice(index)
+      },
+      onCloseDialog: () => {
+        state.coordinates.splice(0)
+      },
+      onScrollEvent: () => {
+        if (state.showDialog) {
+          var image = document.getElementById('imageRef')
+          var imageX = image.getBoundingClientRect().x
+          var imageY = image.getBoundingClientRect().y
+          for (var i in state.coordinates) {
+            state.coordinates[i].displayLeft =
+              imageX + state.coordinates[i].left - 12
+            state.coordinates[i].displayTop =
+              imageY + state.coordinates[i].top - 12
+          }
+        }
+      },
+      userLogin: async () => {
+        try {
+          state.loginForm.key = state.codeId
+          const coordinatesString = []
+          for (let i = 0; i < state.coordinates.length; i++) {
+            const obj = []
+            obj.push(state.coordinates[i].x)
+            obj.push(state.coordinates[i].y)
+            coordinatesString.push(obj.join(','))
+          }
+          state.loginForm.coordinates = coordinatesString.join('-')
+          await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)
+          state.msg = '验证通过'
+          state.msgColor = 'green'
+          state.loading = true
+          methods.onSuccess()
+        } catch (e) {
+          if (e.message === '验证失败') {
+            methods.onFail()
+          } else {
+            state.msg = ''
+            state.showDialog = false
+          }
+          state.loading = false
+          return
+        }
+        methods.onSuccess()
+      },
+      onGetImage: async () => {
+        state.dialogLoading = true
+        state.coordinates.splice(0)
+        const { data } = await getVerificationImage('DY2')
+        Object.keys({ ...data.data }).forEach(field => {
+          state[field] = data.data[field]
+        })
+        state.dialogLoading = false
       },
     })
 
@@ -225,6 +333,9 @@ export default defineComponent({
       } else if (state.loginForm.password === '') {
         passwordRef.value.focus()
       }
+      var dialog = document.querySelector('.el-overlay-dialog')
+      dialog.addEventListener('scroll', methods.onScrollEvent)
+      window.addEventListener('resize', methods.onScrollEvent)
     })
 
     return {
@@ -232,7 +343,6 @@ export default defineComponent({
       passwordRef,
       loginFormRef,
       dyLogo,
-      slideRef,
       ...toRefs(state),
       ...toRefs(methods),
     }
@@ -343,6 +453,26 @@ export default defineComponent({
     }
   }
 }
+
+.image-number-point {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #3f4eff;
+  z-index: 9999;
+  color: white;
+  padding: 2px 6px;
+  user-select: none;
+  cursor: pointer;
+}
+
+:deep(.el-image__inner) {
+  max-height: 100% !important;
+  max-width: 100% !important;
+}
+
 @media (max-width: 768px) {
   .wrapper {
     .affiliate {
