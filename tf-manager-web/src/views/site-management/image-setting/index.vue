@@ -205,6 +205,28 @@
             />
           </el-select>
         </el-form-item>
+        
+        <el-form-item
+          v-show="form.category === 'PROMO'"
+          :label="t('fields.promoType')"
+          prop="promoType"
+        >
+          <el-select
+            v-model="form.promoType"
+            size="small"
+            :placeholder="t('fields.promoType')"
+            class="filter-item"
+            style="width: 350px"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.promoType"
+              :key="item.name"
+              :label="item.display"
+              :value="item.name"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input
             v-model="form.remark"
@@ -365,6 +387,12 @@ const uiControl = reactive({
     { name: 'CRYPTO', display: t('posterType.crypto') },
     { name: 'AFFILIATE', display: t('posterType.affiliate') },
   ],
+  promoType: [
+    { name: 'DESKTOP_IMAGE', display: t('fields.desktopImage') },
+    { name: 'MOBILE_IMAGE', display: t('fields.mobileImage') },
+    { name: 'DESKTOP_BANNER', display: t('fields.desktopBanner') },
+    { name: 'MOBILE_BANNER', display: t('fields.mobileBanner') },
+  ],
 })
 
 let chooseImage = []
@@ -391,6 +419,7 @@ const form = reactive({
   platform: null,
   posterType: null,
   imageDimension: null,
+  promoType: null,
 })
 
 const page = reactive({
@@ -405,6 +434,7 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   platform: [required(t('message.validatePlatformRequired'))],
   posterType: [required(t('messsage.validatePosterTypeRequired'))],
+  promoType: [required(t('messsage.validatePromoTypeRequired'))],
 })
 
 function resetQuery() {
@@ -582,6 +612,11 @@ function edit() {
 }
 
 function submit() {
+  if (form.category === 'PROMO') {
+    formRules.promoType = [required(t('message.validatePromoTypeRequired'))]
+  } else {
+    formRules.promoType = null
+  }
   if (uiControl.dialogType === 'CREATE') {
     create()
   } else {

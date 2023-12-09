@@ -167,7 +167,7 @@
             <el-option
               v-for="item in uiControl.category"
               :key="item.key"
-              :label="item.displayName"
+              :label="t('homeBannerType.' + item.displayName)"
               :value="item.value"
             />
           </el-select>
@@ -243,7 +243,7 @@
           size="mini"
           type="success"
           ref="searchImage"
-          @click="loadSiteImage"
+          @click="loadSiteImage(uiControl.imageSelectionType)"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -326,7 +326,11 @@
     >
       <el-table-column type="selection" />
       <el-table-column prop="title" :label="t('fields.title')" />
-      <el-table-column prop="category" :label="t('fields.category')" />
+      <el-table-column prop="category" :label="t('fields.category')">
+        <template #default="scope">
+          <span>{{ t('homeBannerType.' + scope.row.category) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="siteName" :label="t('fields.site')" />
       <el-table-column prop="state" :label="t('fields.state')">
         <template #default="scope">
@@ -581,7 +585,7 @@ function selectImage(item) {
 }
 
 async function browseImage(type) {
-  loadSiteImage()
+  loadSiteImage(type)
   if (type === 'DESKTOP') {
     uiControl.imageSelectionTitle = t('fields.desktopImage')
   } else {
@@ -640,8 +644,13 @@ async function loadHomebanner() {
   page.records = ret.records
 }
 
-async function loadSiteImage() {
+async function loadSiteImage(type) {
   selectedImage.id = 0
+  if (type === 'DESKTOP') {
+    imageRequest.promoType = 'DESKTOP_BANNER'
+  } else {
+    imageRequest.promoType = 'MOBILE_BANNER'
+  }
   const { data: ret } = await getSiteImage(imageRequest)
   imageList.list = ret.records
   imageList.pages = ret.pages
