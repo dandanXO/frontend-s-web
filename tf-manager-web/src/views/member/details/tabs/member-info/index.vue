@@ -1450,7 +1450,7 @@ export default defineComponent({
       if (res === 'true') {
         ElMessage({ message: t('message.success'), type: "success" });
       } else {
-        ElMessage({ message: t('fields.Success'), type: "fail" });
+        ElMessage({ message: t('fields.fail'), type: "fail" });
       }
     }
 
@@ -1459,7 +1459,7 @@ export default defineComponent({
       if (res === 'true') {
         ElMessage({ message: t('message.success'), type: "success" });
       } else {
-        ElMessage({ message: t('message.Success'), type: "fail" });
+        ElMessage({ message: t('fields.fail'), type: "fail" });
       }
     }
 
