@@ -62,7 +62,7 @@
         <template #default="scope">
           <el-collapse>
             <el-collapse-item :title="getOverview(scope.row.message)" name="1">
-              <pre v-html="scope.row.prettyMessage" />
+              <pre v-html="scope.row.prettyMessage" style="overflow-wrap: break-word;" />
             </el-collapse-item>
           </el-collapse>
         </template>
@@ -229,7 +229,7 @@ function syntaxHighlight(json) {
 }
 
 function getOverview(error) {
-  return error.substr(0, 150) + "...";
+  return error.substr(0, 50) + "...";
 }
 
 onMounted(() => {
@@ -265,7 +265,7 @@ onMounted(() => {
   display: flex !important;
 }
 
-pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; white-space: pre-wrap;}
 :deep {
   .string { color: green; }
   .number { color: darkorange; }
