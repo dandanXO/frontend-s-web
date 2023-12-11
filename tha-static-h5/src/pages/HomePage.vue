@@ -795,28 +795,40 @@
     <div class="special-invite-bonus-container">
       <div class="header-decoration-wrapper">
         <div class="header-decoration">
-          <img class="confetti" src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png" width="250" />
-          <img class="money-bags" src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png" width="150" />
+          <img
+            class="confetti"
+            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png"
+            width="250"
+          />
+          <img
+            class="money-bags"
+            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png"
+            width="150"
+          />
         </div>
       </div>
       <div class="special-invite-bonus-content">
         <div class="title-wrapper">
-          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ </div>
+          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ</div>
           <div class="reward-amt">200</div>
         </div>
         <div class="desc-wrapper">
-          <div class="desc-title">
-            ข้อกำหนดและเงื่อนไข
-          </div>
+          <div class="desc-title">ข้อกำหนดและเงื่อนไข</div>
           <div class="desc-content">
-            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น<br>
-            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท<br>
-            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ<br>
-            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้<br>
+            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น
+            <br />
+            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท
+            <br />
+            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ
+            <br />
+            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้
+            <br />
             - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้
           </div>
         </div>
-        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">{{ $t("lang.confirm") }}</div>
+        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">
+          {{ $t("lang.confirm") }}
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -868,7 +880,7 @@
             </span>
           </div>
         </router-link>
-<!--        <router-link to="/promo?id=77">
+        <!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
               โบนัส
@@ -890,7 +902,7 @@
             </span>
           </div>
         </router-link>
-<!--        <router-link to="/promo?id=79">
+        <!--        <router-link to="/promo?id=79">
           <div class="popup-item">
             <span>
               ประกันยอดเสีย
@@ -1627,43 +1639,47 @@ export default defineComponent({
 
     const checkRedeemSpecialInviteBonusEligiblity = () => {
       if (store.hasToken()) {
-        eventapi.get('/privi/telephone/canRedeem', {
+        eventapi
+          .get("/privi/telephone/canRedeem", {
+            params: {
+              promoCode: "special-invitation-bonus"
+            }
+          })
+          .then((res) => {
+            if (res.data.data === true) {
+              specialInviteBonusEligible.value = true;
+            }
+          });
+      }
+    };
+
+    const redeemSpecialInviteBonus = () => {
+      eventapi
+        .get("/privi/telephone/redeem", {
           params: {
             promoCode: "special-invitation-bonus"
           }
-        }).then((res) => {
-          if(res.data.data === true) {
-            specialInviteBonusEligible.value = true;
-          }
         })
-      }
-    }
+        .then((res) => {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("lang.success"),
+            icon: "check_circle_outline"
+          });
 
-    const redeemSpecialInviteBonus = () => {
-      eventapi.get('/privi/telephone/redeem', {
-        params: {
-          promoCode: "special-invitation-bonus"
-        }
-      }).then((res) => {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: t("lang.success"),
-          icon: "check_circle_outline"
+          specialInviteBonusAmt.value = res.data.data;
+          toggleSpecialInviteBonusPopup(true);
         });
-
-        specialInviteBonusAmt.value = res.data.data
-        toggleSpecialInviteBonusPopup(true);
-      })
-    }
+    };
 
     const toggleSpecialInviteBonusPopup = (status) => {
-      if(status === false) {
+      if (status === false) {
         specialInviteBonusEligible.value = false;
       }
 
       specialInviteBonusPopupVisible.value = status;
-    }
+    };
 
     onMounted(() => {
       checkPlatform();
@@ -2598,6 +2614,41 @@ export default defineComponent({
   position: absolute;
   top: 10%;
   right: 0;
+
+  animation: tilt-shaking 2s ease-in-out infinite;
+}
+
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg);
+  }
+  3% {
+    transform: rotate(6deg);
+  }
+  6% {
+    transform: rotate(0deg);
+  }
+  9% {
+    transform: rotate(-6deg);
+  }
+  12% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(6deg);
+  }
+  18% {
+    transform: rotate(0deg);
+  }
+  21% {
+    transform: rotate(-6deg);
+  }
+  24% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .special-invite-bonus-container {
@@ -2622,7 +2673,6 @@ export default defineComponent({
     }
   }
 
-
   .special-invite-bonus-content {
     background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
     background-size: 100% 100%;
@@ -2643,7 +2693,7 @@ export default defineComponent({
       .reward-amt {
         font-size: 30px;
         font-weight: 700;
-        color: #FFE35A;
+        color: #ffe35a;
         margin-left: 20px;
       }
     }
@@ -2653,11 +2703,11 @@ export default defineComponent({
       flex-direction: column;
 
       .desc-title {
-        color: #FFCF1F;
+        color: #ffcf1f;
       }
 
       .desc-content {
-        color: #E79DFF;
+        color: #e79dff;
       }
     }
 
