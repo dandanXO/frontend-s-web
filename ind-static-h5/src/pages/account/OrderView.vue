@@ -30,7 +30,18 @@
         <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
             <div class="order-col">Order NO.</div>
-            <div class="order-col">{{ e.serialNumber }}</div>
+            <div class="order-col flex-c-end gap-8">
+              {{ e.serialNumber }}
+
+              <div @click="copyText(e.serialNumber)">
+                <img
+                  class="copy-btn btn-pointer"
+                  src="../../assets/images/account/content-copy.svg"
+                  size="24px"
+                  fill="#fff"
+                />
+              </div>
+            </div>
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
@@ -55,7 +66,18 @@
         <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
             <div class="order-col">Order NO.</div>
-            <div class="order-col">{{ e.serialNumber }}</div>
+            <div class="order-col flex-c-end gap-8">
+              {{ e.serialNumber }}
+
+              <div @click="copyText(e.serialNumber)">
+                <img
+                  class="copy-btn btn-pointer"
+                  src="../../assets/images/account/content-copy.svg"
+                  size="24px"
+                  fill="#fff"
+                />
+              </div>
+            </div>
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
@@ -77,6 +99,8 @@
       </q-tab-panel>
     </q-tab-panels>
   </ContentView>
+
+  <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 </template>
 
 <script setup>
@@ -89,7 +113,9 @@ import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const router = useRouter();
 
 let slideList = ref(["Order", "Bank", "Message", "Personal Center", "Discount", "Record"]);
@@ -125,7 +151,7 @@ const searchWithdrawalRecord = () => {
   withdrawalData.value = [];
 
   const { startDate, endDate } = searchForm;
-  
+
   const gmtStartDate = convertToGMT8(startDate);
   const gmtEndDate = convertToGMT8(endDate);
   api
@@ -145,6 +171,29 @@ const searchWithdrawalRecord = () => {
     .then(() => {
       isLoading.withdrawal = false;
     });
+};
+
+const copyinput = ref(null);
+const text_copied = ref("");
+const copyText = (text) => {
+  text_copied.value = text;
+  console.log(text_copied.value);
+
+  setTimeout(() => {
+    const copyText = copyinput.value;
+    console.log(copyText);
+
+    copyText.select();
+    document.execCommand("copy");
+    console.log("Copied");
+
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: "Serial Number Copied to clipboard.",
+      icon: "check_circle_outline"
+    });
+  }, 100);
 };
 
 const depositData = ref([]);
@@ -245,6 +294,7 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       padding: 8px 12px;
+      flex-wrap: wrap;
 
       &--title {
         background-color: rgba(21, 0, 37, 0.5);
@@ -262,6 +312,10 @@ onMounted(() => {
         display: flex;
         justify-content: space-between;
       }
+    }
+
+    .copy-btn {
+      filter: brightness(0) invert(1);
     }
 
     .order-col {

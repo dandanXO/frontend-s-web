@@ -233,6 +233,31 @@ body.body--dark .q-footer {
   background: #063c50;
   color: #26e6fb !important;
 }
+.flex-c-start{
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex-c-end{
+  display:flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.gap-8{
+  gap: 8px
+}
+.btn-pointer{
+  cursor: pointer;
+
+  &:hover{
+    opacity: 0.9;
+  }
+  &:active{
+    filter: brightness(0.86);
+    transform: translate(0, 1px);
+  }
+}
 .bg-brightbtn {
   background: #33bcd4;
   color: #ffffff;

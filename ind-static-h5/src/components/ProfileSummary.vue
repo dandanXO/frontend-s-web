@@ -33,10 +33,15 @@
           </template>
 
           <template v-else>
-            <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-              <span class="balance-amount">
-                {{ isLoadingBalance ? "Loading..." : store.balance.toFixed(2) }}
-              </span>
+            <div class="flex-c-start">
+              <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
+                <span class="balance-amount">
+                  {{ isLoadingBalance ? "Loading..." : store.balance.toFixed(2) }}
+                </span>
+              </div>
+              <div style="margin-top: 10px" @click="refreshBalance()">
+                <q-icon class="btn-pointer" name="sync" size="30px" color="yellow-7"></q-icon>
+              </div>
             </div>
           </template>
         </div>
@@ -180,7 +185,7 @@ onMounted(() => {
           display: block;
           width: 30px;
           position: absolute;
-          top:-3px;
+          top: -3px;
           left: -21px;
         }
 
@@ -226,7 +231,7 @@ onMounted(() => {
       margin-top: 10px;
       padding-top: 1px;
       padding-bottom: 1px;
-      width: 100px;
+      width: 115px;
       font-size: 14px;
       &:active {
         filter: brightness(0.75);
