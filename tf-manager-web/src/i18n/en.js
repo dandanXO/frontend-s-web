@@ -1302,6 +1302,8 @@ export default {
     selectedImage: 'Selected Image',
     poster: 'Poster',
     posterType: 'Poster Type',
+    teamIcon: 'Team Icon',
+    other: 'Other',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
