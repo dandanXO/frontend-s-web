@@ -520,6 +520,29 @@ export default {
     sport: 'SPORT',
     esport: 'ESPORT',
   },
+  member: {
+    status: {
+      normal: 'NORMAL',
+      frozen: 'FROZEN',
+    }
+  },
+  affiliate: {
+    level: {
+      AFFILIATE: 'Affiliate',
+      SUPER_AFFILIATE: 'Super Affiliate',
+      MASTER_AFFILIATE: 'Master Affiliate',
+      CHIEF_AFFILIATE: 'Chief Affiliate',
+    },
+    status: {
+      APPLY: 'Apply',
+      NORMAL: 'Normal',
+      DISABLE: 'Disable',
+    },
+  },
+  osType: {
+    android: 'ANDROID',
+    ios: 'IOS',
+  },
   error: {
     400: 'Bad Request',
     403: 'Forbidden',
