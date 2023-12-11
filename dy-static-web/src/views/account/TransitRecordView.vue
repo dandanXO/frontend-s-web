@@ -1493,7 +1493,7 @@ export default defineComponent({
         case 'PG':
           return 'PG电子';
         case 'AG':
-          return 'AG真人, AG电子';
+          return 'AG真人, XIN电子';
         case 'ALLBET':
           return 'ALLBET真人';
 
