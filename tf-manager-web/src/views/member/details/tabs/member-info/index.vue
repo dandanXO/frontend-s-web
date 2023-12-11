@@ -1447,7 +1447,7 @@ export default defineComponent({
 
     async function callPhone(id, site) {
       var res = await callTelephone(id, site);
-      if (res === 'true') {
+      if (res.data === 'true') {
         ElMessage({ message: t('message.success'), type: "success" });
       } else {
         ElMessage({ message: t('fields.fail'), type: "fail" });
@@ -1456,7 +1456,7 @@ export default defineComponent({
 
     async function stopPhone(id, site) {
       var res = await stopTelephone(id, site);
-      if (res === 'true') {
+      if (res.data === 'true') {
         ElMessage({ message: t('message.success'), type: "success" });
       } else {
         ElMessage({ message: t('fields.fail'), type: "fail" });
