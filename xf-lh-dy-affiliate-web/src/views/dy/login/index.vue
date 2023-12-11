@@ -52,6 +52,7 @@
               </el-input>
             </el-form-item>
           </el-tooltip>
+
           <el-button
             class="common-btn"
             :loading="loading"
@@ -211,6 +212,11 @@ export default defineComponent({
         })
       },
       onFail: () => {
+        const elDialog = document.getElementsByClassName('el-dialog')[0]
+        elDialog.classList.add('shake')
+        setTimeout(() => {
+          elDialog.classList.remove('shake')
+        }, 500)
         methods.onGetImage()
         state.coordinates.splice(0)
       },
@@ -511,6 +517,48 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+</style>
+
+<style>
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px);
+  }
+  10% {
+    transform: translate(-1px, -2px);
+  }
+  20% {
+    transform: translate(-3px, 0px);
+  }
+  30% {
+    transform: translate(3px, 2px);
+  }
+  40% {
+    transform: translate(1px, -1px);
+  }
+  50% {
+    transform: translate(-1px, 2px);
+  }
+  60% {
+    transform: translate(-3px, 1px);
+  }
+  70% {
+    transform: translate(3px, 1px);
+  }
+  80% {
+    transform: translate(-1px, -1px);
+  }
+  90% {
+    transform: translate(1px, 2px);
+  }
+  100% {
+    transform: translate(1px, -2px);
   }
 }
 </style>

@@ -284,7 +284,9 @@
                   <el-dropdown-item @click="showMemberInfo(scope.row)">
                     {{ t('fields.memberInfo') }}
                   </el-dropdown-item>
-                  <el-dropdown-item @click="transferRedirect(scope.row.loginName)">
+                  <el-dropdown-item
+                    @click="transferRedirect(scope.row.loginName)"
+                  >
                     {{ t('menu.Transfer') }}
                   </el-dropdown-item>
                   <el-dropdown-item @click="showEditTag(scope.row)">
@@ -296,7 +298,9 @@
                   <el-dropdown-item @click="showDepositRecord(scope.row)">
                     {{ t('fields.depositRecord') }}
                   </el-dropdown-item>
-                  <el-dropdown-item @click="showGameRecord(scope.row.loginName)">
+                  <el-dropdown-item
+                    @click="showGameRecord(scope.row.loginName)"
+                  >
                     {{ t('fields.betRecord') }}
                   </el-dropdown-item>
                 </el-dropdown-menu>
@@ -361,7 +365,23 @@
               {{ memberInfo.loginName }}
             </el-form-item>
             <el-form-item :label="t('fields.status')">
-              {{ memberInfo.status }}
+              <el-tag
+                v-if="memberInfo.status === 'NORMAL'"
+                type="success"
+                size="mini"
+              >
+                {{ t('member.status.normal') }}
+              </el-tag>
+              <el-tag
+                v-if="memberInfo.status === 'FROZEN'"
+                type="danger"
+                size="mini"
+              >
+                {{ t('member.status.frozen') }}
+              </el-tag>
+              <el-tag v-if="memberInfo.status === null" type="info" size="mini">
+                -
+              </el-tag>
             </el-form-item>
             <el-form-item :label="t('fields.deposit')">
               {{ memberInfo.totalDeposit }}
@@ -533,34 +553,78 @@
           :label="t('fields.serialNumber')"
           align="left"
         />
-        <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="left">
+        <el-table-column
+          prop="depositAmount"
+          :label="t('fields.depositAmount')"
+          align="left"
+        >
           <template #default="scope">
-            $ <span v-formatter="{data: scope.row.depositAmount,type: 'money'}" />
+            $
+            <span
+              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+            />
           </template>
         </el-table-column>
-        <el-table-column prop="depositDate" :label="t('fields.depositDate')" align="left">
+        <el-table-column
+          prop="depositDate"
+          :label="t('fields.depositDate')"
+          align="left"
+        >
           <template #default="scope">
             <span v-if="scope.row.depositDate === null">-</span>
             <span
               v-if="scope.row.depositDate !== null"
-              v-formatter="{data: scope.row.depositDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{
+                data: scope.row.depositDate,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }"
             />
           </template>
         </el-table-column>
-        <el-table-column prop="finishDate" :label="t('fields.finishDate')" align="left">
+        <el-table-column
+          prop="finishDate"
+          :label="t('fields.finishDate')"
+          align="left"
+        >
           <template #default="scope">
             <span v-if="scope.row.finishDate === null">-</span>
             <span
               v-if="scope.row.finishDate !== null"
-              v-formatter="{data: scope.row.finishDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{
+                data: scope.row.finishDate,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }"
             />
           </template>
         </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" align="left">
           <template #default="scope">
-            <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-            <el-tag v-else-if="scope.row.status === 'CLOSED'" type="danger" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-            <el-tag v-else-if="scope.row.status === 'PENDING'" type="warning" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+            <el-tag
+              v-if="
+                scope.row.status === 'SUCCESS' ||
+                  scope.row.status === 'SUPPLEMENT_SUCCESS'
+              "
+              type="success"
+              size="mini"
+            >
+              {{ t('depositStatus.' + scope.row.status) }}
+            </el-tag>
+            <el-tag
+              v-else-if="scope.row.status === 'CLOSED'"
+              type="danger"
+              size="mini"
+            >
+              {{ t('depositStatus.' + scope.row.status) }}
+            </el-tag>
+            <el-tag
+              v-else-if="scope.row.status === 'PENDING'"
+              type="warning"
+              size="mini"
+            >
+              {{ t('depositStatus.' + scope.row.status) }}
+            </el-tag>
             <el-tag v-else type="info" size="mini">-</el-tag>
           </template>
         </el-table-column>
@@ -592,7 +656,7 @@ import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record';
+import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
 
 const store = useStore()
 const { t } = useI18n()
@@ -653,15 +717,15 @@ const memberDepositInfo = reactive({
     records: [],
     loading: false,
     total: 0,
-    totalDeposit: 0
-  }
+    totalDeposit: 0,
+  },
 })
 
 const depositRequest = reactive({
   size: 10,
   current: 1,
   loginName: null,
-});
+})
 
 const checkAll = ref(false)
 const isIndeterminate = ref(false)
@@ -948,7 +1012,10 @@ function showDepositRecord(member) {
 
 async function loadDepositRecords() {
   memberDepositInfo.page.loading = true
-  const { data: ret } = await getMemberDepositRecords(store.state.user.id, depositRequest)
+  const { data: ret } = await getMemberDepositRecords(
+    store.state.user.id,
+    depositRequest
+  )
   memberDepositInfo.page = ret
   memberDepositInfo.page.loading = false
 }
