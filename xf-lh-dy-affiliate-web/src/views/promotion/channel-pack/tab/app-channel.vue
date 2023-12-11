@@ -20,7 +20,7 @@
       <span>{{ form.affId }}</span>
     </el-form-item>
     <el-form-item :label="t('fields.selectSystem')">
-      <span>{{ form.os }}</span>
+      <span>{{ form.os === 'ANDROID' ? t('osType.android') : t('osType.ios') }}</span>
     </el-form-item>
     <el-form-item :label="t('fields.apkType')">
       <el-button
