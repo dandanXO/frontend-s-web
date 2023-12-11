@@ -570,14 +570,16 @@ function showEdit(user) {
   nextTick(() => {
     for (const key in user) {
       if (Object.keys(form).find(k => k === key)) {
-        if (key === 'netPhone' && user[key] === 0) {
-          form[key] = null
-        } else {
-          form[key] = user[key]
-        }
+        form[key] = user[key]
+        // if (key === 'netPhone' && user[key] === 0) {
+        //   form[key] = null
+        // } else {
+        //   form[key] = user[key]
+        // }
       }
     }
-    form.id = user.id
+    form.id = user.id;
+    // console.log(form);
   })
 }
 
@@ -703,7 +705,7 @@ watch(
     if (uiControl.dialogType === 'CREATE') {
       form.roles = null
     } else if (uiControl.dialogType === 'EDIT') {
-      if (oldValue && value !== oldValue) {
+      if (oldValue && value && value !== oldValue) {
         form.roles = null;
       }
     }
