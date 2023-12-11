@@ -85,7 +85,7 @@
           icon="el-icon-refresh"
           size="mini"
           type="primary"
-          v-permission="['sys:member:multi:wheel:random']"
+          v-permission="['sys:member:multi:wheel:additional:random']"
           @click="random"
         >
           {{ t('fields.randomMember') }}
