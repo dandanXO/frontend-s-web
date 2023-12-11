@@ -17,6 +17,7 @@
                 全部删除
               </el-button>
             </div>
+
             <div class="mailbox-list">
               <template v-for="m in mailboxState.mailboxList.inbox.list" :key="m.id">
                 <div class="mailbox-item" @click="openMsg(m)">
@@ -62,7 +63,7 @@
 
     <div class="msg-date">
       <el-icon><Calendar /></el-icon>
-      <div>{{ m.sendTime }}</div>
+      <div>{{ mailboxState.mailboxList.inbox.list.sendTime }}</div>
     </div>
 
     <div class="msg-button">
@@ -352,7 +353,7 @@ export default defineComponent({
           width: 100%;
           margin-bottom: 20px;
           overflow: hidden;
-          color:#838383;
+          color: #838383;
         }
 
         .mailbox-date {
