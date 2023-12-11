@@ -10,7 +10,6 @@
           class="login-form"
           autocomplete="no-fill"
         >
-
           <el-form-item prop="userName">
             <el-input
               ref="userNameRef"
@@ -21,7 +20,9 @@
               tabindex="1"
               autocomplete="no-fill"
             >
-              <template style="background-color: #2144c6;" #prepend><i><img src="../../../assets/images/xf/icon_name.png"></i></template>
+              <template style="background-color: #2144c6;" #prepend>
+                <i><img src="../../../assets/images/xf/icon_name.png"></i>
+              </template>
             </el-input>
           </el-form-item>
 
@@ -124,27 +125,27 @@ import {
   watch,
   ref,
   nextTick,
-  toRefs
-} from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useStore } from "@/store";
-import { UserActionTypes } from "@/store/modules/user/action-types";
-import xfLogo from "@/assets/images/xf/logo.png";
+  toRefs,
+} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { UserActionTypes } from '@/store/modules/user/action-types'
+import xfLogo from '@/assets/images/xf/logo.png'
 import { getVerificationImage } from '@/api/verification'
 
 export default defineComponent({
   setup() {
-    const userNameRef = ref(null);
-    const passwordRef = ref(null);
-    const loginFormRef = ref(null);
-    const router = useRouter();
-    const route = useRoute();
-    const store = useStore();
+    const userNameRef = ref(null)
+    const passwordRef = ref(null)
+    const loginFormRef = ref(null)
+    const router = useRouter()
+    const route = useRoute()
+    const store = useStore()
     const state = reactive({
       loginForm: {
-        userName: "",
-        password: "",
-        site: "XF1",
+        userName: '',
+        password: '',
+        site: 'XF1',
         key: '',
         coordinates: '',
       },
@@ -152,69 +153,74 @@ export default defineComponent({
         userName: [
           {
             required: true,
-            message: "请输入用户名",
-            trigger: "blur",
-          }
+            message: '请输入用户名',
+            trigger: 'blur',
+          },
         ],
         password: [
           {
             required: true,
-            message: "请输入密码",
-            trigger: "blur",
-          }
-        ]
+            message: '请输入密码',
+            trigger: 'blur',
+          },
+        ],
       },
-      passwordType: "password",
+      passwordType: 'password',
       loading: false,
       showDialog: false,
       capsTooltip: false,
-      redirect: "",
+      redirect: '',
       otherQuery: {},
       words: [],
       codeId: '',
       img: '',
       coordinates: [],
       dialogLoading: false,
-    });
+    })
 
     const methods = reactive({
       validatePasswordLength: (rule, value, callback) => {
         if (value.length < 6 || value.length > 12) {
-          callback(new Error("密码长度为6-12"));
+          callback(new Error('密码长度为6-12'))
         } else {
-          callback();
+          callback()
         }
       },
-      checkCapslock: (e) => {
-        const { key } = e;
+      checkCapslock: e => {
+        const { key } = e
         if (key) {
           state.capsTooltip =
-            key !== null && key.length === 1 && key >= "A" && key <= "Z";
+            key !== null && key.length === 1 && key >= 'A' && key <= 'Z'
         }
       },
       showPwd: () => {
-        if (state.passwordType === "password") {
-          state.passwordType = "";
+        if (state.passwordType === 'password') {
+          state.passwordType = ''
         } else {
-          state.passwordType = "password";
+          state.passwordType = 'password'
         }
         nextTick(() => {
-          (passwordRef.value).focus();
-        });
+          passwordRef.value.focus()
+        })
       },
       handleLogin: () => {
-        (loginFormRef.value).validate(async (valid) => {
+        loginFormRef.value.validate(async valid => {
           if (valid) {
             methods.onGetImage()
             state.showDialog = true
           }
-        });
+        })
       },
       onFail: () => {
+        const elDialog = document.getElementsByClassName('el-dialog')[0]
+        elDialog.classList.add('shake')
+        setTimeout(() => {
+          elDialog.classList.remove('shake')
+        }, 500)
         methods.onGetImage()
         state.coordinates.splice(0)
       },
-      onSuccess: async (times) => {
+      onSuccess: async times => {
         router
           .push({
             path: state.redirect || '/',
@@ -298,34 +304,37 @@ export default defineComponent({
         })
         state.dialogLoading = false
       },
-    });
+    })
 
     function getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== "redirect") {
-          acc[cur] = query[cur];
+        if (cur !== 'redirect') {
+          acc[cur] = query[cur]
         }
-        return acc;
-      }, {});
+        return acc
+      }, {})
     }
 
-    watch(() => route.query, query => {
-      if (query) {
-        state.redirect = query.redirect?.toString() ?? "";
-        state.otherQuery = getOtherQuery(query);
+    watch(
+      () => route.query,
+      query => {
+        if (query) {
+          state.redirect = query.redirect?.toString() ?? ''
+          state.otherQuery = getOtherQuery(query)
+        }
       }
-    });
+    )
 
     onMounted(() => {
-      if (state.loginForm.userName === "") {
-        userNameRef.value.focus();
-      } else if (state.loginForm.password === "") {
-        passwordRef.value.focus();
+      if (state.loginForm.userName === '') {
+        userNameRef.value.focus()
+      } else if (state.loginForm.password === '') {
+        passwordRef.value.focus()
       }
       var dialog = document.querySelector('.el-overlay-dialog')
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
-    });
+    })
 
     return {
       userNameRef,
@@ -333,44 +342,44 @@ export default defineComponent({
       loginFormRef,
       xfLogo,
       ...toRefs(state),
-      ...toRefs(methods)
-    };
-  }
-});
+      ...toRefs(methods),
+    }
+  },
+})
 </script>
 
 <style scoped lang="scss">
 .common-btn {
-      font-family: Jura;
-    transition: all .8s,color .3s .3s;
-    min-width: 120px;
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    background-color: #2144c6;
-    font-size: 14px;
-    color: #ffffff;
-    border: 1px solid transparent;
-    border-radius: 0;
-    opacity: .9;
-    &:hover {
-      opacity: 1;
-    }
+  font-family: Jura;
+  transition: all 0.8s, color 0.3s 0.3s;
+  min-width: 120px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #2144c6;
+  font-size: 14px;
+  color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 0;
+  opacity: 0.9;
+  &:hover {
+    opacity: 1;
+  }
 }
 :deep(.el-input-group__prepend) {
-    background-color: #2144c6;
-    border: 0;
-    padding: 0;
-    border-radius: 0;
-    i {
-      display: flex;
-      justify-content: center;
-      img {
-        height: 40px;
-      }
+  background-color: #2144c6;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  i {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 40px;
     }
+  }
 }
 :deep(.el-input__inner) {
   background: #24222e;
@@ -380,7 +389,7 @@ export default defineComponent({
   border-radius: 0;
 }
 .wrapper {
-  background: url("../../../assets/images/xf/main.jpg") no-repeat center top;
+  background: url('../../../assets/images/xf/main.jpg') no-repeat center top;
   background-size: cover;
 
   .affiliate {
@@ -408,7 +417,7 @@ export default defineComponent({
         text-align: center;
         margin-bottom: 40px;
         &:after {
-          content: "";
+          content: '';
           width: 60px;
           height: 5px;
           background: linear-gradient(to right, #de4545, #db7e42);
@@ -508,6 +517,48 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+</style>
+
+<style>
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px);
+  }
+  10% {
+    transform: translate(-1px, -2px);
+  }
+  20% {
+    transform: translate(-3px, 0px);
+  }
+  30% {
+    transform: translate(3px, 2px);
+  }
+  40% {
+    transform: translate(1px, -1px);
+  }
+  50% {
+    transform: translate(-1px, 2px);
+  }
+  60% {
+    transform: translate(-3px, 1px);
+  }
+  70% {
+    transform: translate(3px, 1px);
+  }
+  80% {
+    transform: translate(-1px, -1px);
+  }
+  90% {
+    transform: translate(1px, 2px);
+  }
+  100% {
+    transform: translate(1px, -2px);
   }
 }
 </style>

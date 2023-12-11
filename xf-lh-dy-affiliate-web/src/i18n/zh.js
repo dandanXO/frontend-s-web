@@ -512,6 +512,28 @@ export default {
     sport: '体育',
     esport: '电竞',
   },
+  member: {
+    status: {
+      normal: '正常',
+      frozen: '冻结',
+    }
+  },
+  affiliate: {
+    level: {
+      AFFILIATE: '三级代理',
+      SUPER_AFFILIATE: '二级代理',
+      MASTER_AFFILIATE: '一级代理',
+    },
+    status: {
+      APPLY: '申请',
+      NORMAL: '正常',
+      DISABLE: '禁用',
+    },
+  },
+  osType: {
+    android: '安卓',
+    ios: 'IOS',
+  },
   error: {
     400: '请求无效',
     403: '禁止访问',

@@ -117,7 +117,7 @@
           <template #default="scope">
             <span v-if="scope.row.affiliateLevel === null">-</span>
             <span v-if="scope.row.affiliateLevel !== null">
-              {{ scope.row.affiliateLevel }}
+              {{ t('affiliate.level.' + scope.row.affiliateLevel) }}
             </span>
           </template>
         </el-table-column>
@@ -168,21 +168,21 @@
         >
           <template #default="scope">
             <el-tag v-if="scope.row.affiliateStatus === 'APPLY'" size="mini">
-              {{ scope.row.affiliateStatus }}
+              {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
             <el-tag
               v-if="scope.row.affiliateStatus === 'NORMAL'"
               type="success"
               size="mini"
             >
-              {{ scope.row.affiliateStatus }}
+              {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
             <el-tag
               v-if="scope.row.affiliateStatus === 'DISABLE'"
               type="danger"
               size="mini"
             >
-              {{ scope.row.affiliateStatus }}
+              {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
             <el-tag
               v-if="scope.row.affiliateStatus === null"
