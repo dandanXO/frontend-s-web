@@ -315,6 +315,12 @@ export default {
     newbie: 'Newbie',
     limit: 'Limit',
   },
+  messageType: {
+    NOTIFICATION: 'Notification',
+    ACTIVITY: 'Activity',
+    ANNOUNCEMENT: 'Announcement',
+    PAYMENT: 'Payment'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1588,6 +1594,7 @@ export default {
     validateReasonTypeRequired: 'Reason Type is required',
     validateRebatePercentageRequired: 'Rebate Percentage is required',
     validateMaxRebateRequired: 'Max rebate is required',
+    validateRecipientRequired: 'Recipient is required',
     validateRecordTimeRequired: 'Record Time is required',
     validateRedeemPointsRequired: 'Redeem Points is required',
     validateRedirectRequired: 'Redirect is required',
@@ -1615,6 +1622,7 @@ export default {
     validateStateRequired: 'State is required',
     validateStatusRequired: 'Status is required',
     validateStopAfterFailureRequired: 'Stop After Failure is required',
+    validateSubjectRequired: 'Subject is required',
     validateSuccess: 'Validate Success',
     validateSupportTypeRequired: 'Support Type is required',
     validateTeamNameEnRequired: 'Team Name English is required',
