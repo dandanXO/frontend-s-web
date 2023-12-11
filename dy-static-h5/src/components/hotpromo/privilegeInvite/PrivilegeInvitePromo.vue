@@ -78,94 +78,73 @@
       </div>
       <div v-if="activeKey === 2" class="tab-content">
         <div class="tab-section">
-          <div class="white-btns-container">
-            <a class="white-btn-style">
-              <div class="white-btn-img">
-                <img src="../../../assets/images/privilege-invite/btn-img-refer.png" />
-              </div>
-              <div class="white-btn-text">邀请周存送</div>
-            </a>
-
-            <a class="white-btn-style">
-              <div class="white-btn-img">
-                <img src="../../../assets/images/privilege-invite/btn-img-friend.png" />
-              </div>
-              <div class="white-btn-text">邀请周存送</div>
-            </a>
-          </div>
-          <div class="blue-content-top-container">
-            <div class="blue-content-title-shadow">Create a better future together</div>
+          <div class="blue-content-top-container mtop-0">
+            <div class="blue-content-title-shadow">Join hands for a grand vision</div>
             <div class="blue-content-title">
-              <img src="../../../assets/images/privilege-invite/dy-refer-title-03.png" />
+              <img src="../../../assets/images/privilege-invite/dy-refer-title-02.png" />
             </div>
-            <div class="blue-content-title-text">通过专属链接邀请至官网注册成为会员</div>
+            <div class="blue-content-title-text">
+              雷火用户打开:个人中心--点击“呼朋唤友”复制推广链接，通过QQ、微信、论坛、贴吧、直播间、微博等方式分享，成功邀请即可获得现金奖励!
+            </div>
           </div>
 
-          <div class="blue-content-table-container">
-            <table border="0">
-              <tr>
-                <td>新用户首存金额</td>
-                <td>邀请人</td>
-                <td>被邀请人</td>
-                <td>流水要求</td>
-              </tr>
-              <tr>
-                <td>≥200</td>
-                <td>18.00</td>
-                <td>8.00</td>
-                <td rowspan="6">1倍/不限场馆</td>
-              </tr>
-              <tr>
-                <td>≥200</td>
-                <td>18.00</td>
-                <td>8.00</td>
-              </tr>
-              <tr>
-                <td>≥200</td>
-                <td>18.00</td>
-                <td>8.00</td>
-              </tr>
-              <tr>
-                <td>≥200</td>
-                <td>18.00</td>
-                <td>8.00</td>
-              </tr>
-              <tr>
-                <td>≥200</td>
-                <td>18.00</td>
-                <td>8.00</td>
-              </tr>
-              <tr>
-                <td>≥200</td>
-                <td>18.00</td>
-                <td>8.00</td>
-              </tr>
-            </table>
+          <div class="white-btns-container">
+            <a class="white-btn-style white-btn-style--invite">
+              <div class="white-btn-img">
+                <img src="../../../assets/images/privilege-invite/icon-invite.png" />
+              </div>
+              <div class="white-btn-text">
+                邀请周存送
+                <br />
+                <span>0</span>
+                人
+              </div>
+            </a>
+
+            <a class="white-btn-style white-btn-style--invite">
+              <div class="white-btn-img">
+                <img src="../../../assets/images/privilege-invite/icon-reward.png" />
+              </div>
+              <div class="white-btn-text">
+                邀请周存送
+                <br />
+                <span>0.00</span>
+                元
+              </div>
+            </a>
+          </div>
+
+          <div class="white-btn-qr-container">
+            <div ref="qrRef">
+              <VueQrious :value="`${referralLink}`" :change="onQRCodeChange()" />
+            </div>
+            <div class="qr-details">
+              <q-input class="qr-link" filled dense color="white" ref="copyinput" v-model="referralLink" />
+
+              <div class="qr-actions">
+                <div class="qr-btn-copy" @click="copyCode">复制分享链接</div>
+                <div class="qr-btn" @click="downloadQRCode()">下载分享二维码</div>
+              </div>
+            </div>
           </div>
 
           <div class="blue-content-rules">
+            <div class="rules-img"><img src="../../../assets/images/privilege-invite/rules-title.png" /></div>
             <ol>
+              <li>您邀请好友时，请分享给好友推广二维码或推广链接，好友完成注册后，绑定关系建立；</li>
               <li>
-                每个通过您推广链接进行注册，并完成相应首存的用户，邀请人与被邀请人都将获得对应的邀请奖金，邀请人能最高可获得2328元，被邀请人最高可获得1668元；
+                您邀请的好友在活动期间绑定手机号即可算注册成功，您邀请的好友人数越多，
+                邀请彩金将逐级增加，最高可获得30元/人邀请彩金；
               </li>
-              <li>活动期间每邀请成功一次，每个对应的档位奖金都 可以领取一次；逾期将会视为自动放弃；</li>
+              <li>系统自动发放至中心钱包，仅需1倍流水即可取款；</li>
+              <li>活动结束后，奖励彩金即刻终止，未领取的彩金将不再发放；</li>
               <li>
-                例如：会员A邀请一位被邀请人首存200元，邀请人可获取18元奖金，被邀请人可获取8元；若想获取下一档位58元，则需被邀请人再次存1000元；奖金将会自动派
-                发至主钱包。
-              </li>
-              <li>邀请人等级不得低于青铜Ⅰ（vip2）；</li>
-              <li>
-                普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金
+                同一IP和设备、同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；
               </li>
               <li>
-                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投
-                注额内。
+                任何用户或团体以不正常的方式进行套取活动优惠，平台方保留在不通知的情况下冻结或关闭相关账号的权利，并不退还款项，且用户会被列入黑名单。若发现有套利客户，对冲或不诚实获取盈利之行为，将取消其优惠资格；
               </li>
-              <li>
-                邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
-                个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
-              </li>
-              <li>为避免文字理解差异，雷火电竞保留此活动最终解释权。</li>
+              <li>为避免文字理解差异，本站保留本活动最终解释权；</li>
             </ol>
           </div>
         </div>
@@ -341,13 +320,19 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privilegeInvite/privilegeInvite";
 import { userStore } from "stores/index";
+import VueQrious from "vue-qrious";
+import { api } from "boot/axios";
 
 export default defineComponent({
-  components: {},
+  components: {
+    VueQrious
+  },
   setup() {
+    const $q = useQuasar();
     const store = userStore();
     const activeKey = ref(3);
     const isCheckRecordModalVisible = ref(false);
@@ -364,8 +349,44 @@ export default defineComponent({
     });
     const router = useRouter();
 
+    const checkActiveKey = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramName = urlParams.get("name");
+
+      // Define the mapping of names to activeKey values
+      const nameToActiveKeyMap = {
+        "dy2-vip-upgrade": 1,
+        "dy2-refer-bonus": 2,
+        "Dongying-refer": 3
+      };
+
+      // Check if the paramName is in the mapping
+      if (nameToActiveKeyMap.hasOwnProperty(paramName)) {
+        activeKey.value = nameToActiveKeyMap[paramName];
+      }
+    };
+
     const changeTab = (tabNum) => {
       activeKey.value = tabNum;
+
+      // Define the mapping of tabNum to names
+      const tabNameMap = {
+        1: "dy2-vip-upgrade",
+        2: "dy2-refer-bonus",
+        3: "Dongying-refer"
+      };
+
+      if (tabNameMap.hasOwnProperty(tabNum)) {
+        const name = tabNameMap[tabNum];
+
+        // Update URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set("name", name);
+
+        // Replace the current state in the history with the new URL
+        const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+        window.history.replaceState({}, "", newUrl);
+      }
     };
 
     const toggleCheckRecordModal = (toggleStatus) => {
@@ -397,8 +418,62 @@ export default defineComponent({
       router.push("/account/invite");
     };
 
+    const qrRef = ref();
+    const qrImg = ref();
+    const onQRCodeChange = () => {
+      if (qrRef.value) {
+        qrImg.value = qrRef.value.firstChild.src;
+        console.log(qrImg.value);
+      }
+    };
+
+    const referralLink = ref("");
+    const getReferral = () => {
+      api
+        .get("/session/member/referralCode")
+        .then((res) => {
+          if (res.code === 0) {
+            referralLink.value = `${window.location.origin}/refer/${res.data}`;
+          }
+        })
+        .catch((err) => {});
+    };
+
+    const copybtntxt = ref("Copy");
+    const copyinput = ref(null);
+    const copyCode = () => {
+      const copyText = copyinput.value;
+      copyText.select();
+      document.execCommand("copy");
+
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "已复制链接",
+        icon: "check_circle_outline"
+      });
+    };
+
+    const downloadQRCode = () => {
+      const link = window.document.createElement("a");
+      link.href = qrRef.value.firstChild.src;
+      link.download = "app";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "已下载二维码",
+        icon: "check_circle_outline"
+      });
+    };
+
     onMounted(() => {
       getRebateInfo().then(({ data }) => (rebateInfo.value = data));
+      getReferral();
+      checkActiveKey();
     });
 
     return {
@@ -409,7 +484,17 @@ export default defineComponent({
       getRecords,
       checkRecordFormData,
       shareInvite,
-      rebateInfo
+      rebateInfo,
+      VueQrious,
+      getReferral,
+      referralLink,
+      copybtntxt,
+      copyinput,
+      copyCode,
+      downloadQRCode,
+      onQRCodeChange,
+      qrRef,
+      checkActiveKey
     };
   }
 });
@@ -418,6 +503,76 @@ export default defineComponent({
 <style scoped lang="scss">
 $gold: #efcf68;
 
+.white-btn-qr-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0px -4px 4px 0px #0000001a inset;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius: 12px;
+  width: 100%;
+  // max-width: 180px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 20px;
+
+  :deep(img) {
+    margin-bottom: 0 !important;
+    width: 80px !important;
+  }
+
+  .qr-details {
+    // background:
+    // box-shadow: 0px -2px 4.579999923706055px 0px #B1D7FF inset;
+
+    .qr-link {
+      // box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
+      // padding: 1px;
+      // border-radius: 40px;
+      // display: flex;
+      // color: #7a8eb9;
+      // padding: 6px 12px;
+      // font-size: 10px;
+
+      :deep(.q-field__control) {
+        border-radius: 30px;
+        font-size: 10px;
+        background: #ffffff;
+        border: 1px solid #5894ff;
+      }
+    }
+
+    .qr-actions {
+      display: flex;
+      margin-top: 6px;
+      gap: 8px;
+      justify-content: flex-start;
+
+      .qr-btn {
+        color: #3f8cff;
+        box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
+        padding: 8px 16px;
+        border-radius: 30px;
+        line-height: 1;
+        &:hover {
+          filter: brightness(0.8);
+        }
+      }
+
+      .qr-btn-copy {
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        color: #ffffff;
+        padding: 8px 16px;
+        border-radius: 30px;
+        line-height: 1;
+        &:hover {
+          filter: brightness(0.8);
+        }
+      }
+    }
+  }
+}
 .white-btns-container {
   display: flex;
   position: relative;
@@ -441,6 +596,13 @@ $gold: #efcf68;
       filter: brightness(1.2);
     }
 
+    &--invite {
+      // justify-content: space-between;
+      // padding-left: 16px;
+      // padding-right: 16px;
+      margin-top: 20px;
+    }
+
     .white-btn-img {
       img {
         height: 45px !important;
@@ -451,7 +613,17 @@ $gold: #efcf68;
 
     .white-btn-text {
       color: #424f72;
-      font-size: 14px;
+      font-size: 12px;
+
+      &--invite {
+        color: #7a8eb9;
+      }
+
+      span {
+        color: #424f72;
+        font-size: 150%;
+        font-weight: bold;
+      }
     }
   }
 }
@@ -485,6 +657,9 @@ $gold: #efcf68;
   }
   .blue-content-title-text {
     color: #7a8eb9;
+    width: 80%;
+    margin: auto;
+    text-align: center;
   }
 }
 

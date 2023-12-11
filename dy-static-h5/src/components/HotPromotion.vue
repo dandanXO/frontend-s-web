@@ -7,7 +7,15 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <PrivilegeInvitePromo v-if="!isCommonPromo && store.token && list.redirectUrl === 'Dongying-refer'" />
+    <PrivilegeInvitePromo
+      v-if="
+        !isCommonPromo &&
+        store.token &&
+        (list.redirectUrl === 'Dongying-refer' ||
+          list.redirectUrl === 'dy2-vip-upgrade' ||
+          list.redirectUrl === 'dy2-refer-bonus')
+      "
+    />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
@@ -150,7 +158,9 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-esport-safety" ||
       this.list.redirectUrl === "sport-safety" ||
       this.list.redirectUrl === "dy2-gift" ||
-      this.list.redirectUrl === "Dongying-refer"
+      this.list.redirectUrl === "Dongying-refer" ||
+      this.list.redirectUrl === "dy2-vip-upgrade" ||
+      this.list.redirectUrl === "dy2-refer-bonus"
     ) {
       this.isCommonPromo = false;
     } else {
