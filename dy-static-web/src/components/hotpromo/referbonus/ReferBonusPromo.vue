@@ -39,7 +39,7 @@
       </div>
 
       <div class="share-container">
-        <div ref="qrRef" class="qr"><VueQrious :value="`${referralLink}`" :change="onQRCodeChange()" /></div>
+        <div ref="qrRef" class="qr"><VueQrious :value="`${referralLink}`" /></div>
         <div class="share-link">
           <div class="copy" @click="copyLink()">复制分享链接</div>
           <div class="link">{{ referralLink }}</div>
@@ -78,17 +78,9 @@ const copyLink = () => {
 };
 
 const qrRef = ref();
-const qrImg = ref();
-const onQRCodeChange = () => {
-  if (qrRef.value) {
-    qrImg.value = qrRef.value.firstChild.src;
-    console.log(qrImg.value);
-  }
-};
-
 const downloadQRCode = () => {
   const link = window.document.createElement("a");
-  link.href = qrImg.value;
+  link.href = qrRef.value.firstChild.src;
   link.download = "app";
   document.body.appendChild(link);
   link.click();
