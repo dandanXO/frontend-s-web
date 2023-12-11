@@ -321,6 +321,12 @@ export default {
     newbie: '新人',
     limit: '限时',
   },
+  messageType: {
+    NOTIFICATION: '通知',
+    ACTIVITY: '活动',
+    ANNOUNCEMENT: '公告',
+    PAYMENT: '充提'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1566,6 +1572,7 @@ export default {
     validateRebatePercentageRequired: '返水比例必填',
     validateRedeemPointsRequired: '兑换分数必填',
     validateMaxRebateRequired: '最大返水额必填',
+    validateRecipientRequired: '收件人必填',
     validateRecordTimeRequired: '记录时间必填',
     validateRedirectRequired: '域名转址必填',
     validateReenterPasswordRequired: '请重新输入密码',
@@ -1591,6 +1598,7 @@ export default {
     validateStateRequired: '状态必填',
     validateStatusRequired: '状态必填',
     validateStopAfterFailureRequired: '失败后停止必填',
+    validateSubjectRequired: '标题必填',
     validateSuccess: '验证成功',
     validateSupportTypeRequired: '支持类型必填',
     validateTeamNameEnRequired: '团队英文名称必填',

@@ -615,6 +615,18 @@ async function loadSiteImage() {
   imageList.pages = ret.pages
 }
 
+function submitImage() {
+  switch (uiControl.imageSelectionType) {
+    case 'DESKTOP_IMG':
+      form.desktopImgUrl = selectedImage.path
+      break
+    case 'MOBILE_IMG':
+      form.mobileImgUrl = selectedImage.path
+      break
+  }
+  uiControl.imageSelectionVisible = false
+}
+
 onMounted(async () => {
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
