@@ -1306,6 +1306,8 @@ export default {
     selectedImage: '已选图像',
     poster: '海报',
     posterType: '海报类别',
+    teamIcon: '队伍图标',
+    other: '其他',
   },
   message: {
     addRemarkSuccess: '新增备注成功',

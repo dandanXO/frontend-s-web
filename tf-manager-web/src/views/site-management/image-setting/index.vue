@@ -264,7 +264,11 @@
         </template>
       </el-table-column>
       <el-table-column prop="name" :label="t('fields.imageName')" />
-      <el-table-column prop="category" :label="t('fields.category')" />
+      <el-table-column prop="category" :label="t('fields.category')">
+        <template #default="scope">
+          {{ uiControl.category.filter((item) => item.name === scope.row.category)[0].display }}
+        </template>
+      </el-table-column>
       <el-table-column prop="siteName" :label="t('fields.site')" />
       <el-table-column prop="createTime" :label="t('fields.createTime')">
         <template #default="scope">
@@ -392,6 +396,8 @@ const uiControl = reactive({
     { name: 'MOBILE_IMAGE', display: t('fields.mobileImage') },
     { name: 'DESKTOP_BANNER', display: t('fields.desktopBanner') },
     { name: 'MOBILE_BANNER', display: t('fields.mobileBanner') },
+    { name: 'TEAM_ICON', display: t('fields.teamIcon') },
+    { name: 'OTHER', display: t('fields.other') },
   ],
 })
 
