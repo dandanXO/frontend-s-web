@@ -1558,7 +1558,8 @@ export default {
     'Email Setting': 'Email Setting',
     'SMS Setting': 'SMS Setting',
     DownloadManager: 'Download Manager',
-    GoogleAuth: "Google Auth"
+    GoogleAuth: "Google Auth",
+    "Error Queue": "Error Message Queue",
   },
   google: {
     google_auth_menu: "Google Authenticator",

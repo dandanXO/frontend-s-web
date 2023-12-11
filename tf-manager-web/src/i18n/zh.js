@@ -1535,7 +1535,8 @@ export default {
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
     DownloadManager: '下载中心',
-    GoogleAuth: "Google 验证中心"
+    GoogleAuth: "Google 验证中心",
+    "Error Queue": "错误消息",
   },
   google: {
     google_auth_menu: "谷歌验证",
