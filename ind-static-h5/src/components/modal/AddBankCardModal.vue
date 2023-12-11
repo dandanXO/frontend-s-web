@@ -43,7 +43,7 @@
           </div> -->
 
           <div class="q-my-sm">
-            <div class="input-title">Card Account</div>
+            <div class="input-title">Holder Name</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
@@ -57,7 +57,7 @@
           </div>
 
           <div class="q-my-sm">
-            <div class="input-title">Card Number</div>
+            <div class="input-title">Account Number</div>
             <q-input
               type="number"
               standout

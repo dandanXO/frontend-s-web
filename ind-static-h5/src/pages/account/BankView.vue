@@ -53,10 +53,14 @@
           <div class="card-icon">
             <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
           </div>
-          <div class="card-label">{{ bc.bankName }}</div>
+          <div class="card-label">Bank Account</div>
+          <!--          <div class="card-label">{{ bc.bankName }}</div>-->
           <div class="card-num-wrapper">
             <div class="card-num">{{ maskCardNumber(bc.cardNumber) }}</div>
             <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
+          </div>
+          <div class="card-num-wrapper">
+            <div class="">IFSC: {{ bc.cardAddress }}</div>
           </div>
           <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
             <q-icon size="sm" name="link_off" />
@@ -257,6 +261,7 @@ onActivated(() => {
         gap: 0.5rem;
 
         .card-num {
+          font-size: 1.1rem;
           word-break: break-all;
         }
       }
