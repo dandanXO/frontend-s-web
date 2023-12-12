@@ -177,6 +177,7 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
+import Adjust from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -365,6 +366,12 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
+
+                //ADJUST TRACKEVENT.
+                Adjust.trackEvent({
+                  eventToken: "81ibj7"
+                });
+
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {

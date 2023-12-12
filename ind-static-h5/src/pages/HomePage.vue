@@ -631,23 +631,22 @@ import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpFill } from "vue-remix-icons";
 import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
-import { translateRecord } from "src/directives/translate";
 import ProfileSummary from "../components/ProfileSummary.vue";
-import WithdrawalComponent from "../components/WithdrawalComponent.vue";
 import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Adjust from "@adjustcom/adjust-web-sdk";
 
 const slide = ref(0);
 
 const isFirstView = ref(false);
 const closeAlert = () => {
   // Create a new date object in GMT+5.5
-  const currentTimeInGMT55 = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-  
+  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+
   localStorage.setItem("indexImgTop", currentTimeInGMT55.getTime());
   isFirstView.value = false;
 };
@@ -892,7 +891,7 @@ const setExpiryBanner = () => {
 
 const setWithExpiry = (key, value, interval) => {
   // Create a new date object in GMT+5.5
-  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
 
   const item = {
     value: value,
@@ -1088,6 +1087,14 @@ const openCSInNewTab = (url) => {
   window.open(absoluteUrl, "_blank");
 };
 
+const initAdjustEventTrack = () => {
+  console.log("INit");
+  Adjust.initSdk({
+    appToken: "pxrvpkqs0a9s",
+    environment: "sandbox"
+  });
+};
+
 onMounted(() => {
   getPlatList();
   loadData();
@@ -1096,6 +1103,7 @@ onMounted(() => {
   getVersionNo();
   getAppDownloadUrl();
   loadHotGameList();
+  initAdjustEventTrack();
   store.getUnreadTotal();
   AOS.init();
 });

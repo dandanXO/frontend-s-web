@@ -184,6 +184,7 @@ var qs = require("qs");
 
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import Adjust from "@adjustcom/adjust-web-sdk";
 
 const store = userStore();
 const router = useRouter();
@@ -484,6 +485,7 @@ async function confirmDeposit() {
             }
           });
           data.bankCardId = 0;
+
           pDepo(data);
         }
       });
@@ -507,6 +509,17 @@ async function pDepo(deposit) {
     .then((res) => {
       if (res.code === 0) {
         const response = res.data.result;
+
+        let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
+        if (!isFirstDepo) {
+          console.log("First Depo");
+          //ADJUST TRACKEVENT.
+          Adjust.trackEvent({
+            eventToken: "medfxb"
+          });
+          localStorage.setItem("IS_FIRST_DEPOSIT", "1");
+        }
+
         if (res.data.result.payResultType === "OFFLINE") {
           btnLoading.value = false;
         }
@@ -810,6 +823,28 @@ onMounted(() => {
         background-size: 100%;
       }
     }
+  }
+}
+
+.btn-go {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 1;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  width: 180px;
+  height: 60px;
+  transition: 0.3s all;
+  background-image: url(../assets/images/index/popout/btn-go.png);
+  color: #ffffff;
+  margin: auto;
+
+  &:before {
+    box-shadow: none;
   }
 }
 </style>

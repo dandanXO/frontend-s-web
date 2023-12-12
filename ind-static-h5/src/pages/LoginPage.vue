@@ -146,9 +146,9 @@ import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-// import RegisterPage from "../pages/RegisterPage.vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
+import Adjust from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "LoginPage",
@@ -417,6 +417,12 @@ export default defineComponent({
                 message: "Quick registered successfully",
                 icon: "check_circle_outline"
               });
+
+              //ADJUST TRACKEVENT.
+              Adjust.trackEvent({
+                eventToken: "vm6pjs"
+              });
+
               store.autoLogin(res.data);
               sessionStorage.removeItem("REFERRAL_CODE");
               if (store.hasToken()) {
