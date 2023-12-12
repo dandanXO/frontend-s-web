@@ -787,8 +787,27 @@
     </q-card>
   </q-dialog>
 
-  <q-page-sticky v-if="specialInviteBonusEligible" position="right" :offset="[0, 0]">
-    <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+  <q-page-sticky
+    v-if="showSticky || specialInviteBonusEligible"
+    class="home-sticky-div"
+    position="right"
+    :offset="[0, 0]"
+  >
+    <div v-if="showSticky" class="home-sticky">
+      <img class="sticky-bear" src="../assets/home/line-bear.png" />
+      <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
+        <q-icon name="close"></q-icon>
+      </q-btn>
+      <div class="sticky-container">
+        <div class="line-title">LINE</div>
+        <img src="../assets/home/line-bg.png" class="line-img" />
+        <div class="line-bottom">line ID:@jolly88</div>
+      </div>
+    </div>
+
+    <div v-if="specialInviteBonusEligible" class="bonus-sticky-box">
+      <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+    </div>
   </q-page-sticky>
 
   <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
@@ -991,6 +1010,19 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
+
+    const showSticky = ref(true);
+    const checkSticky = () => {
+      const stickyOff = localStorage.getItem("LINE_STICKY_OFF");
+      if (stickyOff === "true") {
+        showSticky.value = false;
+      }
+    };
+    const closeLineSticky = () => {
+      showSticky.value = false;
+      localStorage.setItem("LINE_STICKY_OFF", "true");
+    };
+
     const mainWallet = computed(() => {
       return store.balance;
     });
@@ -1687,6 +1719,7 @@ export default defineComponent({
       loadHomeData();
       getAppDownloadUrl();
       getVersionNo();
+      checkSticky();
 
       checkSpinWheelPromo();
       checkRedeemSpecialInviteBonusEligiblity();
@@ -1853,6 +1886,8 @@ export default defineComponent({
       scrollPageRef,
       announcementList,
       isStationNotice,
+      closeLineSticky,
+      showSticky,
       isHomePromoModal,
       openPopup,
       noticeTitle,
@@ -2605,15 +2640,21 @@ export default defineComponent({
   }
 }
 
+.bonus-sticky-box {
+  width: 100%;
+  height: 136px;
+  margin-top: 10px;
+}
+
 .special-invite-bonus-sticky {
   background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 190px;
   height: 136px;
-  position: absolute;
-  top: 10%;
-  right: 0;
+  //position: absolute;/**/
+  //right: 50%;
+  //top: 0;
 
   animation: tilt-shaking 2s ease-in-out infinite;
 }
@@ -2789,6 +2830,75 @@ export default defineComponent({
         font-weight: 600;
         font-style: normal;
       }
+    }
+  }
+}
+
+.home-sticky-div {
+  z-index: 4000;
+}
+
+.home-sticky {
+  //display:none;
+  position: relative;
+  width: 175px;
+  height: 240px;
+
+  .sticky-bear {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 55;
+  }
+
+  .sticky-close-btn {
+    position: absolute;
+    right: 5px;
+    top: 37px;
+    z-index: 30;
+    border-radius: 50%;
+    width: 20px;
+    padding: 0px;
+    line-height: 20px;
+    height: 20px;
+    background: $white;
+    color: $text-gray;
+
+    &:active {
+      filter: brightness(0.8);
+    }
+  }
+
+  .sticky-container {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 15;
+
+    width: 152px;
+    height: 192px;
+    background: $primary;
+    border-radius: 10px 0px 0px 10px;
+
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    justify-content: center;
+
+    .line-title {
+      font-size: 18px;
+    }
+
+    .line-img {
+      width: 100px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .line-bottom {
+      font-size: 16px;
     }
   }
 }
