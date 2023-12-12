@@ -1,3 +1,4 @@
 /node_modules/
 /.vscode
 /.idea
+dy-static-h5/resources/.gradle/*

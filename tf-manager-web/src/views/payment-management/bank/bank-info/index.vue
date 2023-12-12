@@ -59,6 +59,7 @@
       v-model="uiControl.dialogVisible"
       append-to-body
       width="580px"
+      :close-on-press-escape="false"
     >
       <el-form
         ref="bankForm"
@@ -93,12 +94,31 @@
             @input="handleChange()"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.bankCode')" prop="code">
+        <el-form-item v-if="form.bankType === 'BANK'" :label="t('fields.bankCode')" prop="code">
           <el-input
             v-model="form.code"
             style="width: 350px"
             @input="handleChange()"
           />
+        </el-form-item>
+        <el-form-item v-if="form.bankType !== 'BANK'" :label="t('fields.bankCode')" prop="code">
+          <el-select
+            filterable
+            clearable
+            v-model="form.code"
+            size="small"
+            :placeholder="t('fields.pleaseChoose')"
+            class="filter-item"
+            style="width: 200px; margin-bottom: 16px"
+            @change="handleChange()"
+          >
+            <el-option
+              v-for="item in list.payTypes"
+              :key="item.id"
+              :label="item.code"
+              :value="item.code"
+            />
+          </el-select>
         </el-form-item>
 
         <!--表里有， 暂时不用 -->
@@ -131,31 +151,22 @@
 
         <el-form-item :label="t('fields.icon')" prop="bankIcon">
           <el-row :gutter="24">
-            <el-col :span="18">
-              <el-input
-                :readonly="true"
-                v-model="form.bankIcon"
-                autocomplete="off"
+            <el-col v-if="form.bankIcon" :span="18" style="width: 250px">
+              <el-image
+                v-if="form.bankIcon"
+                :src="paymentDir + form.bankIcon"
+                fit="contain"
+                class="preview"
               />
             </el-col>
             <el-col :span="6">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="input"
-                style="display: none"
-                accept="image/*"
-                @change="attachPhoto($event)"
-              >
               <el-button
-                style="display: block"
-                icon="el-icon-upload"
+                icon="el-icon-search"
                 size="mini"
                 type="success"
-                @click="$refs.input.click()"
+                @click="browseImage()"
               >
-                {{ t('fields.upload') }}
+                {{ t('fields.browse') }}
               </el-button>
             </el-col>
           </el-row>
@@ -211,6 +222,112 @@
           </el-button>
         </div>
       </el-form>
+    </el-dialog>
+    <el-dialog
+      :title="t('fields.icon')"
+      v-model="uiControl.imageSelectionVisible"
+      append-to-body
+      width="50%"
+      :close-on-press-escape="false"
+    >
+      <div class="search">
+        <el-input
+          v-model="imageRequest.name"
+          size="small"
+          style="width: 200px"
+          :placeholder="t('fields.imageName')"
+        />
+        <el-select
+          v-model="imageRequest.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          ref="searchImage"
+          @click="loadSiteImage"
+        >
+          {{ t('fields.search') }}
+        </el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="warning"
+          @click="resetImageQuery()"
+        >
+          {{ t('fields.reset') }}
+        </el-button>
+      </div>
+      <div class="grid-container">
+        <div
+          v-for="item in imageList.list"
+          :key="item"
+          class="grid-item"
+          :class="item.id === selectedImage.id ? 'selected' : ''"
+        >
+          <el-image
+            :src="paymentDir + item.path"
+            fit="contain"
+            style="aspect-ratio: 1/1"
+            @click="selectImage(item)"
+          />
+        </div>
+      </div>
+      <el-pagination
+        class="pagination"
+        @current-change="changeImagePage"
+        layout="prev, pager, next"
+        :page-size="imageRequest.size"
+        :page-count="imageList.pages"
+        :current-page="imageRequest.current"
+      />
+      <div class="image-info" v-if="selectedImage.id !== 0">
+        <el-row>
+          <el-col :span="4">
+            <h3>{{ t('fields.selectedImage') }}</h3>
+          </el-col>
+          <el-col :span="20">
+            <el-image
+              :src="paymentDir + selectedImage.path"
+              fit="contain"
+              class="smallPreview"
+              :preview-src-list="[paymentDir + selectedImage.path]"
+            />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">{{ t('fields.imageSite') }} :</el-col>
+          <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">{{ t('fields.imageName') }} :</el-col>
+          <el-col :span="20">{{ selectedImage.name }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">{{ t('fields.imageRemark') }} :</el-col>
+          <el-col :span="20">{{ selectedImage.remark }}</el-col>
+        </el-row>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.imageSelectionVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submitImage">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </div>
     </el-dialog>
     <el-table
       :data="page.records"
@@ -288,7 +405,7 @@
 
 <script setup>
 import { ElMessage } from 'element-plus'
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import {
   createBank,
   getBankInfoList,
@@ -296,13 +413,22 @@ import {
   updateBankStatus,
 } from '../../../../api/bank-info'
 import { getCurrencyCodes } from '../../../../api/currency'
+import { getSiteListSimple } from '../../../../api/site'
+import { getActivePaymentTypes } from '../../../../api/payment-type'
 import { required } from '../../../../utils/validate'
 import { hasRole, hasPermission } from '../../../../utils/util'
-import { uploadImage } from '../../../../api/image'
+import { getSiteImage } from '../../../../api/site-image'
+// import { uploadImage } from '../../../../api/image'
+import { useStore } from '../../../../store';
+import { TENANT } from "../../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
 const bankForm = ref(null)
+const paymentDir = process.env.VUE_APP_IMAGE + '/payment/'
 
 let bankName = ''
 let bankCode = ''
@@ -322,6 +448,7 @@ const uiControl = reactive({
     { key: 2, displayName: 'Crypto', value: 'CRYPTO' },
     { key: 3, displayName: 'Ewallet', value: 'EWALLET' },
   ],
+  imageSelectionVisible: false,
 })
 
 const request = reactive({
@@ -329,6 +456,17 @@ const request = reactive({
   current: 1,
   name: null,
   code: null,
+})
+const imageRequest = reactive({
+  size: 10,
+  current: 1,
+  name: null,
+  siteId: null,
+  category: 'PAYMENT',
+})
+
+const sites = reactive({
+  list: [],
 })
 
 const form = reactive({
@@ -340,7 +478,19 @@ const form = reactive({
   status: true,
   currencyIds: null,
   bankType: null,
-  bankIcon: '',
+  bankIcon: null,
+})
+
+const imageList = reactive({
+  dataList: [],
+  pages: 0,
+})
+const selectedImage = reactive({
+  id: 0,
+  name: '',
+  siteName: '',
+  remark: '',
+  path: '',
 })
 
 const page = reactive({
@@ -350,6 +500,7 @@ const page = reactive({
 
 const list = reactive({
   currencies: [],
+  payTypes: [],
 })
 
 const selected = reactive({ currency: [] })
@@ -366,6 +517,11 @@ const formRules = reactive({
 function resetQuery() {
   request.name = null
   request.code = null
+}
+
+function resetImageQuery() {
+  imageRequest.name = null
+  imageRequest.siteId = site.value ? site.value.id : null
 }
 
 function changePage(page) {
@@ -517,6 +673,25 @@ async function loadCurrency() {
   list.currencies = ret
 }
 
+async function loadSiteImage() {
+  selectedImage.id = 0
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+async function loadPayTypes() {
+  const { data: payType } = await getActivePaymentTypes()
+  list.payTypes = payType
+}
+
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
 async function changeBankStatus(id, state) {
   await updateBankStatus(id, state)
 }
@@ -550,30 +725,53 @@ function submit() {
     edit()
   }
 }
-
-async function attachPhoto(event) {
-  const files = event.target.files[0]
-  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-  const dirPayment = 'payment'
-
-  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
-  } else {
-    var formData = new FormData()
-    formData.append('files', files)
-    formData.append('dir', dirPayment)
-    formData.append('overwrite', false)
-    const data = await uploadImage(formData)
-    if (data.code === 0) {
-      var icon = data.data
-      form.bankIcon = icon
-      formRules.bankIcon = icon
-      traceEditing()
-    } else {
-      ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-    }
-  }
+function submitImage() {
+  form.bankIcon = selectedImage.path
+  uiControl.imageSelectionVisible = false
+  traceEditing();
 }
+
+function selectImage(item) {
+  selectedImage.id = item.id
+  selectedImage.name = item.name
+  selectedImage.siteName = item.siteName
+  selectedImage.path = item.path
+  selectedImage.remark = item.remark
+}
+
+async function browseImage() {
+  loadSiteImage()
+  uiControl.imageSelectionVisible = true
+}
+
+async function loadSites() {
+  const { data: ret } = await getSiteListSimple()
+  sites.list = ret
+}
+
+// async function attachPhoto(event) {
+//   const files = event.target.files[0]
+//   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+//   const dirPayment = 'payment'
+
+//   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+//     ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+//   } else {
+//     var formData = new FormData()
+//     formData.append('files', files)
+//     formData.append('dir', dirPayment)
+//     formData.append('overwrite', false)
+//     const data = await uploadImage(formData)
+//     if (data.code === 0) {
+//       var icon = data.data
+//       form.bankIcon = icon
+//       formRules.bankIcon = icon
+//       traceEditing()
+//     } else {
+//       ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+//     }
+//   }
+// }
 
 // async function removeBank(card) {
 //   ElMessageBox.confirm(
@@ -594,9 +792,14 @@ async function attachPhoto(event) {
 //   })
 // }
 
-onMounted(() => {
+onMounted(async () => {
   loadBankInfo()
   loadCurrency()
+  loadPayTypes()
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    sites.list = sites.list.find(s => s.siteName === store.state.user.siteName);
+  }
 })
 </script>
 
@@ -621,5 +824,50 @@ onMounted(() => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+
+.grid-container {
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  border-radius: 5px;
+  transition: transform 0.5s;
+}
+
+.grid-item .el-image:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.grid-item.selected {
+  box-shadow: 0 4px 8px rgba(12, 20, 242, 0.12), 0 0 6px rgba(12, 20, 242, 0.12);
+  border: 1px solid blue;
+}
+
+.image-info {
+  margin: 10px;
+}
+
+.image-info .el-row {
+  margin-top: 10px;
+}
+
+.preview {
+  width: 200px;
+  height: 200px;
+}
+
+.smallPreview {
+  width: 100px;
+  height: 100px;
 }
 </style>

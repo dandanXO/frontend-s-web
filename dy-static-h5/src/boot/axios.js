@@ -6,11 +6,57 @@ import LocalStorage from "boot/local-storage";
 import {stringify} from "qs";
 import i18n from "../i18n/index";
 import axios from "axios";
-// import { useRoute, useRouter } from "vue-router";
+import {getRndInteger} from "boot/utils";
+
+const rstArray = process.env.RST_API;
 const crArray = process.env.CR_API;
-const api = axios.create({baseURL: process.env.RST_API});
-const cashier = axios.create({baseURL: crArray});
-const eventapi = axios.create({baseURL: process.env.EVT_API});
+const evtArray =process.env.EVT_API;
+
+
+var rstApi = getInitApi(rstArray, "DY_H5_RST_URL");
+var crtApi = getInitApi(crArray,"DY_H5_CRT_URL");
+var evtApi = getInitApi(evtArray,"DY_H5_EVT_URL");
+
+const api = axios.create({baseURL: rstApi});
+const cashier = axios.create({baseURL: crtApi});
+const eventapi = axios.create({baseURL: evtApi});
+
+function getInitApi(apiLinks, urlLsName) {
+    var successRstUrl = localStorage.getItem(urlLsName);
+    if (successRstUrl) {
+        axios.get(successRstUrl + "/ping").then((res) => {
+            // console.log(res);
+            if (res.status !== 200) {
+                localStorage.removeItem(urlLsName);
+            }
+        }).catch((err) => {
+            // console.log(err);
+            localStorage.removeItem(urlLsName);
+        })
+
+        return successRstUrl;
+    } else {
+        if(typeof apiLinks === 'string' || apiLinks instanceof String){
+            var initApi = apiLinks;
+        }else{
+            var apiLists = Object.values(apiLinks);
+            var initApi = apiLists[getRndInteger(0, apiLists.length)];
+        }
+
+
+        axios.get(initApi + "/ping").then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+                localStorage.setItem(urlLsName, initApi);
+            } else {
+                localStorage.removeItem(urlLsName);
+            }
+        })
+        return initApi;
+    }
+}
+
+
 export default boot(({app, router}) => {
     const onRequest = (config) => {
         if (store.token) {
@@ -58,7 +104,7 @@ export default boot(({app, router}) => {
             if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
                 location.reload();
             } else {
-                if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
+                if (res.code === ResponseCode.ERROR_TOKEN_MISSED && window.location.pathname !== "/promotion") {
                     return Dialog.create({
                         class: "login-card",
                         title: '请登录',

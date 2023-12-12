@@ -1,14 +1,10 @@
 <template>
   <q-layout view="hHh Lpr fFf">
     <q-header v-if="hasPage" class="page-wrapper">
-      <q-card-section
-          v-if="!hasPage"
-          class="top-section justify-between items-center"
-          horizontal
-      >
+      <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/">
-            <img src="../assets/index/logo.png"/>
+            <img src="../assets/index/logo.png" />
           </router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
@@ -18,25 +14,24 @@
         <!-- <q-card-actions v-if="store.hasToken()">
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
         </q-card-actions> -->
-        <q-btn
-            v-if="store.hasToken()"
-            class="flex"
-            to="/finance/deposit"
-            no-caps
-            flat
-        >
-          <span style="font-size: 10px; margin-left: 5px; display: block">
-            Deposit
-          </span>
+        <q-btn v-if="store.hasToken()" class="flex" to="/finance/deposit" no-caps flat>
+          <span style="font-size: 10px; margin-left: 5px; display: block">Deposit</span>
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage ? '/' + prevPage : '/'">
-          <RiArrowLeftLine/>
+          <RiArrowLeftLine />
         </router-link>
         {{ pageName }}
-        <q-btn v-if="hasDrawer" style="position:absolute; right: 10px;" flat @click="ui.drawerRight = !ui.drawerRight"
-               round dense icon="menu"/>
+        <q-btn
+          v-if="hasDrawer"
+          style="position: absolute; right: 10px"
+          flat
+          @click="ui.drawerRight = !ui.drawerRight"
+          round
+          dense
+          icon="menu"
+        />
       </q-card-section>
       <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
         <q-card-section class="acct-section">
@@ -73,15 +68,7 @@
       </q-list>
     </q-drawer> -->
 
-    <q-drawer
-        side="right"
-        elevated
-        overlay
-        v-model="ui.drawerRight"
-        :width="250"
-        :breakpoint="500"
-        v-if="hasDrawer"
-    >
+    <q-drawer side="right" elevated overlay v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
       <div class="q-pa-md bg-brightbtn">老虎机大厅</div>
       <div class="platforms">
         <div class="text-red q-px-sm q-pt-md">游戏平台</div>
@@ -89,12 +76,12 @@
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
           <q-btn
-              @click="changePlatform(plat)"
-              size="md"
-              color="dyblue"
-              v-for="(plat, n) in platformsList"
-              :key="n"
-              :label="plat.icon"
+            @click="changePlatform(plat)"
+            size="md"
+            color="dyblue"
+            v-for="(plat, n) in platformsList"
+            :key="n"
+            :label="plat.icon"
           />
         </div>
       </q-scroll-area>
@@ -109,64 +96,57 @@
     </q-scroll-area> -->
 
     <q-page-container>
-      <router-view/>
+      <router-view v-slot="{ Component }">
+        <KeepAlive :max="8">
+          <component :is="Component" />
+        </KeepAlive>
+      </router-view>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
-      <q-tabs
-          v-model="tab"
-          no-caps
-          class="bg-primary text-white "
-          :breakpoint="0"
-          align="justify"
-      >
+      <q-tabs v-model="tab" no-caps class="bg-primary text-white" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/ft-home.svg"/>
-          <img
-              class="hover"
-              src="../assets/images/index/menu/ft-home-active.svg"
-          />
+          <img class="inactive" src="../assets/images/index/menu/ft-home.svg" />
+          <img class="hover" src="../assets/images/index/menu/ft-home-active.svg" />
           首页
         </q-route-tab>
-        <q-route-tab to="/sport" name="sport">
-          <img
-              class="inactive"
-              src="../assets/images/index/menu/ft-sport.svg"
-          />
-          <img
-              class="hover"
-              src="../assets/images/index/menu/ft-sport-active.svg"
-          />
-          体育
-        </q-route-tab>
+        <!--        <q-route-tab to="/sport" name="sport">-->
+        <!--          <img-->
+        <!--              class="inactive"-->
+        <!--              src="../assets/images/index/menu/ft-sport.svg"-->
+        <!--          />-->
+        <!--          <img-->
+        <!--              class="hover"-->
+        <!--              src="../assets/images/index/menu/ft-sport-active.svg"-->
+        <!--          />-->
+        <!--          体育-->
+        <!--        </q-route-tab>-->
 
-        <q-route-tab to="/poker" name="poker">
-          <img
-              class="inactive"
-              src="../assets/images/index/menu/ft-poker.png"
-          />
-          <img
-              class="hover"
-              src="../assets/images/index/menu/ft-poker-active.png"
-          />
-          棋牌
-        </q-route-tab>
+        <!--        <q-route-tab to="/poker" name="poker">-->
+        <!--          <img-->
+        <!--              class="inactive"-->
+        <!--              src="../assets/images/index/menu/ft-poker.png"-->
+        <!--          />-->
+        <!--          <img-->
+        <!--              class="hover"-->
+        <!--              src="../assets/images/index/menu/ft-poker-active.png"-->
+        <!--          />-->
+        <!--          棋牌-->
+        <!--        </q-route-tab>-->
         <q-route-tab to="/promo" name="promo">
-          <img
-              class="inactive"
-              src="../assets/images/index/menu/ft-promo.svg"
-          />
-          <img
-              class="hover"
-              src="../assets/images/index/menu/ft-promo-active.svg"
-          />
+          <img class="inactive" src="../assets/images/index/menu/ft-promo.svg" />
+          <img class="hover" src="../assets/images/index/menu/ft-promo-active.svg" />
           优惠
         </q-route-tab>
+
+        <q-route-tab to="/liveChat" name="chat">
+          <img class="inactive" src="../assets/images/index/livechat-icon.svg" />
+          <img class="hover filtericon" src="../assets/images/index/livechat-icon.svg" />
+          客服
+        </q-route-tab>
+
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/ft-me.svg"/>
-          <img
-              class="hover"
-              src="../assets/images/index/menu/ft-me-active.svg"
-          />
+          <img class="inactive" src="../assets/images/index/menu/ft-me.svg" />
+          <img class="hover" src="../assets/images/index/menu/ft-me-active.svg" />
           我的
         </q-route-tab>
       </q-tabs>
@@ -175,14 +155,14 @@
 </template>
 
 <script>
-import {defineComponent, onMounted, ref, watch, computed} from "vue";
-import {userStore} from "stores/index";
-import {Platform} from "quasar";
-import {useUI} from "stores/ui";
-import {useRoute, useRouter} from "vue-router";
-import {translateRecord} from "src/directives/translate";
+import { defineComponent, onMounted, ref, watch, computed } from "vue";
+import { userStore } from "stores/index";
+import { Platform } from "quasar";
+import { useUI } from "stores/ui";
+import { useRoute, useRouter } from "vue-router";
+import { translateRecord } from "src/directives/translate";
 
-import {RiArrowLeftLine} from "vue-remix-icons";
+import { RiArrowLeftLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "MainLayout",
@@ -203,10 +183,8 @@ export default defineComponent({
     const checkPlatform = () => {
       //Is iOS Webclip App || Is Android Apk
       if (
-          (Platform.is.ios &&
-              "standalone" in window.navigator &&
-              window.navigator.standalone) ||
-          (Platform.is.android && Platform.is.capacitor)
+        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
+        (Platform.is.android && Platform.is.capacitor)
       ) {
         isH5.value = false;
       } else {
@@ -228,8 +206,7 @@ export default defineComponent({
         case "www.dy80252.com":
         case "dy86353.com":
         case "dy80252.com":
-          trackingScriptUrl =
-              "https://s9.cnzz.com/z_stat.php?id=1281279658&web_id=1281279658";
+          trackingScriptUrl = "https://s9.cnzz.com/z_stat.php?id=1281279658&web_id=1281279658";
           break;
         case "m.dy93113.com":
         case "m.dy96108.com":
@@ -237,8 +214,7 @@ export default defineComponent({
         case "www.dy96108.com":
         case "dy93113.com":
         case "dy96108.com":
-          trackingScriptUrl =
-              "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
+          trackingScriptUrl = "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
           break;
         case "m.dy18178.com":
         case "m.dy50122.com":
@@ -258,8 +234,7 @@ export default defineComponent({
         case "dy53976.com":
         case "dy70679.com":
         case "dy73953.com":
-          trackingScriptUrl =
-              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+          trackingScriptUrl = "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
         case "m.dy52373.com":
         case "m.dy67892.com":
@@ -420,8 +395,7 @@ export default defineComponent({
         case "m.dy19637.com":
         case "m.dy59386.com":
         case "m.dy91628.com":
-          trackingScriptUrl =
-              "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
+          trackingScriptUrl = "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
           break;
         default:
           return; // Don't load the tracking script for other domains
@@ -448,17 +422,17 @@ export default defineComponent({
       });
     };
     watch(
-        () => route.path,
-        async () => {
-          checkRoute();
-        }
+      () => route.path,
+      async () => {
+        checkRoute();
+      }
     );
 
     watch(
-        () => route.query,
-        async () => {
-          checkRoute();
-        }
+      () => route.query,
+      async () => {
+        checkRoute();
+      }
     );
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
@@ -475,7 +449,8 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform, "SLOT");
+            var platformName =
+              route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "SLOT");
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
@@ -503,6 +478,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "存款";
+        } else if (route.path === "/promotion") {
+          hasPage.value = false;
+          pageName.value = "优惠活动";
+          prevPage.value = "";
         } else if (route.path === "/promo") {
           hasPage.value = true;
           pageName.value = "优惠活动";
@@ -564,11 +543,11 @@ export default defineComponent({
         } else if (route.path === "/account/mail") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "站内信";
-        } else if (route.path === "/account/mail/inbox") {
-          prevPage.value = "account/mail";
+          pageName.value = "会员建议";
+        } else if (route.path === "/account/inbox") {
+          prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "收件箱";
+          pageName.value = "消息中心 ";
         } else if (route.path === "/account/mail/outbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;
@@ -657,60 +636,50 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const platformsFixed = ref([
       {
-        id: '81',
-        code: 'BBINDY',
-        icon: 'bbin',
+        id: "81",
+        code: "BBINDY",
+        icon: "bbin"
       },
       {
-        id: '21',
-        code: 'PG',
-        icon: 'PG',
+        id: "79",
+        code: "PG",
+        icon: "PG"
       },
       {
-        id: '73',
-        code: 'MGP',
-        icon: 'MG',
+        id: "73",
+        code: "MGP",
+        icon: "MG"
       },
       {
-        id: '27',
-        code: 'TTG',
-        icon: 'ttg',
+        id: "26",
+        code: "AG",
+        icon: "ag"
       },
       {
-        id: '28',
-        code: 'SG',
-        icon: 'sg',
+        id: "22",
+        code: "PP",
+        icon: "pp"
       },
       {
-        id: '46',
-        code: 'PP',
-        icon: 'pp',
+        id: "31",
+        code: "JDB",
+        icon: "jdb"
       },
       {
-        id: '64',
-        code: 'JDB',
-        icon: 'jdb',
+        id: "78",
+        code: "PT",
+        icon: "pt"
       },
       {
-        id: '70',
-        code: 'AMEBA',
-        icon: 'AMEBA',
+        id: "65",
+        code: "SW",
+        icon: "SW"
       },
       {
-        id: '54',
-        code: 'PT',
-        icon: 'pt',
-      },
-      {
-        id: '65',
-        code: 'SW',
-        icon: 'SW',
-      },
-      {
-        id: '33',
-        code: 'CQ9',
-        icon: 'CQ9',
-      },
+        id: "33",
+        code: "CQ9",
+        icon: "CQ9"
+      }
     ]);
 
     const platformsList = computed(() => {

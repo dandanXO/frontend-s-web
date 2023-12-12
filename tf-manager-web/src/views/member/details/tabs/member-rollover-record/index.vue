@@ -119,7 +119,7 @@
         >
           <template #default="scope">
             <span v-if="scope.row.createTime === null">-</span>
-            <span v-else>{{ scope.row.createTime }}</span>
+            <span v-else v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}">{{ scope.row.createTime }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -130,7 +130,7 @@
         >
           <template #default="scope">
             <span v-if="scope.row.updateTime === null">-</span>
-            <span v-else>{{ scope.row.updateTime }}</span>
+            <span v-else v-formatter="{data: scope.row.updateTime, timeZone: timeZone, type: 'date'}">{{ scope.row.updateTime }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -211,6 +211,10 @@ const props = defineProps({
   mbrId: {
     type: String,
     required: true
+  },
+  timeZone: {
+    type: String,
+    required: true,
   }
 })
 

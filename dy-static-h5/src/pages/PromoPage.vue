@@ -1,13 +1,12 @@
 <template>
+  <!-- <pre>token: {{ extensionToken }}</pre>
+  <pre>state: {{ extensionState }}</pre>
+  <pre>path: {{ currentPath }}</pre>
+  <pre>store: {{ store }}</pre> -->
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab
-            v-for="(tab, i) in tabItems"
-            :key="i"
-            :name="tab.name"
-            :label="tab.label"
-        />
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -17,35 +16,27 @@
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
                 <div
-                    class="promo-item"
-                    v-for="(promo, i) in filteredArray"
-                    :key="i"
-                    data-aos="zoom-in"
-                    data-aos-easing="ease-out"
-                    data-aos-duration="1000"
+                  class="promo-item"
+                  v-for="(promo, i) in filteredArray"
+                  :key="i"
+                  data-aos="zoom-in"
+                  data-aos-easing="ease-out"
+                  data-aos-duration="1000"
                 >
-                  <template
-                      v-if="
-                      promo.promoType
-                        .toLowerCase()
-                        .split(',')
-                        .includes(tab.name)
-                    "
-                  >
+                  <template v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                              class="promo-content"
-                              :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
                         <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
+                        {{ getPromoLabel(promo.labelType) }}
+                      </div>
                     </a>
                   </template>
 
@@ -53,17 +44,16 @@
                     <a @click="showPromoDetails(promo)">
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                              class="promo-content"
-                              :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
                         <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
+                        {{ getPromoLabel(promo.labelType) }}
+                      </div>
                     </a>
                   </template>
 
@@ -89,29 +79,24 @@
                   "
                 ></div> -->
                 <div>
-                  <img
-                      :src="imgURL + selectedPromo.mobileBannerUrl"
-                      style="width: 100%; display: block"
-                  />
+                  <img :src="imgURL + selectedPromo.mobileBannerUrl" style="width: 100%; display: block" />
                 </div>
               </div>
               <div class="inner">
-                <div v-if="selectedPromo.hasPromo">
-                  <HotPromotion :list="selectedPromo"/>
+                <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
+                  <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                    :class="{
-                    welcome:
-                      selectedPromo.promoType.toLowerCase() === 'welcome',
+                  :class="{
+                    welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
-                    liveCasino:
-                      selectedPromo.promoType.toLowerCase() === 'livecasino',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-html="selectedPromo.pageContent"></div>
+                  <div v-if="selectedPromo.id !== 259" v-html="selectedPromo.pageContent"></div>
                 </div>
               </div>
             </div>
@@ -122,31 +107,32 @@
   </div>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card
-        style="width: 100%; padding: 20px"
-        class="bg-white text-black text-right"
-    >
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-right">
       <q-card-section class="q-mb-md gologin-popup">
         <strong>
-          <RiErrorWarningLine/>
-          系统提示</strong>
+          <RiErrorWarningLine />
+          系统提示
+        </strong>
         请登录后再操作
       </q-card-section>
       <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="dyblue"/>
+        <q-btn label="确认" color="dyblue" />
       </router-link>
     </q-card>
   </q-dialog>
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {ref, defineComponent, onActivated, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
 import {RiErrorWarningLine} from "vue-remix-icons";
+import {isAndroid} from "boot/utils";
+import {SessionStorage} from "quasar";
+import LocalStorage from "boot/local-storage";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
@@ -155,7 +141,7 @@ import HotPromotion from "components/HotPromotion";
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion, RiErrorWarningLine
+    HotPromotion, RiErrorWarningLine,
   },
   setup() {
     const store = userStore();
@@ -173,13 +159,31 @@ export default defineComponent({
       {code: "LIVE CASINO", img: "live", label: "真人娱乐"},
       {code: "FISH", img: "game", label: "老虎机/捕鱼"}
     ]);
+    const getPromoLabel = (labelType) => {
+      switch(labelType) {
+        case 0:
+          return '最新';
+        case 1:
+          return '热门';
+        case 3:
+          return '推荐';
+        case 4:
+          return '日常';
+        case 5:
+          return '新人';
+        case 6:
+          return '限时';
+        default:
+          return '';
+      }
+    }
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
-    const $q = useQuasar();
+        const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
@@ -203,7 +207,7 @@ export default defineComponent({
         isPromoDetail.value = false;
       } else {
         isPromoDetail.value = route.query.name;
-        ui.setScrollPosition("vertical", 0, 200);
+        // ui.setScrollPosition("vertical", 0, 200);
       }
     });
     const loadBanner = () => {
@@ -229,23 +233,39 @@ export default defineComponent({
           });
     };
     const showPromoDetails = (promo) => {
-      if (!store.token) {
-        isDisplayLogin.value = true;
-      } else {
-
-        if (promo.redirectUrl.includes("page-vip")) {
-          router.push({path: "/account/vip"});
+      // extension
+      if(extensionState.value) {
+        router.push({path: currentPath.value, query: {name: promo.redirectUrl, token: extensionToken.value}});
+        isPromoDetail.value = true;
+        selectedPromo.value = promo;
+        if (isAndroid()) {
+            LocalStorage.set("TOKEN", extensionToken.value, 86400);
         } else {
-          if (route.query.fromAccount) {
-            router.push({path: "/promo", query: {name: promo.redirectUrl, fromAccount: true}});
+            SessionStorage.set("TOKEN", extensionToken.value);
+        }
+        store.token = extensionToken.value;
+
+      } else {
+        // non extension
+        if (!store.token) {
+          isDisplayLogin.value = true;
+        } else {
+
+          if (promo.redirectUrl.includes("page-vip")) {
+            router.push({path: "/account/vip"});
           } else {
-            router.push({path: "/promo", query: {name: promo.redirectUrl}});
+            if (route.query.fromAccount) {
+              router.push({path: "/promo", query: {name: promo.redirectUrl, fromAccount: true}});
+            } else {
+              router.push({path: "/promo", query: {name: promo.redirectUrl}});
+            }
+            isPromoDetail.value = true;
+            selectedPromo.value = promo;
           }
-          isPromoDetail.value = true;
-          selectedPromo.value = promo;
         }
       }
     };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
@@ -259,13 +279,15 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      api.get("/promo/page").then((res) => {
+      const platformApiUrl = (store.hasToken() && window.location.pathname !== "/promotion") ? "/session/loggedInPromoPages" : "/promo/page";
+
+      api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
 
           promoItems.forEach((element) => {
-            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST") || element.privilegeStatus === "CLOSE" || element.privilegeStatus === null) {
+            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST")) {
             } else {
               promoState.promoList.push(element);
               // console.log(promoState.promoList);
@@ -282,11 +304,29 @@ export default defineComponent({
       }).catch((e) => {
         console.log("error", e);
       });
-
     };
-    onMounted(() => {
+
+    // extension
+    const currentPath = ref(route.path);
+    const extensionState = ref(false)
+    const extensionToken = ref('')
+
+
+    const checkExtension = () => {
+      if (currentPath.value === "/promotion"){
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+
+    }
+
+
+    onActivated(() => {
+      checkExtension();
       loadBanner();
       loadAll();
+
     });
 
     return {
@@ -303,25 +343,37 @@ export default defineComponent({
       store,
       tab,
       tabItems,
-      isDisplayLogin
+      isDisplayLogin,
+      getPromoLabel,
+
+      checkExtension,
+      currentPath,
+      extensionState,
+      extensionToken
     };
   }
 });
 </script>
 <style lang="scss">
 .promo-container {
-  .promo-view-container {
+  .selected-promo {
     ol {
       padding: 0 15px;
     }
-
     table {
-      margin: 0 15px 20px;
+      margin: 10px auto 20px;
       width: 98%;
-      display: block;
       overflow-x: auto;
       white-space: nowrap;
       border: 0;
+
+      &:not(:has(thead)) {
+        tr:first-child td {
+          background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
+          color: #ffffff;
+          border: 0;
+        }
+      }
 
       tr {
         td {
@@ -332,21 +384,16 @@ export default defineComponent({
             margin: 0;
           }
         }
+      }
 
-        &:first-child {
-          td {
-            color: #db7e42;
-            white-space: nowrap;
-          }
-        }
+      tbody {
+        //display: table;
+        table-layout: fixed;
+        width: 100%;
+      }
 
-        td:nth-child(odd) {
-          background: #3c3c6a;
-        }
-
-        td:nth-child(even) {
-          background: #3c3c6a;
-        }
+      th {
+        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
       }
     }
   }
@@ -361,6 +408,14 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   color: #000;
+
+  table {
+    tbody {
+      width: 100%;
+      table-layout: fixed;
+      //display: table;
+    }
+  }
 
   .all-promotions {
     padding-bottom: 20px;
@@ -636,8 +691,7 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%),
-            linear-gradient(#d0d1d3, #d0d1d3);
+            background: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
           }
 
           td {
@@ -689,7 +743,6 @@ export default defineComponent({
   }
 }
 
-
 .pad-label.label-new {
   font-size: 12px;
   color: #ffffff;
@@ -697,7 +750,7 @@ export default defineComponent({
   position: absolute;
   top: 0px;
   left: 10px;
-  background: linear-gradient(180deg, #FF4D42, #CA0C00);
+  background: linear-gradient(180deg, #ff4d42, #ca0c00);
   border-radius: 0 0 10px 10px;
   font-weight: 600;
 }
@@ -729,7 +782,7 @@ export default defineComponent({
   }
 
   .q-tab--active {
-    background: #68BCEC;
+    background: #68bcec;
     color: #ffffff;
   }
 
@@ -789,7 +842,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #6C6C6E;
+  color: #6c6c6e;
   gap: 15px;
 
   strong {
@@ -801,7 +854,7 @@ export default defineComponent({
     font-weight: 700;
 
     svg {
-      fill: #0089ED;
+      fill: #0089ed;
     }
   }
 }

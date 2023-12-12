@@ -8,10 +8,7 @@
             <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
             <div>
-              <RiVolumeUpFill
-                style="fill: #2db9e2; width: 20px !important"
-                @click="openPopup(announcementList)"
-              />
+              <RiVolumeUpFill style="fill: #2db9e2; width: 20px !important" @click="openPopup(announcementList)" />
             </div>
             <div class="station-notice">
               <Vue3Marquee :clone="false" :duration="130" style="width: 720px">
@@ -36,22 +33,13 @@
         </div>
         <div v-if="!store.token" class="right-contents">
           <a class="common-btn grey" @click="loginDialogVisible = true">登录</a>
-          <a class="common-btn" @click="registerDialogVisible = true">
-            开设账户
-          </a>
-          <a class="common-link" @click="forgetPassDialogVisible = true">
-            忘记账号？
-          </a>
+          <a class="common-btn" @click="registerDialogVisible = true">开设账户</a>
+          <a class="common-link" @click="forgetPassDialogVisible = true">忘记账号？</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
             <span class="el-dropdown-link">
-              <el-tag
-                size="small"
-                type="warning"
-                effect="dark"
-                style="margin-right: 10px; font-weight: bold"
-              >
+              <el-tag size="small" type="warning" effect="dark" style="margin-right: 10px; font-weight: bold">
                 {{ store.vip ? store.vip : store.vip }}
               </el-tag>
               {{ store.nickName }}
@@ -88,18 +76,14 @@
             <span>余额：</span>
             <span class="amount">
               <span v-if="isLoadingBalance">Loading...</span>
-              <span v-if="!isLoadingBalance">
-                {{ store.currency.value }} {{ store.balance }}
-              </span>
+              <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
             </span>
             <el-icon>
               <Refresh />
             </el-icon>
           </a>
           <div class="top-deposit">
-            <router-link to="/center/deposit" class="common-btn">
-              充值
-            </router-link>
+            <router-link to="/center/deposit" class="common-btn">充值</router-link>
           </div>
         </div>
       </div>
@@ -112,21 +96,21 @@
           <img src="../../assets/images/lions_sponsor.png" />
         </router-link>
         <div class="navigations">
-          <div
-            class="header-menu-item"
-            v-for="nav in navigations"
-            :key="nav.name"
-          >
+          <div class="header-menu-item" v-for="nav in navigations" :key="nav.name">
+            <a v-if="nav.code === 'Agent'" :class="{ icon: nav.hasicon }" :href="nav.path" target="_blank">
+              <RiVipDiamondLine />
+              <span>{{ nav.name }}</span>
+            </a>
             <router-link
               @mouseover="showSubMenu(nav)"
               @mouseup="selectedMenu = ''"
               :to="nav.path"
               :class="{ icon: nav.hasicon }"
+              v-if="nav.code !== 'Agent'"
             >
               <template v-if="nav.hasicon">
                 <span>
                   <RiCoupon2Line v-if="nav.code === 'Promotion'" />
-                  <RiVipDiamondLine v-if="nav.code === 'Agent'" />
                   <RiStarLine v-if="nav.code === 'Sponsor'" />
                   <RiSmartphoneLine v-if="nav.code === 'App'" />
                   <RiVipCrownLine v-if="nav.code === 'VIP'" />
@@ -139,42 +123,14 @@
               </template>
             </router-link>
           </div>
-          <div
-            @mousetouch="selectedMenu = ''"
-            class="sub-menu"
-            :style="'height:' + height + 'px;'"
-          >
+          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'Slots'" />
-            <EsportsMenu
-              ref="el"
-              v-if="selectedMenu === 'Esports'"
-              @load-modal="openGame"
-            />
-            <SportsMenu
-              ref="el"
-              v-if="selectedMenu === 'Sports'"
-              @load-modal="openGame"
-            />
-            <LiveCasinoMenu
-              ref="el"
-              v-if="selectedMenu === 'Live Casino'"
-              @load-modal="openGame"
-            />
-            <LotteryMenu
-              ref="el"
-              v-if="selectedMenu === 'Lottery'"
-              @load-modal="openGame"
-            />
-            <PokerMenu
-              ref="el"
-              v-if="selectedMenu === 'Poker'"
-              @load-modal="openGame"
-            />
-            <FishingMenu
-              ref="el"
-              v-if="selectedMenu === 'Fishing'"
-              @load-modal="openGame"
-            />
+            <EsportsMenu ref="el" v-if="selectedMenu === 'Esports'" @load-modal="openGame" />
+            <SportsMenu ref="el" v-if="selectedMenu === 'Sports'" @load-modal="openGame" />
+            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'Live Casino'" @load-modal="openGame" />
+            <LotteryMenu ref="el" v-if="selectedMenu === 'Lottery'" @load-modal="openGame" />
+            <PokerMenu ref="el" v-if="selectedMenu === 'Poker'" @load-modal="openGame" />
+            <FishingMenu ref="el" v-if="selectedMenu === 'Fishing'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -183,129 +139,134 @@
     </div>
 
     <el-dialog
+      class="noPadding login-dialog"
       v-model="loginDialogVisible"
-      title="会员登录"
-      width="50%"
       align-center
-      style="max-width: 800px"
+      width="1280px"
+      style="max-width: 1200px"
       @close="store.loginPageVisible = false"
     >
-      <span>
-        <el-tabs>
-          <el-tab-pane label="账户登录">
-            <el-form
-              ref="loginRef"
-              :rules="loginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="用户名" prop="loginName">
-                <el-input
-                  v-model="loginForm.loginName"
-                  placeholder="输入用户名"
-                />
-              </el-form-item>
-              <el-form-item tabindex="2" label="密码" prop="password">
-                <el-input
-                  v-model="loginForm.password"
-                  placeholder="输入密码"
-                  type="password"
-                  show-password
-                />
-              </el-form-item>
-              <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                <el-row
-                  :gutter="10"
-                  style="justify-content: center; align-items: center"
+      <div class="login-container">
+        <div class="content-form">
+          <div class="dialog-title">登录</div>
+          <span>
+            <el-tabs>
+              <el-tab-pane label="账户登录">
+                <el-form
+                  ref="loginRef"
+                  :rules="loginRules"
+                  :model="loginForm"
+                  label-width="100"
+                  label-suffix=":"
+                  class="form-content"
                 >
-                  <el-col :span="12">
-                    <el-input
-                      v-model="loginForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
-                      @keyup.enter="submitLogin"
-                    />
-                  </el-col>
-                  <el-col :span="12">
-                    <img
-                      style="width: 50%; margin-top: 6px"
-                      :src="verificationImg"
-                      @click="getCode"
-                    />
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="submitLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-          <el-tab-pane label="手机登录">
-            <el-form
-              ref="mobileLoginRef"
-              :rules="mobileLoginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
-                <el-input
-                  v-model="loginForm.phoneNumber"
-                  placeholder="输入手机号"
-                />
-              </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="code">
-                <el-row
-                  :gutter="10"
-                  style="justify-content: center; align-items: center"
+                  <!-- <el-row>
+                    <el-col>
+                      <span class="title">会员登录</span>
+                    </el-col>
+                  </el-row> -->
+                  <el-form-item tabindex="1" label="用户名" prop="loginName">
+                    <el-input v-model="loginForm.loginName" placeholder="输入用户名" />
+                  </el-form-item>
+                  <el-form-item tabindex="2" label="密码" prop="password">
+                    <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
+                  </el-form-item>
+                  <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+                    <el-row :gutter="10" style="justify-content: center; align-items: center">
+                      <el-col :span="12">
+                        <el-input
+                          v-model="loginForm.captchaCode"
+                          label="验证码"
+                          placeholder="验证码"
+                          @keyup.enter="submitLogin"
+                        />
+                      </el-col>
+                      <el-col :span="12">
+                        <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                  <el-button
+                    :loading="loadingBtn"
+                    size="large"
+                    color="#3bafda"
+                    class="common-btn"
+                    style="margin-left: 100px"
+                    @click="submitLogin"
+                  >
+                    登录
+                  </el-button>
+                </el-form>
+              </el-tab-pane>
+              <el-tab-pane label="手机登录">
+                <el-form
+                  ref="mobileLoginRef"
+                  :rules="mobileLoginRules"
+                  :model="loginForm"
+                  label-width="100"
+                  label-suffix=":"
+                  class="form-content"
                 >
-                  <el-col :span="12">
-                    <el-input
-                      v-model="loginForm.code"
-                      label="验证码"
-                      placeholder="验证码"
-                      @keyup.enter="phoneLogin"
-                    />
-                  </el-col>
-                  <el-col :span="12">
-                    <el-button
-                      v-if="loginCountdown === 0"
-                      @click="openCaptchaForm('LOGIN')"
-                      size="small"
-                      color="#3bafda"
-                    >
-                      发送验证码
-                    </el-button>
-                    <el-button v-else disabled size="small" class="common-btn">
-                      已发送（倒数{{ loginCountdown }}秒）
-                    </el-button>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="phoneLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-        </el-tabs>
-      </span>
+                  <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
+                    <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
+                  </el-form-item>
+                  <el-form-item tabindex="2" label="验证码" prop="code">
+                    <el-row :gutter="10" style="justify-content: center; align-items: center">
+                      <el-col :span="12">
+                        <el-input
+                          v-model="loginForm.code"
+                          label="验证码"
+                          placeholder="验证码"
+                          @keyup.enter="phoneLogin"
+                        />
+                      </el-col>
+                      <el-col :span="12">
+                        <el-button
+                          v-if="loginCountdown === 0"
+                          @click="openCaptchaForm('LOGIN')"
+                          size="small"
+                          color="#3bafda"
+                        >
+                          发送验证码
+                        </el-button>
+                        <el-button v-else disabled size="small" class="common-btn">
+                          已发送（倒数{{ loginCountdown }}秒）
+                        </el-button>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                  <el-button
+                    :loading="loadingBtn"
+                    size="large"
+                    color="#3bafda"
+                    class="common-btn"
+                    style="margin-left: 100px"
+                    @click="phoneLogin"
+                  >
+                    登录
+                  </el-button>
+                </el-form>
+              </el-tab-pane>
+            </el-tabs>
+          </span>
+        </div>
+        <div class="details-form">
+          <div class="title"></div>
+          <ul class="tips">
+            <li>注册立即畅游，精彩赛事尽在东赢电竞！</li>
+          </ul>
+
+          <div
+            class="toggle-side toggle-side--reg"
+            @click="
+              registerDialogVisible = true;
+              loginDialogVisible = false;
+            "
+          >
+            开设账户
+          </div>
+        </div>
+      </div>
     </el-dialog>
 
     <el-dialog
@@ -316,27 +277,28 @@
       style="max-width: 1200px"
       @close="store.regPageVisible = false"
     >
-      <div class="register-container">
-        <div class="registered-left">
-          <div class="title"></div>
+      <div class="login-container">
+        <div class="details-form">
+          <div class="title-reg"></div>
           <ul class="tips">
             <li>标记有 * 者为必填项目。</li>
             <li>手机号码为找回密码的重要凭证，请务必填写真实信息。</li>
             <li>若公司有其他活动会邮件通知您，请您务必填写真实有效的邮箱。"</li>
           </ul>
-        </div>
-        <div class="registered-right">
-          <el-form
-            ref="registerRef"
-            :rules="regRules"
-            :model="regForm"
-            label-width="100"
+
+          <div
+            class="toggle-side toggle-side--login"
+            @click="
+              loginDialogVisible = true;
+              registerDialogVisible = false;
+            "
           >
-            <el-row>
-              <el-col>
-                <span class="title">注册账号</span>
-              </el-col>
-            </el-row>
+            登录
+          </div>
+        </div>
+        <div class="content-form">
+          <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="100" class="form-content-reg">
+            <div class="dialog-title">注册账号</div>
 
             <el-form-item label="姓名" prop="realName">
               <el-space>
@@ -360,29 +322,15 @@
 
             <el-form-item label="用户名" prop="loginName">
               <el-space>
-                <el-input
-                  class="wTip"
-                  v-model="regForm.loginName"
-                  placeholder="输入用户名"
-                >
-                  <template #append>
-                    范围在6-12位之间, 由字母和数字组成
-                  </template>
+                <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
+                  <template #append>范围在6-12位之间, 由字母和数字组成</template>
                 </el-input>
               </el-space>
             </el-form-item>
             <el-form-item label="密码" prop="password">
               <el-space>
-                <el-input
-                  class="wTip"
-                  v-model="regForm.password"
-                  placeholder="输入密码"
-                  type="password"
-                  show-password
-                >
-                  <template #append>
-                    密码范围在6-12位之间, 由字母和数字组成
-                  </template>
+                <el-input class="wTip" v-model="regForm.password" placeholder="输入密码" type="password" show-password>
+                  <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
                 </el-input>
               </el-space>
               <el-row>
@@ -430,9 +378,7 @@
                   type="password"
                   show-password
                 >
-                  <template #append>
-                    密码范围在6-12位之间, 由字母和数字组成
-                  </template>
+                  <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
                 </el-input>
               </el-space>
             </el-form-item>
@@ -491,34 +437,36 @@
             </el-form-item>
             <el-form-item label="验证码" prop="captchaCode">
               <el-space>
-                <el-input
-                  v-model="regForm.captchaCode"
-                  label="验证码"
-                  placeholder="验证码"
-                />
+                <el-input v-model="regForm.captchaCode" label="验证码" placeholder="验证码" />
 
-                <img
-                  style="width: 50%; margin-top: 6px"
-                  :src="verificationImg"
-                  @click="getCode"
-                />
+                <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
               </el-space>
             </el-form-item>
           </el-form>
-          <el-button
-            class="common-btn"
-            color="#3bafda"
-            @click="resetRegForm(registerRef)"
-          >
-            重新填写
-          </el-button>
-          <el-button
-            class="common-btn"
-            @click="submitRegisterForm(registerRef)"
-            color="#3bafda"
-          >
-            确认注册
-          </el-button>
+
+          <div style="margin-top: 40px">
+            <el-button
+              :loading="loadingBtn"
+              size="large"
+              color="#3bafda"
+              class="common-btn"
+              style="margin-left: 100px"
+              @click="resetRegForm(registerRef)"
+            >
+              重新填写
+            </el-button>
+
+            <el-button
+              :loading="loadingBtn"
+              size="large"
+              color="#3bafda"
+              class="common-btn"
+              style="margin-left: 30px"
+              @click="submitRegisterForm(registerRef)"
+            >
+              确认注册
+            </el-button>
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -532,54 +480,24 @@
       :close-on-click-modal="false"
       @keydown.enter.prevent
     >
-      <el-form
-        ref="captchaRef"
-        :rules="captchaRules"
-        :model="captchaForm"
-        label-width="100"
-        label-suffix=":"
-      >
+      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
         <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-          <el-row
-            :gutter="10"
-            style="justify-content: center; align-items: center"
-          >
+          <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input
-                v-model="captchaForm.captchaCode"
-                label="验证码"
-                placeholder="验证码"
-                @keyup.enter="sendOtp"
-              />
+              <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
             </el-col>
             <el-col :span="12">
-              <img
-                style="width: 50%; margin-top: 6px"
-                :src="verificationImg"
-                @click="getCode"
-              />
+              <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-button
-          size="large"
-          color="#3bafda"
-          class="common-btn"
-          style="margin-left: 100px"
-          @click="sendOtp"
-        >
+        <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
           发送
         </el-button>
       </el-form>
     </el-dialog>
 
-    <el-dialog
-      v-model="forgetPassDialogVisible"
-      title="忘记账号"
-      width="50%"
-      align-center
-      style="max-width: 800px"
-    >
+    <el-dialog v-model="forgetPassDialogVisible" title="忘记账号" width="50%" align-center style="max-width: 800px">
       <span>
         <el-tabs>
           <!-- <el-tab-pane label="邮箱找回密码">
@@ -624,10 +542,7 @@
                 <el-input v-model="passForm.email" placeholder="输入注册邮箱" />
               </el-form-item>
               <el-form-item tabindex="2" label="验证码" prop="captchaCode">
-                <el-row
-                  :gutter="10"
-                  style="justify-content: center; align-items: center"
-                >
+                <el-row :gutter="10" style="justify-content: center; align-items: center">
                   <el-col :span="12">
                     <el-input
                       v-model="passForm.captchaCode"
@@ -637,11 +552,7 @@
                     />
                   </el-col>
                   <el-col :span="12">
-                    <img
-                      style="width: 50%; margin-top: 6px"
-                      :src="verificationImg"
-                      @click="getCode"
-                    />
+                    <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -661,13 +572,7 @@
       </span>
     </el-dialog>
 
-    <el-dialog
-      class="noPadding"
-      v-model="noticeDialogVisible"
-      width="1280px"
-      align-center
-      style="max-width: 600px"
-    >
+    <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
       <div class="noticedialog">
         <div class="title">系统提示</div>
         <div class="contents">
@@ -677,9 +582,7 @@
           尊敬的东赢会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！东赢娱乐
           2022/10/13
         </div>
-        <el-button class="common-btn" @click="noticeDialogVisible = false">
-          确认
-        </el-button>
+        <el-button class="common-btn" @click="noticeDialogVisible = false">确认</el-button>
       </div>
     </el-dialog>
 
@@ -694,18 +597,8 @@
       :footer="null"
       title="公告"
     >
-      <el-tabs
-        type="card"
-        class="announcementTabs"
-        v-model="announcementActive"
-        @tab-click="announcementTabChange"
-      >
-        <el-tab-pane
-          v-for="(tab, ind) in announcementTypes"
-          :key="tab.id"
-          :tab="ind"
-          :label="tab.name"
-        >
+      <el-tabs type="card" class="announcementTabs" v-model="announcementActive" @tab-click="announcementTabChange">
+        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name">
           <el-collapse accordion v-model="typeActive">
             <template v-for="(ann, idx) in announcementList" :key="idx">
               <template v-if="ann.typeId === tab.id">
@@ -757,7 +650,7 @@ import PromotionMenu from '@/components/menu/PromotionMenu.vue'
 import AppMenu from '@/components/menu/AppMenu.vue'
 import 'vue3-marquee/dist/style.css'
 import {useElementSize} from '@vueuse/core'
-import {ArrowDown, Refresh} from '@element-plus/icons-vue'
+import {ArrowDown, Refresh, ArrowRight, ArrowLeft} from '@element-plus/icons-vue'
 import {storeToRefs} from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -779,6 +672,8 @@ export default defineComponent({
     AppMenu,
     RiVolumeUpFill,
     ArrowDown,
+    ArrowRight,
+    ArrowLeft,
     Refresh,
     RiAccountCircleLine,
     RiMoneyCnyCircleLine,
@@ -798,20 +693,18 @@ export default defineComponent({
     // carousel settings
     navigations: [
       {code: "Home", name: "首页", enName: "Home", path: "/home"},
-      {code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
+      {code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports", submenu: true},
       {code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
-      {code: "Esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true},
-      {code: "Slots", name: "电子", enName: "Slots", path: "/game", submenu: true},
+      {code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
       {code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
+      {code: "Slots", name: "老虎机", enName: "Slots", path: "/game", submenu: true},
       {code: "Lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
       {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true},
-      // {code: "Agent", name: "加盟", enName: "Agent", path: "/agent", hasicon: true},
+      {code: "Agent", name: "加盟", enName: "Affiliate", path: "https://xf-lh-dy-affiliate-web.test-psna.com/", hasicon: true},
       {code: "Sponsor", name: "赞助", enName: "Sponsor", path: "/sponsor", hasicon: true},
       {code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
-      // { code: "Poker", name: "ป็อกเกอร์", path: "/poker" },
-      // { code: "E-sports", name: "E-sports", path: "/e-sport" },
     ]
   }),
   setup() {
@@ -1405,8 +1298,8 @@ export default defineComponent({
         if (res.code === 0) {
           const d = res.data.announcements
           announcementTypes.value = res.data.type
-          if (res.data.type.length > 0) {
-            announcementActive.value = res.data.type[0].id
+          if (res.data.type && res.data.type.length > 0) {
+            announcementActive.value =  res.data.type[0].id
           }
           announcementList.value = d
           // announcementList.value = d.announcements
@@ -1535,9 +1428,9 @@ export default defineComponent({
                 codeId: loginForm.codeId,
               })
               .then(() => {
-                const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                 if (store.token) {
-                  router.push(jumpUrl);
+                  // router.push(jumpUrl);
                   loginDialogVisible.value = false;
                   store.loginPageVisible = false;
 
@@ -1583,9 +1476,9 @@ export default defineComponent({
                 smsCodeId: loginForm.smsCodeId,
               })
               .then(() => {
-                const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                 if (store.token) {
-                  router.push(jumpUrl);
+                  // router.push(jumpUrl);
                   loginDialogVisible.value = false;
                   store.loginPageVisible = false;
 
@@ -1650,8 +1543,8 @@ export default defineComponent({
       return 8;
     }
 
-    watch(
-        () => regForm.password,
+    // watch(
+    //     () => regForm.password,
         // () => {
         //   pwdStrength.value = "";
 
@@ -1690,9 +1583,12 @@ export default defineComponent({
 
         //   // console.log(pwdStrength.value);
         // },
-    );
+    // );
     const todayDate = () => {
       return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
+    }
+    const jumpOut = (path) => {
+      window.location.href=path
     }
 
 
@@ -1761,7 +1657,8 @@ export default defineComponent({
       hasAffiliate,
       countdownTimer,
       regCountdown,
-      loginCountdown
+      loginCountdown,
+      jumpOut
     }
   }
 });
@@ -1846,6 +1743,13 @@ body {
       svg {
         width: 1.3em;
         height: 1.3em;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+      &:active {
+        filter: brightness(0.9);
       }
     }
   }
@@ -2061,7 +1965,7 @@ body {
 
 .register-container {
   display: flex;
-  min-height: 90vh;
+  min-height: 70vh;
 
   .registered-left {
     background-image: url(../../assets/home/zc.jpg);
@@ -2093,8 +1997,7 @@ body {
   .registered-right {
     flex: 2;
     padding: 73px 44px;
-    background: url(../../assets/images/index/reg-bg.jpg) no-repeat center
-      center;
+    background: url(../../assets/images/index/reg-bg.jpg) no-repeat center center;
     background-size: cover;
     .el-row {
       width: 100%;
@@ -2113,6 +2016,127 @@ body {
         margin-top: 52px;
       }
     }
+  }
+}
+
+.login-container {
+  display: flex;
+  min-height: 70vh;
+
+  .dialog-title {
+    color: #5075ad;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #cecece;
+  }
+
+  .form-content {
+    max-width: 400px;
+    margin: 50px auto;
+  }
+
+  .form-content-reg {
+    max-width: 600px;
+    margin: 50px auto;
+  }
+
+  .details-form {
+    background-image: url(../../assets/home/zc.jpg);
+    background-size: cover;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    flex: 1;
+    padding: 80px 30px;
+
+    ul {
+      text-align: left;
+      padding-left: 15px;
+      font-size: 16px;
+      line-height: 30px;
+      color: #ffffff;
+
+      li {
+        // list-style-type: decimal;
+      }
+    }
+
+    .title {
+      background-image: url(../../assets/home/right-title.png);
+      background-position: 100% 100%;
+      width: 107px;
+      height: 35px;
+    }
+
+    .title-reg {
+      background-image: url(../../assets/home/download.png);
+      background-position: 100% 100%;
+      width: 143px;
+      height: 35px;
+    }
+  }
+  .content-form {
+    flex: 2;
+    // padding: 73px 44px;
+    padding: 16px;
+    width: 100%;
+    max-width: 700px;
+    background: url(../../assets/images/index/reg-bg.jpg) no-repeat center center;
+    background-size: cover;
+
+    .el-tabs {
+      // max-width: 500px;
+    }
+    .el-row {
+      width: 100%;
+    }
+    form .title {
+      height: 18px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #5075ad;
+      margin: 0 auto 30px;
+      width: 100%;
+      text-align: left;
+      display: block;
+      &.account {
+        margin-top: 52px;
+      }
+    }
+  }
+}
+
+.toggle-side {
+  position: absolute;
+  bottom: 220px;
+  color: #ffffff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  line-height: 1;
+
+  min-width: 185px;
+  overflow: hidden;
+  z-index: 100;
+  font-weight: 500;
+  letter-spacing: 2px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border: 2px solid #45fdfb;
+  border-radius: 24px;
+  transition: 0.3s;
+
+  &--reg {
+    right: 120px;
+  }
+
+  &--login {
+    left: 120px;
   }
 }
 
@@ -2154,8 +2178,7 @@ body {
     background: #434343;
     width: 33%;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
-      sans-serif;
+    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   span.weak-pwd {
@@ -2568,5 +2591,12 @@ body {
 .mailbox-notify {
   position: relative;
   margin-right: 20px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    filter: brightness(0.9);
+  }
 }
 </style>

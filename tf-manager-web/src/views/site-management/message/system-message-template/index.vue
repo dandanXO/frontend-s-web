@@ -13,6 +13,20 @@
           :end-placeholder="t('fields.endDate')"
           style="margin-left: 5px; width: 250px"
         />
+        <el-select
+          v-model="request.type"
+          :placeholder="t('fields.type')"
+          style="width: 150px; margin-left: 5px;"
+          size="small"
+          default-first-option
+        >
+          <el-option
+            v-for="item in uiControl.type"
+            :key="item.key"
+            :label="t('messageType.' + item.displayName)"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -158,6 +172,20 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item prop="type">
+          <el-select
+            style="width: 540px"
+            v-model="form.type"
+            :placeholder="t('fields.type')"
+          >
+            <el-option
+              v-for="item in uiControl.type"
+              :key="item.key"
+              :label="t('messageType.' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item prop="title">
           <el-input
             style="width: 540px"
@@ -226,7 +254,7 @@
           <el-select
             v-model="importForm.siteId"
             :placeholder="t('fields.site')"
-            style="width: 350px;"
+            style="width: 150px;"
             filterable
             default-first-option
             @focus="loadSites"
@@ -235,6 +263,22 @@
               v-for="item in list.sites"
               :key="item.key"
               :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.type')" prop="type">
+          <el-select
+            v-model="importForm.type"
+            :placeholder="t('fields.type')"
+            style="width: 150px;"
+            filterable
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.type"
+              :key="item.key"
+              :label="t('messageType.' + item.displayName)"
               :value="item.value"
             />
           </el-select>
@@ -290,6 +334,12 @@
     >
       <el-table-column type="selection" v-if="!hasRole(['SUB_TENANT'])" />
       <el-table-column prop="siteName" :label="t('fields.site')" />
+      <el-table-column prop="type" :label="t('fields.type')">
+        <template #default="scope">
+          <span v-if="scope.row.type === null">-</span>
+          <span v-else>{{ t('messageType.' + scope.row.type) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="title" :label="t('fields.title')" />
       <el-table-column prop="content" :label="t('fields.content')" />
       <el-table-column prop="receiveType" :label="t('fields.receiveType')" />
@@ -301,7 +351,7 @@
             v-if="scope.row.sendTime !== null"
             v-formatter="{
               data: scope.row.sendTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
+              timeZone: scope.row.timeZone,
               type: 'date',
             }"
           />
@@ -334,8 +384,10 @@ import {
 import { findLevelByVipName, getVipList } from '../../../../api/vip'
 import { required } from '../../../../utils/validate'
 import { hasRole } from '../../../../utils/util'
+import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 
+const store = useStore();
 const { t } = useI18n();
 const dialogForm = ref(null)
 const importRefForm = ref(null);
@@ -369,7 +421,13 @@ const uiControl = reactive({
     { typeName: 'Specific VIP', value: 'VIP' },
   ],
   size: null,
-  importDialogVisible: false
+  importDialogVisible: false,
+  type: [
+    { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
+    { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
+    { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' },
+    { key: 4, displayName: 'PAYMENT', value: 'PAYMENT' }
+  ]
 })
 
 const importedPage = reactive({
@@ -386,17 +444,20 @@ const importForm = reactive({
 });
 
 const importRules = reactive({
-  siteId: [required(t('message.validateSiteRequired'))]
+  siteId: [required(t('message.validateSiteRequired'))],
+  type: [required(t('message.validateTypeRequired'))]
 });
 
 const request = reactive({
   size: 30,
   current: 1,
   sendTime: [],
+  type: null,
 })
 
 function resetQuery() {
-  request.sendTime = []
+  request.sendTime = [];
+  request.type = null;
 }
 
 const form = reactive({
@@ -405,6 +466,7 @@ const form = reactive({
   vip: null,
   title: null,
   content: null,
+  type: null,
   siteId: null,
 })
 
@@ -472,10 +534,11 @@ const handleSelect = item => {
 }
 
 const formRules = reactive({
-  recipient: [required('Recipient is require')],
-  vip: [required('vip')],
-  title: [required('Subject is require')],
-  content: [required('Message is require')],
+  recipient: [required(t('message.validateRecipientRequired'))],
+  vip: [required(t('message.validateVIPRequired'))],
+  title: [required(t('message.validateSubjectRequired'))],
+  content: [required(t('message.validateContentRequired'))],
+  type: [required(t('message.validateTypeRequired'))]
 })
 
 function showDialog() {
@@ -583,6 +646,11 @@ async function loadSystemMessageTemplate() {
   }
   const { data: ret } = await getSystemMessageTemplate(query)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
+      ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
+      : null
+  });
   page.records = ret.records
 }
 
@@ -762,6 +830,7 @@ async function confirmImport() {
         const item = {};
         if (value) {
           item.siteId = importForm.siteId;
+          item.type = importForm.type;
           Object.entries(value).forEach(([k, v]) => {
             if (k !== "receiveRange") {
               item[k] = v;

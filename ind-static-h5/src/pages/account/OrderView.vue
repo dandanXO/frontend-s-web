@@ -1,7 +1,7 @@
 <template>
   <ProfileSummary />
 
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
 
   <ContentView contentTopStatus="solid">
     <q-tabs
@@ -30,7 +30,18 @@
         <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
             <div class="order-col">Order NO.</div>
-            <div class="order-col">{{ e.serialNumber }}</div>
+            <div class="order-col flex-c-end gap-8">
+              {{ e.serialNumber }}
+
+              <div @click="copyText(e.serialNumber)">
+                <img
+                  class="copy-btn btn-pointer"
+                  src="../../assets/images/account/content-copy.svg"
+                  size="24px"
+                  fill="#fff"
+                />
+              </div>
+            </div>
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
@@ -39,7 +50,7 @@
             </div>
             <div class="order-subrow">
               <div class="order-col">
-                <span class="txt-gray">{{ e.withdrawDate }}</span>
+                <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
               </div>
               <div class="order-col">
                 <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
@@ -55,7 +66,18 @@
         <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
             <div class="order-col">Order NO.</div>
-            <div class="order-col">{{ e.serialNumber }}</div>
+            <div class="order-col flex-c-end gap-8">
+              {{ e.serialNumber }}
+
+              <div @click="copyText(e.serialNumber)">
+                <img
+                  class="copy-btn btn-pointer"
+                  src="../../assets/images/account/content-copy.svg"
+                  size="24px"
+                  fill="#fff"
+                />
+              </div>
+            </div>
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
@@ -64,7 +86,7 @@
             </div>
             <div class="order-subrow">
               <div class="order-col">
-                <span class="txt-gray">{{ e.depositDate }}</span>
+                <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
               </div>
               <div class="order-col">
                 <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
@@ -77,19 +99,23 @@
       </q-tab-panel>
     </q-tab-panels>
   </ContentView>
+
+  <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const router = useRouter();
 
 let slideList = ref(["Order", "Bank", "Message", "Personal Center", "Discount", "Record"]);
@@ -106,12 +132,6 @@ let currentSlide = ref(slideList.value[0]);
 const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
   return false;
-};
-
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
 };
 
 const isLoading = reactive({ withdrawal: true, recharge: true });
@@ -131,9 +151,12 @@ const searchWithdrawalRecord = () => {
   withdrawalData.value = [];
 
   const { startDate, endDate } = searchForm;
+
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/withdraw", {
-      params: { startDate, endDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
     })
     .then((response) => {
       if (response.code === 0) {
@@ -150,15 +173,40 @@ const searchWithdrawalRecord = () => {
     });
 };
 
+const copyinput = ref(null);
+const text_copied = ref("");
+const copyText = (text) => {
+  text_copied.value = text;
+  console.log(text_copied.value);
+
+  setTimeout(() => {
+    const copyText = copyinput.value;
+    console.log(copyText);
+
+    copyText.select();
+    document.execCommand("copy");
+    console.log("Copied");
+
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: "Serial Number Copied to clipboard.",
+      icon: "check_circle_outline"
+    });
+  }, 100);
+};
+
 const depositData = ref([]);
 const searchDepositRecord = () => {
   isLoading.recharge = true;
   depositData.value = [];
 
   const { startDate, endDate } = searchForm;
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/deposit", {
-      params: { startDate, endDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
     })
     .then((response) => {
       if (response.code === 0) {
@@ -178,21 +226,16 @@ const searchDepositRecord = () => {
 const getWithdrawStatus = (withdrawStatus) => {
   switch (withdrawStatus) {
     case "APPLY":
-      return "Applying";
+    case "STEP_1":
+    case "STEP_2":
+    case "STEP_3":
+    case "STEP_4":
+      return "Pending";
     case "FAIL":
+    case "STEP_5":
       return "Failed";
     case "SUCCESS":
       return "Success";
-    case "STEP_1":
-      return "Under review";
-    case "STEP_2":
-      return "To be paid";
-    case "STEP_3":
-      return "Payment on going";
-    case "STEP_4":
-      return "Automatic Payment";
-    case "STEP_5":
-      return "Suspend";
     default:
       return withdrawStatus;
   }
@@ -205,7 +248,7 @@ const getDepositStatus = (depositStatus) => {
     case "SUCCESS":
       return "Success";
     case "SUPPLEMENT_SUCCESS":
-      return "Supplement Success";
+      return "Success";
     case "CLOSED":
       return "Closed";
     default:
@@ -251,6 +294,7 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       padding: 8px 12px;
+      flex-wrap: wrap;
 
       &--title {
         background-color: rgba(21, 0, 37, 0.5);
@@ -268,6 +312,10 @@ onMounted(() => {
         display: flex;
         justify-content: space-between;
       }
+    }
+
+    .copy-btn {
+      filter: brightness(0) invert(1);
     }
 
     .order-col {

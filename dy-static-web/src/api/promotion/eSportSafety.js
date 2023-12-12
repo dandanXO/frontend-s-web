@@ -1,0 +1,14 @@
+import { server } from "@/utils/request";
+
+export function getUpcomingESportMatches() {
+    return server.EVENT.get('/game-match/upcoming/ESPORT');
+}
+
+export function getESportInsurancePlatformOptions() {
+    return server.EVENT.get('/game-match/platform/ESPORT');
+}
+
+export function submitESportInsuranceForm(params) {
+    return server.EVENT.post('/game-match/submit', params);
+}
+
