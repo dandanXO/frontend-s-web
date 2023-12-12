@@ -137,7 +137,7 @@
             icon="el-icon-phone"
             size="mini"
             type="success"
-            v-if="memberDetail.telephone !== null && uiControl.showCall"
+            v-if="uiControl.showCall"
             v-permission="['sys:member:call:phone']"
             @click="callPhone(memberDetail.id, memberDetail.siteId)"
           />
@@ -146,7 +146,7 @@
             icon="el-icon-video-pause"
             size="mini"
             type="danger"
-            v-if="memberDetail.telephone !== null && uiControl.showCall"
+            v-if="uiControl.showCall"
             v-permission="['sys:member:stop:phone']"
             @click="stopPhone(memberDetail.id, memberDetail.siteId)"
           />
