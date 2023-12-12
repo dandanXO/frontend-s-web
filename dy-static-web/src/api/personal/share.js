@@ -7,3 +7,6 @@ export function getReferralLink() {
 export function getInviteFriendListCount() {
   return server.REST.get(`/session/referred/count`, {});
 }
+export function getReferredBonus() {
+  return server.REST.get(`session/referredBonus/count`, {});
+}

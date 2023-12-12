@@ -496,6 +496,17 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/finance/depositMobile",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/finance/DepositView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/display",
     children: [
       {

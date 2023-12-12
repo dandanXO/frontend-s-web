@@ -477,21 +477,12 @@ function onSubmitClick() {
   }).then((res) => {
     const { code, data, message } = res;
     if (code == 0) {
-      if (data.count == 0) {
-        $q.notify({
-          type: "positive",
-          position: "top",
-          message: "您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次",
-          icon: "check_circle_outline"
-        });
-      } else {
-        $q.notify({
-          type: "positive",
-          position: "top",
-          message: "您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!",
-          icon: "check_circle_outline"
-        });
-      }
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: "您好，您已成功提交本场竞猜答案",
+        icon: "check_circle_outline"
+      });
     } else {
       $q.notify({
         color: "negative",

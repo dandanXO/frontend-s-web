@@ -39,7 +39,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/forgot-account" ||
       to.path === "/poker" ||
       to.path === "/sport" ||
-      to.path === "/promotion"
+      to.path === "/promotion" ||
+      to.path === "/finance/depositMobile"
     ) {
       ui.hiddenFooter();
     } else {

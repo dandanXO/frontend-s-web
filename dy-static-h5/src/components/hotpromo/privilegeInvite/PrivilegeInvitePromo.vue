@@ -55,7 +55,7 @@
           </div>
 
           <div class="blue-content-btn-wrap">
-            <q-btn rounded size="12px" label="立即领取" color="primary" />
+            <q-btn rounded size="12px" label="立即领取" color="primary" @click="retrieve" />
           </div>
 
           <div class="blue-content-rules">
@@ -96,7 +96,7 @@
               <div class="white-btn-text">
                 邀请周存送
                 <br />
-                <span>0</span>
+                <span>{{ registerMembers }}</span>
                 人
               </div>
             </a>
@@ -108,7 +108,7 @@
               <div class="white-btn-text">
                 邀请周存送
                 <br />
-                <span>0.00</span>
+                <span>{{ bonusAmount }}</span>
                 元
               </div>
             </a>
@@ -325,7 +325,7 @@ import { useRouter } from "vue-router";
 import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privilegeInvite/privilegeInvite";
 import { userStore } from "stores/index";
 import VueQrious from "vue-qrious";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 
 export default defineComponent({
   components: {
@@ -355,7 +355,7 @@ export default defineComponent({
 
       // Define the mapping of names to activeKey values
       const nameToActiveKeyMap = {
-        "dy2-vip-upgrade": 1,
+        "dy2-vip-upgrade-bonus": 1,
         "dy2-refer-bonus": 2,
         "Dongying-refer": 3
       };
@@ -371,7 +371,7 @@ export default defineComponent({
 
       // Define the mapping of tabNum to names
       const tabNameMap = {
-        1: "dy2-vip-upgrade",
+        1: "dy2-vip-upgrade-bonus",
         2: "dy2-refer-bonus",
         3: "Dongying-refer"
       };
@@ -470,10 +470,46 @@ export default defineComponent({
       });
     };
 
+    const retrieve = () => {
+      eventapi
+        .put("/bonus/claim/" + "dy2-vip-upgrade-bonus")
+        .then((res) => {
+          if (res.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "领取成功",
+              icon: "check_circle_outline"
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+
+    const registerMembers = ref(1);
+    const bonusAmount = ref(1);
+
+    const getInviteCount = () => {
+      api
+        .get("/session/referredBonus/count")
+        .then((res) => {
+          if (res.code === 0) {
+            registerMembers.value = res.data.registerMembers;
+            bonusAmount.value = res.data.bonusAmount;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     onMounted(() => {
       getRebateInfo().then(({ data }) => (rebateInfo.value = data));
       getReferral();
       checkActiveKey();
+      getInviteCount();
     });
 
     return {
@@ -494,7 +530,11 @@ export default defineComponent({
       downloadQRCode,
       onQRCodeChange,
       qrRef,
-      checkActiveKey
+      checkActiveKey,
+      retrieve,
+      getInviteCount,
+      registerMembers,
+      bonusAmount
     };
   }
 });

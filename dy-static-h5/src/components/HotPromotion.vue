@@ -12,7 +12,7 @@
         !isCommonPromo &&
         store.token &&
         (list.redirectUrl === 'Dongying-refer' ||
-          list.redirectUrl === 'dy2-vip-upgrade' ||
+          list.redirectUrl === 'dy2-vip-upgrade-bonus' ||
           list.redirectUrl === 'dy2-refer-bonus')
       "
     />
@@ -159,7 +159,7 @@ export default defineComponent({
       this.list.redirectUrl === "sport-safety" ||
       this.list.redirectUrl === "dy2-gift" ||
       this.list.redirectUrl === "Dongying-refer" ||
-      this.list.redirectUrl === "dy2-vip-upgrade" ||
+      this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
       this.list.redirectUrl === "dy2-refer-bonus"
     ) {
       this.isCommonPromo = false;

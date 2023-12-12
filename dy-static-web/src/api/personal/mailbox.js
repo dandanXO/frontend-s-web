@@ -1,4 +1,5 @@
 import { server } from "@/utils/request";
+import cached from "@/utils/cache";
 
 export function loadMailbox(type, pageNum, pageSize) {
   return server.REST.post("auth/mailbox", {
@@ -9,13 +10,35 @@ export function loadMailbox(type, pageNum, pageSize) {
 }
 
 export function mailInbox(mailQuery) {
-  return server.REST.get("/session/inbox", {
-    params: {
-      type: mailQuery.type,
-      current: mailQuery.current,
-      size: mailQuery.size,
-      orderBy: mailQuery.orderBy
-    }
+  const key = `MAILINBOX_${mailQuery.current}_${mailQuery.size}_${mailQuery.orderBy}_${mailQuery.messageType}`;
+  return cached.get(key, () =>
+    server.REST.get("/session/inbox", {
+      params: {
+        type: mailQuery.type,
+        current: mailQuery.current,
+        size: mailQuery.size,
+        orderBy: mailQuery.orderBy,
+        messageType: mailQuery.messageType
+      }
+    })
+  );
+}
+
+export function readMail(mailQuery) {
+  return server.REST.post("/session/inbox/read", {
+    id: mailQuery.id
+  });
+}
+
+export function readAllMail(mailQuery) {
+  return server.REST.post("/session/inbox/readAll", {
+    type: mailQuery
+  });
+}
+
+export function deleteAllMail(mailQuery) {
+  return server.REST.post("/session/inbox/deleteAll", {
+    type: mailQuery
   });
 }
 

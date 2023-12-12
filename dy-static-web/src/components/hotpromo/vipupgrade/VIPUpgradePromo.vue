@@ -1,7 +1,7 @@
 <template>
   <div class="vip-upgrade-container">
     <div class="vip-upgrade-wrapper">
-      <HotPromoionNav :label="'晋升有礼'"></HotPromoionNav>
+      <HotPromotionNav :label="'晋升有礼'"></HotPromotionNav>
 
       <div class="title">晋升有礼</div>
       <div class="desc-wrapper">
@@ -42,7 +42,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import HotPromoionNav from "@/components/HotPromotionNav.vue";
+import HotPromotionNav from "@/components/HotPromotionNav.vue";
 
 const retrieve = () => {};
 
