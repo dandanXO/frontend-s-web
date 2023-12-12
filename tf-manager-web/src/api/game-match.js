@@ -9,8 +9,16 @@ export const createGameMatch = (gameMatch) => {
   return https().request("/game-match", Method.POST, gameMatch, ContentType.form);
 };
 
-export const updateGameMatch = (id) => {
+export const updateGameMatch = (id, gameMatch) => {
+  return https().request(`/game-match/${id}?_method=PUT`, Method.POST, gameMatch, ContentType.form);
+};
+
+export const updateGameMatchStatus = (id) => {
   return https().request(`/game-match/${id}?_method=PUT`, Method.POST);
+};
+
+export const deleteGameMatch = (id) => {
+  return https().request(`/game-match/${id}?_method=DELETE`, Method.POST);
 };
 
 export const getGameMatchRecord = (query) => {
