@@ -515,7 +515,9 @@ async function pDepo(deposit) {
           console.log("First Depo");
           //ADJUST TRACKEVENT.
           Adjust.trackEvent({
-            eventToken: "medfxb"
+            eventToken: "medfxb",
+            revenue: deposit.localAmount,
+            currency: "INR"
           });
           localStorage.setItem("IS_FIRST_DEPOSIT", "1");
         }

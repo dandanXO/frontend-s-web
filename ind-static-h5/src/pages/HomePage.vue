@@ -1088,11 +1088,14 @@ const openCSInNewTab = (url) => {
 };
 
 const initAdjustEventTrack = () => {
-  console.log("INit");
   Adjust.initSdk({
     appToken: "pxrvpkqs0a9s",
     environment: "sandbox"
   });
+  // setTimeout(() => {
+  //   const webUUID = Adjust.getWebUUID();
+  //   console.log(webUUID);
+  // }, 3000);
 };
 
 onMounted(() => {

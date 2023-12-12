@@ -337,7 +337,7 @@ const loadCards = () => {
       isLoadingBankCard.value = false;
     });
 };
-console.log("cb");
+
 const cardRef = ref();
 const amountRef = ref();
 const bankAddressRef = ref();

@@ -219,7 +219,7 @@ export default defineComponent({
             verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.codeId = response.data.id;
             regForm.captchaCode = "0000";
-            verificationRef.value.resetValidation();
+            // verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
