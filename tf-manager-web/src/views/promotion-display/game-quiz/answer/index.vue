@@ -33,21 +33,12 @@
           :default-time="defaultTime"
           @change="loadGameQuizTitle"
         />
-        <el-select
-          v-model="request.quizId"
+        <el-input
+          v-model="request.quizTitle"
           size="small"
-          :placeholder="t('fields.quizTitle')"
-          class="filter-item"
           style="width: 200px; margin-left: 10px;"
-          @focus="loadGameQuizTitle"
-        >
-          <el-option
-            v-for="item in quizTitles.list"
-            :key="item.id"
-            :label="item.quizTitle"
-            :value="item.id"
-          />
-        </el-select>
+          :placeholder="t('fields.quizTitle')"
+        />
         <el-input
           v-model="request.loginName"
           size="small"
@@ -215,7 +206,7 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getGameQuizTitle, getGameQuizAnswers, updateGameQuizAnswer } from "@/api/game-quiz";
+import { getGameQuizAnswers, updateGameQuizAnswer } from "@/api/game-quiz";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
 
@@ -246,7 +237,7 @@ const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
-  quizId: null,
+  quizTitle: null,
   loginName: null,
   status: null,
   startTime: [convertStartDate(new Date()), convertDate(new Date())]
@@ -254,9 +245,6 @@ const request = reactive({
 
 const gameQuizAnswerForm = ref(null);
 const sites = reactive({
-  list: []
-});
-const quizTitles = reactive({
   list: []
 });
 
@@ -359,19 +347,10 @@ async function loadSites() {
 
 function resetQuery() {
   request.siteId = site.value.id;
-  request.quizId = null;
+  request.quizTitle = null;
   request.status = null;
   request.loginName = null;
   request.startTime = [convertStartDate(new Date()), convertDate(new Date())];
-}
-
-async function loadGameQuizTitle() {
-  const { data: quizTitle } = await getGameQuizTitle(request.siteId);
-  quizTitles.list = quizTitle.filter(title => title.startTime >= request.startTime[0] && title.startTime <= request.startTime[1]);
-  const quizId = quizTitles.list.find(title => title.id === request.quizId)
-  if (!quizId) {
-    request.quizId = null;
-  }
 }
 
 onMounted(async () => {
@@ -382,7 +361,6 @@ onMounted(async () => {
     site.value = sites.list[0];
   }
   request.siteId = site.value.id;
-  await loadGameQuizTitle();
 });
 
 </script>
