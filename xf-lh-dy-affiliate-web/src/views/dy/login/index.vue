@@ -55,7 +55,6 @@
 
           <el-button
             class="common-btn"
-            :loading="loading"
             type="danger"
             style="width:100%;"
             @click.prevent="handleLogin"
@@ -74,18 +73,45 @@
     @close="onCloseDialog"
     :title="'安全验证, 请依次点击：' + words.join(' , ')"
   >
-    <template #header>
-      test
-    </template>
-    <div style="display: flex; flex-direction: column;">
+    <div
+      id="loadDiv"
+      style="display: flex; flex-direction: column; margin-top: -30px"
+      v-loading="dialogLoading"
+    >
       <el-image
-        v-loading="dialogLoading"
         style="cursor: pointer"
         id="imageRef"
         fit="contain"
         :src="img"
         @click="onClickImage"
       />
+      <div
+        :style="{
+          width: imageOffSetWidth + 'px',
+          height: imageOffSetHeight + 'px',
+          position: 'absolute',
+          'z-index': '3000',
+          display: resultDisplay,
+          'justify-content': 'center',
+          'align-items': 'center',
+        }"
+      >
+        <i
+          class="el-icon-success"
+          :style="{
+            'font-size': imageOffSetHeight / 2 + 'px',
+            color: 'rgb(130, 208, 130)',
+          }"
+        />
+        <span
+          :style="{
+            'font-size': imageOffSetHeight / 3 + 'px',
+            color: 'rgb(130, 208, 130)',
+          }"
+        >
+          验证成功
+        </span>
+      </div>
     </div>
     <div>
       <el-button
@@ -166,7 +192,6 @@ export default defineComponent({
         ],
       },
       passwordType: 'password',
-      loading: false,
       showDialog: false,
       capsTooltip: false,
       redirect: '',
@@ -176,6 +201,9 @@ export default defineComponent({
       img: '',
       coordinates: [],
       dialogLoading: false,
+      imageOffSetWidth: 200,
+      imageOffSetHeight: 100,
+      resultDisplay: 'none',
     })
 
     const methods = reactive({
@@ -221,14 +249,22 @@ export default defineComponent({
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        router
-          .push({
-            path: state.redirect || '/',
-            query: state.otherQuery,
-          })
-          .catch(err => {
-            console.warn(err)
-          })
+        state.resultDisplay = 'flex'
+        var image = document.getElementById('imageRef')
+        state.imageOffSetWidth = image.offsetWidth
+        state.imageOffSetHeight = image.offsetHeight
+        state.dialogLoading = false
+        image.style.opacity = '0.1'
+        setTimeout(() => {
+          router
+            .push({
+              path: state.redirect || '/',
+              query: state.otherQuery,
+            })
+            .catch(err => {
+              console.warn(err)
+            })
+        }, 500)
       },
       onClickImage: e => {
         if (state.coordinates.length < 5) {
@@ -260,6 +296,8 @@ export default defineComponent({
       onScrollEvent: () => {
         if (state.showDialog) {
           var image = document.getElementById('imageRef')
+          state.imageOffSetWidth = image.offsetWidth
+          state.imageOffSetHeight = image.offsetHeight
           var imageX = image.getBoundingClientRect().x
           var imageY = image.getBoundingClientRect().y
           for (var i in state.coordinates) {
@@ -271,26 +309,26 @@ export default defineComponent({
         }
       },
       userLogin: async () => {
+        state.dialogLoading = true
+        state.loginForm.key = state.codeId
+        const coordinatesString = []
+        for (let i = 0; i < state.coordinates.length; i++) {
+          const obj = []
+          obj.push(state.coordinates[i].x)
+          obj.push(state.coordinates[i].y)
+          coordinatesString.push(obj.join(','))
+        }
+        state.loginForm.coordinates = coordinatesString.join('-')
+        state.coordinates.splice(0)
         try {
-          state.loginForm.key = state.codeId
-          const coordinatesString = []
-          for (let i = 0; i < state.coordinates.length; i++) {
-            const obj = []
-            obj.push(state.coordinates[i].x)
-            obj.push(state.coordinates[i].y)
-            coordinatesString.push(obj.join(','))
-          }
-          state.loginForm.coordinates = coordinatesString.join('-')
           await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)
-          state.loading = true
-          methods.onSuccess()
         } catch (e) {
           if (e.message === '验证失败') {
             methods.onFail()
           } else {
             state.showDialog = false
           }
-          state.loading = false
+          state.dialogLoading = false
           return
         }
         methods.onSuccess()
@@ -469,10 +507,6 @@ export default defineComponent({
 :deep(.el-image__inner) {
   max-height: 100% !important;
   max-width: 100% !important;
-}
-
-:deep(.el-image) {
-  margin-top: -30px;
 }
 
 @media (max-width: 768px) {
