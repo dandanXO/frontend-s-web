@@ -1095,9 +1095,8 @@ const initAdjustEventTrack = () => {
     Adjust.create(adjustConfig);
 
     setTimeout(() => {
-      const webUUID = Adjust.getAdid().then((res) => {
-        console.log(webUUID);
-        console.log(res);
+      Adjust.getAdid().then((uuid) => {
+        console.log(uuid);
       });
     }, 3000);
   }
