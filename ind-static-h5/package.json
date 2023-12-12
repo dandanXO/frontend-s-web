@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@angular/core": "^17.0.6",
-    "@awesome-cordova-plugins/adjust": "5.29.0",
+    "@awesome-cordova-plugins/adjust": "^5.29.0",
     "@capacitor/android": "^5.0.0",
     "@capacitor/app": "^5.0.0",
     "@capacitor/browser": "^5.0.0",
