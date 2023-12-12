@@ -8,7 +8,7 @@
                         <div class="bet-info-details">
                             <div class="info-team info-team-one">
                                 <div class="info-team-logo">
-                                    <img :src="`${iconImageBasePath}/${item.siteId}/${item.teamOneIcon}`" />
+                                    <img :src="`${iconImageBasePath}/${item.teamOneIcon}`" />
                                 </div>
                                 <div class="info-team-name" v-html="item.teamOne" />
                             </div>
@@ -21,7 +21,7 @@
 
                             <div class="info-team info-team-two">
                                 <div class="info-team-logo">
-                                    <img :src="`${iconImageBasePath}/${item.siteId}/${item.teamTwoIcon}`" />
+                                    <img :src="`${iconImageBasePath}/${item.teamTwoIcon}`" />
                                 </div>
                                 <div class="info-team-name" v-html="item.teamTwo" />
                             </div>
@@ -204,7 +204,7 @@ const nextSlide = () => {
     $swiper.value.slideNext();
 };
 
-const iconImageBasePath = `${process.env.VUE_APP_IMAGE_CDN}/game-match`
+const iconImageBasePath = `${process.env.VUE_APP_IMAGE_CDN}/promo`
 
 onMounted(() => {
     init();

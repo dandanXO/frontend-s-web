@@ -20,7 +20,7 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert Phone number',
-          (val) => (val.length === 10) || 'The phone number must be 10 digits'
+          (val) => val.length === 10 || 'The phone number must be 10 digits'
         ]"
         placeholder="Please Phone Number"
         color="white"
@@ -292,8 +292,9 @@ export default defineComponent({
     };
 
     const isAlphanumeric = (value, translation) => {
-      const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
-      return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+      const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+      // const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+      return passwordPattern.test(value) || `${translation} must at least contain letters and numbers.`;
     };
 
     const router = useRouter();

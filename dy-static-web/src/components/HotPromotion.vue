@@ -18,8 +18,11 @@
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
-    <PrivilegeInvite v-if="list.redirectUrl === 'Dongying-refer' && !isCommonPromo && store.token" />
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
+
+    <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade' && !isCommonPromo && store.token"></VIPUpgradePromo>
+    <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token"></ReferBonusPromo>
+    <PrivilegeInvite v-if="list.redirectUrl === 'Dongying-refer' && !isCommonPromo && store.token" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -52,6 +55,8 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
+import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
+import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 
@@ -73,7 +78,9 @@ export default defineComponent({
     EsportQuiz,
     LotteryPromo,
     PrivilegeInvite,
-    GiftPromo
+    GiftPromo,
+    VIPUpgradePromo,
+    ReferBonusPromo
     // DailyBonus
   },
   props: {
@@ -210,7 +217,9 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-lottery" ||
       this.list.redirectUrl === "Dongying-quiz" ||
       this.list.redirectUrl === "dy2-gift" ||
-      this.list.redirectUrl === "Dongying-refer"
+      this.list.redirectUrl === "Dongying-refer" ||
+      this.list.redirectUrl === "dy2-vip-upgrade" ||
+      this.list.redirectUrl === "dy2-refer-bonus"
     ) {
       this.isCommonPromo = false;
     } else {

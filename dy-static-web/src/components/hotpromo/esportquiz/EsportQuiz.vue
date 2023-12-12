@@ -132,14 +132,20 @@
       <div>
         <table v-if="isHasRecord" class="record-table" id="record-table">
           <tr>
-            <th style="width: 50%">日期</th>
-            <th style="width: 25%">答案</th>
-            <th style="width: 25%">中奖记录</th>
+            <th style="width: 25%">日期</th>
+            <th style="width: 35%">答案</th>
+            <th style="width: 20%">中奖记录</th>
+            <th style="width: 10%">中奖次数</th>
+            <th style="width: 10%">参与次数</th>
           </tr>
           <tr v-for="(e, i) in tableInfo" :key="`table-info-${i}`">
             <td>{{ e.time }}</td>
             <td>{{ e.answer }}</td>
             <td :class="e.className">{{ e.statusText }}</td>
+            <template v-if="i === 0">
+              <td rowspan="2">{{ quizWonTimesRecord }}</td>
+              <td rowspan="2">{{ quizAttendTimesRecord }}</td>
+            </template>
           </tr>
         </table>
         <table v-else class="record-table" id="record-table"></table>
@@ -255,6 +261,8 @@ function getMatchInfo() {
 }
 
 const records = ref([]);
+const quizAttendTimesRecord = ref();
+const quizWonTimesRecord = ref();
 const paginationInfo = reactive({ pageSize: 5, pageNumber: 1, pageTotal: 0 });
 
 const isHasRecord = ref(false);
@@ -263,6 +271,8 @@ function getRecords() {
     const { code, data } = res;
     if (code == 0) {
       records.value = data.answers;
+      quizAttendTimesRecord.value = data.quizAttendTimes;
+      quizWonTimesRecord.value = data.quizWonTimes;
 
       const dataLength = data.answers.length;
       if (dataLength) {
@@ -314,7 +324,8 @@ function getRecordList() {
       const { createTime, answerOne, answerTwo, answerThree, status } = record;
 
       const newObj = {};
-      newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
+      // newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
+      newObj.time = createTime;
       newObj.answer = answerOne + ", " + answerTwo + ", " + answerThree;
       newObj.statusText = status;
       if (status == "WIN") newObj.className = "got-answer";

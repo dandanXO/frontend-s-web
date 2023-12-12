@@ -126,18 +126,27 @@
               <div class="platform-title-sub">ESPORTS</div>
             </div>
             <div class="back">
-              <a
+              <div
                 class="game-platform"
                 @click="openGame('东赢', 'onlyPlatform', 'TFGaming')"
-                style="margin-top: 125px; margin-left: 36px"
+                style="margin-top: 48px; margin-left: 46px"
               >
                 <img src="../assets/home/dy.png" />
                 <div>东赢电竞</div>
-              </a>
-              <a class="game-platform" @click="openGame('小艾', 'onlyPlatform', 'IA')" style="margin-left: 19px">
+              </div>
+              <div
+                class="game-platform"
+                @click="openGame('IM电竞', 'onlyPlatform', 'IMES')"
+                style="margin-left: 30px"
+              >
+                <img src="../assets/home/dy.png" />
+                <div>IM电竞 </div>
+              </div>
+              <div class="game-platform" @click="openGame('小艾', 'onlyPlatform', 'IA')" style="margin-left: 14px">
                 <img src="../assets/home/dy.png" />
                 <div>小艾电竞</div>
-              </a>
+              </div>
+              
               <!-- <div
                 class="game-platform"
                 @click="openGame('IM', 'onlyPlatform', 'IMES')"
@@ -167,10 +176,18 @@
               <div
                 class="game-platform"
                 @click="openGame('IM体育', 'IM', '')"
-                style="margin-top: 170px; margin-left: 30px"
+                style="margin-top: 125px; margin-left: 36px"
               >
                 <img src="../assets/home/dy.png" />
                 <div>IM体育</div>
+              </div>
+              <div
+                class="game-platform"
+                @click="openGame('SABA体育', 'SABA', '')"
+                style="margin-left: 19px"
+              >
+                <img src="../assets/home/dy.png" />
+                <div>SABA体育</div>
               </div>
               <!-- <div
                 class="game-platform"

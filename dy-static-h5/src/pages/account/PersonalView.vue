@@ -1,9 +1,8 @@
 <template>
   <div class="personal-account">
-<!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
+    <!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <q-input
-
         bg-color="white"
         class="q-pb-xs"
         hide-bottom-space
@@ -18,7 +17,6 @@
           <q-icon name="person_outline" />
           <label class="header-label">账号</label>
         </template>
-
       </q-input>
       <q-input
         ref="realNameRef"
@@ -36,7 +34,6 @@
           <q-icon name="badge" class="material-icons-outlined" />
           <label class="header-label">姓名</label>
         </template>
-
       </q-input>
       <q-input
         ref="birthdayRef"
@@ -47,9 +44,7 @@
         hide-bottom-space
         placeholder="DD/MM/YYYY"
         v-model="formDetail.birthday"
-        :rules="[(val) => (val && val.length > 0) || '请输入生日',
-          isValidBirth
-        ]"
+        :rules="[(val) => (val && val.length > 0) || '请输入生日', isValidBirth]"
       >
         <template v-slot:prepend>
           <q-icon name="cake" class="material-icons-outlined" />
@@ -57,11 +52,7 @@
         </template>
         <template v-slot:append>
           <q-icon name="event" color="dark" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="formDetail.birthday" mask="DD/MM/YYYY">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="关闭" color="primary" flat />
@@ -88,7 +79,6 @@
           style="width: 100%"
           @click="isEditPhone ? goToVerifyTelephone() : ''"
         >
-
           <template v-slot:append v-if="isEditPhone">
             <span style="font-size: 50%" @click="goToVerifyTelephone()">请点击验证按钮</span>
           </template>
@@ -96,17 +86,11 @@
             <q-icon name="phone_in_talk" class="material-icons-outlined" />
             <label class="header-label">电话</label>
           </template>
-
         </q-input>
         <template v-if="isEditPhone">
           <div class="q-ml-md">
             <router-link to="/account/verifyTelephone">
-              <q-btn
-                size="md"
-                color="dyblue"
-                label="验证"
-                style="white-space: nowrap"
-              />
+              <q-btn size="md" color="dyblue" label="验证" style="white-space: nowrap" />
             </router-link>
           </div>
         </template>
@@ -134,17 +118,11 @@
             <q-icon name="mail" class="material-icons-outlined" />
             <label class="header-label">邮箱</label>
           </template>
-
         </q-input>
         <template v-if="isEditEmail">
           <div class="q-ml-md">
             <router-link to="/account/verifyEmail">
-              <q-btn
-                size="md"
-                color="dyblue"
-                label="验证"
-                style="white-space: nowrap"
-              />
+              <q-btn size="md" color="dyblue" label="验证" style="white-space: nowrap" />
             </router-link>
           </div>
         </template>
@@ -183,14 +161,8 @@
   </div>
 
   <q-dialog width="100%" v-model="showCaptchaDialog">
-    <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-white text-black text-center"
-    >
-      <q-card-section
-        class="q-mb-md"
-        style="flex-direction: column; display: flex"
-      >
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
+      <q-card-section class="q-mb-md" style="flex-direction: column; display: flex">
         <strong>系统提示</strong>
         <br />
         <br />
@@ -204,12 +176,7 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
-      <q-card-section
-        style="padding: 10px 20px"
-        class="q-pa-md bg-dyblue text-white"
-      >
-        验证码
-      </q-card-section>
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dyblue text-white">验证码</q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="captchaRef" label="验证码">
@@ -230,7 +197,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -285,8 +252,12 @@ export default defineComponent({
       memberInfo: {}
     });
 
+    onActivated(()=>{
+      loadInfo()
+    })
+
     onMounted(() => {
-      loadInfo();
+      // loadInfo();
       getCode();
     });
 
@@ -565,10 +536,10 @@ export default defineComponent({
 .personal-account {
   padding: 10px;
 
-  .header-label{
+  .header-label {
     font-size: 16px;
     font-weight: 600;
-    margin-left:4px;
+    margin-left: 4px;
   }
 
   .web {
@@ -579,8 +550,8 @@ export default defineComponent({
     font-size: 15px;
   }
 
-  .border-input{
-    border-bottom:1px dashed #d7d7d7;
+  .border-input {
+    border-bottom: 1px dashed #d7d7d7;
   }
 
   input.q-placeholder {

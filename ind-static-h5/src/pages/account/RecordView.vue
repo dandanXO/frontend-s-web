@@ -56,7 +56,7 @@
     <template v-else>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
-          <div class="date">{{ convertToGMT55(e.betTime).format("YYYY-MM-DD HH:mm") }}</div>
+          <div class="date">{{ convertToGMT55(e.betTime) }}</div>
           <q-btn
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
             :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
@@ -65,7 +65,7 @@
 
         <q-card-section class="mid-wrapper">
           RS
-          <span>{{ e.payout }}</span>
+          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ e.payout }}</span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -95,7 +95,6 @@ import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
-import moment from "moment";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
@@ -311,6 +310,14 @@ onMounted(() => {
       padding: 0 1rem;
       min-height: unset;
     }
+  }
+
+  .win-amt {
+    color: $positive;
+  }
+
+  .loss-amt {
+    color: $negative;
   }
 
   .mid-wrapper {
