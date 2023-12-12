@@ -146,7 +146,7 @@
             icon="el-icon-video-pause"
             size="mini"
             type="danger"
-            v-if="uiControl.showCall"
+            v-if="uiControl.showCall1"
             v-permission="['sys:member:stop:phone']"
             @click="stopPhone(memberDetail.id, memberDetail.siteId)"
           />
@@ -840,6 +840,7 @@ export default defineComponent({
       dialogTitle: "",
       dialogType: "",
       showCall: false,
+      showCall1: false,
     });
     const route = useRoute()
     const site = reactive({
@@ -1492,6 +1493,7 @@ export default defineComponent({
       loading.fundingInfo = false;
       if (site.id === '3') {
         uiControl.showCall = true;
+        uiControl.showCall1 = true;
       }
     });
 
