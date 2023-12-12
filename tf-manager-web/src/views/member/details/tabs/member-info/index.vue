@@ -132,24 +132,7 @@
           </template>
           <span v-if="memberDetail.telephone !== null">{{ memberDetail.telephone }}</span>
           <span v-if="memberDetail.telephone === null">-</span>
-          <el-button
-            style="margin-left: 5px"
-            icon="el-icon-phone"
-            size="mini"
-            type="success"
-            v-if="uiControl.showCall"
-            v-permission="['sys:member:call:phone']"
-            @click="callPhone(memberDetail.id, memberDetail.siteId)"
-          />
-          <el-button
-            style="margin-left: 5px"
-            icon="el-icon-video-pause"
-            size="mini"
-            type="danger"
-            v-if="uiControl.showCall1"
-            v-permission="['sys:member:stop:phone']"
-            @click="stopPhone(memberDetail.id, memberDetail.siteId)"
-          />
+
           <el-button
             type="info"
             size="mini"
@@ -160,6 +143,25 @@
           >
             {{ t('fields.show') }}
           </el-button>
+
+          <el-button
+            style="margin-left: 5px"
+            icon="el-icon-phone"
+            size="mini"
+            type="success"
+            v-if="memberDetail.telephone !== null && uiControl.showCall"
+            v-permission="['sys:member:call:phone']"
+            @click="callPhone(memberDetail.id, memberDetail.siteId)"
+          />
+          <el-button
+            style="margin-left: 5px"
+            icon="el-icon-video-pause"
+            size="mini"
+            type="danger"
+            v-if="memberDetail.telephone !== null && uiControl.showCall1"
+            v-permission="['sys:member:stop:phone']"
+            @click="stopPhone(memberDetail.id, memberDetail.siteId)"
+          />
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>
