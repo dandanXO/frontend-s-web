@@ -257,7 +257,7 @@
             class="filter-item"
             style="width: 350px"
             :placeholder="t('fields.pleaseChoose')"
-            default-first-option
+            clearable
           >
             <el-option
               v-for="item in netPhone.list"
