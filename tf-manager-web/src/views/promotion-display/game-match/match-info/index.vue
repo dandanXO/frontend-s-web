@@ -231,7 +231,7 @@
       <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="200" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="150" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:game-match:update-status'])" fixed="right" width="280">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game-match:update-status']) || hasPermission(['sys:game-match:update']) || hasPermission(['sys:game-match:delete']))" fixed="right" width="280">
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 'ACTIVE'"
