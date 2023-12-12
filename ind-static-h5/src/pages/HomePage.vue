@@ -638,8 +638,7 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Adjust from "@adjustcom/adjust-web-sdk";
-
+import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 const slide = ref(0);
 
 const isFirstView = ref(false);
@@ -1088,14 +1087,20 @@ const openCSInNewTab = (url) => {
 };
 
 const initAdjustEventTrack = () => {
-  Adjust.initSdk({
-    appToken: "pxrvpkqs0a9s",
-    environment: "sandbox"
-  });
-  // setTimeout(() => {
-  //   const webUUID = Adjust.getWebUUID();
-  //   console.log(webUUID);
-  // }, 3000);
+  if (Platform.is.android && Platform.is.capacitor) {
+    console.log("Init Adjust Sdk");
+    console.log(AdjustEnvironment.Production);
+    var adjustConfig = new AdjustConfig("pxrvpkqs0a9s", AdjustEnvironment.Production);
+    adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+    Adjust.create(adjustConfig);
+
+    setTimeout(() => {
+      const webUUID = Adjust.getAdid().then((res) => {
+        console.log(webUUID);
+        console.log(res);
+      });
+    }, 3000);
+  }
 };
 
 onMounted(() => {

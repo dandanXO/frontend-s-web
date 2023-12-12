@@ -148,7 +148,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
-import Adjust from "@adjustcom/adjust-web-sdk";
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "LoginPage",
@@ -419,9 +419,8 @@ export default defineComponent({
               });
 
               //ADJUST TRACKEVENT.
-              Adjust.trackEvent({
-                eventToken: "vm6pjs"
-              });
+              var adjustEvent = new AdjustEvent("vm6pjs");
+              Adjust.trackEvent(adjustEvent);
 
               store.autoLogin(res.data);
               sessionStorage.removeItem("REFERRAL_CODE");

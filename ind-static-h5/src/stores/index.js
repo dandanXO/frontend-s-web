@@ -46,7 +46,7 @@ export const userStore = defineStore("userStore", {
   actions: {
     hasToken() {
       if (isAndroid()) {
-        console.log("android");
+        // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
         } else {

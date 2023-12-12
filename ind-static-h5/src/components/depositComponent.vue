@@ -184,7 +184,7 @@ var qs = require("qs");
 
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import Adjust from "@adjustcom/adjust-web-sdk";
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 const store = userStore();
 const router = useRouter();
@@ -514,11 +514,10 @@ async function pDepo(deposit) {
         if (!isFirstDepo) {
           console.log("First Depo");
           //ADJUST TRACKEVENT.
-          Adjust.trackEvent({
-            eventToken: "medfxb",
-            revenue: deposit.localAmount,
-            currency: "INR"
-          });
+          var adjustEvent = new AdjustEvent("medfxb");
+          adjustEvent.setRevenue(deposit.localAmount, "INR");
+          Adjust.trackEvent(adjustEvent);
+
           localStorage.setItem("IS_FIRST_DEPOSIT", "1");
         }
 
