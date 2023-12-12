@@ -200,7 +200,7 @@
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="create">{{ t('fields.confirm') }}</el-button>
+          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -231,7 +231,7 @@
       <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="200" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="150" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:game-match:update-status'])">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:game-match:update-status'])" fixed="right" width="280">
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 'ACTIVE'"
@@ -243,6 +243,20 @@
           >
             {{ t('fields.endMatch') }}
           </el-button>
+          <el-button
+            icon="el-icon-edit"
+            size="small"
+            type="warning"
+            v-permission="['sys:game-match:update']"
+            @click="showEdit(scope.row)"
+          />
+          <el-button
+            icon="el-icon-remove"
+            size="small"
+            type="danger"
+            v-permission="['sys:game-match:delete']"
+            @click="removeMatch(scope.row.id)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -373,9 +387,9 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getGameMatch, createGameMatch, updateGameMatch } from "@/api/game-match";
+import { getGameMatch, createGameMatch, updateGameMatch, updateGameMatchStatus, deleteGameMatch } from "@/api/game-match";
 import { hasRole, hasPermission } from "@/utils/util";
-import { onMounted } from "@vue/runtime-core";
+import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
@@ -389,6 +403,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const shortcuts = getShortcuts(t);
 const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const selectedId = ref(null);
 
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
@@ -513,9 +528,23 @@ function showDialog(type) {
   if (type === "CREATE") {
     form.siteId = request.siteId;
     uiControl.dialogTitle = t('fields.addGameMatch');
+  } else if (type === "EDIT") {
+    uiControl.dialogTitle = t('fields.editGameMatch');
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
+}
+
+function showEdit(match) {
+  showDialog('EDIT');
+  nextTick(() => {
+    for (const key in match) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = match[key];
+      }
+    }
+    selectedId.value = match.id;
+  });
 }
 
 function resetImageQuery() {
@@ -561,10 +590,18 @@ function updateStatus(id) {
       type: "warning"
     }
   ).then(async () => {
-    await updateGameMatch(id);
+    await updateGameMatchStatus(id);
     await loadGameMatch();
     ElMessage({ message: t('message.gameMatchEnded'), type: "success" });
   });
+}
+
+function submit() {
+  if (uiControl.dialogType === 'CREATE') {
+    create()
+  } else if (uiControl.dialogType === 'EDIT') {
+    edit()
+  }
 }
 
 function create() {
@@ -576,6 +613,17 @@ function create() {
       ElMessage({ message: t('message.addSuccess'), type: "success" });
     }
   });
+}
+
+function edit() {
+  gameMatchForm.value.validate(async valid => {
+    if (valid) {
+      await updateGameMatch(selectedId.value, form)
+      uiControl.dialogVisible = false
+      await loadGameMatch()
+      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+    }
+  })
 }
 
 async function loadSites() {
@@ -608,6 +656,18 @@ function resetQuery() {
   request.matchTitle = null;
   request.createTime = [convertDate(new Date()), convertDate(new Date())];
   request.gameType = null;
+}
+
+async function removeMatch(id) {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await deleteGameMatch(id)
+    await loadGameMatch()
+    ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
+  })
 }
 
 onMounted(async () => {
