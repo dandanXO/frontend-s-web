@@ -582,7 +582,8 @@ function showEdit(user) {
         }
       }
     }
-    form.id = user.id
+    form.id = user.id;
+    // console.log(form);
   })
 }
 
@@ -708,7 +709,7 @@ watch(
     if (uiControl.dialogType === 'CREATE') {
       form.roles = null
     } else if (uiControl.dialogType === 'EDIT') {
-      if (oldValue && value !== oldValue) {
+      if (oldValue && value && value !== oldValue) {
         form.roles = null;
       }
     }
