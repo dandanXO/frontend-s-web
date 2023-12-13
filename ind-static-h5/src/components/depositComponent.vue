@@ -516,16 +516,16 @@ async function pDepo(deposit) {
       if (res.code === 0) {
         const response = res.data.result;
 
-        let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
-        if (!isFirstDepo) {
-          console.log("First Depo");
-          //ADJUST TRACKEVENT.
-          var adjustEvent = new AdjustEvent("medfxb");
-          adjustEvent.setRevenue(deposit.localAmount, "INR");
-          Adjust.trackEvent(adjustEvent);
-
-          localStorage.setItem("IS_FIRST_DEPOSIT", "1");
-        }
+        // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
+        // if (!isFirstDepo) {
+        //   console.log("First Depo");
+        //   //ADJUST TRACKEVENT.
+        //   var adjustEvent = new AdjustEvent("medfxb");
+        //   adjustEvent.setRevenue(deposit.localAmount, "INR");
+        //   Adjust.trackEvent(adjustEvent);
+        //
+        //   localStorage.setItem("IS_FIRST_DEPOSIT", "1");
+        // }
 
         if (res.data.result.payResultType === "OFFLINE") {
         }

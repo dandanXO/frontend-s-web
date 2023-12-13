@@ -639,7 +639,6 @@ import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
-import AdjustWeb from "@adjustcom/adjust-web-sdk";
 const slide = ref(0);
 
 const isFirstView = ref(false);

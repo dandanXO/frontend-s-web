@@ -178,6 +178,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
 import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+import AdjustWeb from "@adjustcom/adjust-web-sdk";
 export default defineComponent({
   name: "RegisterPage",
   setup() {
@@ -367,8 +368,15 @@ export default defineComponent({
                 });
 
                 //ADJUST TRACKEVENT.
-                var adjustEvent = new AdjustEvent("81ibj7");
-                Adjust.trackEvent(adjustEvent);
+                if (Platform.is.android && Platform.is.capacitor) {
+                  var adjustEvent = new AdjustEvent("81ibj7");
+                  Adjust.trackEvent(adjustEvent);
+                } else {
+                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                  AdjustWeb.trackEvent({
+                    eventToken: "81ibj7"
+                  });
+                }
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
