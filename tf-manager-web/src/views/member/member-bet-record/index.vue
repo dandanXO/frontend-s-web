@@ -8,6 +8,7 @@
           :placeholder="t('fields.site')"
           style="width: 120px"
           @focus="loadSites"
+          @change="loadPlatform"
         >
           <el-option
             v-for="item in siteList.list"
@@ -376,6 +377,7 @@ async function loadSites() {
   const { data: site } = await getSiteListSimple();
   siteList.list = site;
   request.siteId = siteList.list[0].id;
+  await loadPlatform();
 };
 
 function checkQuery() {
@@ -444,7 +446,6 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
-  await loadPlatform();
 })
 </script>
 
