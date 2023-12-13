@@ -24,6 +24,10 @@ export function mailInbox(mailQuery) {
   );
 }
 
+export function getUnreadMailTotal() {
+  return server.REST.get("/session/inbox/getUnreadTotal");
+}
+
 export function readMail(mailQuery) {
   return server.REST.post("/session/inbox/read", {
     id: mailQuery.id
