@@ -5,13 +5,18 @@
         <q-tr :props="props">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+            <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
             <!-- unable to adjust table width... -->
             <template v-else>
-              Monthly Cumulative Deposit
-              <br />
-              An Upgrade Vip Level
+              <div style="white-space: normal; text-align: center">Monthly Cumulative Deposit An Upgrade Vip Level</div>
             </template>
           </q-th>
+        </q-tr>
+
+        <q-tr class="top-header">
+          <q-td>Level</q-td>
+          <q-td>Amount</q-td>
+          <q-td style="width: 60px">Turnover</q-td>
         </q-tr>
       </template>
 
@@ -19,8 +24,10 @@
         <q-tr :props="props">
           <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <template v-if="colIndex === 1">
-              Deposit Rs
-              <span class>{{ col.value }}</span>
+              <div style="text-align: center">
+                Deposit ₹
+                <span class>{{ col.value }}</span>
+              </div>
             </template>
             <template v-else>{{ col.value }}</template>
           </q-td>
@@ -30,11 +37,94 @@
       <template v-slot:bottom-row>
         <q-tr>
           <q-td colspan="100%" class="bottom-note text-left">
-            After The Recharge On The Day Reaches The Standard, The
-            <br />
-            Next Day Will Increase The VIP Level And Issue Corresponding
-            <br />
-            Upgrade Rewards
+            After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
+            corresponding upgrade rewards.
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
+
+    <q-table flat :hide-pagination="true" :columns="columns3" :rows="rows3" row-key="name" :rows-per-page-options="[0]">
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+            <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+            <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <!-- unable to adjust table width... -->
+            <template v-else>
+              <div style="white-space: normal">VIP Promotion Bonus</div>
+            </template>
+          </q-th>
+        </q-tr>
+
+        <q-tr class="top-header">
+          <q-td>Level</q-td>
+          <q-td>Amount</q-td>
+          <q-td style="width: 60px">Turnover</q-td>
+        </q-tr>
+      </template>
+
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+            <template v-if="colIndex === 1">
+              <div style="text-align: center">
+                ₹
+                <span class>{{ col.value }}</span>
+              </div>
+            </template>
+            <template v-else>{{ col.value }}</template>
+          </q-td>
+        </q-tr>
+      </template>
+
+      <template v-slot:bottom-row>
+        <q-tr>
+          <q-td colspan="100%" class="bottom-note text-left">
+            Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
+
+    <q-table flat :hide-pagination="true" :columns="columns4" :rows="rows4" row-key="name" :rows-per-page-options="[0]">
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+            <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+            <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <!-- unable to adjust table width... -->
+            <template v-else>
+              <div style="text-align: center; padding-right: 60px">VIP Monthly Cash Bonus</div>
+            </template>
+          </q-th>
+        </q-tr>
+
+        <q-tr class="top-header">
+          <q-td>Level</q-td>
+          <q-td style="text-align: right">Amount</q-td>
+        </q-tr>
+      </template>
+
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+            <template v-if="colIndex === 1">
+              <div style="text-align: right">
+                ₹
+                <span class>{{ col.value }}</span>
+              </div>
+            </template>
+            <template v-else>{{ col.value }}</template>
+          </q-td>
+        </q-tr>
+      </template>
+
+      <template v-slot:bottom-row>
+        <q-tr>
+          <q-td colspan="100%" class="bottom-note text-left">
+            Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on
+            the 1st of next month.
           </q-td>
         </q-tr>
       </template>
@@ -45,13 +135,16 @@
         <q-tr :props="props">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
-            <!-- unable to adjust table width... -->
+            <div v-else-if="colIndex === 2" style="width: 90px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
             <template v-else>
-              Description Of Daily Withdrawal Limit
-              <br />
-              Corresponding To VIP Level
+              <div style="text-align: center; padding-right: 60px">VIP Daily Withdrawal Limit</div>
             </template>
           </q-th>
+        </q-tr>
+
+        <q-tr class="top-header">
+          <q-td>Level</q-td>
+          <q-td style="text-align: right">Amount</q-td>
         </q-tr>
       </template>
 
@@ -59,11 +152,17 @@
         <q-tr :props="props">
           <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <template v-if="colIndex === 1">
-              Daily Maximum Withdrawal Amount:
+              ₹
               <span class>{{ col.value }}</span>
             </template>
             <template v-else>{{ col.value }}</template>
           </q-td>
+        </q-tr>
+      </template>
+
+      <template v-slot:bottom-row>
+        <q-tr>
+          <q-td colspan="100%" class="bottom-note text-left">Daily withdrawal limits based on VIP levels.</q-td>
         </q-tr>
       </template>
     </q-table>
@@ -79,56 +178,69 @@ const columns = [
     align: "center",
     field: (row) => row.name
   },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
+  { name: "flow", field: "flow", align: "center" }
 ];
 const rows = [
   {
     name: "VIP 1",
-    ugprade: "5,000"
+    ugprade: "5,000",
+    flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "10,000"
+    ugprade: "10,000",
+    flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "20,000"
+    ugprade: "20,000",
+    flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "100,000"
+    ugprade: "100,000",
+    flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "150,000"
+    ugprade: "150,000",
+    flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "200,000"
+    ugprade: "200,000",
+    flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "500,000"
+    ugprade: "500,000",
+    flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "1,000,000"
+    ugprade: "1,000,000",
+    flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "2,000,000"
+    ugprade: "2,000,000",
+    flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "5,000,000"
+    ugprade: "5,000,000",
+    flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "10,000,000"
+    ugprade: "10,000,000",
+    flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "20,000,000"
+    ugprade: "20,000,000",
+    flow: "x10"
   }
 ];
 
@@ -145,51 +257,210 @@ const columns2 = [
 const rows2 = [
   {
     name: "VIP 1",
-    ugprade: "2,500"
+    ugprade: "2,500",
+    flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "5,000"
+    ugprade: "5,000",
+    flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "10,000"
+    ugprade: "10,000",
+    flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "20,000"
+    ugprade: "20,000",
+    flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "100,000"
+    ugprade: "100,000",
+    flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "200,000"
+    ugprade: "200,000",
+    flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "500,000"
+    ugprade: "500,000",
+    flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "1,000,000"
+    ugprade: "1,000,000",
+    flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "2,000,000"
+    ugprade: "2,000,000",
+    flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "5,000,000"
+    ugprade: "5,000,000",
+    flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "10,000,000"
+    ugprade: "10,000,000",
+    flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "20,000,000"
+    ugprade: "20,000,000",
+    flow: "x10"
+  }
+];
+
+const columns3 = [
+  {
+    name: "vip",
+    required: true,
+    label: "",
+    align: "center",
+    field: (row) => row.name
+  },
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
+  { name: "flow", field: "flow", align: "center" }
+];
+const rows3 = [
+  {
+    name: "VIP 1",
+    ugprade: "20",
+    flow: "x10"
+  },
+  {
+    name: "VIP 2",
+    ugprade: "25",
+    flow: "x10"
+  },
+  {
+    name: "VIP 3",
+    ugprade: "50",
+    flow: "x10"
+  },
+  {
+    name: "VIP 4",
+    ugprade: "100",
+    flow: "x10"
+  },
+  {
+    name: "VIP 5",
+    ugprade: "200",
+    flow: "x10"
+  },
+  {
+    name: "VIP 6",
+    ugprade: "300",
+    flow: "x10"
+  },
+  {
+    name: "VIP 7",
+    ugprade: "1,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 8",
+    ugprade: "2,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 9",
+    ugprade: "3,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 10",
+    ugprade: "10,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 11",
+    ugprade: "20,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 12",
+    ugprade: "30,000",
+    flow: "x10"
+  }
+];
+
+const columns4 = [
+  {
+    name: "vip",
+    required: true,
+    label: "",
+    align: "center",
+    field: (row) => row.name
+  },
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
+];
+const rows4 = [
+  {
+    name: "VIP 1",
+    ugprade: "38",
+    flow: "x10"
+  },
+  {
+    name: "VIP 2",
+    ugprade: "88",
+    flow: "x10"
+  },
+  {
+    name: "VIP 3",
+    ugprade: "188",
+    flow: "x10"
+  },
+  {
+    name: "VIP 4",
+    ugprade: "388",
+    flow: "x10"
+  },
+  {
+    name: "VIP 5",
+    ugprade: "588",
+    flow: "x10"
+  },
+  {
+    name: "VIP 6",
+    ugprade: "888",
+    flow: "x10"
+  },
+  {
+    name: "VIP 7",
+    ugprade: "1,888",
+    flow: "x10"
+  },
+  {
+    name: "VIP 8",
+    ugprade: "3,888",
+    flow: "x10"
+  },
+  {
+    name: "VIP 9",
+    ugprade: "8,888",
+    flow: "x10"
+  },
+  {
+    name: "VIP 10",
+    ugprade: "28,888",
+    flow: "x10"
+  },
+  {
+    name: "VIP 11",
+    ugprade: "58,888",
+    flow: "x10"
+  },
+  {
+    name: "VIP 12",
+    ugprade: "88,888",
+    flow: "x10"
   }
 ];
 </script>
@@ -201,6 +472,10 @@ const rows2 = [
   font-size: 1rem;
   font-weight: 700;
   text-align: center;
+
+  .top-header {
+    color: #f1f1f1;
+  }
 
   .q-table__card {
     background: transparent !important;
@@ -217,6 +492,12 @@ const rows2 = [
       font-size: 1rem;
       font-weight: 700;
       line-height: 1;
+      text-align: left;
+      border-width: 0px !important;
+
+      &:first-child {
+        width: 65px;
+      }
     }
   }
   thead > :first-child {
@@ -255,6 +536,13 @@ const rows2 = [
     font-weight: 400;
     line-height: 1.5;
     padding: 0.5rem 1.25rem;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 410px) {
+  .vip-container {
+    padding: 0 0.75rem;
   }
 }
 </style>
