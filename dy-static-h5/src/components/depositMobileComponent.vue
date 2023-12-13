@@ -1,8 +1,8 @@
 <template>
-  <pre>extensionState: {{ extensionState }}</pre>
-  <pre>extensionToken: {{ extensionToken }}</pre>
+  <!--  <pre>extensionState: {{ extensionState }}</pre>-->
+  <!--  <pre>extensionToken: {{ extensionToken }}</pre>-->
 
-  <pre>store:{{ store }}</pre>
+  <!--  <pre>store:{{ store }}</pre>-->
 
   <div class="q-pa-md deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
     <div class="q-mb-sm">
@@ -214,7 +214,7 @@ const store = userStore();
 const route = useRoute();
 const router = useRouter();
 const formRef = ref();
-// const isNewUser = ref(false);
+const isNewUser = ref(false);
 const isNoBankCard = ref(false);
 // const checkNewUser = () => {
 //   if (store.phone === "" || store.phone === null) {
@@ -457,55 +457,51 @@ const depositAmtRef = ref("");
 
 async function confirmDeposit() {
   if (form.bankId !== null || isUSDT.value) {
-    if (store.phone === "" || store.phone === null) {
-      isNewUser.value = true;
+    btnLoading.value = true;
+    depositAmtRef.value.validate();
+    if (depositAmtRef.value.hasError) {
+      btnLoading.value = false;
     } else {
-      btnLoading.value = true;
-      depositAmtRef.value.validate();
-      if (depositAmtRef.value.hasError) {
-        btnLoading.value = false;
-      } else {
-        await cashier
-          .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
-          .then((d) => {
-            if (d.code === 11002) {
-              if (d.data && d.data.suggestion) {
-                form.localAmount = d.data.suggestion;
-                btnLoading.value = false;
-              }
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: d.message,
-                icon: "report_problem"
-              });
-            } else {
-              if (freePrivilege.value) {
-                if (selectedPrivilege.value) {
-                  form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
-                } else {
-                  form.privilegeId = "," + freePrivilege.value.id;
-                }
-              } else {
-                if (selectedPrivilege.value) {
-                  form.privilegeId = selectedPrivilege.value.id;
-                } else {
-                  form.privilegeId = null;
-                }
-              }
-              form.paymentId = activeMethod.value.paymentId;
-              const copy = { ...form };
-              const data = {};
-              Object.entries(copy).forEach(([key, value]) => {
-                if (value) {
-                  data[key] = value;
-                }
-              });
-              data.bankCardId = 0;
-              pDepo(data);
+      await cashier
+        .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+        .then((d) => {
+          if (d.code === 11002) {
+            if (d.data && d.data.suggestion) {
+              form.localAmount = d.data.suggestion;
+              btnLoading.value = false;
             }
-          });
-      }
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: d.message,
+              icon: "report_problem"
+            });
+          } else {
+            if (freePrivilege.value) {
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              } else {
+                form.privilegeId = "," + freePrivilege.value.id;
+              }
+            } else {
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id;
+              } else {
+                form.privilegeId = null;
+              }
+            }
+            form.paymentId = activeMethod.value.paymentId;
+            const copy = { ...form };
+            const data = {};
+            Object.entries(copy).forEach(([key, value]) => {
+              if (value) {
+                data[key] = value;
+              }
+            });
+            data.bankCardId = 0;
+            pDepo(data);
+          }
+        });
     }
   } else {
     $q.notify({

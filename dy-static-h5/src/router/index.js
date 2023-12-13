@@ -50,16 +50,15 @@ export default route(function (/* { store, ssrContext } */) {
     }
 
     if (to.path === "/promotion" || to.path === "/finance/depositMobile") {
-      localStorage.setItem("TOKEN", to.query.token);
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
         SessionStorage.set("TOKEN", to.query.token);
       }
-    }
 
-    user.token = to.query.token;
-    console.log("user", user.token);
+      user.token = to.query.token;
+      console.log("user", user.token);
+    }
 
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
