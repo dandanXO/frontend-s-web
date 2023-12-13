@@ -3,8 +3,6 @@
     <!-- <div class="menu-title-container">
       <span class="menu-title">收发信息</span>
     </div> -->
-    <!-- <pre>isShowSelect: {{ isShowSelect }}</pre>
-    <pre>checkedCheckboxCount: {{ checkedCheckboxCount }}</pre> -->
     <div class="account-content mail">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
         <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
@@ -26,11 +24,6 @@
                       <el-icon><Delete /></el-icon>
                       全部删除
                     </el-button>
-
-                    <!-- <el-button color="darkblue" @click="toggleCheckbox" style="margin-left: auto">
-                      <el-icon><Check /></el-icon>
-                      选择多个
-                    </el-button> -->
                     <div style="margin-left: auto">
                       <el-button v-if="isShowSelect" type="primary" @click="readMultipleMsg()">
                         <el-icon><MessageBox /></el-icon>
@@ -170,13 +163,13 @@ const mailboxState = reactive({
     inbox: {
       list: [],
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 20,
       total: 0
     },
     sent: {
       list: [],
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 20,
       total: 0
     },
     write: {
@@ -198,7 +191,7 @@ const loadPersonalMailbox = () => {
     };
     mailInbox(mailboxData.value)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // if (res.code === 0) {
         //   const response = res.data;
         //   mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
@@ -297,22 +290,22 @@ const readAllMsg = (m) => {
 };
 
 const deleteMsg = (ids, spliceIndex, callback) => {
-  // deleteMail({ ids })
-  // .then((res) => {
-  // const { code } = res;
-  // if (code === 0) {
-    ElMessage({
-      message: "删除成功",
-      type: "success"
-    });
+  deleteMail({ ids })
+    .then((res) => {
+      const { code } = res;
+      if (code === 0) {
+        ElMessage({
+          message: "删除成功",
+          type: "success"
+        });
 
-    if (spliceIndex !== null) mailboxState.mailboxList[mailboxState.active].list.splice(spliceIndex, 1); // fake delete
-    callback && callback();
-  // }
-  // })
-  // .catch((error) => {
-  // console.log(error);
-  // });
+        if (spliceIndex !== null) mailboxState.mailboxList[mailboxState.active].list.splice(spliceIndex, 1); // fake delete
+        callback && callback();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 const deleteAllMsg = (m) => {
@@ -331,18 +324,18 @@ const deleteAllMsg = (m) => {
 };
 
 const selectedIds = ref({});
-const checkedCheckboxCount = computed(() => {
-  return Object.values(selectedIds.value).filter((val) => val).length;
-});
+// const checkedCheckboxCount = computed(() => {
+//   return Object.values(selectedIds.value).filter((val) => val).length;
+// });
 
 const isShowSelect = ref(false);
 
 const readMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
   const selectedIdsArray = selectedMessages.map((msg) => msg.id);
-  console.log(selectedIdsArray);
+  const formattedIds = selectedIdsArray.join(",");
 
-  readMultipleMail(selectedIdsArray)
+  readMultipleMail(formattedIds)
     .then((res) => {
       if (res.code === 0) {
         ElMessage({
@@ -350,7 +343,7 @@ const readMultipleMsg = () => {
           type: "success"
         });
 
-        isShowSelect.value = true;
+        isShowSelect.value = false;
       }
     })
     .catch((error) => {
@@ -361,34 +354,34 @@ const readMultipleMsg = () => {
 const deleteMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
   const selectedIdsArray = selectedMessages.map((msg) => msg.id);
-  console.log(selectedIdsArray);
+  const formattedIds = selectedIdsArray.join(",");
 
-  // deleteMultipleMail(selectedIdsArray)
-  //   .then((res) => {
-  //     if (res.code === 0) {
-  ElMessage({
-    message: "删除已选择的消息",
-    type: "success"
-  });
+  deleteMultipleMail(formattedIds)
+    .then((res) => {
+      if (res.code === 0) {
+        ElMessage({
+          message: "删除已选择的消息",
+          type: "success"
+        });
 
-  isShowSelect.value = true;
+        isShowSelect.value = false;
 
-  selectedMessages.forEach((msg) => {
-    const index = mailboxState.mailboxList.inbox.list.findIndex((item) => item.id === msg.id);
+        selectedMessages.forEach((msg) => {
+          const index = mailboxState.mailboxList.inbox.list.findIndex((item) => item.id === msg.id);
 
-    if (index !== -1) {
-      mailboxState.mailboxList.inbox.list.splice(index, 1);
-    }
-  });
+          if (index !== -1) {
+            mailboxState.mailboxList.inbox.list.splice(index, 1);
+          }
+        });
 
-  Object.keys(selectedIds.value).forEach((key) => {
-    selectedIds.value[key] = false;
-  });
-  //   }
-  // })
-  // .catch((error) => {
-  //   console.log(error);
-  // });
+        Object.keys(selectedIds.value).forEach((key) => {
+          selectedIds.value[key] = false;
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 onMounted(() => {

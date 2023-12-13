@@ -617,7 +617,7 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, ref, reactive, watch} from "vue";
+import {defineComponent, onMounted, onActivated, ref, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
 import {getVerificationCode, register, findAccount} from "@/api/index/login";
@@ -1325,10 +1325,11 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-
+    onActivated(() => {
       store.token && checkMailboxUnread();
+    })
 
+    onMounted(() => {
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
 
@@ -1441,6 +1442,8 @@ export default defineComponent({
                   loginForm.loginName = null
                   loginForm.password = null
                   loginForm.captchaCode = null
+
+                  checkMailboxUnread();
                 } else {
                   // loginForm.loginName = null
                   // loginForm.password = null
