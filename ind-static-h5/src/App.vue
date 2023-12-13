@@ -106,11 +106,17 @@ export default defineComponent({
       console.log(info);
       console.log(info.identifier);
     };
+
+    const initOrientation = () => {
+      screen.orientation.lock("portrait");
+    };
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
       getCSA();
       getAppInfo();
+      initOrientation();
     });
   }
 });
