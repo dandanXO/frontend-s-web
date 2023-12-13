@@ -15,6 +15,19 @@
             <q-icon name="delete" />
             <div>全部删除</div>
           </button>
+          <q-toggle
+            v-model="allowSelectMultiple"
+            :label="'选择多个'"
+            left-label
+          />
+          <button class="read-selected-btn" @click="readSelectedMessages" v-if="hasMessagesSelected">
+            <q-icon name="mail_outline" />
+            <div>读取</div>
+          </button>
+          <button class="del-selected-btn" @click="deleteSelectedMessages" v-if="hasMessagesSelected">
+            <q-icon name="delete" />
+            <div>删除</div>
+          </button>
         </div>
 
         <q-card
@@ -29,7 +42,18 @@
             <div class="mail-title">
               {{ det.title }}
             </div>
-            <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0" />
+            <div style="display:flex;align-items:center;">
+              <q-chip color="brand" size="sm" label="已读" v-if="(det.isRead && det.isRead !== 0) || !!det.readTime" />
+              <div v-if="allowSelectMultiple" class="mailbox-checkbox">
+                <q-checkbox
+                  rounded
+                  :model-value="selectedMessageIds[det.id] ?? false"
+                  @update:model-value="newValue => selectedMessageIds[det.id] = newValue ?? false"
+                  size="sm"
+                  style="font-size: 14px;"
+                  color="#0089ED" />
+              </div>
+            </div>
           </div>
           <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.title ? 'auto' : '0px'}`">
             {{ det.content }}
@@ -71,10 +95,11 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, reactive } from "vue";
+import { defineComponent, onMounted, ref, reactive, watch,computed } from "vue";
 import moment from "moment";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
+import qs from "qs";
 
 export default defineComponent({
   props: {
@@ -105,6 +130,9 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const $q = useQuasar();
+    const allowSelectMultiple = ref(false);
+    const selectedMessageIds = ref({});
+    const hasMessagesSelected = computed(() => Object.values(selectedMessageIds.value).includes(true))
     const isDeleteAllModal = ref(false);
     const lists = reactive({
       NOTIFICATION: [],
@@ -176,6 +204,64 @@ export default defineComponent({
       isDeleteAllModal.value = true;
     };
 
+    const readSelectedMessages = () => {
+      const messagesIdArr = Object.keys(selectedMessageIds.value);
+      const formattedIds = messagesIdArr.join(",");
+      api
+        .post("/session/inbox/readMultiple", qs.stringify({
+          ids: formattedIds
+        }))
+        .then((res) => {
+          if (res.code === 0) {
+            $q.notify({
+              message: "读取已选择的消息",
+              type: "positive",
+              position: "top",
+              icon: "check_circle_outline"
+            });
+
+            lists[props.type] = lists[props.type].map((messageData) => ({
+              ...messageData, 
+              isRead: messagesIdArr.includes(messageData.id.toString()) ? 1 : undefined
+            }));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    const deleteSelectedMessages = () => {
+      const messagesIdArr = Object.keys(selectedMessageIds.value);
+      const formattedIds = messagesIdArr.join(",");
+      api
+        .post("/session/inbox/deleteMultiple", qs.stringify({
+          ids: formattedIds
+        }))
+        .then((res) => {
+          if (res.code === 0) {
+            $q.notify({
+              message: "删除已选择的消息",
+              type: "positive",
+              position: "top",
+              icon: "check_circle_outline"
+            });
+
+            lists[props.type] = lists[props.type].filter((messageData) => !messagesIdArr.includes(messageData.id.toString()));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    // clear selected messages if toggle is turned off
+    watch(() => allowSelectMultiple.value, () => {
+      if(allowSelectMultiple.value === false) {
+        selectedMessageIds.value = {};
+      }
+    })
+
     onMounted(() => {
       onLoad;
     });
@@ -191,7 +277,12 @@ export default defineComponent({
       readAllMessage,
       deleteAllMessage,
       isDeleteAllModal,
-      confirmDeleteAll
+      confirmDeleteAll,
+      allowSelectMultiple,
+      selectedMessageIds,
+      readSelectedMessages,
+      deleteSelectedMessages,
+      hasMessagesSelected
     };
   }
 });
@@ -228,11 +319,15 @@ function mergeArrays(array1, array2) {
 
 <style scoped lang="scss">
 .quick-btn-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(75px,112px));
   gap: 10px;
 
   .read-all-btn,
-  .del-all-btn {
+  .del-all-btn, .read-selected-btn, .del-selected-btn {
+    max-width: 112px;
+    height: 35px;
+    white-space: nowrap;
     color: white;
     border: 0;
     padding: 5px 10px;
@@ -243,11 +338,11 @@ function mergeArrays(array1, array2) {
     gap: 5px;
   }
 
-  .read-all-btn {
+  .read-all-btn, .read-selected-btn {
     background: $primary;
   }
 
-  .del-all-btn {
+  .del-all-btn, .del-selected-btn {
     background: $secondary;
   }
 }
@@ -284,6 +379,7 @@ function mergeArrays(array1, array2) {
   border-bottom: 1px solid #d7d7d7;
   box-shadow: none;
   border-radius: 0px;
+  line-height: 30px;
 
   .mail-title {
     font-size: 16px;
