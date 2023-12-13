@@ -142,7 +142,10 @@
     </div>
 
     <div class="q-mt-md">
-      <div class="btn-go" @click="confirmDeposit">Go</div>
+      <div :class="`btn-go ${btnLoading ? 'disabled' : ''}`" @click="confirmDeposit">
+        <q-spinner v-if="isLoadingInitPay" color="white" size="2em" :thickness="2"></q-spinner>
+        <template v-else>Go</template>
+      </div>
     </div>
 
     <!-- <div class="q-my-lg">
@@ -184,6 +187,7 @@ var qs = require("qs");
 
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 const store = userStore();
 const router = useRouter();
@@ -305,7 +309,9 @@ const handleDepositUpiClick = (option) => {
   }
 };
 
+const isLoadingInitPay = ref(true);
 function initPay() {
+  isLoadingInitPay.value = true;
   $q.loading.show({
     message: "Loading data... Please wait..."
   });
@@ -313,6 +319,8 @@ function initPay() {
   payMethods.value = [];
   cashier.get("/session/deposit/index/").then((res) => {
     $q.loading.hide();
+    isLoadingInitPay.value = false;
+
     if (res.code === 0) {
       const d = res.data;
       d.payments.forEach((element) => {
@@ -440,7 +448,6 @@ function clearInfo() {
 }
 
 const depositAmtRef = ref("");
-
 async function confirmDeposit() {
   btnLoading.value = true;
   depositAmtRef.value.validate();
@@ -453,7 +460,6 @@ async function confirmDeposit() {
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
             form.localAmount = d.data.suggestion;
-            btnLoading.value = false;
           }
           $q.notify({
             color: "negative",
@@ -461,6 +467,8 @@ async function confirmDeposit() {
             message: d.message,
             icon: "report_problem"
           });
+
+          btnLoading.value = false;
         } else {
           if (freePrivilege.value) {
             if (selectedPrivilege.value) {
@@ -484,6 +492,7 @@ async function confirmDeposit() {
             }
           });
           data.bankCardId = 0;
+
           pDepo(data);
         }
       });
@@ -491,7 +500,6 @@ async function confirmDeposit() {
 }
 
 async function pDepo(deposit) {
-  btnLoading.value = true;
   const obj = {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
@@ -507,14 +515,24 @@ async function pDepo(deposit) {
     .then((res) => {
       if (res.code === 0) {
         const response = res.data.result;
+
+        // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
+        // if (!isFirstDepo) {
+        //   console.log("First Depo");
+        //   //ADJUST TRACKEVENT.
+        //   var adjustEvent = new AdjustEvent("medfxb");
+        //   adjustEvent.setRevenue(deposit.localAmount, "INR");
+        //   Adjust.trackEvent(adjustEvent);
+        //
+        //   localStorage.setItem("IS_FIRST_DEPOSIT", "1");
+        // }
+
         if (res.data.result.payResultType === "OFFLINE") {
-          btnLoading.value = false;
         }
         if (res.data.result.payResultType === "RENDER_HTML") {
           isDisplay.value = true;
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
-          btnLoading.value = false;
         } else {
           if (
             (Platform.is.desktop || Platform.is.webkit) &&
@@ -526,15 +544,12 @@ async function pDepo(deposit) {
               const newWin = window.open(`/`, `_self`);
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
-                btnLoading.value = false;
               }
               if (response.payResultType === "POST_SUBMIT") {
                 if (response.paramKey === null || response.paramKey === "") {
                   newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                  btnLoading.value = false;
                 } else {
                   newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                  btnLoading.value = false;
                 }
               }
             } else {
@@ -542,15 +557,12 @@ async function pDepo(deposit) {
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
-                btnLoading.value = false;
               }
               if (response.payResultType === "POST_SUBMIT") {
                 if (response.paramKey === null || response.paramKey === "") {
                   newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                  btnLoading.value = false;
                 } else {
                   newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                  btnLoading.value = false;
                 }
               }
             }
@@ -564,10 +576,8 @@ async function pDepo(deposit) {
                 !liff.isInClient()
               ) {
                 location.href = response.requestUrl;
-                btnLoading.value = false;
               } else {
                 openURL(response.requestUrl);
-                btnLoading.value = false;
               }
             }
             if (response.payResultType === "POST_SUBMIT") {
@@ -584,13 +594,11 @@ async function pDepo(deposit) {
                   router.push(
                     `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
                   );
-                  btnLoading.value = false;
                 }
               } else {
                 router.push(
                   `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
                 );
-                btnLoading.value = false;
               }
             }
           }
@@ -602,7 +610,6 @@ async function pDepo(deposit) {
           message: res.message,
           icon: "report_problem"
         });
-        btnLoading.value = false;
       }
     })
     .catch((error) => {
@@ -612,6 +619,8 @@ async function pDepo(deposit) {
         message: error.message,
         icon: "report_problem"
       });
+    })
+    .then(() => {
       btnLoading.value = false;
     });
 }
@@ -810,6 +819,32 @@ onMounted(() => {
         background-size: 100%;
       }
     }
+  }
+}
+
+.btn-go {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 1;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  width: 180px;
+  height: 60px;
+  transition: 0.3s all;
+  background-image: url(../assets/images/index/popout/btn-go.png);
+  color: #ffffff;
+  margin: auto;
+
+  &:before {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    opacity: 0.7;
   }
 }
 </style>

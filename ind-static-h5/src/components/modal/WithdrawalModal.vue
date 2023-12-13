@@ -210,10 +210,20 @@
         </q-card>
 
         <template v-if="bankCardList.length > 0">
-          <ConfirmButton label="Submit" :confirmFunc="submitWithdraw"></ConfirmButton>
+          <ConfirmButton
+            label="Submit"
+            :confirmFunc="submitWithdraw"
+            :isDisabled="isSubmitDisable"
+            :isLoading="isLoadingBankCard || isLoadingWithdrawalMethod"
+          ></ConfirmButton>
         </template>
         <template v-else>
-          <ConfirmButton label="Submit" :confirmFunc="submitWithdrawBank"></ConfirmButton>
+          <ConfirmButton
+            label="Submit"
+            :confirmFunc="submitWithdrawBank"
+            :isDisabled="isSubmitDisable"
+            :isLoading="isLoadingBankCard || isLoadingWithdrawalMethod"
+          ></ConfirmButton>
         </template>
 
         <div class="bottom-tnc">
@@ -250,9 +260,11 @@ import { userStore } from "stores/index";
 import ConfirmButton from "../../atoms/ConfirmButton.vue";
 
 // modal
+const isLoadingContent = ref(false);
 const isShowModal = ref(false);
 const open = () => {
   isShowModal.value = true;
+  isLoadingContent.value = true;
 
   refreshBalance();
   getWithdrawalMethods();
@@ -275,9 +287,17 @@ const refreshBalance = () => {
   if (store.token) store.getBalance();
 };
 
+const isLoadingWithdrawalMethod = ref(false);
 const withdrawalDialogTab = ref("BANK");
 const withdrawalMethods = reactive({ BANK: {}, UPI: {} });
 const getWithdrawalMethods = () => {
+  isLoadingWithdrawalMethod.value = true;
+  let cbCount = 0;
+
+  const checkCb = () => {
+    if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
+  };
+
   api.get("/session/withdraw/entrance").then((response) => {
     if (response.code === 0) {
       for (let i = 0, l = response.data.length; i < l; i++) {
@@ -292,6 +312,9 @@ const getWithdrawalMethods = () => {
         icon: "report_problem"
       });
     }
+
+    cbCount++;
+    checkCb();
   });
 
   if (bankCardList.value.length === 0) {
@@ -306,7 +329,14 @@ const getWithdrawalMethods = () => {
       })
       .catch((e) => {
         console.log("error", e);
+      })
+      .then(() => {
+        cbCount++;
+        checkCb();
       });
+  } else {
+    cbCount++;
+    checkCb();
   }
 };
 
@@ -337,7 +367,7 @@ const loadCards = () => {
       isLoadingBankCard.value = false;
     });
 };
-console.log("cb");
+
 const cardRef = ref();
 const amountRef = ref();
 const bankAddressRef = ref();
@@ -382,9 +412,12 @@ const onCardChanged = () => {
 };
 
 const isShowRedirectAddBankModal = ref(false);
+const isSubmitDisable = ref(false);
 const submitWithdraw = () => {
+  isSubmitDisable.value = true;
   if (bankCardList.value.length === 0) {
     isShowRedirectAddBankModal.value = true;
+    isSubmitDisable.value = false;
   } else {
     // cardRef.value.validate();
     amountRef.value.validate();
@@ -396,13 +429,17 @@ const submitWithdraw = () => {
     // cardRef.value.hasError ||
     if (amountRef.value.hasError) {
       $q.loading.hide();
+      isSubmitDisable.value = false;
     } else {
-      withdrawGo();
+      withdrawGo(() => {
+        isSubmitDisable.value = false;
+      });
     }
   }
 };
 
 const submitWithdrawBank = async () => {
+  isSubmitDisable.value = true;
   if (bankCardList.value.length === 0) {
     amountRef.value.validate();
     bankAddressRef.value.validate();
@@ -410,6 +447,7 @@ const submitWithdrawBank = async () => {
 
     if (amountRef.value.hasError || bankAddressRef.value.hasError || bankNumberRef.value.hasError) {
       $q.loading.hide();
+      isSubmitDisable.value = false;
       return;
     }
 
@@ -450,6 +488,9 @@ const submitWithdrawBank = async () => {
       })
       .catch((error) => {
         console.log("error", error);
+      })
+      .then(() => {
+        isSubmitDisable.value = false;
       });
     // }
   } else {
@@ -463,13 +504,16 @@ const submitWithdrawBank = async () => {
     // cardRef.value.hasError ||
     if (amountRef.value.hasError) {
       $q.loading.hide();
+      isSubmitDisable.value = false;
     } else {
-      await withdrawGo();
+      withdrawGo(() => {
+        isSubmitDisable.value = false;
+      });
     }
   }
 };
 
-const withdrawGo = () => {
+const withdrawGo = (callback) => {
   withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
   api
     .post("/session/withdraw/", qs.stringify(withdrawInfo))
@@ -500,6 +544,7 @@ const withdrawGo = () => {
     })
     .then(() => {
       $q.loading.hide();
+      callback && callback();
     });
 };
 

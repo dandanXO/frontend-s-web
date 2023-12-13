@@ -193,6 +193,7 @@ const closeDialog = () => {
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
+  screen.orientation.lock("portrait");
 };
 
 const platformCodeImg = ref();
@@ -219,11 +220,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //     var gameIfrm = document.getElementById('game-iframe');
   //     gameIfrm.requestFullscreen();
   // // const iframeRef = ref(null);
-  // var myScreenOrientation = window.screen.orientation;
-  // console.log(myScreenOrientation)
-  // myScreenOrientation.unlock()
-  // myScreenOrientation.lock("portrait");
-  // console.log(myScreenOrientation)
+  screen.orientation.unlock();
   // iframe.find('HTML-Element').touchwipe({
   // wipeLeft: function() { alert("left"); },
   // wipeRight: function() { alert("right"); },
