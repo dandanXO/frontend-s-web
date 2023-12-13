@@ -639,6 +639,7 @@ import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+import AdjustWeb from "@adjustcom/adjust-web-sdk";
 const slide = ref(0);
 
 const isFirstView = ref(false);
@@ -1088,17 +1089,33 @@ const openCSInNewTab = (url) => {
 
 const initAdjustEventTrack = () => {
   if (Platform.is.android && Platform.is.capacitor) {
+    //Android App.
     console.log("Init Adjust Sdk");
-    console.log(AdjustEnvironment.Production);
     var adjustConfig = new AdjustConfig("pxrvpkqs0a9s", AdjustEnvironment.Production);
     adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
     Adjust.create(adjustConfig);
 
     setTimeout(() => {
-      Adjust.getAdid().then((uuid) => {
-        console.log(uuid);
+      Adjust.getAdid().then((aaid) => {
+        console.log("aaid");
+        console.log(aaid);
+        store.aaid = aaid;
       });
-    }, 3000);
+    }, 1500);
+  } else {
+    //Normal WEb / H5 / iOS WEbclip.
+    console.log("Init Web Adjust");
+    const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+    AdjustWeb.initSdk({
+      appToken: "pxrvpkqs0a9s",
+      environment: "production"
+    });
+    setTimeout(() => {
+      const resp = AdjustWeb.getAttribution();
+      console.log("Web Adid");
+      console.log(resp.adid);
+      store.aaid = resp.adid;
+    }, 1500);
   }
 };
 

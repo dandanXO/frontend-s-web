@@ -40,7 +40,8 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "",
       currentMailData: {},
       guest: false,
-      readMsgLists: []
+      readMsgLists: [],
+      aaid: ""
     };
   },
   actions: {
@@ -86,6 +87,9 @@ export const userStore = defineStore("userStore", {
     },
     setPhone(tel) {
       this.phone = tel;
+    },
+    setAaid(aaid) {
+      this.aaid = aaid;
     },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
