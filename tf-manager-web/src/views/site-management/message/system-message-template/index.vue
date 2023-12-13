@@ -21,7 +21,7 @@
           default-first-option
         >
           <el-option
-            v-for="item in uiControl.type"
+            v-for="item in uiControl.searchType"
             :key="item.key"
             :label="t('messageType.' + item.displayName)"
             :value="item.value"
@@ -423,6 +423,11 @@ const uiControl = reactive({
   size: null,
   importDialogVisible: false,
   type: [
+    { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
+    { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
+    { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' }
+  ],
+  searchType: [
     { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
     { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
     { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' },
