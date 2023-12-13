@@ -2221,6 +2221,7 @@ body {
     flex: 1;
     cursor: pointer;
     padding: 25px 10px;
+    position: relative;
 
     &:hover {
       background: $primary;
@@ -2228,6 +2229,24 @@ body {
       .platform-img {
         transform: scale(1.05);
       }
+    }
+
+    // maintenance state
+    &.maintenance:after {
+      content: "维护中";
+      position: absolute;
+      background: rgba(2, 9, 73, 0.4);
+      top: 15%;
+      width: 15%;
+      width: 70%;
+      height: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: bold;
     }
   }
 

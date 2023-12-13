@@ -3,6 +3,8 @@
     <!-- <div class="menu-title-container">
       <span class="menu-title">收发信息</span>
     </div> -->
+    <pre>isShowSelect: {{ isShowSelect }}</pre>
+    <pre>checkedCheckboxCount: {{ checkedCheckboxCount }}</pre>
     <div class="account-content mail">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
         <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
@@ -24,16 +26,45 @@
                       <el-icon><Delete /></el-icon>
                       全部删除
                     </el-button>
+
+                    <!-- <el-button color="darkblue" @click="toggleCheckbox" style="margin-left: auto">
+                      <el-icon><Check /></el-icon>
+                      选择多个
+                    </el-button> -->
+                    <div style="margin-left: auto">
+                      <el-button v-if="isShowSelect" type="primary" @click="readMultipleMsg()">
+                        <el-icon><MessageBox /></el-icon>
+                        读取
+                      </el-button>
+
+                      <el-button v-if="isShowSelect" color="grey" @click="deleteMultipleMsg()">
+                        <el-icon><Delete /></el-icon>
+                        删除
+                      </el-button>
+
+                      <el-switch
+                        v-model="isShowSelect"
+                        inline-prompt
+                        active-text="选择多个"
+                        inactive-text="选择多个"
+                        style="margin-left: 16px"
+                      />
+                    </div>
                   </div>
 
-                  <div class="mailbox-list">
+                  <div class="mailbox-list" :class="isShowSelect && 'select-state'">
                     <template v-for="(m, mi) in mailboxState.mailboxList.inbox.list" :key="m.id">
                       <div :class="`mailbox-item`" @click="openMsg(m)">
                         <div class="mailbox-preview">
                           <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">{{ m.title }}</div>
                           <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
                         </div>
+
+                        <div v-if="isShowSelect" class="mailbox-checkbox">
+                          <el-checkbox v-model="selectedIds[m.id]" size="large" />
+                        </div>
                       </div>
+
                       <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
                         <div class="mailbox-content" v-html="m.content || '加载中...'"></div>
                         <div class="mailbox-date">
@@ -60,48 +91,7 @@
                 </template>
               </el-tab-pane>
             </el-tabs>
-
-            <!-- <div class="quick-btn">
-              <el-button type="primary" @click="readAllMsg(mailboxMessageType)">
-                <el-icon><MessageBox /></el-icon>
-                全部已读
-              </el-button>
-              <el-button color="grey" @click="deleteAllMsg()">
-                <el-icon><Delete /></el-icon>
-                全部删除
-              </el-button>
-            </div> -->
-
-            <!-- <pre>{{ mailboxState.mailboxList.inbox.list }}</pre> -->
-
-            <!-- <div class="mailbox-list">
-              <template v-for="(m, mi) in mailboxState.mailboxList.inbox.list" :key="m.id">
-                <div :class="`mailbox-item`" @click="openMsg(m)">
-                  <div class="mailbox-preview">
-                    <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">{{ m.title }}</div>
-                    <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
-                  </div>
-                </div>
-                <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
-                  <div class="mailbox-content" v-html="m.content || '加载中...'"></div>
-                  <div class="mailbox-date">
-                    <el-icon><Calendar /></el-icon>
-                    <div>{{ new Date(m.sendTime).toLocaleString("zh-CN") }}</div>
-                    <el-icon class="delete-btn"><Delete @click="deleteMsg(m.id, mi)" /></el-icon>
-                  </div>
-                </div>
-              </template>
-            </div> -->
-            <!-- <div class="pagination-wrapper">
-              <el-pagination
-                @current-change="changePage"
-                :total="mailboxState.mailboxList.inbox.total"
-                :current-page="mailboxState.mailboxList.inbox.pageNum"
-                :page-size="mailboxState.mailboxList.inbox.pageSize"
-              />
-            </div> -->
           </div>
-          <!-- <div style="display: flex; justify-content: center; align-items: center; height: 300px" v-else>暂无记录</div> -->
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -135,11 +125,20 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
-import { mailInbox, mailOutbox, wirteMail, readMail, readAllMail, deleteAllMail } from "@/api/personal/mailbox";
+import { ref, reactive, onMounted, computed } from "vue";
+import {
+  mailInbox,
+  mailOutbox,
+  readMail,
+  readMultipleMail,
+  readAllMail,
+  deleteMail,
+  deleteMultipleMail,
+  deleteAllMail
+} from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
-import { Calendar, Delete, MessageBox, ArrowDown } from "@element-plus/icons-vue";
+import { Calendar, Delete, MessageBox, ArrowDown, Check } from "@element-plus/icons-vue";
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
@@ -274,7 +273,6 @@ const openMsg = (m) => {
     .then((res) => {
       const { code, data } = res;
 
-      // console.log(id, "#$%#^%$^%$^");
       // if (code === 0) m.content = data.content;
     })
     .catch((error) => {
@@ -298,6 +296,25 @@ const readAllMsg = (m) => {
     });
 };
 
+const deleteMsg = (ids, spliceIndex, callback) => {
+  // deleteMail({ ids })
+  // .then((res) => {
+  // const { code } = res;
+  // if (code === 0) {
+    ElMessage({
+      message: "删除成功",
+      type: "success"
+    });
+
+    if (spliceIndex !== null) mailboxState.mailboxList[mailboxState.active].list.splice(spliceIndex, 1); // fake delete
+    callback && callback();
+  // }
+  // })
+  // .catch((error) => {
+  // console.log(error);
+  // });
+};
+
 const deleteAllMsg = (m) => {
   deleteAllMail(m)
     .then((res) => {
@@ -313,69 +330,71 @@ const deleteAllMsg = (m) => {
     });
 };
 
+const selectedIds = ref({});
+const checkedCheckboxCount = computed(() => {
+  return Object.values(selectedIds.value).filter((val) => val).length;
+});
+
+const isShowSelect = ref(false);
+
+const readMultipleMsg = () => {
+  const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
+  const selectedIdsArray = selectedMessages.map((msg) => msg.id);
+  console.log(selectedIdsArray);
+
+  readMultipleMail(selectedIdsArray)
+    .then((res) => {
+      if (res.code === 0) {
+        ElMessage({
+          message: "读取已选择的消息",
+          type: "success"
+        });
+
+        isShowSelect.value = true;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const deleteMultipleMsg = () => {
+  const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
+  const selectedIdsArray = selectedMessages.map((msg) => msg.id);
+  console.log(selectedIdsArray);
+
+  // deleteMultipleMail(selectedIdsArray)
+  //   .then((res) => {
+  //     if (res.code === 0) {
+  ElMessage({
+    message: "删除已选择的消息",
+    type: "success"
+  });
+
+  isShowSelect.value = true;
+
+  selectedMessages.forEach((msg) => {
+    const index = mailboxState.mailboxList.inbox.list.findIndex((item) => item.id === msg.id);
+
+    if (index !== -1) {
+      mailboxState.mailboxList.inbox.list.splice(index, 1);
+    }
+  });
+
+  Object.keys(selectedIds.value).forEach((key) => {
+    selectedIds.value[key] = false;
+  });
+  //   }
+  // })
+  // .catch((error) => {
+  //   console.log(error);
+  // });
+};
+
 onMounted(() => {
   loadPersonalMailbox();
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
-
-const formRef = ref();
-const rules = {
-  title: [
-    {
-      required: true,
-      message: "请输入标题",
-      trigger: "blur"
-    },
-    {
-      max: 255,
-      message: "长度为 255",
-      trigger: "change"
-    }
-  ],
-  content: [
-    {
-      required: true,
-      message: "请输入内容",
-      trigger: "blur"
-    },
-    {
-      max: 500,
-      message: "长度应少过 500 字",
-      trigger: "change"
-    }
-  ]
-};
-const onSubmit = () => {
-  loadingBtn.value = true;
-  formRef.value
-    .validate()
-    .then(() => {
-      wirteMail(mailboxState.mailboxList.write)
-        .then((response) => {
-          if (response.code === 0) {
-            ElMessage({
-              message: "成功",
-              type: "success"
-            });
-            loadPersonalMailbox();
-
-            mailboxState.mailboxList.write.title = "";
-            mailboxState.mailboxList.write.content = "";
-          } else {
-            // message.error(response.message);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          // message.error(error.message, 4)
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-      // message.error(error.message, 4)
-    });
-  loadingBtn.value = false;
-};
 </script>
 
 <style scoped lang="scss">
@@ -408,6 +427,7 @@ const onSubmit = () => {
 
     .quick-btn {
       margin: 0 0 18px 0;
+      display: flex;
 
       i {
         margin: 0 5px 0 0;
@@ -416,11 +436,23 @@ const onSubmit = () => {
     .mailbox-list {
       min-height: 450px;
       font-size: 14px;
+      width: 100%;
+      transition: 0.3s all;
+
+      &.select-state {
+        width: calc(100% - 50px);
+      }
 
       .mailbox-item,
       .mailbox-content-wrapper {
         margin-bottom: 10px;
         padding: 0 15px;
+      }
+
+      .mailbox-checkbox {
+        position: absolute;
+        right: -20px;
+        top: 0;
       }
 
       .mailbox-item {

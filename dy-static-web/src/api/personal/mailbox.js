@@ -30,9 +30,27 @@ export function readMail(mailQuery) {
   });
 }
 
+export function readMultipleMail(mailQuery) {
+  return server.REST.post("/session/inbox/readMultiple", {
+    ids: mailQuery
+  });
+}
+
 export function readAllMail(mailQuery) {
   return server.REST.post("/session/inbox/readAll", {
     type: mailQuery
+  });
+}
+
+export function deleteMail(mailQuery) {
+  return server.REST.post("/session/inbox/delete", {
+    id: mailQuery.id
+  });
+}
+
+export function deleteMultipleMail(mailQuery) {
+  return server.REST.post("/session/inbox/deleteMultiple", {
+    ids: mailQuery
   });
 }
 
