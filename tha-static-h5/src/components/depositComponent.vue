@@ -61,7 +61,7 @@
             :options="unselectedPrivileges"
             v-model="selectedPrivilege"
             emit-value
-            v-if="hasPrivilege"
+            v-if="hasPrivilege && !isUSDT"
             :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
             color="white"
             @update:model-value="checkMinDepositAmt"
