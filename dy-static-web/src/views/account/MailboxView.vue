@@ -289,8 +289,8 @@ const readAllMsg = (m) => {
     });
 };
 
-const deleteMsg = (ids, spliceIndex, callback) => {
-  deleteMail({ ids })
+const deleteMsg = (id, spliceIndex, callback) => {
+  deleteMail({ id })
     .then((res) => {
       const { code } = res;
       if (code === 0) {
