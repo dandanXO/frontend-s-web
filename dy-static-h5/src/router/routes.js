@@ -501,10 +501,10 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/finance/DepositView.vue")
+        component: () => import("pages/finance/DepositMobileView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: false }
   },
   {
     path: "/display",
