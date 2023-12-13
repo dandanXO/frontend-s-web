@@ -19,6 +19,7 @@
     "@capacitor/preferences": "^5.0.0",
     "@capacitor/splash-screen": "^5.0.6",
     "cordova-plugin-inappbrowser": "^5.0.0",
-    "cordova-plugin-screen-orientation": "^3.0.3"
+    "cordova-plugin-screen-orientation": "^3.0.3",
+    "es6-promise-plugin": "^4.1.0"
   }
 }
