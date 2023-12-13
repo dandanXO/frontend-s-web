@@ -3,8 +3,8 @@
     <!-- <div class="menu-title-container">
       <span class="menu-title">收发信息</span>
     </div> -->
-    <pre>isShowSelect: {{ isShowSelect }}</pre>
-    <pre>checkedCheckboxCount: {{ checkedCheckboxCount }}</pre>
+    <!-- <pre>isShowSelect: {{ isShowSelect }}</pre>
+    <pre>checkedCheckboxCount: {{ checkedCheckboxCount }}</pre> -->
     <div class="account-content mail">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
         <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
