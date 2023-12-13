@@ -477,6 +477,7 @@ export default defineComponent({
 
   .el-tabs .el-tabs__nav {
     float: none;
+    display: block;
   }
   .el-tabs .el-tabs__item {
     text-align: left;

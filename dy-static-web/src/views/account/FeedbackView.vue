@@ -350,6 +350,7 @@ onMounted(() => {
         transition: all 0.3s;
         background: #f7f8fb;
         cursor: pointer;
+        border-radius: 10px;
 
         &:hover {
           background: #eeeeee;

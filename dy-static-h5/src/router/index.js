@@ -1,6 +1,8 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
@@ -39,11 +41,23 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/forgot-account" ||
       to.path === "/poker" ||
       to.path === "/sport" ||
-      to.path === "/promotion"
+      to.path === "/promotion" ||
+      to.path === "/finance/depositMobile"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
+    }
+
+    if (to.path === "/promotion" || to.path === "/finance/depositMobile") {
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+
+      user.token = to.query.token;
+      console.log("user", user.token);
     }
 
     if (to.name === "agentCode") {
@@ -63,7 +77,10 @@ export default route(function (/* { store, ssrContext } */) {
       if (to.path === "/login") {
         next({ path: "/" });
       } else {
-        if (user.nickName === "" && window.location.pathname !== "/promotion") {
+        if (
+          user.nickName === "" &&
+          (window.location.pathname !== "/promotion" || window.location.pathname !== "/finance/depositMobile")
+        ) {
           user.getMemberInfo().then(() => next({ ...to, replace: true }));
         } else {
           next();

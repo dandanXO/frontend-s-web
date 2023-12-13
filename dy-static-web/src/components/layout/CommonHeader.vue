@@ -25,7 +25,7 @@
               <div class="mailbox-notify">
                 <router-link to="/center/mailbox">
                   <RiMailFill style="fill: #2db9e2; width: 20px" />
-                  <div v-if="isMailboxUnread" class="notify-red"></div>
+                  <div v-if="mailboxUnreadTotal > 0" class="notify-red"></div>
                 </router-link>
               </div>
             </template>
@@ -617,7 +617,7 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, ref, reactive, watch} from "vue";
+import {defineComponent, onMounted, onActivated, ref, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
 import {getVerificationCode, register, findAccount} from "@/api/index/login";
@@ -656,6 +656,7 @@ import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import moment from 'moment';
 import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
+import { getUnreadMailTotal } from "@/api/personal/mailbox";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -1324,8 +1325,11 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
+    onActivated(() => {
+      store.token && checkMailboxUnread();
+    })
 
+    onMounted(() => {
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
 
@@ -1438,6 +1442,8 @@ export default defineComponent({
                   loginForm.loginName = null
                   loginForm.password = null
                   loginForm.captchaCode = null
+
+                  checkMailboxUnread();
                 } else {
                   // loginForm.loginName = null
                   // loginForm.password = null
@@ -1591,6 +1597,18 @@ export default defineComponent({
       window.location.href=path
     }
 
+    const isMailboxUnread = ref(false)
+    const mailboxUnreadTotal = ref(0);
+
+    const checkMailboxUnread = () => {
+      getUnreadMailTotal().then((res) => {
+        const {code, data} = res;
+        if ( code === 0 ) mailboxUnreadTotal.value = data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
 
     return {
       token,
@@ -1658,7 +1676,10 @@ export default defineComponent({
       countdownTimer,
       regCountdown,
       loginCountdown,
-      jumpOut
+      jumpOut,
+      isMailboxUnread,
+      mailboxUnreadTotal,
+      checkMailboxUnread
     }
   }
 });
@@ -2221,6 +2242,7 @@ body {
     flex: 1;
     cursor: pointer;
     padding: 25px 10px;
+    position: relative;
 
     &:hover {
       background: $primary;
@@ -2228,6 +2250,24 @@ body {
       .platform-img {
         transform: scale(1.05);
       }
+    }
+
+    // maintenance state
+    &.maintenance:after {
+      content: "维护中";
+      position: absolute;
+      background: rgba(2, 9, 73, 0.4);
+      top: 15%;
+      width: 15%;
+      width: 70%;
+      height: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: bold;
     }
   }
 
@@ -2598,5 +2638,15 @@ body {
   &:active {
     filter: brightness(0.9);
   }
+}
+
+.notify-red {
+  height: 10px;
+  width: 10px;
+  background: #db0011;
+  position: absolute;
+  border-radius: 50%;
+  bottom: 0;
+  right: -4px;
 }
 </style>

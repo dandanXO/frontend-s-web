@@ -19,10 +19,17 @@
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
-
-    <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade' && !isCommonPromo && store.token"></VIPUpgradePromo>
-    <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token"></ReferBonusPromo>
-    <PrivilegeInvite v-if="list.redirectUrl === 'Dongying-refer' && !isCommonPromo && store.token" />
+    <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade-bonus' && !isCommonPromo && store.token" />
+    <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token" /> -->
+    <PrivilegeInvite
+      v-if="
+        (list.redirectUrl === 'Dongying-refer' ||
+          list.redirectUrl === 'dy2-refer-bonus' ||
+          list.redirectUrl === 'dy2-refer-bonus') &&
+        !isCommonPromo &&
+        store.token
+      "
+    />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -55,8 +62,8 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
-import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
+// import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
+// import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 
@@ -79,8 +86,8 @@ export default defineComponent({
     LotteryPromo,
     PrivilegeInvite,
     GiftPromo,
-    VIPUpgradePromo,
-    ReferBonusPromo
+    // VIPUpgradePromo,
+    // ReferBonusPromo
     // DailyBonus
   },
   props: {
@@ -218,7 +225,7 @@ export default defineComponent({
       this.list.redirectUrl === "Dongying-quiz" ||
       this.list.redirectUrl === "dy2-gift" ||
       this.list.redirectUrl === "Dongying-refer" ||
-      this.list.redirectUrl === "dy2-vip-upgrade" ||
+      this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
       this.list.redirectUrl === "dy2-refer-bonus"
     ) {
       this.isCommonPromo = false;
@@ -233,6 +240,7 @@ export default defineComponent({
   }
 });
 </script>
+
 <style lang="scss">
 .award-modal {
   background: none;

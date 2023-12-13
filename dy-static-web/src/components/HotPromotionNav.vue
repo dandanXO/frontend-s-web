@@ -22,7 +22,7 @@ const router = useRouter();
 const hotPromoNav = [
   {
     label: "晋升有礼",
-    path: "/promotion?name=dy2-vip-upgrade"
+    path: "/promotion?name=dy2-vip-upgrade-bonus"
   },
   {
     label: "携手宏图",

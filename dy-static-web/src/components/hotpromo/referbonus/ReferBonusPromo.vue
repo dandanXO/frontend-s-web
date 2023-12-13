@@ -1,7 +1,7 @@
 <template>
   <div class="refer-bonus-container">
     <div class="refer-bonus-wrapper">
-      <HotPromoionNav :label="'携手宏图'"></HotPromoionNav>
+      <HotPromotionNav :label="'携手宏图'"></HotPromotionNav>
 
       <div class="title">携手宏图</div>
       <div class="desc-wrapper">
@@ -52,7 +52,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import HotPromoionNav from "@/components/HotPromotionNav.vue";
+import HotPromotionNav from "@/components/HotPromotionNav.vue";
 import VueQrious from "vue-qrious";
 import { getReferralLink } from "@/api/personal/share";
 import { ElMessage } from "element-plus";
