@@ -888,7 +888,7 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=76">
+        <!-- <router-link to="/promo?id=76">
           <div class="popup-item">
             <span>
               เลือกรับ
@@ -898,7 +898,7 @@
               ถอนไม่อั้น
             </span>
           </div>
-        </router-link>
+        </router-link> -->
         <!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
