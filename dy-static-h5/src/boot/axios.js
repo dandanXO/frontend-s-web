@@ -105,9 +105,21 @@ export default boot(({ app, router }) => {
         location.reload();
       } else {
         if (
-          res.code === ResponseCode.ERROR_TOKEN_MISSED &&
-          (window.location.pathname !== "/promotion" || window.location.pathname !== "/finance/depositMobile")
+          (window.location.pathname !== "/promotion" ||
+            window.location.pathname !== "/deposit" ||
+            window.location.pathname !== "/invitefriend" ||
+            window.location.pathname !== "/vip") &&
+          (res.code === ResponseCode.ERROR_TOKEN_MISSED ||
+            res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+            res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
+            res.code === ResponseCode.ERROR_NAME_EXIST)
         ) {
+          SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
+          window.location.href = "/";
+          // window.location.href = "app://login";
+        }
+        if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
           return Dialog.create({
             class: "login-card",
             title: "请登录",

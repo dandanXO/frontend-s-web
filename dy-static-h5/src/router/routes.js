@@ -38,7 +38,8 @@ const routes = [
   {
     path: "/promotion",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
+    meta: { requiresAuth: true, isApp: true }
   },
   {
     path: "/liveChat",
@@ -139,6 +140,18 @@ const routes = [
     ]
   },
   {
+    path: "/vip",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "vip",
+        component: () => import("pages/games/VIPView.vue")
+      }
+    ],
+    meta: { requiresAuth: true, isApp: true }
+  },
+  {
     path: "/affiliate",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -165,11 +178,6 @@ const routes = [
     component: () => {}
     // component: () => {},
   },
-  // {
-  //   path: "/privilege/invite",
-  //   name: "invite",
-  //   component: () => import("pages/PrivilegeInvite.vue")
-  // },
   {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
@@ -230,6 +238,17 @@ const routes = [
       }
     ],
     meta: { requiresAuth: true }
+  },
+  {
+    path: "/invitefriend",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/InviteView.vue")
+      }
+    ],
+    meta: { requiresAuth: true, isApp: true }
   },
   {
     path: "/account/announcement",
@@ -496,15 +515,15 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/finance/depositMobile",
+    path: "/deposit",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        component: () => import("pages/finance/DepositMobileView.vue")
+        component: () => import("pages/finance/DepositView.vue")
       }
     ],
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: false, isApp: true }
   },
   {
     path: "/display",

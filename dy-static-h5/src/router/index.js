@@ -42,14 +42,16 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/poker" ||
       to.path === "/sport" ||
       to.path === "/promotion" ||
-      to.path === "/finance/depositMobile"
+      to.path === "/deposit" ||
+      to.path === "/invitefriend" ||
+      to.path === "/vip"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
     }
 
-    if (to.path === "/promotion" || to.path === "/finance/depositMobile") {
+    if (to.path === "/promotion" || to.path === "/deposit" || to.path === "/invitefriend" || to.path === "/vip") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
@@ -77,10 +79,7 @@ export default route(function (/* { store, ssrContext } */) {
       if (to.path === "/login") {
         next({ path: "/" });
       } else {
-        if (
-          user.nickName === "" &&
-          (window.location.pathname !== "/promotion" || window.location.pathname !== "/finance/depositMobile")
-        ) {
+        if (user.nickName === "") {
           user.getMemberInfo().then(() => next({ ...to, replace: true }));
         } else {
           next();
