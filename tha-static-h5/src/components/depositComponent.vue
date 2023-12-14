@@ -65,6 +65,7 @@
             :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
             color="white"
             @update:model-value="checkMinDepositAmt"
+            clearable
           >
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
