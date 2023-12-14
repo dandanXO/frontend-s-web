@@ -142,8 +142,8 @@
     </div>
 
     <div class="q-mt-md">
-      <div :class="`btn-go ${btnLoading ? 'disabled' : ''}`" @click="confirmDeposit">
-        <q-spinner v-if="isLoadingInitPay" color="white" size="2em" :thickness="2"></q-spinner>
+      <div :class="`btn-go`" @click="confirmDeposit">
+        <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
         <template v-else>Go</template>
       </div>
     </div>

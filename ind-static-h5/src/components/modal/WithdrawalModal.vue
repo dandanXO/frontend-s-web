@@ -213,16 +213,14 @@
           <ConfirmButton
             label="Submit"
             :confirmFunc="submitWithdraw"
-            :isDisabled="isSubmitDisable"
-            :isLoading="isLoadingBankCard || isLoadingWithdrawalMethod"
+            :isLoading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           ></ConfirmButton>
         </template>
         <template v-else>
           <ConfirmButton
             label="Submit"
             :confirmFunc="submitWithdrawBank"
-            :isDisabled="isSubmitDisable"
-            :isLoading="isLoadingBankCard || isLoadingWithdrawalMethod"
+            :isLoading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           ></ConfirmButton>
         </template>
 

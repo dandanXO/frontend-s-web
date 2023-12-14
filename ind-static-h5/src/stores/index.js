@@ -91,6 +91,9 @@ export const userStore = defineStore("userStore", {
     setAaid(aaid) {
       this.aaid = aaid;
     },
+    getAaid() {
+      return this.aaid;
+    },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
       if ("standalone" in window.navigator && window.navigator.standalone) {
