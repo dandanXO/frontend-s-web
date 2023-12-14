@@ -402,8 +402,8 @@ export default defineComponent({
       });
 
       (async () => {
-        guestLoginInfo.sid = guestDeviceInfo.value;
-        // guestLoginInfo.sid = store.getAaid();
+        // guestLoginInfo.sid = guestDeviceInfo.value;
+        guestLoginInfo.sid = store.getAaid();
 
         api
           .post("/member/quickRegister", qs.stringify(guestLoginInfo))
