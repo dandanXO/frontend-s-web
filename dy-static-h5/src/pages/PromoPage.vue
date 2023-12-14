@@ -699,6 +699,7 @@ export default defineComponent({
             text-align: center;
             background-color: #ffffff;
             border: 1px solid #d0d1d3;
+            white-space: pre-wrap;
           }
         }
 
