@@ -638,6 +638,7 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { isAndroid } from "boot/utils";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 const slide = ref(0);
 
@@ -1086,38 +1087,6 @@ const openCSInNewTab = (url) => {
   window.open(absoluteUrl, "_blank");
 };
 
-const initAdjustEventTrack = () => {
-  if (Platform.is.android && Platform.is.capacitor) {
-    //Android App.
-    console.log("Init Adjust Sdk");
-    var adjustConfig = new AdjustConfig("pxrvpkqs0a9s", AdjustEnvironment.Production);
-    adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
-    Adjust.create(adjustConfig);
-
-    setTimeout(() => {
-      Adjust.getAdid().then((aaid) => {
-        console.log("aaid");
-        console.log(aaid);
-        store.aaid = aaid;
-      });
-    }, 1500);
-  } else {
-    //Normal WEb / H5 / iOS WEbclip.
-    console.log("Init Web Adjust");
-    const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-    AdjustWeb.initSdk({
-      appToken: "pxrvpkqs0a9s",
-      environment: "production"
-    });
-    setTimeout(() => {
-      const resp = AdjustWeb.getAttribution();
-      console.log("Web Adid");
-      console.log(resp.adid);
-      store.aaid = resp.adid;
-    }, 1500);
-  }
-};
-
 onMounted(() => {
   getPlatList();
   loadData();
@@ -1126,7 +1095,6 @@ onMounted(() => {
   getVersionNo();
   getAppDownloadUrl();
   loadHotGameList();
-  initAdjustEventTrack();
   store.getUnreadTotal();
   AOS.init();
 });

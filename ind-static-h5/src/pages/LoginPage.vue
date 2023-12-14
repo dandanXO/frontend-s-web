@@ -293,7 +293,7 @@ export default defineComponent({
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        // const sidParam = FingerprintJS.hashComponents(allComponents);
 
         if (loginType.value === false) {
           loginNameRef.value.validate();
@@ -310,7 +310,7 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: sidParam,
+                sid: store.aaid,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId
               })
@@ -403,6 +403,7 @@ export default defineComponent({
 
       (async () => {
         guestLoginInfo.sid = guestDeviceInfo.value;
+        // guestLoginInfo.sid = store.getAaid();
 
         api
           .post("/member/quickRegister", qs.stringify(guestLoginInfo))
@@ -464,6 +465,7 @@ export default defineComponent({
     const getAppInfo = async () => {
       const info = await Device.getId();
       guestDeviceInfo.value = info.identifier;
+      // guestDeviceInfo.value = store.aaid;
     };
 
     onMounted(() => {
