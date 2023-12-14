@@ -1693,6 +1693,7 @@ export default {
     'Affiliate List': '代理列表',
     'Affiliate Details': '代理信息',
     'App Version': '应用程序版本控制',
+    'Auto Withdraw Setting': '自动提款设置',
     'Site Affiliate Commission': '站点代理分红',
     'Aff Announcement Management': '代理公告',
     'Affiliate Announcement': '代理公告',
