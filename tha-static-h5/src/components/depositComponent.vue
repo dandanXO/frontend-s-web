@@ -359,6 +359,8 @@ async function confirmDeposit() {
         });
       }
 
+      clearInfo();
+
       window.addEventListener(
         "message",
         (event) => {
