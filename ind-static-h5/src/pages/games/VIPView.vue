@@ -52,7 +52,7 @@
             <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
             <!-- unable to adjust table width... -->
             <template v-else>
-              <div style="white-space: normal">VIP Promotion Bonus</div>
+              <div style="white-space: normal; text-align: center">VIP Promotion Bonus</div>
             </template>
           </q-th>
         </q-tr>
@@ -199,12 +199,12 @@ const rows = [
   },
   {
     name: "VIP 4",
-    ugprade: "100,000",
+    ugprade: "50,000",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "150,000",
+    ugprade: "100,000",
     flow: "x10"
   },
   {
@@ -256,23 +256,28 @@ const columns2 = [
 ];
 const rows2 = [
   {
-    name: "VIP 1",
+    name: "VIP 0",
     ugprade: "2,500",
     flow: "x10"
   },
   {
-    name: "VIP 2",
+    name: "VIP 1",
     ugprade: "5,000",
     flow: "x10"
   },
   {
-    name: "VIP 3",
+    name: "VIP 2",
     ugprade: "10,000",
     flow: "x10"
   },
   {
-    name: "VIP 4",
+    name: "VIP 3",
     ugprade: "20,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 4",
+    ugprade: "50,000",
     flow: "x10"
   },
   {
