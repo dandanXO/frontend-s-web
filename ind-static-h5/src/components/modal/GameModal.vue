@@ -206,6 +206,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
   platformCodeImg.value = platformCode;
 
+  //TESt
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
   // window.addEventListener(
