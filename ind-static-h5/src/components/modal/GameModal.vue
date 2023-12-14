@@ -76,6 +76,7 @@ import DepositComponent from "components/depositComponent.vue";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
+import { isAndroid } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 const props = defineProps(["closeFullGameDialog"]);
@@ -193,7 +194,9 @@ const closeDialog = () => {
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
-  screen.orientation.lock("portrait");
+  if (isAndroid()) {
+    screen.orientation.lock("portrait");
+  }
 };
 
 const platformCodeImg = ref();
@@ -220,7 +223,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //     var gameIfrm = document.getElementById('game-iframe');
   //     gameIfrm.requestFullscreen();
   // // const iframeRef = ref(null);
-  screen.orientation.unlock();
+  if (isAndroid()) {
+    screen.orientation.unlock();
+  }
   // iframe.find('HTML-Element').touchwipe({
   // wipeLeft: function() { alert("left"); },
   // wipeRight: function() { alert("right"); },
