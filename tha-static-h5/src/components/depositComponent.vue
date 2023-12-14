@@ -283,7 +283,7 @@ function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
+    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin+1);
   }
 }
 
