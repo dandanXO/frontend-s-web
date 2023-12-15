@@ -133,6 +133,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    background: #d1d1d1;
 
     .info-team {
       display: flex;
