@@ -35,74 +35,30 @@
           <q-spinner-hourglass color="blue-6" size="8em" />
         </div>
 
-        <iframe
-          @load="loadGame()"
-          v-show="!logoShow"
-          :src="src"
-          id="game-iframe"
-          scrolling="auto"
-          frameborder="0"
-          class="game-iframe"
-          :class="showHeader ? 'game-header-iframe' : ''"
-        ></iframe>
-        <!--        <q-drawer-->
-        <!--            v-model="drawerVisible"-->
-        <!--            :breakpoint="500"-->
-        <!--            overlay-->
-        <!--            bordered-->
-        <!--            class="bg-white"-->
-        <!--            side="right"-->
-        <!--        >-->
-        <!--          <div class="q-pa-sm q-pt-sm">-->
-        <!--            <div>-->
-        <!--              &lt;!&ndash; Uncomment for quick Transfer &ndash;&gt;-->
-        <!--              &lt;!&ndash; <q-btn-group push>-->
-        <!--                <q-btn-->
-        <!--                  size="sm"-->
-        <!--                  :color="quickTransferTab ? 'white' : 'primary'"-->
-        <!--                  glossy-->
-        <!--                  :text-color="quickTransferTab ? 'black' : 'white'"-->
-        <!--                  push-->
-        <!--                  label="Quick Transfer"-->
-        <!--                  icon="multiple_stop"-->
-        <!--                  @click="quickTransferTab = true"-->
-        <!--                />-->
-
-        <!--                <q-btn-->
-        <!--                  size="sm"-->
-        <!--                  :color="!quickTransferTab ? 'white' : 'primary'"-->
-        <!--                  glossy-->
-        <!--                  :text-color="!quickTransferTab ? 'black' : 'white'"-->
-        <!--                  push-->
-        <!--                  label="Bank Transfer"-->
-        <!--                  icon="account_balance"-->
-        <!--                  @click="quickTransferTab = false"-->
-        <!--                />-->
-        <!--              </q-btn-group> &ndash;&gt;-->
-
-        <!--              &lt;!&ndash; <template v-if="quickTransferTab">-->
-        <!--                <div class="numbers">-->
-        <!--                  <div class="instruction">Transfer amount to platform</div>-->
-
-        <!--                  <q-btn-->
-        <!--                    class="full-width"-->
-        <!--                    push-->
-        <!--                    glossy-->
-        <!--                    color="brand"-->
-        <!--                    v-for="(val, valIndex) in values"-->
-        <!--                    :key="valIndex"-->
-        <!--                    @click="submitTransfer(val)"-->
-        <!--                  >-->
-        <!--                    {{ val }}-->
-        <!--                  </q-btn>-->
-        <!--                </div>-->
-        <!--              </template> &ndash;&gt;-->
-        <!--              <template v-if="!quickTransferTab">-->
-        <!--                <DepositComponent/>-->
-        <!--              </template>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </q-drawer>-->
+        <template v-if="transferInfo.platform === 'PG'">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+            :class="showHeader ? 'game-header-iframe' : ''"
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+            :class="showHeader ? 'game-header-iframe' : ''"
+          ></iframe>
+        </template>
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
@@ -247,7 +203,7 @@ const closeDialog = () => {
   // router.replace({query})
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
-  // router.push({query: {...route.query, inGame: true}});
+  transferInfo.value.platform = platformCode;
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
@@ -300,8 +256,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               } else {
                 window.location.href = response.data;
               }
-              // src.value = response.data;
-              // visible.value = true;
             })
             .catch((err) => {
               $q.loading.hide();
@@ -329,6 +283,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             let srcData = response.data;
             if (platformCode === "PG") {
               srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+              logoShow.value = false;
             }
 
             if (way == "ANDROID") {
@@ -383,7 +338,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             } else if (platformCode === "PG") {
               let srcData = response.data;
               srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
-              window.location.href = srcData;
+
+              src.value = srcData;
+              visible.value = true;
             } else {
               // newWin.location.href = response.data;
               window.location.href = response.data;
