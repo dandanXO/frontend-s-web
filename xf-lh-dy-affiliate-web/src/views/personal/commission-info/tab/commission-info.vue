@@ -7,52 +7,54 @@
     <p>
       活跃人数：当月存款>=100或有效投注>=500；
     </p>
-    <table class="custom-table">
-      <thead>
-        <th>级别</th>
-        <th>公司本月总输赢</th>
-        <th>活跃数最低要求</th>
-        <th>佣金比例</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>1 - 40000</td>
-          <td>5</td>
-          <td>30%</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>40001 - 150000</td>
-          <td>10</td>
-          <td>35%</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>150001 - 300000</td>
-          <td>15</td>
-          <td>40%</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>300001 - 500000</td>
-          <td>25</td>
-          <td>45%</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>500001 - 1000000</td>
-          <td>35</td>
-          <td>50%</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>≥1000001</td>
-          <td>50</td>
-          <td>55%</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="overflow">
+      <table class="custom-table">
+        <thead>
+          <th>级别</th>
+          <th>公司本月总输赢</th>
+          <th>活跃数最低要求</th>
+          <th>佣金比例</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1 - 40000</td>
+            <td>5</td>
+            <td>30%</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>40001 - 150000</td>
+            <td>10</td>
+            <td>35%</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>150001 - 300000</td>
+            <td>15</td>
+            <td>40%</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>300001 - 500000</td>
+            <td>25</td>
+            <td>45%</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>500001 - 1000000</td>
+            <td>35</td>
+            <td>50%</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>≥1000001</td>
+            <td>50</td>
+            <td>55%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <h2>佣金计算方式</h2>
     <p>
       <ul>
@@ -73,27 +75,46 @@
   </div>
 </template>
 <style rel="stylesheet/scss" lang="scss" scoped>
-.note {
-  color: red;
+.el-tab-pane p {
+  color: #7D8792;
+  &.note {
+    color: #FB560A;
+  }
+}
+
+.el-tab-pane ul {
+  padding: 0;
+  margin: 0;
+}
+.el-tab-pane ul li {
+  color: #7D8792;
+  padding: 0;
+  margin: 0 0 10px 0;
+  list-style: none;
+}
+.overflow {
+  width: 100%;
+  overflow: auto;
 }
 /* Scoped styles for the component */
 .custom-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  min-width: 500px;
 }
 
 .custom-table th, .custom-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+  border: 0;
+  padding: 10px;
+  text-align: center;
 }
 
 .custom-table th {
-  background-color: #f2f2f2;
+  background-color: #F4F9FD;
 }
 
 .custom-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #F4F9FD;
 }
 </style>

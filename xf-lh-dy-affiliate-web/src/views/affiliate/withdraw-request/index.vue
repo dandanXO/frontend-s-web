@@ -5,71 +5,83 @@
         <span class="role-span">{{ $t('menu.Bank Withdrawal') }}</span>
       </div>
     </template>
-    <el-card style="width: fit-content; padding-right: 200px; margin-bottom: 20px;">
-      <div class="card-panel-description">
-        <div class="card-panel-text">{{ $t('fields.commissionBalance') }}<el-icon class="pointer" @click="loadAffiliateBalance"><Refresh /></el-icon></div>
-        <span v-if="showBalance" class="card-panel-num">
-          $ <span v-formatter="{data: balance,type: 'money'}" />
-        </span>
-        <span v-else>****</span>
-        <el-icon v-if="!showBalance" class="pointer" @click="showBalance = true"><View /></el-icon>
-        <el-icon v-else class="pointer" @click="showBalance = false"><Hide /></el-icon>
-      </div>
-    </el-card>
-    <el-row>
-      <el-form ref="formRef" :model="withdrawInfo" label-position="left" :rules="withdrawRules" label-width="200px">
-        <el-form-item :label="t('fields.selectACard')">
-          <el-row>
-            <div class="cards" v-for="(method, i) in withdrawalMethods"
-                 :key="i" :class="{active: i === activeItem}" @click="selectMethod(method, i)"
-            >
-              <el-card>
-                {{ method.name }}
-              </el-card>
+    <el-tabs v-model="activeName">
+      <el-tab-pane :label="t('menu.Bank Withdrawal')" name="bank-withdrawal">
+        <el-card class="balance-panel">
+          <div class="balance-inner">
+            <div class="money-icon"><img src="../../../assets/images/home/moneybal.svg"></div>
+            <div class="card-panel-description">
+              <div class="card-panel-text">{{ $t('fields.commissionBalance') }}<el-icon class="pointer" @click="loadAffiliateBalance"><Refresh /></el-icon></div>
+              <span v-if="isLoading" class="loading">
+                Loadinggg...
+              </span>
+              <span v-else>
+                <span v-if="showBalance" class="card-panel-num">
+                  $ <span v-formatter="{data: balance,type: 'money'}" />
+                </span>
+                <span v-else>****</span>
+                <el-icon v-if="!showBalance" class="pointer" @click="showBalance = true"><View /></el-icon>
+                <el-icon v-else class="pointer" @click="showBalance = false"><Hide /></el-icon>
+              </span>
             </div>
-          </el-row>
-        </el-form-item>
-        <el-form-item :label="t('fields.withdrawalAmount')" prop="amount">
-          <el-input-number
-            style="width: 100%;"
-            controls-position="right"
-            v-model="withdrawInfo.amount"
-            :placeholder="t('fields.enterTheWithdrawalAmount')"
-            :min="selectedWithdrawalMethod.withdrawMin"
-            :max="selectedWithdrawalMethod.withdrawMax"
-          />
-        </el-form-item>
-        <!-- <el-form-item label>
-        </el-form-item> -->
-        <div class="account-tip remain-box">
-          <div
-            v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin"
-          >
-            {{ $t('message.singleLimit') }} : {{
-              selectedWithdrawalMethod.withdrawMin +
-                " - " +
-                selectedWithdrawalMethod.withdrawMax }}
           </div>
-          <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-            {{ $t('message.withdrawalToday') }} : {{ selectedWithdrawalMethod.withdrawMaxAmount }}
-          </template>
-          <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-            {{ $t('message.remaining') }} : {{ selectedWithdrawalMethod.withdrawMaxTimes }} {{ $t('message.times') }}
-          </template>
-        </div>
-        <el-form-item :label="isUSDT === true ? t('fields.usdtWallet') : t('fields.bankCard')" prop="cardId">
-          <el-select @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''" value-key="id" v-model="withdrawInfo.cardId" :placeholder="t('fields.select')" size="large">
-            <el-option
-              v-for="item in withdrawState.bankCardList"
-              :key="item.id"
-              :label="item.bankName + ` - ` + item.cardNumber"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-button @click="showDialog('SEC_QN')">{{ $t('fields.confirmWithdraw') }}</el-button>
-      </el-form>
-    </el-row>
+        </el-card>
+        <el-row>
+          <el-form ref="formRef" :model="withdrawInfo" label-position="right" :rules="withdrawRules" label-width="200px" label-suffix=":">
+            <el-form-item :label="t('fields.selectACard')">
+              <el-row>
+                <div class="cards" v-for="(method, i) in withdrawalMethods"
+                     :key="i" :class="{active: i === activeItem}" @click="selectMethod(method, i)"
+                >
+                  <el-card>
+                    {{ method.name }}
+                  </el-card>
+                </div>
+              </el-row>
+            </el-form-item>
+            <el-form-item :label="t('fields.withdrawalAmount')" prop="amount" style="margin-bottom: 5px;">
+              <el-input-number
+                style="width: 100%;"
+                controls-position="right"
+                v-model="withdrawInfo.amount"
+                :placeholder="t('fields.enterTheWithdrawalAmount')"
+                :min="selectedWithdrawalMethod.withdrawMin"
+                :max="selectedWithdrawalMethod.withdrawMax"
+              />
+            </el-form-item>
+            <!-- <el-form-item label>
+            </el-form-item> -->
+            <div class="account-tip remain-box">
+              <div
+                v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin"
+              >
+                {{ $t('message.singleLimit') }} : {{
+                  selectedWithdrawalMethod.withdrawMin +
+                    " - " +
+                    selectedWithdrawalMethod.withdrawMax }}
+              </div>
+              <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
+                {{ $t('message.withdrawalToday') }} : {{ selectedWithdrawalMethod.withdrawMaxAmount }}
+              </template>
+              <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
+                {{ $t('message.remaining') }} : {{ selectedWithdrawalMethod.withdrawMaxTimes }} {{ $t('message.times') }}
+              </template>
+            </div>
+            <el-form-item :label="isUSDT === true ? t('fields.usdtWallet') : t('fields.bankCard')" prop="cardId">
+              <el-select @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''" value-key="id" v-model="withdrawInfo.cardId" :placeholder="t('fields.select')" size="large">
+                <el-option
+                  v-for="item in withdrawState.bankCardList"
+                  :key="item.id"
+                  :label="item.bankName + ` - ` + item.cardNumber"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+            <el-button class="rightBtn" @click="showDialog('SEC_QN')">{{ $t('fields.confirmWithdraw') }}</el-button>
+          </el-form>
+        </el-row>
+      </el-tab-pane>
+    </el-tabs>
   </el-card>
   <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
     <el-form v-if="uiControl.dialogType === 'SEC_QN'" ref="secRef" :model="securityForm" :rules="securityFormRules" :inline="true" size="small" label-width="150px">
@@ -128,6 +140,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { required } from "../../../utils/validate";
 
+const activeName = ref('bank-withdrawal')
 const withdrawalMethods = ref([])
 const store = useStore();
 const router = useRouter();
@@ -305,7 +318,7 @@ const withdrawRules = {
 
 const selectedCard = ref([])
 const selectedWithdrawalMethod = ref([])
-
+const isLoading = ref(false)
 const selectMethod = (method, index) => {
   selectedCard.value = []
   withdrawInfo.withdrawCode = null;
@@ -398,8 +411,10 @@ function getWithdrawalMethods() {
 }
 
 async function loadAffiliateBalance() {
+  isLoading.value = true
   const { data: bal } = await getAffiliateCommissionBalance(store.state.user.id);
   balance.value = bal;
+  isLoading.value = false
 }
 
 async function checkWithdrawPw() {
@@ -437,27 +452,78 @@ onMounted(async() => {
 .el-row.flex-column {
   flex-direction: column;
 }
+.el-row .cards .el-card {
+  background: #F4F9FD;
+  border: 1px solid transparent;
+  box-shadow: none;
+  border-radius: 5px !important;
+}
 .el-row .cards.active .el-card {
- background: #304156;
- color: #ffffff;
+ color: #458BFF;
+ position: relative;
+  border: 1px solid#409eff;
+  background: #ecf5ff;
+  overflow: hidden;
+  &:before {
+    content: "✔";
+    position: absolute;
+    color: #ffffff;
+    padding: 0px;
+    right: 3px;
+    bottom: 3px;
+    width: 8px;
+    height: 8px;
+    font-size: 10px;
+    background-size: contain;
+    z-index: 1;
+  }
+  &:after {
+    content: "";
+    background: #409eff;
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    transform: rotateZ(45deg);
+  }
 }
 .account-tip {
   display: flex;
   flex-direction: column;
     line-height: 20px;
-    padding: 10px 0;
+    padding: 0;
+    margin: 0 0 20px;
+    font-size: 14px;
+    color: #7D8592;
+}
+.balance-panel {
+  display: flex;
+  min-width: 300px;
+  max-width: 500px; margin-bottom: 10px; background: #F4F9FD;
+  .balance-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
 }
 
-.card-panel-description {
+.card-panel-description{
   font-weight: 700;
   margin-left: 0;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
 }
 
 .card-panel-description .card-panel-text {
   line-height: 18px;
   color: rgba(0, 0, 0, 0.45);
   font-size: 16px;
-  margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-panel-description .card-panel-link-text {
@@ -470,19 +536,26 @@ onMounted(async() => {
 .card-panel-description .card-panel-num {
   font-size: 20px;
 }
-
+.card-panel-description .loading {
+  font-size: 15px;
+  line-height: 18px;
+  margin-top: 5px;
+}
 .pointer {
   cursor: pointer;
-  padding: 10px;
+  padding: 0 5px;
 }
 
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
 }
-  .account-tip.remain-box {
-    margin-left: 200px;
-  }
+.account-tip.remain-box {
+  margin-left: 200px;
+}
+.el-form-item {
+  align-items: center;
+}
 @media (max-width: 768px) {
   .el-form-item {
     flex-direction: column;

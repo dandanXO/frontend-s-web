@@ -6,7 +6,7 @@
           <span class="role-span">{{ $t('menu.Channel Pack') }}</span>
         </div>
       </template>
-      <el-tabs v-model="activeName" style="margin-left: 20px" :tab-change="checkHistory(activeName)">
+      <el-tabs v-model="activeName" :tab-change="checkHistory(activeName)">
         <el-tab-pane label="APP" name="app-channel">
           <AppChannelTab />
         </el-tab-pane>
