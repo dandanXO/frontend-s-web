@@ -145,7 +145,7 @@ const routes = [
     children: [
       {
         path: "",
-        name: "vip",
+        name: "vipapp",
         component: () => import("pages/games/VIPView.vue")
       }
     ],

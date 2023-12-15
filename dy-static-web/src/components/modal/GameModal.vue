@@ -244,7 +244,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          src.value = res.data;
+          let srcData = res.data;
+
+          if (platformCode === "PG") {
+            srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+          }
+
+          src.value = srcData;
           visible.value = true;
         });
       }
