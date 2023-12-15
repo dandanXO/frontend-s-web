@@ -98,4 +98,66 @@ export default defineComponent({
     margin-left: 0;
   }
 }
+.el-dialog {
+  border-radius: 20px !important;
+  &__header {
+    margin: 0 20px;
+    border-bottom: 1px solid #eeeeee;
+  }
+  &__title {
+    color: #0A1629;
+    font-family: PFBold;
+  }
+}
+.el-dialog__headerbtn .el-dialog__close {
+  font-size: 25px;
+}
+.el-button {
+  border-radius: 10px;
+  box-shadow: 0px 6px 58px 0px #C4CBD61A;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+  table caption {
+    font-size: 1.3em;
+  }
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
 </style>

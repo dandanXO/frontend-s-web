@@ -11,7 +11,7 @@
           <el-row :gutter="20" style="margin-bottom: 20px;">
             <el-col :xl="6" :lg="8" :md="12">
               <el-form-item :label="t('fields.imageTitle')">
-                <el-input size="small" v-model="request.name" />
+                <el-input size="normal" v-model="request.name" />
               </el-form-item>
             </el-col>
             <el-col :xl="8" :lg="12" :md="12">
@@ -20,7 +20,7 @@
                   v-model="request.updateTime"
                   format="DD/MM/YYYY"
                   value-format="YYYY-MM-DD"
-                  size="small"
+                  size="normal"
                   class="input-small"
                   type="daterange"
                   range-separator=":"
@@ -36,7 +36,7 @@
             </el-col>
             <el-col :xl="8" :lg="8" :md="12">
               <el-form-item :label="t('fields.imageSize')">
-                <el-select style="width: 100%;" v-model="request.imageSize" size="small">
+                <el-select style="width: 100%;" v-model="request.imageSize" size="normal">
                   <el-option :label="t('fields.all')" key="0" value="" />
                   <el-option
                     v-for="size in sizeList"
@@ -49,7 +49,7 @@
             </el-col>
             <el-col :xl="6" :lg="8" :md="12">
               <el-form-item :label="t('fields.imageType')">
-                <el-select style="width: 100%;" v-model="request.posterType" size="small">
+                <el-select style="width: 100%;" v-model="request.posterType" size="normal">
                   <el-option :label="t('fields.all')" key="0" value="" />
                   <el-option
                     v-for="poster in posterType"
@@ -65,11 +65,11 @@
                 icon="el-icon-search"
                 type="primary"
                 @click="loadPosterList()"
-                size="mini"
+                size="normal"
               >
                 {{ $t('fields.search') }}
               </el-button>
-              <el-button size="mini" type="primary" plain @click="resetQuery()">
+              <el-button size="normal" type="primary" plain @click="resetQuery()">
                 {{ $t('fields.reset') }}
               </el-button>
             </el-col>

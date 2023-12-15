@@ -7,54 +7,52 @@
     <p>
       活跃人数：当月存款>=100或有效投注>=500；
     </p>
-    <div class="overflow">
-      <table class="custom-table">
-        <thead>
-          <th>级别</th>
-          <th>公司本月总输赢</th>
-          <th>活跃数最低要求</th>
-          <th>佣金比例</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>1 - 40000</td>
-            <td>5</td>
-            <td>30%</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>40001 - 150000</td>
-            <td>10</td>
-            <td>35%</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>150001 - 300000</td>
-            <td>15</td>
-            <td>40%</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>300001 - 500000</td>
-            <td>25</td>
-            <td>45%</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>500001 - 1000000</td>
-            <td>35</td>
-            <td>50%</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>≥1000001</td>
-            <td>50</td>
-            <td>55%</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="custom-table">
+      <thead>
+        <th scope="col">级别</th>
+        <th scope="col">公司本月总输赢</th>
+        <th scope="col">活跃数最低要求</th>
+        <th scope="col">佣金比例</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="级别">1</td>
+          <td data-label="公司本月总输赢">1 - 40000</td>
+          <td data-label="活跃数最低要求">5</td>
+          <td data-label="佣金比例">30%</td>
+        </tr>
+        <tr>
+          <td data-label="级别">2</td>
+          <td data-label="公司本月总输赢">40001 - 150000</td>
+          <td data-label="活跃数最低要求">10</td>
+          <td data-label="佣金比例">35%</td>
+        </tr>
+        <tr>
+          <td data-label="级别">3</td>
+          <td data-label="公司本月总输赢">150001 - 300000</td>
+          <td data-label="活跃数最低要求">15</td>
+          <td data-label="佣金比例">40%</td>
+        </tr>
+        <tr>
+          <td data-label="级别">4</td>
+          <td data-label="公司本月总输赢">300001 - 500000</td>
+          <td data-label="活跃数最低要求">25</td>
+          <td data-label="佣金比例">45%</td>
+        </tr>
+        <tr>
+          <td data-label="级别">5</td>
+          <td data-label="公司本月总输赢">500001 - 1000000</td>
+          <td data-label="活跃数最低要求">35</td>
+          <td data-label="佣金比例">50%</td>
+        </tr>
+        <tr>
+          <td data-label="级别">6</td>
+          <td data-label="公司本月总输赢">≥1000001</td>
+          <td data-label="活跃数最低要求">50</td>
+          <td data-label="佣金比例">55%</td>
+        </tr>
+      </tbody>
+    </table>
     <h2>佣金计算方式</h2>
     <p>
       <ul>
@@ -92,16 +90,12 @@
   margin: 0 0 10px 0;
   list-style: none;
 }
-.overflow {
-  width: 100%;
-  overflow: auto;
-}
 /* Scoped styles for the component */
 .custom-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  min-width: 500px;
+  // min-width: 500px;
 }
 
 .custom-table th, .custom-table td {
@@ -116,5 +110,10 @@
 
 .custom-table tbody tr:nth-child(even) {
   background-color: #F4F9FD;
+}
+@media(max-width: 600px) {
+  .custom-table td {
+    text-align: right;
+  }
 }
 </style>

@@ -296,7 +296,7 @@
           <el-row class="radiorow">
             <el-radio-group
               v-model="request.queryDate"
-              size="small"
+              size="normal"
               @change="loadOpsSummary"
             >
               <el-radio-button label="today">

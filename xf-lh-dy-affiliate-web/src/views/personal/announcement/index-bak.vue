@@ -25,23 +25,23 @@
           v-model="request.title"
           class="input-small"
           :placeholder="t('fields.title')"
-          size="small"
+          size="normal"
         />
         <div class="btn-grp">
           <el-button
             icon="el-icon-search"
             type="primary"
             @click="loadAffiliateAnnouncement()"
-            size="mini"
+            size="normal"
           >
             {{ $t('fields.search') }}
           </el-button>
-          <el-button size="mini" type="warning" @click="resetQuery()">
+          <el-button size="normal" type="primary" plain @click="resetQuery()">
             {{ $t('fields.reset') }}
           </el-button>
           <el-button
             icon="el-icon-edit"
-            size="mini"
+            size="normal"
             type="success"
             :disabled="uiControl.editBtn"
             @click="readAnnouncement()"
@@ -50,7 +50,7 @@
           </el-button>
           <el-button
             icon="el-icon-remove"
-            size="mini"
+            size="normal"
             type="danger"
             v-permission="['sys:annou:del']"
             :disabled="uiControl.removeBtn"
@@ -72,7 +72,7 @@
           :model="form"
           :rules="formRules"
           :inline="true"
-          size="small"
+          size="normal"
           label-width="150px"
         >
           <el-form-item>
@@ -85,7 +85,7 @@
         :data="page.records"
         ref="table"
         row-key="id"
-        size="small"
+        size="normal"
         highlight-current-row
         v-loading="page.loading"
         style="margin-top: 15px; margin-left: 15px;"
@@ -119,13 +119,13 @@
           <template #default="scope">
             <el-button
               icon="el-icon-view"
-              size="mini"
+              size="normal"
               type="success"
               @click="readAnnouncement(scope.row)"
             />
             <el-button
               icon="el-icon-delete"
-              size="mini"
+              size="normal"
               type="delete"
               @click="removeAnnouncement(scope.row)"
             />

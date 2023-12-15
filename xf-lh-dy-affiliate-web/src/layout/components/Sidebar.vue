@@ -52,13 +52,13 @@ const { t } = useI18n()
 const route = useRoute()
 const navigationData = ref([
   {
-    title: t('首页'),
+    title: t('menu.Dashboard'),
     display: false,
     path: '',
     children: [
       {
         path: '/dashboard',
-        title: '首页',
+        title: t('menu.Dashboard'),
         active: false,
         isMainNav: true,
         icon: 'home',

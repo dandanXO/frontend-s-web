@@ -49,7 +49,7 @@
         <el-tag @click.stop="deleteItem(idx, index, element)">x</el-tag>-->
       </div>
       <!-- </div> -->
-      <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
+      <!--      <el-button icon="el-icon-refresh" size="normal" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
 
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">

@@ -8,7 +8,7 @@
               v-model="request.finishTime"
               format="DD/MM/YYYY"
               value-format="YYYY-MM-DD"
-              size="small"
+              size="normal"
               class="input-small"
               type="daterange"
               range-separator=":"
@@ -24,7 +24,7 @@
         </el-col>
         <el-col :xl="4" :lg="8" :md="8">
           <el-form-item :label="t('fields.osType')">
-            <el-select v-model="request.status" size="small">
+            <el-select v-model="request.status" size="normal">
               <el-option :label="t('fields.all')" key="0" value="" />
               <el-option
                 v-for="status in statusList"
@@ -40,11 +40,11 @@
             icon="el-icon-search"
             type="primary"
             @click="loadHistory()"
-            size="mini"
+            size="normal"
           >
             {{ $t('fields.search') }}
           </el-button>
-          <el-button size="mini" type="primary" plain @click="resetQuery()">
+          <el-button size="normal" type="primary" plain @click="resetQuery()">
             {{ $t('fields.reset') }}
           </el-button>
         </el-col>
@@ -54,9 +54,12 @@
       :data="page.records"
       ref="table"
       row-key="id"
-      size="small"
+      size="normal"
       highlight-current-row
     >
+      <template #empty>
+        <emptyComp />
+      </template>
       <el-table-column prop="sequence" :label="t('fields.sequence')" width="50">
         <template #default="scope">
           {{ (request.current - 1) * 10 + scope.$index + 1 }}
@@ -96,7 +99,7 @@
           <el-button
             v-if="scope.row.status === 'SUCCESS'"
             icon="el-icon-view"
-            size="mini"
+            size="normal"
             type="success"
             @click="viewDetail(scope.row)"
           >
@@ -105,7 +108,7 @@
           <el-button
             v-if="scope.row.status === 'IN_QUEUE'"
             icon="el-icon-remove"
-            size="mini"
+            size="normal"
             type="danger"
             @click="cancelPack(scope.row.id)"
           >
@@ -280,6 +283,7 @@ import QrcodeVue from 'qrcode.vue'
 import { getConfigs } from '../../../../api/system-config'
 // import { getShortLink } from '../../../../api/affiliate-short-link'
 // import { generateRandomAlphaNumeric } from '@/utils/utils'
+import emptyComp from '@/components/empty'
 
 defineExpose({
   loadHistory,
@@ -634,7 +638,6 @@ onMounted(() => {
     margin-bottom: 0;
   }
 }
-
 .btn-group {
   width: 100%;
   display: flex;

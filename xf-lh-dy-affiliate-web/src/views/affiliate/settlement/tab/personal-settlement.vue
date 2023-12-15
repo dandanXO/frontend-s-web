@@ -8,7 +8,7 @@
               v-model="request.recordTime"
               format="YYYY-MM"
               value-format="YYYY-MM"
-              size="small"
+              size="normal"
               class="input-small"
               type="month"
               range-separator=":"
@@ -27,11 +27,11 @@
               icon="el-icon-search"
               type="primary"
               @click="loadCommission()"
-              size="mini"
+              size="normal"
             >
               {{ $t('fields.search') }}
             </el-button>
-            <el-button size="mini" type="primary" plain @click="resetQuery()">
+            <el-button size="normal" type="primary" plain @click="resetQuery()">
               {{ $t('fields.reset') }}
             </el-button>
           </div>

@@ -8,7 +8,7 @@
     <el-row style="margin-bottom: 30px;">
       <el-col>
         <!-- <el-card shadow="always" @click="openDialog('bank')"><svg-icon icon-class="bankcard" style="margin-bottom: 5px; width: 100%; height: 100%;" />{{ $t('fields.addBankCard') }}</el-card> -->
-        <el-button class="addcardbtn" :icon="add" size="small" @click="openDialog('bank')" type="primary"><svg-icon icon-class="add" style="display:inline-block; font-size: 20px;" /><span>{{ $t('fields.addBankCard') }}</span></el-button>
+        <el-button class="addcardbtn" :icon="add" size="normal" @click="openDialog('bank')" type="primary"><svg-icon icon-class="add" style="display:inline-block; font-size: 20px;" /><span>{{ $t('fields.addBankCard') }}</span></el-button>
       </el-col>
     </el-row>
     <div class="subtitle">绑定账户列表</div>
@@ -20,7 +20,7 @@
           <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
           <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
           <el-table-column prop="cardAddress" :label="t('fields.cardAddress')" />
-          <el-table-column :label="t('fields.actions')" fixed="right" width="100">
+          <el-table-column :label="t('fields.actions')" width="100">
             <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
             <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
           </el-table-column>
@@ -80,7 +80,7 @@
           <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
           <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
           <el-table-column prop="cardAddress" :label="t('fields.cardAddress')" />
-          <el-table-column :label="t('fields.actions')" fixed="right" width="100">
+          <el-table-column :label="t('fields.actions')" width="100">
             <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
             <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
           </el-table-column>
@@ -95,7 +95,7 @@
           <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
           <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
           <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
-          <el-table-column :label="t('fields.actions')" fixed="right" width="100">
+          <el-table-column :label="t('fields.actions')" width="100">
             <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
             <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
           </el-table-column>

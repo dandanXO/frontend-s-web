@@ -5,7 +5,7 @@
         v-model="request.depositDate"
         format="DD/MM/YYYY HH:mm:ss"
         value-format="YYYY-MM-DD HH:mm:ss"
-        size="small"
+        size="normal"
         type="datetimerange"
         range-separator=":"
         :start-placeholder="t('fields.startDate')"
@@ -19,7 +19,7 @@
       />
       <el-select
         v-model="request.status"
-        size="small"
+        size="normal"
         :placeholder="t('fields.status')"
         class="filter-item"
         style="margin-left: 5px; width: 200px;"
@@ -33,17 +33,17 @@
         />
       </el-select>
       <div class="btn-grp">
-        <el-button icon="el-icon-search" type="primary" @click="loadDepositRecords()" size="mini">
+        <el-button icon="el-icon-search" type="primary" @click="loadDepositRecords()" size="normal">
           {{ $t('fields.search') }}
         </el-button>
-        <el-button size="mini" type="primary" plain @click="resetQuery()">
+        <el-button size="normal" type="primary" plain @click="resetQuery()">
           {{ $t('fields.reset') }}
         </el-button>
       </div>
     </div>
     <el-table :data="page.records" ref="table"
               row-key="id"
-              size="small"
+              size="normal"
               highlight-current-row
               v-loading="page.loading"
               style="margin-top: 15px;"
@@ -77,10 +77,10 @@
       </el-table-column>
       <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="100">
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'CLOSED'" type="danger" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'PENDING'" type="warning" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else type="info" size="mini">-</el-tag>
+          <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'CLOSED'" type="danger" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'PENDING'" type="warning" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+          <el-tag v-else type="info" size="normal">-</el-tag>
         </template>
       </el-table-column>
       <!-- <el-table-column prop="paymentName" :label="t('fields.paymentName')" align="center" min-width="100">

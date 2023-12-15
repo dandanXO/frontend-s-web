@@ -12,7 +12,7 @@
         :key="appType.type"
         :class="form.appType === appType.type ? 'tick' : ''"
         plain
-        size="small"
+        size="normal"
         style="min-width: 100px; padding-left: 10px;"
         @click="onAppTypeChange(index)"
       >
@@ -27,7 +27,7 @@
     </el-form-item>
     <el-form-item :label="t('fields.apkType')">
       <el-button
-        size="small"
+        size="normal"
         style="min-width: 100px; padding-left: 10px;"
         :class="form.apkType === 'NORMAL' ? 'tick' : ''"
         @click="onApkTypeChange(1)"
@@ -35,7 +35,7 @@
         {{ $t('fields.normal') }}
       </el-button>
       <el-button
-        size="small"
+        size="normal"
         style="min-width: 100px; padding-left: 10px;"
         :class="form.apkType !== 'NORMAL' ? 'tick' : ''"
         @click="onApkTypeChange(2)"
@@ -49,7 +49,11 @@
       </div>
     </el-form-item>
     <el-form-item :label="t('fields.appName')" prop="name">
-      <el-input v-model="form.name" />
+      <el-row>
+        <el-col :span="8">
+          <el-input size="normal" v-model="form.name" />
+        </el-col>
+      </el-row>
     </el-form-item>
     <el-form-item :label="t('fields.appIcon')" prop="icon">
       <div id="preview">

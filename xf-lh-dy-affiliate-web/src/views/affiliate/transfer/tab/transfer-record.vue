@@ -5,7 +5,7 @@
         v-model="request.transferDate"
         format="DD/MM/YYYY"
         value-format="YYYY-MM-DD HH:mm:ss"
-        size="small"
+        size="normal"
         type="daterange"
         :start-placeholder="t('fields.startDate')"
         :end-placeholder="t('fields.endDate')"
@@ -17,14 +17,14 @@
         :default-time="defaultTime"
       />
       <div class="btn-grp">
-        <el-button icon="el-icon-search" type="primary" @click="loadTransferRecords()" size="mini">
+        <el-button icon="el-icon-search" type="primary" @click="loadTransferRecords()" size="normal">
           {{ $t('fields.search') }}
         </el-button>
       </div>
     </div>
     <el-table :data="page.records" ref="table"
               row-key="id"
-              size="small"
+              size="normal"
               highlight-current-row
               v-loading="page.loading"
               style="margin-top: 15px;"
@@ -50,8 +50,8 @@
       <el-table-column prop="rollover" :label="t('fields.rollover')" align="center" min-width="100" />
       <el-table-column prop="type" :label="t('fields.transferType')" align="center" min-width="150">
         <template #default="scope">
-          <el-tag v-if="scope.row.type === 'DEPOSIT'" type="success" size="mini">{{ t('transferType.' + scope.row.type) }}</el-tag>
-          <el-tag v-else-if="scope.row.type === 'COMMISSION'" type="warning" size="mini">{{ t('transferType.' + scope.row.type) }}</el-tag>
+          <el-tag v-if="scope.row.type === 'DEPOSIT'" type="success" size="normal">{{ t('transferType.' + scope.row.type) }}</el-tag>
+          <el-tag v-else-if="scope.row.type === 'COMMISSION'" type="warning" size="normal">{{ t('transferType.' + scope.row.type) }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
