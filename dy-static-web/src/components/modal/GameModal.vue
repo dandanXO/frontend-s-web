@@ -194,7 +194,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           platformCode === "SGWin" ||
           platformCode === "TCG" ||
           platformCode === "PT" ||
-          (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
+          (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc") ||
+          (platformCode === "onlyPlatform" && (gameCode === "IMES" || gameCode === "IM"))
         )
       ) {
         visible.value = true;
@@ -204,7 +205,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         iframeScroll.value = true;
       }
 
-      if (platformCode === "onlyPlatform" && gameCode === "IMES") {
+      if (platformCode === "onlyPlatform" && (gameCode === "IMES" || gameCode === "IM")) {
         launchSessionGame(gameCode, {
           isMobile: isMobile()
         }).then((res) => {
@@ -243,7 +244,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          src.value = res.data;
+          let srcData = res.data;
+
+          if (platformCode === "PG") {
+            srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+          }
+
+          src.value = srcData;
           visible.value = true;
         });
       }

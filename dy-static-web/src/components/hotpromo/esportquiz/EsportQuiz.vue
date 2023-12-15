@@ -312,6 +312,7 @@ function onPaginationClick(pageIndex) {
 
 const tableInfo = ref([]);
 function getRecordList() {
+  tableInfo.value = [];
   const { pageSize, pageNumber } = paginationInfo;
   const start = (pageNumber - 1) * pageSize;
   const end = Math.min(start + pageSize, records.value.length); // Ensure end does not exceed array length

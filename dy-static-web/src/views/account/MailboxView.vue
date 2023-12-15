@@ -121,6 +121,7 @@
 import { ref, reactive, onMounted, computed } from "vue";
 import {
   mailInbox,
+  clearMailInboxCache,
   mailOutbox,
   readMail,
   readMultipleMail,
@@ -266,6 +267,8 @@ const openMsg = (m) => {
     .then((res) => {
       const { code, data } = res;
 
+      clearMailInboxCache();
+      loadPersonalMailbox();
       // if (code === 0) m.content = data.content;
     })
     .catch((error) => {
@@ -282,6 +285,9 @@ const readAllMsg = (m) => {
           message: "已全读部消息",
           type: "success"
         });
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
       }
     })
     .catch((error) => {
@@ -300,6 +306,10 @@ const deleteMsg = (id, spliceIndex, callback) => {
         });
 
         if (spliceIndex !== null) mailboxState.mailboxList[mailboxState.active].list.splice(spliceIndex, 1); // fake delete
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
+
         callback && callback();
       }
     })
@@ -316,6 +326,9 @@ const deleteAllMsg = (m) => {
           message: "已删除全部消息",
           type: "success"
         });
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
       }
     })
     .catch((error) => {
@@ -342,6 +355,9 @@ const readMultipleMsg = () => {
           message: "读取已选择的消息",
           type: "success"
         });
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
 
         isShowSelect.value = false;
       }
@@ -377,6 +393,9 @@ const deleteMultipleMsg = () => {
         Object.keys(selectedIds.value).forEach((key) => {
           selectedIds.value[key] = false;
         });
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
       }
     })
     .catch((error) => {
