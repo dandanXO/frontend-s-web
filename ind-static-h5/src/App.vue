@@ -4,13 +4,16 @@
 
 <script>
 import { defineComponent, onMounted } from "vue";
-import { useQuasar } from "quasar";
+import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
+import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+import { isAndroid } from "boot/utils";
+import AdjustWeb from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "App",
@@ -106,11 +109,51 @@ export default defineComponent({
       console.log(info);
       console.log(info.identifier);
     };
+
+    const initOrientation = () => {
+      if (isAndroid()) {
+        screen.orientation.lock("portrait");
+      }
+    };
+
+    const initAdjustEventTrack = () => {
+      if (isAndroid()) {
+        //Android App.
+        console.log("Init Adjust Sdk");
+        var adjustConfig = new AdjustConfig("pxrvpkqs0a9s", AdjustEnvironment.Production);
+        adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+        Adjust.create(adjustConfig);
+
+        setTimeout(() => {
+          Adjust.getAdid().then((aaid) => {
+            console.log("aaid");
+            console.log(aaid);
+            store.aaid = aaid;
+          });
+        }, 1000);
+      } else {
+        //Normal WEb / H5 / iOS WEbclip.
+        console.log("Init Web Adjust");
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.initSdk({
+          appToken: "pxrvpkqs0a9s",
+          environment: "production"
+        });
+        setTimeout(() => {
+          const resp = AdjustWeb.getAttribution();
+          console.log("Web Adid");
+          console.log(resp.adid);
+          store.aaid = resp.adid;
+        }, 1000);
+      }
+    };
+
     onMounted(() => {
       checkSID();
-      // initCsWeb();
       getCSA();
       getAppInfo();
+      initOrientation();
+      initAdjustEventTrack();
     });
   }
 });

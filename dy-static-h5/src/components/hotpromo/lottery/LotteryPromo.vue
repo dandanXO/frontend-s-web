@@ -37,7 +37,13 @@
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="query.recordTime">
+                          <q-date
+                            v-model="query.recordTime"
+                            v-close-popup="dateClosePopup"
+                            @navigation="dateClosePopup = false"
+                            @update:model-value="dateClosePopup = true"
+                          >
+                            <!-- <q-date v-model="query.recordTime" @update:model-value="v-close-popup" > -->
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
                             </div>
@@ -76,7 +82,12 @@
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="winnersQuery.resultTime">
+                          <q-date
+                            v-model="winnersQuery.resultTime"
+                            v-close-popup="dateClosePopup"
+                            @navigation="dateClosePopup = false"
+                            @update:model-value="dateClosePopup = true"
+                          >
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
                             </div>
@@ -165,9 +176,9 @@ const recordColumns = [
     sortable: true
   },
   {
-    name: "recordNumber",
+    name: "number",
     label: "玩家选号",
-    field: "recordNumber",
+    field: "number",
     align: "center",
     sortable: true
   }
@@ -182,42 +193,51 @@ const query = reactive({
 
 const dataSource = ref([]);
 function retrieveList() {
-  if (query.onlyMe) memberId = store.id;
-  else memberId = null;
+  if (query.recordTime) {
+    if (query.onlyMe) memberId = store.id;
+    else memberId = null;
 
-  query.recordTime = moment(query.recordTime).format("YYYY-MM-DD");
+    query.recordTime = moment(query.recordTime).format("YYYY-MM-DD");
 
-  luckyNumberList(query, memberId)
-    .then((res) => {
-      const { code, data } = res;
-      if (code === 0) {
-        const newArray = [];
-        for (let i = 0; i < data.length; i++) {
-          const obj = data[i];
-          let status = "";
-          switch (obj.winStatus) {
-            case "BET":
-              status = "未开奖";
-              break;
-            case "WIN":
-              status = "已中奖";
-              break;
-            case "LOSS":
-              status = "未中奖";
-              break;
-            default:
-              console.log("LotteryPromo :: retrieveList :: no such winStatus exist!");
-              break;
+    luckyNumberList(query, memberId)
+      .then((res) => {
+        const { code, data } = res;
+        if (code === 0) {
+          const newArray = [];
+          for (let i = 0; i < data.length; i++) {
+            const obj = data[i];
+            let status = "";
+            switch (obj.winStatus) {
+              case "BET":
+                status = "未开奖";
+                break;
+              case "WIN":
+                status = "已中奖";
+                break;
+              case "LOSS":
+                status = "未中奖";
+                break;
+              default:
+                console.log("LotteryPromo :: retrieveList :: no such winStatus exist!");
+                break;
+            }
+            obj.winStatus = status;
+            newArray.push(obj);
           }
-          obj.winStatus = status;
-          newArray.push(obj);
+          dataSource.value = newArray;
         }
-        dataSource.value = newArray;
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  } else {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "请选择查询时间",
+      icon: "report_problem"
     });
+  }
 }
 
 // tab 3
@@ -235,9 +255,9 @@ const winnerColumns = [
     align: "center"
   },
   {
-    name: "resultNumber",
+    name: "number",
     label: "中奖号码",
-    field: "resultNumber",
+    field: "number",
     align: "center"
   }
 ];
@@ -248,26 +268,38 @@ const winnersQuery = reactive({
 
 const winnerDataSource = ref([]);
 function retrieveWinnerList() {
-  winnerDataSource.value = [];
+  if (winnersQuery.resultTime) {
+    winnerDataSource.value = [];
 
-  winnersQuery.resultTime = moment(winnersQuery.resultTime).format("YYYY-MM-DD");
+    winnersQuery.resultTime = moment(winnersQuery.resultTime).format("YYYY-MM-DD");
 
-  winnerList(winnersQuery, memberId)
-    .then((res) => {
-      const { code, data } = res;
-      if (code === 0) {
-        data.forEach((element) => {
-          element.winners.forEach((winner) => {
-            winner.resultTime = element.resultTime;
-            winnerDataSource.value.push(winner);
+    winnerList(winnersQuery, memberId)
+      .then((res) => {
+        const { code, data } = res;
+        if (code === 0) {
+          data.forEach((element) => {
+            element.winners.forEach((winner) => {
+              winner.resultTime = element.resultTime;
+              winnerDataSource.value.push(winner);
+            });
           });
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  } else {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "请选择查询时间",
+      icon: "report_problem"
     });
+  }
 }
+
+const closePopup = ref(true);
+const dateClosePopup = ref(true);
 </script>
 
 <style scoped lang="scss">
@@ -342,7 +374,8 @@ function retrieveWinnerList() {
         justify-content: space-between;
         background: white;
         padding: 20px;
-        height: 75px;
+        flex-wrap: wrap;
+        gap: 20px;
 
         .date {
           display: flex;
@@ -378,6 +411,7 @@ function retrieveWinnerList() {
           background-image: linear-gradient(-41deg, #0094ff 0, #19c6ff 100%), linear-gradient(#10111a, #10111a);
           border-radius: 30px;
           font-weight: 600;
+          margin-left: auto;
         }
       }
 

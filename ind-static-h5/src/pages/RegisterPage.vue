@@ -20,7 +20,7 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert Phone number',
-          (val) => (val.length >= 7 && val.length <= 12) || 'The phone number must be between 7 and 12'
+          (val) => val.length === 10 || 'The phone number must be 10 digits'
         ]"
         placeholder="Please Phone Number"
         color="white"
@@ -177,7 +177,8 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+import AdjustWeb from "@adjustcom/adjust-web-sdk";
 export default defineComponent({
   name: "RegisterPage",
   setup() {
@@ -218,7 +219,7 @@ export default defineComponent({
             verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.codeId = response.data.id;
             regForm.captchaCode = "0000";
-            verificationRef.value.resetValidation();
+            // verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
@@ -292,8 +293,9 @@ export default defineComponent({
     };
 
     const isAlphanumeric = (value, translation) => {
-      const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
-      return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+      const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+      // const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+      return passwordPattern.test(value) || `${translation} must at least contain letters and numbers.`;
     };
 
     const router = useRouter();
@@ -333,8 +335,8 @@ export default defineComponent({
           excludes.value.forEach((element) => {
             delete allComponents[element];
           });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
-          regForm.sid = sidParam;
+          // const sidParam = FingerprintJS.hashComponents(allComponents);
+          regForm.sid = store.aaid;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
@@ -364,6 +366,18 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
+
+                //ADJUST TRACKEVENT.
+                if (Platform.is.android && Platform.is.capacitor) {
+                  var adjustEvent = new AdjustEvent("81ibj7");
+                  Adjust.trackEvent(adjustEvent);
+                } else {
+                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                  AdjustWeb.trackEvent({
+                    eventToken: "81ibj7"
+                  });
+                }
+
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
@@ -488,10 +502,10 @@ export default defineComponent({
         return "Please Enter Phone Number";
       }
 
-      const phoneRegex = /^\d{7,12}$/;
+      const phoneRegex = /^\d{10}$/;
       const isValid = phoneRegex.test(phone);
 
-      return isValid ? true : "Phone Number must be between 7 and 12 digits";
+      return isValid ? true : "Phone Number must be 10 digits";
     };
 
     return {

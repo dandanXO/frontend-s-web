@@ -7,11 +7,14 @@
           <div class="acc-pool-number">¥{{ cardInfo.cardDetail.setting.sumAward }}</div>
         </div>
       </div>
+
       <div class="text-center card-tips">
         已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
       </div>
-      <div class="text-center">
+      <div class="text-center position-relative">
         <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取虎卡</div>
+
+        <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">剩下 {{ cardInfo.cardDetail.leftCount }} 次机会领取</div>
       </div>
 
       <div class="content">
@@ -174,37 +177,49 @@ const pageLoadingText = ref("");
 const getNewTigerCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正领取虎卡";
-  getMemberCard({ promoCode: "dy2-tiger-card" }).then((res) => {
-    if (res.code === 0) {
-      cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1;
-      isCardModal.value = true;
-      cardWon.value = res.data.cardType;
+  getMemberCard({ promoCode: "dy2-tiger-card" })
+    .then((res) => {
+      if (res.code === 0) {
+        cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1;
+        isCardModal.value = true;
+        cardWon.value = res.data.cardType;
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
       isPageLoading.value = false;
-    } else {
-      ElMessage.error({
-        type: "error",
-        message: res.message
-      });
-    }
-    isPageLoading.value = false;
-  });
+      pageInit()
+    });
 };
 
 const compoundCard = () => {
 
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
-  synthesisCard({ promoCode: "dy2-tiger-card" }).then((res) => {
-    if (res.code === 0) {
-      pageInit();
-      ElMessage.success({
-        type: "success",
-        message: "success"
-      });
+  synthesisCard({ promoCode: "dy2-tiger-card" })
+    .then((res) => {
+      if (res.code === 0) {
+        pageInit();
+        ElMessage.success({
+          type: "success",
+          message: "success"
+        });
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
       isPageLoading.value = false;
-    }
-    isPageLoading.value = false;
-  });
+    });
 };
 
 const hukaList = ref([
@@ -503,6 +518,16 @@ body {
   margin-top: 20px;
   color: #87898a;
   text-align: center;
+}
+
+.redeem-tips {
+  display: flex;
+  justify-content: center;
+  padding-left: 70px;
+  margin-top: -10px;
+  color: #87898a;
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 
 .huka-list {

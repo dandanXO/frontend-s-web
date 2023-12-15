@@ -215,6 +215,38 @@
         </div>
       </div>
     </el-form-item>
+    <el-form-item :label="t('fields.feedbackType')" size="mini">
+      <div class="withdrawal_failure_type">
+        <div
+          class="adjust_type"
+          style="margin-bottom: 5px"
+          v-for="(item, index) in feedbackType"
+          :key="index"
+        >
+          <el-input v-model="item.value" />
+          <el-button
+            v-if="index === 0"
+            icon="el-icon-plus"
+            type="primary"
+            style="margin-left: 20px"
+            @click="addFeedbackType()"
+            plain
+          >
+            {{ t('fields.add') }}
+          </el-button>
+          <el-button
+            v-else
+            icon="el-icon-remove"
+            type="danger"
+            style="margin-left: 20px"
+            @click="delConfig(item.id)"
+            plain
+          >
+            {{ t('fields.delete') }}
+          </el-button>
+        </div>
+      </div>
+    </el-form-item>
     <el-divider />
     <el-form-item :label="t('fields.platformFee')" size="mini">
       <div class="withdrawal_failure_type">
@@ -257,7 +289,7 @@
         >
           <el-input
             v-model="item.value"
-            style="width: 150px"
+            style="width: 400px"
             :placeholder="t('fields.affiliateShortUrlPlatform')"
           />
         </div>
@@ -273,7 +305,7 @@
         >
           <el-input
             v-model="item.value"
-            style="width: 150px"
+            style="width: 400px"
             :placeholder="t('fields.affiliateWebLink')"
           />
         </div>
@@ -289,10 +321,20 @@
         >
           <el-input
             v-model="item.value"
-            style="width: 150px"
+            style="width: 400px"
             :placeholder="t('fields.affiliateH5Link')"
           />
         </div>
+      </div>
+    </el-form-item>
+
+    <el-form-item :label="t('fields.s3Url')" size="mini">
+      <div style="margin-bottom: 5px">
+        <el-input
+          v-model="s3Url"
+          :placeholder="t('fields.s3Url')"
+          style="width: 400px"
+        />
       </div>
     </el-form-item>
     <el-divider />
@@ -313,13 +355,74 @@
         </div>
       </div>
     </el-form-item>
+    <el-divider v-if="configs.customList.length > 0" />
+    <div v-for="(item, index) in configs.customList" :key="index">
+      <el-form-item
+        :label="
+          index !== 0 && item.code === configs.customList[index - 1].code
+            ? ''
+            : item.code
+        "
+        size="mini"
+      >
+        <el-input v-model="item.value" />
+        <el-button
+          icon="el-icon-remove"
+          size="mini"
+          type="danger"
+          style="margin-left: 20px"
+          @click="delConfig(item.id)"
+          plain
+        >
+          {{ t('fields.delete') }}
+        </el-button>
+      </el-form-item>
+    </div>
     <el-divider />
     <el-form-item size="mini">
       <el-button type="primary" @click="updateConfigs">
         {{ t('fields.confirm') }}
       </el-button>
+      <el-button
+        size="mini"
+        type="success"
+        icon="el-icon-circle-plus"
+        @click="showDialog()"
+      >
+        {{ t('fields.createConfig') }}
+      </el-button>
     </el-form-item>
   </el-form>
+  <el-dialog
+    :title="t('fields.createConfig')"
+    v-model="uiControl.dialogVisible"
+    append-to-body
+  >
+    <el-form
+      ref="configForm"
+      :model="form"
+      :rules="formRules"
+      label-width="150px"
+      label-position="left"
+      @submit.prevent
+    >
+      <el-form-item :label="t('fields.configCode')" prop="code">
+        <el-input v-model="form.code" :placeholder="t('fields.configCode')" />
+      </el-form-item>
+      <el-form-item :label="t('fields.configValue')" prop="value">
+        <el-input v-model="form.value" :placeholder="t('fields.configValue')" />
+      </el-form-item>
+    </el-form>
+
+    <div class="dialog-footer">
+      <el-button @click="uiControl.dialogVisible = false">
+        {{ $t('fields.cancel') }}
+      </el-button>
+      <el-button type="primary" @click="submit()">
+        {{ $t('fields.confirm') }}
+      </el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -329,10 +432,16 @@ import uuidv1 from 'uuid/v1'
 import { getVipList } from '../../../api/vip'
 import { getFinancialLevels } from '../../../api/financial-level'
 import { selectList } from '../../../api/risk-level'
-import { deleteById, getConfigs, updateBatch } from '../../../api/config'
+import {
+  deleteById,
+  getConfigs,
+  updateBatch,
+  createConfig,
+} from '../../../api/config'
 import { hasRole } from '../../../utils/util'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+import { required } from '../../../utils/validate'
 
 const { t } = useI18n()
 const siteId = ref()
@@ -349,15 +458,27 @@ const risks = ref([])
 
 const configs = reactive({
   value: [],
+  customList: [],
 })
 
-watch(
-  () => configs.value,
-  newVal => {
-    console.log(configs.value)
-  },
-  { deep: true }
-)
+const uiControl = reactive({
+  dialogVisible: false,
+})
+
+const configForm = ref(null)
+
+const form = reactive({
+  siteId: '',
+  code: null,
+  value: null,
+})
+
+const formRules = reactive({
+  code: [required(t('message.validateConfigCodeRequired'))],
+  value: [required(t('message.validateConfigValueRequired'))],
+})
+
+watch(() => configs.value, { deep: true })
 
 watch(
   () => siteId.value,
@@ -426,6 +547,8 @@ const withdrawFailCause = computed(() => getter('cancel_cause'))
 
 const adjustType = computed(() => getter('adjust_type'))
 
+const feedbackType = computed(() => getter('feedback_type'))
+
 const platformFee = computed(() => getter('platform_fee'))
 
 const paymentFee = computed(() => getter('payment_fee'))
@@ -439,6 +562,13 @@ const affiliateH5Link = computed(() => getter('affiliate_h5_link'))
 const affiliateShortUrlPlatform = computed(() =>
   getter('affiliate_short_url_platform')
 )
+
+const s3Url = computed({
+  get: () => getter('s3_url', false).value,
+  // eslint-disable-next-line no-return-assign
+  set: newVla =>
+    (configs.value.find(item => item.code === 's3_url').value = newVla),
+})
 
 function getter(code, isArray = true) {
   let subArray = configs.value.filter(config => config.code === code)
@@ -465,6 +595,10 @@ function addAdjustType() {
   addConfigs('adjust_type')
 }
 
+function addFeedbackType() {
+  addConfigs('feedback_type')
+}
+
 function addConfigs(code) {
   configs.value.push({
     id: uuidv1(),
@@ -475,12 +609,20 @@ function addConfigs(code) {
   })
 }
 
-function delConfig(id) {
+async function delConfig(id) {
   for (let index = 0; index < configs.value.length; index++) {
     if (configs.value[index].id === id) {
       configs.value.splice(index, 1)
       if (typeof id === 'number') {
-        deleteById(id)
+        ElMessageBox.confirm(t('message.confirmDelete'), {
+          confirmButtonText: t('fields.confirm'),
+          cancelButtonText: t('fields.cancel'),
+          type: 'warning',
+        }).then(async () => {
+          await deleteById(id)
+          ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
+          loadConfigs()
+        })
       }
       break
     }
@@ -511,6 +653,31 @@ async function loadRiskLevels() {
 async function loadConfigs() {
   const { data: ret } = await getConfigs({ siteId: siteId.value })
   configs.value = ret
+  configs.customList = configs.value.filter(
+    config =>
+      config.code !== 'adjust_type' &&
+      config.code !== 'affiliate_h5_link' &&
+      config.code !== 'affiliate_short_url_platform' &&
+      config.code !== 'affiliate_web_link' &&
+      config.code !== 'cancel_cause' &&
+      config.code !== 'cancel_type' &&
+      config.code !== 'cs_address' &&
+      config.code !== 'default_agent_financial' &&
+      config.code !== 'default_agent_risk' &&
+      config.code !== 'default_agent_vip' &&
+      config.code !== 'default_financial' &&
+      config.code !== 'default_risk' &&
+      config.code !== 'default_vip' &&
+      config.code !== 'feedback_type' &&
+      config.code !== 'payment_fee' &&
+      config.code !== 'platform_fee' &&
+      config.code !== 's3_url' &&
+      config.code !== 'withdraw_tips'
+  )
+  configs.customList = configs.customList.sort((a, b) =>
+    a.code < b.code ? -1 : 1
+  )
+  console.log(configs.customList)
 }
 
 async function updateConfigs() {
@@ -558,6 +725,25 @@ async function updateConfigs() {
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })
 }
 
+function showDialog() {
+  if (configForm.value) {
+    configForm.value.resetFields()
+  }
+  uiControl.dialogVisible = true
+}
+
+async function submit() {
+  configForm.value.validate(async valid => {
+    if (valid) {
+      form.siteId = siteId.value
+      await createConfig(form)
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      await loadConfigs()
+      uiControl.dialogVisible = false
+    }
+  })
+}
+
 onMounted(() => {
   loadSites()
   loadFinancialLevelInfos()
@@ -598,5 +784,10 @@ onMounted(() => {
   ::v-deep .el-input {
     width: 200px;
   }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

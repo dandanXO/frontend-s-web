@@ -1,13 +1,10 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 
-import {
-  createRouter,
-  createMemoryHistory,
-  createWebHistory,
-  createWebHashHistory
-} from "vue-router";
+import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
 
 /*
@@ -33,17 +30,34 @@ export default route(function (/* { store, ssrContext } */) {
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
-    history: createHistory(
-      process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
-    )
+    history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
-    if (to.path === "/login" || to.path === "/register" || to.path === '/forgot-account' || to.path === '/poker' || to.path === '/sport') {
-      ui.hiddenFooter()
+    if (
+      to.path === "/login" ||
+      to.path === "/register" ||
+      to.path === "/forgot-account" ||
+      to.path === "/poker" ||
+      to.path === "/sport" ||
+      to.path === "/promotion" ||
+      to.path === "/finance/depositMobile"
+    ) {
+      ui.hiddenFooter();
     } else {
-      ui.showFooter()
+      ui.showFooter();
+    }
+
+    if (to.path === "/promotion" || to.path === "/finance/depositMobile") {
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+
+      user.token = to.query.token;
+      console.log("user", user.token);
     }
 
     if (to.name === "agentCode") {
@@ -63,7 +77,10 @@ export default route(function (/* { store, ssrContext } */) {
       if (to.path === "/login") {
         next({ path: "/" });
       } else {
-        if (user.nickName === "") {
+        if (
+          user.nickName === "" &&
+          (window.location.pathname !== "/promotion" || window.location.pathname !== "/finance/depositMobile")
+        ) {
           user.getMemberInfo().then(() => next({ ...to, replace: true }));
         } else {
           next();

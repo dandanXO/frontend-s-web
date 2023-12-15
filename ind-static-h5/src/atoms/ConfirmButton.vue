@@ -2,13 +2,14 @@
   <q-card-actions>
     <div :class="`confirm-btn-container ${isDisabled ? 'disabled' : ''}`" @click="onBtnClick()">
       <img class="confirm-btn" src="../assets/images/index/confirm-btn.png" alt="" />
-      <span class="confirm-btn-text">{{ label }}</span>
+      <q-spinner v-if="isLoading" color="white" size="3em" :thickness="2"></q-spinner>
+      <span v-else class="confirm-btn-text">{{ label }}</span>
     </div>
   </q-card-actions>
 </template>
 
 <script setup>
-const props = defineProps(["label", "confirmFunc", "isDisabled"]);
+const props = defineProps(["label", "confirmFunc", "isDisabled", "isLoading"]);
 // NOTE: declaring won't update the value, probably defineProps cloned it.
 // const { confirmFunc, isDisabled } = props;
 
@@ -41,6 +42,10 @@ const onBtnClick = () => {
     position: absolute;
     font-size: 1.25rem;
     font-weight: bold;
+  }
+
+  .q-spinner {
+    position: absolute;
   }
 }
 </style>

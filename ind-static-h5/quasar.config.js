@@ -12,6 +12,8 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 
 const { configure } = require("quasar/wrappers");
 
+const isImageCompress = false;
+
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 module.exports = configure(function (ctx) {
@@ -76,14 +78,16 @@ module.exports = configure(function (ctx) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
 
         // Add Image Compression
-        chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
-          {
-            test: /\.(jpe?g|png|gif|svg)$/i,
-            pngquant: {
-              quality: "70"
+        if (process.env.NODE_ENV === "production" && isImageCompress) {
+          chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
+            {
+              test: /\.(jpe?g|png|gif|svg)$/i,
+              pngquant: {
+                quality: "70"
+              }
             }
-          }
-        ]);
+          ]);
+        }
       }
     },
 

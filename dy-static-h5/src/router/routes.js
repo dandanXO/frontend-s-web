@@ -36,6 +36,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/promotion",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
+  },
+  {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
@@ -160,11 +165,11 @@ const routes = [
     component: () => {}
     // component: () => {},
   },
-  {
-    path: "/privilege/invite",
-    name: "invite",
-    component: () => import("pages/PrivilegeInvite.vue")
-  },
+  // {
+  //   path: "/privilege/invite",
+  //   name: "invite",
+  //   component: () => import("pages/PrivilegeInvite.vue")
+  // },
   {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
@@ -489,6 +494,17 @@ const routes = [
       }
     ],
     meta: { requiresAuth: true }
+  },
+  {
+    path: "/finance/depositMobile",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/finance/DepositMobileView.vue")
+      }
+    ],
+    meta: { requiresAuth: false }
   },
   {
     path: "/display",

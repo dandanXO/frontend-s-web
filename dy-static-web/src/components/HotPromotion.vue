@@ -19,6 +19,17 @@
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
+    <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade-bonus' && !isCommonPromo && store.token" />
+    <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token" /> -->
+    <PrivilegeInvite
+      v-if="
+        (list.redirectUrl === 'Dongying-refer' ||
+          list.redirectUrl === 'dy2-refer-bonus' ||
+          list.redirectUrl === 'dy2-refer-bonus') &&
+        !isCommonPromo &&
+        store.token
+      "
+    />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -49,7 +60,10 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
+import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
+// import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
+// import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 
@@ -70,7 +84,10 @@ export default defineComponent({
     WelcomeTaskPromo,
     EsportQuiz,
     LotteryPromo,
-    GiftPromo
+    PrivilegeInvite,
+    GiftPromo,
+    // VIPUpgradePromo,
+    // ReferBonusPromo
     // DailyBonus
   },
   props: {
@@ -190,7 +207,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    // console.log("Mount");
+    console.log("Mount");
     // console.log(this.list);
     // List for non common promo
 
@@ -206,7 +223,10 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "dy2-lottery" ||
       this.list.redirectUrl === "Dongying-quiz" ||
-      this.list.redirectUrl === "dy2-gift"
+      this.list.redirectUrl === "dy2-gift" ||
+      this.list.redirectUrl === "Dongying-refer" ||
+      this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
+      this.list.redirectUrl === "dy2-refer-bonus"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -220,6 +240,7 @@ export default defineComponent({
   }
 });
 </script>
+
 <style lang="scss">
 .award-modal {
   background: none;
@@ -302,6 +323,7 @@ export default defineComponent({
     gap: 30px;
     text-align: center;
     padding: 20px;
+    align-items: center;
 
     .extrel-img {
       position: absolute;

@@ -9,7 +9,7 @@
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
       <div class="discount-row discount-row--title">
         <div class="discount-col">
-          <span class="txt-gray">{{ e.recordTime }}</span>
+          <span class="txt-gray">{{ convertToGMT55(e.recordTime) }}</span>
         </div>
       </div>
       <div class="discount-row discount-row--content">
@@ -27,7 +27,7 @@
 import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
@@ -67,9 +67,12 @@ const searchDiscountRecord = () => {
   discountData.value = [];
 
   const { startDate, endDate } = searchForm;
+  
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/privilege", {
-      params: { startDate, endDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
     })
     .then((response) => {
       if (response.code === 0) {

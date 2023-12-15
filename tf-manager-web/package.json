@@ -58,7 +58,8 @@
     "vuex-persistedstate": "^4.0.0-beta.1",
     "wangeditor": "^4.7.10",
     "xlsx": "^0.18.4",
-    "xlsx-js-style": "^1.2.0"
+    "xlsx-js-style": "^1.2.0",
+    "yarn": "^1.22.21"
   },
   "devDependencies": {
     "@iconify-icons/fluent": "^1.2.17",

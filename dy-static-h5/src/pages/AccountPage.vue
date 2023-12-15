@@ -247,12 +247,12 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <!--        <router-link to="/affiliate">-->
-        <!--          <div class="acct-nav-item">-->
-        <!--            <img src="../assets/images/account/menu_affiliate.svg"/>-->
-        <!--            <div class="acct-nav-label">加盟</div>-->
-        <!--          </div>-->
-        <!--        </router-link>-->
+        <a href="https://partner.dyvip90.com/" target="_blank">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/menu_affiliate.svg" />
+            <div class="acct-nav-label">加盟</div>
+          </div>
+        </a>
         <!--        <a @click="logout">-->
         <!--          <div class="acct-nav-item">-->
         <!--            <img src="../assets/account/btn-logout.png"/>-->

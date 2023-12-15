@@ -79,6 +79,7 @@ const getPromotion = () => {
 const getPromotionPrize = () => {
   store.getBalance();
   privilegeClaimedModalVisible.value = false;
+  bonusOpened.value = false;
 };
 </script>
 

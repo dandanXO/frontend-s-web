@@ -66,7 +66,7 @@
               v-if="scope.row.recordTime !== null"
               v-formatter="{
                 data: scope.row.recordTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -194,6 +194,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  timeZone: {
+    type: String,
+    required: true,
+  }
 })
 
 const { t } = useI18n()

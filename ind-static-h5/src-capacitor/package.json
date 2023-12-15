@@ -10,6 +10,7 @@
     "buildios": "npx cap sync && npx cap update ios && npx cap run ios -l"
   },
   "dependencies": {
+    "com.adjust.sdk": "4.23.0",
     "@capacitor/android": "^5.5.0",
     "@capacitor/app": "^5.0.0",
     "@capacitor/cli": "^5.0.0",
@@ -17,6 +18,8 @@
     "@capacitor/device": "^5.0.6",
     "@capacitor/preferences": "^5.0.0",
     "@capacitor/splash-screen": "^5.0.6",
-    "cordova-plugin-inappbrowser": "^5.0.0"
+    "cordova-plugin-inappbrowser": "^5.0.0",
+    "cordova-plugin-screen-orientation": "^3.0.3",
+    "es6-promise-plugin": "^4.1.0"
   }
 }

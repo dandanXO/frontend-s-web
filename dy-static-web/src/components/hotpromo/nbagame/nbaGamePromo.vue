@@ -8,7 +8,7 @@
           <div class="bet-info-details">
             <div class="info-team info-team-one">
               <div class="info-team-logo">
-                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamOneIcon" />
+                <img :src="imgURL + nbaDetails.teamOneIcon" />
               </div>
               <div class="info-team-name" v-html="nbaDetails.teamOne" />
             </div>
@@ -21,7 +21,7 @@
 
             <div class="info-team info-team-two">
               <div class="info-team-logo">
-                <img :src="imgURL + nbaDetails.siteId + '/' + nbaDetails.teamTwoIcon" />
+                <img :src="imgURL + nbaDetails.teamTwoIcon" />
               </div>
               <div class="info-team-name" v-html="nbaDetails.teamTwo" />
             </div>
@@ -44,7 +44,7 @@ import "swiper/css/navigation";
 import { loadNbaDetails } from "@/api/promotion/nbaGame";
 
 const nbaDetails = ref([]);
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/game-match/";
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 
 const formatDate = (dateTimeString) => {
   if (dateTimeString === undefined) {

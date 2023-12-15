@@ -560,7 +560,7 @@ export default defineComponent({
                 startCountdown(expirationTime);
                 Swal.fire({
                   title: "系统提示",
-                  text: `${err}`,
+                  text: `${err.message}`,
                   confirmButtonText: "确认"
                 });
               }

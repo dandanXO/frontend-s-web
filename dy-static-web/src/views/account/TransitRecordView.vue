@@ -11,27 +11,13 @@
             <el-form layout="inline" :model="searchForm.deposit">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker
-                    v-model="searchForm.deposit.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.deposit.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.deposit.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.deposit.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item class="search">
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -48,10 +34,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'depositDate'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'depositDate'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.depositDate }}</span>
                   </div>
@@ -62,10 +45,7 @@
                     {{ getDepositStatus(scope.row.status) }}
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'paymentType'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'paymentType'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getDepositType(scope.row.paymentType) }}
                   </div>
@@ -74,13 +54,7 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'PENDING'">
                     <div style="display: flex; align-items: center">
-                      <el-button
-                        size="small"
-                        class="common-btn"
-                        @click="openReminder(scope.row)"
-                      >
-                        催单
-                      </el-button>
+                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">催单</el-button>
                     </div>
                   </template>
                 </template>
@@ -100,27 +74,13 @@
             <el-form layout="inline" :model="searchForm.turnover">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker
-                    v-model="searchForm.turnover.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.turnover.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.turnover.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.turnover.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -156,10 +116,7 @@
                   </div>
                 </template>
 
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -180,27 +137,13 @@
             <el-form layout="inline" :model="searchForm.withdraw">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker
-                    v-model="searchForm.withdraw.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.withdraw.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.withdraw.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.withdraw.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -230,10 +173,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -248,13 +188,7 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'STEP_1'">
                     <div style="display: flex; align-items: center">
-                      <el-button
-                        size="small"
-                        class="common-btn"
-                        @click="openReminder(scope.row)"
-                      >
-                        催单
-                      </el-button>
+                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">催单</el-button>
                     </div>
                   </template>
 
@@ -266,11 +200,7 @@
                     "
                   >
                     <div style="display: flex; align-items: center">
-                      <el-button
-                        size="small"
-                        class="common-btn"
-                        @click="openWithdrawConfirm(scope.row)"
-                      >
+                      <el-button size="small" class="common-btn" @click="openWithdrawConfirm(scope.row)">
                         确认到账
                       </el-button>
                     </div>
@@ -293,27 +223,13 @@
             <el-form layout="inline" :model="searchForm.transfer">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker
-                    v-model="searchForm.transfer.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.transfer.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.transfer.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.transfer.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -330,10 +246,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -370,27 +283,13 @@
             <el-form layout="inline" :model="searchForm.rebates">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker
-                    v-model="searchForm.rebates.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.rebates.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.rebates.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.rebates.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -407,10 +306,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -439,10 +335,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
-          <div
-            v-if="searchForm.gameBetRecord.platform.length === 0"
-            class="payout-total"
-          >
+          <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
           </div>
@@ -458,12 +351,8 @@
                     @change="searchRecord"
                   >
                     <el-option key="" value="">-</el-option>
-                    <el-option
-                      v-for="p in platformsList"
-                      :key="p.name"
-                      :value="p.name"
-                    >
-                      {{ p.name }}
+                    <el-option v-for="p in platformsList" :key="p.name" :value="p.name">
+                      {{ getGameName(p.name) }}
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -475,20 +364,10 @@
                   />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.gameBetRecord.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.gameBetRecord.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -515,10 +394,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -572,20 +448,10 @@
                   />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker
-                    v-model="searchForm.reminderRecord.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
+                  <el-date-picker v-model="searchForm.reminderRecord.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -602,10 +468,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -676,20 +539,10 @@
             autocomplete="off"
             label-width="110"
             label-suffix=":"
-            style="
-              width: 100%;
-              max-width: 400px;
-              margin: 0px auto 0px;
-              padding-top: 50px;
-              padding-bottom: 50px;
-            "
+            style="width: 100%; max-width: 400px; margin: 0px auto 0px; padding-top: 50px; padding-bottom: 50px"
           >
             <el-form-item tabindex="1" label="单号" prop="serialNumber">
-              <el-input
-                v-model="reminderForm.orderNo"
-                placeholder="单号"
-                disabled
-              />
+              <el-input v-model="reminderForm.orderNo" placeholder="单号" disabled />
             </el-form-item>
 
             <el-form-item label="选择图片" prop="photos">
@@ -1117,7 +970,7 @@ export default defineComponent({
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === 'gameBetRecord') {
-        getPlatList();
+        getPlatList(recordActive.value);
       } else if (recordActive.value === 'reminderRecord') {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
@@ -1198,12 +1051,38 @@ export default defineComponent({
       });
       searchRecord();
     };
+    function formatDate(date) {
+      const originalDate = new Date(date);
 
+      // Extract components
+      const year = originalDate.getFullYear();
+      const month = (originalDate.getMonth() + 2).toString().padStart(2, '0');
+      const day = originalDate.getDate().toString().padStart(2, '0');
+
+      // Format as 'YYYY-MM-DD'
+      const formattedDate = `${year}-${month}-${day}`;
+
+      return formattedDate
+    }
     onMounted(() => {
       getTime();
     });
     const platformsList = ref([])
-    const getPlatList = () => {
+    const getPlatList = (v) => {
+      const startMonth = new Date(searchForm[v].startDate).getMonth()
+      const endMonth = new Date(searchForm[v].endDate).getMonth()
+      if (startMonth !== endMonth) {
+        // // Invalid date range, adjust the end date to the last day of the month
+        // const currentDate = new Date(searchForm[v].startDate);
+        // const lastDayOfMonth = getLastDayOfMonth(currentDate);
+        // // Convert the end date to a Date object
+        // const endDateObject = new Date(searchForm[v].endDate);
+        // // Set the day of the month to the last day of the month
+        // endDateObject.setDate(lastDayOfMonth);
+        // // Update searchForm[v].endDate with the adjusted Date object
+        // searchForm[v].endDate = formatDate(endDateObject);
+        ElMessage.error('开始与结束月份必须一致');
+      }
       getPlatformList().then((ret) => {
         platformsList.value = ret
       })
@@ -1313,10 +1192,10 @@ export default defineComponent({
       })
     }
 
+    const imgURL = process.env.VUE_APP_IMAGE_CDN
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
+      reminderForm.photos = imgURL + '/order/' + store.siteId + '/' + linkId
     }
-
     const getTurnoverType = (turnoverType) => {
       if (!turnoverType) {
         return ''
@@ -1569,6 +1448,52 @@ export default defineComponent({
     }
     const formRef = ref(null)
 
+    const getGameName = (gameName) => {
+      if (!gameName) {
+        return ''
+      }
+
+      switch (gameName) {
+        case 'IMES':
+          return 'IM电竞';
+        case 'TCG':
+          return 'TCG彩票';
+        case 'MGP':
+          return 'MG电子';
+        case 'CQ9':
+          return 'CQ电子';
+        case 'SABA':
+          return 'IM电竞';
+        case 'TFGaming':
+          return 'DY电竞 ';
+        case 'SW':
+          return 'SW电子';
+        case 'GPS':
+          return 'GPS捕鱼';
+        case 'IA':
+          return '小艾电竞 ';
+        case 'DT':
+          return '大唐棋牌';
+        case 'IM':
+          return 'IM体育';
+        case 'BBIN':
+          return 'BBIN真人, BBIN电子, BBIN彩票';
+        case 'KY':
+          return '开元棋牌';
+        case 'PT':
+          return 'PT电子';
+        case 'PG':
+          return 'PG电子';
+        case 'AG':
+          return 'AG真人, XIN电子';
+        case 'ALLBET':
+          return 'ALLBET真人';
+
+        default:
+          return gameName;
+      }
+    }
+
     return {
       recordActive,
       uploadFileRef,
@@ -1613,7 +1538,9 @@ export default defineComponent({
       clearItems,
       formRef,
       getTransferChangeType,
-      getPlatform
+      getPlatform,
+      imgURL,
+      getGameName
     };
   }
 });
