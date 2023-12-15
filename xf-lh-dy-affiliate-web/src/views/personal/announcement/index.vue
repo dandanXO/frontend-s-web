@@ -8,7 +8,7 @@
       </template>
       <el-tabs
         v-model="activeName"
-        style="margin-left: 20px"
+        style="margin: 0 20px;"
         @tab-click="handleTabClick"
       >
         <el-tab-pane
@@ -17,14 +17,16 @@
           :key="item.id"
           v-for="item in type.getTypeList"
         >
-          <div class="inputs-wrap">
-            <el-input
-              v-model="request.title"
-              class="input-small"
-              :placeholder="t('fields.title')"
-              size="small"
-            />
-            <div class="btn-grp">
+          <el-row :gutter="20" style="gap:10px;">
+            <el-col :xl="4" :lg="6" :md="6" :sm="5">
+              <el-input
+                v-model="request.title"
+                class="input-small"
+                :placeholder="t('fields.title')"
+                size="small"
+              />
+            </el-col>
+            <el-col :xl="16" :lg="12" :md="18" :sm="18">
               <el-button
                 icon="el-icon-search"
                 type="primary"
@@ -55,8 +57,8 @@
               >
                 {{ t('fields.bulk_delete') }}
               </el-button>
-            </div>
-          </div>
+            </el-col>
+          </el-row>
 
           <el-dialog
             v-model="uiControl.dialogVisible"
@@ -87,10 +89,12 @@
             highlight-current-row
             v-loading="page.loading"
             style="margin-top: 15px; margin-left: 15px;"
-            :empty-text="t('fields.noData')"
             @selection-change="handleSelectionChange"
             @row-click="handleRowClick"
           >
+            <template #empty>
+              <emptyComp />
+            </template>
             <el-table-column type="selection" width="55" />
             <el-table-column
               prop="title"
@@ -152,6 +156,7 @@ import {
   deleteAffAnnouncement,
 } from '../../../api/affiliate-announcement'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import emptyComp from '@/components/empty'
 
 const store = useStore()
 const { t } = useI18n()
@@ -321,6 +326,9 @@ onMounted(() => {
     padding: 0;
   }
 }
+.el-button {
+  margin-bottom: 10px;
+}
 
 .inputs-wrap {
   margin: 20px;
@@ -341,24 +349,24 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-      &.el-range-editor--small.el-input__inner {
-        max-width: unset;
-      }
-    }
-  }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //     &.el-range-editor--small.el-input__inner {
+  //       max-width: unset;
+  //     }
+  //   }
+  // }
 }
 </style>

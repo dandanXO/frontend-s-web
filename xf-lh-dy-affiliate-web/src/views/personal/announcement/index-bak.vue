@@ -89,9 +89,11 @@
         highlight-current-row
         v-loading="page.loading"
         style="margin-top: 15px; margin-left: 15px;"
-        :empty-text="t('fields.noData')"
         @selection-change="handleSelectionChange"
       >
+        <template #empty>
+          <emptyComp />
+        </template>
         <el-table-column type="selection" width="55" />
         <el-table-column
           prop="title"
@@ -153,6 +155,7 @@ import {
   deleteAffAnnouncement,
 } from '../../../api/affiliate-announcement'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import emptyComp from '@/components/empty'
 
 const store = useStore()
 const { t } = useI18n()
@@ -335,24 +338,24 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-      &.el-range-editor--small.el-input__inner {
-        max-width: unset;
-      }
-    }
-  }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //     &.el-range-editor--small.el-input__inner {
+  //       max-width: unset;
+  //     }
+  //   }
+  // }
 }
 </style>

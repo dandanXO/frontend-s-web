@@ -2,7 +2,7 @@
   <div class="inputs-wrap">
     <el-form @submit.prevent>
       <el-row :gutter="20">
-        <el-col :span="12">
+        <el-col :xl="6" :lg="8" :md="10" :sm="12">
           <el-form-item :label="t('fields.recordTime') + ' :'">
             <el-date-picker
               v-model="request.recordTime"
@@ -18,10 +18,11 @@
               :disabled-date="disabledDate"
               :editable="false"
               :clearable="false"
+              style="width:100%"
             />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :xl="6" :lg="8" :md="8" :sm="12">
           <div>
             <el-button
               icon="el-icon-search"
@@ -31,7 +32,7 @@
             >
               {{ $t('fields.search') }}
             </el-button>
-            <el-button size="mini" type="warning" @click="resetQuery()">
+            <el-button size="mini" type="primary" plain @click="resetQuery()">
               {{ $t('fields.reset') }}
             </el-button>
           </div>
@@ -133,9 +134,11 @@
   >
     <el-table
       :data="data.depositData"
-      :empty-text="t('fields.noData')"
       height="380"
     >
+      <template #empty>
+        <emptyComp />
+      </template>
       <el-table-column
         prop="type"
         :label="t('fields.paymentMethod')"
@@ -156,9 +159,11 @@
   >
     <el-table
       :data="data.bonusData"
-      :empty-text="t('fields.noData')"
       height="380"
     >
+      <template #empty>
+        <emptyComp />
+      </template>
       <el-table-column
         prop="type"
         :label="t('fields.privilegeType')"
@@ -179,9 +184,11 @@
   >
     <el-table
       :data="data.winLossData"
-      :empty-text="t('fields.noData')"
       height="380"
     >
+      <template #empty>
+        <emptyComp />
+      </template>
       <el-table-column
         prop="type"
         :label="t('fields.platform')"
@@ -215,9 +222,11 @@
   >
     <el-table
       :data="data.winLossData"
-      :empty-text="t('fields.noData')"
       height="380"
     >
+      <template #empty>
+        <emptyComp />
+      </template>
       <el-table-column
         prop="type"
         :label="t('fields.platform')"
@@ -256,6 +265,7 @@ import { useI18n } from 'vue-i18n'
 import moment from 'moment'
 import { getFinanceReport } from '../../../../api/affiliate-finance-record'
 import { useStore } from '@/store'
+import emptyComp from "@/components/empty"
 
 const store = useStore()
 const { t } = useI18n()
@@ -427,6 +437,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  margin: 20px auto;
 }
 
 .grid-item {
@@ -435,6 +446,7 @@ onMounted(() => {
   border: 1px solid #f2f2f6;
   border-radius: 8px;
   padding: 20px;
+  background: #F4F9FD;
 }
 
 .grid-item-label {
@@ -454,6 +466,14 @@ onMounted(() => {
 .grid-item-value {
   font-size: 16px;
   font-weight: 700;
+}
+.el-form-item {
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 </style>

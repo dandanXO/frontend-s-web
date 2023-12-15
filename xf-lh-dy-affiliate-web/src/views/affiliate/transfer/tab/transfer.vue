@@ -1,50 +1,56 @@
 <template>
-  <el-card class="box-card" shadow="never" style="margin-top: 20px">
-    <el-card style="width: fit-content; padding-right: 200px; margin-bottom: 20px;">
+  <el-card class="balance-panel">
+    <div class="balance-inner">
+      <div class="money-icon"><img src="../../../../assets/images/home/moneybal.svg"></div>
       <div class="card-panel-description">
         <div class="card-panel-text">{{ $t('fields.balance') }}<el-icon class="pointer" @click="loadAffiliateBalance"><Refresh /></el-icon></div>
-        <span v-if="showBalance" class="card-panel-num">
-          $ <span v-formatter="{data: balance,type: 'money'}" />
+        <span v-if="isLoading" class="loading">
+          Loadinggg...
         </span>
-        <span v-else>****</span>
-        <el-icon v-if="!showBalance" class="pointer" @click="showBalance = true"><View /></el-icon>
-        <el-icon v-else class="pointer" @click="showBalance = false"><Hide /></el-icon>
+        <span v-else>
+          <span v-if="showBalance" class="card-panel-num">
+            $ <span v-formatter="{data: balance,type: 'money'}" />
+          </span>
+          <span v-else>****</span>
+          <el-icon v-if="!showBalance" class="pointer" @click="showBalance = true"><View /></el-icon>
+          <el-icon v-else class="pointer" @click="showBalance = false"><Hide /></el-icon>
+        </span>
       </div>
-    </el-card>
-    <el-row>
-      <el-form ref="formRef" :model="form" label-position="right" :rules="formRules">
-        <el-form-item :label="t('fields.downlineMember')" prop="loginName">
-          <el-input
-            v-model="form.loginName"
-            :placeholder="t('fields.downlineMember')"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.transferAmount')" prop="transferAmount">
-          <el-input
-            v-model="form.transferAmount"
-            :placeholder="t('fields.transferAmount')"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.rollover')" prop="rollover">
-          <el-input
-            v-model="form.rollover"
-            :placeholder="t('fields.rollover')"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.withdrawPassword')" prop="withdrawPassword">
-          <el-input
-            type="password"
-            v-model="form.withdrawPassword"
-            autocomplete="off"
-            :placeholder="t('fields.withdrawPassword')"
-          />
-        </el-form-item>
-        <el-form-item label>
-          <el-button @click="submitTransfer">{{ $t('fields.confirm') }}</el-button>
-        </el-form-item>
-      </el-form>
-    </el-row>
+    </div>
   </el-card>
+  <el-row>
+    <el-form ref="formRef" :model="form" label-position="right" :rules="formRules" label-width="200px" label-suffix=":">
+      <el-form-item :label="t('fields.downlineMember')" prop="loginName">
+        <el-input
+          v-model="form.loginName"
+          :placeholder="t('fields.downlineMember')"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.transferAmount')" prop="transferAmount">
+        <el-input
+          v-model="form.transferAmount"
+          :placeholder="t('fields.transferAmount')"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.rollover')" prop="rollover">
+        <el-input
+          v-model="form.rollover"
+          :placeholder="t('fields.rollover')"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.withdrawPassword')" prop="withdrawPassword">
+        <el-input
+          type="password"
+          v-model="form.withdrawPassword"
+          autocomplete="off"
+          :placeholder="t('fields.withdrawPassword')"
+        />
+      </el-form-item>
+      <el-form-item label>
+        <el-button type="primary" @click="submitTransfer">{{ $t('fields.confirm') }}</el-button>
+      </el-form-item>
+    </el-form>
+  </el-row>
 </template>
 
 <script setup>
@@ -65,6 +71,7 @@ const { t } = useI18n();
 const balance = ref(0);
 const showBalance = ref(false);
 const formRef = ref();
+const isLoading = ref(false);
 const form = reactive({
   loginName: null,
   transferAmount: null,
@@ -109,8 +116,10 @@ function clearForm() {
 }
 
 async function loadAffiliateBalance() {
+  isLoading.value = true
   const { data: bal } = await getAffiliateBalance(store.state.user.id);
   balance.value = bal;
+  isLoading.value = false
 }
 
 async function checkWithdrawPw() {
@@ -130,6 +139,9 @@ onMounted(async () => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.el-form-item {
+  align-items: center;
+}
 .header-container {
   margin: 40px 0 20px;
   display: flex;
@@ -153,16 +165,32 @@ onMounted(async () => {
   }
 }
 
-.card-panel-description {
+.balance-panel {
+  display: flex;
+  min-width: 300px;
+  max-width: 500px; margin-bottom: 10px; background: #F4F9FD;
+  .balance-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+}
+.card-panel-description{
   font-weight: 700;
   margin-left: 0;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
 }
 
 .card-panel-description .card-panel-text {
   line-height: 18px;
   color: rgba(0, 0, 0, 0.45);
   font-size: 16px;
-  margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-panel-description .card-panel-link-text {
@@ -176,30 +204,35 @@ onMounted(async () => {
   font-size: 20px;
 }
 
+.card-panel-description .loading {
+  font-size: 15px;
+  line-height: 18px;
+  margin-top: 5px;
+}
 .pointer {
-    cursor: pointer;
-    padding: 10px;
+  cursor: pointer;
+  padding: 0 5px;
 }
 
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-    &.el-range-editor--small.el-input__inner {
-      max-width: unset;
-    }
-    }
-  }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //   &.el-range-editor--small.el-input__inner {
+  //     max-width: unset;
+  //   }
+  //   }
+  // }
 }
 </style>

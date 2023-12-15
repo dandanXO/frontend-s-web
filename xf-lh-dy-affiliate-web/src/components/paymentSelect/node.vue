@@ -169,7 +169,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 $group-color: #76c034;
 // $node-color: #dd4645;
-$node-color: #45fefa;
+$node-color: #458BFF;
 .title {
   color: $group-color;
   margin: 10px auto;
@@ -330,8 +330,8 @@ $node-color: #45fefa;
     }
   }
   .node-content {
-    gap: 0 20px;
-    padding: 30px 0 0;
+    gap: 20px;
+    padding: 20px 0;
     .payment-method-item {
       text-align: center;
       padding: 10px 8px;
@@ -352,7 +352,9 @@ $node-color: #45fefa;
     .node-item {
       display: flex;
       justify-content: center;
-      // min-width: 6rem;
+      background: #F4F9FD;
+      border: 1px solid transparent;
+      min-width: 175px;
       .payment-method-wrapper {
         display: none;
       }
@@ -369,16 +371,16 @@ $node-color: #45fefa;
       }
 
       .node-txt-img {
-       background-color: #2a313e;
+      //  background-color: #2a313e;
         // background-color: #f7f7f7;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 4rem;
-        height: 4rem;
+        // box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        width: 3rem;
+        height: 3rem;
         margin-bottom: 5px;
-        border: 2px solid #dddddd;
+        // border: 2px solid #dddddd;
         // padding: 5px 15px;
         border-radius: 3px;
 
@@ -458,6 +460,36 @@ $node-color: #45fefa;
   }
   .node-item {
     position: relative;
+    &.active {
+      border: 1px solid $node-color;
+      position: relative;
+      border: 1px solid#409eff;
+      background: #ecf5ff;
+      overflow: hidden;
+      &:before {
+        content: "✔";
+        position: absolute;
+        color: #ffffff;
+        padding: 0px;
+        right: 3px;
+        bottom: 3px;
+        width: 8px;
+        height: 8px;
+        font-size: 10px;
+        background-size: contain;
+        z-index: 1;
+      }
+      &:after {
+        content: "";
+        background: #409eff;
+        position: absolute;
+        bottom: -15px;
+        right: -15px;
+        width: 30px;
+        height: 30px;
+        transform: rotateZ(45deg);
+      }
+    }
     .promo {
       position: absolute;
       right: 0;

@@ -9,10 +9,10 @@
       <el-form @submit.prevent>
         <div style="margin: 20px;">
           <el-row :gutter="20">
-            <el-col :span="4">
+            <el-col :xl="2" :lg="3" :md="12" :sm="24">
               <el-form-item :label="t('fields.memberTag') + ' :'" />
             </el-col>
-            <el-col :span="15">
+            <el-col :xl="18" :lg="16" :md="12" :sm="24">
               <el-checkbox
                 :indeterminate="isIndeterminate"
                 v-model="checkAll"
@@ -31,7 +31,7 @@
                 />
               </el-checkbox-group>
             </el-col>
-            <el-col :span="5">
+            <el-col class="memberTag" :xl="3" :lg="4" :md="12" :sm="24" style="margin-left: auto; text-align: right;">
               <el-button
                 icon="el-icon-setting"
                 type="primary"
@@ -45,27 +45,27 @@
         </div>
         <div class="inputs-wrap">
           <el-row :gutter="20">
-            <el-col :span="8">
+            <el-col :xl="8" :lg="7" :md="12">
               <el-form-item :label="t('fields.loginName') + ' :'">
-                <el-input v-model="request.loginName" />
+                <el-input size="small" v-model="request.loginName" />
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :xl="10" :lg="10" :md="12">
               <el-form-item :label="t('fields.depositAmount') + ' :'">
-                <el-input v-model="request.depositMinAmount" class="input-min">
+                <el-input size="small" v-model="request.depositMinAmount" class="input-min">
                   <template #append>
                     -
                   </template>
                 </el-input>
                 <el-input
                   v-model="request.depositMaxAmount"
-                  class="input-max"
+                  class="input-max" size="small"
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="6">
-              <el-form-item :label="t('fields.betRecord')">
-                <el-select v-model="request.isBet">
+            <el-col :xl="6" :lg="5" :md="12">
+              <el-form-item :label="t('fields.betRecord') + ' :'">
+                <el-select size="small" v-model="request.isBet">
                   <el-option key="1" value="-1" :label="t('fields.all')">
                     {{ t('fields.all') }}
                   </el-option>
@@ -82,7 +82,7 @@
         </div>
         <div class="inputs-wrap">
           <el-row :gutter="20">
-            <el-col :span="8">
+            <el-col :xl="8" :lg="8" :md="12">
               <el-form-item :label="t('fields.recordTime') + ' :'">
                 <el-date-picker
                   v-model="request.recordTime"
@@ -101,7 +101,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :xl="10" :lg="8" :md="12">
               <el-form-item :label="t('fields.registerTime') + ' :'">
                 <el-date-picker
                   v-model="request.regTime"
@@ -120,7 +120,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <el-col :xl="6" :lg="6" :md="12">
               <div>
                 <el-button
                   icon="el-icon-search"
@@ -130,7 +130,7 @@
                 >
                   {{ $t('fields.search') }}
                 </el-button>
-                <el-button size="mini" type="warning" @click="resetQuery()">
+                <el-button size="mini" type="primary" plain @click="resetQuery()">
                   {{ $t('fields.reset') }}
                 </el-button>
               </div>
@@ -157,9 +157,11 @@
         highlight-current-row
         v-loading="page.loading"
         style="margin-top: 15px;"
-        :empty-text="t('fields.noData')"
         @selection-change="handleSelectionChange"
       >
+        <template #empty>
+          <emptyComp />
+        </template>
         <el-table-column type="selection" width="40" />
         <el-table-column
           prop="loginName"
@@ -435,8 +437,10 @@
       </div>
       <el-table
         :data="memberInfo.memberBetRecordSummaryVOList"
-        :empty-text="t('fields.noData')"
       >
+        <template #empty>
+          <emptyComp />
+        </template>
         <el-table-column :label="t('fields.sequence')" align="left">
           <template #default="scope">
             {{ scope.$index + 1 }}
@@ -540,9 +544,11 @@
       </div>
       <el-table
         :data="memberDepositInfo.page.records"
-        :empty-text="t('fields.noData')"
         v-loading="memberDepositInfo.page.loading"
       >
+        <template #empty>
+          <emptyComp />
+        </template>
         <el-table-column :label="t('fields.sequence')" align="left" width="50">
           <template #default="scope">
             {{ (depositRequest.current - 1) * 10 + scope.$index + 1 }}
@@ -656,7 +662,8 @@ import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
+import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record';
+import emptyComp from '@/components/empty';
 
 const store = useStore()
 const { t } = useI18n()
@@ -1166,6 +1173,7 @@ onMounted(() => {
   }
   .el-row .el-col {
     display: flex;
+    margin-bottom: 10px;
   }
 }
 
@@ -1187,6 +1195,9 @@ onMounted(() => {
   }
 }
 
+.el-input-group {
+  vertical-align: unset;
+}
 .input-max {
   width: 40%;
 
@@ -1223,6 +1234,11 @@ onMounted(() => {
   }
 }
 
+.el-form-item {
+  flex: 1;
+  margin-bottom: 0;
+}
+
 .info-row-container:not(:first-child) {
   border-top: 1px solid #f2f2f6;
 }
@@ -1233,24 +1249,29 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-      &.el-range-editor--small.el-input__inner {
-        max-width: unset;
-      }
-    }
+  .memberTag {
+    position: absolute;
+    top: -20px;
+    right: 0;
   }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //     &.el-range-editor--small.el-input__inner {
+  //       max-width: unset;
+  //     }
+  //   }
+  // }
 }
 </style>

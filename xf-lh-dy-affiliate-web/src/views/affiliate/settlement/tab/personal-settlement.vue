@@ -2,7 +2,7 @@
   <div class="inputs-wrap">
     <el-form @submit.prevent>
       <el-row :gutter="20">
-        <el-col :span="8">
+        <el-col :xl="6" :lg="8" :md="12" :sm="12">
           <el-form-item :label="t('fields.recordTime') + ' :'">
             <el-date-picker
               v-model="request.recordTime"
@@ -17,10 +17,11 @@
               :disabled-date="disabledDate"
               :editable="false"
               :clearable="false"
+              style="width: 100%;"
             />
           </el-form-item>
         </el-col>
-        <el-col :span="16">
+        <el-col :xl="6" :lg="8" :md="12" :sm="12">
           <div>
             <el-button
               icon="el-icon-search"
@@ -30,7 +31,7 @@
             >
               {{ $t('fields.search') }}
             </el-button>
-            <el-button size="mini" type="warning" @click="resetQuery()">
+            <el-button size="mini" type="primary" plain @click="resetQuery()">
               {{ $t('fields.reset') }}
             </el-button>
           </div>
@@ -215,18 +216,42 @@ onMounted(() => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.el-form-item {
+  align-items: center;
+}
 .info-container {
   border-radius: 5px;
-  border: 1px solid #f2f2f6;
+  border: 1px solid #F4F9FD;
   padding: 0 20px;
   margin: 24px 0;
 }
 
+.display-container {
+  margin: 20px auto;
+}
 .display-container .el-row {
   padding: 15px 10px;
 }
 
 .display-container .el-row:nth-child(odd) {
-  background-color: #f2f2f6;
+  background-color: #F4F9FD;
+}
+</style>
+
+<style>
+.el-form-item__label {
+  line-height: unset;
+}
+.el-form-item__content {
+  line-height: unset;
+}
+
+@media (max-width: 768px) {
+.el-form-item__label {
+  line-height: 40px;
+}
+.el-form-item__content {
+  line-height: 40px;
+}
 }
 </style>

@@ -4,7 +4,7 @@
       <el-select
         v-model="selectedBankId"
         @change="selectBank"
-        placeholder="选择银行"
+        :placeholder="t('fields.selectBank')"
       >
         <el-option
           v-for="bc in props.bankList"
@@ -24,6 +24,8 @@ import { defineProps, ref, defineEmits, defineExpose } from "vue";
 import { postDeposit } from "@/api/deposit";
 import { doIt } from "@/utils/action";
 
+import { useI18n } from "vue-i18n";
+const { t } = useI18n()
 const props = defineProps({
   bankList: {
     type: Array,
